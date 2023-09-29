@@ -58,7 +58,7 @@ FLCreateClassSerializationTest >> testCreateByteArrayWithInstance [
 
 { #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
-	"Tests materialization a class or trait not defined in the image and that the metaclass is also created."
+	"Tests materialization of a class or trait not defined in the image and that the metaclass is also created."
 
 	| class materializedClassOrTrait environment category name metaclassName metaclass |
 	class := self classFactory silentlyNewClass.
@@ -70,8 +70,7 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: class.
 
-	"This is the test environment, so we have to cheat"
-	self assertCollection: environment associations hasSameElements: materializedClassOrTrait environment associations.
+	self assert: environment identicalTo: materializedClassOrTrait environment.
 
 	self assert: category equals: materializedClassOrTrait category.
 	self assert: name equals: materializedClassOrTrait name.
@@ -474,7 +473,7 @@ FLCreateClassSerializationTest >> testCreateWithNilEnvironment [
 
 { #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
-	"Tests materialization a class or trait not defined in the image, and with Smalltalk globals  in the instance variable 'environment '. In that case, the whole Smalltalk globals should NOT be fully serialized but instead just store a reference to it. "
+	"Tests materialization of a class or trait not defined in the image, and with Smalltalk globals  in the instance variable 'environment'. In that case, the whole Smalltalk globals should NOT be fully serialized but only a reference to the globals should be stored. "
 
 	| aClassOrTrait materializedClassOrTrait category name |
 	aClassOrTrait := self classFactory silentlyNewClass.

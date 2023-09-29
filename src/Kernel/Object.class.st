@@ -478,7 +478,7 @@ Object >> basicSize [
 	"Primitive. Answer the number of indexable variables in the receiver.
 	This value is the same as the largest legal subscript. Essential. Do not
 	override in any subclass (except Context). See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	<primitive: 62>
 	"The number of indexable fields of fixed-length objects is 0"
 	^0
@@ -616,7 +616,7 @@ Object >> changed: anAspect with: anObject [
 { #category : 'introspection' }
 Object >> className [
 	"Answer a string characterizing the receiver's class, for use in list views for example"
-
+	<reflection: 'Object Inspection - Accessing object class'>
 	^ self class name asString
 ]
 
@@ -810,6 +810,8 @@ Object >> displayStringOn: aStream [
 
 { #category : 'reflective operations' }
 Object >> doesNotUnderstand: aMessage [
+
+	<reflection: 'Message sending and code execution - Control message passing'>
 	<debuggerCompleteToSender>
 	 "Handle the fact that there was an attempt to send the given message to the receiver but the receiver does not understand this message (typically sent from the machine when a message is sent to the receiver and no method is defined for that selector)."
 	"Testing: (3 activeProcess)"
@@ -1061,7 +1063,7 @@ Object >> instVarAt: index [
 	 corresponds to the named instance variables, followed by the indexed instance
 	 variables. Fail if the index is not an Integer or is not the index of a fixed
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 173 error: ec>
 	self primitiveFailed
 ]
@@ -1072,7 +1074,7 @@ Object >> instVarAt: index put: anObject [
 	 variables corresponds to the named instance variables, followed by the indexed
 	 instance variables. Fail if the index is not an Integer or is not the index of a fixed
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 174 error: ec>
 	 (index isInteger
 		and: [ index between: 1 and: self class instSize + self basicSize])
@@ -1085,7 +1087,7 @@ Object >> instVarAt: index put: anObject [
 Object >> instVarNamed: aStringOrSymbol [
 	"Return the value of the instance variable in me with that name.  Slow, but very useful.
 	We support here all slots (even non indexed) but raise a backward compatible exception"
-
+	<reflection: 'Object Inspection - State inspection'>
 	^ self class
 		slotNamed: aStringOrSymbol
 		ifFound: [ :slot | slot read: self ]
@@ -1096,7 +1098,7 @@ Object >> instVarNamed: aStringOrSymbol [
 Object >> instVarNamed: aString put: aValue [
 	"Store into the value of the instance variable in me of that name. Slow, but very useful.
 	We support here all slots (even non indexed) but raise a backward compatible exception"
-
+	<reflection: 'Object Modification - State modification'>
 	^ self class
 		slotNamed: aString
 		ifFound: [ :slot | slot write: aValue to: self ]
@@ -1137,12 +1139,13 @@ Object >> isCharacter [
 
 { #category : 'testing' }
 Object >> isClass [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ false
 ]
 
 { #category : 'testing' }
 Object >> isClassOrTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ self isClass or: [ self isTrait ]
 ]
 
@@ -1247,7 +1250,7 @@ Object >> isInterval [
 Object >> isKindOf: aClass [
 	"Answer whether the class, aClass, is a superclass or class of the receiver.
 	The current implemementation allows for a Trait to be used as argument"
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self class == aClass or: [ self class inheritsFrom: aClass ]
 ]
 
@@ -1271,7 +1274,7 @@ Object >> isLiteral: alreadyVisited [
 { #category : 'class membership' }
 Object >> isMemberOf: aClass [
 	"Answer whether the receiver is an instance of the class, aClass."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self class == aClass
 ]
 
@@ -1418,6 +1421,7 @@ Object >> isThisEverCalled: msg [
 
 { #category : 'testing' }
 Object >> isTrait [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^false
 ]
 
@@ -1553,7 +1557,7 @@ Object >> perform: aSymbol [
 	"Send the unary selector, aSymbol, to the receiver.
 	Fail if the number of arguments expected by the selector is not zero.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: #()
 ]
@@ -1561,6 +1565,7 @@ Object >> perform: aSymbol [
 { #category : 'message performing' }
 Object >> perform: selector orSendTo: otherTarget [
 	"If I wish to intercept and handle selector myself, do it; else send it to otherTarget"
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	^ (self respondsTo: selector) ifTrue: [self perform: selector] ifFalse: [otherTarget perform: selector]
 ]
 
@@ -1569,7 +1574,7 @@ Object >> perform: aSymbol with: anObject [
 	"Send the selector, aSymbol, to the receiver with anObject as its argument.
 	Fail if the number of arguments expected by the selector is not one.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: {anObject}
 ]
@@ -1579,7 +1584,7 @@ Object >> perform: aSymbol with: firstObject with: secondObject [
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not two.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: {firstObject . secondObject}
 ]
@@ -1589,7 +1594,7 @@ Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObjec
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not three.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol
 		withArguments: {firstObject . secondObject . thirdObject}
@@ -1600,7 +1605,7 @@ Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObjec
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not four.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol
 		withArguments: {firstObject . secondObject . thirdObject . fourthObject}
@@ -1612,7 +1617,7 @@ Object >> perform: selector withArguments: argArray [
 	Fail if the number of arguments expected by the selector
 	does not match the size of argArray.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 84>
 	^ self perform: selector withArguments: argArray inSuperclass: self class
 ]
@@ -1624,7 +1629,7 @@ Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 	but with the supplied superclass instead.  It will fail if lookupClass
 	cannot be found among the receiver's superclasses.
 	Primitive. Essential. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 100>
 	selector isSymbol
 		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
@@ -1639,6 +1644,7 @@ Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 Object >> perform: selector withEnoughArguments: anArray [
 	"Send the selector, aSymbol, to the receiver with arguments in argArray.
 	Only use enough arguments for the arity of the selector; supply nils for missing ones."
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	| numArgs args |
 	numArgs := selector numArgs.
 	anArray size == numArgs
@@ -1675,7 +1681,7 @@ Object >> pinInMemory [
 Object >> pointsOnlyWeaklyTo: anObject [
 	"Assume, we already know that receiver points to an object,
 	answer true if receiver points only weakly to it "
-
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	self class isWeak ifFalse: [ ^ false ].
 	1 to: self class instSize do:
 		[:i | (self instVarAt: i) == anObject ifTrue: [^ false]].
@@ -1693,7 +1699,7 @@ Object >> postCopy [
 Object >> primitiveChangeClassTo: anObject [
 	"Primitive. Change the class of the receiver into the class of the argument given that the format of the receiver matches the format of the argument's class. Fail if receiver or argument are SmallIntegers, or when the format of the receiver is different from the format of the argument's class, or when the arguments class is fixed and the receiver's size differs from the size that an instance of the argument's class should have.
 	Note: The primitive will fail in most cases that you think might work. This is mostly because of differences in the format. As an example, '(Array new: 3) primitiveChangeClassTo: Morph basicNew' would fail for two of the reasons mentioned above. Array is variable and Morph is fixed (different format - failure #1). Morph is a fixed-field-only object and the array is too short (failure #2)."
-
+	<reflection: 'Object Modification - Object class change'>
 	<primitive: 115>
 	self isReadOnlyObject
 		ifTrue: [ ^ self modificationForbiddenFor: #primitiveChangeClassTo: value: anObject ].
@@ -1755,11 +1761,13 @@ Object >> readFromString: aString [
 
 { #category : 'introspection' }
 Object >> readSlot: aSlot [
+	<reflection: 'Object Inspection - State inspection'>
 	^aSlot read: self
 ]
 
 { #category : 'introspection' }
 Object >> readSlotNamed: aName [
+	<reflection: 'Object Inspection - State inspection'>
 	^(self class slotNamed: aName) read: self
 ]
 
@@ -1817,7 +1825,7 @@ Object >> respondsTo: aSymbol [
 	"Answer whether the receiver can understand the specified message selector
 	aSymbol (ie. will respond meaningfully when such a message is sent to the
 	receiver)."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^self class canUnderstand: aSymbol
 ]
 
@@ -1952,6 +1960,7 @@ Object >> size [
 	This value is the same as the largest legal subscript. Essential. See Object
 	documentation whatIsAPrimitive."
 
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 62>
 	self class isVariable ifFalse: [self errorNotIndexable].
 	^ 0
@@ -1970,7 +1979,7 @@ Object >> sizeInMemory [
 Object >> someObject [
 	"Primitive. Answer the first object in the enumeration of all
 	 objects."
-
+	<reflection: 'Memory Scanning'>
 	<primitive: 138>
 	self primitiveFailed
 ]
@@ -2190,11 +2199,13 @@ Object >> windowIsClosing [
 
 { #category : 'introspection' }
 Object >> writeSlot: aSlot value: anObject [
+	<reflection: 'Class structural modification - Slot modification'>
 	^aSlot write: anObject to: self
 ]
 
 { #category : 'introspection' }
 Object >> writeSlotNamed: aName value: anObject [
+	<reflection: 'Class structural modification - Slot modification'>
 	^(self class slotNamed: aName) write: anObject to: self
 ]
 

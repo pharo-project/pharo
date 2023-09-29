@@ -19,7 +19,7 @@ Class {
 { #category : 'instance creation' }
 Message class >> selector: aSymbol [
 	"Answer an instance of me with unary selector, aSymbol."
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^self new setSelector: aSymbol arguments: (Array new: 0)
 ]
 
@@ -51,50 +51,53 @@ Message >> analogousCodeTo: anObject [
 { #category : 'accessing' }
 Message >> argument [
 	"Answer the first (presumably sole) argument"
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^arguments at: 1
 ]
 
 { #category : 'accessing' }
 Message >> argument: newValue [
 	"Change the first argument to newValue and answer self"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	arguments at: 1 put: newValue
 ]
 
 { #category : 'accessing' }
 Message >> arguments [
 	"Answer the arguments of the receiver."
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^arguments
 ]
 
 { #category : 'converting' }
 Message >> asSendTo: anObject [
+
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^MessageSend message: self to: anObject
 ]
 
 { #category : 'testing' }
 Message >> hasArguments [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^arguments notEmpty
 ]
 
 { #category : 'accessing' }
 Message >> lookupClass [
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^ lookupClass
 ]
 
 { #category : 'private' }
 Message >> lookupClass: aClass [
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	lookupClass := aClass
 ]
 
 { #category : 'accessing' }
 Message >> numArgs [
 	"Answer the number of arguments in this message"
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^arguments size
 ]
 
@@ -113,28 +116,28 @@ Message >> printOn: stream [
 { #category : 'accessing' }
 Message >> selector [
 	"Answer the selector of the receiver."
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^selector
 ]
 
 { #category : 'sending' }
 Message >> sendTo: receiver [
 	"answer the result of sending this message to receiver"
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	^ receiver perform: selector withArguments: arguments
 ]
 
 { #category : 'accessing' }
 Message >> sends: aSelector [
 	"answer whether this message's selector is aSelector"
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^selector == aSelector
 ]
 
 { #category : 'sending' }
 Message >> sentTo: receiver [
 	"answer the result of sending this message to receiver"
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ lookupClass
 		ifNil: [ receiver perform: selector withArguments: arguments]
 		ifNotNil: [ receiver perform: selector withArguments: arguments inSuperclass: lookupClass]
@@ -142,13 +145,13 @@ Message >> sentTo: receiver [
 
 { #category : 'private' }
 Message >> setSelector: aSymbol [
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	selector := aSymbol
 ]
 
 { #category : 'private' }
 Message >> setSelector: aSymbol arguments: anArray [
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	selector := aSymbol.
 	arguments := anArray
 ]

@@ -23,6 +23,7 @@ Class {
 
 { #category : 'accessing - method dictionary' }
 TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
+	<reflection: 'Class structural modification - Selector/Method modification'>
 
 	super
 		addAndClassifySelector: selector
@@ -50,6 +51,7 @@ TraitedClass class >> classTrait [
 
 { #category : 'testing' }
 TraitedClass class >> isTrait [
+	<reflection: 'Class structural inspection - Traits'>
 	^ true
 ]
 
@@ -78,7 +80,7 @@ TraitedClass class >> traitUsers [
 { #category : 'accessing - method dictionary' }
 TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
 	"When a new methods is added, I add it to the localMethodDict and also propagate the changes to my users"
-
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	self localMethodDict at: selector put: compiledMethod.
 
 	super addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol.
@@ -88,6 +90,7 @@ TraitedClass >> addAndClassifySelector: selector withMethod: compiledMethod inPr
 
 { #category : 'querying' }
 TraitedClass >> allTraits [
+	<reflection: 'Class structural inspection - Traits'>
 	^ self traitComposition allTraits
 ]
 
@@ -120,7 +123,8 @@ TraitedClass >> findOriginClassOf: aMethod [
 
 	"I return the myself or the trait that has the original implementation of a method.
 	If the method is an alias, the returned class includes the original aliased method"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	
 	(aMethod hasProperty: #traitSource)
 		ifTrue: [ ^ aMethod traitSource innerClass ].
 
@@ -138,7 +142,8 @@ TraitedClass >> findOriginMethodOf: aMethod [
 	If it cames from a trait composition I look for the method in the trait composition.
 	First I try with the trait stored in the traitSource.
 	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	
 	(self includesLocalSelector: aMethod selector)
 		ifTrue: [ ^ aMethod ].
 
@@ -159,6 +164,7 @@ TraitedClass >> hasTraitComposition [
 
 { #category : 'testing' }
 TraitedClass >> includesLocalSelector: aSymbol [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self isLocalSelector: aSymbol
 ]
 
@@ -181,7 +187,7 @@ TraitedClass >> isLocalAliasSelector: aSymbol [
 
 { #category : 'testing' }
 TraitedClass >> isLocalSelector: aSelector [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self localMethodDict includesKey: aSelector
 ]
 
@@ -199,13 +205,13 @@ TraitedClass >> localMethodDict: aMethodDictionary [
 { #category : 'accessing' }
 TraitedClass >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self localMethodDict values
 ]
 
 { #category : 'accessing - method dictionary' }
 TraitedClass >> localSelectors [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self localMethodDict keys
 ]
 
@@ -275,6 +281,7 @@ TraitedClass >> removeSelector: aSelector [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	super removeSelector: aSelector.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
@@ -305,10 +312,12 @@ TraitedClass >> traitCompositionString [
 { #category : 'accessing' }
 TraitedClass >> traitUsers [
 	"I am a traited class, I have no users, this is for compatibility with traits"
+		<reflection: 'Class structural inspection - Traits'>
 	^ #()
 ]
 
 { #category : 'accessing' }
 TraitedClass >> traits [
+	<reflection: 'Class structural inspection - Traits'>
 	^ self traitComposition traits
 ]

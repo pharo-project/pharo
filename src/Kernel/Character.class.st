@@ -395,6 +395,8 @@ Character >> basicIdentityHash [
 	 The value answered is unsigned. It can in theory be in the full
 	 poisitive SmallInteger range, but based on Unicode, it is fair
 	 to assume that the value is in the range [ 0 ; 16r3FFFFF ]"
+	
+	<reflection: 'Object Inspection - Accessing object identity'>
 	<primitive: 171>
 	^self primitiveFailed
 ]
@@ -823,7 +825,7 @@ Character >> lowercase [
 { #category : 'memory scanning' }
 Character >> nextObject [
 	"Characters are immediate objects, and, as such, do not have successors in object memory."
-
+	<reflection: 'Memory Scanning'>
 	self shouldNotImplement
 ]
 

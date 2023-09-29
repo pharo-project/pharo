@@ -26,5 +26,5 @@ ZnClientIgnoringExceptionOnConnectionReuseEvent >> exception: anObject [
 { #category : 'printing' }
 ZnClientIgnoringExceptionOnConnectionReuseEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Ignoring Exception On Connection Reuse '; print: exception
+	stream << 'Ignoring Exception On Connection Reuse '; print: exception
 ]

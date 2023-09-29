@@ -26,7 +26,7 @@ ZnResponseReadEvent >> duration: anObject [
 { #category : 'printing' }
 ZnResponseReadEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Response Read '; print: response; space; print: duration; << 'ms'
+	stream << 'Response Read '; print: response; space; print: duration; << 'ms'
 ]
 
 { #category : 'accessing' }

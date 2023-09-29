@@ -21,6 +21,7 @@ WriteOnceSlot >> isWritten: anObject [
 
 { #category : 'meta-object-protocol' }
 WriteOnceSlot >> read: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ (super read: anObject) key
 ]
 
@@ -32,7 +33,7 @@ WriteOnceSlot >> wantsInitialization [
 
 { #category : 'meta-object-protocol' }
 WriteOnceSlot >> write: aValue to: anObject [
-
+	<reflection: 'Object Modification - State modification'>
 	^(self isWritten: anObject)
 		ifTrue: [ (super read: anObject) key: aValue value: false. aValue ]
 		ifFalse: [ self error: 'only one assignment allowed' ]

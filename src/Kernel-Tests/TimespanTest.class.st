@@ -497,6 +497,11 @@ TimespanTest >> testUnionWithSeparate [
 ]
 
 { #category : 'tests' }
+TimespanTest >> testWorkDates [
+	self assert: aTimespan workDates size equals: 5
+]
+
+{ #category : 'tests' }
 TimespanTest >> testWorkDatesDo [
 	| count |
 

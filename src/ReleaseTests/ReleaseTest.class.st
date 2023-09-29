@@ -250,24 +250,13 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 
 	| methods |
 	"we do not care about methods that are installed from traits"
-	methods := SystemNavigation new allMethods reject: [:method | method isFromTrait].
+	methods := SystemNavigation new allMethods reject: [ :method | method isFromTrait ].
 
-	methods := methods select: [:method |
-	method methodClass superclass
-		ifNotNil: [ :superclass | (superclass lookupSelector: method selector)
-			ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
-			ifNil: [ false ] ]
-		ifNil: [ false ]
-	].
-	self assert: methods size <= 369.
-
-
-	"there should be no method left"
-	"self assert: methods isEmpty description: [
-		String streamContents: [ :stream |
-			stream
-				nextPutAll: 'Found methods that are the same as in a superclass';
-				print: methods ] ]"
+	methods := methods select: [ :method |
+		           method overriddenMethod
+			           ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
+			           ifNil: [ false ] ].
+	self assert: methods size <= 326
 ]
 
 { #category : 'tests - variables' }

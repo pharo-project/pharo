@@ -497,12 +497,6 @@ MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 		newMenuIn: aThemedMorph for: aModel
 ]
 
-{ #category : 'events' }
-MorphicUIManager >> onEventSensorStartup: anEventSensor [
-
-	anEventSensor flushAllButDandDEvents
-]
-
 { #category : 'ui requests' }
 MorphicUIManager >> onFontsChanged [
 

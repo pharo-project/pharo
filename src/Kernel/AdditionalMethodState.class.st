@@ -297,6 +297,13 @@ AdditionalMethodState >> propertyAt: aKey ifAbsent: aBlock [
 ]
 
 { #category : 'properties' }
+AdditionalMethodState >> propertyAt: aKey ifPresent: aBlock [
+	"Answer the property value associated with aKey or, if aKey is found, evaluate aBlock with it."
+
+	^ aBlock value: (self propertyAt: aKey ifAbsent: [ ^ self ])
+]
+
+{ #category : 'properties' }
 AdditionalMethodState >> propertyKeysAndValuesDo: aBlock [
 	"Enumerate the receiver with all the keys and values."
 

@@ -28,6 +28,18 @@ SystemDictionaryTest >> classToBeTested [
 	^ SystemDictionary
 ]
 
+{ #category : 'requirements' }
+SystemDictionaryTest >> supportsNilKey [
+
+	^ false
+]
+
+{ #category : 'tests - DictionaryIndexAccessing' }
+SystemDictionaryTest >> testAtPutNil [
+
+	self should: [ self collection at: nil put: nil ] raise: Error
+]
+
 { #category : 'tests' }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsClassForClasses [
 

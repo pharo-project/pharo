@@ -33,6 +33,12 @@ ZnServerTransactionTiming >> initialize [
 	requestDuration := handlerDuration := responseDuration := 0
 ]
 
+{ #category : 'printing' }
+ZnServerTransactionTiming >> printOn: stream [
+	super printOn: stream.
+	stream nextPut: $(; print: self totalDuration; nextPut: $)
+]
+
 { #category : 'accessing' }
 ZnServerTransactionTiming >> requestDuration [
 	^ requestDuration
