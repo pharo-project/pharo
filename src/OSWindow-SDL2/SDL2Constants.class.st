@@ -1177,3 +1177,9 @@ SDL2Constants class >> initializeWindow [
     SDL_WINDOWEVENT_FOCUS_LOST		:= 13.
     SDL_WINDOWEVENT_CLOSE			:= 14
 ]
+
+{ #category : 'initialization' }
+SDL2Constants >> initialize [
+		<ignoreUnusedClassVariables: #( SDL_GL_SWAP_CONTROL )>
+		super initialize.
+]

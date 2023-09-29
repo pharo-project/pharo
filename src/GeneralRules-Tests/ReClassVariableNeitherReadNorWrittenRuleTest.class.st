@@ -8,9 +8,8 @@ Class {
 
 { #category : 'tests' }
 ReClassVariableNeitherReadNorWrittenRuleTest >> testRule [
-	| critiques |
-	critiques := self myCritiquesOnClass: RBLintRuleTestData.
-	self assert: critiques size equals: 1
+
+	self denyEmpty: (self subjectUnderTest new unreferencedVariablesOf: RBLintRuleTestData)
 ]
 
 { #category : 'tests' }

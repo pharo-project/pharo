@@ -58,11 +58,13 @@ WeakMessageSend >> = anObject [
 
 { #category : 'accessing' }
 WeakMessageSend >> arguments [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^arguments ifNil: [ Array new ]
 ]
 
 { #category : 'accessing' }
 WeakMessageSend >> arguments: anArray [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	arguments := WeakArray withAll: anArray.
 	"no reason this should be a WeakArray"
 	shouldBeNil := Array withAll: (anArray collect: [ :ea | ea isNil ])
@@ -84,7 +86,7 @@ WeakMessageSend >> asMinimalRepresentation [
 { #category : 'private' }
 WeakMessageSend >> collectArguments: anArgArray [
 	"Private"
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	| staticArgs |
 	staticArgs := self arguments.
 	^ anArgArray size = staticArgs size
@@ -99,6 +101,7 @@ WeakMessageSend >> collectArguments: anArgArray [
 
 { #category : 'evaluating' }
 WeakMessageSend >> cull: arg [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ selector numArgs = 0
 		ifTrue: [ self value ]
 		ifFalse: [ self value: arg ]
@@ -106,6 +109,7 @@ WeakMessageSend >> cull: arg [
 
 { #category : 'evaluating' }
 WeakMessageSend >> cull: arg1 cull: arg2 [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ selector numArgs < 2
 		ifTrue: [ self cull: arg1]
 		ifFalse: [ self value: arg1 value: arg2 ]
@@ -113,6 +117,7 @@ WeakMessageSend >> cull: arg1 cull: arg2 [
 
 { #category : 'evaluating' }
 WeakMessageSend >> cull: arg1 cull: arg2 cull: arg3 [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ selector numArgs < 3
 		ifTrue: [ self cull: arg1 cull: arg2 ]
 		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
@@ -221,6 +226,7 @@ WeakMessageSend >> isReceiverOrAnyArgumentGarbage [
 
 { #category : 'testing' }
 WeakMessageSend >> isValid [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^self isReceiverOrAnyArgumentGarbage not
 ]
 
@@ -239,26 +245,31 @@ WeakMessageSend >> printOn: aStream [
 
 { #category : 'accessing' }
 WeakMessageSend >> receiver [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^self at: 1
 ]
 
 { #category : 'accessing' }
 WeakMessageSend >> receiver: anObject [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	self at: 1 put: anObject
 ]
 
 { #category : 'accessing' }
 WeakMessageSend >> selector [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^selector
 ]
 
 { #category : 'accessing' }
 WeakMessageSend >> selector: aSymbol [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	selector := aSymbol
 ]
 
 { #category : 'evaluating' }
 WeakMessageSend >> value [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 
 	| strongReceiver |
 
@@ -277,7 +288,7 @@ WeakMessageSend >> value [
 
 { #category : 'evaluating' }
 WeakMessageSend >> value: anObject [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	| strongReceiver |
 
 	strongReceiver := self receiver.
@@ -291,7 +302,7 @@ WeakMessageSend >> value: anObject [
 
 { #category : 'evaluating' }
 WeakMessageSend >> value: anObject1 value: anObject2 [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	| strongReceiver |
 
 	strongReceiver := self receiver.
@@ -306,7 +317,7 @@ WeakMessageSend >> value: anObject1 value: anObject2 [
 
 { #category : 'evaluating' }
 WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	| strongReceiver |
 
 	strongReceiver := self receiver.
@@ -322,7 +333,7 @@ WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 
 { #category : 'evaluating' }
 WeakMessageSend >> valueWithArguments: anArray [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	| strongReceiver |
 
 	strongReceiver := self receiver.
@@ -336,6 +347,7 @@ WeakMessageSend >> valueWithArguments: anArray [
 { #category : 'evaluating' }
 WeakMessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	| args strongReceiver |
 
 	strongReceiver := self receiver.

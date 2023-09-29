@@ -49,6 +49,7 @@ HistorySlot >> rawRead: anObject [
 { #category : 'meta-object-protocol' }
 HistorySlot >> read: anObject [
 	"we return the last value from the collection"
+	<reflection: 'Object Inspection - State inspection'>
 	^ (self rawRead: anObject) last
 ]
 
@@ -76,6 +77,7 @@ HistorySlot >> wantsInitialization [
 
 { #category : 'meta-object-protocol' }
 HistorySlot >> write: aDictionary to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	| history |
 	history := self rawRead: anObject.
 	history size >= size

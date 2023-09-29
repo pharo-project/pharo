@@ -15,7 +15,7 @@ RPackageRenameTest >> testRenamePackage [
 	| package workingCopy class |
 	package := self ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class := self createNewClassNamed: #TestClass inCategory: 'Test1-TAG'.
+	class := self newClassNamed: #TestClass in: package tag: 'TAG'.
 
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
@@ -42,8 +42,8 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 	| package workingCopy class1 class2 |
 	package := self ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class1 := self createNewClassNamed: #TestClass1 inCategory: 'Test1-Core'.
-	class2 := self createNewClassNamed: #TestClass2 inCategory: 'Test1-Util'.
+	class1 := self newClassNamed: #TestClass1 in: package tag: 'Core'.
+	class2 := self newClassNamed: #TestClass2 in: package tag: 'Util'.
 
 	self assert: (package classTagNamed: #Core ifAbsent: [ nil ]) notNil.
 	self assert: (package classTagNamed: #Util ifAbsent: [ nil ]) notNil.
@@ -66,9 +66,9 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	| package workingCopy class1 class2 class3 |
 	package := self ensurePackage: 'Test1'.
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class1 := self createNewClassNamed: #TestClass1 inCategory: 'Test1-Core'.
-	class2 := self createNewClassNamed: #TestClass2 inCategory: 'Test1-Util'.
-	class3 := self createNewClassNamed: #TestClass3 inCategory: 'Test1'.
+	class1 := self newClassNamed: #TestClass1 in: package tag: 'Core'.
+	class2 := self newClassNamed: #TestClass2 in: package tag: 'Util'.
+	class3 := self newClassNamed: #TestClass3 in: 'Test1'.
 
 	self assert: (package classTagNamed: #Core ifAbsent: [ nil ]) notNil.
 	self assert: (package classTagNamed: #Util ifAbsent: [ nil ]) notNil.
@@ -90,12 +90,12 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 	| package class extendedPackage extension |
 	package := self ensurePackage: 'OriginalPackage'.
 
-	class := self createNewClassNamed: #TestClass inCategory: 'OriginalPackage-TAG'.
+	class := self newClassNamed: #TestClass in: package tag: 'TAG'.
 
 	extendedPackage := self ensurePackage: 'ExtendedPackage'.
 
 
-	class := self createNewClassNamed: #TestExtendedClass inCategory: 'ExtendedPackage'.
+	class := self newClassNamed: #TestExtendedClass in: extendedPackage.
 
 	class compile: 'm ^ 42' classified: '*OriginalPackage'.
 	extension := class >> #m.
@@ -120,16 +120,10 @@ RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
 	| package class extendedPackage extension |
 	package := self ensurePackage: 'OriginalPackage'.
-
-	class := self createNewClassNamed: #TestClass inCategory: 'OriginalPackage-TAG'.
-
+	class := self newClassNamed: #TestClass in: package tag: 'TAG'.
 	extendedPackage := self ensurePackage: 'ExtendedPackage'.
-
-
-	class := self createNewClassNamed: #TestExtendedClass inCategory: 'ExtendedPackage'.
-
+	class := self newClassNamed: #TestExtendedClass in: extendedPackage.
 	class := class class.
-
 	class compile: 'm ^ 42' classified: '*OriginalPackage'.
 	extension := class >> #m.
 
@@ -157,7 +151,7 @@ RPackageRenameTest >> testUnregisterPackage [
 	package := self ensurePackage: 'Test1'.
 
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
-	class := self createNewClassNamed: #TestClass inCategory: 'Test1-TAG'.
+	class := self newClassNamed: #TestClass in: package tag: 'TAG'.
 	self assert: (package includesClass: class).
 	self assert: (package classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
 	self assert: ((package classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).

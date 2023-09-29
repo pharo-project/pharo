@@ -128,6 +128,7 @@ SmallFloat64 >> basicIdentityHash [
  -1.0->'-16r810000000000000'->'16r1F7F0000000000000' .
   1.0->'16r7F0000000000000'->'16r7F0000000000000'}"
 
+	<reflection: 'Object Inspection - Accessing object identity'>
 	<primitive: 171>
 	^self primitiveFailed
 ]
@@ -218,6 +219,7 @@ SmallFloat64 >> fractionPart [
 SmallFloat64 >> identityHash [
 	"We need the override since basicIdentityHash is already in SmallInteger range,
 	 the bitShift: 8 of the super implementation would lead to a LargeInteger"
+	<reflection: 'Object Inspection - Accessing object identity'>
 	^ self basicIdentityHash
 ]
 
@@ -279,6 +281,7 @@ SmallFloat64 >> ln [
 SmallFloat64 >> nextObject [
 	"SmallFloat64 are immediate objects, and, as such, do not have successors in object memory."
 
+	<reflection: 'Memory Scanning'>
 	self shouldNotImplement
 ]
 

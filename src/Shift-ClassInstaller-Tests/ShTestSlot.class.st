@@ -22,7 +22,7 @@ ShTestSlot >> wantsInitialization [
 
 { #category : 'initialization' }
 ShTestSlot >> write: aValue to: anObject [
-
+	<reflection: 'Object Modification - State modification'>
 	^(self read: anObject)
 		ifNil: [ super write: aValue to: anObject ]
 ]

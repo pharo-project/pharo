@@ -31,7 +31,7 @@ ZnServerGenericLogEvent class >> subject: object [
 { #category : 'printing' }
 ZnServerGenericLogEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream space; nextPutAll: subject asString
+	stream nextPutAll: subject asString
 ]
 
 { #category : 'accessing' }

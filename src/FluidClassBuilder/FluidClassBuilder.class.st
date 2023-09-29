@@ -49,6 +49,7 @@ Class {
 { #category : 'copying' }
 FluidClassBuilder >> fillInstanceSideFromClass: aClass [
 
+	<reflection: 'Class structural inspection - Pragma'>
 	super fillInstanceSideFromClass: aClass.
 	self superclass: aClass superclass.
 

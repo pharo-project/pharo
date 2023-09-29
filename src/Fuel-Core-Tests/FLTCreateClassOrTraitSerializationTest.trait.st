@@ -82,7 +82,7 @@ FLTCreateClassOrTraitSerializationTest >> testCompiledMethodClassBinding [
 
 { #category : 'tests' }
 FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
-	"Tests materialization a class or trait not defined in the image."
+	"Tests materialization of a class or trait not defined in the image."
 
 	| aClassOrTrait materializedClassOrTrait environment category name |
 	aClassOrTrait := self newClassOrTrait.
@@ -93,8 +93,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
 	self deny: aClassOrTrait identicalTo: materializedClassOrTrait.
-	"This is the test environment wrapper, so we need to cheat"
-	self assertCollection: environment associations hasSameElements: materializedClassOrTrait environment associations.
+	self assert: environment identicalTo: materializedClassOrTrait environment.
 	self assert: category equals: materializedClassOrTrait category.
 	self assert: name equals: materializedClassOrTrait name.
 

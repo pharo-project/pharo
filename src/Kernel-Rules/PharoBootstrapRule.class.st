@@ -19,8 +19,8 @@ PharoBootstrapRule class >> checksPackage [
 
 { #category : 'running' }
 PharoBootstrapRule >> basicCheck: aPackage [
-	(self bootstrapPackages includes: aPackage packageName)
-		ifFalse: [ ^ false "Do not check" ].
+
+	(self bootstrapPackages includes: aPackage name) ifFalse: [ ^ false "Do not check" ].
 	^ self newExternalDependencyExistFor: aPackage
 ]
 
@@ -110,8 +110,9 @@ PharoBootstrapRule >> name [
 { #category : 'instance creation' }
 PharoBootstrapRule >> newExternalDependencyExistFor: aPackage [
 	"Check if there are new dependencies to a package outside this layer"
+
 	| dependencies newDependencies |
-	dependencies := self dependencyChecker dependenciesOf: aPackage packageName.
+	dependencies := self dependencyChecker dependenciesOf: aPackage name.
 	newDependencies := dependencies difference: self bootstrapPackages.
 	^ newDependencies notEmpty
 ]

@@ -78,22 +78,20 @@ ZnByteArrayEntity >> printContentsOn: stream [
 
 { #category : 'initialize-release' }
 ZnByteArrayEntity >> readFrom: stream [
-
 	self contentLength
 		ifNil: [
 			self bytes: (ZnUtils readUpToEnd: stream limit: (ZnCurrentOptions at: #maximumEntitySize)).
-			self contentLength: self bytes size
-			]
-		ifNotNil: [ | byteArray |
-
+			self contentLength: self bytes size ]
+		ifNotNil: [ | byteArray readCount |
 			self contentLength > (ZnCurrentOptions at: #maximumEntitySize)
 				ifTrue: [ ZnEntityTooLarge signal ].
 			byteArray := ByteArray ofSize: self contentLength.
-			self contentLength > ZnUtils streamingBufferSize
+			readCount := self contentLength > ZnUtils streamingBufferSize
 				ifTrue: [ ZnUtils streamFrom: stream to: byteArray writeStream size: self contentLength ]
-				ifFalse: [ stream next: self contentLength into: byteArray ].
-			self bytes: byteArray
-			]
+				ifFalse: [ stream readInto: byteArray startingAt: 1 count: self contentLength ].
+			readCount = self contentLength 
+				ifTrue: [ self bytes: byteArray ]
+				ifFalse: [ self bytes: (byteArray copyFrom: 1 to: readCount); contentLength: readCount ] ]
 ]
 
 { #category : 'accessing' }
