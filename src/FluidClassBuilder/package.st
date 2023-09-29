@@ -1,1 +1,1 @@
-Package { #name : #FluidClassBuilder }
+Package { #name : 'FluidClassBuilder' }

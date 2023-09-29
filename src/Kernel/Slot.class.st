@@ -51,6 +51,7 @@ Slot class >> checkValidName: aSymbol [
 
 { #category : 'testing' }
 Slot class >> isUsed [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
@@ -252,6 +253,7 @@ Slot >> printOn: aStream [
 
 { #category : 'meta-object-protocol' }
 Slot >> read: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ self subclassResponsibility
 ]
 
@@ -303,6 +305,7 @@ Slot >> storeOn: aStream [
 { #category : 'queries' }
 Slot >> usingMethods [
 	"All methods that read or write the slot"
+	<reflection: 'Structural queries on methods - Method element references'>
 	^self owningClass
 		ifNil: [ #() ]
 		ifNotNil: [:class | class allMethodsAccessingSlot: self]
@@ -321,5 +324,6 @@ Slot >> write: aValue inContext: aContext [
 
 { #category : 'meta-object-protocol' }
 Slot >> write: aValue to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	^self subclassResponsibility
 ]

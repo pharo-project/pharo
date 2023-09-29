@@ -1,12 +1,12 @@
-Extension { #name : #Time }
+Extension { #name : 'Time' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Time >> fuelAccept: aGeneralMapper [
 
 	^ aGeneralMapper visitHookPrimitive: self
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Time class >> materializeFrom: aDecoder [
 	
 	^ self 
@@ -14,7 +14,7 @@ Time class >> materializeFrom: aDecoder [
 		nanoSeconds: aDecoder nextEncodedUint32
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Time >> serializeOn: anEncoder [
 
 	anEncoder 

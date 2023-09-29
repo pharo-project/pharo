@@ -2,28 +2,30 @@
 I am a cluster for storing metaclasses in full detail.
 "
 Class {
-	#name : #FLMetaclassCluster,
-	#superclass : #FLBehaviorCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLMetaclassCluster',
+	#superclass : 'FLBehaviorCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLMetaclassCluster class >> clusterBucketIn: aClusterization [
 
 	^aClusterization metalevelClassSideBucket
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMetaclassCluster >> instanceVariablesStringFor: aClass [
 	^ aClass instanceVariablesString
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLMetaclassCluster >> materializeInstanceWith: aDecoder [
 	^Metaclass new
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLMetaclassCluster >> materializePostInstance: aMetaclass with: aDecoder [
 
 	| superclass instanceVariableNames format layout |
@@ -43,7 +45,7 @@ FLMetaclassCluster >> materializePostInstance: aMetaclass with: aDecoder [
 		into: aMetaclass
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLMetaclassCluster >> referencesOf: aMetaclass do: aBlock [
 	super
 		referencesOf: aMetaclass
@@ -54,12 +56,12 @@ FLMetaclassCluster >> referencesOf: aMetaclass do: aBlock [
 		value: aMetaclass superclass
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLMetaclassCluster >> serializeInstancesStepWith: anEncoder [
 	"Do nothing. I know my objects have nothing to serialize in this step."
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLMetaclassCluster >> serializePostInstance: aMetaclass with: anEncoder [
 
 	anEncoder encodeReferenceTo: aMetaclass superclass.

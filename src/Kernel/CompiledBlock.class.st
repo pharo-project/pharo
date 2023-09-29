@@ -35,6 +35,7 @@ CompiledBlock >> hasMethodReturn [
 
 { #category : 'testing' }
 CompiledBlock >> hasPragmaNamed: aSymbol [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ false
 ]
 
@@ -161,6 +162,7 @@ CompiledBlock >> pcInOuter [
 
 { #category : 'accessing' }
 CompiledBlock >> pragmas [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ #()
 ]
 
@@ -208,6 +210,8 @@ CompiledBlock >> sameLiteralsAs: method [
 
 { #category : 'accessing' }
 CompiledBlock >> selector [
+
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self outerCode selector
 ]
 

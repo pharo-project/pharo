@@ -1,26 +1,26 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Behavior >> fuelIgnoredInstanceVariableNames [
 	"Indicates which variables have to be ignored during serialization."
 
 	^#()
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Behavior >> fuelInitializeTraitComposition [
 
 	self traitComposition traits do: [:each | each addUser: self]
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Behavior >> fuelNew [
 	"Answer an instance of mine in which serialized references will be injected."
 
 	^ self basicNew
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Behavior >> fuelNew: sizeRequested [ 
 	"Answer an instance of mine in which serialized references will be injected."
 

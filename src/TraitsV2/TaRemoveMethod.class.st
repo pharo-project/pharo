@@ -3,15 +3,17 @@ I can remove a method from a trait.
 I implement the #- operator.
 "
 Class {
-	#name : #TaRemoveMethod,
-	#superclass : #TaSingleComposition,
+	#name : 'TaRemoveMethod',
+	#superclass : 'TaSingleComposition',
 	#instVars : [
 		'removedSelectors'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaRemoveMethod class >> remove: anArrayOfSelectors to: aTrait [
 	^ self new
 		removedSelectors: anArrayOfSelectors;
@@ -19,38 +21,38 @@ TaRemoveMethod class >> remove: anArrayOfSelectors to: aTrait [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveMethod >> compiledMethodAt: aSelector [
 	(removedSelectors includes: aSelector ) ifTrue:[NotFound signalFor: aSelector].
 	^ inner compiledMethodAt: aSelector
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaRemoveMethod >> copyTraitExpression [
 	^ self class remove: removedSelectors to: inner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveMethod >> methods [
 	^ inner methods reject: [ :e | removedSelectors includes: e selector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveMethod >> removedSelectors [
 	^ removedSelectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveMethod >> removedSelectors: anObject [
 	removedSelectors := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveMethod >> selectors [
 	^ inner selectors reject: [ :selector | removedSelectors includes: selector ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaRemoveMethod >> traitCompositionExpression [
 	^ String
 		streamContents: [ :s |
@@ -60,7 +62,7 @@ TaRemoveMethod >> traitCompositionExpression [
 			removedSelectors printAsSelfEvaluatingFormOn: s ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaRemoveMethod >> traitDefining: aSelector [
 	(removedSelectors includes: aSelector ) ifTrue:[NotFound signalFor: aSelector].
 	^ inner traitDefining: aSelector

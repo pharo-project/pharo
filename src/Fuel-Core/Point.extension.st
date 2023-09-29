@@ -1,6 +1,6 @@
-Extension { #name : #Point }
+Extension { #name : 'Point' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Point >> fuelAccept: aGeneralMapper [
 
 	^ aGeneralMapper visitPoint: self

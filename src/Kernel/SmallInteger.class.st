@@ -212,6 +212,7 @@ SmallInteger >> asFloat [
 SmallInteger >> basicIdentityHash [
 	"The value answered is signed, within the full
 	 SmallInteger range, on the contrary to normal objects."
+	<reflection: 'Object Inspection - Accessing object identity'>
 	^self
 ]
 
@@ -474,6 +475,7 @@ SmallInteger >> highBitOfPositiveReceiver [
 SmallInteger >> identityHash [
 	"Answer a SmallInteger whose value is related to the receiver's identity.
 	 Specific override here to decrease the number of conflicts"
+	<reflection: 'Object Inspection - Accessing object identity'>
 	^ self hashMultiply
 ]
 
@@ -523,6 +525,7 @@ SmallInteger >> nextInstance [
 	(SmallInteger minVal) to: (SmallInteger maxVal) do: [:integer | <your code here>].
 	"
 
+	<reflection: 'Memory Scanning - Instances of a class'>
 	self shouldNotImplement
 ]
 
@@ -530,6 +533,7 @@ SmallInteger >> nextInstance [
 SmallInteger >> nextObject [
 	"SmallIntegers are immediate objects, and, as such, do not have successors in object memory."
 
+	<reflection: 'Memory Scanning'>
 	self shouldNotImplement
 ]
 
@@ -556,6 +560,7 @@ SmallInteger >> odd [
 { #category : 'pointers' }
 SmallInteger >> pointsTo: anObject [
 	"Answers true if I hold a reference to anObject, or false otherwise. But since SmallIntegers do not have pointers, it always answers false"
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	^false
 ]
 

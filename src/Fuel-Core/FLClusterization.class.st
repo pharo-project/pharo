@@ -2,8 +2,8 @@
 I manage the clusters collected during the analysis step of serialization.
 "
 Class {
-	#name : #FLClusterization,
-	#superclass : #Object,
+	#name : 'FLClusterization',
+	#superclass : 'Object',
 	#instVars : [
 		'baselevelBucket',
 		'substitutionsBucket',
@@ -13,16 +13,18 @@ Class {
 		'primitivesBucket',
 		'postBaselevelBucket'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'cluster buckets' }
+{ #category : 'cluster buckets' }
 FLClusterization >> baselevelBucket [
 	
 	^ baselevelBucket
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLClusterization >> clusterBuckets [
 	"Answer a new collection with all the clusters that have been collected in trace. Note that order is imporant."
 
@@ -37,24 +39,24 @@ FLClusterization >> clusterBuckets [
 		yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLClusterization >> clusters [
 	
 	^self clusterBuckets flatCollect: [:c | c ].
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 FLClusterization >> fuelAccept: aGeneralMapper [
 	^ aGeneralMapper visitSubstitution: self by: nil
 ]
 
-{ #category : #'cluster buckets' }
+{ #category : 'cluster buckets' }
 FLClusterization >> globalsBucket [
 	
 	^ globalsBucket
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLClusterization >> initialize [
 
 	super initialize.
@@ -67,19 +69,19 @@ FLClusterization >> initialize [
 	postBaselevelBucket := IdentityDictionary new.
 ]
 
-{ #category : #'cluster buckets' }
+{ #category : 'cluster buckets' }
 FLClusterization >> metalevelClassSideBucket [
 	
 	^ metalevelClassSideBucket
 ]
 
-{ #category : #'cluster buckets' }
+{ #category : 'cluster buckets' }
 FLClusterization >> metalevelInstanceSideBucket [
 	
 	^ metalevelInstanceSideBucket
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLClusterization >> objectCount [
 
 	^self clusterBuckets sum: [ :aClusterBucket | 
@@ -88,19 +90,19 @@ FLClusterization >> objectCount [
 			into: [ :sum :aCluster | sum + aCluster objects size ] ].
 ]
 
-{ #category : #'cluster buckets' }
+{ #category : 'cluster buckets' }
 FLClusterization >> postBaselevelBucket [
 	
 	^ postBaselevelBucket
 ]
 
-{ #category : #'cluster buckets' }
+{ #category : 'cluster buckets' }
 FLClusterization >> primitivesBucket [
 	
 	^ primitivesBucket
 ]
 
-{ #category : #'cluster buckets' }
+{ #category : 'cluster buckets' }
 FLClusterization >> substitutionsBucket [
 	
 	^ substitutionsBucket

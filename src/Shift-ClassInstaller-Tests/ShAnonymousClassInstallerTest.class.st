@@ -1,10 +1,11 @@
 Class {
-	#name : #ShAnonymousClassInstallerTest,
-	#superclass : #TestCase,
-	#category : #'Shift-ClassInstaller-Tests'
+	#name : 'ShAnonymousClassInstallerTest',
+	#superclass : 'TestCase',
+	#category : 'Shift-ClassInstaller-Tests',
+	#package : 'Shift-ClassInstaller-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShAnonymousClassInstallerTest >> testSubclasses [
 
 	| aSubClass |

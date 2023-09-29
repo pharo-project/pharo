@@ -86,8 +86,8 @@ ClassDescription >> classComment: aString [
 
 { #category : '*Deprecated12' }
 ClassDescription >> classesThatImplementAllOf: selectorSet [
-	"Return an array of any classes that implement all the messages in selectorSet."
-
+	"Return an array of any classes that implement all the messages in selectorSet."	
+		<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	| found remaining |
 	self deprecated: 'This method will be removed in the next version of Pharo.'.
 	found := OrderedCollection new.

@@ -1,6 +1,6 @@
-Extension { #name : #Array }
+Extension { #name : 'Array' }
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 Array >> asTraitComposition [
 
 	^ self
