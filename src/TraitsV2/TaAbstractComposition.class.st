@@ -196,9 +196,8 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	 - The trait defining the method is not the same.
 	 - If both methods have source code and if the source codes are not the same.
 	"
-	aClass methodDict at: aSelector ifPresent: [ :originalMethod |
-		((replacing not and: [ originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode ] ]) and: [
-			 source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ] ].
+	aClass compiledMethodAt: aSelector ifPresent: [ :originalMethod |
+		(replacing not and: [ originalMethod traitSource = traitDefining and: [ originalMethod hasSourceCode and: [ source isNotNil and: [ source = originalMethod sourceCode ] ] ] ]) ifTrue: [ ^ false ] ].
 
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
@@ -207,7 +206,9 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	newMethod setSourcePointer: aCompiledMethod sourcePointer.
 
 	"This step should not announce anything in the system."
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ aClass addAndClassifySelector: aSelector withMethod: newMethod inProtocol: aCompiledMethod protocol ].
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ aClass classify: aSelector under: aCompiledMethod protocolName ].
+
+	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
 	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
 
