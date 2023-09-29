@@ -9,7 +9,6 @@ Class {
 	#name : 'RBRefactoryDefinitionChange',
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'controller',
 		'definition',
 		'definedClass'
 	],
@@ -20,12 +19,6 @@ Class {
 
 { #category : 'instance creation' }
 RBRefactoryDefinitionChange class >> definition: aString [
-
-	^ self definition: aString for: nil
-]
-
-{ #category : 'instance creation' }
-RBRefactoryDefinitionChange class >> definition: aString for: aController [
 
 	| parseTree context |
 	parseTree := RBParser
@@ -38,12 +31,12 @@ RBRefactoryDefinitionChange class >> definition: aString for: aController [
 			((RBParser parseRewriteExpression: pattern)
 				 match: parseTree
 				 inContext: context empty) ifTrue: [
-				^ class definition: aString for: aController context: context ] ] ].
+				^ class definition: aString context: context ] ] ].
 	^ self error: 'Invalid definition:' , aString
 ]
 
 { #category : 'private' }
-RBRefactoryDefinitionChange class >> definition: aString for: aController context: aDictionary [
+RBRefactoryDefinitionChange class >> definition: aString context: aDictionary [
 
 	| dictionary |
 	dictionary := SmallDictionary new.
@@ -55,7 +48,7 @@ RBRefactoryDefinitionChange class >> definition: aString for: aController contex
 						 ifTrue: [ node value ]
 						 ifFalse: [ node ] ]) ].
 	^ self new
-		  definition: aString controller: aController;
+		  definition: aString;
 		  fillOutDefinition: dictionary;
 		  yourself
 ]
@@ -80,12 +73,6 @@ RBRefactoryDefinitionChange >> changeString [
 ]
 
 { #category : 'accessing' }
-RBRefactoryDefinitionChange >> controller [
-
-	^ controller
-]
-
-{ #category : 'accessing' }
 RBRefactoryDefinitionChange >> definedClass [
 
 	^ definedClass
@@ -98,11 +85,10 @@ RBRefactoryDefinitionChange >> definition [
 ]
 
 { #category : 'initialization' }
-RBRefactoryDefinitionChange >> definition: aString controller: aController [
+RBRefactoryDefinitionChange >> definition: aString [
 
 	isMeta := false.
-	definition := aString.
-	controller := aController
+	definition := aString
 ]
 
 { #category : 'private' }
@@ -120,9 +106,7 @@ RBRefactoryDefinitionChange >> fillOutDefinition: aDictionary [
 { #category : 'private' }
 RBRefactoryDefinitionChange >> generateChanges [
 
-	definedClass := self definitionClass environment
-		                defineClass: self definition
-		                withController: self controller
+	definedClass := self definitionClass environment defineClass: self definition
 ]
 
 { #category : 'comparing' }
