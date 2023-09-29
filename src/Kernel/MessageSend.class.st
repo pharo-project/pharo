@@ -1,20 +1,18 @@
 "
-Instances of MessageSend encapsulate messages send to objects. Arguments can be either predefined or supplied when the message send is performed. 
+Instances of `MessageSend` encapsulate messages send to objects. Arguments can be either predefined or supplied when the message send is performed. 
 
 Use #value to perform a message send with its predefined arguments and #valueWithArguments: if additonal arguments have to supplied.
 
-Structure:
- receiver		Object -- object receiving the message send
- selector		Symbol -- message selector
- arguments		Array -- bound arguments
+## Structure
+
+- receiver: 	Object -- object receiving the message send
+
 "
 Class {
 	#name : 'MessageSend',
-	#superclass : 'Object',
+	#superclass : 'Message',
 	#instVars : [
-		'receiver',
-		'selector',
-		'arguments'
+		'receiver'
 	],
 	#category : 'Kernel-Messaging',
 	#package : 'Kernel',
@@ -50,18 +48,6 @@ MessageSend >> = anObject [
 		and: [receiver == anObject receiver
 		and: [selector == anObject selector
 		and: [arguments = anObject arguments]]]
-]
-
-{ #category : 'accessing' }
-MessageSend >> arguments [
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^ arguments
-]
-
-{ #category : 'accessing' }
-MessageSend >> arguments: anArray [
-	<reflection: 'Message sending and code execution - Message send reification'>
-	arguments := anArray
 ]
 
 { #category : 'converting' }
@@ -140,13 +126,6 @@ MessageSend >> message [
 	^Message selector: selector arguments: arguments
 ]
 
-{ #category : 'accessing' }
-MessageSend >> numArgs [
-	"Answer the number of arguments in this message"
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^arguments size
-]
-
 { #category : 'printing' }
 MessageSend >> printOn: aStream [
 
@@ -169,18 +148,6 @@ MessageSend >> receiver [
 MessageSend >> receiver: anObject [
 	<reflection: 'Message sending and code execution - Message send reification'>
 	receiver := anObject
-]
-
-{ #category : 'accessing' }
-MessageSend >> selector [
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^ selector
-]
-
-{ #category : 'accessing' }
-MessageSend >> selector: aSymbol [
-	<reflection: 'Message sending and code execution - Message send reification'>
-	selector := aSymbol
 ]
 
 { #category : 'evaluating' }

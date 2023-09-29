@@ -12,12 +12,10 @@ and it also has
 "
 Class {
 	#name : 'WeakMessageSend',
-	#superclass : 'Object',
+	#superclass : 'MessageSend',
 	#type : 'weak',
 	#instVars : [
-		'selector',
-		'shouldBeNil',
-		'arguments'
+		'shouldBeNil'
 	],
 	#category : 'Kernel-Messaging',
 	#package : 'Kernel',
@@ -27,24 +25,6 @@ Class {
 { #category : 'instance creation' }
 WeakMessageSend class >> new [
 	^self new: 1
-]
-
-{ #category : 'instance creation' }
-WeakMessageSend class >> receiver: anObject selector: aSymbol [
-	^ self receiver: anObject selector: aSymbol arguments: #()
-]
-
-{ #category : 'instance creation' }
-WeakMessageSend class >> receiver: anObject selector: aSymbol argument: aParameter [
-	^ self receiver: anObject selector: aSymbol arguments: (Array with: aParameter)
-]
-
-{ #category : 'instance creation' }
-WeakMessageSend class >> receiver: anObject selector: aSymbol arguments: anArray [
-	^ self new
-		receiver: anObject;
-		selector: aSymbol;
-		arguments: anArray
 ]
 
 { #category : 'comparing' }
@@ -97,30 +77,6 @@ WeakMessageSend >> collectArguments: anArgArray [
 				  to: (anArgArray size min: staticArgs size)
 				  with: anArgArray
 				  startingAt: 1 ]
-]
-
-{ #category : 'evaluating' }
-WeakMessageSend >> cull: arg [
-	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs = 0
-		ifTrue: [ self value ]
-		ifFalse: [ self value: arg ]
-]
-
-{ #category : 'evaluating' }
-WeakMessageSend >> cull: arg1 cull: arg2 [
-	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs < 2
-		ifTrue: [ self cull: arg1]
-		ifFalse: [ self value: arg1 value: arg2 ]
-]
-
-{ #category : 'evaluating' }
-WeakMessageSend >> cull: arg1 cull: arg2 cull: arg3 [
-	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	^ selector numArgs < 3
-		ifTrue: [ self cull: arg1 cull: arg2 ]
-		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
 ]
 
 { #category : 'private' }
@@ -188,12 +144,6 @@ WeakMessageSend >> ensureReceiverAndArguments: aReceiver [
   ^true
 ]
 
-{ #category : 'comparing' }
-WeakMessageSend >> hash [
-	"work like MessageSend>>hash"
-	^self receiver hash bitXor: selector hash
-]
-
 { #category : 'private' }
 WeakMessageSend >> isAnyArgumentGarbage [
 	"Make sure that my arguments haven't gone away"
@@ -204,11 +154,6 @@ WeakMessageSend >> isAnyArgumentGarbage [
 		]
 	].
 	^false
-]
-
-{ #category : 'testing' }
-WeakMessageSend >> isMessageSend [
-	^true
 ]
 
 { #category : 'private' }
@@ -253,18 +198,6 @@ WeakMessageSend >> receiver [
 WeakMessageSend >> receiver: anObject [
 	<reflection: 'Message sending and code execution - Message send reification'>
 	self at: 1 put: anObject
-]
-
-{ #category : 'accessing' }
-WeakMessageSend >> selector [
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^selector
-]
-
-{ #category : 'accessing' }
-WeakMessageSend >> selector: aSymbol [
-	<reflection: 'Message sending and code execution - Message send reification'>
-	selector := aSymbol
 ]
 
 { #category : 'evaluating' }
