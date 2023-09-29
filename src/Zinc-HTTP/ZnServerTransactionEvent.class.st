@@ -29,7 +29,6 @@ ZnServerTransactionEvent >> duration [
 { #category : 'printing' }
 ZnServerTransactionEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream space.
 	request requestLine printMethodAndUriOn: stream.
 	stream space; print: response code.
 	response hasEntity

@@ -44,8 +44,7 @@ ZnSimplifiedClientTransactionEvent >> method [
 { #category : 'printing' }
 ZnSimplifiedClientTransactionEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream space; nextPutAll: method.
-	stream space.
+	stream nextPutAll: method; space.
 	url printPathQueryFragmentOn: stream.
 	stream space; print: response.
 	size ifNotNil: [
