@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfSlot }
+Package { #name : 'BaselineOfSlot' }

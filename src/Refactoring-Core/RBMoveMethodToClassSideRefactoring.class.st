@@ -85,9 +85,11 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	^ (self parseTree allDefinedVariables includes: aString)
 ]
 
-{ #category : 'refactoring' }
+{ #category : 'executing' }
 RBMoveMethodToClassSideRefactoring >> generateChanges [
 	
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].

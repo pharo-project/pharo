@@ -583,6 +583,12 @@ CompiledMethod >> name [
 	^ self printString
 ]
 
+{ #category : 'accessing' }
+CompiledMethod >> overriddenMethod [
+
+	^ self methodClass superclass ifNotNil: [ :class | class lookupSelector: self selector ]
+]
+
 { #category : 'private' }
 CompiledMethod >> penultimateLiteral [
 	"Answer the penultimate literal of the receiver, which holds either

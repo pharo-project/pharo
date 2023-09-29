@@ -2,22 +2,23 @@
 A DrTestsUITest is a test class for testing the behavior of DrTests-TestRunner UI
 "
 Class {
-	#name : #DrTestsTestRunnerUITest,
-	#superclass : #TestCase,
+	#name : 'DrTestsTestRunnerUITest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'drTest'
 	],
-	#category : #'DrTests-Tests'
+	#category : 'DrTests-Tests',
+	#package : 'DrTests-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DrTestsTestRunnerUITest >> setUp [
 
 	super setUp.
 	drTest := DrTests on: { DTTestsRunnerPlugin }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsTestRunnerUITest >> testRunTestsUpdatesUIWithResults [
 
 	drTest pluginPresenter startButton performAction.

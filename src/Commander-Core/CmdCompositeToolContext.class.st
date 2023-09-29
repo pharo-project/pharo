@@ -8,59 +8,60 @@ Internal Representation and Key Implementation Points.
 	existingContexts:		<Collection of<CmdToolContext>>
 "
 Class {
-	#name : #CmdCompositeToolContext,
-	#superclass : #CmdToolContext,
+	#name : 'CmdCompositeToolContext',
+	#superclass : 'CmdToolContext',
 	#instVars : [
 		'existingContexts'
 	],
-	#category : #'Commander-Core'
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCompositeToolContext >> activeContextFor: aCommand [
 	^existingContexts detect: [ :each |
 		each allowsExecutionOf: aCommand]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCompositeToolContext >> allowsExecutionOf: aCommandClass [
 
 	^existingContexts anySatisfy: [:each |
 		each allowsExecutionOf: aCommandClass]
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdCompositeToolContext >> applyResultOf: aCommand [
 
 	(self activeContextFor: aCommand)
 		applyResultOf: aCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCompositeToolContext >> existingContexts [
 	^ existingContexts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCompositeToolContext >> existingContexts: anObject [
 	existingContexts := anObject
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdCompositeToolContext >> prepareFullExecutionOf: aCommand [
 
 	(self activeContextFor: aCommand)
 		prepareFullExecutionOf: aCommand
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdCompositeToolContext >> prepareNewCommand: aCommand [
 
 	(self activeContextFor: aCommand)
 		prepareNewCommand: aCommand
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCompositeToolContext >> representsSimpleAnnotationUser: aToolClass [
 
 	^existingContexts anySatisfy: [:each |

@@ -3,15 +3,16 @@ A PharoCommonTools is a ToolRegistry that knows about common tools that may be r
 
 "
 Class {
-	#name : #PharoCommonTools,
-	#superclass : #ToolRegistry,
+	#name : 'PharoCommonTools',
+	#superclass : 'ToolRegistry',
 	#instVars : [
 		'recentTools'
 	],
-	#category : #'Tool-Registry'
+	#category : 'Tool-Registry',
+	#package : 'Tool-Registry'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 PharoCommonTools class >> browsingSettingsOn: aBuilder [
 	<systemsettings>
 
@@ -26,13 +27,13 @@ PharoCommonTools class >> browsingSettingsOn: aBuilder [
 		parent: #codeBrowsing
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 PharoCommonTools class >> initialize [
 	SessionManager default
 		registerToolClassNamed: self name
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 PharoCommonTools class >> settingsOn: aBuilder [
 	<systemsettings>
 
@@ -90,12 +91,12 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						domainValues: Smalltalk tools recentChangeSorterTools]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 PharoCommonTools class >> shutDown: aboutToQuit [
 	Smalltalk image tools cleanUp
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 PharoCommonTools class >> worldMenuOn: aBuilder [
 
 	<worldMenu>
@@ -116,170 +117,170 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		action: [ (Smalltalk at: #IceTipRepositoriesBrowser) new open ]
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> basicInspector [
 
 	^ self toolNamed: #basicInspector
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> browser [
 
 	^ self toolNamed: #browser
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> browserTool [
 	^ self browser
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> browserTool: aTool [
 	^ self register: aTool as: #browser
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> changeList [
 
 	^ self toolNamed: #changeList
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> changeSorter [
 
 	^ self toolNamed: #changeSorter
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> changeSorterTool [
 	^ self changeSorter
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> changeSorterTool: aTool [
 	^ self register: aTool as: #changeSorter
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 PharoCommonTools >> cleanUp [
 	recentTools keysAndValuesDo:[:name :toolSet|
 		toolSet copy do:[:tool | tool isObsolete ifTrue:[ toolSet remove: tool]]]
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> fileList [
 
 	^ self toolNamed: #fileList
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> fileListTool [
 	^ self fileList
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> fileListTool: aTool [
 	^ self register: aTool as: #fileList
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> finder [
 
 	^ self toolNamed: #finder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoCommonTools >> initialize [
 	recentTools := Dictionary new.
 	super initialize
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> inspector [
 
 	^ self toolNamed: #inspector
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> inspectorTool [
 	^ self inspector
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> inspectorTool: aTool [
 	^ self register: aTool as: #inspector
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> messageList [
 
 	^ self toolNamed: #messageList
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> messageListTool [
 	^ self messageList
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> messageListTool: aTool [
 	^ self register: aTool as: #messageList
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> monticelloBrowser [
 
 	^ self toolNamed: #monticelloBrowser
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> pointerExplorer [
 
 	^ self toolNamed: #pointerExplorer
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> processBrowser [
 
 	^ self toolNamed: #processBrowser
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> recentBrowserTools [
 	^ self recentToolsFor: #browser
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> recentChangeSorterTools [
 	^ self recentToolsFor: #changeSorter
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> recentFileListTools [
 	^ self recentToolsFor: #fileList
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> recentInspectorTools [
 	^ self recentToolsFor: #inspector
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> recentToolsFor: aName [
 	^ (recentTools at: aName ifAbsent: [ {} ]) reject: [ :tool | tool isObsolete ]
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> recentVersionBrowserTools [
 	^ self recentToolsFor: #versionBrowser
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> recentWorkspaceTools [
 	^ self recentToolsFor: #workspace
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PharoCommonTools >> register: anTool as: aNameSelector [
 	| usedToolSet |
 	anTool ifNil:[ ^ self].
@@ -288,19 +289,19 @@ PharoCommonTools >> register: anTool as: aNameSelector [
 	usedToolSet add: anTool
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> testRunner [
 
 	^ self toolNamed: #testRunner
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> timeProfiler [
 
 	^ self toolNamed: #timeProfiler
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoCommonTools >> toolNamed: aSymbol [
 
 	tools at: aSymbol ifPresent: [ :tool | ^ tool ].
@@ -308,34 +309,34 @@ PharoCommonTools >> toolNamed: aSymbol [
 		'No tool named: "' , aSymbol , '" present in the registry'
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> versionBrowser [
 
 	^ self toolNamed: #versionBrowser
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> versionBrowserTool [
 	^ self versionBrowser
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> versionBrowserTool: aTool [
 	^ self register: aTool as: #versionBrowser
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 PharoCommonTools >> workspace [
 
 	^ self toolNamed: #workspace
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> workspaceTool [
 	^ self workspace
 ]
 
-{ #category : #tools }
+{ #category : 'tools' }
 PharoCommonTools >> workspaceTool: aTool [
 	^ self register: aTool as: #workspace
 ]

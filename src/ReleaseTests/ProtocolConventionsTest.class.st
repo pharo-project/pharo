@@ -4,12 +4,14 @@ I am a test case ensuring that some protocols that were removed from the system 
 The goal is to keep some conventions around protocols. For example we should use #removing and not #remove or #removal. The goal is to keep the number of protocols in the default image resonable to be able to give better propositions to the users.
 "
 Class {
-	#name : #ProtocolConventionsTest,
-	#superclass : #TestCase,
-	#category : #'ReleaseTests-Categorization'
+	#name : 'ProtocolConventionsTest',
+	#superclass : 'TestCase',
+	#category : 'ReleaseTests-Categorization',
+	#package : 'ReleaseTests',
+	#tag : 'Categorization'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ProtocolConventionsTest >> assertProtocolName: aProtocolName notAcceptingProtocolNamesLike: aCollectionOfSelectors [
 	| violations |
 	violations := self class environment allClassesAndTraits
@@ -30,7 +32,7 @@ Some classes are violating this convention:
 								separatedBy: [ s cr ] ])} ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ProtocolConventionsTest >> assertProtocolName: aProtocolName notAcceptingProtocolNamesLike: aCollectionOfSelectors notMoreViolationsThan: aCount [
 
 	| violations |
@@ -51,13 +53,13 @@ Some classes are violating this convention:
 						 separatedBy: [ s cr ] ]) } ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass [
 
 	self checkIdiomForRuleClass: aRuleClass notMoreViolationsThan: 0
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass notMoreViolationsThan: aCount [
 
 	| idiom |
@@ -69,49 +71,49 @@ ProtocolConventionsTest >> checkIdiomForRuleClass: aRuleClass notMoreViolationsT
 		notMoreViolationsThan: aCount
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperAccessingProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAccessingRule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperAddingRemovingProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForAddingRemovingRule notMoreViolationsThan: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperConvertingProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForConvertingRule notMoreViolationsThan: 29
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperFileInOutProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForFileInOutRule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperInstanceCreationProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForInstanceCreationRule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperRemovalProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForRemovalRule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperTestProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForTestsRule notMoreViolationsThan: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolConventionsTest >> testProperUtilitiesProtocolIsUsed [
 
 	self checkIdiomForRuleClass: ReProperMethodProtocolNameForUtilitiesRule notMoreViolationsThan: 5

@@ -4,8 +4,8 @@ I'm an example of how metalinks can be used to show the coverage of an execution
 CoverageDemo open
 "
 Class {
-	#name : #CoverageDemoPresenter,
-	#superclass : #SpPresenter,
+	#name : 'CoverageDemoPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'installMetalinkButton',
 		'runCodeButton',
@@ -14,10 +14,11 @@ Class {
 		'compiledMethods',
 		'coverageCode'
 	],
-	#category : #'Reflectivity-Examples'
+	#category : 'Reflectivity-Examples',
+	#package : 'Reflectivity-Examples'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 CoverageDemoPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #codePanelMorph;
@@ -30,7 +31,7 @@ CoverageDemoPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CoverageDemoPresenter class >> exampleIfTrueIfFalse [
 	| t |
 	t := false.
@@ -38,54 +39,54 @@ CoverageDemoPresenter class >> exampleIfTrueIfFalse [
 	^ 5
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CoverageDemoPresenter class >> exampleMethod [
 	^ 2 + 3
 ]
 
-{ #category : #open }
+{ #category : 'open' }
 CoverageDemoPresenter class >> open [
 	<script>
 	self new open
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 CoverageDemoPresenter class >> title [
 	^'Coverage Demo'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 CoverageDemoPresenter >> addCards [
 	compiledMethods do: [ :method | codePanelMorph morph addMorph: (ReflectivityCodeMorph compiledMethod: method) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageDemoPresenter >> compiledMethods [
 	^ compiledMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageDemoPresenter >> compiledMethods: anObject [
 	compiledMethods := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageDemoPresenter >> coverageCode [
 	^ coverageCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageDemoPresenter >> coverageCode: anObject [
 	coverageCode := anObject
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CoverageDemoPresenter >> exampleMethod [
 
 	self open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CoverageDemoPresenter >> exampleNotCompleteCoverage [
 
 	self coverageCode: [ CoverageDemoPresenter exampleIfTrueIfFalse. ].
@@ -94,7 +95,7 @@ CoverageDemoPresenter >> exampleNotCompleteCoverage [
 	self open
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoverageDemoPresenter >> initialize [
 	coverageCode := [ CoverageDemoPresenter exampleMethod ].
 	compiledMethods := OrderedCollection new.
@@ -103,13 +104,13 @@ CoverageDemoPresenter >> initialize [
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoverageDemoPresenter >> initializePresenter [
 	installMetalinkButton action: [ self installMetalink ].
 	runCodeButton action: [ self runCoverageCode ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoverageDemoPresenter >> initializeWidgets [
 	installMetalinkButton := self newButton.
 	runCodeButton := self newButton.
@@ -121,7 +122,7 @@ CoverageDemoPresenter >> initializeWidgets [
 	runCodeButton label: 'Run Example Code'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoverageDemoPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self title;
@@ -129,7 +130,7 @@ CoverageDemoPresenter >> initializeWindow: aWindowPresenter [
 		whenClosedDo: [ self removeMetalink ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 CoverageDemoPresenter >> installMetalink [
 	| link |
 	link := MetaLink new
@@ -139,36 +140,36 @@ CoverageDemoPresenter >> installMetalink [
 	compiledMethods do: [ :method | method ast nodesDo: [ :node | node link: link ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageDemoPresenter >> metalinkBlock [
 	^ metalinkBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageDemoPresenter >> metalinkBlock: anObject [
 	metalinkBlock := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 CoverageDemoPresenter >> open [
 	self addCards.
 	^ super open
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 CoverageDemoPresenter >> removeMetalink [
 
 	compiledMethods do:[:method| method methodClass recompile]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 CoverageDemoPresenter >> runCoverageCode [
 
 	coverageCode value.
 	self updateRubricStyle
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 CoverageDemoPresenter >> updateRubricStyle [
 	codePanelMorph morph submorphs
 		do: [ :card |

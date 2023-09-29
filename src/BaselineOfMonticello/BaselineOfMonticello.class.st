@@ -2,24 +2,25 @@
 This baseline is used to store information about Monticello packages. It is not directly used for the packages loading during bootstrap.
 "
 Class {
-	#name : #BaselineOfMonticello,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfMonticello
+	#name : 'BaselineOfMonticello',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfMonticello',
+	#package : 'BaselineOfMonticello'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfMonticello class >> corePackageNames [
 
 	^ self packagesOfGroupNamed: #Core
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfMonticello class >> remoteRepositoriesPackageNames [
 
 	^ self packagesOfGroupNamed: #RemoteRepositories
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfMonticello >> baseline: spec [
 	<baseline>
 

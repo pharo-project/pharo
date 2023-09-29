@@ -2,63 +2,65 @@
 This is the abstract superclass for archive members, which are files or directories stored in archives.
 "
 Class {
-	#name : #ArchiveMember,
-	#superclass : #Object,
+	#name : 'ArchiveMember',
+	#superclass : 'Object',
 	#instVars : [
 		'fileName',
 		'isCorrupt'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArchiveMember class >> newDirectoryNamed: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArchiveMember class >> newFromFile: aFileName [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArchiveMember class >> newFromString: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ArchiveMember >> close [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArchiveMember >> fileName [
 	^fileName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArchiveMember >> fileName: aName [
 	fileName := aName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ArchiveMember >> initialize [
 	super initialize.
 	fileName := ''.
 	isCorrupt := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArchiveMember >> isCorrupt [
 	^isCorrupt ifNil: [ isCorrupt := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArchiveMember >> isCorrupt: aBoolean [
 	"Mark this member as being corrupt."
 	isCorrupt := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArchiveMember >> localFileName: aString [
 	"Set my internal filename.
 	Returns the (possibly new) filename"
@@ -68,7 +70,7 @@ ArchiveMember >> localFileName: aString [
 		with: UnixStore delimiter asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ArchiveMember >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -77,7 +79,7 @@ ArchiveMember >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ArchiveMember >> usesFile: aFileReferenceOrFileName [
 	"Do I require aFileName? That is, do I care if it's clobbered?"
 	^false

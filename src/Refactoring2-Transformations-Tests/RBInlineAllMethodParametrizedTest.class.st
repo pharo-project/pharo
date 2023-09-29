@@ -1,22 +1,24 @@
 Class {
-	#name : #RBInlineAllMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBInlineAllMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineAllMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInlineAllSendersRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInlineAllMethodParametrizedTest >> constructor [
 	^ #sendersOf:in:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSelectorInClass [
 
 	| refactoring |
@@ -26,7 +28,7 @@ RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSele
 	self shouldFail: refactoring
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 	| class superclass |
 	model := RBClassModelFactory rbNamespace new.
@@ -40,7 +42,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 			equals: (self parseMethod: 'foo: arg1 bar: arg2 ^ (arg1 + arg2) - arg1')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 	| class |
 	model := RBClassModelFactory rbNamespace new.
@@ -58,7 +60,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 	^ 5 + 7')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod [
 	| refactoring methodName |
 	methodName := #caller2.
@@ -72,7 +74,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod
 	(1 to: 10) inject: 1 into: [:sum1 :each1 | sum1 * (self foo: each1)]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineAllMethodParametrizedTest >> testRecursiveMethod [
 	| class |
 	model := RBClassModelFactory rbNamespace new.

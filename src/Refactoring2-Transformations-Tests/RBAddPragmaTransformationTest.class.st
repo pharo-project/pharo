@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddPragmaTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddPragmaTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddPragmaTransformationTest >> methodAfter [
 	<pragmaForTesting: 56>
 
@@ -12,14 +14,14 @@ RBAddPragmaTransformationTest >> methodAfter [
 	variable := 'String'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddPragmaTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddPragmaTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
@@ -28,7 +30,7 @@ RBAddPragmaTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBPragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddPragmaTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddPragmaTransformation
@@ -37,7 +39,7 @@ RBAddPragmaTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBAddPragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddPragmaTransformationTest >> testPragmaAlreadyExists [
 
 	self shouldFail: (RBAddPragmaTransformation
@@ -46,7 +48,7 @@ RBAddPragmaTransformationTest >> testPragmaAlreadyExists [
 			 inClass: #RBAddPragmaTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddPragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -64,7 +66,7 @@ RBAddPragmaTransformationTest >> testRefactoring [
 		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddPragmaTransformationTest >> testTransform [
 
 	| transformation class |

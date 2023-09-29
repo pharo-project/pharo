@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Ring-Definitions-Containers' }
+{ #category : '*Ring-Definitions-Containers' }
 String >> isCategoryOf: prefix [
 	"This method is used for the MC synchronization of RPackage with categorises. Since we want to remove the system of category, this method should not be used and has a vocation to be removed from the system."
 

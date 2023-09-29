@@ -11,23 +11,24 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : #RBDeprecateMethodDriver,
-	#superclass : #RBDriver,
+	#name : 'RBDeprecateMethodDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'refactoring',
 		'useInsteadSelector',
 		'selectorToDeprecate'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCollection [
 
 	^ self new deprecateMethod: aString in: aClass  scopes: aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
 
 	scopes := aCollection.
@@ -41,12 +42,12 @@ RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollec
 	self selectorToReplaceDeprecatedSelector.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDeprecateMethodDriver >> refactoring [
 	^ refactoring
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBDeprecateMethodDriver >> runRefactoring [
 
 	| compositeChange |
@@ -73,7 +74,7 @@ RBDeprecateMethodDriver >> runRefactoring [
 	self openPreviewWithChanges: compositeChange
 ]
 
-{ #category : #'ui - requests' }
+{ #category : 'ui - requests' }
 RBDeprecateMethodDriver >> selectorToReplaceDeprecatedSelector [
 
 	useInsteadSelector := SpRequestDialog new

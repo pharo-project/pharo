@@ -9,43 +9,45 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyShowMessageImplementorCommand,
-	#superclass : #SycMessageCommand,
+	#name : 'ClyShowMessageImplementorCommand',
+	#superclass : 'SycMessageCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Queries'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Queries'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> methodBrowserToolbarActivation [
 	<classAnnotation>
 
 	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $m meta for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 	"it is not supported yet. Look senders command"
 
@@ -54,17 +56,17 @@ ClyShowMessageImplementorCommand class >> sourceCodeShortcutActivation [
 	^ClyShortcutCommandActivator by: $m meta for: ClySourceCodeContext"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowMessageImplementorCommand >> defaultMenuIconName [
 	^ #smallFind
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowMessageImplementorCommand >> defaultMenuItemName [
 	^'Implementors'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowMessageImplementorCommand >> execute [
 
 	| selectors |
@@ -72,7 +74,7 @@ ClyShowMessageImplementorCommand >> execute [
 	browser spawnQueryBrowserOn: (ClyMessageImplementorsQuery ofAny: selectors)
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowMessageImplementorCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

@@ -68,10 +68,24 @@ TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 TraitBuilderEnhancer >> allSlotsForBuilder: aBuilder [
 
 	| resultingSlots |
+	resultingSlots := (super allSlotsForBuilder: aBuilder) asOrderedCollection.
 
+	"We reject the slots that already have a slot in the class or a superclass"
+	aBuilder traitComposition asTraitComposition slotsCopy do: [ :slot |
+		(resultingSlots anySatisfy: [ :slot2 | slot name = slot2 name ]) ifFalse: [ resultingSlots add: slot ] ].
+
+	^ resultingSlots
+]
+
+{ #category : 'accessing' }
+TraitBuilderEnhancer >> allSlotsToInstallForBuilder: aBuilder [
+
+	| resultingSlots |
 	resultingSlots := self
-		eliminateDuplicates: aBuilder layoutDefinition slots , aBuilder traitComposition asTraitComposition slotsCopy
-		withSuperclassSlots: (aBuilder superclass ifNil: [#()] ifNotNil:[ :x | x allSlots]).
+		                  eliminateDuplicates: aBuilder layoutDefinition slots , aBuilder traitComposition asTraitComposition slotsCopy
+		                  withSuperclassSlots: (aBuilder superclass
+				                   ifNil: [ #(  ) ]
+				                   ifNotNil: [ :x | x allSlots ]).
 
 	^ resultingSlots
 ]
@@ -125,7 +139,7 @@ TraitBuilderEnhancer >> configureClass: newClass superclass: superclass withLayo
 	| resultingSlots |
 	self validateTraitComposition: self traitComposition ofClass: builder oldClass.
 
-	resultingSlots := self allSlotsForBuilder: builder.
+	resultingSlots := self allSlotsToInstallForBuilder: builder.
 
 	newClass superclass: superclass withLayoutType: layoutType slots: resultingSlots
 ]

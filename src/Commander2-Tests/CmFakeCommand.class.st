@@ -1,25 +1,26 @@
 Class {
-	#name : #CmFakeCommand,
-	#superclass : #CmCommand,
-	#category : #'Commander2-Tests'
+	#name : 'CmFakeCommand',
+	#superclass : 'CmCommand',
+	#category : 'Commander2-Tests',
+	#package : 'Commander2-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmFakeCommand >> canBeExecuted [
 	^ self context = 42
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmFakeCommand >> dynamicDescription [
 	^ super dynamicDescription , ' ' , self context asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmFakeCommand >> dynamicName [
 	^ super dynamicName , ' ' , self context asString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmFakeCommand >> initialize [
 	super initialize.
 	self

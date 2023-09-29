@@ -1,1 +1,1 @@
-Package { #name : #'Clap-Commands-Pharo' }
+Package { #name : 'Clap-Commands-Pharo' }

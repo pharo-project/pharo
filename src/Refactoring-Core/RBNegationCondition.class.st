@@ -34,8 +34,9 @@ RBNegationCondition >> condition: aCondition [
 ]
 
 { #category : 'private' }
-RBNegationCondition >> errorBlockFor: aBoolean [
-	^condition errorBlockFor: aBoolean not
+RBNegationCondition >> errorBlock [
+
+	^ condition errorBlock
 ]
 
 { #category : 'private' }
@@ -47,4 +48,10 @@ RBNegationCondition >> errorStringFor: aBoolean [
 RBNegationCondition >> printOn: aStream [
 	aStream nextPutAll: 'NOT ';
 		print: condition
+]
+
+{ #category : 'displaying' }
+RBNegationCondition >> violationMessageOn: aStream [ 
+
+	condition violationMessageOn: aStream
 ]

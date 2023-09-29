@@ -1,1 +1,1 @@
-Package { #name : #'Native-Browser' }
+Package { #name : 'Native-Browser' }

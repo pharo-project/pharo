@@ -1,17 +1,19 @@
 Class {
-	#name : #RBAbstractRefactoringTest,
-	#superclass : #RBAbstractEnvTestCase,
+	#name : 'RBAbstractRefactoringTest',
+	#superclass : 'RBAbstractEnvTestCase',
 	#instVars : [
 		'rbClass'
 	],
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractRefactoringTest >> constructor [
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBAbstractRefactoringTest >> createRefactoringWithArguments: aParameterCollection [
 
 	^ rbClass
@@ -19,7 +21,7 @@ RBAbstractRefactoringTest >> createRefactoringWithArguments: aParameterCollectio
 		  withArguments: aParameterCollection
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArguments: aParameterCollection [
 
 	^ rbClass
@@ -27,63 +29,63 @@ RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArgumen
 		  withArguments: { aRBNamespace } , aParameterCollection
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
 	aRefactoring generateChanges
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> executeRefactorings: aRefactoringColl [
 	aRefactoringColl do: [ :ref | ref generateChanges]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractRefactoringTest >> methodSignatureStringForSymbol: aSymbol withArgumentString: aString [
 	"The method is written this way to make sure that we can rename test input (methods) and do not break the tests."
 	
 	^ aSymbol asString, aString, Character cr asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractRefactoringTest >> methodSignatureStringForUnarySymbol: aSymbol [
 	"The method is written this way to make sure that we can rename test input (methods) and do not break the tests."
 	
 	^ aSymbol asString, Character cr asString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBAbstractRefactoringTest >> objectClassVariable [
 	^Object classPool keys detect: [:each | true]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> parseExpression: aString [
 	^ self parserClass parseExpression: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> parseMethod: aString [
 	^ self parserClass parseMethod: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractRefactoringTest >> rbClass: anObject [
 
 	rbClass := anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAbstractRefactoringTest >> setUp [
 	super setUp.
 	model := self defaultNamespaceClass new
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupExtractionClassFor: aRefactoring toReturn: aClass [
 	| options |
 	options := aRefactoring options copy.
@@ -92,7 +94,7 @@ RBAbstractRefactoringTest >> setupExtractionClassFor: aRefactoring toReturn: aCl
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn: anObject [
 	| options |
 	options := aRefactoring options copy.
@@ -100,7 +102,7 @@ RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn:
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
 	| options |
 	options := aRefactoring options copy.
@@ -108,7 +110,7 @@ RBAbstractRefactoringTest >> setupInlineExpressionFor: aRefactoring toReturn: aB
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 
 	| options |
@@ -122,7 +124,7 @@ RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelecto
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection [
 
 	| options |
@@ -137,7 +139,7 @@ RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelecto
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [
 
 	| options |
@@ -146,7 +148,7 @@ RBAbstractRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
 
 	| options |
@@ -155,7 +157,7 @@ RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aS
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [
 
 	| options |
@@ -164,7 +166,7 @@ RBAbstractRefactoringTest >> setupShouldUseExistingMethodFor: aRefactoring toRet
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupVariableToMoveToFor: aRefactoring toReturn: aString [
 
 	| options |
@@ -173,7 +175,7 @@ RBAbstractRefactoringTest >> setupVariableToMoveToFor: aRefactoring toReturn: aS
 	aRefactoring options: options
 ]
 
-{ #category : #'set up' }
+{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupVariableTypesFor: aRefactoring toReturn: anObject [
 
 	| options |
@@ -182,14 +184,14 @@ RBAbstractRefactoringTest >> setupVariableTypesFor: aRefactoring toReturn: anObj
 	aRefactoring options: options
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [
 	self
 		shouldnt: [ self executeRefactoring: aRefactoring ]
 		raise: RBRefactoringWarning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractRefactoringTest >> testConditions [
 	| condition newCondition |
 	condition := RBCondition new

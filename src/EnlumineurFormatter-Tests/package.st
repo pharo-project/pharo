@@ -1,1 +1,1 @@
-Package { #name : #'EnlumineurFormatter-Tests' }
+Package { #name : 'EnlumineurFormatter-Tests' }

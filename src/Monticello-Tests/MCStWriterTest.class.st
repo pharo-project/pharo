@@ -122,12 +122,6 @@ MCMethodDeclaration className: #MCMockClassD selector: #one category: #''''as ye
 '
 ]
 
-{ #category : 'data' }
-MCStWriterTest >> expectedOrganizationDefinition [
-	^ 'self packageOrganizer ensurePackage: #MonticelloMocks withTags: #()!
-'
-]
-
 { #category : 'testing' }
 MCStWriterTest >> methodWithBangs [
 	^ '
@@ -271,6 +265,18 @@ MCStWriterTest >> testOrganizationDefinition [
 	| definition |
 	definition := self mockPackage systemPackage asMCOrganizationDefinition.
 	writer visitOrganizationDefinition: definition.
-	self assertContentsOf: stream match: self expectedOrganizationDefinition.
+	self assertContentsOf: stream match: 'self packageOrganizer ensurePackage: #MonticelloMocks withTags: #()!
+'.
+	self assertAllChunksAreWellFormed
+]
+
+{ #category : 'testing' }
+MCStWriterTest >> testOrganizationDefinition2 [
+
+	| definition |
+	definition := MCOrganizationDefinition packageName: #'Package-With-Dashes' tagNames: #( #Tag #'Tag-With-Dashes' ).
+	writer visitOrganizationDefinition: definition.
+	self assertContentsOf: stream match: 'self packageOrganizer ensurePackage: #''Package-With-Dashes'' withTags: #(#Tag #''Tag-With-Dashes'')!
+'.
 	self assertAllChunksAreWellFormed
 ]

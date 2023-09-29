@@ -194,15 +194,11 @@ MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment
 	traitPropertiesDict
 		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
 		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'classtraitcomposition' ifPresent: [ :classTraitComposition | definition classTraitComposition: classTraitComposition ];
 		at: 'instvars' ifPresent: [ :ivars | definition instVarNames: ivars ];
 		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
 
-	definitions add: definition.
-
-	traitPropertiesDict at: 'classtraitcomposition' ifPresent: [ :classTraitComposition |
-		definitions add: ((MCClassTraitDefinition baseTraitName: (traitPropertiesDict at: 'name'))
-				 classTraitComposition: classTraitComposition;
-				 yourself) ]
+	definitions add: definition
 ]
 
 { #category : 'accessing' }

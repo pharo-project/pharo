@@ -2,23 +2,25 @@
 A MCConfigurationBrowser displays an MCConfiguration, and edits the configuration to add or remove package dependencies and repository specifications. It allows a configuration to be stored in a repository or posted to an update stream.
 "
 Class {
-	#name : #MCConfigurationBrowser,
-	#superclass : #MCTool,
+	#name : 'MCConfigurationBrowser',
+	#superclass : 'MCTool',
 	#instVars : [
 		'configuration',
 		'dependencyIndex',
 		'repositoryIndex'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #opening }
+{ #category : 'opening' }
 MCConfigurationBrowser class >> open [
 	<script>
 	^self new show
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> add [
 	(self pickWorkingCopiesSatisfying: [:each | (self includesPackage: each package) not])
 		do: [:wc |
@@ -32,7 +34,7 @@ Skipping this package']
 	self changed: #dependencyList; changed: #description
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 MCConfigurationBrowser >> addDependency [
 	(self pickWorkingCopiesSatisfying: [:each | (self includesPackage: each package) not])
 		do: [:wc |
@@ -46,7 +48,7 @@ Skipping this package']
 	self changed: #dependencyList; changed: #description
 ]
 
-{ #category : #repositories }
+{ #category : 'repositories' }
 MCConfigurationBrowser >> addRepository [
 	(self pickRepositorySatisfying: [:ea | (self repositories includes: ea) not])
 		ifNotNil: [:repo |
@@ -57,7 +59,7 @@ MCConfigurationBrowser >> addRepository [
 		]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> buttonSpecs [
 	^ #(('Add' addDependency 'Add a dependency')
 		('Update' updateMenu 'Update dependencies')
@@ -70,41 +72,41 @@ MCConfigurationBrowser >> buttonSpecs [
 		)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCConfigurationBrowser >> canMoveDown [
 	^self index between: 1 and: self maxIndex - 1 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCConfigurationBrowser >> canMoveUp [
 	^self index > 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCConfigurationBrowser >> canRemove [
 	^self index > 0
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> changedButtons [
 	self changed: #canMoveDown.
 	self changed: #canMoveUp.
 	self changed: #canRemove.
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> changedList [
 	self dependencyIndex > 0 ifTrue: [ ^ self changed: #dependencyList ].
 	self repositoryIndex > 0 ifTrue: [ ^ self repositoryListChanged ].
 	self error: 'nothing selected'
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 MCConfigurationBrowser >> checkDependencies [
 	^self checkModified and: [self checkMissing]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 MCConfigurationBrowser >> checkMissing [
 	| missing |
 	missing := (self dependencies collect: [:ea | ea versionInfo name]) asSet.
@@ -124,7 +126,7 @@ MCConfigurationBrowser >> checkMissing [
 	
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 MCConfigurationBrowser >> checkModified [
 	| modified |
 	modified := self dependencies select: [:dep |
@@ -139,7 +141,7 @@ MCConfigurationBrowser >> checkModified [
 	
 ]
 
-{ #category : #repositories }
+{ #category : 'repositories' }
 MCConfigurationBrowser >> checkRepositories [
 	| bad |
 	bad := self repositories reject: [:repo | repo isKindOf: MCHttpRepository].
@@ -153,7 +155,7 @@ MCConfigurationBrowser >> checkRepositories [
 
 ]
 
-{ #category : #repositories }
+{ #category : 'repositories' }
 MCConfigurationBrowser >> checkRepositoryTemplates [
 	"unused for now - we only do HTTP"
 	| bad |
@@ -168,35 +170,35 @@ MCConfigurationBrowser >> checkRepositoryTemplates [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfigurationBrowser >> configuration [
 	^configuration ifNil: [configuration := MCConfiguration new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfigurationBrowser >> configuration: aConfiguration [
 	configuration := aConfiguration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfigurationBrowser >> dependencies [
 	^self configuration dependencies
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfigurationBrowser >> dependencies: aCollection [
 	self configuration dependencies: aCollection.
 	self changed: #dependencyList; changed: #description
 
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> dependencyIndex [
 	^dependencyIndex ifNil: [0]
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> dependencyIndex: anInteger [
 	dependencyIndex := anInteger.
 	dependencyIndex > 0
@@ -205,7 +207,7 @@ MCConfigurationBrowser >> dependencyIndex: anInteger [
 	self changedButtons.
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 MCConfigurationBrowser >> dependencyList [
 	^self dependencies collect: [:dep | 
 		Text string: (dep isCurrent
@@ -219,7 +221,7 @@ MCConfigurationBrowser >> dependencyList [
 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> dependencyMenu: aMenu [
 	self fillMenu: aMenu fromSpecs: #(('Change log...' showChangeLog)).
 	self fillMenu: aMenu fromSpecs: #(('Add dependency...' addDependency)).
@@ -229,7 +231,7 @@ MCConfigurationBrowser >> dependencyMenu: aMenu [
 
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 MCConfigurationBrowser >> description [
 	self selectedDependency ifNotNil: [:dep | ^ ('Package: ', dep package name, String cr,
 		dep versionInfo summary) asText].
@@ -240,7 +242,7 @@ MCConfigurationBrowser >> description [
 
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 MCConfigurationBrowser >> description: aText [
 
 	self selectedRepository ifNotNil: [:repo | 
@@ -259,7 +261,7 @@ MCConfigurationBrowser >> description: aText [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> down [
 	self canMoveDown
 		ifFalse: [ ^ self ].
@@ -268,29 +270,29 @@ MCConfigurationBrowser >> down [
 	self changedList
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCConfigurationBrowser >> includesPackage: aPackage [
 	^self dependencies anySatisfy: [:each | each package = aPackage]
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> index [
 	^self dependencyIndex max: self repositoryIndex
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> index: anInteger [
 	self dependencyIndex > 0 ifTrue: [^self dependencyIndex: anInteger].
 	self repositoryIndex > 0 ifTrue: [^self repositoryIndex: anInteger].
 	anInteger > 0 ifTrue: [self error: 'cannot select']
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> initialExtent [
 	^ 350@500
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> installMenu [
 
 	| menu |
@@ -301,21 +303,21 @@ MCConfigurationBrowser >> installMenu [
 	menu popUpInWorld.
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> list [
 	self dependencyIndex > 0 ifTrue: [^self dependencies].
 	self repositoryIndex > 0 ifTrue: [^self repositories].
 	^#()
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> load [
 	self configuration load.
 	self changed: #dependencyList; changed: #description
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> loadMenu [
 
 	| menu |
@@ -326,19 +328,19 @@ MCConfigurationBrowser >> loadMenu [
 
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> maxIndex [
 	^ self list size
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> merge [
 	self configuration merge.
 	self changed: #dependencyList; changed: #description
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> migrate [
 	"copy all packageversions in this cofiguration to a repository"
 	| versions |
@@ -357,7 +359,7 @@ MCConfigurationBrowser >> migrate [
 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> pickConfig [
 	self pickRepository ifNotNil: [:repo |
 		| configs index |
@@ -374,7 +376,7 @@ MCConfigurationBrowser >> pickConfig [
 	^nil
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> pickName [
 	| name |
 	name := UIManager default
@@ -383,13 +385,13 @@ MCConfigurationBrowser >> pickName [
 	^ name isEmptyOrNil ifFalse: [name]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> pickRepository [
 	^self pickRepositorySatisfying: [:ea | true]
 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> pickRepositorySatisfying: aBlock [
 	| index list |
 	list := MCRepositoryGroup default repositories select: aBlock.
@@ -397,7 +399,7 @@ MCConfigurationBrowser >> pickRepositorySatisfying: aBlock [
 	^ index = 0 ifFalse: [list at: index]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> pickWorkingCopiesSatisfying: aBlock [
 
 	| copies item |
@@ -416,7 +418,7 @@ MCConfigurationBrowser >> pickWorkingCopiesSatisfying: aBlock [
 		  ifFalse: [ { (copies at: item - 1) } ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> remove [
 	self canRemove
 		ifFalse: [ ^ self ].
@@ -425,23 +427,23 @@ MCConfigurationBrowser >> remove [
 	self updateIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfigurationBrowser >> repositories [
 	^ self configuration repositories
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfigurationBrowser >> repositories: aCollection [
 	^self configuration repositories: aCollection
 
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> repositoryIndex [
 	^repositoryIndex ifNil: [0]
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> repositoryIndex: anInteger [
 	repositoryIndex := anInteger.
 	repositoryIndex > 0
@@ -450,45 +452,45 @@ MCConfigurationBrowser >> repositoryIndex: anInteger [
 	self changedButtons.
 ]
 
-{ #category : #repositories }
+{ #category : 'repositories' }
 MCConfigurationBrowser >> repositoryList [
 	^self repositories collect: [:ea | ea description]
 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> repositoryMenu: aMenu [
 	^self fillMenu: aMenu fromSpecs: #(
 		('Add repository...' addRepository)
 	)
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> selectDependency: aDependency [
 	self dependencyIndex: (self dependencies indexOf: aDependency)
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> selectRepository: aRepository [
 	self repositoryIndex: (self repositories indexOf: aRepository)
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 MCConfigurationBrowser >> selectedDependency [
 	^ self dependencies at: self dependencyIndex ifAbsent: []
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 MCConfigurationBrowser >> selectedPackage [
 	^ self selectedDependency ifNotNil: [:dep | dep package]
 ]
 
-{ #category : #repositories }
+{ #category : 'repositories' }
 MCConfigurationBrowser >> selectedRepository [
 	^ self repositories at: self repositoryIndex ifAbsent: []
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> showChangeLog [
 	self pickConfig ifNotNil: [:oldConfig |
 		Transcript dependents isEmpty
@@ -500,7 +502,7 @@ MCConfigurationBrowser >> showChangeLog [
 			Transcript flush]]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> store [
 	(self checkRepositories and: [self checkDependencies]) ifFalse: [^self].
 	self pickName ifNotNil: [:name |
@@ -509,7 +511,7 @@ MCConfigurationBrowser >> store [
 			repo storeVersion: self configuration]].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> up [
 	self canMoveUp
 		ifFalse: [ ^ self ].
@@ -518,26 +520,26 @@ MCConfigurationBrowser >> up [
 	self changedList
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MCConfigurationBrowser >> updateFromImage [
 	self configuration updateFromImage.
 	self changed: #dependencyList; changed: #description
 
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MCConfigurationBrowser >> updateFromRepositories [
 	self configuration updateFromRepositories.
 	self changed: #dependencyList; changed: #description
 
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 MCConfigurationBrowser >> updateIndex [
 	self index > 0 ifTrue: [self index: (self index min: self maxIndex)]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> updateMenu [
 
 	| menu |
@@ -548,14 +550,14 @@ MCConfigurationBrowser >> updateMenu [
 	menu popUpInWorld.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfigurationBrowser >> upgrade [
 	self configuration upgrade.
 	self changed: #dependencyList; changed: #description
 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCConfigurationBrowser >> widgetSpecs [
 	^ #(
 		((buttonRow) (0 0 1 0) (0 0 0 30))

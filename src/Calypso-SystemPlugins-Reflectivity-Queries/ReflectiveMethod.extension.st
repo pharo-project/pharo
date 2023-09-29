@@ -1,6 +1,6 @@
-Extension { #name : #ReflectiveMethod }
+Extension { #name : 'ReflectiveMethod' }
 
-{ #category : #'*Calypso-SystemPlugins-Reflectivity-Queries' }
+{ #category : '*Calypso-SystemPlugins-Reflectivity-Queries' }
 ReflectiveMethod >> calypsoEnvironmentType [
 	^ClyMethod
 ]

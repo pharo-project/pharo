@@ -1,5 +1,5 @@
 "
-A class trait definition
+This class is just here for backward compatibility and should not be used anymore. It is just here to load old code.
 "
 Class {
 	#name : 'MCClassTraitDefinition',

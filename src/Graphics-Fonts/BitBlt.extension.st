@@ -1,6 +1,6 @@
-Extension { #name : #BitBlt }
+Extension { #name : 'BitBlt' }
 
-{ #category : #'*Graphics-Fonts' }
+{ #category : '*Graphics-Fonts' }
 BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale [
 
 	| xTable |
@@ -21,7 +21,7 @@ BitBlt >> basicDisplayString: aString from: startIndex to: stopIndex at: aPoint 
 	^ destX@destY
 ]
 
-{ #category : #'*Graphics-Fonts' }
+{ #category : '*Graphics-Fonts' }
 BitBlt >> cachedFontColormapFrom: sourceDepth to: destDepth [
 	"Modified from computeColormapFrom:to:."
 	| srcIndex map |
@@ -38,13 +38,13 @@ BitBlt >> cachedFontColormapFrom: sourceDepth to: destDepth [
 	^ map
 ]
 
-{ #category : #'*Graphics-Fonts' }
+{ #category : '*Graphics-Fonts' }
 BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint kern: kernDelta font: aFont [
 	"Double dispatch into the font. This method is present so that other-than-bitblt entities can be used by CharacterScanner and friends to display text."
 	^ aFont displayString: aString on: self from: startIndex to: stopIndex at: aPoint kern: kernDelta
 ]
 
-{ #category : #'*Graphics-Fonts' }
+{ #category : '*Graphics-Fonts' }
 BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strikeFont: font kern: kernDelta scale: scale [
 	"If required, do a second pass with new rule and colorMap.
 	This happens when #installStrikeFont:foregroundColor:backgroundColor: sets rule 37 (rgbMul).
@@ -73,13 +73,13 @@ BitBlt >> displayString: aString from: startIndex to: stopIndex at: aPoint strik
 	^answer
 ]
 
-{ #category : #'*Graphics-Fonts' }
+{ #category : '*Graphics-Fonts' }
 BitBlt >> installFont: aFont foregroundColor: foregroundColor backgroundColor: backgroundColor [
 	"Double dispatch into the font. This method is present so that other-than-bitblt entities can be used by CharacterScanner and friends to display text."
 	^aFont installOn: self foregroundColor: foregroundColor backgroundColor: backgroundColor
 ]
 
-{ #category : #'*Graphics-Fonts' }
+{ #category : '*Graphics-Fonts' }
 BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	| lastSourceDepth targetColor |
 	sourceForm ifNotNil:[lastSourceDepth := sourceForm depth].

@@ -80,18 +80,6 @@ RPackageSet class >> withCacheDo: aBlock [
 		self isCacheActive ifFalse: [ self resetCache ] ]
 ]
 
-{ #category : 'system compatibility' }
-RPackageSet >> asRPackageSet [
-	^self
-]
-
-{ #category : 'accessing' }
-RPackageSet >> categoryNames [
-	^  self packages
-		inject:  #()
-		into: [ :all :each | all, (each classTagCategoryNames asArray) ]
-]
-
 { #category : 'accessing' }
 RPackageSet >> classes [
 	^classes ifNil: [ classes := self packages flatCollect: #definedClasses ]
@@ -105,15 +93,6 @@ RPackageSet >> definedClasses [
 { #category : 'system compatibility' }
 RPackageSet >> extendedClasses [
 	^ self packages flatCollect: #extendedClasses
-]
-
-{ #category : 'system compatibility' }
-RPackageSet >> extensionCategoriesForClass: aClass [
-
-	self
-		deprecated: 'Use #extensionProtocolsForClass: instead.'
-		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
-	^ self extensionProtocolsForClass: aClass
 ]
 
 { #category : 'accessing' }
@@ -162,6 +141,7 @@ RPackageSet >> packages [
 ]
 
 { #category : 'accessing' }
-RPackageSet >> unregister [
-	self packages do: #unregister
+RPackageSet >> removeFromSystem [
+
+	self packages do: [ :package | package removeFromSystem ]
 ]

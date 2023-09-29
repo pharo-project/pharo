@@ -4,12 +4,14 @@ The project managers should return a subclass of myself.
 
 "
 Class {
-	#name : #ClyAllProjectsQuery,
-	#superclass : #ClyTypedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyAllProjectsQuery',
+	#superclass : 'ClyTypedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyAllProjectsQuery class >> resultItemsType [
 	^ClyManagedProject
 ]

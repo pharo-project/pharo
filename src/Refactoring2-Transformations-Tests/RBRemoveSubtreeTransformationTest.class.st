@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveSubtreeTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveSubtreeTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testEmptyCode [
 
 	self shouldFail: (RBRemoveSubtreeTransformation
@@ -18,7 +20,7 @@ RBRemoveSubtreeTransformationTest >> testEmptyCode [
 			 in: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testFailureExtract [
 
 	self shouldFail: (RBRemoveSubtreeTransformation
@@ -32,7 +34,7 @@ RBRemoveSubtreeTransformationTest >> testFailureExtract [
 			 in: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveSubtreeTransformation
@@ -46,7 +48,7 @@ RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
 			 in: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -67,7 +69,7 @@ RBRemoveSubtreeTransformationTest >> testRefactoring [
 		equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
@@ -84,7 +86,7 @@ RBRemoveSubtreeTransformationTest >> testTransform [
 	self assertEmpty: (class parseTreeForSelector: #one) body statements
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testTransformNotSequenceNode [
 
 	| transformation class |

@@ -1,22 +1,24 @@
 Class {
-	#name : #RBInlineParameterParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBInlineParameterParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInlineParameterRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInlineParameterParametrizedTest >> constructor [
 	^ #inlineParameter:in:selector:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInlineParameterParametrizedTest >> testFailureInlineArgsWhitoutSameLiteral [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -25,7 +27,7 @@ RBInlineParameterParametrizedTest >> testFailureInlineArgsWhitoutSameLiteral [
 				 ('inline' , 'Bar:') asSymbol })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInlineParameterParametrizedTest >> testFailureInlineBlockFailure [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -34,7 +36,7 @@ RBInlineParameterParametrizedTest >> testFailureInlineBlockFailure [
 				 ('inline' , 'Foo:') asSymbol })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineParameterParametrizedTest >> testInlineLiteralArray [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

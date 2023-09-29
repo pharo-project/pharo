@@ -1,6 +1,6 @@
-Extension { #name : #Duration }
+Extension { #name : 'Duration' }
 
-{ #category : #'*Network-Mail' }
+{ #category : '*Network-Mail' }
 Duration >> asEmailTimeOffsetString [
 	"Format per RFC5322  e.g.  '-0500'"
 

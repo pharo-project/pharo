@@ -2,18 +2,20 @@
 Merge work
 "
 Class {
-	#name : #GoferMerge,
-	#superclass : #GoferUpdate,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferMerge',
+	#superclass : 'GoferUpdate',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GoferMerge >> defaultModel [
 
 	^ MCVersionMerger new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferMerge >> execute [
 
 	[ self model merge ]

@@ -2,17 +2,18 @@
 I'm a model for user interaction for the remove instance variable refactoring.
 "
 Class {
-	#name : #RBRemoveInstanceVariablesDriver,
-	#superclass : #RBDriver,
+	#name : 'RBRemoveInstanceVariablesDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
-		'variables',
-		'refactoring'
+		'variables'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBRemoveInstanceVariablesDriver >> configureRefactoring [
 
 	refactoring := RBCompositeRefactoring new
@@ -22,13 +23,13 @@ RBRemoveInstanceVariablesDriver >> configureRefactoring [
 								yourself 
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBRemoveInstanceVariablesDriver >> refactoring [
 
 	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
@@ -55,7 +56,7 @@ RBRemoveInstanceVariablesDriver >> runRefactoring [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
 	
 	scopes := refactoringScopes.

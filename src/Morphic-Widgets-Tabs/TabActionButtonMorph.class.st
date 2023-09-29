@@ -4,15 +4,17 @@ I am a multi state button supporting icon.
 I am used to render tab actions
 "
 Class {
-	#name : #TabActionButtonMorph,
-	#superclass : #MultistateButtonMorph,
+	#name : 'TabActionButtonMorph',
+	#superclass : 'MultistateButtonMorph',
 	#instVars : [
 		'icon'
 	],
-	#category : #'Morphic-Widgets-Tabs-Support'
+	#category : 'Morphic-Widgets-Tabs-Support',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabActionButtonMorph class >> forAction: anAction [
 
 	^ self new
@@ -20,7 +22,7 @@ TabActionButtonMorph class >> forAction: anAction [
 		yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabActionButtonMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
@@ -31,7 +33,7 @@ TabActionButtonMorph >> drawOn: aCanvas [
 		at: self topLeft
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabActionButtonMorph >> forAction: anAction [
 	| baseColor |
 
@@ -60,7 +62,7 @@ TabActionButtonMorph >> forAction: anAction [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabActionButtonMorph >> icon: anObject [
 
 	icon := anObject

@@ -207,7 +207,7 @@ MCClassDefinition >> createClass [
 
 	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
 	^ [
-	  Smalltalk classInstaller make: [ :builder |
+	  self class classInstaller make: [ :builder |
 		  builder
 			  superclass: superClass;
 			  name: name;

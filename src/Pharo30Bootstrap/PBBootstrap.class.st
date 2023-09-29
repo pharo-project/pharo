@@ -1,6 +1,6 @@
 Class {
-	#name : #PBBootstrap,
-	#superclass : #Object,
+	#name : 'PBBootstrap',
+	#superclass : 'Object',
 	#instVars : [
 		'architecture',
 		'imageReference',
@@ -10,22 +10,23 @@ Class {
 		'versionInfo',
 		'repositoryLocation'
 	],
-	#category : #Pharo30Bootstrap
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBootstrap class >> for32Bits [
 
 	^ self forArchitecture: '32'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBootstrap class >> for64Bits [
 
 	^ self forArchitecture: '64'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBootstrap class >> forArchitecture: architecture [
 
 	^ super new
@@ -33,7 +34,7 @@ PBBootstrap class >> forArchitecture: architecture [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBootstrap class >> forArchitecture: architecture buildNumber: buildNumber versionInfo: versionInfo [
 	
 	^ super new
@@ -43,7 +44,7 @@ PBBootstrap class >> forArchitecture: architecture buildNumber: buildNumber vers
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBootstrap class >> fromCommandLine [
 	| options architecture buildNumber versionInfo |
 	options := CommandLineArguments new.
@@ -64,13 +65,13 @@ PBBootstrap class >> fromCommandLine [
 	^ self forArchitecture: architecture buildNumber: buildNumber versionInfo: versionInfo
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBootstrap class >> new [
 
 	self error: 'Please use one of the factory methods #for32Bits or #for64Bits'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBBootstrap class >> repositoryLocation [
 	"Returns the location of the repository that we want to bootstrap, which is usually the working directory. Can be overridden if BOOTSTRAP_REPOSITORY is specified"
 	^ (Smalltalk os environment
@@ -78,19 +79,19 @@ PBBootstrap class >> repositoryLocation [
 		ifAbsent: [ '.' ]) asFileReference
 ]
 
-{ #category : #'package-names' }
+{ #category : 'package-names' }
 PBBootstrap >> allPackagesForHermes [
 
 	^ #BaselineOfPharoBootstrap asClass allPackageNames , #BaselineOfTraits asClass packagesToExportWithHermes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> architecture: aString [
 
 	architecture := aString
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 PBBootstrap >> bootstrap [
 
 	PBStepStartedSignal emit: 'Starting  Process.'.
@@ -110,25 +111,25 @@ PBBootstrap >> bootstrap [
 	PBStepFinishedSignal emit: 'Process ended.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> bootstrapCacheDirectory [
 
 	^ (Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> buildNumber [
 
 	^ buildNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> buildNumber: aBuildNumber [
 
 	buildNumber := aBuildNumber
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 PBBootstrap >> createImage [
 
 	| builder |
@@ -142,7 +143,7 @@ PBBootstrap >> createImage [
 	builder bootstrap
 ]
 
-{ #category : #'pre-requisites' }
+{ #category : 'pre-requisites' }
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
@@ -150,7 +151,7 @@ PBBootstrap >> ensureBaselineOfPharoBootstrap [
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> exportAllPackagesIntoMcz [
 
 	self mczCache directory ensureDeleteAll; ensureCreateDirectory.
@@ -158,13 +159,13 @@ PBBootstrap >> exportAllPackagesIntoMcz [
 		self exportIntoMcz: packageName ].
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> exportIntoMcz: aPackageName [
 
 	self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> exportKernelPackageNames [
 	"Export list of kernel package names for RPackage initialization to a file"
 		
@@ -173,7 +174,7 @@ PBBootstrap >> exportKernelPackageNames [
 	
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> exportKernelProtocols [
 	"This method exports all protocols of the methots in the kernel in a single text file to be easily readed and imported from the 'in-midst of initialization' image."
 		
@@ -182,7 +183,7 @@ PBBootstrap >> exportKernelProtocols [
 	
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> exportMonticelloInStFile [
 
 	self
@@ -206,7 +207,7 @@ PBBootstrap >> exportMonticelloInStFile [
 
 ]
 
-{ #category : #exporting }
+{ #category : 'exporting' }
 PBBootstrap >> exportPackageNamesFor: packageNames to: aTextFile [
 
 	"export list of packages for the RPackage initialization. Eech package on standalone line"
@@ -216,7 +217,7 @@ PBBootstrap >> exportPackageNamesFor: packageNames to: aTextFile [
 		packageNames do: [ :each | stream nextPutAll: each; cr ]].
 ]
 
-{ #category : #exporting }
+{ #category : 'exporting' }
 PBBootstrap >> exportPackages: packageList intoFile: aFileName [
 
 	self
@@ -225,7 +226,7 @@ PBBootstrap >> exportPackages: packageList intoFile: aFileName [
 		intoFile: aFileName
 ]
 
-{ #category : #exporting }
+{ #category : 'exporting' }
 PBBootstrap >> exportPackages: packageList usingInitializeScript: aScriptString intoFile: aFileName [
 
 	self
@@ -236,7 +237,7 @@ PBBootstrap >> exportPackages: packageList usingInitializeScript: aScriptString 
 		intoFile: aFileName
 ]
 
-{ #category : #exporting }
+{ #category : 'exporting' }
 PBBootstrap >> exportPackages: packageList withBlacklistedClasses: blacklistedClasses withBlacklistedMethods: methods usingInitializeScript: aString intoFile: aFileName [
 
 	| mcst | 	
@@ -259,7 +260,7 @@ PBBootstrap >> exportPackages: packageList withBlacklistedClasses: blacklistedCl
 	].
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> exportProtocolsFor: packageNames to: protocolsFile [
 
 	"This methods takes the packages from the (filetree) origin repository, reads all methods in these packages and export the their protocols in a single text file with the following format:
@@ -281,7 +282,7 @@ PBBootstrap >> exportProtocolsFor: packageNames to: protocolsFile [
 		      stream nextPutAll: def category asString; cr ]]]
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> generateHermesFiles [
 	| oldPackage hePackage writer |
 	self hermesPackageNames
@@ -296,40 +297,40 @@ PBBootstrap >> generateHermesFiles [
 			writer close]
 ]
 
-{ #category : #'package-names' }
+{ #category : 'package-names' }
 PBBootstrap >> hermesPackageNames [
 	^ #BaselineOfPharoBootstrap asClass packagesToExportWithHermes , #BaselineOfTraits asClass packagesToExportWithHermes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> imageName: aString [ 
 	
 	imageReference := (self bootstrapCacheDirectory / aString) asFileReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBBootstrap >> initialize [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBBootstrap >> initializeImage [
 	
 ]
 
-{ #category : #'package-names' }
+{ #category : 'package-names' }
 PBBootstrap >> kernelPackageNames [
 
 	self ensureBaselineOfPharoBootstrap.
 	^ #BaselineOfPharoBootstrap asClass kernelPackageNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> mczCache [
 	
 	^ MCDirectoryRepository new directory: (self bootstrapCacheDirectory / 'pharo-local' / 'package-cache') ensureCreateDirectory
 ]
 
-{ #category : #'package-names' }
+{ #category : 'package-names' }
 PBBootstrap >> monticelloNetworkPackageNames [
 
 	^ #('Network-Kernel'
@@ -342,13 +343,13 @@ PBBootstrap >> monticelloNetworkPackageNames [
 		 'Zodiac-Core')
 ]
 
-{ #category : #'package-names' }
+{ #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
 	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> originRepository [
 	| repositoryReference |
 	repositoryReference := self repositoryLocation / 'src'.
@@ -359,13 +360,13 @@ PBBootstrap >> originRepository [
 				yourself]
 ]
 
-{ #category : #'package-names' }
+{ #category : 'package-names' }
 PBBootstrap >> packagesToExportAsMCZ [
 
 	^ #(BaselineOfMetacello) , (#BaselineOfMetacello asClass allPackageNames)  , self monticelloPackageNames , self hermesPackageNames, self kernelPackageNames , self monticelloNetworkPackageNames
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> prepareBootstrap [
 	
 	self
@@ -379,7 +380,7 @@ PBBootstrap >> prepareBootstrap [
 		prepareEnvironmentForExport.
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> prepareEnvironmentForExport [
 	| allPackages |
 
@@ -403,7 +404,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
@@ -411,19 +412,19 @@ PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment clean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> repositoryLocation [
 
 	^ repositoryLocation ifNil: [ self class repositoryLocation ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> repositoryLocation: aFileReference [
 
 	repositoryLocation := aFileReference
 ]
 
-{ #category : #'package-names' }
+{ #category : 'package-names' }
 PBBootstrap >> sUnitPackageNames [
 
 	self ensureBaselineOfPharoBootstrap.
@@ -431,12 +432,12 @@ PBBootstrap >> sUnitPackageNames [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> versionInfo [
 	^ versionInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBBootstrap >> versionInfo: anObject [
 	versionInfo := anObject
 ]

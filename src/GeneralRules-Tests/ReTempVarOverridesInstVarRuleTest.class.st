@@ -2,38 +2,40 @@
 A RBTempVarOverridesInstVarRuleTest is a test class for testing the behavior of RBTempVarOverridesInstVarRule
 "
 Class {
-	#name : #ReTempVarOverridesInstVarRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#name : 'ReTempVarOverridesInstVarRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
 	#instVars : [
 		'dummy1',
 		'dummy2',
 		'dummy3',
 		'dummy4'
 	],
-	#category : #'GeneralRules-Tests-Migrated'
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRuleTest >> dummy1 [
 	^ dummy1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRuleTest >> dummy2 [
 	^ dummy2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRuleTest >> dummy3 [
 	^ dummy3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRuleTest >> dummy4 [
 	^ dummy4
 ]
 
-{ #category : #sample }
+{ #category : 'sample' }
 ReTempVarOverridesInstVarRuleTest >> sampleMethod: dummy1 [
 	"I override dummy1, dummy2, dummy3  "
 	| dummy2 |
@@ -41,7 +43,7 @@ ReTempVarOverridesInstVarRuleTest >> sampleMethod: dummy1 [
 	^ dummy2 value: dummy1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTempVarOverridesInstVarRuleTest >> testRule [
 	| critiques |
 	critiques := self myCritiquesOnMethod: self class >> #sampleMethod:.

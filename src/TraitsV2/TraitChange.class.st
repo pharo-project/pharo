@@ -99,10 +99,9 @@ TraitChange >> initialize [
 
 { #category : 'operations' }
 TraitChange >> remove: aSelector into: aClass changes: results [
-	| isLocal inTrait priorMethod priorProtocol |
 
+	| isLocal inTrait |
 	"I handle the removal of a selector. There are many cases to check."
-
 	isLocal := aClass localSelectors includes: aSelector.
 	inTrait := aClass traitComposition traitDefining: aSelector ifNone: [ nil ].
 
@@ -114,34 +113,22 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 
 	"If the removed method was shadowing a method from a trait composition, the method from the trait composition
 	should be installed. And the change propagated as an update, not as a removal."
-	inTrait
-		ifNotNil: [
-			inTrait installSelector: aSelector into: aClass.
-			results updatedSelectors add: aSelector.
-			^ self ].
+	inTrait ifNotNil: [
+		inTrait installSelector: aSelector into: aClass.
+		results updatedSelectors add: aSelector.
+		^ self ].
 
 
 	"We have to remove the method that was removed in a used trait."
-
-	(aClass methodDict includesKey: aSelector) ifTrue:[
-		priorMethod := aClass methodDict at: aSelector.
-		priorProtocol := aClass protocolOfSelector: aSelector.
-
-		priorMethod removeFromPackage.
-		aClass removeFromProtocols: aSelector.
-		aClass methodDict removeKey: aSelector.
-
-		SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: aClass
-	].
+	(aClass methodDict includesKey: aSelector) ifTrue: [ aClass removeSelector: aSelector ].
 
 	"The change is propagated as a removal"
 	results removedSelectors add: aSelector.
 
 	"If the updated method is aliased (it has alias pointing to it), they should be removed also"
-	(aClass traitComposition reverseAlias: aSelector)
-		do: [ :aliased |
-			aClass methodDict removeKey: aliased ifAbsent: [  ].
-			results removedSelectors add: aliased ]
+	(aClass traitComposition reverseAlias: aSelector) do: [ :aliased |
+		aClass methodDict removeKey: aliased ifAbsent: [  ].
+		results removedSelectors add: aliased ]
 ]
 
 { #category : 'accessing' }

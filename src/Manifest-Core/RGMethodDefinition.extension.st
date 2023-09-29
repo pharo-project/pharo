@@ -1,6 +1,6 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : 'RGMethodDefinition' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RGMethodDefinition >> arrayStringForManifest [
 	| array |
 	array := Array new: 2.
@@ -9,7 +9,7 @@ RGMethodDefinition >> arrayStringForManifest [
 	^ array
 ]
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RGMethodDefinition class >> manifestReadOn: aArray [
 
  	^ self className: (aArray at: 1)
@@ -17,7 +17,7 @@ RGMethodDefinition class >> manifestReadOn: aArray [
 		isMetaSide: ((aArray at: 3) = #true)
 ]
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RGMethodDefinition >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class asString.

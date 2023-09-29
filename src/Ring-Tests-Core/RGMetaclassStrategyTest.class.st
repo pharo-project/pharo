@@ -1,10 +1,11 @@
 Class {
-	#name : #RGMetaclassStrategyTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGMetaclassStrategyTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
@@ -14,7 +15,7 @@ RGMetaclassStrategyTest >> testCreationByMethod [
 	self assert: (anRGBehavior behaviorStrategy isMetaclassStrategy)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testIncompatibleBehavior [
 
 	| anRGBehavior aTrait |
@@ -61,7 +62,7 @@ RGMetaclassStrategyTest >> testIncompatibleBehavior [
 		anRGBehavior trait ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testKind [
 
 	| strategy |
@@ -73,7 +74,7 @@ RGMetaclassStrategyTest >> testKind [
 	self deny: strategy isMetaclassTraitStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testResolvingConsistency [
 
 	| anObject |
@@ -81,7 +82,7 @@ RGMetaclassStrategyTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testSetBaseClass [
 
 	| env class1 class2 |
@@ -94,7 +95,7 @@ RGMetaclassStrategyTest >> testSetBaseClass [
 	self assert: class1 metaclass baseBehavior equals: class2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testSharedPools [
 
 	| anRGBehavior |
@@ -103,7 +104,7 @@ RGMetaclassStrategyTest >> testSharedPools [
 	self assert: (anRGBehavior sharedPools) isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testStoreString [
 
 	| anRGBehavior |
@@ -115,7 +116,7 @@ RGMetaclassStrategyTest >> testStoreString [
 	self assert: anRGBehavior storeString equals: '(RGMetaclass named: #SomeMetaclass)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassStrategyTest >> testTheMetaclass [
 
 	| anRGBehavior |

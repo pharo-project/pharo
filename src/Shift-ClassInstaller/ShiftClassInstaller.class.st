@@ -190,13 +190,11 @@ ShiftClassInstaller >> make [
 		builder builderEnhancer afterMigratingClass: builder installer: self.
 
 		builder builderEnhancer propagateChangesToRelatedClasses: newClass installer: self.
+		
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
 		newClass := oldClass.
 	].
-
-	self fixSlotScope: newClass.
-	self fixSlotScope: newClass class.
 
 	self recategorize: newClass to: builder category asSymbol.
 	self comment: newClass.
@@ -256,6 +254,9 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 		{ oldClass. builder oldMetaclass } , oldClassVariables asArray
 			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.
 
+		self fixSlotScope: newClass.
+		self fixSlotScope: newClass class.
+
 		newClass classPool rehash.
 	] valueUninterruptably
 ]
@@ -295,15 +296,7 @@ ShiftClassInstaller >> oldClass: anObject [
 { #category : 'notifications' }
 ShiftClassInstaller >> recategorize: aClass to: newCategory [
 
-	| oldCategory |
-	oldCategory := oldClass ifNotNil: [ oldClass category ].
-	oldCategory == newCategory ifTrue: [ ^ self ].
-
-	self installingEnvironment organization ifNotNil: [ :systemOrganizer | aClass basicCategory: newCategory ].
-
-	(oldCategory isNil or: [ oldCategory = Class unclassifiedCategory ])
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
-		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
+	aClass category: newCategory
 ]
 
 { #category : 'building' }

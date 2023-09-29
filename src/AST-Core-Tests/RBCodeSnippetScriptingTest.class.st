@@ -1,10 +1,12 @@
 Class {
-	#name : #RBCodeSnippetScriptingTest,
-	#superclass : #RBCodeSnippetTest,
-	#category : #'AST-Core-Tests-Snippets'
+	#name : 'RBCodeSnippetScriptingTest',
+	#superclass : 'RBCodeSnippetTest',
+	#category : 'AST-Core-Tests-Snippets',
+	#package : 'AST-Core-Tests',
+	#tag : 'Snippets'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetScriptingTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new

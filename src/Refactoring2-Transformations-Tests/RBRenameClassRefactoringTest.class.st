@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameClassRefactoringTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRenameClassRefactoringTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameClassRefactoringTest >> testFailureBadName [
 
 	self shouldFail: (RBRenameClassRefactoring
@@ -14,21 +16,21 @@ RBRenameClassRefactoringTest >> testFailureBadName [
 		(RBRenameClassRefactoring rename: #RBLintRuleTestData to: #'Ob ject')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameClassRefactoringTest >> testFailureExistingName [
 
 	self shouldFail:
 		(RBRenameClassRefactoring rename: self class name to: #Object)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameClassRefactoringTest >> testFailureMetaClassFailure [
 
 	self shouldFail:
 		(RBRenameClassRefactoring rename: self class class name to: #Foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassRefactoringTest >> testModelRenameSequenceClass [
 
 	model defineClass: 'Object << #Foo1
@@ -52,7 +54,7 @@ RBRenameClassRefactoringTest >> testModelRenameSequenceClass [
 		  equals: (self parseMethod: 'objectName ^ #(Foo3)')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassRefactoringTest >> testRefactoring [
 
 	| refactoring class |
@@ -77,7 +79,7 @@ RBRenameClassRefactoringTest >> testRefactoring [
 	self assert: class superclass name equals: #Thing
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassRefactoringTest >> testRenameClass [
 	| refactoring class classA classB classC aModel |
 
@@ -103,7 +105,7 @@ RBRenameClassRefactoringTest >> testRenameClass [
 								^RBNewClassName new')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassRefactoringTest >> testRenameClassFromTrait [
 	| refactoring class classA classB classC aModel |
 
@@ -122,7 +124,7 @@ RBRenameClassRefactoringTest >> testRenameClassFromTrait [
 	self assert: ((refactoring model classNamed: #RBClassUsingSharedPoolForTestData) methodFor: #methodFromTrait) modelClass name equals: #RBTDummy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassRefactoringTest >> testUnmarkRemovedClassIfRenameTargetClass [
 	"Unmark a removed class if we rename another class to the removed class name.
 rename class A to C (class A is marked as removed)

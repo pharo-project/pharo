@@ -4,16 +4,17 @@ MetacelloToolbox implements a toolbox API for Metacello.
 The toolbox methods on the class-side implement scripts for a number of commonly performed Metacello development tasks. The methods should be used in development scripts or GUI tools so that a common implementation is preserved across the toolset.
 "
 Class {
-	#name : #MetacelloToolBox,
-	#superclass : #Object,
+	#name : 'MetacelloToolBox',
+	#superclass : 'Object',
 	#instVars : [
 		'project',
 		'methodSpec'
 	],
-	#category : #'Metacello-ToolBox'
+	#category : 'Metacello-ToolBox',
+	#package : 'Metacello-ToolBox'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox class >> appendDescription: aString to: versionSpec [
 	aString isEmpty
 		ifTrue: [ ^ self ].
@@ -29,7 +30,7 @@ MetacelloToolBox class >> appendDescription: aString to: versionSpec [
 			versionSpec description: strm contents ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloToolBox class >> baseNameOf: configurationClassName [
   "Return the baseName for the given configuration class name."
 
@@ -42,7 +43,7 @@ MetacelloToolBox class >> baseNameOf: configurationClassName [
     ifFalse: [ configurationClassName ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloToolBox class >> baseNameOfConfiguration: aConfigurationClass [
 	"Return the baseName for the given configuration class."
 
@@ -50,7 +51,7 @@ MetacelloToolBox class >> baseNameOfConfiguration: aConfigurationClass [
 	^self baseNameOf: aConfigurationClass name asString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloToolBox class >> baselineNameFrom: baseName [
   "Return the fully-qualified baseline class name."
 
@@ -58,14 +59,14 @@ MetacelloToolBox class >> baselineNameFrom: baseName [
   ^ MetacelloScriptEngine baselineNameFrom: baseName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloToolBox class >> baselineNamed: baseName [
   ^ self new
     baselineNamed: baseName;
     yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloToolBox class >> checkForCriticalValidationIssues: configurationBasename [
 	"Validate the named configuration and filter out all non-critical issues."
 	<apiDocumentation>
@@ -74,7 +75,7 @@ MetacelloToolBox class >> checkForCriticalValidationIssues: configurationBasenam
 		select: [ :issue | issue isCritical ]
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> compareVersion: fromVersionString for: configurationBasename to: toVersionString [
 	"Return a MetacelloMCVersionDiffReport that whose fields 
 		#additions
@@ -101,7 +102,7 @@ MetacelloToolBox class >> compareVersion: fromVersionString for: configurationBa
 	^ report
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> compareVersionsIn: aConfigurationClass [
 	"Compare the current #stable version to current #development version"
 
@@ -115,7 +116,7 @@ MetacelloToolBox class >> compareVersionsIn: aConfigurationClass [
 		to: developmentVersion versionString
 ]
 
-{ #category : #'tool support' }
+{ #category : 'tool support' }
 MetacelloToolBox class >> compiledMethodForVersion: aMetacelloVersion [
 
 	| toolbox pragma |
@@ -124,7 +125,7 @@ MetacelloToolBox class >> compiledMethodForVersion: aMetacelloVersion [
 	^pragma method
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloToolBox class >> configurationClasses [
     "Return a set of the Metacello configuration classes that have been loaded into the image."
 
@@ -132,7 +133,7 @@ MetacelloToolBox class >> configurationClasses [
     ^ MetacelloProjectRegistration configurationClasses
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloToolBox class >> configurationNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 
@@ -140,7 +141,7 @@ MetacelloToolBox class >> configurationNameFrom: baseName [
     ^ MetacelloScriptEngine configurationNameFrom: baseName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloToolBox class >> configurationNamed: baseName [
 
 	^self new 
@@ -148,7 +149,7 @@ MetacelloToolBox class >> configurationNamed: baseName [
 		yourself
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> copyConfiguration: aConfigurationClass to: metacelloRepositoryString [
 	"Copy the current configuration mcz file to the given repository (i.e., http: //... or directory://, etc.)"
 
@@ -162,7 +163,7 @@ MetacelloToolBox class >> copyConfiguration: aConfigurationClass to: metacelloRe
 				yourself)
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createBaseline: baselineVersionString for: configurationBasename from: existingBaselineVersionString description: aString [
 	"Create a new baseline version based on the specification in an existing baseline"
 
@@ -175,7 +176,7 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
 		versionSpecsDo: [ :attribute :versionSpec | true ]
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createBaseline: baselineVersionString for: configurationBasename from: existingBaselineVersionString description: aString versionSpecsDo: versionSpecBlock [
 	"Create a new baseline version based on the specification in an existing baseline. Evaluate <versionSpecBlock> for each section."
 
@@ -199,7 +200,7 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
 	^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createBaseline: baselineVersionString for: configurationBasename repository: repositoryDescription requiredProjects: projectList packages: packageList dependencies: dependencies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: groups [
 	"Create a new baseline version based on the specified project structure.
 		repositoryDescription - metacello repository string
@@ -238,7 +239,7 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
 	^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createBaseline: baselineVersionString for: configurationBasename repository: repositoryDescription requiredProjects: projectList packages: packageList repositories: repositories dependencies: dependencies groups: groups [
     "Create a new baseline version based on the specified project structure.
 		repositoryDescription - metacello repository string
@@ -267,7 +268,7 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
     ^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createBaselineOf: baselineBasename requiredProjects: projectList packages: packageList repositories: repositories dependencies: dependencies groups: groups [
   "Create a new baseline in a BaselinOf based on the specified project structure.
 		repositoryDescription - metacello repository string
@@ -293,7 +294,7 @@ MetacelloToolBox class >> createBaselineOf: baselineBasename requiredProjects: p
   ^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createBranch: branchName for: configurationBasename description: commitMessage [
 	"Create a new branch for the project and save the configuration to it's repository."
 	
@@ -309,7 +310,7 @@ MetacelloToolBox class >> createBranch: branchName for: configurationBasename de
 	^nil
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createDevelopment: developmentVersionString for: configurationBasename from: existingDevelopmentVersionString description: aString [
 	"Create a new development version based on the specifications in an existing development version. Modify the #development symbolic version to reference the new version."
 
@@ -341,7 +342,7 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 	^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createDevelopment: developmentVersionString for: configurationBasename from: existingDevelopmentVersionString imports: imports description: aString [
 	"Create a new development version based on the specifications in an existing version, but override the imports for the new version. Modify the #development symbolic version to reference the new version."
 
@@ -359,7 +360,7 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 	^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createDevelopment: developmentVersionString for: configurationBasename importFromBaseline: baselineVersionString description: aString [
 	"Create a new development version based on the specifications in an existing baseline version. Modify the #development symbolic version to reference the new version."
 
@@ -390,7 +391,7 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 	^ toolbox
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> createNewBaselineVersionIn: aConfigurationClass description: creationMessage [
 	"Create a new baseline version based upon #stable version's baseline.
 	 A new baseline should be created if new packages or projects have been added or package dependencies have changed."
@@ -407,7 +408,7 @@ MetacelloToolBox class >> createNewBaselineVersionIn: aConfigurationClass descri
 		description: creationMessage
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> createNewBaselineVersionIn: aConfigurationClass description: creationMessage versionSpecsDo: versionSpecBlock [
 	"Create a new baseline version based upon #stable version's baseline. Evaluate <versionSpecBlock> for each section.
 	 A new baseline should be created if new packages or projects have been added or package dependencies have changed."
@@ -425,7 +426,7 @@ MetacelloToolBox class >> createNewBaselineVersionIn: aConfigurationClass descri
 		versionSpecsDo: versionSpecBlock
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> createNewBaselineVersionIn: aConfigurationClass requiredProjects: projectList packages: packageList dependencies: dependencies  groups: groups [
 	"Create a new baseline version based upon #stable version's baseline, modify the baseline based on the provided structural additions:
 		projectList - collection of project base names (without ConfigurationOf prefix)
@@ -461,7 +462,7 @@ MetacelloToolBox class >> createNewBaselineVersionIn: aConfigurationClass requir
 		groups: groups
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> createNewDevelopmentVersionIn: aConfigurationClass description: creationMessage [
 	"Create a new development version using the #stable version as model."
 
@@ -477,7 +478,7 @@ MetacelloToolBox class >> createNewDevelopmentVersionIn: aConfigurationClass des
 		description: creationMessage
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> createVersion: targetVersionString for: configurationBasename from: sourceVersionString description: aString [
 	"Create a new version based on the specifications in the given version. 
 	 If the new version string contains 'baseline', then create a new baseline version.
@@ -520,7 +521,7 @@ MetacelloToolBox class >> createVersion: targetVersionString for: configurationB
 						description: aString ] ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> descriptionForValidationReasonCode: reasonCode [
 	"Description of validation reasonCode"
 
@@ -528,7 +529,7 @@ MetacelloToolBox class >> descriptionForValidationReasonCode: reasonCode [
 	^MetacelloMCVersionValidator descriptionForReasonCode: reasonCode
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> modifyBaselineVersionIn: aConfigurationClass repository: repositoryDescription requiredProjects: projectList packages: packageList dependencies: dependencies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: groups [
 	"Modify #development version's baseline version based on the given structure
 		repositoryDescription - metacello repository string
@@ -565,7 +566,7 @@ MetacelloToolBox class >> modifyBaselineVersionIn: aConfigurationClass repositor
 		groups: groups
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> modifyDevelopmentVersionIn: aConfigurationClass imports: imports requiredProjects: projectList packages: packageList description: message [
 	"Modify #development version's baseline version based on the given structure
 		imports - imports array
@@ -604,7 +605,7 @@ MetacelloToolBox class >> modifyDevelopmentVersionIn: aConfigurationClass import
 		description: message
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> modifySymbolicVersion: symbolicVersionSymbol for: configurationBasename attribute: attribute to: versionString [
 	"Set the value of the symbolic version for the given attribute to the given version string"
 
@@ -617,7 +618,7 @@ MetacelloToolBox class >> modifySymbolicVersion: symbolicVersionSymbol for: conf
 	^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> modifyVersion: sourceVersionString for: configurationBasename projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 	"Modify the project, package and/or group specifications for the given version"
 
@@ -633,7 +634,7 @@ MetacelloToolBox class >> modifyVersion: sourceVersionString for: configurationB
 			true ]
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> modifyVersion: sourceVersionString for: configurationBasename versionSpecsDo: aBlock [
 	"Modify the version specifications for the given version"
 
@@ -643,7 +644,7 @@ MetacelloToolBox class >> modifyVersion: sourceVersionString for: configurationB
 		commitMethod
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> modifyVersion: sourceVersionString section: sectionAttributeOrPath for: configurationBasename repository: repositoryDescription requiredProjects: projectList packages: packageList dependencies: dependencies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: groups [
 	"Modify a new version based on the specified project structure.
 		repositoryDescription - metacello repository string
@@ -680,14 +681,14 @@ MetacelloToolBox class >> modifyVersion: sourceVersionString section: sectionAtt
 	^ toolbox
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloToolBox class >> platformAttributes [
 	"Answer the list of platform attributes for the current platform"
 	<apiDocumentation>
 	^MetacelloPlatform current defaultPlatformAttributes
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> releaseDevelopmentVersionIn: aConfigurationClass description: commitMessage [
 	"Release #development version: set version blessing to #release, update the #development and #stable symbolic version methods and save the configuration."
 
@@ -699,7 +700,7 @@ MetacelloToolBox class >> releaseDevelopmentVersionIn: aConfigurationClass descr
 		saveConfigurationPackageFor: aConfigurationClass name asString description: commitMessage
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString for: configurationBasename from: developmentVersionString [
 	"Update the #development and #earlyAccess symbolic versions."
 
@@ -753,7 +754,7 @@ MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString fo
 	^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> releaseVersion: developmentVersionString for: configurationBasename [
 	"Set the #common blessing to #release and set the #common #stable symbolic version to the given version."
 
@@ -765,7 +766,7 @@ MetacelloToolBox class >> releaseVersion: developmentVersionString for: configur
 		platformAttribute: #common
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> releaseVersion: developmentVersionString for: configurationBasename blessingAttribute: attribute platformAttribute: platformAttribute [
 	<apiDocumentation>
 	"Set the blessing to #release and set the #stable symbolic version to the given version, using the given attributes for each."
@@ -787,7 +788,7 @@ MetacelloToolBox class >> releaseVersion: developmentVersionString for: configur
 	^ toolbox
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> saveConfigurationPackageFor: configurationBasename description: commitMessage [
 	"Save mcz file that contains the configuration to it's repository."
 	
@@ -802,7 +803,7 @@ MetacelloToolBox class >> saveConfigurationPackageFor: configurationBasename des
 	^nil
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionString for: configurationBasename description: commitMessage [
   "Save modified mcz files associated with the project. Then update given version to reflect the new mcz file versions."
 
@@ -857,7 +858,7 @@ MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionStr
   ^ modifiedPackages
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> saveModifiedPackagesAndConfigurationIn: aConfigurationClass description: commitMessage [
 	"Save modified mcz files, update and then save the configuration."
 
@@ -877,7 +878,7 @@ MetacelloToolBox class >> saveModifiedPackagesAndConfigurationIn: aConfiguration
 	self saveConfigurationPackageFor: aConfigurationClass name asString description: commitMessage
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> saveModifiedPackagesIn: aConfigurationClass description: commitMessage [
 	"Save modified mcz files and update the configuration."
 
@@ -891,7 +892,7 @@ MetacelloToolBox class >> saveModifiedPackagesIn: aConfigurationClass descriptio
 			description: commitMessage
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> stableVersion: stableVersionString for: configurationBasename platformAttribute: platformAttribute [
 	<apiDocumentation>
 	"Set the #stable symbolic version to the given version, using the given platformAttribute."
@@ -902,14 +903,14 @@ MetacelloToolBox class >> stableVersion: stableVersionString for: configurationB
 		commitMethod.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox class >> stripVersionStringForSelector: versionString [
 
 	^((versionString copyWithout: $.) copyWithout: $-) 
 		copyReplaceAll: 'baseline' with: ''
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> updateDescription: developmentVersionString for: configurationBasename description: message [
 	"Update description"
 
@@ -930,7 +931,7 @@ MetacelloToolBox class >> updateDescription: developmentVersionString for: confi
 		commitMethod
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> updateDevelopment: developmentVersionString for: configurationBasename updatePackages: updatePackages description: message [
 	"Update project specs and (conditionally) the package specs in the given version to reflect the new mcz file and project versions."
 
@@ -955,7 +956,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 	^ updatedSpecs
 ]
 
-{ #category : #scripts }
+{ #category : 'scripts' }
 MetacelloToolBox class >> updateDevelopment: developmentVersionString for: configurationBasename updateProjects: updateProjects description: message [
 	"Update packageSpecs and (conditionally) the project specs in the given version to reflect the new mcz file and project versions."
 
@@ -980,7 +981,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 	^ updatedSpecs
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloToolBox class >> updateToLatestPackageVersionsIn: aConfigurationClass description: descriptionString [
 	"Update the #development version to match currently loaded mcz files."
 
@@ -994,7 +995,7 @@ MetacelloToolBox class >> updateToLatestPackageVersionsIn: aConfigurationClass d
 		description: descriptionString
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> validateBaseline: baselineClass [
   "Check the baseline for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). "
 
@@ -1002,7 +1003,7 @@ MetacelloToolBox class >> validateBaseline: baselineClass [
   ^ self validateBaseline: baselineClass debug: #() recurse: false
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> validateBaseline: baselineClass debug: debugList recurse: aBool [
   "Check the baseline for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). "
 
@@ -1013,7 +1014,7 @@ MetacelloToolBox class >> validateBaseline: baselineClass debug: debugList recur
     recurse: aBool
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> validateConfiguration: configurationClass [
 	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). "
 
@@ -1021,7 +1022,7 @@ MetacelloToolBox class >> validateConfiguration: configurationClass [
 	^ self validateConfiguration: configurationClass debug: #() recurse: false
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> validateConfiguration: configurationClass debug: debugList recurse: aBool [
 	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). "
 
@@ -1029,7 +1030,7 @@ MetacelloToolBox class >> validateConfiguration: configurationClass debug: debug
 	^ MetacelloMCVersionValidator validateConfiguration: configurationClass debug: debugList recurse: aBool
 ]
 
-{ #category : #'load validation' }
+{ #category : 'load validation' }
 MetacelloToolBox class >> validatePlatformLoad: platformAttribute for: configurationBasename [
 	"Validate, Load, and run tests for all versions of the given configuration. Return list of issues."
 
@@ -1085,7 +1086,7 @@ MetacelloToolBox class >> validatePlatformLoad: platformAttribute for: configura
 	^ issues
 ]
 
-{ #category : #'load validation' }
+{ #category : 'load validation' }
 MetacelloToolBox class >> validatePlatformLoad: platformAttribute for: configurationBasename version: versionString [
 	"Load, and run tests for the given version of the configuration. Mark as #stable, if load and tests are clean. Return list of issues."
 
@@ -1121,7 +1122,7 @@ MetacelloToolBox class >> validatePlatformLoad: platformAttribute for: configura
 	^ issues
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> validateProject: aMetacelloProject version: versionString [
 	"Check a specific version in the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). "
 
@@ -1129,7 +1130,7 @@ MetacelloToolBox class >> validateProject: aMetacelloProject version: versionStr
 	^ self validateProject: aMetacelloProject version: versionString debug: #() recurse: false
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox class >> validateProject: aMetacelloProject version: versionString debug: debugList recurse: aBool [
 	"Check a specific version in the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). "
 
@@ -1141,14 +1142,14 @@ MetacelloToolBox class >> validateProject: aMetacelloProject version: versionStr
 		recurse: aBool
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> abortMethod [
 
 	project := project configuration class project.	"recalculate project"
 	methodSpec := nil
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addBaselineOfSection: sectionAttributeOrPath requiredProjects: projectList packages: packageList dependencies: dependecies groups: groups versionSpecsDo: aBlock [
   "
 		repositoryDescription - metacello repository string
@@ -1173,7 +1174,7 @@ MetacelloToolBox >> addBaselineOfSection: sectionAttributeOrPath requiredProject
     versionSpecsDo: aBlock
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addBaselineOfSection: sectionAttributeOrPath requiredProjects: projectList packages: packageList dependencies: dependecies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: groups versionSpecsDo: aBlock [
   "
 		projectList - collection of project base names (without ConfigurationOf prefix)
@@ -1243,7 +1244,7 @@ MetacelloToolBox >> addBaselineOfSection: sectionAttributeOrPath requiredProject
     versionSpec: versionSpec
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addBaselineOfSection: sectionAttributeOrPath requiredProjects: projectList packages: packageList repositories: repositories dependencies: dependecies groups: groups versionSpecsDo: aBlock [
   "
 		repositoryDescription - metacello repository string
@@ -1269,7 +1270,7 @@ MetacelloToolBox >> addBaselineOfSection: sectionAttributeOrPath requiredProject
     versionSpecsDo: aBlock
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addSection: sectionAttributeOrPath repository: repositoryDescription requiredProjects: projectList packages: packageList dependencies: dependecies groups: groups versionSpecsDo: aBlock [
 	"
 		repositoryDescription - metacello repository string
@@ -1294,7 +1295,7 @@ MetacelloToolBox >> addSection: sectionAttributeOrPath repository: repositoryDes
 		versionSpecsDo: aBlock
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addSection: sectionAttributeOrPath repository: repositoryDescription requiredProjects: projectList packages: packageList dependencies: dependecies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: groups versionSpecsDo: aBlock [
     "
 		repositoryDescription - metacello repository string
@@ -1353,7 +1354,7 @@ MetacelloToolBox >> addSection: sectionAttributeOrPath repository: repositoryDes
     self methodSpec addMethodSection: sectionAttributeOrPath asMetacelloAttributePath versionSpec: versionSpec
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addSection: sectionAttributeOrPath repository: repositoryDescription requiredProjects: projectList packages: packageList repositories: repositories dependencies: dependecies groups: groups versionSpecsDo: aBlock [
     "
 		repositoryDescription - metacello repository string
@@ -1380,7 +1381,7 @@ MetacelloToolBox >> addSection: sectionAttributeOrPath repository: repositoryDes
         versionSpecsDo: aBlock
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addSectionsFrom: inputVersionStringOrSymbol forBaseline: forBaseline updateProjects: updateProjects updatePackages: updatePackages versionSpecsDo: aBlock [
     | constructor updatedSpecs projectAttributes fullVersionSpec version coll pragma imports visitedSpecs fromVersionString |
     constructor := self constructor.
@@ -1420,7 +1421,7 @@ MetacelloToolBox >> addSectionsFrom: inputVersionStringOrSymbol forBaseline: for
                 ifTrue: [ self methodSpec addMethodSection: methodSection attributePath versionSpec: versionSpec ] ]
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> addSymbolicSection: attribute version: versionString [
     self methodSpec methodSections
         do: [ :methodSection | 
@@ -1431,12 +1432,12 @@ MetacelloToolBox >> addSymbolicSection: attribute version: versionString [
     self methodSpec addMethodSection: attribute versionString: versionString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox >> baselineNameFrom: baseName [
   ^ self class baselineNameFrom: baseName
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> baselineNamed: baseName [
   | baselineName |
   "Check if the class does not exist"
@@ -1460,7 +1461,7 @@ MetacelloToolBox >> baselineNamed: baseName [
     project
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox >> buildMapFrom: mapList for: packageList [
 	| map |
 	map := Dictionary new.
@@ -1474,7 +1475,7 @@ MetacelloToolBox >> buildMapFrom: mapList for: packageList [
 	^ map
 ]
 
-{ #category : #'spec creation' }
+{ #category : 'spec creation' }
 MetacelloToolBox >> classicCreateProjectReferenceSpec: projectBaseName [
   | configurationName projectReferenceProject versionString |
   configurationName := self configurationNameFrom: projectBaseName.
@@ -1501,7 +1502,7 @@ MetacelloToolBox >> classicCreateProjectReferenceSpec: projectBaseName [
     yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox >> clearVersionSpec: versionSpec fullVersionSpec: fullVersionSpec updateProjects: updateProjects updatePackages: updatePackages [
 	versionSpec
 		specListProjectDo: [ :spec | 
@@ -1521,7 +1522,7 @@ MetacelloToolBox >> clearVersionSpec: versionSpec fullVersionSpec: fullVersionSp
 		groupDo: [ :ignored |  ]
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> commitBaselineOfMethod [
   | skipValidation |
   skipValidation := false.
@@ -1538,11 +1539,11 @@ MetacelloToolBox >> commitBaselineOfMethod [
   methodSpec := nil
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> commitConfiguration: commitComment [
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> commitMethod [
 	| skipValidation |
 	skipValidation := false.
@@ -1559,12 +1560,12 @@ MetacelloToolBox >> commitMethod [
 	methodSpec := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox >> configurationNameFrom: baseName [	
 	^self class configurationNameFrom: baseName
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> configurationNamed: baseName [
   | configurationName |
   "Check if the class does not exist"
@@ -1582,7 +1583,7 @@ MetacelloToolBox >> configurationNamed: baseName [
     project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloToolBox >> constructor [
 
 	| constructor |
@@ -1591,7 +1592,7 @@ MetacelloToolBox >> constructor [
 	^constructor
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> createBaselineOfMethod: selector inCategory: category [
   methodSpec := MetacelloBaselineOfMethodSpec new
     project: project;
@@ -1600,7 +1601,7 @@ MetacelloToolBox >> createBaselineOfMethod: selector inCategory: category [
     yourself
 ]
 
-{ #category : #'spec creation' }
+{ #category : 'spec creation' }
 MetacelloToolBox >> createConfiguration: baseName [
   | configurationName |
   "Check if the class does not exist"
@@ -1619,21 +1620,21 @@ MetacelloToolBox >> createConfiguration: baseName [
   ^ (MetacelloPlatform current globalNamed: configurationName asSymbol) project
 ]
 
-{ #category : #'spec creation' }
+{ #category : 'spec creation' }
 MetacelloToolBox >> createGroupSpec: baseName [
 	^ (self project groupSpec)
 		name: baseName;
 		yourself
 ]
 
-{ #category : #'spec creation' }
+{ #category : 'spec creation' }
 MetacelloToolBox >> createPackageSpec: baseName [
 	^ (project packageSpec)
 		name: baseName;
 		yourself
 ]
 
-{ #category : #'spec creation' }
+{ #category : 'spec creation' }
 MetacelloToolBox >> createProjectReferenceSpec: projectBaseName [
   | projectSpec |
   projectSpec := (Metacello image
@@ -1647,7 +1648,7 @@ MetacelloToolBox >> createProjectReferenceSpec: projectBaseName [
     yourself
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> createSymbolicVersionMethod: selector inCategory: category forVersion: versionSymbol [
 	| constructor |
 	methodSpec := (MetacelloSymbolicVersionMethodSpec new)
@@ -1660,7 +1661,7 @@ MetacelloToolBox >> createSymbolicVersionMethod: selector inCategory: category f
 	self methodSpec methodSections: (constructor extractSymbolicVersionSpecsFor: versionSymbol) asOrderedCollection.
 ]
 
-{ #category : #'spec creation' }
+{ #category : 'spec creation' }
 MetacelloToolBox >> createVersion: versionString [
 	| version  |
 	[ version := project version: versionString ]
@@ -1675,7 +1676,7 @@ MetacelloToolBox >> createVersion: versionString [
 	^version
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> createVersionMethod: selector inCategory: category forVersion: versionString [
 	
 	methodSpec := (MetacelloVersionMethodSpec new)
@@ -1686,7 +1687,7 @@ MetacelloToolBox >> createVersionMethod: selector inCategory: category forVersio
 		yourself.
 ]
 
-{ #category : #'spec creation' }
+{ #category : 'spec creation' }
 MetacelloToolBox >> createVersionSpec: versionString [
 	| versionSpec |
 	versionSpec := project versionSpec.
@@ -1694,7 +1695,7 @@ MetacelloToolBox >> createVersionSpec: versionString [
 	^ versionSpec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox >> editVersionSpecsForImport: constructor projectAttributes: projectAttributes active: activeSection fullVersionSpec: fullVersionSpec updateProjects: updateProjects updatePackages: updatePackages visited: visitedSpecs updated: updatedSpecs [
     | fileSpecified encounteredPackageSpecs |
     fileSpecified := Bag new.
@@ -1759,18 +1760,18 @@ MetacelloToolBox >> editVersionSpecsForImport: constructor projectAttributes: pr
                         updatePackages: updatePackages ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox >> ensureMetacello [
 	"noop for now"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloToolBox >> hasMethodForSymbolicVersion: versionSymbol [
 
 	^(self constructor extractSymbolicVersionPragmas at: versionSymbol ifAbsent: [ ^ false ]) size > 0
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> importFrom: inputVersionStringOrSymbol projectAttributes: projectAttributes inactiveAttributes: inactiveAttributesList updateProjects: updateProjects updatePackages: updatePackages versionSpecsDo: aBlock [
     | constructor updatedSpecs fullVersionSpec version visitedSpecs fromVersionString attributeSet |
     constructor := self constructor.
@@ -1825,7 +1826,7 @@ MetacelloToolBox >> importFrom: inputVersionStringOrSymbol projectAttributes: pr
                 ifTrue: [ self methodSpec addMethodSection: attributePath versionSpec: versionSpec ] ]
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> importFrom: inputVersionStringOrSymbol updateProjects: updateProjects updatePackages: updatePackages versionSpecsDo: aBlock [
     ^ self
         importFrom: inputVersionStringOrSymbol
@@ -1836,13 +1837,13 @@ MetacelloToolBox >> importFrom: inputVersionStringOrSymbol updateProjects: updat
         versionSpecsDo: aBlock
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> imports: importList [
 
 	self methodSpec imports: importList
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> methodSectionsFrom: inputVersionStringOrSymbol do: methodSectionBlock [
   | constructor version fromVersionString |
   constructor := self constructor.
@@ -1852,13 +1853,13 @@ MetacelloToolBox >> methodSectionsFrom: inputVersionStringOrSymbol do: methodSec
   constructor methodSectionsDo: methodSectionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloToolBox >> methodSpec [
 
 	^methodSpec
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifiedPackageSpecs: versionStringOrSymbol packageSpecsDo: aBlock [
 	| versionSpec |
 	versionSpec := (self project version: versionStringOrSymbol) spec.
@@ -1874,7 +1875,7 @@ MetacelloToolBox >> modifiedPackageSpecs: versionStringOrSymbol packageSpecsDo: 
 		groupDo: [ :ignored |  ]
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifyBaselineOf [
   | baselineClass constructor pragma baseline |
   baselineClass := project configuration class.
@@ -1893,7 +1894,7 @@ MetacelloToolBox >> modifyBaselineOf [
     do: [ :methodSection | self methodSpec methodSections add: methodSection ]
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifySection: sectionAttributeOrPath repository: repositoryDescription requiredProjects: newProjectList packages: newPackageList dependencies: dependecies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: newGroups versionSpecsDo: aBlock [
     "
 		repositoryDescription - metacello repository string
@@ -1926,7 +1927,7 @@ MetacelloToolBox >> modifySection: sectionAttributeOrPath repository: repository
         versionSpecsDo: aBlock
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifySection: sectionAttributeOrPath sectionIndex: sectionIndex repository: repositoryDescription requiredProjects: newProjectList packages: newPackageList dependencies: dependecies includes: includes files: files repositories: repositories preLoadDoIts: preLoadDoIts postLoadDoIts: postLoadDoIts supplyingAnswers: supplyingAnswers groups: newGroups versionSpecsDo: aBlock [
     "
 		repositoryDescription - metacello repository string
@@ -2009,13 +2010,13 @@ MetacelloToolBox >> modifySection: sectionAttributeOrPath sectionIndex: sectionI
     aBlock value: versionSpec
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifySymbolicVersionMethodFor: versionSymbol [
 
 	^self modifySymbolicVersionMethodFor: versionSymbol symbolicVersionSpecsDo: [:symbolicVersionSpec | true ].
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifySymbolicVersionMethodFor: versionSymbol symbolicVersionSpecsDo: aBlock [
     | constructor coll pragma |
     constructor := self constructor.
@@ -2035,12 +2036,12 @@ MetacelloToolBox >> modifySymbolicVersionMethodFor: versionSymbol symbolicVersio
                 ifTrue: [ self methodSpec addMethodSection: symbolicVersionSpec attributes versionString: symbolicVersionSpec versionString ] ]
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifyVersionMethodForVersion: inputVersionStringOrSymbol [
 	^ self modifyVersionMethodForVersion: inputVersionStringOrSymbol versionSpecsDo: [ :attribute :versionSpec | true ]
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> modifyVersionMethodForVersion: inputVersionStringOrSymbol versionSpecsDo: aBlock [
 	^ self
 		updateVersionMethodForVersion: inputVersionStringOrSymbol
@@ -2049,19 +2050,19 @@ MetacelloToolBox >> modifyVersionMethodForVersion: inputVersionStringOrSymbol ve
 		versionSpecsDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloToolBox >> project [
 
 	^project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloToolBox >> project: aMetacelloProject [
 
 	project := aMetacelloProject
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> symbolicVersionMethod: versionSymbol [
 	(self hasMethodForSymbolicVersion: versionSymbol)
 		ifTrue: [ self modifySymbolicVersionMethodFor: versionSymbol ]
@@ -2072,7 +2073,7 @@ MetacelloToolBox >> symbolicVersionMethod: versionSymbol [
 				forVersion: versionSymbol ].
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol projectAttributes: projectAttributes updateProjects: updateProjects updatePackages: updatePackages versionSpecsDo: aBlock [
     | constructor updatedSpecs fullVersionSpec version coll pragma imports blessing addedSections visitedSpecs sourceVersionString keptSections |
     updatedSpecs := Set new.
@@ -2129,7 +2130,7 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol pr
     ^ updatedSpecs
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol updateProjects: updateProjects updatePackages: updatePackages versionSpecsDo: aBlock [
     ^ self
         updateVersionMethodForVersion: inputVersionStringOrSymbol
@@ -2139,7 +2140,7 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol up
         versionSpecsDo: aBlock
 ]
 
-{ #category : #'api-configuration' }
+{ #category : 'api-configuration' }
 MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol versionSpecsDo: aBlock [
 	^ self
 		updateVersionMethodForVersion: inputVersionStringOrSymbol
@@ -2148,7 +2149,7 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol ve
 		versionSpecsDo: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBox >> updateVersionSpec: versionSpec fullVersionSpec: fullVersionSpec updateProjects: updateProjects updatePackages: updatePackages visited: visitedSpecs updated: updatedSpecs [
     versionSpec
         specListProjectDo: [ :spec | 
@@ -2189,7 +2190,7 @@ MetacelloToolBox >> updateVersionSpec: versionSpec fullVersionSpec: fullVersionS
         groupDo: [ :ignored |  ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox >> validateConfiguration [
     | issues |
     issues := (MetacelloMCVersionValidator validateConfiguration: project configuration class recurse: false)
@@ -2198,7 +2199,7 @@ MetacelloToolBox >> validateConfiguration [
         ifTrue: [ MetacelloValidationFailure issues: issues message: 'There are critical issues in the configuration' ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloToolBox >> validateVersion: versionStringOrSymbol [
     | issues |
     issues := (MetacelloMCVersionValidator validateProject: project version: versionStringOrSymbol)

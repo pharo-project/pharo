@@ -1,9 +1,10 @@
 Trait {
-	#name : #TRGReadOnlyTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'TRGReadOnlyTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGReadOnlyTest >> testReadOnlyErrors [
 
 	| selectors backend |

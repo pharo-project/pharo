@@ -2,29 +2,31 @@
 I am a context of selected projects in full browser
 "
 Class {
-	#name : #ClyFullBrowserProjectContext,
-	#superclass : #ClyFullBrowserContext,
-	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
+	#name : 'ClyFullBrowserProjectContext',
+	#superclass : 'ClyFullBrowserContext',
+	#category : 'Calypso-SystemTools-FullBrowser-Contexts',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Contexts'
 }
 
-{ #category : #'selection strategy' }
+{ #category : 'selection strategy' }
 ClyFullBrowserProjectContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyProjectChildItem
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserProjectContext >> isClassGroupSelected [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserProjectContext >> isClassTagSelected [
 	^false
 ]
 
-{ #category : #'selection-projects' }
+{ #category : 'selection-projects' }
 ClyFullBrowserProjectContext >> selectedProjectItems [
 
 	^selectedItems collect: [ :each | each rootParentItem ]

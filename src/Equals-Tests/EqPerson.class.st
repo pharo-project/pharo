@@ -4,23 +4,24 @@ I'm a domain object used by Equals tests.
 I'm an Person with a name and an age.
 "
 Class {
-	#name : #EqPerson,
-	#superclass : #Object,
+	#name : 'EqPerson',
+	#superclass : 'Object',
 	#traits : 'TEquality',
 	#classTraits : 'TEquality classTrait',
 	#instVars : [
 		'name',
 		'age'
 	],
-	#category : #'Equals-Tests'
+	#category : 'Equals-Tests',
+	#package : 'Equals-Tests'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EqPerson class >> instVarNamesForEqualityComparison [
 	^#(age)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EqPerson class >> name: aString age: positiveInt [
 	^self new
 		name: aString;
@@ -28,22 +29,22 @@ EqPerson class >> name: aString age: positiveInt [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EqPerson >> age [
 	^ age
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EqPerson >> age: anObject [
 	age := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EqPerson >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EqPerson >> name: anObject [
 	name := anObject
 ]

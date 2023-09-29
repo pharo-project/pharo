@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameInstanceVariableParametrizedTest,
-	#superclass : #RBRenameVariableParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenameInstanceVariableParametrizedTest',
+	#superclass : 'RBRenameVariableParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenameInstanceVariableRefactoring .
@@ -16,14 +18,14 @@ RBRenameInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameInstanceVariableParametrizedTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { 'classBlock'. 'name'. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameInstanceVariableParametrizedTest >> testFailureMetaclassFailure [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -32,14 +34,14 @@ RBRenameInstanceVariableParametrizedTest >> testFailureMetaclassFailure [
 				 RBTransformationRuleTestData class name })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { 'foo'. 'newFoo'. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -74,7 +76,7 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVar [
 	self resultClass: RBSelectorEnvironment')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 	| refactoring class |
 
@@ -102,7 +104,7 @@ RBRenameInstanceVariableParametrizedTest >> testRenameInstVarFromTrait [
 		equals: (self parseMethod: 'msg2 var11')"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameInstanceVariableParametrizedTest >> testRenameInstVarNotAccessors [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

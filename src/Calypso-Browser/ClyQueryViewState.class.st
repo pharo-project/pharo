@@ -25,16 +25,18 @@ Internal Representation and Key Implementation Points.
 	selection:		<ClyDesiredDataSource>
 "
 Class {
-	#name : #ClyQueryViewState,
-	#superclass : #Object,
+	#name : 'ClyQueryViewState',
+	#superclass : 'Object',
 	#instVars : [
 		'dataSource',
 		'selection'
 	],
-	#category : #'Calypso-Browser-NavigationHistory'
+	#category : 'Calypso-Browser-NavigationHistory',
+	#package : 'Calypso-Browser',
+	#tag : 'NavigationHistory'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyQueryViewState >> applyTo: aQueryView [
 
 	| newDataSource |
@@ -46,36 +48,36 @@ ClyQueryViewState >> applyTo: aQueryView [
 	aQueryView selection ensureVisibleLastItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewState >> dataSource [
 	^ dataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewState >> dataSource: anObject [
 	dataSource := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewState >> isCurrentStateOf: aQueryView [
 
 	^(aQueryView dataSource isInSameStateAs: dataSource)
 		and: [aQueryView selection isSameAs: selection]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewState >> representsConcreteQuery [
 	"this method allows to detect that query view is in state when it not shows any concrete query. It is happens when view was not requested to show anything yet. In that case data source is initialized with unknown query instance"
 
 	^(dataSource isBasedOn: ClyUnknownQuery instance) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewState >> selection [
 	^ selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewState >> selection: anObject [
 	selection := anObject
 ]

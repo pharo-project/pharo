@@ -9,8 +9,8 @@ Instance Variables:
 	negation	<BlockClosure>	A one-argument block that is a negation of <predicate>.
 "
 Class {
-	#name : #RxsPredicate,
-	#superclass : #RxsNode,
+	#name : 'RxsPredicate',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'predicate',
 		'negation'
@@ -19,10 +19,12 @@ Class {
 		'EscapedLetterSelectors',
 		'NamedClassSelectors'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RxsPredicate class >> forEscapedLetter: aCharacter [
 
 	^self new perform:
@@ -31,7 +33,7 @@ RxsPredicate class >> forEscapedLetter: aCharacter [
 			ifAbsent: [RxParser signalSyntaxException: 'bad backslash escape'])
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RxsPredicate class >> forNamedClass: aString [
 
 	^self new perform:
@@ -40,7 +42,7 @@ RxsPredicate class >> forNamedClass: aString [
 			ifAbsent: [RxParser signalSyntaxException: 'bad character class name'])
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxsPredicate class >> initialize [
 
 	self
@@ -48,7 +50,7 @@ RxsPredicate class >> initialize [
 		initializeEscapedLetterSelectors
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxsPredicate class >> initializeEscapedLetterSelectors [
 	"self initializeEscapedLetterSelectors"
 
@@ -62,7 +64,7 @@ RxsPredicate class >> initializeEscapedLetterSelectors [
 		at: $\ put: #beBackslash
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxsPredicate class >> initializeNamedClassSelectors [
 	"self initializeNamedClassSelectors"
 
@@ -80,42 +82,42 @@ RxsPredicate class >> initializeNamedClassSelectors [
 		at: 'xdigit' put: #beHexDigit
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxsPredicate >> beAlphaNumeric [
 
 	predicate := [:char | char isAlphaNumeric].
 	negation := [:char | char isAlphaNumeric not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxsPredicate >> beAlphabetic [
 
 	predicate := [:char | char isLetter].
 	negation := [:char | char isLetter not]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beBackslash [
 
 	predicate := [:char | char == $\].
 	negation := [:char | char ~~ $\]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beControl [
 
 	predicate := [:char | char asInteger < 32].
 	negation := [:char | char asInteger >= 32]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beDigit [
 
 	predicate := [:char | char isDigit].
 	negation := [:char | char isDigit not]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beGraphics [
 
 	self
@@ -123,7 +125,7 @@ RxsPredicate >> beGraphics [
 		negate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beHexDigit [
 
 	| hexLetters |
@@ -132,14 +134,14 @@ RxsPredicate >> beHexDigit [
 	negation := [:char | char isDigit not and: [(hexLetters includes: char) not]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beLowercase [
 
 	predicate := [:char | char isLowercase].
 	negation := [:char | char isLowercase not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxsPredicate >> beNotDigit [
 
 	self
@@ -147,7 +149,7 @@ RxsPredicate >> beNotDigit [
 		negate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beNotSpace [
 
 	self
@@ -155,7 +157,7 @@ RxsPredicate >> beNotSpace [
 		negate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beNotWordConstituent [
 
 	self
@@ -163,7 +165,7 @@ RxsPredicate >> beNotWordConstituent [
 		negate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> bePrintable [
 
 	self
@@ -171,7 +173,7 @@ RxsPredicate >> bePrintable [
 		negate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> bePunctuation [
 
 	| punctuationChars |
@@ -180,40 +182,40 @@ RxsPredicate >> bePunctuation [
 	negation := [:char | (punctuationChars includes: char) not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxsPredicate >> beSpace [
 
 	predicate := [:char | char isSeparator].
 	negation := [:char | char isSeparator not]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsPredicate >> beUppercase [
 
 	predicate := [:char | char isUppercase].
 	negation := [:char | char isUppercase not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxsPredicate >> beWordConstituent [
 
 	predicate := [:char | char isAlphaNumeric or: [char == $_]].
 	negation := [:char | char isAlphaNumeric not and: [char ~~ $_]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsPredicate >> dispatchTo: anObject [
 
 	^anObject syntaxPredicate: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsPredicate >> isEnumerable [
 
 	^false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxsPredicate >> negate [
 
 	| tmp |
@@ -222,25 +224,25 @@ RxsPredicate >> negate [
 	negation := tmp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsPredicate >> negated [
 
 	^self copy negate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsPredicate >> predicate [
 
 	^predicate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsPredicate >> predicateNegation [
 
 	^negation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsPredicate >> value: aCharacter [
 
 	^predicate value: aCharacter

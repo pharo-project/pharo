@@ -1,13 +1,15 @@
 Class {
-	#name : #AnyEffectSuitePreparatorTest,
-	#superclass : #TestCase,
+	#name : 'AnyEffectSuitePreparatorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'runner'
 	],
-	#category : #'TestRunner-Tests-Preparators'
+	#category : 'TestRunner-Tests-Preparators',
+	#package : 'TestRunner-Tests',
+	#tag : 'Preparators'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnyEffectSuitePreparatorTest >> testSuitePreparator [
 	
 	|initialSuite initialSuiteCopy|

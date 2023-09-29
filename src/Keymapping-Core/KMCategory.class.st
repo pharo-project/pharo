@@ -2,67 +2,69 @@
 I am a keymap category.  I represent a set of keymaps that can be attached to a morph, so morphs can share my keymaps.
 "
 Class {
-	#name : #KMCategory,
-	#superclass : #Object,
+	#name : 'KMCategory',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'platforms'
 	],
-	#category : #'Keymapping-Core-Categories'
+	#category : 'Keymapping-Core-Categories',
+	#package : 'Keymapping-Core',
+	#tag : 'Categories'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMCategory class >> named: aCategorySymbol [
 	^ (self new)
 		name: aCategorySymbol;
 		yourself
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> addKeymapEntry: aKeymapEntry [
 	self commonEntries add: aKeymapEntry
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> addKeymapEntry: aKeymapEntry at: aPlatform [
 	(self entriesAt: aPlatform) add: aKeymapEntry
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> allEntries [
 	^self commonEntries, self platformEntries
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 KMCategory >> asKmCategoryIn: aKmRepository [
 
 	"Maybe we should validate we exist in the repository?"
 	^ self
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 KMCategory >> bindToObject: anObject andMorph: aMorph [
 
 	^ KMCategoryBinding target: anObject morph: aMorph category: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMCategory >> buildKeymapOnMethod: method [
 
 	self addKeymapEntry: (self perform: method selector)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategory >> categoryName [
 	^ name
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> commonEntries [
 	^self entriesAt: #all
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMCategory >> displayStringOn: stream [
 	super displayStringOn: stream.
 	^ stream
@@ -71,23 +73,23 @@ KMCategory >> displayStringOn: stream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategory >> entriesAt: aPlatform [
 	platforms ifNil: [ platforms := Dictionary new ].
 	^platforms at: aPlatform ifAbsentPut: [ KMStorage new ]
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> hasKeymapNamed: aKeymapEntryName [
 	^self allEntries hasKeymapNamed: aKeymapEntryName
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> hasKeymapNamed: aKeymapEntryName at: aPlatform [
 	^ (self entriesAt: aPlatform) hasKeymapNamed: aKeymapEntryName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMCategory >> initialize [
 
 	super initialize.
@@ -96,56 +98,56 @@ KMCategory >> initialize [
 		thenDo: [ :m | self buildKeymapOnMethod: m ]
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 KMCategory >> installAsGlobalCategory [
 
 	KMRepository default setAsGlobalCategory: self
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 KMCategory >> keymapForShortcut: aShortcut [
 
 	^ self allEntries keymapForShortcut: aShortcut
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> keymapNamed: aKeymapEntryName [
 	^self allEntries keymapNamed: aKeymapEntryName
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> keymapNamed: aKeymapEntryName at: aPlatform [
 	^(self entriesAt: aPlatform) keymapNamed: aKeymapEntryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategory >> keymaps [
 	^self allEntries keymaps
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMCategory >> matches: aString [
 	^ self keymaps anySatisfy: [ :entry |
 		entry matches: aString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMCategory >> matchesCompletely: aString [
 	^ self keymaps anySatisfy: [ :entry |
 		entry matchesCompletely: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategory >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategory >> name: aCategorySymbol [
 	name := aCategorySymbol
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMCategory >> onMatchWith: anEventBuffer notify: aMatchListener andDo: aBlock [
 	self keymaps do: [ :entry |
 		entry onMatchWith: anEventBuffer
@@ -153,12 +155,12 @@ KMCategory >> onMatchWith: anEventBuffer notify: aMatchListener andDo: aBlock [
 			andDo: aBlock ]
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> platformEntries [
 	^self entriesAt: Smalltalk os platformFamily
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 KMCategory >> removeKeymapEntry: aKeymapEntry [
 
 	[ self commonEntries remove: aKeymapEntry ]
@@ -166,7 +168,7 @@ KMCategory >> removeKeymapEntry: aKeymapEntry [
 	do: [ self platformEntries remove: aKeymapEntry ]
 ]
 
-{ #category : #keymaps }
+{ #category : 'keymaps' }
 KMCategory >> tools [
 
 	^ Smalltalk tools

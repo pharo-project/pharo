@@ -2,12 +2,14 @@
 SUnit tests for MessageTally
 "
 Class {
-	#name : #MessageTallyTest,
-	#superclass : #TestCase,
-	#category : #'Tool-Profilers-Tests-Messages'
+	#name : 'MessageTallyTest',
+	#superclass : 'TestCase',
+	#category : 'Tool-Profilers-Tests-Messages',
+	#package : 'Tool-Profilers-Tests',
+	#tag : 'Messages'
 }
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTallyTest >> testClosedTally [
 
 	| tally |
@@ -22,7 +24,7 @@ MessageTallyTest >> testClosedTally [
 	self assert: tally receivers isNil
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 MessageTallyTest >> testInstantiation [
 
 	| messageTally |
@@ -31,7 +33,7 @@ MessageTallyTest >> testInstantiation [
 	self assert: messageTally tally equals: 0
 ]
 
-{ #category : #sampling }
+{ #category : 'sampling' }
 MessageTallyTest >> testSampling1 [
 
 	| tally |
@@ -46,7 +48,7 @@ MessageTallyTest >> testSampling1 [
 	self assert: tally process isNil
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTallyTest >> testTallySends [
 	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest|
 	allProcesses := Process allInstances.
@@ -101,7 +103,7 @@ MessageTallyTest >> testTallySends [
 	tally close
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTallyTest >> testTallyShouldNotContainsAReturn [
 
 	"The block passed to MessageTally should not have a ^ "

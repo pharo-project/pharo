@@ -40,7 +40,7 @@ FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
 		but the superclass of traits is nil"
 		superclass: nil;
 		setName: name;
-		basicCategory: (category ifNil: [ RPackage defaultPackageName ]) asSymbol;
+		basicCategory: (category ifNil: [ UndefinedPackage undefinedPackageName ]) asSymbol;
 		environment: environment.
 	self
 		installLayout: layout

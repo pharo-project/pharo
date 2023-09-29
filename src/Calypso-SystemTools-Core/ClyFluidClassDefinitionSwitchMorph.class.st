@@ -7,15 +7,17 @@ Internal Representation and Key Implementation Points.
 	checkbox:		<CheckboxMorph>
 "
 Class {
-	#name : #ClyFluidClassDefinitionSwitchMorph,
-	#superclass : #ClyStatusBarItemMorph,
+	#name : 'ClyFluidClassDefinitionSwitchMorph',
+	#superclass : 'ClyStatusBarItemMorph',
 	#instVars : [
 		'checkbox'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Classes'
+	#category : 'Calypso-SystemTools-Core-Editors-Classes',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Classes'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyFluidClassDefinitionSwitchMorph >> build [
 
 	checkbox := CheckboxMorph
@@ -29,19 +31,19 @@ ClyFluidClassDefinitionSwitchMorph >> build [
 	self addMorph: checkbox
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFluidClassDefinitionSwitchMorph >> definitionTypeLabel [
 	^ 'Fluid'
 ]
 
-{ #category : #configure }
+{ #category : 'configure' }
 ClyFluidClassDefinitionSwitchMorph >> toggle [
 
 	ClassDefinitionPrinter toggleShowFluidClassDefinition.
 	ownerTool update
 ]
 
-{ #category : #configure }
+{ #category : 'configure' }
 ClyFluidClassDefinitionSwitchMorph >> usesSlotBasedDefinition [
 
 	^ ClassDefinitionPrinter showFluidClassDefinition

@@ -7,12 +7,14 @@ If the global object is available in the environment,
 See my superclass for details.
 "
 Class {
-	#name : #CoGlobalVariableMessageHeuristic,
-	#superclass : #CoVariableMessageHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoGlobalVariableMessageHeuristic',
+	#superclass : 'CoVariableMessageHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoGlobalVariableMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: completionContext [
 
 	completionContext
@@ -22,7 +24,7 @@ CoGlobalVariableMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: c
 	^ CoEmptyFetcher new
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoGlobalVariableMessageHeuristic >> newFetcherForGlobal: aGlobal inASTNode: ast [
 
 	"This is a class or trait. Autocomplete class-side messages"

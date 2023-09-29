@@ -152,7 +152,7 @@ RBVariableEnvironment >> addClass: aClass instanceVariableWriter: aString [
 { #category : 'private' }
 RBVariableEnvironment >> allClassesDo: aBlock [
 	| classes instVarBlock |
-	classes := Set new.
+	classes := Set new: 4096.
 	instVarBlock :=
 			[:each |
 			| class |
@@ -165,8 +165,8 @@ RBVariableEnvironment >> allClassesDo: aBlock [
 			[:each |
 			| class |
 			class := self classForName: each.
-			class notNil
-				ifTrue:
+			class 
+				ifNotNil:
 					[classes
 						addAll: class withAllSubclasses;
 						addAll: class class withAllSubclasses]].

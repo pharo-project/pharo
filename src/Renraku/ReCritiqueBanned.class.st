@@ -2,20 +2,22 @@
 Announced when a critic gets banned.
 "
 Class {
-	#name : #ReCritiqueBanned,
-	#superclass : #ReSingleCritiqueEvent,
+	#name : 'ReCritiqueBanned',
+	#superclass : 'ReSingleCritiqueEvent',
 	#instVars : [
 		'entityBanLevel'
 	],
-	#category : #'Renraku-Announcements'
+	#category : 'Renraku-Announcements',
+	#package : 'Renraku',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCritiqueBanned >> entityBanLevel [
 	^ entityBanLevel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCritiqueBanned >> entityBanLevel: anObject [
 	entityBanLevel := anObject
 ]

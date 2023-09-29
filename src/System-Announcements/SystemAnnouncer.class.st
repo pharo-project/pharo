@@ -109,12 +109,9 @@ SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName inCategory: aCategoryName [
-	self announce: (ClassRenamed
-				class: aClass
-				category: aCategoryName
-				oldName: oldClassName
-				newName: newClassName)
+SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
+
+	self announce: (ClassRenamed class: aClass oldName: oldClassName newName: newClassName)
 ]
 
 { #category : 'triggering' }
@@ -172,10 +169,10 @@ SystemAnnouncer >> methodRecategorized: method oldProtocol: oldProtocol [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior [
+SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage [
 	"A method with the given selector was removed from the class."
 
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: protocol origin: aBehavior)
+	self announce: (MethodRemoved methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage)
 ]
 
 { #category : 'triggering' }

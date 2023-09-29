@@ -4,22 +4,24 @@ RBSpecialCharacterToken is the first-class representation of special characters.
 
 "
 Class {
-	#name : #RBSpecialCharacterToken,
-	#superclass : #RBValueToken,
-	#category : #'AST-Core-Tokens'
+	#name : 'RBSpecialCharacterToken',
+	#superclass : 'RBValueToken',
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSpecialCharacterToken >> isSpecial [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSpecialCharacterToken >> isSpecial: aValue [
 	^self value = aValue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSpecialCharacterToken >> length [
 	^1
 ]

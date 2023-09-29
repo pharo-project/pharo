@@ -1,24 +1,26 @@
 Class {
-	#name : #ClassWithThreeAnnotations,
-	#superclass : #Object,
-	#category : #'ClassAnnotation-Tests-Examples-Annotated classes'
+	#name : 'ClassWithThreeAnnotations',
+	#superclass : 'Object',
+	#category : 'ClassAnnotation-Tests-Examples-Annotated classes',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Examples-Annotated classes'
 }
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithThreeAnnotations class >> annotationExample1 [
 	<classAnnotation>
 
 	^ClassAnnotationExample1 new
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithThreeAnnotations class >> annotationExample2 [
 	<classAnnotation>
 
 	^ClassAnnotationExample1 new
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithThreeAnnotations class >> annotationExample3 [
 	<classAnnotation>
 

@@ -2,16 +2,17 @@
 I am a command to replace senders of message selector.
 "
 Class {
-	#name : #SycReplaceMessageCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
+	#name : 'SycReplaceMessageCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSelector',
 		'selectedClass'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycReplaceMessageCommand >> createRefactoring [
 
 	self flag: 'TODO'. "Improve preview to add args when change the sender with empty args"
@@ -36,19 +37,19 @@ SycReplaceMessageCommand >> createRefactoring [
 				   inAllClasses: true) newArgs:  newSelector newArgs ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycReplaceMessageCommand >> defaultMenuIconName [
 	^#edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycReplaceMessageCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| methodName dialog |
@@ -72,7 +73,7 @@ SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	newSelector := methodName
 ]
 
-{ #category : #'factory method' }
+{ #category : 'factory method' }
 SycReplaceMessageCommand >> refactoringClass [
 
 	^ RBReplaceMessageSendTransformation

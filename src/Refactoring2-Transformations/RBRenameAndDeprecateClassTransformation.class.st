@@ -17,16 +17,18 @@ transformation := (RBRenameAndDeprecateClassTransformation
 
 "
 Class {
-	#name : #RBRenameAndDeprecateClassTransformation,
-	#superclass : #RBCompositeTransformation,
+	#name : 'RBRenameAndDeprecateClassTransformation',
+	#superclass : 'RBCompositeTransformation',
 	#instVars : [
 		'className',
 		'newClassName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassName to: aNewClassName [
 
 	^ self new
@@ -36,7 +38,7 @@ RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassN
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation class >> rename: aClassName to: aNewClassName [
 
 	^ self new
@@ -44,7 +46,7 @@ RBRenameAndDeprecateClassTransformation class >> rename: aClassName to: aNewClas
 		newClassName: aNewClassName
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [
@@ -62,14 +64,14 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 						class: className) ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation >> className: aClassName newClassName: aNewClassName [
 
 	className := aClassName.
 	newClassName := aNewClassName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -82,7 +84,7 @@ RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameAndDeprecateClassTransformation >> tmpName [
 	"return the hidden name of the subclass"
 

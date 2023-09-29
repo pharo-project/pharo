@@ -72,11 +72,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'constants' }
-RPackage class >> defaultPackageName [
-	^ #'_UnpackagedPackage'
-]
-
 { #category : 'class initialization' }
 RPackage class >> initialize [
 	"Ensure the organizer will be the RPackageOrganizer default"
@@ -143,14 +138,6 @@ RPackage >> <= aRPackage [
 	^ self name <= aRPackage name
 ]
 
-{ #category : 'class tags' }
-RPackage >> actualClassTags [
-
-	(classTags size = 1 and: [classTags anyOne isRoot]) ifTrue: [ ^#() ].
-
-	^classTags
-]
-
 { #category : 'add class' }
 RPackage >> addClass: aClass [
 	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
@@ -160,7 +147,7 @@ RPackage >> addClass: aClass [
 		- change the class category as appropriate.
 			(and by cascade, ensure systemClassRecategorizedAction: is called)."
 
-	aClass category: self rootTag categoryName
+	aClass instanceSide category: self rootTag categoryName
 ]
 
 { #category : 'add method - compiled method' }
@@ -177,11 +164,6 @@ RPackage >> addMethod: aCompiledMethod [
 			self organizer registerExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
-]
-
-{ #category : 'class tags' }
-RPackage >> classTagCategoryNames [
-	^ (Set with: self packageName), (self classTags collect: [:each | each categoryName])
 ]
 
 { #category : 'class tags' }
@@ -278,16 +260,17 @@ RPackage >> demoteToTagInPackage [
 	| newPackage tag |
 	(self name includes: $-) ifFalse: [ self error: 'To demote a package, it name needs to contain at least one dash `-`.' ].
 
-	self flag: #package. "We need to unregister because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a #removeFromSystem at the end to avoid to have a removal system AND an unregistering system."
-	self unregister.
-
 	newPackage := self organizer ensurePackage: (self name copyUpToLast: $-).
 
 	"We keep the suffix that was removed as the tag name to create."
 	tag := newPackage ensureTag: (self name withoutPrefix: newPackage name , '-').
 
 	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
-	self extensionMethods do: [ :method | newPackage addMethod: method ].
+	self extensionMethods do: [ :method |
+		newPackage addMethod: method.
+		self removeMethod: method ].
+
+	self removeFromSystem.
 
 	^ newPackage
 ]
@@ -406,16 +389,6 @@ RPackage >> hierarchyRoots [
 ]
 
 { #category : 'private' }
-RPackage >> importClass: aClass [
-	"import a class already created but not attached to a package to the receiver.
-	Handle also *- convention. Methods defined in *category are not added to the package.
-	Pay attention that it will not import anything from the metaClass side"
-
-	self flag: #package. "Do not rely on the category here in the future"
-	self importClass: aClass inTag: (self toTagName: aClass category)
-]
-
-{ #category : 'private' }
 RPackage >> importClass: aClass inTag: aTag [
 	"Import a class already created but not attached to a package to the receiver. It will import the class and its methods.
 
@@ -428,9 +401,6 @@ RPackage >> importClass: aClass inTag: aTag [
 	self removeAllMethodsFromClass: aClass.
 	
 	(self ensureTag: aTag) addClass: aClass instanceSide.
-
-	"Maybe this should go in the PackageTag during the addition of the class"
-	self registerClass: aClass.
 
 	{ aClass . aClass classSide } do: [ :class |
 		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
@@ -519,12 +489,6 @@ RPackage >> initialize [
 ]
 
 { #category : 'testing' }
-RPackage >> isDefault [
-	"Return whether the receiver is the default package, i.e. the one used when nothing else is specified."
-	^ self name = self class defaultPackageName
-]
-
-{ #category : 'testing' }
 RPackage >> isDeprecated [
 	^ self packageManifestOrNil
 		ifNil: [ ^ false ]
@@ -534,7 +498,6 @@ RPackage >> isDeprecated [
 { #category : 'testing' }
 RPackage >> isEmpty [
 
-	self name = self class defaultPackageName ifTrue: [ ^ false ].
 	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
 ]
 
@@ -543,12 +506,19 @@ RPackage >> isTestPackage [
 	"1. Test package ends with suffix -Tests. Suffix is case sensitive.
 	 2. Or test package contains '-Tests-' in middle.
 	Some examples: "
+
 	"(RPackage named: 'MockPackage-Tests') isTestPackage >>> true"
-	"(RPackage named: 'MockPackage-tests') isTestPackage >>> false"
+	"(RPackage named: 'MockPackage-tests') isTestPackage >>> true"
 	"(RPackage named: 'MockPackage') isTestPackage >>> false"
 	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
-	^ (self name endsWith: '-Tests') or: [self name includesSubstring: '-Tests-']
+	^ (self name endsWith: '-Tests' caseSensitive: false) or: [ self name includesSubstring: '-Tests-' caseSensitive: false ]
+]
+
+{ #category : 'testing' }
+RPackage >> isUndefined [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -583,11 +553,14 @@ RPackage >> methodsForClass: aClass [
 { #category : 'private' }
 RPackage >> moveClass: aClass toTag: aTag [
 
-	| oldPackage |
+	| oldPackage tag |
+	tag := self ensureTag: aTag.
+	aClass packageTag = tag ifTrue: [ ^ self ].
+
 	oldPackage := aClass package.
 
 	oldPackage removeClass: aClass.
-	self importClass: aClass inTag: aTag.
+	self importClass: aClass inTag: tag.
 
 	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
 ]
@@ -628,7 +601,8 @@ RPackage >> packageManifestOrNil [
 { #category : 'accessing' }
 RPackage >> packageName [
 
-	^ name
+	self deprecated: 'Use #name instead.' transformWith: '`@rcv packageName' -> '`@rcv name'.
+	^ self name
 ]
 
 { #category : 'system compatibility' }
@@ -679,18 +653,6 @@ RPackage >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
-{ #category : 'register' }
-RPackage >> register [
-	self organizer registerPackage: self
-]
-
-{ #category : 'private - register' }
-RPackage >> registerClass: aClass [
-	"Private method that declares the mapping between a class and its package."
-
-	self organizer registerPackage: self forClass: aClass
-]
-
 { #category : 'private - register' }
 RPackage >> removeAllMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
@@ -713,10 +675,7 @@ RPackage >> removeClass: aClass [
 	"Then I unregister it from the tags"
 	self classTags
 		detect: [ :tag | tag includesClass: aClass ]
-		ifFound: [ :tag | tag removeClass: aClass ].
-
-	"Lastly I remove the class from the organizer. Maybe this should go in the PackageTag during the removal."
-	self unregisterClass: aClass
+		ifFound: [ :tag | tag removeClass: aClass ]
 ]
 
 { #category : 'class tags' }
@@ -728,10 +687,10 @@ RPackage >> removeEmptyTags [
 { #category : 'removing' }
 RPackage >> removeFromSystem [
 
-	self definedClasses do: #removeFromSystem.
-	self extensionMethods do: #removeFromSystem.
+	self classTags do: [ :tag | tag removeFromSystem ].
+	self extensionMethods do: [ :method | method removeFromSystem ].
 
-	self unregister
+	self organizer unregisterPackage: self
 ]
 
 { #category : 'add method - compiled method' }
@@ -794,18 +753,11 @@ RPackage >> removeTag: aTag [
 		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
+	tag classes do: [ :class | class removeFromSystem ].
+
 	classTags remove: tag ifAbsent: [ ^ self ].
 
 	SystemAnnouncer announce: (PackageTagRemoved to: tag)
-]
-
-{ #category : 'private' }
-RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
-
-	| protocols |
-	protocols := self extensionMethods collect: [ :method | method protocol ] as: Set.
-
-	protocols do: [ :protocol | protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ]
 ]
 
 { #category : 'class tags' }
@@ -822,19 +774,24 @@ RPackage >> renameTag: aTag to: newName [
 RPackage >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
 
-	| oldName newName oldCategoryNames |
+	| oldName newName |
 	oldName := self name.
 	newName := aSymbol asSymbol.
 	self organizer validatePackageDoesNotExist: aSymbol.
-	oldCategoryNames := (self classTags collect: [ :each | each categoryName ] as: Set)
-		                    add: self name;
-		                    difference: { newName }.
+
 	self organizer basicUnregisterPackage: self.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ self definedClasses do: [ :each | each category: newName , (each category allButFirst: oldName size) ] ].
+
 	self flag: #package. "For now, the root tag has the name of the package, thus, renaming the package means that we need to rename the root tag. In the future I want to update the root tag name to be fix and not depend on the name of the package. When that happens, we'll be able to remove the next line."
 	self classTagNamed: oldName ifPresent: [ :tag | tag renameTo: newName ].
-	self renameExtensionsPrefixedWith: oldName to: newName.
+
+	self flag: #package. "The next line is necessary until classes know their tag. Then it will not be needed anymore"
+	self classTags do: [ :tag | tag classes do: [ :class | class basicCategory: tag categoryName ] ].
+
+	"We rename the extension protocols refering to this package"
+	(self extensionMethods collect: [ :method | method protocol ] as: Set) do: [ :protocol |
+		protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ].
+
 	self organizer basicRegisterPackage: self.
 	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
@@ -903,17 +860,4 @@ RPackage >> toTagName: aSymbol [
 			  (aSymbol sameAs: self name)
 				  ifTrue: [ self rootTagName ]
 				  ifFalse: [ aSymbol ] ]
-]
-
-{ #category : 'register' }
-RPackage >> unregister [
-
-	self organizer removePackage: self
-]
-
-{ #category : 'private - register' }
-RPackage >> unregisterClass: aClass [
-	"Private method that declares the mapping between a class and its package."
-
-	self organizer unregisterPackage: self forClass: aClass
 ]

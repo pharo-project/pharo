@@ -50,16 +50,18 @@ xurl = ""https://www.cs.hmc.edu/tr/hmc-cs-2014-0905.pdf"",
 }
 "
 Class {
-	#name : #Random,
-	#superclass : #Object,
+	#name : 'Random',
+	#superclass : 'Object',
 	#instVars : [
 		'state',
 		'seed'
 	],
-	#category : #'Random-Core-Base'
+	#category : 'Random-Core-Base',
+	#package : 'Random-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Random class >> bucketTest: randy [
 	"Execute this:   Random bucketTest: Random new"
 
@@ -98,7 +100,7 @@ more; go get coffee.
 						stream space ] ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Random class >> primitiveRandomNumber: stateArray [
 	"Answer a random Float in the interval [0 to 1)."
 
@@ -121,47 +123,47 @@ Random class >> primitiveRandomNumber: stateArray [
 		   returnValue << (count negated bitAnd: 31)) bitAnd: 16r7FFFFFFF
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Random class >> seed: anInteger [
 	^self new seed: anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> initialize [
 	state := DoubleWordArray new: 1.
 	self useClockBasedSeed.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> maxValue [
 	^16r7FFFFFFF
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> next [
 	"Answer a random Float in the interval [0 to 1)."
 
 	^ (self privateNextValue / (self maxValue + 1) ) asFloat 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> next: anInteger [
 	^ self next: anInteger into: (Array new: anInteger)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> next: anInteger into: anArray [
 	1 to: anInteger do: [:index | anArray at: index put: self next].
 	^ anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> nextBetween: lowerBound and: higherBound [
 	"Answer a random float number from the range [lowerBound, higherBound)"
 	^ lowerBound + (self next * (higherBound - lowerBound))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> nextInteger: anInteger [
 	"Answer a random integer in the interval [1, anInteger].
 	Handle large numbers too (for cryptography)."
@@ -173,20 +175,20 @@ Random >> nextInteger: anInteger [
 	  + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> nextIntegerBetween: lowerBound and: higherBound [
 	"Answer a random integer number from the inclusive range [lowerBound, higherBound]"
 	^ lowerBound + (self nextInteger: (higherBound - lowerBound + 1)) - 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Random >> privateNextValue [
 	"Answer a random Float in the interval [0 to 1)."
 
 	^ self class primitiveRandomNumber: state
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Random >> seed [
 	"Since [1] says...
 	    'After initialization the ideal solution is to hide seed from the user'
@@ -194,27 +196,27 @@ Random >> seed [
 	^ seed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> seed: aNumber [
 	"Refer #privateNextSeed and [1], seed should be positive and less than m"
 	seed := aNumber.
 	self setStateFromSeed.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> setStateFromSeed [
 
 	state at: 1 put: seed + 1442695040888963407.
 	self class primitiveRandomNumber: state
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> state [
 
 	^ state
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> useClockBasedSeed [
 	"Set a reasonable Park-Miller starting seed [1] based on the ms clock."
 
@@ -224,7 +226,7 @@ Random >> useClockBasedSeed [
 	self setStateFromSeed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> useUnixRandomGeneratorSeed [
 	"Try to seed the receiver using random bytes from a Unix OS' /dev/random.
 	Return true if we succeeded, false otherwise.

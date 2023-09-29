@@ -61,20 +61,19 @@ MCTraitDefinition >> classSlotDefinitionString [
 { #category : 'installing' }
 MCTraitDefinition >> createClass [
 
-	| trait |
-	trait := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: name;
-			         traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
-			         slots: self instanceVariables;
-			         package: self category;
-			         beTrait ].
-
-
-	trait ifNotNil: [
-		trait comment: comment stamp: commentStamp.
-		self classInstanceVariables ifNotEmpty: [ :vars | trait classSide slots: vars ] ].
-	^ trait
+	^ [
+	  self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: name;
+			  traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
+			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
+			  slots: self instanceVariables;
+			  classSlots: self classInstanceVariables;
+			  package: self category;
+			  comment: comment stamp: commentStamp;
+			  beTrait ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
 { #category : 'testing' }

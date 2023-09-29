@@ -8,18 +8,19 @@ To create a single key combination use the #asShortcut message. Like for example
 $a asShortcut
 "
 Class {
-	#name : #KMSingleKeyCombination,
-	#superclass : #KMKeyCombination,
+	#name : 'KMSingleKeyCombination',
+	#superclass : 'KMKeyCombination',
 	#instVars : [
 		'key'
 	],
 	#classInstVars : [
 		'specialKeys'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMSingleKeyCombination class >> from: aCharacterOrInteger [
 	| aCharacter |
 	aCharacter := aCharacterOrInteger asCharacter.
@@ -27,7 +28,7 @@ KMSingleKeyCombination class >> from: aCharacterOrInteger [
 	^ (KeyboardKey fromCharacter: aCharacter) asKeyCombination
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMSingleKeyCombination class >> specialKeys [
 	^specialKeys
 		ifNil: [ specialKeys :=
@@ -47,66 +48,66 @@ KMSingleKeyCombination class >> specialKeys [
 				} asDictionary.]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMSingleKeyCombination >> = aShortcut [
 	^ super = aShortcut and: [ aShortcut key = key ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMSingleKeyCombination >> hash [
 	^ key hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMSingleKeyCombination >> key [
 	^ key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMSingleKeyCombination >> key: aKeyString [
 	key := aKeyString
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMSingleKeyCombination >> matchesEvent: aKeyboardEvent [
 	^ self key asLowercase = aKeyboardEvent modifiedCharacter asLowercase
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMSingleKeyCombination >> modifiedBy: aModifier [
 	^ KMModifiedKeyCombination modifier: aModifier character: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMSingleKeyCombination >> modifier [
 
 	^ KMNoModifier new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMSingleKeyCombination >> name [
 	^ self key name
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMSingleKeyCombination >> platformCharacter [
 
 	^ key
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMSingleKeyCombination >> platformModifier [
 
 	^ self modifier
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMSingleKeyCombination >> prettyPrintOn: aStream [
 
 	self printOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMSingleKeyCombination >> printOn: aStream [
 	aStream nextPutAll: self name
 ]

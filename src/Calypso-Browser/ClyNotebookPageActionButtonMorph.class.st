@@ -3,15 +3,17 @@ I am a multi state button supporting icon.
 I am used to render page actions.
 "
 Class {
-	#name : #ClyNotebookPageActionButtonMorph,
-	#superclass : #MultistateButtonMorph,
+	#name : 'ClyNotebookPageActionButtonMorph',
+	#superclass : 'MultistateButtonMorph',
 	#instVars : [
 		'icon'
 	],
-	#category : #'Calypso-Browser-Tabs'
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNotebookPageActionButtonMorph class >> forAction: anAction [
 
 	^ self new
@@ -19,7 +21,7 @@ ClyNotebookPageActionButtonMorph class >> forAction: anAction [
 		yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ClyNotebookPageActionButtonMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
@@ -30,7 +32,7 @@ ClyNotebookPageActionButtonMorph >> drawOn: aCanvas [
 		at: self topLeft
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNotebookPageActionButtonMorph >> forAction: anAction [
 	| baseColor |
 
@@ -59,13 +61,13 @@ ClyNotebookPageActionButtonMorph >> forAction: anAction [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageActionButtonMorph >> icon: anObject [
 
 	icon := anObject
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 ClyNotebookPageActionButtonMorph >> themeChanged [
 	| baseColor |
 

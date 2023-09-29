@@ -1,6 +1,6 @@
-Extension { #name : #MCChangeSelectionRequest }
+Extension { #name : 'MCChangeSelectionRequest' }
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCChangeSelectionRequest >> defaultAction [
 	^ (MCChangeSelector new patch: patch; label: label) showModally
 ]

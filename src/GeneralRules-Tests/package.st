@@ -1,1 +1,1 @@
-Package { #name : #'GeneralRules-Tests' }
+Package { #name : 'GeneralRules-Tests' }

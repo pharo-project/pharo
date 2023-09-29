@@ -2,8 +2,8 @@
 Abstract superclass for Variable definitions: Slots (instance and class side) and ClassVariables (aka SharedVariables)
 "
 Class {
-	#name : #CDVariableNode,
-	#superclass : #CDNode,
+	#name : 'CDVariableNode',
+	#superclass : 'CDNode',
 	#instVars : [
 		'node',
 		'start',
@@ -11,16 +11,18 @@ Class {
 		'name',
 		'variableClassName'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode class >> isAbstract [
 
 	^ self == CDVariableNode
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol start: start stop: stop [
 
 	^ self new
@@ -32,51 +34,51 @@ CDVariableNode class >> node: aNode name: aName slotClassName: aSymbol start: st
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> asCalypsoVariableOf: aClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> binding [
 	"To be polymorphic to RB method nodes"
 	^self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isClassVariable [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isGlobalVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isInstanceVariable [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isLiteralVariable [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isTempVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isUndeclaredVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isVariable [
 	"To be polymorphic to RB method nodes"
 	| existingClass |
@@ -91,34 +93,34 @@ CDVariableNode >> isVariable [
 			false]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDVariableNode >> isWorkspaceVariable [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> node [
 	^node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> node: aNode [
 	node := aNode
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CDVariableNode >> printOn: aStream [
 
 	aStream
@@ -130,34 +132,34 @@ CDVariableNode >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> sourceInterval [
 	^self start to: self stop
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 CDVariableNode >> start [
 
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> start: anInteger [
 	start := anInteger
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 CDVariableNode >> stop [
 	^ stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> stop: anInteger [
 
 	stop := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> variableClassName [
 	"Return a symbol representing the class of the variable i.e., 'x' => InstanceVariableSlot slotClassName returns
 	#InstanceVariableSlot"
@@ -165,7 +167,7 @@ CDVariableNode >> variableClassName [
 	^ variableClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDVariableNode >> variableClassName: aSymbol [
 
 	variableClassName := aSymbol

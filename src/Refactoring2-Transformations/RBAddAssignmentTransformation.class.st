@@ -19,16 +19,18 @@ Observations about the transformation:
 - Otherwise, the assignment will be positioned as the first statement of the method
 "
 Class {
-	#name : #RBAddAssignmentTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddAssignmentTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'variableName',
 		'value'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddAssignmentTransformation class >> model: aRBModel variable: aVariableName value: anExpression inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -40,7 +42,7 @@ RBAddAssignmentTransformation class >> model: aRBModel variable: aVariableName v
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddAssignmentTransformation class >> variable: aVariableName value: anExpression inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -51,7 +53,7 @@ RBAddAssignmentTransformation class >> variable: aVariableName value: anExpressi
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddAssignmentTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
@@ -70,7 +72,7 @@ RBAddAssignmentTransformation >> applicabilityPreconditions [
 					    with: variableName))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddAssignmentTransformation >> classExist [
 
 	^ RBCondition
@@ -79,7 +81,7 @@ RBAddAssignmentTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddAssignmentTransformation >> privateTransform [
 	"if the variable was previously assigned, the transformation adds
 	 this assignment as the last one"
@@ -100,7 +102,7 @@ RBAddAssignmentTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -117,7 +119,7 @@ RBAddAssignmentTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddAssignmentTransformation >> variable: aVariableName value: anExpression inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.

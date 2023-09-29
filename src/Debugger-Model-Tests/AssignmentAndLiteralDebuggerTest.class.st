@@ -1,16 +1,18 @@
 Class {
-	#name : #AssignmentAndLiteralDebuggerTest,
-	#superclass : #DebuggerTest,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'AssignmentAndLiteralDebuggerTest',
+	#superclass : 'DebuggerTest',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AssignmentAndLiteralDebuggerTest >> setUp [
 	super setUp.
 	self settingUpSessionAndProcessAndContextForBlock: [ |var| var:=4]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssignmentAndLiteralDebuggerTest >> testInterruptedContextEqualsSuspendedContextOfInterruptedProcess [
 	self assert: session interruptedContext equals: session interruptedProcess suspendedContext.
 	session stepInto.
@@ -18,31 +20,31 @@ AssignmentAndLiteralDebuggerTest >> testInterruptedContextEqualsSuspendedContext
 	self assert: session interruptedContext equals: session interruptedProcess suspendedContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssignmentAndLiteralDebuggerTest >> testNewDebugSession [
 	self assert: context size equals: 2. "we are in the block"
 	self assert: session interruptedContext equals: context
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssignmentAndLiteralDebuggerTest >> testStepIntoAssignment [
 	session stepInto.
 	self assert: (session interruptedContext tempNamed: 'var') equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssignmentAndLiteralDebuggerTest >> testStepIntoLiteral [
 	session stepInto.
 	self assert: context top equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssignmentAndLiteralDebuggerTest >> testStepOverAssignment [
 	session stepOver.
 	self assert: (context tempNamed: 'var') equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssignmentAndLiteralDebuggerTest >> testStepOverLiteral [
 	session stepOver.
 	self assert: context top equals: 4

@@ -11,8 +11,8 @@ This method is called for each subsequent run of characters in aString which is 
 
 "
 Class {
-	#name : #StrikeFont,
-	#superclass : #AbstractFont,
+	#name : 'StrikeFont',
+	#superclass : 'AbstractFont',
 	#instVars : [
 		'characterToGlyphMap',
 		'xTable',
@@ -35,63 +35,64 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Graphics-Fonts'
+	#category : 'Graphics-Fonts',
+	#package : 'Graphics-Fonts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> actualFamilyNames [
 	"Answer a sorted list of actual family names, without the Default aliases"
 
 	^(self familyNames copyWithoutAll: TextStyle defaultFamilyNames) asOrderedCollection
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 StrikeFont class >> cleanUp: aggressive [
 	"Flush synthesized strike fonts"
 
 	self allInstancesDo: [:sf| sf reset]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> default [
 	^TextStyle default defaultFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> defaultFallbackFontKeys [
 	^ Array with: self defaultFontKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> defaultFontKey [
 	^ self dejaVuKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> defaultFontSize [
 	^ 9
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> dejaVuKey [
 	^ 'Bitmap DejaVu Sans'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> familyName: aName pointSize: aSize [
 	"Answer a font (or the default font if the name is unknown) in the specified size."
 
 	^ ((TextStyle named: aName asSymbol) ifNil: [TextStyle default]) fontOfPointSize: aSize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StrikeFont class >> familyName: aName pointSize: aSize emphasized: emphasisCode [
 	"Create the font with this emphasis"
 
 	^ (self familyName: aName pointSize: aSize) emphasized: emphasisCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> familyName: aName size: aSize [
 	"Answer a font (or the default font if the name is unknown) in the specified size."
 	| style |
@@ -101,19 +102,19 @@ StrikeFont class >> familyName: aName size: aSize [
 	^style fontOfSize: aSize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StrikeFont class >> familyName: aName size: aSize emphasized: emphasisCode [
 	"Create the font with this emphasis"
 
 	^ (self familyName: aName size: aSize) emphasized: emphasisCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> familyNames [
 	^ (TextSharedInformation select: [:each | each isKindOf: TextStyle]) keys asSortedCollection
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> fromHostFont: fontName size: fontSize flags: fontFlags weight: fontWeight [
 	"
 		^StrikeFont fromHostFont: (StrikeFont hostFontFromUser)
@@ -179,7 +180,7 @@ StrikeFont class >> fromHostFont: fontName size: fontSize flags: fontFlags weigh
 		with: xTable
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> fromStrike: fileName [
 	"Read a font from disk in the old ST-80 'strike' format.
 	Note: this is an old format; use strike2 format instead"
@@ -187,7 +188,7 @@ StrikeFont class >> fromStrike: fileName [
 	^self new newFromStrike: fileName
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> hostFontFromUser [
 	"StrikeFont hostFontFromUser"
 	| fontNames index labels |
@@ -203,12 +204,12 @@ StrikeFont class >> hostFontFromUser [
 	^ fontNames at: index
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 StrikeFont class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 StrikeFont class >> limitTo16Bits [
 	"Limit glyph depth to 16 bits (it is usually 16 or 32).
 
@@ -218,13 +219,13 @@ StrikeFont class >> limitTo16Bits [
 		setGlyphsDepthAtMost: 16 ]
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> listFont: index [
 	<primitive:'primitiveListFont' module:'FontPlugin'>
 	^nil
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> listFontNames [
 	"StrikeFont listFontNames"
 	"List all the OS font names"
@@ -239,12 +240,12 @@ StrikeFont class >> listFontNames [
 	^ fontNames contents
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> localeChanged [
 	self setupDefaultFallbackFont
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont class >> makeControlCharsVisible [
 	"
 	Make normally not visible characters, visible
@@ -253,7 +254,7 @@ StrikeFont class >> makeControlCharsVisible [
 	self allInstances do: [ :font | font makeControlCharsVisible ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont class >> makeLfInvisible [
 	"
 	Make line feed characters invisible
@@ -262,7 +263,7 @@ StrikeFont class >> makeLfInvisible [
 	self allInstances do: [ :font | font makeLfInvisible ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont class >> makeLfVisible [
 	"
 	Make line feed characters visible
@@ -271,7 +272,7 @@ StrikeFont class >> makeLfVisible [
 	self allInstances do: [ :font | font makeLfVisible ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont class >> makeTabInvisible [
 	"
 	Make tab characters invisible
@@ -280,7 +281,7 @@ StrikeFont class >> makeTabInvisible [
 	self allInstances do: [ :font | font makeTabInvisible ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont class >> makeTabVisible [
 	"
 	Make tab characters visible
@@ -289,60 +290,60 @@ StrikeFont class >> makeTabVisible [
 	self allInstances do: [ :font | font makeTabVisible ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StrikeFont class >> passwordFontSize: aSize [
 	^ FixedFaceFont new passwordFont fontSize: aSize
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> primitiveCreateFont: fontName size: fontSize flags: fontFlags weight: fontWeight [
 	<primitive:'primitiveCreateFont' module:'FontPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> primitiveDestroyFont: fontHandle [
 	<primitive:'primitiveDestroyFont' module:'FontPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> primitiveFont: fontHandle glyphOfChar: charIndex into: glyphForm [
 	<primitive:'primitiveFontGlyphOfChar' module:'FontPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> primitiveFont: fontHandle widthOfChar: charIndex [
 	<primitive:'primitiveFontWidthOfChar' module:'FontPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> primitiveFontAscent: fontHandle [
 	<primitive:'primitiveFontAscent' module:'FontPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> primitiveFontDescent: fontHandle [
 	<primitive:'primitiveFontDescent' module:'FontPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'font creation' }
+{ #category : 'font creation' }
 StrikeFont class >> primitiveFontEncoding: fontHandle [
 	<primitive:'primitiveFontEncoding' module:'FontPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 StrikeFont class >> readStrikeFont2Family: familyName [
 	"StrikeFont readStrikeFont2Family: 'Lucida'"
 	^self readStrikeFont2Family: familyName fromDirectory: FileSystem workingDirectory
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 StrikeFont class >> readStrikeFont2Family: familyName fromDirectory: aDirectory [
 	"StrikeFont readStrikeFont2Family: 'Lucida' fromDirectory: FileDirectory default"
 	"This utility reads all available .sf2 StrikeFont files for a given family from
@@ -361,7 +362,7 @@ StrikeFont class >> readStrikeFont2Family: familyName fromDirectory: aDirectory 
 	readStrikeFont2Family: 'Lucida'))."
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 StrikeFont class >> saveSpace [
 	"Removes glyphs over 128, leaving only lower ascii.
 	Also limit glyph depth to 4 bits (it is usually 16 or 32).
@@ -374,7 +375,7 @@ StrikeFont class >> saveSpace [
 		setGlyphsDepthAtMost: 4 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont class >> setupDefaultFallbackFont [
 	"
 	StrikeFont setupDefaultFallbackFont
@@ -389,14 +390,14 @@ StrikeFont class >> setupDefaultFallbackFont [
 								do: [:f | f setupDefaultFallbackFont]]]]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 StrikeFont class >> shutDown [
 	"StrikeFont shutDown"
 	"Deallocate synthetically derived copies of base fonts to save space"
 	self allSubInstancesDo: [ :sf | sf reset ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont class >> useUnderscoreIfOver1bpp [
 	"Sets underscore and caret glyphs for chars 95 and 94.
 	Only for enhanced StrikeFonts, i.e. those with glyphs of more than 1bpp.
@@ -407,27 +408,27 @@ StrikeFont class >> useUnderscoreIfOver1bpp [
 	self allInstances do: [ :font | font useUnderscoreIfOver1bpp ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> alter: char formBlock: formBlock [
 	self characterFormAt: char
 		put: (formBlock value: (self characterFormAt: char))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> ascent [
 	"Answer the receiver's maximum extent of characters above the baseline."
 
 	^ascent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> ascentKern [
 	"Return the kern delta for ascenders."
 	(emphasis noMask: 2) ifTrue: [^ 0].
 	^ (self ascent-5+4)//4 max: 0  "See makeItalicGlyphs"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> ascentOf: aCharacter [
 
 	(self hasGlyphOf: aCharacter) ifFalse: [
@@ -438,7 +439,7 @@ StrikeFont >> ascentOf: aCharacter [
 	^ self ascent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> baseKern [
 	"Return the base kern value to be used for all characters."
 
@@ -456,7 +457,7 @@ StrikeFont >> baseKern [
 		+ (((self ascent-5+4)//4 max: 0))
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> bonk: glyphForm with: bonkForm [
 	"Bonking means to run through the glyphs clearing out black pixels
 	between characters to prevent them from straying into an adjacent
@@ -490,7 +491,7 @@ StrikeFont >> bonk: glyphForm with: bonkForm [
 						copyBits ] ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 StrikeFont >> buildFromForm: allGlyphs data: data name: aString [
 	| x |
 	pointSize := data first.
@@ -522,7 +523,7 @@ StrikeFont >> buildFromForm: allGlyphs data: data name: aString [
 	derivativeFonts := Array new: 32
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> buildfontNamed: nm fromForms: forms startingAtAscii: startAscii ascent: a descent: d maxWid: m [
 	"This builds a StrikeFont instance from existing forms."
 	| lastAscii width ascii charForm missingForm tempGlyphs |
@@ -607,7 +608,7 @@ StrikeFont >> buildfontNamed: nm fromForms: forms startingAtAscii: startAscii as
 	characterToGlyphMap := nil
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> characterForm: char pixelValueAt: pt put: val [
 	| f |
 	f := self characterFormAt: char.
@@ -619,7 +620,7 @@ StrikeFont >> characterForm: char pixelValueAt: pt put: val [
 		put: val
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> characterFormAt: character [
 	"Answer a Form copied out of the glyphs for the argument, character."
 	| ascii leftX rightX |
@@ -633,7 +634,7 @@ StrikeFont >> characterFormAt: character [
 	^ glyphs copy: (leftX @ 0 corner: rightX @ self height)
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> characterFormAt: character put: characterForm [
 	"Copy characterForm over the glyph for the argument, character."
 	| ascii leftX rightX widthDif newGlyphs |
@@ -683,7 +684,7 @@ f characterFormAt: $  put: (Form extent: (f widthOf: $ )+10@f height)
 "
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> characterFormAtMulti: character [
 	"Answer a Form copied out of the glyphs for the argument, character."
 	| ascii leftX rightX |
@@ -696,17 +697,17 @@ StrikeFont >> characterFormAtMulti: character [
 	^ glyphs copy: (leftX @ 0 corner: rightX @ self height)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> characterToGlyphMap [
 	^ characterToGlyphMap ifNil: [ characterToGlyphMap := self createCharacterToGlyphMap ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> characterToGlyphMap: anArray [
 	characterToGlyphMap := anArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StrikeFont >> checkCharacter: character [
 	"Answer a Character that is within the ascii range of the receiver--either
 	character or the last character in the receiver."
@@ -718,7 +719,7 @@ StrikeFont >> checkCharacter: character [
 		ifFalse: [ character ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StrikeFont >> createCharacterToGlyphMap [
         "Private. Create the character to glyph mapping for a font that didn't have any before. This is basically equivalent to what the former setStopCondition did, only based on indexes."
 
@@ -726,13 +727,13 @@ StrikeFont >> createCharacterToGlyphMap [
         ^ nil
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 StrikeFont >> deepCopy [
  " there is a circular reference from the derivative fonts back to the receiver. It is therefore not possible to make a deep copy. We make a sahllow copy. The method postCopy can be used to modify the shallow copy. "
   ^self copy
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> derivativeFont: aStrikeFont at: index [
 
 	| newDeriv |
@@ -747,12 +748,12 @@ StrikeFont >> derivativeFont: aStrikeFont at: index [
 	derivativeFonts at: index put: aStrikeFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> derivativeFonts [
 	^derivativeFonts copyWithout: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> descent [
 	"Answer the receiver's maximum extent of characters below the baseline."
 
@@ -761,14 +762,14 @@ StrikeFont >> descent [
 		ifFalse: [descent]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> descentKern [
 	"Return the kern delta for descenders."
 	(emphasis noMask: 2) ifTrue: [^ 0].
 	^ (self height-1-self ascent+4)//4 max: 0  "See makeItalicGlyphs"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> descentOf: aCharacter [
 
 	(self hasGlyphOf: aCharacter) ifFalse: [
@@ -779,7 +780,7 @@ StrikeFont >> descentOf: aCharacter [
 	^ self descent
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> displayChar: ascii form: charForm [
 
 	| m bigForm |
@@ -796,7 +797,7 @@ StrikeFont >> displayChar: ascii form: charForm [
 		(50 @ 2 + (m * charForm width @ 0) extent: 1 @ (m * self height))
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	| nextWide destX glyphInfo char charIndex |
 	destX := aPoint x.
@@ -823,7 +824,7 @@ StrikeFont >> displayMultiString: aString on: aBitBlt from: startIndex to: stopI
 		with: aPoint + (destX @ 0)
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	"Draw the given string from startIndex to stopIndex
 	at aPoint on the (already prepared) BitBlt."
@@ -848,7 +849,7 @@ StrikeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex 
 			scale: scale
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> emphasis [
 	"Answer the integer code for synthetic bold, italic, underline, and
 	strike-out."
@@ -856,14 +857,14 @@ StrikeFont >> emphasis [
 	^emphasis
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> emphasis: code [
 	"Set the integer code for synthetic bold, itallic, underline, and strike-out,
 	where bold=1, italic=2, underlined=4, and struck out=8."
 	emphasis := code
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> emphasized: code [
 	"Answer a copy of the receiver with emphasis set to include code."
 	| derivative addedEmphasis base safeCode |
@@ -897,7 +898,7 @@ StrikeFont >> emphasized: code [
 	^ derivative
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> ensureCleanBold [
 	"This ensures that all character glyphs have at least one pixel of white space on the right
 	so as not to cause artifacts in neighboring characters in bold or italic."
@@ -924,7 +925,7 @@ StrikeFont shutDown.  'Flush synthetic fonts'.
 "
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> extendMaxAsciiTo: newMax [
 	"Extend the range of this font so that it can display glyphs up to newMax."
 	newMax + 3 <= xTable size ifTrue: [ ^ self ].	"No need to extend."
@@ -939,17 +940,17 @@ StrikeFont >> extendMaxAsciiTo: newMax [
 	characterToGlyphMap := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> fallbackFont [
 	^ fallbackFont ifNil: [ fallbackFont := FixedFaceFont new errorFont baseFont: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> fallbackFont: aFontSetOrNil [
 	fallbackFont := aFontSetOrNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> familyName [
 	| nameString firstDigit |
 	nameString := self name.
@@ -959,7 +960,7 @@ StrikeFont >> familyName [
 		ifFalse: [ nameString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> familySizeFace [
 	"Answer an array with familyName, a String, pointSize, an Integer, and
 	faceCode, an Integer."
@@ -971,7 +972,7 @@ StrikeFont >> familySizeFace [
 	"(1 to: 12) collect: [:x | (TextStyle default fontAt: x) familySizeFace]"
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> fillZeroWidthSlots [
 	"Note: this is slow because it copies the font once for every replacement."
 	| nullGlyph |
@@ -987,7 +988,7 @@ StrikeFont >> fillZeroWidthSlots [
 					put: nullGlyph ] ]
 ]
 
-{ #category : #'multibyte character methods' }
+{ #category : 'multibyte character methods' }
 StrikeFont >> fixAscent: a andDescent: d head: h [
 	"(a + d) = (ascent + descent) ifTrue: ["
 	| bb newGlyphs |
@@ -1005,7 +1006,7 @@ StrikeFont >> fixAscent: a andDescent: d head: h [
 	"]."
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> fixOneWideChars [
 	"This fixes all 1-wide characters to be 2 wide with blank on the right
 	so as not to cause artifacts in neighboring characters in bold or italic."
@@ -1028,7 +1029,7 @@ StrikeFont shutDown.  'Flush synthetic fonts'.
 "
 ]
 
-{ #category : #'multibyte character methods' }
+{ #category : 'multibyte character methods' }
 StrikeFont >> fixXTable [
 	| newXTable val |
 	xTable size >= 258 ifTrue: [ ^ self ].
@@ -1053,12 +1054,12 @@ StrikeFont >> fixXTable [
 	xTable := newXTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> fontNameWithPointSize [
 	^self name withoutTrailingDigits, ' ', self pointSize printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 	"Answer the width of the argument as a character in the receiver."
 
@@ -1081,7 +1082,7 @@ StrikeFont >> glyphInfoOf: aCharacter into: glyphInfoArray [
 	^ glyphInfoArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> glyphOf: aCharacter [
 	"Answer the width of the argument as a character in the receiver."
 	| code |
@@ -1092,7 +1093,7 @@ StrikeFont >> glyphOf: aCharacter [
 	^ glyphs copy: ((xTable at: code + 1) @ 0 corner: (xTable at: code + 2) @ self height)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> glyphs [
 	"Answer a Form containing the bits representing the characters of the
 	receiver."
@@ -1100,7 +1101,7 @@ StrikeFont >> glyphs [
 	^glyphs
 ]
 
-{ #category : #'multibyte character methods' }
+{ #category : 'multibyte character methods' }
 StrikeFont >> hasGlyphOf: aCharacter [
 	| code |
 	code := aCharacter charCode.
@@ -1112,7 +1113,7 @@ StrikeFont >> hasGlyphOf: aCharacter [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> height [
 	"Answer the height of the receiver, total of maximum extents of
 	characters above and below the baseline."
@@ -1120,7 +1121,7 @@ StrikeFont >> height [
 	^self ascent + self descent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> heightOf: aCharacter [
 
 	(self hasGlyphOf: aCharacter) ifFalse: [
@@ -1131,7 +1132,7 @@ StrikeFont >> heightOf: aCharacter [
 	^ self height
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgroundColor: backgroundColor scale: scale [
 	^aDisplayContext
 		installStrikeFont: self
@@ -1140,35 +1141,35 @@ StrikeFont >> installOn: aDisplayContext foregroundColor: foregroundColor backgr
 		scale: scale
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> isSynthetic [
 	^type > 0
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> isSynthetic: aBoolean [
 	type := aBoolean
 		ifTrue: [ 3 ]
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> isSyntheticItalic [
 	^type = 5
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> isSyntheticItalic: aBoolean [
 	aBoolean
 		ifTrue: [type :=  5]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> lineGrid [
 	^ ascent + descent
 ]
 
-{ #category : #'make arrows' }
+{ #category : 'make arrows' }
 StrikeFont >> makeAssignArrow [
 	"Replace the underline character with an arrow for this font"
 	| arrowForm arrowCanvas arrowY arrowLeft arrowRight arrowHeadLength |
@@ -1199,7 +1200,7 @@ StrikeFont >> makeAssignArrow [
 		put: arrowForm
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> makeBoldGlyphs [
 	"Make a bold set of glyphs with same widths by ORing 1 bit to the right
 		(requires at least 1 pixel of intercharacter space)"
@@ -1238,7 +1239,7 @@ StrikeFont >> makeBoldGlyphs [
 	fallbackFont ifNotNil: [ fallbackFont := fallbackFont emphasized: 1 ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> makeCarriageReturnsWhite [
 	"Some larger fonts have a gray carriage return (from the zero wide fixup) make it white so it doesn't show"
 	| crForm |
@@ -1249,7 +1250,7 @@ StrikeFont >> makeCarriageReturnsWhite [
 		put: crForm
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> makeCondensedGlyphs [
 	"Make a condensed set of glyphs with same widths.
 	NOTE: this has been superceded by kerning -- should not get called"
@@ -1286,7 +1287,7 @@ StrikeFont >> makeCondensedGlyphs [
 "
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> makeControlCharsVisible [
 	| glyph |
 	self characterToGlyphMap.
@@ -1337,7 +1338,7 @@ StrikeFont >> makeControlCharsVisible [
 			put: 133 ]
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> makeItalicGlyphs [
 	"Make an italic set of glyphs with same widths by skewing left and right.
 	In the process, characters would overlap, so we widen them all first.
@@ -1396,13 +1397,13 @@ StrikeFont >> makeItalicGlyphs [
 	fallbackFont ifNotNil: [ fallbackFont := fallbackFont emphasized: 2 ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> makeLfInvisible [
 	self characterToGlyphMap.
 	characterToGlyphMap at: 11 put: (11 < minAscii ifFalse: [11] ifTrue: [maxAscii+1])
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> makeLfVisible [
 	| glyph |
 	self characterToGlyphMap.
@@ -1420,7 +1421,7 @@ StrikeFont >> makeLfVisible [
 		put: 132
 ]
 
-{ #category : #'make arrows' }
+{ #category : 'make arrows' }
 StrikeFont >> makeReturnArrow [
 	"Replace the caret character with an arrow"
 	| arrowForm arrowCanvas arrowHeadLength arrowX arrowTop arrowBottom |
@@ -1453,7 +1454,7 @@ StrikeFont >> makeReturnArrow [
 		put: arrowForm
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> makeStruckOutGlyphs [
 	"Make a struck-out set of glyphs with same widths"
 	| g |
@@ -1464,19 +1465,19 @@ StrikeFont >> makeStruckOutGlyphs [
 	fallbackFont ifNotNil: [ fallbackFont := fallbackFont emphasized: 16 ]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> makeTabInvisible [
 	self characterToGlyphMap.
 	characterToGlyphMap at: 10 put: (10 < minAscii ifFalse: [10] ifTrue:[maxAscii+1])
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> makeTabVisible [
 	self characterToGlyphMap.
 	characterToGlyphMap at: 10 put: 172
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> makeUnderlinedGlyphs [
 	"Make an underlined set of glyphs with same widths"
 	| g |
@@ -1487,41 +1488,41 @@ StrikeFont >> makeUnderlinedGlyphs [
 	fallbackFont ifNotNil: [ fallbackFont := fallbackFont emphasized: 4 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> maxAscii [
 	"Answer the integer that is the last Ascii character value of the receiver."
 
 	^maxAscii
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> maxWidth [
 	"Answer the integer that is the width of the receiver's widest character."
 
 	^maxWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> minAscii [
 	"Answer the integer that is the first Ascii character value of the receiver."
 
 	^minAscii
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> name [
 	"Answer the receiver's name."
 
 	^name ifNil: ['(unnamed)']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> name: aString [
 	"Set the receiver's name."
 	name := aString
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> newFromStrike: fileName [
 	"Build an instance from the strike font file name. The '.strike' extension
 	is optional."
@@ -1575,17 +1576,17 @@ StrikeFont >> newFromStrike: fileName [
 	characterToGlyphMap := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> pointSize [
 	^ pointSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> pointSize: anInteger [
 	pointSize := anInteger
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 StrikeFont >> postCopy [
  " the receiver is a just created shallow copy. This method gives it the final touch. "
 
@@ -1596,7 +1597,7 @@ StrikeFont >> postCopy [
     self reset.  " takes care of the derivative fonts "
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 StrikeFont >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -1607,14 +1608,14 @@ StrikeFont >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> raster [
 	"Answer an integer that specifies the layout of the glyphs' form."
 
 	^raster
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> readBFHeaderFrom: f [
 	name := self
 		restOfLine: 'Font name = '
@@ -1642,7 +1643,7 @@ StrikeFont >> readBFHeaderFrom: f [
 	type := 0	"ignored for now"
 ]
 
-{ #category : #'multibyte character methods' }
+{ #category : 'multibyte character methods' }
 StrikeFont >> readCharacter: aBits from: aStream [
 	| pos |
 	pos := 0.
@@ -1657,7 +1658,7 @@ StrikeFont >> readCharacter: aBits from: aStream [
 		pos := pos + 4 ]
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> readFromBitFont: fileName [
 	"This builds a StrikeFont instance by reading the data file format
 	produced by BitFont, a widely available font conversion utility
@@ -1787,7 +1788,7 @@ StrikeFont >> readFromBitFont: fileName [
 	characterToGlyphMap := nil
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> readFromStrike2: fileName [
 	"StrikeFont new readFromStrike2: 'Palatino14.sf2'"
 	"Build an instance from the strike font stored in strike2 format.
@@ -1799,7 +1800,7 @@ StrikeFont >> readFromStrike2: fileName [
 	[ self readFromStrike2Stream: file ] ensure: [ file close ]
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> readFromStrike2Stream: file [
 	"Build an instance from the supplied binary stream on data in strike2 format"
 	type := file nextInt32.
@@ -1835,13 +1836,13 @@ StrikeFont >> readFromStrike2Stream: file [
 	characterToGlyphMap := nil
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 StrikeFont >> releaseCachedState [
 
 	self reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StrikeFont >> reset [
 	"Reset the cache of derivative emphasized fonts"
 	fallbackFont class = FixedFaceFont ifTrue: [ fallbackFont := nil ].
@@ -1863,7 +1864,7 @@ StrikeFont >> reset [
 	"
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 StrikeFont >> restOfLine: leadString from: file [
 	"Utility method to assist reading of BitFont data files"
 	| line |
@@ -1877,18 +1878,18 @@ StrikeFont >> restOfLine: leadString from: file [
 		to: line size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> setGlyphs: newGlyphs [
 	"Replace the glyphs form.  Used to make a synthetic bold or italic font quickly."
 	glyphs := newGlyphs
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 StrikeFont >> setGlyphsDepthAtMost: aNumber [
 	glyphs depth > aNumber ifTrue: [ glyphs := glyphs asFormOfDepth: aNumber ]
 ]
 
-{ #category : #'multibyte character methods' }
+{ #category : 'multibyte character methods' }
 StrikeFont >> setupDefaultFallbackFont [
 	| fonts f |
 	fonts := TextStyle default fontArray.
@@ -1900,7 +1901,7 @@ StrikeFont >> setupDefaultFallbackFont [
 	self reset
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 StrikeFont >> stripHighGlyphs [
 	"Remove glyphs for characters above 128"
 	| i |
@@ -1924,7 +1925,7 @@ StrikeFont >> stripHighGlyphs [
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> subscript [
 	"Answer an integer that is the further vertical offset relative to the
 	baseline for positioning characters as subscripts."
@@ -1932,7 +1933,7 @@ StrikeFont >> subscript [
 	^subscript
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> superscript [
 	"Answer an integer that is the further vertical offset relative to the
 	baseline for positioning characters as superscripts."
@@ -1940,27 +1941,27 @@ StrikeFont >> superscript [
 	^superscript
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> textStyle [
 	^ TextStyle actualTextStyles detect:
 		[:aStyle | aStyle fontArray includes: self] ifNone: [nil]
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> useLeftArrow [
 	self characterToGlyphMap.
 	characterToGlyphMap at: 96 put: 95.
 	characterToGlyphMap at: 95 put: 94
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> useUnderscore [
 	self characterToGlyphMap.
 	characterToGlyphMap at: 96 put: 129.
 	characterToGlyphMap at: 95 put: 128
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> useUnderscoreIfOver1bpp [
 
 	glyphs depth = 1 ifTrue: [
@@ -1974,12 +1975,12 @@ StrikeFont >> useUnderscoreIfOver1bpp [
 	characterToGlyphMap at: 95 put: 128
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 StrikeFont >> veryDeepCopyWith: deepCopier [
 	"Return self.  I am shared.  Do not record me."
 ]
 
-{ #category : #'character shapes' }
+{ #category : 'character shapes' }
 StrikeFont >> widen: char by: delta [
 
 	^ self
@@ -1992,7 +1993,7 @@ StrikeFont >> widen: char by: delta [
 			newForm	"and substitute it in the font" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> widthOf: aCharacter [
 	"Answer the width of the argument as a character in the receiver."
 	| code |
@@ -2005,14 +2006,14 @@ StrikeFont >> widthOf: aCharacter [
 	^ (xTable at: code + 2) - (xTable at: code + 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> xTable [
 	"Answer an Array of the left x-coordinate of characters in glyphs."
 
 	^xTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StrikeFont >> xTable: anObject [
 	xTable := anObject
 ]

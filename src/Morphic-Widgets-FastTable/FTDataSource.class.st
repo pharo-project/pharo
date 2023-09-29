@@ -31,15 +31,17 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTDataSource,
-	#superclass : #Object,
+	#name : 'FTDataSource',
+	#superclass : 'Object',
 	#instVars : [
 		'table'
 	],
-	#category : #'Morphic-Widgets-FastTable-DataSource'
+	#category : 'Morphic-Widgets-FastTable-DataSource',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'DataSource'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> basicHeaderCellFor: column [
 	| cell |
 	column id ifNil: [ ^ nil ].
@@ -55,46 +57,46 @@ FTDataSource >> basicHeaderCellFor: column [
 	^ cell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> cellColumn: column row: rowIndex [
 	"Answer a morph with the cell view. I will probably return a FTCellMorph."
 
 	self subclassResponsibility
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTDataSource >> dropElements: aCollection index: rowIndex [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTDataSource >> elementAt: rowIndex [
 	"I am a really important method for a DataSource. I take an index and I return an object
 	 that should be displayed in the table for the index."
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTDataSource >> hasElementAt: index [
 
 	^ self numberOfRows >= index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> headerColumn: column [
 	"Answers a cell who will be the header of a column"
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> menuColumn: column row: rowIndex [
 	"Answer a menu for the (column, row) provided"
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> newDataSourceMatching: aFTFilter [
 	"I am here to help the FTFilterFunction. I take a aFTFilter and I need to return a new dataSource with filtered elements. Each dataSource is responsible of his filtering in order to get a generic mechanism."
 
@@ -103,39 +105,39 @@ FTDataSource >> newDataSourceMatching: aFTFilter [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> numberOfRows [
 	"I return the number of elements I can display in the table when I am call."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTDataSource >> passengerAt: rowIndex [
 	"Answer 'passenger' for drag&drop operation (a passenger is the object who will travel between
 	 drag and drop). By default, passenger is same as current element"
 	^ self elementAt: rowIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTDataSource >> readyToBeDisplayed [
 	"I am a method call when I am set to a FTTableMorph. I can be override, for example the dataSource of glamour send an announcement to update the dataSource of a Refderer."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> realElementAt: anIndex [
 	"I am here because some dataSource wrap there element into an other Object but we still want to access to the initial element. In that case a DataSource can override me to get the real element."
 
 	^ self elementAt: anIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> rowHeight: roIndex [
 
 	^ self table rowHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> searchText: aString [
 	"search a text and answers a list of elements indexes matching condition.
 	 E.g,
@@ -147,57 +149,57 @@ FTDataSource >> searchText: aString [
 	^ #()
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTDataSource >> sortElements: aSortFunction [
 	"This method should sort the elements of the datasource using the sort function as parameter."
 
 	self subclassResponsibility
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTDataSource >> sortWith: aSortFunction [
 	self sortElements: aSortFunction.
 	self table refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> table [
 	"this the table binded to this dataSource"
 
 	^ table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> table: anObject [
 	table := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTDataSource >> tableRefresh [
 	^ self table refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDataSource >> toString: anObject [
 	"Override me if you expect something else."
 
 	^ anObject asString
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTDataSource >> unsort [
 	self unsortElements.
 	self table refresh
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTDataSource >> unsortElements [
 	"This method should return the elements in their initial state."
 
 	self subclassResponsibility
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTDataSource >> wantsDropElements: aCollection type: type index: rowIndex [
 	^ false
 ]

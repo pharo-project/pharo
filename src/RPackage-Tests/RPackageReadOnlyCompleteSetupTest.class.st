@@ -38,15 +38,15 @@ Class {
 RPackageReadOnlyCompleteSetupTest >> setUp [
 
 	super setUp.
-	p1 := self createNewPackageNamed: self p1Name.
-	p2 := self createNewPackageNamed: self p2Name.
-	p3 := self createNewPackageNamed: self p3Name.
+	p1 := self ensurePackage: self p1Name.
+	p2 := self ensurePackage: self p2Name.
+	p3 := self ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
-	b1 := self createNewClassNamed: #B1DefinedInP1 inPackage: p1.
-	a2 := self createNewClassNamed: #A2DefinedInP2 inPackage: p2.
-	b2 := self createNewClassNamed: #B2DefinedInP2 inPackage: p2.
-	a3 := self createNewClassNamed: #A3DefinedInP3 inPackage: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
+	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
+	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -286,28 +286,6 @@ RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
 	self assert: (packages includes: p1).
 	self assert: (packages includes: p2).
 	self assert: (packages includes: p3)
-]
-
-{ #category : 'tests - tag class' }
-RPackageReadOnlyCompleteSetupTest >> testRemoveTag [
-
-	self assert: p1 classTags size equals: 1. "We start with the root tag"
-
-	p1 importClass: a1 inTag: #foo.
-	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
-
-	p1 importClass: b1 inTag: #foo.
-	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
-
-	p1 removeTag: #bar.
-	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
-
-	p1 removeTag: #foo.
-	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
-	self assert: (p1 classesTaggedWith: #foo) size equals: 0
 ]
 
 { #category : 'tests - tag class' }

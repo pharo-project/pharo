@@ -5,26 +5,28 @@ I contain a complishonBuilder that is used to create a complishon.
 See my superclass for details
 "
 Class {
-	#name : #CoCompletionEngine,
-	#superclass : #CompletionEngine,
+	#name : 'CoCompletionEngine',
+	#superclass : 'CompletionEngine',
 	#instVars : [
 		'completionBuilder'
 	],
-	#category : #'HeuristicCompletion-Morphic-Core'
+	#category : 'HeuristicCompletion-Morphic-Core',
+	#package : 'HeuristicCompletion-Morphic',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionEngine >> completionBuilder [
 
 	^ completionBuilder ifNil: [ CoASTHeuristicsResultSetBuilder new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionEngine >> completionBuilder: anObject [
 	completionBuilder := anObject
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CoCompletionEngine >> createContext [
 
 	^ super createContext
@@ -32,7 +34,7 @@ CoCompletionEngine >> createContext [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionEngine >> doItContext [
 	"Rubric sends the morph as requestor to the compiler.
 	We need to use it to keep the same semantics..."
@@ -40,20 +42,20 @@ CoCompletionEngine >> doItContext [
 	^ self editor model doItContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionEngine >> doItRequestor [
 
 	^ self editor morph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoCompletionEngine >> initialize [
 
 	super initialize.
 	contextClass := CoCompletionContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionEngine >> variableBindingNames [
 
 	^ self doItRequestor

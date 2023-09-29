@@ -2,21 +2,23 @@
 A SubPixel-AntiAliased GlyphRenderer for FreeType
 "
 Class {
-	#name : #FreeTypeSubPixelAntiAliasedGlyphRenderer,
-	#superclass : #FreeTypeGlyphRenderer,
+	#name : 'FreeTypeSubPixelAntiAliasedGlyphRenderer',
+	#superclass : 'FreeTypeGlyphRenderer',
 	#pools : [
 		'FT2Constants'
 	],
-	#category : #'FreeType-Graphics-GlyphRendering'
+	#category : 'FreeType-Graphics-GlyphRendering',
+	#package : 'FreeType-Graphics',
+	#tag : 'GlyphRendering'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FreeTypeSubPixelAntiAliasedGlyphRenderer class >> initialize [
 
 	FreeTypeGlyphRenderer current: self new
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm baseExtent: baseExtent baseOffset: baseOffset baseAdvance: baseAdvance baseLinearAdvance: baseLinearAdvance scale: scale [
 	"aGlyphForm should be 3x stretched 8 bit GlyphForm"
 	| w h s answer rowstart bytes word littleEndian shift v a colorVal i
@@ -97,7 +99,7 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> filter: aGlyphForm baseExtent: baseE
 	^answer
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderAndFilterStretchedGlyph: aCharacter depth: depth subpixelPosition: sub font: aFreeTypeFont scale: scale [
 	"Glyphs are either 1 or 8 bit deep. For 32 bpp we use 8 bits, otherwise 1"
 	| em form glyph scaleX charCode slant extraWidth s offsetX offsetY synthBoldStrength boldExtra extraHeight face baseExtent baseOffset baseAdvance baseLinearAdvance |
@@ -162,7 +164,7 @@ FreeTypeSubPixelAntiAliasedGlyphRenderer >> renderAndFilterStretchedGlyph: aChar
 	^ self filter: form baseExtent: baseExtent baseOffset: baseOffset baseAdvance: baseAdvance baseLinearAdvance: baseLinearAdvance scale: scale
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FreeTypeSubPixelAntiAliasedGlyphRenderer >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub font: aFreeTypeFont scale: scale [
 
 	| form |

@@ -4,12 +4,14 @@ I am a command to open browser with methods where halts or breakpoints are insta
 I am registered in world toolbar using class side method #worldMenuOn:
 "
 Class {
-	#name : #ClyBrowseBreakpointsCommand,
-	#superclass : #CmdCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
+	#name : 'ClyBrowseBreakpointsCommand',
+	#superclass : 'CmdCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 ClyBrowseBreakpointsCommand class >> worldMenuOn: aBuilder [
 	<worldMenu>
 
@@ -23,25 +25,25 @@ ClyBrowseBreakpointsCommand class >> worldMenuOn: aBuilder [
 		action: [ command execute ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseBreakpointsCommand >> defaultMenuIconName [
 
 	^#smallDebug
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseBreakpointsCommand >> defaultMenuItemName [
 
 	^'Browse Breakpoints'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseBreakpointsCommand >> description [
 
 	^'Open browser with methods where Halts or Breakpoints are installed'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBrowseBreakpointsCommand >> execute [
 
 	ClyQueryBrowserMorph browseBreakpoints

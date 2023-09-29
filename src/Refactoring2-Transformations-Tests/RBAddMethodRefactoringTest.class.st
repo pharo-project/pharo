@@ -1,17 +1,19 @@
 Class {
-	#name : #RBAddMethodRefactoringTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddMethodRefactoringTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddMethodRefactoringTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddMethodRefactoringTest >> testFailureExistingSelector [
 
 	self shouldFail: (RBAddMethodRefactoring
@@ -20,7 +22,7 @@ RBAddMethodRefactoringTest >> testFailureExistingSelector [
 			 withProtocol: #accessing)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddMethodRefactoringTest >> testFailureModelExistingSelector [
 
 	self
@@ -36,7 +38,7 @@ RBAddMethodRefactoringTest >> testFailureModelExistingSelector [
 				 withProtocol: #accessing)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddMethodRefactoringTest >> testFailureModelInheritedSelector [
 
 	| refactoring |

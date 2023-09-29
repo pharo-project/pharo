@@ -2,29 +2,30 @@
 A FinderSingleMethodNode is a node used to display a selector implemented only once in the system
 "
 Class {
-	#name : #FinderSingleMethodNode,
-	#superclass : #FinderMethodNode,
-	#category : #'Tool-Finder-UI'
+	#name : 'FinderSingleMethodNode',
+	#superclass : 'FinderMethodNode',
+	#category : 'Tool-Finder-UI',
+	#package : 'Tool-Finder-UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSingleMethodNode >> childrenItems [
 
 	^ #()
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FinderSingleMethodNode >> displayString [
 	^ self itemMethod selector , ' (' , self itemMethod methodClass name , ')'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderSingleMethodNode >> isSingle [
 
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderSingleMethodNode >> itemMethod [
 	| itemClass |
 	itemClass := (self model resultDictionary at: self item) first.

@@ -1,6 +1,6 @@
-Extension { #name : #CheckboxButtonMorph }
+Extension { #name : 'CheckboxButtonMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 CheckboxButtonMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the image for the current state."
 

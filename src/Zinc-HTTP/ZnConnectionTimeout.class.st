@@ -9,7 +9,9 @@ ZnConnectionTimeout
 	during: [ ^ ZnClient new get: 'http://zn.stfx.eu/zn/small.html' ]
 "
 Class {
-	#name : #ZnConnectionTimeout,
-	#superclass : #DynamicVariable,
-	#category : #'Zinc-HTTP-Variables'
+	#name : 'ZnConnectionTimeout',
+	#superclass : 'DynamicVariable',
+	#category : 'Zinc-HTTP-Variables',
+	#package : 'Zinc-HTTP',
+	#tag : 'Variables'
 }

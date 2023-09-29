@@ -28,7 +28,8 @@ RPackageTag class >> package: aPackage name: aString [
 RPackageTag >> addClass: aClass [
 
 	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
-	classes add: aClass
+	classes add: aClass.
+	self organizer registerPackage: self package forClass: aClass
 ]
 
 { #category : 'private' }
@@ -93,7 +94,8 @@ RPackageTag >> isEmpty [
 
 { #category : 'testing' }
 RPackageTag >> isRoot [
-	^ self name = self packageName
+
+	^ self name = self package rootTagName
 ]
 
 { #category : 'accessing' }
@@ -146,7 +148,7 @@ RPackageTag >> promoteAsPackage [
 
 	self classes do: [ :class | newPackage moveClass: class toTag: newPackage rootTag ].
 
-	self organizer registerPackage: newPackage
+	self organizer addPackage: newPackage
 ]
 
 { #category : 'accessing' }
@@ -154,6 +156,7 @@ RPackageTag >> removeClass: aClass [
 
 	| oldObject |
 	oldObject := classes remove: aClass ifAbsent: [  ].
+	self organizer unregisterPackage: self package forClass: aClass.
 	self isEmpty ifTrue: [ self removeFromPackage ].
 	^ oldObject
 ]
@@ -162,6 +165,13 @@ RPackageTag >> removeClass: aClass [
 RPackageTag >> removeFromPackage [
 
 	self assert: self isEmpty description: 'Package tag is not empty'.
+
+	self package removeTag: self
+]
+
+{ #category : 'accessing' }
+RPackageTag >> removeFromSystem [
+	"Remove the tag and its content from the system"
 
 	self package removeTag: self
 ]
@@ -177,9 +187,9 @@ RPackageTag >> renameTo: newTagName [
 	oldTagName = newTagName ifTrue: [ ^ self ].
 
 	self basicRenameTo: newTagName.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self flag: #package. "This should be removed with the system organizer."
-		self classes do: [ :each | each category: newCategoryName ] ].
+
+	self flag: #package. "This should be removed later when the class will know its tag."
+	self classes do: [ :class | class basicCategory: newCategoryName ].
 	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 

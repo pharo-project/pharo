@@ -3,12 +3,13 @@ I am a command to insert new subclass into my target class hierarchy.
 All current subclasses of targetClass will become subclasses of new created class
 "
 Class {
-	#name : #SycCmInsertSubclassCommand,
-	#superclass : #SycCmNewClassCreationCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycCmInsertSubclassCommand',
+	#superclass : 'SycCmNewClassCreationCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycCmInsertSubclassCommand >> executeRefactoring [
 
 	| refactoring |
@@ -20,23 +21,23 @@ SycCmInsertSubclassCommand >> executeRefactoring [
 	refactoring execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSubclassCommand >> icon [
 	^ self iconNamed: #smallLoadProject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmInsertSubclassCommand >> isApplicable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSubclassCommand >> name [
 	^'Insert subclass'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSubclassCommand >> order [
 	^ 20
 ]

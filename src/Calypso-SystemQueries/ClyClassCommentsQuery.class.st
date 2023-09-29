@@ -17,44 +17,46 @@ Internal Representation and Key Implementation Points.
 	pattern:		<ClyStringPattern>
 "
 Class {
-	#name : #ClyClassCommentsQuery,
-	#superclass : #ClyClassQuery,
+	#name : 'ClyClassCommentsQuery',
+	#superclass : 'ClyClassQuery',
 	#instVars : [
 		'pattern'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassCommentsQuery class >> filteredBy: aStringPattern [
 	^self new
 		pattern: aStringPattern
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassCommentsQuery class >> filteredBy: aStringPattern from: aScope [
 	^(self from: aScope)
 		pattern: aStringPattern
 ]
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyClassCommentsQuery class >> resultItemsType [
 	^ClyClassComment
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassCommentsQuery class >> withString: aString [
 
 	^self withString: aString caseSensitive: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassCommentsQuery class >> withString: aString caseSensitive: aBool [
 
 	^self filteredBy: (ClySubstringPattern with: aString caseSensitive: aBool)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassCommentsQuery class >> withString: aString caseSensitive: aBool from: aScope [
 
 	^self
@@ -62,13 +64,13 @@ ClyClassCommentsQuery class >> withString: aString caseSensitive: aBool from: aS
 		from: aScope
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassCommentsQuery class >> withString: aString from: aScope [
 
 	^self withString: aString caseSensitive: false from: aScope
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassCommentsQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 	self == anObject ifTrue: [ ^ true ].
@@ -76,7 +78,7 @@ ClyClassCommentsQuery >> = anObject [
 	^ pattern = anObject pattern
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyClassCommentsQuery >> buildResult: aQueryResult [
 	| classComments |
 	classComments := OrderedCollection new.
@@ -88,37 +90,37 @@ ClyClassCommentsQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: classComments
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassCommentsQuery >> description [
 
 	^'class comments with ', pattern value printString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassCommentsQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: pattern hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCommentsQuery >> pattern [
 	^ pattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCommentsQuery >> pattern: anObject [
 	pattern := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassCommentsQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	aStream nextPutAll: pattern value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassCommentsQuery >> selectsClass: aClass [
 
 	^aClass hasComment and: [ pattern matches: aClass comment]

@@ -37,15 +37,6 @@ TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod 
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : 'accessing - method dictionary' }
-TraitedMetaclass >> addSelector: selector withRecompiledMethod: compiledMethod [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-
-	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
-
-	self addSelector: selector withMethod: compiledMethod
-]
-
 { #category : 'querying' }
 TraitedMetaclass >> allTraits [
 	<reflection: 'Class structural inspection - Traits'>
@@ -292,11 +283,9 @@ TraitedMetaclass >> recompile: selector from: oldClass [
 	method := oldClass compiledMethodAt: selector.
 	newMethod := self recompileBasic: selector from: oldClass.
 
-	method properties
-		at: #traitSource
-		ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource].
+	method properties at: #traitSource ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource ].
 
-	self addSelector: selector withRecompiledMethod: newMethod
+	self addSelectorSilently: selector withMethod: newMethod
 ]
 
 { #category : 'traits' }

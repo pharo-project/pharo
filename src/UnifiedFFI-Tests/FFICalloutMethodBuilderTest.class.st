@@ -2,28 +2,30 @@
 Tests for FFICalloutMethodBuilder
 "
 Class {
-	#name : #FFICalloutMethodBuilderTest,
-	#superclass : #TestCase,
+	#name : 'FFICalloutMethodBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'architecture'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 FFICalloutMethodBuilderTest >> builder [
 	^ (TFCalloutAPI inUFFIContext: nil) newBuilder
 		requestor: FFICalloutMethodBuilderTestRequestor new;
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICalloutMethodBuilderTest >> setUp [
 	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 	| result tfFunction |
 
@@ -59,7 +61,7 @@ FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 		TFBasicType uint16}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallCreateObject [
 	| result |
 
@@ -81,7 +83,7 @@ FFICalloutMethodBuilderTest >> testCallCreateObject [
 	self assert: result literals second definition parameterTypes first equals: TFBasicType sint32
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 	| result tfFunction |
 
@@ -105,7 +107,7 @@ FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 	self assert: tfFunction definition returnType equals: TFBasicType uint32
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallSimple [
 	| result tfFunction |
 
@@ -128,7 +130,7 @@ FFICalloutMethodBuilderTest >> testCallSimple [
 	self assert: tfFunction definition parameterTypes asArray equals: { TFBasicType sint32 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithConstant [
 	| result tfFunction |
 
@@ -152,7 +154,7 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 	self assert: tfFunction definition parameterTypes asArray equals: { TFBasicType sint32. TFBasicType uint32 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithObject [
 	| result tfFunction |
 
@@ -176,7 +178,7 @@ FFICalloutMethodBuilderTest >> testCallWithObject [
 	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithPointer [
 	| result tfFunction |
 
@@ -200,7 +202,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointer [
 	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 	| result tfFunction |
 
@@ -224,7 +226,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithSelf [
 	| result tfFunction |
 

@@ -2,18 +2,20 @@
 SUnit tests for class Form
 "
 Class {
-	#name : #FormTest,
-	#superclass : #ClassTestCase,
-	#category : #'Graphics-Tests-Primitives'
+	#name : 'FormTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Graphics-Tests-Primitives',
+	#package : 'Graphics-Tests',
+	#tag : 'Primitives'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 FormTest >> classToBeTested [
 
 	^Form
 ]
 
-{ #category : #'tests - 32 bit' }
+{ #category : 'tests - 32 bit' }
 FormTest >> test32BitFormBlackShouldStayBlackAfterSave [
 	"Solve bug: https://pharo.manuscript.com/f/cases/14619"
 
@@ -22,7 +24,7 @@ FormTest >> test32BitFormBlackShouldStayBlackAfterSave [
 	self assert: blackForm colorsUsed first equals: Color black
 ]
 
-{ #category : #'tests - 32 bit' }
+{ #category : 'tests - 32 bit' }
 FormTest >> test32BitTranslucentBlackIsBlack [
 	|form|
 	form := Form extent: 1@1 depth: 32.
@@ -30,7 +32,7 @@ FormTest >> test32BitTranslucentBlackIsBlack [
 	self assert:  0 equals: (form pixelValueAt: 0@0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FormTest >> testIsAllWhite [
 	"Make sure #isAllWhite works for all bit depths"
 

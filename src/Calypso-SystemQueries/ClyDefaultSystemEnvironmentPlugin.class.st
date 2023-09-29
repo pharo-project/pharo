@@ -4,12 +4,14 @@ I fill items with basic properties related to Smalltalk meta model.
 And I provide standart method and class groups
 "
 Class {
-	#name : #ClyDefaultSystemEnvironmentPlugin,
-	#superclass : #ClySystemEnvironmentPlugin,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyDefaultSystemEnvironmentPlugin',
+	#superclass : 'ClySystemEnvironmentPlugin',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyDefaultSystemEnvironmentPlugin >> checkPackageHasClassGroups: aPackage [
 	| providers packageScope |
 	packageScope := ClyPackageScope of: aPackage in: environment.
@@ -21,21 +23,21 @@ ClyDefaultSystemEnvironmentPlugin >> checkPackageHasClassGroups: aPackage [
 	^ false
 ]
 
-{ #category : #'method groups' }
+{ #category : 'method groups' }
 ClyDefaultSystemEnvironmentPlugin >> collectClassGroupProviders [
 
 	^{ClyExtendedClassGroupProvider. ClyNoTagClassGroupProvider. ClyTaggedClassGroupProvider}
 		collect: [ :each | each new ]
 ]
 
-{ #category : #'method groups' }
+{ #category : 'method groups' }
 ClyDefaultSystemEnvironmentPlugin >> collectMethodGroupProviders [
 
 	^{ClyInheritedMethodGroupProvider. ClyMethodsInProtocolGroupProvider. ClyUnclassifiedMethodGroupProvider. ClyExtendedMethodGroupProvider}
 		collect: [ :each | each new ]
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyDefaultSystemEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 
 	anItem ensureSystemDefinition: [ClyClassDefinitionProperty of: aClass].
@@ -45,25 +47,25 @@ ClyDefaultSystemEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass
 	aClass hasComment ifFalse: [ anItem markWith: ClyNoCommentTag]
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyDefaultSystemEnvironmentPlugin >> decorateBrowserItem: anItem ofClassGroup: aClassGroup [
 
 	aClassGroup decorateOwnBrowserItem: anItem
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyDefaultSystemEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
 	anItem ensureSystemDefinition: [ClyMethodDefinitionProperty of: aMethod]
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyDefaultSystemEnvironmentPlugin >> decorateBrowserItem: anItem ofMethodGroup: aMethodGroup [
 
 	aMethodGroup decorateOwnBrowserItem: anItem
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyDefaultSystemEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
 
 	aPackage classes ifNotEmpty: [ anItem markWithChildrenOf: ClyClass ].

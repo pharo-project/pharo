@@ -5,45 +5,47 @@ If contour ends with close command, then my insntance will have 'closed' flag se
 See AthensPathBuilder , which is responsible for building paths.
 "
 Class {
-	#name : #AthensMoveSegment,
-	#superclass : #AthensLineSegment,
+	#name : 'AthensMoveSegment',
+	#superclass : 'AthensLineSegment',
 	#instVars : [
 		'closed'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensMoveSegment >> accept: aVisitor [
 	^ aVisitor moveSegment: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensMoveSegment >> closed: aBoolean [
 	closed := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensMoveSegment >> isClosed [
 	^ closed == true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensMoveSegment >> isMove [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensMoveSegment >> reopen: aBoolean [
 	closed := aBoolean
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensMoveSegment >> sendCommandTo: aBuilder [
 	^ aBuilder moveTo: point
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensMoveSegment >> visitWith: visitor [
 
 	visitor visitMoveSegment: self

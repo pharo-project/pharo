@@ -4,20 +4,22 @@ I'm a form that keeps a surface with the only purpose of prevent GC when is stil
 I'm used at AthensCairoSurface>>#asForm
 "
 Class {
-	#name : #AthensCairoSurfaceForm,
-	#superclass : #Form,
+	#name : 'AthensCairoSurfaceForm',
+	#superclass : 'Form',
 	#instVars : [
 		'surface'
 	],
-	#category : #'Athens-Cairo-Surface'
+	#category : 'Athens-Cairo-Surface',
+	#package : 'Athens-Cairo',
+	#tag : 'Surface'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurfaceForm >> surface [
 	^ surface
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurfaceForm >> surface: anObject [
 	surface := anObject
 ]

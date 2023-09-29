@@ -1,6 +1,6 @@
-Extension { #name : #FFIBackend }
+Extension { #name : 'FFIBackend' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 FFIBackend >> calloutAPIClass [
 
 	^ FFICalloutAPI

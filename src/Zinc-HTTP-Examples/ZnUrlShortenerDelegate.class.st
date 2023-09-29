@@ -26,25 +26,26 @@ Thanks to Cédrick Béler for the first implementation of this example.
 Part of Zinc HTTP Components
 "
 Class {
-	#name : #ZnUrlShortenerDelegate,
-	#superclass : #Object,
+	#name : 'ZnUrlShortenerDelegate',
+	#superclass : 'Object',
 	#classVars : [
 		'Database'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlShortenerDelegate class >> database [
 	^ Database ifNil: [ Database := Dictionary new ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ZnUrlShortenerDelegate class >> reset [
 	Database := nil
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ZnUrlShortenerDelegate class >> shorten: urlOrString [
 	"Shorten urlOrString, store it in our database and return the key"
 
@@ -58,7 +59,7 @@ ZnUrlShortenerDelegate class >> shorten: urlOrString [
 	^ key
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnUrlShortenerDelegate >> handleGetRequest: request [
 	^ request uri lastPathSegment
 			ifNotNil: [ :key |
@@ -75,14 +76,14 @@ ZnUrlShortenerDelegate >> handleGetRequest: request [
 						ZnResponse ok: (ZnEntity text: shortUrl printString) ] ]
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnUrlShortenerDelegate >> handleRequest: request [
 	^ request method = #GET
 		ifTrue: [ self handleGetRequest: request ]
 		ifFalse: [ ZnResponse methodNotAllowed: request ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlShortenerDelegate >> welcomeHTML [
 	^ ZnHtmlOutputStream streamContents: [ :html |
 		html page: 'Zn URL Shortener' do: [

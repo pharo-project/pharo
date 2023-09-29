@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRemoveMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -13,7 +15,7 @@ RBRemoveMethodParametrizedTest class >> testParameters [
 		  yourself
 ]
 
-{ #category : #builder }
+{ #category : 'builder' }
 RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
 
 	^ rbClass
@@ -21,7 +23,7 @@ RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArg
 		  withArguments: { rbNamespace } , aParameterCollection
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveMethodParametrizedTest >> testFailureRemoveNonExistingMethod [
 
 	self shouldFail: (self
@@ -29,7 +31,7 @@ RBRemoveMethodParametrizedTest >> testFailureRemoveNonExistingMethod [
 			 andArguments: #( #nonExistingMethod #RBBasicLintRuleTestData ))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodParametrizedTest >> testRemoveMethod [
 	| refactoring selector |
 	selector := 'selectorNotReferenced' asSymbol.

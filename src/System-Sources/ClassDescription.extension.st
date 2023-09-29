@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*System-Sources' }
+{ #category : '*System-Sources' }
 ClassDescription >> logMethodSource: aText forMethod: aCompiledMethod inProtocol: aProtocol withStamp: changeStamp [
 
 	aCompiledMethod

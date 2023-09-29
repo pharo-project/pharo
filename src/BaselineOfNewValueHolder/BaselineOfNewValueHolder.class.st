@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfNewValueHolder,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfNewValueHolder
+	#name : 'BaselineOfNewValueHolder',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfNewValueHolder',
+	#package : 'BaselineOfNewValueHolder'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfNewValueHolder >> baseline: spec [
 	<baseline>
 	
@@ -18,7 +19,7 @@ BaselineOfNewValueHolder >> baseline: spec [
 		spec group: 'tests' with: #('NewValueHolder-Tests') ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfNewValueHolder >> project [
 	
 	| aProject |

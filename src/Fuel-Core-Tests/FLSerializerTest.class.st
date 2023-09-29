@@ -343,38 +343,6 @@ FLSerializerTest >> testLookUpInGlobalsMustBeGlobal [
 ]
 
 { #category : 'tests-configuring-globals' }
-FLSerializerTest >> testLookUpInGlobalsObjectKey [
-	| object marge |
-	object := Object new.
-	marge := 'Marge'.
-	self environmentOfTest
-		at: object
-		put: marge.
-	addedGlobals add: object.
-	self serializer lookUpInGlobals: object.
-
-	self assert: (self serializer globals includesKey: object).
-	self assert: (self serializer globals at: object) identicalTo: marge.
-	self deny: (self serializer globals includesKey: marge)
-]
-
-{ #category : 'tests-configuring-globals' }
-FLSerializerTest >> testLookUpInGlobalsPassingValue [
-	| object1 object2 |
-	object1 := Object new.
-	object2 := Object new.
-	self environmentOfTest
-		at: object1
-		put: object2.
-	addedGlobals add: object1.
-	self serializer lookUpInGlobals: object2.
-	
-	self assert: (self serializer globals includesKey: object1).
-	self assert: (self serializer globals at: object1) identicalTo: object2.
-	self deny: (self serializer globals includesKey: object2)
-]
-
-{ #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookUpInGlobalsSymbolKey [
 	| object |
 	object := Object new.
@@ -391,15 +359,17 @@ FLSerializerTest >> testLookUpInGlobalsSymbolKey [
 
 { #category : 'tests-configuring-globals' }
 FLSerializerTest >> testLookupAllInGlobals [
-	| globals global1 global2 marge |
+	| globals global1 marge |
 	global1 := Object new.
-	global2 := Object new.
 	marge := 'Marge'.
 	globals := { Object. Class. Smalltalk. #World. global1. marge }.
 	self serializer lookUpAllInGlobals: globals.
 	self environmentOfTest
 		at: #global1 put: global1;
-		at: global2 put: marge.
+		at: #global2 put: marge.
+	addedGlobals
+		add: #global1;
+		add: #global2.
 	
 	{
 		#Object -> Object.
@@ -407,7 +377,6 @@ FLSerializerTest >> testLookupAllInGlobals [
 		#Smalltalk -> Smalltalk.
 		#World -> World.
 		#global1 -> global1.
-		global2 -> marge
 	} do: [ :assoc |
 		self assert: (self serializer globals includesAssociation: assoc) ]
 ]

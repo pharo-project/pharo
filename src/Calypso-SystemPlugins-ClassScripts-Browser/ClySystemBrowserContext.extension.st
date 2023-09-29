@@ -1,13 +1,13 @@
-Extension { #name : #ClySystemBrowserContext }
+Extension { #name : 'ClySystemBrowserContext' }
 
-{ #category : #'*Calypso-SystemPlugins-ClassScripts-Browser' }
+{ #category : '*Calypso-SystemPlugins-ClassScripts-Browser' }
 ClySystemBrowserContext >> isClassScriptSelected [
 
 	^self isMethodSelected and: [
 		(self lastSelectedObjectIn: self selectedMethodItems) hasProperty: ClyClassScriptProperty]
 ]
 
-{ #category : #'*Calypso-SystemPlugins-ClassScripts-Browser' }
+{ #category : '*Calypso-SystemPlugins-ClassScripts-Browser' }
 ClySystemBrowserContext >> selectedClassScript [
 
 	| methodItem |

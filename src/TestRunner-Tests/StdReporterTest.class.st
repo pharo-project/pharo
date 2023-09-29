@@ -1,17 +1,19 @@
 Class {
-	#name : #StdReporterTest,
-	#superclass : #AbstractReporterTest,
-	#category : #'TestRunner-Tests-Reporters'
+	#name : 'StdReporterTest',
+	#superclass : 'AbstractReporterTest',
+	#category : 'TestRunner-Tests-Reporters',
+	#package : 'TestRunner-Tests',
+	#tag : 'Reporters'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 StdReporterTest >> setUp [
 
 	super setUp.
 	reporter := StdReporter new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdReporterTest >> testCurrentTestIsIncrementAfterEachTestCaseExecution [
 
 	| runner |
@@ -22,7 +24,7 @@ StdReporterTest >> testCurrentTestIsIncrementAfterEachTestCaseExecution [
 	self assert: reporter currentTest equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdReporterTest >> testCurrentTestIsOneInitialy [
 
 	self assert: reporter currentTest equals: 1

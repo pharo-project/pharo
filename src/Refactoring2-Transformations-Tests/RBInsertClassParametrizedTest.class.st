@@ -1,10 +1,12 @@
 Class {
-	#name : #RBInsertClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBInsertClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInsertClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInsertNewClassRefactoring };
@@ -12,19 +14,19 @@ RBInsertClassParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInsertClassParametrizedTest >> constructor [
 	^ #addClass:superclass:subclasses:category:
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBInsertClassParametrizedTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureEmptyCategory [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -34,7 +36,7 @@ RBInsertClassParametrizedTest >> testFailureEmptyCategory [
 				 #'' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureExistingClassName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -44,7 +46,7 @@ RBInsertClassParametrizedTest >> testFailureExistingClassName [
 				 #'Refactory-Testing' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureModelExistingClassName [
 
 	self shouldFail:
@@ -55,7 +57,7 @@ RBInsertClassParametrizedTest >> testFailureModelExistingClassName [
 				 #'Refactory-Testing' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureModelInvalidSubclass [
 
 	self shouldFail:
@@ -66,7 +68,7 @@ RBInsertClassParametrizedTest >> testFailureModelInvalidSubclass [
 				 #'Refactory-Tesing' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureModelNonImmediateSubclassOfSuperclass [
 
 	| refactoring |
@@ -81,7 +83,7 @@ RBInsertClassParametrizedTest >> testFailureModelNonImmediateSubclassOfSuperclas
 	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureNonImmediateSubclassOfSuperclass [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -91,7 +93,7 @@ RBInsertClassParametrizedTest >> testFailureNonImmediateSubclassOfSuperclass [
 				 #'Refactory-Tesing' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureSubclassIsMetaslass [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -101,7 +103,7 @@ RBInsertClassParametrizedTest >> testFailureSubclassIsMetaslass [
 				 #'Refactory-Tesing' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBInsertClassParametrizedTest >> testFailureSuperclassIsMetaclass [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -111,7 +113,7 @@ RBInsertClassParametrizedTest >> testFailureSuperclassIsMetaclass [
 				 #'Refactory-Testing' })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInsertClassParametrizedTest >> testInsertClassWithinExistingHiearchy [
 	| refactoring insertedClass parentOfInsertedClass childOfInsertedClass |
 
@@ -141,7 +143,7 @@ RBInsertClassParametrizedTest >> testInsertClassWithinExistingHiearchy [
 	self assert: (insertedClass classSide subclasses includes: childOfInsertedClass classSide)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInsertClassParametrizedTest >> testModelInsertClass [
 	| refactoring insertedClass superClass subclass |
 	superClass := model classNamed: #Foo.

@@ -7,8 +7,8 @@ A simple button that handles multiple fillstyle states:
 with variants being a combination of passive/active and enabled/disabled.
 "
 Class {
-	#name : #MultistateButtonMorph,
-	#superclass : #Morph,
+	#name : 'MultistateButtonMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'enabled',
 		'active',
@@ -17,17 +17,19 @@ Class {
 		'stateMap',
 		'upAction'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> active [
 	"Answer the value of active"
 
 	^ active
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> active: anObject [
 	"Set the value of active"
 
@@ -35,7 +37,7 @@ MultistateButtonMorph >> active: anObject [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeDisabledNotOverDownFillStyle: aFillStyle [
 	"Set the active, disabled, notOver, down fill style."
 
@@ -43,7 +45,7 @@ MultistateButtonMorph >> activeDisabledNotOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeDisabledNotOverUpFillStyle: aFillStyle [
 	"Set the active, disabled, notOver, up fill style."
 
@@ -51,7 +53,7 @@ MultistateButtonMorph >> activeDisabledNotOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeDisabledOverDownFillStyle: aFillStyle [
 	"Set the active, disabled, over, down fill style."
 
@@ -59,7 +61,7 @@ MultistateButtonMorph >> activeDisabledOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeDisabledOverUpFillStyle: aFillStyle [
 	"Set the active, disabled, over, up fill style."
 
@@ -67,7 +69,7 @@ MultistateButtonMorph >> activeDisabledOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeEnabledNotOverDownFillStyle: aFillStyle [
 	"Set the active, enabled, notOver, down fill style."
 
@@ -75,7 +77,7 @@ MultistateButtonMorph >> activeEnabledNotOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeEnabledNotOverUpFillStyle: aFillStyle [
 	"Set the active, enabled, notOver, up fill style."
 
@@ -83,7 +85,7 @@ MultistateButtonMorph >> activeEnabledNotOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeEnabledOverDownFillStyle: aFillStyle [
 	"Set the active, enabled, over, down fill style."
 
@@ -91,7 +93,7 @@ MultistateButtonMorph >> activeEnabledOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> activeEnabledOverUpFillStyle: aFillStyle [
 	"Set the active, enabled, over, up fill style."
 
@@ -99,13 +101,13 @@ MultistateButtonMorph >> activeEnabledOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MultistateButtonMorph >> addUpAction: aValuable [
 
 	upAction := aValuable
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MultistateButtonMorph >> changed [
 	"Update the fillStyle here."
 
@@ -115,14 +117,14 @@ MultistateButtonMorph >> changed [
 	super changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> down [
 	"Answer the value of down"
 
 	^ down
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> down: anObject [
 	"Set the value of down"
 
@@ -130,14 +132,14 @@ MultistateButtonMorph >> down: anObject [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> enabled [
 	"Answer whether the button is rnabled."
 
 	^enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> enabled: anObject [
 	"Set the value of enabled"
 
@@ -145,7 +147,7 @@ MultistateButtonMorph >> enabled: anObject [
 	self changed
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 MultistateButtonMorph >> extent: aPoint [
 	"Center the fill style origin."
 
@@ -156,7 +158,7 @@ MultistateButtonMorph >> extent: aPoint [
 	super extent: aPoint
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> fillStyleToUse [
 	"Answer the fill style to used based on the current state."
 
@@ -174,7 +176,7 @@ MultistateButtonMorph >> fillStyleToUse [
 		map at: (self down ifTrue: [#up] ifFalse: [#down]) ifAbsent: [Color transparent]]
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> fillStyles [
 	"Answer all the fill styles"
 
@@ -187,14 +189,14 @@ MultistateButtonMorph >> fillStyles [
 	^styles
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> handlesMouseDown: evt [
 	"Yes."
 
 	^true
 ]
 
-{ #category : #recategorized }
+{ #category : 'recategorized' }
 MultistateButtonMorph >> handlesMouseOver: anEvent [
 	"Answer true, otherwise what is all that
 	#mouseEnter:/#mouseLeave: stuff about?"
@@ -202,14 +204,14 @@ MultistateButtonMorph >> handlesMouseOver: anEvent [
 	^true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> handlesMouseOverDragging: evt [
 	"Yes, for other states."
 
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MultistateButtonMorph >> initialize [
 	"Initialize the receiver."
 
@@ -221,13 +223,13 @@ MultistateButtonMorph >> initialize [
 	super initialize
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> labelGraphic: anObject [
 	"do nothing. this is a hack to make this multistate button work with a menu on a system window.
 	Need to refactor menu boxes!"
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> mouseDown: evt [
 	"Handle a mouse down event."
 
@@ -236,7 +238,7 @@ MultistateButtonMorph >> mouseDown: evt [
 	self down: true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> mouseEnter: evt [
 	"Handle a mouseEnter event, meaning the mouse just entered my bounds with no button pressed."
 
@@ -244,7 +246,7 @@ MultistateButtonMorph >> mouseEnter: evt [
 	self over: true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> mouseEnterDragging: evt [
 	"Handle a mouseEnterDragging event, meaning the mouse just entered my bounds with a button pressed or laden with submorphs."
 
@@ -252,7 +254,7 @@ MultistateButtonMorph >> mouseEnterDragging: evt [
 	self over: true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> mouseLeave: evt [
 	"Handle a mouseLeave event, meaning the mouse just left my bounds with no button pressed."
 
@@ -260,7 +262,7 @@ MultistateButtonMorph >> mouseLeave: evt [
 	self over: false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> mouseLeaveDragging: evt [
 	"Handle a mouseLeaveLaden event, meaning the mouse just left my bounds with a button pressed or laden with submorphs."
 
@@ -268,7 +270,7 @@ MultistateButtonMorph >> mouseLeaveDragging: evt [
 	self over: false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MultistateButtonMorph >> mouseUp: evt [
 	"Handle a mouse up event."
 
@@ -281,14 +283,14 @@ MultistateButtonMorph >> mouseUp: evt [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> over [
 	"Answer the value of over"
 
 	^ over
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> over: anObject [
 	"Set the value of over"
 
@@ -296,7 +298,7 @@ MultistateButtonMorph >> over: anObject [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveDisabledNotOverDownFillStyle: aFillStyle [
 	"Set the passive, disabled, notOver, down fill style."
 
@@ -304,7 +306,7 @@ MultistateButtonMorph >> passiveDisabledNotOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveDisabledNotOverUpFillStyle: aFillStyle [
 	"Set the passive, disabled, notOver, up fill style."
 
@@ -312,7 +314,7 @@ MultistateButtonMorph >> passiveDisabledNotOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveDisabledOverDownFillStyle: aFillStyle [
 	"Set the passive, disabled, over, down fill style."
 
@@ -320,7 +322,7 @@ MultistateButtonMorph >> passiveDisabledOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveDisabledOverUpFillStyle: aFillStyle [
 	"Set the passive, disabled, over, up fill style."
 
@@ -328,7 +330,7 @@ MultistateButtonMorph >> passiveDisabledOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveEnabledNotOverDownFillStyle: aFillStyle [
 	"Set the passive, enabled, notOver, down fill style."
 
@@ -336,7 +338,7 @@ MultistateButtonMorph >> passiveEnabledNotOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveEnabledNotOverUpFillStyle: aFillStyle [
 	"Set the passive, enabled, notOver, up fill style."
 
@@ -344,7 +346,7 @@ MultistateButtonMorph >> passiveEnabledNotOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveEnabledOverDownFillStyle: aFillStyle [
 	"Set the passive, enabled, over, down fill style."
 
@@ -352,7 +354,7 @@ MultistateButtonMorph >> passiveEnabledOverDownFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 MultistateButtonMorph >> passiveEnabledOverUpFillStyle: aFillStyle [
 	"Set the passive, enabled, over, up fill style."
 
@@ -360,7 +362,7 @@ MultistateButtonMorph >> passiveEnabledOverUpFillStyle: aFillStyle [
 	self changed
 ]
 
-{ #category : #recategorized }
+{ #category : 'recategorized' }
 MultistateButtonMorph >> privateMoveBy: delta [
 	"Adjust all the fill styles"
 
@@ -368,14 +370,14 @@ MultistateButtonMorph >> privateMoveBy: delta [
 	(self fillStyles copyWithout: self fillStyle) do: [:fs | fs isOrientedFill ifTrue: [fs origin: fs origin + delta]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> stateMap [
 	"Answer the value of stateMap"
 
 	^ stateMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultistateButtonMorph >> stateMap: anObject [
 	"Set the value of stateMap"
 

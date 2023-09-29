@@ -2,12 +2,14 @@
 Loading for specific packages using Gofer
 "
 Class {
-	#name : #GoferLoad,
-	#superclass : #GoferOperation,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferLoad',
+	#superclass : 'GoferOperation',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GoferLoad >> addResolved: aResolvedReference [
 	| version |
 	version := aResolvedReference version.
@@ -19,19 +21,19 @@ GoferLoad >> addResolved: aResolvedReference [
 			name: dependency versionInfo name) resolveWith: self gofer) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferLoad >> defaultModel [
 	^ MCVersionLoader new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferLoad >> execute [
 
 	self model hasVersions ifTrue: [ self model load ].
 	self updateRepositories
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferLoad >> initializeOn: aGofer [
 	super initializeOn: aGofer.
 	aGofer resolved
@@ -39,7 +41,7 @@ GoferLoad >> initializeOn: aGofer [
 		displayingProgress: 'Loading Versions'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferLoad >> updateRepositories [
 	"This code makes sure that all packages have a repository assigned, including the dependencies."
 
@@ -49,7 +51,7 @@ GoferLoad >> updateRepositories [
 				addRepository: repository ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferLoad >> versions [
 	^ model versions
 ]

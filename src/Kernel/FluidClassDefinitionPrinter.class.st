@@ -311,13 +311,13 @@ FluidClassDefinitionPrinter >> msgAndClassNameOn: s [
 FluidClassDefinitionPrinter >> packageOn: s [
 	"The code to get the package name is not nice but it is possible we are asking the definition to a class that was uninstalled from the system and in that case it does not know its package anymore. And some code in the image expect to have the package of the class with the same name instead."
 
+	self flag: #package. "The current way of getting the package is really slow but it is the only way to get a package for the removed classes. This is the wrong package then but we have breaking tests if we fix it for now :(
+	I'll come with a better fix once the classes will know their package tag"
 	s
 		crtab;
 		nextPutAll: 'package: ';
 		nextPut: $';
-		nextPutAll: ((forClass packageOrganizer packageOfClassNamed: forClass name)
-				 ifNotNil: [ :package | package name ]
-				 ifNil: [ RPackage defaultPackageName ]);
+		nextPutAll: (forClass packageOrganizer packageOfClassNamed: forClass name) name;
 		nextPut: $'
 ]
 

@@ -1,16 +1,17 @@
 Class {
-	#name : #MetacelloToolBoxTutorial,
-	#superclass : #AbstractTutorial,
-	#category : #'Metacello-ProfStef'
+	#name : 'MetacelloToolBoxTutorial',
+	#superclass : 'AbstractTutorial',
+	#category : 'Metacello-ProfStef',
+	#package : 'Metacello-ProfStef'
 }
 
-{ #category : #'tutorial metainfo' }
+{ #category : 'tutorial metainfo' }
 MetacelloToolBoxTutorial class >> title [	
 
 	^'Inside Metacello Toolbox API'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> create10Baseline [
 
 	^Lesson
@@ -56,7 +57,7 @@ ProfStef next.
 
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> create11Baseline [
 
 	^Lesson
@@ -128,7 +129,7 @@ ProfStef next.
 
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> intro [
 
 	^Lesson
@@ -141,13 +142,13 @@ ProfStef next.
 
 ]
 
-{ #category : #intro }
+{ #category : 'intro' }
 MetacelloToolBoxTutorial >> introductionText [
 
 	^'Dive down into the MetacelloToolBox API to take a closer look at the implementation of the development support methods.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> open10ForDevelopment [
 
 	^Lesson
@@ -207,7 +208,7 @@ ProfStef next.
 
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> open11ForDevelopment [
 
 	^Lesson
@@ -262,7 +263,7 @@ ProfStef next.
 
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> releaseVersion10 [
 
 	^Lesson
@@ -305,7 +306,7 @@ ProfStef next.
 
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> releaseVersion11PharoOnly [
 
 	^Lesson
@@ -347,7 +348,7 @@ ProfStef next.
 
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 MetacelloToolBoxTutorial >> tutorial [
 
 	^#(
@@ -362,7 +363,7 @@ MetacelloToolBoxTutorial >> tutorial [
 		)
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloToolBoxTutorial >> updateVersion10 [
 
 	^Lesson

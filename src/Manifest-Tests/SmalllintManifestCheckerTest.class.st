@@ -2,15 +2,17 @@
 SUnit tests for SmalllintManifestChecker
 "
 Class {
-	#name : #SmalllintManifestCheckerTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'SmalllintManifestCheckerTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'checker'
 	],
-	#category : #'Manifest-Tests-Base'
+	#category : 'Manifest-Tests-Base',
+	#package : 'Manifest-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SmalllintManifestCheckerTest >> setUp [
 
 	super setUp.
@@ -31,7 +33,7 @@ SmalllintManifestCheckerTest >> setUp [
 		run
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SmalllintManifestCheckerTest >> tearDown [
 
 	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class |
@@ -41,7 +43,7 @@ SmalllintManifestCheckerTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmalllintManifestCheckerTest >> testCriticsOf [
 
 	| critiques |
@@ -51,21 +53,21 @@ SmalllintManifestCheckerTest >> testCriticsOf [
 	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassA >> #method) ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmalllintManifestCheckerTest >> testIsFalsePositive [
 
 	self assert: (checker isFalsePositive: MFClassB >> #method3 forRuleId: ReCodeCruftLeftInMethodsRule uniqueIdentifierName versionId: 1).
 	self deny: (checker isFalsePositive: MFClassA >> #method forRuleId: ReCodeCruftLeftInMethodsRule uniqueIdentifierName versionId: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmalllintManifestCheckerTest >> testIsToDo [
 
 	self assert: (checker isToDo: MFClassB >> #method3 forRuleId: ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName versionId: 1).
 	self deny: (checker isToDo: MFClassB >> #method2 forRuleId: ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName versionId: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmalllintManifestCheckerTest >> testToDoOf [
 
 	self assert: ((checker toDoOf: ReTemporaryNeitherReadNorWrittenRule new) anySatisfy: [ :each | each sourceAnchor entity = (MFClassB >> #method3) ]).

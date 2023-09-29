@@ -1,11 +1,11 @@
-Extension { #name : #TestCase }
+Extension { #name : 'TestCase' }
 
-{ #category : #'*SUnit-Visitor' }
+{ #category : '*SUnit-Visitor' }
 TestCase >> acceptSUnitVisitor: aTSUnitVisitor [
 	^ aTSUnitVisitor visitTestCase: self
 ]
 
-{ #category : #'*SUnit-Visitor' }
+{ #category : '*SUnit-Visitor' }
 TestCase class >> acceptSUnitVisitor: aTSUnitVisitor [
 	^ aTSUnitVisitor visitTestCaseClass: self
 ]

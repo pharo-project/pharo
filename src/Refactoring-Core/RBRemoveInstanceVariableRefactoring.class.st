@@ -25,13 +25,16 @@ RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
-	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
+	^ (RBInstanceVariableHasReferences new 
+			hierarchyOf: class referencesInstanceVariable: variableName) not
 	
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'executing' }
 RBRemoveInstanceVariableRefactoring >> generateChanges [
 	
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].

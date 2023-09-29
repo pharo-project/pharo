@@ -13,12 +13,14 @@ I representing an elliptical arc, using endpoint parametrization:
 (not functional yet)
 "
 Class {
-	#name : #AthensEllipticalArcSegment,
-	#superclass : #AthensPathSegment,
-	#category : #'Athens-Core-Paths'
+	#name : 'AthensEllipticalArcSegment',
+	#superclass : 'AthensPathSegment',
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensEllipticalArcSegment >> accept: aVisitor [
 	^ aVisitor ellipticalArcSegment: self
 ]

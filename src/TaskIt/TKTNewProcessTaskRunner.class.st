@@ -46,12 +46,14 @@ The generated output will look something like this:
 First, you'll see that a different processes is being used to execute each task. Also, their execution is concurrent, as we can see the messages interleaved.
 "
 Class {
-	#name : #TKTNewProcessTaskRunner,
-	#superclass : #TKTRunner,
-	#category : #'TaskIt-Kernel'
+	#name : 'TKTNewProcessTaskRunner',
+	#superclass : 'TKTRunner',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 TKTNewProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
 	TKTConfiguration processProvider
 		createProcessDoing:

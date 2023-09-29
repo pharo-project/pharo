@@ -951,17 +951,21 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 ClassDescription >> removeSelector: selector [
 	"Remove the message whose selector is given from the method
 	dictionary of the receiver, if it is there. Answer nil otherwise."
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	| priorMethod priorProtocol origin |
-	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
-	origin := priorMethod origin.
-	priorProtocol := self protocolOfSelector: selector.
 
-	priorMethod removeFromPackage.
-	self removeFromProtocols: selector.
+  <reflection: 'Class structural modification - Selector/Method modification'>
+	| method protocol package origin |
+	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
+	origin := method origin.
+	protocol := self protocolOfSelector: selector.
+	package := method package.
+
+	method removeFromPackage.
+	"When we remove a method we do not want to announce a recategorization."
+	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self removeFromProtocols: selector ].
+
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
+	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin package: package
 ]
 
 { #category : 'instance variables' }
@@ -1202,8 +1206,40 @@ ClassDescription >> wantsChangeSetLogging [
 ]
 
 { #category : 'queries' }
+ClassDescription >> whichMethodsAccess: instVarName [
+	"Answer the methods that access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isAccessedIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsRead: instVarName [
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isReadIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsWrite: instVarName [
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isWrittenIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
 ClassDescription >> whichSelectorsAccess: instVarName [
-	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1213,7 +1249,8 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 
 { #category : 'queries' }
 ClassDescription >> whichSelectorsRead: instVarName [
-	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1223,7 +1260,8 @@ ClassDescription >> whichSelectorsRead: instVarName [
 
 { #category : 'queries' }
 ClassDescription >> whichSelectorsWrite: instVarName [
-	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable"
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName

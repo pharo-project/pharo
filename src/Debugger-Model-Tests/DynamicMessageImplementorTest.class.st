@@ -2,22 +2,24 @@
 SUnit tests for class DynamicMessageImplementor
 "
 Class {
-	#name : #DynamicMessageImplementorTest,
-	#superclass : #TestCase,
+	#name : 'DynamicMessageImplementorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'instVar'
 	],
-	#category : #'Debugger-Model-Tests-Core'
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicMessageImplementorTest >> instVar [
 	"Only required so that instVar is referenced as we do not want unreferenced ivars in the image"
 
 	^ instVar
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testBinaryMessage [
 
 	| messageImplementor sourceCode |
@@ -27,7 +29,7 @@ DynamicMessageImplementorTest >> testBinaryMessage [
 	self assert: sourceCode withSeparatorsCompacted equals: '+ anInteger self shouldBeImplemented.' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testConflictingArgumentNames [
 
 	| messageImplementor sourceCode |
@@ -37,7 +39,7 @@ DynamicMessageImplementorTest >> testConflictingArgumentNames [
 	self assert: sourceCode withSeparatorsCompacted equals: 'm1: anInteger m2: anInteger2 m3: anInteger3 self shouldBeImplemented.' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testGenerateBooleanArgumentNameForFalse [
 
 	| messageImplementor sourceCode |
@@ -47,7 +49,7 @@ DynamicMessageImplementorTest >> testGenerateBooleanArgumentNameForFalse [
 	self assert: sourceCode withSeparatorsCompacted equals: 'iReceiveABoolean: aBoolean self shouldBeImplemented.' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testGenerateBooleanArgumentNameForTrue [
 
 	| messageImplementor sourceCode |
@@ -57,7 +59,7 @@ DynamicMessageImplementorTest >> testGenerateBooleanArgumentNameForTrue [
 	self assert: sourceCode withSeparatorsCompacted equals: 'iReceiveABoolean: aBoolean self shouldBeImplemented.' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testGenerateGetter [
 
 	| messageImplementor sourceCode |
@@ -71,7 +73,7 @@ DynamicMessageImplementorTest >> testGenerateGetter [
 		equals: 'instVar	^ instVar' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testGenerateSetter [
 
 	| messageImplementor sourceCode |
@@ -85,7 +87,7 @@ DynamicMessageImplementorTest >> testGenerateSetter [
 		equals: 'instVar: anInteger instVar := anInteger' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testNonConflictingArgumentNames [
 
 	| messageImplementor sourceCode |
@@ -95,7 +97,7 @@ DynamicMessageImplementorTest >> testNonConflictingArgumentNames [
 	self assert: sourceCode withSeparatorsCompacted equals: 'm1: anInteger m2: aCharacter m3: aString self shouldBeImplemented.' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testOneArgumentNotMatchingAnInstanceVariable [
 
 	| messageImplementor sourceCode |
@@ -105,7 +107,7 @@ DynamicMessageImplementorTest >> testOneArgumentNotMatchingAnInstanceVariable [
 	self assert: sourceCode withSeparatorsCompacted equals: 'm1: anInteger self shouldBeImplemented.' withSeparatorsCompacted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementorTest >> testUnaryMessageNotMatchingAnInstanceVariable [
 
 	| messageImplementor sourceCode |

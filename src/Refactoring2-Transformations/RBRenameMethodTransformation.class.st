@@ -1,13 +1,15 @@
 Class {
-	#name : #RBRenameMethodTransformation,
-	#superclass : #RBChangeMethodNameTransformation,
+	#name : 'RBRenameMethodTransformation',
+	#superclass : 'RBChangeMethodNameTransformation',
 	#instVars : [
 		'hasPermutedArguments'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameMethodTransformation class >> model: aRBSmalltalk renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		model: aRBSmalltalk;
@@ -18,7 +20,7 @@ RBRenameMethodTransformation class >> model: aRBSmalltalk renameMethod: aSelecto
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameMethodTransformation class >> renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		renameMethod: aSelector
@@ -27,7 +29,7 @@ RBRenameMethodTransformation class >> renameMethod: aSelector in: aClass to: new
 		permutation: aMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodTransformation >> applicabilityPreconditions [ 
 
 	^ super applicabilityPreconditions & 
@@ -37,7 +39,7 @@ RBRenameMethodTransformation >> applicabilityPreconditions [
 				, ' doesn''t have the correct number of arguments.')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodTransformation >> hasPermutedArguments [
 
 	^ hasPermutedArguments
@@ -45,18 +47,18 @@ RBRenameMethodTransformation >> hasPermutedArguments [
 		ifNotNil: [ hasPermutedArguments ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodTransformation >> implementorsCanBePrimitives [
 	^self hasPermutedArguments not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodTransformation >> modifyImplementorParseTree: parseTree in: aClass [
 	super modifyImplementorParseTree: parseTree in: aClass.
 	self renameArgumentsIn: parseTree
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodTransformation >> parseTreeRewriter [
 	| rewriteRule oldString newString |
 	oldString := self buildSelectorString: oldSelector.
@@ -70,7 +72,7 @@ RBRenameMethodTransformation >> parseTreeRewriter [
 	^rewriteRule
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodTransformation >> preconditions [
 	| newCondition |
 	newCondition := (RBCondition
@@ -82,7 +84,7 @@ RBRenameMethodTransformation >> preconditions [
 	^newCondition | super preconditions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

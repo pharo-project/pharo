@@ -26,19 +26,21 @@ To view changes check `StRefactoringPreviewPresenter changes: aCompositeRefactor
 
 "
 Class {
-	#name : #RBRemoveClassTransformation,
-	#superclass : #RBClassTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#name : 'RBRemoveClassTransformation',
+	#superclass : 'RBClassTransformation',
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveClassTransformation class >> cannotRemoveTopLevelClassErrorMesssage [
 
 	^ 'Cannot remove top level class' , String cr
 	  , 'when it has subclasses'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> className: aClassName [
 
 	^ self new
@@ -46,7 +48,7 @@ RBRemoveClassTransformation class >> className: aClassName [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> classNames: aCollection [
 
 	^ self
@@ -54,7 +56,7 @@ RBRemoveClassTransformation class >> classNames: aCollection [
 		classNames: aCollection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> model: aRBSmalltalk className: aClassName [
 
 	^ self new
@@ -63,7 +65,7 @@ RBRemoveClassTransformation class >> model: aRBSmalltalk className: aClassName [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 
 	^ RBCompositeTransformation new
@@ -72,7 +74,7 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveClassTransformation >> applicabilityPreconditions [ 
 
 		| aClassOrTrait |
@@ -82,14 +84,14 @@ RBRemoveClassTransformation >> applicabilityPreconditions [
 			
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveClassTransformation >> preconditionIsNotMetaclass: aClass [
 
 	^ ((RBCondition isMetaclass: aClass)
 		errorMacro: 'Cannot remove just the metaclass') not
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveClassTransformation >> privateTransform [
 
 	self
@@ -97,13 +99,13 @@ RBRemoveClassTransformation >> privateTransform [
 		removeClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveClassTransformation >> removeClass [
 
 	self model removeClassNamed: className
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveClassTransformation >> reparentSubclasses [
 
 	self model
@@ -111,7 +113,7 @@ RBRemoveClassTransformation >> reparentSubclasses [
 		to: self definingClass superclass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

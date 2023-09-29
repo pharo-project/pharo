@@ -30,6 +30,12 @@ ShDefaultBuilderEnhancer >> allSlotsForBuilder: aBuilder [
 	^ aBuilder layoutDefinition allSlots
 ]
 
+{ #category : 'accessing' }
+ShDefaultBuilderEnhancer >> allSlotsToInstallForBuilder: aBuilder [
+
+	^ aBuilder layoutDefinition allSlots
+]
+
 { #category : 'migrating' }
 ShDefaultBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 ]
@@ -71,7 +77,7 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: ShLayoutChangeDetector.
 	aBuilder addChangeComparer: ShBitLayoutChangeDetector.
 	aBuilder addChangeComparer: ShClassSlotChangeDetector.
-	aBuilder addChangeComparer: ShSuperclassChangedDetector.
+	aBuilder addChangeComparer: ShSuperclassChangeDetector.
 	aBuilder addChangeComparer: ShMetaclassChangeDetector
 ]
 

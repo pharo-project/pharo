@@ -1,6 +1,15 @@
 Extension { #name : 'RPackage' }
 
 { #category : '*Deprecated12' }
+RPackage >> actualClassTags [
+
+	self deprecated: 'This method is too specific and will be removed in future versions of Pharo.'.
+	(classTags size = 1 and: [ classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
+
+	^ classTags
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> addClassTag: tagName [
 
 	self deprecated: 'Use #ensureTag: instead' transformWith: '`@rcv addClassTag: `@arg' -> '`@rcv ensureTag: `@arg'.
@@ -72,6 +81,13 @@ RPackage >> classesForClassTag: aTagName [
 ]
 
 { #category : '*Deprecated12' }
+RPackage class >> defaultPackageName [
+
+	self deprecated: 'Use `UndefinedPackage undefinedPackageName`' transformWith: '`@rcv defaultPackageName' -> 'UndefinedPackage undefinedPackageName'.
+	^ UndefinedPackage undefinedPackageName
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> definedClassesDo: aBlock [
 
 	self deprecated:
@@ -86,6 +102,13 @@ RPackage >> extensionCategoriesForClass: aClass [
 		deprecated: 'Use #extensionProtocolsForClass: instead.'
 		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
 	^ self extensionProtocolsForClass: aClass
+]
+
+{ #category : '*Deprecated12' }
+RPackage >> importClass: aClass [
+
+	self deprecated: 'Use #addClass: instead or #moveClass:toTag:' transformWith: '`@rcv importClass: `@arg' -> '`@rcv addClass: `@arg'.
+	^ self addClass: aClass
 ]
 
 { #category : '*Deprecated12' }
@@ -137,6 +160,13 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> isDefault [
+
+	self deprecated: 'Use #isUndefined instead' transformWith: '`@rcv isDefault' -> '`@rcv isUndefined'.
+	^ self isUndefined
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> isYourClassExtension: protocol [
 
 	self
@@ -171,6 +201,15 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> register [
+
+	self
+		deprecated: 'Tihs method will be removed because usually if the package know the organizer it should be because the organizer created it.'
+		transformWith: '`@rcv register' -> '`@rcv organizer addPackage: `@rcv'.
+	self organizer addPackage: self
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> removeClassNamed: aClassName [
 
 	self deprecated: 'Use #removeClass: with a real class instead.'.
@@ -182,4 +221,14 @@ RPackage >> removeClassTag: aSymbol [
 
 	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
 	self removeTag: aSymbol
+]
+
+{ #category : '*Deprecated12' }
+RPackage >> unregister [
+
+	self
+		deprecated: 'Tihs method will be removed because the name does not conform with the naming convensions of this class.'
+		transformWith: '`@rcv unregister' -> '`@rcv organizer unregisterPackage: `@rcv'.
+
+	self organizer unregisterPackage: self
 ]

@@ -74,12 +74,6 @@ Behavior >> addSelector: selector withMethod: compiledMethod [
 ]
 
 { #category : 'adding-removing methods' }
-Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-	^ self addSelectorSilently: selector withMethod: compiledMethod
-]
-
-{ #category : 'adding-removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the
 	receiver's method dictionary.
@@ -783,9 +777,9 @@ Behavior >> hasBindingOf: aString [
 
 { #category : 'testing - method dictionary' }
 Behavior >> hasMethodAccessingVariable: aVariable [
-	"Answer true if any of my methods access the variable"
-	<reflection: 'Structural queries on methods - Method slot uses'>
-	^self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
+	"Answer true if any of my methods access the variable. Pay attention that the compiler is free to optimize unused variable. Results are garanteed only for used variables e.g. variables in return, message sends, or assignment."
+  <reflection: 'Structural queries on methods - Method slot uses'>
+	^ self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
 ]
 
 { #category : 'testing - method dictionary' }

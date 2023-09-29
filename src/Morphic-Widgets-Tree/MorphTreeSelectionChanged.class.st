@@ -2,20 +2,22 @@
 Used to announce the change of a selection in the tree
 "
 Class {
-	#name : #MorphTreeSelectionChanged,
-	#superclass : #MorphTreeAnnounce,
+	#name : 'MorphTreeSelectionChanged',
+	#superclass : 'MorphTreeAnnounce',
 	#instVars : [
 		'selection'
 	],
-	#category : #'Morphic-Widgets-Tree-Announcements'
+	#category : 'Morphic-Widgets-Tree-Announcements',
+	#package : 'Morphic-Widgets-Tree',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeSelectionChanged >> selection [
 	^ selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeSelectionChanged >> selection: aSelection [
 	selection := aSelection
 ]

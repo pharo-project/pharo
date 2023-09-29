@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddMessageSendTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddMessageSendTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddMessageSendTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,14 +14,14 @@ RBAddMessageSendTransformationTest >> methodAfter [
 	variable byteAt: 1
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddMessageSendTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddMessageSendTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
@@ -28,7 +30,7 @@ RBAddMessageSendTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBMessageSendTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddMessageSendTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
@@ -37,7 +39,7 @@ RBAddMessageSendTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBAddMessageSendTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddMessageSendTransformationTest >> testReceiverDoesNotExist [
 
 	self shouldFail: (RBAddMessageSendTransformation
@@ -46,7 +48,7 @@ RBAddMessageSendTransformationTest >> testReceiverDoesNotExist [
 			 inClass: #RBAddMessageSendTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddMessageSendTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -65,7 +67,7 @@ RBAddMessageSendTransformationTest >> testRefactoring [
 		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddMessageSendTransformationTest >> testTransform [
 
 	| transformation class |

@@ -48,11 +48,11 @@ RBConjunctiveCondition >> check [
 ]
 
 { #category : 'private' }
-RBConjunctiveCondition >> errorBlockFor: aBoolean [
-	^aBoolean
-		ifTrue: [nil]
-		ifFalse:
-			[failed = #leftFailed ifTrue: [left errorBlock] ifFalse: [right errorBlock]]
+RBConjunctiveCondition >> errorBlock [
+
+	^ failed = #leftFailed
+		  ifTrue: [ left errorBlock ]
+		  ifFalse: [ right errorBlock ]
 ]
 
 { #category : 'private' }
@@ -106,4 +106,12 @@ RBConjunctiveCondition >> rightFailed [
 { #category : 'private' }
 RBConjunctiveCondition >> unknownFailed [
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)
+]
+
+{ #category : 'displaying' }
+RBConjunctiveCondition >> violationMessageOn: aStream [
+
+	failed = #left
+		ifTrue: [ left violationMessageOn: aStream ]
+		ifFalse: [ right violationMessageOn: aStream ]
 ]

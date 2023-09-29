@@ -6,23 +6,25 @@ compilation result. My subclass define the kind of class definition I can add, a
 My instance variable ""definedClass"" is the new class object.
 "
 Class {
-	#name : #RBRefactoryDefinitionChange,
-	#superclass : #RBRefactoryClassChange,
+	#name : 'RBRefactoryDefinitionChange',
+	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
 		'controller',
 		'definition',
 		'definedClass'
 	],
-	#category : #'Refactoring-Changes-Changes-Classes'
+	#category : 'Refactoring-Changes-Changes-Classes',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRefactoryDefinitionChange class >> definition: aString [
 
 	^ self definition: aString for: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRefactoryDefinitionChange class >> definition: aString for: aController [
 
 	| parseTree context |
@@ -40,7 +42,7 @@ RBRefactoryDefinitionChange class >> definition: aString for: aController [
 	^ self error: 'Invalid definition:' , aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryDefinitionChange class >> definition: aString for: aController context: aDictionary [
 
 	| dictionary |
@@ -58,44 +60,44 @@ RBRefactoryDefinitionChange class >> definition: aString for: aController contex
 		  yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryDefinitionChange class >> definitionPatterns [
 
 	self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRefactoryDefinitionChange >> = aDefinitionChange [
 
 	^ self class = aDefinitionChange class and: [
 		  self definition = aDefinitionChange definition ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRefactoryDefinitionChange >> changeString [
 
 	^ 'Define ' , self displayClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryDefinitionChange >> controller [
 
 	^ controller
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryDefinitionChange >> definedClass [
 
 	^ definedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryDefinitionChange >> definition [
 
 	^ definition
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryDefinitionChange >> definition: aString controller: aController [
 
 	isMeta := false.
@@ -103,19 +105,19 @@ RBRefactoryDefinitionChange >> definition: aString controller: aController [
 	controller := aController
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryDefinitionChange >> definitionClass [
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryDefinitionChange >> fillOutDefinition: aDictionary [
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryDefinitionChange >> generateChanges [
 
 	definedClass := self definitionClass environment
@@ -123,13 +125,13 @@ RBRefactoryDefinitionChange >> generateChanges [
 		                withController: self controller
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRefactoryDefinitionChange >> hash [
 
 	^ definition hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryDefinitionChange >> namesIn: aString [
 
 	| names scanner token |
@@ -141,7 +143,7 @@ RBRefactoryDefinitionChange >> namesIn: aString [
 	^ names asArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRefactoryDefinitionChange >> printOn: aStream [
 
 	aStream

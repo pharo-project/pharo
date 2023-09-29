@@ -2,17 +2,18 @@
 Specially themed label used for tab selector items. 
 "
 Class {
-	#name : #TabLabelMorph,
-	#superclass : #PanelMorph,
+	#name : 'TabLabelMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'tabSelector',
 		'normalLabel',
 		'selectedLabel'
 	],
-	#category : #'Morphic-Widgets-PolyTabs'
+	#category : 'Morphic-Widgets-PolyTabs',
+	#package : 'Morphic-Widgets-PolyTabs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> adoptPaneColor: paneColor [
 	"Use the theme for fillStyle and border."
 
@@ -22,7 +23,7 @@ TabLabelMorph >> adoptPaneColor: paneColor [
 	self borderStyle: self borderStyleToUse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
 
@@ -31,7 +32,7 @@ TabLabelMorph >> borderStyleToUse [
 		ifFalse: [self theme tabLabelNormalBorderStyleFor: self]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TabLabelMorph >> extent: aPoint [
 	"Set the extent of the receiver.
 	Update the pane color for size dependent fill/border styles."
@@ -40,7 +41,7 @@ TabLabelMorph >> extent: aPoint [
 	self adoptPaneColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> fillStyleToUse [
 	"Answer the basic fill style for the receiver."
 
@@ -49,7 +50,7 @@ TabLabelMorph >> fillStyleToUse [
 		ifFalse: [self normalFillStyle]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> focusBounds [
 	"Answer the bounds for drawing the focus indication."
 
@@ -58,7 +59,7 @@ TabLabelMorph >> focusBounds [
 		ifFalse: [super focusBounds insetBy: (2@2 corner: 2@0)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> font: aFont [
 	"Set the label font"
 
@@ -68,7 +69,7 @@ TabLabelMorph >> font: aFont [
 		(m respondsTo: #font:) ifTrue: [m font: aFont]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabLabelMorph >> initialize [
 	"Initialize the receiver."
 
@@ -77,7 +78,7 @@ TabLabelMorph >> initialize [
 	self borderStyle: self borderStyleToUse
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TabLabelMorph >> isSelected [
 	"Answer whether the tab is selected."
 
@@ -86,7 +87,7 @@ TabLabelMorph >> isSelected [
 		ifNotNil: [:selector | selector selectedTab == self]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TabLabelMorph >> isVisible [
 	"Answer whether the tab is currently visible."
 
@@ -95,7 +96,7 @@ TabLabelMorph >> isVisible [
 		ifNotNil: [:selector | selector visibleTabs includes: self]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> label [
 	"Answer the label contents."
 
@@ -104,7 +105,7 @@ TabLabelMorph >> label [
 		ifFalse: [self normalLabel userString ifNil: [self firstSubmorph]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> label: aStringOrMorph [
 	"Change the label contents"
 
@@ -120,7 +121,7 @@ TabLabelMorph >> label: aStringOrMorph [
 		selected: self isSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> label: aStringOrMorph selected: selectedStringOrMorph [
 	"Change the label contents"
 
@@ -141,33 +142,33 @@ TabLabelMorph >> label: aStringOrMorph selected: selectedStringOrMorph [
 		selected: self isSelected
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TabLabelMorph >> minWidth [
 	"Consult the theme also."
 
 	^super minWidth max: self theme buttonMinWidth
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 TabLabelMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
 
 	^self theme tabLabelNormalFillStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> normalLabel [
 
 	^ normalLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> normalLabel: anObject [
 
 	normalLabel := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> selected: aBoolean [
 	"Use the appropriate label."
 
@@ -177,32 +178,32 @@ TabLabelMorph >> selected: aBoolean [
 		ifFalse: [self addMorph: self normalLabel]
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 TabLabelMorph >> selectedFillStyle [
 	"Return the selected fillStyle of the receiver."
 
 	^self theme tabLabelSelectedFillStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> selectedLabel [
 
 	^ selectedLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> selectedLabel: anObject [
 
 	selectedLabel := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> tabSelector [
 
 	^ tabSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelMorph >> tabSelector: anObject [
 
 	tabSelector := anObject

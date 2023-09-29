@@ -8,16 +8,18 @@ Instance variables:
 	negated		<Boolean>
 "
 Class {
-	#name : #RxsCharSet,
-	#superclass : #RxsNode,
+	#name : 'RxsCharSet',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'negated',
 		'elements'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsCharSet >> dispatchTo: aMatcher [
 	"Inform the matcher of the kind of the node, and it
 	will do whatever it has to."
@@ -25,7 +27,7 @@ RxsCharSet >> dispatchTo: aMatcher [
 	^aMatcher syntaxCharSet: self
 ]
 
-{ #category : #privileged }
+{ #category : 'privileged' }
 RxsCharSet >> enumerablePartPredicateIgnoringCase: aBoolean [
 
 	| enumeration |
@@ -35,7 +37,7 @@ RxsCharSet >> enumerablePartPredicateIgnoringCase: aBoolean [
 		ifFalse: [[:char | enumeration includes: char]]
 ]
 
-{ #category : #privileged }
+{ #category : 'privileged' }
 RxsCharSet >> enumerableSetIgnoringCase: aBoolean [
 	"Answer a collection of characters that make up the portion of me
 	that can be enumerated."
@@ -49,13 +51,13 @@ RxsCharSet >> enumerableSetIgnoringCase: aBoolean [
 	^set
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsCharSet >> hasPredicates [
 
 	^elements contains: [:some | some isEnumerable not]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsCharSet >> initializeElements: aCollection negated: aBoolean [
 	"See class comment for instance variables description."
 
@@ -63,19 +65,19 @@ RxsCharSet >> initializeElements: aCollection negated: aBoolean [
 	negated := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsCharSet >> isEnumerable [
 
 	^elements anySatisfy: [:some | some isEnumerable ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsCharSet >> isNegated [
 
 	^negated
 ]
 
-{ #category : #privileged }
+{ #category : 'privileged' }
 RxsCharSet >> optimalSetIgnoringCase: aBoolean [
 	"Assuming the client with search the `set' using #includes:,
 	answer a collection with the contents of `set', of the class
@@ -89,7 +91,7 @@ RxsCharSet >> optimalSetIgnoringCase: aBoolean [
 		ifFalse: [set]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsCharSet >> predicateIgnoringCase: aBoolean [
 
 	| predicate enumerable |
@@ -103,7 +105,7 @@ RxsCharSet >> predicateIgnoringCase: aBoolean [
 				ifFalse: [[:char | (enumerable value: char) or: [predicate value: char]]]]
 ]
 
-{ #category : #privileged }
+{ #category : 'privileged' }
 RxsCharSet >> predicatePartPredicate [
 	"Answer a predicate that tests all of my elements that cannot be
 	enumerated."
@@ -124,7 +126,7 @@ RxsCharSet >> predicatePartPredicate [
 			[[:char | (predicates contains: [:some | some value: char]) not]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsCharSet >> predicates [
 
 	^(elements reject: [:some | some isEnumerable])

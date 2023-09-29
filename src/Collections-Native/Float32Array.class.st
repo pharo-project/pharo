@@ -4,13 +4,15 @@ FloatArrays store 32bit IEEE floating point numbers.
 For further comments read comments of `WordArray`.
 "
 Class {
-	#name : #Float32Array,
-	#superclass : #ArrayedCollection,
-	#type : #words,
-	#category : #'Collections-Native-Base'
+	#name : 'Float32Array',
+	#superclass : 'ArrayedCollection',
+	#type : 'words',
+	#category : 'Collections-Native-Base',
+	#package : 'Collections-Native',
+	#tag : 'Base'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Float32Array >> = aFloatArray [
 	| length |
 	<primitive: 'primitiveEqual' module: 'FloatArrayPlugin'>
@@ -22,24 +24,24 @@ Float32Array >> = aFloatArray [
 	^ true
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Float32Array >> addAssignToFloatArray: aFloatArray [
 
 	^ aFloatArray primAddArray: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Float32Array >> asFloatArray [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Float32Array >> at: index [
 	<primitive: 'primitiveAt' module: 'FloatArrayPlugin'>
 	^Float fromIEEE32Bit: (self basicAt: index)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Float32Array >> at: index put: value [
 	<primitive: 'primitiveAtPut' module: 'FloatArrayPlugin'>
 	value isFloat
@@ -48,13 +50,13 @@ Float32Array >> at: index put: value [
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Float32Array >> defaultElement [
 	"Return the default element of the receiver"
 	^0.0
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Float32Array >> dot: aFloatVector [
 	"Primitive. Return the dot product of the receiver and the argument.
 	Fail if the argument is not of the same size as the receiver."
@@ -67,7 +69,7 @@ Float32Array >> dot: aFloatVector [
 	^result
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Float32Array >> hash [
 	| result |
 	<primitive:'primitiveHashArray' module: 'FloatArrayPlugin'>
@@ -76,70 +78,70 @@ Float32Array >> hash [
 	^result bitAnd: 16r1FFFFFFF
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primAddArray: floatArray [
 
 	<primitive: 'primitiveAddFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) + (floatArray at: i)]
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primAddScalar: scalarValue [
 
 	<primitive: 'primitiveAddScalar' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) + scalarValue]
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primDivArray: floatArray [
 
 	<primitive: 'primitiveDivFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) / (floatArray at: i)]
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primDivScalar: scalarValue [
 
 	<primitive: 'primitiveDivScalar' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) / scalarValue]
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primMulArray: floatArray [
 
 	<primitive: 'primitiveMulFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) * (floatArray at: i)]
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primMulScalar: scalarValue [
 
 	<primitive: 'primitiveMulScalar' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) * scalarValue]
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primSubArray: floatArray [
 
 	<primitive: 'primitiveSubFloatArray' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) - (floatArray at: i)]
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> primSubScalar: scalarValue [
 
 	<primitive: 'primitiveSubScalar' module: 'FloatArrayPlugin'>
 	1 to: self size do:[:i| self at: i put: (self at: i) - scalarValue]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Float32Array >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #'primitives - plugin' }
+{ #category : 'primitives - plugin' }
 Float32Array >> sum [
 
 	<primitive: 'primitiveSum' module: 'FloatArrayPlugin'>

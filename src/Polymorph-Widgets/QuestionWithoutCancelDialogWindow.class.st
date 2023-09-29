@@ -2,25 +2,27 @@
 A yes/no message dialog. Yes (return) is the default. Escape will answer no.
 "
 Class {
-	#name : #QuestionWithoutCancelDialogWindow,
-	#superclass : #QuestionDialogWindow,
-	#category : #'Polymorph-Widgets-Windows'
+	#name : 'QuestionWithoutCancelDialogWindow',
+	#superclass : 'QuestionDialogWindow',
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 QuestionWithoutCancelDialogWindow >> closeWindowAction [
 
 	self escapePressed
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 QuestionWithoutCancelDialogWindow >> escapePressed [
 	"Default is to cancel."
 
 	self no
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuestionWithoutCancelDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 

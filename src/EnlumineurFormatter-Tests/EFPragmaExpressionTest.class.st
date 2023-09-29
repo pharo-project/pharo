@@ -1,10 +1,11 @@
 Class {
-	#name : #EFPragmaExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFPragmaExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFPragmaExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -13,7 +14,7 @@ EFPragmaExpressionTest >> basicConfiguration [
 		keepBlockInMessage: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFPragmaExpressionTest >> testPragmaNoExtraSpace [
 	| expr source |
 	expr := RBParser parsePragma:'<   Pragma   >'.
@@ -22,7 +23,7 @@ EFPragmaExpressionTest >> testPragmaNoExtraSpace [
 	self assert: source equals: '<Pragma>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFPragmaExpressionTest >> testPragmaNoExtraSpace2 [
 	| expr source |
 	expr := RBParser parsePragma:'<func:     ''(3+4)''       res:      7>'.
@@ -31,7 +32,7 @@ EFPragmaExpressionTest >> testPragmaNoExtraSpace2 [
 	self assert: source equals: '<func: ''(3+4)'' res: 7>'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFPragmaExpressionTest >> testPragmaNoExtraSpaceBetweenMethodeAndArgument [
 	| expr source |
 	expr := RBParser parsePragma:'<primitive:    41>'.

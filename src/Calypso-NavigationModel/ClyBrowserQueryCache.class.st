@@ -33,17 +33,19 @@ Internal Representation and Key Implementation Points.
 	startPosition:		<Integer>
 "
 Class {
-	#name : #ClyBrowserQueryCache,
-	#superclass : #Object,
+	#name : 'ClyBrowserQueryCache',
+	#superclass : 'Object',
 	#instVars : [
 		'startPosition',
 		'items',
 		'sizeLimit'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserQueryCache class >> filledBy: aBrowserQueryResult startingAt: startPosition size: cacheSize [
 
 	^(self withSize: cacheSize)
@@ -51,32 +53,32 @@ ClyBrowserQueryCache class >> filledBy: aBrowserQueryResult startingAt: startPos
 		fillItemsFrom: aBrowserQueryResult
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserQueryCache class >> withSize: cacheSize [
 
 	^self new
 		sizeLimit: cacheSize
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserQueryCache >> createFullUpdateOf: aBrowserQueryResult [
 
 	^aBrowserQueryResult createUpdateWithItemsStartingAt: startPosition count: sizeLimit
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserQueryCache >> fillItemsFrom: aBrowserQueryResult [
 
 	items := aBrowserQueryResult itemsStartingAt: startPosition count: sizeLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> findItemWhich: blockCondition ifExists: presentBlock [
 
 	items detect: blockCondition ifFound: presentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> findItemsWith: actualObjects forAbsentDo: absentBlock [
 	"it returns items which represent actualObjects.
 	If there is no item for some of given objects method uses absentBlock result.
@@ -87,36 +89,36 @@ ClyBrowserQueryCache >> findItemsWith: actualObjects forAbsentDo: absentBlock [
 		items detect: [ :item | item actualObject == eachObject ] ifNone: absentBlock]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserQueryCache >> includesItemAt: position [
 
 	^position between: startPosition and: startPosition + items size - 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserQueryCache >> initialize [
 	super initialize.
 	startPosition := 0.
 	items := Array empty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> itemAt: globalPosition [
 
 	^items at: globalPosition - startPosition + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> items [
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> items: anObject [
 	items := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserQueryCache >> loadItemOf: aBrowserQueryResult at: position [
 	(self includesItemAt: position) ifTrue: [ ^ self ].
 
@@ -124,7 +126,7 @@ ClyBrowserQueryCache >> loadItemOf: aBrowserQueryResult at: position [
 	self fillItemsFrom: aBrowserQueryResult
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserQueryCache >> loadItemsOf: aBrowserQueryResult startingWhere: conditionBlock [
 
 	| newItems |
@@ -136,22 +138,22 @@ ClyBrowserQueryCache >> loadItemsOf: aBrowserQueryResult startingWhere: conditio
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> sizeLimit [
 	^ sizeLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> sizeLimit: anObject [
 	sizeLimit := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> startPosition [
 	^ startPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryCache >> startPosition: anObject [
 	startPosition := anObject
 ]

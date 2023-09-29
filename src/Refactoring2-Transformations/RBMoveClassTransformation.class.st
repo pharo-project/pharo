@@ -18,16 +18,18 @@ Preconditions:
 - the package and optional tag must exist
 "
 Class {
-	#name : #RBMoveClassTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBMoveClassTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'packageName',
 		'tagName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveClassTransformation class >> move: aClassName toPackage: aPackageName [
 
 	^ self new
@@ -36,7 +38,7 @@ RBMoveClassTransformation class >> move: aClassName toPackage: aPackageName [
 		  yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMoveClassTransformation class >> move: aClassName toPackage: aPackageName inTag: aTagName [
 
 	^ (self move: aClassName toPackage: aPackageName)
@@ -44,7 +46,7 @@ RBMoveClassTransformation class >> move: aClassName toPackage: aPackageName inTa
 		  yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBMoveClassTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
@@ -57,7 +59,7 @@ RBMoveClassTransformation >> applicabilityPreconditions [
 				    ifNotNil: [ :name | ' with tag named ' , name ]))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBMoveClassTransformation >> category [
 
 	^ self tagName
@@ -65,7 +67,7 @@ RBMoveClassTransformation >> category [
 		  ifNotNil: [ self packageName , '-' , tagName ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBMoveClassTransformation >> classExist [
 
 	^ RBCondition
@@ -74,19 +76,19 @@ RBMoveClassTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveClassTransformation >> packageName [
 
 	^ packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveClassTransformation >> packageName: anObject [
 
 	packageName := anObject
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBMoveClassTransformation >> privateTransform [
 
 	self flag: #package. "This should use the package and tag API."
@@ -94,7 +96,7 @@ RBMoveClassTransformation >> privateTransform [
 	self model category: self category for: self definingClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -113,13 +115,13 @@ RBMoveClassTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveClassTransformation >> tagName [
 
 	^ tagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveClassTransformation >> tagName: anObject [
 
 	tagName := anObject

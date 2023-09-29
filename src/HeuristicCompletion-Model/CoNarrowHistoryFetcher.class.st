@@ -3,18 +3,20 @@ I am a decorator that allows the narrowing and unnarrowing without needing to re
 I store the intermediate state of the query and perform the subsequent query taking care of the results already handled.
 "
 Class {
-	#name : #CoNarrowHistoryFetcher,
-	#superclass : #CoFetcherDecorator,
+	#name : 'CoNarrowHistoryFetcher',
+	#superclass : 'CoFetcherDecorator',
 	#instVars : [
 		'currentResults',
 		'history',
 		'currentKey',
 		'currentFinished'
 	],
-	#category : #'HeuristicCompletion-Model-Core'
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoNarrowHistoryFetcher >> entriesDo: aBlock [
 
 	currentResults do: aBlock.
@@ -29,7 +31,7 @@ CoNarrowHistoryFetcher >> entriesDo: aBlock [
 	currentFinished := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoNarrowHistoryFetcher >> initialize [
 
 	super initialize.
@@ -39,7 +41,7 @@ CoNarrowHistoryFetcher >> initialize [
 	history := Dictionary new
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoNarrowHistoryFetcher >> narrowFilter: aFilter narrowKey: aKey [
 
 	history at: currentKey put: (CoNarrowHistoryItem forFetcher: decoree results: currentResults hasFinished: currentFinished).
@@ -56,7 +58,7 @@ CoNarrowHistoryFetcher >> narrowFilter: aFilter narrowKey: aKey [
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoNarrowHistoryFetcher >> reset [
 
 	super reset.
@@ -65,7 +67,7 @@ CoNarrowHistoryFetcher >> reset [
 	history := Dictionary new
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoNarrowHistoryFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 
 	history at: aKey
@@ -84,7 +86,7 @@ CoNarrowHistoryFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 	currentKey := aKey
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoNarrowHistoryFetcher >> withNarrowHistory [
 
 	^ self

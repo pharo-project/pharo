@@ -165,7 +165,7 @@ RPackageOrganizer >> addMethod: method [
 
 	| package protocol |
 	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
-	method methodClass package name = RPackage defaultPackageName ifTrue: [ ^ self ].
+	method methodClass package name = UndefinedPackage undefinedPackageName ifTrue: [ ^ self ].
 
 	protocol := method protocol.
 	package := protocol isExtensionProtocol
@@ -173,6 +173,27 @@ RPackageOrganizer >> addMethod: method [
 		           ifFalse: [ method methodClass package ].
 
 	package addMethod: method
+]
+
+{ #category : 'registration' }
+RPackageOrganizer >> addPackage: aPackage [
+
+	| package |
+	self validatePackageDoesNotExist: aPackage.
+
+	aPackage isString
+		ifTrue: [ package := RPackage named: aPackage organizer: self ]
+		ifFalse: [
+			aPackage organizer: self.
+			aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
+			aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
+			package := aPackage ].
+
+	self basicRegisterPackage: package.
+
+	SystemAnnouncer announce: (PackageAdded to: package).
+
+	^ package
 ]
 
 { #category : 'system integration' }
@@ -186,7 +207,10 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
 	Smalltalk allClassesAndTraits
-		do: [ :behavior | (self ensurePackageMatching: behavior category) importClass: behavior ]
+		do: [ :behavior |
+			| package |
+			package := self ensurePackageMatching: behavior category.
+			package moveClass: behavior toTag: (package toTagName: behavior category) ]
 		displayingProgress: 'Importing behaviors'.
 
 	Smalltalk allClassesAndTraits
@@ -214,34 +238,9 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 ]
 
 { #category : 'registration' }
-RPackageOrganizer >> createPackageNamed: aString [
-
-	self validatePackageDoesNotExist: aString.
-
-	^ self ensurePackage: aString
-]
-
-{ #category : 'initialization' }
-RPackageOrganizer >> defineUnpackagedClassesPackage [
-
-	^ self ensurePackage: RPackage defaultPackageName
-]
-
-{ #category : 'registration' }
 RPackageOrganizer >> ensurePackage: aPackage [
 
-	| packageName |
-	packageName := aPackage isString
-		               ifTrue: [ aPackage ]
-		               ifFalse: [ aPackage name ].
-
-	(self hasPackage: aPackage) ifTrue: [ ^ self packageNamed: packageName ].
-
-	^ aPackage isString
-		  ifTrue: [ self packageNamed: aPackage ifAbsent: [ self registerPackage: (RPackage named: aPackage organizer: self) ] ]
-		  ifFalse: [
-			  (self hasPackage: aPackage) ifFalse: [ self registerPackage: aPackage ].
-			  aPackage ]
+	^ self packageNamed: (aPackage isString ifTrue: [ aPackage ] ifFalse: [ aPackage name ]) ifAbsent: [ self addPackage: aPackage ]
 ]
 
 { #category : 'registration' }
@@ -317,8 +316,7 @@ RPackageOrganizer >> initialize [
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
 	classExtendingPackagesMapping := IdentityDictionary new.
-
-	self defineUnpackagedClassesPackage
+	self ensurePackage: UndefinedPackage new
 ]
 
 { #category : 'system integration' }
@@ -398,16 +396,15 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self packageNamed: RPackage defaultPackageName ]
+	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self undefinedPackage ]
 ]
 
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
-	self flag: #pharoFixMe. "Should probably return _UnunpackagedPackage instead of nil"
 	classPackageMapping keysAndValuesDo: [ :class :package | class originalName = aName ifTrue: [ ^ package ] ].
 
-	^ nil
+	^ self undefinedPackage
 ]
 
 { #category : 'accessing' }
@@ -457,23 +454,6 @@ RPackageOrganizer >> registerInterestToSystemAnnouncement [
 	self registerInterestToAnnouncer: self announcer
 ]
 
-{ #category : 'registration' }
-RPackageOrganizer >> registerPackage: aPackage [
-	"A new package is now available and declared in the receiver. "
-
-	self
-		packageNamed: aPackage name
-		ifPresent: [ RPackageConflictError signal: ('Package can not be added because it conflicts with package a package of the same name.' format: { aPackage name }) ].
-
-	self basicRegisterPackage: aPackage.
-	aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
-	aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
-
-	SystemAnnouncer announce: (PackageAdded to: aPackage).
-
-	^ aPackage
-]
-
 { #category : 'private - registration' }
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
@@ -501,19 +481,11 @@ RPackageOrganizer >> removeEmptyPackagesAndTags [
 { #category : 'registration' }
 RPackageOrganizer >> removePackage: aPackage [
 
-	| package |
-	(self hasPackage: aPackage) ifFalse: [ ^ self ].
-
-	package := aPackage isString
-		           ifTrue: [ self packageNamed: aPackage ]
-		           ifFalse: [ aPackage ].
-
-	self basicUnregisterPackage: package.
-	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
-	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
-	SystemAnnouncer announce: (PackageRemoved to: package).
-
-	^ package
+	self
+		packageNamed: (aPackage isString
+				 ifTrue: [ aPackage ]
+				 ifFalse: [ aPackage name ])
+		ifPresent: [ :package | package removeFromSystem ]
 ]
 
 { #category : 'system integration' }
@@ -540,42 +512,18 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 	(self ensurePackage: aPackage) renameTag: aTag to: newName
 ]
 
-{ #category : 'registration' }
-RPackageOrganizer >> signalPackageExists: aPackageName [
-
-	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
-]
-
-{ #category : 'private' }
-RPackageOrganizer >> stopNotification [
-	"(self instVarNamed: #default) stopNotification"
-
-	"pay attention that we can break the system using this method"
-
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-
-	self class environment at: #MCWorkingCopy ifPresent: [:wc |
-		wc removeDependent: self]
-]
-
 { #category : 'system integration' }
-RPackageOrganizer >> systemClassAddedActionFrom: ann [
+RPackageOrganizer >> systemClassAddedActionFrom: announcement [
 
-	(self ensurePackageMatching: ann classAffected category) importClass: ann classAffected
+	self systemClassRecategorizedActionFrom: announcement
 ]
 
 { #category : 'system integration' }
 RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 
-	| class newPackage newCategoryName |
-	class := announcement classAffected.
-
-	newCategoryName := announcement newCategory.
-
-	newCategoryName = announcement oldCategory ifTrue: [ ^ self ].
-	newPackage := self ensurePackageMatching: newCategoryName.
-
-	newPackage moveClass: class toTag: (newPackage ensureTag: (newPackage toTagName: newCategoryName))
+	| newPackage |
+	newPackage := self ensurePackageMatching: announcement classAffected category.
+	newPackage moveClass: announcement classAffected toTag: (newPackage toTagName: announcement classAffected category)
 ]
 
 { #category : 'system integration' }
@@ -635,6 +583,12 @@ RPackageOrganizer >> testPackages [
 	^ self packages select: [ :package | package isTestPackage ]
 ]
 
+{ #category : 'tests' }
+RPackageOrganizer >> undefinedPackage [
+
+	^ self packages detect: [ :package | package isUndefined ]
+]
+
 { #category : 'initialization' }
 RPackageOrganizer >> unregister [
 	SystemAnnouncer uniqueInstance unsubscribe: self
@@ -653,6 +607,25 @@ RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
+{ #category : 'private' }
+RPackageOrganizer >> unregisterPackage: aPackage [
+	"I am a private method to unregister a package from myself without removing its contents fro the image."
+
+	| package |
+	(self hasPackage: aPackage) ifFalse: [ ^ self ].
+
+	package := aPackage isString
+		           ifTrue: [ self packageNamed: aPackage ]
+		           ifFalse: [ aPackage ].
+
+	self basicUnregisterPackage: package.
+	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
+	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
+	SystemAnnouncer announce: (PackageRemoved to: package).
+
+	^ package
+]
+
 { #category : 'private - registration' }
 RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 	"unregister the back pointer mapping from classes to packages."
@@ -662,7 +635,11 @@ RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
 ]
 
 { #category : 'registration' }
-RPackageOrganizer >> validatePackageDoesNotExist: aPackageName [
+RPackageOrganizer >> validatePackageDoesNotExist: aPackage [
 
-	(self hasPackage: aPackageName) ifTrue: [ self signalPackageExists: aPackageName ]
+	| packageName |
+	packageName := aPackage isString
+		               ifTrue: [ aPackage ]
+		               ifFalse: [ aPackage name ].
+	self packageNamed: packageName ifPresent: [ RPackageConflictError signal: ('A package named {1} already exists' format: { packageName }) ]
 ]

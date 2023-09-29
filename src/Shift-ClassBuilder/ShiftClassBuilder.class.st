@@ -176,6 +176,9 @@ ShiftClassBuilder >> classTraitComposition [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> classTraitComposition: aValue [
+
+	"The enhander needs to be put to nil in case the trait composition is updated."
+	builderEnhancer := nil.
 	^ extensibleProperties at: #classTraitComposition put: aValue
 ]
 

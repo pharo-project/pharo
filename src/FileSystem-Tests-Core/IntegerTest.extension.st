@@ -1,6 +1,6 @@
-Extension { #name : #IntegerTest }
+Extension { #name : 'IntegerTest' }
 
-{ #category : #'*FileSystem-Tests-Core' }
+{ #category : '*FileSystem-Tests-Core' }
 IntegerTest >> testHumanReadableByteSizeString [
 	self assert: 1000 humanReadableByteSizeString equals: '1000 B'.
 	self assert: 1024 humanReadableByteSizeString equals: '1 KB'.
