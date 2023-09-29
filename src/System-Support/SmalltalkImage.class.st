@@ -158,7 +158,7 @@ SmalltalkImage >> argumentAt: i [
 { #category : 'system attribute' }
 SmalltalkImage >> arguments [
 	"Answer an array with all the command line arguments.
-	This does not include imagePath, documentPath nor any option."
+	This does not include imagePath nor any option."
 
 	"Smalltalk commandLine arguments"
 
