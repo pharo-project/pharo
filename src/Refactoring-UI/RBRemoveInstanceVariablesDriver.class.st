@@ -13,7 +13,7 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
 	StMessageBrowserPresenter
