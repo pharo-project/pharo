@@ -52,13 +52,8 @@ CommandLineArguments >> arguments [
 CommandLineArguments >> commandLineArguments [
 	"self commandLineArguments"
 
-	| imagePath args |
+	^ Smalltalk arguments.
 
-	args := OrderedCollection withAll: Smalltalk arguments.
-	imagePath := Smalltalk vm imagePath.
-	imagePath isEmptyOrNil
-		ifFalse: [ args addFirst: imagePath ].
- 	^ args
 ]
 
 { #category : 'copying' }
@@ -105,12 +100,8 @@ CommandLineArguments >> includesSubCommand: aName [
 { #category : 'initialization' }
 CommandLineArguments >> initialize [
 
-	| imagePath  |
-
 	arguments := OrderedCollection withAll: Smalltalk arguments.
-	imagePath := Smalltalk vm imagePath.
-	imagePath isEmptyOrNil
-		ifFalse: [ arguments addFirst: imagePath ]
+
 ]
 
 { #category : 'initialization' }
