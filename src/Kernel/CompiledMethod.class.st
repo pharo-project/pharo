@@ -748,7 +748,7 @@ CompiledMethod >> propertyAt: aKey ifAbsentPut: aBlock [
 CompiledMethod >> propertyAt: propName ifPresent: aBlock [
 	| propertiesOrSelector |
 	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
-		ifTrue: [propertiesOrSelector at: propName ifPresent: aBlock]
+		ifTrue: [propertiesOrSelector propertyAt: propName ifPresent: aBlock]
 		ifFalse: [nil]
 ]
 
