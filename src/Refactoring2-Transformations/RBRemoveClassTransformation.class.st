@@ -78,7 +78,7 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 RBRemoveClassTransformation >> applicabilityPreconditions [ 
 
 		| aClassOrTrait |
-		aClassOrTrait := self model classNamed: className asSymbol.
+		aClassOrTrait := self model classNamed: className.
 		aClassOrTrait ifNil: [ self refactoringError: 'No such class or trait named ', className ].
 		^ (self preconditionIsNotMetaclass: aClassOrTrait)
 			

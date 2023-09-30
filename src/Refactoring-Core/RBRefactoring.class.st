@@ -71,7 +71,7 @@ RBRefactoring >> classObjectFor: anObject [
 	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [
 		^ self model classFor: anObject ].
 	anObject isString ifTrue: [
-		^ self model classNamed: anObject asSymbol ].
+		^ self model classNamed: anObject ].
 	^ anObject
 ]
 

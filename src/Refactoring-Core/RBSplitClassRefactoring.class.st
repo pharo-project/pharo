@@ -103,7 +103,7 @@ RBSplitClassRefactoring >> addClass [
 				superclass: Object
 				subclasses: #()
 				category: class category).
-	newClass := self model classNamed: newClassName asSymbol
+	newClass := self model classNamed: newClassName
 ]
 
 { #category : 'private - transforming' }

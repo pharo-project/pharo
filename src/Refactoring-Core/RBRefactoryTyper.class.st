@@ -202,7 +202,7 @@ RBRefactoryTyper >> guessTypeFromAssignment: aNode [
 			].
 	aNode value isMessage
 		ifTrue: [ aNode value receiver isVariable
-				ifTrue: [ type := model classNamed: aNode value receiver name asSymbol ].
+				ifTrue: [ type := model classNamed: aNode value receiver name ].
 			aNode value selector = #asValue
 				ifTrue: [ type := model classNamed: #ValueHolder ].
 			( #(#and: #or: #= #== #~= #~~ #<= #< #~~ #> #>=) includes: aNode value selector )
