@@ -615,54 +615,6 @@ Class >> environment: anEnvironment [
 	environment := anEnvironment
 ]
 
-{ #category : 'subclass creation - weak' }
-Class >> ephemeronSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	 ^ self classInstaller
-			make: [ :builder |
-				builder
-					superclass: self;
-					name: className;
-					layoutClass: EphemeronLayout;
-					slotsFromString: instVarNameList;
-					sharedVariablesFromString: classVarNames;
-					category: cat;
-					environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: t;
-			  layoutClass: EphemeronLayout;
-			  slotsFromString: f;
-			  sharedVariablesFromString: d;
-			  sharedPools: s;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - weak' }
-Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a subclass of an existing class (the receiver) in which the subclass is to have weak indexable pointer variables."
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: EphemeronLayout;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
 { #category : 'fileout' }
 Class >> expandedDefinitionStringFor: aPrinter [
 

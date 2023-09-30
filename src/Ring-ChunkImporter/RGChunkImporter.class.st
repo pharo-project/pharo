@@ -31,6 +31,7 @@ RGChunkImporter >> allowedSelectors [
 
 	^ #(
 #ephemeronSubclass:instanceVariableNames:classVariableNames:package:
+#ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
 #ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:
 
 #immediateSubclass:instanceVariableNames:classVariableNames:package:
