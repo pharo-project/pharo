@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBInstanceVariableHasReferences',
-	#superclass : 'RBCondition',
+	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
 		'violators',
 		'aClass',
@@ -16,11 +16,17 @@ RBInstanceVariableHasReferences >> check [
 	
 	aClass withAllSubclasses do: [ :each |
 			| res |
-			res := (each whichSelectorsReferToInstanceVariable: instanceVariable).
+			res := (each whichMethodsReferToInstanceVariable: instanceVariable).
 			res isNotEmpty
 				ifTrue: [ violators addAll: res ].
 			].
 	^ violators isNotEmpty
+]
+
+{ #category : 'accessing' }
+RBInstanceVariableHasReferences >> errorString [ 
+
+	^ ' Variable ', instanceVariable , ' is still referenced'
 ]
 
 { #category : 'instance creation' }
@@ -33,4 +39,9 @@ RBInstanceVariableHasReferences >> hierarchyOf: aRBClass referencesInstanceVaria
 RBInstanceVariableHasReferences >> initialize [ 
 	super initialize.
 	violators := OrderedCollection new
+]
+
+{ #category : 'accessing' }
+RBInstanceVariableHasReferences >> violators [ 
+	^ violators
 ]

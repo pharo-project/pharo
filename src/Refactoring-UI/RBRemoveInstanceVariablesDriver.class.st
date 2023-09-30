@@ -13,27 +13,65 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'resources' }
-RBRemoveInstanceVariablesDriver >> configureRefactoring [
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
-	refactoring := RBCompositeRefactoring new
-							model: model; 
-							refactorings: (variables collect: [:each | 
-									RBRemoveInstanceVariableRefactoring model: model remove: each from: class]);
-								yourself 
+	StMessageBrowserPresenter
+		browse: refactoring violators
+		
 ]
 
 { #category : 'resources' }
-RBRemoveInstanceVariablesDriver >> refactoring [
+RBRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
+	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
+							model: model; 
+							refactorings: (variables collect: [:each | 
+									RBRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+								yourself.
+	refactoring prepareForInteractiveMode
+]
+
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
+
+	| select items |
+	items := OrderedCollection new.
+	items add: (RBBrowseReferencedInstanceVariableChoice new
+						driver: self ; yourself).
+	items add: (RBRemoveInstanceVariableChoice new driver: self; yourself).
+	items add: (RBRemoveInstanceVariableAndShowChoice new driver: self; yourself).
+	
+	select := SpSelectDialog new
+		          title: 'There are references to variables!';
+		          items: items;
+		          display: [ :each | each description ];
+		          displayIcon: [ :each |  self iconNamed: each systemIconName ];
+		          openModal.
+
+	select ifNotNil: [ select action ]
+]
+
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> removeInstanceVariables [
+
+	| changes |
+	changes := refactoring privateTransform.
+	self openPreviewWithChanges: changes
 ]
 
 { #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
-	[
+	
+	refactoring applicabilityPreconditions check ifFalse: [
+		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
+	refactoring breakingChangePreconditions check
+		ifTrue: [ self removeInstanceVariables ]
+		ifFalse: [ self handleBreakingChanges ]
+
+	"[
 		[ 
 			| changes |
 			changes := refactoring generateChanges.
@@ -52,7 +90,7 @@ RBRemoveInstanceVariablesDriver >> runRefactoring [
 										cancelLabel: 'No, forget it';
 										openModal.
 								dialog 
-									ifTrue: [ self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring)].  err return ].
+									ifTrue: [ self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring)].  err return ]."
 	
 ]
 
