@@ -311,7 +311,7 @@ RBCondition class >> isClassNamed: className definedIn: aModel [
 
 	^ self new 
 		block: [ | aClassOrTrait |
-				aClassOrTrait := aModel classNamed: className asSymbol.
+				aClassOrTrait := aModel classNamed: className.
 				aClassOrTrait isNotNil ]
 		errorString: [ className , ' is <1?:not > defined' ]
 ]

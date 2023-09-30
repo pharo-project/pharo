@@ -83,9 +83,7 @@ RBTransformationsTest >> testAddTemporaryVariableTransform [
 		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
-
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
 	self
 		assert: (class parseTreeForSelector: #one) temporaries size
@@ -103,8 +101,7 @@ RBTransformationsTest >> testAddVariableAccessorTransform [
 
 	self assert: transformation model changes changes size equals: 2.
 
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self
 		assert: (class parseTreeForSelector: #instVar)
 		equals: (self parseMethod: 'instVar ^instVar').
@@ -123,9 +120,7 @@ RBTransformationsTest >> testAddVariableTransform [
 		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
-
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf')
 ]
 
@@ -154,7 +149,7 @@ RBTransformationsTest >> testCompositeTransform [
 	self assert: transformation model changes changes size equals: 3.
 
 	class := transformation model classNamed:
-		         (self changeMockClass name , 'Temporary') asSymbol.
+		         (self changeMockClass name , 'Temporary').
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self
 		assert: (class parseTreeForSelector: #printString1)
@@ -197,8 +192,7 @@ RBTransformationsTest >> testDeprecateClassTransform [
 
 	self assert: transformation model changes changes size equals: 4.
 
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self assert: class comment equals: 'Deprecated!!! Use superclass'.
 
 	class := transformation model metaclassNamed:
@@ -234,8 +228,7 @@ RBTransformationsTest >> testMoveInstanceVariableToClassTransform [
 		                  toClass: self changeMockClass name.
 
 	oldClass := transformation model classNamed: #FOOBAR.
-	newClass := transformation model classNamed:
-		            self changeMockClass name asSymbol.
+	newClass := transformation model classNamed: self changeMockClass name.
 	self assert: (oldClass directlyDefinesInstanceVariable: 'asdf').
 	self deny: (newClass directlyDefinesInstanceVariable: 'asdf').
 
@@ -289,8 +282,7 @@ RBTransformationsTest >> testRemoveClassTransform [
 	transformation := (RBRemoveClassTransformation className:
 		                   self changeMockClass name) generateChanges.
 	self assert: transformation model changes changes size equals: 1.
-	newClass := transformation model classNamed:
-		            self changeMockClass name asSymbol.
+	newClass := transformation model classNamed: self changeMockClass name.
 	superclass := transformation model classNamed: #Object.
 	self assert: newClass isNil.
 	newClass := self changeMockClass name.
@@ -331,8 +323,7 @@ RBTransformationsTest >> testRemoveMethodTransform [
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self deny: (class directlyDefinesMethod: #one)
 ]
 
@@ -347,8 +338,7 @@ RBTransformationsTest >> testRemoveVariableTransform [
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self deny: (class directlyDefinesInstanceVariable: 'instVar')
 ]
 

@@ -98,7 +98,7 @@ RBInsertNewClassRefactoring >> privateTransform [
 		                         with: category asString.
 	self model
 		defineClass: classDefinitionString withComment: comment;
-		reparentClasses: subclasses to: (self model classNamed: className asSymbol)
+		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
 { #category : 'printing' }

@@ -280,7 +280,7 @@ RBNamespace >> classObjectFor: anObject [
 	(anObject isBehavior or: [anObject isTrait])
 		ifTrue: [ ^ self classFor: anObject ].
 	anObject isString
-		ifTrue: [ ^ self classNamed: anObject asSymbol ].
+		ifTrue: [ ^ self classNamed: anObject ].
 	^ anObject
 ]
 
