@@ -13,7 +13,7 @@ Class {
 { #category : 'accessing' }
 RBRemoveClassReparentChoice >> action [
 
-	driver removeClassChanges.
+	driver applyChanges
 
 ]
 
