@@ -14,11 +14,9 @@ and to browse all nonprimitive methods with pragmas evaluate
 "
 Class {
 	#name : 'Pragma',
-	#superclass : 'Object',
+	#superclass : 'Message',
 	#instVars : [
-		'method',
-		'arguments',
-		'selector'
+		'method'
 	],
 	#classInstVars : [
 		'pragmaCache'
@@ -126,7 +124,7 @@ Pragma class >> pragmaCache [
 	^ pragmaCache ifNil: [ pragmaCache := Dictionary new ]
 ]
 
-{ #category : 'private' }
+{ #category : 'instance creation' }
 Pragma class >> selector: aSymbol arguments: anArray [
 	^ self new
 		selector: aSymbol;
@@ -183,20 +181,20 @@ Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
 			ifAbsent: [ ^ aBlockClosure value])
 ]
 
-{ #category : 'accessing - pragma' }
+{ #category : 'accessing' }
 Pragma >> arguments [
 	"Answer the arguments of the receiving pragma. For a pragma defined as <key1: val1 key2: val2> this will answer #(val1 val2)."
 	<reflection: 'Class structural inspection - Pragma'>
 	^ arguments
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 Pragma >> arguments: anArray [
 	<reflection: 'Class structural inspection - Pragma'>
 	arguments := anArray
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 Pragma >> displayStringOn: stream [
 	self method displayStringOn: stream.
 	stream space.
@@ -261,7 +259,7 @@ Pragma >> methodSelector [
 	^method selector
 ]
 
-{ #category : 'accessing - pragma' }
+{ #category : 'accessing' }
 Pragma >> numArgs [
 	"Answer the number of arguments in the pragma."
 	<reflection: 'Class structural inspection - Pragma'>
@@ -294,7 +292,7 @@ Pragma >> selector [
 	^ selector
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 Pragma >> selector: aSymbol [
 	<reflection: 'Class structural inspection - Pragma'>
 	selector := aSymbol
