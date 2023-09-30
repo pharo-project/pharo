@@ -258,8 +258,8 @@ RBNamespace >> classNameFor: aBehavior [
 { #category : 'accessing - classes' }
 RBNamespace >> classNamed: aSymbol [
 	| class classes index symb |
+	aSymbol ifNil: [ ^ nil ].
 	symb := aSymbol asSymbol.
-	symb ifNil: [ ^ nil ].
 	(self hasRemoved: symb) ifTrue: [ ^ nil ].
 	(newClasses includesKey: symb) ifTrue: [ ^ (newClasses at: symb) first ].
 	(changedClasses includesKey: symb) ifTrue: [ ^ (changedClasses at: symb) first ].
