@@ -97,8 +97,7 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 	slots: { #instVar};
 	sharedVariables: { #ClassVar};
 	sharedPools: {PoolDict};
-	package: ''' , self class category , '''' for: self.
-	self assert: change controller equals: self.
+	package: ''' , self class category , ''''.
 	self assert: change superclassName equals: self class superclass name.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
@@ -232,7 +231,6 @@ RBRefactoringChangeTest >> testCompileInClass [
 	"note that this compile does not modify the class because the change is not performed"
 	| change |
 	change := changes compile: 'setUp' in: self class.
-	self assert: change controller isNil.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
@@ -247,7 +245,6 @@ RBRefactoringChangeTest >> testCompileInClassified [
 	"note that this compile does not modify the class because the change is not performed"
 	| change |
 	change := changes compile: 'setUp' in: self class classified: #accessing.
-	self assert: change controller isNil.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
@@ -262,8 +259,7 @@ RBRefactoringChangeTest >> testCompileInInteractively [
 	"note that this compile does not modify the class because the change is not performed"
 	
 	| change |
-	change := changeFactory addMethodSource: 'setUp' in: self class classified: #running for: self.
-	self assert: change controller equals: self.
+	change := changeFactory addMethodSource: 'setUp' in: self class classified: #running.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
@@ -279,7 +275,6 @@ RBRefactoringChangeTest >> testCompileInMetaclass [
 	
 	| change |
 	change := changes compile: 'new' in: self class class.
-	self assert: change controller isNil.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class class.
 	self assert: change isMeta.
@@ -331,7 +326,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
 
 	| change |
 	change := changeFactory addClassDefinition: 'Object << #' , self changeMockClass name , 'Temporary
-	package: ''' , self class category , '''' for: self.
+	package: ''' , self class category , ''''.
 	self performAndUndoChange: change do: [
 		self assert: (workingEnvironment hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
@@ -381,11 +376,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveMethod [
 RBRefactoringChangeTest >> testPerformAddRemoveMethodInteractively [
 
 	| change |
-	change := changeFactory 
-			addMethodSource: 'method ^ 1' 
-			in: self changeMockClass 
-			classified: #utilities 
-			for: self.
+	change := changeFactory addMethodSource: 'method ^ 1' in: self changeMockClass classified: #utilities.
 	self performAndUndoChange: change do: [ self assert: (self changeMockClass canUnderstand: #method) ].
 	self deny: (self changeMockClass canUnderstand: #method).
 	self assert: change definedSelector equals: #method
