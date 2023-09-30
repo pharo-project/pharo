@@ -203,8 +203,9 @@ Pragma >> displayStringOn: stream [
 
 { #category : 'testing' }
 Pragma >> hasLiteral: aLiteral [
-	^self selector == aLiteral
-	   or: [arguments hasLiteral: aLiteral]
+	"Answer <true> if the receiver references the argument, literal."
+
+	^ self selector == aLiteral or: [ arguments hasLiteral: aLiteral ]
 ]
 
 { #category : 'comparing' }
