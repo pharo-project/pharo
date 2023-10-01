@@ -42,6 +42,15 @@ RBUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions
 	
 ]
 
+{ #category : 'preconditions' }
+RBUpFrontPreconditionCheckingCompositeRefactoring >> checkApplicabilityPreconditions [
+
+	| pre |
+	pre := self applicabilityPreconditions.
+	pre check ifFalse: [
+		RBRefactoringError signal: pre errorString ].
+]
+
 { #category : 'accessing' }
 RBUpFrontPreconditionCheckingCompositeRefactoring >> privateTransform [
 	"pay attention we are not checking preconditions of children at this level"

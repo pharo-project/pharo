@@ -9,7 +9,7 @@ Class {
 { #category : 'accessing' }
 RBRemoveInstanceVariableChoice >> action [
 
-	driver removeInstanceVariables
+	driver applyChanges
 ]
 
 { #category : 'accessing' }
