@@ -164,6 +164,12 @@ RubCharacterBlock >> right [
 	^ surface right
 ]
 
+{ #category : 'private' }
+RubCharacterBlock >> scaleBy: scale [
+
+	^ self copy surface: (surface scaleBy: scale)
+]
+
 { #category : 'accessing' }
 RubCharacterBlock >> stringIndex [
 	"Answer the position of the receiver in the string it indexes."
