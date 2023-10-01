@@ -95,3 +95,57 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 			  package: package;
 			  environment: self environment ]
 ]
+
+{ #category : '*Deprecated12' }
+Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
+self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith:
+			'`@rcv immediateSubclass: `@arg1 instanceVariableNames: `@arg2 classVariableNames: `@arg3 poolDictionaries: `@arg5 category: `@arg4'
+			-> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@arg1;
+					layoutClass: ImmediateLayout;
+					slotsFromString: `@arg2;
+					sharedVariablesFromString: `@arg3;
+					sharedPools: `@arg5;
+					category: `@arg4;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		builder
+			superclass: self;
+			name: t;
+			layoutClass: ImmediateLayout;
+			slotsFromString: f;
+			sharedVariablesFromString: d;
+			sharedPools: s;
+			category: cat;
+			environment: self environment ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategorySymbol [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith: '`@rcv subclass: `@arg1 instanceVariableNames: `@arg2 classVariableNames: `@arg3 category: `@arg4' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@arg1;
+					slotsFromString: `@arg2;
+					sharedVariablesFromString: `@arg3;
+					category: `@arg4;
+					environment: `@rcv environment ]'.
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  superclass: self;
+			  name: aSubclassSymbol;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  category: aCategorySymbol;
+			  environment: self environment ]
+]

@@ -717,20 +717,6 @@ Class >> immediateSubclass: className instanceVariableNames: instVarNameList cla
 			environment: self environment ]
 ]
 
-{ #category : 'subclass creation - deprecated' }
-Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: t;
-			layoutClass: ImmediateLayout;
-			slotsFromString: f;
-			sharedVariablesFromString: d;
-			sharedPools: s;
-			category: cat;
-			environment: self environment ]
-]
-
 { #category : 'subclass creation - immediate' }
 Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
 	"This is the standard initialization message for creating a new class as a
@@ -1131,21 +1117,6 @@ Class >> subclass: t instanceVariableNames: ins [
 				superclass: self; 
 				name: t;
 				slotsFromString: ins;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategorySymbol [
-	"Added to allow for a simplified subclass creation experience. "
-	<reflection: 'Class structural modification - Old class creation'>
-
-		^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self; 
-				name: aSubclassSymbol;
-				sharedVariablesFromString: classVarNames;
-				slotsFromString: instVarNameList;
 				environment: self environment ]
 ]
 
