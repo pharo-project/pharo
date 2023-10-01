@@ -1136,22 +1136,6 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classV
 				environment: self environment ]
 ]
 
-{ #category : 'subclass creation - deprecated' }
-Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
 { #category : 'subclass creation' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
 	<reflection: 'Class structural modification - Old class creation'>
@@ -1280,21 +1264,6 @@ Class >> usesPoolVarNamed: aString [
 	^self allSharedPools anySatisfy: [:each | each usesClassVarNamed: aString]
 ]
 
-{ #category : 'subclass creation - deprecated' }
-Class >> variableByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames category: cat [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				category: cat;
-				environment: self environment ]
-]
-
 { #category : 'subclass creation - variableByte' }
 Class >> variableByteSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 	"Added to allow for a simplified subclass creation experience. "
@@ -1307,22 +1276,6 @@ Class >> variableByteSubclass: className instanceVariableNames: instVarNameList 
 				layoutClass: (self checkForCompiledMethodLayout: className);
 				slotsFromString: instVarNameList;
 				sharedVariablesFromString: classVarNames;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableByteSubclass: className instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
 				category: cat;
 				environment: self environment ]
 ]
@@ -1376,20 +1329,6 @@ Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNam
 				environment: self environment ]
 ]
 
-{ #category : 'subclass creation - deprecated' }
-Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: VariableLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
 { #category : 'subclass creation - variable' }
 Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 
@@ -1400,21 +1339,6 @@ Class >> variableSubclass: className instanceVariableNames: instVarNameList clas
 			  layoutClass: VariableLayout;
 			  slotsFromString: instVarNameList;
 			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: VariableLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  sharedPools: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -1438,21 +1362,6 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 				environment: self environment ]
 ]
 
-{ #category : 'subclass creation - deprecated' }
-Class >> variableWordSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: WordLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
 { #category : 'subclass creation - variableWord' }
 Class >> variableWordSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 	"Variable word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a full word (32 bits).
@@ -1466,21 +1375,6 @@ Class >> variableWordSubclass: className instanceVariableNames: instVarNameList 
 			  layoutClass: WordLayout;
 			  slotsFromString: instVarNameList;
 			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: t;
-			  layoutClass: WordLayout;
-			  slotsFromString: f;
-			  sharedVariablesFromString: d;
-			  sharedPools: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -1502,21 +1396,6 @@ Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d 
 				environment: self environment ]
 ]
 
-{ #category : 'subclass creation - deprecated' }
-Class >> weakSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: WeakLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
 { #category : 'subclass creation - weak' }
 Class >> weakSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 	"Added to allow for a simplified subclass creation experience. "
@@ -1528,21 +1407,6 @@ Class >> weakSubclass: className instanceVariableNames: instVarNameList classVar
 			  layoutClass: WeakLayout;
 			  slotsFromString: instVarNameList;
 			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: t;
-			  layoutClass: WeakLayout;
-			  slotsFromString: f;
-			  sharedVariablesFromString: d;
-			  sharedPools: s;
 			  category: cat;
 			  environment: self environment ]
 ]
