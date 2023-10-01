@@ -2182,6 +2182,15 @@ EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 ]
 
 { #category : 'visiting' }
+EFFormatter >> visitLiteralCollectionNode: aLiteralCollectionNode [
+	self 
+		bracketWith: '{}' 
+		around: [ 
+			codeStream space; nextPutAll: ':', aLiteralCollectionNode collectionClass name. 
+			self formatArray: aLiteralCollectionNode ]
+]
+
+{ #category : 'visiting' }
 EFFormatter >> visitLiteralNode: aLiteralNode [
 	aLiteralNode value isLiteral
 		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]

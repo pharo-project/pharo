@@ -237,6 +237,13 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 ]
 
 { #category : 'visiting' }
+OCASTSemanticAnalyzer >> visitLiteralCollectionNode: aLiteralCollectionNode [
+	aLiteralCollectionNode collectionClass parent: aLiteralCollectionNode.
+	super visitLiteralCollectionNode: aLiteralCollectionNode.
+	
+]
+
+{ #category : 'visiting' }
 OCASTSemanticAnalyzer >> visitMessageNode: aMessageNode [
 	
 	super visitMessageNode: aMessageNode.

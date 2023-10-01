@@ -662,6 +662,15 @@ OCASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	methodBuilder pushLiteral: aRBLiteralArrayNode value
 ]
 
+{ #category : 'visiting' }
+OCASTTranslator >> visitLiteralCollectionNode: aLiteralCollectionNode [
+
+	
+	methodBuilder pushLiteralVariable: aLiteralCollectionNode collectionClass binding.
+	self visitArrayNode: aLiteralCollectionNode.
+	methodBuilder send: #withAllForBrace:
+]
+
 { #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralNode: aLiteralNode [
 

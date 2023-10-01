@@ -151,6 +151,16 @@ CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [
 ]
 
 { #category : 'visiting' }
+CoASTResultSetBuilder >> visitLiteralCollectionNode: aLiteralCollectionNode [
+	
+	"I do not know what I should return but the children being a collection it does not work."
+	| res |
+	res := self visitNode:  aLiteralCollectionNode collectionClass.
+	aLiteralCollectionNode children do: [ :each | self visitNode: each ].
+	^ res
+]
+
+{ #category : 'visiting' }
 CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
 
 	^ self visitValueNode: aRBLiteralValueNode

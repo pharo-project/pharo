@@ -386,6 +386,13 @@ ASTTypingVisitor >> visitLiteralArrayNode: aLiteralNode [
 ]
 
 { #category : 'visiting' }
+ASTTypingVisitor >> visitLiteralCollectionNode: aLiteralNode [
+
+	super visitLiteralCollectionNode: aLiteralNode.
+	self typeNode: aLiteralNode with: aLiteralNode collectionClass
+]
+
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitLiteralNode: aLiteralNode [
 
 	self typeNode: aLiteralNode with: aLiteralNode value class

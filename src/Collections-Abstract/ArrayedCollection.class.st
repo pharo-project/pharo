@@ -156,6 +156,13 @@ ArrayedCollection class >> withAll: aCollection [
 	^ (self new: aCollection size) replaceFrom: 1 to: aCollection size with: aCollection
 ]
 
+{ #category : 'instance creation' }
+ArrayedCollection class >> withAllForBrace: aCollection [
+	"Create a new collection containing all the elements from aCollection. This method is used by the  literalCollection feature e.g., {:Set 1. 2 . 2}"
+
+	^ (self new: aCollection size) replaceFrom: 1 to: aCollection size with: aCollection
+]
+
 { #category : 'adding' }
 ArrayedCollection >> add: newObject [
 	self shouldNotImplement

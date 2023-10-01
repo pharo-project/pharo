@@ -107,6 +107,12 @@ RBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 ]
 
 { #category : 'visiting' }
+RBProgramNodeVisitor >> visitLiteralCollectionNode: aLiteralCollectionNode [
+	self visitNode:  aLiteralCollectionNode collectionClass.
+	aLiteralCollectionNode children do: [ :each | self visitNode: each ]
+]
+
+{ #category : 'visiting' }
 RBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
 ]
 

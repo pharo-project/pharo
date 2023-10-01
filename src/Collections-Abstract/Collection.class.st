@@ -134,6 +134,15 @@ Collection class >> withAll: aCollection [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+Collection class >> withAllForBrace: aCollection [
+	"Create a new collection containing all the elements from aCollection. This method is used by the  literalCollection feature e.g., {:Set 1. 2 . 2}."
+
+	^ (self new: aCollection size)
+		addAll: aCollection;
+		yourself
+]
+
 { #category : 'enumerating' }
 Collection >> & aCollection [
 

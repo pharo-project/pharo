@@ -242,6 +242,11 @@ RBParser >> literalArrayNodeClass [
 	^ RBLiteralArrayNode
 ]
 
+{ #category : 'private - parsing' }
+RBParser >> literalCollectionNodeClass [
+	^ RBLiteralCollectionNode 
+]
+
 { #category : 'private - classes' }
 RBParser >> literalNodeClass [
 	^ RBLiteralNode
@@ -281,6 +286,16 @@ RBParser >> parseArray [
 	node right: currentToken start.
 	self step.
 	^ node
+]
+
+{ #category : 'private - parsing' }
+RBParser >> parseArrayable [
+	"We have { and it can be { 1 . 2} or {:Set 1. 2. }"
+	
+	^ (self nextToken value = $:)
+			ifFalse: [ self parseArray ]
+			ifTrue: [ self parseLiteralCollection ]
+	
 ]
 
 { #category : 'private - parsing' }
@@ -756,6 +771,26 @@ RBParser >> parseLiteralByteArrayObject [
 ]
 
 { #category : 'private - parsing' }
+RBParser >> parseLiteralCollection [
+	":Set 1. 2 . 3 }"
+	
+	| startToken node |
+	startToken := currentToken.
+	self step.
+	node := self literalCollectionNodeClass new.
+	node left: startToken start.
+	self step.
+	node collectionClass: self parseVariableNode.
+	
+	self parseStatementList: false  into: node untilAnyCloserOf: '}'.
+	(currentToken isSpecial: $})
+		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: '''}'' expected'].
+	node right: currentToken start.
+	self step.
+	^ node
+]
+
+{ #category : 'private - parsing' }
 RBParser >> parseLiterals [
 
 	| stream |
@@ -925,7 +960,7 @@ RBParser >> parsePrimitiveObject [
 		ifTrue:
 			[currentToken value = $[ ifTrue: [^self saveCommentsDuring:[self parseBlock]].
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
-			currentToken value = ${ ifTrue: [^self parseArray]].
+			currentToken value = ${ ifTrue: [^self parseArrayable]].
 
 	"Annotations are implemented as a magic receiver '@'"
 	(currentToken isBinary: #@) ifTrue: [

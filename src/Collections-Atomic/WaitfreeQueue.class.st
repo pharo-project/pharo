@@ -63,6 +63,13 @@ WaitfreeQueue class >> withAll: aCollection [
 	^ self new initializeWithAll: aCollection
 ]
 
+{ #category : 'instance creation' }
+WaitfreeQueue class >> withAllForBrace: aCollection [
+	"Answer an instance of the receiver initialized with the supplied collection of items. This method is used by the  literalCollection feature e.g., {:Set 1. 2 . 2}"
+
+	^ self new initializeWithAll: aCollection
+]
+
 { #category : 'private - accessing' }
 WaitfreeQueue >> dummy [
 	"Answer the dummy entry of the receiver.
