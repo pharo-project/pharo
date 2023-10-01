@@ -97,8 +97,35 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 ]
 
 { #category : '*Deprecated12' }
+Class >> immediateSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: package [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith: '`@rcv immediateSubclass: `@arg1 instanceVariableNames: `@arg2 classVariableNames: `@arg3 package: `@arg4' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@arg1;
+					layoutClass: ImmediateLayout;
+					slotsFromString: `@arg2;
+					sharedVariablesFromString: `@arg3;
+					package: `@arg4;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  superclass: self;
+			  name: className;
+			  layoutClass: ImmediateLayout;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  package: package;
+			  environment: self environment ]
+]
+
+{ #category : '*Deprecated12' }
 Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-self
+
+	self
 		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
 		transformWith:
 			'`@rcv immediateSubclass: `@arg1 instanceVariableNames: `@arg2 classVariableNames: `@arg3 poolDictionaries: `@arg5 category: `@arg4'
@@ -114,15 +141,45 @@ self
 					category: `@arg4;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: t;
-			layoutClass: ImmediateLayout;
-			slotsFromString: f;
-			sharedVariablesFromString: d;
-			sharedPools: s;
-			category: cat;
-			environment: self environment ]
+		  builder
+			  superclass: self;
+			  name: t;
+			  layoutClass: ImmediateLayout;
+			  slotsFromString: f;
+			  sharedVariablesFromString: d;
+			  sharedPools: s;
+			  category: cat;
+			  environment: self environment ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: package [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith:
+			'`@rcv immediateSubclass: `@arg1 instanceVariableNames: `@arg2 classVariableNames: `@arg3 poolDictionaries: `@arg5 package: `@arg4' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@arg1;
+					layoutClass: ImmediateLayout;
+					slotsFromString: `@arg2;
+					sharedVariablesFromString: `@arg3;
+					sharedPools: `@arg5;
+					package: `@arg4;
+					environment: `@rcv environment ]'.
+
+	^ self classInstaller make: [ :builder |
+		  builder
+			  superclass: self;
+			  name: t;
+			  layoutClass: ImmediateLayout;
+			  slotsFromString: f;
+			  sharedVariablesFromString: d;
+			  sharedPools: s;
+			  package: package;
+			  environment: self environment ]
 ]
 
 { #category : '*Deprecated12' }
@@ -263,6 +320,32 @@ Class >> variableSubclass: className instanceVariableNames: instVarNameList clas
 ]
 
 { #category : '*Deprecated12' }
+Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: package [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith: '`@rcv variableSubclass: `@arg1 instanceVariableNames: `@arg2 classVariableNames: `@arg3 category: `@arg4' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@arg1;
+					layoutClass: VariableLayout;
+					slotsFromString: `@arg2;
+					sharedVariablesFromString: `@arg3;
+					package: `@arg4;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  superclass: self;
+			  name: className;
+			  layoutClass: VariableLayout;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  package: package;
+			  environment: self environment ]
+]
+
+{ #category : '*Deprecated12' }
 Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames poolDictionaries: s category: cat [
 
 	self
@@ -289,6 +372,35 @@ Class >> variableSubclass: className instanceVariableNames: instVarNameList clas
 			  sharedVariablesFromString: classVarNames;
 			  sharedPools: s;
 			  category: cat;
+			  environment: self environment ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: package [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith:
+			'`@rcv variableSubclass: `@arg1 instanceVariableNames: `@arg2 classVariableNames: `@arg3 poolDictionaries: `@arg5 package: `@arg4' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@arg1;
+					layoutClass: VariableLayout;
+					slotsFromString: `@arg2;
+					sharedVariablesFromString: `@arg3;
+			 		sharedPools: `@arg5;
+					package: `@arg4;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  superclass: self;
+			  name: t;
+			  layoutClass: VariableLayout;
+			  slotsFromString: f;
+			  sharedVariablesFromString: d;
+			  sharedPools: s;
+			  package: package;
 			  environment: self environment ]
 ]
 
