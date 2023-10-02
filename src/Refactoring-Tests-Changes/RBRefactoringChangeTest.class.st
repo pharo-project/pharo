@@ -92,12 +92,16 @@ RBRefactoringChangeTest >> testAddClassInstanceVariable [
 
 { #category : 'tests' }
 RBRefactoringChangeTest >> testAddClassInteractively [
+
 	| change |
-	change := changeFactory addClassDefinition: 'AbstractEnvironmentTestCase << #' , self class name , '
-	slots: { #instVar};
-	sharedVariables: { #ClassVar};
-	sharedPools: {PoolDict};
-	package: ''' , self class category , ''''.
+	change := changeFactory addClassDefinition: [ :aBuilder |
+		          aBuilder
+			          superclass: AbstractEnvironmentTestCase;
+			          name: self class name;
+			          slots: { #instVar };
+			          sharedVariables: { #ClassVar };
+			          sharedPools: 'PoolDict';
+			          package: self class package name ].
 	self assert: change superclassName equals: self class superclass name.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
@@ -114,41 +118,25 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 
 { #category : 'tests - pattern' }
 RBRefactoringChangeTest >> testAddClassPattern [
-
 	"Make sure that all class definitions can be parsed."
 
-	self exampleClasses
-		do: [ :class |
-			( class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ] )
-				ifFalse: [ | change |
+	self exampleClasses do: [ :class |
+		(class isObsolete or: [ class superclass isNotNil and: [ class superclass isObsolete ] ]) ifFalse: [
+			| change |
+			change := changes defineClass: [ :aBuilder | aBuilder fillFor: class ].
+			self assert: (change isKindOf: RBAddClassChange).
+			self assert: change changeClassName equals: class name.
 
-					change := changes defineClass: class oldDefinition.
-					self assert: ( change isKindOf: RBAddClassChange ).
-					self assert: change changeClassName equals: class name.
+			class superclass
+				ifNil: [ self assert: change definitionClass equals: ProtoObject ]
+				ifNotNil: [ self assert: change definitionClass equals: class superclass ].
 
-					class superclass
-						ifNil: [ self assert: change definitionClass equals: ProtoObject ]
-						ifNotNil: [ self assert: change definitionClass equals: class superclass ].
-
-					self assert: change instanceVariableNames equals: class instVarNames asArray.
-					self assert: change classVariableNames equals: class classVarNames asArray.
-					self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
-					self assert: change category equals: class category.
-					self universalTestFor: change
-					]
-			]
-]
-
-{ #category : 'tests - pattern' }
-RBRefactoringChangeTest >> testAddClassTraitPattern [
-	"Make sure that all class trait definitions can be parsed."
-
-	self exampleTraits do: [ :trait |
-		| change |
-		change := changes defineClass:  trait classTrait oldDefinition.
-		self assert: (change isKindOf: RBAddClassTraitChange).
-		self assert: change changeClassName equals: trait name.
-		self universalTestFor: change ]
+			self assert: change instanceVariableNames equals: class instVarNames asArray.
+			self assert: change classVariableNames equals: class classVarNames asArray.
+			self assert: change classInstanceVariableNames equals: class class instVarNames.
+			self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
+			self assert: change category equals: class category.
+			self universalTestFor: change ] ]
 ]
 
 { #category : 'tests' }
@@ -175,20 +163,6 @@ RBRefactoringChangeTest >> testAddInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : 'tests - pattern' }
-RBRefactoringChangeTest >> testAddMetaclassPattern [
-	"Make sure that metaclass definitions can be parsed."
-
-	self exampleClasses do: [ :class |
-		(class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ]) ifFalse: [
- 		| change |
-		change := changes defineClass: class class oldDefinition.
-		self assert: (change isKindOf: RBAddMetaclassChange).
-		self assert: change changeClassName equals: class name.
-		self assert: change classInstanceVariableNames equals: class class instVarNames.
-		self universalTestFor: change ]]
-]
-
 { #category : 'tests' }
 RBRefactoringChangeTest >> testAddPool [
 
@@ -207,8 +181,7 @@ RBRefactoringChangeTest >> testAddTraitPattern [
 
 	self exampleTraits do: [ :trait |
 		| change |
-		change := changes defineClass: trait oldDefinition.
-		self assert: (change isKindOf: RBAddTraitChange).
+		change := changes defineClass: [ :aBuilder | aBuilder fillFor: trait ].
 		self assert: change changeClassName equals: trait name.
 		self assert: change category equals: trait category.
 		self universalTestFor: change ]

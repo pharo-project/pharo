@@ -103,6 +103,13 @@ RBAddClassChange >> category [
 ]
 
 { #category : 'accessing' }
+RBAddClassChange >> classInstanceVariableNames [
+
+	self flag: #refacto. "remove var + ifNotNil:"
+	^ builder ifNotNil: [ builder classSlots collect: [ :slot | slot name ] ]
+]
+
+{ #category : 'accessing' }
 RBAddClassChange >> classVariableNames [
 
 	self flag: #refacto. "remove var + ifNotNil:"

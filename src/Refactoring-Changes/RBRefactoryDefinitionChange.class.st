@@ -22,7 +22,7 @@ Class {
 RBRefactoryDefinitionChange class >> definition: aString [
 
 	| parseTree context |
-	1haltOnce.
+	1halt..
 	parseTree := RBParser
 		             parseExpression: aString
 		             onError: [ :err :pos |
@@ -67,7 +67,9 @@ RBRefactoryDefinitionChange class >> make: aBlock [
 	| builder |
 	builder := ShiftClassBuilder new.
 	self flag: #refacto. "Manage errors"
-	aBlock value: builder.
+	[ aBlock value: builder ]
+		on: Warning
+		do: [ :e | e resume ].
 	self flag: #refacto. "Dispatch to the right subclass."
 	^ self new
 		  builder: builder;
@@ -162,6 +164,5 @@ RBRefactoryDefinitionChange >> namesIn: aString [
 { #category : 'printing' }
 RBRefactoryDefinitionChange >> printOn: aStream [
 
-	aStream
-		nextPutAll: definition
+	aStream nextPutAll: builder printString
 ]
