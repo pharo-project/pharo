@@ -559,8 +559,9 @@ ShiftClassBuilder >> superclass [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> superclass: aSuperclass [
-	aSuperclass ifNil: [ superclassName := nil ].
-	superclass := aSuperclass
+
+	superclass := aSuperclass.
+	superclassName := superclass ifNotNil: [ superclass name ]
 ]
 
 { #category : 'accessing' }

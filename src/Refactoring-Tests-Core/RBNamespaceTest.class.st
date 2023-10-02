@@ -166,22 +166,26 @@ RBNamespaceTest >> testCommentChange [
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testDefineClassAfterDeletedChange [
+
 	| st |
 	st := modelFactory rbNamespace new.
 	st removeClassNamed: self class name.
 	self deny: (st includesClassNamed: self class name).
-	st defineClass: self class oldDefinition.
+	st defineClass: [ :aBuilder | aBuilder fillFor: self class ].
 	self assert: (st includesClassNamed: self class name).
 	self assert: (st classNamed: self class name) notNil
 ]
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testDefineClassChange [
+
 	| st |
 	st := modelFactory rbNamespace new.
-	st
-		defineClass: 'RefactoringBrowserTest << #SmalltalkTestXXX
-				package: #''Refactory-Testing'''.
+	st defineClass: [ :aBuilder |
+		aBuilder
+			superclassName: #RefactoringBrowserTest;
+			name: #SmalltalkTestXXX;
+			package: #'Refactory-Testing' ].
 	self assert: (st includesClassNamed: #SmalltalkTestXXX).
 	self assert: (st classNamed: #SmalltalkTestXXX) notNil
 ]
@@ -210,27 +214,25 @@ RBNamespaceTest >> testIncludesClass [
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testModelImplementorsSenders [
+
 	| model class modelImps refs found |
 	model := modelFactory rbNamespace new.
-	model
-		defineClass: 'Object << #Asdf package: #''Refactory-Testing'''.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #Asdf;
+			package: #'Refactory-Testing' ].
 	class := model classNamed: #Asdf.
-	class compile: 'storeOn: aStream ^super storeOn: aStream'
-		classified: #(#printing).
+	class compile: 'storeOn: aStream ^super storeOn: aStream' classified: #( #printing ).
 	modelImps := model allImplementorsOf: #storeOn:.
 	self assert: (modelImps includes: class).
-	self assert: modelImps size - 1
-				equals: (RBBrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
+	self assert: modelImps size - 1 equals: (RBBrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
 	refs := RBBrowserEnvironment new referencesTo: #storeOn:.
 	found := false.
-	model allReferencesTo: #storeOn:
-		do:
-			[:each |
-			each modelClass = class
-				ifTrue: [found := true]
-				ifFalse:
-					[	self
-						assert: (refs includesSelector: each selector in: each modelClass realClass)]].
+	model allReferencesTo: #storeOn: do: [ :each |
+		each modelClass = class
+			ifTrue: [ found := true ]
+			ifFalse: [ self assert: (refs includesSelector: each selector in: each modelClass realClass) ] ].
 	self assert: found
 ]
 
@@ -239,17 +241,16 @@ RBNamespaceTest >> testPopulateModel [
 
 	| newModel |
 	newModel := RBNamespace onEnvironment: RBClassEnvironment new.
-	
-	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassA) classDefinitionString.
-	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassB) classDefinitionString.
-	newModel defineClass: (ClassDefinitionPrinter oldPharo for: MyClassC) classDefinitionString.
+
+	newModel defineClass: [ :aBuilder | aBuilder fillFor: MyClassA ].
+	newModel defineClass: [ :aBuilder | aBuilder fillFor: MyClassB ].
+	newModel defineClass: [ :aBuilder | aBuilder fillFor: MyClassC ].
 	newModel name: 'Test'.
-	
-	
+
+
 	self assert: (newModel classNamed: #MyClassA) name equals: 'MyClassA'.
 	self assert: (newModel classNamed: #MyClassB) superclass name equals: 'MyClassA'.
-	self assert: (newModel classNamed: #MyClassC) superclass name equals: 'MyClassA'.
-
+	self assert: (newModel classNamed: #MyClassC) superclass name equals: 'MyClassA'
 ]
 
 { #category : 'tests - classes' }
