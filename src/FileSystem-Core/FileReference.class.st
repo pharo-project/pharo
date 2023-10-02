@@ -215,22 +215,16 @@ FileReference >> extractVersionNumberFrom: filename basename: basename extension
 	filename=basename.extension without number will return 0
 	It returns nil if given file does not satisfy this pattern"
 
-	"ensure prefix basename."
-	| versionStart versionEnd |
-	(filename beginsWith: basename) ifFalse: [^nil].
-	(filename size > basename size and: [(filename at: basename size + 1) = $.])
-		ifFalse: [ ^nil ].
-	"ensure suffix .extension"
-	(filename endsWith: extension) ifFalse: [^nil].
-	(filename size > extension size and: [(filename at: filename size - extension size) = $.])
-		 ifFalse: [ ^nil ].
+	| tokenizedFilename |
+	^ (tokenizedFilename := filename findTokens: '.') size = 2
+		ifTrue: [ 0 ]
+		ifFalse: [ 
+			(tokenizedFilename
+				collect: [ : e | NumberParser parse: e onError: [ nil ] ]
+				thenReject: #isNil)
+					ifEmpty: [ 0 ] 
+					ifNotEmpty: [ : numbers | numbers last ] ].
 
-	versionStart := basename size + 2.
-	versionEnd := filename size - extension size - 1.
-	versionStart to: versionEnd do: [:i |
-		(filename at: i) isDigit ifFalse: [ ^nil ] ].
-	versionStart > versionEnd ifTrue: [ ^0]. "means pattern baseline.extension"
-	^(filename copyFrom: versionStart to: versionEnd) asNumber
 ]
 
 { #category : 'accessing' }
@@ -444,7 +438,8 @@ FileReference >> nextVersion [
 	parent := self parent.
 	extension := self extension.
 	basename := self basename.
-	nameWithoutExtension := basename copyFrom: 1 to: (basename size - extension size - 1).
+	nameWithoutExtension := self basenameWithoutExtension.
+	
 	"At this stage nameWithoutExtension may still include a version number.  Remove it if necessary"
 	index := nameWithoutExtension size.
 	[ index > 0 and: [ (nameWithoutExtension at: index) isDigit ] ] whileTrue:
@@ -453,7 +448,7 @@ FileReference >> nextVersion [
 		[ nameWithoutExtension := nameWithoutExtension copyFrom: 1 to: index-1 ].
 
 	max := parent versionNumberFor: nameWithoutExtension extension: extension.
-	^ parent / (nameWithoutExtension, '.', (max+1) asString) , self extension
+	^ parent / (nameWithoutExtension, '.', (max+1) asString , '.' , self extension)
 ]
 
 { #category : 'accessing' }
@@ -595,13 +590,20 @@ FileReference >> versionNumberFor: basename extension: extension [
 	"Answer the latest (largest) version number for the specified file.
 	0 = basename.extension exists, but nothing later.
 	nil = no file exists"
-	| maxVersion |
+	| maxVersion fileName |
+
 	maxVersion := 0.
-	self fileSystem childNamesAt: self path do: [ :child | | childVersion |
-		childVersion := self extractVersionNumberFrom: child basename: basename extension: extension.
-		childVersion ifNotNil: [ maxVersion := maxVersion max: childVersion ]].
-	^maxVersion = 0
-		ifTrue: [ (self / (basename, '.', extension)) asFileReference exists
+	"Handle the case of files with dots as part of its name"
+	fileName := nil.
+	(self childrenMatching: '*.', extension) 
+		do: [ : fileRef | 
+			(self extractVersionNumberFrom: fileRef basename basename: basename extension: extension)
+				ifNotNil: [ : childVersion | 
+					fileName := fileRef basenameWithoutExtension.
+					maxVersion := maxVersion max: childVersion ] ].
+
+	^ maxVersion = 0
+		ifTrue: [ (((self / (basename, '.', extension)) asFileReference exists) or: [ fileName notNil ])
 			ifTrue: [ 0 ]
 			ifFalse: [ nil ] ]
 		ifFalse: [ maxVersion ]
