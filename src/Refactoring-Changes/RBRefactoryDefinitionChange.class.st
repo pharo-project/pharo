@@ -10,7 +10,8 @@ Class {
 	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
 		'definition',
-		'definedClass'
+		'definedClass',
+		'builder'
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
 	#package : 'Refactoring-Changes',
@@ -21,6 +22,7 @@ Class {
 RBRefactoryDefinitionChange class >> definition: aString [
 
 	| parseTree context |
+	1haltOnce.
 	parseTree := RBParser
 		             parseExpression: aString
 		             onError: [ :err :pos |
@@ -59,11 +61,38 @@ RBRefactoryDefinitionChange class >> definitionPatterns [
 	self subclassResponsibility
 ]
 
+{ #category : 'instance creation' }
+RBRefactoryDefinitionChange class >> make: aBlock [
+
+	| builder |
+	builder := ShiftClassBuilder new.
+	self flag: #refacto. "Manage errors"
+	aBlock value: builder.
+	self flag: #refacto. "Dispatch to the right subclass."
+	^ self new
+		  builder: builder;
+		  yourself
+]
+
 { #category : 'comparing' }
 RBRefactoryDefinitionChange >> = aDefinitionChange [
 
 	^ self class = aDefinitionChange class and: [
 		  self definition = aDefinitionChange definition ]
+]
+
+{ #category : 'accessing' }
+RBRefactoryDefinitionChange >> builder [
+
+	^ builder
+]
+
+{ #category : 'accessing' }
+RBRefactoryDefinitionChange >> builder: aClassBuilder [
+
+	isMeta := false.
+	builder := aClassBuilder.
+	className := builder name
 ]
 
 { #category : 'printing' }

@@ -145,7 +145,8 @@ RBPackageEnvironment >> initialize [
 
 { #category : 'accessing' }
 RBPackageEnvironment >> packageNames [
-	^ packages collect: [ :each | each packageName ]
+
+	^ packages collect: [ :each | each name ]
 ]
 
 { #category : 'accessing' }

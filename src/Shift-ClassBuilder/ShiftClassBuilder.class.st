@@ -165,6 +165,11 @@ ShiftClassBuilder >> classNamed: aName [
 ]
 
 { #category : 'accessing' }
+ShiftClassBuilder >> classSlots [
+	^ self layoutDefinition classSlots
+]
+
+{ #category : 'accessing' }
 ShiftClassBuilder >> classSlots: aSlotCollection [
 	self layoutDefinition classSlots: aSlotCollection
 ]

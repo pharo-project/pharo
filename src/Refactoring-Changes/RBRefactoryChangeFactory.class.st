@@ -19,7 +19,10 @@ RBRefactoryChangeFactory class >> instance [
 { #category : 'refactory changes - classes' }
 RBRefactoryChangeFactory >> addClassDefinition: definition [
 
-	^ RBAddClassChange definition: definition
+	self flag: #refacto.
+	^ definition isString
+		  ifTrue: [ RBAddClassChange definition: definition ]
+		  ifFalse: [ RBAddClassChange make: definition ]
 ]
 
 { #category : 'refactory changes - variables' }

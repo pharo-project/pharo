@@ -39,7 +39,9 @@ RBAddClassTraitChange >> definitionClass [
 { #category : 'initialization' }
 RBAddClassTraitChange >> fillOutDefinition: aDictionary [
 	"What a bad method name!!! This has nothing to do with it. It fills up a domain object out of the dictionary."
+
 	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined
 	in the expressions defined in the definitionPatterns method!"
+
 	className := (aDictionary at: '`traitName') asSymbol
 ]

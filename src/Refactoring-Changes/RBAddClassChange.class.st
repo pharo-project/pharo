@@ -98,14 +98,15 @@ RBAddClassChange >> asUndoOperation [
 
 { #category : 'accessing' }
 RBAddClassChange >> category [
-
-	^ category
+	self flag: #refacto. "remove var + ifNotNil:"
+	^ category ifNil: [ builder ifNotNil: [ builder category ] ]
 ]
 
 { #category : 'accessing' }
 RBAddClassChange >> classVariableNames [
 
-	^ classVariableNames
+	self flag: #refacto. "remove var + ifNotNil:"
+	^ classVariableNames ifNil: [ builder ifNotNil: [ builder sharedVariables collect: [ :slot | slot name ] ] ]
 ]
 
 { #category : 'private' }
@@ -118,65 +119,38 @@ RBAddClassChange >> definitionClass [
 { #category : 'private' }
 RBAddClassChange >> fillOutDefinition: aDictionary [
 	"What a bad method name!!! This has nothing to do with it. It fills up a domain object out of the dictionary."
+
 	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined
 	in the expressions defined in the definitionPatterns method!"
 
-	superclassName := (aDictionary at: '`@superclass')
-		ifNotNil: [ :value | value asSymbol ].
+	superclassName := (aDictionary at: '`@superclass') ifNotNil: [ :value | value asSymbol ].
 	className := (aDictionary at: '`#className') asSymbol.
 
-	(aDictionary includesKey: '`#instanceVariableNames')
-		ifTrue: [
-		instanceVariableNames := self namesIn: (aDictionary
-			at: '`#instanceVariableNames'
-			ifAbsent: [ String new ]).
-	].
+	(aDictionary includesKey: '`#instanceVariableNames') ifTrue: [
+		instanceVariableNames := self namesIn: (aDictionary at: '`#instanceVariableNames' ifAbsent: [ String new ]) ].
 
-	(aDictionary includesKey: '`@slots')
-		ifTrue: [
-		instanceVariableNames :=  (aDictionary
-			at: '`@slots') statements collect: [ :each | each value asString ]
-	].
+	(aDictionary includesKey: '`@slots') ifTrue: [ instanceVariableNames := (aDictionary at: '`@slots') statements collect: [ :each | each value asString ] ].
 
-	(aDictionary includesKey: '`#classVariableNames')
-		ifTrue: [
-	classVariableNames := self namesIn: (aDictionary
-		at: '`#classVariableNames'
-		ifAbsent: [ String new ]).
-	].
+	(aDictionary includesKey: '`#classVariableNames') ifTrue: [
+		classVariableNames := self namesIn: (aDictionary at: '`#classVariableNames' ifAbsent: [ String new ]) ].
 
-	(aDictionary includesKey: '`@sharedVariables')
-		ifTrue: [
-		classVariableNames := (aDictionary at: '`@sharedVariables') statements collect: [ :each | each value asString ]
-	].
+	(aDictionary includesKey: '`@sharedVariables') ifTrue: [
+		classVariableNames := (aDictionary at: '`@sharedVariables') statements collect: [ :each | each value asString ] ].
 
 
-	(aDictionary includesKey: '`#poolDictionaries')
-		ifTrue: [
+	(aDictionary includesKey: '`#poolDictionaries') ifTrue: [ poolDictionaryNames := self namesIn: (aDictionary at: '`#poolDictionaries' ifAbsent: [ String new ]) ].
 
-	poolDictionaryNames := self namesIn: (aDictionary
-		at: '`#poolDictionaries'
-		ifAbsent: [ String new ]).
-	].
-
-	(aDictionary includesKey: '`@pools')
-		ifTrue: [
-
-	poolDictionaryNames :=  (aDictionary
-			at: '`@pools') statements collect: [ :each | each name ].
-	].
+	(aDictionary includesKey: '`@pools') ifTrue: [ poolDictionaryNames := (aDictionary at: '`@pools') statements collect: [ :each | each name ] ].
 
 
-	category := (aDictionary
-		at: '`#category'
-		ifAbsent: [ Class unclassifiedCategory ])
-			asSymbol
+	category := (aDictionary at: '`#category' ifAbsent: [ Class unclassifiedCategory ]) asSymbol
 ]
 
 { #category : 'accessing' }
 RBAddClassChange >> instanceVariableNames [
-
-	^ instanceVariableNames
+	
+	self flag: #refacto. "remove var + ifNotNil:"
+	^ instanceVariableNames ifNil: [ builder ifNotNil: [ builder slots collect: [ :slot | slot name ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -188,13 +162,15 @@ RBAddClassChange >> nameToDisplay [
 { #category : 'accessing' }
 RBAddClassChange >> sharedPoolNames [
 
-	^ poolDictionaryNames
+	self flag: #refacto. "remove var + ifNotNil:"
+	^ poolDictionaryNames ifNil: [ builder ifNotNil: [ builder sharedPools collect: [ :slot | slot name ] ] ]
 ]
 
 { #category : 'accessing' }
 RBAddClassChange >> superclassName [
 
-	^ superclassName
+	self flag: #refacto. "remove var + ifNotNil:"
+	^ superclassName ifNil: [ builder ifNotNil: [ builder superclassName ] ]
 ]
 
 { #category : 'accessing' }

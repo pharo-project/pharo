@@ -365,6 +365,7 @@ RBNamespace >> defineClass: aString [
 			newClass classSide superclass: ( self classFor: Object class superclass )
 			]
 		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
+	self flag: #refacto. "We shoult let the change create and fill the RB class IMO."
 	newClass instanceVariableNames: (change instanceVariableNames ifNil: ['']).
 	newClass classVariableNames: (change classVariableNames ifNil: ['']).
 	newClass poolDictionaryNames: (change sharedPoolNames ifNil: ['']).
