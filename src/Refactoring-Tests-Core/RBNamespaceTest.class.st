@@ -255,13 +255,17 @@ RBNamespaceTest >> testPopulateModel [
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testRedefineClassChange [
+
 	| st |
 	st := modelFactory rbNamespace new.
-	st defineClass: 'nil << #Object
-				slots: { #a};
-				sharedVariables: {#A};
-				sharedPools: {TextConstants};
-				package: #''Refactory-Testing'''.
+	st defineClass: [ :aBuilder |
+		aBuilder
+			superclass: nil;
+			name: #RBNamespaceTest;
+			slots: { #a };
+			sharedVariables: { #A };
+			sharedPools: 'TextConstants';
+			package: #'Refactory-Testing' ].
 	self assert: (st includesClassNamed: #Object).
 	self assert: (st classNamed: #Object) notNil
 ]

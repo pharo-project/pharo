@@ -704,18 +704,16 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 
 { #category : 'changes' }
 RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
-	aRBClassCollection do:
-			[:aClass |
-			self defineClass: (self replaceClassNameIn: aClass definitionString
-						to: newClass name)]
-]
 
-{ #category : 'private - changes' }
-RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [
-	| parseTree |
-	parseTree := self parserClass parseExpression: definitionString.
-	parseTree receiver: (RBVariableNode named: aSymbol).
-	^parseTree formattedCode
+	aRBClassCollection do: [ :aClass |
+		self defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: newClass name;
+				name: aClass name;
+				slots: aClass instanceVariableNames;
+				sharedVariables: aClass classVariableNames;
+				sharedPools: (' ' join: aClass sharedPoolNames);
+				category: aClass category ] ]
 ]
 
 { #category : 'accessing' }
