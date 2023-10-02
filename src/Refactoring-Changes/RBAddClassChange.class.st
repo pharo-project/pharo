@@ -56,13 +56,6 @@ RBAddClassChange >> builder: aClassBuilder [
 ]
 
 { #category : 'accessing' }
-RBAddClassChange >> category [
-
-	1 halt.
-	^ builder category
-]
-
-{ #category : 'accessing' }
 RBAddClassChange >> classInstanceVariableNames [
 
 	^ builder classSlots collect: [ :slot | slot name ]
