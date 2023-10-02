@@ -92,7 +92,9 @@ RBMoveClassTransformation >> packageName: anObject [
 RBMoveClassTransformation >> privateTransform [
 
 	self flag: #package. "This should use the package and tag API."
-	self definingClass category: self category.
+	self definingClass
+		packageName: self packageName;
+		tagName: self tagName.
 	self model category: self category for: self definingClass
 ]
 

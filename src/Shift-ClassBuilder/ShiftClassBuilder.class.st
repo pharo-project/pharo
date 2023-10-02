@@ -323,6 +323,7 @@ ShiftClassBuilder >> environment: anObject [
 { #category : 'initialization' }
 ShiftClassBuilder >> fillFor: aClass [
 
+	self flag: #package. "package tag should be improved in the future"
 	self
 		superclass: aClass superclass;
 		name: aClass getName;
@@ -331,7 +332,8 @@ ShiftClassBuilder >> fillFor: aClass [
 		classSlots: aClass class localSlots;
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
-		category: aClass category;
+		package: aClass package name;
+		tag: (aClass packageTag ifNotNil: [ :tag | tag name ]);
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
 

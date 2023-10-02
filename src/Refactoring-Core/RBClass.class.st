@@ -14,7 +14,9 @@ Class {
 		'poolDictionaryNames',
 		'category',
 		'comment',
-		'classPool'
+		'classPool',
+		'packageName',
+		'tagName'
 	],
 	#classVars : [
 		'LookupComment'
@@ -92,6 +94,12 @@ RBClass >> allPoolDictionaryNames [
 
 { #category : 'accessing' }
 RBClass >> category [
+
+	category ifNil: [
+		self packageName ifNotNil: [ :package |
+			^ (self tagName isNil or: [ self tagName = package ])
+				  ifTrue: [ package ]
+				  ifFalse: [ package , '-' , self tagName ] ] ].
 
 	^ category ifNil: [ category := self realClass category ]
 ]
@@ -193,6 +201,18 @@ RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
 ]
 
 { #category : 'accessing' }
+RBClass >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+RBClass >> packageName: anObject [
+
+	packageName := anObject
+]
+
+{ #category : 'accessing' }
 RBClass >> poolDictionaryNames [
 
 	^ self privatePoolDictionaryNames copy
@@ -269,4 +289,16 @@ RBClass >> sharedPoolNames [
 { #category : 'accessing' }
 RBClass >> sharedPools [
 	^ self allPoolDictionaryNames collect: [ :each | Smalltalk globals at: each asSymbol ifAbsent: [ Dictionary new ] ]
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName: anObject [
+
+	tagName := anObject
 ]

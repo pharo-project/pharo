@@ -58,6 +58,7 @@ RBAddClassChange >> builder: aClassBuilder [
 { #category : 'accessing' }
 RBAddClassChange >> category [
 
+	1 halt.
 	^ builder category
 ]
 
@@ -117,6 +118,12 @@ RBAddClassChange >> nameToDisplay [
 ]
 
 { #category : 'accessing' }
+RBAddClassChange >> package [
+
+	^ builder package
+]
+
+{ #category : 'accessing' }
 RBAddClassChange >> sharedPoolNames [
 
 	^ builder ifNotNil: [ builder sharedPools ]
@@ -126,6 +133,12 @@ RBAddClassChange >> sharedPoolNames [
 RBAddClassChange >> superclassName [
 
 	^ builder superclassName
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> tag [
+
+	^ builder tag
 ]
 
 { #category : 'accessing' }

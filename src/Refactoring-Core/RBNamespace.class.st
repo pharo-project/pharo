@@ -368,7 +368,8 @@ RBNamespace >> defineClass: aBlock [
 	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
 	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
 	change comment ifNotNil: [ :comment | newClass comment: comment ].
-	newClass category: change category.
+	newClass packageName: change package.
+	newClass tagName: change tag.
 	^ change
 ]
 
