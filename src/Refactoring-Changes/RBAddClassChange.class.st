@@ -163,7 +163,7 @@ RBAddClassChange >> nameToDisplay [
 RBAddClassChange >> sharedPoolNames [
 
 	self flag: #refacto. "remove var + ifNotNil:"
-	^ poolDictionaryNames ifNil: [ builder ifNotNil: [ builder sharedPools collect: [ :slot | slot name ] ] ]
+	^ poolDictionaryNames ifNil: [ builder ifNotNil: [ builder sharedPools ] ]
 ]
 
 { #category : 'accessing' }
