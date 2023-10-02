@@ -291,11 +291,10 @@ RBParser >> parseArray [
 { #category : 'private - parsing' }
 RBParser >> parseArrayable [
 	"We have { and it can be { 1 . 2} or {:Set 1. 2. }"
-	
-	^ (self nextToken value = $:)
-			ifFalse: [ self parseArray ]
-			ifTrue: [ self parseLiteralCollection ]
-	
+
+	^ (self nextToken isSpecial: $:)
+		  ifFalse: [ self parseArray ]
+		  ifTrue: [ self parseLiteralCollection ]
 ]
 
 { #category : 'private - parsing' }

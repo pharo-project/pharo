@@ -7,6 +7,18 @@ Class {
 }
 
 { #category : 'tests' }
+RBLiteralCollectionParserTest >> testCollectionWithDollarCharacterIsNotLiteralArrayCollection [ 
+
+	| compiler |
+	compiler := OpalCompiler new.
+	self assert: (compiler evaluate: 
+		'{ $: }' )
+		
+		equals: #($:).
+	
+]
+
+{ #category : 'tests' }
 RBLiteralCollectionParserTest >> testDictionary [
 
 	| compiler dict |
