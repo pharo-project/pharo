@@ -53,6 +53,7 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 		RBValueNode
 			RBAnnotationMarkNode
 			RBArrayNode
+				RBLiteralCollectionNode
 			RBAssignmentNode
 			RBBlockNode
 			RBCascadeNode
