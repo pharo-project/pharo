@@ -114,12 +114,12 @@ RBInsertNewClassTransformation >> isValidClassName [
 RBInsertNewClassTransformation >> privateTransform [
 
 	self model
-		defineClass: ('<1p> %<%< #<2s> package: <3p>'
-			expandMacrosWith: (self model classObjectFor: superclass)
-			with: className
-			with: category asString);
-		reparentClasses: (subclasses collect: [ :e | self model classObjectFor: e ])
-		to: (self model classNamed: className asSymbol)
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: (self model classObjectFor: superclass) name;
+				name: className;
+				package: category ];
+		reparentClasses: (subclasses collect: [ :subclass | self model classObjectFor: subclass ]) to: (self model classNamed: className asSymbol)
 ]
 
 { #category : 'printing' }

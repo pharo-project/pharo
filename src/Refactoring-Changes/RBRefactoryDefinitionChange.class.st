@@ -135,7 +135,10 @@ RBRefactoryDefinitionChange >> fillOutDefinition: aDictionary [
 { #category : 'private' }
 RBRefactoryDefinitionChange >> generateChanges [
 
-	definedClass := self definitionClass environment defineClass: self definition
+	self flag: #refacto.
+	definedClass := self definition
+		                ifNil: [ self class classInstaller new makeWithBuilder: self builder ]
+		                ifNotNil: [ self definitionClass environment defineClass: self definition ]
 ]
 
 { #category : 'comparing' }
