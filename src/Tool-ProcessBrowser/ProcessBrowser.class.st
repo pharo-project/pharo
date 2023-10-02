@@ -265,6 +265,12 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowDebug: false
 ]
 
+{ #category : 'cleanup' }
+ProcessBrowser class >> restartMethods [
+
+	self registerWellKnownProcesses
+]
+
 { #category : 'process control' }
 ProcessBrowser class >> resumeProcess: aProcess [
 	| priority |
