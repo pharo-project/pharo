@@ -349,37 +349,26 @@ RBNamespace >> defineClass: aString [
 	change := changes defineClass: aString.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
-	newClass
-		ifNil: [ | newMetaclass |
-
-			self unmarkAsRemoved: newClassName.
-			newClass := modelFactory rbClass named: newClassName.
-			newMetaclass := modelFactory rbMetaclass named: newClassName.
-			newClass model: self.
-			newMetaclass model: self.
-			newClasses at: newClassName put: ( Array with: newClass with: newMetaclass )
-			].
-	newClass superclass: ( self classNamed: change superclassName ).
+	newClass ifNil: [
+		| newMetaclass |
+		self unmarkAsRemoved: newClassName.
+		newClass := modelFactory rbClass named: newClassName.
+		newMetaclass := modelFactory rbMetaclass named: newClassName.
+		newClass model: self.
+		newMetaclass model: self.
+		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].
+	newClass superclass: (self classNamed: change superclassName).
 	newClass superclass
-		ifNil: [ self rootClasses add: newClass.
-			newClass classSide superclass: ( self classFor: Object class superclass )
-			]
+		ifNil: [
+			self rootClasses add: newClass.
+			newClass classSide superclass: (self classFor: Object class superclass) ]
 		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
 	self flag: #refacto. "We shoult let the change create and fill the RB class IMO."
-	newClass instanceVariableNames: (change instanceVariableNames ifNil: ['']).
-	newClass classVariableNames: (change classVariableNames ifNil: ['']).
-	newClass poolDictionaryNames: (change sharedPoolNames ifNil: ['']).
+	newClass instanceVariableNames: (change instanceVariableNames ifNil: [ '' ]).
+	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
+	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
+	change comment ifNotNil: [ :comment | newClass comment: comment ].
 	newClass category: change category.
-	^ change
-]
-
-{ #category : 'changes' }
-RBNamespace >> defineClass: aString withComment: aCommentString [
-
-	| change newClass |
-	change := self defineClass: aString.
-	newClass := self classNamed: change changeClassName.
-	newClass comment: aCommentString.
 	^ change
 ]
 

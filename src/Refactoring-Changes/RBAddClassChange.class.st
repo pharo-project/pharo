@@ -109,6 +109,13 @@ RBAddClassChange >> classVariableNames [
 	^ classVariableNames ifNil: [ builder ifNotNil: [ builder sharedVariables collect: [ :slot | slot name ] ] ]
 ]
 
+{ #category : 'accessing' }
+RBAddClassChange >> comment [
+
+	self flag: #refacto. "remove var + ifNotNil:"
+	^ builder ifNotNil: [ builder comment ]
+]
+
 { #category : 'private' }
 RBAddClassChange >> definitionClass [
 
