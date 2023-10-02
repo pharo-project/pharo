@@ -63,7 +63,7 @@ RBExtractToTemporaryRefactoring >> compileNewMethod [
 RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	| valueNode |
 	valueNode := RBVariableNode named: newVariableName.
-	^RBAssignmentNode variable: valueNode value: aNode
+	^RBAssignmentNode variable: valueNode value: aNode copy.
 ]
 
 { #category : 'initialization' }
@@ -76,21 +76,19 @@ RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelect
 
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> insertTemporary [
-	| node statementNode nodeReferences children |
+
+	| node statementNode nodeReferences |
 	node := self parseTree whichNodeIsContainedBy: sourceInterval.
-	(node notNil and: [ node isValue ])
-		ifFalse: [ self refactoringError: 'Cannot assign to non-value nodes' ].
-	children := self parseTree body allChildren.
-	nodeReferences := children select: [ :each | each = node ] thenCollect: [ :each | each ].
+	(node notNil and: [ node isValue ]) ifFalse: [
+		self refactoringError: 'Cannot assign to non-value nodes' ].
+	nodeReferences := node methodOrBlockNode allChildren select: [ :each |
+		                  each = node ].
 	statementNode := node statementNode.
-	nodeReferences do: [ :each | each replaceWith: (RBVariableNode named: newVariableName) ].
 	statementNode parent
-		addNode: (self constructAssignmentFrom: node)
-			before:
-				(node == statementNode
-						ifTrue: [ RBVariableNode named: newVariableName ]
-						ifFalse: [ statementNode ]);
-		addTemporaryNamed: newVariableName
+		addNode: (self constructAssignmentFrom: node) before: statementNode;
+		addTemporaryNamed: newVariableName.
+	nodeReferences do: [ :each |
+		each replaceWith: (RBVariableNode named: newVariableName) ]
 ]
 
 { #category : 'private - accessing' }

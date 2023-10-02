@@ -73,7 +73,7 @@ RBExtractToTemporaryTransformation >> checkVariableName [
 RBExtractToTemporaryTransformation >> constructAssignmentFrom: aNode [
 	| valueNode |
 	valueNode := RBVariableNode named: newVariableName.
-	^RBAssignmentNode variable: valueNode value: aNode
+	^RBAssignmentNode variable: valueNode value: aNode copy.
 ]
 
 { #category : 'api' }
@@ -86,21 +86,19 @@ RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSel
 
 { #category : 'executing' }
 RBExtractToTemporaryTransformation >> insertTemporary [
-	^ {RBCustomTransformation
-	model: self model
-	with: [ :rbMode | | node statementNode nodeReferences  |
-	node := self nodeContainedBy: sourceInterval.
-	nodeReferences := self referencesTo: node.
-	statementNode := node statementNode.
-	nodeReferences do: [ :each | each replaceWith: (RBVariableNode named: newVariableName) ].
-	statementNode parent
-		addNode: (self constructAssignmentFrom: node)
-			before:
-				(node == statementNode
-						ifTrue: [ RBVariableNode named: newVariableName ]
-						ifFalse: [ statementNode ]);
-		addTemporaryNamed: newVariableName.
-		class compileTree: self parseTree]}
+
+	^ { (RBCustomTransformation model: self model with: [ :rbMode |
+		   | node statementNode nodeReferences |
+		   node := self nodeContainedBy: sourceInterval.
+		   nodeReferences := self referencesTo: node.
+		   statementNode := node statementNode.
+		   statementNode parent
+			   addNode: (self constructAssignmentFrom: node)
+			   before: statementNode;
+			   addTemporaryNamed: newVariableName.
+		   nodeReferences do: [ :each |
+			   each replaceWith: (RBVariableNode named: newVariableName) ].
+		   class compileTree: self parseTree ]) }
 ]
 
 { #category : 'accessing' }
@@ -125,9 +123,8 @@ RBExtractToTemporaryTransformation >> parseTree [
 
 { #category : 'accessing' }
 RBExtractToTemporaryTransformation >> referencesTo: aNode [
-	| children |
-	children := self parseTree body allChildren.
-	^ children select: [ :each | each = aNode ]
+
+	^ aNode methodOrBlockNode allChildren select: [ :each | each = aNode ]
 ]
 
 { #category : 'accessing' }
