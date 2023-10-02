@@ -33,12 +33,25 @@ RBChildrenToSiblingsParametrizedTest >> setUp [
 				            class := Smalltalk at: each ifAbsent: [ nil ].
 				            class notNil ifTrue: [ sum add: class class ].
 				            sum ])) not) name: 'Test'.
-	#( 'ConcreteSuperclass << #NoMoveSubclass
-	package: ''Testing''' 'Object << #ConcreteSuperclass
-	slots: {#instVarName1 . #instVarName2}; 
-	sharedVariables: { #ClassVarName1 . #ClassVarName2}; 
-	package: ''Testing''' 'ConcreteSuperclass << #ConcreteSubclass
-	package: ''Testing''' ) do: [ :each | model defineClass: each ].
+
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #ConcreteSuperclass;
+				slots: { #instVarName1. #instVarName2 };
+				sharedVariables: { #ClassVarName1. #ClassVarName2 };
+				package: #Testing ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #ConcreteSuperclass;
+				name: #ConcreteSubclass;
+				package: #Testing ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #ConcreteSuperclass;
+				name: #NoMoveSubclass;
+				package: #Testing ].
 	(model metaclassNamed: #ConcreteSuperclass) addInstanceVariable: 'classInstVarName1'.
 	#( #( #ConcreteSubclass #( #( 'initialize
 	super initialize.
