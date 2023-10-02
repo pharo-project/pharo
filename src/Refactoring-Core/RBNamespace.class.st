@@ -343,10 +343,10 @@ RBNamespace >> createNewPackageFor: aPackage [
 ]
 
 { #category : 'changes' }
-RBNamespace >> defineClass: aString [
+RBNamespace >> defineClass: aBlock [
 
 	| change newClass newClassName |
-	change := changes defineClass: aString.
+	change := changes defineClass: aBlock.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
 	newClass ifNil: [

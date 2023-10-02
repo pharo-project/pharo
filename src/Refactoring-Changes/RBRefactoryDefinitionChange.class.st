@@ -19,58 +19,15 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBRefactoryDefinitionChange class >> definition: aString [
-
-	| parseTree context |
-	1halt..
-	parseTree := RBParser
-		             parseExpression: aString
-		             onError: [ :err :pos |
-		             ^ self error: 'Invalid definition string' ].
-	context := SmallDictionary new.
-	RBRefactoryDefinitionChange allSubclassesDo: [ :class |
-		class definitionPatterns do: [ :pattern |
-			((RBParser parseRewriteExpression: pattern)
-				 match: parseTree
-				 inContext: context empty) ifTrue: [
-				^ class definition: aString context: context ] ] ].
-	^ self error: 'Invalid definition:' , aString
-]
-
-{ #category : 'private' }
-RBRefactoryDefinitionChange class >> definition: aString context: aDictionary [
-
-	| dictionary |
-	dictionary := SmallDictionary new.
-	aDictionary keysAndValuesDo: [ :key :node |
-		dictionary at: key formattedCode put: (node isVariable
-				 ifTrue: [ node name ]
-				 ifFalse: [
-					 node isLiteralNode
-						 ifTrue: [ node value ]
-						 ifFalse: [ node ] ]) ].
-	^ self new
-		  definition: aString;
-		  fillOutDefinition: dictionary;
-		  yourself
-]
-
-{ #category : 'private' }
-RBRefactoryDefinitionChange class >> definitionPatterns [
-
-	self subclassResponsibility
-]
-
-{ #category : 'instance creation' }
 RBRefactoryDefinitionChange class >> make: aBlock [
 
 	| builder |
 	builder := ShiftClassBuilder new.
-	self flag: #refacto. "Manage errors"
+
 	[ aBlock value: builder ]
 		on: Warning
 		do: [ :e | e resume ].
-	self flag: #refacto. "Dispatch to the right subclass."
+
 	^ self new
 		  builder: builder;
 		  yourself
@@ -79,8 +36,7 @@ RBRefactoryDefinitionChange class >> make: aBlock [
 { #category : 'comparing' }
 RBRefactoryDefinitionChange >> = aDefinitionChange [
 
-	^ self class = aDefinitionChange class and: [
-		  self definition = aDefinitionChange definition ]
+	^ self class = aDefinitionChange class and: [ self builder = aDefinitionChange builder ]
 ]
 
 { #category : 'accessing' }
@@ -115,21 +71,8 @@ RBRefactoryDefinitionChange >> definition [
 	^ definition
 ]
 
-{ #category : 'initialization' }
-RBRefactoryDefinitionChange >> definition: aString [
-
-	isMeta := false.
-	definition := aString
-]
-
 { #category : 'private' }
 RBRefactoryDefinitionChange >> definitionClass [
-
-	self subclassResponsibility
-]
-
-{ #category : 'initialization' }
-RBRefactoryDefinitionChange >> fillOutDefinition: aDictionary [
 
 	self subclassResponsibility
 ]
@@ -137,16 +80,13 @@ RBRefactoryDefinitionChange >> fillOutDefinition: aDictionary [
 { #category : 'private' }
 RBRefactoryDefinitionChange >> generateChanges [
 
-	self flag: #refacto.
-	definedClass := self definition
-		                ifNil: [ self class classInstaller new makeWithBuilder: self builder ]
-		                ifNotNil: [ self definitionClass environment defineClass: self definition ]
+	definedClass := self class classInstaller new makeWithBuilder: self builder
 ]
 
 { #category : 'comparing' }
 RBRefactoryDefinitionChange >> hash [
 
-	^ definition hash
+	^ builder hash
 ]
 
 { #category : 'private' }

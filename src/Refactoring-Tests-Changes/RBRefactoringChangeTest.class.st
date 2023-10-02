@@ -273,12 +273,15 @@ RBRefactoringChangeTest >> testComposite [
 
 { #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClass [
-	
+
 	| change |
-	change := changes defineClass: 'Object << #' , self changeMockClass name , 'Temporary
-	package: ''' , self class category , ''''.
+	change := changes defineClass: [ :aBuilder |
+		          aBuilder
+			          superclass: Object;
+			          name: self changeMockClass name , 'Temporary';
+			          package: self class package name ].
 	self performAndUndoChange: change do: [
-		self assert: (workingEnvironment  hasClassNamed: change changeClassName).
+		self assert: (workingEnvironment hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
 		self assert: change definedClass isBehavior ].
 	self deny: (workingEnvironment hasClassNamed: change changeClassName).
@@ -298,8 +301,11 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInstanceVariable [
 RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
 
 	| change |
-	change := changeFactory addClassDefinition: 'Object << #' , self changeMockClass name , 'Temporary
-	package: ''' , self class category , ''''.
+	change := changeFactory addClassDefinition: [ :aBuilder |
+		          aBuilder
+			          superclass: Object;
+			          name: self changeMockClass name , 'Temporary';
+			          package: self class package name ].
 	self performAndUndoChange: change do: [
 		self assert: (workingEnvironment hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
@@ -359,20 +365,31 @@ RBRefactoringChangeTest >> testPerformAddRemoveMethodInteractively [
 RBRefactoringChangeTest >> testPerformChangeClass [
 
 	| change |
-	change := changes
-		defineClass:
-			self class name , ' << #' , self changeMockClass name
-				,
-					'
-	package: ''' , self class category , ''''.
-	self
-		performAndUndoChange: change
-		do: [ self assert: change changeClass superclass equals: self class.
-			self assertEmpty: change changeClass instVarNames.
-			self assertEmpty: change changeClass classVarNames.  ].
+	change := changes defineClass: [ :aBuilder |
+		          aBuilder
+			          superclass: self class;
+			          name: self changeMockClass name;
+			          package: self class package name ].
+	self performAndUndoChange: change do: [
+		self assert: change changeClass superclass equals: self class.
+		self assertEmpty: change changeClass instVarNames.
+		self assertEmpty: change changeClass classVarNames ].
 	self assert: change changeClass superclass equals: Object.
 	self denyEmpty: change changeClass instVarNames.
-	self denyEmpty: change changeClass classVarNames. 
+	self denyEmpty: change changeClass classVarNames.
+	self assert: change definedClass equals: self changeMockClass
+]
+
+{ #category : 'tests - perform' }
+RBRefactoringChangeTest >> testPerformChangeClassInstanceVariables [
+
+	| change |
+	change := changes defineClass: [ :aBuilder |
+		          aBuilder
+			          fillFor: self changeMockClass;
+			          classSlots: {  } ].
+	self performAndUndoChange: change do: [ self assertEmpty: change changeClass class instVarNames ].
+	self denyEmpty: change changeClass class instVarNames.
 	self assert: change definedClass equals: self changeMockClass
 ]
 
@@ -384,19 +401,6 @@ RBRefactoringChangeTest >> testPerformChangeComment [
 	comment := change changeClass comment.
 	self performAndUndoChange: change do: [ self assert: change changeClass comment equals: 'Some Comment' ].
 	self assert: change changeClass comment equals: comment
-]
-
-{ #category : 'tests - perform' }
-RBRefactoringChangeTest >> testPerformChangeMetaclass [
-	| change |
-	change := changes
-		defineClass:
-			self changeMockClass name
-				,
-					' class instanceVariableNames: '''''.
-	self performAndUndoChange: change do: [ self assertEmpty: change changeClass class instVarNames ].
-	self denyEmpty: change changeClass class instVarNames.
-	self assert: change definedClass equals: self changeMockClass class
 ]
 
 { #category : 'tests - perform' }

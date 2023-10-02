@@ -19,10 +19,7 @@ RBRefactoryChangeFactory class >> instance [
 { #category : 'refactory changes - classes' }
 RBRefactoryChangeFactory >> addClassDefinition: definition [
 
-	self flag: #refacto.
-	^ definition isString
-		  ifTrue: [ RBAddClassChange definition: definition ]
-		  ifFalse: [ RBAddClassChange make: definition ]
+	^ RBAddClassChange make: definition
 ]
 
 { #category : 'refactory changes - variables' }
@@ -62,12 +59,6 @@ RBRefactoryChangeFactory >> addPackageNamed: aString [
 RBRefactoryChangeFactory >> addPoolVariable: variableName to: aClass [
 
 	^ RBAddPoolVariableChange add: variableName to: aClass
-]
-
-{ #category : 'refactory changes - classes' }
-RBRefactoryChangeFactory >> addTraitDefinition: definition [
-
-	^ RBAddTraitChange definition: definition
 ]
 
 { #category : 'refactory changes - classes' }
