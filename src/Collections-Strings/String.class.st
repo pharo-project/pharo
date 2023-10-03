@@ -98,11 +98,11 @@ Class {
 		'CSSeparators',
 		'CaseInsensitiveOrder',
 		'CaseSensitiveOrder',
-		'InitialHash',
 		'LowercasingTable',
 		'Tokenish',
 		'TypeTable',
-		'UppercasingTable'
+		'UppercasingTable',
+		'InitialHash'
 	],
 	#category : #'Collections-Strings-Base'
 }
