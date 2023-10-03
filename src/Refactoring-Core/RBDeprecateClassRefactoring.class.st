@@ -69,10 +69,10 @@ RBDeprecateClassRefactoring >> convertDeprecatedToSubclass [
 	self model reparentClasses: {deprecatedClass} to: replacement.
 	deprecatedClass selectors do: [ :symbol |
 		(deprecatedClass realClass instanceSide compiledMethodAt: symbol) isExtension
-			ifFalse: [ deprecatedClass removeMethod: symbol ] ].
+			ifFalse: [ self removeMethod: symbol from: deprecatedClass ] ].
 	deprecatedClass classSide selectors do: [ :symbol |
 		(deprecatedClass realClass classSide compiledMethodAt: symbol) isExtension
-			ifFalse: [ deprecatedClass classSide removeMethod: symbol ] ].
+			ifFalse: [ self removeMethod: symbol from: deprecatedClass classSide ] ].
 	self addMethod: 'isDeprecated
 		" Uses ', newName, ' instead of ', className,'"
 		^ true'
@@ -152,10 +152,19 @@ RBDeprecateClassRefactoring >> privateTransform [
 RBDeprecateClassRefactoring >> removeExtensionMethods [
 
 	(self instanceSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | deprecatedClass instanceSide removeMethod: each selector ].
+		do: [ :each | self removeMethod: each selector from: deprecatedClass instanceSide ].
 
 	(self classSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | deprecatedClass classSide removeMethod: each selector ]
+		do: [ :each | self removeMethod: each selector from: deprecatedClass classSide ]
+]
+
+{ #category : 'removing' }
+RBDeprecateClassRefactoring >> removeMethod: selector from: aRBClass [
+
+	self generateChangesFor:
+		(RBRemoveMethodTransformation
+			selector: selector
+			from: aRBClass)
 ]
 
 { #category : 'transforming' }

@@ -102,7 +102,7 @@ RBMoveMethodToClassSideTransformation >> parseTree [
 	^ parseTree doSemanticAnalysis
 ]
 
-{ #category : 'refactoring' }
+{ #category : 'transforming' }
 RBMoveMethodToClassSideTransformation >> privateTransform [
 	| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
@@ -114,7 +114,7 @@ RBMoveMethodToClassSideTransformation >> privateTransform [
 	newSource2 := self getNewSource.
 	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
 	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
-	oldClass removeMethod: method selector.
+	self removeMethod: method selector from: oldClass.
 	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
 	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
 ]
@@ -135,6 +135,15 @@ RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 			            getter: accessorsRefactoring getterMethod
 			            setter: accessorsRefactoring setterMethod.
 		self convertMethod: method selector for: class using: replacer ]
+]
+
+{ #category : 'transforming' }
+RBMoveMethodToClassSideTransformation >> removeMethod: aSelector from: aRBClass [
+
+	(RBRemoveMethodTransformation
+		model: self model
+		selector: aSelector
+		from: aRBClass ) generateChanges
 ]
 
 { #category : 'refactoring' }
