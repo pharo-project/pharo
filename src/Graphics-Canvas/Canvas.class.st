@@ -733,22 +733,3 @@ Canvas >> translucentImage: aForm at: aPoint sourceRect: sourceRect [
 		sourceRect: sourceRect
 		rule: Form blend
 ]
-
-{ #category : 'drawing - images' }
-Canvas >> warpImage: aForm transform: aTransform [
-	"Warp the given form using aTransform"
-	^self warpImage: aForm transform: aTransform at: 0@0
-]
-
-{ #category : 'drawing - images' }
-Canvas >> warpImage: aForm transform: aTransform at: extraOffset [
-	"Warp the given form using aTransform.
-	TODO: Use transform to figure out appropriate cell size"
-	^self warpImage: aForm transform: aTransform at: extraOffset sourceRect: aForm boundingBox cellSize: 1
-]
-
-{ #category : 'drawing - images' }
-Canvas >> warpImage: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
-	"Warp the given using the appropriate transform and offset."
-	^self subclassResponsibility
-]
