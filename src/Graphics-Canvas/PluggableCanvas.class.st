@@ -116,12 +116,6 @@ PluggableCanvas >> flush [
 		c flush ]
 ]
 
-{ #category : 'other' }
-PluggableCanvas >> flushDisplay [
-	self apply: [ :c |
-		c flushDisplay ]
-]
-
 { #category : 'drawing - rectangles' }
 PluggableCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	self apply: [ :c |

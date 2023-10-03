@@ -364,12 +364,6 @@ FormCanvas >> flush [
 	engine ifNotNil:[engine flush]
 ]
 
-{ #category : 'other' }
-FormCanvas >> flushDisplay [
-
-	Display deferUpdates: false
-]
-
 { #category : 'accessing' }
 FormCanvas >> form [
 

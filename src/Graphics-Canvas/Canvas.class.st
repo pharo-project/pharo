@@ -255,11 +255,6 @@ Canvas >> finish [
 Canvas >> flush [
 ]
 
-{ #category : 'other' }
-Canvas >> flushDisplay [
-	"Empty hook method."
-]
-
 { #category : 'accessing' }
 Canvas >> form [
 
