@@ -58,12 +58,12 @@ RBChildrenToSiblingsRefactoring >> abstractSuperclass [
 
 { #category : 'transforming' }
 RBChildrenToSiblingsRefactoring >> addSuperclass [
-	self generateChangesFor: (RBInsertNewClassRefactoring
-				model: self model
-				addClass: className
-				superclass: parent superclass
-				subclasses: (Array with: parent)
-				category: parent category)
+
+	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
+			 superclass: parent superclass;
+			 subclasses: { parent };
+			 category: parent category;
+			 yourself)
 ]
 
 { #category : 'transforming' }

@@ -11,13 +11,10 @@ Class {
 { #category : 'executing' }
 SycCmAddSubclassCommand >> executeRefactoring [
 
-	| refactoring |
-	refactoring := RBInsertNewClassRefactoring
-		addClass: newClassName
-		superclass: targetClass asString
-		subclasses:  #()
-		category: targetClass category.
-	refactoring execute.
+	(RBInsertNewClassRefactoring className: newClassName)
+		superclass: targetClass asString;
+		category: targetClass category;
+		execute
 ]
 
 { #category : 'accessing' }

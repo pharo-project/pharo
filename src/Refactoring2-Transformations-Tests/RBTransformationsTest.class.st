@@ -129,31 +129,20 @@ RBTransformationsTest >> testCompositeTransform [
 
 	| transformation newClassName class |
 	newClassName := (self changeMockClass name , 'Temporary') asSymbol.
-	transformation := RBCompositeTransformation new transformations:
-		                  (OrderedCollection new
-			                   add: (RBInsertNewClassTransformation
-					                    addClass: newClassName
-					                    superclass: #Object
-					                    subclasses: #(  )
+	transformation := RBCompositeTransformation new transformations: (OrderedCollection new
+			                   add: ((RBInsertNewClassTransformation className: newClassName)
+					                    superclass: #Object;
 					                    category: self class category);
-			                   add: (RBAddVariableTransformation
-					                    instanceVariable: 'asdf'
-					                    class: newClassName);
-			                   add: (RBAddMethodTransformation
-					                    sourceCode: 'printString1 ^super printString'
-					                    in: newClassName
-					                    withProtocol: #accessing );
+			                   add: (RBAddVariableTransformation instanceVariable: 'asdf' class: newClassName);
+			                   add: (RBAddMethodTransformation sourceCode: 'printString1 ^super printString' in: newClassName withProtocol: #accessing);
 			                   yourself).
 	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 3.
 
-	class := transformation model classNamed:
-		         (self changeMockClass name , 'Temporary').
+	class := transformation model classNamed: self changeMockClass name , 'Temporary'.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
-	self
-		assert: (class parseTreeForSelector: #printString1)
-		equals: (self parseMethod: 'printString1 ^super printString')
+	self assert: (class parseTreeForSelector: #printString1) equals: (self parseMethod: 'printString1 ^super printString')
 ]
 
 { #category : 'tests' }

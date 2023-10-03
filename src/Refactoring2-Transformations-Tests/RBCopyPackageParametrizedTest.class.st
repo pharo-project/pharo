@@ -25,11 +25,10 @@ RBCopyPackageParametrizedTest >> setUp [
 	model := self defaultNamespaceClass new.
 
 	#( #RBFTTest1 #RBFTTest2 ) do: [ :className |
-		(RBInsertNewClassTransformation
-			 addClass: className
-			 superclass: #Object
-			 subclasses: #(  )
-			 category: #RefactoringSmallPackageForTest) execute ].
+		(RBInsertNewClassTransformation className: className)
+			superclass: #Object;
+			category: #RefactoringSmallPackageForTest;
+			execute ].
 
 	(RBAddMethodTransformation
 		 sourceCode: 'foo

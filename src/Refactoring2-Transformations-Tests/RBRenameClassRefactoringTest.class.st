@@ -136,25 +136,17 @@ rename class B to A
 	classA := ('RBClass' , 'ToRename') asSymbol.
 	classB := 'TestUnmarkClassRenameSource' asSymbol.
 	classC := 'TestUnmarkClassRenameTarget' asSymbol.
-	addClass := RBInsertNewClassTransformation
-		            model: model
-		            addClass: classB
-		            superclass: #Object
-		            subclasses: {  }
-		            category: self class package name.
+	addClass := (RBInsertNewClassTransformation model: model className: classB)
+		            superclass: #Object;
+		            category: self class package name;
+		            yourself.
 	addClass generateChanges.
 	self assert: (model includesClassNamed: classA).
-	renameClass := RBRenameClassRefactoring
-							model: model
-		               rename: classA
-							to: classC.
+	renameClass := RBRenameClassRefactoring model: model rename: classA to: classC.
 	renameClass generateChanges.
 	self deny: (model includesClassNamed: classA).
 	self assert: (model includesClassNamed: classC).
-	renameClass := RBRenameClassRefactoring
-							model: model
-		               rename: classB
-				         to: classA.
+	renameClass := RBRenameClassRefactoring model: model rename: classB to: classA.
 	renameClass generateChanges.
 	self deny: (model includesClassNamed: classB).
 	self assert: (model includesClassNamed: classC).

@@ -32,48 +32,6 @@ Class {
 	#tag : 'Model-Unused'
 }
 
-{ #category : 'instance creation' }
-RBInsertNewClassTransformation class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-
-	^ self new
-		addClass: aName
-		superclass: aClass
-		subclasses: aCollection
-		category: aSymbol;
-		yourself
-]
-
-{ #category : 'instance creation' }
-RBInsertNewClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-
-	^ self new
-		model: aRBSmalltalk;
-		addClass: aName
-			superclass: aClass
-			subclasses: aCollection
-			category: aSymbol;
-		yourself
-]
-
-{ #category : 'api' }
-RBInsertNewClassTransformation >> addClass: aName superclass: aClass category: aSymbol [
-
-	self
-		addClass: aName
-		superclass: aClass asSymbol
-		subclasses: (OrderedCollection new)
-		category: aSymbol
-]
-
-{ #category : 'api' }
-RBInsertNewClassTransformation >> addClass: aName superclass: superclassName subclasses: aCollection category: aSymbol [
-
-	self className: aName.
-	superclass := superclassName asSymbol.
-	subclasses := aCollection.
-	category := aSymbol asSymbol
-]
-
 { #category : 'preconditions' }
 RBInsertNewClassTransformation >> applicabilityPreconditions [
 	"Superclass and subclasses shouldn't be metaclasses.
@@ -96,6 +54,25 @@ RBInsertNewClassTransformation >> applicabilityPreconditions [
 	  & (RBCondition isSymbol: category)
 	  & ((RBCondition withBlock: [ category isNotEmpty ]) errorMacro:
 			   'Invalid category name')
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassTransformation >> category [
+
+	^ category
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassTransformation >> category: anObject [
+
+	category := anObject
+]
+
+{ #category : 'initialization' }
+RBInsertNewClassTransformation >> initialize [
+
+	super initialize.
+	subclasses := #(  )
 ]
 
 { #category : 'preconditions' }
@@ -137,4 +114,16 @@ RBInsertNewClassTransformation >> storeOn: aStream [
 	aStream nextPutAll: ' category: '.
 	category storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : 'api' }
+RBInsertNewClassTransformation >> subclasses: aCollection [
+
+	subclasses := aCollection
+]
+
+{ #category : 'api' }
+RBInsertNewClassTransformation >> superclass: superclassName [
+
+	superclass := superclassName asSymbol
 ]

@@ -59,13 +59,12 @@ RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: 
 
 { #category : 'transforming' }
 RBCopyClassRefactoring >> copyClass [
-	self generateChangesFor: (RBInsertNewClassRefactoring
-		model: self model
-		addClass: className
-		superclass: aClass superclass
-		subclasses: #()
-		category: self packageName
-		comment: aClass comment)
+
+	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
+			 superclass: aClass superclass;
+			 category: self packageName;
+			 comment: aClass comment;
+			 yourself)
 ]
 
 { #category : 'copying' }

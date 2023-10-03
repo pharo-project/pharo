@@ -22,70 +22,46 @@ Class {
 	#tag : 'Refactorings'
 }
 
-{ #category : 'instance creation' }
-RBInsertNewClassRefactoring class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-	^ self new
-		addClass: aName
-		superclass: aClass
-		subclasses: aCollection
-		category: aSymbol
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> category [
+
+	^ category
 ]
 
-{ #category : 'instance creation' }
-RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-	^ self new
-		model: aRBSmalltalk;
-		addClass: aName
-			superclass: aClass
-			subclasses: aCollection
-			category: aSymbol;
-		yourself
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> category: anObject [
+
+	category := anObject
 ]
 
-{ #category : 'instance creation' }
-RBInsertNewClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
-	^ self new
-		model: aRBSmalltalk;
-		addClass: aName
-			superclass: aClass
-			subclasses: aCollection
-			category: aSymbol
-			comment: aCommentString;
-		yourself
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> comment [
+
+	^ comment
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> comment: aString [
+	comment := aString
 ]
 
 { #category : 'initialization' }
-RBInsertNewClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-	self addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: ''
-	
-]
+RBInsertNewClassRefactoring >> initialize [
 
-{ #category : 'initialization' }
-RBInsertNewClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol comment: aCommentString [
-	self className: aName.
-	superclass := self classObjectFor: aClass.
-	subclasses := aCollection collect: [:each | self classObjectFor: each].
-	category := aSymbol.
-	comment := aCommentString
+	super initialize.
+	subclasses := #(  )
 ]
 
 { #category : 'preconditions' }
 RBInsertNewClassRefactoring >> preconditions [
+
 	| cond |
-	cond := ((RBCondition isMetaclass: superclass)
-				errorMacro: 'Superclass must not be a metaclass') not.
-	cond := subclasses inject: cond
-				into:
-					[:sub :each |
-					sub
-						& ((RBCondition isMetaclass: each)
-								errorMacro: 'Subclass must <1?not :>be a metaclass') not
-							& (RBCondition isImmediateSubclass: each of: superclass)].
-	^cond & (RBCondition isValidClassName: className)
-		& (RBCondition isGlobal: className in: self model) not
-			& (RBCondition isSymbol: category)
-			& ((RBCondition withBlock: [category isNotEmpty ])
-					errorMacro: 'Invalid category name')
+	cond := ((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must not be a metaclass') not.
+	cond := subclasses inject: cond into: [ :sub :each |
+		        sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
+		        & (RBCondition isImmediateSubclass: each of: superclass) ].
+	^ cond & (RBCondition isValidClassName: className) & (RBCondition isGlobal: className in: self model) not & (RBCondition isSymbol: category)
+	  & ((RBCondition withBlock: [ category isNotEmpty ]) errorMacro: 'Invalid category name')
 ]
 
 { #category : 'transforming' }
@@ -96,8 +72,8 @@ RBInsertNewClassRefactoring >> privateTransform [
 			aBuilder
 				superclass: superclass;
 				name: className;
-				package: category;
-				comment: comment ];
+				package: self category;
+				comment: self comment ];
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
@@ -115,4 +91,16 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 	aStream nextPutAll: ' category: '.
 	category storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : 'initialization' }
+RBInsertNewClassRefactoring >> subclasses: aCollection [
+
+	subclasses := aCollection collect: [ :each | self classObjectFor: each ]
+]
+
+{ #category : 'initialization' }
+RBInsertNewClassRefactoring >> superclass: aClass [
+
+	superclass := self classObjectFor: aClass
 ]

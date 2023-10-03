@@ -15,6 +15,23 @@ Class {
 }
 
 { #category : 'accessing' }
+RBClassTransformation class >> className: aString [
+
+	^ self new
+		  className: aString;
+		  yourself
+]
+
+{ #category : 'accessing' }
+RBClassTransformation class >> model: aRBNamespace className: aString [
+
+	^ self new
+		  model: aRBNamespace;
+		  className: aString;
+		  yourself
+]
+
+{ #category : 'accessing' }
 RBClassTransformation >> className [
 	self flag: #popUp.
 	^ className ifNil: [
