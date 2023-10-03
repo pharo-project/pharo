@@ -18,8 +18,7 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
-		'packageName',
-		'tagName'
+		'packageName'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',

@@ -187,7 +187,9 @@ RBRefactoringChangeTest >> testAddTraitPattern [
 		change := changes defineClass: [ :aBuilder | aBuilder fillFor: trait ].
 		self assert: change changeClassName equals: trait name.
 		self assert: change package equals: trait package name.
-		self assert: change tag equals: trait packageTag name.
+		self assert: change tag equals: (trait packageTag isRoot
+				 ifTrue: [ nil ]
+				 ifFalse: [ trait packageTag name ]).
 		self universalTestFor: change ]
 ]
 

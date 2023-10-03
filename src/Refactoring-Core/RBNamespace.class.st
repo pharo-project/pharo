@@ -311,22 +311,22 @@ RBNamespace >> convertClasses: classSet select: aBlock using: searchReplacer [
 
 { #category : 'accessing - classes' }
 RBNamespace >> createNewClassFor: aBehavior [
+
 	| nonMeta meta className rbType rbMetaType |
 	className := aBehavior instanceSide name.
 	aBehavior isTrait
 		ifTrue: [
 			rbType := modelFactory rbTrait.
-			rbMetaType := modelFactory rbTraitMetaclass.
-		] ifFalse: [
+			rbMetaType := modelFactory rbTraitMetaclass ]
+		ifFalse: [
 			rbType := modelFactory rbClass.
-			rbMetaType := modelFactory rbMetaclass.
-		].
+			rbMetaType := modelFactory rbMetaclass ].
 	nonMeta := rbType existingNamed: className model: self.
 	meta := rbMetaType existingNamed: className model: self.
 	nonMeta packageName: aBehavior package name.
 	self flag: #package. "In the future we should have the undefined tag"
-	nonMeta tagName: (aBehavior packageTag ifNotNil: [ :tag | tag name ]).
-	^changedClasses at: className put: (Array with: nonMeta with: meta)
+	aBehavior packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ nonMeta tagName: tag name ] ].
+	^ changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
 { #category : 'accessing - classes' }
