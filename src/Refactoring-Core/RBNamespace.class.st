@@ -220,12 +220,6 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 				do: [:sel | aBlock value: (each methodFor: sel)]]
 ]
 
-{ #category : 'accessing' }
-RBNamespace >> category: aString for: aClass [
-
-	^ changes addChange: (RBClassCategoryChange category: aString for: aClass)
-]
-
 { #category : 'private - changes' }
 RBNamespace >> changeClass: aRBClass [
 	changedClasses
@@ -690,6 +684,12 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 	dict at: aSymbol put: value.
 	value first name: aSymbol.
 	^ change
+]
+
+{ #category : 'accessing' }
+RBNamespace >> repackage: aClass in: aPackage tag: aTag [
+
+	^ changes addChange: (RBClassRepackagingChange repackage: aClass in: aPackage tag: aTag)
 ]
 
 { #category : 'changes' }

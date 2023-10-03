@@ -60,14 +60,6 @@ RBMoveClassTransformation >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBMoveClassTransformation >> category [
-
-	^ self tagName
-		  ifNil: [ self packageName ]
-		  ifNotNil: [ self packageName , '-' , tagName ]
-]
-
-{ #category : 'preconditions' }
 RBMoveClassTransformation >> classExist [
 
 	^ RBCondition
@@ -91,11 +83,10 @@ RBMoveClassTransformation >> packageName: anObject [
 { #category : 'executing' }
 RBMoveClassTransformation >> privateTransform [
 
-	self flag: #package. "This should use the package and tag API."
 	self definingClass
 		packageName: self packageName;
 		tagName: self tagName.
-	self model category: self category for: self definingClass
+	self model repackage: self definingClass in: self packageName tag: self tagName
 ]
 
 { #category : 'printing' }
