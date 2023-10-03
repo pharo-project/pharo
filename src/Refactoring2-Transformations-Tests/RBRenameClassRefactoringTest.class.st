@@ -33,38 +33,41 @@ RBRenameClassRefactoringTest >> testFailureMetaClassFailure [
 { #category : 'tests' }
 RBRenameClassRefactoringTest >> testModelRenameSequenceClass [
 
-	model defineClass: 'Object << #Foo1
-			package: #''Refactory-Test data'''.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #Foo1;
+			package: #'Refactory-Test data' ].
 	(model classNamed: #Foo1)
-		compile: 'foo	 ^ Foo1' classified: #(accessing);
-		compile: 'objectName ^ #(Foo1)' classified: #(accessing).
+		compile: 'foo	 ^ Foo1' classified: #( accessing );
+		compile: 'objectName ^ #(Foo1)' classified: #( accessing ).
 
-	
-	(RBRenameClassRefactoring model: model rename: #Foo1 to: #Foo2 )
-		generateChanges.
-	(RBRenameClassRefactoring model: model rename: #Foo2 to: #Foo3 )
-		generateChanges.
+
+	(RBRenameClassRefactoring model: model rename: #Foo1 to: #Foo2) generateChanges.
+	(RBRenameClassRefactoring model: model rename: #Foo2 to: #Foo3) generateChanges.
 
 	self deny: (model includesClassNamed: #Foo1).
 	self deny: (model includesClassNamed: #Foo2).
 	self assert: (model includesClassNamed: #Foo3).
-	self assert: ((model classNamed: #Foo3) parseTreeForSelector: #foo)
-		  equals: (self parseMethod: 'foo ^ Foo3').
-	self assert: ((model classNamed: #Foo3) parseTreeForSelector: #objectName)
-		  equals: (self parseMethod: 'objectName ^ #(Foo3)')
+	self assert: ((model classNamed: #Foo3) parseTreeForSelector: #foo) equals: (self parseMethod: 'foo ^ Foo3').
+	self assert: ((model classNamed: #Foo3) parseTreeForSelector: #objectName) equals: (self parseMethod: 'objectName ^ #(Foo3)')
 ]
 
 { #category : 'tests' }
 RBRenameClassRefactoringTest >> testRefactoring [
 
 	| refactoring class |
-	model 	defineClass: 'Object << #Foo
-		slots: { #a };
-		package: #''Refactoring2-Refactorings-Tests'''.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #Foo;
+			slots: { #a };
+			package: #'Refactoring2-Refactorings-Tests' ].
 
 	class := model classNamed: #Foo.
-	class compile: 'foo	^Object' classified: #(#accessing);
-			compile: 'objectName ^#(Object)' classified: #(#accessing).
+	class
+		compile: 'foo	^Object' classified: #( #accessing );
+		compile: 'objectName ^#(Object)' classified: #( #accessing ).
 
 	refactoring := RBRenameClassRefactoring model: model rename: #Object to: #Thing.
 
@@ -72,10 +75,8 @@ RBRenameClassRefactoringTest >> testRefactoring [
 
 	self assert: (model includesClassNamed: #Thing).
 	self deny: (model includesClassNamed: #Object).
-	self assert: (class parseTreeForSelector: #foo)
-		  equals: (self parseMethod: 'foo ^Thing').
-	self assert: (class parseTreeForSelector: #objectName)
-		  equals: (self parseMethod: 'objectName ^#(Thing)').
+	self assert: (class parseTreeForSelector: #foo) equals: (self parseMethod: 'foo ^Thing').
+	self assert: (class parseTreeForSelector: #objectName) equals: (self parseMethod: 'objectName ^#(Thing)').
 	self assert: class superclass name equals: #Thing
 ]
 

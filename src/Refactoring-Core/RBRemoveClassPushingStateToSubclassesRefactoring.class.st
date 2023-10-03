@@ -28,10 +28,7 @@ Class {
 { #category : 'preconditions' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition
-		   withBlock: [ self preconditionHaveNoReferences check ]
-		   errorString: 'Some classes still have references')
-		errorBlock: [ "This is here to mark this as a breaking change and raise warning" ]
+	^ { self preconditionHaveNoReferences }
 ]
 
 { #category : 'transforming' }

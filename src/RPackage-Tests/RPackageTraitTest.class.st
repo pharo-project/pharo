@@ -21,23 +21,23 @@ RPackageTraitTest >> setUp [
 
 	super setUp.
 
-	p1 := self createNewPackageNamed: self p1Name.
-	p2 := self createNewPackageNamed: self p2Name.
-	p3 := self createNewPackageNamed: self p3Name.
+	p1 := self ensurePackage: self p1Name.
+	p2 := self ensurePackage: self p2Name.
+	p3 := self ensurePackage: self p3Name.
 
-	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 
 	"a1 defines two normal = local methods"
 	a1 compile: 'localMethodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherLocalMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	t1 := self createNewTraitNamed: #TraitInPackageP1 inPackage: p1.
+	t1 := self newTraitNamed: #TraitInPackageP1 in: p1.
 	t1 compile: 'traitMethodDefinedInP1 ^ #traitMethodDefinedInP1'.
 
 	"P3 defines a new method extension on T1 (packaged in p1)"
 	t1 compile: 'traitMethodExtendedFromP3 ^ #traitMethodExtendedFromP3' classified: '*' , self p3Name.
 
-	t2 := self createNewTraitNamed: #TraitInPackageP2 inPackage: p2.
+	t2 := self newTraitNamed: #TraitInPackageP2 in: p2.
 	t2 compile: 'traitMethodDefinedInP2 ^ #traitMethodDefinedInP2'.
 
 	"Here P1 extends T2 from P2 with a new method"
@@ -51,7 +51,7 @@ RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
 	"Regression test for a bug where adding a method to a class that overrides a method from a trait was not know by the package of the class"
 
 	| a2 |
-	a2 := self createNewClassNamed: #A2DefinedInP1 inPackage: p1.
+	a2 := self newClassNamed: #A2DefinedInP1 in: p1.
 
 	a2 setTraitComposition: t1 asTraitComposition.
 

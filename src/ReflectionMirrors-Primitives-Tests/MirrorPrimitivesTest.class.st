@@ -63,11 +63,11 @@ MirrorPrimitivesTest >> testChangingFixedFieldOfWeakMessageSend [
 	MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 1 put: #newSelector.
 	self assert: arrayWithInstVars selector equals: #newSelector.
 
-	MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 3 put: #newArgs.
+	MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 2 put: #newArgs.
 	self assert: arrayWithInstVars arguments equals: #newArgs.
 
 	self
-	 	should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 5 put: 100 ]
+	 	should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 6 put: 100 ]
 		raise: PrimitiveFailed
 ]
 
@@ -113,11 +113,11 @@ MirrorPrimitivesTest >> testChangingGeneralFieldOfWeakMessageSend [
 	MirrorPrimitives fieldOf: arrayWithInstVars at: 2 put: #newSelector.
 	self assert: arrayWithInstVars selector equals: #newSelector.
 
-	MirrorPrimitives fieldOf: arrayWithInstVars at: 4 put: #newArgs.
+	MirrorPrimitives fieldOf: arrayWithInstVars at: 3 put: #newArgs.
 	self assert: arrayWithInstVars arguments equals: #newArgs.
 
 	self
-	 	should: [MirrorPrimitives fieldOf: arrayWithInstVars at: 5 put: 100]
+	 	should: [MirrorPrimitives fieldOf: arrayWithInstVars at: 7 put: 100]
 		raise: PrimitiveFailed
 ]
 
@@ -224,10 +224,10 @@ MirrorPrimitivesTest >> testGettingFixedFieldOfWeakMessageSend [
 	actual := MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 1.
 	self assert: actual equals: #selector. "receiver is stored as first array item"
 
-	actual := MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 3.
+	actual := MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 2.
 	self assert: actual first equals: #args.
 
-	self should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 5 ] raise: PrimitiveFailed
+	self should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 6 ] raise: PrimitiveFailed
 ]
 
 { #category : 'tests - fields accessing' }
@@ -332,10 +332,10 @@ MirrorPrimitivesTest >> testGettingGeneralFieldOfWeakMessageSend [
 	actual := MirrorPrimitives fieldOf: arrayWithInstVars at: 2.
 	self assert: actual equals: #selector.
 
-	actual := MirrorPrimitives fieldOf: arrayWithInstVars at: 4.
+	actual := MirrorPrimitives fieldOf: arrayWithInstVars at: 3.
 	self assert: actual first equals: #args.
 
-	self should: [ MirrorPrimitives fieldOf: arrayWithInstVars at: 5 ] raise: PrimitiveFailed
+	self should: [ MirrorPrimitives fieldOf: arrayWithInstVars at: 7 ] raise: PrimitiveFailed
 ]
 
 { #category : 'tests - hashes' }

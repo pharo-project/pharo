@@ -101,6 +101,7 @@ SystemDictionary >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
 
+	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemDictionary' ].
 	(self includesKey: aKey) ifFalse: [
 		self declare: aKey from: Undeclared.
 		self flushClassNameCache ].

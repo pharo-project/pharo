@@ -213,6 +213,12 @@ FileReferenceTest >> testCanonicalization [
 	self assert: ref path segments equals: #('a' 'c').
 
 	ref := '/a/b/../c' asFileReference canonicalize.
+	self assert: ref path segments equals: #('a' 'c').
+
+	ref := '/..' asFileReference canonicalize.
+	self assertEmpty: ref path segments.
+
+	ref := '/../a/b/../c' asFileReference canonicalize.
 	self assert: ref path segments equals: #('a' 'c')
 ]
 

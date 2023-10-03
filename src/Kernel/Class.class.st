@@ -106,7 +106,7 @@ Class >> addClassVarNamed: aString [
 	"Add the argument, aString, as a class variable of the receiver.
 	Signal an error if the first character of aString is not capitalized,
 	or if it is already a variable named in the class."
-
+	<reflection: 'Class structural modification - Class variable modification'>
 	self addClassVariable: (aString asSymbol => ClassVariable)
 ]
 
@@ -115,6 +115,7 @@ Class >> addClassVariable: aClassVariable [
 	"Add the argument, aString, as a class variable of the receiver.
 	Signal an error if the first character of aString is not capitalized,
 	or if it is already a variable named in the class."
+	<reflection: 'Class structural modification - Class variable modification'>
 	| symbol oldState |
 	oldState := self copyForAnnouncement.
 	symbol := aClassVariable name asSymbol.
@@ -132,7 +133,7 @@ Class >> addClassVariable: aClassVariable [
 { #category : 'instance variables' }
 Class >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
-
+	<reflection: 'Class structural modification - Instance variable modification'>
 	aString substrings do: [ :each|
 		self addSlot: (InstanceVariableSlot named: each asSymbol) ]
 ]
@@ -143,6 +144,7 @@ Class >> addSharedPool: aSharedPool [
 	"Add the argument, aSharedPool, as one of the receiver's shared pools.
 	Create an error if the shared pool is already one of the pools.
 	This method will work with shared pools that are plain Dictionaries or thenewer SharedPool subclasses"
+	<reflection: 'Class structural modification - Shared pool modification'>
 
 	(self sharedPools includes: aSharedPool) ifTrue: [
 		^ self error: 'This is already in my shared pool list' ].
@@ -153,7 +155,7 @@ Class >> addSharedPool: aSharedPool [
 
 { #category : 'pool variables' }
 Class >> addSharedPoolNamed: aSharedPoolName [
-
+	<reflection: 'Class structural modification - Shared pool modification'>
 	|poolClass|
 	poolClass := aSharedPoolName asClassIfAbsent: [nil].
 	poolClass isPool
@@ -165,6 +167,7 @@ Class >> addSharedPoolNamed: aSharedPoolName [
 Class >> addSubclass: aSubclass [
 	"Make the argument, aSubclass, be one of the subclasses of the receiver.
 	Create an error notification if the argument's superclass is not the receiver."
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	aSubclass superclass ~~ self
 		ifTrue: [^self error: aSubclass name , ' is not my subclass'].
 	subclasses ifNil: [
@@ -184,7 +187,7 @@ Class >> allClassVariables [
 { #category : 'pool variables' }
 Class >> allSharedPools [
 	"Answer an ordered collection of the pools the receiver shares, including those defined  in the superclasses of the receiver."
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^self superclass
 		ifNil: [self sharedPools copy]
 		ifNotNil: [ | aSet |
@@ -256,7 +259,7 @@ Class >> bindingOf: varName [
 	could use different environments.
 	That's why we doing an environment lookup only as a last step of symbol lookup
 	and taking only the environment of receiver only, not any of it's superclass(es) "
-
+	<reflection: 'Class structural inspection - Variable lookup'>
 	| aSymbol |
 	aSymbol := varName asSymbol.
 
@@ -339,12 +342,13 @@ Class >> classInstaller [
 Class >> classPool [
 	"Answer the dictionary of class variables.
 	We initialize in basicDeclareClassVariable: to not allocate unused empty dictionaries"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^classPool ifNil: [ Dictionary new ]
 ]
 
 { #category : 'accessing' }
 Class >> classPool: aDictionary [
+	<reflection: 'Class structural modification - Shared pool modification'>
 	classPool := aDictionary
 ]
 
@@ -353,7 +357,7 @@ Class >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
 	"Point class classSide >>> Point class"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self class
 ]
 
@@ -374,7 +378,7 @@ Class >> classVarNamed: aString put: anObject [
 { #category : 'class variables' }
 Class >> classVarNames [
 	"Answer a collection of the receiver's class variable names."
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^self classPool keys sort
 ]
 
@@ -403,14 +407,14 @@ Class >> classVariableNamed: aString [
 { #category : 'class variables' }
 Class >> classVariableNamed: aString ifAbsent: absentBlock [
 	"Answer the Class Variable"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^self classPool associationAt: aString asSymbol ifAbsent: absentBlock
 ]
 
 { #category : 'class variables' }
 Class >> classVariables [
 	"Answer the meta objects of all class variables"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^self classPool associations
 ]
 
@@ -498,6 +502,7 @@ Class >> commentStamp: changeStamp [
 { #category : 'accessing - class hierarchy' }
 Class >> commonSuperclassWith: aClass [
 	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self withAllSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
 ]
 
@@ -551,20 +556,21 @@ Class >> declareClassVariables: newVars [
 { #category : 'pool variables' }
 Class >> definedVariables [
 	"return all the Variables defined by this class"
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self slots, self classVariables
 ]
 
 { #category : 'class variables' }
 Class >> definesClassVariable: aGlobal [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVariables includes: aGlobal
 ]
 
 { #category : 'class variables' }
 Class >> definesClassVariableNamed: aString [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVarNames includes: aString
 ]
 
@@ -676,7 +682,7 @@ Class >> getName [
 { #category : 'testing' }
 Class >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
 ]
 
@@ -699,20 +705,21 @@ Class >> hasBindingThatBeginsWith: aString [
 
 { #category : 'accessing - parallel hierarchy' }
 Class >> hasClassSide [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^self classSide notNil
 ]
 
 { #category : 'class variables' }
 Class >> hasClassVarNamed: aString [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classPool includesKey: aString
 ]
 
 { #category : 'class variables' }
 Class >> hasClassVariable: aGlobal [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVariables identityIncludes: aGlobal
 ]
 
@@ -727,18 +734,20 @@ Class >> hasMethods [
 	"Answer a Boolean according to whether any methods are defined for the
 	receiver (includes whether there are methods defined in the receiver's
 	metaclass)."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^super hasMethods or: [ self classSide hasMethods ]
 ]
 
 { #category : 'pool variables' }
 Class >> hasSharedPools [
 	"Returns whether the receiver uses shared pools directly (Does not take into account that it may inherit shared pool uses."
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self sharedPools notEmpty
 ]
 
 { #category : 'accessing - class hierarchy' }
 Class >> hasSubclasses [
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self subclasses isNotEmpty
 ]
 
@@ -811,30 +820,32 @@ Class >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"
 	"Point class instanceSide >>> Point"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self
 ]
 
 { #category : 'testing' }
 Class >> isAnonymous [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^self getName isNil
 ]
 
 { #category : 'testing' }
 Class >> isClass [
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ true
 ]
 
 { #category : 'testing' }
 Class >> isClassOrTrait [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^true
 ]
 
 { #category : 'testing' }
 Class >> isObsolete [
 	"Return true if the receiver is obsolete."
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ ObsoleteClasses includes: self
 ]
 
@@ -845,7 +856,7 @@ Class >> isSelfEvaluating [
 
 { #category : 'testing' }
 Class >> isUsed [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ self hasSubclasses
 		ifFalse: [ super isUsed ]
 		ifTrue: [ true ]
@@ -867,7 +878,7 @@ Class >> needsSlotClassDefinition [
 
 { #category : 'subclass creation' }
 Class >> newAnonymousSubclass [
-
+	<reflection: 'Class structural modification - Anonymous class creation'>
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
 		builder
 			superclass: self ;
@@ -876,6 +887,7 @@ Class >> newAnonymousSubclass [
 
 { #category : 'subclass creation' }
 Class >> newSubclass [
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	| i className |
 	i := 1.
 	[ className := (self name , i printString) asSymbol.
@@ -918,7 +930,7 @@ Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 { #category : 'class variables' }
 Class >> readClassVariableNamed: aString [
 	"Answer the content of the Class Variable"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^(self classVariableNamed: aString) read
 ]
 
@@ -937,7 +949,7 @@ Class >> removeClassVarNamed: aString [
     the names defined in the receiver, a class. Create an error notification if
     aString is not a class variable or if it is still being used in the code of
     the class."
-
+	<reflection: 'Class structural modification - Class variable modification'>
 	self removeClassVarNamed: aString interactive: false
 ]
 
@@ -947,6 +959,7 @@ Class >> removeClassVarNamed: aString interactive: interactive [
     the names defined in the receiver, a class. Create an error notification if
     aString is not a class variable or if it is still being used in the code of
     the class."
+	<reflection: 'Class structural modification - Class variable modification'>
 
 	| aSymbol varUserClass |
 	aSymbol := aString asSymbol.
@@ -969,6 +982,7 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 { #category : 'class variables' }
 Class >> removeClassVariable: aGlobal [
 	"Remove the class variable"
+	<reflection: 'Class structural modification - Class variable modification'>
 	self removeClassVarNamed: aGlobal name
 ]
 
@@ -1017,6 +1031,7 @@ Class >> removeSharedPool: aDictionary [
 	dictionaries. Create an error notification if the dictionary is not one of
 	the pools.
 	: Note that it removes the wrong one if there are two empty Dictionaries in the list."
+	<reflection: 'Class structural modification - Shared pool modification'>
 
 	| satisfiedSet workingSet aSubclass |
 	(self sharedPools includes: aDictionary) ifFalse: [ ^ self error: 'the dictionary is not in my pool' ].
@@ -1051,7 +1066,7 @@ Class >> removeSharedPool: aDictionary [
 { #category : 'accessing - class hierarchy' }
 Class >> removeSubclass: aSubclass [
 	"If the argument, aSubclass, is one of the receiver's subclasses, remove it."
-
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	self subclasses == nil ifFalse: [
 		self subclasses: (self subclasses copyWithout: aSubclass).
 		self subclasses ifEmpty: [ self subclasses: nil ] ]
@@ -1081,6 +1096,7 @@ Class >> setName: aSymbol [
 
 { #category : 'pool variables' }
 Class >> sharedPoolNames [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self sharedPools collect: [:ea |
 		ea isObsolete
 			ifTrue: [ ea name ]
@@ -1090,7 +1106,7 @@ Class >> sharedPoolNames [
 { #category : 'pool variables' }
 Class >> sharedPoolOfVarNamed: aString [
 	"Returns the SharedPool or nil from which the pool variable named aString is coming from."
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self sharedPools
 		detect: [ :each | each usesClassVarNamed: aString ]
 		ifNone: [ self superclass ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
@@ -1100,12 +1116,13 @@ Class >> sharedPoolOfVarNamed: aString [
 Class >> sharedPools [
 	"Answer an orderedCollection of the shared pools declared in the receiver.
 	Note: To save memory, the variable is initialized by #addSharedPool:"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ sharedPools ifNil: [ sharedPools := super sharedPools ]
 ]
 
 { #category : 'pool variables' }
 Class >> sharedPools: aCollection [
+	<reflection: 'Class structural modification - Shared pool modification'>
 	sharedPools := aCollection
 ]
 
@@ -1114,6 +1131,7 @@ Class >> sharedPoolsDo: aBlockClosure [
 	"Iterate shared pools.
 	The shared pool collection is lazily created on access.
 	This method avoids creating the collection for a simple iteration"
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	self hasSharedPools ifFalse: [ ^ self ].
 	self sharedPools do: aBlockClosure
 ]
@@ -1145,6 +1163,7 @@ Class >> sharing: poolString [
 
 { #category : 'subclass creation' }
 Class >> subclass: t [
+	<reflection: 'Class structural modification - Old class creation'>
 	^ self classInstaller
 		make: [ :builder |
 			builder
@@ -1157,6 +1176,7 @@ Class >> subclass: t [
 
 { #category : 'subclass creation' }
 Class >> subclass: t instanceVariableNames: ins [
+	<reflection: 'Class structural modification - Old class creation'>
 	^ self classInstaller
 		make: [ :builder |
 			builder
@@ -1169,6 +1189,7 @@ Class >> subclass: t instanceVariableNames: ins [
 { #category : 'subclass creation - deprecated' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategorySymbol [
 	"Added to allow for a simplified subclass creation experience. "
+	<reflection: 'Class structural modification - Old class creation'>
 
 		^ self classInstaller
 		make: [ :builder |
@@ -1183,6 +1204,7 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classV
 { #category : 'subclass creation' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aPackageSymbol [
 	"Added to allow for a simplified subclass creation experience. "
+	<reflection: 'Class structural modification - Old class creation'>
 
 	^ self classInstaller
 		make: [ :builder |
@@ -1197,6 +1219,8 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classV
 
 { #category : 'subclass creation - deprecated' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
+	<reflection: 'Class structural modification - Old class creation'>
+
 	^ self classInstaller
 		make: [ :builder |
 			builder
@@ -1211,6 +1235,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 
 { #category : 'subclass creation' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
+	<reflection: 'Class structural modification - Old class creation'>
 
 	^ self classInstaller
 		make: [ :builder |
@@ -1227,6 +1252,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 
 { #category : 'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
+	<reflection: 'Class structural modification - Old class creation'>
 
 	^ self classInstaller make: [ :builder |
 		  builder
@@ -1240,6 +1266,7 @@ Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition cla
 
 { #category : 'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
+	<reflection: 'Class structural modification - Old class creation'>
 
 	^ self classInstaller make: [ :builder |
 		  builder
@@ -1254,6 +1281,7 @@ Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition cla
 
 { #category : 'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
+	<reflection: 'Class structural modification - Old class creation'>
 
 	^ self classInstaller make: [ :builder |
 		  builder
@@ -1266,6 +1294,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 
 { #category : 'subclass creation - slots' }
 Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
+	<reflection: 'Class structural modification - Old class creation'>
 
 	^ self classInstaller make: [ :builder |
 		  builder
@@ -1280,7 +1309,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 { #category : 'accessing - class hierarchy' }
 Class >> subclasses [
 	"Answer a Set containing the receiver's subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^subclasses
 		ifNil: [ #() ]
 		ifNotNil: [ subclasses copy ]
@@ -1288,13 +1317,14 @@ Class >> subclasses [
 
 { #category : 'accessing - class hierarchy' }
 Class >> subclasses: aCollection [
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	subclasses := aCollection
 ]
 
 { #category : 'accessing - class hierarchy' }
 Class >> subclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's immediate subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self subclasses do: aBlock
 ]
 
@@ -1313,21 +1343,21 @@ Class >> unload [
 { #category : 'class variables' }
 Class >> usesClassVarNamed: aString [
 	"Return whether the receiver or its superclasses have a class variable named: aString"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self allClassVarNames includes: aString
 ]
 
 { #category : 'pool variables' }
 Class >> usesLocalPoolVarNamed: aString [
 	"Return whether the receiver uses a pool variable named: aString which is defined locally"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self sharedPools anySatisfy: [ :each | each usesClassVarNamed: aString ]
 ]
 
 { #category : 'pool variables' }
 Class >> usesPoolVarNamed: aString [
 	"Return whether the receiver has a pool variable named: aString, taking into account superclasses too"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^self allSharedPools anySatisfy: [:each | each usesClassVarNamed: aString]
 ]
 
@@ -1618,6 +1648,6 @@ Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDict
 { #category : 'class variables' }
 Class >> writeClassVariableNamed: aString value: anObject [
 	"Store anObject in the class variable."
-
+	<reflection: 'Class structural modification - Slot modification'>
 	(self classVariableNamed: aString) write: anObject
 ]

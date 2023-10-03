@@ -81,6 +81,13 @@ RPackage >> classesForClassTag: aTagName [
 ]
 
 { #category : '*Deprecated12' }
+RPackage class >> defaultPackageName [
+
+	self deprecated: 'Use `UndefinedPackage undefinedPackageName`' transformWith: '`@rcv defaultPackageName' -> 'UndefinedPackage undefinedPackageName'.
+	^ UndefinedPackage undefinedPackageName
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> definedClassesDo: aBlock [
 
 	self deprecated:
@@ -95,6 +102,13 @@ RPackage >> extensionCategoriesForClass: aClass [
 		deprecated: 'Use #extensionProtocolsForClass: instead.'
 		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
 	^ self extensionProtocolsForClass: aClass
+]
+
+{ #category : '*Deprecated12' }
+RPackage >> importClass: aClass [
+
+	self deprecated: 'Use #addClass: instead or #moveClass:toTag:' transformWith: '`@rcv importClass: `@arg' -> '`@rcv addClass: `@arg'.
+	^ self addClass: aClass
 ]
 
 { #category : '*Deprecated12' }
@@ -143,6 +157,13 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 
 	self deprecated: 'Use #includesSelector:ofClass: directly with the class.'.
 	^ self includesSelector: aSelector ofClass: (self environment at: aClassName)
+]
+
+{ #category : '*Deprecated12' }
+RPackage >> isDefault [
+
+	self deprecated: 'Use #isUndefined instead' transformWith: '`@rcv isDefault' -> '`@rcv isUndefined'.
+	^ self isUndefined
 ]
 
 { #category : '*Deprecated12' }
@@ -207,7 +228,7 @@ RPackage >> unregister [
 
 	self
 		deprecated: 'Tihs method will be removed because the name does not conform with the naming convensions of this class.'
-		transformWith: '`@rcv unregister' -> '`@rcv organizer removePackage: `@rcv'.
+		transformWith: '`@rcv unregister' -> '`@rcv organizer unregisterPackage: `@rcv'.
 
-	self organizer removePackage: self
+	self organizer unregisterPackage: self
 ]

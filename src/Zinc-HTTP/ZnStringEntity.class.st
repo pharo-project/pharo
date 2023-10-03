@@ -174,7 +174,7 @@ ZnStringEntity >> readFrom: stream [
 	readStream := total ifNotNil: [ ZnLimitedReadStream on: stream limit: total ] ifNil: [ stream ].
 	buffer := String new: (ZnUtils streamingBufferSize min: (total ifNil: [ ZnUtils streamingBufferSize ])).
 	stringStream := nil.
-	totalRead := 0.
+	totalRead := read := 0.
 	self initializeEncoder.
 	[ readStream atEnd ] whileFalse: [
 		[ read := encoder readInto: buffer startingAt: 1 count: buffer size fromStream: readStream ]
@@ -191,7 +191,7 @@ ZnStringEntity >> readFrom: stream [
 			ifTrue: [ ZnEntityTooLarge signal ].
 		stringStream ifNil: [
 			readStream atEnd
-				ifTrue: [ ^ self string: (buffer copyFrom: 1 to: read) ]
+				ifTrue: [ ^ self string: (buffer copyFrom: 1 to: read); computeContentLength ]
 				ifFalse: [ stringStream := (total ifNil: [ buffer species new ] ifNotNil: [ buffer species new: total ]) writeStream ] ].
 		stringStream next: read putAll: buffer startingAt: 1.
 		ZnUtils signalProgress: totalRead total: total ].

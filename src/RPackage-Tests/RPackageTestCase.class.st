@@ -5,7 +5,6 @@ Class {
 	#name : 'RPackageTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'createdPackages',
 		'testEnvironment'
 	],
 	#category : 'RPackage-Tests',
@@ -13,81 +12,72 @@ Class {
 }
 
 { #category : 'utilities' }
-RPackageTestCase >> createMockTestPackages [
+RPackageTestCase >> ensurePackage: aName [
 
-	^ self namesOfMockTestPackages collect: [:pName | self createNewPackageNamed: pName]
+	^ self organizer ensurePackage: aName
 ]
 
 { #category : 'utilities' }
-RPackageTestCase >> createNewClassNamed: aName [
-	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
+RPackageTestCase >> newClassNamed: aName in: aPackage [
+
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]) ]
 ]
 
 { #category : 'utilities' }
-RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
+RPackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
 
-	| cls |
-	cls := self class classInstaller make: [ :aClassBuilder |
-		       aClassBuilder
-			       name: aName;
-			       installingEnvironment: testEnvironment;
-			       package: cat ].
-
-	createdPackages add: cls package.
-	^ cls
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
+			  tag: (aTag isString
+					   ifTrue: [ aTag ]
+					   ifFalse: [ aTag name ]) ]
 ]
 
 { #category : 'utilities' }
-RPackageTestCase >> createNewClassNamed: aName inPackage: p [
+RPackageTestCase >> newClassNamed: aName inTag: aTag [
 
-	| cls |
-	cls := self createNewClassNamed: aName inCategory: p name.
-	p importClass: cls.
-	^ cls
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: aTag package name;
+			  tag: aTag name ]
 ]
 
 { #category : 'utilities' }
-RPackageTestCase >> createNewPackageNamed: aName [
+RPackageTestCase >> newTraitNamed: aName in: aPackage [
 
-	| pack |
-	pack := self organizer ensurePackage: aName.
-	createdPackages add: pack.
-	^ pack
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
+			  installingEnvironment: testEnvironment;
+			  beTrait ]
 ]
 
 { #category : 'utilities' }
-RPackageTestCase >> createNewTraitNamed: aName [
-	^ self createNewTraitNamed: aName inCategory: 'RPackageTest'
-]
+RPackageTestCase >> newTraitNamed: aName inTag: aTag [
 
-{ #category : 'utilities' }
-RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
-
-	| cls |
-	cls := self class classInstaller make: [ :aBuilder |
-		       aBuilder
-			       name: aName;
-			       package: cat;
-			       installingEnvironment: testEnvironment;
-			       beTrait ].
-
-	createdPackages add: cls package.
-	^ cls
-]
-
-{ #category : 'utilities' }
-RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
-
-	| cls |
-	cls := self createNewTraitNamed: aName.
-	p importClass: cls.
-	^ cls
-]
-
-{ #category : 'utilities' }
-RPackageTestCase >> namesOfMockTestPackages [
-
-	^ #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package')
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  package: aTag package name;
+			  tag: aTag name;
+			  installingEnvironment: testEnvironment;
+			  beTrait ]
 ]
 
 { #category : 'accessing' }
@@ -107,13 +97,6 @@ RPackageTestCase >> runCase [
 		  self performTest ] ] ensure: [
 		self tearDown.
 		self cleanUpInstanceVariables ]
-]
-
-{ #category : 'running' }
-RPackageTestCase >> setUp [
-
-	super setUp.
-	createdPackages := Set new
 ]
 
 { #category : 'running' }

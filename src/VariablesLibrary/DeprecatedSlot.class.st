@@ -63,6 +63,7 @@ DeprecatedSlot >> printOn: aStream [
 DeprecatedSlot >> read: anObject [
 
 	"In case this is ShiftClassInstaller then we are migrating the instances and we should not raise a deprecation"
+	<reflection: 'Object Inspection - State inspection'>
 	thisContext sender class = ShiftClassInstaller ifFalse: [
 		SlotDeprecation new
 			context: thisContext;
@@ -75,6 +76,7 @@ DeprecatedSlot >> read: anObject [
 DeprecatedSlot >> write: aValue to: anObject [
 
 	"In case this is ShiftClassInstaller then we are migrating the instances and we should not raise a deprecation"
+	<reflection: 'Object Modification - State modification'>
 	thisContext sender class = ShiftClassInstaller ifFalse: [
 		SlotDeprecation new
 			context: thisContext;

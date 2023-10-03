@@ -10,7 +10,7 @@ I am a driver object responsible for invoking refactorings. I am responsible for
 
 "
 Class {
-	#name : 'RBDriver',
+	#name : 'RBInteractionDriver',
 	#superclass : 'Object',
 	#instVars : [
 		'model',
@@ -23,19 +23,26 @@ Class {
 }
 
 { #category : 'testing' }
-RBDriver class >> isAbstract [
+RBInteractionDriver class >> isAbstract [
 
-	^ self == RBDriver
+	^ self == RBInteractionDriver
 ]
 
 { #category : 'execution' }
-RBDriver >> furtherActionFor: aReport [
+RBInteractionDriver >> applyChanges [
+	"I'm a hook to actually execute the changes"
+	
+	self subclassResponsibility
+]
+
+{ #category : 'execution' }
+RBInteractionDriver >> furtherActionFor: aReport [
 	
 	aReport browse
 ]
 
 { #category : 'execution' }
-RBDriver >> openPreviewWithChanges: changes [
+RBInteractionDriver >> openPreviewWithChanges: changes [
 	
 	^ (StRefactoringPreviewPresenter
 		 changes: changes
@@ -45,18 +52,18 @@ RBDriver >> openPreviewWithChanges: changes [
 ]
 
 { #category : 'resources' }
-RBDriver >> refactoring [
+RBInteractionDriver >> refactoring [
 	^ refactoring
 ]
 
 { #category : 'utilities' }
-RBDriver >> refactoringScopeOn: aScope [
+RBInteractionDriver >> refactoringScopeOn: aScope [
 
 	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
 ]
 
 { #category : 'execution' }
-RBDriver >> runRefactoring [
+RBInteractionDriver >> runRefactoring [
 
 	self subclassResponsibility
 ]

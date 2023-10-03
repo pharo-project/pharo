@@ -249,19 +249,19 @@ Trait >> expandedDefinitionStringFor: aPrinter [
 
 { #category : 'testing' }
 Trait >> isBaseTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
 { #category : 'testing' }
 Trait >> isClass [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
 { #category : 'testing' }
 Trait >> isClassTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
@@ -277,6 +277,7 @@ Trait >> isEmpty [
 
 { #category : 'testing' }
 Trait >> isTrait [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -292,7 +293,7 @@ Trait >> isTraitExclusion [
 
 { #category : 'testing' }
 Trait >> isUsed [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ super isUsed or: [ self traitUsers notEmpty ]
 ]
 
@@ -337,11 +338,13 @@ Trait >> removeUser: aClass [
 
 { #category : 'accessing' }
 Trait >> traitUsers [
+	<reflection: 'Class structural inspection - Traits'>
 	^ self users
 ]
 
 { #category : 'users' }
 Trait >> users [
+	<reflection: 'Class structural inspection - Traits'>
 	^ users ifNil: [ users := IdentitySet new ]
 ]
 

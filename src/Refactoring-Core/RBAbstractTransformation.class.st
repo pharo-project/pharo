@@ -203,7 +203,6 @@ RBAbstractTransformation >> execute [
 
 { #category : 'executing' }
 RBAbstractTransformation >> generateChanges [
-	"compatibility method RBRefactoring"
 	
 	self prepareForExecution.
 	self checkPreconditions.

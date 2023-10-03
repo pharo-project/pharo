@@ -12,7 +12,8 @@ Class {
 	#superclass : 'Announcement',
 	#instVars : [
 		'timestamp',
-		'id'
+		'id',
+		'processId'
 	],
 	#classVars : [
 		'IdCounter',
@@ -40,7 +41,7 @@ ZnLogEvent class >> initialize [
 { #category : 'convenience' }
 ZnLogEvent class >> logToTranscript [
 	self stopLoggingToTranscript.
-	^ self announcer when: ZnLogEvent do: [ :event | self crTrace: event ] for: self
+	^ self announcer when: ZnLogEvent do: [ :event | self crTrace: event ]
 ]
 
 { #category : 'accessing' }
@@ -80,6 +81,8 @@ ZnLogEvent >> emit [
 
 { #category : 'accessing' }
 ZnLogEvent >> id [
+	"Return my numerical id or sequence number, unique in this image session."
+	
 	^ id
 ]
 
@@ -87,7 +90,8 @@ ZnLogEvent >> id [
 ZnLogEvent >> initialize [
 	super initialize.
 	timestamp := DateAndTime now.
-	id := self nextId
+	id := self nextId.
+	processId := ZnUtils currentProcessID
 ]
 
 { #category : 'accessing' }
@@ -101,16 +105,40 @@ ZnLogEvent >> printContentsOn: stream [
 ]
 
 { #category : 'printing' }
-ZnLogEvent >> printOn: stream [
+ZnLogEvent >> printHeaderOn: stream [
+	"Print my generic context part, <date> <time> <seq-nr> <process> [ subclass addition], to stream"
+	
 	timestamp printYMDOn: stream.
 	stream space.
 	timestamp printHMSOn: stream.
 	stream space.
 	id \\ 1000 printOn: stream base: 10 length: 3 padded: true.
+	stream space.
+	processId printOn: stream base: 10 length: 6 padded: true
+]
+
+{ #category : 'printing' }
+ZnLogEvent >> printOn: stream [
+	self printHeaderOn: stream.
+	stream space.
 	self printContentsOn: stream
 ]
 
 { #category : 'accessing' }
+ZnLogEvent >> processId [
+	"Return a numeric process id"
+	
+	^ processId
+]
+
+{ #category : 'initialize' }
+ZnLogEvent >> processId: anObject [
+	processId := anObject
+]
+
+{ #category : 'accessing' }
 ZnLogEvent >> timestamp [
+	"Return the point in time when I was created"
+
 	^ timestamp
 ]

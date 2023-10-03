@@ -61,7 +61,7 @@ ProcessLocalSlot >> initialize: anObject [
 
 { #category : 'meta-object-protocol' }
 ProcessLocalSlot >> read: anObject [
-
+	<reflection: 'Object Inspection - State inspection'>
 	^ (super read: anObject) value
 ]
 
@@ -73,7 +73,7 @@ ProcessLocalSlot >> wantsInitialization [
 
 { #category : 'meta-object-protocol' }
 ProcessLocalSlot >> write: aValue to: anObject [
-
+	<reflection: 'Object Modification - State modification'>
 	(super read: anObject) value: aValue.
 	^ aValue
 ]

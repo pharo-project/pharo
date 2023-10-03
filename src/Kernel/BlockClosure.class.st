@@ -55,8 +55,8 @@ BlockClosure class >> isAbstract [
 { #category : 'accessing' }
 BlockClosure >> argumentCount [
 	"Answer the number of arguments that must be used to evaluate this block"
-
-	^numArgs
+	<reflection: 'Message sending and code execution - Message send reification'>
+	^ numArgs
 ]
 
 { #category : 'accessing' }
@@ -144,6 +144,7 @@ BlockClosure >> cull: anArg [
 	"Execute the receiver with one or zero arguments depending on the receiver"
 	"([ 12 ] cull: 13)>>> 12 "
 	"([:x | x + 12] cull: 3)>>> 15"
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs = 0
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
@@ -156,6 +157,7 @@ BlockClosure >> cull: firstArg cull: secondArg [
 	"
 	"([:x :y | x + y] cull: 3 cull: 2) >>> 5
 	"
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs < 2
 		ifTrue: [self cull: firstArg]
 		ifFalse: [self value: firstArg value: secondArg]
@@ -163,6 +165,7 @@ BlockClosure >> cull: firstArg cull: secondArg [
 
 { #category : 'evaluating' }
 BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs < 3
 		ifTrue: [self cull: firstArg cull: secondArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg]
@@ -171,7 +174,7 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg [
 { #category : 'evaluating' }
 BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 	"Execute the receiver with four or less arguments. Check cull:cull: for examples"
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs < 4
 		ifTrue: [self cull: firstArg cull: secondArg cull: thirdArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg value: fourthArg]
@@ -413,7 +416,7 @@ BlockClosure >> newProcessWith: anArray [
 { #category : 'accessing' }
 BlockClosure >> numArgs [
 	"Answer the number of arguments that must be used to evaluate this block"
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^numArgs
 ]
 
@@ -556,6 +559,7 @@ BlockClosure >> onErrorDo: errorHandlerBlock [
 
 { #category : 'accessing' }
 BlockClosure >> outerContext [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^outerContext
 ]
 
@@ -603,7 +607,8 @@ BlockClosure >> repeatWithGCIf: testBlock [
 ]
 
 { #category : 'accessing' }
-BlockClosure >> sender [
+BlockClosure >> sender [	
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^ self subclassResponsibility
 ]
 
@@ -883,6 +888,7 @@ BlockClosure >> valueWithArguments: anArray [
 { #category : 'evaluating' }
 BlockClosure >> valueWithEnoughArguments: anArray [
 	"call me with enough arguments from anArray"
+	<reflection: 'Message sending and code execution - Message send reification'>
 	| args |
 	(anArray size == self numArgs)
 		ifTrue: [ ^self valueWithArguments: anArray ].

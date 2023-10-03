@@ -1,6 +1,10 @@
 Class {
 	#name : 'RBRemoveInstanceVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'applicabilityPreconditions',
+		'breakingChangePreconditions'
+	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -18,14 +22,16 @@ RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 
 { #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
-
-	^ RBCondition directlyDefinesInstanceVariable: variableName asString in: class
+	"we store it because the violators are computed during check so we should not recreate it each time."
+ 	^ applicabilityPreconditions ifNil: [ RBCondition directlyDefinesInstanceVariable: variableName asString in: class ]
 ]
 
 { #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
-	^ (RBCondition hierarchyOf: class referencesInstanceVariable: variableName) not
+	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
+		(RBInstanceVariableHasReferences new 
+			hierarchyOf: class referencesInstanceVariable: variableName) not ]
 	
 ]
 
@@ -53,8 +59,7 @@ RBRemoveInstanceVariableRefactoring >> preconditions [
 
 { #category : 'transforming' }
 RBRemoveInstanceVariableRefactoring >> privateTransform [
-	
-	
+
 	class removeInstanceVariable: variableName
 ]
 

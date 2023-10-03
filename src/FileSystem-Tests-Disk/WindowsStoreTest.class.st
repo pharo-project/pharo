@@ -56,6 +56,7 @@ WindowsStoreTest >> testPrintString [
 
 	"path"
 	self assert: (filesystem referenceTo: 'a/b') printString equals: 'File @ a\b'.
+	self assert: (filesystem referenceTo: '/a/b') printString equals: 'File @ \a\b'.
 	self assert: (filesystem referenceTo: '\test.txt') printString equals: 'File @ \test.txt'.
 
 	"root"

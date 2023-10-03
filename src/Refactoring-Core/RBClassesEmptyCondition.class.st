@@ -1,26 +1,10 @@
 Class {
 	#name : 'RBClassesEmptyCondition',
-	#superclass : 'RBCondition',
-	#instVars : [
-		'classes',
-		'violators'
-	],
+	#superclass : 'RBClassesCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
-
-{ #category : 'checking' }
-RBClassesEmptyCondition >> check [
-
-	^ self violators isEmpty
-]
-
-{ #category : 'accessing' }
-RBClassesEmptyCondition >> classes: aRBClassCollection [
-
-	classes := aRBClassCollection 
-]
 
 { #category : 'testing' }
 RBClassesEmptyCondition >> isEmpty: aClass [
@@ -30,35 +14,19 @@ RBClassesEmptyCondition >> isEmpty: aClass [
 			  aClass selectors isEmpty ] ]
 ]
 
-{ #category : 'checking' }
-RBClassesEmptyCondition >> isFalse [
-
-	^ self isTrue not
-]
-
-{ #category : 'checking' }
-RBClassesEmptyCondition >> isTrue [
-
-	^ self check
-]
-
-{ #category : 'printing' }
-RBClassesEmptyCondition >> printOn: aStream [
+{ #category : 'displaying' }
+RBClassesEmptyCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator name;
 			nextPutAll: ' is not empty.';
-			nextPut: Character cr ]
+			space ]
 ]
 
 { #category : 'accessing' }
 RBClassesEmptyCondition >> violators [
 
 	^ violators ifNil: [
-		  violators := OrderedCollection new.
-		  classes do: [ :aClass |
-			  (self isEmpty: aClass) ifFalse: [
-				  violators add: aClass ] ].
-		  violators ]
+		  violators := classes reject: [ :aClass | self isEmpty: aClass ] ]
 ]

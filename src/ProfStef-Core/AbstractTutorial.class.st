@@ -47,8 +47,8 @@ AbstractTutorial class >> title [
 
 { #category : 'tutorial metainfo' }
 AbstractTutorial class >> tutorials [
-	^ (self subclasses sort: [ :a :b | a name < b name ])
-		reject: [ :aTutorial | aTutorial packageName = 'ProfStef-Tests' ]
+
+	^ (self subclasses sort: [ :a :b | a name < b name ]) reject: [ :aTutorial | aTutorial package name = 'ProfStef-Tests' ]
 ]
 
 { #category : 'tutorial' }

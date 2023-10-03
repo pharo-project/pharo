@@ -353,6 +353,17 @@ RBAbstractClass >> existingMethodsThatReferToClassVariable: aString [
 
 { #category : 'method accessing' }
 RBAbstractClass >> existingMethodsThatReferToInstanceVariable: aString [
+	| existingMethods rClass |
+	rClass := self realClass. "no idea what we cannot use the variable realClass"
+	existingMethods :=  (realClass whichSelectorsAccess: aString) collect: [ :each | realClass >> each ].
+	(newMethods isNil and: [ removedMethods isNil ])
+		ifTrue: [ ^ existingMethods ].
+	^ existingMethods
+		reject: [ :each | (self hasRemoved: each) or: [ self newMethods includesKey: each ] ]
+]
+
+{ #category : 'method accessing' }
+RBAbstractClass >> existingSelectorsThatReferToInstanceVariable: aString [
 	| existingMethods |
 	existingMethods := self realClass
 		whichSelectorsAccess: aString.
@@ -784,6 +795,23 @@ RBAbstractClass >> whichClassIncludesSelector: aSelector [
 ]
 
 { #category : 'method accessing' }
+RBAbstractClass >> whichMethodsReferToInstanceVariable: aString [
+
+	| methods |
+	methods := Set new.
+	newMethods
+		ifNotNil: [ newMethods
+				do: [ :each |
+					( each refersToVariable: aString )
+						ifTrue: [ methods add: each  ]
+					]
+			].
+	self isDefined
+		ifTrue: [ methods addAll: ( self existingMethodsThatReferToInstanceVariable: aString ) ].
+	^ methods
+]
+
+{ #category : 'method accessing' }
 RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
 
 	| selectors |
@@ -831,7 +859,7 @@ RBAbstractClass >> whichSelectorsReferToInstanceVariable: aString [
 					]
 			].
 	self isDefined
-		ifTrue: [ selectors addAll: ( self existingMethodsThatReferToInstanceVariable: aString ) ].
+		ifTrue: [ selectors addAll: ( self existingSelectorsThatReferToInstanceVariable: aString ) ].
 	^ selectors
 ]
 

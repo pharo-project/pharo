@@ -37,20 +37,21 @@ RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 
 { #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddToModel [
+
 	| refactoring |
 	model := RBNamespace new.
 	model name: 'Add instance variable'.
-	model defineClass: 'Object << #FOOBAR
-		slots: { #fdsa };
-		package: #''Refactory-Test data'''.
-	refactoring := self createRefactoringWithModel: model
-		andArguments: {'asdf' .  #FOOBAR }.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #fdsa };
+			package: #'Refactory-Test data' ].
+	refactoring := self createRefactoringWithModel: model andArguments: { 'asdf'. #FOOBAR }.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model
-		classNamed: #FOOBAR)
-		directlyDefinesInstanceVariable: 'asdf')
+	self assert: ((refactoring model classNamed: #FOOBAR) directlyDefinesInstanceVariable: 'asdf')
 ]
 
 { #category : 'tests' }

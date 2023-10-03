@@ -13,11 +13,11 @@ Class {
 { #category : 'accessing' }
 RBRemoveClassReparentChoice >> action [
 
-	driver removeClassChanges.
+	driver applyChanges
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 RBRemoveClassReparentChoice >> classesHaveSubclasses: aBoolean [
 
 	classesHaveSubclasses := aBoolean

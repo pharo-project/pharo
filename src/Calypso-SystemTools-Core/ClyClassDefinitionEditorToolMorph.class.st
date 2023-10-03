@@ -15,6 +15,18 @@ Class {
 { #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
+	| code |
+	code := self pendingText.
+	^ (code asString lines first includesSubstring: '<<')
+		  ifTrue: [ self applyChangesAsClassDefinition ]
+		  ifFalse: [
+			  self pendingText: code copy. "no idea why we have to copy"
+			  self applyChangesAsMethodDefinition ]
+]
+
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
+
 	| newClass |
 	newClass := browser
 		            compileANewClassFrom: self pendingText asString
@@ -26,6 +38,26 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
 	^ true
+]
+
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
+
+ 	| newMethod selector selectedClass |
+ 	selectedClass := self editingClass.
+
+ 	selector := selectedClass
+ 		            compile: self pendingText asString
+ 		            notifying: textMorph.
+
+ 	selector ifNil: [ ^ false ].
+ 	newMethod := selectedClass >> selector.
+ 	MethodClassifier classify: newMethod.
+
+ 	self removeFromBrowser.
+ 	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
+ 	browser selectMethod: newMethod.
+ 	^ true
 ]
 
 { #category : 'to sort' }
