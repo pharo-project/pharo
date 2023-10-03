@@ -13,9 +13,3 @@ Class {
 PackageAdded class >> initialize [
 	self deprecatedAliases: { #RPackageRegistered }
 ]
-
-{ #category : 'accessing' }
-PackageAdded >> package [
-	"self error."
-	^super package
-]
