@@ -323,7 +323,7 @@ PBImageBuilder50 >> createInitialObjects [
             caseInsesitiveOrder at: lower asciiValue + 1 put: (caseInsesitiveOrder at: char asciiValue + 1) ].
 		
 		String classPool at: #AsciiOrder put: asciiOrder.
-		String classPool at: #CaseInsesitiveOrder put: caseInsesitiveOrder'.
+		String classPool at: #CaseInsensitiveOrder put: caseInsesitiveOrder'.
 
 	PBSubStepFinishedSignal emit: 'Initializing SmallInteger constants'.
 	self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: '
