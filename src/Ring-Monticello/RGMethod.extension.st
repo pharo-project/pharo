@@ -1,9 +1,9 @@
-Extension { #name : #RGMethod }
+Extension { #name : 'RGMethod' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGMethod >> asMCDefinition [
 
-	^ MCMethodDefinition 
+	^ MCMethodDefinition
 		className: self parent instanceSide name
 		classIsMeta: self parent isMeta
 		selector: self name

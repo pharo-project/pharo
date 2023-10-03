@@ -17,95 +17,95 @@ The fifth and following parameters are passed in the stack.
 If any of the four first parameters does not fit in the registers are passed in the stack.
 "
 Class {
-	#name : #FFIWin64CallbackArgumentReader,
-	#superclass : #FFIAbstract64BitsArgumentReader,
+	#name : 'FFIWin64CallbackArgumentReader',
+	#superclass : 'FFIAbstract64BitsArgumentReader',
 	#instVars : [
 		'currentParameterIndex'
 	],
-	#category : #'UnifiedFFI-Callbacks'
+	#category : 'UnifiedFFI-Callbacks',
+	#package : 'UnifiedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWin64CallbackArgumentReader >> currentParameterIndex [
-	
+
 	^ currentParameterIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIWin64CallbackArgumentReader >> extractNext: aType [
 
 	super extractNext: aType.
-	currentParameterIndex := currentParameterIndex + 1.
+	currentParameterIndex := currentParameterIndex + 1
 ]
 
-{ #category : #extracting }
-FFIWin64CallbackArgumentReader >> extractStructType: type [ 
-	
+{ #category : 'extracting' }
+FFIWin64CallbackArgumentReader >> extractStructType: type [
+
 	| pointer |
-	
+
 	"The struct are always preallocated by the caller and they pass as a pointer."
-	
+
 	pointer := self basicExtractPointer.
-	self addArgument: (type handle: pointer at: 1).
+	self addArgument: (type handle: pointer at: 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWin64CallbackArgumentReader >> floatRegisterPointer [
-	
+
 	^ callbackContext floatregargsp
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIWin64CallbackArgumentReader >> initialize [
 
 	super initialize.
-	currentParameterIndex := 1.
+	currentParameterIndex := 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWin64CallbackArgumentReader >> integerRegisterPointer [
-	
+
 	^ callbackContext intregargsp
 ]
 
-{ #category : #'calculating-offsets' }
+{ #category : 'calculating-offsets' }
 FFIWin64CallbackArgumentReader >> nextBaseAddressFor: type [
-	
+
 	| baseAddressToRead offsetOfBaseAddress |
-	
+
 	^ (self currentParameterIndex <= self numberOfRegisters and: [ type typeSize <= 8])
-		ifTrue:[ 
+		ifTrue:[
 				"If the parameter is a floating point parameter it comes in the floating point set of registers, not in the general purpose ones."
 				baseAddressToRead := type isFloatType ifTrue: [self floatRegisterPointer] ifFalse: [self integerRegisterPointer].
 				offsetOfBaseAddress := (self currentParameterIndex - 1) * Smalltalk wordSize + 1.
 				currentStackOffset := currentStackOffset + Smalltalk wordSize.
-				{ baseAddressToRead. offsetOfBaseAddress }] 
-		ifFalse:[ super nextBaseAddressFor: type ].
-
-
+				{ baseAddressToRead. offsetOfBaseAddress }]
+		ifFalse:[ super nextBaseAddressFor: type ]
 ]
 
-{ #category : #'calculating-offsets' }
+{ #category : 'calculating-offsets' }
 FFIWin64CallbackArgumentReader >> nextBaseAddressForStructure: type [
 
 	self error: 'The structures all always pointers'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWin64CallbackArgumentReader >> numberOfRegisters [
-	
+
 	"Win64 only uses 4 registers (integer or float), but never more"
 	^ 4
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFIWin64CallbackArgumentReader >> stackIntegerType [
-	
+
 	^ FFIInt64 new
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFIWin64CallbackArgumentReader >> stackUnsignedIntegerType [
-	
+
 	^ FFIUInt64 new
 ]

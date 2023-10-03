@@ -13,15 +13,17 @@ Preconditions:
 overrides from RBAddVariableRefactoring and RBRemoveVariableRefactoring
 "
 Class {
-	#name : #RBRenameVariableTransformation,
-	#superclass : #RBVariableTransformation,
+	#name : 'RBRenameVariableTransformation',
+	#superclass : 'RBVariableTransformation',
 	#instVars : [
 		'newVariableName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameVariableTransformation class >> model: aRBModel rename: aVariableName to: aNewVariableName in: aClassName classVariable: aBoolean [
 
 	^ self new
@@ -33,7 +35,7 @@ RBRenameVariableTransformation class >> model: aRBModel rename: aVariableName to
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameVariableTransformation class >> model: aRBModel renameClassVariable: aVariableName to: aNewVariableName in: aClassName [
 
 	^ self new
@@ -45,7 +47,7 @@ RBRenameVariableTransformation class >> model: aRBModel renameClassVariable: aVa
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameVariableTransformation class >> model: aRBModel renameInstanceVariable: aVariableName to: aNewVariableName in: aClassName [
 
 	^ self new
@@ -57,7 +59,7 @@ RBRenameVariableTransformation class >> model: aRBModel renameInstanceVariable: 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameVariableTransformation class >> rename: aVariableName to: aNewVariableName in: aClassName classVariable: aBoolean [
 
 	^ self new
@@ -68,7 +70,7 @@ RBRenameVariableTransformation class >> rename: aVariableName to: aNewVariableNa
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameVariableTransformation class >> renameClassVarible: aVariableName to: aNewVariableName in: aClassName [
 
 	^ self new
@@ -79,7 +81,7 @@ RBRenameVariableTransformation class >> renameClassVarible: aVariableName to: aN
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameVariableTransformation class >> renameInstanceVarible: aVariableName to: aNewVariableName in: aClassName [
 
 	^ self new
@@ -90,22 +92,39 @@ RBRenameVariableTransformation class >> renameInstanceVarible: aVariableName to:
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRenameVariableTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBRenameVariableTransformation >> applicabilityPreconditions [
 
 	class := self model classObjectFor: className.
 
 	^ (isClassVariable
-		ifTrue: [ (RBCondition isMetaclass: class) not 
-					& (RBCondition isValidClassVarName: newVariableName asString for: class) 
-					& (RBCondition definesClassVariable: variableName asString in: class) ]
-		ifFalse: [ (RBCondition isValidInstanceVariableName: newVariableName for: class) 
-					& (RBCondition definesInstanceVariable: variableName in: class) ])
-		& (RBCondition hierarchyOf: class definesVariable: newVariableName) not 
-		& (RBCondition isGlobal: newVariableName in: self model) not
+		   ifTrue: [
+			   (RBCondition isMetaclass: class) not
+			   &
+			   (RBCondition
+				    isValidClassVarName: newVariableName asString
+				    for: class)
+			   &
+			   (RBCondition
+				    definesClassVariable: variableName asString
+				    in: class) ]
+		   ifFalse: [
+			   (RBCondition
+				    isValidInstanceVariableName: newVariableName
+				    for: class)
+			   & (RBCondition definesInstanceVariable: variableName in: class) ])
+	  &
+	  (RBCondition hierarchyOf: class definesVariable: newVariableName)
+		  not & self isNotGlobal
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBRenameVariableTransformation >> isNotGlobal [
+
+	^ (RBCondition isGlobal: newVariableName in: self model) not
+]
+
+{ #category : 'executing' }
 RBRenameVariableTransformation >> privateTransform [
 
 	isClassVariable
@@ -115,7 +134,7 @@ RBRenameVariableTransformation >> privateTransform [
 						to: newVariableName around: [ self renameReferences ]  ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableTransformation >> referencesFor: aClass [
 
 	^ isClassVariable
@@ -123,36 +142,36 @@ RBRenameVariableTransformation >> referencesFor: aClass [
 		ifFalse: [ aClass whichSelectorsReferToInstanceVariable: variableName ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRenameVariableTransformation >> rename: aVariableName to: aNewVariableName class: aClassName classVariable: aBoolean [
 
 	self className: aClassName.
 	variableName := aVariableName.
 	newVariableName := aNewVariableName.
-	isClassVariable := aBoolean.
+	isClassVariable := aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableTransformation >> renameReferences [
 
 	| replacer subclasses |
-	replacer := self parseTreeRewriterClass 
+	replacer := self parseTreeRewriterClass
 				rename: variableName
 				to: newVariableName
 				handler: [ self refactoringError: ('<1s> is already defined as a method
-					or block temporary <n> variable in this class or one of its subclasses' 
+					or block temporary <n> variable in this class or one of its subclasses'
 					expandMacrosWith: newVariableName )].
 	subclasses := (self model classObjectFor: className) withAllSubclasses.
-	isClassVariable ifTrue: [ subclasses addAll: self definingClass withAllSubclasses ].
-	
+	isClassVariable ifTrue: [ subclasses addAll: self definingClass classSide withAllSubclasses ].
+
 	self model
 		convertClasses: subclasses
 		select: [ :aClass | self referencesFor: aClass ]
 		using: replacer
 ]
 
-{ #category : #printing }
-RBRenameVariableTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBRenameVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

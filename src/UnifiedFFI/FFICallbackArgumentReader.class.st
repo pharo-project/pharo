@@ -45,8 +45,8 @@ The pointer to this struct is stored in a new first parameter to the callback. T
 The callback can access to the pointer through the returnValueHolder instance variable.
 "
 Class {
-	#name : #FFICallbackArgumentReader,
-	#superclass : #Object,
+	#name : 'FFICallbackArgumentReader',
+	#superclass : 'Object',
 	#instVars : [
 		'callback',
 		'callbackContext',
@@ -55,99 +55,99 @@ Class {
 		'returnValueHolder',
 		'nextArgumentIndex'
 	],
-	#category : #'UnifiedFFI-Callbacks'
+	#category : 'UnifiedFFI-Callbacks',
+	#package : 'UnifiedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFICallbackArgumentReader class >> forCallback: aCallback inContext: aCallbackContext [
 
 	^ self basicNew
 		callbackContext: aCallbackContext;
 		callback: aCallback;
 		initialize;
-		yourself.
+		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackArgumentReader >> addArgument: anArgument [
 
 	extractedArguments at: nextArgumentIndex put: anArgument.
-	nextArgumentIndex := nextArgumentIndex + 1 
+	nextArgumentIndex := nextArgumentIndex + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackArgumentReader >> arguments [
-	
+
 	^ extractedArguments
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> basicExtractInteger [
-	
+
 	| baseAddressToRead offsetOfBaseAddress type pair |
-	
+
 	type := self stackIntegerType.
 	pair := self nextBaseAddressFor: type.
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
-	
-	^ type handle: baseAddressToRead at: offsetOfBaseAddress.
+
+	^ type handle: baseAddressToRead at: offsetOfBaseAddress
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> basicExtractPointer [
-	
+
 	^ ExternalAddress fromAddress: (self basicExtractUnsignedInteger)
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> basicExtractUnsignedInteger [
-	
+
 	| baseAddressToRead offsetOfBaseAddress type pair |
-	
+
 	type := self stackUnsignedIntegerType.
 	pair := self nextBaseAddressFor: type.
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
-	
-	^ type handle: baseAddressToRead at: offsetOfBaseAddress.
+
+	^ type handle: baseAddressToRead at: offsetOfBaseAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackArgumentReader >> callback [
 	^ callback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackArgumentReader >> callback: anObject [
 	callback := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackArgumentReader >> callbackContext [
 	^ callbackContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackArgumentReader >> callbackContext: anObject [
-	callbackContext := anObject.
-
+	callbackContext := anObject
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> extractArguments [
 
-	callback functionSpec arguments do: [ :type | self extractNext: type resolvedType ].
-
+	callback functionSpec arguments do: [ :type | self extractNext: type resolvedType ]
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> extractCharacterType [
 
 	self addArgument: self basicExtractUnsignedInteger asCharacter
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> extractDouble [
 
 	| type pair baseAddressToRead offsetOfBaseAddress |
@@ -156,22 +156,21 @@ FFICallbackArgumentReader >> extractDouble [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
-
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress)
 ]
 
-{ #category : #extracting }
-FFICallbackArgumentReader >> extractExternalString: type [ 
-	
+{ #category : 'extracting' }
+FFICallbackArgumentReader >> extractExternalString: type [
+
 	| pair baseAddressToRead offsetOfBaseAddress |
 	pair := self nextBaseAddressFor: type.
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress)
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> extractFloat [
 
 	| type pair baseAddressToRead offsetOfBaseAddress |
@@ -180,16 +179,16 @@ FFICallbackArgumentReader >> extractFloat [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress)
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> extractIntegerType [
 
 	self addArgument: self basicExtractInteger
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> extractNext: aFFIType [
 
 	aFFIType isPointer
@@ -197,7 +196,7 @@ FFICallbackArgumentReader >> extractNext: aFFIType [
 		ifFalse: [ aFFIType extractFromCallbackOn: self ]
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFICallbackArgumentReader >> extractPointerOfType: aType [
 
 	| pair baseAddressToRead offsetOfBaseAddress |
@@ -205,25 +204,24 @@ FFICallbackArgumentReader >> extractPointerOfType: aType [
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	self addArgument: (aType handle: baseAddressToRead at: offsetOfBaseAddress).
-
+	self addArgument: (aType handle: baseAddressToRead at: offsetOfBaseAddress)
 ]
 
-{ #category : #extracting }
-FFICallbackArgumentReader >> extractStructType: type [ 
-	
+{ #category : 'extracting' }
+FFICallbackArgumentReader >> extractStructType: type [
+
 	| pair baseAddressToRead offsetOfBaseAddress |
-	
+
 	pair := self nextBaseAddressForStructure: type.
 	baseAddressToRead := pair first.
 	offsetOfBaseAddress := pair second.
 
-	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress).
+	self addArgument: (type handle: baseAddressToRead at: offsetOfBaseAddress)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICallbackArgumentReader >> initialize [
-	
+
 	| returnType |
 
 	super initialize.
@@ -231,16 +229,16 @@ FFICallbackArgumentReader >> initialize [
 	currentStackOffset := 1.
 	extractedArguments := Array new: callback functionSpec arguments size.
 	nextArgumentIndex := 1.
-	
+
 	"If the function returns an struct by copy there is a hidden parameter with a pointer storing it".
 	returnType := callback functionSpec returnType resolvedType.
-	(returnType isExternalStructure and: [ returnType isPointer not ]) ifTrue: [ 
+	(returnType isExternalStructure and: [ returnType isPointer not ]) ifTrue: [
 		returnValueHolder := self stackPointer pointerAt: 1.
 		currentStackOffset := currentStackOffset + Smalltalk wordSize.
 	]
 ]
 
-{ #category : #'calculating-offsets' }
+{ #category : 'calculating-offsets' }
 FFICallbackArgumentReader >> nextBaseAddressFor: type [
 
 	"I calculate the base address to read an argument from a callback context.
@@ -258,11 +256,11 @@ FFICallbackArgumentReader >> nextBaseAddressFor: type [
 	^ {baseAddressToRead. offsetOfBaseAddress}
 ]
 
-{ #category : #'calculating-offsets' }
+{ #category : 'calculating-offsets' }
 FFICallbackArgumentReader >> nextBaseAddressForStructure: type [
 
 	"I calculate the base address to read an struct argument.
-	The handling of structs is different in the subclases, but in myself the handle of 
+	The handling of structs is different in the subclases, but in myself the handle of
 	structs is performed in the stack, so the calculation of addresses is perform in the same
 	way as non-struct arguments."
 
@@ -270,22 +268,22 @@ FFICallbackArgumentReader >> nextBaseAddressForStructure: type [
 	^ self nextBaseAddressFor: type
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFICallbackArgumentReader >> stackIntegerType [
-	
+
 	"Depending of the architecture there are different types used in the stack for the integers."
-	
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackArgumentReader >> stackPointer [
 	^ callbackContext stackp
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFICallbackArgumentReader >> stackUnsignedIntegerType [
-	
+
 	"Depending of the architecture there are different types used in the stack for the unsigned integers."
 
 	^ self subclassResponsibility

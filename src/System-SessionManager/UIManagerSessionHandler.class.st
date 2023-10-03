@@ -6,44 +6,46 @@ This session handler makes the assumption that the current UIManager is a startu
 During shutdown we put back a startup ui manager, so we can handle startup actions during next startup without depending in the UI. (However, we shouldn't need a UI manager during the first startup actions).
 "
 Class {
-	#name : #UIManagerSessionHandler,
-	#superclass : #AbstractSessionHandler,
+	#name : 'UIManagerSessionHandler',
+	#superclass : 'AbstractSessionHandler',
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'System-SessionManager-Handlers'
+	#category : 'System-SessionManager-Handlers',
+	#package : 'System-SessionManager',
+	#tag : 'Handlers'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 UIManagerSessionHandler class >> initialize [
 	"has to be executed at the end of the user category"
-	SessionManager default 
+	SessionManager default
 		register: self uniqueInstance
-		inCategory: SessionManager default userCategory  
+		inCategory: SessionManager default userCategory
 		atPriority: SmallInteger maxVal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UIManagerSessionHandler class >> uniqueInstance [
 	^ UniqueInstance ifNil: [ UniqueInstance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UIManagerSessionHandler >> handledId [
 	^ self class name
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 UIManagerSessionHandler >> shutdown: isImageQuitting [
 
 	"Prepare the shutdown and the next startup"
 
-	UIManager default: StartupUIManager new.
+	UIManager default: StartupUIManager new
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 UIManagerSessionHandler >> startup: isImageStarting [
 	"Install the right UIManager"
-	
-	UIManager default: UIManager forCurrentSystemConfiguration.
+
+	UIManager default: UIManager forCurrentSystemConfiguration
 ]

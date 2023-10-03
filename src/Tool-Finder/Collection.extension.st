@@ -1,7 +1,13 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Tool-Finder' }
+{ #category : '*Tool-Finder' }
 Collection class >> approvedSelectorsForMethodFinder [
 
 	 ^ self selectors
+]
+
+{ #category : '*Tool-Finder' }
+Collection class >> forbiddenSelectorsForMethodFinder [
+
+	^ #( #combinations )
 ]

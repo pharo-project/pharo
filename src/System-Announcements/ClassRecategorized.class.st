@@ -6,17 +6,19 @@ This announcement will be raised when:
 It corresponds to the RecategorizedEvent
 "
 Class {
-	#name : #ClassRecategorized,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClassRecategorized',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'newCategory',
 		'oldCategory',
 		'classRecategorized'
 	],
-	#category : #'System-Announcements-System-Classes'
+	#category : 'System-Announcements-System-Classes',
+	#package : 'System-Announcements',
+	#tag : 'System-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassRecategorized class >> class: aClass recategorizedFrom: oldCategory to: newCategory [
 	^self new
 			classRecategorized: aClass;
@@ -25,37 +27,37 @@ ClassRecategorized class >> class: aClass recategorizedFrom: oldCategory to: new
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRecategorized >> classAffected [
 	^self classRecategorized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRecategorized >> classRecategorized [
 	^classRecategorized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRecategorized >> classRecategorized: aClass [
 	classRecategorized := aClass
 ]
 
-{ #category : #accessing }
-ClassRecategorized >> newCategory [ 
+{ #category : 'accessing' }
+ClassRecategorized >> newCategory [
 	^newCategory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRecategorized >> newCategory: aNewCategory [
 	newCategory := aNewCategory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRecategorized >> oldCategory [
 	^oldCategory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRecategorized >> oldCategory: anOldCategory [
 	oldCategory := anOldCategory
 ]

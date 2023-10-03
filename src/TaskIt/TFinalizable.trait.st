@@ -1,14 +1,17 @@
 Trait {
-	#name : #TFinalizable,
-	#category : #'TaskIt-Kernel'
+	#name : 'TFinalizable',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #starting }
+{ #category : 'starting' }
 TFinalizable >> noteDoesNotNeedToBeFinalized [
-	WeakRegistry default remove: self ifAbsent: [  ]
+
+	FinalizationRegistry default remove: self ifAbsent: [  ]
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TFinalizable >> noteNeedsToBeFinalized [
-	WeakRegistry default add: self
+	FinalizationRegistry default add: self
 ]

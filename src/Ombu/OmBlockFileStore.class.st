@@ -2,15 +2,17 @@
 I am a single-file store of entries. Each new entry is appended at the end. Entries are lazily read in blocks (represented by OmBlock) from file on demand.
 "
 Class {
-	#name : #OmBlockFileStore,
-	#superclass : #OmFileStore,
+	#name : 'OmBlockFileStore',
+	#superclass : 'OmFileStore',
 	#instVars : [
 		'blocks'
 	],
-	#category : #'Ombu-Stores'
+	#category : 'Ombu-Stores',
+	#package : 'Ombu',
+	#tag : 'Stores'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OmBlockFileStore >> blockForLocalNameAsInteger: anIndex [
 
 	self checkIfMustRefresh.
@@ -18,13 +20,13 @@ OmBlockFileStore >> blockForLocalNameAsInteger: anIndex [
 	^ self error: 'block not found'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStore >> blockSize [
 
 	^  131072 "2 ** 17"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStore >> entryPositionsStartingAt: startPosition upTo: endPosition [
 
 	self readEntriesWith: [:readStream |
@@ -34,20 +36,20 @@ OmBlockFileStore >> entryPositionsStartingAt: startPosition upTo: endPosition [
 			entryPositionsUpTo: endPosition ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmBlockFileStore >> initialize [
 
 	super initialize.
-	
+
 	blocks := OrderedCollection with:
 		(OmBlock
 			store: self
 			startPosition: 0
 			endPosition: self blockSize - 1
-			firstEntryReference: (self referenceToLocalName: '1')).
+			firstEntryReference: (self referenceToLocalName: '1'))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
 	^ (self blockForLocalNameAsInteger: aString asInteger)
@@ -57,7 +59,7 @@ OmBlockFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosur
 			ifAbsent: absentBlockClosure
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmBlockFileStore >> refresh [
 	self flush.
 
@@ -66,12 +68,12 @@ OmBlockFileStore >> refresh [
 			self initialize.
 			self fileReference ifAbsent: [ ^ self ].
 			self
-				readEntriesWith: [ :readStream | 
+				readEntriesWith: [ :readStream |
 					self refreshNewBlocksFrom: readStream.
 					self refreshHeadReferenceAndEntryCountFrom: readStream ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmBlockFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosition since: initialLocalName [
 	"AKA: Refresh blocks after new entries were written."
 
@@ -79,39 +81,39 @@ OmBlockFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosit
 	lastBlock := blocks last.
 
 	"Update last block if necessary"
-	firstStreamPosition < lastBlock endPosition ifTrue: [ 
+	firstStreamPosition < lastBlock endPosition ifTrue: [
 		lastBlock refreshIfNeededStartingAt: firstStreamPosition since: initialLocalName ].
 
 	"Add new blocks if necessary"
 	lastStreamPosition > lastBlock endPosition ifTrue: [
-		self readEntriesWith: [:readStream | self refreshNewBlocksFrom: readStream ] ].
+		self readEntriesWith: [:readStream | self refreshNewBlocksFrom: readStream ] ]
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmBlockFileStore >> refreshHeadReferenceAndEntryCountFrom: readStream [
 
 	entryCount := blocks last lastLocalNameAsInteger.
-	headReference := self referenceToLocalName: entryCount asString.
+	headReference := self referenceToLocalName: entryCount asString
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmBlockFileStore >> refreshNewBlocksFrom: readStream [
 
-	| reader blockPosition blockFirstEntry |
+	| reader blockPosition |
 	reader := self newEntryReader.
 	reader stream: readStream.
-	
-	[	blockPosition := blocks size * self blockSize.
-		blockPosition < readStream size ] whileTrue: [
-			readStream position: blockPosition.
-			reader nextEntryPositionIfFound: [:position | 
-				readStream position: position.
-				blockFirstEntry := reader nextEntry.
-				blocks add: (OmBlock
-					store: self
-					startPosition: position
-					endPosition: blockPosition + self blockSize - 1
-					firstEntryReference: (self referenceTo: blockFirstEntry)).
-				] ifNone: [ ^self "No more entries to add in a new block" ].
-		]
+
+	[
+	blockPosition := blocks size * self blockSize.
+	blockPosition < readStream size ] whileTrue: [
+		| startPosition blockFirstEntry |
+		reader positionAtNextEntryStartingAt: blockPosition.
+		readStream atEnd ifTrue: [ ^ self "No more entries to add in a new block" ].
+		startPosition := readStream position.
+		blockFirstEntry := reader nextEntry.
+		blocks add: (OmBlock
+				 store: self
+				 startPosition: startPosition
+				 endPosition: blockPosition + self blockSize - 1
+				 firstEntryReference: (self referenceTo: blockFirstEntry)) ]
 ]

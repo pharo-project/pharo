@@ -1,64 +1,65 @@
 Class {
-	#name : #DoItVariableTest,
-	#superclass : #TestCase,
+	#name : 'DoItVariableTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'instVarForTest'
 	],
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DoItVariableTest >> readVarInDifferentContext: aVar [
-	| temp | 
+	| temp |
 	self assert: aVar name equals: #temp.
-	
+
 	temp := #thisTemp.
 	^aVar readInContext: thisContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testConvertingToDoItVariable [
 
 	| temp var |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	
+
 	self assert: (var asDoItVariableFrom: #anyContext) identicalTo: var
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testCreationFromAnotherVariable [
 	| temp var targetTemp |
 	temp := 100.
 	targetTemp := thisContext lookupVar: #temp.
 	var := targetTemp asDoItVariableFrom: thisContext.
-	
+
 	self assert: var class equals: DoItVariable.
 	self assert: var doItContext identicalTo: thisContext.
 	self assert: var actualVariable identicalTo: targetTemp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testDoItCompilation [
 	| temp var doIt |
 	temp := 100.
-	var := DoItVariable named: #temp fromContext: thisContext.	
-	doIt := thisContext class compiler
+	var := DoItVariable named: #temp fromContext: thisContext.
+	doIt := thisContext compiler
 		source: 'temp + 2';
-		context: thisContext;
-		noPattern: true;
+		isScripting: true;
 		bindings: { var };
 		compile.
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testFromInstVarVariable [
 
 	| var |
 	instVarForTest := 100.
 	var := DoItVariable named: #instVarForTest fromContext: thisContext.
-	
+
 	self assert: var name equals: #instVarForTest.
 	self assert: var read equals: 100.
 	var write: 200.
@@ -66,13 +67,13 @@ DoItVariableTest >> testFromInstVarVariable [
 	self assert: instVarForTest equals: 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testFromTempVariable [
 
 	| temp var |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	
+
 	self assert: var name equals: #temp.
 	self assert: var read equals: 100.
 	var write: 200.
@@ -80,21 +81,19 @@ DoItVariableTest >> testFromTempVariable [
 	self assert: temp equals: 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testReadCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning 
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
-	
+	doIt := ast generateMethod.
+
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testReadInGivenContextShouldIgnoreIt [
 	| temp var actual |
 	temp := 100.
@@ -104,32 +103,30 @@ DoItVariableTest >> testReadInGivenContextShouldIgnoreIt [
 	self assert: actual equals: 100
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testUsingMethods [
 
 	| temp var |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	
+
 	self assert: var usingMethods equals: { thisContext method }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testWriteCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis] 
-		on: OCUndeclaredVariableWarning 
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generateMethod.
 	doIt valueWithReceiver: self arguments: #().
-	
+
 	self assert: temp equals: 500
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testWriteInGivenContextShouldIgnoreIt [
 	| temp var |
 	temp := 100.
@@ -139,11 +136,11 @@ DoItVariableTest >> testWriteInGivenContextShouldIgnoreIt [
 	self assert: temp equals: 200
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DoItVariableTest >> writeVarInDifferentContext: aVar value: aValue [
-	| temp | 
+	| temp |
 	self assert: aVar name equals: #temp.
-	
+
 	temp := #thisTemp.
 	aVar write: aValue inContext: thisContext.
 	self assert: temp equals: #thisTemp

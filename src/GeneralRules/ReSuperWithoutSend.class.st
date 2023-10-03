@@ -7,12 +7,14 @@ For every other use, it is just the same as ""self"".
 
 "
 Class {
-	#name : #ReSuperWithoutSend,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReSuperWithoutSend',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ReSuperWithoutSend >> basicCheck: aNode [
 	aNode isVariable ifFalse: [ ^ false ].
 	aNode isSuperVariable ifFalse: [ ^ false ].
@@ -23,12 +25,12 @@ ReSuperWithoutSend >> basicCheck: aNode [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSuperWithoutSend >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSuperWithoutSend >> name [
 	^ 'super makes only sense as the receiver of a message'
 ]

@@ -13,34 +13,35 @@ Instance Variables
 
 "
 Class {
-	#name : #SettingTree,
-	#superclass : #Model,
+	#name : 'SettingTree',
+	#superclass : 'Model',
 	#instVars : [
 		'collector',
 		'nodeList',
 		'persistence'
 	],
-	#category : #'System-Settings-Browser'
+	#category : 'System-Settings-Browser',
+	#package : 'System-Settings-Browser'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SettingTree class >> acceptableKeywords: aCollectionOfStrings [
 	^ self new acceptableKeywords: aCollectionOfStrings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTree >> acceptableKeywords: keywords [
-	self collector 
+	self collector
 		selectors: keywords;
 		filter: [:prg | prg methodClass isMeta].
 	nodeList := nil.
 	self collector reset
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 SettingTree >> checkForUnknownParent [
 	self unclassified
-		ifNotEmpty: [ :nodesWithUnknownParent | 
+		ifNotEmpty: [ :nodesWithUnknownParent |
 			| builder g |
 			builder := SettingTreeBuilder new.
 			g := (builder group: #nodesWithUnknownParent) node.
@@ -53,68 +54,68 @@ SettingTree >> checkForUnknownParent [
 				do: [ :node | node parentName: #nodesWithUnknownParent ] ]
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 SettingTree >> checkForUnknownTarget [
 	"check only root because other nodes with unknown target inherits it from its parent"
 	self settingTreeRoots do: [:node | node item target ifNil: [node item target: (node pragma ifNotNil: [:prg | prg methodClass instanceSide])]].
-	self settingTreeRoots do: [:node | node checkForUnknownTarget].
+	self settingTreeRoots do: [:node | node checkForUnknownTarget]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SettingTree >> childrenOf: aNode [
 	| children idx order |
 	"Get aNode children. Assign children order if one child has an order which is not nil"
 	children := self nodeList select: [ :p | p parentName = aNode settingDeclaration name ].
 	children
 		detect: [ :n | n order notNil ]
-		ifFound: [ :firstWithOrder | 
+		ifFound: [ :firstWithOrder |
 			idx := children indexOf: firstWithOrder.
 			order := firstWithOrder order.
 			idx > 1
-				ifTrue: [ 
-					idx - 1 to: 1 do: [ :pos | 
+				ifTrue: [
+					idx - 1 to: 1 do: [ :pos |
 						(children at: pos) order: order - 1.
 						order := order - 1 ] ].
 			order := firstWithOrder order.
-			idx + 1 to: children size do: [ :pos | 
+			idx + 1 to: children size do: [ :pos |
 				(children at: pos) order ifNil: [ (children at: pos) order: order + 1 ] ifNotNil: [ order := (children at: pos) order ].
 				order := order + 1 ] ].
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTree >> collector [
 	^ collector ifNil: [collector := PragmaCollector new]
 ]
 
-{ #category : #querying }
-SettingTree >> deeplyDetect: aBlock [ 
+{ #category : 'querying' }
+SettingTree >> deeplyDetect: aBlock [
 	self settingTreeRoots
 		do: [:sub | (sub deeplyDetect: aBlock)
 				ifNotNil: [:found | ^ found]].
 	^ nil
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SettingTree >> deeplySelect: aBlock [
 	^ self deeplySelect: aBlock in: OrderedCollection new
 ]
 
-{ #category : #querying }
-SettingTree >> deeplySelect: aBlock in: aCollection [ 
+{ #category : 'querying' }
+SettingTree >> deeplySelect: aBlock in: aCollection [
 	self settingTreeRoots
-		do: [:aRoot | aRoot deeplySelect: aBlock in: aCollection]. 
+		do: [:aRoot | aRoot deeplySelect: aBlock in: aCollection].
 	^ aCollection
 ]
 
-{ #category : #'private - tree building' }
+{ #category : 'private - tree building' }
 SettingTree >> emptyNodeNamed: aSymbol [
 	(self nodeNamed: aSymbol)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTree >> itemSortBlock [
-	^ [:a :b | 
+	^ [:a :b |
 		((a order notNil and: [b order notNil]) and: [a order ~= b order])
 			ifTrue: [a order < b order]
 			ifFalse: [((a order isNil and: [b order isNil]) or: [a order = b order])
@@ -122,10 +123,10 @@ SettingTree >> itemSortBlock [
 				ifFalse: [a order ifNil: [false] ifNotNil: [true]]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTree >> nodeList [
 	| builder |
-	^ nodeList 
+	^ nodeList
 		ifNil: [
 			builder := SettingTreeBuilder new.
 			self pragmasDo: [:p | builder buildPragma: p].
@@ -136,27 +137,27 @@ SettingTree >> nodeList [
 			self nodeList]
 ]
 
-{ #category : #'private - tree building' }
+{ #category : 'private - tree building' }
 SettingTree >> nodeNamed: aSymbol [
 	^ self nodeNamed: aSymbol ifAbsent: []
 ]
 
-{ #category : #'private - tree building' }
+{ #category : 'private - tree building' }
 SettingTree >> nodeNamed: aSymbol ifAbsent: aBlock [
 	^ self nodeList detect: [:d | d settingDeclaration name = aSymbol] ifNone: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTree >> persistence [
 	^ persistence ifNil: [ persistence := SystemSettingsPersistence settingTree: self ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SettingTree >> pragmasDo: aBlock [
 	^  self collector do: aBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SettingTree >> retainedNodesFromList: aListOfNodes [
 	| retained |
 	retained := OrderedCollection new.
@@ -164,38 +165,38 @@ SettingTree >> retainedNodesFromList: aListOfNodes [
 	^ retained
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SettingTree >> settingTreeRoots [
-	^ self retainedNodesFromList: ((self nodeList select: [:n | n parentName isNil]) asArray sort: self sortBlock) asOrderedCollection.
+	^ self retainedNodesFromList: ((self nodeList select: [:n | n parentName isNil]) asArray sort: self sortBlock) asOrderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTree >> sortBlock [
 	^ [:a :b | self itemSortBlock value: a settingDeclaration value: b settingDeclaration]
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 SettingTree >> storeSettingNodes [
 	self persistence storeSettingNodes
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SettingTree >> unclassified [
-	^ self nodeList select: [:node | node parentName notNil and: [node parentNode isNil]].
+	^ self nodeList select: [:node | node parentName notNil and: [node parentNode isNil]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTree >> updateList [
-	nodeList := nil.
+	nodeList := nil
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 SettingTree >> updateSettingNodes [
 	self persistence updateSettingNodes
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SettingTree >> whenChangedSend: aSelector to: aTarget [
 	self collector whenChangedSend: aSelector to: aTarget.
-	self collector whenResetSend: aSelector to: aTarget.
+	self collector whenResetSend: aSelector to: aTarget
 ]

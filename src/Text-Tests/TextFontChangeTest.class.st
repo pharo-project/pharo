@@ -2,12 +2,14 @@
 SUnit tests for class TextFontChange
 "
 Class {
-	#name : #TextFontChangeTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextFontChangeTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextFontChangeTest >> setUp [
 	"create the prototypes for testing"
 	super setUp.
@@ -17,10 +19,10 @@ TextFontChangeTest >> setUp [
 	prototypes add: TextFontChange font3.
 	prototypes add: TextFontChange font4.
 	prototypes
-		add: (TextFontChange fontNumber: 6) 
+		add: (TextFontChange fontNumber: 6)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextFontChangeTest >> testEquality [
 	"Check that different instances of the same TextFontChange are equal"
 	self assert: TextFontChange defaultFontChange equals: TextFontChange defaultFontChange.
@@ -31,9 +33,9 @@ TextFontChangeTest >> testEquality [
 	self assert: (TextFontChange fontNumber: 6) equals: (TextFontChange fontNumber: 6)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextFontChangeTest >> testHash [
-	"test that different instances of the same TextFontChange hash to the 
+	"test that different instances of the same TextFontChange hash to the
 	same value"
 	| hashes hash |
 	hashes := OrderedCollection new.

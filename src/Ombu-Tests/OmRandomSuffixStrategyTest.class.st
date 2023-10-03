@@ -2,16 +2,17 @@
 An OmRandomSuffixStrategyTest is a test class for testing the behavior of OmRandomSuffixStrategy
 "
 Class {
-	#name : #OmRandomSuffixStrategyTest,
-	#superclass : #OmSessionStoreNameStrategyTest,
-	#category : #'Ombu-Tests'
+	#name : 'OmRandomSuffixStrategyTest',
+	#superclass : 'OmSessionStoreNameStrategyTest',
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmRandomSuffixStrategyTest >> testIsNotConstant [
 
 	| names |
 	names := (1 to: 7) collect: [:each | strategy nextTo: 'existing' in: self directory ].
 	"This should be different"
-	self assert: names asSet size equals: names size.
+	self assert: names asSet size equals: names size
 ]

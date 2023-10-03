@@ -8,73 +8,75 @@ To launch the example:
 self new open
 "
 Class {
-	#name : #SDL2AthensDrawingExample,
-	#superclass : #SDL2AthensExample,
+	#name : 'SDL2AthensDrawingExample',
+	#superclass : 'SDL2AthensExample',
 	#instVars : [
 		'strokes',
 		'currentStroke'
 	],
-	#category : #'OSWindow-SDL2-Examples-Basic'
+	#category : 'OSWindow-SDL2-Examples-Basic',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> clearStrokes [
 	strokes removeAll
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2AthensDrawingExample >> clearSurface [
 	renderer athensSurface
-		drawDuring: [ :canvas | 
+		drawDuring: [ :canvas |
 			canvas
 				setPaint: Color white;
 				drawShape: (0 @ 0 extent: window extent) ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SDL2AthensDrawingExample >> createEventHandler [
-	^ OSWindowAthensDrawingExampleEventHandler new 
+	^ OSWindowAthensDrawingExampleEventHandler new
 			athensExample: self
 ]
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> endStroke [
-	currentStroke := OrderedCollection new.
+	currentStroke := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2AthensDrawingExample >> initialize [
 	super initialize.
 	currentStroke := OrderedCollection new.
 	strokes := OrderedCollection new
 ]
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> moveAt: aPoint [
 	currentStroke add: aPoint
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SDL2AthensDrawingExample >> redraw [
 	self clearSurface.
 	strokes
 		do:
-			[ :stroke | 
+			[ :stroke |
 			| path |
 			path := renderer athensSurface
-				createPath: [ :builder | 
+				createPath: [ :builder |
 					builder
 						absolute;
 						moveTo: stroke first.
 					stroke do: [ :point | builder lineTo: point ] ].
-			renderer drawDuring: [ :canvas | 
+			renderer drawDuring: [ :canvas |
 					canvas
 						setStrokePaint: Color black;
 						setShape: path;
 						draw ] ]
 ]
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> startStrokeAt: aPoint [
 	currentStroke := OrderedCollection with: aPoint.
 	strokes add: currentStroke

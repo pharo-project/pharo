@@ -5,12 +5,14 @@ If a class defines methods for reading and writing instance variables, they are 
 Omit method that are redefined in subclasses.
 "
 Class {
-	#name : #RBProtectInstanceVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBProtectInstanceVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	| matcher |
 	matcher := self parseTreeSearcher.
@@ -21,7 +23,7 @@ RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 				with: '`method ^' , variableName
 				with: ('`method: `arg <1s> := `arg' expandMacrosWith: variableName)
 				with: ('`method: `arg ^<1s> := `arg' expandMacrosWith: variableName))
-			do: [ :aNode :answer | 
+			do: [ :aNode :answer |
 				(class subclassRedefines: aNode selector)
 					ifFalse: [ answer add: aNode selector ].
 				answer ].
@@ -31,23 +33,23 @@ RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	^ matcher answer
 ]
 
-{ #category : #transforming }
-RBProtectInstanceVariableRefactoring >> inline: aSelector [ 
-	self onError: 
-			[self performCompositeRefactoring: (RBInlineAllSendersRefactoring 
+{ #category : 'transforming' }
+RBProtectInstanceVariableRefactoring >> inline: aSelector [
+	self onError:
+			[self generateChangesFor: (RBInlineAllSendersRefactoring
 						model: self model
 						sendersOf: aSelector
 						in: class)]
 		do: []
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBProtectInstanceVariableRefactoring >> preconditions [
 	^RBCondition definesInstanceVariable: variableName in: class
 ]
 
-{ #category : #transforming }
-RBProtectInstanceVariableRefactoring >> transform [
+{ #category : 'transforming' }
+RBProtectInstanceVariableRefactoring >> privateTransform [
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]
 ]

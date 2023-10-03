@@ -3,23 +3,31 @@ A simple CompasableModel to add new packages to the current package dependencies
 It implies to be open from a PDPackageAnalyzerWindowPackageDependencies instance. 
 "
 Class {
-	#name : #DAAddPackagePresenter,
-	#superclass : #SpPresenter,
+	#name : 'DAAddPackagePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'packageList',
 		'buttonAddPackage',
 		'dependenciesPresenter'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Core'
+	#category : 'Tool-DependencyAnalyser-UI-Core',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Core'
 }
 
-{ #category : #protocol }
+{ #category : 'specs' }
+DAAddPackagePresenter class >> title [
+
+	^ 'Choose packages to add'
+]
+
+{ #category : 'protocol' }
 DAAddPackagePresenter >> actionOnAddPackage [
 	| relationGraph packagesToAdd |
 	buttonAddPackage
-		action: [ 
+		action: [
 			self selectedItemsFromPackageList
-				ifNotEmpty: [ 
+				ifNotEmpty: [
 					relationGraph := self dependenciesPresenter relationGraph.
 					packagesToAdd := self selectedItemsFromPackageList
 						collect: [ :packageName | (DAPackage on: (RPackageSet named: packageName)) beSeen ].
@@ -30,68 +38,64 @@ DAAddPackagePresenter >> actionOnAddPackage [
 					self delete ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAAddPackagePresenter >> buildList [
 	| packagesAdded packagesNotAdded |
 	packagesAdded := self dependenciesPresenter seenPackagesName.
 	packagesNotAdded := self systemPackages.
 	packagesNotAdded removeAll: packagesAdded.
-	packageList sourceItems: packagesNotAdded.
+	packageList sourceItems: packagesNotAdded
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAAddPackagePresenter >> connectPresenters [
 	self actionOnAddPackage
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DAAddPackagePresenter >> defaultLayout [
-	
+
 	^ SpBoxLayout newTopToBottom
 			add: packageList;
 			add: buttonAddPackage expand: false;
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAddPackagePresenter >> dependenciesPresenter [
 	^ dependenciesPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAddPackagePresenter >> dependenciesPresenter: aPackageTreePresenter [
 	dependenciesPresenter := aPackageTreePresenter.
 	self buildList
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DAAddPackagePresenter >> initialExtent [
 	^ (600@600)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAAddPackagePresenter >> initializePresenters [
-	
+
 	buttonAddPackage := self newButton
 		help: 'Add these packages to the current analysis';
 		label: 'Add packages';
 		icon: (self iconNamed: #addIcon);
 		yourself.
 
-	packageList := SpChooserPresenter new.
+	packageList := SpChooserPresenter new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAAddPackagePresenter >> selectedItemsFromPackageList [
 	^ packageList chosenItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAddPackagePresenter >> systemPackages [
-	^ (RPackageOrganizer default packages collect: [ :package | package packageName asString ] )asSortedCollection
-]
 
-{ #category : #protocol }
-DAAddPackagePresenter >> title [
-	^ 'Choose packages to add'
+	^ (self packageOrganizer packages collect: [ :package | package packageName asString ]) asSortedCollection
 ]

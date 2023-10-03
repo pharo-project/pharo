@@ -1,10 +1,10 @@
-Extension { #name : #ClassVariable }
+Extension { #name : 'ClassVariable' }
 
-{ #category : #'*Ring-Core' }
-ClassVariable >> asRingMinimalDefinitionIn: anRGEnvironment [ 
+{ #category : '*Ring-Core' }
+ClassVariable >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
-			RGClassVariable 
-				named: self key asSymbol 
+			RGClassVariable
+				named: self key asSymbol
 				parent: (self definingClass asRingMinimalDefinitionIn: anRGEnvironment) ]
 ]

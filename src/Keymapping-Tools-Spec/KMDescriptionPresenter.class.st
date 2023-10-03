@@ -2,17 +2,18 @@
 A KMDescription is a window showing the description of shortcuts for a specified set of symbols reprensenting KMCategories
 "
 Class {
-	#name : #KMDescriptionPresenter,
-	#superclass : #SpPresenter,
+	#name : 'KMDescriptionPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'shortcutList',
 		'actionBar',
 		'categoryList'
 	],
-	#category : #'Keymapping-Tools-Spec'
+	#category : 'Keymapping-Tools-Spec',
+	#package : 'Keymapping-Tools-Spec'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 KMDescriptionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #categoryList withConstraints: [ :c | c height: 25 ];
@@ -21,26 +22,26 @@ KMDescriptionPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 KMDescriptionPresenter class >> example [
 	self new
 		categories: #(GlobalShortcuts MonticelloShortcuts TextEditor);
 		open
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 KMDescriptionPresenter >> categories: aCollectionOfSymbols [
 	categoryList items: (aCollectionOfSymbols collect: [ :e | KMRepository default categoryForName: e ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMDescriptionPresenter >> initializePresenter [
 	categoryList
 		transmitTo: shortcutList
 		transform: [ :category | (category entriesAt: #all) keymaps sorted: [ :keymap | keymap shortcut asString ] ascending ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMDescriptionPresenter >> initializeWidgets [
 	categoryList := self newDropList.
 	shortcutList := self newTable.
@@ -62,7 +63,7 @@ KMDescriptionPresenter >> initializeWidgets [
 				yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMDescriptionPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'Shortcuts description';

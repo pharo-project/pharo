@@ -13,99 +13,101 @@ undoMessage
 
 "
 Class {
-	#name : #UndoRedoRecord,
-	#superclass : #HistoryLeaf,
+	#name : 'UndoRedoRecord',
+	#superclass : 'HistoryLeaf',
 	#instVars : [
 		'redoMessage',
 		'undoMessage'
 	],
-	#category : #'System-History-Utilities'
+	#category : 'System-History-Utilities',
+	#package : 'System-History',
+	#tag : 'Utilities'
 }
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 UndoRedoRecord class >> do: doMessageSend undo: undoMessageSend [
 	^ self redo: doMessageSend undo: undoMessageSend
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 UndoRedoRecord class >> doArray: doArray undoArray: undoArray [
 	^ self redoArray: doArray undoArray: undoArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UndoRedoRecord class >> redo: doMessageSend undo: undoMessageSend [
 
 	| anUndoRecord |
 	anUndoRecord := self new.
 	anUndoRecord redoMessage: doMessageSend.
 	anUndoRecord undoMessage: undoMessageSend.
-	^anUndoRecord.
+	^anUndoRecord
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UndoRedoRecord class >> redoArray: doArray undoArray: undoArray [
 	" doArray and undoArray are constructed as follow: #(receiver selector arguments) "
 	| anUndoRecord |
 	anUndoRecord := self new.
-	anUndoRecord redoMessage: (MessageSend 
-		receiver: 	(doArray first) 
-		selector: 	(doArray second) 
+	anUndoRecord redoMessage: (MessageSend
+		receiver: 	(doArray first)
+		selector: 	(doArray second)
 		arguments: 	(doArray third)).
-	undoArray 
-		ifNotNil: [ 
-			anUndoRecord undoMessage: (MessageSend 
-				receiver: 	(undoArray first) 
-				selector: 	(undoArray second) 
+	undoArray
+		ifNotNil: [
+			anUndoRecord undoMessage: (MessageSend
+				receiver: 	(undoArray first)
+				selector: 	(undoArray second)
 				arguments: 	(undoArray third))].
-	^anUndoRecord.
+	^anUndoRecord
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 UndoRedoRecord >> do [
 	^self redo
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 UndoRedoRecord >> doMessage [
 
 	^ self redoMessage
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 UndoRedoRecord >> doMessage: aMessageSend [
 	^ self redoMessage: aMessageSend
 ]
 
-{ #category : #'redo-undo' }
+{ #category : 'redo-undo' }
 UndoRedoRecord >> redo [
-	^self redoMessage value.
+	^self redoMessage value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UndoRedoRecord >> redoMessage [
 
 	^ redoMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UndoRedoRecord >> redoMessage: aMessageSend [
 
 	redoMessage := aMessageSend
 ]
 
-{ #category : #'redo-undo' }
+{ #category : 'redo-undo' }
 UndoRedoRecord >> undo [
 	^self undoMessage
-		ifNotNil: [self undoMessage value].
+		ifNotNil: [self undoMessage value]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UndoRedoRecord >> undoMessage [
 
 	^ undoMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UndoRedoRecord >> undoMessage: aMessageSend [
 
 	undoMessage := aMessageSend

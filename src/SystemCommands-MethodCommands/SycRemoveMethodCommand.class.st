@@ -13,50 +13,51 @@ Internal Representation and Key Implementation Points.
 	removeStrategy:		<SycRemoveMethodStrategy>
 "
 Class {
-	#name : #SycRemoveMethodCommand,
-	#superclass : #SycMethodCommand,
+	#name : 'SycRemoveMethodCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'removeStrategy'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethodCommand >> defaultMenuIconName [
 	^#removeIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethodCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMethodCommand >> execute [
-	
+
 	removeStrategy removeMethods: methods
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRemoveMethodCommand >> initialize [
 	super initialize.
-	
+
 	removeStrategy := SycSilentlyRemoveMethodStrategy new
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	removeStrategy := aToolContext requestRemoveMethodStrategyFor: methods.
+
+	removeStrategy := aToolContext requestRemoveMethodStrategyFor: methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethodCommand >> removeStrategy [
 	^ removeStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethodCommand >> removeStrategy: anObject [
 	removeStrategy := anObject
 ]

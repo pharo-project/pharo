@@ -1,31 +1,32 @@
 Class {
-	#name : #TFUFFIFunctionCallTest,
-	#superclass : #TFUFFITestCase,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIFunctionCallTest',
+	#superclass : 'TFUFFITestCase',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> calloutWithManyArguments: arg1 and: arg2 and: arg3 and: arg4 and: arg5 and: arg6 and: arg7 and: arg8 and: arg9 and: arg10 [
 	^ self
 		ffiCall:
 			#(int multipleArgumentCallout #(int arg1 , int arg2 , int arg3 , int arg4 , int arg5 , int arg6 , int arg7 , int arg8 , int arg9 , int arg10))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> longCallout: seconds [
-	
+
 	^ self ffiCall: #(int longCallout(int seconds))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> shortCallout [
-	
+
 	^ self ffiCall: #(int shortCallout())
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> testCalloutWithManyArguments [
-	
+
 	| result |
 	result := self
 			calloutWithManyArguments: 1
@@ -41,9 +42,9 @@ TFUFFIFunctionCallTest >> testCalloutWithManyArguments [
 	self assert: result equals: 55
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> testLongCalloutDoesNotBlockImage [
-	
+
 	"Tricky test.
 	This tests checks that during a callout the image is not completely suspended.
 	To do that, we do a 1 second long callout in a separate Pharo process.
@@ -52,13 +53,13 @@ TFUFFIFunctionCallTest >> testLongCalloutDoesNotBlockImage [
 
 	"If we are running in the same thread execution, it will block the interpreter. So the test is skipped."
 	(self ffiLibrary = TFTestLibraryUsingSameThreadRunner)
-		ifTrue: [ ^ self skip ]. 
-	
+		ifTrue: [ ^ self skip ].
+
 	calloutEnter := Semaphore new.
 	calloutExit := Semaphore new.
-	orderOfFinishing := OrderedCollection new.	
+	orderOfFinishing := OrderedCollection new.
 	[
-		calloutEnter signal. 	
+		calloutEnter signal.
 		self longCallout: 1.
 		orderOfFinishing add: #finishedCallout.
 		calloutExit signal ] fork.
@@ -66,19 +67,19 @@ TFUFFIFunctionCallTest >> testLongCalloutDoesNotBlockImage [
 	0.3 seconds wait.
 	orderOfFinishing add: #waitingForCallout.
 	calloutExit wait.
-	
+
 	self assert: orderOfFinishing first equals: #waitingForCallout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> testShortCallout [
-	
+
 	| semaphore result |
 	semaphore := Semaphore new.
-	
+
 	[ 	result := self shortCallout.
 		semaphore signal ] fork.
 	semaphore wait.
-	
+
 	self assert: result equals: 42
 ]

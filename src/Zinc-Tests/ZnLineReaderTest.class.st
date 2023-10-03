@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnLineReaderTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnLineReaderTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLineReaderTest >> testBinary [
 	| input reader |
 	input := ('Foo' , String crlf , 'Bar' , String crlf) asByteArray.
@@ -14,23 +15,23 @@ ZnLineReaderTest >> testBinary [
 	self assert: reader nextLine isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLineReaderTest >> testLineTooLong [
 	| input reader |
 	input := (String new: 128) atAllPut: $X.
 	reader := (ZnLineReader on: input readStream) limit: 64.
-	self should: [ reader nextLine ] raise: ZnLineTooLong  
+	self should: [ reader nextLine ] raise: ZnLineTooLong
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLineReaderTest >> testLineTooLongDefault [
 	| input reader |
 	input := (String new: ZnConstants maximumLineLength + 1) atAllPut: $X.
 	reader := ZnLineReader on: input readStream.
-	self should: [ reader nextLine ] raise: ZnLineTooLong  
+	self should: [ reader nextLine ] raise: ZnLineTooLong
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLineReaderTest >> testSimple [
 	| input reader |
 	input := 'Foo' , String crlf , 'Bar' , String crlf.

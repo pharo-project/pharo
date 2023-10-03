@@ -2,49 +2,49 @@
 A CNSelectorExtractorTest is a test class for testing the behavior of CNSelectorExtractor
 "
 Class {
-	#name : #CNSelectorExtractorTest,
-	#superclass : #TestCase,
+	#name : 'CNSelectorExtractorTest',
+	#superclass : 'TestCase',
 	#classVars : [
 		'selectorExtractor'
 	],
-	#category : #'Tools-CodeNavigation-Tests'
+	#category : 'Tools-CodeNavigation-Tests',
+	#package : 'Tools-CodeNavigation-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CNSelectorExtractorTest >> initialize [
-			
-	selectorExtractor := CNSelectorExtractor new.
+
+	selectorExtractor := CNSelectorExtractor new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesReturnsNil [
 
    |source position|
 	"Border cases first"
-	
+
 	"Nil source, returns nil"
 	source := nil.
 	position := 1.
 	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-	
+
 	"Empty source, returns nil"
 	source := ''.
 	position := 1.
 	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-	
+
 	"nil source, invalid Position"
 	source := nil.
 	position := -1.
 	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-	
+
 	"a string source, invalid Position"
 	source := 'astring'.
 	position := 10000.
-	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil.
-
+	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionGeneralCasesExtractsSelector [
 
 	"Note that the tested method (#extractSelectorFromSource:atPosition:) uses internally #extractSelectorFromAST:atPosition:"

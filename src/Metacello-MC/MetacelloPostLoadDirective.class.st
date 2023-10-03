@@ -1,34 +1,36 @@
 Class {
-	#name : #MetacelloPostLoadDirective,
-	#superclass : #MetacelloPrePostLoadDirective,
-	#category : #'Metacello-MC-Directives'
+	#name : 'MetacelloPostLoadDirective',
+	#superclass : 'MetacelloPrePostLoadDirective',
+	#category : 'Metacello-MC-Directives',
+	#package : 'Metacello-MC',
+	#tag : 'Directives'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPostLoadDirective >> addTo: aLoaderDirective [
 
 	spec postLoadDoIt value ~~ nil ifTrue: [ aLoaderDirective add: self ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloPostLoadDirective >> label [
 
 	^super label, ' >> ', self spec postLoadDoIt value asString
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPostLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadPostloadDirective: self.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPostLoadDirective >> postLoadDo: aBlock [
 
 	aBlock value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPostLoadDirective >> title [
 
 	^'postload'

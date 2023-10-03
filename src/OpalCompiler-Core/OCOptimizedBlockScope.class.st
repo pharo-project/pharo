@@ -5,48 +5,50 @@ To be consistent, these blocks need nevertheless a scope.
 
 "
 Class {
-	#name : #OCOptimizedBlockScope,
-	#superclass : #OCBlockScope,
+	#name : 'OCOptimizedBlockScope',
+	#superclass : 'OCBlockScope',
 	#instVars : [
 		'isInlinedLoop'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCOptimizedBlockScope >> initialize [
 	super initialize.
 	isInlinedLoop := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCOptimizedBlockScope >> isInsideOptimizedLoop [
 	^ isInlinedLoop
 		ifTrue: [true]
 		ifFalse: [self outerScope isInsideOptimizedLoop]
 ]
 
-{ #category : #testing }
-OCOptimizedBlockScope >> isOptimized [ 
+{ #category : 'testing' }
+OCOptimizedBlockScope >> isOptimized [
 
 	^ true
 ]
 
-{ #category : #mark }
+{ #category : 'mark' }
 OCOptimizedBlockScope >> markInlinedLoop [
 	isInlinedLoop := true
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 OCOptimizedBlockScope >> nextOuterScopeContextOf: aContext [
 
 	"Returns the next context to lookup a variable name from within outer scope.
-	
+
 	For inlined BlockClosure which I represent it will be same context because inlined blocks do not produce extra contexts on stack"
 	^ aContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCOptimizedBlockScope >> outerNotOptimizedScope [
 	^self outerScope outerNotOptimizedScope
 ]

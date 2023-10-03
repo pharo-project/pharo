@@ -3,12 +3,14 @@ I am a refactory change for a class-rename refactoring. I hold the old and new n
 Executing this change will rename the (global) defined ""oldName"" class to ""newName"".
 "
 Class {
-	#name : #RBRenameClassChange,
-	#superclass : #RBCompositeRefactoryChange,
-	#category : #'Refactoring-Changes-Changes-Classes'
+	#name : 'RBRenameClassChange',
+	#superclass : 'RBCompositeRefactoryChange',
+	#category : 'Refactoring-Changes-Changes-Classes',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameClassChange class >> rename: oldString to: newString [
 
 	^ self new
@@ -16,29 +18,29 @@ RBRenameClassChange class >> rename: oldString to: newString [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRenameClassChange >> = aRenameClassChange [
 
 	super class = aRenameClassChange class
 		ifFalse: [ ^ false ].
-	^oldName = aRenameClassChange oldName 
+	^oldName = aRenameClassChange oldName
 		and: [ newName = aRenameClassChange newName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> changeClass [
 
-	^ (onSystemDictionary classNamed: oldName) ifNil: [ 
+	^ (onSystemDictionary classNamed: oldName) ifNil: [
 		  onSystemDictionary classNamed: newName ]
 ]
 
-{ #category : #private }
-RBRenameClassChange >> executeNotifying: aBlock [ 
+{ #category : 'private' }
+RBRenameClassChange >> executeNotifying: aBlock [
 
 	| undos |
 	self changeClass rename: newName.
-	undos := changes collect: [ :each | 
-		(each renameChangesForClass: oldName asSymbol to: newName asSymbol) 
+	undos := changes collect: [ :each |
+		(each renameChangesForClass: oldName asSymbol to: newName asSymbol)
 			executeNotifying: aBlock ].
 	^ self copy
 		changes: undos reverse;
@@ -46,39 +48,39 @@ RBRenameClassChange >> executeNotifying: aBlock [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRenameClassChange >> hash [
 
 	^ (self class hash bitXor: self oldName hash) bitXor:
 		  self newName hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> nameToDisplay [
 
 	^ self printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> newName [
 
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> oldName [
 
 	^ oldName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> oldVersionTextToDisplay [
 
-	^ String streamContents: [ :s | 
+	^ String streamContents: [ :s |
 			self changes do: [ :c | 	s << c oldVersionTextToDisplay; cr ]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameClassChange >> printOn: aStream [
 
 	aStream
@@ -88,32 +90,32 @@ RBRenameClassChange >> printOn: aStream [
 		nextPut: $!
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRenameClassChange >> rename: oldString to: newString [
 
 	oldName := oldString.
 	newName := newString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> renameChangesForClass: oldClassName to: newClassName [
 
 	| change |
 	change := super renameChangesForClass: oldClassName to: newClassName.
-	oldName asSymbol = oldClassName ifTrue: [ 
+	oldName asSymbol = oldClassName ifTrue: [
 		change rename: newClassName to: newName ].
 	^ change
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> textToDisplay [
 
-	^ String streamContents: [ :s | 
+	^ String streamContents: [ :s |
          s << self printString ; cr.
          self changes do: [ :c | 	s << c textToDisplay; cr ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameClassChange >> whatToDisplayIn: aChangeBrowser [
 
 	^ { self }

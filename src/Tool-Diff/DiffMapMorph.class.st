@@ -2,18 +2,20 @@
 A morph to display a map of join mappings
 "
 Class {
-	#name : #DiffMapMorph,
-	#superclass : #BorderedMorph,
+	#name : 'DiffMapMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'mappings'
 	],
-	#category : #'Tool-Diff-Morphs'
+	#category : 'Tool-Diff-Morphs',
+	#package : 'Tool-Diff',
+	#tag : 'Morphs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMapMorph >> adoptPaneColor: paneColor [
 	"Change our border color too."
-	
+
 	|c|
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
@@ -21,16 +23,16 @@ DiffMapMorph >> adoptPaneColor: paneColor [
 	self borderStyle baseColor: paneColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMapMorph >> defaultColor [
 	"Answer the default color for the receiver."
 	^ self theme diffMapColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 DiffMapMorph >> drawOn: aCanvas [
 	"Draw the indicators for the mappings."
-	
+
 	|b f|
 	b := self innerBounds insetBy: 2.
 	super drawOn: aCanvas.
@@ -43,10 +45,10 @@ DiffMapMorph >> drawOn: aCanvas [
 			j drawMapOn: c in: b scale: f]]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 DiffMapMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the indicators for the mappings."
-	
+
 	|b f|
 	b := self innerBounds insetBy: 2.
 	super drawOnAthensCanvas: anAthensCanvas.
@@ -59,31 +61,31 @@ DiffMapMorph >> drawOnAthensCanvas: anAthensCanvas [
 			j drawMapOn: c in: b scale: f]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMapMorph >> extent: newExtent [
 	"Update the gradient."
-	
+
 	super extent: newExtent.
 	(self fillStyle notNil and: [self fillStyle isOrientedFill])
 		ifTrue: [self fillStyle direction: 0@self height]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMapMorph >> gradientRampForColor: c [
 	"Answer the background gradient ramp to use."
-	
+
 	^{0.0->c darker duller. 0.1-> c lighter.
 		0.9->c twiceLighter. 1.0->c darker}
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DiffMapMorph >> handlesMouseDown: anEvent [
 	"Answer true to report mouse down activity."
-	
+
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMapMorph >> initialize [
 	"Initialize the receiver."
 
@@ -92,14 +94,14 @@ DiffMapMorph >> initialize [
 		mappings: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMapMorph >> mappings [
 	"Answer the value of mappings"
 
 	^ mappings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMapMorph >> mappings: anObject [
 	"Set the value of mappings"
 
@@ -107,22 +109,22 @@ DiffMapMorph >> mappings: anObject [
 	self changed
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 DiffMapMorph >> mappingsHeight [
 	"Answer the maximum y of all the mappings."
-	
+
 	self mappings ifEmpty: [^0].
-	^self mappings last dst range last 
+	^self mappings last dst range last
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DiffMapMorph >> mouseDown: event [
 	"Trigger a 0..1 range based on location."
-	
+
 	|b|
 	b := self innerBounds insetBy: 2.
 	self
 		triggerEvent: #mapClicked
-		with: (((event cursorPoint y asFloat - b top / b height) 
+		with: (((event cursorPoint y asFloat - b top / b height)
 				min: 1) max: 0)
 ]

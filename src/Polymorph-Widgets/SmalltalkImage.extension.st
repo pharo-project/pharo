@@ -1,6 +1,6 @@
-Extension { #name : #SmalltalkImage }
+Extension { #name : 'SmalltalkImage' }
 
-{ #category : #'*Polymorph-Widgets' }
-SmalltalkImage >> ui [ 
+{ #category : '*Polymorph-Widgets' }
+SmalltalkImage >> ui [
 	^ UIThemeRegistry
 ]

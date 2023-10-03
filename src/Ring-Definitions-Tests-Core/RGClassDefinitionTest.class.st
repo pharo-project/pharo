@@ -2,12 +2,14 @@
 SUnit tests for class definitions
 "
 Class {
-	#name : #RGClassDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGClassDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testAddingMethods [
 	| newMethod newClass |
 	newClass := RGClassDefinition named: #OrderedCollection.
@@ -18,7 +20,7 @@ RGClassDefinitionTest >> testAddingMethods [
 			'add: newObject
 									^self addLast: newObject'.
 
-	self assert: newMethod isMetaSide not.
+	self assert: newMethod isMeta not.
 	self assert: newClass hasMethods not.
 
 	newClass addMethod: newMethod.
@@ -44,7 +46,7 @@ RGClassDefinitionTest >> testAddingMethods [
 	self assert: (newClass compiledMethodNamed: #fakeMethod) isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testAsClassDefinition [
 	| newClass |
 	newClass := OrderedCollection asRingDefinition.
@@ -59,7 +61,7 @@ RGClassDefinitionTest >> testAsClassDefinition [
 	self assert: newClass classSide isClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testAsClassDefinition2 [
 	| newClass |
 	newClass := MOPTestClassC asRingDefinition.
@@ -76,12 +78,12 @@ RGClassDefinitionTest >> testAsClassDefinition2 [
 	self assert: newClass classSide traitCompositionSource equals: 'Trait2 classTrait'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testAsClassDefinitionSourceDefinition [
 	| newClass |
 	newClass := MOPTestClassC asRingDefinition.
 	self
-		assert: newClass definitionSource 
+		assert: newClass definitionSource
 		equals: (ClassDefinitionPrinter new for: MOPTestClassC) definitionString.
 
 	self
@@ -89,12 +91,12 @@ RGClassDefinitionTest >> testAsClassDefinitionSourceDefinition [
 		equals: (ClassDefinitionPrinter new for: MOPTestClassC class) definitionString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testAsRingDefinition [
 	self assert: OrderedCollection asRingDefinition asRingDefinition isRingObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testClassEquality [
 	| newClass |
 	self assert: OrderedCollection asRingDefinition equals: OrderedCollection asRingDefinition.
@@ -103,7 +105,7 @@ RGClassDefinitionTest >> testClassEquality [
 	self assert: OrderedCollection asRingDefinition equals: newClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testExistingClass [
 	| newClass metaClass |
 	newClass := RGClassDefinition named: #OrderedCollection.
@@ -121,7 +123,7 @@ RGClassDefinitionTest >> testExistingClass [
 	self assert: metaClass realClass equals: OrderedCollection class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testNonExistingClass [
 	| newClass |
 	newClass := RGClassDefinition named: #Connection.
@@ -142,25 +144,25 @@ RGClassDefinitionTest >> testNonExistingClass [
 	self assert: newClass hasProtocols not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testReadFrom [
 	| st rg |
 	rg := Point asRingDefinition.
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			rg storeOn: s.
 			s contents ].
 	self assert: (Object readFrom: st) equals: rg.
 
 	rg := Point class asRingDefinition.
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			rg storeOn: s.
 			s contents ].
 	self assert: (Object readFrom: st) equals: rg
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testRemovingMethods [
 	| newMethod newClass |
 	newClass := RGClassDefinition named: #OrderedCollection.
@@ -189,23 +191,23 @@ RGClassDefinitionTest >> testRemovingMethods [
 	self assert: newClass hasMethods not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testStoreOn [
 	| st |
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			Point asRingDefinition storeOn: s.
 			s contents ].
 	self assert: st equals: '(RGClassDefinition named: #Point)'.
 
 	st := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			Point class asRingDefinition storeOn: s.
 			s contents ].
 	self assert: st equals: '((RGMetaclassDefinition named: #''Point class'') baseClass:(RGClassDefinition named: #Point))'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithCategory [
 	| newClass |
 	newClass := (RGClassDefinition named: #Object)
@@ -216,7 +218,7 @@ RGClassDefinitionTest >> testWithCategory [
 	self assert: newClass category equals: 'Kernel-Objects'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithClassInstanceVariables [
 	| newClass metaClass classInstVar |
 	newClass := RGClassDefinition named: #HashTableSizes.
@@ -241,7 +243,7 @@ RGClassDefinitionTest >> testWithClassInstanceVariables [
 	self assert: (metaClass instanceVariableNamed: #sizes) isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithClassVariables [
 	| newClass classVar |
 	newClass := (RGClassDefinition named: #Object)
@@ -268,7 +270,7 @@ RGClassDefinitionTest >> testWithClassVariables [
 	self assert: newClass classVariables size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithComment [
 	| newClass newComment |
 	newClass := RGClassDefinition named: #Object.
@@ -296,7 +298,7 @@ RGClassDefinitionTest >> testWithComment [
 	self assert: newClass comment isRingObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithDefaultNamespace [
 	| newClass |
 	newClass := RGClassDefinition named: #Object.
@@ -305,7 +307,7 @@ RGClassDefinitionTest >> testWithDefaultNamespace [
 	self assert: newClass realClass equals: Object
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithInstanceVariables [
 	| newClass instVar |
 	newClass := RGClassDefinition named: #OrderedCollection.
@@ -329,7 +331,7 @@ RGClassDefinitionTest >> testWithInstanceVariables [
 	self assert: (newClass instanceVariableNamed: #array) isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithPoolDictionaries [
 	| newClass poolVar |
 	newClass := (RGClassDefinition named: #Text)
@@ -356,7 +358,7 @@ RGClassDefinitionTest >> testWithPoolDictionaries [
 	self assertEmpty: newClass sharedPools
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithProtocols [
 	| newMethod newClass |
 	newClass := RGClassDefinition named: #OrderedCollection.
@@ -377,7 +379,7 @@ RGClassDefinitionTest >> testWithProtocols [
 	self assertEmpty: (newClass methodsInProtocol: 'accessing')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassDefinitionTest >> testWithSuperclass [
 	| newClass supClass |
 	supClass := (RGClassDefinition named: #Object)

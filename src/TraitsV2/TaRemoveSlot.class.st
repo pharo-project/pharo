@@ -4,34 +4,36 @@ I implement the #--  operator.
 
 "
 Class {
-	#name : #TaRemoveSlot,
-	#superclass : #TaSingleComposition,
+	#name : 'TaRemoveSlot',
+	#superclass : 'TaSingleComposition',
 	#instVars : [
 		'removedSlots'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaRemoveSlot class >> remove: anArrayOfSlotNames from: aTrait [
 	^ self new
 		removedSlots: anArrayOfSlotNames;
 		inner: aTrait;
-		yourself.
+		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaRemoveSlot >> copyTraitExpression [
 	^ self class remove: removedSlots from: inner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveSlot >> removedSlots [
 
 	^ removedSlots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveSlot >> removedSlots: anObject [
 	"we support both a symbol and an array of symbols"
 	removedSlots := anObject isSymbol
@@ -39,18 +41,18 @@ TaRemoveSlot >> removedSlots: anObject [
 		                ifFalse: [ anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRemoveSlot >> slots [
 	^ inner slots reject: [ :e | removedSlots includes: e name ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaRemoveSlot >> traitCompositionExpression [
 
 	removedSlots size = 1
 		           ifTrue: [^ self inner traitCompositionExpressionWithParens , ' -- ' , removedSlots first printString].
-			
-	^ String streamContents: [ :s | 
+
+	^ String streamContents: [ :s |
 		  s
 			  nextPutAll: self inner traitCompositionExpressionWithParens;
 			  nextPutAll: ' -- '.

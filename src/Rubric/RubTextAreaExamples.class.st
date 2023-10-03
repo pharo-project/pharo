@@ -16,15 +16,17 @@ RubTextAreaExamples withOnlyThePrimarySelection.
 RubTextAreaExamples wrappedTo400WithMarginsOf40.
 "
 Class {
-	#name : #RubTextAreaExamples,
-	#superclass : #Object,
+	#name : 'RubTextAreaExamples',
+	#superclass : 'Object',
 	#classVars : [
 		'ModelForShout'
 	],
-	#category : #'Rubric-Editing-Core-Examples'
+	#category : 'Rubric-Editing-Core-Examples',
+	#package : 'Rubric',
+	#tag : 'Editing-Core-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> autoReactingText [
 	"self autoReactingText"
 	<sampleInstance>
@@ -44,7 +46,7 @@ RubTextAreaExamples class >> autoReactingText [
 	area openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> blueTextOnGrayBackgroundNotWrapped [
 	"self blueTextOnGrayBackgroundNotWrapped"
 	<sampleInstance>
@@ -57,7 +59,7 @@ RubTextAreaExamples class >> blueTextOnGrayBackgroundNotWrapped [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400 [
 	"self blueTextOnGrayBackgroundWrappedTo400"
 	<sampleInstance>
@@ -71,7 +73,7 @@ RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400 [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400Version2 [
 	"self blueTextOnGrayBackgroundWrappedTo400Version2"
 	<sampleInstance>
@@ -85,7 +87,7 @@ RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400Version2 [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> centered [
 
 	"self centered"
@@ -100,22 +102,17 @@ RubTextAreaExamples class >> centered [
 		openInWorld
 ]
 
-{ #category : #shout }
-RubTextAreaExamples class >> hasBindingOf: aString [
-	^ (self bindingOf: aString) notNil
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextAreaExamples class >> interactionModel [
 	^ ModelForShout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextAreaExamples class >> menu [
 	^ nil
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> nicolaiAttributeFix [
 	<example>
 	"self nicolaiAttributeFix"
@@ -124,7 +121,7 @@ RubTextAreaExamples class >> nicolaiAttributeFix [
 	font2 := TextFontReference toFont: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10).
 	{font1.
 	font2}
-		do: [ :f | 
+		do: [ :f |
 			| t1 t2 t3 t4 t5 t6 |
 			tMorph := RubEditingArea new.
 			t1 := 'normal\' withCRs asText addAttribute: f.
@@ -147,16 +144,16 @@ RubTextAreaExamples class >> nicolaiAttributeFix [
 			tMorph openInWorld ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> presentationInput [
 	<sampleInstance>
 	"
-	
+
 	self presentationInput.
-	
+
 	Thanks to Tudor Girba aka Doru
 	Then Shift+Tab makes the editing area appear at the center of the screen.
-	Useful to input explanations during a presentation 
+	Useful to input explanations during a presentation
 	"
 
 	KMRepository reset.
@@ -179,7 +176,7 @@ RubTextAreaExamples class >> presentationInput [
 								openCenteredInWorld ]))
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> profileSourcesFileViewing [
 	"The big test to check that a TextArea is able to compose and ''quickly'' show
 	 a big file content "
@@ -197,7 +194,7 @@ RubTextAreaExamples class >> profileSourcesFileViewing [
 				openInWorld ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> rightFlushed [
 
 	"self rightFlushed"
@@ -212,18 +209,18 @@ RubTextAreaExamples class >> rightFlushed [
 		  yourself
 ]
 
-{ #category : #NOcompletion }
+{ #category : 'NOcompletion' }
 RubTextAreaExamples class >> selectedClassOrMetaClass [
 	^ ModelForShout class
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubTextAreaExamples class >> shoutAboutToStyle: aStyler [
 	aStyler classOrMetaClass: ModelForShout.
 	^ true
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> shoutedScriptingTextArea [
 	"self shoutedScriptingTextArea"
 	<sampleInstance>
@@ -237,7 +234,7 @@ RubTextAreaExamples class >> shoutedScriptingTextArea [
 		openInWorld
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextAreaExamples class >> show: aMessage while: aBlock [
 	| m |
 	m := RubEditingArea new
@@ -251,11 +248,11 @@ RubTextAreaExamples class >> show: aMessage while: aBlock [
 		openInWorld;
 		centered;
 		yourself.
-	
-	[ aBlock ensure: [ m delete ] ] fork.
+
+	[ aBlock ensure: [ m delete ] ] fork
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> simplestEmptyNotWrapped [
 	"self simplestEmptyNotWrapped"
 <sampleInstance>
@@ -264,7 +261,7 @@ RubTextAreaExamples class >> simplestEmptyNotWrapped [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> simplestEmptyNotWrappedWithMaxLength [
 	"self simplestEmptyNotWrapped"
 
@@ -275,7 +272,7 @@ RubTextAreaExamples class >> simplestEmptyNotWrappedWithMaxLength [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> simplestEmptyTextField [
 	"self simplestEmptyTextField"
 <sampleInstance>
@@ -284,7 +281,7 @@ RubTextAreaExamples class >> simplestEmptyTextField [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> simplestEmptyWrappedTo400 [
 	"self simplestEmptyWrappedTo400"
 <sampleInstance>
@@ -294,7 +291,7 @@ RubTextAreaExamples class >> simplestEmptyWrappedTo400 [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> simplestWrappedTo400 [
 	"self simplestWrappedTo400"
 <sampleInstance>
@@ -305,12 +302,12 @@ RubTextAreaExamples class >> simplestWrappedTo400 [
 		openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextAreaExamples class >> smallLoremIpsum [
 	^'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. '
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> smallLoremIpsumWrappedTo400 [
 	"self smallLoremIpsumWrappedTo400"
 <sampleInstance>
@@ -321,7 +318,7 @@ RubTextAreaExamples class >> smallLoremIpsumWrappedTo400 [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> smalltalkCodeWithStabilo [
 	"self smalltalkCodeWithStabilo"
 <sampleInstance>
@@ -338,7 +335,7 @@ RubTextAreaExamples class >> smalltalkCodeWithStabilo [
 	area openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> smalltalkCodeWrappedTo400 [
 	"self smalltalkCodeWrappedTo400"
 <sampleInstance>
@@ -354,7 +351,7 @@ RubTextAreaExamples class >> smalltalkCodeWrappedTo400 [
 	^ area
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> smalltalkCodeWrappedWithSegments [
 	"self smalltalkCodeWrappedWithSegments"
 <sampleInstance>
@@ -380,24 +377,24 @@ RubTextAreaExamples class >> smalltalkCodeWrappedWithSegments [
 	area openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> someSmallSmalltalkCode [
 	^ '
 WorldState
-	addDeferredUIMessage: [ 
+	addDeferredUIMessage: [
 		World displayWorldSafely.
 		Cursor wait
-			showWhile: [ 
+			showWhile: [
 				aBlock
 					ensure: [ m delete ] ] ]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextAreaExamples class >> someSmalltalkCode [
 	^ self class sourceCodeAt: #show:while:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextAreaExamples class >> someSmalltalkScript [
 	^ '" Enter some code here as in a workspace"' , String cr , 'RubTextArea new
 		beWrapped;
@@ -407,7 +404,7 @@ RubTextAreaExamples class >> someSmalltalkScript [
 		openInWorld'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> sourceCodeTemplateWrappedTo400 [
 	"self sourceCodeTemplateWrappedTo400"
 <sampleInstance>
@@ -421,7 +418,7 @@ RubTextAreaExamples class >> sourceCodeTemplateWrappedTo400 [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> textAreaWithBiggerFont [
 	" self textAreaWithBiggerFont "
 
@@ -435,7 +432,7 @@ RubTextAreaExamples class >> textAreaWithBiggerFont [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> textFieldWithCRAction [
 	"self textFieldWithCRAction"
 <sampleInstance>
@@ -451,7 +448,7 @@ RubTextAreaExamples class >> textFieldWithCRAction [
 		to: [ self trace: s text asString ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> withOnlyThePrimarySelection [
 	"self withOnlyThePrimarySelection"
 <sampleInstance>
@@ -465,7 +462,7 @@ RubTextAreaExamples class >> withOnlyThePrimarySelection [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextAreaExamples class >> wrappedTo400WithMarginsOf40 [
 	"self wrappedTo400WithMarginsOf40"
 <sampleInstance>

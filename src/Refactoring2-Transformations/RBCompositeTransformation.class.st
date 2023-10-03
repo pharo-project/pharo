@@ -1,15 +1,26 @@
+"
+A composite transformation is a transformation composed of other transformation. 
+For example move instance variable can be composed of add and remove. 
+
+In addition, a composite transformation can have previous transformations. 
+A previous transformation is a list of transformations resulting from for example configuration such as
+pre transformations. 
+For example do we push up instance variable when we push up a method that uses such instance variable.
+
+"
 Class {
-	#name : #RBCompositeTransformation,
-	#superclass : #RBTransformation,
+	#name : 'RBCompositeTransformation',
+	#superclass : 'RBTransformation',
 	#instVars : [
 		'previousTransformations',
-		'transformations',
-		'delegatesPreconditions'
+		'transformations'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeTransformation class >> model: aRBModel with: aCollection [
 
 	^ self new
@@ -18,7 +29,7 @@ RBCompositeTransformation class >> model: aRBModel with: aCollection [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeTransformation class >> with: aCollection [
 
 	^ self new
@@ -26,58 +37,40 @@ RBCompositeTransformation class >> with: aCollection [
 		yourself
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBCompositeTransformation >> buildTransformations [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-RBCompositeTransformation >> delegatesPreconditions: aBoolean [
-
-	delegatesPreconditions := aBoolean
-]
-
-{ #category : #initialization }
-RBCompositeTransformation >> initialize [
-
-	super initialize.
-	delegatesPreconditions := true
-]
-
-{ #category : #preconditions }
-RBCompositeTransformation >> preconditions [
-	"it delegates the preconditionn checking to each sub-refactoring separately.
-	 additional preconditions are welcomed"
-
-	^ self emptyCondition
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeTransformation >> previousTransformations [
 	^ previousTransformations ifNil: [ previousTransformations := OrderedCollection new ]
 ]
 
-{ #category : #executing }
+{ #category : 'transforming' }
 RBCompositeTransformation >> privateTransform [
 	"in refactoring mode, the transformation can do its own precondition checking,
 	 therefore not needing checking from its containing transformations"
 
-	(self previousTransformations, self transformations) do: [ :transformation |
+	"previousTransformations can be a transformation resulting from a given configuration,
+	for example do we push up instance variable when we push up a method that uses such instance variable"
+
+	self previousTransformations , self transformations do: [
+		:transformation |
 		transformation
 			copyOptionsFrom: self options;
 			model: self model;
-			preconditionChecking: (delegatesPreconditions & self preconditionChecking);
-			transform ]
+			generateChanges ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeTransformation >> transformations [
 
 	^ transformations ifNil: [ transformations := self buildTransformations ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeTransformation >> transformations: anObject [
 	transformations := anObject
 ]

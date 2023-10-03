@@ -1,6 +1,6 @@
-Extension { #name : #FileReference }
+Extension { #name : 'FileReference' }
 
-{ #category : #'*MonticelloFileTree-FileSystem-Utilities' }
+{ #category : '*MonticelloFileTree-FileSystem-Utilities' }
 FileReference >> fileTreeUtilityClass [
     ^ MCFileTreeFileSystemUtils
 ]

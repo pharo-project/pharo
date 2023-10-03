@@ -17,38 +17,40 @@ I initialize the version object of the Image and perform the initial initializat
 Check #initializeCommandLineHandlerAndErrorHandling to see the steps performed.
 "
 Class {
-	#name : #PharoBootstrapInitialization,
-	#superclass : #Object,
-	#category : #'PharoBootstrap-Initialization-Base'
+	#name : 'PharoBootstrapInitialization',
+	#superclass : 'Object',
+	#category : 'PharoBootstrap-Initialization-Base',
+	#package : 'PharoBootstrap-Initialization',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandling [
 	"This method is run before the new bootstrapped image is saved!"
 	ProcessorScheduler initialize.
-	
+
 	Object initialize.
-	
+
 	ChronologyConstants initialize.
 	DateAndTime initialize.
 	SessionManager default installNewSession.
-	
+
 	Delay initialize.
 	SmallInteger initialize.
-	
+
 	ProcessorScheduler startUp.
-	
+
 	OSPlatform startUp: true.
-	
+
 	String initialize.
 	ByteString initialize. "needed by TextConverter to install LineEnd convention (called by Smalltalk openLog)"
-	ZnUTF8Encoder initialize.	
-	
+	ZnUTF8Encoder initialize.
+
 	"Weak array class initialization 2 lines"
 	Smalltalk specialObjectsArray at: 42 put: Semaphore new."to put in EPObjectSpace>>#createSpecialObjectsArray?"
 	WeakArray restartFinalizationProcess.
-	
-	Smalltalk globals 
+
+	Smalltalk globals
 		at: #Transcript
 		put: (NonInteractiveTranscript stdout install).
 	Float initialize.
@@ -57,17 +59,17 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	ExternalSemaphoreTable initialize.
 	Collection initialize.
 	CompiledMethod initialize.
-	Categorizer initialize.
 	Slot initialize.
 	RPackage initialize.
 	Behavior initialize.
+	Class initialize.
 
-	UIManager default: NonInteractiveUIManager new.	 
+	UIManager default: NonInteractiveUIManager new.
 
 	Smalltalk sourceFileVersionString: 'PharoV60'.
 	(Smalltalk class classVariableNamed: 'LastImagePath') value: Smalltalk imagePath. "set the default value"
 	SourceFiles := SourceFileArray new.
-		
+
 	Color initialize.
 	InstructionStream initialize.
 	SmallInteger initialize.
@@ -75,17 +77,17 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	"FFI"
 	ExternalObject initialize.
 	ExternalType initialize.
-	FFIBackend initialize.
 
 	"Initialize basic command line behaviour"
-	Stdio initialize.
 	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
+
+	SessionManager initializeKernelRegistrations.
 	Smalltalk snapshot: true andQuit: true.
-	Processor terminateActive.
+	Processor terminateActive
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 PharoBootstrapInitialization class >> initializeFileSystem [
 	| env |
 	env := self environment.
@@ -95,14 +97,14 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	(env at: #File) initialize
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: buildNumber commitHash: hash [
 
 	"The image main entry point called by an image builder. The arguments specify the image
 	version description.
 	This method is run before the new bootstrapped image is saved!"
 
-	SystemVersion 
+	SystemVersion
 		writeClassVariableNamed: #Current
 		value: (SystemVersion new
 					type: typeName;
@@ -113,6 +115,6 @@ PharoBootstrapInitialization class >> initializeImageOfType: typeName major: maj
 					build: buildNumber;
 					commitHash: hash;
 					yourself).
-	
-	self initializeCommandLineHandlerAndErrorHandling.
+
+	self initializeCommandLineHandlerAndErrorHandling
 ]

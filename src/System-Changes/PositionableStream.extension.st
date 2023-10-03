@@ -1,6 +1,6 @@
-Extension { #name : #PositionableStream }
+Extension { #name : 'PositionableStream' }
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> basicNextChunk [
 	"Answer the contents of the receiver, up to the next terminator character. Doubled terminators indicate an embedded terminator character."
 
@@ -9,9 +9,9 @@ PositionableStream >> basicNextChunk [
 	out := (String new: 1000) writeStream.
 	self skipSeparators.
 	[ (ch := self next) isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			ch == terminator
-				ifTrue: [ 
+				ifTrue: [
 					self peek == terminator
 						ifTrue: [ self next	"skip doubled terminator" ]
 						ifFalse: [ ^ out contents	"terminator is not doubled; we're done!" ] ].
@@ -19,37 +19,37 @@ PositionableStream >> basicNextChunk [
 	^ out contents
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> decodeString: string andRuns: runsRaw [
 	| strm runLength runValues newString index |
 	strm := ReadStream on: runsRaw from: 1 to: runsRaw size.
 	(strm peekFor: $()
 		ifFalse: [ ^ nil ].
 	runLength := OrderedCollection new.
-	[ 
+	[
 	strm skipSeparators.
 	strm peekFor: $) ] whileFalse: [ runLength add: (Number readFrom: strm) ].
 	runValues := OrderedCollection new.
 	[ strm atEnd ]
-		whileFalse: [ 
+		whileFalse: [
 			runValues add: (Number readFrom: strm).
 			strm next ].
 	newString := WideString new: string size.
 	index := 1.
 	runLength
 		with: runValues
-		do: [ :length :leadingChar | 
+		do: [ :length :leadingChar |
 			index to: index + length - 1 do: [ :pos | newString at: pos put: (string at: pos) ].
 			index := index + length ].
 	^ newString
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> header [
 	"If the stream requires a standard header, override this message.  See HtmlFileStream"
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> nextChunk [
 	"Answer the contents of the receiver, up to the next terminator character. Doubled terminators indicate an embedded terminator character."
 
@@ -58,9 +58,9 @@ PositionableStream >> nextChunk [
 	out := (String new: 1000) writeStream.
 	self skipSeparators.
 	[ (ch := self next) isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			ch == terminator
-				ifTrue: [ 
+				ifTrue: [
 					self peek == terminator
 						ifTrue: [ self next	"skip doubled terminator" ]
 						ifFalse: [ ^ self parseLangTagFor: out contents	"terminator is not doubled; we're done!" ] ].
@@ -68,7 +68,7 @@ PositionableStream >> nextChunk [
 	^ self parseLangTagFor: out contents
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> nextPreamble [
 	"Assuming that preamble part does not contain ]lang[ tag"
 	| terminator out ch |
@@ -76,9 +76,9 @@ PositionableStream >> nextPreamble [
 	out := (String new: 1000) writeStream.
 	self skipSeparators.
 	[ (ch := self next) isNil ]
-		whileFalse: [ 
+		whileFalse: [
 			ch == terminator
-				ifTrue: [ 
+				ifTrue: [
 					self peek == terminator
 						ifTrue: [ self next	"skip doubled terminator" ]
 						ifFalse: [ ^out contents	"terminator is not doubled; we're done!" ] ].
@@ -86,7 +86,7 @@ PositionableStream >> nextPreamble [
 	^ out contents
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> parseLangTagFor: aString [
 
 	| string peek runsRaw pos |
@@ -101,25 +101,25 @@ PositionableStream >> parseLangTagFor: aString [
 	] ifFalse: [
 		self position: pos
 	].
-	^ string.
+	^ string
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> skipStyleChunk [
 	"Get to the start of the next chunk that is not a style for the previous chunk"
 
 	| pos |
 	pos := self position.
 	self skipSeparators.
-	self peek == $] 
+	self peek == $]
 		ifTrue: [(self upTo: $[) = ']text' 	"old -- no longer needed"
 				"now positioned past the open bracket"
 			ifFalse: [self nextChunk]]	"absorb ]style[ and its whole chunk"
-				
+
 		ifFalse: [self position: pos]	"leave untouched"
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 PositionableStream >> verbatim: aString [
 	"Do not attempt to translate the characters.  Use to override nextPutAll:"
 	^ self nextPutAll: aString

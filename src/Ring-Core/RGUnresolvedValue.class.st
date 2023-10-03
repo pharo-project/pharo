@@ -1,69 +1,77 @@
 Class {
-	#name : #RGUnresolvedValue,
-	#superclass : #Object,
+	#name : 'RGUnresolvedValue',
+	#superclass : 'Object',
 	#instVars : [
 		'default'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGUnresolvedValue class >> recursive [
 
 	| unresolvedValue |
-	
+
 	unresolvedValue := self new.
 	unresolvedValue default: unresolvedValue.
-	^ unresolvedValue.
+	^ unresolvedValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGUnresolvedValue >> default [
 	^ default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGUnresolvedValue >> default: anObject [
 	default := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+RGUnresolvedValue >> hasResolvedName [
+
+	^ false
+]
+
+{ #category : 'testing' }
 RGUnresolvedValue >> isRGUnresolvedValue [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGUnresolvedValue >> isRingFullyResolved [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGUnresolvedValue >> isRingFullyUnresolved [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGUnresolvedValue >> isRingResolved [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGUnresolvedValue >> orDefaultForUnresolved [
 
 	^ self default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGUnresolvedValue >> referencedBehaviors [
 
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGUnresolvedValue >> value [
 
 	^ self default

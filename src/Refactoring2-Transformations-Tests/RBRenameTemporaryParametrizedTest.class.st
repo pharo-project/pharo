@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameTemporaryParametrizedTest,
-	#superclass : #RBWithDifferentsArgumentsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenameTemporaryParametrizedTest',
+	#superclass : 'RBWithDifferentsArgumentsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameTemporaryParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -17,24 +19,34 @@ RBRenameTemporaryParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testBadIntervalAndVariableDoesNotExist [
-	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (14 to: 17) . #rule } .
-				'asdf' . #RBRefactoryTestDataApp .#testMethod }).
-	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (17 to: 14) . #xyz } .
-				'asdf' . #RBRefactoryTestDataApp . #testMethod }).
-	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (19 to: 24) . #temporaryVariable1 } .
-				'asdf' . #RBRefactoryTestDataApp . #testMethod })
+{ #category : 'failure tests' }
+RBRenameTemporaryParametrizedTest >> testFailureBadIntervalAndVariableDoesNotExist [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 {
+					 (14 to: 17).
+					 #rule }.
+				 'asdf'.
+				 #RBClassDataForRefactoringTest.
+				 #testMethod }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 {
+					 (17 to: 14).
+					 #xyz }.
+				 'asdf'.
+				 #RBClassDataForRefactoringTest.
+				 #testMethod }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 {
+					 (19 to: 24).
+					 #temporaryVariable1 }.
+				 'asdf'.
+				 #RBClassDataForRefactoringTest.
+				 #testMethod })
 ]
 
-{ #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testBadName [
+{ #category : 'failure tests' }
+RBRenameTemporaryParametrizedTest >> testFailureBadName [
 	self
 		shouldFail:
 			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
@@ -44,36 +56,55 @@ RBRenameTemporaryParametrizedTest >> testBadName [
 				'a b' . #RBLintRuleTestData . #openEditor })
 ]
 
-{ #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testExistingVariable [
+{ #category : 'failure tests' }
+RBRenameTemporaryParametrizedTest >> testFailureExistingVariable [
+
 	self
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19) . #rules }.
-				'name' . #RBLintRuleTestData . #openEditor });
-		shouldFail:
-			(self createRefactoringWithArguments: { { (15 to: 19). #rules }.
-				'rules' . #RBLintRuleTestData . #openEditor })
+		shouldFail: (self createRefactoringWithArguments: {
+						 {
+							 (15 to: 19).
+							 #rules }.
+						 'name'.
+						 #RBLintRuleTestData.
+						 #openEditor });
+		shouldFail: (self createRefactoringWithArguments: {
+						 {
+							 (15 to: 19).
+							 #rules }.
+						 'rules'.
+						 #RBLintRuleTestData.
+						 #openEditor })
 ]
 
-{ #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testModelBadName [
+{ #category : 'failure tests' }
+RBRenameTemporaryParametrizedTest >> testFailureModelBadName [
+
 	| class |
 	model := RBNamespace new.
 	class := model classNamed: #Object.
-	class 
-		compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
-		classified: #(#accessing).
+	class
+		compile:
+		'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
+		classified: #( #accessing ).
 	self
-		shouldFail: (self createRefactoringWithModel: model	
-			andArguments: { { (20 to: 24) . #temp2 } .
-					'temp3' . #Object .  #aMethod: });
-		shouldFail: (self createRefactoringWithModel: model 
-			andArguments: { { (20 to: 24) . #temp2 } .
-					'temp1' . #Object . #aMethod: })
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 {
+							 (20 to: 24).
+							 #temp2 }.
+						 'temp3'.
+						 #Object.
+						 #aMethod: });
+		shouldFail: (self createRefactoringWithModel: model andArguments: {
+						 {
+							 (20 to: 24).
+							 #temp2 }.
+						 'temp1'.
+						 #Object.
+						 #aMethod: })
 ]
 
-{ #category : #'failure tests' }
-RBRenameTemporaryParametrizedTest >> testModelExistingVariable [
+{ #category : 'failure tests' }
+RBRenameTemporaryParametrizedTest >> testFailureModelExistingVariable [
 
 	| transformation |
 	transformation := (RBAddMethodTransformation
@@ -84,29 +115,31 @@ RBRenameTemporaryParametrizedTest >> testModelExistingVariable [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self class name
-		                   withProtocols: { #accessing }) transform.
+		                   withProtocol: #accessing ) generateChanges.
 
 	self shouldFail: (self
 			 createRefactoringWithModel: transformation model
-			 andArguments: { 
-					 { (16 to: 19) . #temp }.
+			 andArguments: {
+					 {
+						 (16 to: 19).
+						 #temp }.
 					 #bar.
 					 self class name.
 					 #foo })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameTemporaryParametrizedTest >> testRenameArg [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: { { (7 to: 13) . #aString } .
 		'asdf' . #RBLintRuleTestData . #name: }.
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeForSelector: #name:) equals: (self parseMethod: 'name: asdf 
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeForSelector: #name:) equals: (self parseMethod: 'name: asdf
 	name := asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameTemporaryParametrizedTest >> testRenameTemporary [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: { {(15 to: 19) . #rules} .

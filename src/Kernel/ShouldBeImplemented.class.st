@@ -4,12 +4,14 @@ I am ShouldBeImplemented, an exception signaled when some method should have bee
 This is more like a placeholder during development.
 "
 Class {
-	#name : #ShouldBeImplemented,
-	#superclass : #SelectorException,
-	#category : #'Kernel-Exceptions'
+	#name : 'ShouldBeImplemented',
+	#superclass : 'SelectorException',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ShouldBeImplemented >> standardMessageText [
 	"Generate a standard textual description"
 

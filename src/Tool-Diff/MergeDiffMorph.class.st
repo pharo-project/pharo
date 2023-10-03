@@ -3,60 +3,61 @@ A morph to display merge differences and allow to merge them
 with clickable icons on the spitter
 "
 Class {
-	#name : #MergeDiffMorph,
-	#superclass : #DiffMorph,
+	#name : 'MergeDiffMorph',
+	#superclass : 'DiffMorph',
 	#instVars : [
 		'allowJoinClicks'
 	],
-	#category : #'Tool-Diff-Morphs'
+	#category : 'Tool-Diff-Morphs',
+	#package : 'Tool-Diff',
+	#tag : 'Morphs'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 MergeDiffMorph class >> example [
 
-	MergeDiffMorph new openInWindow 
+	MergeDiffMorph new openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MergeDiffMorph class >> example2 [
 
-	(MergeDiffMorph 
+	(MergeDiffMorph
 		from: 'test' to: 'test2')
-		openInWindow 
+		openInWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeDiffMorph >> allowJoinClicks [
 	"Answer the value of allowJoinClicks"
 
 	^ allowJoinClicks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeDiffMorph >> allowJoinClicks: anObject [
 	"Set the value of allowJoinClicks"
 
 	allowJoinClicks := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeDiffMorph >> calculatedJoinMappings [
 	"Specify click allowance for each section."
-	
+
 	^super calculatedJoinMappings do: [:j |
 		j allowClick: self allowJoinClicks]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeDiffMorph >> compositeText [
 	"Answer the composite text based on the selection state
 	of the joins."
 
 	^self joinMorph compositeText
-	
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 MergeDiffMorph >> indicateDst [
 	"Change the indicators of the joins to the dst side."
 
@@ -67,7 +68,7 @@ MergeDiffMorph >> indicateDst [
 		changed: #selectedDifferences
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 MergeDiffMorph >> indicateSrc [
 	"Change the indicators of the joins to the src side."
 
@@ -78,7 +79,7 @@ MergeDiffMorph >> indicateSrc [
 		changed: #selectedDifferences
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MergeDiffMorph >> initialize [
 	"Initialize the receiver."
 
@@ -87,14 +88,14 @@ MergeDiffMorph >> initialize [
 		allowJoinClicks: true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeDiffMorph >> joinSectionClass [
 	"Answer the class to use for a new join section."
 
 	^MergeJoinSection
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeDiffMorph >> newJoinMorph [
 	"Answer a new join morph."
 
@@ -102,7 +103,7 @@ MergeDiffMorph >> newJoinMorph [
 		when: #joinClicked send: #update: to: self with: #joinClicked
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeDiffMorph >> update: aspect [
 	"A join has probably changed its selection state."
 

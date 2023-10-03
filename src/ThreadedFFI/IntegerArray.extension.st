@@ -1,9 +1,8 @@
-Extension { #name : #IntegerArray }
+Extension { #name : 'IntegerArray' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 IntegerArray >> tfPointerAddress [
 
 	self pinInMemory.
 	^ PointerUtils oopForObject: self
-
 ]

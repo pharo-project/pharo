@@ -6,42 +6,44 @@ Basically I am a readwrite stream that reads character pressed events to:
 When I read the Character cr event, I send my contents (the line) to the debugger, then I reinitialize myself.
 "
 Class {
-	#name : #EDREPLInterface,
-	#superclass : #ReadWriteStream,
+	#name : 'EDREPLInterface',
+	#superclass : 'ReadWriteStream',
 	#instVars : [
 		'debugger',
 		'inputBufferStream',
 		'waitSemaphore'
 	],
-	#category : #'EmergencyDebugger-View'
+	#category : 'EmergencyDebugger-View',
+	#package : 'EmergencyDebugger',
+	#tag : 'View'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EDREPLInterface class >> forDebugger: aSindarinDebugger [
 	^ (self on: (String new: 100))
 		debugger: aSindarinDebugger;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EDREPLInterface >> debugger: anObject [
 	debugger := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EDREPLInterface >> inputBufferStream [
 
 	^ inputBufferStream ifNil: [ inputBufferStream := String new writeStream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EDREPLInterface >> pushChar: aChar [
 
 	self inputBufferStream nextPut: aChar.
 	self waitSemaphore signal
 ]
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 EDREPLInterface >> readEvalPrint [
 
 	[ debugger isRunning ]
@@ -52,7 +54,7 @@ EDREPLInterface >> readEvalPrint [
 	self terminateREPL
 ]
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 EDREPLInterface >> requestLine [
 	| startPos char contents |
 
@@ -74,21 +76,21 @@ EDREPLInterface >> requestLine [
 		to: contents size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EDREPLInterface >> resetREPL [
 
 	self on: (String new: 100).
 	inputBufferStream := nil
 ]
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 EDREPLInterface >> terminateREPL [
 
 	self waitSemaphore signal.
 	waitSemaphore := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EDREPLInterface >> waitSemaphore [
 
 	^ waitSemaphore ifNil: [ waitSemaphore := Semaphore new ]

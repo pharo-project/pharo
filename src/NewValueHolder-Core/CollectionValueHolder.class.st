@@ -2,12 +2,14 @@
 I am designed specifically for collections.
 "
 Class {
-	#name : #CollectionValueHolder,
-	#superclass : #NewValueHolder,
-	#category : #'NewValueHolder-Core-Base'
+	#name : 'CollectionValueHolder',
+	#superclass : 'NewValueHolder',
+	#category : 'NewValueHolder-Core-Base',
+	#package : 'NewValueHolder-Core',
+	#tag : 'Base'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> add: newObject [
 	| result |
 	result := value add: newObject.
@@ -15,80 +17,80 @@ CollectionValueHolder >> add: newObject [
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> add: newObject after: oldObject [ 
-	
+{ #category : 'protocol' }
+CollectionValueHolder >> add: newObject after: oldObject [
+
 	| result |
 	result := value add: newObject after: oldObject.
 	self valueAdded: newObject.
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> add: newObject afterIndex: index [ 
-	
+{ #category : 'protocol' }
+CollectionValueHolder >> add: newObject afterIndex: index [
+
 	| result |
 	result := value add: newObject afterIndex: index.
 	self valueAdded: newObject.
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> add: newObject before: oldObject [
-	
+
 	| result |
 	result := value add: newObject before: oldObject.
 	self valueAdded: newObject.
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> add: newObject beforeIndex: index [ 
-	
+{ #category : 'protocol' }
+CollectionValueHolder >> add: newObject beforeIndex: index [
+
 	| result |
 	result := value add: newObject beforeIndex: index.
 	self valueAdded: newObject.
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> addAll: aCollection [ 
-	
+{ #category : 'protocol' }
+CollectionValueHolder >> addAll: aCollection [
+
 	| result |
 	result := value addAll: aCollection.
 	self valueAdded: aCollection.
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> addAllFirst: anOrderedCollection [
-	
+
 	| result |
 	result := value addAllFirst: anOrderedCollection.
 	self valueAdded: anOrderedCollection.
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> addAllFirstUnlessAlreadyPresent: anOrderedCollection [
-	
+
 	| result |
 	result := value addAllFirstUnlessAlreadyPresent: anOrderedCollection.
 	self valueAdded: anOrderedCollection.
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> addAllLast: aCollection [ 
-	
+{ #category : 'protocol' }
+CollectionValueHolder >> addAllLast: aCollection [
+
 	| result |
 	result := value addAllLast: aCollection.
 	self valueAdded: aCollection.
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> addFirst: newObject [ 
+{ #category : 'protocol' }
+CollectionValueHolder >> addFirst: newObject [
 
 	| result |
 	result := value addFirst: newObject .
@@ -96,8 +98,8 @@ CollectionValueHolder >> addFirst: newObject [
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> addLast: newObject [ 
+{ #category : 'protocol' }
+CollectionValueHolder >> addLast: newObject [
 
 	| result |
 	result := value addLast: newObject .
@@ -105,13 +107,13 @@ CollectionValueHolder >> addLast: newObject [
 	^ result
 ]
 
-{ #category : #override }
+{ #category : 'override' }
 CollectionValueHolder >> at: anObject [
 
 	^ value at: anObject
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> at: index ifAbsentPut: block [
 
 	| result |
@@ -120,7 +122,7 @@ CollectionValueHolder >> at: index ifAbsentPut: block [
 	^ result
 ]
 
-{ #category : #override }
+{ #category : 'override' }
 CollectionValueHolder >> at: key put: anObject [
 
 	value at: key put: anObject.
@@ -128,52 +130,52 @@ CollectionValueHolder >> at: key put: anObject [
 	^ anObject
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> atAll: aCollection put: anObject [ 
-	
+{ #category : 'protocol' }
+CollectionValueHolder >> atAll: aCollection put: anObject [
+
 	| result |
 	result := value atAll: aCollection put: anObject .
 	self valueAdded: anObject.
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> atAll: indexArray putAll: valueArray [
-	
+
 	| result |
 	result := value atAll: indexArray putAll: valueArray.
 	self valueAdded: valueArray.
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> atAllPut: anObject [ 
-	
+{ #category : 'protocol' }
+CollectionValueHolder >> atAllPut: anObject [
+
 	| result |
 	result := value atAllPut: anObject.
 	self valueAdded: anObject.
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> atLast: indexFromEnd put: obj [
-	
+
 	| result |
 	result := value atLast: indexFromEnd put: obj.
 	self valueAdded: obj.
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> atWrap: index put: anObject [
-	
+
 	| result |
 	result := value atWrap: index put: anObject.
 	self valueAdded: value.
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CollectionValueHolder >> doesNotUnderstand: aMessage [
 
 	^ (value respondsTo: aMessage selector)
@@ -181,7 +183,7 @@ CollectionValueHolder >> doesNotUnderstand: aMessage [
 		ifFalse: [ super doesNotUnderstand: aMessage ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> insert: anObject before: spot [
 
 	| result |
@@ -190,7 +192,7 @@ CollectionValueHolder >> insert: anObject before: spot [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> remove: oldObject [
 
 	| result |
@@ -199,7 +201,7 @@ CollectionValueHolder >> remove: oldObject [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> remove: oldObject ifAbsent: absentBlock [
 
 	| result |
@@ -208,7 +210,7 @@ CollectionValueHolder >> remove: oldObject ifAbsent: absentBlock [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> removeAll [
 	"Note: I'm not sure about the semantics here, because Collections normally don't return anything on #removeAll, even though one might expect the original content. Use with care."
 
@@ -216,7 +218,7 @@ CollectionValueHolder >> removeAll [
 	self valueRemoved: nil
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> removeAll: aCollection [
 	| result |
 	result := value removeAll: aCollection.
@@ -224,7 +226,7 @@ CollectionValueHolder >> removeAll: aCollection [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> removeAt: index [
 
 	| result |
@@ -233,7 +235,7 @@ CollectionValueHolder >> removeAt: index [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> removeFirst [
 
 	| result |
@@ -242,8 +244,8 @@ CollectionValueHolder >> removeFirst [
 	^ result
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> removeFirst: n [ 
+{ #category : 'protocol' }
+CollectionValueHolder >> removeFirst: n [
 
 	| result |
 	result := value removeFirst: n .
@@ -251,7 +253,7 @@ CollectionValueHolder >> removeFirst: n [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> removeIndex: removedIndex [
 
 	| result |
@@ -260,7 +262,7 @@ CollectionValueHolder >> removeIndex: removedIndex [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> removeLast [
 
 	| result |
@@ -269,7 +271,7 @@ CollectionValueHolder >> removeLast [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> removeLast: n [
 
 	| result |
@@ -278,67 +280,67 @@ CollectionValueHolder >> removeLast: n [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> replace: aBlock [
 	value replace: aBlock.
 	self valueChanged
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> replaceAll: oldObject with: newObject [
 	value replaceAll: oldObject with: newObject.
 	self valueChanged: oldObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CollectionValueHolder >> reset [
 
 	value reset.
 	self valueChanged
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CollectionValueHolder >> resetTo: index [
 
 	value resetTo: index.
 	self valueChanged
 ]
 
-{ #category : #override }
-CollectionValueHolder >> size [ 
+{ #category : 'override' }
+CollectionValueHolder >> size [
 
 	^ value size
 ]
 
-{ #category : #protocol }
-CollectionValueHolder >> sort: aSortBlock [ 
+{ #category : 'protocol' }
+CollectionValueHolder >> sort: aSortBlock [
 
 	value sort: aSortBlock .
 	self valueChanged
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 CollectionValueHolder >> valueAdded: newValue [
 	self announcer announce: (ValueAdded newValue: newValue).
 	self valueChanged: newValue
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 CollectionValueHolder >> valueRemoved: oldValue [
 	self announcer announce: (ValueRemoved oldValue: oldValue).
 	self valueChanged: oldValue
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 CollectionValueHolder >> whenAddedDo: aBlock [
 	"Culled block [ :newValue :announcement | ]"
 
-	self announcer when: ValueAdded do: [ :ann | aBlock cull: ann newValue cull: ann ]
+	self announcer when: ValueAdded do: [ :ann | aBlock cull: ann newValue cull: ann ] for: self
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 CollectionValueHolder >> whenRemovedDo: aBlock [
 	"Culled block [ :oldValue :announcement | ]"
 
-	self announcer when: ValueRemoved do: [ :ann | aBlock cull: ann oldValue cull: ann ]
+	self announcer when: ValueRemoved do: [ :ann | aBlock cull: ann oldValue cull: ann ] for: self
 ]

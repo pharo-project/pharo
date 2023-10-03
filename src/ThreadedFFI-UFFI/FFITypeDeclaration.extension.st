@@ -1,7 +1,7 @@
-Extension { #name : #FFITypeDeclaration }
+Extension { #name : 'FFITypeDeclaration' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFITypeDeclaration >> tfExternalTypeWithArity [
-	
+
 	^ self resolvedType tfExternalTypeWithArity
 ]

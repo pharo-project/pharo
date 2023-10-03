@@ -16,24 +16,26 @@ a min: b
 		
 "
 Class {
-	#name : #ReMinMaxRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReMinMaxRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMinMaxRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'MinMaxRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMinMaxRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReMinMaxRule >> initialize [
 	super initialize.
 	self
@@ -63,12 +65,12 @@ ReMinMaxRule >> initialize [
 		replace: '``@b >= `a ifFalse: [`a := ``@b]' with: '`a := `a min: ``@b'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMinMaxRule >> name [
 	^ 'Rewrite ifTrue:ifFalse: using min:/max:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMinMaxRule >> rationale [
 	^ 'The use of the messages #min: and #max: improves code readability and avoids heavily nested conditionals.'
 ]

@@ -24,8 +24,8 @@ To use the MockObject as a real mock, the user needs to verify its use. This is 
 The ```#verify:``` message will assert 1) that the mock has received all the messages it has been trained on 2) that it has not received only those messages 3) that it has received the messages it has been trained on.
 "
 Class {
-	#name : #MockObject,
-	#superclass : #Object,
+	#name : 'MockObject',
+	#superclass : 'Object',
 	#instVars : [
 		'messages',
 		'failed'
@@ -33,16 +33,17 @@ Class {
 	#classInstVars : [
 		'any'
 	],
-	#category : #'SUnit-MockObjects'
+	#category : 'SUnit-MockObjects',
+	#package : 'SUnit-MockObjects'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockObject class >> any [
 
 	^ any ifNil: [ any := Object new ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MockObject class >> on: aSymbol [
 
 	^ self new
@@ -50,7 +51,7 @@ MockObject class >> on: aSymbol [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MockObject class >> on: aSymbol respond: anObject [
 
 	^ self new
@@ -58,7 +59,7 @@ MockObject class >> on: aSymbol respond: anObject [
 		  yourself
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 MockObject >> doesNotUnderstand: aMessage [
 	messages isEmpty
 		ifTrue: [ failed := true ]
@@ -70,7 +71,7 @@ MockObject >> doesNotUnderstand: aMessage [
 					failed := true ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MockObject >> initialize [
 
 	super initialize.
@@ -78,132 +79,132 @@ MockObject >> initialize [
 	failed := false
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector [
 	"Teach to return self on a message whose selector is aSelector"
-	
+
 	self on: aSelector respond: self
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector respond: anObject [
 	"Teach to return self on a message whose selector is aSelector"
-	
+
 	self on: aSelector withArguments: nil respond: anObject
 ]
 
-{ #category : #'teaching - verifying' }
+{ #category : 'teaching - verifying' }
 MockObject >> on: aSelector verify: aBlock [
 
 	self on: aSelector withArguments: nil verify: aBlock
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector with: anObject [
 	"Teach to return self on a message whose selector is aSelector and argument is anObject.
 	The test will fail if the message argument does not correspond to anObject."
-	
+
 	self on: aSelector withArguments: { anObject } respond: self
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector with: anObject respond: anotherObject [
 	"Teach to return anotherObject on a message whose selector is aSelector and argument is anObject.
 	The test will fail if the message argument does not correspond to anObject."
-	
+
 	self
 		on: aSelector
 		withArguments: { anObject }
 		verify: [ anotherObject ]
 ]
 
-{ #category : #'teaching - verifying' }
+{ #category : 'teaching - verifying' }
 MockObject >> on: aSymbol with: anObject verify: aBlock [
 
 	self on: aSymbol withArguments: { anObject } verify: aBlock
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector with: anObject with: anotherObject [
 	"Teach to return self on a message whose selector is aSelector and arguments are anObject and anotherObject"
-	
+
 	self
 		on: aSelector
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject }
 		respond: self
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector with: anObject with: anotherObject respond: aResponseObject [
 	"Teach to return anotherObject on a message whose selector is aSelector and arguments are is anObject and anotherObject.
 	The test will fail if the message arguments do not correspond to anObject and anotherObject."
-	
+
 	self
 		on: aSelector
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject }
 		verify: [ aResponseObject ]
 ]
 
-{ #category : #'teaching - verifying' }
+{ #category : 'teaching - verifying' }
 MockObject >> on: aSymbol with: anObject with: anotherObject verify: aBlock [
 
 	self
 		on: aSymbol
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject }
 		verify: aBlock
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSymbol with: anObject with: anotherObject with: aThirdObject [
 
 	self
 		on: aSymbol
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject.
 				aThirdObject }
 		respond: self
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector with: anObject with: anotherObject with: aThirdObject respond: aResponseObject [
 
 	self
 		on: aSelector
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject.
 				aThirdObject }
 		verify: [ aResponseObject ]
 ]
 
-{ #category : #'teaching - verifying' }
+{ #category : 'teaching - verifying' }
 MockObject >> on: aSymbol with: anObject with: anotherObject with: aThirdObject verify: aBlock [
 
 	self
 		on: aSymbol
-		withArguments: { 
+		withArguments: {
 				anObject.
 				anotherObject.
 				aThirdObject }
 		verify: aBlock
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector withArguments: aCollection [
 	"Teach to return self on a message whose selector is aSelector and arguments are held in aCollection.
 	The test will fail if the message arguments do not correspond to the ones in aCollection."
-	
+
 	self on: aSelector withArguments: aCollection respond: self
 ]
 
-{ #category : #teaching }
+{ #category : 'teaching' }
 MockObject >> on: aSelector withArguments: anArray respond: anObject [
 	"Teach to return anObject on a message whose selector is aSelector and arguments are held in anArray.
 	The test will fail if the message arguments do not correspond to the ones in anArray."
@@ -211,14 +212,14 @@ MockObject >> on: aSelector withArguments: anArray respond: anObject [
 	self on: aSelector withArguments: anArray verify: [ anObject ]
 ]
 
-{ #category : #'teaching - verifying' }
+{ #category : 'teaching - verifying' }
 MockObject >> on: aSymbol withArguments: anArray verify: aBlock [
-	
+
 	messages add: (MockMessageSend on: aSymbol with: anArray do: aBlock).
 	failed := false
 ]
 
-{ #category : #verifying }
+{ #category : 'verifying' }
 MockObject >> verifyIn: aTestCase [
 
 	aTestCase deny: failed description: 'Incorrect message sequence'.

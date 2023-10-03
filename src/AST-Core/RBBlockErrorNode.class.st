@@ -7,12 +7,17 @@ or the closure : [ block node .
 
 "
 Class {
-	#name : #RBBlockErrorNode,
-	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#name : 'RBBlockErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
+	#instVars : [
+		'arguments'
+	],
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 RBBlockErrorNode class >> error: aToken withNodes: aCollection [
 	"Analyses the token to identify if it's an opening or a closure."
 	| message |
@@ -20,19 +25,36 @@ RBBlockErrorNode class >> error: aToken withNodes: aCollection [
 										  				 ifFalse: [ '''['' expected' ].
 	"If the collection is empty, there is only the token in the error."
 	aCollection isEmpty
-		ifTrue: [ ^self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
+		ifTrue: [ ^self new contents: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
 	"If the collection is not empty, we have to sort where the node begins and where it ends."
 	^message = ''']'' expected'
-		ifTrue: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
-		ifFalse: [ self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
+		ifTrue: [ self new contents: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
+		ifFalse: [ self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
 ]
 
-{ #category : #testing }
+{ #category : 'accessing' }
+RBBlockErrorNode >> argumentNames [
+
+	^ self arguments collect: [:each | each name] as: Array
+]
+
+{ #category : 'accessing' }
+RBBlockErrorNode >> arguments [
+	^arguments
+]
+
+{ #category : 'accessing' }
+RBBlockErrorNode >> arguments: anObject [
+
+	arguments := anObject
+]
+
+{ #category : 'testing' }
 RBBlockErrorNode >> isBlockError [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockErrorNode >> repairCollectionFromStart [
 	" The repair process goes through goes through the statements that are compatible with an array.
 	  Begins with all statements included in the array and gets one of every time.

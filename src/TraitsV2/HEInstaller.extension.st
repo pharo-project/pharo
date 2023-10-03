@@ -1,15 +1,15 @@
-Extension { #name : #HEInstaller }
+Extension { #name : 'HEInstaller' }
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 HEInstaller >> buildTrait: aTraitDefinition [
 	| newTrait traitComposition traitClass|
-	
+
 	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
-	
+
 	traitClass := Smalltalk globals at: #Trait ifAbsent: [ self error: 'Trait support is not installed' ].
-	
-	traitComposition := self buildTraitCompositionFor: aTraitDefinition traitComposition.	
-	
+
+	traitComposition := self buildTraitCompositionFor: aTraitDefinition traitComposition.
+
 	newTrait := traitClass
 		named: aTraitDefinition traitName
 		uses: traitComposition
@@ -21,7 +21,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	^ newTrait
 ]
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 HEInstaller >> buildTraitCompositionFor: traitComposition [
 
 	| aLiteral |

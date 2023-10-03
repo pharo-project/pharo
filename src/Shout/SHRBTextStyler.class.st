@@ -2,60 +2,54 @@
 I'm the one who visits node to coloring the code
 "
 Class {
-	#name : #SHRBTextStyler,
-	#superclass : #SHTextStyler,
-	#traits : 'TRBProgramNodeVisitor',
-	#classTraits : 'TRBProgramNodeVisitor classTrait',
+	#name : 'SHRBTextStyler',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
 		'bracketLevel',
 		'classOrMetaClass',
-		'font',
-		'isForWorkspace',
-		'pixelHeight',
-		'workspace'
+		'workspace',
+		'plugins',
+		'braceLevel',
+		'view',
+		'stylingEnabled',
+		'text',
+		'isScripting'
 	],
 	#classInstVars : [
 		'styleTable',
-		'textAttributesByPixelHeight',
-		'formatIncompleteIdentifiers'
+		'formatIncompleteIdentifiers',
+		'textAttributes'
 	],
-	#category : #'Shout-Styling'
+	#category : 'Shout-Styling',
+	#package : 'Shout',
+	#tag : 'Styling'
 }
 
-{ #category : #attributes }
-SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil font: aTextStyleOrFontOrNil [ 
+{ #category : 'attributes' }
+SHRBTextStyler class >> attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil [
 
-	| emphArray answer |	
+	| emphArray answer |
 	answer := Array new.
-	aColorOrNil ifNotNil: [ answer := answer , {TextColor color: aColorOrNil}].
-	
-	anEmphasisSymbolOrArrayorNil
-		ifNotNil: [
-			emphArray := anEmphasisSymbolOrArrayorNil isSymbol
-						ifTrue: [{anEmphasisSymbolOrArrayorNil}]
-						ifFalse: [anEmphasisSymbolOrArrayorNil].
-			emphArray do: [:each | 
-				each ~= #normal
-					ifTrue: [answer := answer , {TextEmphasis perform: each}]]].
-	
-	aTextStyleOrFontOrNil
-		ifNotNil: [ answer := answer , {TextFontReference toFont: aTextStyleOrFontOrNil}].
-		
+	aColorOrNil ifNotNil: [ answer := answer , { (TextColor color: aColorOrNil) } ].
+
+	anEmphasisSymbolOrArrayorNil ifNotNil: [
+		emphArray := anEmphasisSymbolOrArrayorNil isSymbol
+			             ifTrue: [ { anEmphasisSymbolOrArrayorNil } ]
+			             ifFalse: [ anEmphasisSymbolOrArrayorNil ].
+		emphArray do: [ :each | each ~= #normal ifTrue: [ answer := answer , { (TextEmphasis perform: each) } ] ] ].
+
 	^ answer
 ]
 
-{ #category : #attributes }
-SHRBTextStyler class >> attributesFor: aSymbol pixelHeight: aNumber [ 
-	^ (self textAttributesByPixelHeight
-		at: aNumber
-		ifAbsentPut: [self initialTextAttributesForPixelHeight: aNumber])
-		at: aSymbol
-		ifAbsent: [#()]
+{ #category : 'private' }
+SHRBTextStyler class >> attributesFor: aSymbol [
+
+	^ self textAttributes at: aSymbol ifAbsent: [ #(  ) ]
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBTextStyler class >> blueStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
@@ -64,268 +58,179 @@ SHRBTextStyler class >> blueStyleTable [
 	if pixel height is not specified , then the editor font size will be used.
 	"
 	<styleTable: 'Blue'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								black)
 			(invalid 									red)
-			(excessCode 							red)
-			
+
 			(comment 								(gray darker))
-			(unfinishedComment 					(red muchDarker))
-			
-			(#'$' 									(red muchDarker))
+
 			(character 								(red muchDarker))
-			(integer 								(red muchDarker))
-			(number 								(red muchDarker)) 
-			(#- 										(red muchDarker))
-			(symbol 								(magenta muchDarker)) 
-			(stringSymbol 							(magenta muchDarker)) 
-			(literalArray 							(magenta muchDarker))
-			(string 									(magenta muchDarker) normal)										
-			(unfinishedString 						red normal)
-	
-			(assignment 							nil)
-			(ansiAssignment 						nil)
-	
-			(literal 									nil italic)
-			(keyword 								(black))
-			(binary 									(black)) 
-			(unary 									(black))
-										
+			(number 								(red muchDarker))
+			(symbol 								(magenta muchDarker))
+			(string 									(magenta muchDarker) normal)
+
+			(selector 								(black))
+
 			(#self 									(cyan muchDarker ))
 			(#super 								(cyan muchDarker ))
 			(#true 									(red muchDarker))
 			(#false 									(red muchDarker))
 			(#nil 									(red muchDarker))
 			(#thisContext 							(cyan muchDarker ))
+			(#thisProcess 							(cyan muchDarker ))
 			(#return 								(cyan muchDarker ) bold)
-			(patternArg 							(blue muchDarker)) 
-			(methodArg 							(blue muchDarker))
+			(patternArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
 			(argument 								(blue muchDarker))
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
-			(instVar 								(blue muchDarker))
-			(workspaceVar 							(blue muchDarker))
-		
+			(instVar 								(cyan muchDarker))
+
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
-			(poolConstant 							(blue muchDarker))
-			(classVar 								(blue muchDarker))
-			(globalVar 								(blue muchDarker))
-												
+			(poolConstant 							(cyan muchDarker))
+			(classVar 								(cyan muchDarker))
+			(globalVar 								(purple muchDarker))
+
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					nil  italic)
-			(incompleteBinary 						nil  italic) 
-			(incompleteUnary 						nil  italic)					
-				
-			(undefinedIdentifier 					red)						
-			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
-	
-			(patternKeyword 						nil bold)
-			(patternBinary 							nil bold)
-			(patternUnary 							nil bold) 
+			(incompleteSelector 					nil  italic)
+
+			(undefinedIdentifier 					red)
+			(undefinedSelector 					red)
+
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue) 
-			(arrayStart 								black)
-			(arrayEnd 								black)
-			(arrayStart1 							black)
-			(arrayEnd1 								black)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
+			(brace1 								(green muchDarker))
+			(brace2 								(magenta muchDarker))
+			(brace3 								(red muchDarker))
+			(brace4 								(green darker))
+			(brace5 								(orange darker))
+			(brace6 								(magenta darker))
+			(brace7 								blue)
 			(cascadeSeparator 					black)
 			(statementSeparator 					black)
 			(methodTempBar 						(black))
 			(blockTempBar 						(black))
 			(blockArgsBar 							(black))
-										
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(green muchDarker))
-			(pragmaKeyword 						(green muchDarker))
-			(pragmaUnary 							(green muchDarker))
-			(pragmaBinary 							(green muchDarker)) 
-			(externalFunctionCallingConvention 	(green muchDarker) bold)
-			(module 								(green muchDarker) bold))
+
+			(pragma 						(green muchDarker)))
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBTextStyler class >> darkStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
-	This style is inspired on darkula theme from eclipse: http://eclipsecolorthemes.org/?view=theme&id=15515.  
+
+	This style is inspired on darkula theme from eclipse: http://eclipsecolorthemes.org/?view=theme&id=15515.
 	"
 	<styleTable: 'Dark'>
 
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								white)
 			(invalid 								'FF8A80')
-			(excessCode 							'FF8A80')
-			
+
 			(comment 								'7D8C93')
-			(unfinishedComment 				'FF8A80')
-			
-			(#'$' 									('E38C1E' lighter))
+
 			(character 							('E38C1E' lighter))
-			(integer 								('FFE54B'))
 			(number 								('FFE54B'))
-			(#- 									('FFE54B'))
-			(symbol 								('E38C1E')) 
-			(stringSymbol 						('E38C1E')) 
-			(literalArray 						white)
+			(symbol 								('E38C1E'))
 			(string 								('E38C1E'))
-												
-			(unfinishedString 					'FF8A80' normal)
-			(assignment 							nil bold)
-			(ansiAssignment 					nil bold)
-										
-			(literal 								nil italic)
-												
-			(keyword 								white)
-			(binary 								white) 
-			(unary 								white)
-										
+
+			(selector 								white)
+
 			(#true 								('00CC6E' darker))
 			(#false 								('00CC6E' darker))
 			(#nil 									('00CC6E' darker))
-													
+
 			(#self 								'00CC6E')
 			(#super								'00CC6E')
 			(#thisContext 						'00CC6E')
+			(#thisProcess 						'00CC6E')
 			(#return 								'00CC6E' bold)
-												
-			(patternArg 							'A7E2ED') 
-			(methodArg 							'A7E2ED')
+
+			(patternArg 							'A7E2ED')
 			(blockPatternArg 					'A7E2ED' italic)
 			(blockArg 							'A7E2ED' italic)
 			(argument 							'A7E2ED')
 			(blockTempVar 						'A7E2ED')
 			(blockPatternTempVar 				'A7E2ED')
-								
+
 			(instVar 								'A7E2ED')
-			(workspaceVar 						'A7E2ED' bold)
-										
+
 			(tempVar 								'A7E2ED')
 			(patternTempVar 					'A7E2ED')
-										
+
 			(poolConstant 						'A7E2ED' bold)
 			(classVar 							'A7E2ED' bold)
 			(globalVar 							white bold)
-												
-		
+
+
 			(incompleteIdentifier 			'E8E2B7' italic)
-			(incompleteKeyword 				'E8E2B7' italic)
-			(incompleteBinary 					'E8E2B7' italic) 
-			(incompleteUnary 					'E8E2B7' italic)
-				
-			(undefinedIdentifier 				'FF8A80')						
-			(undefinedKeyword 					'FF8A80')
-			(undefinedBinary 					'FF8A80') 
-			(undefinedUnary 					'FF8A80') 
-			
-			(patternKeyword 					nil bold)
-			(patternBinary 						nil bold)
-			(patternUnary 						nil bold) 
+			(incompleteSelector 				'E8E2B7' italic)
+
+			(undefinedIdentifier 				'FF8A80')
+			(undefinedSelector 					'FF8A80')
+
+			(patternSelector 					nil bold)
 			(blockArgColon 						white)
-			(leftParenthesis 					white)
-			(rightParenthesis 					white)
-			(leftParenthesis1 					(green muchLighter))
-			(rightParenthesis1 				(green muchLighter))
-			(leftParenthesis2 					(magenta muchLighter))
-			(rightParenthesis2 				(magenta muchLighter))
-			(leftParenthesis3 					('FF8A80' muchLighter))
-			(rightParenthesis3 				('FF8A80' muchLighter))
-			(leftParenthesis4 					(green lighter))
-			(rightParenthesis4 				(green lighter))
-			(leftParenthesis5 					(orange lighter))
-			(rightParenthesis5 				(orange lighter))
-			(leftParenthesis6 					(magenta lighter))
-			(rightParenthesis6 				(magenta lighter))
-			(leftParenthesis7 					blue)
-			(rightParenthesis7 				blue)
-			(blockStart 							white)
-			(blockEnd 							white)
-			(blockStart1 						(green muchLighter))
-			(blockEnd1 							(green muchLighter))
-			(blockStart2 						(magenta muchLighter))
-			(blockEnd2 							(magenta muchLighter))
-			(blockStart3 						(red muchLighter))
-			(blockEnd3 							(red muchLighter))
-			(blockStart4 						(green lighter))
-			(blockEnd4 							(green lighter))
-			(blockStart5 						(orange lighter))
-			(blockEnd5 							(orange lighter))
-			(blockStart6 						(magenta lighter))
-			(blockEnd6 							(magenta lighter))
-			(blockStart7 						blue)
-			(blockEnd7 							blue) 
-			(arrayStart 							white)
-			(arrayEnd 							white)
-			(arrayStart1 						white)
-			(arrayEnd1 							white)
-			(leftBrace 							white)
-			(rightBrace 							white)
+			(parenthesis 					white)
+			(parenthesis1 					(green muchLighter))
+			(parenthesis2 					(magenta muchLighter))
+			(parenthesis3 					('FF8A80' muchLighter))
+			(parenthesis4 					(green lighter))
+			(parenthesis5 					(orange lighter))
+			(parenthesis6 					(magenta lighter))
+			(parenthesis7 					blue)
+			(block 							white)
+			(block1 						(green muchLighter))
+			(block2 						(magenta muchLighter))
+			(block3 						(red muchLighter))
+			(block4 						(green lighter))
+			(block5 						(orange lighter))
+			(block6 						(magenta lighter))
+			(block7 						blue)
+			(brace 							white)
+			(brace1 						(green muchLighter))
+			(brace2 						(magenta muchLighter))
+			(brace3 						(red muchLighter))
+			(brace4 						(green lighter))
+			(brace5 						(orange lighter))
+			(brace6 						(magenta lighter))
+			(brace7 						blue)
 			(cascadeSeparator 					white bold)
 			(statementSeparator 				white bold)
 			(methodTempBar 						white)
 			(blockTempBar 						white)
 			(blockArgsBar 						white)
-										
-			(externalCallType 								white)
-			(externalCallTypePointerIndicator 		white)
-			(primitiveOrExternalCallStart 				white bold)
-			(primitiveOrExternalCallEnd 				white bold)
-			(primitive 										'B4DD6E')
-			(pragmaKeyword 									'B4DD6E')
-			(pragmaUnary 									'B4DD6E')
-			(pragmaBinary 									'B4DD6E') 
-			(externalFunctionCallingConvention 		'B4DD6E' bold)
-			(module 											'B4DD6E' bold))
+
+			(pragma 									'B4DD6E'))
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBTextStyler class >> defaultStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
@@ -333,641 +238,528 @@ SHRBTextStyler class >> defaultStyleTable [
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
 	"
-								
+
  	^ self blueStyleTable
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBTextStyler class >> formatIncompleteIdentifiers [
 
-	^ formatIncompleteIdentifiers ifNil: [ formatIncompleteIdentifiers := true ]
+	^ formatIncompleteIdentifiers ifNil: [ formatIncompleteIdentifiers := false ]
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBTextStyler class >> formatIncompleteIdentifiers: aValue [
 
 	formatIncompleteIdentifiers := aValue
 ]
 
-{ #category : #attributes }
-SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [ 
+{ #category : 'attributes' }
+SHRBTextStyler class >> initialTextAttributes [
+
+	^ self initialTextAttributesForStyleTable: self styleTable
+]
+
+{ #category : 'attributes' }
+SHRBTextStyler class >> initialTextAttributesForStyleTable: aStyleTable [
+
 	| d |
 	d := IdentityDictionary new.
-	self styleTable
-		do: [:each | 
-			| textStyle element emphasis font pixelHeight attrArray color textStyleName |
-			element := each first.
-			color := each
-						at: 2
-						ifAbsent: [].
-			color := color
-						ifNotNil: [Color colorFrom: color].
-			emphasis := each
-						at: 3
-						ifAbsent: [].
-			textStyleName := each
-						at: 4
-						ifAbsent: [].
-			pixelHeight := each
-						at: 5
-						ifAbsent: [aNumber].
-			textStyleName
-				ifNil: [pixelHeight := nil].
-			textStyle := TextStyle named: textStyleName.
-			font := textStyle
-						ifNotNil: [pixelHeight
-								ifNotNil: [textStyle fontOfSize: pixelHeight]].
-			attrArray := self
-						attributeArrayForColor: color
-						emphasis: emphasis
-						font: font.
-			attrArray notEmpty
-				ifTrue: [d at: element put: attrArray]].
+	aStyleTable do: [ :each |
+		| element emphasis color |
+		element := each first.
+		color := each at: 2 ifAbsent: [  ].
+		color := color ifNotNil: [ Color colorFrom: color ].
+		emphasis := each at: 3 ifAbsent: [  ].
+
+		(self attributeArrayForColor: color emphasis: emphasis) ifNotEmpty: [ :attrArray | d at: element put: attrArray ] ].
+
 	^ d
 ]
 
-{ #category : #'class initialization' }
-SHRBTextStyler class >> initialize [
-
-	styleTable := nil.
-	textAttributesByPixelHeight := nil
+{ #category : 'styles' }
+SHRBTextStyler class >> newAttributesForStyleTable: aStyleTable [
+	
+	^ self initialTextAttributesForStyleTable: aStyleTable
 ]
 
-{ #category : #styles }
-SHRBTextStyler class >> settingsOn: aBuilder [ 
-	<systemsettings>
+{ #category : 'styles' }
+SHRBTextStyler class >> newAttributesForStyleTableNamed: aString [
+	| table |
 	
-	(aBuilder setting: #formatIncompleteIdentifiers) 
+	table := self styleTableNamed: aString.
+	^ self newAttributesForStyleTable: (table ifNil: [ self styleTable ])
+]
+
+{ #category : 'initialization' }
+SHRBTextStyler class >> resetTextAttributesCaches [
+
+	<script>
+	textAttributes := nil
+]
+
+{ #category : 'styles' }
+SHRBTextStyler class >> settingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder setting: #formatIncompleteIdentifiers)
 		target: self;
-		default: true;
+		default: false;
 		order: 1;
 		label: 'Format Incomplete Identifiers';
 		parentName: #'Syntax Highlighting';
 		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recommended for big images, as it traverse all the image to get the information'
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBTextStyler class >> solarizedStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
-	This style is based on old theme and other old environments.  
+
+	This style is based on old theme and other old environments.
 	"
 	<styleTable: 'Solarized'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								('657A81' muchDarker))
 			(invalid 									red)
-			(excessCode 							red)
-			
+
 			(comment 								'586E75')
-			(unfinishedComment 					(red muchDarker))
-			
-			(#'$' 									('268BD2' lighter))
+
 			(character 								('268BD2' lighter))
-			(integer 								('2AA198'))
 			(number 								('2AA198'))
-			(#- 										('2AA198'))
-			(symbol 								('268BD2')) 
-			(stringSymbol 							('268BD2')) 
-			(literalArray 							black)
+			(symbol 								('268BD2'))
 			(string 									('268BD2'))
-												
-			(unfinishedString 						red normal)
-			(assignment 							nil bold)
-			(ansiAssignment 						nil bold)
-										
-			(literal 									nil italic)
-												
-			(keyword 								nil)
-			(binary 									nil) 
-			(unary 									nil)
-										
+
+
+			(selector 								nil)
+
 			(#true 									('CB4B16' darker))
 			(#false 									('CB4B16' darker))
 			(#nil 									('CB4B16' darker))
-													
+
 			(#self 									'B58900')
 			(#super								'B58900')
 			(#thisContext 							'B58900')
+			(#thisProcess 							'B58900')
 			(#return 								'B58900' bold)
-												
-			(patternArg 							('D33682')) 
-			(methodArg 							('D33682'))
+
+			(patternArg 							('D33682'))
 			(blockPatternArg 						('D33682'))
 			(blockArg 								('D33682'))
 			(argument 								('D33682'))
 			(blockTempVar 						('D33682'))
 			(blockPatternTempVar 					('D33682'))
-								
+
 			(instVar 								('D33682'))
-			(workspaceVar 							('D33682') bold)
-										
+
 			(tempVar 								('D33682'))
 			(patternTempVar 						('D33682'))
-										
+
 			(poolConstant 							('D33682') bold)
 			(classVar 								('D33682') bold)
 			(globalVar 								('268BD2' muchDarker) bold)
-												
+
 			(undefinedIdentifier 					red)
 			(incompleteIdentifier 					'D33682' italic)
-			(incompleteKeyword 					nil  italic)
-			(incompleteBinary 						nil  italic) 
-			(incompleteUnary 						nil  italic)
-			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
-			(patternKeyword 						'657A81' bold)
-			(patternBinary 							'657A81' bold)
-			(patternUnary 							'657A81' bold) 
+			(incompleteSelector 					nil  italic)
+			(undefinedSelector 					red)
+			(patternSelector 						'657A81' bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue) 
-			(arrayStart 								black)
-			(arrayEnd 								black)
-			(arrayStart1 							black)
-			(arrayEnd1 								black)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
+			(brace1 								(green muchDarker))
+			(brace2 								(magenta muchDarker))
+			(brace3 								(red muchDarker))
+			(brace4 								(green darker))
+			(brace5 								(orange darker))
+			(brace6 								(magenta darker))
+			(brace7 								blue)
 			(cascadeSeparator 					black bold)
 			(statementSeparator 					black bold)
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
-										
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(cyan muchDarker))
-			(pragmaKeyword 						(cyan muchDarker))
-			(pragmaUnary 							(cyan muchDarker))
-			(pragmaBinary 							(cyan muchDarker)) 
-			(externalFunctionCallingConvention 	(cyan muchDarker) bold)
-			(module 								(cyan muchDarker) bold))
+
+			(pragma 						(cyan muchDarker)))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHRBTextStyler class >> styleTable [
 	^ styleTable
 		ifNil: [styleTable := self defaultStyleTable]
 ]
 
-{ #category : #accessing }
-SHRBTextStyler class >> styleTable: anArray [ 
+{ #category : 'accessing' }
+SHRBTextStyler class >> styleTable: anArray [
+
 	styleTable := anArray.
-	textAttributesByPixelHeight := nil
+	self resetTextAttributesCaches
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
+SHRBTextStyler class >> styleTableNamed: aString [
+
+	^ (Pragma allNamed: #styleTable: in: self class)
+		detect: [ :each | (each argumentAt: 1) = aString ]
+		ifFound: [ :each | self perform: each methodSelector ]
+		ifNone: [ nil ]
+]
+
+{ #category : 'styles' }
 SHRBTextStyler class >> tangoStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
+
 	This is a syntax coloring scheme based on the tango desktop icon scheme:
 	http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines
 	"
 	<styleTable: 'Tango'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								black)
 			(invalid 									red)
-			(excessCode 							red)
-			
+
 			(comment 								'888a85')
-			(unfinishedComment 					(red muchDarker))
-			
-			(#'$' 									'ce5c00')
+
 			(character 								'ce5c00')
-			(integer 								'8f5902')
 			(number 								'8f5902')
-			(#- 										'8f5902')
-			(symbol 								'c4a000') 
-			(stringSymbol 							'c4a000') 
-			(literalArray 							black)
+			(symbol 								'c4a000')
 			(string 									'ce5c00')
-												
-			(unfinishedString 						red normal)
-			(assignment 							nil)
-			(ansiAssignment 						nil)
-										
-			(literal 									'8F5902')
-												
-			(keyword 								(black))
-			(binary 									(black)) 
-			(unary 									(black))
-										
+
+
+			(selector 								(black))
+
 			(#true 									'8F5902')
 			(#false 									'8F5902')
 			(#nil 									'8F5902')
-													
+
 			(#self 									'4d9a06')
 			(#super 								'4d9a06')
 			(#thisContext 							'4d9a06')
+			(#thisProcess 							'4d9a06')
 			(#return 								black bold)
-												
-			(patternArg 							'2e3426' italic) 
-			(methodArg 							'555753' italic)
+
+			(patternArg 							'2e3426' italic)
 			(blockPatternArg 						'888a85' bold)
 			(blockArg 								'555753' italic)
 			(argument 								'555753' italic)
 			(blockTempVar 						'555753' italic)
 			(blockPatternTempVar 					'888a85' italic)
-								
+
 			(instVar 								'204a87')
-			(workspaceVar 							'204a87')
-										
+
 			(tempVar 								'555753' italic)
 			(patternTempVar 						'888a85' italic)
-										
+
 			(poolConstant 							'ad7fa8' bold)
 			(classVar 								'ad7fa8' bold)
 			(globalVar 								'5c3566' bold)
-												
-			
+
+
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					blue italic)
-			(incompleteBinary 						blue italic) 
-			(incompleteUnary 						blue italic)
-									
-			(undefinedIdentifier 					red)						
-			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
-			(patternKeyword 						nil bold)
-			(patternBinary 							nil bold)
-			(patternUnary 							nil bold) 
+			(incompleteSelector 					blue italic)
+
+			(undefinedIdentifier 					red)
+			(undefinedSelector 					red)
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue) 
-			(arrayStart 								black)
-			(arrayEnd 								black)
-			(arrayStart1 							black)
-			(arrayEnd1 								black)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
+			(brace1 								(green muchDarker))
+			(brace2 								(magenta muchDarker))
+			(brace3 								(red muchDarker))
+			(brace4 								(green darker))
+			(brace5 								(orange darker))
+			(brace6 								(magenta darker))
+			(brace7 								blue)
 			(cascadeSeparator 					black)
 			(statementSeparator 					black)
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
-										
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(green muchDarker))
-			(pragmaKeyword 						(green muchDarker))
-			(pragmaUnary 							(green muchDarker))
-			(pragmaBinary 							(green muchDarker)) 
-			(externalFunctionCallingConvention 	(green muchDarker) bold)
-			(module 								(green muchDarker) bold))
+
+			(pragma 						(green muchDarker)))
 ]
 
-{ #category : #attributes }
-SHRBTextStyler class >> textAttributesByPixelHeight [
-	^ textAttributesByPixelHeight
-		ifNil: [textAttributesByPixelHeight := Dictionary new]
+{ #category : 'accessing' }
+SHRBTextStyler class >> textAttributes [
+
+	^ textAttributes ifNil: [ textAttributes := self initialTextAttributes ]
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBTextStyler class >> vintageStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
 	Multiple emphases can be specified using an array e.g. #(bold italic).
 	If emphasis is not specified, #normal will be used.
 	if pixel height is not specified , then the editor font size will be used.
-	
-	This style is based on old theme and other old environments.  
+
+	This style is based on old theme and other old environments.
 	"
 	<styleTable: 'Vintage'>
-								
-			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
  ^ #(
 			(default 								black)
 			(invalid 									red)
-			(excessCode 							red)
-			
+
 			(comment 								'006400')
-			(unfinishedComment 					(red muchDarker))
-			
-			(#'$' 									('801f91' lighter))
+
 			(character 								('801f91' lighter))
-			(integer 								('801f91'))
 			(number 								('801f91'))
-			(#- 										('801f91'))
-			(symbol 								('801f91')) 
-			(stringSymbol 							('801f91')) 
-			(literalArray 							black)
+			(symbol 								('801f91'))
 			(string 									('801f91'))
-												
-			(unfinishedString 						red normal)
-			(assignment 							nil bold)
-			(ansiAssignment 						nil bold)
-										
-			(literal 									nil italic)
-												
-			(keyword 								black)
-			(binary 									black) 
-			(unary 									black)
-										
+
+
+			(selector 								black)
+
 			(#true 									('A31515' darker))
 			(#false 									('A31515' darker))
 			(#nil 									('A31515' darker))
-													
+
 			(#self 									'A31515')
 			(#super								'A31515')
 			(#thisContext 							'A31515')
+			(#thisProcess 							'A31515')
 			(#return 								'A31515' bold)
-												
-			(patternArg 							(blue muchDarker)) 
-			(methodArg 							(blue muchDarker))
+
+			(patternArg 							(blue muchDarker))
 			(blockPatternArg 						(blue muchDarker))
 			(blockArg 								(blue muchDarker))
 			(argument 								(blue muchDarker))
 			(blockTempVar 						(blue muchDarker))
 			(blockPatternTempVar 					(blue muchDarker))
-								
+
 			(instVar 								(blue muchDarker))
-			(workspaceVar 							(blue muchDarker) bold)
-										
+
 			(tempVar 								(blue muchDarker))
 			(patternTempVar 						(blue muchDarker))
-										
+
 			(poolConstant 							(blue muchDarker) bold)
 			(classVar 								(blue muchDarker) bold)
 			(globalVar 								black bold)
-												
-		
+
+
 			(incompleteIdentifier 					blue italic)
-			(incompleteKeyword 					blue italic)
-			(incompleteBinary 						blue italic) 
-			(incompleteUnary 						blue italic)
-				
-			(undefinedIdentifier 					red)						
-			(undefinedKeyword 					red)
-			(undefinedBinary 						red) 
-			(undefinedUnary 						red) 
-			
-			(patternKeyword 						nil bold)
-			(patternBinary 							nil bold)
-			(patternUnary 							nil bold) 
+			(incompleteSelector 					blue italic)
+
+			(undefinedIdentifier 					red)
+			(undefinedSelector 					red)
+
+			(patternSelector 						nil bold)
 			(blockArgColon 						black)
-			(leftParenthesis 						black)
-			(rightParenthesis 						black)
-			(leftParenthesis1 						(green muchDarker))
-			(rightParenthesis1 						(green muchDarker))
-			(leftParenthesis2 						(magenta muchDarker))
-			(rightParenthesis2 						(magenta muchDarker))
-			(leftParenthesis3 						(red muchDarker))
-			(rightParenthesis3 						(red muchDarker))
-			(leftParenthesis4 						(green darker))
-			(rightParenthesis4 						(green darker))
-			(leftParenthesis5 						(orange darker))
-			(rightParenthesis5 						(orange darker))
-			(leftParenthesis6 						(magenta darker))
-			(rightParenthesis6 						(magenta darker))
-			(leftParenthesis7 						blue)
-			(rightParenthesis7 						blue)
-			(blockStart 								black)
-			(blockEnd 								black)
-			(blockStart1 							(green muchDarker))
-			(blockEnd1 								(green muchDarker))
-			(blockStart2 							(magenta muchDarker))
-			(blockEnd2 								(magenta muchDarker))
-			(blockStart3 							(red muchDarker))
-			(blockEnd3 								(red muchDarker))
-			(blockStart4 							(green darker))
-			(blockEnd4 								(green darker))
-			(blockStart5 							(orange darker))
-			(blockEnd5 								(orange darker))
-			(blockStart6 							(magenta darker))
-			(blockEnd6 								(magenta darker))
-			(blockStart7 							blue)
-			(blockEnd7 								blue) 
-			(arrayStart 								black)
-			(arrayEnd 								black)
-			(arrayStart1 							black)
-			(arrayEnd1 								black)
-			(leftBrace 								black)
-			(rightBrace 								black)
+			(parenthesis 						black)
+			(parenthesis1 						(green muchDarker))
+			(parenthesis2 						(magenta muchDarker))
+			(parenthesis3 						(red muchDarker))
+			(parenthesis4 						(green darker))
+			(parenthesis5 						(orange darker))
+			(parenthesis6 						(magenta darker))
+			(parenthesis7 						blue)
+			(block 								black)
+			(block1 							(green muchDarker))
+			(block2 							(magenta muchDarker))
+			(block3 							(red muchDarker))
+			(block4 							(green darker))
+			(block5 							(orange darker))
+			(block6 							(magenta darker))
+			(block7 							blue)
+			(brace 								black)
+			(brace1 								(green muchDarker))
+			(brace2 								(magenta muchDarker))
+			(brace3 								(red muchDarker))
+			(brace4 								(green darker))
+			(brace5 								(orange darker))
+			(brace6 								(magenta darker))
+			(brace7 								blue)
 			(cascadeSeparator 					black bold)
 			(statementSeparator 					black bold)
 			(methodTempBar 						black)
 			(blockTempBar 						black)
 			(blockArgsBar 							black)
-										
-			(externalCallType 						black)
-			(externalCallTypePointerIndicator 		black)
-			(primitiveOrExternalCallStart 			black bold)
-			(primitiveOrExternalCallEnd 			black bold)
-			(primitive 								(cyan muchDarker))
-			(pragmaKeyword 						(cyan muchDarker))
-			(pragmaUnary 							(cyan muchDarker))
-			(pragmaBinary 							(cyan muchDarker)) 
-			(externalFunctionCallingConvention 	(cyan muchDarker) bold)
-			(module 								(cyan muchDarker) bold))
+
+			(pragma 						(cyan muchDarker)))
 ]
 
-{ #category : #formatting }
+{ #category : 'private' }
+SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
+
+	self plugins add: aPlugin
+]
+
+{ #category : 'formatting' }
 SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
-	self 
-		addAttributes: attributes
-		from: anRBNode start
-		to: anRBNode stop
+
+	self addAttributes: attributes from: anRBNode startWithoutParentheses to: anRBNode stopWithoutParentheses
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 SHRBTextStyler >> addAttributes: attributes from: start to: stop [
-	charAttr
-		from: (start max: 1)
-		to: (stop min: charAttr size)
-		put: attributes
+
+	charAttr from: (start max: 1) to: (stop min: charAttr size) put: attributes
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SHRBTextStyler >> addAttributesFrom: attributeRuns satisfying: aTestBlock to: aText [
 
-	attributeRuns withStartStopAndValueDo: [:start :stop :attributes | 
-		attributes 
-			select: aTestBlock 
-			thenDo: [ :selectedAttribute| 
+	attributeRuns withStartStopAndValueDo: [:start :stop :attributes |
+		attributes
+			select: aTestBlock
+			thenDo: [ :selectedAttribute|
 				aText
 					addAttribute: selectedAttribute
 					from: start
 					to: stop ]].
-		
+
 	^ aText
 ]
 
-{ #category : #formatting }
-SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute forNode: anRBNode [
-	self 
-		addStyle:styleSymbol
-		attributes: { additionalAttribute }
-		forNode: anRBNode.
+{ #category : 'accessing' }
+SHRBTextStyler >> addPlugin: aPlugin [
+
+	self plugins add: aPlugin
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: start to: end [
-	self addAttributes: (self attributesFor: styleSymbol), {additionalAttribute} from: start to: end.
+	self addAttributes: (self attributesFor: styleSymbol), {additionalAttribute} from: start to: end
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anRBNode [
-	self 
-		addAttributes: (self attributesFor: styleSymbol), additionalAttributes 
-		forNode: anRBNode.
+	self
+		addAttributes: (self attributesFor: styleSymbol), additionalAttributes
+		forNode: anRBNode
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 SHRBTextStyler >> addStyle: styleSymbol forNode: anRBNode [
-	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode.
+	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 SHRBTextStyler >> addStyle: styleSymbol from: start to: end [
-	self addAttributes: (self attributesFor: styleSymbol) from: start to: end.
+	self addAttributes: (self attributesFor: styleSymbol) from: start to: end
 ]
 
-{ #category : #private }
-SHRBTextStyler >> attributesFor: aSymbol [ 
-	^ self class attributesFor: aSymbol pixelHeight: self pixelHeight
+{ #category : 'private' }
+SHRBTextStyler >> attributesFor: aSymbol [
+
+	^ self class attributesFor: aSymbol
 ]
 
-{ #category : #accessing }
-SHRBTextStyler >> classOrMetaClass: aBehavior [ 
+{ #category : 'accessing' }
+SHRBTextStyler >> braceStyleName [
+
+	| level |
+	level := braceLevel \\ self maximumImbricationStyleSupported.
+	^ (#brace , (level isZero
+		    ifTrue: [ '' ]
+		    ifFalse: [ level asString ])) asSymbol
+]
+
+{ #category : 'accessing' }
+SHRBTextStyler >> bracketStyleName [
+
+	| level |
+	level := bracketLevel \\ self maximumImbricationStyleSupported.
+	^ (#block , (level isZero
+		    ifTrue: [ '' ]
+		    ifFalse: [ level asString ])) asSymbol
+]
+
+{ #category : 'accessing' }
+SHRBTextStyler >> classOrMetaClass: aBehavior [
 	classOrMetaClass := aBehavior
 ]
 
-{ #category : #private }
-SHRBTextStyler >> currentClosedBracketStyleName [
-	bracketLevel isZero ifTrue: [ ^ #blockEnd ].
-	^ (#blockEnd asString , bracketLevel asString) asSymbol
+{ #category : 'visiting' }
+SHRBTextStyler >> formatIncompleteSelector: aSymbol [
+
+	aSymbol isSelectorSymbol ifTrue: [ ^ nil ].
+	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil ])
+		  ifTrue: [ #incompleteSelector ]
+		  ifFalse: [ #undefinedSelector ]
 ]
 
-{ #category : #private }
-SHRBTextStyler >> currentClosedParenthesisStyleName [
-	parentheseLevel isZero ifTrue: [ ^ #rightParenthesis ].
-	^ (#rightParenthesis asString , parentheseLevel asString) asSymbol
-]
+{ #category : 'initialization' }
+SHRBTextStyler >> initialize [
 
-{ #category : #private }
-SHRBTextStyler >> currentOpenedBracketStyleName [
-	bracketLevel isZero ifTrue: [ ^ #blockStart ].
-	^ (#blockStart asString , bracketLevel asString) asSymbol
-]
-
-{ #category : #private }
-SHRBTextStyler >> currentOpenedParenthesisStyleName [
-	parentheseLevel isZero ifTrue: [ ^ #leftParenthesis ].
-	^ (#leftParenthesis asString , parentheseLevel asString) asSymbol
-]
-
-{ #category : #accessing }
-SHRBTextStyler >> font: aFont [ 
-	font := aFont
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
-	^ (self class formatIncompleteIdentifiers
-		and: [ (Symbol
-						selectorThatStartsCaseSensitive: aMessageNode selector asString
-						skipping: nil) isNotNil ])
-			ifTrue: [ #incompleteKeyword ]
-			ifFalse: [ #undefinedKeyword ]
-]
-
-{ #category : #initialization }
-SHRBTextStyler >> initialize [ 
 	super initialize.
-	
-	isForWorkspace := false
+	stylingEnabled := true.
+	isScripting := false
 ]
 
-{ #category : #accessing }
-SHRBTextStyler >> isForWorkspace [  
-	^workspace 
-		ifNil: [ isForWorkspace ]
+{ #category : 'accessing' }
+SHRBTextStyler >> isForWorkspace [
+
+	self
+		deprecated: 'use isScripting'
+		transformWith: '`@receiver isForWorkspace' -> '`@receiver isScripting'.
+	^ self isScripting
+]
+
+{ #category : 'accessing' }
+SHRBTextStyler >> isForWorkspace: aBoolean [
+		self
+		deprecated: 'use isScripting:'
+		transformWith: '`@receiver isForWorkspace: `@argument' -> '`@receiver isScripting: `@argument'.
+	^ self isScripting: aBoolean
+]
+
+{ #category : 'accessing' }
+SHRBTextStyler >> isScripting [
+	^workspace
+		ifNil: [ isScripting ]
 		ifNotNil: [ workspace isScripting ]
 ]
 
-{ #category : #accessing }
-SHRBTextStyler >> isForWorkspace: aBoolean [
-	isForWorkspace := aBoolean
+{ #category : 'accessing' }
+SHRBTextStyler >> isScripting: aBoolean [
+	isScripting := aBoolean
 ]
 
-{ #category : #formatting }
+{ #category : 'private' }
 SHRBTextStyler >> literalStyleSymbol: aValue [
 
 	aValue isSymbol
@@ -986,143 +778,170 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 	^ #default
 ]
 
-{ #category : #private }
-SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
-	^ anArgumentNode isDefinedByBlock
-		ifTrue: [ anArgumentNode isDefinition 
-				ifTrue: [ #blockPatternArg ]
-				ifFalse: [ #blockArg ] ]
-		ifFalse: [ #methodArg ]
+{ #category : 'accessing' }
+SHRBTextStyler >> maximumImbricationStyleSupported [
+	"We style up to 8 level of imbricated parenthesis/brackets/braces."
+
+	^ 8
 ]
 
-{ #category : #private }
-SHRBTextStyler >> methodOrBlockTempDeclStyleFor: aSequenceNode [
-	^ aSequenceNode scope isBlockScope
-		ifTrue: [ #blockPatternTempVar ]
-		ifFalse: [ #patternTempVar ]
+{ #category : 'accessing' }
+SHRBTextStyler >> parenthesisStyleName [
+
+	| level |
+	level := parentheseLevel \\ self maximumImbricationStyleSupported.
+	^ (#parenthesis , (level isZero
+		    ifTrue: [ '' ]
+		    ifFalse: [ level asString ])) asSymbol
 ]
 
-{ #category : #private }
-SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
-	^ aTemporaryNode isDefinedByBlock
-		ifTrue: [ #blockTempVar ]
-		ifFalse: [ #tempVar ]
+{ #category : 'private' }
+SHRBTextStyler >> plugins [
+
+	^ plugins ifNil: [ plugins := OrderedCollection new ]
 ]
 
-{ #category : #private }
-SHRBTextStyler >> pixelHeight [
-	^ pixelHeight ifNil: [ pixelHeight := (font ifNil: [ TextStyle defaultFont ]) pixelSize ]
-]
-
-{ #category : #private }
+{ #category : 'private' }
 SHRBTextStyler >> privateStyle: aText [
-	| ast |
+	| compiler |
+
 	aText ifEmpty: [ ^ self ].
-	ast := classOrMetaClass compiler
+	compiler := classOrMetaClass compiler
 		source: aText asString;
-		noPattern: self isForWorkspace ;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
-		requestor: workspace;
-		parse.				
-	^ self style: aText ast: ast
+		isScripting: self isScripting;
+		requestor: workspace.
+
+	self plugins do: [ :each | compiler addParsePlugin: each ].
+
+	^ self
+		style: aText
+		ast: compiler parse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
-	aVariableNode binding ifNil: [^#default].
-	aVariableNode isArgumentVariable ifTrue: [ ^#methodArg].
-	aVariableNode isTempVariable ifTrue: [ ^#tempVar].
-	aVariableNode isGlobalVariable ifTrue: [ ^#globalVar].
-	"here we should add support for #classVar"
-	aVariableNode isClassVariable ifTrue: [ ^#globalVar].
-	aVariableNode isInstanceVariable ifTrue: [ ^#instVar]. 
-	"for now we use temp variable here, we could now color them with their own color"
-	aVariableNode isWorkspaceVariable ifTrue: [ ^#tempVar]. 
-	
-	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
-		ifTrue:[ ^#incompleteIdentifier] .
-	"Note: if formatIncompleteIdentifiers is true, a non-exisiting variable might be incomplete"
-	aVariableNode isUndeclaredVariable ifTrue: [ ^#undefinedIdentifier ].
-
-	^#invalid.
+	^ aVariableNode styleName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 
 	aVariableNode binding isGlobalVariable
-		ifTrue: [ ^ TextClassLink className: aVariableNode name ].	
+		ifTrue: [ ^ TextClassLink className: aVariableNode name ].
 	^ TextVariableLink variableName: aVariableNode name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
-	| textLink global |
+
+	| textLink |
 	textLink := self resolveTextLinkFor: aVariableNode.
-	aVariableNode binding isGlobalVariable ifFalse: [ ^{textLink} ].
-	
-	global :=	 aVariableNode binding value.
-	(global isClass and: [ global isDeprecated ]) ifFalse: [ ^{textLink} ].
-	
-	^{ textLink. TextEmphasis struckOut }
+	aVariableNode binding isGlobalVariable ifFalse: [ ^ { textLink } ].
+
+	aVariableNode binding isDeprecated ifFalse: [ ^ { textLink } ].
+
+	^ {
+		  textLink.
+		  TextEmphasis struckOut }
 ]
 
-{ #category : #private }
-SHRBTextStyler >> style: aText ast: ast [
+{ #category : 'styling' }
+SHRBTextStyler >> style: aText [
+
 	aText ifEmpty: [ ^ self ].
-	text := aText.	
+	stylingEnabled ifFalse: [ ^ self ].
+	text := aText copy.
+	self privateStyle: text.
+	view ifNotNil: [ :view2 | view2 stylerStyled: text ]
+]
+
+{ #category : 'private' }
+SHRBTextStyler >> style: aText ast: ast [
+
+	aText ifEmpty: [ ^ self ].
+	text := aText.
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
-	parentheseLevel:=0.
+	parentheseLevel := 0.
+	braceLevel := 0.
 	self visitNode: ast.
-	^aText runs: (RunArray newFrom: charAttr)
+	"Second pass to ensure that all syntax errors are visible"
+	ast allErrorNotices do: [ :notice | 
+		notice isSyntaxError ifTrue: [
+			self addStyle: #invalid from: notice position to: notice position ] ].
+	^ aText runs: (RunArray newFrom: charAttr)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+SHRBTextStyler >> styleCloseBrace: anArrayNode [
+
+	braceLevel := braceLevel - 1.
+	(anArrayNode right isZero or: [ anArrayNode value isNil ]) ifTrue: [ ^ self ].
+	self addStyle: self braceStyleName from: anArrayNode right to: anArrayNode right
+]
+
+{ #category : 'private' }
 SHRBTextStyler >> styleCloseBracket: aBlockNode [
 	bracketLevel := bracketLevel - 1.
 	(aBlockNode right isZero or: [ aBlockNode value isNil ]) ifTrue:[ ^self ].
-	self addStyle: self currentClosedBracketStyleName from: aBlockNode right to: aBlockNode right
+	self addStyle: self bracketStyleName from: aBlockNode right to: aBlockNode right
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHRBTextStyler >> styleCloseParenthese: aMessageNode [
 	aMessageNode parentheses
-		ifNotEmpty: [ 
+		ifNotEmpty: [
 			aMessageNode parentheses
-				reverseDo: [:interval | 
+				do: [:interval |
 					| pos |
 					pos := interval last.
 					parentheseLevel := parentheseLevel - 1.
-					self addStyle: self currentClosedParenthesisStyleName from: pos to: pos ]]
+					self addStyle: self parenthesisStyleName from: pos to: pos ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+SHRBTextStyler >> styleOpenBrace: anArrayNode [
+
+	| style |
+	style := self braceStyleName.
+	self addStyle: style from: anArrayNode left to: anArrayNode left.
+	braceLevel := braceLevel + 1
+]
+
+{ #category : 'private' }
 SHRBTextStyler >> styleOpenBracket: aBlockNode [
 	| style |
-	style := aBlockNode isFaulty
-		ifTrue: [ #invalid ]
-		ifFalse: [ self currentOpenedBracketStyleName ].
+	style := self bracketStyleName.
 	self addStyle: style from: aBlockNode left to: aBlockNode left.
 	bracketLevel := bracketLevel + 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHRBTextStyler >> styleOpenParenthese: aMessageNode [
 	aMessageNode parentheses
-		ifNotEmpty: [ 
+		ifNotEmpty: [
 			aMessageNode parentheses
-				do: [ :interval | 
+				reverseDo: [ :interval |
 					| pos |
 					pos := interval first.
-					self addStyle:  self currentOpenedParenthesisStyleName from: pos to: pos.
+					self addStyle:  self parenthesisStyleName from: pos to: pos.
 					parentheseLevel := parentheseLevel + 1 ]]
 ]
 
-{ #category : #private }
+{ #category : 'visiting' }
+SHRBTextStyler >> styleParenthesisOf: aNode around: aBlock [
+
+	aNode isValue ifFalse: [ ^ aBlock value ].
+
+	self styleOpenParenthese: aNode.
+	aBlock value.
+	self styleCloseParenthese: aNode
+]
+
+{ #category : 'private' }
 SHRBTextStyler >> styleTempBars: aSequenceNode [
 	| tempBarAttribute |
-	tempBarAttribute := aSequenceNode scope isMethodScope
+	tempBarAttribute := (aSequenceNode scope isNil or: [ aSequenceNode scope isMethodScope ])
 		ifTrue: [ #methodTempBar ]
 		ifFalse: [ #blockTempBar ].
 	aSequenceNode leftBar
@@ -1131,26 +950,56 @@ SHRBTextStyler >> styleTempBars: aSequenceNode [
 		ifNotNil: [ :pos | self addStyle: tempBarAttribute from: pos to: pos ]
 ]
 
-{ #category : #styling }
-SHRBTextStyler >> unstyledTextFrom: aText [ 
+{ #category : 'styling' }
+SHRBTextStyler >> styledTextFor: aText [
+
+	^ self privateStyle: aText
+]
+
+{ #category : 'private' }
+SHRBTextStyler >> stylingEnabled [
+
+	^ stylingEnabled
+]
+
+{ #category : 'private' }
+SHRBTextStyler >> stylingEnabled: aBoolean [
+
+	stylingEnabled := aBoolean
+]
+
+{ #category : 'styling' }
+SHRBTextStyler >> unstyledTextFrom: aText [
 	"return a Text object without all styling attributes"
+
 	| answer |
-	answer := super unstyledTextFrom: aText.
-	self 
-		addAttributesFrom: aText runs 
-		satisfying: [ :each| each isKindOf: TextAction ]
-		to: answer.
+	answer := Text fromString: aText string.
+	self addAttributesFrom: aText runs satisfying: [ :each | each isKindOf: TextAction ] to: answer.
 	^ answer
 ]
 
-{ #category : #visiting }
-SHRBTextStyler >> visitArgumentNode: anArgumentNode [
-	| blockOrMethodArgStyle |
-	blockOrMethodArgStyle := self methodOrBlockArgStyleFor: anArgumentNode.
-	self addStyle: blockOrMethodArgStyle forNode: anArgumentNode
+{ #category : 'accessing' }
+SHRBTextStyler >> view: aViewOrMorph [
+
+	view := aViewOrMorph
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
+SHRBTextStyler >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+
+	self addStyle: #pragma from: aRBAnnotationMarkNode start to: aRBAnnotationMarkNode start.
+]
+
+{ #category : 'visiting' }
+SHRBTextStyler >> visitArrayNode: anArrayNode [
+
+	anArrayNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
+	self styleOpenBrace: anArrayNode.
+	anArrayNode children do: [ :each | self visitNode: each ].
+	self styleCloseBrace: anArrayNode
+]
+
+{ #category : 'visiting' }
 SHRBTextStyler >> visitAssignmentNode: anAssignmentNode [
 	self visitNode: anAssignmentNode variable.
 	self visitNode: anAssignmentNode value.
@@ -1158,7 +1007,7 @@ SHRBTextStyler >> visitAssignmentNode: anAssignmentNode [
 		ifFalse: [ self addStyle: #invalid forNode: anAssignmentNode ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitBlockNode: aBlockNode [
 	aBlockNode comments
 		do:
@@ -1173,190 +1022,168 @@ SHRBTextStyler >> visitBlockNode: aBlockNode [
 	self styleCloseBracket: aBlockNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitCascadeNode: aCascadeNode [
 	aCascadeNode messages do: [ :each | self visitNode: each ].
 	aCascadeNode semicolons do: [ :pos | self addStyle: #cascadeSeparator from: pos to: pos ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
-	self addStyle: #invalid from: anEnglobingErrorNode stop to: anEnglobingErrorNode stop + 1.
-	anEnglobingErrorNode content do: [:each | self visitNode: each ]
+	anEnglobingErrorNode value ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode startWithoutParentheses to: anEnglobingErrorNode startWithoutParentheses + anEnglobingErrorNode value size - 1 ].
+	anEnglobingErrorNode valueAfter ifNotEmpty: [
+		self addStyle: #invalid from: anEnglobingErrorNode stopWithoutParentheses to: anEnglobingErrorNode stopWithoutParentheses + anEnglobingErrorNode valueAfter size - 1 ].
+	anEnglobingErrorNode contents do: [:each | self visitNode: each ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	"In a (valid) byte array all elements are of the same type, style the whole contents
-at once, but for ordinary literal arrays, style every node"
+	"We reuse the nested brackets/parenthesis style.
+	The main point it to easyly match opener and closer, nor necesarily to add type semanting"
 
-	(aRBLiteralArrayNode isForByteArray and: [ 
-		aRBLiteralArrayNode isFaulty not and: [ 
-			aRBLiteralArrayNode contents isNotEmpty 
-		]
-	]) ifTrue: [ 
-			self addStyle: #number 
-				from: aRBLiteralArrayNode start + 2 
-				to: aRBLiteralArrayNode stop - 1 ]
-		ifFalse: [ aRBLiteralArrayNode contents do: [ :each | self visitNode: each ]]
+	| style |
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [
+			style := self bracketStyleName.
+			bracketLevel := bracketLevel + 1 ]
+		ifFalse: [
+			style := self parenthesisStyleName.
+			parentheseLevel := parentheseLevel + 1 ].
+
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode startWithoutParentheses
+		to: aRBLiteralArrayNode startWithoutParentheses + aRBLiteralArrayNode openerSize - 1.
+	self
+		addStyle: style
+		from: aRBLiteralArrayNode stopWithoutParentheses
+		to: aRBLiteralArrayNode stopWithoutParentheses.
+
+	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ].
+
+	aRBLiteralArrayNode isForByteArray
+		ifTrue: [ bracketLevel := bracketLevel - 1 ]
+		ifFalse: [ parentheseLevel := parentheseLevel - 1 ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
-	| value link |
+
+	| value attributes |
 	value := aLiteralValueNode value.
-	
-	
-	"We can have 3 different kind of links from a literal: 
+	attributes := OrderedCollection new.
+
+	"We can have 3 different kind of links from a literal:
 	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
-	link := value isSymbol
+	value isSymbol
 		ifTrue: [
 			self class environment
 				at: value
-				ifPresent: [ :aGlobal | TextClassLink className: value ]
-				ifAbsent: [ TextMethodLink selector: value ] ]
+				ifPresent: [ :aGlobal |
+					attributes add: (TextClassLink className: value).
+					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
+				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
 		ifFalse: [ TextClassLink class: value class ].
-	self addStyle: (self literalStyleSymbol: value) attribute: link forNode: aLiteralValueNode
+	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
+
 	| style link |
 	
-	style := aMessageNode selector isSelectorSymbol 
-		ifTrue: [ #keyword ]
-		ifFalse: [ self formatIncompleteSelector: aMessageNode ].
-		
+	style := (self formatIncompleteSelector: aMessageNode selector) ifNil: [
+		aMessageNode isAnnotation ifTrue: [ #pragma ] ifFalse: [ #selector ] ].
+
 	link := TextMethodLink sourceNode: aMessageNode.
-	self styleOpenParenthese: aMessageNode.
-	
-	aMessageNode selectorParts
-		with: aMessageNode keywordsPositions
-		do: [ :keyword :position | 
-			self
-				addStyle: style
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
-	
-	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
-		ifTrue: [ self visitNode: aMessageNode receiver ].
-	
-	aMessageNode arguments do: [ :each | self visitNode: each ].
-	self styleCloseParenthese: aMessageNode
+
+	aMessageNode selectorParts with: aMessageNode keywordsPositions do: [ :keyword :position |
+		self
+			addStyle: style
+			attribute: link
+			from: position
+			to: position + keyword size - 1.
+
+		(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ]) ifTrue: [ self visitNode: aMessageNode receiver ].
+
+		aMessageNode arguments do: [ :each | self visitNode: each ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitMethodNode: aMethodNode [
 	| link |
-	self visitMethodComments: aMethodNode comments.
-	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
+	self visitMethodComments: aMethodNode.
+	aMethodNode arguments do: [ :argument | self visitNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
-	aMethodNode selectorParts
-		with: aMethodNode keywordsPositions
-		do:
-			[ :keyword :position | 
-			self
-				addStyle: #patternKeyword
-				attribute: link
-				from: position
-				to: position + keyword size - 1 ].
+	aMethodNode isDoIt ifFalse: [
+		aMethodNode selectorParts
+			with: aMethodNode keywordsPositions
+			do:
+				[ :keyword :position |
+				self
+					addStyle: #patternSelector
+					attribute: link
+					from: position
+					to: position + keyword size - 1 ] ].
 	aMethodNode pragmas do: [ :each | self visitNode: each ].
 	self visitNode: aMethodNode body
 ]
 
-{ #category : #visiting }
-SHRBTextStyler >> visitNode: aNode [ 
-	aNode comments do: [:comment|
-		self 
-			addStyle: #comment
-			from: comment start
-			to: comment stop ].
+{ #category : 'visiting' }
+SHRBTextStyler >> visitNode: aNode [
 
-	^aNode acceptVisitor: self
+	aNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
+
+	^ self styleParenthesisOf: aNode around: [ aNode acceptVisitor: self ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitParseErrorNode: anErrorNode [
-	self 
-		addStyle: #invalid
-		forNode: anErrorNode
+
+	self addStyle: #invalid forNode: anErrorNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitPragmaNode: aPragmaNode [
-	aPragmaNode selectorParts with: aPragmaNode keywordsPositions do: [ :keyword : position|
-	self 
-		addStyle: #pragmaKeyword
-		from: position
-		to: position + keyword size ].
-	
+	"Lets imagin this pragma: `<  test: #toto test2: 2 >`
+
+	We want to highlight the `<`, the `test:`, the `test2:` and the `>` but we do not want to highlight the arguments."
+
+	self addStyle: #pragma from: aPragmaNode left to: aPragmaNode left.
+	aPragmaNode keywordsIntervals do: [ :i | self addStyle: #pragma from: i first to: i last ].
+	self addStyle: #pragma from: aPragmaNode right to: aPragmaNode right.
+
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
 
-{ #category : #visiting }
-SHRBTextStyler >> visitReturnNode: aReturnNode [ 
-	self 
-		addStyle: #return
-		from: aReturnNode start
-		to: aReturnNode stop.
-		
+{ #category : 'visiting' }
+SHRBTextStyler >> visitReturnNode: aReturnNode [
+
+	self addStyle: #return from: aReturnNode start to: aReturnNode start.
+
 	self visitNode: aReturnNode value
 ]
 
-{ #category : #visiting }
-SHRBTextStyler >> visitSelfNode: aSelfNode [
-	self 
-		addStyle: #self
-		forNode: aSelfNode
-]
-
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitSequenceNode: aSequenceNode [
+
 	self styleTempBars: aSequenceNode.
 	aSequenceNode temporaries do: [ :each | self visitNode: each ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
-	aSequenceNode periods
-		do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
+	aSequenceNode periods do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
 ]
 
-{ #category : #visiting }
-SHRBTextStyler >> visitSuperNode: aSuperNode [
-	self addStyle: #super forNode: aSuperNode
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
-	| patternTempStyle |
-	patternTempStyle := self
-		methodOrBlockTempDeclStyleFor: aTemporaryDeclarationNode parent.
-	self addStyle: patternTempStyle forNode: aTemporaryDeclarationNode
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitTemporaryNode: aTemporaryNode [
-	| methodOrBlockTempStyle |
-	methodOrBlockTempStyle := self methodOrBlockTempStyleFor: aTemporaryNode.
-	self addStyle: methodOrBlockTempStyle forNode: aTemporaryNode
-]
-
-{ #category : #visiting }
-SHRBTextStyler >> visitThisContextNode: aThisContextNode [
-	self addStyle: #thisContext forNode: aThisContextNode
-]
-
-{ #category : #visiting }
+{ #category : 'visiting' }
 SHRBTextStyler >> visitVariableNode: aVariableNode [
-	self 
-		addStyle: (self resolveStyleFor: aVariableNode) 
-		attributes: (self resolveVariableAttributesFor: aVariableNode)
-		forNode: aVariableNode
+
+	self addStyle: (self resolveStyleFor: aVariableNode) attributes: (self resolveVariableAttributesFor: aVariableNode) forNode: aVariableNode.
 ]
 
-{ #category : #accessing }
-SHRBTextStyler >> workspace: aWorkspace [ 
+{ #category : 'accessing' }
+SHRBTextStyler >> workspace: aWorkspace [
 	workspace := aWorkspace
 ]

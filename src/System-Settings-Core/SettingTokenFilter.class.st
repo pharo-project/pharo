@@ -8,43 +8,45 @@ Instance Variables
 
 "
 Class {
-	#name : #SettingTokenFilter,
-	#superclass : #SettingFilter,
+	#name : 'SettingTokenFilter',
+	#superclass : 'SettingFilter',
 	#instVars : [
 		'token'
 	],
-	#category : #'System-Settings-Core-Filter'
+	#category : 'System-Settings-Core-Filter',
+	#package : 'System-Settings-Core',
+	#tag : 'Filter'
 }
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 SettingTokenFilter >> keepSettingDeclaration: aSettingDeclaration [
 	| selector |
-	selector := (aSettingDeclaration respondsTo: #getSelector) 
+	selector := (aSettingDeclaration respondsTo: #getSelector)
 		ifTrue: [aSettingDeclaration getSelector] ifFalse: [''].
-	^ (({aSettingDeclaration name.  
-		aSettingDeclaration label. 
-		selector asUppercase. 
+	^ (({aSettingDeclaration name.
+		aSettingDeclaration label.
+		selector asUppercase.
 		aSettingDeclaration description}
 				collect: [:e | (e ifNil: ['']) asUppercase])
 				includesSubstringAnywhere: self token asUppercase)
 ]
 
-{ #category : #filtering }
-SettingTokenFilter >> keepSettingTreeNode: aSettingNode [ 
+{ #category : 'filtering' }
+SettingTokenFilter >> keepSettingTreeNode: aSettingNode [
 	^ (({aSettingNode methodClass name asUppercase. aSettingNode selector asUppercase}
 			collect: [:e | e ifNil: ['']])
 			includesSubstringAnywhere: self token asUppercase)
 		or: [self keepSettingDeclaration: aSettingNode settingDeclaration]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTokenFilter >> token [
 	"Answer the value of token"
 
 	^ token
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTokenFilter >> token: aString [
 	"Set the value of token"
 

@@ -76,8 +76,8 @@ This is implemented using a ZnUrlOperation.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnUrl,
-	#superclass : #Object,
+	#name : 'ZnUrl',
+	#superclass : 'Object',
 	#instVars : [
 		'scheme',
 		'host',
@@ -88,89 +88,90 @@ Class {
 		'username',
 		'password'
 	],
-	#category : #'Zinc-Resource-Meta-Core'
+	#category : 'Zinc-Resource-Meta-Core',
+	#package : 'Zinc-Resource-Meta-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl class >> defaultPortForScheme: scheme [
 	(#(http ws) includes: scheme) ifTrue: [ ^ 80 ].
 	(#(https wss) includes: scheme) ifTrue: [ ^ 443 ].
 	^ nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUrl class >> fromString: string [
 	^ self new
-		parseFrom: string; 
-		yourself 
+		parseFrom: string;
+		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUrl class >> fromString: string defaultScheme: defaultScheme [
 	^ self new
-		parseFrom: string defaultScheme: defaultScheme; 
-		yourself 
+		parseFrom: string defaultScheme: defaultScheme;
+		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl class >> image [
 	"Return a File URL refering to the file path of the current image file.
 	This is useful as a context to resolve relative URLs, see #withRelativeReference:"
-	
+
 	^ SmalltalkImage current imagePath asPath asZnUrl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl class >> schemesNotUsingDoubleSlash [
 	"Most URL schemes use a double slash, as in http://
 	but some don't, return a list of those"
-	
+
 	^ #( #mailto #telnet )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl class >> schemesNotUsingPath [
 	"Most URL schemes use a hierarchical path
 	but some don't, return a list of those"
-	
+
 	^ #( #mailto )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl class >> schemesOptionallyNotUsingDoubleSlash [
 	"Most URL schemes use a double slash, as in http://
 	but some optionally don't, return a list of those"
-	
+
 	^ #( #file )
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> & association [
-	^ self withQuery: association 
+	^ self withQuery: association
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> + string [
 	^ self withRelativeReference: string
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> / object [
 	^ object addedToZnUrl: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnUrl >> = anObject [
 	^ self == anObject
 		or: [ self class == anObject class and: [ self equals: anObject ] ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> ? association [
-	^ self withQuery: association 
+	^ self withQuery: association
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> addPathSegment: segment [
 	"Modify the receiver's path by adding segment at the end"
 
@@ -180,19 +181,19 @@ ZnUrl >> addPathSegment: segment [
 	segments add: segment
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> addPathSegments: pathSegments [
 	"Modify the receiver's path by adding the elements of pathSegments at the end"
 
 	pathSegments do: [ :each | self addPathSegment: each ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> addedToZnUrl: url [
-	^ url withPathSegments: self pathSegments 
+	^ url withPathSegments: self pathSegments
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUrl >> asFileReference [
 	"Convert the receiver into a new FileReference object.
 	Note that for a FileReference a trailing slash is not relevant"
@@ -207,20 +208,20 @@ ZnUrl >> asFileReference [
 	^ FileReference fileSystem: FileSystem disk path: (AbsolutePath withAll: path)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUrl >> asFileUrl [
 	"Return a copy of the receiver as a File URL, replacing the scheme with #file.
 	This is useful when you want to do a #asFileReference afterwards."
-	
+
 	^ self copy
 		scheme: #file;
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUrl >> asRelativeUrl [
 	"Copy the receiver, with scheme, host and port cleared"
-	
+
 	^ self copy
 		scheme: nil;
 		host: nil;
@@ -228,103 +229,103 @@ ZnUrl >> asRelativeUrl [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUrl >> asUrl [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUrl >> asZnUrl [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUrl >> asZnUrlWithDefaults [
-	^ self copy 
-		setDefaults; 
+	^ self copy
+		setDefaults;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> authority [
-	^ self hasNonDefaultPort 
-		ifTrue: [ 
-			String streamContents: [ :stream | 
+	^ self hasNonDefaultPort
+		ifTrue: [
+			String streamContents: [ :stream |
 				stream nextPutAll: self host; nextPut: $:; print: self port ] ]
-		ifFalse: [ 
+		ifFalse: [
 			self host ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> authorityWithPort [
-	^ String streamContents: [ :stream | 
-			stream nextPutAll: self host; nextPut: $:; print: self portOrDefault ] 
+	^ String streamContents: [ :stream |
+			stream nextPutAll: self host; nextPut: $:; print: self portOrDefault ]
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> clearPath [
 	self hasPath
 		ifTrue: [ segments removeAll ]
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> closePath [
 	self isDirectoryPath
 		ifFalse: [ self addPathSegment: $/ ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> decodePercent: string [
 	^ ZnResourceMetaUtils decodePercent: string
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> directory [
 	^ self isDirectoryPath
 		ifTrue: [ self path ]
-		ifFalse: [ 
+		ifFalse: [
 			String streamContents: [ :stream |
-				segments allButLast  
+				segments allButLast
 					do: [ :each | stream nextPutAll: each ]
 					separatedBy: [ stream nextPut: $/ ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> encode: string on: stream [
 	"Percent encode string on stream, using the smallest possible safe set.
 	This is used for the host, username and password parts."
-	
+
 	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #rfc3986SafeSet encoder: ZnDefaultCharacterEncoder value)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> encodeFragment: string on: stream [
 	"Percent encode string, assumed to be a fragment, on stream using the query safe set."
-	
+
 	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #querySafeSet encoder: ZnDefaultCharacterEncoder value)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> encodePath: string on: stream [
 	"Percent encode string on stream using a safe set specific to path elements"
-	
+
 	stream nextPutAll: (ZnResourceMetaUtils encodePercent: string safeSet: #urlPathSafeSet encoder: ZnDefaultCharacterEncoder value)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> encodeQueryFields: fields on: stream [
 	"Percent encode the key/value fields on stream, these constitute the query part"
-	
+
 	ZnResourceMetaUtils writeQueryFields: fields on: stream
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> enforceKnownScheme [
 	(scheme isNil or: [ #(#http #https #ws #wss #file) includes: scheme ])
 		ifFalse: [ (ZnUnknownScheme scheme: scheme) signal ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnUrl >> equals: url [
 	self scheme = url scheme ifFalse: [ ^ false ].
 	self host = url host ifFalse: [ ^ false ].
@@ -336,223 +337,222 @@ ZnUrl >> equals: url [
 	^ true
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> file [
 	^ self isDirectoryPath
 		ifTrue: [ String new ]
 		ifFalse: [ segments last ]
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> firstPathSegment [
 	^ self isSlash
 		ifTrue: [ nil ]
 		ifFalse: [ segments first ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> fragment [
 	^ fragment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> fragment: string [
 	fragment := string
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasFragment [
 	^ fragment notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasHost [
 	^ host notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasNonDefaultPort [
-	^ self hasPort 
+	^ self hasPort
 		and: [ self port ~= (self class defaultPortForScheme: self schemeOrDefault) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasPassword [
 	^ password notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasPath [
 	^ segments notNil and: [ segments isEmpty not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasPort [
 	^ port notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasQuery [
 	^ query notNil and: [ query isEmpty not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasScheme [
 	^ scheme notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasSecureScheme [
 	^ #(https wss) includes: self scheme
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> hasUsername [
 	^ username notNil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnUrl >> hash [
 	^ self hasPath
 		ifTrue: [ segments inject: host hash into: [ :sum :each | sum bitXor: each hash ] ]
 		ifFalse: [ host hash ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> host [
 	^ host
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> host: hostName [
 	host := hostName ifNotNil: [ hostName asLowercase ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUrl >> inContextOf: absoluteUrl [
 	"Return a copy of the receiver where scheme, host and port
 	are taken from absoluteUrl unless they are already in the receiver.
 	Path merging is not supported. See also #withRelativeReference: "
-	
+
 	| copy |
 	copy := self copy.
 	copy hasScheme ifFalse: [ copy scheme: absoluteUrl scheme ].
 	copy hasHost ifFalse: [ copy host: absoluteUrl host ].
-	(copy hasPort not and: [ copy scheme = absoluteUrl scheme ]) 
-		ifTrue: [ copy port: absoluteUrl port ].      
+	(copy hasPort not and: [ copy scheme = absoluteUrl scheme ])
+		ifTrue: [ copy port: absoluteUrl port ].
 	^ copy
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isAbsolute [
 	"We consider URLs with scheme://host as absolute (port is not relevant here).
 	See also #inContextOf: and #withRelativeReference:"
-	
+
 	^ self hasScheme and: [ self hasHost ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isDirectoryPath [
-	^ self hasPath 
+	^ self hasPath
 		ifTrue: [ segments last = $/ ]
 		ifFalse: [ true ]
-	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isEmpty [
 	^ (self hasScheme | self hasHost | self hasPath | self hasQuery | self hasFragment | self hasUsername | self hasPassword) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isFile [
 	^ scheme = #file
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isFilePath [
 	^ self isDirectoryPath not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isHttp [
 	^ scheme == #http
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isHttps [
 	^ scheme == #https
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isLocalHost [
 	^ self hasHost and: [ #('localhost' '127.0.0.1') includes: self host ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isRelative [
 	^ self isAbsolute not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> isSchemeNotUsingDoubleSlash: schemeString [
-	^ self class schemesNotUsingDoubleSlash , self class schemesOptionallyNotUsingDoubleSlash 
+	^ self class schemesNotUsingDoubleSlash , self class schemesOptionallyNotUsingDoubleSlash
 		includes: schemeString asLowercase
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isSchemeUsingDoubleSlash [
 	^ (self class schemesNotUsingDoubleSlash includes: self scheme) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isSchemeUsingPath [
 	^ (self class schemesNotUsingPath includes: self scheme) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUrl >> isSlash [
 	^ self hasPath not
 		or: [ segments size = 1 and: [ segments first = $/ ] ]
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> lastPathSegment [
 	^ self isSlash
 		ifTrue: [ nil ]
 		ifFalse: [ segments last ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> mailToAddress [
 	"Assuming my scheme is #mailto, return the address."
-	
-	^ self username, '@', self host 
+
+	^ self username, '@', self host
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> parseAuthority: string from: start to: stop [
 	| index |
 	((index := string indexOf: $@ startingAt: start) > 0 and: [ index < stop ])
 		ifTrue: [
 			self parseUserInfo: (ReadStream on: string from: start to: index - 1).
 			self parseHostPort: (ReadStream on: string from: index + 1 to: stop) ]
-		ifFalse: [ 
+		ifFalse: [
 			self parseHostPort: (ReadStream on: string from: start to: stop) ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> parseFrom: string [
 	self parseFrom: string defaultScheme: nil
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> parseFrom: string defaultScheme: defaultScheme [
 	| start end index |
 	start := 1.
 	end := string size.
 	(index := string indexOf: $#) > 0
-		ifTrue: [ 
+		ifTrue: [
 			self fragment: (self decodePercent: (string copyFrom: index + 1 to: end)).
 			end := index - 1 ].
 	(index := string indexOf: $?) > 0
@@ -563,34 +563,34 @@ ZnUrl >> parseFrom: string defaultScheme: defaultScheme [
 		ifTrue: [
 			self scheme: (string copyFrom: 1 to: index - 1).
 			start := index + 3 ]
-		ifFalse: [ 
-			((index := string indexOf: $:) > 0 
-					and: [ index <= end 
+		ifFalse: [
+			((index := string indexOf: $:) > 0
+					and: [ index <= end
 						and: [ self isSchemeNotUsingDoubleSlash: (string copyFrom: 1 to: index - 1) ] ])
-				ifTrue: [ 
+				ifTrue: [
 					self scheme: (string copyFrom: 1 to: index - 1).
 					start := index + 1 ]
-				ifFalse: [ 
+				ifFalse: [
 					defaultScheme ifNotNil: [ self scheme: defaultScheme ] ] ].
-	self hasScheme 
-		ifTrue: [  
+	self hasScheme
+		ifTrue: [
 			(index := string indexOf: $/ startingAt: start) > 0
 				ifTrue: [
 					self parseAuthority: string from: start to: index - 1.
 					start := index ]
-				ifFalse: [ 
+				ifFalse: [
 					^ self parseAuthority: string from: start to: end ] ].
 	self parsePath: (ReadStream on: string from: start to: end)
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> parseHostPort: stream [
 	| hostString portNumber |
 	self isFile
-		ifTrue: [ 
+		ifTrue: [
 			(hostString := stream upTo: $/) isEmpty
 				ifFalse: [ self host: (self decodePercent: hostString) ] ]
-		ifFalse: [ 
+		ifFalse: [
 			(hostString := stream upTo: $:) isEmpty
 				ifFalse: [ self host: (self decodePercent: hostString) ].
 			stream atEnd
@@ -600,7 +600,7 @@ ZnUrl >> parseHostPort: stream [
 					self port: portNumber ] ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> parsePath: stream [
 	stream peekFor: $/.
 	[ stream atEnd ] whileFalse: [ | segment |
@@ -609,117 +609,116 @@ ZnUrl >> parsePath: stream [
 				stringStream nextPut: stream next ] ].
 		segment = '.'
 			ifFalse: [
-				segment = '..' 
+				segment = '..'
 					ifTrue: [ self removeLastPathSegment ]
 					ifFalse: [ self addPathSegment: (self decodePercent: segment) ] ].
 		((stream peekFor: $/) and: [ stream atEnd ])
 			ifTrue: [ self closePath ] ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> parseQueryFrom: stream [
 	^ ZnResourceMetaUtils parseQueryFrom: stream
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> parseUserInfo: stream [
 	| userString |
-	(userString := stream upTo: $:) isEmpty 
-		ifFalse: [  
+	(userString := stream upTo: $:) isEmpty
+		ifFalse: [
 			self username: (self decodePercent: userString) ].
-	stream atEnd 
-		ifFalse: [ 
+	stream atEnd
+		ifFalse: [
 			self password: (self decodePercent: stream upToEnd) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> password [
 	^ password
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> password: string [
 	password := string
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> path [
-	self hasPath 
+	self hasPath
 		ifFalse: [ ^ String new ].
-	^ String streamContents: [ :stream | 
-		segments 
-			do: [ :each | 
+	^ String streamContents: [ :stream |
+		segments
+			do: [ :each |
 				each = $/
 					ifFalse: [ stream nextPutAll: each ] ]
 			separatedBy: [ stream nextPut: $/ ] ]
-
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrl >> pathPrintString [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 			self printPathOn: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrl >> pathQueryFragmentPrintString [
-	^ String streamContents: [ :stream | 
+	^ String streamContents: [ :stream |
 			self printPathQueryFragmentOn: stream ]
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> pathSegments [
 	^ segments ifNil: [ #() ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnUrl >> performOperation: operation [
 	"Look for and execute a handler that can perform operation on the receiver"
-	
+
 	^ self performOperation: operation with: nil
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnUrl >> performOperation: operation with: argument [
-	"Look for and execute a handler that can perform operation 
+	"Look for and execute a handler that can perform operation
 	on the receiver with the optional argument"
-	
+
 	^ ZnUrlOperation
-		performOperation: operation 
-		with: argument 
-		on: self 
+		performOperation: operation
+		with: argument
+		on: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> port [
 	^ port
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> port: integer [
 	port := integer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> portIfAbsent: valuable [
 	^ self hasPort
 		ifTrue: [ self port ]
 		ifFalse: valuable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> portOrDefault [
 	^ self portIfAbsent: [ self class defaultPortForScheme: self schemeOrDefault ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ZnUrl >> postCopy [
 	super postCopy.
 	segments := segments copy.
 	query := query copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrl >> printAuthorityOn: stream [
 	self hasUsername ifTrue: [
 		self encode: self username on: stream.
@@ -727,35 +726,34 @@ ZnUrl >> printAuthorityOn: stream [
 			stream nextPut: $:.
 			self encode: self password on: stream ].
 		stream nextPut: $@ ].
-	self hasHost ifTrue: [ 
+	self hasHost ifTrue: [
 		self encode: self host on: stream ].
-	self hasPort ifTrue: [ 
+	self hasPort ifTrue: [
 		stream nextPut: $:; print: self port ]
-
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrl >> printOn: stream [
-	self hasScheme ifTrue: [ 
+	self hasScheme ifTrue: [
 		stream nextPutAll: self scheme; nextPut: $:.
 		self isSchemeUsingDoubleSlash ifTrue: [ stream nextPut: $/; nextPut: $/ ] ].
 	self printAuthorityOn: stream.
 	self printPathQueryFragmentOn: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrl >> printPathOn: stream [
 	self hasPath
 		ifFalse: [ ^ stream nextPut: $/ ].
-	segments do: [ :each | 
+	segments do: [ :each |
 		stream nextPut: $/.
 		each = $/
 			ifFalse: [ self encodePath: each on: stream ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrl >> printPathQueryFragmentOn: stream [
-	self isSchemeUsingPath 
+	self isSchemeUsingPath
 		ifTrue: [ self printPathOn: stream ].
 	self hasQuery
 		ifTrue: [ self printQueryOn: stream ].
@@ -765,22 +763,22 @@ ZnUrl >> printPathQueryFragmentOn: stream [
 	self encodeFragment: self fragment on: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrl >> printQueryOn: stream [
-	stream nextPut: $?. 
+	stream nextPut: $?.
 	self encodeQueryFields: self query on: stream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> processRelativeReference: reference [
 	"Parse & resolve the relative reference using myself as base URL, destructively"
-	
+
 	| index end |
 	reference first = $/ ifTrue: [ self clearPath ].
 	(self isFilePath and: [ ('?#' includes: reference first) not ] ) ifTrue: [ self removeLastPathSegment ].
 	end := reference size.
 	(index := reference indexOf: $#) > 0
-		ifTrue: [ 
+		ifTrue: [
 			self fragment: (self decodePercent: (reference copyFrom: index + 1 to: end)).
 			end := index - 1 ].
 	(index := reference indexOf: $?) > 0
@@ -788,208 +786,205 @@ ZnUrl >> processRelativeReference: reference [
 			self query: (ZnResourceMetaUtils parseQueryFrom: (ReadStream on: reference from: index + 1 to: end)).
 			end := index - 1 ].
 	self parsePath: (ReadStream on: reference from: 1 to: end).
-	(reference = '.' ) | (reference = '..' ) | (reference endsWith: '/.') | (reference endsWith: '/..') 
+	(reference = '.' ) | (reference = '..' ) | (reference endsWith: '/.') | (reference endsWith: '/..')
 		ifTrue: [ self closePath ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> query [
 	^ query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> query: dictionary [
 	query := dictionary
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryAddAll: keyedCollection [
 	"Add all key/value pairs in keyedCollection as query parameters to the receiver.
 	Note that we use #addAllMulti:"
 
 	keyedCollection isEmpty
-		ifFalse: [ 
+		ifFalse: [
 			query ifNil: [ query := ZnMultiValueDictionary new ].
 			query addAllMulti: keyedCollection ].
 	^ keyedCollection
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryAt: key [
 	"Return the value of the query parameter key in the receiver.
 	Signal a KeyNotFound exception if there is no such parameter"
-	
+
 	^ self queryAt: key ifAbsent: [ KeyNotFound signalFor: key printString ]
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryAt: key add: value [
 	"Modify the receiver by adding a query variable key=value.
 	If key already exists, value is added to it."
 
 	query ifNil: [ query := ZnMultiValueDictionary new ].
 	query at: key asString add: (value ifNotNil: [ value asString ])
-
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryAt: key ifAbsent: block [
 	"Return the value of the query parameter key in the receiver.
 	Execute block if there is no such parameter"
-	
+
 	^ self hasQuery
 		ifTrue: [ self query at: key asString ifAbsent: block ]
 		ifFalse: block
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryAt: key ifPresent: block [
 	"Execute block with the value of the query parameter named key as value.
 	Return nil if there is no such parameter"
-	
+
 	^ self hasQuery
 		ifTrue: [ self query at: key asString ifPresent: block ]
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryAt: key put: value [
 	"Modify the receiver by setting a query variable key=value.
 	If key is already exists, it is overwritten."
 
 	query ifNil: [ query := ZnMultiValueDictionary new ].
 	query at: key asString put: (value ifNotNil: [ value asString ])
-
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryDo: block [
 	"Execute block for each query key/value pair in the receiver"
-	
-	self hasQuery ifTrue: [ 
+
+	self hasQuery ifTrue: [
 		self query keysAndValuesDo: block ]
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryKeys [
 	"Return the collection of all query keys in the receiver"
-	
+
 	^ self hasQuery
 		ifTrue: [ self query keys ]
 		ifFalse: [ #() ]
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryRemoveAll [
 	"Modify the receiver by removing all query parameters"
-	
+
 	self hasQuery
 		ifTrue: [ self query removeAll ]
 ]
 
-{ #category : #'accessing - query' }
+{ #category : 'accessing - query' }
 ZnUrl >> queryRemoveKey: key [
 	"Modify the receiver by remove the query parameter named key.
 	Do nothing if there is no such parameter"
-	
+
 	self hasQuery
 		ifTrue: [ self query removeKey: key asString ifAbsent: [ ] ]
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> removeFirstPathSegment [
 	self hasPath
 		ifTrue: [ segments removeFirst ]
 ]
 
-{ #category : #'accessing - path' }
+{ #category : 'accessing - path' }
 ZnUrl >> removeLastPathSegment [
 	self hasPath
 		ifTrue: [ segments removeLast ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> scheme [
 	^ scheme
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> scheme: anObject [
 
 	anObject ifNil: [ scheme := nil ] ifNotNil: [ scheme := anObject asLowercase asSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> schemeOrDefault [
-	^ self hasScheme 
+	^ self hasScheme
 		ifTrue: [ self scheme ]
-		ifFalse: [ #http ]    
+		ifFalse: [ #http ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> segments [
 	^ segments
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> segments: collection [
 	segments := collection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUrl >> setDefaults [
-	self hasScheme 
+	self hasScheme
 		ifFalse: [ self scheme: self schemeOrDefault ].
-	self hasPort 
-		ifFalse: [ self port: self portOrDefault ]    
+	self hasPort
+		ifFalse: [ self port: self portOrDefault ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> username [
 	^ username
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrl >> username: string [
 	username := string
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> withPathSegment: segment [
 	"Return a new URL equal to the receiver with its path extended with segment"
-	
+
 	^ self copy
 		addPathSegment: segment;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> withPathSegments: pathSegments [
 	"Return a new URL equal to the receiver with its path extended with pathSegments"
-	
+
 	^ self copy
 		addPathSegments: pathSegments;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUrl >> withQuery: association [
-	"Return a new URL equal to the receiver with the association's 
+	"Return a new URL equal to the receiver with the association's
 	key=value added as a query parameter.
 	Note that #queryAt:add: is used."
-	
+
 	^ self copy
 		queryAt: association key add: association value;
-		yourself 
-		
+		yourself
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ZnUrl >> withRelativeReference: reference [
 	"Return a new URL by parsing & resolving the relative reference using myself as base URL.
 	This implements the process described in RFC 3986 Section 5"
-	
+
 	| resolved |
-	[ (resolved := reference asZnUrl) isAbsolute 
+	[ (resolved := reference asZnUrl) isAbsolute
 		ifTrue: [ ^ resolved ] ] on: Error do: [ ].
 	(reference beginsWith: '//')
 		ifTrue: [ ^ self class fromString: (reference allButFirst: 2) defaultScheme: self scheme ].

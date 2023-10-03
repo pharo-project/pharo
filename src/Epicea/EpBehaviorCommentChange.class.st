@@ -2,8 +2,8 @@
 I represent a change in the comment of a class or a trait.
 "
 Class {
-	#name : #EpBehaviorCommentChange,
-	#superclass : #EpBehaviorChange,
+	#name : 'EpBehaviorCommentChange',
+	#superclass : 'EpBehaviorChange',
 	#instVars : [
 		'behavior',
 		'oldComment',
@@ -11,10 +11,12 @@ Class {
 		'oldStamp',
 		'newStamp'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpBehaviorCommentChange class >> newWith: aClassCommentedAnnouncement [
 
 	^self
@@ -25,7 +27,7 @@ EpBehaviorCommentChange class >> newWith: aClassCommentedAnnouncement [
 		newStamp: aClassCommentedAnnouncement newStamp
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpBehaviorCommentChange class >> newWithBehavior: aBehavior oldComment: anOldComment newComment: aNewComment oldStamp: anOldStamp newStamp: aNewStamp [
 
 	^ self basicNew
@@ -37,22 +39,22 @@ EpBehaviorCommentChange class >> newWithBehavior: aBehavior oldComment: anOldCom
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBehaviorCommentChange >> accept: aChangeVisitor [
 	^ aChangeVisitor visitBehaviorCommentChange: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCommentChange >> behaviorAffected [
 	^ behavior
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCommentChange >> behaviorAffectedName [
 	^ behavior name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpBehaviorCommentChange >> initializeWithBehavior: aBehavior oldComment: anOldComment newComment: aNewComment oldStamp: anOldStamp newStamp: aNewStamp [
 
 	self initialize.
@@ -63,22 +65,22 @@ EpBehaviorCommentChange >> initializeWithBehavior: aBehavior oldComment: anOldCo
 	newStamp := aNewStamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCommentChange >> newComment [
 	^ newComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCommentChange >> newStamp [
 	^ newStamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCommentChange >> oldComment [
 	^ oldComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCommentChange >> oldStamp [
 	^ oldStamp
 ]

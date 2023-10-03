@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Tool-Finder' }
+{ #category : '*Tool-Finder' }
 Integer class >> forbiddenSelectorsForMethodFinder [
 
 	^ #(#benchFib #tinyBenchmarks)

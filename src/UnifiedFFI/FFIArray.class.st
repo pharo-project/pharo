@@ -56,70 +56,71 @@ TheStruct class>>fieldsDesc
 Of course this is not the best way to do it (parser needs to be adapted to do this automatically), but is a good and fast way to provide the functionality. 
 "
 Class {
-	#name : #FFIArray,
-	#superclass : #FFIExternalArray,
+	#name : 'FFIArray',
+	#superclass : 'FFIExternalArray',
 	#classInstVars : [
 		'type',
 		'numberOfElements'
 	],
-	#category : #'UnifiedFFI-Objects'
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #converting }
-FFIArray class >> asExternalTypeOn: generator [ 
+{ #category : 'converting' }
+FFIArray class >> asExternalTypeOn: generator [
 	^ FFITypeArrayType objectClass: self
 ]
 
-{ #category : #'instance creation' }
-FFIArray class >> externalNew [ 
-	"Create a new array in the C heap. 
+{ #category : 'instance creation' }
+FFIArray class >> externalNew [
+	"Create a new array in the C heap.
 	 This array needs to be disposed (using #free method)... or you can declare it #autoRelease"
-	^ self basicNew 
+	^ self basicNew
 		initializeExternalType: self type size: self numberOfElements;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIArray class >> fromHandle: aHandle [
-	^ self basicNew 
+	^ self basicNew
 		initializeHandle: aHandle type: self type size: self numberOfElements;
 		yourself
 ]
 
-{ #category : #'instance creation' }
-FFIArray class >> new [ 
-	^ self basicNew 
+{ #category : 'instance creation' }
+FFIArray class >> new [
+	^ self basicNew
 		initializeType: self type size: self numberOfElements;
 		yourself
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 FFIArray class >> newArrayTypeOf: aTypeName size: elements [
-	^ FFIArray newAnonymousSubclass 
-		type: (FFIExternalType resolveType: aTypeName)	
+	^ FFIArray newAnonymousSubclass
+		type: (FFIExternalType resolveType: aTypeName)
 		size: elements
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIArray class >> numberOfElements [
 	^ numberOfElements
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 FFIArray class >> ofType: aTypeName size: elements [
-	^ FFIArray newAnonymousSubclass 
-		type: (FFIExternalType resolveType: aTypeName)	
+	^ FFIArray newAnonymousSubclass
+		type: (FFIExternalType resolveType: aTypeName)
 		size: elements
 ]
 
-{ #category : #private }
-FFIArray class >> type [ 
+{ #category : 'private' }
+FFIArray class >> type [
 	^ type
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIArray class >> type: aType 	size: elements [
 	type := aType.
 	numberOfElements := elements
-		
 ]

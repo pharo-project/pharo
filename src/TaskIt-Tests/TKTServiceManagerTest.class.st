@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTServiceManagerTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Services'
+	#name : 'TKTServiceManagerTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Services',
+	#package : 'TaskIt-Tests',
+	#tag : 'Services'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTServiceManagerTest >> testCannotStartTwoServicesWithSameName [
 	| executed service newService |
 	executed := 0.
@@ -21,36 +23,36 @@ TKTServiceManagerTest >> testCannotStartTwoServicesWithSameName [
 			200 milliSeconds wait ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTServiceManagerTest >> testServiceIsExecutedMultipleTimes [
 
 	| executed service |
 	executed := 0.
-	
+
 	service := TKTParameterizableService new.
 	service name: 'test'.
 	service step: [ executed := executed + 1 ].
 	service start.
-	
+
 	(service stepDelay * 2) wait.
 	service stop.
 	200 milliSeconds wait.
-	
+
 	self assert: executed > 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTServiceManagerTest >> testStopServiceStopsUnderlyingWorker [
 
 	| executed service |
 	executed := 0.
-	
+
 	service := TKTParameterizableService new.
 	service name: 'test'.
 	service step: [ executed := executed + 1 ].
 	service start.
 	service stop.
 	(service stepDelay * 3) wait.
-	
+
 	self deny: service worker isRunning
 ]

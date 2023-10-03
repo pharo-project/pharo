@@ -7,12 +7,14 @@ or the closure : ( parentheses node .
 
 "
 Class {
-	#name : #RBParenthesesErrorNode,
-	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#name : 'RBParenthesesErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 RBParenthesesErrorNode class >> error: aToken withNodes: aCollection [
 	"Analyses the token to identify if it's an opening or a closure."
 	| message |
@@ -20,14 +22,14 @@ RBParenthesesErrorNode class >> error: aToken withNodes: aCollection [
 										  				 ifFalse: [ '''('' expected' ].
 	"If the collection is empty, there is only the token in the error."
 	aCollection isEmpty
-		ifTrue: [ ^self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
+		ifTrue: [ ^self new contents: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
 	"If the collection is not empty, we have to sort where the node begins and where it ends."
 	^message = ''')'' expected'
-		ifTrue: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
-		ifFalse: [ self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
+		ifTrue: [ self new contents: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
+		ifFalse: [ self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBParenthesesErrorNode >> isParenthesesError [
 	^true
 ]

@@ -2,22 +2,24 @@
 Abstract font family
 "
 Class {
-	#name : #AbstractFontFamily,
-	#superclass : #Object,
+	#name : 'AbstractFontFamily',
+	#superclass : 'Object',
 	#instVars : [
 		'familyName',
 		'members'
 	],
-	#category : #'Fonts-Infrastructure-Base'
+	#category : 'Fonts-Infrastructure-Base',
+	#package : 'Fonts-Infrastructure',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractFontFamily class >> isAbstract [
 
 	 ^self name = #AbstractFontFamily
 ]
 
-{ #category : #'member lookup' }
+{ #category : 'member lookup' }
 AbstractFontFamily >> closestMemberWithStretchValue: stretchValue weightValue: weightValue slantValue: slantValue [
 
 	"answer the member that has weight, slant and stretch values that most closely
@@ -31,28 +33,28 @@ AbstractFontFamily >> closestMemberWithStretchValue: stretchValue weightValue: w
 			   slant: slantValue ]) first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamily >> familyName [
 	"Answer the value of familyName"
 
 	^ familyName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamily >> familyName: anObject [
 	"Set the value of familyName"
 
 	familyName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamily >> members [
 	"Answer the value of members"
 
 	^ members
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractFontFamily >> printOn: aStream [
 	aStream
 		print: self class name;

@@ -1,6 +1,6 @@
 Class {
-	#name : #RubCharacterBlockScanner,
-	#superclass : #RubCharacterScanner,
+	#name : 'RubCharacterBlockScanner',
+	#superclass : 'RubCharacterScanner',
 	#instVars : [
 		'characterPoint',
 		'characterIndex',
@@ -10,10 +10,12 @@ Class {
 		'nextLeftMargin',
 		'specialWidth'
 	],
-	#category : #'Rubric-TextScanning'
+	#category : 'Rubric-TextScanning',
+	#package : 'Rubric',
+	#tag : 'TextScanning'
 }
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textLine [
 	"This method is the Morphic characterBlock finder.  It combines
 	MVC's characterBlockAtPoint:, -ForIndex:, and buildCharcterBlock:in:"
@@ -65,17 +67,17 @@ RubCharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textL
 							[ "Result for characterBlockForIndex: " (RubCharacterBlock new stringIndex: characterIndex topLeft: characterPoint + ((font descentKern - kern) @ 0) extent: lastCharacterExtent) textLine: line ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlockScanner >> characterPointSetX: xVal [
 	characterPoint := xVal @ characterPoint y
 ]
 
-{ #category : #'stop conditions' }
-RubCharacterBlockScanner >> cr [ 
-	"Answer a CharacterBlock that specifies the current location of the mouse 
-	relative to a carriage return stop condition that has just been 
-	encountered. The ParagraphEditor convention is to denote selections by 
-	CharacterBlocks, sometimes including the carriage return (cursor is at 
+{ #category : 'stop conditions' }
+RubCharacterBlockScanner >> cr [
+	"Answer a CharacterBlock that specifies the current location of the mouse
+	relative to a carriage return stop condition that has just been
+	encountered. The ParagraphEditor convention is to denote selections by
+	CharacterBlocks, sometimes including the carriage return (cursor is at
 	the end) and sometimes not (cursor is in the middle of the text)."
 
 	((characterIndex notNil
@@ -98,10 +100,10 @@ RubCharacterBlockScanner >> cr [
 		^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> crossedX [
-	"Text display has wrapping. The scanner just found a character past the x 
-	location of the cursor. We know that the cursor is pointing at a character 
+	"Text display has wrapping. The scanner just found a character past the x
+	location of the cursor. We know that the cursor is pointing at a character
 	or before one."
 
 	| leadingTab currentX |
@@ -117,7 +119,7 @@ RubCharacterBlockScanner >> crossedX [
 		ifTrue:	[lastCharacter := (text at: lastIndex).
 				characterPoint := destX @ destY.
 				^true].
-	lastIndex >= line last 
+	lastIndex >= line last
 		ifTrue:	[lastCharacter := (text at: line last).
 				characterPoint := destX @ destY.
 				^true].
@@ -152,10 +154,10 @@ RubCharacterBlockScanner >> crossedX [
 	^ true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> endOfRun [
-	"Before arriving at the cursor location, the selection has encountered an 
-	end of run. Answer false if the selection continues, true otherwise. Set 
+	"Before arriving at the cursor location, the selection has encountered an
+	end of run. Answer false if the selection continues, true otherwise. Set
 	up indexes for building the appropriate CharacterBlock."
 
 	| runLength lineStop |
@@ -204,7 +206,7 @@ RubCharacterBlockScanner >> endOfRun [
 	^true
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCharacterBlockScanner >> indentationLevel: anInteger [
 	super indentationLevel: anInteger.
 	nextLeftMargin := leftMargin.
@@ -212,21 +214,21 @@ RubCharacterBlockScanner >> indentationLevel: anInteger [
 		nextLeftMargin := self nextTabXFrom: nextLeftMargin]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlockScanner >> lastCharacterExtentSetX: xVal [
 	lastCharacterExtent := xVal @ lastCharacterExtent y
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlockScanner >> lastSpaceOrTabExtentSetX: xVal [
 	lastSpaceOrTabExtent := xVal @ lastSpaceOrTabExtent y
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> paddedSpace [
-	"When the line is justified, the spaces will not be the same as the font's 
-	space character. A padding of extra space must be considered in trying 
-	to find which character the cursor is pointing at. Answer whether the 
+	"When the line is justified, the spaces will not be the same as the font's
+	space character. A padding of extra space must be considered in trying
+	to find which character the cursor is pointing at. Answer whether the
 	scanning has crossed the cursor."
 
 	| pad |
@@ -243,7 +245,7 @@ RubCharacterBlockScanner >> paddedSpace [
 	^ false
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCharacterBlockScanner >> placeEmbeddedObject: anchoredMorph [
 	"Workaround: The following should really use #textAnchorType"
 	anchoredMorph relativeTextAnchorPosition ifNotNil:[^true].
@@ -252,21 +254,27 @@ RubCharacterBlockScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'accessing' }
+RubCharacterBlockScanner >> scale [
+
+	^ 1
+]
+
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> setFont [
 	specialWidth := nil.
 	super setFont
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
-	
+
 	self setFont.
-	self setConditionArray: (alignment = Justified ifTrue: [#paddedSpace]).
+	self setConditionArray: (alignment = Justified ifTrue: [#paddedSpace])
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCharacterBlockScanner >> tab [
 	| currentX |
 	currentX := (alignment = Justified and: [self leadingTab not])
@@ -277,7 +285,7 @@ RubCharacterBlockScanner >> tab [
 	lastSpaceOrTabExtent := lastCharacterExtent copy.
 	self lastSpaceOrTabExtentSetX: (currentX - destX max: 0).
 	currentX >= characterPoint x
-		ifTrue: 
+		ifTrue:
 			[lastCharacterExtent := lastSpaceOrTabExtent copy.
 			^ self crossedX].
 	destX := currentX.

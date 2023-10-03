@@ -34,69 +34,71 @@ Command line with password:
 	Pharo.exe Pharo.image eval ""1+1"" --deploymentPassword=Test
 "
 Class {
-	#name : #BasicCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #'System-BasicCommandLineHandler-Base'
+	#name : 'BasicCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'System-BasicCommandLineHandler-Base',
+	#package : 'System-BasicCommandLineHandler',
+	#tag : 'Base'
 }
 
-{ #category : #'password-protection' }
+{ #category : 'password-protection' }
 BasicCommandLineHandler class >> commandLinePasswordManager [
 	^ CommandLinePasswordManager current
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BasicCommandLineHandler class >> commandName [
 	^ ''
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 BasicCommandLineHandler class >> description [
 	^ 'basic responsible for the default options and activating other commands'
 ]
 
-{ #category : #'class initialization' }
-BasicCommandLineHandler class >> initialize [ 
-	SessionManager default 
+{ #category : 'class initialization' }
+BasicCommandLineHandler class >> initialize [
+	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 BasicCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	"I do not match ever, because my activation is manual"
 	^ false
 ]
 
-{ #category : #accessing }
-BasicCommandLineHandler class >> priority [ 
+{ #category : 'accessing' }
+BasicCommandLineHandler class >> priority [
 	"Lowest priority"
 	^ Float infinity negated
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 BasicCommandLineHandler class >> startUp: isImageStarting [
 	"only handle when launching a new image"
 	isImageStarting ifFalse: [ ^ self ].
 
-	Smalltalk session 
+	Smalltalk session
 		addDeferredStartupAction: [ self new activate ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 BasicCommandLineHandler >> activate [
 
-	commandLine := commandLine class withArguments: (commandLine arguments 
-					reject: [ :each | each = '--interactive' ]).	
+	commandLine := commandLine class withArguments: (commandLine arguments
+					reject: [ :each | each = '--interactive' ]).
 
 	[ [ self handleArgument: self firstArgument ]
 		on: Exit
-		do: [ :exit | 
+		do: [ :exit |
 			"If the command line is protected by password, we just exit the image because in non-headless mode the handleExit will let the image open. If the password protection is enabled, it is to avoid to let the access to the image."
 			self class commandLinePasswordManager hasPasswordSet
 				ifTrue: [ Smalltalk snapshot: false andQuit: true ].
 			self handleExit: exit ] ] forkAt: Processor userSchedulingPriority named: 'CommandLine handler process'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 BasicCommandLineHandler >> activateSubCommand: aCommandLinehandler [
 	[ aCommandLinehandler activateWith: commandLine ] on: Exit do: [ :exit |
 		^ self handleExit: exit for: aCommandLinehandler ].
@@ -104,7 +106,7 @@ BasicCommandLineHandler >> activateSubCommand: aCommandLinehandler [
 	^ aCommandLinehandler
 ]
 
-{ #category : #password }
+{ #category : 'password' }
 BasicCommandLineHandler >> checkPassword [
 	self
 		optionAt: 'deploymentPassword'
@@ -114,33 +116,33 @@ BasicCommandLineHandler >> checkPassword [
 	commandLine := commandLine copyWithoutPassword
 ]
 
-{ #category : #'private - preferences' }
+{ #category : 'private - preferences' }
 BasicCommandLineHandler >> copySubcommand [
 	commandLine := commandLine copySubcommand
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> copyright [
-	self stdout 
+	self stdout
 		nextPutAll: Smalltalk licenseString; cr.
-	self quit.
+	self quit
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> default [
 
-	^ self 
+	^ self
 		help;
 		exitSuccess
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> disabledAccessMode [
 
 	"just eat the argument because it was processed with by the SessionAccessModeResolver before"
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> error [
 	self arguments size = 1
 		ifTrue:  [
@@ -148,16 +150,16 @@ BasicCommandLineHandler >> error [
 				ifTrue:  [ self << 'Invalid option: ']
 				ifFalse: [ self << 'Invalid sub command: ']]
 		ifFalse: [ self << 'Invalid arguments: "'].
-		
-	(self << (' ' join: self arguments)) 
+
+	(self << (' ' join: self arguments))
 		nextPutAll: '"'; cr.
-		
+
 	self printHelp.
-	
-	self exitFailure.
+
+	self exitFailure
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 BasicCommandLineHandler >> firstArgument [
 
 	^ self arguments
@@ -165,7 +167,7 @@ BasicCommandLineHandler >> firstArgument [
 		  ifNotEmpty: [ :arguments | arguments first ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 BasicCommandLineHandler >> handleArgument: aString [
 
 	"give priority to subcommands"
@@ -173,21 +175,21 @@ BasicCommandLineHandler >> handleArgument: aString [
 		ifFalse: [ ^ self ].
 
 	"check for default options"
-	(aString isEmpty and: [ Smalltalk isInteractiveGraphic not]) 
+	(aString isEmpty and: [ Smalltalk isInteractiveGraphic not])
 			ifTrue: [ ^ self default ].
-	
+
 	aString = '--version'
 		ifTrue: [ ^ self version ].
-		
+
 	aString = '--help'
 		ifTrue: [ ^ self help ].
-		
+
 	aString = '--list'
 		ifTrue: [ ^ self list ].
-		
+
 	aString = '--copyright'
 		ifTrue: [ ^ self copyright ].
-		
+
 	aString = '--no-quit'
 		ifTrue: [ ^ self noQuit ].
 
@@ -202,49 +204,49 @@ BasicCommandLineHandler >> handleArgument: aString [
 
 	Smalltalk isInteractiveGraphic
 		ifTrue: [ ^ self noQuit ].
-	
+
 	"none of the previous options matched hence we output an error message"
-	self error.
+	self error
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 BasicCommandLineHandler >> handleEmptyArguments [
 	Smalltalk isHeadless
 		ifFalse: [ ^ self ].
-	
-	self help.
+
+	self help
 ]
 
-{ #category : #activation }
-BasicCommandLineHandler >> handleExit: exit [ 
+{ #category : 'activation' }
+BasicCommandLineHandler >> handleExit: exit [
 	^ self handleExit: exit  for: self
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 
 	(Smalltalk isInteractive or: [ Smalltalk isInteractiveGraphic ])
 		ifFalse: [ ^ exit pass ].
-		
-	exit isSuccess 
+
+	exit isSuccess
 		ifFalse: [ ^ Error signal: exit messageText ].
-	
+
 	self inform: aCommandLinehandler name, ' successfully finished'.
-		
+
 	"for failing subcommands return self which is used to check if the subcommand failed"
-	exit isSuccess 
-		ifTrue: [ ^ aCommandLinehandler ].
+	exit isSuccess
+		ifTrue: [ ^ aCommandLinehandler ]
 ]
 
-{ #category : #password }
+{ #category : 'password' }
 BasicCommandLineHandler >> handlePassword: password [
 	(self class commandLinePasswordManager isMatchingPassword: password) ifTrue: [ ^ self ].
-	
+
 	self stderr << 'ERROR: Wrong password.'.
 	Smalltalk snapshot: false andQuit: true
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 BasicCommandLineHandler >> handleSubcommand [
 	"check if there is an active subcommand"
 
@@ -253,55 +255,55 @@ BasicCommandLineHandler >> handleSubcommand [
 
 	"If there is no handler, use myself"
 	handlers ifEmpty: [ ^ self ].
-	
+
 	(self requirePasswordFor: handlers first)
 		ifTrue: [ self checkPassword ].
-		
+
 	^ self activateSubCommand: handlers first
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BasicCommandLineHandler >> initialize [
 	super initialize.
 	commandLine := CommandLineArguments new
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> list [
 	| handlers shortNames maxShortNameSize |
-	self stdout 
+	self stdout
 		nextPutAll: 'Currently installed Command Line Handlers:'; lf.
-	handlers := self allHandlers reject: [ :cls | 
+	handlers := self allHandlers reject: [ :cls |
 			cls includesBehavior: BasicCommandLineHandler ].
 	shortNames := handlers collect: [ :each | each commandName ].
 	maxShortNameSize := (shortNames detectMax: [ :name|  name size ]) size.
 	handlers do: [ :handler|
-		self stdout 
+		self stdout
 			nextPutAll: '    ';
-			nextPutAll: (handler commandName padRightTo: maxShortNameSize); 
+			nextPutAll: (handler commandName padRightTo: maxShortNameSize);
 			nextPutAll: '    ';
 			nextPutAll: (handler description ifNil: [ '--']); lf].
-	self quit.
+	self quit
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> noQuit [
 	"Nothing to be done, unlike the other commands the image continues running"
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> readOnlyAccessMode [
 
 	"just eat the argument because it was processed with by the SessionAccessModeResolver before"
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> readWriteAccessMode [
 
 	"just eat the argument because it was processed with by the SessionAccessModeResolver before"
 ]
 
-{ #category : #password }
+{ #category : 'password' }
 BasicCommandLineHandler >> requirePasswordFor: handler [
 	"If the password hash is nil, no password is set and we can just ignore it."
 
@@ -309,7 +311,7 @@ BasicCommandLineHandler >> requirePasswordFor: handler [
 		and: [ self class commandLinePasswordManager hasPasswordSet ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BasicCommandLineHandler >> selectHandlers [
 	| handlers |
 	handlers := (self subCommandsRoot selectHandlersFor: commandLine) copyWithout: self class.
@@ -317,27 +319,27 @@ BasicCommandLineHandler >> selectHandlers [
 	^ handlers
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BasicCommandLineHandler >> selectedHandler [
-	^ self selectHandlers 
-		ifEmpty: [ nil ] 
+	^ self selectHandlers
+		ifEmpty: [ nil ]
 		ifNotEmpty: [ :handlers | handlers first ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BasicCommandLineHandler >> subCommandsRoot [
 	^ CommandLineHandler
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> version [
-	self stdout 
+	self stdout
 		nextPutAll: 'Image: '; print: SystemVersion current; cr;
 		nextPutAll: 'VM:    '; nextPutAll: Smalltalk vm version; cr.
-	self quit.
+	self quit
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 BasicCommandLineHandler >> writeOnlyAccessMode [
 
 	"just eat the argument because it was processed with by the SessionAccessModeResolver before"

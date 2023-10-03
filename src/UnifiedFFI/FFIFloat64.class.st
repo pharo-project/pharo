@@ -3,47 +3,49 @@ Float type.
 Represented as double in C side.
 "
 Class {
-	#name : #FFIFloat64,
-	#superclass : #FFIFloatType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIFloat64',
+	#superclass : 'FFIFloatType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
-FFIFloat64 class >> externalType [ 
+{ #category : 'accessing' }
+FFIFloat64 class >> externalType [
 	^ ExternalType double
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFloat64 class >> externalTypeAlignment [
 	^ OSPlatform current ffiFloat64Alignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFloat64 class >> externalTypeSize [
 	^ 8
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIFloat64 >> basicHandle: aHandle at: index [
 	^ aHandle doubleAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIFloat64 >> basicHandle: aHandle at: index put: value [
 	^ aHandle doubleAt: index put: value
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIFloat64 >> emitPointerArityRoll: aBuilder context: aContext [
-	self loader 
-		emitPointerArityPack: aBuilder 
-		context: aContext 
+	self loader
+		emitPointerArityPack: aBuilder
+		context: aContext
 		arity: self pointerArity
 		selector: #packAsDoubleToArity:
 ]
 
-{ #category : #callbacks }
-FFIFloat64 >> extractFromCallbackOn: aCallbackArgumentReader [ 
-	
+{ #category : 'callbacks' }
+FFIFloat64 >> extractFromCallbackOn: aCallbackArgumentReader [
+
 	aCallbackArgumentReader extractDouble
 ]

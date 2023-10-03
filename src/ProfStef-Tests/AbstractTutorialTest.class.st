@@ -2,12 +2,14 @@
 SUnit tests for AbstractTutorial
 "
 Class {
-	#name : #AbstractTutorialTest,
-	#superclass : #TestCase,
-	#category : #'ProfStef-Tests-Tests'
+	#name : 'AbstractTutorialTest',
+	#superclass : 'TestCase',
+	#category : 'ProfStef-Tests-Tests',
+	#package : 'ProfStef-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractTutorialTest >> testLessonsReturnsAllLessonInstances [
 	| lessons |
 	lessons := MockTutorial new lessons.
@@ -17,31 +19,31 @@ AbstractTutorialTest >> testLessonsReturnsAllLessonInstances [
 	self assert: 'third' equals: lessons last title
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractTutorialTest >> testTitleHumanizeClassName [
 	self assert: 'How To Make Your Own Tutorial' equals: HowToMakeYourOwnTutorial title.
-	self assert: 'Pharo Syntax Tutorial' equals: PharoSyntaxTutorial title.
+	self assert: 'Pharo Syntax Tutorial' equals: PharoSyntaxTutorial title
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractTutorialTest >> testTutorialRaisesShouldBeImplemented [
 	| tutorial |
 	tutorial := AbstractTutorial new.
-	self 
+	self
 		should: [tutorial tutorial]
 		raise: Error
-		withExceptionDo: [:anException | 
-			self 
-				assert:  ShouldBeImplemented 
+		withExceptionDo: [:anException |
+			self
+				assert:  ShouldBeImplemented
 				equals: anException class
-		].
+		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractTutorialTest >> testTutorialsReturnsAllButMockTutorial [
 	| tutorials |
 	tutorials := AbstractTutorial tutorials.
 	self assert: (tutorials includes: PharoSyntaxTutorial).
 	self assert: (tutorials includes: HowToMakeYourOwnTutorial).
-	self deny: (tutorials includes: MockTutorial).
+	self deny: (tutorials includes: MockTutorial)
 ]

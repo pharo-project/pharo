@@ -2,29 +2,26 @@
 I am a command to add classes scope to listScopes
 "
 Class {
-	#name : #SycAddClassesScopeCommand,
-	#superclass : #SycClassCommand,
-	#category : #'SystemCommands-ClassCommands-Scope'
+	#name : 'SycAddClassesScopeCommand',
+	#superclass : 'SycClassCommand',
+	#category : 'SystemCommands-ClassCommands-Scope',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Scope'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddClassesScopeCommand >> defaultMenuIconName [
 	^ #add
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddClassesScopeCommand >> defaultMenuItemName [
 	^ 'Add class(es) to scope list'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddClassesScopeCommand >> execute [
 	| scope |
 	scope := RBBrowserEnvironment new forClasses: classes.
 	RefactoringSettings addScope: scope
-]
-
-{ #category : #execution }
-SycAddClassesScopeCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext
 ]

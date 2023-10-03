@@ -2,69 +2,71 @@
 SUnit tests to simulate and test mouse behavior
 "
 Class {
-	#name : #SimulateMouseTest,
-	#superclass : #AbstractUITestCase,
+	#name : 'SimulateMouseTest',
+	#superclass : 'AbstractUITestCase',
 	#instVars : [
 		'morph'
 	],
-	#category : #'SUnit-Support-UITesting-Tests-Base'
+	#category : 'SUnit-Support-UITesting-Tests-Base',
+	#package : 'SUnit-Support-UITesting-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SimulateMouseTest >> menuOpenedDuring: aBlock [
 
 	| jailor |
 	jailor := MenuCapturingMorph new openInWorld.
 	aBlock value.
-	^ jailor menu.
+	^ jailor menu
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimulateMouseTest >> tearDown [
 
 	morph delete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimulateMouseTest >> testSimulateClick [
 
-	morph := TextMorph new contents: ''; openInWorld.	
+	morph := TextMorph new contents: ''; openInWorld.
 	morph simulateClick.
-	self assert: morph hasKeyboardFocus.
+	self assert: morph hasKeyboardFocus
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimulateMouseTest >> testSimulateMiddleClick [
-	
+
 	morph := MorphHandlingMiddleButton new openInWorld.
 	morph simulateMiddleClick.
-	self assert: morph wasClickedWithMiddleButton.
+	self assert: morph wasClickedWithMiddleButton
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimulateMouseTest >> testSimulateRightClick [
-	
+
 	| menu |
 	morph := Smalltalk tools workspace open.
 	menu := self menuOpenedDuring: [ morph simulateRightClick ].
-	self assert: menu isNil not.
+	self assert: menu isNil not
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SimulateMouseTest >> timeoutAfter: aDuration ifNot: aBlock [
 
 	| timer |
 	timer := Stopwatch new activate.
-	[ timer duration < aDuration and: [ aBlock value not ] ] whileTrue.
+	[ timer duration < aDuration and: [ aBlock value not ] ] whileTrue
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SimulateMouseTest >> waitForMorphThat: aBlock [
 
 	self timeoutAfter: 2 seconds ifNot: [
 		morph := self currentWorld submorphThat: aBlock ifNone: [ nil ].
 		(Delay forMilliseconds: 100) wait.
 		morph isNil].
-	^ morph.
+	^ morph
 ]

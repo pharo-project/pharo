@@ -1,10 +1,12 @@
 Class {
-	#name : #SlotTraitsTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-ClassBuilder'
+	#name : 'SlotTraitsTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testClassWithClassTrait [
 	self assertEmpty: TOne traitUsers.
 	self assertEmpty: TOne classTrait traitUsers.
@@ -19,7 +21,7 @@ SlotTraitsTest >> testClassWithClassTrait [
 	self assert: aClass one equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testClassWithTrait [
 	self assertEmpty: TOne traitUsers.
 	self assertEmpty: TOne classTrait traitUsers.
@@ -34,7 +36,7 @@ SlotTraitsTest >> testClassWithTrait [
 	self assert: aClass new one equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testModifyClassTraitComposition [
 	"Tests that when modifying the trait composition on class-side, the old methods are removed from the method dictionary, and the new ones are added."
 
@@ -65,7 +67,7 @@ SlotTraitsTest >> testModifyClassTraitComposition [
 	self deny: (aClass canUnderstand: #two)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testModifyTraitComposition [
 	"Tests that when modifying the trait composition, the old methods are removed from the method dictionary, and the new ones are added."
 
@@ -96,7 +98,7 @@ SlotTraitsTest >> testModifyTraitComposition [
 	self deny: (aClass canUnderstand: #two)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testRemoveClassTrait [
 	"Tests that when removing a trait from class-side, its methods are removed from the method dictionary."
 
@@ -109,7 +111,7 @@ SlotTraitsTest >> testRemoveClassTrait [
 	self assertEmpty: TOne classTrait traitUsers
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testRemoveTrait [
 	"Tests that when removing a trait from a class, its methods are removed from the method dictionary."
 
@@ -122,84 +124,84 @@ SlotTraitsTest >> testRemoveTrait [
 	self deny: (aClass canUnderstand: #one)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testTraitUsersAfterClassReshape [
 
-	aClass := self make: [ :builder | 
+	aClass := self make: [ :builder |
 		builder
 			name: self aClassName ].
 
-	anotherClass := self make: [ :builder | 
+	anotherClass := self make: [ :builder |
 		builder
 			name: self anotherClassName;
 			superclass: aClass;
 			traitComposition: TOne;
 			classTraitComposition: TOne classTrait + TTwo ].
-	
+
 	self assert: TOne traitUsers asArray equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
 	self assert: TTwo traitUsers asArray equals: { anotherClass class }.
 	self assert: TTwo classTrait traitUsers asArray equals: { }.
-	
+
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
 	self assert: (anotherClass class canUnderstand: #two).
-	
-	
+
+
 	"reshape the super class"
-	aClass := self make: [ :builder | 
+	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
 			slots: #( x y z )].
 
-			
+
 	self assert: TOne traitUsers asArray equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
 	self assert: TTwo traitUsers asArray equals: { anotherClass class }.
 	self assert: TTwo classTrait traitUsers asArray equals: { }.
-	
+
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
-	self assert: (anotherClass class canUnderstand: #two).
+	self assert: (anotherClass class canUnderstand: #two)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotTraitsTest >> testTraitUsersAfterMetaclassReshape [
 
-	aClass := self make: [ :builder | 
+	aClass := self make: [ :builder |
 		builder
 			name: self aClassName ].
 
-	anotherClass := self make: [ :builder | 
+	anotherClass := self make: [ :builder |
 		builder
 			name: self anotherClassName;
 			superclass: aClass;
 			traitComposition: TOne;
 			classTraitComposition: TOne classTrait + TTwo ].
-	
-	
+
+
 	self assert: TOne traitUsers asArray            equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
 	self assert: TTwo traitUsers asArray            equals: { anotherClass class }.
 	self assert: TTwo classTrait traitUsers asArray equals: { }.
-	
+
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
 	self assert: (anotherClass class canUnderstand: #two).
-		
-	aClass := self make: [ :builder | 
+
+	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
-			slots: #( x y z ) ].	
-	
+			slots: #( x y z ) ].
+
 	self assert: TOne traitUsers asArray            equals: { anotherClass }.
 	self assert: TOne classTrait traitUsers asArray equals: { anotherClass class }.
 	self assert: TTwo traitUsers asArray            equals: { anotherClass class }.
 	self assert: TTwo classTrait traitUsers asArray equals: { }.
-	
+
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).

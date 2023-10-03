@@ -18,17 +18,19 @@ target
 
 "
 Class {
-	#name : #FastDraggingFrameMorph,
-	#superclass : #BorderedMorph,
+	#name : 'FastDraggingFrameMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'target',
 		'startGap',
 		'location'
 	],
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FastDraggingFrameMorph class >> forDragging: aWindow clickedAt: aPoint [
 	| b |
 	b := self new.
@@ -37,7 +39,7 @@ FastDraggingFrameMorph class >> forDragging: aWindow clickedAt: aPoint [
 	^ b
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FastDraggingFrameMorph class >> forResizing: aWindow fromLocation: aSideOrCorner [
 	| b  |
 	b := self new.
@@ -46,56 +48,56 @@ FastDraggingFrameMorph class >> forResizing: aWindow fromLocation: aSideOrCorner
 	^ b
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FastDraggingFrameMorph >> defaultBorderColor [
 	^ Color gray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FastDraggingFrameMorph >> defaultBorderWidth [
 	^ 2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FastDraggingFrameMorph >> defaultColor [
 	^ Color gray alpha: 0.15
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FastDraggingFrameMorph >> draggedTo: aPoint [
 	self position: aPoint + startGap
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FastDraggingFrameMorph >> handlesMouseDown: evt [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FastDraggingFrameMorph >> isForDragging [
 	^ location isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FastDraggingFrameMorph >> location: aSymbol [
 	"The symbol wich represents the corner or the edge grip location (#topLeft, #top ..., #bottomLeft or #left)"
 	location := aSymbol
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FastDraggingFrameMorph >> mouseDown: evt [
 	"Normally, should not be possible"
 	self delete
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FastDraggingFrameMorph >> mouseMove: evt [
 	self isForDragging
 		ifTrue: [self draggedTo: evt position]
 		ifFalse: [self reframedTo: evt position]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FastDraggingFrameMorph >> mouseUp: evt [
 	target
 		ifNotNil: [Display
@@ -104,24 +106,24 @@ FastDraggingFrameMorph >> mouseUp: evt [
 	self delete
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FastDraggingFrameMorph >> reframedTo: aPoint [
 	self
 		bounds: (self bounds withSideOrCorner: location setToPoint: aPoint)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FastDraggingFrameMorph >> startGap: aPoint [
 	"APoint is the distance between the window position and the first click position"
 	startGap := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FastDraggingFrameMorph >> target [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FastDraggingFrameMorph >> target: aSystemWindow [
 	target := aSystemWindow.
 	self color: (target paneColor alpha: 0.35).
@@ -129,7 +131,7 @@ FastDraggingFrameMorph >> target: aSystemWindow [
 	self currentHand newMouseFocus: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FastDraggingFrameMorph >> wantsToBeTopmost [
 	"Answer if the receiver want to be one of the topmost objects in
 	its owner"

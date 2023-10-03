@@ -16,96 +16,84 @@ My instances can be created using following expression:
 
 "
 Class {
-	#name : #OCContextualDoItSemanticScope,
-	#superclass : #OCDoItSemanticScope,
+	#name : 'OCContextualDoItSemanticScope',
+	#superclass : 'OCDoItSemanticScope',
 	#instVars : [
 		'targetContext',
 		'importedVariables'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #'instance creation' }
-OCContextualDoItSemanticScope class >> targetingContext: aContext [ 
-	^self new 
+{ #category : 'instance creation' }
+OCContextualDoItSemanticScope class >> targetingContext: aContext [
+	^self new
 		targetContext: aContext
 ]
 
-{ #category : #'code evaluation' }
-OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [ 
+{ #category : 'code evaluation' }
+OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 
 	aSystemAnnouncer evaluated: aSourceString context: targetContext
 ]
 
-{ #category : #converting }
-OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [ 
-	anObject == targetContext receiver ifFalse: [ 
-		self error: 'Receiver is not same as context receiver' ].
-	
-	^self
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
-	
-	(targetContext astScope hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	
-	^super hasBindingThatBeginsWith: aString
 
+	(targetContext astScope hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+
+	^super hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #lookup }
-OCContextualDoItSemanticScope >> importVariable: aVariable [ 
+{ #category : 'lookup' }
+OCContextualDoItSemanticScope >> importVariable: aVariable [
 
-	^importedVariables 
-		at: aVariable name 
+	^importedVariables
+		at: aVariable name
 		ifAbsentPut: [ aVariable asDoItVariableFrom: targetContext ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> importedVariables [
 
 	^ importedVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> importedVariables: anObject [
 
 	importedVariables := anObject
 ]
 
-{ #category : #initialization }
-OCContextualDoItSemanticScope >> initialize [ 
+{ #category : 'initialization' }
+OCContextualDoItSemanticScope >> initialize [
 	super initialize.
-	
-	importedVariables := Dictionary new 
+
+	importedVariables := Dictionary new
 ]
 
-{ #category : #lookup }
-OCContextualDoItSemanticScope >> lookupVar: name declare: aBoolean [
+{ #category : 'lookup' }
+OCContextualDoItSemanticScope >> lookupVar: name [
 
-	(targetContext lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^self importVariable: v].
+	(targetContext lookupVar: name) ifNotNil: [ :v | ^self importVariable: v].
 
-	^super lookupVar: name declare: aBoolean
+	^super lookupVar: name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> receiver [
 	^targetContext receiver
 ]
 
-{ #category : #accessing }
-OCContextualDoItSemanticScope >> targetClass [ 
-	^targetContext compiledCode methodClass
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> targetContext [
 
 	^ targetContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> targetContext: aContext [
 
 	targetContext := aContext

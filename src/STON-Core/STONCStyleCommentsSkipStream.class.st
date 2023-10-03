@@ -21,102 +21,104 @@ Comments inside single and double quote delimited strings are ignored. Backslash
 
 "
 Class {
-	#name : #STONCStyleCommentsSkipStream,
-	#superclass : #Object,
+	#name : 'STONCStyleCommentsSkipStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'peekedCharacter',
 		'delimiter',
 		'escape'
 	],
-	#category : #'STON-Core-Reader'
+	#category : 'STON-Core-Reader',
+	#package : 'STON-Core',
+	#tag : 'Reader'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 STONCStyleCommentsSkipStream class >> on: readStream [
 	^ self new
 		on: readStream;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStream >> atEnd [
 	^ self peek isNil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 STONCStyleCommentsSkipStream >> close [
 	stream close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> collectionSpecies [
 	^ String
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONCStyleCommentsSkipStream >> consumeComment [
 	stream peek = $/ ifTrue: [ self consumeToEOL ].
 	stream peek = $* ifTrue: [ self consumeToCommentEnd ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONCStyleCommentsSkipStream >> consumeToCommentEnd [
 	[ stream atEnd or: [ stream next = $* and: [ stream peekFor: $/ ] ] ] whileFalse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONCStyleCommentsSkipStream >> consumeToEOL [
 	| eol char |
 	eol := false.
-	[ eol ] whileFalse: [ 
+	[ eol ] whileFalse: [
 		char := stream next.
 		(char isNil or: [ char = Character lf ])
 			ifTrue: [ eol := true ]
-			ifFalse: [ 
+			ifFalse: [
 				char = Character cr
-					ifTrue: [ 
+					ifTrue: [
 						eol := true.
 						stream peekFor: Character lf ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONCStyleCommentsSkipStream >> escape [
-	"Return true when we previously read a backslash escape inside a string, 
+	"Return true when we previously read a backslash escape inside a string,
 	so that the next string delimiter should be returned as is"
-	
+
 	^ escape = true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONCStyleCommentsSkipStream >> handleStringDelimiter: char [
 	self escape
 		ifTrue: [ escape := false ]
-		ifFalse: [ 
+		ifFalse: [
 			self insideString
-				ifTrue: [ 
+				ifTrue: [
 					char = delimiter
 						ifTrue: [ delimiter := nil ] ]
 				ifFalse: [ delimiter := char ] ].
 	^ char
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONCStyleCommentsSkipStream >> insideString [
 	"Return true when we are currently inside a string where comments should be ignored."
-	
+
 	^ (delimiter = $') | (delimiter = $")
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStream >> isBinary [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> next [
 	^ peekedCharacter
-		ifNil: [ 
+		ifNil: [
 			stream atEnd
 				ifFalse: [ self nextNonCommentChar ] ]
 		ifNotNil: [ | character |
@@ -125,147 +127,147 @@ STONCStyleCommentsSkipStream >> next [
 			character ]
 ]
 
-{ #category : #accessing }
-STONCStyleCommentsSkipStream >> next: requestedCount [ 
+{ #category : 'accessing' }
+STONCStyleCommentsSkipStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
 
-	^ self 
-		next: requestedCount 
+	^ self
+		next: requestedCount
 		into: (self collectionSpecies new: requestedCount)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
-	
+
 	^ self
 		next: requestedCount
 		into: collection
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
-	
+
 	| readCount |
-	readCount := self 
-		readInto: collection 
-		startingAt: offset 
+	readCount := self
+		readInto: collection
+		startingAt: offset
 		count: requestedCount.
 	^ requestedCount = readCount
 		ifTrue: [ collection ]
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> nextLine [
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
-	
+
 	self atEnd ifTrue: [ ^ nil ].
 	^ self collectionSpecies streamContents: [ :out | | eol char |
 		eol := false.
-		[ eol ] whileFalse: [ 
+		[ eol ] whileFalse: [
 			char := self next.
 			(char isNil or: [ char = Character lf ])
 				ifTrue: [ eol := true ]
-				ifFalse: [ 
-					char = Character cr 
+				ifFalse: [
+					char = Character cr
 						ifTrue: [ eol := true. self peekFor: Character lf ]
 						ifFalse: [  out nextPut: char ] ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONCStyleCommentsSkipStream >> nextNonCommentChar [
 	| char |
 	char := stream next.
 	(self insideString and: [ char = $\ ])
-		ifTrue: [ 
-			escape := true. 
+		ifTrue: [
+			escape := true.
 			^ char ].
 	(char = $') | (char = $")
-		ifTrue: [ 
+		ifTrue: [
 			^ self handleStringDelimiter: char ].
-	escape := false. 
+	escape := false.
 	^ (char = $/ and: [ self insideString not and: [ (stream peek = $/) | (stream peek = $*) ] ])
-		ifTrue: [ 
+		ifTrue: [
 			self consumeComment.
 			stream next ]
 		ifFalse: [ char ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 STONCStyleCommentsSkipStream >> on: readStream [
 	stream := readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> peek [
 	^ peekedCharacter
 		ifNil: [
 			stream atEnd
-				ifFalse: [ 
+				ifFalse: [
 					peekedCharacter := self nextNonCommentChar ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> peekFor: object [
 	^ self peek = object
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			true ]
 		ifFalse: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> position [
 	^ stream position
 ]
 
-{ #category : #accessing }
-STONCStyleCommentsSkipStream >> readInto: collection startingAt: offset count: requestedCount [ 
+{ #category : 'accessing' }
+STONCStyleCommentsSkipStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."
-	
-	^ peekedCharacter 
+
+	^ peekedCharacter
 		ifNil: [
 			0 to: requestedCount - 1 do: [ :count | | object |
-				(object := self nextNonCommentChar) ifNil: [ ^ count ].  
+				(object := self nextNonCommentChar) ifNil: [ ^ count ].
 				collection at: offset + count put: object ].
 			^ requestedCount ]
-		ifNotNil: [ 
+		ifNotNil: [
 			collection at: offset put: peekedCharacter.
 			peekedCharacter := nil.
-			(self 
-				readInto: collection 
+			(self
+				readInto: collection
 				startingAt: offset + 1
 				count: requestedCount - 1) + 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> skip: count [
 	count timesRepeat: [ self next ]
 ]
 
-{ #category : #accessing }
-STONCStyleCommentsSkipStream >> upTo: anObject [ 	
-	^ self collectionSpecies 
+{ #category : 'accessing' }
+STONCStyleCommentsSkipStream >> upTo: anObject [
+	^ self collectionSpecies
 		streamContents: [ :out | | element |
-			[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [ 
+			[ self atEnd or: [ (element := self next) = anObject ] ] whileFalse: [
 				out nextPut: element ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> upToEnd [
 	^ self collectionSpecies
-		streamContents: [ :collectionStream | 
+		streamContents: [ :collectionStream |
 			[ self atEnd ] whileFalse: [ collectionStream nextPut: self next ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONCStyleCommentsSkipStream >> wrappedStream [
 	^ stream
 ]

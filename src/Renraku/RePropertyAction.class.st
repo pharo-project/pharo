@@ -10,55 +10,57 @@ action - a two (ortional) parameter block that is evaluated with the critic and 
 
 "
 Class {
-	#name : #RePropertyAction,
-	#superclass : #Object,
+	#name : 'RePropertyAction',
+	#superclass : 'Object',
 	#instVars : [
 		'action',
 		'icon',
 		'description'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RePropertyAction >> actOnCritic: aCritic ofEntity: anEntity [
 
 	action cull: aCritic cull: anEntity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePropertyAction >> action [
 	^ action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePropertyAction >> action: anObject [
 	action := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePropertyAction >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePropertyAction >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #accessing }
-RePropertyAction >> icon [ 
+{ #category : 'accessing' }
+RePropertyAction >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePropertyAction >> icon: anObject [
 	icon := anObject
 ]
 
-{ #category : #initialization }
-RePropertyAction >> initialize [ 
-	
+{ #category : 'initialization' }
+RePropertyAction >> initialize [
+
 	icon := (Form extent: 16@16 depth: 32) fillColor: Color green.
 	description := ''.
 	action := [ :critic :entity | ]

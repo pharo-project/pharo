@@ -26,8 +26,8 @@ pool stop.
 ]]]
 "
 Class {
-	#name : #TKTWorkerPool,
-	#superclass : #Object,
+	#name : 'TKTWorkerPool',
+	#superclass : 'Object',
 	#traits : 'TTaskScheduler - {#scheduleTaskExecution:}',
 	#classTraits : 'TTaskScheduler classTrait',
 	#instVars : [
@@ -37,10 +37,12 @@ Class {
 		'workers',
 		'priority'
 	],
-	#category : #'TaskIt-Worker'
+	#category : 'TaskIt-Worker',
+	#package : 'TaskIt',
+	#tag : 'Worker'
 }
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TKTWorkerPool >> getAvailableWorker [
 
 	| worker |
@@ -51,7 +53,7 @@ TKTWorkerPool >> getAvailableWorker [
 	^ worker
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWorkerPool >> initialize [
 
 	super initialize.
@@ -60,29 +62,29 @@ TKTWorkerPool >> initialize [
 	freeWorkers := AtomicSharedQueue new.
 
 	poolWorker := TKTWorker new.
-	self name: 'Worker' , self identityHash asString.
+	self name: 'Worker' , self identityHash asString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTWorkerPool >> isFree [
 
 	^ workers allSatisfy: [ :each | each isFree ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerPool >> name [
-	
+
 	^ poolWorker name
 ]
 
-{ #category : #accessing }
-TKTWorkerPool >> name: aString [ 
-	
+{ #category : 'accessing' }
+TKTWorkerPool >> name: aString [
+
 	poolWorker name: aString
 ]
 
-{ #category : #schedulling }
-TKTWorkerPool >> newWorker [	
+{ #category : 'schedulling' }
+TKTWorkerPool >> newWorker [
 	| newWorker |
 	newWorker := TKTWorker new.
 	newWorker
@@ -92,13 +94,13 @@ TKTWorkerPool >> newWorker [
 	^ workers add: newWorker
 ]
 
-{ #category : #accessing }
-TKTWorkerPool >> poolMaxSize: anInteger [ 
-	
+{ #category : 'accessing' }
+TKTWorkerPool >> poolMaxSize: anInteger [
+
 	poolMaxSize := anInteger
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TKTWorkerPool >> printOn: aStream [
 
 	aStream
@@ -112,32 +114,32 @@ TKTWorkerPool >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerPool >> priority [
 	^priority
 ]
 
-{ #category : #accessing }
-TKTWorkerPool >> priority: anInteger [ 
+{ #category : 'accessing' }
+TKTWorkerPool >> priority: anInteger [
 	priority := anInteger.
 	workers do: [ : each | each priority: anInteger ]
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TKTWorkerPool >> purge [
 
 	poolWorker purge
 ]
 
-{ #category : #schedulling }
-TKTWorkerPool >> returnWorker: aTKTWorker [ 
+{ #category : 'schedulling' }
+TKTWorkerPool >> returnWorker: aTKTWorker [
 
 	freeWorkers nextPut: aTKTWorker
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TKTWorkerPool >> scheduleTaskExecution: aTaskExecution [
-	
+
 	poolWorker schedule: [ | worker |
 		worker := self getAvailableWorker.
 		worker schedule: [
@@ -145,32 +147,32 @@ TKTWorkerPool >> scheduleTaskExecution: aTaskExecution [
 			self returnWorker: worker ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerPool >> size [
-	
+
 	^ workers size
 ]
 
-{ #category : #starting }
-TKTWorkerPool >> start [ 
+{ #category : 'starting' }
+TKTWorkerPool >> start [
 	poolWorker start
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTWorkerPool >> stop [
 
 	poolWorker stop.
-	
+
 	workers do: #stop.
 	workers removeAll.
-	
+
 	"Empty the free workers queue"
 	[freeWorkers isEmpty]
 		whileFalse: [ freeWorkers next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerPool >> workers [
-	
+
 	^ workers copy
 ]

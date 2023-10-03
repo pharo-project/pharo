@@ -1,11 +1,11 @@
-Extension { #name : #EmptyLayout }
+Extension { #name : 'EmptyLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 EmptyLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	| aHost |
-	
-	aHost := self host 
+
+	aHost := self host
 		ifNotNil: [ :foundHost | foundHost asRingMinimalDefinitionIn: anRGEnvironment ]
 		ifNil: [ self error: 'Cannot create model for an empty layout without a host'].
 

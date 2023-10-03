@@ -17,23 +17,25 @@ Close my instance morphs via halos, or evaluate the following...
 
 "
 Class {
-	#name : #DelaySchedulerBackgroundWorkerMorph,
-	#superclass : #Morph,
+	#name : 'DelaySchedulerBackgroundWorkerMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'work',
 		'stringMorph',
 		'morphDeleted'
 	],
-	#category : #'Morphic-Tests-Processes'
+	#category : 'Morphic-Tests-Processes',
+	#package : 'Morphic-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #action }
+{ #category : 'action' }
 DelaySchedulerBackgroundWorkerMorph >> delete [
     morphDeleted := true.
     super delete
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelaySchedulerBackgroundWorkerMorph >> initialize [
     "DelaySchedulerBackgroundWorkerMorph new openInWorld"
     | workerProcess controllerProcess |
@@ -63,12 +65,12 @@ DelaySchedulerBackgroundWorkerMorph >> initialize [
     controllerProcess resume
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 DelaySchedulerBackgroundWorkerMorph >> step [
     stringMorph contents: work printString
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 DelaySchedulerBackgroundWorkerMorph >> stepTime [
     ^ 50
 ]

@@ -2,91 +2,94 @@
 Notify about repackaging of a class
 "
 Class {
-	#name : #ClassRepackaged,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClassRepackaged',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'classRepackaged',
 		'newPackage',
 		'oldPackage'
 	],
-	#category : #'System-Announcements-System-Packages'
+	#category : 'System-Announcements-System-Packages',
+	#package : 'System-Announcements',
+	#tag : 'System-Packages'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassRepackaged class >> classRepackaged: aClass oldPackage: oldPackage newPackage: newPackage [
 	^self new
 			classRepackaged: aClass;
 			oldPackage: oldPackage;
 			newPackage: newPackage;
-			yourself.
+			yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassRepackaged >> affectsMethods [
 	"methods belong to class which could be represented by tools as part of method"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassRepackaged >> affectsMethodsDefinedInClass: aClass [
 
 	^classRepackaged == aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassRepackaged >> affectsMethodsDefinedInPackage: aPackage [
 
 	^oldPackage == aPackage or: [ newPackage == aPackage ]
 ]
 
-{ #category : #testing }
-ClassRepackaged >> affectsMethodsTaggedWith: tagName [
-	^classRepackaged tagsForMethods includes: tagName
+{ #category : 'testing' }
+ClassRepackaged >> affectsMethodsInProtocol: protocol [
+
+	^ classRepackaged protocolNames includes: protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> classAffected [
-	
+
 	^ classRepackaged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> classRepackaged [
-	
+
 	^ classRepackaged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> classRepackaged: anObject [
-	
+
 	classRepackaged := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> newPackage [
-	
+
 	^ newPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> newPackage: anObject [
-	
+
 	newPackage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> oldPackage [
-	
+
 	^ oldPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> oldPackage: anObject [
-	
+
 	oldPackage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> packagesAffected [
 	^{oldPackage. newPackage}
 ]

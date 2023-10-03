@@ -18,23 +18,31 @@ self firstStatement.
 The ""method comment"" is assigned to the method node, the ""comment about the return"" is assigned
 to the ""self firstStatement"" node!
 
+Note that comments can be escaped by doubling the quotation (like in a string).
+Therefore `""This is """"a single"""" comment""` is a single comment.
+Whereas `""This is "" ""three"" "" comments""` is three comments.
+
 instance variables
-	contents 	<String> the comment text
+	contents 	<String> the comment text without the quotes.
+		Note double quotes are unescaped, so you get single quotes here.
+		You can use `sourceCode` to get the original text with all verbatim quotes. 
 	start	<Number> (start-) position within the method source
 
 "
 Class {
-	#name : #RBComment,
-	#superclass : #RBProgramNode,
+	#name : 'RBComment',
+	#superclass : 'RBProgramNode',
 	#instVars : [
 		'contents',
 		'start',
 		'stop'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBComment class >> with: aCommentToken [
 	"To respect the previously implemented comment node content,
 	 we strip the surrounding quotes of the comment."
@@ -43,7 +51,7 @@ RBComment class >> with: aCommentToken [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBComment class >> with: aString at: startPosition [
 
 	^ self with: (RBCommentToken
@@ -52,36 +60,34 @@ RBComment class >> with: aString at: startPosition [
 			   stop: startPosition + aString size - 1)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBComment >> = anObject [
 	self == anObject ifTrue: [ ^true ].
-	^ self class = anObject class ifTrue: [ self contents = anObject contents ] ifFalse: [ false ]
+	^ self class = anObject class and: [ self contents = anObject contents ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBComment >> acceptVisitor: aProgramNodeVisitor [
-	"At some point we will have to think what we do to visit comment.
-	It may have an impact on visitors so this should be done carefully.
-	Since by default previously comment node were not subclass of ProgramNode
-	we do nothing by default."
+
+	^ aProgramNodeVisitor visitCommentNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBComment >> contents [
 	^ contents
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBComment >> hash [
 	^ self contents hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBComment >> isCommentNode [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBComment >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' "'.
@@ -89,23 +95,23 @@ RBComment >> printOn: aStream [
 	aStream nextPutAll: '" '
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 RBComment >> size [
 	^ contents size + 2 "must take into account quotation marks"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBComment >> start [
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBComment >> stop [
 	^ stop ifNil: [ start + self size - 1 ]
 			 ifNotNil: [ stop ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBComment >> with: aString from: aStartPosition to: aStopPosition [
 	start := aStartPosition.
 	stop := aStopPosition.

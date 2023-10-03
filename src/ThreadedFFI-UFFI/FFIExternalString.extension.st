@@ -1,7 +1,7 @@
-Extension { #name : #FFIExternalString }
+Extension { #name : 'FFIExternalString' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIExternalString >> tfExternalType [
-	
+
 	^ TFDerivedType string
 ]

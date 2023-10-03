@@ -7,33 +7,35 @@ Session ids are stored in cookies.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnServerSessionManager,
-	#superclass : #Object,
+	#name : 'ZnServerSessionManager',
+	#superclass : 'Object',
 	#instVars : [
 		'sessions'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSessionManager >> cleanupInvalidSessions [
 	"Remove all expired sessions"
-	
+
 	sessions keysAndValuesRemove: [ :key :value | value isValid not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSessionManager >> cookieName [
 	^ 'session-id'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnServerSessionManager >> initialize [
 	super initialize.
 	sessions := Dictionary new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnServerSessionManager >> newSessionForRequest: request [
 	| id session |
 	id := self newSessionId.
@@ -43,31 +45,31 @@ ZnServerSessionManager >> newSessionForRequest: request [
 	^ session
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnServerSessionManager >> newSessionId [
 	"Create a new session id.
 	If the server has a route, append it at the end with a dot as separator."
-	
+
 	^ ZnCurrentServer value route
 		ifNil: [ UUID new asString36 ]
-		ifNotNil: [ :route | 
+		ifNotNil: [ :route |
 			String
-				streamContents: [ :stream | 
+				streamContents: [ :stream |
 					stream
 						<< UUID new asString36;
 						nextPut: $.;
 						<< route ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSessionManager >> removeSessionWithId: id [
 	"Remove the session with id.
 	If there is no such session, do nothing"
-	
+
 	^ sessions removeKey: id ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSessionManager >> sessionFor: request [
 	"Bind an existing session to request or create a new session"
 
@@ -75,23 +77,23 @@ ZnServerSessionManager >> sessionFor: request [
 	id := self sessionIdFromRequest: request.
 	sessions
 		at: id
-		ifPresent: [ :session | 
+		ifPresent: [ :session |
 			session isValid
 				ifTrue: [ ^ session touch; yourself ]
 				ifFalse: [ sessions removeKey: id ] ].
 	^ self newSessionForRequest: request
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnServerSessionManager >> sessionIdFromRequest: request [
 	| cookie |
-	cookie := request cookies 
-		detect: [ :each | each name = self cookieName ] 
+	cookie := request cookies
+		detect: [ :each | each name = self cookieName ]
 		ifNone: [ ^ nil ].
 	^ cookie value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerSessionManager >> setSession: session in: response [
 	"Bind session in response"
 

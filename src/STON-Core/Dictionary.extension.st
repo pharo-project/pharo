@@ -1,10 +1,10 @@
-Extension { #name : #Dictionary }
+Extension { #name : 'Dictionary' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Dictionary class >> fromSton: stonReader [
 	"Instances of STON mapClass will be read directly and won't arrive here.
 	Other (sub)classes will use this method."
-	
+
 	| dictionary |
 	dictionary := self new.
 	stonReader parseMapDo: [ :key :value |
@@ -12,24 +12,24 @@ Dictionary class >> fromSton: stonReader [
 	^ dictionary
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Dictionary >> stonOn: stonWriter [
 	"Instances of STON mapClass will be encoded directly, without a class tag.
 	Other (sub)classes will be encoded with a class tag and will use a map representation. "
-	
+
 	self class == STON mapClass
-		ifTrue: [ 
+		ifTrue: [
 			stonWriter writeMap: self ]
-		ifFalse: [ 
-			stonWriter 
-				writeObject: self 
+		ifFalse: [
+			stonWriter
+				writeObject: self
 				do: [ stonWriter encodeMap: self ] ]
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Dictionary >> stonPostReferenceResolution [
 	"When references were resolved in me, the hash of my keys might have changed.
 	Check if I am still healthy and rehash me if not."
-	
+
 	self isHealthy ifFalse: [ self rehash ]
 ]

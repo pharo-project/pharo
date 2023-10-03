@@ -1,13 +1,13 @@
-Extension { #name : #TheManifestBuilder }
+Extension { #name : 'TheManifestBuilder' }
 
-{ #category : #'*Tool-DependencyAnalyser-UI' }
+{ #category : '*Tool-DependencyAnalyser-UI' }
 TheManifestBuilder >> addManuallyResolvedDependency: aPackageName [
-	| packageNames |	
-	
+	| packageNames |
+
 	packageNames := self manifest manuallyResolvedDependencies asSet.
 	packageNames add: aPackageName asSymbol.
 	packageNames := packageNames asArray.
-	self 
+	self
 		compileSelector: #manuallyResolvedDependencies
 		returnValue: packageNames asString
 		classified: 'meta-data - dependency analyser'

@@ -4,15 +4,17 @@ I'm a data source which will have many list of elements. My goal is to allow a F
 Users might want to subclass me to have better options.
 "
 Class {
-	#name : #FTOutlineDataSource,
-	#superclass : #FTDataSource,
+	#name : 'FTOutlineDataSource',
+	#superclass : 'FTDataSource',
 	#instVars : [
 		'items'
 	],
-	#category : #'Morphic-Widgets-FastTable-DataSource'
+	#category : 'Morphic-Widgets-FastTable-DataSource',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'DataSource'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTOutlineDataSource class >> items: aCollectionOfCollection [
 	" I take a collection of collection of elements."
 
@@ -21,7 +23,7 @@ FTOutlineDataSource class >> items: aCollectionOfCollection [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> cellColumn: column row: rowIndex [
 	| cell |
 	cell := FTCellMorph new
@@ -32,7 +34,7 @@ FTOutlineDataSource >> cellColumn: column row: rowIndex [
 	^ cell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> elementAt: index [
 	| tmpIndex |
 	tmpIndex := index.
@@ -44,22 +46,22 @@ FTOutlineDataSource >> elementAt: index [
 	self errorSubscriptBounds: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> headerColumn: column [
 	^ self basicHeaderCellFor: column
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> items [
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> items: anObject [
 	items := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTOutlineDataSource >> needSeparatorBefore: index [
 	| tmpIndex |
 	index <= 1
@@ -73,14 +75,14 @@ FTOutlineDataSource >> needSeparatorBefore: index [
 	self errorSubscriptBounds: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> newDataSourceMatching: aFTFilter [
 	| newItems |
 	newItems := items class withAll: (items collect: [ :coll | coll select: [ :each | aFTFilter matches: (self toString: each) ] ]).
 	^ self class new items: newItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> numberOfRows [
 	^ self items
 		ifNotNil: [ | cpt |
@@ -90,7 +92,7 @@ FTOutlineDataSource >> numberOfRows [
 		ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTOutlineDataSource >> searchText: aString [
 	| index result |
 	aString isEmptyOrNil

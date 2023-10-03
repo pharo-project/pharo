@@ -15,21 +15,23 @@ clean, such as using object instead of array having 4 slots.
 sd-20 June 2003
 "
 Class {
-	#name : #SpaceTally,
-	#superclass : #Object,
+	#name : 'SpaceTally',
+	#superclass : 'Object',
 	#instVars : [
 		'results'
 	],
-	#category : #'Tool-Profilers-Space'
+	#category : 'Tool-Profilers-Space',
+	#package : 'Tool-Profilers',
+	#tag : 'Space'
 }
 
-{ #category : #fileout }
-SpaceTally class >> printSpaceAnalysis [	
+{ #category : 'fileout' }
+SpaceTally class >> printSpaceAnalysis [
 	<script>
 	self new printSpaceAnalysis
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally class >> printSpaceAnalysis: aThreshold on: aStream [
 	<script>
 	self new
@@ -37,7 +39,7 @@ SpaceTally class >> printSpaceAnalysis: aThreshold on: aStream [
 		printSpaceAnalysis: aThreshold on: aStream
 ]
 
-{ #category : #'class analysis' }
+{ #category : 'class analysis' }
 SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 	"SpaceTally new compareTallyIn: 'tally' to: 'tally2'"
 
@@ -48,7 +50,7 @@ SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 			a := Array readFrom: s nextLine.
 			beforeDict at: a first put: a allButFirst ]].
 	afterDict := Dictionary new.
-	
+
 	afterFileName asFileReference readStreamDo: [ :s|
 		[s atEnd] whileFalse: [
 			a := Array readFrom: s nextLine.
@@ -68,13 +70,9 @@ SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 		withText: answer contents
 		label: 'space diffs';
 		openInWorld
-	
-
-
-
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> computeSpaceForClass: cl [
 	| codeSpace instSpace instCount |
 	codeSpace := cl spaceUsed.
@@ -90,11 +88,11 @@ SpaceTally >> computeSpaceForClass: cl [
 				spaceForInstances: instSpace)
 ]
 
-{ #category : #'class analysis' }
+{ #category : 'class analysis' }
 SpaceTally >> computeSpaceUsage [
 	| c instanceCount |
 	results items
-		do: [ :entry | 
+		do: [ :entry |
 			c := self class environment at: entry analyzedClassName.
 			instanceCount := c instanceCount.
 			entry codeSize: c spaceUsed.
@@ -103,11 +101,11 @@ SpaceTally >> computeSpaceUsage [
 			Smalltalk garbageCollectMost ]
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> computeSpaceUsageResultsForClassesInstancesAssociations: aCollectionOfClasses [
 	results := SpaceTallyResult new: aCollectionOfClasses size.
 	aCollectionOfClasses associations
-		do: [ :assoc | 
+		do: [ :assoc |
 			| instances class |
 			instances := assoc value.
 			class := assoc key.
@@ -121,14 +119,14 @@ SpaceTally >> computeSpaceUsageResultsForClassesInstancesAssociations: aCollecti
 								spaceForInstances: (instances sum: #sizeInMemory)) ] ]
 ]
 
-{ #category : #'class analysis' }
+{ #category : 'class analysis' }
 SpaceTally >> preAllocateResultsFor: classes [
 	results := SpaceTallyResult new: classes size.
 	classes
 		do: [ :cl | results addItem: (SpaceTallyItem analyzedClassName: cl name) ]
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> printHeader: aStream [
 	aStream
 		nextPutAll: ('Class' padRightTo: 45);
@@ -140,14 +138,14 @@ SpaceTally >> printHeader: aStream [
 		cr
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> printSpaceAnalysis [
 	self systemWideSpaceTally.
 	'STspace.txt' asFileReference
 		writeStreamDo: [ :stream | self printSpaceAnalysis: 1 on: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SpaceTally >> printSpaceAnalysis: threshold on: aStream [
 "SpaceTally new printSpaceAnalysis: 1 on: (FileStream forceNewFileNamed: 'STspace.text')"
 
@@ -161,7 +159,7 @@ SpaceTally >> printSpaceAnalysis: threshold on: aStream [
 	items :=  results itemsForThreshold: threshold.
 	self printHeader: aStream.
 	items
-		do: [ :s | 
+		do: [ :s |
 			| percent |
 			percent := s spaceForInstances * 100.0
 				/  results totalInstSpace roundTo: 0.1.
@@ -176,7 +174,7 @@ SpaceTally >> printSpaceAnalysis: threshold on: aStream [
 		nextPutAll: ((totalPercent roundTo: 0.1) printString padLeftTo: 12)
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> printSpaceDifferenceFrom: fileName1 to: fileName2 [
 	"For differential results, run printSpaceAnalysis twice with different fileNames,
 	then run this method...
@@ -198,9 +196,9 @@ SpaceTally >> printSpaceDifferenceFrom: fileName1 to: fileName2 [
 			ifTrue: [coll1 remove: item]
 			ifFalse: [coll2 add: item]].
 	f close.
-	StandardWindow new 
-		withText: (String streamContents: 
-			[:s | 
+	StandardWindow new
+		withText: (String streamContents:
+			[:s |
 			s nextPutAll: fileName1; cr.
 			coll1 do: [:x | s nextPutAll: x; cr].
 			s cr; cr.
@@ -210,32 +208,32 @@ SpaceTally >> printSpaceDifferenceFrom: fileName1 to: fileName2 [
 		openInWorld
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> printSpaceTallyItem: aSpaceTallyItem percent: percent on: aStream [
 	aStream
 		nextPutAll: (aSpaceTallyItem analyzedClassName padRightTo: 45);
 		nextPutAll: (aSpaceTallyItem codeSize printString padLeftTo: 12);
 		nextPutAll: (aSpaceTallyItem instanceCount printString padLeftTo: 12);
 		nextPutAll: (aSpaceTallyItem spaceForInstances printString padLeftTo: 14).
-	aStream 
+	aStream
 		nextPutAll: ((percent printShowingDecimalPlaces: 2) padLeftTo: 12);
 		nextPutAll: (((aSpaceTallyItem spaceForInstances / (aSpaceTallyItem instanceCount max: 1)) asFloat printShowingDecimalPlaces: 2) padLeftTo: 20);
 		cr
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> privateAllObjects [
 	Smalltalk garbageCollect.
 	^ SystemNavigation default allObjects groupedBy: #class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTally >> results [
 
 	^ results
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 SpaceTally >> saveTo: aFileName [
 	"| st |
 	st := SpaceTally new.
@@ -244,15 +242,15 @@ SpaceTally >> saveTo: aFileName [
 	| file |
 	file := aFileName asFileReference.
 	file exists ifTrue: [ file delete ].
-	
+
 	file writeStreamDo: [ :s|
-		results items do: [:each | s nextPutAll: each analyzedClassName asString ; 
-						nextPutAll: ' '; nextPutAll: each codeSize printString; 
-						nextPutAll: ' '; nextPutAll: each instanceCount printString; 
-						nextPutAll: ' '; nextPutAll: each spaceForInstances printString; cr]].
+		results items do: [:each | s nextPutAll: each analyzedClassName asString ;
+						nextPutAll: ' '; nextPutAll: each codeSize printString;
+						nextPutAll: ' '; nextPutAll: each instanceCount printString;
+						nextPutAll: ' '; nextPutAll: each spaceForInstances printString; cr]]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SpaceTally >> spaceForInstancesOf: aClass [
 	"Answer a pair of the number of bytes consumed by all instances of the
 	 given class, including their object headers, and the number of instances."
@@ -270,7 +268,7 @@ SpaceTally >> spaceForInstancesOf: aClass [
 	^{ total. instances size }
 ]
 
-{ #category : #'class analysis' }
+{ #category : 'class analysis' }
 SpaceTally >> spaceTally: classes [
 	"Answer a collection of SpaceTallyItems representing the memory space (in bytes) consumed 	by the code and instances of each class in the system. Note that code sizes do not currently 	report memory consumed by class variables. "
 
@@ -282,10 +280,9 @@ SpaceTally >> spaceTally: classes [
 	Smalltalk garbageCollect.
 	self computeSpaceUsage.
 	^ results
-
 ]
 
-{ #category : #'class analysis' }
+{ #category : 'class analysis' }
 SpaceTally >> systemWideSpaceTally [
 	"Answer a collection of SpaceTallyItems representing the memory space (in bytes) consumed 	by the code and instances of each class in the system. Note that code sizes do not currently 	report memory consumed by class variables. "
 

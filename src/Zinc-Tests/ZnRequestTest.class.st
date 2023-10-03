@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnRequestTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnRequestTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestTest >> testAcceptsEncodingGzip [
 	| request |
 	request := ZnRequest new.
@@ -12,7 +13,7 @@ ZnRequestTest >> testAcceptsEncodingGzip [
 	self assert: request acceptsEncodingGzip
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testBasicAuthenticate [
 	| request |
 	request := ZnRequest new.
@@ -27,30 +28,28 @@ ZnRequestTest >> testBasicAuthenticate [
 	self assert: request basicAuthentication asArray equals: #('user' ':colons:')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testCookiesParsing [
 	| input request cookies testCookie1 testCookie2 |
-	input := 'GET /foo.html HTTP/1.1', String crlf, 
+	input := 'GET /foo.html HTTP/1.1', String crlf,
 		'Cookie: testCookie1=123; testCookie2=321', String crlf,
-		'Host: foo.com', String crlf, 
-		'Agent: SUnit', String crlf, 
+		'Host: foo.com', String crlf,
+		'Agent: SUnit', String crlf,
 		String crlf.
 	request := ZnRequest readFrom: input readStream.
-	
+
 	cookies := request cookies.
 	testCookie1 := cookies detect: [ :each | each name = 'testCookie1' ].
 	testCookie2 := cookies detect: [ :each | each name = 'testCookie2' ].
-	
+
 	self assert: testCookie1 notNil.
-	self assert: testCookie1 value equals: '123'.	
-	
+	self assert: testCookie1 value equals: '123'.
+
 	self assert: testCookie2 notNil.
-	self assert: testCookie2 value equals: '321'.	
-
-
+	self assert: testCookie2 value equals: '321'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testCookiesWriting [
 	| client testCookie1 testCookie2 cookies |
 	client := ZnClient new.
@@ -66,12 +65,9 @@ ZnRequestTest >> testCookiesWriting [
 	cookies := client request cookies do: [ :each | each defaultDomain: 'example.com' ].
 	self assert: (cookies includes: testCookie1).
 	self assert: (cookies includes: testCookie2)
-	
-		
-
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testMergedFields [
 	| request form mergedFields |
 	request := ZnRequest post: 'http://host.com/foo?x=1&y=2&x=3'.
@@ -88,29 +84,28 @@ ZnRequestTest >> testMergedFields [
 	self assert: (mergedFields at: #z) sorted equals: #('100' '200')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testReading [
 	| input request |
-	input := 'GET /foo.html HTTP/1.1', String crlf, 
-		'Host: foo.com', String crlf, 
-		'Agent: SUnit', String crlf, 
+	input := 'GET /foo.html HTTP/1.1', String crlf,
+		'Host: foo.com', String crlf,
+		'Agent: SUnit', String crlf,
 		String crlf.
 	request := ZnRequest readFrom: input readStream.
 	self assert: request method equals: #GET.
 	self assert: request hasHeaders.
 	self assert: (request headers at: 'Host') equals: 'foo.com'.
 	self assert: request hasEntity not
-
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testReadingWithEntity [
 	| input request |
-	input := 'GET /foo.html HTTP/1.1', String crlf, 
-		'Host: foo.com', String crlf, 
-		'Content-Length: 8', String crlf, 
-		'Content-Type: text/plain', String crlf, 
-		String crlf, 
+	input := 'GET /foo.html HTTP/1.1', String crlf,
+		'Host: foo.com', String crlf,
+		'Content-Length: 8', String crlf,
+		'Content-Type: text/plain', String crlf,
+		String crlf,
 		'12345678'.
 	request := ZnRequest readFrom: input asByteArray readStream.
 	self assert: request method equals: #GET.
@@ -119,10 +114,9 @@ ZnRequestTest >> testReadingWithEntity [
 	self assert: request contentLength equals: 8.
 	self assert: request hasHeaders.
 	self assert: request entity contents equals: '12345678'
-
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testUrl [
 	| url request input |
 	url := 'http://zn.stfx.eu/zn/small.thml' asZnUrl.
@@ -132,8 +126,8 @@ ZnRequestTest >> testUrl [
 	self assert: request relativeUrl equals: url asRelativeUrl.
 	self assert: request absoluteUrl equals: url.
 	url := 'http://foo.com/foo.html' asZnUrl.
-	input := 'GET /foo.html HTTP/1.1' , String crlf , 
-		'Host: foo.com' , String crlf , 
+	input := 'GET /foo.html HTTP/1.1' , String crlf ,
+		'Host: foo.com' , String crlf ,
 		String crlf.
 	request := ZnRequest readFrom: input readStream.
 	self assert: request url equals: url asRelativeUrl.

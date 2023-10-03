@@ -4,16 +4,18 @@ This announcement will be emitted when a class or a trait definition changes.
 For example, when an instance variable is added or when the trait composition is modified in a class definition.
 "
 Class {
-	#name : #ClassModifiedClassDefinition,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClassModifiedClassDefinition',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'newClassDefinition',
 		'oldClassDefinition'
 	],
-	#category : #'System-Announcements-System-Classes'
+	#category : 'System-Announcements-System-Classes',
+	#package : 'System-Announcements',
+	#tag : 'System-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassModifiedClassDefinition class >> classDefinitionChangedFrom: oldClass to: newClass [
 	^self new
 			oldClassDefinition: oldClass;
@@ -21,27 +23,27 @@ ClassModifiedClassDefinition class >> classDefinitionChangedFrom: oldClass to: n
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassModifiedClassDefinition >> classAffected [
 	^self newClassDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassModifiedClassDefinition >> newClassDefinition [
 	^newClassDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassModifiedClassDefinition >> newClassDefinition: aClass [
 	newClassDefinition := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassModifiedClassDefinition >> oldClassDefinition [
 	^oldClassDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassModifiedClassDefinition >> oldClassDefinition: aClass [
 	oldClassDefinition := aClass
 ]

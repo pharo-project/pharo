@@ -2,20 +2,22 @@
 I provide convenience methods to create morphs.
 "
 Class {
-	#name : #EpMorphFactory,
-	#superclass : #Object,
+	#name : 'EpMorphFactory',
+	#superclass : 'Object',
 	#classInstVars : [
 		'defaultInstance'
 	],
-	#category : #'EpiceaBrowsers-UI-Common'
+	#category : 'EpiceaBrowsers-UI-Common',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Common'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMorphFactory class >> default [
 	^ defaultInstance ifNil: [ defaultInstance := self new ]
 ]
 
-{ #category : #strings }
+{ #category : 'strings' }
 EpMorphFactory >> emphasizedStringFor: aString [
 
 	| morph |
@@ -29,7 +31,7 @@ EpMorphFactory >> emphasizedStringFor: aString [
 	^ morph
 ]
 
-{ #category : #strings }
+{ #category : 'strings' }
 EpMorphFactory >> pillWith: aString [
 
 	^ (self wrapping: aString)
@@ -39,7 +41,7 @@ EpMorphFactory >> pillWith: aString [
 		yourself
 ]
 
-{ #category : #generic }
+{ #category : 'generic' }
 EpMorphFactory >> rowWithAll: someMophs [
 
 	^ Morph new
@@ -53,19 +55,19 @@ EpMorphFactory >> rowWithAll: someMophs [
 		yourself
 ]
 
-{ #category : #strings }
+{ #category : 'strings' }
 EpMorphFactory >> secondaryStringFor: aString [
 
 	^ self stringFor: aString color: self secondaryTextColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 EpMorphFactory >> secondaryTextColor [
 
 	^ Smalltalk ui theme caretColor mixed: 0.5 with: Color gray
 ]
 
-{ #category : #generic }
+{ #category : 'generic' }
 EpMorphFactory >> semiTransparent: aForm [
 
 	^ AlphaImageMorph new
@@ -74,19 +76,19 @@ EpMorphFactory >> semiTransparent: aForm [
 		yourself
 ]
 
-{ #category : #generic }
+{ #category : 'generic' }
 EpMorphFactory >> smallGap [
 
 	^ self wrapping: ''
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 EpMorphFactory >> softerTextColor [
 
 	^ self textColor mixed: 0.1 with: Color gray
 ]
 
-{ #category : #strings }
+{ #category : 'strings' }
 EpMorphFactory >> stringFor: aString color: aColor [
 
 	^ aString asMorph
@@ -94,13 +96,13 @@ EpMorphFactory >> stringFor: aString color: aColor [
 		yourself
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 EpMorphFactory >> textColor [
 
 	^ Smalltalk ui theme textColor
 ]
 
-{ #category : #strings }
+{ #category : 'strings' }
 EpMorphFactory >> wrapping: aMorphOrString [
 
 	^ Morph new

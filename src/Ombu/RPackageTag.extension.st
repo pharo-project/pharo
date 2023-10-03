@@ -1,9 +1,9 @@
-Extension { #name : #RPackageTag }
+Extension { #name : 'RPackageTag' }
 
-{ #category : #'*Ombu-Ston' }
+{ #category : '*Ombu-Ston' }
 RPackageTag class >> fromSton: stonReader [
 	"Specialize generic implementation since #new is forbidden in this class."
-	
+
 	^ self basicNew
 		fromSton: stonReader;
 		yourself

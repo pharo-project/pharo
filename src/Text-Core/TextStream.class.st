@@ -13,25 +13,27 @@ ex:
  		openInWindowLabeled: 'TextStream test'
 "
 Class {
-	#name : #TextStream,
-	#superclass : #WriteStream,
-	#category : #'Text-Core-Base'
+	#name : 'TextStream',
+	#superclass : 'WriteStream',
+	#category : 'Text-Core-Base',
+	#package : 'Text-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextStream >> applyAttribute: att beginningAt: startPos [
 	collection addAttribute: att from: startPos to: self position
 ]
 
-{ #category : #accessing }
-TextStream >> nextPutAll: aCollection [ 
+{ #category : 'accessing' }
+TextStream >> nextPutAll: aCollection [
  	"Optimized access to get around Text at:Put: overhead"
  	| n |
  	n := aCollection size.
       position + n > writeLimit
         ifTrue:
          [self growTo: position + n + 10].
- 	collection 
+ 	collection
  		replaceFrom: position+1
  		to: position + n
  		with: aCollection
@@ -40,7 +42,7 @@ TextStream >> nextPutAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextStream >> withAttribute: att do: strmBlock [
 "Add text to the stream with a block and apply its text attribute"
 	| pos1 val |
@@ -50,8 +52,8 @@ TextStream >> withAttribute: att do: strmBlock [
 	^ val
 ]
 
-{ #category : #private }
-TextStream >> withAttributes: attributes do: streamBlock [ 
+{ #category : 'private' }
+TextStream >> withAttributes: attributes do: streamBlock [
 "Add text to the stream with a block and apply its text attributes (in collection)"
 	| pos1 val |
 	pos1 := self position.

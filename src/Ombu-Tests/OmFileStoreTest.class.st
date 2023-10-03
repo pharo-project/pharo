@@ -1,52 +1,53 @@
 Class {
-	#name : #OmFileStoreTest,
-	#superclass : #OmStoreTest,
-	#category : #'Ombu-Tests'
+	#name : 'OmFileStoreTest',
+	#superclass : 'OmStoreTest',
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmFileStoreTest >> setUpOtherStore [
 
-	^ OmFileStore 
+	^ OmFileStore
 		named: 'testingOtherStore', UUID new asString36
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #resources }
-OmFileStoreTest >> setUpStore [	
+{ #category : 'resources' }
+OmFileStoreTest >> setUpStore [
 
-	^ OmFileStore 
+	^ OmFileStore
 		named: 'testingStore', UUID new asString36
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmFileStoreTest >> tearDown [
-	
+
 	store fileReference ensureDelete.
 	otherStore fileReference ensureDelete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testEnsureDeleteFile [
 	| loadedStore |
 	store newEntry: (OmEntry content: 42).
 	store flush.
 
 	store ensureDeleteFile.
-	
-	loadedStore := 
-		(OmFileStore 
-			named: store globalName 
+
+	loadedStore :=
+		(OmFileStore
+			named: store globalName
 			inDirectory: self directoryForTests)
 			refresh;
 			yourself.
-	
-	self assert: loadedStore entriesCount equals: 0.
+
+	self assert: loadedStore entriesCount equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testIsOutdated [
 
 	| copy |
@@ -61,10 +62,10 @@ OmFileStoreTest >> testIsOutdated [
 	"A store is outdated if the file exists and has greater size than in memory."
 	self assert: copy isOutdated.
 	store ensureDeleteFile.
-	self deny: copy isOutdated.
+	self deny: copy isOutdated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile1 [
 	"Bad character"
 
@@ -74,19 +75,19 @@ OmFileStoreTest >> testLoadFromCorruptFile1 [
 
 	"Override first characters"
 	store fileReference writeStreamDo: [ :stream | stream nextPutAll: '***' ].
-	
-	loadedStore := 
-		(OmFileStore 
-			named: store globalName 
+
+	loadedStore :=
+		(OmFileStore
+			named: store globalName
 			inDirectory: self directoryForTests)
 			yourself.
-	
-	self 
+
+	self
 		should: [ loadedStore refresh; entries ]
 		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile2 [
 	"Bad class name"
 
@@ -96,19 +97,19 @@ OmFileStoreTest >> testLoadFromCorruptFile2 [
 
 	"Override first characters"
 	store fileReference writeStreamDo: [ :stream | stream nextPutAll: 'OMENTRY' ].
-	
-	loadedStore := 
-		(OmFileStore 
-			named: store globalName 
+
+	loadedStore :=
+		(OmFileStore
+			named: store globalName
 			inDirectory: self directoryForTests)
 			yourself.
-	
-	self 
+
+	self
 		should: [ loadedStore refresh; entries ]
 		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile3 [
 	"Bad class name. Last entry."
 
@@ -117,19 +118,19 @@ OmFileStoreTest >> testLoadFromCorruptFile3 [
 
 	"Override first characters"
 	store fileReference writeStreamDo: [ :stream | stream nextPutAll: 'OMENTRY' ].
-	
-	loadedStore := 
-		(OmFileStore 
-			named: store globalName 
+
+	loadedStore :=
+		(OmFileStore
+			named: store globalName
 			inDirectory: self directoryForTests)
 			yourself.
-	
-	self 
+
+	self
 		should: [ loadedStore refresh; entries ]
 		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile4 [
 	"Content is corrupted"
 
@@ -137,43 +138,51 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 	store newEntry: (OmEntry content: 41).
 	store newEntry: (OmEntry content: 42).
 	store flush.
-	
-	"Override first characters"
-	stream := store fileReference binaryWriteStream.
-	[
-		(ZnCharacterWriteStream on: stream encoding: 'utf8')
-			position: 50;
-			nextPutAll: '**'.
-			
-		"Apparently, in Linux it can randomly fail if not explicitly flush"
-		stream flush.
-	] ensure: [ stream close ].
-	
-	loadedStore := 
-		(OmFileStore 
-			named: store globalName 
-			inDirectory: self directoryForTests)
-			yourself.
-	
-	self 
-		should: [ loadedStore refresh; entries ]
-		raise: OmFileStoreReadingError.
+
+	"Override some characters"
+	stream := store fileReference binaryWriteStreamDo: [ :writeStream |
+		          writeStream
+			          position: 50;
+			          nextPutAll: '**' utf8Encoded ].
+
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests) yourself.
+
+	self
+		should: [
+			loadedStore
+				refresh;
+				entries ]
+		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromFile [
+
 	| loadedStore |
 	store newEntry: (OmEntry content: 42).
 	store flush.
-	
-	loadedStore := 
-		(OmFileStore 
-			named: store globalName 
-			inDirectory: self directoryForTests)
-			refresh;
-			yourself.
-	
-	self 
-		assert: (loadedStore entries collect: #content as: Array)
-		equals: #(42)
+
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests)
+		               refresh;
+		               yourself.
+
+	self assert: store entriesCount equals: 1.
+
+	self assert: (loadedStore entries collect: #content as: Array) equals: #( 42 )
+]
+
+{ #category : 'tests' }
+OmFileStoreTest >> testLoadFromFileTrickyCase [
+
+	| loadedStore |
+	store newEntry: (OmEntry content: 'OmEntry {').
+	store flush.
+
+	loadedStore := (OmFileStore named: store globalName inDirectory: self directoryForTests)
+		               refresh;
+		               yourself.
+
+	self assert: store entriesCount equals: 1.
+
+	self assert: (loadedStore entries collect: #content as: Array) equals: #( 'OmEntry {' )
 ]

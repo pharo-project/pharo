@@ -2,34 +2,36 @@
 I'm a parser for fields in FFIExternalStructure
 "
 Class {
-	#name : #FFIExternalStructureFieldParser,
-	#superclass : #Object,
+	#name : 'FFIExternalStructureFieldParser',
+	#superclass : 'Object',
 	#instVars : [
 		'fieldSpec'
 	],
-	#category : #'UnifiedFFI-External-StructureHandling'
+	#category : 'UnifiedFFI-External-StructureHandling',
+	#package : 'UnifiedFFI',
+	#tag : 'External-StructureHandling'
 }
 
-{ #category : #accessing }
-FFIExternalStructureFieldParser >> fieldSpec [ 
+{ #category : 'accessing' }
+FFIExternalStructureFieldParser >> fieldSpec [
 	^ fieldSpec
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FFIExternalStructureFieldParser >> parseFields: fields structure: structClass [
 	| stream type fieldName generator anonFieldCount |
-	
+
 	stream := fields readStream.
 	generator := FFICallout new requestor: structClass.
 	anonFieldCount := 0.
 
 	fieldSpec := FFIExternalStructureFieldSpec new.
 	[ stream atEnd ] whileFalse: [ | arity |
-		type := generator resolveType: stream next. 
+		type := generator resolveType: stream next.
 		arity := 0.
 		[stream peek beginsWith: '*' ] whileTrue: [
-			stream next do: [ :eachStar | 
-				eachStar = $* 
+			stream next do: [ :eachStar |
+				eachStar = $*
 					ifTrue: [ arity := arity + 1 ]
 					ifFalse: [ self error: 'I cannot parse structure.' ] ] ].
 		type pointerArity: arity.
@@ -40,16 +42,15 @@ FFIExternalStructureFieldParser >> parseFields: fields structure: structClass [
 
 			"align := type typeSize min: byteAlign." "if byte align == 1, struct is packed"
 			"add padding between fields, if needed"
-			"self sizeAlignedTo: align with: type." 
+			"self sizeAlignedTo: align with: type."
 
-			fieldSpec addField: fieldName type: type. 
+			fieldSpec addField: fieldName type: type.
 		] ifFalse: [
 			self flag: 'ToDO: Remove the ordered dictionary.'.
-			fieldSpec addField: anonFieldCount type: type. 
+			fieldSpec addField: anonFieldCount type: type.
 			anonFieldCount := anonFieldCount + 1.
 		].
 		stream peek == #';' ifTrue: [ stream next ]].
-	
-	^ self fieldSpec
 
+	^ self fieldSpec
 ]

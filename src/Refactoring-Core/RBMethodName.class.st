@@ -12,8 +12,8 @@ RBMethodName selector: 'color:' arguments:{'aColor'}.
 (RBMethodName selector:'color' arguments:{}) isValid.
 "
 Class {
-	#name : #RBMethodName,
-	#superclass : #Model,
+	#name : 'RBMethodName',
+	#superclass : 'Model',
 	#instVars : [
 		'selector',
 		'arguments',
@@ -21,61 +21,63 @@ Class {
 		'permutation',
 		'renameMap'
 	],
-	#category : #'Refactoring-Core-Support'
+	#category : 'Refactoring-Core-Support',
+	#package : 'Refactoring-Core',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
-RBMethodName class >> selector: aSymbol arguments: stringCollection [ 
-	^ self new 
+{ #category : 'instance creation' }
+RBMethodName class >> selector: aSymbol arguments: stringCollection [
+	^ self new
 			selector: aSymbol;
 			arguments: stringCollection;
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> arguments [
 	^arguments
 ]
 
-{ #category : #accessing }
-RBMethodName >> arguments: nameCollection [ 
+{ #category : 'accessing' }
+RBMethodName >> arguments: nameCollection [
 	arguments := nameCollection.
 	self changed: #arguments
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodName >> isValid [
 	"Return whether the receiver looks like a method with a selector in sync with the arguments in a possible class"
-	
+
 	^ 	selector isString and: [ selector isValidSelector
 			and: [ selector numArgs = arguments size ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> newArgs [
 
 	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> newArgs: anObject [
 
 	newArgs := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> permutation [
 
 	^ permutation ifNil: [ permutation := 1 to: arguments size ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> permutation: anObject [
 
 	permutation := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodName >> printOn: aStream [
 	| argumentStream |
 	self isValid
@@ -84,30 +86,30 @@ RBMethodName >> printOn: aStream [
 	self selector keywords keysAndValuesDo: [ :key :part |
 		key = 1 ifFalse: [ aStream space ].
 		aStream nextPutAll: part.
-		(self selector isUnary or: [ argumentStream atEnd ]) 
+		(self selector isUnary or: [ argumentStream atEnd ])
 			ifTrue: [ ^ self ].
 		aStream space; nextPutAll: argumentStream next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> renameMap [
 
 	^ renameMap ifNil: [ renameMap := {  } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> renameMap: anObject [
 
 	renameMap := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> selector [
 	^selector
 ]
 
-{ #category : #accessing }
-RBMethodName >> selector: aSymbol [ 
+{ #category : 'accessing' }
+RBMethodName >> selector: aSymbol [
 	selector := aSymbol asSymbol.
 	self changed: #selector
 ]

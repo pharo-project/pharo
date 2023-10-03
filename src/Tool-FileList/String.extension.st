@@ -1,8 +1,8 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Tool-FileList' }
+{ #category : '*Tool-FileList' }
 String >> asFileName [
-	"Answer a String made up from the receiver that is an acceptable file 
+	"Answer a String made up from the receiver that is an acceptable file
 	name."
 
 	| string checkedString |

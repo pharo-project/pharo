@@ -2,51 +2,48 @@
 Check for proper Manifest categorization
 "
 Class {
-	#name : #ProperPackagesTest,
-	#superclass : #TestCase,
-	#category : #'ReleaseTests-Categorization'
+	#name : 'ProperPackagesTest',
+	#superclass : 'TestCase',
+	#category : 'ReleaseTests-Categorization',
+	#package : 'ReleaseTests',
+	#tag : 'Categorization'
 }
 
-{ #category : #'tests - sunit' }
+{ #category : 'tests - sunit' }
 ProperPackagesTest >> testNoPackageNameEndsWithTest [
 
 	self assert: (Smalltalk packages select: [:each | each name endsWith: 'Test' ]) isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 	"Method categories that represent extensions should start with a * followed by a package name that starts with an uppercase letter - ensure that"
-	 
-	| condition badCases |
-	condition := [ :protocol | 
-	             (protocol beginsWith: '*') and: [ 
-		             protocol second isLowercase ] ].
-	badCases := CompiledMethod allInstances select: [ :each | 
-		         each protocol notNil and: [ condition value: each protocol ] ].
 
-	self assert: badCases isEmpty
+	self assertEmpty:
+		(SystemNavigation default allMethods select: [ :method | method isExtension and: [ method protocolName second isLowercase ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperPackagesTest >> testProperClassTagCasing [
-	|violations|
+
+	| violations |
 	violations := OrderedCollection new.
-	RPackageOrganizer default packages
-        do: [:package | package classTags do: [:classTag | classTag name first isLowercase ifTrue: [ violations add: (package -> classTag) ] ] ].
-	self assert:  violations isEmpty description: 'Class Tags should be uppercase'
+	self packageOrganizer packages do: [ :package |
+		package classTags do: [ :classTag | classTag name first isLowercase ifTrue: [ violations add: package -> classTag ] ] ].
+	self assert: violations isEmpty description: 'Class Tags should be uppercase'
 ]
 
-{ #category : #'tests - manifest' }
+{ #category : 'tests - manifest' }
 ProperPackagesTest >> testProperManifestCategorization [
-	"If a package provides a PackageManifest subclass then this manifest class should be packaged 
+	"If a package provides a PackageManifest subclass then this manifest class should be packaged
 	 with 'Manifest' tag similar to all other manifests."
-	
+
 	|violations|
 	violations := OrderedCollection new.
 	PackageManifest allSubclassesDo: [:each |
- 	   ((each package classesForClassTag: 'Manifest') includes: each)
+ 	   ((each package classesTaggedWith: 'Manifest') includes: each)
   	      ifFalse: [ violations add: each ]
 	].
 
-	self assert: violations isEmpty.
+	self assert: violations isEmpty
 ]

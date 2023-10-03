@@ -6,24 +6,26 @@ I am resolved by resolving my type.
 The type knows how to resolve itself in a context.
 "
 Class {
-	#name : #FFIConstantArgument,
-	#superclass : #FFIFunctionArgument,
+	#name : 'FFIConstantArgument',
+	#superclass : 'FFIFunctionArgument',
 	#instVars : [
 		'value'
 	],
-	#category : #'UnifiedFFI-Arguments'
+	#category : 'UnifiedFFI-Arguments',
+	#package : 'UnifiedFFI',
+	#tag : 'Arguments'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIConstantArgument class >> value: aValue typeName: aTypeName arity: anInteger [
-	
+
 	^ self new
 		value: aValue;
 		type: (FFITypeDeclaration typeName: aTypeName arity: anInteger);
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIConstantArgument >> asOldArraySpec [
 
 	^ {
@@ -35,39 +37,39 @@ FFIConstantArgument >> asOldArraySpec [
 		0 }
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIConstantArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
-	
+
 	self shouldNotImplement
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIConstantArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
 	self shouldNotImplement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIConstantArgument >> initialize [
 
 	super initialize.
-	type := FFIUndefinedTypeDeclaration new.
+	type := FFIUndefinedTypeDeclaration new
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FFIConstantArgument >> resolveUsing: aResolver [
 
-	value = false ifTrue: [ 
+	value = false ifTrue: [
 		loader := FFILiteralArgument value: 0 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	value = true ifTrue: [ 
+	value = true ifTrue: [
 		loader := FFILiteralArgument value: 1 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	(value isNil or: [ value = 'NULL' ]) ifTrue: [ 
+	(value isNil or: [ value = 'NULL' ]) ifTrue: [
 		loader := FFILiteralArgument value: ExternalAddress null type: (aResolver resolveType: #'void *').
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
@@ -78,16 +80,16 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		^ self ].
 	loader := FFILiteralArgument value: value.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
-	resolvedType loader: loader.
+	resolvedType loader: loader
 ]
 
-{ #category : #accessing }
-FFIConstantArgument >> value [ 
+{ #category : 'accessing' }
+FFIConstantArgument >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIConstantArgument >> value: anObject [
 	value := anObject
 ]

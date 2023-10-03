@@ -1,104 +1,200 @@
 Class {
-	#name : #RBAbstractRefactoringTest,
-	#superclass : #RBAbstractEnvTestCase,
-	#traits : 'TModelBuilder + TSetUpRefactorings',
-	#classTraits : 'TModelBuilder classTrait + TSetUpRefactorings classTrait',
+	#name : 'RBAbstractRefactoringTest',
+	#superclass : 'RBAbstractEnvTestCase',
 	#instVars : [
-		'model',
 		'rbClass'
 	],
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractRefactoringTest >> constructor [
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBAbstractRefactoringTest >> createRefactoringWithArguments: aParameterCollection [
-	^ (rbClass perform: self constructor
-			withArguments: aParameterCollection) asRefactoring
+
+	^ rbClass
+		  perform: self constructor
+		  withArguments: aParameterCollection
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArguments: aParameterCollection [
-	^ (rbClass perform: #model: , self constructor
-			withArguments: {aRBNamespace} , aParameterCollection) asRefactoring
+
+	^ rbClass
+		  perform: #model: , self constructor
+		  withArguments: { aRBNamespace } , aParameterCollection
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute.
+	aRefactoring generateChanges
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> executeRefactorings: aRefactoringColl [
-	aRefactoringColl do: [ :ref | ref primitiveExecute]
+	aRefactoringColl do: [ :ref | ref generateChanges]
 ]
 
-{ #category : #helpers }
+{ #category : 'tests' }
+RBAbstractRefactoringTest >> methodSignatureStringForSymbol: aSymbol withArgumentString: aString [
+	"The method is written this way to make sure that we can rename test input (methods) and do not break the tests."
+	
+	^ aSymbol asString, aString, Character cr asString
+]
+
+{ #category : 'tests' }
+RBAbstractRefactoringTest >> methodSignatureStringForUnarySymbol: aSymbol [
+	"The method is written this way to make sure that we can rename test input (methods) and do not break the tests."
+	
+	^ aSymbol asString, Character cr asString
+]
+
+{ #category : 'helpers' }
 RBAbstractRefactoringTest >> objectClassVariable [
 	^Object classPool keys detect: [:each | true]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> parseExpression: aString [
 	^ self parserClass parseExpression: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> parseMethod: aString [
 	^ self parserClass parseMethod: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBAbstractRefactoringTest >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #actions }
-RBAbstractRefactoringTest >> proceedThroughWarning: aBlock [ 
-	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractRefactoringTest >> rbClass: anObject [
 
 	rbClass := anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAbstractRefactoringTest >> setUp [
 	super setUp.
-	model := self defaultNamespace new
+	model := self defaultNamespaceClass new
 ]
 
-{ #category : #actions }
-RBAbstractRefactoringTest >> shouldFail: aRefactoring [ 
-
-	self proceedThroughWarning: [
-		self should: [ aRefactoring primitiveExecute ] 
-		raise: RBRefactoringError ]
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupExtractionClassFor: aRefactoring toReturn: aClass [
+	| options |
+	options := aRefactoring options copy.
+	options at: #extractionClass
+		put: [:ref | aClass].
+	aRefactoring options: options
 ]
 
-{ #category : #actions }
-RBAbstractRefactoringTest >> shouldWarn: aRefactoringColl [ 
-	self 
-		should: [ self executeRefactoring: aRefactoringColl ]
-		raise: RBRefactoringWarning
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn: anObject [
+	| options |
+	options := aRefactoring options copy.
+	options at: #implementorToInline put: [:ref :imps | anObject].
+	aRefactoring options: options
 ]
 
-{ #category : #actions }
-RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [ 
-	self 
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
+	| options |
+	options := aRefactoring options copy.
+	options at: #inlineExpression put: [:ref :string | aBoolean].
+	aRefactoring options: options
+]
+
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #methodName
+		put:
+			[:aMethodName :ref |
+			aMethodName
+				selector: aSelector;
+				yourself].
+	aRefactoring options: options
+]
+
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #methodName
+		put:
+			[ :aMethodName :ref |
+			aMethodName
+				selector: aSelector;
+				arguments: stringCollection;
+				yourself].
+	aRefactoring options: options
+]
+
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #searchInWholeHierarchy put: [ :ref :cls | aBoolean ].
+	aRefactoring options: options
+]
+
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #selfArgumentName put: [:ref | aString].
+	aRefactoring options: options
+]
+
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #useExistingMethod put: [ :ref :cls | aBoolean ].
+	aRefactoring options: options
+]
+
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupVariableToMoveToFor: aRefactoring toReturn: aString [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #selectVariableToMoveTo put: [:ref :class :selector | aString].
+	aRefactoring options: options
+]
+
+{ #category : 'set up' }
+RBAbstractRefactoringTest >> setupVariableTypesFor: aRefactoring toReturn: anObject [
+
+	| options |
+	options := aRefactoring options copy.
+	options at: #variableTypes put: [:ref :ignore1 :ignore2 | anObject].
+	aRefactoring options: options
+]
+
+{ #category : 'actions' }
+RBAbstractRefactoringTest >> shouldntWarn: aRefactoring [
+	self
 		shouldnt: [ self executeRefactoring: aRefactoring ]
 		raise: RBRefactoringWarning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractRefactoringTest >> testConditions [
 	| condition newCondition |
-	condition := RBCondition new 
+	condition := RBCondition new
 				block: [false]
 				errorString: 'false'.
 	condition errorMacro: '<1?true:false>'.

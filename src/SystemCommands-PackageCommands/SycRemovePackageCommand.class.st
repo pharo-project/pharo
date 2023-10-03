@@ -2,39 +2,57 @@
 I am a command to remove given packages
 "
 Class {
-	#name : #SycRemovePackageCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'SystemCommands-PackageCommands'
+	#name : 'SycRemovePackageCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #accessing }
-SycRemovePackageCommand class >> defaultMenuIconName [ 
+{ #category : 'accessing' }
+SycRemovePackageCommand class >> defaultMenuIconName [
 	^ #delete
 ]
 
-{ #category : #accessing }
+{ #category : 'execution' }
+SycRemovePackageCommand >> applyResultInContext: aToolContext [
+	"Update the browser's title and method editor  after removal of a package"
+
+	| browserTool |
+	
+	super applyResultInContext: aToolContext.
+
+	browserTool := aToolContext tool.
+	aToolContext tool navigationEnvironment: ClyNavigationEnvironment currentImage.
+	browserTool 
+		updateWindowTitle;
+		updateMethodEditorAfterPackageRemoval.
+	
+]
+
+{ #category : 'accessing' }
 SycRemovePackageCommand >> defaultMenuIconName [
 	^#removeIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemovePackageCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemovePackageCommand >> execute [
-			
-	packages do: [ :each | each removeFromSystem ]
+
+	self packages do: [ :each | each removeFromSystem ].
+	self packages: OrderedCollection new.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemovePackageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| packagesWithClasses names answer |
-	super prepareFullExecutionInContext: aToolContext.	
+	super prepareFullExecutionInContext: aToolContext.
 	packagesWithClasses := packages reject: [ :each | each isEmpty].
-	packagesWithClasses ifNotEmpty: [ 	
+	packagesWithClasses ifNotEmpty: [
 		names := (packagesWithClasses collect: [:package | package name ]) joinUsing: ', '.
 		answer := UIManager default confirm: (
 			'Are you sure you want to delete the selection(s)?', String cr, names, ' still contains classes.').

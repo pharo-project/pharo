@@ -2,48 +2,50 @@
 SUnit tests for tutorial navigation
 "
 Class {
-	#name : #PharoTutorialGoTest,
-	#superclass : #TestCase,
-	#category : #'ProfStef-Tests-Tests'
+	#name : 'PharoTutorialGoTest',
+	#superclass : 'TestCase',
+	#category : 'ProfStef-Tests-Tests',
+	#package : 'ProfStef-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 PharoTutorialGoTest >> tearDown [
 	ProfStef default close.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoTutorialGoTest >> testGoOnMockTutorial [
 	| displayedText expected |
 	ProfStef goOn: MockTutorial.
-	
+
 	displayedText := ProfStef default lessonView text.
 	expected := MockTutorial new firstLesson lesson.
- 	self assert: displayedText equals: expected.
+ 	self assert: displayedText equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoTutorialGoTest >> testGoOpenSmalltalkSyntaxTutorial [
 	| displayedText expected |
 	ProfStef go.
-	
+
 	displayedText := ProfStef default lessonView text.
 	expected := PharoSyntaxTutorial new welcome lesson.
- 	self assert: displayedText equals: expected.
+ 	self assert: displayedText equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoTutorialGoTest >> testGoTwiceShowLessonViewIfNotVisible [
 	| firstLessonView |
 	ProfStef go.
 	firstLessonView := ProfStef default lessonView.
 	firstLessonView close.
 	ProfStef goOn: PharoSyntaxTutorial.
-	self assert:  (self currentWorld systemWindows includes:  firstLessonView window).
+	self assert:  (self currentWorld systemWindows includes:  firstLessonView window)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoTutorialGoTest >> testGoTwiceUseSameLessonView [
 	| firstLessonView |
 	ProfStef go.
@@ -52,7 +54,7 @@ PharoTutorialGoTest >> testGoTwiceUseSameLessonView [
 	self assert: firstLessonView identicalTo: ProfStef default lessonView
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoTutorialGoTest >> testLessonViewIsScripting [
 
 	| firstLessonView |

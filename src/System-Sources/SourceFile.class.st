@@ -2,17 +2,19 @@
 asdasd
 "
 Class {
-	#name : #SourceFile,
-	#superclass : #Object,
+	#name : 'SourceFile',
+	#superclass : 'Object',
 	#instVars : [
 		'path',
 		'stream',
 		'potentialLocations'
 	],
-	#category : #'System-Sources-Sources'
+	#category : 'System-Sources-Sources',
+	#package : 'System-Sources',
+	#tag : 'Sources'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SourceFile class >> on: aPath potentialLocations: locations [
 
 	^ self new
@@ -21,70 +23,70 @@ SourceFile class >> on: aPath potentialLocations: locations [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFile >> atEnd [
-	
+
 	^ stream atEnd
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SourceFile >> close [
 
 	stream ifNil: [ ^ self ].
-	stream closed ifTrue: [ 
+	stream closed ifTrue: [
 		stream := nil.
 		^ self ].
 	stream close.
-	stream := nil.
+	stream := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> closed [
 	^ stream isNil or: [ stream closed ]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 SourceFile >> cr [
 
 	stream cr
 ]
 
-{ #category : #buffering }
+{ #category : 'buffering' }
 SourceFile >> discardBuffer [
 
 	stream wrappedStream discardBuffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> ensureWrittenPosition: aPosition [
 
 	self isReadOnly ifTrue: [ ^ false ].
-	
+
 	^ stream ensureWrittenPosition: aPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> flush [
 
 	(stream isNil or: [ stream isReadOnly ])
 		ifTrue: [ ^ self ].
-	
+
 	stream flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> fullName [
 
 	^ path asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> getPreambleAt: startingPosition [
 	"Search backwards from byte startingPosition in my stream for a method preamble and return it.
 	A method preamble looks like: MyClass methodsFor: 'test' stamp: 'author 1/27/2019 12:27'
 	but with exclamation marks ($!) around it (the contents excluding the $!'s is returned).
 	startingPosition should be set one position before the closing $!"
-	
+
 	| characterReadStream binaryStream encoder position |
 	"I hold either a ZnCharacterReadStream or a ZnCharacterReadWriteStream (see #tryOpenReadOnly:)
 	Use #isReadOnly and #readOnlyCopy to access the ZnCharacterReadStream in both cases"
@@ -97,110 +99,110 @@ SourceFile >> getPreambleAt: startingPosition [
 	Although the underlying encoding is UTF-8 we can still operate/move at the byte level
 	since $! code 33 cannot occur in code points encoded using 2, 3 or 4 bytes"
 	position := startingPosition.
-	[ position >= 0 
-		and: [ 
-			binaryStream position: position. 
-			binaryStream next ~= 33 "$!" ] ] 
+	[ position >= 0
+		and: [
+			binaryStream position: position.
+			binaryStream next ~= 33 "$!" ] ]
 		whileTrue: [ position := position - 1 ].
 	"Now that we found the byte range, extract and decode it"
 	^ encoder decodeBytes: (binaryStream next: startingPosition - position)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFile >> isOpen [
 
 	^ stream notNil and: [ stream closed not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFile >> isReadOnly [
 
 	^ stream isReadOnly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> next [
 
 	^ stream next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> next: anInteger [
 
 	^ stream next: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> next: anInteger putAll: aString startingAt: startIndex [
 
 	stream next: anInteger putAll: aString startingAt: startIndex
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 SourceFile >> nextChunk [
 
 	^ (ChunkReadStream on: stream) next
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 SourceFile >> nextChunkPut: aChunk [
 
 	^ (ChunkWriteStream on: stream) nextPut: aChunk
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> nextPut: aCharacter [
 
 	stream nextPut: aCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> nextPutAll: aString [
 
 	stream nextPutAll: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> path [
 	^ path
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> path: aPath [
 	path := aPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> peek [
-	
+
 	^ stream peek
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> position [
 
 	^ stream position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> position: anInteger [
 
 	stream position: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> potentialLocations [
 
 	^ potentialLocations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> potentialLocations: aCollection [
 
 	potentialLocations := aCollection
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SourceFile >> printOn: aStream [
 
 	aStream
@@ -210,7 +212,7 @@ SourceFile >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> readOnlyCopy [
 
 	^ (self species on: path potentialLocations: potentialLocations)
@@ -218,43 +220,43 @@ SourceFile >> readOnlyCopy [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SourceFile >> setToEnd [
 
 	stream setToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> size [
 
 	^ stream size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> skip: anInteger [
 
 	stream skip: anInteger
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 SourceFile >> space [
 
 	stream space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> stream: aStream [
 
 	stream := aStream
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 SourceFile >> tryOpen [
 
 	self tryOpenReadOnly: false
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 SourceFile >> tryOpenReadOnly: readOnly [
 	| basename |
 	basename := path asFileReference basename.
@@ -263,21 +265,21 @@ SourceFile >> tryOpenReadOnly: readOnly [
 	We need to create the encoding and buffering streams manually because we need a read write stream."
 	readOnly ifFalse: [
 		potentialLocations
-			do: [ :each | 
+			do: [ :each |
 				[ stream := SourceFileCharacterReadWriteStream
 					on: (SourceFileBufferedReadWriteStream on:(each asFileReference / basename) unbufferedBinaryWriteStream)
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 
-	potentialLocations do: [ :each | 
+	potentialLocations do: [ :each |
 			[ stream := ZnCharacterReadStream
 					on: (each asFileReference / basename) binaryReadStream
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFile >> upToEnd [
-	
+
 	^ stream upToEnd
 ]

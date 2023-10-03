@@ -2,31 +2,33 @@
 Checks for repeated literal equality tests that should rather be implemented as a search in a literal collection.
 "
 Class {
-	#name : #ReSearchingLiteralRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReSearchingLiteralRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSearchingLiteralRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'SearchingLiteralRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReSearchingLiteralRule >> afterCheck: aNode mappings: mappingDict [
 	^ self
 		isSearchingLiteralExpression: aNode
 		for: (mappingDict at: '``@object')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSearchingLiteralRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReSearchingLiteralRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -40,7 +42,7 @@ ReSearchingLiteralRule >> initialize [
 			'``@expression | (`#literal == ``@object)')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReSearchingLiteralRule >> isSearchingLiteralExpression: aSearchingNode for: anObjectNode [
 	| argument arguments |
 	aSearchingNode isMessage ifFalse: [^false].
@@ -67,7 +69,7 @@ ReSearchingLiteralRule >> isSearchingLiteralExpression: aSearchingNode for: anOb
 					for: anObjectNode]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSearchingLiteralRule >> name [
 	^ 'Uses or instead of a searching literal'
 ]

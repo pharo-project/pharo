@@ -1,13 +1,15 @@
 Class {
-	#name : #TKTServiceTest,
-	#superclass : #TKTTestCase,
+	#name : 'TKTServiceTest',
+	#superclass : 'TKTTestCase',
 	#instVars : [
 		'service'
 	],
-	#category : #'TaskIt-Tests-Services'
+	#category : 'TaskIt-Tests-Services',
+	#package : 'TaskIt-Tests',
+	#tag : 'Services'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TKTServiceTest >> tearDown [
 
 	(service notNil and: [service isRunning]) ifTrue: [
@@ -15,7 +17,7 @@ TKTServiceTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTServiceTest >> testPrioritySetAfterStart [
 	|newPriority|
 	service := TKTParameterizableService new.
@@ -25,11 +27,10 @@ TKTServiceTest >> testPrioritySetAfterStart [
 	service start.
 	service priority: newPriority.
 	self assert: service priority equals: newPriority.
-	self assert: service process priority equals: newPriority.
-
+	self assert: service process priority equals: newPriority
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTServiceTest >> testPrioritySetBeforeStart [
 	|initialPriority|
 	service := TKTParameterizableService new.
@@ -38,22 +39,21 @@ TKTServiceTest >> testPrioritySetBeforeStart [
 	service priority: initialPriority.
 	self assert: service priority equals: initialPriority.
 	service start.
-	self assert: service process priority equals: initialPriority.
-
+	self assert: service process priority equals: initialPriority
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTServiceTest >> testServiceIsKilledAfterStop [
 
 	service := TKTParameterizableService new.
 	service name: 'test service'.
 	service start.
 	(service stop) waitForCompletion: 2 second.
-	
-	self deny: service isRunning.
+
+	self deny: service isRunning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTServiceTest >> testServiceShouldHaveAName [
 
 	self should: [TKTService new start] raise: Error

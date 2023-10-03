@@ -29,23 +29,26 @@ Usecases:
 In both these usecases, i provide fast and convenient access to the needed informations.
 "
 Class {
-	#name : #MetaLinkRegistry,
-	#superclass : #Object,
+	#name : 'MetaLinkRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'links',
 		'permalinks',
 		'permanentTargets',
 		'slotSources'
 	],
-	#category : #'Reflectivity-Installer'
+	#category : 'Reflectivity-Installer',
+	#package : 'Reflectivity',
+	#tag : 'Installer'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetaLinkRegistry >> addMetaLink: aLink forObject: anObject [
-	(links at: aLink ifAbsentPut: WeakSet new) add: anObject
+
+	(links at: aLink ifAbsentPut: [ WeakSet new ]) add: anObject
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> canReinstallPermaLink: permalink [
 	^ (self hasPermaLinks: permalink link) not
 		or: [ | slotsOrVarsWithPermalink |
@@ -53,18 +56,18 @@ MetaLinkRegistry >> canReinstallPermaLink: permalink [
 			slotsOrVarsWithPermalink flattened noneSatisfy: [ :slotOrVar | permalink slotOrVariable == slotOrVar ] ]
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> countObjectSpecificLinksIn: someLinks [
 	someLinks ifNil:[^0].
 	^ (someLinks select: [ :link | self isLinkObjectSpecific: link ]) size
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> hasPermaLinks: aLink [
 	^ permalinks keys includes: aLink
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetaLinkRegistry >> initialize [
 	links := WeakKeyDictionary new.
 	permalinks := WeakKeyDictionary new.
@@ -72,68 +75,68 @@ MetaLinkRegistry >> initialize [
 	permanentTargets := WeakKeyDictionary new
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> isLinkObjectSpecific: aLink [
 	^ links keys includes: aLink
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> isNodeWithInstanceSpecificLinks: node [
 	^ (self countObjectSpecificLinksIn: node links) > 0
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> objectsForLink: aMetaLink [
 	^ links at: aMetaLink ifAbsent: [ WeakSet new ]
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> permaLinksFor: aLink [
 	^ permalinks at: aLink ifAbsent: [ #() ]
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> permaLinksForClasses: targetClasses [
 	| allPermalinks |
 	allPermalinks := permalinks values flattened.
 	^ allPermalinks select: [ :p | (targetClasses select: [ :c | p notNil and: [ c == p slotOrVarClass ] ]) notEmpty ]
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> permaLinksForMethod: method [
 
 	| class targets |
 	class := method methodClass.
 	targets := (self slotSourcesAt: class) flattened.
-	^ (permanentTargets associationsSelect: [ :assoc | 
-		   targets includes: assoc key ]) values flattened select: [ 
+	^ (permanentTargets associationsSelect: [ :assoc |
+		   targets includes: assoc key ]) values flattened select: [
 		  :permalink | permalink slotOrVarClass isInClassHierarchyOf: class ]
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> registerPermaLink: aPermaLink [
 	| registeredTargets registeredLinks registeredSlots |
 	registeredTargets := self registeredTargetsAt: aPermaLink slotOrVariable ifAbsentPut: [ Set new ].
 	registeredTargets add: aPermaLink.
-	
+
 	registeredLinks := permalinks at: aPermaLink link ifAbsentPut: [ Set new ].
 	registeredLinks add: aPermaLink.
-	
+
 	registeredSlots := self slotSourcesAt: aPermaLink slotOrVarClass ifAbsentPut: [ Set new ].
 	registeredSlots add: aPermaLink slotOrVariable
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> registeredTargetsAt: slotOrVariable [
 	^ permanentTargets at: slotOrVariable ifAbsent: [ WeakSet new ]
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> registeredTargetsAt: slotOrVariable ifAbsentPut: aBlock [
 	^ permanentTargets at: slotOrVariable ifAbsentPut: aBlock
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> removePermaLinkFromPermanentTarget: permaLink [
 	| targetForPermaLink |
 	targetForPermaLink := self
@@ -143,45 +146,45 @@ MetaLinkRegistry >> removePermaLinkFromPermanentTarget: permaLink [
 		ifTrue: [ self unregisterTarget: permaLink slotOrVariable ]
 ]
 
-{ #category : #permalinks }
+{ #category : 'permalinks' }
 MetaLinkRegistry >> removePermalinkSlotOrVarFromClassRegistry: permaLink [
 
-	(self slotSourcesAt: permaLink slotOrVarClass) do: [ :set | 
+	(self slotSourcesAt: permaLink slotOrVarClass) do: [ :set |
 		set remove: permaLink slotOrVariable ifAbsent: [  ] ]
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> slotSourcesAt: aClass [
 	^ self slotSourcesAt:  aClass ifAbsent: [Array with: Set new ]
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> slotSourcesAt: aClass ifAbsent: aBlock [
 
 	| registeredClasses |
-	registeredClasses := slotSources keys select: [ :c | 
+	registeredClasses := slotSources keys select: [ :c |
 		                     c isInClassHierarchyOf: aClass ].
 	registeredClasses isEmpty ifTrue: [ ^ aBlock value ].
 	^ registeredClasses collect: [ :c | slotSources at: c ]
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> slotSourcesAt: aClass ifAbsentPut: aBlock [
 	^ slotSources at: aClass ifAbsentPut: aBlock
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> unregisterPermaLinksFor: aLink [
 	| permaLinks |
 	permaLinks := (self permaLinksFor: aLink) ifEmpty: [ ^ self ].
 	permaLinks
-		do: [ :permaLink | 
+		do: [ :permaLink |
 			self removePermaLinkFromPermanentTarget: permaLink.
 			self removePermalinkSlotOrVarFromClassRegistry: permaLink ].
 	permalinks removeKey: aLink
 ]
 
-{ #category : #'registry access' }
+{ #category : 'registry access' }
 MetaLinkRegistry >> unregisterTarget: slotOrVariable [
 	permanentTargets removeKey: slotOrVariable ifAbsent: [  ]
 ]

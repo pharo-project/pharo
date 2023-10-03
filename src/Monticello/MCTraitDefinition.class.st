@@ -2,63 +2,49 @@
 A MCTraitDefinition represents a trait.
 "
 Class {
-	#name : #MCTraitDefinition,
-	#superclass : #MCClassDefinition,
-	#category : #'Monticello-Modeling'
+	#name : 'MCTraitDefinition',
+	#superclass : 'MCClassDefinition',
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: aString5 [ 
-
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ''
-		classTraitComposition: nil
-		classInstVarNames: ''
-		comment: commentString
-		commentStamp: aString5
-
-]
-
-{ #category : #'instance creation api' }
+{ #category : 'deprecated' }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
+	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		classTraitComposition: classTraitCompositionString
-		classInstVarNames: civarArray
-		comment: commentString
-		commentStamp: commentStamp
-
-		
+	^ (self named: classNameString)
+		  traitComposition: traitCompositionString;
+		  category: categoryString;
+		  instVarNames: ivarArray;
+		  classInstVarNames: civarArray;
+		  comment: commentString;
+		  commentStamp: commentStamp;
+		  classTraitComposition: classTraitCompositionString;
+		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCTraitDefinition >> = aDefinition [
+
 	self flag: #traits. "Ugly we harcoded the super superclass method.  We will have to refactor the definition hierarchy"
-	
-	^ (aDefinition isKindOf: MCDefinition)
-		and: [(self isRevisionOf: aDefinition)
-		and: [self traitCompositionString = aDefinition traitCompositionString
-		and: [self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [category = aDefinition category
-		and: [self slotDefinitionString = aDefinition slotDefinitionString
-		and: [self classInstVarNames  = aDefinition classInstVarNames  
-		and: [comment = aDefinition comment]]]]]]]
+
+	^ (aDefinition isKindOf: MCDefinition) and: [
+		  (self isRevisionOf: aDefinition) and: [
+			  self traitCompositionString = aDefinition traitCompositionString and: [
+				  self classTraitCompositionString = aDefinition classTraitCompositionString and: [
+					  self category = aDefinition category and: [
+						  self slotDefinitionString = aDefinition slotDefinitionString and: [
+							  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCTraitDefinition >> accept: aVisitor [
 	^ aVisitor visitTraitDefinition: self
 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> classSlotDefinitionString [
 
 	^ self needsSlotClassDefinition 
@@ -72,137 +58,44 @@ MCTraitDefinition >> classSlotDefinitionString [
 				stream nextPutAll: ' }']]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCTraitDefinition >> createClass [
-	| trait |
-	
-	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: name;
-			traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
-			slots: self instanceVariables;
-			package:  category;
-			beTrait ].					
 
-
-	trait ifNotNil: [
-		trait classComment: comment stamp: commentStamp.
-		self classInstanceVariables ifNotEmpty: [
-			trait classSide slots: self classInstanceVariables ]].
-	^trait
+	^ [
+	  self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: name;
+			  traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
+			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
+			  slots: self instanceVariables;
+			  classSlots: self classInstanceVariables;
+			  package: self category;
+			  comment: comment stamp: commentStamp;
+			  beTrait ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCTraitDefinition >> hasClassInstanceVariables [
 	^ false
 
 
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCTraitDefinition >> hash [
-	| hash |
-	hash := String stringHash: name initialHash: 0.
-	hash := String stringHash: self traitCompositionString initialHash: hash.
-	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
-	^ hash
 
+	^ (name hash bitXor: traitComposition hash) bitXor: self category hash
 ]
 
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	category:  categoryString
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	     category := categoryString.
-		comment := commentString withInternalLineEndings.
-		variables := OrderedCollection  new.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp]
-
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	category:  categoryString
-	instVarNames: ivarArray
-	classInstVarNames: civarArray
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	    category := categoryString.
-		comment := commentString withInternalLineEndings.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
-		variables := OrderedCollection  new.
-		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-		self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
-]
-
-{ #category : #initialization }
-MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classTraitComposition: classTraitCompositionString classInstVarNames: civarArray comment: commentString commentStamp: commentStampString [
-	self
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		classInstVarNames: civarArray
-		comment: commentString
-		commentStamp: commentStampString.
-
-		classTraitComposition := classTraitCompositionString
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	category:  categoryString
-	instVarNames: ivarArray
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	    category := categoryString.
-		comment := commentString withInternalLineEndings.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
-		variables := OrderedCollection  new.
-		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-
-]
-
-{ #category : #initializing }
-MCTraitDefinition >> initializeWithName: classNameString 
-	traitComposition:  traitCompositionString
-	classTraitComposition: aClassTraitComposition
-	category:  categoryString
-	instVarNames: ivarArray
-	comment:  commentString  
-	commentStamp:   commentStampString [
-					
-		name := classNameString asSymbol.
-		traitComposition := traitCompositionString.
-	    category := categoryString.
-		comment := commentString withInternalLineEndings.
-		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
-		variables := OrderedCollection  new.
-		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-		
-	classTraitComposition := aClassTraitComposition
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> printClassDefinitionOn: stream [
 
 	^ self printMetaDefinitionOn: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> printDefinitionOn: stream [
 	stream nextPutAll: 'Trait named: #', self className;
 		 cr;
@@ -227,14 +120,14 @@ MCTraitDefinition >> printDefinitionOn: stream [
 
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCTraitDefinition >> requirements [
 	"Assuming that traits in a composition can be identified by
 	testing for the first character beeing an uppercase character
 	(and thus not a special character such as {, # etc.)"
 
 	self hasTraitComposition
-		ifFalse: [ ^ Array new ].
+		ifFalse: [ ^ #() ].
 
 	^ (((RBParser parseExpression: self traitCompositionString)
 		allChildren select: [ :e | e isVariable ])
@@ -242,7 +135,7 @@ MCTraitDefinition >> requirements [
 		as: Set) asArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCTraitDefinition >> slotDefinitionString [
 
 	variables ifNil: [ ^ '{ }' ].

@@ -1,8 +1,8 @@
-Extension { #name : #GlobalVariable }
+Extension { #name : 'GlobalVariable' }
 
-{ #category : #'*Ring-Core' }
-GlobalVariable >> asRingMinimalDefinitionIn: anRGEnvironment [ 
+{ #category : '*Ring-Core' }
+GlobalVariable >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
-		RGGlobalVariable named: self key asSymbol parent: anRGEnvironment].
+		RGGlobalVariable named: self key asSymbol parent: anRGEnvironment]
 ]

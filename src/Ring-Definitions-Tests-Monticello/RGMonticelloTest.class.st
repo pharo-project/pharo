@@ -2,12 +2,14 @@
 SUnit tests for monticello
 "
 Class {
-	#name : #RGMonticelloTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Monticello-Base'
+	#name : 'RGMonticelloTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Monticello-Base',
+	#package : 'Ring-Definitions-Tests-Monticello',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMonticelloTest >> testAsMCMethodDefinition [
 	| ringMethod mcMethod |
 	ringMethod := (OrderedCollection >> #size) asActiveRingDefinition.
@@ -21,7 +23,7 @@ RGMonticelloTest >> testAsMCMethodDefinition [
 	self assert: mcMethod source equals: (OrderedCollection >> #size) sourceCode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMonticelloTest >> testConvertingMCClassDefinition [
 	| mcClass ringClass |
 	mcClass := OrderedCollection asClassDefinition.
@@ -33,31 +35,31 @@ RGMonticelloTest >> testConvertingMCClassDefinition [
 	self deny: (ringClass isSameRevisionAs: SortedCollection asRingDefinition)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMonticelloTest >> testConvertingMCMethodDefinition [
 	| mcMethod ringMethod |
-	
+
 	ringMethod := (OrderedCollection >> #add: ) asRingDefinition.
 	mcMethod := ringMethod asMCMethodDefinition.
-	
+
 	self assert: (ringMethod isMethod).
 	self assert: (ringMethod isSameRevisionAs: ((OrderedCollection >> #add: ) asRingDefinition)).
 	self deny: (ringMethod isSameRevisionAs: ((OrderedCollection >> #addAll: ) asRingDefinition))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMonticelloTest >> testConvertingMCOrganizationDefinition [
+
 	| mcOrganization ringOrganization mcOrganization2 |
-	
-	mcOrganization := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions'}.
-	mcOrganization2 := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions' . #'Ring-Definitions-Core-Variables'}.
+	mcOrganization := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions }.
+	mcOrganization2 := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions. #Variables }.
 	ringOrganization := mcOrganization asRingDefinition.
-	
-	self assert: (ringOrganization isOrganization).
+
+	self assert: ringOrganization isOrganization.
 	self deny: (ringOrganization isSameRevisionAs: mcOrganization2 asRingDefinition)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMonticelloTest >> testConvertingMCTraitDefinition [
 	| mcClass ringClass |
 	mcClass := TSortable asClassDefinition.

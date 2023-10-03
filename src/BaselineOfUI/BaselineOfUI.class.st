@@ -15,15 +15,16 @@ Installs:
 - some other packages
 "
 Class {
-	#name : #BaselineOfUI,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfUI',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfUI
+	#category : 'BaselineOfUI',
+	#package : 'BaselineOfUI'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfUI >> baseline: spec [ 
     <baseline>
 
@@ -42,8 +43,7 @@ BaselineOfUI >> baseline: spec [
 		"Spec 2 (base), using external configuration"
 		self specBase: spec.		
 		
-		spec package: 'StartupPreferences'.				
-		spec package: 'Debugger-Actions'.
+		spec package: 'StartupPreferences'.		
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
 		spec package: 'Morphic-Widgets-Tree'.
@@ -56,7 +56,7 @@ BaselineOfUI >> baseline: spec [
 	].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfUI >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
@@ -73,7 +73,7 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	Initialized := true
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfUI >> specBase: spec [
 	
 	spec baseline: 'SpecBase' with: [

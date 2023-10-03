@@ -15,17 +15,19 @@ Preconditions:
 - Check whether the class does not have instance or class variables with the given name.
 "
 Class {
-	#name : #RBRenameTemporaryVariableTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRenameTemporaryVariableTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'variableName',
 		'newVariableName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
-RBRenameTemporaryVariableTransformation class >> model: aRBModel rename: oldName to: newName in: aClass selector: aSelector [ 
+{ #category : 'api' }
+RBRenameTemporaryVariableTransformation class >> model: aRBModel rename: oldName to: newName in: aClass selector: aSelector [
 
 	^ self new
 		model: aRBModel;
@@ -35,8 +37,8 @@ RBRenameTemporaryVariableTransformation class >> model: aRBModel rename: oldName
 		to: newName
 ]
 
-{ #category : #api }
-RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in: aClass selector: aSelector [ 
+{ #category : 'api' }
+RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in: aClass selector: aSelector [
 
 	^ self new
 		class: aClass
@@ -45,17 +47,28 @@ RBRenameTemporaryVariableTransformation class >> rename: oldName to: newName in:
 		to: newName
 ]
 
-{ #category : #private }
+{ #category : 'preconditions' }
+RBRenameTemporaryVariableTransformation >> applicabilityPreconditions [ 
+	"check whether variable exists?
+	 test instance variables as well"
+
+	^ (RBCondition isValidInstanceVariableName: newVariableName for: self definingClass)
+		& (RBCondition definesSelector: selector in: self definingClass)
+		& (RBCondition definesInstanceVariable: newVariableName in: self definingClass) not
+		& (RBCondition definesClassVariable: newVariableName in: self definingClass) not
+]
+
+{ #category : 'private' }
 RBRenameTemporaryVariableTransformation >> checkExistingVariable: variableNode [
 
 	(variableNode isNil or: [ variableNode isVariable not ])
 		ifTrue: [ self refactoringError: ('Temporary variable named {1} does not exist.'
 							format: { variableName asString }) ].
 	variableNode name = variableName
-		ifFalse: [ self refactoringError: 'Selected interval should include variable declaration' ].
+		ifFalse: [ self refactoringError: 'Selected interval should include variable declaration' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameTemporaryVariableTransformation >> checkNewVariable: aParseTree [
 
 	aParseTree
@@ -66,11 +79,11 @@ RBRenameTemporaryVariableTransformation >> checkNewVariable: aParseTree [
 							format: { newVariableName asString }) ].
 	(aParseTree allDefinedVariables includes: newVariableName)
 		ifTrue: [ self refactoringError: ('Temporary variable named {1} is already defined.'
-							format: { newVariableName asString }) ].
+							format: { newVariableName asString }) ]
 ]
 
-{ #category : #api }
-RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector rename: anOldSymbol to: aNewSymbol [ 
+{ #category : 'api' }
+RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector rename: anOldSymbol to: aNewSymbol [
 
 	self className: aClass.
 	selector := aSelector.
@@ -78,18 +91,7 @@ RBRenameTemporaryVariableTransformation >> class: aClass selector: aSelector ren
 	newVariableName := aNewSymbol
 ]
 
-{ #category : #preconditions }
-RBRenameTemporaryVariableTransformation >> preconditions [
-	"check whether variable exists?
-	 test instance variables as well"
-
-	^ (RBCondition isValidInstanceVariableName: newVariableName for: self definingClass)
-		& (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition definesInstanceVariable: newVariableName in: self definingClass) not
-		& (RBCondition definesClassVariable: newVariableName in: self definingClass) not
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenameTemporaryVariableTransformation >> privateTransform [
 	| parseTree definingNode variableNode |
 	parseTree := self definingMethod.
@@ -102,8 +104,8 @@ RBRenameTemporaryVariableTransformation >> privateTransform [
 	class compileTree: parseTree
 ]
 
-{ #category : #printing }
-RBRenameTemporaryVariableTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBRenameTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -2,28 +2,29 @@
 I provide a testing class and method which are destroyed later
 "
 Class {
-	#name : #ReCodeBasedTestCase,
-	#superclass : #RenrakuBaseTestCase,
+	#name : 'ReCodeBasedTestCase',
+	#superclass : 'RenrakuBaseTestCase',
 	#instVars : [
 		'testClass',
 		'testMethod',
 		'testClass2'
 	],
-	#category : #'Renraku-Tests'
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReCodeBasedTestCase class >> isAbstract [
 
 	^ self = ReCodeBasedTestCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCodeBasedTestCase >> setUp [
 	super setUp.
 
-	testClass := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	testClass := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #RenrakuProgrammaticallyCreatedClassTestClass;
 			package: testPackage name ].
 
@@ -31,13 +32,13 @@ ReCodeBasedTestCase >> setUp [
 	testMethod := testClass
 		>> (testClass compile: 'testingMethod ^ self').
 
-	testClass2 := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	testClass2 := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #RenrakuProgrammaticallyCreatedClassTestClass2;
 			package: testPackage name ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCodeBasedTestCase >> tearDown [
 
 	testPackage methods do: #removeFromSystem.

@@ -3,8 +3,8 @@ shows how to use a RubPluggableTextMorph.
 see example class side
 "
 Class {
-	#name : #RubPluggableTextMorphExample,
-	#superclass : #Model,
+	#name : 'RubPluggableTextMorphExample',
+	#superclass : 'Model',
 	#instVars : [
 		'selection',
 		'scrollValue',
@@ -13,38 +13,40 @@ Class {
 		'selectedMethodName',
 		'enabled'
 	],
-	#category : #'Rubric-Compatibility-toBeDeprecated'
+	#category : 'Rubric-Compatibility-toBeDeprecated',
+	#package : 'Rubric',
+	#tag : 'Compatibility-toBeDeprecated'
 }
 
-{ #category : #'source code area' }
+{ #category : 'source code area' }
 RubPluggableTextMorphExample >> accept: source notifying: aController [
-	| p result |
-	self selectedClass ifNil: [ ^self ].
-	p := self selectedClass organization protocolOrganizer protocolsOfSelector: self selector.
-	p := p ifEmpty: [ Protocol unclassified ] ifNotEmpty: [p anyOne name].
-	result := self selectedClass compile: source classified: p notifying: aController.
-	result ifNotNil: [self changed: #clearUserEdits ].
+
+	| protocol result |
+	self selectedClass ifNil: [ ^ self ].
+	protocol := (self selectedClass >> self selector) protocol ifNil: [ Protocol unclassified ].
+	result := self selectedClass compile: source classified: protocol notifying: aController.
+	result ifNotNil: [ self changed: #clearUserEdits ].
 	^ result
 ]
 
-{ #category : #edits }
+{ #category : 'edits' }
 RubPluggableTextMorphExample >> askBeforeDiscardingEdits [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> autoAccept [
 	"Answer whether the editor accepts its contents on each change."
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> behavior [
 	^ self selectedClass
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 RubPluggableTextMorphExample >> checkClassName [
 	| conf |
 	conf := RubConfigurationChange new.
@@ -54,33 +56,33 @@ RubPluggableTextMorphExample >> checkClassName [
 	self selectedClassName announce: conf
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 RubPluggableTextMorphExample >> checkMethodName [
 	| conf |
 	conf := RubConfigurationChange new.
 	self selectedClass
 		ifNil: [ conf configurationBlock: [ :textField | textField textColor: Color red ] ]
-		ifNotNil: [ 
+		ifNotNil: [
 			conf
-				configurationBlock: [ :textField | 
+				configurationBlock: [ :textField |
 					(self selectedClass canUnderstand: self selectedMethodName getString asSymbol)
 						ifFalse: [ textField textColor: Color red ]
 						ifTrue: [ textField textColor: Color black ] ] ].
 	self selectedMethodName announce: conf
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> classIsMeta [
 	^ classIsMeta ifNil: [ classIsMeta := false ]
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> classIsMeta: aBoolean [
 	classIsMeta := aBoolean.
 	self changed: #classIsMeta
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> classSelectorMorph [
 	^ self selectedClassName newTextField
 		withGhostText: 'Class name';
@@ -89,10 +91,10 @@ RubPluggableTextMorphExample >> classSelectorMorph [
 		yourself
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubPluggableTextMorphExample >> codePaneMenu: aMenu shifted: shifted [
-	"Note that unless we override perform:orSendTo:, 
-	PluggableTextController will respond to all menu items in a 
+	"Note that unless we override perform:orSendTo:,
+	PluggableTextController will respond to all menu items in a
 	text pane"
 	"You should not use this way of getting menu. Because when you create a text area, you have a menu"
 
@@ -101,21 +103,21 @@ RubPluggableTextMorphExample >> codePaneMenu: aMenu shifted: shifted [
 	^ aMenu addAllFrom: donorMenu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> dragEnabled [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> dropEnabled [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> dropEnabled: aBoolean [
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> editButtonMorph [
 	^ UIManager default
 		newButtonFor: self
@@ -125,34 +127,34 @@ RubPluggableTextMorphExample >> editButtonMorph [
 		help: nil
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> editSourceCode [
 	self changed: #getText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> enabled [
 	^ enabled ifNil: [ enabled := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> enabled: aBoolean [
 	enabled = aBoolean ifTrue: [ ^self ].
 	enabled := aBoolean.
 	self changed: #enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> getText [
 	^ self method ifNil: [''] ifNotNil: [:m | m sourceCode]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> help [
 	^ nil
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> metaSwitchMorph [
 	^ UIManager default
 		newCheckboxFor: self
@@ -162,12 +164,12 @@ RubPluggableTextMorphExample >> metaSwitchMorph [
 		help: 'Class side is used if checked'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> method [
 	^ [ self selectedClass >> (self selectedMethodName getString ifEmpty: [ ^nil ]) asSymbol ] on: Error do: [  ]
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> methodSelectorMorph [
 	^ self selectedMethodName newTextField
 		withGhostText: 'Method name';
@@ -176,7 +178,7 @@ RubPluggableTextMorphExample >> methodSelectorMorph [
 		yourself
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> newScrolledTextMorph [
 	| st |
 	st := RubPluggableTextMorph new
@@ -204,14 +206,14 @@ RubPluggableTextMorphExample >> newScrolledTextMorph [
 	^ st
 ]
 
-{ #category : #edits }
+{ #category : 'edits' }
 RubPluggableTextMorphExample >> okToChange [
 	self canDiscardEdits
 		ifTrue: [ ^ true ].
 	^ self promptForCancel
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> open [
 	| window editor clsMorph mthMorph |
 	window := (StandardWindow labelled: 'Method editor with shout') model: self.
@@ -238,7 +240,7 @@ RubPluggableTextMorphExample >> open [
 	^ window openInWorld
 ]
 
-{ #category : #edits }
+{ #category : 'edits' }
 RubPluggableTextMorphExample >> promptForCancel [
 	"Ask for the appropriate action to take when unaccepted contents
 	would be overwritten."
@@ -251,31 +253,31 @@ RubPluggableTextMorphExample >> promptForCancel [
 		cancelChoice: 'Cancel' translated
 		default: nil.
 	choice
-		ifNotNil: [ 
+		ifNotNil: [
 			choice
-				ifTrue: [ 
+				ifTrue: [
 					self changed: #getText.
 					self changed: #clearUserEdits ]
 				ifFalse: [ self changed: #clearUserEdits ] ].
 	^ self canDiscardEdits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> readSelection [
 	^ selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> scrollValue: aPoint [
 	scrollValue := aPoint
 ]
 
-{ #category : #accessing }
-RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [ 
+{ #category : 'accessing' }
+RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [
 	scrollValue := anAnnouncement step
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> selectedClass [
 	| cls |
 	cls := (Smalltalk globals at: (self selectedClassName getString ifEmpty: [ ^ nil ]) asSymbol ifAbsent: [ ^ nil ])
@@ -285,40 +287,40 @@ RubPluggableTextMorphExample >> selectedClass [
 		ifFalse: [ cls ]
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> selectedClassName [
 	^ selectedClassName ifNil: [ selectedClassName := RubScrolledTextModel new ]
 ]
 
-{ #category : #'view creation' }
+{ #category : 'view creation' }
 RubPluggableTextMorphExample >> selectedMethodName [
 	^ selectedMethodName ifNil: [ selectedMethodName := RubScrolledTextModel new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> selector [
 	^ self selectedMethodName getString asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextMorphExample >> setSelection: anInterval [
 	selection := anInterval.
 	self changed: #readSelection
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubPluggableTextMorphExample >> shoutAboutToStyle: ARubricMode [
 	ARubricMode classOrMetaClass: self selectedClass.
 	^ true
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 RubPluggableTextMorphExample >> whenClassNameChanged: anAnnouncement [
 	self checkMethodName.
 	self checkClassName
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 RubPluggableTextMorphExample >> whenMethodNameChanged: anAnnouncement [
 	self checkMethodName
 ]

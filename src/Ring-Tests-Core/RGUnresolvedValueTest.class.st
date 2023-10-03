@@ -1,26 +1,27 @@
 Class {
-	#name : #RGUnresolvedValueTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGUnresolvedValueTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGUnresolvedValueTest >> testDefaultValue [
 
-	| unresolved | 
-	
+	| unresolved |
+
 	unresolved := RGUnresolvedValue new.
 	self deny: unresolved isRingResolved.
 	self deny: unresolved isRingFullyResolved.
 	self assert: unresolved isRingFullyUnresolved.
 	self assert: unresolved value isNil.
 	self assert: unresolved value isRingResolved.
-	
+
 	unresolved := RGUnresolvedValue new default: #someObject.
 	self deny: unresolved isRingResolved.
 	self assert: unresolved value equals: #someObject.
 	self assert: unresolved value isRingResolved.
-	
+
 	unresolved := RGUnresolvedValue new default: #someObject.
 	self deny: unresolved isRingResolved.
 	self assert: unresolved value equals: #someObject.
@@ -28,14 +29,14 @@ RGUnresolvedValueTest >> testDefaultValue [
 
 	unresolved := RGUnresolvedValue recursive.
 	self deny: unresolved isRingResolved.
-	self deny: unresolved value isRingResolved.
+	self deny: unresolved value isRingResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGUnresolvedValueTest >> testReferencedBehaviors [
 
-	| unresolved | 
-	
+	| unresolved |
+
 	unresolved := RGUnresolvedValue new.
-	self assert: unresolved referencedBehaviors isEmpty.
+	self assert: unresolved referencedBehaviors isEmpty
 ]

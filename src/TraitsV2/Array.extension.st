@@ -1,8 +1,9 @@
-Extension { #name : #Array }
+Extension { #name : 'Array' }
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 Array >> asTraitComposition [
-	^ self isEmpty
-		ifTrue: [ TaEmptyComposition new ]
-		ifFalse: [ TaSequence withAll: (self collect: [:each | each asTraitComposition]) ]
+
+	^ self
+		ifEmpty: [ TaEmptyComposition new ]
+		ifNotEmpty: [ TaSequence withAll: (self collect: [ :each | each asTraitComposition ]) ]
 ]

@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyCriticMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
+	#name : 'ClyCriticMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-Critic-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyCriticMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 	^ClyClassWithProblemMethods
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyCriticMethodGroupProviderTest >> groupProviderClass [
 	^ClyCriticMethodGroupProvider
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*System-Settings-Core' }
-Class >> acceptSettings: aVisitor [ 
+{ #category : '*System-Settings-Core' }
+Class >> acceptSettings: aVisitor [
 	^ aVisitor visitClass: self
 ]

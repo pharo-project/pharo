@@ -9,25 +9,27 @@ range
 
 "
 Class {
-	#name : #RangeSettingDeclaration,
-	#superclass : #SettingDeclaration,
+	#name : 'RangeSettingDeclaration',
+	#superclass : 'SettingDeclaration',
 	#instVars : [
 		'range'
 	],
-	#category : #'System-Settings-Core-Base'
+	#category : 'System-Settings-Core-Base',
+	#package : 'System-Settings-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RangeSettingDeclaration >> hasEditableList [
 	^ false
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RangeSettingDeclaration >> inputWidget [
 	^ (self theme
 			newRowIn: self
 			for: {
-				(self theme 
+				(self theme
 					newTextEntryIn: self
 					for: self
 					get: #realValue
@@ -38,7 +40,7 @@ RangeSettingDeclaration >> inputWidget [
 						hResizing: #rigid;
 						width: 80;
 						wantsFrameAdornments: true;
-						yourself. 
+						yourself.
 				(PluggableSliderMorph new max: self range last;
 					 min: self range first;
 					 quantum: self range increment;
@@ -48,22 +50,22 @@ RangeSettingDeclaration >> inputWidget [
 					 vResizing: #spaceFIll;
 					 setBalloonText: self description;
 					 minWidth: 300; height: 20;
-					 yourself}) 
+					 yourself})
 		cellInset: 10;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RangeSettingDeclaration >> range [
 	^ range
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RangeSettingDeclaration >> range: anInterval [
 	range := anInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RangeSettingDeclaration >> realValue: aValue [
 	aValue
 		ifNil: [self settingReceiver perform: self setSelector with: nil]

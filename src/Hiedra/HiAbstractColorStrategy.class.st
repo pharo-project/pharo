@@ -2,22 +2,24 @@
 I represent a trategy to map nodes and links of a ruler to colors. I'm used by the HiSimpleRenderer.
 "
 Class {
-	#name : #HiAbstractColorStrategy,
-	#superclass : #Object,
-	#category : #'Hiedra-UI'
+	#name : 'HiAbstractColorStrategy',
+	#superclass : 'Object',
+	#category : 'Hiedra-UI',
+	#package : 'Hiedra',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractColorStrategy >> colorForLink: aHiLink [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractColorStrategy >> colorForNode: aHiNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractColorStrategy >> ruler: aHiRuler [
 	self subclassResponsibility
 ]

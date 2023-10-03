@@ -2,16 +2,17 @@
 Functional unit tests for the key-value store REST interface example
 "
 Class {
-	#name : #ZnKeyValueStoreTest,
-	#superclass : #TestCase,
+	#name : 'ZnKeyValueStoreTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'client',
 		'server'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ZnKeyValueStoreTest >> setUp [
 	| port |
 	super setUp.
@@ -22,25 +23,24 @@ ZnKeyValueStoreTest >> setUp [
 	client httpClient port: port
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnKeyValueStoreTest >> tearDown [
 	server stop.
 	client close.
-	super tearDown.
-
+	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnKeyValueStoreTest >> testUsage [
 	| key value |
 	key := 'key-' , 100 atRandom asString.
 	value := 'value-' , 100 atRandom asString.
 
 	self assert: client contents isEmpty.
-	self should: [ client at: key ] raise: KeyNotFound. 
+	self should: [ client at: key ] raise: KeyNotFound.
 
 	client at: key put: value.
-	self assert: (client at: key) equals: value. 
+	self assert: (client at: key) equals: value.
 
 	client removeKey: key.
 	self should: [ client at: key ] raise: KeyNotFound

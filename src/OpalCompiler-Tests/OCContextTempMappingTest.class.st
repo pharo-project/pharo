@@ -15,37 +15,39 @@ Probably tests are missing covering all possible combinations of
 However this class is a starting point for this.
 "
 Class {
-	#name : #OCContextTempMappingTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-FromOld'
+	#name : 'OCContextTempMappingTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-FromOld',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'FromOld'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> fetchArgFromOptimizedBlockInsideFullBlock: anArg extraArg: anotherArg [
-	
+
 	| result |
-	self class withAllSubclassesDo: [ :each | 
+	self class withAllSubclassesDo: [ :each |
 		result := anArg = anArg ifTrue: [ anotherArg value. thisContext tempNamed: #anArg ]].
 	^result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingArgOfOuterBlockFromAnotherDeepBlock [
-	
+
 	| actual |
-	
+
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
-	
-	actual := [:outerArg | 
+
+	actual := [:outerArg |
 		outerArg asString.
 		[ :innerArg | innerArg asString. thisContext tempNamed: #outerArg ] value: #innerValue.
 		] value: #outerValue.
-	
+
 	self assert: actual equals: #outerValue
 ]
 
-{ #category : #'test - block arguments' }
+{ #category : 'test - block arguments' }
 OCContextTempMappingTest >> testAccessingBlockArgumentNoneOptimizedBlock [
 	" the #in: call is not optimized, the block argument 'x' is a real block local temporary (argument).
 (OCContextTempMappingTest>>#testAccessingBlockArgumentNoneOptimizedBlock) numTemps -> 2"
@@ -60,13 +62,13 @@ OCContextTempMappingTest >> testAccessingBlockArgumentNoneOptimizedBlock [
 	self assert: b equals:#(a b x)
 ]
 
-{ #category : #'test - block arguments' }
+{ #category : 'test - block arguments' }
 OCContextTempMappingTest >> testAccessingBlockArgumentOptimizedBlock [
 	" the #ifNotNil: call is an optimized block, the block argument 'x' actually a method temporary.
 (OCContextTempMappingTest>>#testAccessingBlockArgumentOptimizedBlock) numTemps -> 3"
 
 	| a b |
-	
+
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
@@ -75,15 +77,15 @@ OCContextTempMappingTest >> testAccessingBlockArgumentOptimizedBlock [
 	self assert: b equals: #(#a #b #x)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingMethodArgFromOptimizedBlockContext [
-	
+
 	| actual |
 	actual := self fetchArgFromOptimizedBlockInsideFullBlock: #argValue extraArg: #anotherArg.
 	self assert: actual equals: #argValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingMultipleVariablesInVector [
 	| t1 t2 t3 t4 t5 t6 |
 	"Check the source code availability to do not fail on images without sources"
@@ -107,7 +109,7 @@ OCContextTempMappingTest >> testAccessingMultipleVariablesInVector [
 	self assert: t6 identicalTo: (thisContext tempNamed: 't6')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingTempsVectorInBlock [
 	"Check the source code availability to do not fail on images without sources"
 
@@ -118,7 +120,7 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock [
 	self assert: (thisContext tempNamed: 'temp') identicalTo: 1 ] value ] value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingTempsVectorInBlock2 [
 	| a b r |
 	"Check the source code availability to do not fail on images without sources"
@@ -135,7 +137,7 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock2 [
 	self assert: (r tempNamed: 'b') identicalTo: b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingTempsVectorInBlock3 [
 
 	|a b r |
@@ -145,13 +147,13 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock3 [
 
 	a := [ r := 'failure'].
 	[ b :='success'.
-	self assert: (thisContext tempNamed: 'a') equals: a. 
+	self assert: (thisContext tempNamed: 'a') equals: a.
 	] on: Error do: a.
 	self assert: (thisContext tempNamed: 'r') equals: nil.
-	self assert: (thisContext tempNamed: 'b') equals: 'success'.
+	self assert: (thisContext tempNamed: 'b') equals: 'success'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingVariablesInBlock [
 	| theContext |
 	"Check the source code availability to do not fail on images without sources"
@@ -164,19 +166,19 @@ OCContextTempMappingTest >> testAccessingVariablesInBlock [
 	self assert: (theContext tempNamed: 't1') ] value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingVariablesInOptimizedBlock [
 	"Check the source code availability to do not fail on images without sources"
 
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
-	1 to: 2 do: [ :index | 
+	1 to: 2 do: [ :index |
 		| optimizedTemp |
 		optimizedTemp := index.
 		self assert: (thisContext tempNamed: 'optimizedTemp') identicalTo: index ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCContextTempMappingTest >> testAccessingVariablesInOptimizedBlock2 [
 	| a b |
 	"Check the source code availability to do not fail on images without sources"

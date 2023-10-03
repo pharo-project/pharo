@@ -1,9 +1,9 @@
-Extension { #name : #FTTreeItem }
+Extension { #name : 'FTTreeItem' }
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 FTTreeItem >> pathForItemSuchThat: aFullBlockClosure [
-	
-	children do: [ :each | 
+
+	children do: [ :each |
 		(each pathForItemSuchThat: aFullBlockClosure)
 		ifNotEmpty: [ :path | ^ path ] ].
 	^ #()

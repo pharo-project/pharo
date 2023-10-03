@@ -2,30 +2,31 @@
 I am a command to convert a temp variable in instance variable.
 "
 Class {
-	#name : #SycConvertTempToInstVarCommand,
-	#superclass : #SycSourceCodeRefactoringCommand,
-	#category : #'SystemCommands-SourceCodeCommands'
+	#name : 'SycConvertTempToInstVarCommand',
+	#superclass : 'SycSourceCodeRefactoringCommand',
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycConvertTempToInstVarCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^(super canBeExecutedInContext: aSourceCodeContext) and: [aSourceCodeContext isTempVariableSelected]
 ]
 
-{ #category : #execution }
-SycConvertTempToInstVarCommand >> asRefactorings [ 
-	^ { RBTemporaryToInstanceVariableRefactoring 
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> asRefactorings [
+	^ { RBTemporaryToInstanceVariableRefactoring
 		class: method origin
 		selector: method selector
 		variable: sourceNode name }
 ]
 
-{ #category : #execution }
-SycConvertTempToInstVarCommand >> defaultMenuIconName [ 
+{ #category : 'execution' }
+SycConvertTempToInstVarCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycConvertTempToInstVarCommand >> defaultMenuItemName [
 	^'Convert to Instance Var'
 ]

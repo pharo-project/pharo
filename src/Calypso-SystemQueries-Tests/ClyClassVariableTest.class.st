@@ -1,10 +1,12 @@
 Class {
-	#name : #ClyClassVariableTest,
-	#superclass : #TestCase,
-	#category : #'Calypso-SystemQueries-Tests-Domain'
+	#name : 'ClyClassVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Calypso-SystemQueries-Tests-Domain',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Domain'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassVariableTest >> testDetectingDefiningClassFromClassSide [
 
 	| varBinding var |
@@ -15,7 +17,7 @@ ClyClassVariableTest >> testDetectingDefiningClassFromClassSide [
 	self assert: var definingClass equals: ClyClass2FromP1Mock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassVariableTest >> testDetectingDefiningClassFromItself [
 
 	| varBinding var |
@@ -26,7 +28,7 @@ ClyClassVariableTest >> testDetectingDefiningClassFromItself [
 	self assert: var definingClass equals: ClyClass2FromP1Mock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassVariableTest >> testDetectingDefiningClassFromSharedPoolUser [
 
 	| varBinding var |
@@ -37,7 +39,7 @@ ClyClassVariableTest >> testDetectingDefiningClassFromSharedPoolUser [
 	self assert: var definingClass equals: ChronologyConstants
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassVariableTest >> testDetectingDefiningClassFromSharedPoolUserClassSide [
 
 	| varBinding var |
@@ -48,7 +50,7 @@ ClyClassVariableTest >> testDetectingDefiningClassFromSharedPoolUserClassSide [
 	self assert: var definingClass equals: ChronologyConstants
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassVariableTest >> testDetectingDefiningClassFromSubclass [
 
 	| varBinding var |
@@ -59,7 +61,7 @@ ClyClassVariableTest >> testDetectingDefiningClassFromSubclass [
 	self assert: var definingClass equals: ClyClass2FromP1Mock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassVariableTest >> testDetectingDefiningClassFromSubclassClassSide [
 
 	| varBinding var |

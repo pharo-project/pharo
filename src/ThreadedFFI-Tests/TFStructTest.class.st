@@ -1,11 +1,12 @@
 Class {
-	#name : #TFStructTest,
-	#superclass : #TFTestCase,
-	#category : #'ThreadedFFI-Tests'
+	#name : 'TFStructTest',
+	#superclass : 'TFTestCase',
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #tests }
-TFStructTest >> longStructSize [ 
+{ #category : 'tests' }
+TFStructTest >> longStructSize [
 
 	^ TFWorker default
 		invokeFunction:
@@ -15,10 +16,9 @@ TFStructTest >> longStructSize [
 				definition:
 					(TFFunctionDefinition parameterTypes: {} returnType: TFBasicType uint))
 		withArguments: #()
-
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> pointSize [
 
 	^ self runner
@@ -31,7 +31,7 @@ TFStructTest >> pointSize [
 		withArguments: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> testLongStructSize [
 	| pointType |
 	pointType := TFStructType
@@ -47,34 +47,33 @@ TFStructTest >> testLongStructSize [
 	self assert: TFLongTestStruct byteSize equals: self longStructSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> testPointStructSize [
 
 	| pointType |
 	pointType := TFStructType forClass: TFPointTestStruct withMembers: { TFBasicType sint. TFBasicType sint. }.
-	
+
 	self assert: pointType byteSize equals: self pointSize.
-	self assert: pointType byteSize equals: TFPointTestStruct byteSize.
-	
+	self assert: pointType byteSize equals: TFPointTestStruct byteSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> testReturnsAnStruct [
 	| pointType fun aPoint |
-	
-	pointType := TFStructType 
-		forClass: TFPointTestStruct 
-		withMembers: { 
-			TFBasicType sint. 
+
+	pointType := TFStructType
+		forClass: TFPointTestStruct
+		withMembers: {
+			TFBasicType sint.
 			TFBasicType sint }.
-	
+
 	fun := TFExternalFunction
 		name: 'newPoint' moduleName: self libraryPath
 		parameterTypes:	{TFBasicType sint. TFBasicType sint}
 		returnType: pointType.
-		
+
 	aPoint := TFPointTestStruct fromHandle: (runner invokeFunction: fun withArguments: #(1 5)).
 
 	self assert: aPoint x equals: 1.
-	self assert: aPoint y equals: 5.	
+	self assert: aPoint y equals: 5.
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameClassVariableParametrizedTest,
-	#superclass : #RBRenameVariableParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenameClassVariableParametrizedTest',
+	#superclass : 'RBRenameVariableParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'building suites' }
 RBRenameClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenameClassVariableRefactoring .
@@ -16,40 +18,37 @@ RBRenameClassVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
-RBRenameClassVariableParametrizedTest >> testAlreadyExistingName [
-	self shouldFail: 
-		(self createRefactoringWithArguments:
-			{ #RecursiveSelfRule . 
-			self objectClassVariable . 
-			#RBTransformationRuleTestData})
+{ #category : 'failure tests' }
+RBRenameClassVariableParametrizedTest >> testFailureAlreadyExistingName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RecursiveSelfRule.
+				 self objectClassVariable.
+				 #RBTransformationRuleTestData })
 ]
 
-{ #category : #'failure tests' }
-RBRenameClassVariableParametrizedTest >> testMetaClassFailure [
+{ #category : 'failure tests' }
+RBRenameClassVariableParametrizedTest >> testFailureMetaClassFailure [
 
-	self shouldFail: 
-		(self createRefactoringWithArguments: 
-			{ #RecursiveSelfRule . 
-			#Foo . 
-			RBTransformationRuleTestData class name asSymbol })
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RecursiveSelfRule.
+				 #Foo.
+				 RBTransformationRuleTestData class name asSymbol })
 ]
 
-{ #category : #'failure tests' }
-RBRenameClassVariableParametrizedTest >> testNonExistantName [
-	self shouldFail: 
-		(self createRefactoringWithArguments: 
-			{ #foo . 
-			#newFoo . 
-			#RBBasicLintRuleTestData })
+{ #category : 'failure tests' }
+RBRenameClassVariableParametrizedTest >> testFailureNonExistantName [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { #foo. #newFoo. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: 
-		{ #RecursiveSelfRule . 
-		#RSR . 
+	refactoring := self createRefactoringWithArguments:
+		{ #RecursiveSelfRule .
+		#RSR .
 		#RBTransformationRuleTestData}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
@@ -77,32 +76,32 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 		equals:
 			(self
 				parseMethod:
-					'checkMethod: aSmalllintContext 
+					'checkMethod: aSmalllintContext
 								class := aSmalllintContext selectedClass.
-								(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
+								(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue:
 										[(RSR executeTree: rewriteRule tree initialAnswer: false)
-											ifFalse: 
+											ifFalse:
 												[builder compile: rewriteRule tree printString
 													in: class
 													classified: aSmalllintContext protocols]]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassVariableParametrizedTest >> testRenameClassVarInSharedPool [
 	| refactoring class userClass |
-	
-	refactoring := self createRefactoringWithArguments: 
-		{ #Var1 . 
-		#VarOne . 
+
+	refactoring := self createRefactoringWithArguments:
+		{ #Var1 .
+		#VarOne .
 		#RBSharedPoolForTestData}.
-	
+
 	self executeRefactoring: refactoring.
-	
+
 	class := refactoring model classNamed: #RBSharedPoolForTestData.
 	userClass := refactoring model classNamed: #RBClassUsingSharedPoolForTestData.
-	
-	self assert: (class parseTreeForSelector: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').	
-	self assert: (class parseTreeForSelector: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').	
+
+	self assert: (class parseTreeForSelector: #msg1) equals: (self parseMethod: 'msg1 ^ VarOne').
+	self assert: (class parseTreeForSelector: #msg2) equals: (self parseMethod: 'msg2 ^ VarOne').
 		self flag: 'TODO : fix in tranform class'
 "	self assert: (userClass parseTreeFor: #msg3) equals: (self parseMethod: 'msg3 ^ VarOne').	"
 ]

@@ -4,53 +4,54 @@ The content I show, is provided by an ECDetailContentProvider subclass.
 
 "
 Class {
-	#name : #NECDetailMorph,
-	#superclass : #Morph,
+	#name : 'NECDetailMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'title',
 		'description',
 		'arrowPosition',
 		'label'
 	],
-	#category : #'NECompletion-Morphic'
+	#category : 'NECompletion-Morphic',
+	#package : 'NECompletion-Morphic'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NECDetailMorph class >> height [
 	^ NECMenuMorph itemHeight * 15.5
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECDetailMorph class >> width [
 	^ NECMenuMorph itemWidth * 2.0
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> bounds [
 	^ super bounds topLeft extent: self class width @ self class height
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> contentBounds [
 	| factor rectangle |
 	factor := self itemHeight.
 	rectangle := self bounds top: self bounds top + 3.
 	rectangle := rectangle left: rectangle left + (factor * 2.0).
-	rectangle := rectangle bottom: rectangle bottom - factor.
+	rectangle := rectangle bottom: rectangle bottom.
 	^ rectangle
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> defaultColor [
 	^ NECMenuMorph backgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECDetailMorph >> descriptionBounds [
 	^ self contentBounds top: self contentBounds top + 30
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> drawArrowOn: aCanvas [
 	| point factor poligon |
 	factor := self itemHeight.
@@ -66,40 +67,13 @@ NECDetailMorph >> drawArrowOn: aCanvas [
 	aCanvas drawPolygon: poligon fillStyle: self scrollColor
 ]
 
-{ #category : #drawing }
-NECDetailMorph >> drawMessageOn: aCanvas [
-	| factor rectangle width browseMessage |
-	factor := self itemHeight.
-	rectangle := self bounds top: self bounds bottom - factor.
-	rectangle := rectangle left: self contentBounds left.
-	aCanvas
-		line: rectangle topLeft
-		to: rectangle topRight
-		color: Color darkGray.
-	rectangle := rectangle top: rectangle top + 1.
-	aCanvas
-		drawString: '<- close detail'
-		in: rectangle
-		font: self messageFont
-		color: Color darkGray.
-	browseMessage := 'browse ->'.
-	width := self messageFont widthOfString: browseMessage.
-	aCanvas
-		drawString: browseMessage
-		in: (rectangle left: rectangle right - width)
-		font: self messageFont
-		color: Color darkGray
-]
-
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
-	arrowPosition ifNotNil: [
-		self drawArrowOn: aCanvas.
-		self drawMessageOn: aCanvas]
+	arrowPosition ifNotNil: [ self drawArrowOn: aCanvas ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECDetailMorph >> entryDescription: anECEntryDescription [
 	| categoryContents entryDescription |
 	entryDescription := anECEntryDescription.
@@ -116,7 +90,7 @@ NECDetailMorph >> entryDescription: anECEntryDescription [
 	label contents: categoryContents
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NECDetailMorph >> initialize [
 	| childBounds |
 	super initialize.
@@ -140,17 +114,17 @@ NECDetailMorph >> initialize [
 	self addMorph: description
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> itemHeight [
 	^ NECMenuMorph itemHeight
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> messageFont [
 	^ NECMenuMorph messageFont
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> position: aPoint menuWidth: anInteger [
 	| y x |
 	arrowPosition := aPoint.
@@ -167,17 +141,17 @@ NECDetailMorph >> position: aPoint menuWidth: anInteger [
 	self position: x @ y
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECDetailMorph >> positionOnLeft: anInteger [
 	^ arrowPosition x - self class width - anInteger
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECDetailMorph >> scrollColor [
 	^ NECMenuMorph scrollColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECDetailMorph >> titleBounds [
 	^ self contentBounds top: self contentBounds top + 10
 ]

@@ -6,26 +6,28 @@ The main feature is to browse automatically in the browser when you click on a n
 
 "
 Class {
-	#name : #DAPackageAnalyzerPresenter,
-	#superclass : #SpPresenterWithModel,
+	#name : 'DAPackageAnalyzerPresenter',
+	#superclass : 'SpPresenterWithModel',
 	#instVars : [
 		'browserWrapper'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Core'
+	#category : 'Tool-DependencyAnalyser-UI-Core',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageAnalyzerPresenter class >> isAbstract [
 
 	^ self == DAPackageAnalyzerPresenter
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackageAnalyzerPresenter class >> onPackagesNamed: aCollection [
 	^ self on: (DADependencyTreePresenter onPackagesNamed: aCollection)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageAnalyzerPresenter class >> selectedPackagesFrom: aBuilder [
 	| target selectedPackages |
 	target := aBuilder model.
@@ -33,50 +35,50 @@ DAPackageAnalyzerPresenter class >> selectedPackagesFrom: aBuilder [
 	^ selectedPackages
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 DAPackageAnalyzerPresenter class >> systemPackages [
-	^ RPackageOrganizer default packages collect: [ :package | package packageName asString ]
+	^ self packageOrganizer packages collect: [ :package | package packageName asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageAnalyzerPresenter >> browserWindow [
 
 	^ self model browser
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 DAPackageAnalyzerPresenter >> defaultLabel [
 	^ 'Package Dependencies Analysis'
 ]
 
-{ #category : #layout }
-DAPackageAnalyzerPresenter >> defaultLayout [ 
+{ #category : 'layout' }
+DAPackageAnalyzerPresenter >> defaultLayout [
 	^ SpPanedLayout newHorizontal
 		add: self model;
 		add: browserWrapper;
 		positionOfSlider: 0.3;
-		yourself 
+		yourself
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 DAPackageAnalyzerPresenter >> delete [
 	self dependenciesPresenter close.
 	^ super delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageAnalyzerPresenter >> dependenciesPresenter [
 	^ self model
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 DAPackageAnalyzerPresenter >> initialExtent [
 	^ (1500@800)
 ]
 
-{ #category : #initialization }
-DAPackageAnalyzerPresenter >> initializePresenters [ 
+{ #category : 'initialization' }
+DAPackageAnalyzerPresenter >> initializePresenters [
 
-	browserWrapper := self newMorph 
-		morph: self browserWindow.
+	browserWrapper := self newMorph
+		morph: self browserWindow
 ]

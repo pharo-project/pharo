@@ -2,18 +2,20 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TEmptySequenceableTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TEmptySequenceableTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 TEmptySequenceableTest >> accessValuePutIn [
 	"return access the element put in the non-empty collection"
 
 	^ self perform: self selectorToAccessValuePutIn
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 TEmptySequenceableTest >> accessValuePutInOn: s [
 
 	"return access the element put in the non-empty collection"
@@ -21,26 +23,26 @@ TEmptySequenceableTest >> accessValuePutInOn: s [
 	^ s perform: self selectorToAccessValuePutIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TEmptySequenceableTest >> empty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TEmptySequenceableTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TEmptySequenceableTest >> selectorToAccessValuePutIn [
 	"return the selector of the method that should be invoked to access an element"
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TEmptySequenceableTest >> test0FixtureEmptySequenceableTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -48,20 +50,20 @@ TEmptySequenceableTest >> test0FixtureEmptySequenceableTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - sequence isempty' }
+{ #category : 'tests - sequence isempty' }
 TEmptySequenceableTest >> testSequenceIfNotEmpty [
 
 	self assert: (self nonEmpty
 					ifNotEmpty: [:s | self accessValuePutInOn: s]) = self valuePutIn
 ]
 
-{ #category : #'tests - sequence isempty' }
+{ #category : 'tests - sequence isempty' }
 TEmptySequenceableTest >> testSequenceIfNotEmptyifEmpty [
 
 	self assert: (self nonEmpty ifEmpty: [false] ifNotEmpty: [:s | (self accessValuePutInOn: s) = self valuePutIn])
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 TEmptySequenceableTest >> valuePutIn [
 	"the value that we will put in the non empty collection"
 

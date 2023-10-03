@@ -5,25 +5,27 @@ I override the marshalling methods from/to C doubles to pharo objects.
 See my superclass for more details.
 "
 Class {
-	#name : #TFDoubleType,
-	#superclass : #TFBasicType,
-	#category : #'ThreadedFFI-Types'
+	#name : 'TFDoubleType',
+	#superclass : 'TFBasicType',
+	#category : 'ThreadedFFI-Types',
+	#package : 'ThreadedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFDoubleType >> emitMarshallToPrimitive: builder [
-	
+
 	builder send: #asFloat
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 TFDoubleType >> readValue: anExternalAddress offset: offset [
-	
+
 	^ anExternalAddress doubleAt: offset
 ]
 
-{ #category : #writing }
-TFDoubleType >> write: aNumber into: anExternalAddress [ 
+{ #category : 'writing' }
+TFDoubleType >> write: aNumber into: anExternalAddress [
 
 	anExternalAddress doubleAt: 1 put: aNumber asFloat
 ]

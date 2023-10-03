@@ -2,73 +2,75 @@
 Instruction ""if: boolean goto: labelNum1 otherwise: labelNum2""
 "
 Class {
-	#name : #IRJumpIf,
-	#superclass : #IRJump,
+	#name : 'IRJumpIf',
+	#superclass : 'IRJump',
 	#instVars : [
 		'boolean',
 		'otherwise'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRJumpIf >> accept: aVisitor [
 	^ aVisitor visitJumpIf: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJumpIf >> boolean [
 
 	^ boolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJumpIf >> boolean: bool [
 
 	boolean := bool
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRJumpIf >> isGoto [
 	"is unconditional jump"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRJumpIf >> isIf [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJumpIf >> nextBytecodeOffsetAfterJump [
 	"check if we are in ifTrue:ifFalse: / ifFalse:ifTrue: or in ifTrue: / ifFalse: and answers the next byte code offset"
-	^destination last isJump 
+	^destination last isJump
 		ifTrue: [ destination last destination first bytecodeOffset ]
-		ifFalse: [ 
+		ifFalse: [
 			(destination sequence at: ((destination size - 1) max: 1)) bytecodeOffset ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJumpIf >> nonBodySuccessorSequences [
 
 	^ {destination}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJumpIf >> otherwise [
 
 	^ otherwise
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJumpIf >> otherwise: aSequence [
 
 	otherwise := aSequence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRJumpIf >> successorSequences [
 
 	^ {destination. otherwise}

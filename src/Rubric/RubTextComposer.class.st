@@ -2,8 +2,8 @@
 I represent the composer of a text, I am used to represent a paragraph
 "
 Class {
-	#name : #RubTextComposer,
-	#superclass : #Object,
+	#name : 'RubTextComposer',
+	#superclass : 'Object',
 	#instVars : [
 		'lines',
 		'maxRightX',
@@ -31,15 +31,17 @@ Class {
 		'emphasisHere',
 		'cursorWidth'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> actualWidth [
 	^ actualWidth
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RubTextComposer >> addNullLineForIndex: index [
 	"This awful bit is to ensure that if we have scanned all the text and the last character is a CR that there is a null line at the end of lines. Sometimes this was not happening which caused anomalous selections when selecting all the text. This is implemented as a post-composition fixup because I couldn't figure out where to put it in the main logic."
 
@@ -49,13 +51,13 @@ RubTextComposer >> addNullLineForIndex: index [
 		ifFalse: [ ^ self ].
 	oldLastLine last = (index - 1)
 		ifFalse: [ ^ self ].
-	r := oldLastLine left @ oldLastLine bottom extent: oldLastLine right @ (oldLastLine bottom - oldLastLine top).	
+	r := oldLastLine left @ oldLastLine bottom extent: oldLastLine right @ (oldLastLine bottom - oldLastLine top).
 	"Even though we may be below the bottom of the container,
 	it is still necessary to compose the last line for consistency..."
 	self addNullLineWithIndex: index andRectangle: r
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RubTextComposer >> addNullLineWithIndex: index andRectangle: aRectangle [
 	| nullString nullLine |
 	nullString := ' ' asText.
@@ -73,7 +75,7 @@ RubTextComposer >> addNullLineWithIndex: index andRectangle: aRectangle [
 	lines addLast: nullLine
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubTextComposer >> checkIfReadyToSlide [
 
 	"Check whether we are now in sync with previously composed lines"
@@ -97,28 +99,28 @@ RubTextComposer >> checkIfReadyToSlide [
 	]
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> completeComposition [
 	numberOfPhysicalLines := 1.
 	actualWidth := 1.
 	self lines
-		do: [ :line | 
+		do: [ :line |
 			line lineNumber: numberOfPhysicalLines.
 			line stopCondition = #cr
 				ifTrue: [ numberOfPhysicalLines := numberOfPhysicalLines + 1 ].
 			actualWidth := line actualWidth max: actualWidth ]
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> composeAllLines [
 	[ currCharIndex <= theText size and: [ currentY + defaultLineHeight <= theContainer bottom ] ]
-		whileTrue: [ 
+		whileTrue: [
 			(nowSliding
 				ifTrue: [ self slideOneLineDown ]
 				ifFalse: [ self composeOneLine ]) ifNil: [ ^ nil ] ]
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> composeAllRectangles: rectangles [
 	| charIndexBeforeLine numberOfLinesBefore |
 	actualHeight := defaultLineHeight.
@@ -127,13 +129,13 @@ RubTextComposer >> composeAllRectangles: rectangles [
 	self composeEachRectangleIn: rectangles.
 	currentY := currentY + actualHeight.
 	currentY > theContainer bottom
-		ifTrue: [ 
+		ifTrue: [
 			"Oops -- the line is really too high to fit -- back out"
 			currCharIndex := charIndexBeforeLine.
 			lines size - numberOfLinesBefore timesRepeat: [ lines removeLast ].
 			^ self ].	"It's OK -- the line still fits."
 	maxRightX := maxRightX max: scanner rightX.
-	1 to: rectangles size - 1 do: [ :i | 
+	1 to: rectangles size - 1 do: [ :i |
 		"Adjust heights across rectangles if necessary"
 		(lines at: lines size - rectangles size + i) lineHeight: lines last lineHeight baseline: lines last baseline ].
 	isFirstLine := false.
@@ -141,35 +143,35 @@ RubTextComposer >> composeAllRectangles: rectangles [
 		ifTrue: [ ^ nil	"we are finished composing" ]
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> composeEachRectangleIn: rectangles [
 
 	| myLine lastChar |
 
-	1 to: rectangles size do: [:i | 
+	1 to: rectangles size do: [:i |
 		currCharIndex <= theText size ifFalse: [ ^ false ].
-		myLine := scanner 
-			composeFrom: currCharIndex 
-			inRectangle: (rectangles at: i)				
-			firstLine: isFirstLine 
-			leftSide: i=1 
+		myLine := scanner
+			composeFrom: currCharIndex
+			inRectangle: (rectangles at: i)
+			firstLine: isFirstLine
+			leftSide: i=1
 			rightSide: i=rectangles size.
 		myLine actualWidth: scanner rightX - theContainer left.
-		
+
 		lines addLast: myLine.
 		actualHeight := actualHeight max: myLine lineHeight.  "includes font changes"
 		currCharIndex := myLine last + 1.
-		
+
 		"This happens if the text is just one line long"
 		(myLine last = 0) ifTrue: [ ^ false ].
-		
+
 		lastChar := theText at: myLine last.
 		(CharacterSet crlf includes: lastChar) ifTrue: [^#cr].
 	].
 	^false
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubTextComposer >> composeLinesFrom: start to: stop delta: delta into: lineColl priorLines: priorLines atY: startingY [
 	"While the section from start to stop has changed, composition may
 	ripple all the way to the end of the text. However in a rectangular
@@ -178,7 +180,7 @@ RubTextComposer >> composeLinesFrom: start to: stop delta: delta into: lineColl 
 	copy the old lines from there to the end of the container, with
 	adjusted indices and y-values"
 
-	self 
+	self
 		composeLinesFrom: start
 		to: stop
 		delta: delta
@@ -191,7 +193,7 @@ RubTextComposer >> composeLinesFrom: start to: stop delta: delta into: lineColl 
 	self completeComposition
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: argLinesCollection priorLines: argPriorLines atY: argStartY textStyle: argTextStyle text: argText container: argContainer [
 	theTextStyle := argTextStyle.
 	theText := argText.
@@ -213,14 +215,14 @@ RubTextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: 
 	isFirstLine := true.
 	self composeAllLines.
 	isFirstLine
-		ifTrue: [ 
+		ifTrue: [
 			"No space in container or empty text"
 			self addNullLineWithIndex: startCharIndex andRectangle: (theContainer topLeft extent: theContainer width @ defaultLineHeight) ]
 		ifFalse: [ self fixupLastLineIfCR ].
 	prevLines := #()
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> composeOneLine [
 	| rectangles |
 	rectangles := theContainer rectanglesAt: currentY height: defaultLineHeight.
@@ -230,37 +232,37 @@ RubTextComposer >> composeOneLine [
 	self checkIfReadyToSlide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> container [
 	^ theContainer
 ]
 
-{ #category : #accessing }
-RubTextComposer >> container: aRectangle [ 
+{ #category : 'accessing' }
+RubTextComposer >> container: aRectangle [
 	theContainer := aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> cursorWidth [
 	^ cursorWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> cursorWidth: anInteger [
 	cursorWidth := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> emphasisHere [
 	^ emphasisHere ifNil: [ emphasisHere := ' ' asText attributesAt: 1 forStyle: self textStyle ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> emphasisHere: aListOfTextAttribute [
 	emphasisHere := aListOfTextAttribute
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubTextComposer >> fastFindFirstLineSuchThat: lineBlock [
 	"Perform a binary search of the lines array and return the index
 	of the first element for which lineBlock evaluates as true.
@@ -272,14 +274,14 @@ RubTextComposer >> fastFindFirstLineSuchThat: lineBlock [
 	high := self lines size.
 	[index := high + low // 2.
 	low > high]
-		whileFalse: 
+		whileFalse:
 			[(lineBlock value: (self lines at: index))
 				ifTrue: [high := index - 1]
 				ifFalse: [low := index + 1]].
 	^ low
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextComposer >> fixupLastLineIfCR [
 	"This awful bit is to ensure that if we have scanned all the text and the last character is a CR that there is a null line at the end of lines. Sometimes this was not happening which caused anomalous selections when selecting all the text. This is implemented as a post-composition fixup because I couldn't figure out where to put it in the main logic."
 
@@ -288,7 +290,7 @@ RubTextComposer >> fixupLastLineIfCR [
 	self addNullLineForIndex: theText size + 1
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubTextComposer >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	"Answer the number of leading tabs in the line at lineIndex.  If there are
 	 no visible characters, pass the number of tabs to aBlock and return its value.
@@ -301,55 +303,61 @@ RubTextComposer >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	 first > 1 and: [crlf includes: (self text string at: first - 1)]] whileTrue: "word wrap"
 		[arrayIndex := arrayIndex - 1].
 	last := (self lines at: arrayIndex) last.
-	
-	^(self text string copyFrom: first to: last) indentationIfBlank: aBlock.
+
+	^(self text string copyFrom: first to: last) indentationIfBlank: aBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubTextComposer >> lineIndexForPoint: aPoint [
+
+	^ self lineIndexForPoint: aPoint scale: 1
+]
+
+{ #category : 'querying' }
+RubTextComposer >> lineIndexForPoint: aPoint scale: scale [
 	"Answer the index of the line in which to select the character nearest to aPoint."
 	| i py |
 	py := aPoint y truncated.
 
 	"Find the first line at this y-value"
-	i := (self fastFindFirstLineSuchThat: [:line | line bottom > py]) min: self lines size.
+	i := (self fastFindFirstLineSuchThat: [:line | (line bottom * scale) > py]) min: self lines size.
 
 	"Now find the first line at this x-value"
-	[i < self lines size and: [(self lines at: i+1) top = (self lines at: i) top
-				and: [aPoint x >= (self lines at: i+1) left]]]
+	[i < self lines size and: [((self lines at: i+1) top * scale) = ((self lines at: i) top * scale)
+				and: [aPoint x >= ((self lines at: i+1) left * scale)]]]
 		whileTrue: [i := i + 1].
 	^ i
 ]
 
-{ #category : #querying }
-RubTextComposer >> lineIndexOfCharacterIndex: characterIndex [ 
+{ #category : 'querying' }
+RubTextComposer >> lineIndexOfCharacterIndex: characterIndex [
 	"Answer the line index for a given characterIndex."
 	^ (self fastFindFirstLineSuchThat: [:line | line first > characterIndex]) - 1 max: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> lines [
 	^ lines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> lines: aCollectionOfTextLine [
 	lines := aCollectionOfTextLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> maxRightX [
 	^ maxRightX
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextComposer >> moveBy: aPoint [
 	self lines do: [ :line | line moveBy: aPoint ].
 	theContainer := theContainer translateBy: aPoint.
 	maxRightX := maxRightX + aPoint x
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> needComposition [
 	| ret |
 	ret := prevText isNil.
@@ -364,17 +372,17 @@ RubTextComposer >> needComposition [
 	^ ret
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> numberOfPhysicalLines [
 	^ numberOfPhysicalLines ifNil: [ numberOfPhysicalLines := 0 ]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubTextComposer >> prepareToForceComposition [
 	prevText := nil
 ]
 
-{ #category : #'private - composition' }
+{ #category : 'private - composition' }
 RubTextComposer >> recomposeFrom: start to: stop delta: delta [
 	"Recompose this paragraph. The altered portion is between start and
 	stop. Recomposition may continue to the end of the text, due to a
@@ -397,17 +405,17 @@ RubTextComposer >> recomposeFrom: start to: stop delta: delta [
 		delta: delta
 		into: newLines
 		priorLines: self lines
-		atY: (self lines at: startLine) top.
+		atY: (self lines at: startLine) top
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubTextComposer >> replaceFrom: start to: stop with: aText [
 	"Edit the text, and then recompose the lines."
 	self text replaceFrom: start to: stop with: aText.
-	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop - start + 1).
+	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop - start + 1)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextComposer >> slideOneLineDown [
 
 	| priorLine |
@@ -426,42 +434,42 @@ RubTextComposer >> slideOneLineDown [
 	currCharIndex := priorLine last + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> startCharIndex [
 	^ startCharIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> startCharIndex: anObject [
 	^ startCharIndex := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> tabWidth [
 	^ self textStyle rubTabWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> text [
 	^ theText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> text: aText [
 	theText := aText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextComposer >> textStyle [
 	^ theTextStyle
 ]
 
-{ #category : #accessing }
-RubTextComposer >> textStyle: aTextStyle [ 
+{ #category : 'accessing' }
+RubTextComposer >> textStyle: aTextStyle [
 	theTextStyle := aTextStyle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextComposer >> unplug [
 	theText := '' asText.
 	lines := #().

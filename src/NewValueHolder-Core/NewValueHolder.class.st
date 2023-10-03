@@ -12,16 +12,18 @@ But since B selection changes, you set A selection, and so on…
 This case is prevented by the use of a `lock` variable.
 "
 Class {
-	#name : #NewValueHolder,
-	#superclass : #Model,
+	#name : 'NewValueHolder',
+	#superclass : 'Model',
 	#instVars : [
 		'lock',
 		'value'
 	],
-	#category : #'NewValueHolder-Core-Base'
+	#category : 'NewValueHolder-Core-Base',
+	#package : 'NewValueHolder-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NewValueHolder class >> value: contents [
 
 	^ self new
@@ -29,93 +31,93 @@ NewValueHolder class >> value: contents [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 NewValueHolder >> asValueHolder [
 
 	^ self
 ]
 
-{ #category : #backward }
+{ #category : 'backward' }
 NewValueHolder >> contents [
 
 	^ self value
 ]
 
-{ #category : #backward }
+{ #category : 'backward' }
 NewValueHolder >> contents: anObject [
 
 	self value: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NewValueHolder >> handleCircularReferencesWhile: aBlock [
 	"Used to handle circular references as explained in the class comment"
 
 	lock ifTrue: [ ^ self ].
 	lock := true.
-	
-	aBlock ensure: [ lock := false ].
+
+	aBlock ensure: [ lock := false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NewValueHolder >> initialize [
 
 	super initialize.
-	
-	lock := false.
+
+	lock := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NewValueHolder >> isValueHolder [
 
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 NewValueHolder >> printOn: aStream [
 	super printOn: aStream.
-	
-	aStream 
-		nextPutAll: '[ '; 
+
+	aStream
+		nextPutAll: '[ ';
 		print: self value;
 		nextPutAll: ' ]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewValueHolder >> rawValue: aValue [
 
 	value := aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewValueHolder >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewValueHolder >> value: anObject [
-	
+
 	self handleCircularReferencesWhile: [ | oldValue |
 		oldValue := value.
 		value := anObject.
-		self valueChanged: oldValue ].
+		self valueChanged: oldValue ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewValueHolder >> valueChanged [
-	
+
 	self announcer announce: (ValueChanged newValue: self value)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewValueHolder >> valueChanged: oldValue [
-	
+
 	self valueChanged: oldValue to: self value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewValueHolder >> valueChanged: oldValue to: newValue [
-	
+
 	self announcer announce: (ValueChanged oldValue: oldValue newValue: newValue)
 ]

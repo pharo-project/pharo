@@ -5,41 +5,43 @@ I have a default instance that is hearing SystemAnnouncements and logging the ch
 But you can have your own instance and log whatever you want.
 "
 Class {
-	#name : #ChangesLog,
-	#superclass : #Object,
+	#name : 'ChangesLog',
+	#superclass : 'Object',
 	#instVars : [
 		'startupStamp'
 	],
 	#classVars : [
 		'DefaultInstance'
 	],
-	#category : #'System-Sources-Changes-Log'
+	#category : 'System-Sources-Changes-Log',
+	#package : 'System-Sources',
+	#tag : 'Changes-Log'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangesLog class >> default [
-	^DefaultInstance ifNil: [ 
+	^DefaultInstance ifNil: [
 		DefaultInstance := self new.
 		self registerInterestToSystemAnnouncement.
-		DefaultInstance.].
+		DefaultInstance.]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangesLog class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
-	
+
 	DefaultInstance ifNotNil: [:defaultInstance |
 		SystemAnnouncer uniqueInstance unsubscribe: defaultInstance.
-		defaultInstance registerToAnnouncements. ].
+		defaultInstance registerToAnnouncements. ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ChangesLog class >> reset [
 	SystemAnnouncer uniqueInstance unsubscribe: DefaultInstance.
-	DefaultInstance := nil.
+	DefaultInstance := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ChangesLog >> assureStartupStampLogged [
 	"If there is a startup stamp not yet actually logged to disk, do it now."
 
@@ -55,14 +57,14 @@ ChangesLog >> assureStartupStampLogged [
 	SourceFiles forceChangesToDisk
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ChangesLog >> logChange: aStringOrText [
 	"Write the argument, aString, onto the changes file."
 
 	| aString |
 	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
     ifTrue: [ ^ self ].
-	
+
 	self assureStartupStampLogged.
 
 	aString := aStringOrText asString.
@@ -72,59 +74,59 @@ ChangesLog >> logChange: aStringOrText [
 	SourceFiles changesWriteStreamDo: [ :changesFile |
 		changesFile
 			cr; cr.
-			
+
 		(ChunkWriteStream on: changesFile)
 			nextPut: aString ].
 
 	SourceFiles forceChangesToDisk
 ]
 
-{ #category : #'event-listening' }
+{ #category : 'event-listening' }
 ChangesLog >> logClassRemoved: announcement [
 	announcement classRemoved acceptsLoggingOfCompilation ifTrue: [
-		self logChange: 'Smalltalk globals removeClassNamed: #', announcement classRemoved name	
-	].
+		self logChange: 'Smalltalk globals removeClassNamed: #', announcement classRemoved name
+	]
 ]
 
-{ #category : #'event-listening' }
+{ #category : 'event-listening' }
 ChangesLog >> logClassRenamed: announcement [
 	announcement classRenamed acceptsLoggingOfCompilation ifTrue: [
-		self logChange: '(Smalltalk globals at: #', announcement oldName, ') rename: #', announcement newName.	
-	].
+		self logChange: '(Smalltalk globals at: #', announcement oldName, ') rename: #', announcement newName.
+	]
 ]
 
-{ #category : #'event-listening' }
+{ #category : 'event-listening' }
 ChangesLog >> logExpressionEvaluated: announcement [
-	self logChange: announcement expressionEvaluated.
+	self logChange: announcement expressionEvaluated
 ]
 
-{ #category : #'event-listening' }
+{ #category : 'event-listening' }
 ChangesLog >> logMethodRemoved: announcement [
 	announcement methodClass acceptsLoggingOfCompilation ifTrue: [
-		self logChange: 
+		self logChange:
 			announcement methodClass name, ' removeSelector: #', announcement selector
 	]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ChangesLog >> logSnapshot: save andQuit: quit [
 	"Log into the changes file the fact that the session will be either snapshoted, quit, or both."
 
-	| message |	
+	| message |
 	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
     ifTrue: [ ^ self ].
 
 	message := String
-		streamContents: [ :s | 
+		streamContents: [ :s |
 			s
 				nextPutAll: '----';
 				nextPutAll:
 						(save
-								ifTrue: [ 
+								ifTrue: [
 									quit
 										ifTrue: [ 'QUIT' ]
 										ifFalse: [ 'SNAPSHOT' ] ]
-								ifFalse: [ 
+								ifFalse: [
 									quit
 										ifTrue: [ 'QUIT/NOSAVE' ]
 										ifFalse: [ 'NOP' ] ]);
@@ -137,32 +139,32 @@ ChangesLog >> logSnapshot: save andQuit: quit [
 
 	self assureStartupStampLogged.
 
-	save ifTrue: [ 
+	save ifTrue: [
 		Smalltalk lastQuitLogPosition:
 			SourceFiles changesFileStream size ].
 
 	self logChange: message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangesLog >> recordStartupStamp [
-	
-	startupStamp := '----STARTUP----', DateAndTime now printString, ' as ', Smalltalk imagePath.
+
+	startupStamp := '----STARTUP----', DateAndTime now printString, ' as ', Smalltalk imagePath
 ]
 
-{ #category : #'event-listening' }
+{ #category : 'event-listening' }
 ChangesLog >> registerToAnnouncements [
 	SystemAnnouncer uniqueInstance weak
-		when: ClassRemoved 
+		when: ClassRemoved
 			send: #logClassRemoved:
 			to: self;
-		when: ClassRenamed 
+		when: ClassRenamed
 			send: #logClassRenamed:
 			to: self;
 		when: MethodRemoved
 			send: #logMethodRemoved:
 			to: self;
-		when: ExpressionEvaluated 
+		when: ExpressionEvaluated
 			send: #logExpressionEvaluated:
-			to: self.
+			to: self
 ]

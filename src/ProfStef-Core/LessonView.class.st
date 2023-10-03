@@ -4,20 +4,21 @@ A LessonView displays a Lesson instance.
 LessonView new open
 "
 Class {
-	#name : #LessonView,
-	#superclass : #Object,
+	#name : 'LessonView',
+	#superclass : 'Object',
 	#instVars : [
 		'shoutMorph',
 		'window',
 		'sourceTextModel'
 	],
-	#category : #'ProfStef-Core'
+	#category : 'ProfStef-Core',
+	#package : 'ProfStef-Core'
 }
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView class >> menuOn: aBuilder [
 	<LessonViewContextMenu>
-	
+
 	(aBuilder item: #'Do it' translated)
 		keyText: 'd';
 		selector: #doIt;
@@ -32,10 +33,10 @@ LessonView class >> menuOn: aBuilder [
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
-		iconName: #smallInspectIt.
+		iconName: #smallInspectIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> bindings [
 
 	"dynamic variable binding not needed for Lessons"
@@ -43,7 +44,7 @@ LessonView >> bindings [
 	^ Dictionary new
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView >> buildText [
 	| scrolledText |
 	scrolledText := self sourceTextModel newScrolledText
@@ -54,95 +55,95 @@ LessonView >> buildText [
 	^ scrolledText
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView >> buildWindow [
-	^ SystemWindow labelled: 'PrStef lesson'.
+	^ SystemWindow labelled: 'PrStef lesson'
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView >> close [
-	window delete.
+	window delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> doItContext [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> doItReceiver [
 	^ nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LessonView >> initialize [
 
 	super initialize.
 	window := self buildWindow.
 	shoutMorph := self buildText.
 	window addMorph: shoutMorph frame: (0 @ 0 corner: 1 @ 1).
-	window extent: 600 @ 450.
+	window extent: 600 @ 450
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LessonView >> isOpenInWindow [
 	^ self currentWorld systemWindows includes: window
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LessonView >> isScripting [
  ^ true
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView >> menu [
-	^ (PragmaMenuBuilder pragmaKeyword: #LessonViewContextMenu model: self) menu.
+	^ (PragmaMenuBuilder pragmaKeyword: #LessonViewContextMenu model: self) menu
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView >> open [
 	"menu: #shoutMorphFillMenu:."
 	window openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> selectedClassOrMetaClass [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> shoutMorph [
 	^ shoutMorph
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView >> shoutMorphFillMenu: aMenu [
 	^ aMenu addAllFrom: self menu
 ]
 
-{ #category : #gui }
+{ #category : 'gui' }
 LessonView >> showLesson: aLesson withTitle: aString [
 	self window setLabel: aString.
 	self sourceTextModel setText: aLesson lesson.
 	self isOpenInWindow ifFalse: [ self open ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> sourceTextModel [
-	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ].
+	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LessonView >> text [
 	^ self sourceTextModel getText asString
 ]
 
-{ #category : #accessing }
-LessonView >> window [ 
+{ #category : 'accessing' }
+LessonView >> window [
 	^ window
 ]

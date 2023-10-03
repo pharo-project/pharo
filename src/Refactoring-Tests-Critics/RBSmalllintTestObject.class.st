@@ -2,72 +2,74 @@
 This class is used to test method critics.
 "
 Class {
-	#name : #RBSmalllintTestObject,
-	#superclass : #RBSmalllintTestSuperclassObject,
+	#name : 'RBSmalllintTestObject',
+	#superclass : 'RBSmalllintTestSuperclassObject',
 	#instVars : [
 		'temporaryVariable'
 	],
-	#category : #'Refactoring-Tests-Critics'
+	#category : 'Refactoring-Tests-Critics-Base',
+	#package : 'Refactoring-Tests-Critics',
+	#tag : 'Base'
 }
 
-{ #category : #'accessing - good' }
+{ #category : 'accessing - good' }
 RBSmalllintTestObject >> abstractUnaryAccessingMethodWithoutReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self subclassResponsibility
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> anySatisfy [
 	^((1 to: 10) detect: [:each | each > 2] ifNone: [nil]) isNil
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> asOrderedCollectionNotNeeded [
 	self foo addAll: (1 to: 10) asOrderedCollection
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> assignmentInBlock [
 	[^self printString] ensure: [self close]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> assignmentInIfTrue [
 	| variable |
-	self isVariable 
+	self isVariable
 		ifTrue: [variable := self]
 		ifFalse: [variable := self printString].
 	^variable
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> assignmentWithoutEffect [
 	| a |
 	a := 1.
 	a := a
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> atIfAbsent [
 	^ Smalltalk at: #MyTest
-		ifAbsent: 
+		ifAbsent:
 			[| collection |
 			collection := #().
 			Smalltalk at: #MyTest put: collection]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> badMessage [
 	self become: String new
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> booleanPrecedence [
 	^true & 4 = 45
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> codeCruftLeftInMethods [
 	<haltOrBreakpointForTesting>
 	| a b c |
@@ -78,65 +80,65 @@ RBSmalllintTestObject >> codeCruftLeftInMethods [
 		ifFalse: [ c ]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> collectSelectNotUsed [
 	(1 to: 10) select: [:each | each = 4]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> collectionAtCollectionSize [
 	^self at: self size
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> collectionMessagesToExternalObject [
 	self someObject collection remove: 10
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> collectionProtocol [
 	| newCollection |
 	newCollection := OrderedCollection new.
-	(1 to: 10) asOrderedCollection do: 
-			[:each | 
+	(1 to: 10) asOrderedCollection do:
+			[:each |
 			| new |
 			new := each * 2.
 			newCollection add: new].
 	^newCollection
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> consistencyCheck [
 	^(1 to: 10) size > 0
 ]
 
-{ #category : #methods }
-RBSmalllintTestObject >> debbuggingMessageSent [
-	self rearmOneShot
+{ #category : 'methods' }
+RBSmalllintTestObject >> debuggingMessageSent [
+	self isThisEverCalled
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> detectContains [
 	^(1 to: 10) do: [:each | each > 2 ifTrue: [^each]]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> emptyExceptionHandler [
 	[ ] on: Error do: [ :err | ]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> endTrueFalse [
-	self isVariable 
-		ifTrue: 
+	self isVariable
+		ifTrue:
 			[self printString.
 			self isVariable printString]
-		ifFalse: 
+		ifFalse:
 			[self printString.
 			^4]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> equalNotUsed [
 	| string |
 	string = '' yourself.
@@ -144,26 +146,26 @@ RBSmalllintTestObject >> equalNotUsed [
 	^string
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> equalsTrue [
 	^true == self
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> equivalentSuperclassMethods [
 	"comments and formatting are ignored when comparing methods"
 	^ (
 		self
 		identityHash
-		).
+		)
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> extraBlock [
 	^[:arg | arg + 43] value: 45
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> fileBlocks [
 	| file |
 	^
@@ -171,74 +173,74 @@ RBSmalllintTestObject >> fileBlocks [
 	file contents] ensure: [file close]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> flagged [
 	self flag: #pharoTodo
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> floatEqualityComparison [
 	^ 1.0 = 1
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> fullBlocks [
 	^[thisContext]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> guardingClause [
-	self isSymbol 
-		ifFalse: 
+	self isSymbol
+		ifFalse:
 			[self printString.
 			self isSymbol printString]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> haltClassMentioned [
 	<haltOrBreakpointForTesting>
 	Halt now
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> ifTrueBlocks [
 	^ true ifFalse: self foo
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> ifTrueReturns [
 	self isSymbol ifFalse: [^true].
 	^false
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> inlineTemporary [
 	| temp |
 	self isNil ifTrue: [temp := 4].
 	^temp
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> justSendsSuper [
 	super justSendsSuper
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> literalArrayCharacters [
 	^#($a $b $c) includes: $a
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> literalArrayContainsComma [
 	^ #(#,)
 ]
 
-{ #category : #'accessing - bad' }
+{ #category : 'accessing - bad' }
 RBSmalllintTestObject >> literalArrayContainsSuspiciousTrueFalseOrNil [
 	^#(#nil)
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> longMethods [
 	self printString.
 	self printString.
@@ -260,7 +262,7 @@ RBSmalllintTestObject >> longMethods [
 	self isVariable ifTrue: [self printString]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> minMax [
 	"Bug in 3<5 ifTrue: [3]  ifFalse: [5]"
 
@@ -271,7 +273,7 @@ RBSmalllintTestObject >> minMax [
 	^var"
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> missingYourself [
 	^(OrderedCollection new)
 		add: 1;
@@ -279,7 +281,7 @@ RBSmalllintTestObject >> missingYourself [
 		removeFirst
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> modifiesCollection [
 	| collection |
 	collection := (1 to: 10) asOrderedCollection.
@@ -287,7 +289,7 @@ RBSmalllintTestObject >> modifiesCollection [
 	^collection
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> multiplePeriodsTerminatingAssignmentStatement [
 	| strings |
 
@@ -298,22 +300,22 @@ RBSmalllintTestObject >> multiplePeriodsTerminatingAssignmentStatement [
 	^ strings.
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> multiplePeriodsTerminatingStatement [
 	^ self..
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> noMoveDefinition [
 	| temp |
-	^(self collect: 
-			[:each | 
+	^(self collect:
+			[:each |
 			temp := each printString.
-			temp , temp]) 
+			temp , temp])
 		select: [:each | temp := each size + temp]
 ]
 
-{ #category : #'accessing - good' }
+{ #category : 'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingBranchingStatementMethodWithoutReturn: anObject [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
@@ -322,41 +324,41 @@ RBSmalllintTestObject >> nonUnaryAccessingBranchingStatementMethodWithoutReturn:
 		ifFalse: [ '' ]
 ]
 
-{ #category : #'accessing - good' }
+{ #category : 'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingMessageStatementMethodWithoutReturn: anObject [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
-{ #category : #'accessing - good' }
+{ #category : 'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingMethodWithoutReturn: anObject [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> notOptimizedIf [
 	^ true ifFalse: 1
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> onlyReadOrWrittenTemporary [
 	| a |
 	a := 1
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> precedence [
 	^self isArray ifFalse: [self block + 5 * 34] ifTrue: [self printString = 10]
 ]
 
-{ #category : #methods }
-RBSmalllintTestObject >> referencesConditionFor: aClass [ 
+{ #category : 'methods' }
+RBSmalllintTestObject >> referencesConditionFor: aClass [
 	| environment association |
-	^(RBCondition withBlock: 
+	^(RBCondition withBlock:
 			[association := Smalltalk globals associationAt: aClass name
 						ifAbsent: [self refactoringError: 'Could not find class'].
-			environment := (self environment referencesTo: association) 
+			environment := (self environment referencesTo: association)
 						| (self environment referencesTo: aClass name).
 			environment isEmpty])
 		errorMacro: aClass , ' is referenced.<n>Browse references?';
@@ -364,61 +366,61 @@ RBSmalllintTestObject >> referencesConditionFor: aClass [
 		yourself
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> refersToClass [
 	^ RBSmalllintTestObject
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> release [
 	self printString
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> returnInEnsure [
 	[self error: 'asdf'] ensure: [^4]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> returnsBooleanAndOther [
 	self isVariable ifTrue: [^false].
 	self printString
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> returnsIfTrue [
 	^self isNil ifTrue: [4]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> searchingLiteral [
 	^self printString = #a or: [#() = self printString | ( #() == self printString)]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> sendsDifferentSuper [
 	super printString
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> shouldntRaiseError [
 	self shouldnt: [ 0/1 ] raise: Error
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> shouldntRaiseException [
 	self shouldnt: [ 0/1 ] raise: Exception
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> sizeCheck [
 	self isEmpty
-		ifFalse: [self do: 
-					[:each | 
+		ifFalse: [self do:
+					[:each |
 					]]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> stringConcatenation [
 	| string |
 	string := '' yourself.
@@ -426,39 +428,39 @@ RBSmalllintTestObject >> stringConcatenation [
 	^string
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> tempVarOverridesInstVar [
 	| temporaryVariable |
 	temporaryVariable := 4.
 	^temporaryVariable
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> temporaryVariableCapitalization [
 	| Capital |
 	Capital := 'Bern'.
 	^ Capital
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> tempsReadBeforeWritten [
 	| temp |
 	self isVariable ifTrue: [temp := 4].
 	^temp
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> testMethod1 [
-	^self testMethod1 
+	^self testMethod1
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> threeElementPoint [
 	^5 @ 5 + 6 @ 6
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> toDoCollect [
 	| array |
 	array := Array new: 10.
@@ -466,7 +468,7 @@ RBSmalllintTestObject >> toDoCollect [
 	^array
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> toDoWithIncrement [
 	| counter |
 	counter := 0.
@@ -476,12 +478,12 @@ RBSmalllintTestObject >> toDoWithIncrement [
 	^counter
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> transcriptMentioned [
 	Transcript show: 'message'
 ]
 
-{ #category : #'accessing - good' }
+{ #category : 'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
@@ -490,7 +492,7 @@ RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithReturn [
 		ifFalse: [ '' ]
 ]
 
-{ #category : #'accessing - bad' }
+{ #category : 'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithoutReturn [
 	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
@@ -499,33 +501,33 @@ RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithoutReturn [
 		ifFalse: [ '' ]
 ]
 
-{ #category : #'accessing - good' }
+{ #category : 'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingMessageStatementMethodWithReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	^ self value
 ]
 
-{ #category : #'accessing - bad' }
+{ #category : 'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingMessageStatementMethodWithoutReturn [
 	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
-{ #category : #'accessing - good' }
+{ #category : 'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingMethodWithReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	^ self
 ]
 
-{ #category : #'accessing - bad' }
+{ #category : 'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingMethodWithoutReturn [
 	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 ]
 
-{ #category : #'non-accessing' }
+{ #category : 'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
@@ -534,66 +536,68 @@ RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn 
 		ifFalse: [ '' ]
 ]
 
-{ #category : #'non-accessing' }
+{ #category : 'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMessageStatementMethodWithoutReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
-{ #category : #'non-accessing' }
+{ #category : 'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMethodWithoutReturn [
 	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 RBSmalllintTestObject >> unclassifiedMethods [
 	"intentionally unclassified method"
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> uncommonMessageSend [
+	<ignoreNotImplementedSelectors: #(#false)>
 	true false
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> uncommonMessageSend2 [
+	<ignoreNotImplementedSelectors: #(Object)>
 	|a|
 	a:=3
 	Object new.
 	^ a
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> unoptimizedAndOr [
 	^ (true and: [ false ]) and: [ true ]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> usesAdd [
 	^(1 to: 10) asOrderedCollection addAll: (11 to: 20)
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> usesTrue [
 	^ True
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> variableAssignedLiteral [
 	temporaryVariable := #()
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> whileTrue [
 	| i |
 	i := 1.
-	[i < self size] whileTrue: 
+	[i < self size] whileTrue:
 			[(self at: i) printString.
 			i := i + 1]
 ]
 
-{ #category : #methods }
+{ #category : 'methods' }
 RBSmalllintTestObject >> yourselfNotUsed [
 	self
 		printString;

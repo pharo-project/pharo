@@ -2,59 +2,61 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TReplacementSequencedTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TReplacementSequencedTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TReplacementSequencedTest >> elementInForReplacement [
 	"Return an element included in 'nonEmpty'"
 
 	^ self nonEmpty anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TReplacementSequencedTest >> firstIndex [
 	"Return an index between 'nonEmpty' bounds that is < to 'second index'"
 
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TReplacementSequencedTest >> newElement [
 	"Return an element that will be put in the collection in place of another"
 
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TReplacementSequencedTest >> nonEmpty [
 
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TReplacementSequencedTest >> replacementCollection [
 	"Return a collection that will be put into 'nonEmpty'"
 
 	^ self replacementCollectionSameSize, self 	replacementCollectionSameSize
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TReplacementSequencedTest >> replacementCollectionSameSize [
 	"Return a collection of size (secondIndex - firstIndex + 1)"
 
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TReplacementSequencedTest >> secondIndex [
 	"Return an index between 'nonEmpty' bounds that is > to 'first index'"
 
 	^self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TReplacementSequencedTest >> testOFixtureReplacementSequencedTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -78,7 +80,7 @@ TReplacementSequencedTest >> testOFixtureReplacementSequencedTest [
 	self assert: self secondIndex - self firstIndex + 1 equals: self replacementCollectionSameSize size
 ]
 
-{ #category : #'tests - replacing' }
+{ #category : 'tests - replacing' }
 TReplacementSequencedTest >> testReplaceAllWith [
 	| result collection oldElement newElement oldOccurrences |
 	collection := self nonEmpty.
@@ -91,7 +93,7 @@ TReplacementSequencedTest >> testReplaceAllWith [
 	self assert: oldOccurrences equals: (result occurrencesOf: newElement)
 ]
 
-{ #category : #'tests - replacing' }
+{ #category : 'tests - replacing' }
 TReplacementSequencedTest >> testReplaceFromToWith [
 	| result collection replacementCollec firstInd secondInd |
 	collection := self nonEmpty .
@@ -116,7 +118,7 @@ TReplacementSequencedTest >> testReplaceFromToWith [
 		self assert: (result at: i) equals: (collection at: (secondInd + 1 - (firstInd + replacementCollec size) + i)) ]
 ]
 
-{ #category : #'tests - replacing' }
+{ #category : 'tests - replacing' }
 TReplacementSequencedTest >> testReplaceFromToWithStartingAt [
 	| result repStart collection replacementCollec firstInd secondInd |
 	collection := self nonEmpty.

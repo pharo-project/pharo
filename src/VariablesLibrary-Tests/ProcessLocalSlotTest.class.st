@@ -1,17 +1,20 @@
 Class {
-	#name : #ProcessLocalSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'ProcessLocalSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
+	<ignoreNotImplementedSelectors: #(slot1:)>
 	| slot writerString instance |
 	slot := #slot1 => ProcessLocalSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
 	writerString := String streamContents: [ :str |
-		str 
+		str
 			nextPutAll: slot name;
 			nextPutAll: ': anObject';
 			cr;tab;
@@ -19,35 +22,37 @@ ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
 			nextPutAll: slot name;
 			nextPutAll: ':= anObject ]'.
 		].
-	
+
 	aClass compile: writerString.
-	
+
 	instance := aClass new.
 	instance slot1: #test.
 	self assert: (instance instVarNamed: #slot1) value equals: #test
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testRead [
 	| slot |
+	<ignoreNotImplementedSelectors: #(slot1)>
 	slot := #slot1 => ProcessLocalSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
 	self assert: aClass new slot1 equals: nil.
-	
+
 	"test refelective read"
 	self assert: (slot read: aClass new) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testWriteAndReadCompiled [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	slot := #slot1 => ProcessLocalSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	object := aClass new.
-	
+
 	"now compile an accessor and read/write"
 	self compileAccessorsFor: slot.
 	self assert: object slot1 equals: nil.
@@ -58,7 +63,7 @@ ProcessLocalSlotTest >> testWriteAndReadCompiled [
 	self assert: object slot1 equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testWriteAndReadReflective [
 	| slot object |
 	slot := #slot1 => ProcessLocalSlot.

@@ -3,6 +3,7 @@ I am ZdcSecureSMTPClient.
 
 I open a ZdcSecureSocketStream to the SMTP server and connect it at the SSL level.
 
+```
 | mailMessage |
 mailMessage := MailMessage empty.
 mailMessage setField: 'subject' toString: 'ZdcSecureSMTPClient Test'.
@@ -12,45 +13,47 @@ ZdcSecureSMTPClient
 	password: '<your-password>'
 	to: '<email-address>' 
 	message: mailMessage
+```
 "
 Class {
-	#name : #ZdcSecureSMTPClient,
-	#superclass : #SMTPClient,
+	#name : 'ZdcSecureSMTPClient',
+	#superclass : 'SMTPClient',
 	#instVars : [
 		'variant',
-		'lineReader'
+		'lineReader',
+		'skipRequireStartTLS'
 	],
-	#category : #'Zodiac-Extra'
+	#category : 'Zodiac-Extra',
+	#package : 'Zodiac-Extra'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZdcSecureSMTPClient class >> defaultPortForSSL [
 	^ 465
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZdcSecureSMTPClient class >> defaultPortForStartTLS [
 	^ 587
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ZdcSecureSMTPClient class >> sendUsingGMailAccount: senderAddress password: password to: receiverAddress message: mailMessage [
 	| smtpClient |
 	(smtpClient := self new)
-		user: senderAddress; 
+		user: senderAddress;
 		password: password.
 	smtpClient openOnHost: (NetNameResolver addressForName: 'smtp.gmail.com') port: 465.
 	mailMessage setField: 'from' toString: senderAddress.
 	mailMessage setField: 'to' toString: receiverAddress.
-	^ smtpClient 
+	^ smtpClient
 		mailFrom: senderAddress to: { receiverAddress } text: mailMessage text;
-		quit; 
+		quit;
 		close;
 		yourself
-
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecureSMTPClient >> alternativeLogin [
 	self initiateSession. "send EHLO first"
 	self user ifNil: [ ^ self ].
@@ -62,10 +65,10 @@ ZdcSecureSMTPClient >> alternativeLogin [
 	self checkResponse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSMTPClient >> ensureConnection [
 	"Overwritten & refactored"
-		
+
 	self isConnected ifTrue: [ ^ self].
 	self stream ifNotNil: [ self stream close ].
 	self setupStream.
@@ -74,51 +77,52 @@ ZdcSecureSMTPClient >> ensureConnection [
 	self login
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecureSMTPClient >> fetchNextResponse [
 	"The FTP and similar protocols allow multi-line responses.
-	If the response is multi-line, the fourth character of the first line is a  
-	$- and the last line repeats the numeric code but the code is followed by 
+	If the response is multi-line, the fourth character of the first line is a
+	$- and the last line repeats the numeric code but the code is followed by
 	a space."
 
 	| response result firstLine |
 	result := '' writeStream.
 	firstLine := self nextLineFromStream.
 	result nextPutAll: firstLine.
-	(self responseIsContinuation: firstLine) 
+	(self responseIsContinuation: firstLine)
 		ifTrue: [
 			"continued over multiple lines. Discard continuation lines."
 			[response := self nextLineFromStream.
 			response ifNil: [ ^ nil ].
-			response size > 3 and: 
-					[ (response copyFrom: 1 to: 3) = (firstLine copyFrom: 1 to: 3) 
+			response size > 3 and:
+					[ (response copyFrom: 1 to: 3) = (firstLine copyFrom: 1 to: 3)
 						and: [ (response at: 4) = Character space ] ] ] whileFalse: [
 							result cr; nextPutAll: response ] ].
 	self lastResponse: result contents
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZdcSecureSMTPClient >> initialize [
 	super initialize.
-	self useSSL
+	self useSSL.
+	skipRequireStartTLS := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSecureSMTPClient >> isSSL [
 	^ variant = #ssl
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSecureSMTPClient >> isStartTLS [
 	^ variant = #startTLS
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSMTPClient >> logVerbose: aString [
 	"self log: aString; log: Character cr"
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecureSMTPClient >> nextLineFromStream [
 	| line |
 	line := lineReader nextLine.
@@ -126,40 +130,43 @@ ZdcSecureSMTPClient >> nextLineFromStream [
 	^ line
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecureSMTPClient >> requireStartTLS [
-	(self lastResponse includesSubstring: 'STARTTLS')
-		ifFalse: [ ^ self error: 'Server does not seem to support STARTTLS' ].
+	"Normally, the server advertises is capabilities before the upgrade from plain to TLS.
+	It should list STARTTLS as one of its capabilities. If not, we signal an error.
+	The option skipRequireStartTLS allows for this test to be skipped,
+	assuming STARTTLS capability even though it was not advertised."
 
+	skipRequireStartTLS ifTrue: [ ^ self ].
+	(self lastResponse includesSubstring: 'STARTTLS')
+		ifFalse: [ ^ self error: 'Server does not seem to support STARTTLS' ]
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecureSMTPClient >> sendCommand: aString [
 	self logVerbose: aString.
-	self stream 
+	self stream
 		nextPutAll: aString;
 		nextPutAll: #[13 10];
 		flush
-
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSMTPClient >> setupStream [
 	variant = #ssl ifTrue: [ ^ self setupStreamForSSL ].
 	variant = #startTLS ifTrue: [ ^ self setupStreamForStartTLS ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSMTPClient >> setupStreamForSSL [
 	self stream: (ZdcSecureSocketStream openConnectionToHost: self host port: self port).
 	self stream connect.
 	self logVerbose: 'SSL Connect OK.'.
 	"as we connect directly with SSL the first message will be a 220 server greeting"
-	self checkResponse.
-
+	self checkResponse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSMTPClient >> setupStreamForStartTLS [
 	"See http://www.ietf.org/rfc/rfc3207.txt for how to setup a secure connection"
 
@@ -170,30 +177,40 @@ ZdcSecureSMTPClient >> setupStreamForStartTLS [
 	self startTLS
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'initialize-release' }
+ZdcSecureSMTPClient >> skipRequireStartSSL [
+	"Normally, the server advertises is capabilities before the upgrade from plain to TLS.
+	It should list STARTTLS as one of its capabilities. If not, we signal an error.
+	The option skipRequireStartTLS allows for this test to be skipped,
+	assuming STARTTLS capability even though it was not advertised."
+
+	skipRequireStartTLS := true
+]
+
+{ #category : 'private - protocol' }
 ZdcSecureSMTPClient >> startTLS [
-	"Send a STARTTLS command and after the response, 
+	"Send a STARTTLS command and after the response,
 	switch to a SecureSocketStream and do the client handshake"
-	
+
 	self sendCommand: 'STARTTLS'.
-	self checkResponse.	
+	self checkResponse.
 	self stream: (ZdcSecureSocketStream on: self stream socket).
 	self stream connect.
 	self logVerbose: 'SSL Connect OK.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcSecureSMTPClient >> stream: aStream [
 	super stream: aStream.
 	lineReader := ZnLineReader on: self stream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZdcSecureSMTPClient >> useSSL [
 	variant := #ssl
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZdcSecureSMTPClient >> useStartTLS [
 	variant := #startTLS
 ]

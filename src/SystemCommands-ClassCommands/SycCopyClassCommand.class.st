@@ -10,70 +10,71 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SycCopyClassCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycCopyClassCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'originalClass',
 		'newClassName',
 		'resultClass'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCopyClassCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassSelected
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCopyClassCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	aToolContext showClass: resultClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyClassCommand >> defaultMenuIconName [
 	^#smallCopy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyClassCommand >> defaultMenuItemName [
 	^'Copy'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCopyClassCommand >> execute [
-	
+
 	resultClass := originalClass duplicateClassWithNewName: newClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyClassCommand >> newClassName [
 	^ newClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyClassCommand >> newClassName: anObject [
 	newClassName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyClassCommand >> originalClass [
 	^ originalClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyClassCommand >> originalClass: anObject [
 	originalClass := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCopyClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	originalClass := aToolContext lastSelectedClass.
-	
+
 	newClassName := UIManager default request: 'Input new class name' initialAnswer: originalClass name.
-	
-	newClassName isEmptyOrNil | (newClassName = originalClass name) 
+
+	newClassName isEmptyOrNil | (newClassName = originalClass name)
 		ifTrue: [ CmdCommandAborted signal ]
 ]

@@ -46,8 +46,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #EditingState,
-	#superclass : #Object,
+	#name : 'EditingState',
+	#superclass : 'Object',
 	#instVars : [
 		'emphasisHere',
 		'pointBlock',
@@ -59,150 +59,147 @@ Class {
 		'lastParenLocation',
 		'mouseDownInterval'
 	],
-	#category : #'Text-Edition-Utilities'
+	#category : 'Text-Edition-Utilities',
+	#package : 'Text-Edition',
+	#tag : 'Utilities'
 }
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 EditingState >> clearUndoManager: aKeyboardEvent [
 	self undoManager reset.
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> emphasisHere [
 	^ emphasisHere
 ]
 
-{ #category : #accessing }
-EditingState >> emphasisHere: aListOfTextAttribute [ 
+{ #category : 'accessing' }
+EditingState >> emphasisHere: aListOfTextAttribute [
 	emphasisHere := aListOfTextAttribute
 				ifNotNil: [:l | l reject: [:a | TextSelectionColor = a class]]
 ]
 
-{ #category : #'private - debugging' }
+{ #category : 'private - debugging' }
 EditingState >> exploreUndoManager: aKeyboardEvent [
 	self undoManager inspect.
 	^ true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 EditingState >> focused: aBoolean from: aTextMorph [
 	(aBoolean and: [aTextMorph sharesFindReplace])
-		ifTrue: [[(EditorFindReplaceDialogWindow on: aTextMorph) comeToFront] on: Error do: []].
+		ifTrue: [[(EditorFindReplaceDialogWindow on: aTextMorph) comeToFront] on: Error do: []]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 EditingState >> handlesKeyboard: evt from: aTextMorph [
 	^ false
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 EditingState >> keystroke: aKeyboardEvent from: aTextMorph [
-
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> lastParenLocation [
 	^ lastParenLocation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> lastParenLocation: anIntegerIndex [
 	lastParenLocation := anIntegerIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> markBlock [
 	^ markBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> markBlock: aCharacterBlock [
 	markBlock := aCharacterBlock
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 EditingState >> mouseDown: anEvent from: aTextMorph [
 	self mouseDownInterval: aTextMorph editor selectionInterval.
 	self focused: true from: aTextMorph
-
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> mouseDownInterval [
 	^ mouseDownInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> mouseDownInterval: anInterval [
 	mouseDownInterval := anInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> pointBlock [
 	^ pointBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> pointBlock: aCharacterBlock [
-	pointBlock := aCharacterBlock.
-
+	pointBlock := aCharacterBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> previousInterval [
 
 	^ previousInterval ifNil: [previousInterval := 1 to: 0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> previousInterval: anInterval selection: aSelection [
 
 	previousInterval := anInterval.
-	previousSelection := aSelection.
-
+	previousSelection := aSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> previousSelection [
 
 	^ previousSelection ifNil: [previousSelection := '' asText]
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 EditingState >> redo [
-	^ self undoManager redo 
+	^ self undoManager redo
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 EditingState >> redoArray: doArray undoArray: undoArray [
-	self undoManager isPlugged 
+	self undoManager isPlugged
 		ifTrue: [self undoManager redoArray: doArray undoArray: undoArray]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> startOfTyping [
 	^ startOfTyping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> startOfTyping: anIntegerIndex [
 	startOfTyping := anIntegerIndex
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 EditingState >> undo [
-	^ self undoManager undo 
+	^ self undoManager undo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> undoManager [
 
-	^ undoManager ifNil: [ undoManager := HistoryIterator new].
-
+	^ undoManager ifNil: [ undoManager := HistoryIterator new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditingState >> unselect [
 	self markBlock: self pointBlock copy
 ]

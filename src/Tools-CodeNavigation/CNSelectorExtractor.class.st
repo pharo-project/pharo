@@ -33,12 +33,13 @@ Selecting both `aVariable` or the message `cascade2` will yield a message node `
 However, in the first case, the cursor is closer to `cascade1`, so we want cascade1 while in the latter case we want cascade2.
 "
 Class {
-	#name : #CNSelectorExtractor,
-	#superclass : #Object,
-	#category : #'Tools-CodeNavigation'
+	#name : 'CNSelectorExtractor',
+	#superclass : 'Object',
+	#category : 'Tools-CodeNavigation',
+	#package : 'Tools-CodeNavigation'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 
 	| bestNodeAtPosition |
@@ -46,7 +47,7 @@ CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 	^ self extractSelectorFromNode: bestNodeAtPosition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CNSelectorExtractor >> extractSelectorFromNode: aNode [
 
 	| node originalNode |
@@ -56,10 +57,10 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 
 	node isCascade ifTrue: [ ^ node messages first selector ].
 
-	node isMethod ifFalse: [ 
+	node isMethod ifFalse: [
 		(node isValue and: [ node value isSymbol ]) ifTrue: [ ^ node value ].
 
-		[ node isMessage or: [ node isMethod ] ] whileFalse: [ 
+		[ node isMessage or: [ node isMethod ] ] whileFalse: [
 			(node := node parent) ifNil: [ ^ nil ] ].
 
 		"This is a strange case with cascades.
@@ -67,33 +68,33 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 		And each message contains (duplicated) the receiver.
 		So we need to deambiguate here:
 		  was the selection on the receiver? or on the message itself?
-		
+
 		For example:
 		  aVariable
 			cascade1;
 			cascade2.
-			
+
 		Selecting both the receiver or the cascade2 will yield a message node `aVariable cascade2`.
 		However, in the first case we want cascade1 and in the latter we want cascade2.
-		
+
 		"
-		(node ~= originalNode and: [ 
-			 node parent notNil and: [ node parent isCascade ] ]) ifTrue: [ 
+		(node ~= originalNode and: [
+			 node parent notNil and: [ node parent isCascade ] ]) ifTrue: [
 			node := node parent messages first ] ].
-	
+
 	"In the case of doIt methods"
 	(node isMethod and: [ node isDoIt and: [ aNode isVariable ]])
-		ifTrue: [  ^ aNode name ].		
+		ifTrue: [  ^ aNode name ].
 	(node isMethod and: [ node isDoIt and: [ aNode isParseError ]])
 		ifTrue: [ ^ aNode value asSymbol ifEmpty: [ nil ] ].
 
 	^ node selector
 ]
 
-{ #category : #'public - extraction' }
-CNSelectorExtractor >> extractSelectorFromSelection: aString [ 
+{ #category : 'public - extraction' }
+CNSelectorExtractor >> extractSelectorFromSelection: aString [
    "Extract a selector from the given string in isolation, regardless of the context around it"
-	
+
 	| node |
 	node := RBParser parseFaultyExpression: aString.
 	node
@@ -109,16 +110,16 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
 	^ aString asSymbol
 ]
 
-{ #category : #'public - extraction' }
+{ #category : 'public - extraction' }
 CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition [
 	"Receives a string with the source code, and a number which indicates the position (of the caret) where the selectors will be extracted."
-	
+
 	| position |
 	aString ifNil: [ ^ nil ].
 	aString ifEmpty: [ ^ nil ].
-	position := (aPosition < 0 or: [ aPosition > aString size ]) 
+	position := (aPosition < 0 or: [ aPosition > aString size ])
 		ifTrue: [
-			(aString size + 1) = aPosition 
+			(aString size + 1) = aPosition
 				ifTrue: [ aPosition -1 ]
 				ifFalse: [ ^ nil ]].
 	^ self

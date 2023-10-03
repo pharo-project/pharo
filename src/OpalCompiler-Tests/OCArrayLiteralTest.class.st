@@ -1,23 +1,25 @@
 Class {
-	#name : #OCArrayLiteralTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-FromOld'
+	#name : 'OCArrayLiteralTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-FromOld',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'FromOld'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OCArrayLiteralTest >> runCase [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCArrayLiteralTest >> tearDown [
 
 	self class removeSelector: #array.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayBase [
 	self class compile: 'array ^ #[2r1010 8r333 16rFF]'.
 	self assert: (self array isKindOf: ByteArray).
@@ -27,21 +29,21 @@ OCArrayLiteralTest >> testByteArrayBase [
 	self assert: self array last equals: 255
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayEmpty [
 	self class compile: 'array ^ #[]'.
 	self assert: (self array isKindOf: ByteArray).
 	self assertEmpty: self array
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayLiteral [
 	self class compile: 'array ^ #[ 1 2 3 4 ]'.
 	self assert: self array equals: self array.
 	self assert: self array identicalTo: self array
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayLong [
 	self class compile: 'array ^ #[ ' , ((0 to: 255) inject: ' ' into: [ :r :e | r , ' ' , e asString ]) , ' ]'.
 	self assert: (self array isKindOf: ByteArray).
@@ -49,7 +51,7 @@ OCArrayLiteralTest >> testByteArrayLong [
 	0 to: 255 do: [ :index | self assert: (self array at: index + 1) equals: index ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayRange [
 	self class compile: 'array ^ #[ 0 255 ]'.
 	self assert: (self array isKindOf: ByteArray).
@@ -58,7 +60,7 @@ OCArrayLiteralTest >> testByteArrayRange [
 	self assert: self array last equals: 255
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayWithinArray [
 	self class compile: 'array ^ #( #[1] #[2] )'.
 	self assert: (self array isKindOf: Array).
@@ -69,13 +71,13 @@ OCArrayLiteralTest >> testByteArrayWithinArray [
 	self assert: self array last first equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testReservedIdentifiers [
 	self class compile: 'array ^ #(nil true false)'.
 	self assert: self array equals: {nil . true . false}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCArrayLiteralTest >> testSymbols [
 	self class compile: 'array ^ #(#nil #true #false #''nil'' #''true'' #''false'')'.
 	self assert: self array equals: {#nil . #true . #false . #nil . #true . #false}

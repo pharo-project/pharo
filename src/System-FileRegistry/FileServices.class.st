@@ -11,12 +11,14 @@ MyClass class>>fileReaderServicesForFile: fullName suffix: suffix
 		ifFalse: [#()]
 "
 Class {
-	#name : #FileServices,
-	#superclass : #Object,
-	#category : #'System-FileRegistry-Base'
+	#name : 'FileServices',
+	#superclass : 'Object',
+	#category : 'System-FileRegistry-Base',
+	#package : 'System-FileRegistry',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileServices class >> itemsForDirectory: aFileDirectory [
 	"Answer a list of services appropriate when no file is selected."
 
@@ -27,7 +29,7 @@ FileServices class >> itemsForDirectory: aFileDirectory [
 	^ services
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileServices class >> itemsForFile: fullName [
 	"Answer a list of services appropriate for a file of the given full name"
 
@@ -35,7 +37,7 @@ FileServices class >> itemsForFile: fullName [
 	suffix := self suffixOf: fullName.
 	services := OrderedCollection new.
 	(Pragma allNamed: #fileService)
-		do: [ :each | 
+		do: [ :each |
 			services
 				addAll:
 					(each methodClass soleInstance
@@ -46,7 +48,7 @@ FileServices class >> itemsForFile: fullName [
 	^ services
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 FileServices class >> suffixOf: aName [
 	"Answer the file extension of the given file"
 	^ aName

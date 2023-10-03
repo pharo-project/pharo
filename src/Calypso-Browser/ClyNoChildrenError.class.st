@@ -2,15 +2,17 @@
 I am ClyNoChildrenError, an exception indicating that an operation on a parent in a parent-child structure failed due to the absence of child elements. 
 "
 Class {
-	#name : #ClyNoChildrenError,
-	#superclass : #Error,
+	#name : 'ClyNoChildrenError',
+	#superclass : 'Error',
 	#instVars : [
 		'parent'
 	],
-	#category : #'Calypso-Browser-Exceptions'
+	#category : 'Calypso-Browser-Exceptions',
+	#package : 'Calypso-Browser',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 ClyNoChildrenError class >> signalFor: aParentObject [
 	"Create and signal a ClyNotFoundError exception for aParentObject in the default receiver."
 
@@ -19,13 +21,13 @@ ClyNoChildrenError class >> signalFor: aParentObject [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNoChildrenError >> parent [
 
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNoChildrenError >> parent: anObject [
 
 	parent := anObject

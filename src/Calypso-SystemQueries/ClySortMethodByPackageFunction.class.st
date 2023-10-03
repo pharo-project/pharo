@@ -2,12 +2,14 @@
 See comment of my collate:with: method
 "
 Class {
-	#name : #ClySortMethodByPackageFunction,
-	#superclass : #ClySortFunction,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClySortMethodByPackageFunction',
+	#superclass : 'ClySortFunction',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClySortMethodByPackageFunction >> collate: aMethod1 with: aMethod2 [
 	"Returns:
 		-1 if aMethod1 is 'lower than' aMethod2

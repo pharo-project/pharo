@@ -63,12 +63,14 @@ TKTTask valuable: MyTask new.
 ]]]
 "
 Class {
-	#name : #TKTTask,
-	#superclass : #Object,
-	#category : #'TaskIt-Kernel'
+	#name : 'TKTTask',
+	#superclass : 'Object',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TKTTask class >> valuable: aValuable [
 
 	^ TKTGenericTask new
@@ -76,50 +78,50 @@ TKTTask class >> valuable: aValuable [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTask >> asTask [
 	^ self
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TKTTask >> configureTaskExecution: execution with: aRunner [
 	execution runner: aRunner.
 	execution task: self.
 	^ execution
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTask >> evaluateOn: anExecution [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTask >> future [
 	^ self future: TKTConfiguration runner
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTask >> future: executor [
 	^ executor privateFuture: self
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TKTTask >> futureTaskExecutionFor: aRunner [
 	^ self configureTaskExecution: TKTFutureExecution new with: aRunner
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTask >> schedule [
-	
+
 	self schedule: TKTConfiguration runner
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TKTTask >> schedule: executor [
-	executor privateSchedule: self 
+	executor privateSchedule: self
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TKTTask >> scheduleTaskExecutionFor: aRunner [
 	^ self configureTaskExecution: TKTTaskExecution new with: aRunner
 ]

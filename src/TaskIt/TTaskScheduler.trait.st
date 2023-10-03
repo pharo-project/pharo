@@ -2,41 +2,43 @@
 I am a trait implementing the main behavior of a task scheduler. That is, I define as requirement a #schedule: message and I define #future: on top of #schedule:.
 "
 Trait {
-	#name : #TTaskScheduler,
-	#category : #'TaskIt-Kernel'
+	#name : 'TTaskScheduler',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTaskScheduler classSide >> isDebuggingCompatible [
 	^ false
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> future: aTask [
 	^ aTask asTask future: self
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> isDebuggingCompatible [
 	^ false
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> isLocalThreadRunner [
-	^ false 
+	^ false
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> isUIRunner [
-	^ false 
+	^ false
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> isWorker [
-	^ false 
+	^ false
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> privateFuture: aTask [
 	| execution |
 	execution := aTask asTask futureTaskExecutionFor: self.
@@ -44,27 +46,26 @@ TTaskScheduler >> privateFuture: aTask [
 	^ execution future
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> privateSchedule: aTask [
 	| execution |
 	execution := aTask asTask scheduleTaskExecutionFor: self.
 	self scheduleTaskExecution: execution
-	
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> privateTimeout: timeout on: aTaskExecution [
 	timeout wait.
 	aTaskExecution isFinished
 		ifFalse: [ aTaskExecution cancelWithReason: 'Timeout after: ' , timeout asString ]
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> schedule: aTask [
 	aTask asTask schedule: self
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> schedule: aTask timeout: aTimeout [
 
 	| execution |
@@ -72,17 +73,17 @@ TTaskScheduler >> schedule: aTask timeout: aTimeout [
 	execution runner: self.
 	execution task: aTask.
 	execution timeout: aTimeout.
-	
-	self scheduleTaskExecution: execution.
+
+	self scheduleTaskExecution: execution
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> scheduleTaskExecution: aTaskExecution [
 
-	self requirement
+	self explicitRequirement
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TTaskScheduler >> scheduleTimeout: timeout on: aTaskExecution [
 	TKTConfiguration processProvider
 		createProcessDoing:

@@ -2,64 +2,73 @@
 CompilerTest is a holder for SUnit test of Compiler
 "
 Class {
-	#name : #OCCompilerTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'OCCompilerTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'errorMessage',
 		'errorLocation',
 		'errorSource',
-		'text'
+		'text',
+		'interactive'
 	],
-	#category : #'OpalCompiler-Tests-FromOld'
+	#category : 'OpalCompiler-Tests-FromOld',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'FromOld'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OCCompilerTest >> compile [
 	^ self compileWithFailBlock: [^ nil]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCCompilerTest >> compileWithFailBlock: aBlock [
-	^ OpalCompiler new 
+	^ OpalCompiler new
 		source: text;
 		class: MockForCompilation;
 		requestor: self;
 		failBlock: aBlock;
-		compile.
+		compile
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 OCCompilerTest >> initializeErrorMessage [
 	errorMessage := nil.
 	errorLocation := nil.
 	errorSource := nil
 ]
 
-{ #category : #mocking }
-OCCompilerTest >> notify: aString at: aSmallInteger in: aReadStream [ 
-	errorMessage := aString.
-	errorLocation := aSmallInteger.
-	errorSource := aReadStream.
+{ #category : 'accessing' }
+OCCompilerTest >> interactive [
+
+	^ interactive ifNil: [ true ]
 ]
 
-{ #category : #running }
+{ #category : 'mocking' }
+OCCompilerTest >> notify: aString at: aSmallInteger in: aReadStream [
+	errorMessage := aString.
+	errorLocation := aSmallInteger.
+	errorSource := aReadStream
+]
+
+{ #category : 'running' }
 OCCompilerTest >> runCase [
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCCompilerTest >> setUp [
 	super setUp.
-	testingEnvironment at: #OCCompilerTestTestVar put: MockForCompilation.
+	testingEnvironment at: #OCCompilerTestTestVar put: MockForCompilation
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCCompilerTest >> tearDown [
 	testingEnvironment removeKey: #OCCompilerTestTestVar.
 	super tearDown
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 OCCompilerTest >> tempTraitShadowingString [
 
 	^ 'testReplaceFromToWithStartingAt
@@ -67,20 +76,20 @@ OCCompilerTest >> tempTraitShadowingString [
 		replacementCollection := 1.'
 ]
 
-{ #category : #'tests - readonly vars' }
+{ #category : 'tests - readonly vars' }
 OCCompilerTest >> testAssignmentOfClassNameBinding [
 	self initializeErrorMessage.
 	text := 'temp | | MockForCompilation := nil'.
 
 	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Cannot store into ->'.
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Assignment to read-only variable ->'.
 			self assert: errorLocation equals: 10.
 			self assert: errorSource contents equals: 'temp | | MockForCompilation := nil'.
 			^ nil ].
 	self fail
 ]
 
-{ #category : #'tests - readonly vars' }
+{ #category : 'tests - readonly vars' }
 OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 	self initializeErrorMessage.
 	text := 'temp | | OCCompilerTestTestVar := 2'.
@@ -94,73 +103,82 @@ OCCompilerTest >> testAssignmentOfGlobalVarBinding [
 		compile
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests' }
+OCCompilerTest >> testErrorOrders [
+
+	| ast notices |
+	ast := OpalCompiler new parse: 'foo | b | ^ a + ¿. 5 "what'.
+	notices := ast allNotices sorted
+		           collect: [ :e |
+		           e position asString , ':' , e messageText ]
+		           as: Array.
+	self
+		assertCollection: notices
+		equals: #( '17:Unknown character' '27:Unmatched " in comment.'
+			   '13:Undeclared variable' '7:Unused variable' '20:Unreachable statement' )
+]
+
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 	self initializeErrorMessage.
 	text := 'temp [:var1 | ]'.
 
 	self compile.
 
-	self flag: 'display menu instead of going into failblock'.
-
-	self assert: errorMessage equals: 'Name already defined ->'.
-	self assert: errorLocation equals: 8.
-	self assert: errorSource contents equals: 'temp [:var1 | ]'
+	self assert: errorMessage equals: nil.
+	self assert: errorLocation equals: nil.
+	self assert: errorSource equals: nil
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testInBlockArgumentPseudoVariableShadowing [
+	self initializeErrorMessage.
+	text := 'temp [:thisProcess | ]'.
+
+	self compile.
+
+	self assert: errorMessage equals: nil.
+	self assert: errorLocation equals: nil.
+	self assert: errorSource equals: nil
+]
+
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testInBlockTempArgumentShadowing [
+
 	self initializeErrorMessage.
 	text := 'temp [:temp | |temp|]'.
 
-	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
-			self assert: errorLocation equals: 16.
-			self assert: errorSource contents equals: 'temp [:temp | |temp|]'.
-			^ nil ].
-	self fail
+	self compileWithFailBlock: [ ^ self fail ]
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testInBlockTempInstanceVariableShadowing [
+
 	self initializeErrorMessage.
 	text := 'temp [:temp | |var1|]'.
 
-	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
-			self assert: errorLocation equals: 16.
-			self assert: errorSource contents equals: 'temp [:temp | |var1|]'.
-			^ nil ].
-	self fail
+	self compileWithFailBlock: [ ^ self fail ]
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testInBlockTempShadowing [
+
 	self initializeErrorMessage.
 	text := 'temp |var2| [:temp| |var2|]'.
 
-	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
-			self assert: errorLocation equals: 22.
-			self assert: errorSource contents equals: 'temp |var2| [:temp| |var2|]'.
-			^ nil ].
-	self fail
+	self compileWithFailBlock: [ ^ self fail ]
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testInstanceVariableShadowing [
+
 	self initializeErrorMessage.
 	text := 'var1 |var1|'.
 
-	self
-		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
-			self assert: errorLocation equals: 7.
-			self assert: errorSource contents equals: 'var1 |var1|'.
-			^ nil ].
-	self fail
+	self compileWithFailBlock: [ ^ self fail ]
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 OCCompilerTest >> testNegativeZero [
 	self
 		assert:
@@ -170,203 +188,30 @@ OCCompilerTest >> testNegativeZero [
 		equals: Float negativeZero hex
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testNoShadowing [
 	self initializeErrorMessage.
 	text := 'temp |var2|  var2:=1'.
 
 	self compileWithFailBlock: [
 		self fail.
-		^nil ].
+		^nil ]
 ]
 
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveInBlockArgumentInstanceVariableShadowing [
+{ #category : 'tests - shadowing' }
+OCCompilerTest >> testPseudoVariableShadowing [
 
 	self initializeErrorMessage.
+	text := 'var1 |thisContext| ^thisContext'.
 
-	self 
-		should: [ 
-			OpalCompiler new 
-				source: 'temp [:var1 | ]';
-				class: MockForCompilation;
-				compile.
-		] 
-		raise: OCShadowVariableWarning 
-		withExceptionDo: [ :ex |
-			self 
-				assert: ex warningMessage 
-				equals: 'MockForCompilation>>temp(var1 is shadowed)'
-		].
+	self compile.
+
+	self assert: errorMessage equals: nil.
+	self assert: errorLocation equals: nil.
+	self assert: errorSource equals: nil
 ]
 
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveInBlockTempArgumentShadowing [
-
-	self initializeErrorMessage.
-	self 
-		should: [ 
-			OpalCompiler new
-				source: 'temp [:temp | |temp|]';
-				class: MockForCompilation;
-				requestor: self;
-				compile.
-		] 
-		raise: OCShadowVariableWarning 
-		withExceptionDo: [ :ex |
-			self 
-				assert: ex warningMessage 
-				equals: 'MockForCompilation>>temp(temp is shadowed)'
-		].
-]
-
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveInBlockTempInstanceVariableShadowing [
-	
-	self initializeErrorMessage.
-	self 
-		should: [ 
-			OpalCompiler new
-				source: 'temp [:temp | |var1|]';
-				class: MockForCompilation;
-				requestor: self;
-				failBlock: [self fail. ^ nil];
-				compile.
-		] 
-		raise: OCShadowVariableWarning 
-		withExceptionDo: [ :ex |
-			self 
-				assert: ex warningMessage 
-				equals: 'MockForCompilation>>temp(var1 is shadowed)'
-		].
-]
-
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveInBlockTempShadowing [
-	
-	self initializeErrorMessage.
-	self 
-		should: [ 
-			OpalCompiler new
-				source: 'temp |var2| [:temp| |var2|]';
-				class: MockForCompilation;
-				requestor: self;
-				failBlock: [self fail];
-				compile.
-		] 
-		raise: OCShadowVariableWarning 
-		withExceptionDo: [ :ex |
-			self 
-				assert: ex warningMessage 
-				equals: 'MockForCompilation>>temp(var2 is shadowed)'
-		].
-]
-
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveNoShadowing [
-
-	self initializeErrorMessage.
-
-	self shouldnt: [ 
-		OpalCompiler new
-			source: 'temp |var2|';
-			class: MockForCompilation;
-			requestor: self;
-			failBlock: [self fail. ^ nil ];
-			compile.
-	] raise: OCShadowVariableWarning.
-]
-
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveShadowingOfTemp [
-
-	self initializeErrorMessage.
-	self 
-		should: [ 
-			OpalCompiler new
-				source: 'temp |temp1 temp1| ';
-				class: MockForCompilation;
-				requestor: self;
-				compile.
-		] 
-		raise: OCShadowVariableWarning 
-		withExceptionDo: [ :ex |
-			self 
-				assert: ex warningMessage 
-				equals: 'MockForCompilation>>temp(temp1 is shadowed)'
-		].
-]
-
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveSiblingBlocksInstanceVariableShadowing [
-
-	self initializeErrorMessage.
-	self 
-		should: [ 
-			OpalCompiler new
-				source: 'temp [:temp | ].[:temp | |var1|]';
-				class:  MockForCompilation;
-				requestor: self; 
-				failBlock: [self fail. ^ nil ];
-				compile.
-		] 
-		raise: OCShadowVariableWarning 
-		withExceptionDo: [ :ex |
-			self 
-				assert: ex warningMessage 
-				equals: 'MockForCompilation>>temp(var1 is shadowed)'
-		].
-]
-
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
-	self initializeErrorMessage.
-
-	self shouldnt: [ 
-		OpalCompiler new
-			source: 'temp [:temp | ]. [:temp | ]';
-			class: MockForCompilation;
-			requestor: self;
-			failBlock: [self fail. ^nil];
-			compile
-	] raise: OCShadowVariableWarning.
-]
-
-{ #category : #'tests - shadowing' }
-OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
-	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
-		do: [ :each | 
-			self initializeErrorMessage.
-			[ :exit | 
-			OpalCompiler new
-				source: 'temp ^ [ :' , each , ' | ^ ' , each , ' ]';
-				class: MockForCompilation;
-				requestor: self;
-				failBlock: [ exit value ];
-				compile.
-			self fail ] valueWithExit.
-			self assert: (errorMessage = 'Variable name expected ->' or: [ errorMessage = 'Name already defined ->' ]).
-			self assert: errorLocation equals: 11 ]
-]
-
-{ #category : #'tests - shadowing' }
-OCCompilerTest >> testReservedNameAsMethodArgumentShadowing [
-	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
-		do: [ :each | 
-			self initializeErrorMessage.
-			[ :exit | 
-			OpalCompiler new
-				source: 'temp: ' , each , ' ^ ' , each;
-				class: MockForCompilation;
-				requestor: self;
-				failBlock: [ exit value ];
-				compile.
-			self fail ] valueWithExit.
-			self assert: (errorMessage = 'Variable name expected ->' or: [ errorMessage = 'Name already defined ->' ]).
-			self assert: errorLocation equals: 7 ]
-]
-
-{ #category : #literals }
+{ #category : 'literals' }
 OCCompilerTest >> testScaledDecimalLiterals [
 	"Equal ScaledDecimal with different scales should use different slots
 	This is related to http://bugs.squeak.org/view.php?id=6797"
@@ -379,7 +224,7 @@ OCCompilerTest >> testScaledDecimalLiterals [
 	self deny: (Smalltalk compiler evaluate: '0.5s1 scale =  0.5s2 scale')
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 	self initializeErrorMessage.
 
@@ -387,14 +232,11 @@ OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
 		source: 'temp [:temp | ].[:temp | |var1|]';
 		class: MockForCompilation;
 		requestor: self;
-		failBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
-			self assert: errorLocation equals: 27.
-			^ nil ];
-		compile.
-	self fail
+		failBlock: [ ^ self fail ];
+		compile
 ]
 
-{ #category : #'tests - shadowing' }
+{ #category : 'tests - shadowing' }
 OCCompilerTest >> testSiblingBlocksTempShadowing [
 
 	self initializeErrorMessage.
@@ -402,48 +244,59 @@ OCCompilerTest >> testSiblingBlocksTempShadowing [
 	OpalCompiler new
 		source: 'temp [:temp | ]. [:temp | ]';
 		class: MockForCompilation;
-		failBlock: [self fail. ^ nil ];
-		compile.
+		compile
 ]
 
-{ #category : #'tests - shadowing2' }
-OCCompilerTest >> testTraitTempShadowing [
-	
-	| warningCount |
-	
-	warningCount := 0.
-	
-	self initializeErrorMessage.
-	
-	[ 
-			OpalCompiler new 
-				source: self tempTraitShadowingString;
-				class: ArrayTest;
-				failBlock: [self fail.];
-				compile.
-	] 
-	on: OCShadowVariableWarning 
-	do: [ :ex | 
-		warningCount := warningCount + 1.
-		self 
-			assert: ex warningMessage 
-			equals: (self traitTempShadowingWarnings at: warningCount).
-		
-		ex resume
-	].
+{ #category : 'tests' }
+OCCompilerTest >> testUndefinedVariable [
+	"This test shows that undefined variables behave as globals (for now) and is independent of the compilation mode"
 
-	self assert: warningCount equals: 3
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
+	self
+		assert: ( [ {
+			OpalCompiler new
+				permitFaulty: true;
+				evaluate: 'undefinedName123'.
+			OpalCompiler new
+				permitFaulty: true;
+				evaluate: 'undefinedName123 := 1'.
+			OpalCompiler new
+				permitFaulty: true;
+				evaluate: 'undefinedName123 := 2. undefinedName123'.
+			OpalCompiler new
+				permitFaulty: true;
+				evaluate: 'undefinedName123' }  ] on: UndeclaredVariableRead , UndeclaredVariableWrite do: [ :e | e resume: e class ] )
+		equals: { UndeclaredVariableRead. UndeclaredVariableWrite. UndeclaredVariableRead. UndeclaredVariableRead }.
+
+	"Cleanup"
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]
 ]
 
-{ #category : #mocking }
+{ #category : 'tests' }
+OCCompilerTest >> testUndefinedVariableFrontend [
+	"This test shows that undefined variables are registered only on backend"
+
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ].
+	OpalCompiler new parse: 'foo ^undefinedName123'.
+	self deny: (Undeclared includesKey: #undefinedName123).
+	self should: [ OpalCompiler new compile: 'foo ^undefinedName123 ¿ 2' ] raise: CodeError.
+	self deny: (Undeclared includesKey: #undefinedName123).
+	OpalCompiler new permitFaulty: true; compile: 'foo ^undefinedName123'.
+	self assert: (Undeclared includesKey: #undefinedName123).
+
+	"Cleanup"
+	Undeclared removeKey: #undefinedName123 ifAbsent: [ ]
+]
+
+{ #category : 'mocking' }
 OCCompilerTest >> text [
 	^ text
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 OCCompilerTest >> traitTempShadowingWarnings [
 
-	^ #(	
+	^ #(
 		'ArrayTest>>testReplaceFromToWithStartingAt(replacementCollection is shadowed)'
 		'ArrayTest>>testReplaceFromToWithStartingAt(firstIndex is shadowed)'
 		'ArrayTest>>testReplaceFromToWithStartingAt(secondIndex is shadowed)'

@@ -2,43 +2,45 @@
 I am an abstract task scheduler that schedules tasks inside a queue to be consumed afterwards
 "
 Class {
-	#name : #TKTQueueTaskScheduler,
-	#superclass : #Object,
+	#name : 'TKTQueueTaskScheduler',
+	#superclass : 'Object',
 	#traits : 'TTaskScheduler',
 	#classTraits : 'TTaskScheduler classTrait',
 	#instVars : [
 		'queue'
 	],
-	#category : #'TaskIt-Worker'
+	#category : 'TaskIt-Worker',
+	#package : 'TaskIt',
+	#tag : 'Worker'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTQueueTaskScheduler >> initialize [
 
 	super initialize.
 	queue := AtomicSharedQueue new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTQueueTaskScheduler >> isEmpty [
 
 	^ queue isEmpty
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TKTQueueTaskScheduler >> purge [
 
 	queue removeAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTQueueTaskScheduler >> queue: aTaskQueue [
 
 	queue := aTaskQueue
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TKTQueueTaskScheduler >> scheduleTaskExecution: aTask [
-	
+
 	queue nextPut: aTask
 ]

@@ -2,41 +2,42 @@
 SUnit tests for packages
 "
 Class {
-	#name : #RGPackageTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGPackageTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testAddingClass [
 
 	| newPackage newClass env |
-	
+
 	newPackage := RGPackage named: 'Collections-Sequenceable'.
 	env := newPackage environment.
 	newClass:= RGClass named: #OrderedCollection parent: env.
-	
+
 	self assert: (env ask packages notEmpty).
-	
-	newPackage addDefinedBehavior: newClass.
+
+	newPackage addDefinedBehavior: newClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testAddingPackage [
 "	| newPackage childPackage |
-	
+
 	newPackage:= RGPackage named: #'Collections'.
 	newPackage addPackageNamed: #'Collections-Sequenceable'.
-		
+
 	self assert: (newPackage includesPackageNamed: #'Collections-Sequenceable').
 	self assert: newPackage packages size equals: 1.
-	
+
 	childPackage:= newPackage packageNamed: #'Collections-Sequenceable'.
 	self assert: (childPackage parent = newPackage parent).
 	self assert: (childPackage package = newPackage)."
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testCategories [
 	| package env class1 class2 |
 	package := RGPackage named: 'SomePackage'.
@@ -61,14 +62,14 @@ RGPackageTest >> testCategories [
 	self assert: package categories asArray sorted equals: #('SomePackage-tag1' 'SomePackage-tag2')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testClasses [
-	
+
 	| package env class1 class2 trait1 |
 
 	package := RGPackage named: 'SomePackage'.
 	env := package environment.
-	
+
 	self assert: package classes isEmpty.
 	self assert: package definedClasses isEmpty.
 	self assert: package definedTraits isEmpty.
@@ -78,17 +79,17 @@ RGPackageTest >> testClasses [
 	self assert: package extendedClassesAndTraits isEmpty.
 	self assert: package extendedSelectors isEmpty.
 	self assert: package extendedTraits isEmpty.
-		
+
 	class1 := env ensureClassNamed: #Class1.
 	class2 := env ensureClassNamed: #Class2.
-	
+
 	class1 package: package.
 	class2 package: package.
-	
+
 	self assert: package classes size equals: 2.
 	self assert: (package classes includes: class1).
 	self assert: (package classes includes: class2).
-	
+
 	self assert: package definedClasses size equals: 2.
 	self assert: (package definedClasses includes: class1).
 	self assert: (package definedClasses includes: class2).
@@ -104,12 +105,12 @@ RGPackageTest >> testClasses [
 	self assert: (package definedClassesOnly allSatisfy: #isClass).
 
 	self assert: package definedTraits size equals: 1.
-	self assert: (package definedClasses includes: trait1).
+	self assert: (package definedClasses includes: trait1)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testDefinedBehaviorsCollection [
-	
+
 	| package env behavior1 behavior2 behavior3 |
 
 	package := RGPackage unnamed.
@@ -117,17 +118,17 @@ RGPackageTest >> testDefinedBehaviorsCollection [
 
 	self assert: package definedBehaviors isEmpty.
 	self assert: (package hasUnresolved: #definedBehaviors).
-	
+
 	behavior1 := env ensureClassNamed: #Behavior1.
 	package addDefinedBehavior: behavior1.
 	self assert: package definedBehaviors size equals: 1.
 
 	self assert: (package hasResolved: #definedBehaviors).
-	
+
 	behavior2 := env ensureClassNamed: #'Behavior2 class'.
 	package addDefinedBehavior: behavior2.
 	self assert: package definedBehaviors size equals: 2.
-	
+
 	behavior3 := env ensureTraitNamed: #Behavior3.
 	package addDefinedBehavior: behavior3.
 	self assert: package definedBehaviors size equals: 3.
@@ -137,21 +138,21 @@ RGPackageTest >> testDefinedBehaviorsCollection [
 
 	package cleanDefinedBehaviors.
 	self assert: package definedBehaviors isEmpty.
-	self assert: (package hasResolved: #definedBehaviors).
+	self assert: (package hasResolved: #definedBehaviors)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testDefinedBehaviorsOfUnresolvedPackages [
 
 	| env class |
-	
+
 	env := RGEnvironment new.
 	class := env ensureClassNamed: #SomeClass.
 	self assert: class package definedBehaviors size equals: 1.
-	self assert: class package definedBehaviors anyOne equals: class.
+	self assert: class package definedBehaviors anyOne equals: class
 ]
 
-{ #category : #'tests - new' }
+{ #category : 'tests - new' }
 RGPackageTest >> testNewPackage [
 	| newPackage |
 	newPackage := RGPackage named: 'Collections-Sequenceable'.
@@ -190,16 +191,16 @@ RGPackageTest >> testNewPackage [
 	self assert: newPackage traits isEmpty
 ]
 
-{ #category : #'tests - new' }
+{ #category : 'tests - new' }
 RGPackageTest >> testPrinting [
 	| newPackage |
-	
+
 	newPackage := RGPackage named: 'Collections-Sequenceable'.
-	
-	self assert: newPackage printString equals: ('RGPackage(Collections-Sequenceable)').
+
+	self assert: newPackage printString equals: ('RGPackage(Collections-Sequenceable)')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testResolvingConsistency [
 
 	| anObject |
@@ -207,7 +208,7 @@ RGPackageTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #'tests - new' }
+{ #category : 'tests - new' }
 RGPackageTest >> testStubPackage [
 	| env package package2 |
 	env := RGEnvironment new.
@@ -223,33 +224,33 @@ RGPackageTest >> testStubPackage [
 	self assert: (env ask packages size = 3)."
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testTagsForClasses [
-	
+
 	| package env class1 class2 |
 
 	package := RGPackage unnamed.
 	env := package environment.
-	
+
 	self assert: package tagsForClasses isEmpty.
 	self assert: (package hasUnresolved: #tagsForClasses).
-	
+
 	class1 := env ensureClassNamed: #Class1.
 	class2 := env ensureClassNamed: #Class2.
-	
+
 	class1 package: package.
 	class2 package: package.
-	
+
 	self assert: package tagsForClasses isEmpty.
 	self assert: (package hasUnresolved: #tagsForClasses).
 
 	self assert: (package classesTaggedWith: #tag1) isEmpty.
-	
+
 	class1 tagWith: #tag1.
 	self assert: class1 tags equals: #(#tag1).
 	self assert: package tagsForClasses equals: #(#tag1).
 	self assert: (package classesTaggedWith: #tag1) equals: {class1}.
-	
+
 	class2 tagWith: #tag1.
 	self assert: class2 tags equals: #(#tag1).
 	self assert: package tagsForClasses equals: #(#tag1).
@@ -258,7 +259,7 @@ RGPackageTest >> testTagsForClasses [
 	class1 tagWith: #tag2.
 	self assert: class1 tags sorted equals: #(#tag1 #tag2).
 	self assert: package tagsForClasses sorted equals: #(#tag1 #tag2).
-	
+
 	class1 untagFrom: #tag1.
 	self assert: class1 tags equals: #(#tag2).
 	self assert: package tagsForClasses sorted equals: #(#tag1 #tag2).
@@ -275,12 +276,12 @@ RGPackageTest >> testTagsForClasses [
 
 	self assert: (package classesTaggedWith: #tag1) isEmpty.
 	self assert: (package classesTaggedWith: #tag2) isEmpty.
-	self assert: (package classesTaggedWith: #tag3) isEmpty.
+	self assert: (package classesTaggedWith: #tag3) isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testTagsForClassesCollection [
-	
+
 	| package env tag1 tag2 tag3 |
 
 	package := RGPackage unnamed.
@@ -288,17 +289,17 @@ RGPackageTest >> testTagsForClassesCollection [
 
 	self assert: package tagsForClasses isEmpty.
 	self assert: (package hasUnresolved: #tagsForMethods).
-	
+
 	tag1 := #tag1.
 	package addClassTag: #tag1.
 	self assert: package tagsForClasses size equals: 1.
 
 	self assert: (package hasResolved: #tagsForClasses).
-	
+
 	tag2 := #tag2.
 	package addClassTag: tag2.
 	self assert: package tagsForClasses size equals: 2.
-	
+
 	tag3 := #tag3.
 	package addClassTag: tag3.
 	self assert: package tagsForClasses size equals: 3.
@@ -308,5 +309,5 @@ RGPackageTest >> testTagsForClassesCollection [
 
 	package cleanTagsForClasses.
 	self assert: package tagsForClasses isEmpty.
-	self assert: (package hasResolved: #tagsForClasses).
+	self assert: (package hasResolved: #tagsForClasses)
 ]

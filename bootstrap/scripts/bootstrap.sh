@@ -24,6 +24,8 @@
 set -x
 set -e
 
+echo $(date -u) "Bootstrap: Starting bootstrap"
+
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 #
@@ -43,3 +45,4 @@ ${SCRIPTS}/3-prepare.sh
 #
 ${SCRIPTS}/4-build.sh
 
+echo $(date -u) "Bootstrap: End of the bootstrap"

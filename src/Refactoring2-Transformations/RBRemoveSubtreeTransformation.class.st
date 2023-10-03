@@ -15,15 +15,17 @@ Preconditions:
 - the code from which the subtree will be extracted should be parseable
 "
 Class {
-	#name : #RBRemoveSubtreeTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemoveSubtreeTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'sourceCode'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveSubtreeTransformation class >> code: aString from: aSelector in: aClass [
 
 	^ self new
@@ -33,7 +35,7 @@ RBRemoveSubtreeTransformation class >> code: aString from: aSelector in: aClass 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSelector in: aClass [
 
 	^ self new
@@ -44,16 +46,9 @@ RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSele
 		yourself
 ]
 
-{ #category : #api }
-RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
+{ #category : 'preconditions' }
+RBRemoveSubtreeTransformation >> applicabilityPreconditions [ 
 
-	self className: aClassName.
-	selector := aSelector.
-	sourceCode := aString
-]
-
-{ #category : #preconditions }
-RBRemoveSubtreeTransformation >> preconditions [
 	^ (RBCondition definesSelector: selector in: self definingClass)
 		&
 			(RBCondition
@@ -73,7 +68,15 @@ RBRemoveSubtreeTransformation >> preconditions [
 					true ])
 ]
 
-{ #category : #executing }
+{ #category : 'api' }
+RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	sourceCode := aString
+]
+
+{ #category : 'executing' }
 RBRemoveSubtreeTransformation >> privateTransform [
 
 	| parseTree |
@@ -81,21 +84,21 @@ RBRemoveSubtreeTransformation >> privateTransform [
 	"suggest remove similar code here"
 	parseTree := self definingClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
-	
+
 	"Halt now."
 	(parseTree extractSubtreeWith: sourceCode)
 		ifNotNil: [ :subtree |
 			parseTree removeSubtree: subtree.
 			self definingClass compileTree: parseTree ]
 		ifNil: [ ^ self ].
-	
-	
-	"(subtree := parseTree extractSubtreeWith: sourceCode) ifNil: [ ^ self ].	
+
+
+	"(subtree := parseTree extractSubtreeWith: sourceCode) ifNil: [ ^ self ].
 	parseTree := parseTree removeSubtree: subtree.
 	self definingClass compileTree: parseTree"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 	^ [ self parseTreeRewriterClass
 		replaceStatements: aTree formattedCode
@@ -110,8 +113,8 @@ RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 				onInterval: aTree sourceInterval ]
 ]
 
-{ #category : #printing }
-RBRemoveSubtreeTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBRemoveSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

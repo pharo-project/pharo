@@ -1,7 +1,7 @@
-Extension { #name : #FFIULong }
+Extension { #name : 'FFIULong' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIULong >> tfExternalType [
-	
+
 	^ TFBasicType ulong
 ]

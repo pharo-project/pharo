@@ -1,43 +1,43 @@
-Extension { #name : #MCDefinition }
+Extension { #name : 'MCDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> authorForStamp: stamp [
-	
+
 	^ stamp isEmptyOrNil
 		ifTrue: [ '<historical>']
-		ifFalse: [ stamp substrings first].
+		ifFalse: [ stamp substrings first]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	"do nothing by default"
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackage [
-	
+
 	"by default do not set the package"
 
-	^ self ensureRingDefinitionIn: anRGEnvironment.
+	^ self ensureRingDefinitionIn: anRGEnvironment
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> timeForStamp: stamp [
 
 	^ stamp
 		ifNil: [ 	DateAndTime new]
-		ifNotNil: [ 
+		ifNotNil: [
 			| substrings |
 			substrings := stamp substrings.
-			([(DateAndTime fromString: (' ' join: substrings allButFirst ))] on: Exception do: [DateAndTime epoch]) ].
+			([(DateAndTime fromString: (' ' join: substrings allButFirst ))] on: Exception do: [DateAndTime epoch]) ]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> traitCompositionFrom: aStringOrNil parent: aBehavior [
-	
+
 	| composition transformations |
-	
+
 	composition := RGTraitComposition parent: aBehavior.
 
 	aStringOrNil ifNil: [ ^ composition ].

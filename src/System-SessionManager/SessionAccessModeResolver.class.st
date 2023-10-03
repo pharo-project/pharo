@@ -2,29 +2,31 @@
 I check the image arguments and resolve if the access mode of the image. I am started very soon in the image start-up process.
 "
 Class {
-	#name : #SessionAccessModeResolver,
-	#superclass : #Object,
-	#category : #'System-SessionManager-Utilities'
+	#name : 'SessionAccessModeResolver',
+	#superclass : 'Object',
+	#category : 'System-SessionManager-Utilities',
+	#package : 'System-SessionManager',
+	#tag : 'Utilities'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SessionAccessModeResolver class >> initialize [
 
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
-		inCategory: SessionManager default systemCategory  
-		atPriority: SessionManager default defaultPriority - 90.
+		inCategory: SessionManager default systemCategory
+		atPriority: SessionManager default defaultPriority - 90
 ]
 
-{ #category : #'class initialization' }
-SessionAccessModeResolver class >> resolve [ 
+{ #category : 'class initialization' }
+SessionAccessModeResolver class >> resolve [
 
 	"check if the image was started in the read-only mode"
 
-	| arguments mode | 
-	
+	| arguments mode |
+
 	arguments := Smalltalk argumentsStartingAtIndex: 0.
-			
+
 	mode := #readWrite.
 
 	(Smalltalk argumentsInclude: '--readWriteAccessMode')
@@ -35,11 +37,11 @@ SessionAccessModeResolver class >> resolve [
 		ifTrue: [ mode := #writeOnly ].
 	(Smalltalk argumentsInclude: '--disabledAccessMode')
 		ifTrue: [ mode := #disabled ].
-		
-	SessionManager default currentSession accessMode: mode.
+
+	SessionManager default currentSession accessMode: mode
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 SessionAccessModeResolver class >> startUp: resuming [
 
 	resuming ifTrue: [

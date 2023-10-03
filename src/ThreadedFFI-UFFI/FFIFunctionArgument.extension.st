@@ -1,7 +1,7 @@
-Extension { #name : #FFIFunctionArgument }
+Extension { #name : 'FFIFunctionArgument' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIFunctionArgument >> tfExternalTypeWithArity [
-	
+
 	^ self resolvedType tfExternalTypeWithArity
 ]

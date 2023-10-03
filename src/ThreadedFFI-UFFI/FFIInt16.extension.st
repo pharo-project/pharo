@@ -1,7 +1,7 @@
-Extension { #name : #FFIInt16 }
+Extension { #name : 'FFIInt16' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIInt16 >> tfExternalType [
-	
+
 	^ TFBasicType sint16
 ]

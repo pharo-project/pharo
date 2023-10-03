@@ -2,16 +2,17 @@
 I am a read-write character stream. I am mainly used to open the Pharo source and changes files.
 "
 Class {
-	#name : #ZnCharacterReadWriteStream,
-	#superclass : #Object,
+	#name : 'ZnCharacterReadWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'readStream',
 		'writeStream'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 
 	^ self new
@@ -19,71 +20,71 @@ ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> atEnd [
-	
+
 	^ readStream atEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> close [
-	
+
 	writeStream close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterReadWriteStream >> closed [
 	^ writeStream closed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> collectionSpecies [
 	^ String
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> cr [
-	
+
 	writeStream cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> flush [
 
 	writeStream flush
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterReadWriteStream >> isReadOnly [
-	
+
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> next [
-	
+
 	^ readStream next
 ]
 
-{ #category : #accessing }
-ZnCharacterReadWriteStream >> next: anInteger [ 
-	
+{ #category : 'accessing' }
+ZnCharacterReadWriteStream >> next: anInteger [
+
 	^ readStream next: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> nextPut: aCharacter [
 
 	^ writeStream nextPut: aCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> nextPutAll: aString [
 
 	^ writeStream nextPutAll: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnCharacterReadWriteStream >> on: aStream encoding: encoding [
 	| encoder |
 	encoder := encoding asZnCharacterEncoder.
@@ -91,92 +92,87 @@ ZnCharacterReadWriteStream >> on: aStream encoding: encoding [
 	writeStream := ZnCharacterWriteStream on: aStream encoding: encoder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> peek [
-	
+
 	^ readStream peek
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> position [
 
 	^ readStream position
 ]
 
-{ #category : #accessing }
-ZnCharacterReadWriteStream >> position: anInteger [ 
-	
+{ #category : 'accessing' }
+ZnCharacterReadWriteStream >> position: anInteger [
+
 	readStream position: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> print: object [
 
 	writeStream print: object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> readOnlyCopy [
 
 	^ readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> setToEnd [
 
 	writeStream setToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> size [
 
 	^ readStream size
 ]
 
-{ #category : #accessing }
-ZnCharacterReadWriteStream >> skip: anInteger [ 
-	
+{ #category : 'accessing' }
+ZnCharacterReadWriteStream >> skip: anInteger [
+	anInteger < 0 ifTrue: [ self error: 'cannot skip backwards' ].
 	readStream skip: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> space [
-	
+
 	writeStream space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> tab [
 
 	writeStream tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> upToAll: aCollection [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
-	
-	^ self collectionSpecies streamContents: [ :out |
-		| partialMatch pattern matched |
-		partialMatch := (self collectionSpecies new: aCollection size) writeStream.
+
+	^ self collectionSpecies streamContents: [ :out | | pattern |
 		pattern := aCollection readStream.
-		matched := false.
-		([ matched or: [ self atEnd or: [ pattern atEnd ] ] ]) whileFalse: [
-			| ch |
-			(ch := self next) = pattern next
+		([ self atEnd or: [ pattern atEnd ] ]) whileFalse: [
+			self peek = pattern peek
 				ifTrue: [
-					pattern atEnd
-						ifTrue: [ matched := true ]
-						ifFalse: [ partialMatch nextPut: ch ] ]
+					self next. pattern next ]
 				ifFalse: [
-					pattern reset.
-					out nextPutAll: partialMatch contents.
-					partialMatch reset.
-					out nextPut: ch ] ].
-		matched ifFalse: [ out nextPutAll: partialMatch contents ] ]
+					pattern position = 0
+						ifTrue: [ out nextPut: self next ]
+						ifFalse: [ out next: pattern position putAll: aCollection ].
+					pattern reset ] ].
+		pattern atEnd
+			ifFalse: [ out next: pattern position putAll: aCollection ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadWriteStream >> upToEnd [
-	
+
 	^ readStream upToEnd
 ]

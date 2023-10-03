@@ -1,28 +1,28 @@
-Extension { #name : #SymbolTest }
+Extension { #name : 'SymbolTest' }
 
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 SymbolTest >> testAsClass [
-	self 
+	self
 		assert: #Symbol asClass
 		equals: Symbol
 ]
 
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 SymbolTest >> testAsClassIfAbsent [
 
-	self 
+	self
 		assert: (#Symbol asClassIfAbsent: [ self fail ])
 		equals: Symbol.
-		
+
 	#+ asClassIfAbsent: [ ^ self "success" ].
-	self fail.
+	self fail
 ]
 
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 SymbolTest >> testAsClassIfPresent [
-	
-	#Symbol asClassIfPresent: [ :class | 
+
+	#Symbol asClassIfPresent: [ :class |
 		self assert: class equals: Symbol ].
-	
-	#'+' asClassIfPresent: [ ^ self fail ].
+
+	#'+' asClassIfPresent: [ ^ self fail ]
 ]

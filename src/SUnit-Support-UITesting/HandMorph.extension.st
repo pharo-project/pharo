@@ -1,6 +1,6 @@
-Extension { #name : #HandMorph }
+Extension { #name : 'HandMorph' }
 
-{ #category : #'*SUnit-Support-UITesting' }
+{ #category : '*SUnit-Support-UITesting' }
 HandMorph >> simulateKeyStroke: aCharacterOrShortcut [
 
 	| shortcut |
@@ -8,9 +8,9 @@ HandMorph >> simulateKeyStroke: aCharacterOrShortcut [
 	self handleEvent: (KeyboardEvent new
 		setType: #keystroke
 		buttons: shortcut modifier eventCode
-		position: self position 
+		position: self position
 		keyValue: shortcut key asciiValue
 		charCode: shortcut key asciiValue
-		hand: self activeHand 
-		stamp: DateAndTime now).
+		hand: self activeHand
+		stamp: DateAndTime now)
 ]

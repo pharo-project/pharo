@@ -1,44 +1,45 @@
 Class {
-	#name : #SycGeneratePrintOnCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'SycGeneratePrintOnCommand',
+	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'variables'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGeneratePrintOnCommand >> asRefactorings [
 
 	^{
-		self refactoringClass  
+		self refactoringClass
 			className: targetClass name
 			variables: (variables collect: [:each | each name])
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycGeneratePrintOnCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
-	^ self refactoringClass menuItemString 
+	^ self refactoringClass menuItemString
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGeneratePrintOnCommand >> execute [
 	self executeRefactorings
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGeneratePrintOnCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	
-	variables := aToolContext 
-		requestMultipleVariables: 'Choose variables for print string' 
+
+	variables := aToolContext
+		requestMultipleVariables: 'Choose variables for print string'
 		from: {targetClass}
 ]
 
-{ #category : #'factory method' }
-SycGeneratePrintOnCommand >> refactoringClass [ 
+{ #category : 'factory method' }
+SycGeneratePrintOnCommand >> refactoringClass [
 
 	^ RBGeneratePrintOnTransformation
 ]

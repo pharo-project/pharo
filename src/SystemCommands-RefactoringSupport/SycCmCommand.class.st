@@ -2,22 +2,23 @@
 This class is an extension so we can mix command of Commander2 with Commander.
 "
 Class {
-	#name : #SycCmCommand,
-	#superclass : #CmCommand,
+	#name : 'SycCmCommand',
+	#superclass : 'CmCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'parentGroup'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 SycCmCommand class >> activationStrategy [
 	self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 SycCmCommand class >> addItemsToSubmenu: aCmdMenu forContext: aClyMethodContext [
 
 	| commands |
@@ -25,7 +26,7 @@ SycCmCommand class >> addItemsToSubmenu: aCmdMenu forContext: aClyMethodContext 
 	aCmdMenu activationStrategyClass = self activationStrategy ifFalse: [ ^ self ].
 
 	commands := self subclasses
-		            collect: [ :e | 
+		            collect: [ :e |
 			            e new
 				            context: aClyMethodContext;
 				            yourself ]
@@ -34,13 +35,13 @@ SycCmCommand class >> addItemsToSubmenu: aCmdMenu forContext: aClyMethodContext 
 	commands do: [ :e | aCmdMenu rootGroup addItem: e ]
 ]
 
-{ #category : #adding }
-SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [ 
+{ #category : 'adding' }
+SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
 
 	| commands |
-	
-	commands := self allSubclasses collect: [:aClass | 
-		aClass new 
+
+	commands := self allSubclasses collect: [:aClass |
+		aClass new
 			context: context;
 			yourself] thenSelect: [:aCommand | aCommand isApplicable ].
 
@@ -54,75 +55,75 @@ SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
 	^ menuMorph
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCmCommand >> applyCommandResult [
 ]
 
-{ #category : #executing }
-SycCmCommand >> execute [ 
+{ #category : 'executing' }
+SycCmCommand >> execute [
 	[self prepareFullExecution.
 	self executeRefactoring.
-	self applyCommandResult] 
+	self applyCommandResult]
 		on: Exception do: [ :exc | self processCommandFailure: exc ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycCmCommand >> executeRefactoring [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmCommand >> icon [
 
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmCommand >> isApplicable [
-	
+
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmCommand >> isEnabled [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmCommand >> order [
-	
+
 	^ 10100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmCommand >> parentGroup [
 
 	^ parentGroup
 ]
 
-{ #category : #accessing }
-SycCmCommand >> parentGroup: aCmdRootMenuGroup [ 
-	
+{ #category : 'accessing' }
+SycCmCommand >> parentGroup: aCmdRootMenuGroup [
+
 	parentGroup := aCmdRootMenuGroup
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 SycCmCommand >> prepareFullExecution [
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCmCommand >> processCommandFailure: anException [
-	
+
 	context processFailure: anException of: self
 ]
 
-{ #category : #'context menu' }
-SycCmCommand >> registerContextMenuItemsWithBuilder: aBuilder [ 
+{ #category : 'context menu' }
+SycCmCommand >> registerContextMenuItemsWithBuilder: aBuilder [
 
 	(aBuilder item: self name)
 		parent: self parentGroup name;
 		order: self parentGroup order + (self order / 100);
 		help: self description;
 		action: [self execute];
-		icon: self icon.
+		icon: self icon
 ]

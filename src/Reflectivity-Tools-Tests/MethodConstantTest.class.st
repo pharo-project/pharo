@@ -1,28 +1,29 @@
 Class {
-	#name : #MethodConstantTest,
-	#superclass : #TestCase,
-	#category : #'Reflectivity-Tools-Tests'
+	#name : 'MethodConstantTest',
+	#superclass : 'TestCase',
+	#category : 'Reflectivity-Tools-Tests',
+	#package : 'Reflectivity-Tools-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> constFromBlock: aBlock [
 
 	^aBlock asMethodConstant
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> constFromReceiverExpression [
 
 	^DateAndTime now asMethodConstant
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> sumOfTwoConsts: firstBlock and: secondBlock [
 
 	^firstBlock asMethodConstant + secondBlock asMethodConstant
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> testAPIFromBlock [
 	| constInitialResult constSecondResult |
 	constInitialResult := self constFromBlock: [ DateAndTime now ].
@@ -31,7 +32,7 @@ MethodConstantTest >> testAPIFromBlock [
 	self assert: constSecondResult identicalTo: constInitialResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> testAPIFromMessageSendReceiver [
 	| constInitialResult constSecondResult |
 	constInitialResult := self constFromReceiverExpression.
@@ -40,28 +41,28 @@ MethodConstantTest >> testAPIFromMessageSendReceiver [
 	self assert: constSecondResult identicalTo: constInitialResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> testConstPlaceInTransformedMethod [
 
 	| transformedMethod const |
-	const := self constFromReceiverExpression. 
-		
-	transformedMethod := self class >> #constFromReceiverExpression. 
-	
+	const := self constFromReceiverExpression.
+
+	transformedMethod := self class >> #constFromReceiverExpression.
+
 	self assert: (transformedMethod literals anySatisfy:  [ :each | each == const ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> testTwoConstsInSameMethod [
 
 	| result1 result2 |
 	result1 := self sumOfTwoConsts: [ 1 ] and: [ 2 ].
 	result2 := self sumOfTwoConsts: nil and: nil.
 	self assert: result1 equals: 3.
-	self assert: result2 equals: 3.
+	self assert: result2 equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodConstantTest >> testUsingConstJustInSameMethod [
 	| values |
 	self skip.	"not working for the first call: would need on stack replacement"

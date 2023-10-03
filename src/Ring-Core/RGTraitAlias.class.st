@@ -1,20 +1,22 @@
 Class {
-	#name : #RGTraitAlias,
-	#superclass : #RGTraitTransformation,
+	#name : 'RGTraitAlias',
+	#superclass : 'RGTraitTransformation',
 	#instVars : [
 		'aliases'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'accessing - backend' }
-RGTraitAlias >> addAlias: aSymbol [ 
+{ #category : 'accessing - backend' }
+RGTraitAlias >> addAlias: aSymbol [
 
-	self parent parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior addAlias: aSymbol to: self ].
+	self parent parent announceDefinitionChangeDuring: [
+		self backend forBehavior addAlias: aSymbol to: self ]
 ]
 
-{ #category : #'queries - aliases' }
+{ #category : 'queries - aliases' }
 RGTraitAlias >> aliases [
 
 	| allAliases |
@@ -23,109 +25,109 @@ RGTraitAlias >> aliases [
 	^ allAliases
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitAlias >> aliasesDo: aBlock [
 
 	self backend forBehavior aliasesFor: self do: aBlock
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitAlias >> cleanAliases [
 
-	self parent parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior cleanAliasesFor: self ].
+	self parent parent announceDefinitionChangeDuring: [
+		self backend forBehavior cleanAliasesFor: self ]
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGTraitAlias >> defaultAliases [
 
 	^ OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitAlias >> initialize [
 
 	super initialize.
-	
-	aliases := self unresolvedValue: self defaultAliases.
+
+	aliases := self unresolvedValue: self defaultAliases
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RGTraitAlias >> initializeUnresolved [
 
 	super initializeUnresolved.
-	
-	aliases := self unresolvedValue: self defaultAliases.
+
+	aliases := self unresolvedValue: self defaultAliases
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGTraitAlias >> isTraitAlias [
 
 	^ true
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGTraitAlias >> makeResolved [
 
 	super makeResolved.
-	
-	aliases := self aliases markAsRingResolved.
+
+	aliases := self aliases markAsRingResolved
 ]
 
-{ #category : #'queries - methods' }
+{ #category : 'queries - methods' }
 RGTraitAlias >> methods [
 
 	"TODO"
 	^ self subject methods reject: [ :each | self aliases includes: each name  ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitAlias >> pvtAddAlias: aSymbol [
 
-	aliases isRingResolved ifFalse: [ 
+	aliases isRingResolved ifFalse: [
 		self pvtCleanAliases  ].
-	
-	aliases add: aSymbol.
+
+	aliases add: aSymbol
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitAlias >> pvtAliasesDo: aBlock [
 
 	aliases value do: aBlock
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitAlias >> pvtCleanAliases [
 
-	aliases := self defaultAliases.
+	aliases := self defaultAliases
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitAlias >> pvtRemoveAlias: aSymbol [
 
-	aliases remove: aSymbol.
+	aliases remove: aSymbol
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitAlias >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#aliases -> aliases. 
+	^ super pvtResolvableProperties, {
+		#aliases -> aliases.
 	}
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitAlias >> removeAlias: aSymbol [
 
-	self parent parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior removeAlias: aSymbol from: self ].
+	self parent parent announceDefinitionChangeDuring: [
+		self backend forBehavior removeAlias: aSymbol from: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitAlias >> traitCompositionString [
 
-	^ String streamContents: [:aStream |	
-		aStream 
+	^ String streamContents: [:aStream |
+		aStream
 			nextPutAll: self subject traitTransformationString;
 			space;
 			nextPut: $@;
@@ -133,14 +135,14 @@ RGTraitAlias >> traitCompositionString [
 			nextPut: ${.
 	self aliases do: [:each | aStream print: each]
 		separatedBy: [aStream nextPutAll: '. '].
-	aStream nextPut: $}].
+	aStream nextPut: $}]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitAlias >> traitTransformationString [
 
-	^ String streamContents: [:aStream |	
-		aStream 
+	^ String streamContents: [:aStream |
+		aStream
 			nextPut: $(;
 			nextPutAll: self subject name;
 			space;
@@ -150,5 +152,5 @@ RGTraitAlias >> traitTransformationString [
 	self aliases do: [:each | aStream print: each]
 		separatedBy: [aStream nextPutAll: '. '].
 	aStream nextPut: $}.
-	aStream nextPut: $)].
+	aStream nextPut: $)]
 ]

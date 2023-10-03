@@ -26,8 +26,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #GlobalIdentifier,
-	#superclass : #Object,
+	#name : 'GlobalIdentifier',
+	#superclass : 'Object',
 	#instVars : [
 		'persistenceStrategy',
 		'persistedInformation'
@@ -35,116 +35,114 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'System-Identification'
+	#category : 'System-Identification',
+	#package : 'System-Identification'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 GlobalIdentifier class >> cleanUp [
-	"Clean unique instance."	
-	self reset.
+	"Clean unique instance."
+	self reset
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 GlobalIdentifier class >> initialize [
 
 	SessionManager default
 		register: (ClassSessionHandler forClassNamed: self name)
-		inCategory: SessionManager default systemCategory  
-		atPriority: SessionManager default defaultPriority - 80.
+		inCategory: SessionManager default systemCategory
+		atPriority: SessionManager default defaultPriority - 80
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlobalIdentifier class >> initializeUniqueInstance [
 	uniqueInstance := self basicNew initialize.
-	uniqueInstance ensure.
+	uniqueInstance ensure
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlobalIdentifier class >> new [
 	"Users should not create instances of this class.
 	Within the framework more instances are created when loading data and when testing."
 	self shouldNotImplement
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 GlobalIdentifier class >> reset [
 	"self reset"
 	uniqueInstance := nil
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 GlobalIdentifier class >> startUp: resuming [
 
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifier class >> uniqueInstance [
 	"self uniqueInstance"
 	uniqueInstance ifNil: [ self initializeUniqueInstance ].
 	^ uniqueInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifier >> computerUUID [
 	"This value identifies a user logged into the computer.
 	Before calling #computerUUID method, you should call #ensure."
-	
-	^ persistedInformation at: #computerUUID ifAbsentPut: [UUID new asString].
+
+	^ persistedInformation at: #computerUUID ifAbsentPut: [UUID new asString]
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifier >> ensure [
-	self persistenceStrategy ensure: self.
-
-
+	self persistenceStrategy ensure: self
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifier >> ensureComputerAndSecretValues [
 
 	"To be used before saving the dictionary with new values. So, we can ensure it is properly generated. Accessing the values force its generation"
-	
+
 	self computerUUID.
-	self secretUUID.
+	self secretUUID
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlobalIdentifier >> initialize [
 	super initialize.
 	"Dictionary contains all the values that we want to persist on disk."
 	persistedInformation := Dictionary new.
 	persistenceStrategy := GlobalIdentifierPersistence ston.
-	persistenceStrategy previous: GlobalIdentifierPersistence fuel.
+	persistenceStrategy previous: GlobalIdentifierPersistence fuel
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 GlobalIdentifier >> obfuscate: anObject [
 	"If you have an information that you want to obfuscate before sending,
 	this is likely a good solution for you."
 	^ anObject hash bitXor: self secretUUID hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifier >> persistedInformation [
 	^ persistedInformation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifier >> persistenceStrategy [
 	^ persistenceStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifier >> persistenceStrategy: anObject [
 	persistenceStrategy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifier >> secretUUID [
 	"This value can be used for obfuscating an information before sending it.
 	See #obfuscate: method.
 	Before calling #secretUUID method, you should call #ensure."
-	^ persistedInformation at: #secretUUID ifAbsentPut: [UUID new asString].
-
+	^ persistedInformation at: #secretUUID ifAbsentPut: [UUID new asString]
 ]

@@ -1,20 +1,22 @@
 Class {
-	#name : #RGTraitComposition,
-	#superclass : #RGObject,
+	#name : 'RGTraitComposition',
+	#superclass : 'RGObject',
 	#instVars : [
 		'transformations'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'accessing - backend' }
-RGTraitComposition >> addTransformation: anRGTraitTransformation [ 
+{ #category : 'accessing - backend' }
+RGTraitComposition >> addTransformation: anRGTraitTransformation [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior addTransformation: anRGTraitTransformation to: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior addTransformation: anRGTraitTransformation to: self ]
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGTraitComposition >> addoptToParentStub [
 
 	super addoptToParentStub.
@@ -22,135 +24,135 @@ RGTraitComposition >> addoptToParentStub [
 	self environment backend createUnresolvedClassGroupFor: self parent
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitComposition >> cleanTransformations [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior cleanTransformationsFor: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior cleanTransformationsFor: self ]
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGTraitComposition >> defaultParentStub [
 
 	^ self defaultClassStub
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> defaultTransformations [
 
 	^ OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitComposition >> initialize [
 
 	super initialize.
-	
-	transformations := self unresolvedValue: self defaultTransformations.
+
+	transformations := self unresolvedValue: self defaultTransformations
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitComposition >> initializeUnresolved [
 
 	super initializeUnresolved.
-	
-	transformations := self unresolvedValue: self defaultTransformations.
+
+	transformations := self unresolvedValue: self defaultTransformations
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGTraitComposition >> isTraitComposition [
 
 	^ true
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGTraitComposition >> makeResolved [
 
 	super makeResolved.
-	
-	transformations := self transformations markAsRingResolved.
+
+	transformations := self transformations markAsRingResolved
 ]
 
-{ #category : #'queries - methods' }
+{ #category : 'queries - methods' }
 RGTraitComposition >> methods [
 
-	^ Array streamContents: [ :stream | 
+	^ Array streamContents: [ :stream |
 		self transformationsDo: [ :transformation | stream nextPutAll: transformation methods ]]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtAddTransformation: anRGTraitTransformation [
 
 	self environment verifyOwnership: anRGTraitTransformation.
-	
-	transformations isRingResolved ifFalse: [ 
+
+	transformations isRingResolved ifFalse: [
 		self pvtCleanTransformations  ].
-	
-	transformations add: anRGTraitTransformation.
+
+	transformations add: anRGTraitTransformation
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtCleanTransformations [
 
-	transformations := self defaultTransformations.
+	transformations := self defaultTransformations
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtRemoveTransformation: anRGTraitTransformation [
 
 	self environment verifyOwnership: anRGTraitTransformation.
-	
-	transformations remove: anRGTraitTransformation.
+
+	transformations remove: anRGTraitTransformation
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtResolvableProperties [
 
-	^ super pvtResolvableProperties, { 
-		#transformations -> transformations. 
+	^ super pvtResolvableProperties, {
+		#transformations -> transformations.
 	}
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitComposition >> pvtTransformationsDo: aBlock [
 
 	transformations value do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> referencedBehaviors [
 
 	^ self transformations collect: [ :each |
-		each isTrait 
+		each isTrait
 			ifTrue: [ each ]
 			ifFalse: [ each subject ] ]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitComposition >> removeTransformation: anRGTraitTransformation [
 
-	self parent announceDefinitionChangeDuring: [ 
-		self backend forBehavior removeTransformation: anRGTraitTransformation from: self ].
+	self parent announceDefinitionChangeDuring: [
+		self backend forBehavior removeTransformation: anRGTraitTransformation from: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> traitCompositionString [
 
 	self transformations isEmpty ifTrue: [ ^ '{}' ].
-	
-	^String streamContents: [ :stream | 
-		self transformations 
+
+	^String streamContents: [ :stream |
+		self transformations
 			do: [ :each | stream nextPutAll: each traitTransformationString ]
 			separatedBy: [ stream nextPutAll: ' + ' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> traits [
 
 	^ self transformations collect: [:each | each trait ]
 ]
 
-{ #category : #'queries - transformations' }
+{ #category : 'queries - transformations' }
 RGTraitComposition >> transformations [
 
 	| allTransformations |
@@ -159,17 +161,17 @@ RGTraitComposition >> transformations [
 	^ allTransformations
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitComposition >> transformationsDo: aBlock [
 
 	self backend forBehavior transformationsFor: self do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitComposition >> usedTraits [
 
-	^ self transformations flatCollect: [ :each | 
-		each isTrait 
+	^ self transformations flatCollect: [ :each |
+		each isTrait
 			ifTrue: [ {each} ]
 			ifFalse: [ each usedTraits ].
 		 ] as: IdentitySet

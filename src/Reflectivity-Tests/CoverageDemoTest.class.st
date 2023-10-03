@@ -1,21 +1,23 @@
 Class {
-	#name : #CoverageDemoTest,
-	#superclass : #TestCase,
+	#name : 'CoverageDemoTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'link',
 		'selector'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoverageDemoTest >> tearDown [
 	link ifNotNil: [link uninstall].
 	ReflectivityExamples recompile: selector.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageDemoTest >> testCoverageAST [
 	selector := #exampleMethod.
 	link := MetaLink new
@@ -34,7 +36,7 @@ CoverageDemoTest >> testCoverageAST [
 				hasBeenExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageDemoTest >> testCoverageControlFlow [
 	selector := #exampleIfTrueIfFalse.
 	link := MetaLink new
@@ -68,7 +70,7 @@ CoverageDemoTest >> testCoverageControlFlow [
 		assert: (ReflectivityExamples >> #exampleIfTrueIfFalse) ast hasBeenExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageDemoTest >> testCoverageMethod [
 	selector := #exampleMethod.
 	link := MetaLink new
@@ -79,5 +81,5 @@ CoverageDemoTest >> testCoverageMethod [
 
 	self deny: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
-	self assert: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted.
+	self assert: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted
 ]

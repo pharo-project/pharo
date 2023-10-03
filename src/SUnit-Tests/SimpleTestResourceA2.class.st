@@ -2,7 +2,9 @@
 I'm a simple test resource for test purposes
 "
 Class {
-	#name : #SimpleTestResourceA2,
-	#superclass : #SimpleTestResource,
-	#category : #'SUnit-Tests-Resources'
+	#name : 'SimpleTestResourceA2',
+	#superclass : 'SimpleTestResource',
+	#category : 'SUnit-Tests-Resources',
+	#package : 'SUnit-Tests',
+	#tag : 'Resources'
 }

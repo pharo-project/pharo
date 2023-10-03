@@ -14,76 +14,78 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #TestServiceExample,
-	#superclass : #TestExecutionService,
+	#name : 'TestServiceExample',
+	#superclass : 'TestExecutionService',
 	#instVars : [
 		'forkedProcesses',
 		'isCleanUpDone',
 		'isCompletedTestHandled',
 		'signaledExceptions'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestServiceExample class >> isEnabledByDefault [
 	^false
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestServiceExample >> cleanUpAfterTest [
 	super cleanUpAfterTest.
-	
+
 	isCleanUpDone := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestServiceExample >> forkedProcesses [
 	^ forkedProcesses
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestServiceExample >> handleCompletedTest [
 	super handleCompletedTest.
-	
+
 	isCompletedTestHandled := true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestServiceExample >> handleException: anUnhandledException [
 	super handleException: anUnhandledException.
-	
+
 	signaledExceptions add: anUnhandledException
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestServiceExample >> handleNewProcess: aProcess [
 	super handleNewProcess: aProcess.
-	
+
 	forkedProcesses add: aProcess
 ]
 
-{ #category : #initialization }
-TestServiceExample >> initialize [ 
+{ #category : 'initialization' }
+TestServiceExample >> initialize [
 	super initialize.
-	
+
 	forkedProcesses := OrderedCollection new.
 	signaledExceptions := OrderedCollection new.
 	isCleanUpDone := false.
 	isCompletedTestHandled := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestServiceExample >> isCleanUpDone [
 	^ isCleanUpDone
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestServiceExample >> isCompletedTestHandled [
 	^ isCompletedTestHandled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestServiceExample >> signaledExceptions [
 	^ signaledExceptions
 ]

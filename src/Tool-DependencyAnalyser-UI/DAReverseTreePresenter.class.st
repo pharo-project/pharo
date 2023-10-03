@@ -4,43 +4,51 @@ A DAPackageAnalyzerReverseTreeModel shows all users from a set of packages. Also
 The presenter is initialized with a relation graph of package dependencies, with all the dependencies already compute.
 "
 Class {
-	#name : #DAReverseTreePresenter,
-	#superclass : #DAPackageTreePresenter,
+	#name : 'DAReverseTreePresenter',
+	#superclass : 'DAPackageTreePresenter',
 	#instVars : [
 		'relationGraph',
 		'packageLabel'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Core'
+	#category : 'Tool-DependencyAnalyser-UI-Core',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAReverseTreePresenter class >> onRelationGraph: aRelationGraph [
 	^ self on: aRelationGraph
 ]
 
-{ #category : #private }
+{ #category : 'specs' }
+DAReverseTreePresenter class >> title [
+
+	^ 'Package Dependencies Reverse Analysis'
+]
+
+{ #category : 'private' }
 DAReverseTreePresenter >> buildRoots [
 	| collectionOfWrapper |
 	collectionOfWrapper := relationGraph allDependentPackagesFromSeenPackages
 		collect: [ :package | package asDependentPackageWrapperOn: relationGraph ].
-	
+
 	self tree roots: (self nodesFor: collectionOfWrapper asSortedCollection).
-	self updatePackageLabel.
+	self updatePackageLabel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAReverseTreePresenter >> connectPresenters [
 	super connectPresenters.
-	
+
 	tree
-		whenSelectedItemChangedDo: [ :item | 
+		whenSelectedItemChangedDo: [ :item |
 			item
-				ifNotNil: [ 
+				ifNotNil: [
 					self tree selectedItem selectInBrowser.
-					tree contextMenu: [ :aMenu | self loadMenuForSelectedItem ] ] ].
+					tree contextMenu: [ :aMenu | self loadMenuForSelectedItem ] ] ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DAReverseTreePresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -50,19 +58,19 @@ DAReverseTreePresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAReverseTreePresenter >> initializePresenters [
 
 	super initializePresenters.
 
 	packageLabel := self newLabel label: 'Analysis of packages'.
-	self buildRoots.
+	self buildRoots
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DAReverseTreePresenter >> nodesFor: anItemList [
-	^ anItemList collect: 
-		[ :each | 
+	^ anItemList collect:
+		[ :each |
 		DAReversePackageNode new
 						content: each;
 						treeModelParent: self;
@@ -71,30 +79,24 @@ DAReverseTreePresenter >> nodesFor: anItemList [
 						yourself ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAReverseTreePresenter >> refresh [
 
 	self relationGraph refreshGraph.
 	self buildRoots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReverseTreePresenter >> relationGraph [
 	^ relationGraph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAReverseTreePresenter >> setModelBeforeInitialization: aRelationGraph [
-	relationGraph := aRelationGraph.
-	
+	relationGraph := aRelationGraph
 ]
 
-{ #category : #accessing }
-DAReverseTreePresenter >> title [
-	^ 'Package Dependencies Reverse Analysis'
-]
-
-{ #category : #private }
+{ #category : 'private' }
 DAReverseTreePresenter >> updatePackageLabel [
 	packageLabel label: 'Analysis of ' , self tree roots size asString , ' package(s)'
 ]

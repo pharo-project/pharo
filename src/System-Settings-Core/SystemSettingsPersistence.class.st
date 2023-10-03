@@ -20,8 +20,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SystemSettingsPersistence,
-	#superclass : #Object,
+	#name : 'SystemSettingsPersistence',
+	#superclass : 'Object',
 	#instVars : [
 		'fileReference',
 		'settingTree'
@@ -29,15 +29,17 @@ Class {
 	#classInstVars : [
 		'lastSettingsComputerID'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-Core'
+	#category : 'System-Settings-Core-Persistence-Ston-Core',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-Core'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 SystemSettingsPersistence class >> cleanUp [
-	lastSettingsComputerID := nil.
+	lastSettingsComputerID := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingsPersistence class >> default [
 	^ self new
 		fileReference: self defaultPreferenceFileReference;
@@ -45,21 +47,21 @@ SystemSettingsPersistence class >> default [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingsPersistence class >> defaultPreferenceFileReference [
 	^ StartupPreferencesLoader preferencesVersionFolder / 'system-settings.ston'
 ]
 
-{ #category : #deleting }
-SystemSettingsPersistence class >> deleteSettingNode: aSettingNode [ 
+{ #category : 'deleting' }
+SystemSettingsPersistence class >> deleteSettingNode: aSettingNode [
 	self default deleteSettingNode: aSettingNode
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SystemSettingsPersistence class >> initialize [
 	"in order to update settings at startup.
 	should be registered at the end of standard classes but before user classes"
-	
+
 	"IMPORTANT: do not uncomment the registration to the session manager!
 	For now, SystemSettingsPersistence is handled directly by the command line handler startup.
 	We should define a startup action parsing command line arguments and able to provide them to other startup actions. Then, SystemSettingsPersistence as well as StartupPreferencesLoader, could be independent startup actions."
@@ -67,111 +69,111 @@ SystemSettingsPersistence class >> initialize [
 		registerBeforeUserClass: self"
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 SystemSettingsPersistence class >> resumeSystemSettings [
 	"Load persisted settings if the last settings were not loaded from this machine"
 	| thisComputerID |
-	
+
 	thisComputerID := GlobalIdentifier uniqueInstance computerUUID.
-	lastSettingsComputerID ~= thisComputerID ifTrue: [ 
+	lastSettingsComputerID ~= thisComputerID ifTrue: [
 		lastSettingsComputerID := thisComputerID.
 		self updateSettingNodes ]
 ]
 
-{ #category : #'instance creation' }
-SystemSettingsPersistence class >> settingTree: aSettingTree [ 
+{ #category : 'instance creation' }
+SystemSettingsPersistence class >> settingTree: aSettingTree [
 	^ self new
 		fileReference: self defaultPreferenceFileReference;
 		settingTree: aSettingTree;
 		yourself
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 SystemSettingsPersistence class >> startUp: resuming [
 	resuming ifTrue: [ self resumeSystemSettings ]
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence class >> storeIdentifier: settingNodeIdentifierString [
 	self default storeIdentifier: settingNodeIdentifierString
 ]
 
-{ #category : #storing }
-SystemSettingsPersistence class >> storeSettingNode: aSettingNode [ 
+{ #category : 'storing' }
+SystemSettingsPersistence class >> storeSettingNode: aSettingNode [
 	self default storeSettingNode: aSettingNode
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence class >> storeSettingNodes [
 	self default storeSettingNodes
 ]
 
-{ #category : #storing }
-SystemSettingsPersistence class >> storeSettingNodes: aCollectionOfSettingNodes [ 
+{ #category : 'storing' }
+SystemSettingsPersistence class >> storeSettingNodes: aCollectionOfSettingNodes [
 	self default storeSettingNodes: aCollectionOfSettingNodes
 ]
 
-{ #category : #accessing }
-SystemSettingsPersistence class >> storedValueForSettingNode: aSettingNode [ 
+{ #category : 'accessing' }
+SystemSettingsPersistence class >> storedValueForSettingNode: aSettingNode [
 	^ self default storedValueForSettingNode: aSettingNode
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SystemSettingsPersistence class >> updateSettingNode: aSettingNode [
 	self default updateSettingNode: aSettingNode
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SystemSettingsPersistence class >> updateSettingNodes [
 	self default updateSettingNodes
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SystemSettingsPersistence class >> updateSettingNodes: aSettingNode [
 	self default updateSettingNodes: aSettingNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingsPersistence >> allStoredSettings [
 	"Load all stored settings from the file preference."
-	(self fileReference exists) 
+	(self fileReference exists)
 		ifFalse: [ ^ #() ].
-	^ SettingsStonReader new stream: self readStream; secureLoad.
+	^ SettingsStonReader new stream: self readStream; secureLoad
 ]
 
-{ #category : #deleting }
-SystemSettingsPersistence >> deleteSettingNode: aSettingNode [ 
+{ #category : 'deleting' }
+SystemSettingsPersistence >> deleteSettingNode: aSettingNode [
 	self deleteSettingNodes: (Array with: aSettingNode)
 ]
 
-{ #category : #deleting }
-SystemSettingsPersistence >> deleteSettingNodes: aCollection [ 
+{ #category : 'deleting' }
+SystemSettingsPersistence >> deleteSettingNodes: aCollection [
 	| storedSettings reducedStoredSettings |
 	storedSettings := self storedSettingsForSettingNodes: aCollection.
-	reducedStoredSettings := self allStoredSettings difference: storedSettings . 
+	reducedStoredSettings := self allStoredSettings difference: storedSettings .
 	self storeExactStoredSettings: reducedStoredSettings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingsPersistence >> ensureFileReference [
 	"It ensures that the parent directory exists."
 	self fileReference parent ensureCreateDirectory.
 	^ self fileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingsPersistence >> fileReference [
 	"Reference to a file with preferences."
 	^ fileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingsPersistence >> fileReference: aFileReference [
 	"Reference to a file with preferences."
 	fileReference := aFileReference
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> mergeStoredSettings: aCollectionOfStoredSettings [
 	^ StoredSettingsMerger new
 		addStoredSettings: self allStoredSettings;
@@ -179,17 +181,17 @@ SystemSettingsPersistence >> mergeStoredSettings: aCollectionOfStoredSettings [
 		storedSettings
 ]
 
-{ #category : #accessing }
-SystemSettingsPersistence >> nodeNamed: aString [ 
+{ #category : 'accessing' }
+SystemSettingsPersistence >> nodeNamed: aString [
 	^ self settingTree nodeNamed: aString
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 SystemSettingsPersistence >> readStream [
 	^ self fileReference readStream
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> removeFileReference [
 	"We have to remove the file before writing new settings."
 
@@ -200,32 +202,32 @@ SystemSettingsPersistence >> removeFileReference [
 	fileReference copy renameTo: newFileReference basename
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 SystemSettingsPersistence >> settingNodeForStoredSetting: aStoredSetting [
 	^ self settingTree nodeList detect: [ :eachSettingNode |
 		aStoredSetting isForSettingNode: eachSettingNode ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingsPersistence >> settingTree [
 	^ settingTree
 ]
 
-{ #category : #accessing }
-SystemSettingsPersistence >> settingTree: aSettingTree [ 
+{ #category : 'accessing' }
+SystemSettingsPersistence >> settingTree: aSettingTree [
 	settingTree := aSettingTree
 ]
 
-{ #category : #enumerating }
-SystemSettingsPersistence >> settingsNodesFromIdentifiers: aCollection [ 
-	^ aCollection 
+{ #category : 'enumerating' }
+SystemSettingsPersistence >> settingsNodesFromIdentifiers: aCollection [
+	^ aCollection
 			collect: [ :eachIdentifier |
 				self settingTree deeplyDetect: [ :eachSettingNode |
 					eachSettingNode settingNodeIdentifier = eachIdentifier ] ]
 			thenReject: #isNil
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeExactStoredSettings: allStoredSettings [
 	| stream |
 	self removeFileReference.
@@ -234,7 +236,7 @@ SystemSettingsPersistence >> storeExactStoredSettings: allStoredSettings [
 		ensure: [ stream close ]
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeExactStoredSettings: allStoredSettings on: aStream [
 	SettingsStonWriter new
 		stream: aStream;
@@ -242,13 +244,13 @@ SystemSettingsPersistence >> storeExactStoredSettings: allStoredSettings on: aSt
 		store
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeIdentifier: settingNodeIdentifierString [
 	"It stores one setting, identifier by settingNodeIdentifierString, on the disk."
 	self storeIdentifiers: (Array with: settingNodeIdentifierString)
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeIdentifiers: aCollectionOfSettingNodeIdentifiers [
 	"It stores one setting, identifier by settingNodeIdentifierString, on the disk."
 	| settingNodes |
@@ -256,26 +258,26 @@ SystemSettingsPersistence >> storeIdentifiers: aCollectionOfSettingNodeIdentifie
 	self storeSettingNodes: settingNodes
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeSettingNode: aSettingNode [
 	"It stores one setting on the disk."
 	self storeSettingNodes: (Array with: aSettingNode)
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeSettingNodes [
-	self storeSettingNodes: self settingTree nodeList.
+	self storeSettingNodes: self settingTree nodeList
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeSettingNodes: aCollectionOfSettingNodes [
 	"It stores a collection of settings on the disk."
 	| storedNodes |
 	storedNodes := StoredSettingsFactory new fromSettingNodes: aCollectionOfSettingNodes.
-	self storeStoredSettings: storedNodes.
+	self storeStoredSettings: storedNodes
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 SystemSettingsPersistence >> storeStoredSettings: aCollectionOfStoredSettings [
 	"It stores a collection of settings on the disk."
 	| allStoredSettings |
@@ -283,53 +285,53 @@ SystemSettingsPersistence >> storeStoredSettings: aCollectionOfStoredSettings [
 	self storeExactStoredSettings: allStoredSettings
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 SystemSettingsPersistence >> storedSettingForSettingNode: aSettingNode [
 	"It returns a stored setting for the setting node."
-	^ self allStoredSettings 
-				detect: [ :eachStoredSetting | 
+	^ self allStoredSettings
+				detect: [ :eachStoredSetting |
 					eachStoredSetting isForSettingNode: aSettingNode ]
 				ifNone: [ nil ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 SystemSettingsPersistence >> storedSettingsForSettingNodes: aCollectionOfSettingNodes [
 	"It returns stored settings for the setting nodes."
-	^ self allStoredSettings 
-				select: [ :eachStoredSetting | 
+	^ self allStoredSettings
+				select: [ :eachStoredSetting |
 					aCollectionOfSettingNodes anySatisfy: [ :eachSettingNode |
 						eachStoredSetting isForSettingNode: eachSettingNode ] ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SystemSettingsPersistence >> storedValueForSettingNode: aSettingNode [
 	"It returns a stored value for the setting node.
 	It returns nil value when there is no stored value."
 	^ (self storedSettingForSettingNode: aSettingNode) ifNotNil: #realValue
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SystemSettingsPersistence >> updateSettingNode: aSettingNode [
 	self updateSettingNodes: (Array with: aSettingNode)
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SystemSettingsPersistence >> updateSettingNodes [
 	self updateSettingNodes: self settingTree nodeList
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SystemSettingsPersistence >> updateSettingNodes: aCollectionOfSettingNodes [
 	| storedSettings |
 	storedSettings := self allStoredSettings.
 	aCollectionOfSettingNodes do: [ :eachSettingNode |
-		storedSettings 
+		storedSettings
 			detect: [ :eachStoredSetting | eachStoredSetting isForSettingNode: eachSettingNode ]
 			ifFound: [ :storedSetting | storedSetting updateSettingNode: eachSettingNode ]
 			ifNone: [ "ignore it" ] ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 SystemSettingsPersistence >> writeStream [
 	^ self ensureFileReference writeStream
 ]

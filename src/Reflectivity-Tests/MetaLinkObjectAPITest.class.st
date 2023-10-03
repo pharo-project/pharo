@@ -1,13 +1,15 @@
 Class {
-	#name : #MetaLinkObjectAPITest,
-	#superclass : #TestCase,
+	#name : 'MetaLinkObjectAPITest',
+	#superclass : 'ReflectivityTestCase',
 	#instVars : [
 		'tag'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetaLinkObjectAPITest >> link [
 	^ MetaLink new
 		metaObject: self;
@@ -16,7 +18,7 @@ MetaLinkObjectAPITest >> link [
 		control: #after
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetaLinkObjectAPITest >> linkForTemp [
 	| okNode |
 	okNode := RBLiteralValueNode value: 'ok'.
@@ -27,25 +29,19 @@ MetaLinkObjectAPITest >> linkForTemp [
 		control: #after
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MetaLinkObjectAPITest >> setUp [
 	super setUp.
 	tag := OrderedCollection new.
 	MetaLink uninstallAll
 ]
 
-{ #category : #tagging }
+{ #category : 'tagging' }
 MetaLinkObjectAPITest >> tagExec: aTag [
 	tag add: aTag
 ]
 
-{ #category : #running }
-MetaLinkObjectAPITest >> tearDown [
-	MetaLink uninstallAll.
-	super tearDown.
-]
-
-{ #category : #'class api' }
+{ #category : 'class api' }
 MetaLinkObjectAPITest >> testLinkClassToAST [
 	| link instance |
 	link := self link.
@@ -55,10 +51,12 @@ MetaLinkObjectAPITest >> testLinkClassToAST [
 	instance := ReflectivityExamples2 new.
 	instance exampleMethod.
 	self assert: tag size equals: 1.
-	self assert: tag first identicalTo: instance
+	self assert: tag first identicalTo: instance.
+	
+	link uninstall
 ]
 
-{ #category : #'class api' }
+{ #category : 'class api' }
 MetaLinkObjectAPITest >> testLinkClassToClassVarNamed [
 	| link instance |
 	link := self link.
@@ -70,10 +68,12 @@ MetaLinkObjectAPITest >> testLinkClassToClassVarNamed [
 	instance methodWithClassVarAccess.
 
 	self assert: tag size equals: 2.
-	self assert: (tag allSatisfy: [ :t | t == instance ])
+	self assert: (tag allSatisfy: [ :t | t == instance ]).
+
+	link uninstall
 ]
 
-{ #category : #'class api' }
+{ #category : 'class api' }
 MetaLinkObjectAPITest >> testLinkClassToSlotNamed [
 	| link instance |
 	link := self link.
@@ -85,10 +85,12 @@ MetaLinkObjectAPITest >> testLinkClassToSlotNamed [
 	instance methodWithInstVarAccess.
 
 	self assert: tag size equals: 2.
-	self assert: (tag allSatisfy: [ :t | t == instance ])
+	self assert: (tag allSatisfy: [ :t | t == instance ]).
+
+	link uninstall
 ]
 
-{ #category : #'class api' }
+{ #category : 'class api' }
 MetaLinkObjectAPITest >> testLinkClassToSlotNamedUninstall [
 	| link instance |
 	link := self link.
@@ -98,13 +100,13 @@ MetaLinkObjectAPITest >> testLinkClassToSlotNamedUninstall [
 	instance := ReflectivityExamples2 new.
 	instance methodWithInstVarAccess.
 	self assert: tag size equals: 2.
-	
+
 	link uninstall.
 	instance methodWithInstVarAccess.
 	self assert: tag size equals: 2
 ]
 
-{ #category : #'class api' }
+{ #category : 'class api' }
 MetaLinkObjectAPITest >> testLinkClassToTempVarNamed [
 	| link instance |
 	link := self linkForTemp.
@@ -116,10 +118,12 @@ MetaLinkObjectAPITest >> testLinkClassToTempVarNamed [
 	instance methodWithTempVarAccess.
 
 	self assert: tag size equals: 4.
-	self assert: (tag allSatisfy: [ :t | t = 'ok' ])
+	self assert: (tag allSatisfy: [ :t | t = 'ok' ]).
+
+	link uninstall
 ]
 
-{ #category : #'object - api' }
+{ #category : 'object - api' }
 MetaLinkObjectAPITest >> testLinkObjectToAST [
 	| link instance instance2 |
 	link := self link.
@@ -136,7 +140,7 @@ MetaLinkObjectAPITest >> testLinkObjectToAST [
 	self assert: tag first identicalTo: instance
 ]
 
-{ #category : #'object - api' }
+{ #category : 'object - api' }
 MetaLinkObjectAPITest >> testLinkObjectToClassVarName [
 	| link instance |
 	link := self link.
@@ -153,7 +157,7 @@ MetaLinkObjectAPITest >> testLinkObjectToClassVarName [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'object - api' }
+{ #category : 'object - api' }
 MetaLinkObjectAPITest >> testLinkObjectToSlotNamed [
 	| link instance |
 	link := self link.
@@ -170,7 +174,7 @@ MetaLinkObjectAPITest >> testLinkObjectToSlotNamed [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'object - api' }
+{ #category : 'object - api' }
 MetaLinkObjectAPITest >> testLinkObjectToTempVarName [
 	| link instance |
 	link := self link.
@@ -187,7 +191,7 @@ MetaLinkObjectAPITest >> testLinkObjectToTempVarName [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToClassVarNameAll [
 	| link instance |
 	link := self link.
@@ -214,7 +218,7 @@ MetaLinkObjectAPITest >> testLinkToClassVarNameAll [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToClassVarNameReads [
 	| link instance |
 	link := self link.
@@ -241,7 +245,7 @@ MetaLinkObjectAPITest >> testLinkToClassVarNameReads [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToClassVarNameWrites [
 	| link instance |
 	link := self link.
@@ -268,7 +272,7 @@ MetaLinkObjectAPITest >> testLinkToClassVarNameWrites [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToSlotNamedAll [
 	| link instance |
 	link := self link.
@@ -295,7 +299,7 @@ MetaLinkObjectAPITest >> testLinkToSlotNamedAll [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToSlotNamedReads [
 	| link instance |
 	link := self link.
@@ -322,7 +326,7 @@ MetaLinkObjectAPITest >> testLinkToSlotNamedReads [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToSlotNamedWrites [
 	| link instance |
 	link := self link.
@@ -349,7 +353,7 @@ MetaLinkObjectAPITest >> testLinkToSlotNamedWrites [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToTempVarNameAll [
 	| link instance |
 	link := self link.
@@ -384,7 +388,7 @@ MetaLinkObjectAPITest >> testLinkToTempVarNameAll [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToTempVarNameReads [
 	| link instance |
 	link := self link.
@@ -419,7 +423,7 @@ MetaLinkObjectAPITest >> testLinkToTempVarNameReads [
 	self assert: (tag allSatisfy: [ :t | t == instance ])
 ]
 
-{ #category : #'common api' }
+{ #category : 'common api' }
 MetaLinkObjectAPITest >> testLinkToTempVarNameWrites [
 	| link instance |
 	link := self link.

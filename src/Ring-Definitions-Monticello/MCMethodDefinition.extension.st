@@ -1,13 +1,13 @@
-Extension { #name : #MCMethodDefinition }
+Extension { #name : 'MCMethodDefinition' }
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCMethodDefinition >> asRingDefinition [
 
 	^RGMethodDefinition new
 		name: self selector;
 		parentName: self className;
-		isMetaSide: self classIsMeta;
+		isMeta: self classIsMeta;
 		protocol: self protocol;
-		sourceCode: self source;    
+		sourceCode: self source;
 		stamp: self timeStamp
 ]

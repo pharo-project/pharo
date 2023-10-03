@@ -1,14 +1,15 @@
 Class {
-	#name : #OmBlockFileStoreTest,
-	#superclass : #OmFileStoreTest,
+	#name : 'OmBlockFileStoreTest',
+	#superclass : 'OmFileStoreTest',
 	#instVars : [
 		'targetReference',
 		'bigStore'
 	],
-	#category : #'Ombu-Tests'
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStoreTest class >> multiBlockOmbu [
 	"The second comment in this method is used to generate test data for #testEntryForIfPresentIfAbsent"
 "OmEntry {
@@ -6603,7 +6604,7 @@ OmEntry {
 "
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmBlockFileStoreTest >> setUpOtherStore [
 
 	^ OmBlockFileStore
@@ -6611,23 +6612,23 @@ OmBlockFileStoreTest >> setUpOtherStore [
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #initialization }
-OmBlockFileStoreTest >> setUpStore [	
+{ #category : 'initialization' }
+OmBlockFileStoreTest >> setUpStore [
 
 	^ OmBlockFileStore
 		named: 'testingStore', UUID new asString36
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmBlockFileStoreTest >> tearDown [
 
-	bigStore ifNotNil: 
+	bigStore ifNotNil:
 		[ bigStore fileReference ensureDelete ].
-	super tearDown.
+	super tearDown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStoreTest >> testEntryForIfPresentIfAbsent [
 	"Check that #entryFor:ifPresent:ifAbsent: loads the file past the first block"
 	| ombuContent ombuFile mr1 entry mr2 |
@@ -6640,7 +6641,7 @@ OmBlockFileStoreTest >> testEntryForIfPresentIfAbsent [
 	bigStore := OmBlockFileStore
 		named: 'bigStore'
 		inDirectory: ombuFile parent.
-	targetReference := OmReference 
+	targetReference := OmReference
 		globalName: 'bigStore'
 		localName: '199'.
 	mr1 := bigStore mustRefresh.
@@ -6654,19 +6655,19 @@ OmBlockFileStoreTest >> testEntryForIfPresentIfAbsent [
 	self assert: entry isNotNil
 		description: 'entry not found'.
 	self assert: mr2 not
-		description: 'mustRefresh should be false after to search'.
+		description: 'mustRefresh should be false after to search'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmBlockFileStoreTest >> testMultibyteUnicodeCharacterCrossingTwoBlocks [
 	"Test fogbugz case 20112"
-	
+
 	| aWideString |
 	aWideString := (String streamContents: [:stream |
 		store blockSize timesRepeat: [ stream nextPut: (Character value: 266) ].
 	 ]).
-	store newEntry: (OmEntry content: aWideString).	
-	store newEntry: (OmEntry content: aWideString).	
+	store newEntry: (OmEntry content: aWideString).
+	store newEntry: (OmEntry content: aWideString).
 
 	"self shouldnt: [ "store flush" ] raise: OmFileStoreReadingError"
 ]

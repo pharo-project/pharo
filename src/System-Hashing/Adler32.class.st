@@ -6,12 +6,14 @@ The purpose of this class is mainly grouping as the ZipPlugin already implements
 Note that Adler32 is not a CRC, strictly speaking.
 "
 Class {
-	#name : #Adler32,
-	#superclass : #Checksum,
-	#category : #'System-Hashing-Checksums'
+	#name : 'Adler32',
+	#superclass : 'Checksum',
+	#category : 'System-Hashing-Checksums',
+	#package : 'System-Hashing',
+	#tag : 'Checksums'
 }
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Adler32 class >> update: adler from: start to: stop in: aCollection [
 	"Update crc using the Adler32 checksum technique from RFC1950"
 "
@@ -26,7 +28,7 @@ Adler32 class >> update: adler from: start to: stop in: aCollection [
         return (s2 << 16) + s1;
 "
 	<primitive: 'primitiveUpdateAdler32' module: 'ZipPlugin'>
-	
+
 	| s1 s2 |
 	s1 := adler bitAnd: 16rFFFF.
 	s2 := (adler bitShift: -16) bitAnd: 16rFFFF.

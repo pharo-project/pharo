@@ -4,8 +4,8 @@ A TickDialogWindow is a modal dialog window which contains a TickList where user
 See self example
 "
 Class {
-	#name : #TickDialogWindow,
-	#superclass : #DialogWindowMorph,
+	#name : 'TickDialogWindow',
+	#superclass : 'DialogWindowMorph',
 	#instVars : [
 		'defaultValue',
 		'itemsHeaderName',
@@ -15,16 +15,18 @@ Class {
 		'resultStorage',
 		'wrapBlockOrSelector'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 TickDialogWindow class >> example [
-	
+
 	(self itemsList: Morph methods itemsHeaderName: 'Plop' wrapBlockOrSelector: #selector title: 'Example') choose
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName title: aTitle [
 
 	^ self basicNew
@@ -35,7 +37,7 @@ TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName title: aTi
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName title: aTitle defaultValue: aBoolean [
 	^ self basicNew
 		itemsList: itemsList;
@@ -46,7 +48,7 @@ TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName title: aTi
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName wrapBlockOrSelector: aBlockOrSelector title: aTitle [
 	^ self basicNew
 		itemsList: itemsList;
@@ -57,7 +59,7 @@ TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName wrapBlockO
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName wrapBlockOrSelector: aBlockOrSelector title: aTitle defaultValue: aBoolean [
 	^ self basicNew
 		itemsList: itemsList;
@@ -69,171 +71,171 @@ TickDialogWindow class >> itemsList: itemsList itemsHeaderName: aName wrapBlockO
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 TickDialogWindow >> accept [
 
-	self resultStorage: self listModel selectedItems.
+	self resultStorage: self listModel selectedItems
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 TickDialogWindow >> choose [
 
 	^ self chooseFromOwner: self currentWorld
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 TickDialogWindow >> chooseFromOwner: aMorph [
 
 	self openModal.
 	^ resultStorage
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 TickDialogWindow >> defaultFocusMorph [
 
-	^ self listMorph 
+	^ self listMorph
 		ifNil: [ super defaultFocusMorph ]
 		ifNotNil: [:morph | morph ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> defaultValue [
 
 	^ defaultValue ifNil: [defaultValue := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> defaultValue: aBoolean [
 
 	defaultValue := aBoolean
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 TickDialogWindow >> hasUnacceptedEdits [
 
 	^ true
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 TickDialogWindow >> initialExtent [
-	
+
 	| width |
 	width := (self listMorph allNodeMorphs detectMax: [:e | e width]) width.
 	width := width+ 50.
-	
+
 	^width@400
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TickDialogWindow >> isResizeable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> itemsHeaderName [
 
 	^ itemsHeaderName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> itemsHeaderName: anObject [
-	
+
 	itemsHeaderName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> itemsList [
 
 	^ itemsList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> itemsList: anObject [
-	
+
 	itemsList := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> listModel [
 
 	^ listModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> listModel: aModel [
 
 	listModel := aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> listMorph [
 
 	^ listMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> listMorph: anObject [
-	
+
 	listMorph := anObject
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 TickDialogWindow >> newContentMorph [
 
-	self listModel: ((self tickListClass 
-						itemsList: self itemsList 
-						itemsHeaderName: self itemsHeaderName 
+	self listModel: ((self tickListClass
+						itemsList: self itemsList
+						itemsHeaderName: self itemsHeaderName
 						wrapBlockOrSelector: self wrapBlockOrSelector)
 						autoMultiSelection: true;
 						beCheckList;
 						yourself).
-	
+
 	self listMorph: (self listModel defaultTreeMorph
 								buildContents;
 								vResizing: #spaceFill;
 								hResizing: #spaceFill).
-								
-	self defaultValue ifTrue: [ self listMorph selectAll ].							
+
+	self defaultValue ifTrue: [ self listMorph selectAll ].
 	^ self listMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> resultStorage [
 
 	^ resultStorage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> resultStorage: anObject [
-	
+
 	resultStorage := anObject
 ]
 
-{ #category : #accessing }
-TickDialogWindow >> selectItems: aCollection [ 
+{ #category : 'accessing' }
+TickDialogWindow >> selectItems: aCollection [
 	self listModel selectItems: aCollection
 ]
 
-{ #category : #accessing }
-TickDialogWindow >> selectedItems [ 
+{ #category : 'accessing' }
+TickDialogWindow >> selectedItems [
 	^ self listModel selectedItems
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TickDialogWindow >> tickListClass [
 
 	^ MorphTreeModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> wrapBlockOrSelector [
 
 	^ wrapBlockOrSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickDialogWindow >> wrapBlockOrSelector: anObject [
-	
+
 	wrapBlockOrSelector := anObject
 ]

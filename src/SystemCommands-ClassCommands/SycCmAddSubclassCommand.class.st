@@ -2,41 +2,41 @@
 I am a command to create new subclass og given class (my targetClass)
 "
 Class {
-	#name : #SycCmAddSubclassCommand,
-	#superclass : #SycCmNewClassCreationCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycCmAddSubclassCommand',
+	#superclass : 'SycCmNewClassCreationCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycCmAddSubclassCommand >> executeRefactoring [
-	
+
 	| refactoring |
-	refactoring := RBInsertClassTransformation
-		addClass: newClassName 
+	refactoring := RBInsertNewClassRefactoring
+		addClass: newClassName
 		superclass: targetClass asString
 		subclasses:  #()
 		category: targetClass category.
-	refactoring asRefactoring execute. 
-
+	refactoring execute.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> icon [
 	^self iconNamed:#add
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmAddSubclassCommand >> isApplicable [
-	
+
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> name [
 	^'New subclass'
 ]
 
-{ #category : #accessing }
-SycCmAddSubclassCommand >> order [ 	
+{ #category : 'accessing' }
+SycCmAddSubclassCommand >> order [
 	^ 10100.1
 ]

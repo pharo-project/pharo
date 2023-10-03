@@ -1,10 +1,11 @@
 Class {
-	#name : #RBMethodProtocolChange,
-	#superclass : #RBAddMethodChange,
-	#category : #'Refactoring-Changes'
+	#name : 'RBMethodProtocolChange',
+	#superclass : 'RBAddMethodChange',
+	#category : 'Refactoring-Changes',
+	#package : 'Refactoring-Changes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodProtocolChange class >> selector: aSelector in: aBehavior classified: aProtocol [
 
 	^ self new
@@ -13,16 +14,16 @@ RBMethodProtocolChange class >> selector: aSelector in: aBehavior classified: aP
 		classified: aProtocol
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBMethodProtocolChange >> asUndoOperation [
-	
+
 	^ self class
 		selector: self selector
 		in: self changeClass
 		classified: self oldProtocol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodProtocolChange >> changeString [
 
 	^ String streamContents: [ :stream | stream
@@ -32,16 +33,16 @@ RBMethodProtocolChange >> changeString [
 		nextPutAll: super changeString ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBMethodProtocolChange >> oldProtocol [
 
 	| oldProtocol |
 	oldProtocol := RBBrowserEnvironment new
 						whichProtocolIncludes: self selector in: self changeClass.
-	^ oldProtocol ifNil: [ oldProtocol := #accessing ].
+	^ oldProtocol ifNil: [ oldProtocol := #accessing ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodProtocolChange >> oldVersionTextToDisplay [
 
 	^ String streamContents: [ :stream | stream
@@ -52,7 +53,7 @@ RBMethodProtocolChange >> oldVersionTextToDisplay [
 		nextPutAll: super oldVersionTextToDisplay ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMethodProtocolChange >> selector: aSelector in: aClass classified: aProtocol [
 
 	selector := aSelector.
@@ -60,13 +61,13 @@ RBMethodProtocolChange >> selector: aSelector in: aClass classified: aProtocol [
 	self protocols: aProtocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodProtocolChange >> source [
 
 	^ source ifNil: [ super oldVersionTextToDisplay ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodProtocolChange >> textToDisplay [
 
 	^ String streamContents: [ :stream | stream

@@ -1,10 +1,12 @@
 Class {
-	#name : #MemoryLoggerTest,
-	#superclass : #TestCase,
-	#category : #'Beacon-Core-Tests-Tests'
+	#name : 'MemoryLoggerTest',
+	#superclass : 'TestCase',
+	#category : 'Beacon-Core-Tests-Tests',
+	#package : 'Beacon-Core-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryLoggerTest >> testRecordOneSignal [
 	| logger |
 	logger := MemoryLogger new runDuring: [ StringSignal emit: 'test' ].
@@ -12,7 +14,7 @@ MemoryLoggerTest >> testRecordOneSignal [
 	self assert: logger recordings first message equals: 'test'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryLoggerTest >> testRecordTwoSignalsInTheRightOrder [
 	| logger |
 	logger := MemoryLogger new
@@ -24,7 +26,7 @@ MemoryLoggerTest >> testRecordTwoSignalsInTheRightOrder [
 	self assert: logger recordings last message equals: 'test2'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryLoggerTest >> testRunDuringStopsAtTheEnd [
 	| logger |
 	logger := MemoryLogger new.

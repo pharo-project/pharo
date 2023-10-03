@@ -1,6 +1,6 @@
-Extension { #name : #CmdCommandActivator }
+Extension { #name : 'CmdCommandActivator' }
 
-{ #category : #'*Commander-Spec2-Compatibility' }
+{ #category : '*Commander-Spec2-Compatibility' }
 CmdCommandActivator >> getShortcutTipForMenuItem [
 	CmdShortcutActivation
 		activeInstancesFor: command class
@@ -11,7 +11,7 @@ CmdCommandActivator >> getShortcutTipForMenuItem [
 		^nil
 ]
 
-{ #category : #'*Commander-Spec2-Compatibility' }
+{ #category : '*Commander-Spec2-Compatibility' }
 CmdCommandActivator >> help [
 	^ self command class defaultHelp
 ]

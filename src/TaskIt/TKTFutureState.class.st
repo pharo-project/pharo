@@ -18,37 +18,39 @@ My main messages are:
     scheduling a callback in the given future in case of failure
 "
 Class {
-	#name : #TKTFutureState,
-	#superclass : #Object,
-	#category : #'TaskIt-Futures'
+	#name : 'TKTFutureState',
+	#superclass : 'Object',
+	#category : 'TaskIt-Futures',
+	#package : 'TaskIt',
+	#tag : 'Futures'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTFutureState >> isFailure [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTFutureState >> isFinished [
-	
+
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTFutureState >> isSuccess [
 
 	^ false
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 TKTFutureState >> onFailureDo: aBlockClosure inFuture: aFuture [
 
 	"nothing"
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 TKTFutureState >> onSuccessDo: aBlockClosure inFuture: aFuture [
-	
+
 	"nothing"
 ]

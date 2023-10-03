@@ -2,38 +2,40 @@
 Tests for NaturalLanguageTranslator
 "
 Class {
-	#name : #NaturalLanguageTranslatorTest,
-	#superclass : #TestCase,
+	#name : 'NaturalLanguageTranslatorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'previousRegistered'
 	],
-	#category : #'System-Localization-Tests-Translations'
+	#category : 'System-Localization-Tests-Translations',
+	#package : 'System-Localization-Tests',
+	#tag : 'Translations'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 NaturalLanguageTranslatorTest >> setUp [
 
 	super setUp.
 	previousRegistered := NaturalLanguageTranslator current
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NaturalLanguageTranslatorTest >> tearDown [
 
 	NaturalLanguageTranslator current: previousRegistered.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NaturalLanguageTranslatorTest >> testRegisterCustomTranslator [
 
 	NaturalLanguageTranslator current: RegisterableTranslatorMock new.
-	
+
 	"Our custom translator translates the string differently"
 	self assert: 'TestCase' translated equals: 'Testfall'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NaturalLanguageTranslatorTest >> testTranslatePureString [
 
 	self assert: 'Pharo' translated equals: 'Pharo'

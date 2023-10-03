@@ -1,8 +1,8 @@
-Extension { #name : #RBTransformationRule }
+Extension { #name : 'RBTransformationRule' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RBTransformationRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	
+
 	(self basicCheck: aMethod)
 		ifTrue: [
 			aCriticBlock cull: (
@@ -12,11 +12,11 @@ RBTransformationRule >> check: aMethod forCritiquesDo: aCriticBlock [
 					tree: rewriteRule tree)  ]
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RBTransformationRule >> suggestedCode: aCritic [
 
-	^ (self changes detect: [ :ch | 
+	^ (self changes detect: [ :ch |
 			(ch  isMeta = aCritic  methodClass isMeta) &
-			(ch changeClassName = aCritic criticTheNonMetaclassClass name) & 
-			(ch selector = aCritic selector)]) source.
+			(ch changeClassName = aCritic criticTheNonMetaclassClass name) &
+			(ch selector = aCritic selector)]) source
 ]

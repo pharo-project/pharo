@@ -14,8 +14,8 @@ RBMethodArgumentsSelector
 		labelMorph contents: self methodName printString')
 "
 Class {
-	#name : #RBMethodArgumentsSelector,
-	#superclass : #DialogWindowMorph,
+	#name : 'RBMethodArgumentsSelector',
+	#superclass : 'DialogWindowMorph',
 	#instVars : [
 		'arguments',
 		'values',
@@ -28,10 +28,12 @@ Class {
 		'sourceCodeMorph',
 		'tree'
 	],
-	#category : #'Refactoring2-Transformations-Utilities'
+	#category : 'Refactoring2-Transformations-Utilities',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodArgumentsSelector class >> on: arguments and: values in: sourceCode [
 
 	^ self basicNew
@@ -40,106 +42,106 @@ RBMethodArgumentsSelector class >> on: arguments and: values in: sourceCode [
 		in: sourceCode
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodArgumentsSelector class >> openOn: arguments and: values in: sourceCode [
 
-	^ (self 
+	^ (self
 		on: arguments
 		and: values
 		in: sourceCode) openModal
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodArgumentsSelector >> addAssociation [
 
 	[  | argument value |
 		argument := argumentsList at: self argumentIndex.
 		value := valuesList at: self valueIndex.
-			
+
 		"replace occurrences in code"
-		tree := RBParseTreeRewriter 
+		tree := RBParseTreeRewriter
 			replace: value
 			with: argument in: tree.
-		
+
 		"add new entry"
 		argsAndValues at: argument put: value.
 		"remove from lists"
 		argumentsList removeAt: self argumentIndex.
 		valuesList removeAt: self valueIndex.
-		
+
 		sourceCodeMorph contents: self sourceCode.
-		self changed: #associations; changed: #arguments; 
+		self changed: #associations; changed: #arguments;
 				changed: #values; changed: #isOkEnabled ]
 	on: Error do: [ self inform: 'Please select one argument and one value.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> argumentIndex [
 
 	^ selectedArgumentIndex ifNil: [ selectedArgumentIndex := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> argumentIndex: anInteger [
 
 	selectedArgumentIndex := anInteger.
 	self changed: #argumentIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> arguments [
 
 	^ argumentsList ifNil: [ argumentsList := arguments asOrderedCollection ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> argumentsAndValues [
 
 	^ argsAndValues
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> associationIndex [
 
 	^ selectedAssociationIndex ifNil: [ selectedAssociationIndex := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> associationIndex: anInteger [
 
 	selectedAssociationIndex := anInteger.
 	self changed: #associationIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> associations [
 
 	^ argsAndValues associations collect: [:each | each asString ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMethodArgumentsSelector >> initializeWith: aCollection and: anotherCollection in: aTree [
 
 	arguments := aCollection.
 	values := anotherCollection.
 	tree := aTree.
-	
+
 	argsAndValues := Dictionary new.
-	
+
 	self initialize.
 	self title: 'There are extra arguments in this method. Please map a value to each extra argument.' translated
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodArgumentsSelector >> isOkEnabled [
 
 	^ argumentsList isEmpty
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodArgumentsSelector >> newContentMorph [
 
-	^ (self newColumn: { 
+	^ (self newColumn: {
 		(self newRow: {
 			"the arguments"
 			self newGroupbox: 'Arguments' for: (self newColumn: {
@@ -150,7 +152,7 @@ RBMethodArgumentsSelector >> newContentMorph [
 					help: nil)
 					hResizing: #spaceFill;
 					yourself }).
-					
+
 			"the values"
 			self newGroupbox: 'Values' for: (self newColumn: {
 				(self newListFor: self
@@ -160,20 +162,20 @@ RBMethodArgumentsSelector >> newContentMorph [
 					help: nil)
 					hResizing: #spaceFill;
 					yourself }).
-					
+
 			"add an association"
 			(self newRow: {
-				self newButtonFor: self action: #addAssociation 
+				self newButtonFor: self action: #addAssociation
 					label: 'v' help: 'Map'.})
 				hResizing: #shrinkWrap}).
-				
+
 		"source code preview"
 		(self newRow: {
 			self newGroupbox: 'Preview' for: (self newColumn: {
 				sourceCodeMorph := (self newText: tree formattedCode)
 					extent: 400@400;
 					hResizing: #rigid }) }).
-				
+
 		"associations"
 		(self newRow: {
 			self newGroupbox: 'Associations' for: (self newColumn: {
@@ -184,38 +186,38 @@ RBMethodArgumentsSelector >> newContentMorph [
 					help: nil)
 					hResizing: #spaceFill;
 					yourself. }).
-					
+
 		"remove association"
 		(self newRow: {
 			self newButtonFor: self action: #removeAssociation
 				label: '^' help: 'Unmap'.})
-			hResizing: #shrinkWrap }).		
-		
+			hResizing: #shrinkWrap }).
+
 	 }) vResizing: #shrinkWrap
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 RBMethodArgumentsSelector >> newOKButton [
 
 	^ self newOKButtonFor: self getEnabled: #isOkEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> newTree [
 
 	^ tree
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodArgumentsSelector >> removeAssociation [
 
 	[  | association argument value |
 		association := argsAndValues associations at: self associationIndex.
 		argument := association key.
 		value := association value.
-		
+
 		"replace occurrences in code"
-		tree := RBParseTreeRewriter 
+		tree := RBParseTreeRewriter
 			replace: argument
 			with: value in: tree.
 
@@ -223,33 +225,33 @@ RBMethodArgumentsSelector >> removeAssociation [
 		argsAndValues removeKey: argument.
 		argumentsList add: argument.
 		valuesList add: value.
-		
+
 		sourceCodeMorph contents: self sourceCode.
 		self changed: #associations; changed: #arguments;
 				changed: #values; changed: #isOkEnabled ]
 	on: Error do: [ self inform: 'Please select one association to remove.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> sourceCode [
 
 	^ tree formattedCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> valueIndex [
 
 	^ selectedValueIndex ifNil: [ selectedValueIndex := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> valueIndex: anInteger [
 
 	selectedValueIndex := anInteger.
 	self changed: #valueIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodArgumentsSelector >> values [
 
 	^ valuesList ifNil: [ valuesList := values asOrderedCollection ]

@@ -2,16 +2,18 @@
 Testing class
 "
 Class {
-	#name : #PaMatrixExampleTest,
-	#superclass : #PaAbstractExampleTest,
-	#category : #'ParametrizedTests-Tests'
+	#name : 'PaMatrixExampleTest',
+	#superclass : 'PaAbstractExampleTest',
+	#category : 'ParametrizedTests-Tests',
+	#package : 'ParametrizedTests',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PaMatrixExampleTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
 		forSelector: #option1 addOptions: #(a b c);
 		forSelector: #option2 addOptions: {[1].[2].[3]};
-		yourself.
+		yourself
 ]

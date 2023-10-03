@@ -1,9 +1,8 @@
-Extension { #name : #ByteString }
+Extension { #name : 'ByteString' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 ByteString >> tfPointerAddress [
 
 	self pinInMemory.
 	^ PointerUtils oopForObject: self
-
 ]

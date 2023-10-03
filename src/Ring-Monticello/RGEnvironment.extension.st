@@ -1,6 +1,6 @@
-Extension { #name : #RGEnvironment }
+Extension { #name : 'RGEnvironment' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGEnvironment >> writeIntoFileTree: aMCFileTreeRepository [
 
 	(self ask packages select: #isRingResolved) do: [ :aPackage |
@@ -12,10 +12,10 @@ RGEnvironment >> writeIntoFileTree: aMCFileTreeRepository [
 		aVersion := MCVersion package: (MCPackage new name: aPackage name) info: info snapshot: aSnapshot dependencies: #().
 		IceMetadatalessFileTreeWriter
 			fileOut: (aVersion)
-			on: (aMCFileTreeRepository) ].
+			on: (aMCFileTreeRepository) ]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGEnvironment >> writeIntoTonel: aFileReference [
 
 	(self ask packages select: #isRingResolved) do: [ :aPackage |
@@ -25,7 +25,7 @@ RGEnvironment >> writeIntoTonel: aFileReference [
 		info := MCVersionInfo new.
 		info instVarNamed: #name put: aPackage name, '-author'.
 		aVersion := MCVersion package: (MCPackage new name: aPackage name) info: info snapshot: aSnapshot dependencies: #().
-		TonelWriter 
+		TonelWriter
 			fileOut: (aVersion)
 			on: aFileReference ]
 ]

@@ -1,10 +1,11 @@
 Class {
-	#name : #MetacelloPlatformTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsMCCore'
+	#name : 'MetacelloPlatformTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPlatformTestCase >> testTempFileFor [
 	"This should be enough to ensure that https://github.com/dalehenrich/metacello-work/issues/405 doesn't happen again"
 	| tempFilePath |

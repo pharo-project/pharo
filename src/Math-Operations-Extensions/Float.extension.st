@@ -1,13 +1,13 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> arcCos [
 	"Answer the angle in radians."
 
 	^ Halfpi - self arcSin
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> arcSin [
 	"Answer the angle in radians."
 
@@ -17,7 +17,7 @@ Float >> arcSin [
 		ifFalse: [ (self / (1.0 - (self * self)) sqrt) arcTan ]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> arcTan: denominator [
 	"Answer the angle in radians.
 	Implementation note: use sign in order to catch cases of negativeZero"
@@ -42,7 +42,7 @@ Float >> arcTan: denominator [
 					ifFalse: [ ((self / denominator) arcTan) - Pi ]]]]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> asIEEE32BitWord [
 	"Convert the receiver into a 32 bit Integer value representing the same number in IEEE 32 bit format.
 	Used for conversion in Float32Arrays only."
@@ -106,7 +106,7 @@ Float >> asIEEE32BitWord [
 	^ destWord
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> asIEEE64BitWord [
 	"Convert the receiver into a 64 bit Integer value representing the same number in IEEE 64 bit format.
 	Used for conversion in Float64Arrays only."
@@ -114,32 +114,30 @@ Float >> asIEEE64BitWord [
 	^ ((self basicAt: 1) bitShift: 32) + (self basicAt: 2)
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> closeTo: num [
  	"Tell whether the receiver and arguments are close from each."
 
 	^ self closeTo: num precision: DefaultComparisonPrecision
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> closeTo: num precision: aPrecision [
- 	"Tell whether the receiver and arguments are close from each other given a precision"
+	"Tell whether the receiver and arguments are close from each other given a precision"
 
-	num isNumber ifFalse: [ ^ [self = num] onErrorDo: [false]].
-	self = 0.0 ifTrue: [^ num abs < aPrecision].
-	num = 0 ifTrue: [^self abs < aPrecision].
-	^self = num asFloat
-		or: [(self - num) abs / (self abs max: num abs) < aPrecision]
+	num isNumber ifFalse: [ ^ false ].
+
+	^ self = num asFloat or: [ (self - num) abs <= aPrecision ]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> cos [
 	"Answer the cosine of the receiver taken as an angle in radians."
 
 	^ (self + Halfpi) sin
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> degreeCos [
 	"Take care of exceptional values"
 
@@ -147,7 +145,7 @@ Float >> degreeCos [
 	^self degreesToRadians cos
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> degreeSin [
 	"Take care of exceptional values"
 
@@ -155,14 +153,14 @@ Float >> degreeSin [
 	^self degreesToRadians sin
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> degreesToRadians [
 	"Answer the receiver in radians. Assumes the receiver is in degrees."
 
 	^self * RadiansPerDegree
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float class >> epsilon [
 
 	self
@@ -171,14 +169,14 @@ Float class >> epsilon [
 	^ self machineEpsilon
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float class >> fmax [
 	"Answer the maximum finite floating point value representable."
 
 	^MaxVal
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float class >> fmin [
 	"Answer minimum positive representable value."
 
@@ -187,47 +185,42 @@ Float class >> fmin [
 		ifFalse: [self fminNormalized]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float class >> fminDenormalized [
 	"Answer the minimum denormalized value representable."
 
 	^1.0 timesTwoPower: MinValLogBase2
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float class >> fminNormalized [
 	"Answer the minimum normalized value representable."
 
 	^1.0 timesTwoPower: -1022
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> integerPart [
 	"Answer a Float whose value is the receiver's truncated value."
 
 	^self - self fractionPart
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> log [
 	"Answer the base 10 logarithm of the receiver."
 
 	^ self ln / Ln10
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
-Float class >> machineEpsilon [
-	"Answer the machine epsilon or macheps, defined by wikipedia asCalypsoItemContext
-	https://en.wikipedia.org/wiki/Machine_epsilon
+{ #category : '*Math-Operations-Extensions' }
+Float class >> maxLog [
+	"Answer maximum log value representable"
 
-	*an upper bound on the relative approximation error due to rounding in floating point arithmetic*
-
-	Compute it as the difference between 1.0 and previous representable value"
-
-	^1.0 timesTwoPower: 1 - self precision
+	^ MaxValLn
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> nthRoot: aPositiveInteger [
 	"Answer the nth root of the receiver."
 	aPositiveInteger = 2 ifTrue: [
@@ -244,7 +237,7 @@ Float >> nthRoot: aPositiveInteger [
 		ifFalse: [ self raisedTo: 1.0 / aPositiveInteger ]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> predecessor [
 	| ulp |
 	self isFinite ifFalse: [
@@ -257,14 +250,14 @@ Float >> predecessor [
 		ifFalse: [self - (0.5 * ulp)]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> radiansToDegrees [
 	"Answer the receiver in degrees. Assumes the receiver is in radians."
 
 	^self / RadiansPerDegree
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> reciprocal [
 
 	"Returns the reciprocal.
@@ -273,14 +266,14 @@ Float >> reciprocal [
 	^1.0 / self
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> reduce [
     "If self is close to an integer, return that integer"
 
     (self closeTo: self rounded) ifTrue: [^ self rounded]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
    "(10.12345 round: 2) >>> 10.12 "
@@ -288,7 +281,7 @@ Float >> round: numberOfWishedDecimal [
 	^(self asFraction round: numberOfWishedDecimal) asFloat
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> rounded [
 	"Answer the integer nearest the receiver.
 	Implementation note: super would not handle tricky inexact arithmetic"
@@ -300,7 +293,7 @@ Float >> rounded [
 		ifFalse: [ self truncated + self sign rounded ]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> safeArcCos [
 	"Answer the angle in radians."
 
@@ -309,7 +302,7 @@ Float >> safeArcCos [
 		ifFalse: [ self sign arcCos ]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> successor [
 	| ulp |
 	self isFinite ifFalse: [
@@ -322,14 +315,14 @@ Float >> successor [
 		ifFalse: [self + (0.5 * ulp)]
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> tan [
 	"Answer the tangent of the receiver taken as an angle in radians."
 
 	^ self sin / self cos
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 Float >> ulp [
 	"Answer the unit of least precision of self (the power of two corresponding to last bit of mantissa)"
 

@@ -2,19 +2,21 @@
 Commands to install a breakpoint on the selected variable reads from the vars view in Calypso
 "
 Class {
-	#name : #ClyBreakOnReadCommand,
-	#superclass : #ClyBreakOnVariableCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
+	#name : 'ClyBreakOnReadCommand',
+	#superclass : 'ClyBreakOnVariableCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'VariableBreakpoints'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBreakOnReadCommand >> breakOn: variable [
 	VariableBreakpoint
 		watchVariableReads: variable name
 		inClass: variable definingClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBreakOnReadCommand >> defaultMenuItemName [
 	^'Break on read'
 ]

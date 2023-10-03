@@ -11,15 +11,17 @@ Preconditions:
 overridden from RBAddVariableAccessorRefactoring
 "
 Class {
-	#name : #RBAddAccessorsForClassTransformation,
-	#superclass : #RBCompositeTransformation,
+	#name : 'RBAddAccessorsForClassTransformation',
+	#superclass : 'RBCompositeTransformation',
 	#instVars : [
 		'className'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddAccessorsForClassTransformation class >> className: aClassName [
 
 	^ self new
@@ -27,7 +29,7 @@ RBAddAccessorsForClassTransformation class >> className: aClassName [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddAccessorsForClassTransformation class >> model: aRBModel className: aClassName [
 
 	^ self new
@@ -36,7 +38,7 @@ RBAddAccessorsForClassTransformation class >> model: aRBModel className: aClassN
 		yourself
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddAccessorsForClassTransformation >> buildTransformations [
 
 	| class |
@@ -48,14 +50,14 @@ RBAddAccessorsForClassTransformation >> buildTransformations [
 				class: class ])
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddAccessorsForClassTransformation >> className: aClassName [
 
 	className := aClassName
 ]
 
-{ #category : #printing }
-RBAddAccessorsForClassTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBAddAccessorsForClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

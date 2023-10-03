@@ -1,12 +1,12 @@
-Extension { #name : #MCClassTraitDefinition }
+Extension { #name : 'MCClassTraitDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassTraitDefinition >> asRGDefinition [
 
 	^ self ensureRingDefinitionIn: RGEnvironment new
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassTraitDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
@@ -17,5 +17,5 @@ MCClassTraitDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		traitDef classTrait: def.
 		def traitComposition: (self traitCompositionFrom: self classTraitComposition parent: def).
 		traitDef category: self category. "makes no sense for metaclass trait"
-		def].
+		def]
 ]

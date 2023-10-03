@@ -2,44 +2,45 @@
 I am a command to find and replace setUp method in owner class and its subclasses if apply
 "
 Class {
-	#name : #SycFindAndReplaceSetUpCommand,
-	#superclass : #SycMethodCmCommand,
+	#name : 'SycFindAndReplaceSetUpCommand',
+	#superclass : 'SycMethodCmCommand',
 	#instVars : [
 		'method'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycFindAndReplaceSetUpCommand >> executeRefactoring [
 	| refactoring |
-	refactoring := RBFindAndReplaceSetUpRefactoring 
+	refactoring := RBFindAndReplaceSetUpTransformation
 		model: model
 		of: method origin
 		inWholeHierarchy: self searchInTheWholeHierarchy.
 	refactoring execute
 ]
 
-{ #category : #testing }
-SycFindAndReplaceSetUpCommand >> isApplicable [ 
+{ #category : 'testing' }
+SycFindAndReplaceSetUpCommand >> isApplicable [
 	^ context lastSelectedMethod selector = #setUp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycFindAndReplaceSetUpCommand >> name [
 	^ 'Find and replace setUp'
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 SycFindAndReplaceSetUpCommand >> prepareFullExecution [
 	super prepareFullExecution.
-	method := context lastSelectedMethod.
+	method := context lastSelectedMethod
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycFindAndReplaceSetUpCommand >> searchInTheWholeHierarchy [
 
-	^ method origin subclasses 
+	^ method origin subclasses
 		ifEmpty: [ false ]
 		ifNotEmpty: [ self confirm: 'Do you want to search occurrences in the whole hierarchy?' ]
 ]

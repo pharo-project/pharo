@@ -1,6 +1,6 @@
-Extension { #name : #ContextTest }
+Extension { #name : 'ContextTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testCannotReturn [
 	| context p |
 	p := [context := thisContext] fork.
@@ -13,7 +13,7 @@ ContextTest >> testCannotReturn [
 			self assert: err target equals: context]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testClosureRestart [
 	"Test that various combinations of closures are restarted with the expected values"
 	"no args, no remote temps blocks are not tested, as I don't know how to do that programatically without ending up looping endlessly"
@@ -22,13 +22,13 @@ ContextTest >> testClosureRestart [
 	"self should: [self privRestartBlockArgsNoRemoteTempsTest] notTakeMoreThan: 0.1 second" "FAILING!"
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testJump [
 	#(exampleClosure exampleSend exampleStore) do: [ :selector |
 		self verifyJumpWithSelector: selector ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testReadVariableNamed [
 	|localVar|
 	localVar := 2.
@@ -40,14 +40,14 @@ ContextTest >> testReadVariableNamed [
 	self assert: (thisContext readVariableNamed: #Smalltalk) equals: Smalltalk
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testSourceNodeExecuted [
 	| sourceNode |
 	sourceNode := thisContext sender sender sourceNodeExecuted.
 	self assert: sourceNode selector equals: #performTest
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testSourceNodeExecutedWhenContextIsJustAtStartpc [
 	| sourceNode context |
 
@@ -56,7 +56,7 @@ ContextTest >> testSourceNodeExecutedWhenContextIsJustAtStartpc [
 	self assert: sourceNode equals: (self class >> testSelector) ast sendNodes first receiver
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testWriteVariableNamedValue [
 	|localVar|
 	localVar := 2.

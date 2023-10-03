@@ -2,21 +2,23 @@
 Abstract Test class for the Shift Class Builder tests
 "
 Class {
-	#name : #ShAbstractClassBuilderTest,
-	#superclass : #TestCase,
+	#name : 'ShAbstractClassBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'result',
 		'builder'
 	],
-	#category : #'Shift-ClassBuilder-Tests-Base'
+	#category : 'Shift-ClassBuilder-Tests-Base',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
-ShAbstractClassBuilderTest class >> isAbstract [ 
+{ #category : 'testing' }
+ShAbstractClassBuilderTest class >> isAbstract [
 	^ self == ShAbstractClassBuilderTest
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> doValidateMethods: selectors on: class [
 	| association |
 	class methods
@@ -24,24 +26,24 @@ ShAbstractClassBuilderTest >> doValidateMethods: selectors on: class [
 			class methods do: [ :method | method classBinding == association ] ].
 
 	selectors
-		do: [ :selector | 
+		do: [ :selector |
 			self assert: (class canUnderstand: selector).
 			self assert: (class >> selector) classBinding value identicalTo: class ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ShAbstractClassBuilderTest >> setUp [
+
 	super setUp.
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
+	builder := ShiftClassBuilder new
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> validateClassSideMethods: selectors [
 	self doValidateMethods: selectors on: result class
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> validateClassSlots: addedSlots superclass: aSuperClass [
 	| resultSlots allSlots |
 	resultSlots := result class allSlots.
@@ -53,17 +55,17 @@ ShAbstractClassBuilderTest >> validateClassSlots: addedSlots superclass: aSuperC
 
 	allSlots
 		with: resultSlots
-		do: [ :a :b | 
+		do: [ :a :b |
 			self assert: a name equals: b name.
 			self assert: a class equals: b class ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> validateMethods: selectors [
 	self doValidateMethods: selectors on: result
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> validateResult [
 	| obj |
 	self assert: result isClass.
@@ -74,23 +76,23 @@ ShAbstractClassBuilderTest >> validateResult [
 	self assert: obj class identicalTo: result
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> validateSharedPools: pools [
 	self assertCollection: result sharedPools equals: pools asOrderedCollection
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> validateSharedVariables: allVariables [
 	| resultVariables classVar |
 	resultVariables  := result classVarNames.
 
 	self assertCollection: resultVariables equals: allVariables.
-	allVariables do: [ :each | 
+	allVariables do: [ :each |
 		classVar := result classVariableNamed: each.
 		self assert: classVar definingClass equals: result  ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ShAbstractClassBuilderTest >> validateSlots: allSlots [
 	| resultSlots |
 	resultSlots := result allSlots.
@@ -101,12 +103,12 @@ ShAbstractClassBuilderTest >> validateSlots: allSlots [
 
 	allSlots
 		with: resultSlots
-		do: [ :a :b | 
+		do: [ :a :b |
 			self assert: a name equals: b name.
 			self assert: a class equals: b class ]
 ]
 
-{ #category : #'private - validating' }
+{ #category : 'private - validating' }
 ShAbstractClassBuilderTest >> validateSuperclass: aSuperclass [
 	self assert: result superclass identicalTo: aSuperclass
 ]

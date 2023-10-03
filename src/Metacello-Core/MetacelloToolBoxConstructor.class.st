@@ -1,14 +1,16 @@
 Class {
-	#name : #MetacelloToolBoxConstructor,
-	#superclass : #MetacelloAbstractVersionConstructor,
+	#name : 'MetacelloToolBoxConstructor',
+	#superclass : 'MetacelloAbstractVersionConstructor',
 	#instVars : [
 		'currentSection',
 		'methodSections'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBoxConstructor >> evaluateMethodSection: methodSection version: sourceVersionString [
 	| versionSpec |
 	versionSpec := self project versionSpec.
@@ -19,7 +21,7 @@ MetacelloToolBoxConstructor >> evaluateMethodSection: methodSection version: sou
 	methodSection methodSections do: [ :ms | self evaluateMethodSection: ms version: sourceVersionString ]
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 MetacelloToolBoxConstructor >> extractMethodSectionsFor: sourceVersionString [
 	| coll pragma |
 	coll := self extractAllVersionPragmas at: sourceVersionString ifAbsent: [ ^ #() ].
@@ -30,7 +32,7 @@ MetacelloToolBoxConstructor >> extractMethodSectionsFor: sourceVersionString [
 	self methodSections do: [ :methodSection | self evaluateMethodSection: methodSection version: sourceVersionString ].
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 MetacelloToolBoxConstructor >> extractSymbolicVersionSpecsFor: sourceVersionSymbol [
 	| coll pragma |
 	coll := self extractSymbolicVersionPragmas at: sourceVersionSymbol ifAbsent: [ ^ #() ].
@@ -41,14 +43,14 @@ MetacelloToolBoxConstructor >> extractSymbolicVersionSpecsFor: sourceVersionSymb
 	^ self methodSections
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBoxConstructor >> methodSection: methodSection do: aBlock [
 
 	methodSection methodSections do: aBlock.
 	methodSection methodSections do: [ :ms | self methodSection: ms do: aBlock ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBoxConstructor >> methodSection: methodSection inEvaluationOrder: attributes do: aBlock [
     | selected |
     selected := IdentitySet new.
@@ -65,7 +67,7 @@ MetacelloToolBoxConstructor >> methodSection: methodSection inEvaluationOrder: a
         do: [ :ms | self methodSection: ms inEvaluationOrder: (attributes copyFrom: 2 to: attributes size) do: aBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloToolBoxConstructor >> methodSectionAttributes [
     | attributes |
     attributes := Set new.
@@ -73,20 +75,20 @@ MetacelloToolBoxConstructor >> methodSectionAttributes [
     ^ attributes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBoxConstructor >> methodSections [
 
 	methodSections == nil ifTrue: [ methodSections := OrderedCollection new ].
 	^methodSections
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloToolBoxConstructor >> methodSectionsDo: aBlock [
 
 	self methodSection: self do: aBlock
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MetacelloToolBoxConstructor >> methodSectionsInEvaluationOrder: attributes do: aBlock [
     "breadth first traversal ... to collect selected sections, then evaluate individual sections in attribute order"
 
@@ -109,13 +111,13 @@ MetacelloToolBoxConstructor >> methodSectionsInEvaluationOrder: attributes do: a
             list do: aBlock ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloToolBoxConstructor >> reset [
 	super reset.	"not needed, but included for completeness"
 	methodSections := nil
 ]
 
-{ #category : #'api callbacks' }
+{ #category : 'api callbacks' }
 MetacelloToolBoxConstructor >> setFor: attributeList do: aBlock [
     "conditional version support"
 
@@ -129,7 +131,7 @@ MetacelloToolBoxConstructor >> setFor: attributeList do: aBlock [
         ifFalse: [ self methodSections add: methodSection ]
 ]
 
-{ #category : #'api callbacks' }
+{ #category : 'api callbacks' }
 MetacelloToolBoxConstructor >> setFor: attributeList version: aString [
     "conditional symbolicVersion support"
 

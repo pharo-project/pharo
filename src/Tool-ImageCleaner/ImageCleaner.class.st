@@ -20,72 +20,72 @@ You can use one of my 2 methods:
 	remove the versionner
 "
 Class {
-	#name : #ImageCleaner,
-	#superclass : #Object,
+	#name : 'ImageCleaner',
+	#superclass : 'Object',
 	#instVars : [
 		'literalTable'
 	],
-	#category : #'Tool-ImageCleaner'
+	#category : 'Tool-ImageCleaner',
+	#package : 'Tool-ImageCleaner'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ImageCleaner class >> cleanUpForProduction [
 	<script>
 	self new cleanUpForProduction
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ImageCleaner class >> cleanUpForRelease [
 	<script>
 	self new cleanUpForRelease
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleaner class >> examplePackages [
 	<script: 'self examplePackages inspect'>
-	
+
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleaner class >> helpPackages [
 	<script: 'self helpPackages inspect'>
-	
+
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ImageCleaner class >> shareLiterals [
 	<script>
 	self new shareLiterals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleaner class >> testPackages [
+	"All test packages to wipe out, except ReleeaseTests package."
 
 	<script: 'self testPackages inspect'>
-	"All test packages to wipe out, except ReleeaseTests package."
-	^ RPackageOrganizer default testPackageNames copyWithout:
-		  'ReleaseTests'
+	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ImageCleaner >> cleanUpForProduction [
 	<script: 'self new cleanUpForProduction'>
 
-	|unloading|	
+	|unloading|
 	PolymorphSystemSettings showDesktopLogo: false.
-	
-	unloading := [ :each | (MCPackage named: each) unload ].	
+
+	unloading := [ :each | (MCPackage named: each) unload ].
 	self packagesForCleanUpInProduction do: unloading.
 	self class helpPackages do: unloading.
 	self class testPackages do: unloading.
 	self class examplePackages do: unloading.
-	
+
 	self cleanUpForRelease
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ImageCleaner >> cleanUpForRelease [
 	<script: 'self new cleanUpForRelease'>
 
@@ -93,49 +93,46 @@ ImageCleaner >> cleanUpForRelease [
 	self cleanUpMethods.
 	self class environment at: #MetacelloProjectRegistration ifPresent: [ :class | class resetRegistry ].
 	SystemNavigation new
-		allObjectsDo: [ :each | 
+		allObjectsDo: [ :each |
 			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
 				ifTrue: [ each releaseCachedState ] ].
-	
-	self 
-		removeEmptyCategories;
-		removeEmptyPackages.
-		
-	Smalltalk organization sortCategories.
 
-	Smalltalk 
+	self removeEmptyCategories.
+	self packageOrganizer removeEmptyPackagesAndTags.
+
+	Smalltalk
 		garbageCollect;
-		cleanOutUndeclared; 
+		cleanOutUndeclared;
 		fixObsoleteReferences;
 		cleanUp: true except: #() confirming: false.
-		
-	FreeTypeFontProvider current prepareForRelease.	
-	
-	HashedCollection rehashAll.		
+
+	FreeTypeFontProvider current prepareForRelease.
+
+	HashedCollection rehashAll.
 	self shareLiterals.
 	Author reset
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> cleanUpMethods [
 	"Make sure that all methods in use are restarted"
 	<script: 'self new cleanUpMethods'>
 	WeakArray restartFinalizationProcess.
 	ToolRegistry allSubInstances do: [:each | each resetAnnouncer].
 
-	WorldState 
+	WorldState
 		allInstancesDo: [ :ws | ws convertAlarms; cleanStepList].
-		
+
 	ProcessBrowser initialize.
 	Delay restartTimerEventLoop.
 	"We are moving all the restart code to the classes"
-	Smalltalk restartMethods.
+	Smalltalk restartMethods
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> cleanUpProcesses [
 	(Process allInstances
-		reject: [ :p | 
+		reject: [ :p |
 			{
 			Processor activeProcess.
 			WeakArray runningFinalizationProcess.
@@ -143,106 +140,93 @@ ImageCleaner >> cleanUpProcesses [
 			SmalltalkImage current lowSpaceWatcherProcess.
 			UIManager default uiProcess.
 			Delay schedulingProcess} includes: p ])
-		do: [ :p | 
+		do: [ :p |
 			p
 				suspend;
 				terminate ]
 ]
 
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> createLiteralTable [
 	| arrays |
 	literalTable := OCLiteralSet new.
 	self literalsDo: [ :literal :method | literalTable add: literal.
 		"we add all the contentents of the arrays recursively, too"
-		literal isArray ifTrue: [ 
-			literal recursiveDo: [ :each | 
-				(each isSymbol not and: [ each isImmediateObject not and: [each isNotNil]]) 
+		literal isArray ifTrue: [
+			literal recursiveDo: [ :each |
+				(each isSymbol not and: [ each isImmediateObject not and: [each isNotNil]])
 					ifTrue: [ literalTable add: each ] ] ] ].
 
 	"we need to go over all array and unify. As we have all flattend arrays in the literalTable, we need to only have to iterate it"
 	arrays := literalTable select: [ :each | each isArray ].
 	arrays do: [ :array |
 			array beWritableObject.
-			array copy do: [ :arrayValue | 
+			array copy do: [ :arrayValue |
 				(arrayValue  isSymbol not and:  [ arrayValue isImmediateObject not ]) ifTrue:
 				[array
-					at: (array indexOf: arrayValue)
+					at: (array identityIndexOf: arrayValue)
 					put: (literalTable like: arrayValue)]].
-			array beReadOnlyObject ].
+			array beReadOnlyObject ]
 ]
 
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> detroyLiteralTable [
 	"in case someone keeps in instance of ImageCleaner, make sure the table gets GCed"
 	literalTable := nil
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> examplePackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
+
+	^ self class examplePackages
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> helpPackages [
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+
+	^ self class helpPackages
 ]
 
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> literalsDo: aBlock [
 
-	CompiledCode allSubInstancesDo: [ :cm | 
-		cm literals do: [ :literal | 
+	CompiledCode allSubInstancesDo: [ :cm |
+		cm literals do: [ :literal |
 			"Symbols are already shared, we can skip them here"
-			(literal isLiteral and: [literal isSymbol not and: [literal isImmediateObject not and: [literal isNotNil]]]) 
+			(literal isLiteral and: [literal isSymbol not and: [literal isImmediateObject not and: [literal isNotNil]]])
 				ifTrue: [ aBlock value: literal value: cm ] ] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> packagesForCleanUpInProduction [
 	"A list of packages who will be unloaded when going to production.
 	 WARNING, ORDER IS IMPORTANT"
-	
-	^#('MonticelloMocks')
 
+	^#('MonticelloMocks')
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> removeEmptyCategories [
-
 	"Remove empty categories, which are not in MC packages, because MC does
 	not do this (this script does not make packages dirty)"
-	Smalltalk organization removeEmptyCategories.
-	Smalltalk
-		allClassesAndTraitsDo: [ :class |
-			[ :each |
-				each
-					removeEmptyCategories;
-					sortCategories ]
-						value: class organization;
-						value: class class organization ].
+
+	self packageOrganizer removeEmptyPackagesAndTags.
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols ]
 ]
 
-{ #category : #cleaning }
-ImageCleaner >> removeEmptyPackages [
-	| empty |
-	empty := RPackageOrganizer default packages select: #isEmpty.
-	empty do: #unregister.
-]
-
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> shareLiterals [
 	"We go over all methods and replace all the literals that are equal by one copy"
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
 			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable like: literal)  ].
 	self detroyLiteralTable
-		
-
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> testPackages [
 
-	^ self class testPackages 
+	^ self class testPackages
 ]

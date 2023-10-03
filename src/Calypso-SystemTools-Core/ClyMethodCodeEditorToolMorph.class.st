@@ -11,15 +11,17 @@ Internal Representation and Key Implementation Points.
 	editingMethod:		<CompiledMethod>
 "
 Class {
-	#name : #ClyMethodCodeEditorToolMorph,
-	#superclass : #ClyMethodEditorToolMorph,
+	#name : 'ClyMethodCodeEditorToolMorph',
+	#superclass : 'ClyMethodEditorToolMorph',
 	#instVars : [
 		'editingMethod'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMethodCodeEditorToolMorph class >> browserTabActivation [
 	"This declaration specifies that in any browser when methods are selected, a method editor will be available in a tab."
 
@@ -27,26 +29,28 @@ ClyMethodCodeEditorToolMorph class >> browserTabActivation [
 	^ClyTabActivationStrategyAnnotation for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCodeEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext isMethodSelected
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodCodeEditorToolMorph >> applyChanges [
+
 	| selector methodClass currentMethod |
-	methodClass := self chooseClassForNewMethodIfNone: [^false].
-	selector := methodClass compile: self pendingText classified: editingMethod protocol notifying: textMorph.
-	selector ifNil: [^false ].
+	methodClass := self chooseClassForNewMethodIfNone: [ ^ false ].
+	selector := methodClass compile: self pendingText asString classified: editingMethod protocol notifying: textMorph.
+	selector ifNil: [ ^ false ].
 	currentMethod := methodClass >> selector.
-	self tagAndPackageEditingMethod: currentMethod.
+	self setMethodProtocol: currentMethod.
+	self protocolAndPackageEditingMethod: currentMethod.
 	self switchToMethod: currentMethod.
 	"update the AST to the just compiled method. This clears breakpoints. To be improved"
 	ast := self initializeAST.
-	^true
+	^ true
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodCodeEditorToolMorph >> applyDecorations [
 	| hasEdits |
 
@@ -64,7 +68,7 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 	browser decorateMethodEditor: self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodCodeEditorToolMorph >> attachToSystem [
 
 	browser system
@@ -74,14 +78,14 @@ ClyMethodCodeEditorToolMorph >> attachToSystem [
 	SystemAnnouncer uniqueInstance weak when: ASTCacheReset send: #resetASTCache to: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCodeEditorToolMorph >> belongsToCurrentBrowserContext [
 	^browser methodSelection isEmpty
 		ifTrue: [ browser isClassSelected: self editingMethod origin ]
 		ifFalse: [ browser isMethodSelected: self editingMethod]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 	| actualMethod |
 	super belongsToRemovedBrowserContext ifTrue: [ ^true ].
@@ -93,7 +97,7 @@ ClyMethodCodeEditorToolMorph >> belongsToRemovedBrowserContext [
 	^false
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 	super buildLeftSideBar.
 
@@ -101,14 +105,14 @@ ClyMethodCodeEditorToolMorph >> buildLeftSideBar [
 	self leftSideBar enableMouseCommands: CmdTextLeftBarDoubleClickActivation withContextFrom: self
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodCodeEditorToolMorph >> cancelChanges [
-	self updateMethodTagsAndPackage.
+	self updateProtocolAndPackage.
 
 	super cancelChanges
 ]
 
-{ #category : #contexts }
+{ #category : 'contexts' }
 ClyMethodCodeEditorToolMorph >> createCommandContextForCursorAt: aCursorPoint [
 
 	| sourceNode |
@@ -117,14 +121,14 @@ ClyMethodCodeEditorToolMorph >> createCommandContextForCursorAt: aCursorPoint [
 	^ClyMethodSourceCodeContext for: self selectedNode: sourceNode
 ]
 
-{ #category : #contexts }
+{ #category : 'contexts' }
 ClyMethodCodeEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
 		ifNil: [super createTextContext]
 		ifNotNil: [ :astNode | ClyMethodSourceCodeContext for: self selectedNode: astNode]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodCodeEditorToolMorph >> decorateContainerTab [
 	| title |
 	super decorateContainerTab.
@@ -136,40 +140,40 @@ ClyMethodCodeEditorToolMorph >> decorateContainerTab [
 	containerTab label: title
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCodeEditorToolMorph >> defaultIconName [
 	^#scriptManager
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodCodeEditorToolMorph >> detachFromSystem [
 
 	browser system unsubscribe: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> editingMethod [
 	^editingMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> editingMethod: aMethod [
 	editingMethod := aMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> editingText [
 	^editingMethod sourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> extendingPackage: aPackage [
 	super extendingPackage: aPackage.
 
 	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 
 	| foundSelector foundNode positions |
@@ -185,7 +189,7 @@ ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 	^positions first to: positions last + foundSelector keywords last size - 1
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> findAnyVariableInSourceCode: varNames [
 	| foundNode |
 
@@ -195,7 +199,7 @@ ClyMethodCodeEditorToolMorph >> findAnyVariableInSourceCode: varNames [
 	^foundNode start to: foundNode stop
 ]
 
-{ #category : #contexts }
+{ #category : 'contexts' }
 ClyMethodCodeEditorToolMorph >> findSourceNodeAt: aCursorPoint [
 	| startPosition endPosition line lineIndex  selection |
 	lineIndex := self leftSideBar lineIndexForPoint: aCursorPoint. "strangely we can't ask text morph about it"
@@ -213,19 +217,19 @@ ClyMethodCodeEditorToolMorph >> findSourceNodeAt: aCursorPoint [
 		ifNil: [ ast ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCodeEditorToolMorph >> initializeAST [
 	"When the editor is created, we get the AST from the method"
 	^ editingMethod ast
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCodeEditorToolMorph >> isCommandAvailable: aCommand [
 
 	^ aCommand canBeExecutedInCodeMethodEditor: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCodeEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 
@@ -234,7 +238,7 @@ ClyMethodCodeEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 			and: [ editingMethod origin == anotherBrowserTool editingMethod origin ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCodeEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
 	self context class = aClyFullBrowserContext class
 		ifFalse: [ ^ false ].
@@ -244,7 +248,7 @@ ClyMethodCodeEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
 			and: [ editingMethod origin == aClyFullBrowserContext lastSelectedMethod origin ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> methodClass [
 
 	self belongsToCurrentBrowserContext ifFalse: [ ^editingMethod origin ].
@@ -252,56 +256,60 @@ ClyMethodCodeEditorToolMorph >> methodClass [
 	^browser chooseClassForEditorOfMethod: editingMethod
 ]
 
-{ #category : #accessing }
-ClyMethodCodeEditorToolMorph >> methodTags: tagsArray [
-	super methodTags: tagsArray.
+{ #category : 'accessing' }
+ClyMethodCodeEditorToolMorph >> methodProtocol: protocolName [
 
-	self hasUnacceptedEdits ifFalse: [ self tagEditingMethod: editingMethod]
+	super methodProtocol: protocolName.
+
+	self hasUnacceptedEdits ifFalse: [ self editProtocolOf: editingMethod ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCodeEditorToolMorph >> modifiesExtension [
 	^editingMethod isExtension
 		ifTrue: [ extendingPackage ~~ editingMethod package  ]
 		ifFalse: [ extendingPackage notNil and: [extendingPackage ~~ self methodClass package] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodCodeEditorToolMorph >> printContext [
 	^self editingMethod printSystemPath
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCodeEditorToolMorph >> resetASTCache [
 	"when the AST cache is cleared, we have to rescue the AST we are looking at"
-	ASTCache default at: ast compiledMethod ifAbsentPut: ast
+	| cm |
+	cm := ast compiledMethod.
+	cm ifNil: [  ^ self ].
+	ASTCache default at: cm ifAbsentPut: ast
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> selectAnySelector: selectors [
 
 	textMorph setSelection: (self findAnySelectorInSourceCode: selectors)
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> selectAnyVariable: varNames [
 
 	textMorph setSelection: (self findAnyVariableInSourceCode: varNames)
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> selectSourceNode: anASTNode [
 
 	textMorph setSelection: anASTNode sourceInterval
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> selectVariableNamed: varName [
 
 	self selectAnyVariable: { varName }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCodeEditorToolMorph >> selectedSourceNode [
 
 	| selectedInterval selectedNode |
@@ -314,27 +322,39 @@ ClyMethodCodeEditorToolMorph >> selectedSourceNode [
 	^ selectedNode ifNil: [ ast ]
 ]
 
-{ #category : #initialization }
+{ #category : 'operations' }
+ClyMethodCodeEditorToolMorph >> setMethodProtocol: currentMethod [
+	"Only change the protocol if we created a new method, not if we edit an existing one"
+
+	(editingMethod selector = currentMethod selector and: [
+		 editingMethod methodClass = currentMethod methodClass ]) ifTrue: [ ^ self ].
+
+	MethodClassifier
+		classify: currentMethod
+		fallbackProtocol: editingMethod protocolName
+]
+
+{ #category : 'initialization' }
 ClyMethodCodeEditorToolMorph >> setUpModelFromContext [
 	super setUpModelFromContext.
 
 	editingMethod := context lastSelectedMethod
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCodeEditorToolMorph >> setUpParametersFromModel [
 	super setUpParametersFromModel.
 
-	self updateMethodTagsAndPackage
+	self updateProtocolAndPackage
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCodeEditorToolMorph >> setUpTargetClasses [
 
 	targetClasses := browser chooseClassesForNewMethod: editingMethod
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodCodeEditorToolMorph >> switchToMethod: aMethod [
 	self detachFromSystem.
 	editingMethod := aMethod.
@@ -343,14 +363,14 @@ ClyMethodCodeEditorToolMorph >> switchToMethod: aMethod [
 	self update
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodCodeEditorToolMorph >> toggleExtendingPackage [
 	super toggleExtendingPackage.
 
 	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyMethodCodeEditorToolMorph >> update [
 
 	editingMethod := editingMethod origin
@@ -361,9 +381,9 @@ ClyMethodCodeEditorToolMorph >> update [
 	self formatTextIfNeeded
 ]
 
-{ #category : #updating }
-ClyMethodCodeEditorToolMorph >> updateMethodTagsAndPackage [
+{ #category : 'updating' }
+ClyMethodCodeEditorToolMorph >> updateProtocolAndPackage [
 
-	methodTags := editingMethod tags reject: [ :each | each beginsWith: '*' ].
-	extendingPackage := editingMethod isExtension ifTrue: [ editingMethod package ] ifFalse: [ nil ]
+	self methodProtocol: editingMethod protocolName.
+	editingMethod isExtension ifTrue: [ extendingPackage := editingMethod package ]
 ]

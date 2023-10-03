@@ -1,34 +1,36 @@
 Class {
-	#name : #OCDynamicASTCompilerPluginTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Plugins'
+	#name : 'OCDynamicASTCompilerPluginTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Plugins',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Plugins'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDynamicASTCompilerPluginTest >> testCreateAndUseDynamicCompilerPlugin [
 
 	| plugin result |
-	
+
 	plugin := OCDynamicASTCompilerPlugin
-		          newFromTransformBlock: [ :ast | 
+		          newFromTransformBlock: [ :ast |
 			          (RBParseTreeRewriter
 				           replaceLiteral: 42
 				           with: 'meaning of life') executeTree: ast.
 			          ast ]
 		          andPriority: 0.
-		
-	"Use plugin with compiler"	
+
+	"Use plugin with compiler"
 	result := Object compiler
 		          addPlugin: plugin;
 		          evaluate: '42'.
 	self assert: result equals: 'meaning of life'
 ]
 
-{ #category : #tests }
-OCDynamicASTCompilerPluginTest >> testCreateDynamicCompilerPluginWithDefaultPriority [  
+{ #category : 'tests' }
+OCDynamicASTCompilerPluginTest >> testCreateDynamicCompilerPluginWithDefaultPriority [
 
 	| plugin |
 	plugin := OCDynamicASTCompilerPlugin newFromTransformBlock: [ :ast | ast ].
-			
+
 	self assert: plugin priority equals: OCDynamicASTCompilerPlugin defaultPriority
 ]

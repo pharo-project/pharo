@@ -3,8 +3,8 @@ I am a generic pool to be used whith TFFI.
 My main usage will be to keep a pool of external semaphores, avoiding the creation/registration/unregistration of an external semaphore each external call.
 "
 Class {
-	#name : #TFPool,
-	#superclass : #Object,
+	#name : 'TFPool',
+	#superclass : 'Object',
 	#instVars : [
 		'mutex',
 		'elements',
@@ -13,43 +13,45 @@ Class {
 		'pointer',
 		'releaseBlock'
 	],
-	#category : #'ThreadedFFI-Base'
+	#category : 'ThreadedFFI-Base',
+	#package : 'ThreadedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFPool class >> newProvider: aBlock size: aNumber releaseBlock: aReleaseBlock [
 
-	^ self basicNew 
+	^ self basicNew
 		initializeProvider: aBlock size: aNumber releaseBlock: aReleaseBlock;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFPool >> elements [
 
 	^ elements copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFPool >> growBy: aNumber [
 
-	elements := elements, (self populate: (Array new: aNumber)).
+	elements := elements, (self populate: (Array new: aNumber))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFPool >> growRate [
- 
+
 	^ initialSize // 2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFPool >> initialize [
 
 	super initialize.
 	mutex := Mutex new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFPool >> initializeProvider: aBlock size: aNumber releaseBlock: aReleaseBlock [
 
 	self initialize.
@@ -60,78 +62,77 @@ TFPool >> initializeProvider: aBlock size: aNumber releaseBlock: aReleaseBlock [
 	elements := self populate: (Array new: initialSize)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TFPool >> isEmpty [
-	
+
 	^ elements allSatisfy: #isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TFPool >> isOverflown [
 
 	^ pointer > elements size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFPool >> populate: anArray [
 
 	1 to: anArray size do: [ :index |
 		anArray at: index put: provider value ].
-	
+
 	^ anArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TFPool >> printOn: stream [
 
 	super printOn: stream.
-	stream 
-		nextPut: $( ; 
-		print: self size  ; 
+	stream
+		nextPut: $( ;
+		print: self size  ;
 		nextPutAll: ' elements)'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFPool >> release [
 
 	super release.
 
 	releaseBlock ifNotNil: [ elements do: releaseBlock ].
-	elements := nil.
-
+	elements := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFPool >> returnOne: anObject [
 
-	mutex critical: [ 
+	mutex critical: [
 		| index |
-		index := pointer - 1. 
-		index > 0 ifFalse: [ 
+		index := pointer - 1.
+		index > 0 ifFalse: [
 			"This can happen if a new session starts in middle of a call."
 			'Returning an object but pool is full' crTrace.
-			releaseBlock value:anObject. 
-			^ self  ]. 
+			releaseBlock value:anObject.
+			^ self  ].
 		elements at: index put: anObject.
 		pointer := index ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFPool >> size [
 
 	^ elements size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFPool >> takeOne [
 	| element |
 
-	^ mutex critical: [ 
+	^ mutex critical: [
 		| index |
-		
+
 		self isOverflown
 			ifTrue: [ self growBy: self growRate ].
-		
+
 		index := pointer.
 		pointer := pointer + 1.
 		element := elements at: index.

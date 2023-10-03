@@ -1,15 +1,15 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Symbol >> asMethodPreamble [
 	self numArgs = 0
 		ifTrue: [ ^ self asString ].
 	^ String
-		streamContents: [ :str | 
+		streamContents: [ :str |
 			| keywords |
 			keywords := self keywords.
 			keywords
-				doWithIndex: [ :each :index | 
+				doWithIndex: [ :each :index |
 					str
 						nextPutAll: each;
 						nextPutAll: ' var';

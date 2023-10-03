@@ -38,24 +38,26 @@ method1
 ```
 "
 Class {
-	#name : #RBInlineParameterRefactoring,
-	#superclass : #RBRemoveParameterRefactoring,
+	#name : 'RBInlineParameterRefactoring',
+	#superclass : 'RBRemoveParameterRefactoring',
 	#instVars : [
 		'expressions'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
-RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass selector: aSelector [ 
-	^ self new 
+{ #category : 'instance creation' }
+RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass selector: aSelector [
+	^ self new
 		inlineParameter: aString
 		in: aClass
 		selector: aSelector
 ]
 
-{ #category : #'instance creation' }
-RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aString in: aClass selector: aSelector [ 
+{ #category : 'instance creation' }
+RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
 		inlineParameter: aString
@@ -64,41 +66,41 @@ RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aStri
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBInlineParameterRefactoring >> allExpressionsToInline [
 	| coll |
 	coll := Set new.
 	self model allReferencesTo: oldSelector
-		do: 
-			[:each | 
+		do:
+			[:each |
 			| tree |
 			tree := each parseTree.
 			tree ifNotNil: [coll addAll: (self expressionsToInlineFrom: tree)]].
 	^coll asOrderedCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '``@obj ' , (self buildSelectorString: oldSelector)
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			answer
 				add: (aNode arguments at: parameterIndex);
 				yourself ].
 	^ searcher executeTree: aTree initialAnswer: OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBInlineParameterRefactoring >> inlineParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.
 	argument := aString
 ]
 
-{ #category : #transforming }
-RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [ 
+{ #category : 'transforming' }
+RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| node assignment |
 	node := (parseTree arguments at: parameterIndex) copy.
 	parseTree body addTemporaryNamed: node name.
@@ -107,21 +109,21 @@ RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass
 	super modifyImplementorParseTree: parseTree in: aClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInlineParameterRefactoring >> myConditions [
 	self getNewSelector.
 	expressions := self allExpressionsToInline.
-	^(RBCondition definesSelector: oldSelector in: class) 
-		& ((RBCondition withBlock: [expressions isNotEmpty ]) 
-				errorMacro: 'No callers. Use Remove Method instead.') 
-			& ((RBCondition withBlock: [expressions size = 1]) 
-					errorMacro: 'All values passed as this argument must be identical.') 
-			& ((RBCondition withBlock: [expressions first isLiteralNode]) 
+	^(RBCondition definesSelector: oldSelector in: class)
+		& ((RBCondition withBlock: [expressions isNotEmpty ])
+				errorMacro: 'No callers. Use Remove Method instead.')
+			& ((RBCondition withBlock: [expressions size = 1])
+					errorMacro: 'All values passed as this argument must be identical.')
+			& ((RBCondition withBlock: [expressions first isLiteralNode])
 					errorMacro: 'All values passed must be literal.')
 ]
 
-{ #category : #printing }
-RBInlineParameterRefactoring >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBInlineParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

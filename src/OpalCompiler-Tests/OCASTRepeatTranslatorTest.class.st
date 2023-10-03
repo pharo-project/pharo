@@ -1,17 +1,19 @@
 Class {
-	#name : #OCASTRepeatTranslatorTest,
-	#superclass : #OCASTSingleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTRepeatTranslatorTest',
+	#superclass : 'OCASTSingleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTRepeatTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineRepeat . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineRepeat))
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testRepeatExecutesBlock [
 
 
@@ -24,11 +26,11 @@ OCASTRepeatTranslatorTest >> testRepeatExecutesBlock [
 	 ^ total'
 		withTemps: #('total')
 		withBlock: '[ total := total  + 1. total > 5 ifTrue: [ ^ total ] ]'.
-	
-	self assert: result equals: 6.
+
+	self assert: result equals: 6
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testRepeatWithTempInBlock [
 
 	| result |
@@ -39,15 +41,15 @@ OCASTRepeatTranslatorTest >> testRepeatWithTempInBlock [
 	{argument} repeat.
 	 ^ total'
 		withTemps: #('total')
-		withBlock: '[ | tempInBlock | 
+		withBlock: '[ | tempInBlock |
 			tempInBlock := total.
 			total := tempInBlock + 1.
 			total > 5 ifTrue: [ ^ total ] ]'.
-	
-	self assert: result equals: 6.
+
+	self assert: result equals: 6
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 
 	| result |
@@ -58,9 +60,9 @@ OCASTRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 	5 timesRepeat: {argument}.
 	 ^ total'
 		withTemps: #('total')
-		withBlock: '[ | tempInBlock | 
+		withBlock: '[ | tempInBlock |
 			tempInBlock := total.
 			total := total + tempInBlock ]'.
-	
-	self assert: result equals: 2 ** 5.
+
+	self assert: result equals: 2 ** 5
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : #FFIAbstractTest,
-	#superclass : #TestCase,
+	#name : 'FFIAbstractTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'intType',
 		'int32Type',
@@ -8,16 +8,18 @@ Class {
 		'charType',
 		'uint32Type'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIAbstractTest class >> isAbstract [
 
 	^ self == FFIAbstractTest
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIAbstractTest >> externalTypeAlias: aTypeName [
 
 	"Prefix the type so we have control over it.
@@ -27,9 +29,9 @@ FFIAbstractTest >> externalTypeAlias: aTypeName [
 	^ '_test_type_', aTypeName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIAbstractTest >> ffiBindingOf: aString [
-	
+
 	aString = '_test_type_int'
 		ifTrue: [ ^ aString -> intType ].
 	aString = '_test_type_bool'
@@ -45,7 +47,7 @@ FFIAbstractTest >> ffiBindingOf: aString [
 	self error: 'Type not recognized: ', aString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFIAbstractTest >> setUp [
 
 	super setUp.
@@ -53,5 +55,5 @@ FFIAbstractTest >> setUp [
 	int32Type := FFIInt32.
 	uint32Type := FFIUInt32.
 	voidType := FFIVoid.
-	charType := FFICharacterType.
+	charType := FFICharacterType
 ]

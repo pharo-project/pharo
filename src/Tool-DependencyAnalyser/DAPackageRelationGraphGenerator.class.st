@@ -2,15 +2,17 @@
 A class able to generate a dot file from a relationGraph (PDPackageRelationGraph)
 "
 Class {
-	#name : #DAPackageRelationGraphGenerator,
-	#superclass : #DAGraphVizGenerator,
+	#name : 'DAPackageRelationGraphGenerator',
+	#superclass : 'DAGraphVizGenerator',
 	#instVars : [
 		'relationGraph'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackageRelationGraphGenerator class >> newWith: aRelationGraph named: aString [
 
 	| generator |
@@ -21,29 +23,29 @@ DAPackageRelationGraphGenerator class >> newWith: aRelationGraph named: aString 
 	^ generator
 ]
 
-{ #category : #'build items' }
+{ #category : 'build items' }
 DAPackageRelationGraphGenerator >> buildEdges [
 	relationGraph packages
-		do: [ :package | 
+		do: [ :package |
 			package dependencies
-				do: [ :dependency | 
+				do: [ :dependency |
 					graphviz
 						add: dependency source packageName -> dependency target packageName
 						with: {(#label -> dependency numberOfDependencies)} ] ]
 		displayingProgress: 'Building edges'
 ]
 
-{ #category : #'build items' }
+{ #category : 'build items' }
 DAPackageRelationGraphGenerator >> buildNodes [
 	relationGraph seenPackages do: [ :package | graphviz add: package packageName ] displayingProgress: 'Building nodes'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphGenerator >> relationGraph [
 	^ relationGraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphGenerator >> relationGraph: anObject [
 	relationGraph := anObject
 ]

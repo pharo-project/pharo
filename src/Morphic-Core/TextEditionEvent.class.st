@@ -1,57 +1,59 @@
 Class {
-	#name : #TextEditionEvent,
-	#superclass : #UserInputEvent,
+	#name : 'TextEditionEvent',
+	#superclass : 'UserInputEvent',
 	#instVars : [
 		'text',
 		'start',
 		'length'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditionEvent >> isTextEditionEvent [
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditionEvent >> length [
 
 	^ length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditionEvent >> length: anInteger [
 
 	length := anInteger
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 TextEditionEvent >> sentTo: anObject [
 
 	^anObject handleTextEditionEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditionEvent >> start [
 
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditionEvent >> start: anInteger [
 
 	start := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditionEvent >> text [
 
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditionEvent >> text: aString [
 
 	text := aString

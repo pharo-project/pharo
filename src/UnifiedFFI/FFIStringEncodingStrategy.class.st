@@ -3,15 +3,17 @@ I am a string encoding strategy that explicitly encodes a string into bytes befo
 I know how to emit the necessary IR code to push a string argument and encode it.
 "
 Class {
-	#name : #FFIStringEncodingStrategy,
-	#superclass : #Object,
+	#name : 'FFIStringEncodingStrategy',
+	#superclass : 'Object',
 	#instVars : [
 		'encoding'
 	],
-	#category : #'UnifiedFFI-Strings'
+	#category : 'UnifiedFFI-Strings',
+	#package : 'UnifiedFFI',
+	#tag : 'Strings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIStringEncodingStrategy class >> forEncoding: aString [
 
 	^ self new
@@ -19,17 +21,17 @@ FFIStringEncodingStrategy class >> forEncoding: aString [
 		yourself
 ]
 
-{ #category : #emitting }
-FFIStringEncodingStrategy >> emitIRForFunctionArgument: aFFICharacterType inIRBuilder: anIRBuilder context: aContext [ 
-	
+{ #category : 'emitting' }
+FFIStringEncodingStrategy >> emitIRForFunctionArgument: aFFICharacterType inIRBuilder: anIRBuilder context: aContext [
+
 	aFFICharacterType loader emitArgument: anIRBuilder context: aContext.
 	anIRBuilder pushLiteral: encoding asSymbol.
-	anIRBuilder send: #nullTerminatedEncodeWith:.
+	anIRBuilder send: #nullTerminatedEncodeWith:
 ]
 
-{ #category : #emitting }
+{ #category : 'emitting' }
 FFIStringEncodingStrategy >> emitIRForFunctionReturn: aFFICharacterType inIRBuilder: anIRBuilder context: aContext [
-	
+
 	"The top of the stack should contain a ByteString with the bytes of the returned char*.
 	The FFI backend assumes (correctly) that it is a null terminated string, and (incorrectly) that the encoding is the same of the image.
 	We should transform the byte string into a byte array and then decode it"
@@ -39,12 +41,12 @@ FFIStringEncodingStrategy >> emitIRForFunctionReturn: aFFICharacterType inIRBuil
 	^ anIRBuilder returnTop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIStringEncodingStrategy >> encoding [
 	^ encoding
 ]
 
-{ #category : #accessing }
-FFIStringEncodingStrategy >> encoding: aString [ 
+{ #category : 'accessing' }
+FFIStringEncodingStrategy >> encoding: aString [
 	encoding := aString
 ]

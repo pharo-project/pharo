@@ -1,15 +1,15 @@
-Extension { #name : #Slot }
+Extension { #name : 'Slot' }
 
-{ #category : #'*SystemCommands-VariableCommands' }
+{ #category : '*SystemCommands-VariableCommands' }
 Slot >> createRefactoring: variableRefactoringClass for: declarationClass [
-	^variableRefactoringClass 
+	^variableRefactoringClass
 			variable: self name
 			class: declarationClass
 ]
 
-{ #category : #'*SystemCommands-VariableCommands' }
+{ #category : '*SystemCommands-VariableCommands' }
 Slot >> createRefactoring: variableRefactoringClass for: declarationClass in: aModel [
-	^variableRefactoringClass 
+	^variableRefactoringClass
 			model: aModel
 			variable: self name
 			class: declarationClass

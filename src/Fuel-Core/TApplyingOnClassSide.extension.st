@@ -1,6 +1,6 @@
-Extension { #name : #TApplyingOnClassSide }
+Extension { #name : 'TApplyingOnClassSide' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 TApplyingOnClassSide >> fuelAccept: aGeneralMapper [
 	^self explicitRequirement.
 ]

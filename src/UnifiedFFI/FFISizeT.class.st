@@ -4,101 +4,101 @@ I can change in different architectures (32/64bits)
 
 "
 Class {
-	#name : #FFISizeT,
-	#superclass : #FFIIntegerType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFISizeT',
+	#superclass : 'FFIIntegerType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
-FFISizeT class >> externalType [ 
+{ #category : 'accessing' }
+FFISizeT class >> externalType [
 	^ FFIArchitecture forCurrentArchitecture externalSizeTType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT class >> externalTypeAlignment [
 	^ Smalltalk wordSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT class >> externalTypeSize [
 	^ Smalltalk wordSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFISizeT >> basicHandle: aHandle at: index [
 	^ aHandle platformSizeTAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFISizeT >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformSizeTAt: index put: value
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFISizeT >> emitSelector [
 	^ 'platformSizeTAt'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> offsetPointerReadFieldAt: offsetVariableName [
-	^ '^ExternalData 
+	^ '^ExternalData
 		fromHandle: (handle {1}: {2})
 		type: FFIArchitecture forCurrentArchitecture externalSizeTType asPointerType'
-	format: { 
+	format: {
 		self emitSelector.
 		offsetVariableName }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> offsetReadFieldAt: offsetVariableName [
-	self isPointer ifTrue: [ 
+	self isPointer ifTrue: [
 		^ self offsetPointerReadFieldAt: offsetVariableName ].
-	
+
 	^ String streamContents: [ :stream |
 		stream << '^handle ' << self emitSelector << ': ' << offsetVariableName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> offsetWriteFieldAt: offsetVariableName with: valueName [
-	self isPointer ifTrue: [ 
-		^ self externalTypeWithArity 
-			offsetWriteFieldAt: offsetVariableName 
+	self isPointer ifTrue: [
+		^ self externalTypeWithArity
+			offsetWriteFieldAt: offsetVariableName
 			with: valueName ].
 
 	^ String streamContents: [ :stream |
-		stream 
-			<< '^handle ' << self emitSelector << ': ' << offsetVariableName 
+		stream
+			<< '^handle ' << self emitSelector << ': ' << offsetVariableName
 			<< ' put: ' << valueName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> pointerReadFieldAt: byteOffset [
-	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of 
+	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of
 	 just passing the offset as a string... it will work :)"
 	^ self offsetPointerReadFieldAt: byteOffset asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> readFieldAt: byteOffset [
-	self isPointer ifTrue: [ 
+	self isPointer ifTrue: [
 		^ self pointerReadFieldAt: byteOffset ].
 
 	^ String streamContents: [ :stream |
-		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ].
-
+		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> writeFieldAt: byteOffset with: valueName [
 
-	self isPointer ifTrue: [ 
-		^ self externalTypeWithArity 
+	self isPointer ifTrue: [
+		^ self externalTypeWithArity
 			writeFieldAt: byteOffset
 			with: valueName ].
 
 	^ String streamContents: [ :stream |
-		stream 
+		stream
 			<< '^handle ' << self emitSelector << ': ' << byteOffset asString
 			<< ' put: ' << valueName ]
-
 ]

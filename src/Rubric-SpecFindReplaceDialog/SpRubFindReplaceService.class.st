@@ -4,35 +4,36 @@ I am a FindReplace service that allows to use Spec based dialog as a replacement
 I can currently work only with the default Morphic Spec backend.
 "
 Class {
-	#name : #SpRubFindReplaceService,
-	#superclass : #FindReplaceService,
+	#name : 'SpRubFindReplaceService',
+	#superclass : 'FindReplaceService',
 	#instVars : [
 		'dialog',
 		'dialogWindow',
 		'textAreaHolder'
 	],
-	#category : #'Rubric-SpecFindReplaceDialog'
+	#category : 'Rubric-SpecFindReplaceDialog',
+	#package : 'Rubric-SpecFindReplaceDialog'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceService >> caseSensitive [
 	^ caseSensitive ifNil: [caseSensitive := RubAbstractTextArea caseSensitiveFinds]
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> dialogIsActiveFor: aTextArea [
 
  ^ false
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 SpRubFindReplaceService >> discardDialog [
 
 	dialog := nil.
-	dialogWindow := nil.
+	dialogWindow := nil
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> find [
 	| where |
 	self setStartIndex.
@@ -41,7 +42,7 @@ SpRubFindReplaceService >> find [
 	^ where
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> findAndSelect [
 	| where |
 	findStartIndex > 0
@@ -61,37 +62,37 @@ SpRubFindReplaceService >> findAndSelect [
 	^ where
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> findAndSelectRegex [
 	^ self findRegex ifNotNil: [ self findAndSelect ]
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> findNext [
 
 	^ nil
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpRubFindReplaceService >> findPolicyChanged [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceService >> findText: aStringOrText [
-	
+
 	super findText: aStringOrText.
-	self textArea whenFindTextChanged: RubFindTextChanged new.
+	self textArea ifNotNil: [:textArea | textArea whenFindTextChanged: RubFindTextChanged new].
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRubFindReplaceService >> initialize [
 	super initialize.
-	
+
 	textAreaHolder := WeakArray new: 1
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 SpRubFindReplaceService >> openDialog [
 
 	dialogWindow ifNotNil: [ dialogWindow close ].
@@ -102,30 +103,30 @@ SpRubFindReplaceService >> openDialog [
 	dialogWindow := dialog openDialog
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> replace [
-	findStartIndex := self searchBackwards 
-		ifTrue: [self textArea editor stopIndex] 
+	findStartIndex := self searchBackwards
+		ifTrue: [self textArea editor stopIndex]
 		ifFalse: [self textArea editor startIndex].
 	(self find)
 		ifNotNil: [self textArea replaceSelectionWith: self replaceText]
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> replaceAll [
 	| startIdx |
 	startIdx := self wrapAround ifTrue: [1] ifFalse: [self textArea editor selectionInterval first].
 	self textArea replaceAll: self findRegex with: self replaceText startingAt: startIdx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceService >> searchBackwards: aBoolean [
 	searchBackwards := aBoolean.
 	self updateFindStartIndex.
 	self findPolicyChanged
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpRubFindReplaceService >> setStartIndex [
 	findStartIndex
 		ifNil: [ findStartIndex := self searchBackwards
@@ -133,26 +134,26 @@ SpRubFindReplaceService >> setStartIndex [
 				ifFalse: [ self textArea editor startIndex ] ]
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> textArea [
 	^ textAreaHolder at: 1
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SpRubFindReplaceService >> textArea: aTextArea [
 	| oldTextArea |
-	oldTextArea := textAreaHolder at: 1 ifAbsent: nil. 
+	oldTextArea := textAreaHolder at: 1 ifAbsent: nil.
 	oldTextArea == aTextArea ifTrue: [ ^ self ].
 	oldTextArea ifNotNil: [ oldTextArea announcer unsubscribe: self ].
 	textAreaHolder at: 1 put: aTextArea.
 	aTextArea announcer
-		when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self.
+		when: RubFindReplaceWindowRequired send: #whenFindReplaceWindowRequired: to: self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpRubFindReplaceService >> updateFindStartIndex [
 	| si |
-	self textArea 
+	self textArea
 		ifNil: [ ^self ]
 		ifNotNil: [ :aTextArea |
 			aTextArea changed.
@@ -161,11 +162,11 @@ SpRubFindReplaceService >> updateFindStartIndex [
 			self findStartIndex: (self searchBackwards ifTrue: [si first - 1] ifFalse: [si last + 1]) ]
 ]
 
-{ #category : #'user-interface' }
+{ #category : 'user-interface' }
 SpRubFindReplaceService >> whenDialogDeleted [
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 
 	self textArea hasSelection
@@ -174,16 +175,16 @@ SpRubFindReplaceService >> whenFindReplaceWindowRequired: anAnnouncement [
 	self openDialog
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 SpRubFindReplaceService >> whenTextAreaGotFocus: anAnnounce [
-	self textArea: anAnnounce morph.
+	self textArea: anAnnounce morph
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 SpRubFindReplaceService >> whenTextAreaLostFocus: anAnnounce [
 ]
 
-{ #category : #'events handling' }
-SpRubFindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [ 
+{ #category : 'events handling' }
+SpRubFindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [
 	self updateFindStartIndex
 ]

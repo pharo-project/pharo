@@ -1,7 +1,7 @@
-Extension { #name : #FFIUInt32 }
+Extension { #name : 'FFIUInt32' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIUInt32 >> tfExternalType [
-	
+
 	^ TFBasicType uint32
 ]

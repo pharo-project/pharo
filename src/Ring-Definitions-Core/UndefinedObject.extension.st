@@ -1,7 +1,7 @@
-Extension { #name : #UndefinedObject }
+Extension { #name : 'UndefinedObject' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 UndefinedObject >> asRingDefinition [
-	
+
 	^ self
 ]

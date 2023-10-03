@@ -105,37 +105,39 @@ I'm implemented as an extension of FFIStructure.
 I put all of my fields at the same offset, which is zero.
 "
 Class {
-	#name : #FFIUnion,
-	#superclass : #FFIStructure,
-	#category : #'UnifiedFFI-Objects'
+	#name : 'FFIUnion',
+	#superclass : 'FFIStructure',
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFIUnion class >> compileFields: specArray withAccessors: aSymbol [
 	| fieldSpec defineBoolean totalSize|
 	defineBoolean := aSymbol = #always.
 	fieldSpec := self fieldSpec.
-	totalSize := 0.	
+	totalSize := 0.
 	externalStructureAlignment := 1.
-	fieldSpec fieldsAndTypesDo: [ :fieldName :type | 
-		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [ 
-			self defineFieldAccessorsFor: fieldName startingAt: 1 type: type ]. 
+	fieldSpec fieldsAndTypesDo: [ :fieldName :type |
+		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [
+			self defineFieldAccessorsFor: fieldName startingAt: 1 type: type ].
 		totalSize := totalSize max: type typeSize.
 		externalStructureAlignment := externalStructureAlignment max: type typeAlignment  ].
 	totalSize := totalSize alignedTo: externalStructureAlignment.
-	
-	"Real compiled spec is the compiled spec of fields plus a header with structure size and 
+
+	"Real compiled spec is the compiled spec of fields plus a header with structure size and
 	 structure flag"
-	"Temporal type to ensure cyclic (pointer) references will work (case of linked lists, 
+	"Temporal type to ensure cyclic (pointer) references will work (case of linked lists,
 	 for example). I do not like it, but it works :S"
-	compiledSpec := {ExternalType pointerSpec}. 
+	compiledSpec := {ExternalType pointerSpec}.
 	"Now I can reconsider it"
 	compiledSpec := fieldSpec compileSpec copyWithFirst: (totalSize bitOr: FFIFlagStructure).
 	ExternalType noticeModificationOf: self.
 	^ compiledSpec
 ]
 
-{ #category : #'register marshalling' }
+{ #category : 'register marshalling' }
 FFIUnion class >> emitFlatStructureLayoutInto: flatStructureLayout [
 	flatStructureLayout addMemoryFieldSize: self structureSize alignment: self structureAlignment
 ]

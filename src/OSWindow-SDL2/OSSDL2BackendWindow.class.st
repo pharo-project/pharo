@@ -4,8 +4,8 @@ I am the OSWindowHandle interface implemented using SDL2 library
 my handle is an SDL_Window
 "
 Class {
-	#name : #OSSDL2BackendWindow,
-	#superclass : #OSBackendWindow,
+	#name : 'OSSDL2BackendWindow',
+	#superclass : 'OSBackendWindow',
 	#instVars : [
 		'currentCursor',
 		'iconSurface',
@@ -21,32 +21,34 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-Base'
+	#category : 'OSWindow-SDL2-Base',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSSDL2BackendWindow class >> newWithHandle: handle attributes: attributes [
-	^ self basicNew 
-		initWithHandle: handle attributes: attributes; 
+	^ self basicNew
+		initWithHandle: handle attributes: attributes;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow class >> screenScaleFactorBaseDPI [
 
 	^ ScreenScaleFactorBaseDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow class >> screenScaleFactorBaseDPI: aNumber [
 
 	ScreenScaleFactorBaseDPI := aNumber
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSSDL2BackendWindow class >> settingsOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder setting: #screenScaleFactorBaseDPI)
 		parent: #pharoSystem;
 		label: 'SDL2 Screen Scale Factor Base DPI';
@@ -55,39 +57,39 @@ OSSDL2BackendWindow class >> settingsOn: aBuilder [
 		default: 96.0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> borderless [
 	^ sdl2Window getFlags anyMask: SDL_WINDOW_BORDERLESS
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> borderless: aBoolean [
 	sdl2Window toggleBorder: aBoolean not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> bounds: newBounds [
-	self 
+	self
 		position: newBounds origin;
 		extent: newBounds extent
 ]
 
-{ #category : #'mouse capture' }
+{ #category : 'mouse capture' }
 OSSDL2BackendWindow >> captureMouse [
 	SDL2 setRelativeMouseMode: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> clipboardText [
 	^ SDL2 clipboardText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> clipboardText: aText [
 	SDL2 clipboardText: aText
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifiers: modifiers [
 	| shift ctrl alt ralt gui numLock|
 	modifiers buttons button1: (mouseState bitAnd: SDL_BUTTON_LMASK) ~= 0.
@@ -102,7 +104,7 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 	ralt := (modState bitAnd: KMOD_RALT) ~= 0.
 	gui := (modState bitAnd: KMOD_GUI) ~= 0.
 	numLock := (modState bitAnd: KMOD_NUM) ~= 0.
-	
+
 	modifiers leftShift: shift; rightShift: shift;
 		leftCtrl: ctrl; rightCtrl: ctrl;
 		leftAlt: alt; rightAlt: ralt;
@@ -110,21 +112,21 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 		numLock: numLock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2BackendWindow >> convertCursor: aCursor [
 	| bits size result bytesPerLineInResult bytesPerLineInBitMap lineBitmapPosition lineResultPosition |
 
 	"This method converts the bits in a Pharo Cursor to the bitmap expected by SDL.
-	SDL expects a bitmap of 1bit depth. The cursor passed as parameter should be 1 bit depth.	
-		
+	SDL expects a bitmap of 1bit depth. The cursor passed as parameter should be 1 bit depth.
+
 	This conversion handles cursors of any size. SDL requires that the resulting width is multiple of 8.
 	"
 	aCursor unhibernate.
-	
+
 	bits := aCursor bits.
 	size := aCursor extent.
 
-	"The resulting byte array has the size of the cursor (e.g., 32x32), but as each pixel is one byte 
+	"The resulting byte array has the size of the cursor (e.g., 32x32), but as each pixel is one byte
 	we need to divide it by 8"
 	result := ByteArray new: (size x * size y) // 8.
 
@@ -132,7 +134,7 @@ OSSDL2BackendWindow >> convertCursor: aCursor [
 	As the bitmap is organized line by line, we need to calculate how many bytes there is in a line."
 	bytesPerLineInResult := size x // 8.
 	"The amount of bytes in a line in the bitmap is not the same as the result.
-	Bitmaps contain 32-bit numbers. So each line is padded to 32 bits elements (4 bytes). 
+	Bitmaps contain 32-bit numbers. So each line is padded to 32 bits elements (4 bytes).
 	If the line has 48 pixels, in the byteArray it will take 6 bytes, but in the bitmap this is round up to 8 bytes.
 	The padding is always zero and we can discard it in the transformation (as it has not image information)"
 	bytesPerLineInBitMap := bytesPerLineInResult roundUpTo: 4.
@@ -140,28 +142,28 @@ OSSDL2BackendWindow >> convertCursor: aCursor [
 	"We are going to traverse the cursor line by line.
 	As the positions in the bitmap and the byte array are not the same (the bitmap has padding, the bytearray no)
 	we need to have different starts for each line.
-	Once the offset is adjusted we can copy byte-per-byte"	
+	Once the offset is adjusted we can copy byte-per-byte"
 	1 to: size y do: [ :line |
 		lineBitmapPosition := (line - 1) * bytesPerLineInBitMap.
 		lineResultPosition := (line - 1) * bytesPerLineInResult.
-		
+
 		1 to: bytesPerLineInResult do: [ :i |
 			result at: lineResultPosition + i put: (bits byteAt: lineBitmapPosition + i)]].
-	
+
 
 	^ result
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 OSSDL2BackendWindow >> convertCursor: cursor withMask: mask andScale: scale [
 
 	| maskBits extent cursorBits offset sdlCursor scaledCursor scaledMask scaleToUse |
 
 	scaleToUse := scale ceiling.
 
-	^ self 
-		lookupSystemCursor: cursor 
-		ifNotFound: [ 
+	^ self
+		lookupSystemCursor: cursor
+		ifNotFound: [
 			scaledCursor := cursor scaledToSize: (cursor extent * scaleToUse).
 			scaledMask := mask scaledToSize: (mask extent * scaleToUse).
 
@@ -175,87 +177,86 @@ OSSDL2BackendWindow >> convertCursor: cursor withMask: mask andScale: scale [
 				             w: extent x
 				             h: extent y
 				             hotX: offset x negated
-				             hotY: offset y negated ].
+				             hotY: offset y negated ]
 ]
 
-{ #category : #private }
-OSSDL2BackendWindow >> convertNumpadKeysOf: osEvent [ 
+{ #category : 'private' }
+OSSDL2BackendWindow >> convertNumpadKeysOf: osEvent [
 
 	"The SDL input is too low level and does not translate values of numpad keys when NumLock is off. We need to do it manually. May not be compatible with non-standard key labels"
 
 	osEvent modifiers numLock ifTrue: [ ^ self ].
 
-	osEvent symbol = 1073741916 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741916 ifTrue: [
+		osEvent
 			scanCode: 80;
-			symbol: 1073741904;	
+			symbol: 1073741904;
 			character: Character arrowLeft ].
 
-	osEvent symbol = 1073741918 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741918 ifTrue: [
+		osEvent
 			scanCode: 79;
-			symbol: 1073741903;	
+			symbol: 1073741903;
 			character: Character arrowRight ].
 
-	osEvent symbol = 1073741920 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741920 ifTrue: [
+		osEvent
 			scanCode: 82;
-			symbol: 1073741906;	
+			symbol: 1073741906;
 			character: Character arrowUp ].
 
-	osEvent symbol = 1073741914 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741914 ifTrue: [
+		osEvent
 			scanCode: 81;
-			symbol: 1073741905;	
+			symbol: 1073741905;
 			character: Character arrowDown ].
 
-	osEvent symbol = 1073741915 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741915 ifTrue: [
+		osEvent
 			scanCode: 91;
-			symbol: 1073741902;	
+			symbol: 1073741902;
 			character: Character pageDown ].
-		
-	osEvent symbol = 1073741921 ifTrue: [ 
-		osEvent 
+
+	osEvent symbol = 1073741921 ifTrue: [
+		osEvent
 			scanCode: 75;
-			symbol: 1073741899;	
+			symbol: 1073741899;
 			character: Character pageUp ].
 
-	osEvent symbol = 1073741913 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741913 ifTrue: [
+		osEvent
 			scanCode: 77;
-			symbol: 1073741901;	
+			symbol: 1073741901;
 			character: Character end ].
 
-	osEvent symbol = 1073741919 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741919 ifTrue: [
+		osEvent
 			scanCode: 74;
-			symbol: 1073741898;	
+			symbol: 1073741898;
 			character: Character home ].
-		
-	osEvent symbol = 1073741922 ifTrue: [ 
-		osEvent 
+
+	osEvent symbol = 1073741922 ifTrue: [
+		osEvent
 			scanCode: 73;
-			symbol: 1073741897;	
+			symbol: 1073741897;
 			character: Character insert ].
 
-	osEvent symbol = 1073741923 ifTrue: [ 
-		osEvent 
+	osEvent symbol = 1073741923 ifTrue: [
+		osEvent
 			scanCode: 76;
-			symbol: 127;	
-			character: Character delete ].
-
+			symbol: 127;
+			character: Character delete ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> deliverGlobalEvent: aGlobalEvent [
 	^ osWindow deliverGlobalEvent: aGlobalEvent
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 OSSDL2BackendWindow >> destroy [
 
-	sdl2Window ifNotNil: [ :validHandle | 
+	sdl2Window ifNotNil: [ :validHandle |
 		OSSDL2Driver current unregisterWindowWithId: validHandle windowID.
 		renderer ifNotNil: [ renderer destroy ].
 		validHandle destroy
@@ -266,13 +267,13 @@ OSSDL2BackendWindow >> destroy [
 	osWindow := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> diagonalDPI [
 	self fetchDPIAndRaiseEvent.
 	^ diagonalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> extent [
 	| w h |
 	w := ByteArray new: 4.
@@ -281,19 +282,19 @@ OSSDL2BackendWindow >> extent [
 	^ (w signedLongAt: 1) @ (h signedLongAt: 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> extent: newExtent [
 	sdl2Window setSizeW: newExtent x h: newExtent y
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2BackendWindow >> fetchDPI [
 	| displayIndex ddpi hdpi vdpi newDiagonalDPI newScreenScaleFactor |
 	"In OS X disable the computation of a DPI based scale factor. These values
 	are completely wrong and we are getting scale factors that are very large
 	even in non-retina display. This workaround does not affect the support for
 	retina display because that is handled by fetching the size of the drawing surface."
-	Smalltalk os isMacOSX ifTrue: [ 
+	Smalltalk os isMacOSX ifTrue: [
 		diagonalDPI := verticalDPI := horizontalDPI := self screenScaleFactorBaseDPI.
 		screenScaleFactor := 1.0.
 		^ false
@@ -301,12 +302,12 @@ OSSDL2BackendWindow >> fetchDPI [
 
 	displayIndex := sdl2Window getDisplayIndex.
 	displayIndex < 0 ifTrue: [ ^ false ].
-	
+
 	ddpi := ByteArray new: 4.
 	hdpi := ByteArray new: 4.
 	vdpi := ByteArray new: 4.
 	(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 ifFalse: [ ^ false ].
-				
+
 	newDiagonalDPI := ddpi floatAt: 1.
 	"Allow automatic scale of factor increments of 5%. We need to
 	round due to precision issues which may result in an almost 1 scale factor, but not exactly one.
@@ -322,7 +323,7 @@ OSSDL2BackendWindow >> fetchDPI [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2BackendWindow >> fetchDPIAndRaiseEvent [
 	self fetchDPI ifTrue: [
 		(OSWindowResolutionChangeEvent for: osWindow)
@@ -334,20 +335,20 @@ OSSDL2BackendWindow >> fetchDPIAndRaiseEvent [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> fullscreen: aBoolean [
 
-	aBoolean 
-		ifTrue: [ sdl2Window fullscreen: SDL_WINDOW_FULLSCREEN_DESKTOP ] 
+	aBoolean
+		ifTrue: [ sdl2Window fullscreen: SDL_WINDOW_FULLSCREEN_DESKTOP ]
 		ifFalse: [ sdl2Window fullscreen: 0 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2BackendWindow >> getFlags [
 	^ sdl2Window getFlags
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2BackendWindow >> getWMInfo [
 	| wmInfo |
 	wmInfo := SDL_SysWMinfo new version: SDL_Version bindingVersion.
@@ -355,32 +356,32 @@ OSSDL2BackendWindow >> getWMInfo [
 	^ wmInfo
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> handleNewSDLEvent: sdlEvent [
 	^ sdlEvent accept: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> hide [
 	sdl2Window hide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> horizontalDPI [
 	self fetchDPIAndRaiseEvent.
 	^ horizontalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> icon: aForm [
 	| convertedIcon surface |
 	aForm ifNil: [ ^self ].
-	
+
 	convertedIcon := aForm unhibernate; asFormOfDepth: 32.
 	surface := SDL2 createRGBSurfaceFromPixels: convertedIcon bits
 			width: convertedIcon width height: convertedIcon height
 			depth: 32 pitch: convertedIcon width *4
-			rmask: 16r00ff0000 
+			rmask: 16r00ff0000
 			gmask: 16r000ff00
 			bmask: 16r00000ff
 			amask: 16rff000000.
@@ -389,65 +390,65 @@ OSSDL2BackendWindow >> icon: aForm [
 	iconSurface := surface
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 OSSDL2BackendWindow >> initWithHandle: aHandle attributes: attributes [
 	sdl2Window := aHandle.
 	attributes applyTo: self.
 	diagonalDPI := horizontalDPI := verticalDPI := self screenScaleFactorBaseDPI.
 	screenScaleFactor := 1.
-	self fetchDPI.
+	self fetchDPI
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSSDL2BackendWindow >> initialize [
 	super initialize.
 	self class initializeSlots: self
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSSDL2BackendWindow >> isTextInputActive [
 	"See https://wiki.libsdl.org/SDL_IsTextInputActive"
 
 	^ sdl2Window isTextInputActive
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSSDL2BackendWindow >> isValid [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSSDL2BackendWindow >> isVisible [
 	^ (self getFlags bitAnd: SDL_WINDOW_SHOWN) = SDL_WINDOW_SHOWN
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 OSSDL2BackendWindow >> lookupSystemCursor: cursor ifNotFound: aBlock [
-	
+
 	^ self systemCursorConversionTable
 		  detect: [ :aMapping | (Cursor perform: aMapping key) = cursor ]
 		  ifFound: [ :aMapping | SDL2 createSystemCursor: (SDL_SystemCursorType perform: aMapping value) ]
 		  ifNone: [ aBlock value  ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> mapSpecialCharacter: symbol [
 	^ SDL2SpecialCharacterMapping mapKeySymbol: symbol ifAbsent: [ ^ nil ]
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSSDL2BackendWindow >> maximize [
 
 	sdl2Window maximize
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSSDL2BackendWindow >> minimize [
 
 	sdl2Window minimize
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> mousePosition [
 	| x y |
 	x := ByteArray new: 4.
@@ -456,36 +457,36 @@ OSSDL2BackendWindow >> mousePosition [
 	^ ( x signedLongAt: 1) @ (y signedLongAt: 1)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSSDL2BackendWindow >> newAthensRenderer [
 	^ renderer := OSSDL2AthensRenderer for: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSSDL2BackendWindow >> newFormRenderer: form [
-	^ renderer := OSSDL2FormRenderer new 
+	^ renderer := OSSDL2FormRenderer new
 		form: form;
 		backendWindow: self;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSSDL2BackendWindow >> newGenericRenderer [
-	^ renderer := OSSDL2GenericRenderer new 
+	^ renderer := OSSDL2GenericRenderer new
 		backendWindow: self;
 		createSDL2Renderer;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSSDL2BackendWindow >> newOpenGLRenderer [
-	^ renderer := OSSDL2GLRenderer new 
+	^ renderer := OSSDL2GLRenderer new
 		backendWindow: self;
 		createContext;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> platformSpecificHandle [
 	| wmInfo platformID |
 	wmInfo := self getWMInfo.
@@ -499,11 +500,11 @@ OSSDL2BackendWindow >> platformSpecificHandle [
 	platformID = SDL_SYSWM_MIR ifTrue: [ ^ wmInfo info mir asPlatformSpecificHandle ].
 	platformID = SDL_SYSWM_WINRT ifTrue: [ ^ wmInfo info winrt asPlatformSpecificHandle ].
 	platformID = SDL_SYSWM_ANDROID ifTrue: [ ^ wmInfo info android asPlatformSpecificHandle ].
-	
+
 	self error: 'Trying to get a platform specific handle for an unsupported SDL2 platform.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> position [
 	| x y |
 	x := ByteArray new: ExternalType long byteSize.
@@ -512,72 +513,72 @@ OSSDL2BackendWindow >> position [
 	^ ( x signedLongAt: 1) @ (y signedLongAt: 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> position: aPoint [
 	sdl2Window setPositionX: aPoint x asInteger y: aPoint y asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> prepareExternalResourceForAutoRelease [
 	sdl2Window autoRelease
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> raise [
 
 	sdl2Window raise
 ]
 
-{ #category : #'mouse capture' }
+{ #category : 'mouse capture' }
 OSSDL2BackendWindow >> releaseMouse [
 	SDL2 setRelativeMouseMode: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> resizable [
 	^ sdl2Window getFlags anyMask: SDL_WINDOW_RESIZABLE
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSSDL2BackendWindow >> restore [
 
 	sdl2Window restore
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> screenScaleFactor [
 	self fetchDPIAndRaiseEvent.
 	^ screenScaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> screenScaleFactorBaseDPI [
 
-	^ self class screenScaleFactorBaseDPI 
+	^ self class screenScaleFactorBaseDPI
 		ifNil: [ super screenScaleFactorBaseDPI ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> sdl2Window [
 
 	^ sdl2Window
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSSDL2BackendWindow >> setDraggableArea: aRectangle [
 
 	| myCallback sdlRect |
-	
+
 	sdlRect := aRectangle asSDLRect.
-	
+
 	myCallback := DraggableCallback on: [ :aWindow :pt :data |
 			(pt x > sdlRect x) & (pt x < sdlRect w) & (pt y > sdlRect y) & (pt y < sdlRect h) ifTrue: [ 1 ] ifFalse: [ 0 ].
 		].
-	
+
 	^sdl2Window setHitTest: myCallback
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 OSSDL2BackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 
 	| sdlCursor |
@@ -588,24 +589,24 @@ OSSDL2BackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 	currentCursor := sdlCursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> show [
 	sdl2Window show
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 OSSDL2BackendWindow >> showCursor: aBoolean [
 	SDL2 showCursor: (aBoolean ifTrue: [SDL_ENABLE] ifFalse: [SDL_DISABLE])
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSSDL2BackendWindow >> startTextInput [
 	"See https://wiki.libsdl.org/SDL_StartTextInput"
 
 	sdl2Window startTextInput
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSSDL2BackendWindow >> startTextInputAtRectangle: aRectangle [
 
 	"See https://wiki.libsdl.org/SDL_StartTextInput"
@@ -615,57 +616,57 @@ OSSDL2BackendWindow >> startTextInputAtRectangle: aRectangle [
 		setTextInputRectangle: aRectangle asSDLRect
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSSDL2BackendWindow >> stopTextInput [
 	"See https://wiki.libsdl.org/SDL_StopTextInput"
 
 	sdl2Window stopTextInput
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 OSSDL2BackendWindow >> systemCursorConversionTable [
 
 	^ OSPlatform current sdlPlatform systemCursorConversionTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> title [
 	^ sdl2Window title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> title: aTitle [
 	sdl2Window title: aTitle
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSSDL2BackendWindow >> toggleBorderOff [
 
 	sdl2Window toggleBorder: false
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSSDL2BackendWindow >> toggleBorderOn [
 
 	sdl2Window toggleBorder: true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSSDL2BackendWindow >> updateToNewResolution [
-	
+
 	"Force the regeneration of the renderer because we have a new resolution"
 	renderer destroy.
 	renderer validate.
-	renderer updateAll.
+	renderer updateAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> verticalDPI [
 	self fetchDPIAndRaiseEvent.
 	^ verticalDPI
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitKeyDownEvent: event [
 	| osEvent keysym |
 	keysym := event keysym.
@@ -675,14 +676,14 @@ OSSDL2BackendWindow >> visitKeyDownEvent: event [
 			repeat: event repeat;
 			position: self mousePosition;
 			character: (self mapSpecialCharacter: keysym sym).
-			
-	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.	
+
+	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
 	self convertNumpadKeysOf: osEvent.
-		
+
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitKeyUpEvent: event [
 	| osEvent keysym |
 	keysym := event keysym.
@@ -691,36 +692,36 @@ OSSDL2BackendWindow >> visitKeyUpEvent: event [
 			symbol: keysym sym;
 			repeat: event repeat;
 			position: self mousePosition.
-			
+
 	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
 	self convertNumpadKeysOf: osEvent.
 
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitMouseButtonDownEvent: event [
 	| osEvent |
 	osEvent := OSMouseButtonPressEvent for: osWindow.
 	osEvent button: event button;
 			position: event x @ event y.
-	
+
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitMouseButtonUpEvent: event [
 	| osEvent |
 	osEvent := OSMouseButtonReleaseEvent for: osWindow.
 	osEvent button: event button;
 			position: event x @ event y.
-	
+
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitMouseMotionEvent: sdlEvent [
 	| osEvent |
 	osEvent := OSMouseMoveEvent for: osWindow.
@@ -731,19 +732,19 @@ OSSDL2BackendWindow >> visitMouseMotionEvent: sdlEvent [
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitMouseWheelEvent: sdlEvent [
 	| osEvent |
 	osEvent := OSMouseWheelEvent for: osWindow.
 	osEvent position: self mousePosition;
 			scrollHorizontal: sdlEvent x;
 			scrollVertical: sdlEvent y.
-			
+
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
 
 	self fetchDPI.
@@ -755,7 +756,7 @@ OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
 		deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitTextEditingEvent: event [
 	| osEvent |
 	"Nothing for now"
@@ -768,52 +769,52 @@ OSSDL2BackendWindow >> visitTextEditingEvent: event [
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitTextInputEvent: event [
 	| osEvent |
-	
+
 	osEvent := OSTextInputEvent for: osWindow.
 	osEvent text: (ZnUTF8Encoder new decodeBytes: event text);
 			position: self mousePosition.
 	^ osEvent deliver
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSSDL2BackendWindow >> visitWindowEvent: windowEvent [
 	osWindow ifNil: [ ^self ].
-	
+
 	windowEvent event = SDL_WINDOWEVENT_EXPOSED ifTrue: [
 		^ ((OSWindowExposeEvent for: osWindow) timestamp: windowEvent timestamp) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_HIDDEN ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_HIDDEN ifTrue: [
 		^ (OSWindowHiddenEvent for: osWindow) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_SHOWN ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_SHOWN ifTrue: [
 		^ ((OSWindowShownEvent for: osWindow) timestamp: windowEvent timestamp) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_CLOSE ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_CLOSE ifTrue: [
 		^ (OSWindowCloseEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_MOVED ifTrue: [
 		self fetchDPIAndRaiseEvent.
 		^ (OSWindowMoveEvent for: osWindow) deliver
 	].
-	windowEvent event = SDL_WINDOWEVENT_RESIZED ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_RESIZED ifTrue: [
 		^ (OSWindowResizeEvent for: osWindow)
 				width: windowEvent data1;
 				height: windowEvent data2;
 				deliver ].
-	windowEvent event = SDL_WINDOWEVENT_ENTER ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_ENTER ifTrue: [
 		^ (OSWindowMouseEnterEvent for: osWindow) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_LEAVE ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_LEAVE ifTrue: [
 		^ (OSWindowMouseLeaveEvent for: osWindow) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_FOCUS_GAINED ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_FOCUS_GAINED ifTrue: [
 		^ (OSWindowFocusInEvent for: osWindow) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_FOCUS_LOST ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_FOCUS_LOST ifTrue: [
 		^ (OSWindowFocusOutEvent for: osWindow) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_MAXIMIZED ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_MAXIMIZED ifTrue: [
 		^ (OSWindowMaximizedEvent for: osWindow) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_MINIMIZED ifTrue: [ 
+	windowEvent event = SDL_WINDOWEVENT_MINIMIZED ifTrue: [
 		^ (OSWindowMinimizedEvent for: osWindow) deliver ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2BackendWindow >> windowId [
 	^ self sdl2Window windowID
 ]

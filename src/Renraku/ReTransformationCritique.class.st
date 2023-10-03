@@ -2,15 +2,17 @@
 A critique which contains the AST that should replace the existing one of the criticized entity
 "
 Class {
-	#name : #ReTransformationCritique,
-	#superclass : #ReAbstractCritique,
+	#name : 'ReTransformationCritique',
+	#superclass : 'ReAbstractCritique',
 	#instVars : [
 		'newTree'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReTransformationCritique class >> for: anEntity by: aRule tree: newAST [
 
 	^ self basicNew
@@ -20,24 +22,24 @@ ReTransformationCritique class >> for: anEntity by: aRule tree: newAST [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTransformationCritique >> change [
 	"re-add the method compiled from the new AST"
-	
-	^ (RBRefactoryChangeFactory instance) 
-		addMethodSource: newTree newSource 
+
+	^ (RBRefactoryChangeFactory instance)
+		addMethodSource: newTree newSource
 		in: self entity methodClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReTransformationCritique >> initializeRule: aRule target: anEntity tree: newAST [
 
 	self initializeRule: aRule target: anEntity.
 	newTree := newAST
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReTransformationCritique >> providesChange [
-	
+
 	^ true
 ]

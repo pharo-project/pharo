@@ -1,21 +1,23 @@
 Class {
-	#name : #TKTParameterizedServiceTest,
-	#superclass : #TKTTestCase,
+	#name : 'TKTParameterizedServiceTest',
+	#superclass : 'TKTTestCase',
 	#instVars : [
 		'service'
 	],
-	#category : #'TaskIt-Tests-Services'
+	#category : 'TaskIt-Tests-Services',
+	#package : 'TaskIt-Tests',
+	#tag : 'Services'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TKTParameterizedServiceTest >> tearDown [
 
 	(service notNil and: [service isRunning]) ifTrue: [
 		(service stop) waitForCompletion: 1 second ].
-	super tearDown	
+	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTParameterizedServiceTest >> testServiceExecutesStartUpOnStart [
 
 	| started |
@@ -24,13 +26,13 @@ TKTParameterizedServiceTest >> testServiceExecutesStartUpOnStart [
 	service name: 'test service'.
 	service onSetUpDo: [ started := true ].
 	service start.
-	
+
 	100 milliSeconds wait.
-	
-	self assert: started.
+
+	self assert: started
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTParameterizedServiceTest >> testServiceExecutesTearDownOnStop [
 
 	| stopped |
@@ -41,10 +43,10 @@ TKTParameterizedServiceTest >> testServiceExecutesTearDownOnStop [
 	service start.
 	(service stop) waitForCompletion: 2 second.
 
-	self assert: stopped.
+	self assert: stopped
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTParameterizedServiceTest >> testServiceRunsAfterStart [
 
 	| run |
@@ -53,8 +55,8 @@ TKTParameterizedServiceTest >> testServiceRunsAfterStart [
 	service name: 'test service'.
 	service step: [ run := true ].
 	service start.
-	
+
 	10 milliSeconds wait.
-	
-	self assert: run.
+
+	self assert: run
 ]

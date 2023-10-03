@@ -1,56 +1,57 @@
 Class {
-	#name : #SycGenerateVariableAccessorsWithLazyInitializationCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycGenerateVariableAccessorsWithLazyInitializationCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'variable',
 		'value'
 	],
-	#category : #'SystemCommands-VariableCommands'
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> canBeExecutedInContext: aToolContext [
 
-	^ (super canBeExecutedInContext: aToolContext) and: [ 
-		  aToolContext isVariableSelected and: [ 
+	^ (super canBeExecutedInContext: aToolContext) and: [
+		  aToolContext isVariableSelected and: [
 			  aToolContext isGlobalVariableSelected not ] ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
-	
+
 	^CmdContextMenuActivation byRootGroupItemOrder: 2 for: ClyFullBrowserVariableContext
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> asRefactorings [
 
-	^ { (self refactoringClass  
+	^ { (self refactoringClass
 		variable: variable name
-		class: variable definingClass 
+		class: variable definingClass
 		classVariable: variable isClassVariable
 		defaultValue: value) }
 ]
 
-{ #category : #accessing }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName [ 
+{ #category : 'accessing' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> isComplexRefactoring [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
@@ -62,8 +63,8 @@ SycGenerateVariableAccessorsWithLazyInitializationCommand >> prepareFullExecutio
 	value isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]
 ]
 
-{ #category : #'factory method' }
-SycGenerateVariableAccessorsWithLazyInitializationCommand >> refactoringClass [ 
+{ #category : 'factory method' }
+SycGenerateVariableAccessorsWithLazyInitializationCommand >> refactoringClass [
 
 	^ RBCreateLazyAccessorsForVariableTransformation
 ]

@@ -2,28 +2,30 @@
 Default superclass for application about dialogs.
 "
 Class {
-	#name : #AboutDialogWindow,
-	#superclass : #LongMessageDialogWindow,
-	#category : #'Polymorph-Widgets-Windows'
+	#name : 'AboutDialogWindow',
+	#superclass : 'LongMessageDialogWindow',
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #'instance creation' }
-AboutDialogWindow class >> open [ 
+{ #category : 'instance creation' }
+AboutDialogWindow class >> open [
 	<script>
-	
-	^(self new) 
+
+	^(self new)
 		open;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AboutDialogWindow class >> openForPharo [
 	<script>
 	| text dialog width |
 	text := Smalltalk systemInformationString withCRs.
 	width := 0.
 	text
-		linesDo: [ :l | 
+		linesDo: [ :l |
 			width := width
 				max: (self theme textFont widthOfStringOrText: l) ].
 	dialog := self new entryText: text.
@@ -37,7 +39,7 @@ AboutDialogWindow class >> openForPharo [
 	dialog position: 25 @ 25
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AboutDialogWindow >> defaultLabel [
 	"Answer the default label for the receiver."
 

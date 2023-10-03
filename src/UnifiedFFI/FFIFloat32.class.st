@@ -3,54 +3,56 @@ Float type.
 Represented as float in C side.
 "
 Class {
-	#name : #FFIFloat32,
-	#superclass : #FFIFloatType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIFloat32',
+	#superclass : 'FFIFloatType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
-FFIFloat32 class >> externalType [ 
+{ #category : 'accessing' }
+FFIFloat32 class >> externalType [
 	^ ExternalType float
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFloat32 class >> externalTypeAlignment [
 	^ 4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFloat32 class >> externalTypeSize [
 	^ 4
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIFloat32 >> basicHandle: aHandle at: index [
 	^ aHandle floatAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIFloat32 >> basicHandle: aHandle at: index put: value [
 	^ aHandle floatAt: index put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFloat32 >> callbackReturnOn: callbackContext for: aFloat [
 	^ FFIArchitecture forCurrentArchitecture returnSingleFloatsAsDoubles
 		ifTrue: [ callbackContext floatResult: aFloat ]
 		ifFalse: [ callbackContext singleFloatResult: aFloat ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIFloat32 >> emitPointerArityRoll: aBuilder context: aContext [
-	self loader 
-		emitPointerArityPack: aBuilder 
-		context: aContext 
+	self loader
+		emitPointerArityPack: aBuilder
+		context: aContext
 		arity: self pointerArity
 		selector: #packAsFloatToArity:
 ]
 
-{ #category : #callbacks }
-FFIFloat32 >> extractFromCallbackOn: aCallbackArgumentReader [ 
-	
+{ #category : 'callbacks' }
+FFIFloat32 >> extractFromCallbackOn: aCallbackArgumentReader [
+
 	aCallbackArgumentReader extractFloat
 ]

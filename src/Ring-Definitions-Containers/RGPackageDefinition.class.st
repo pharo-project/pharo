@@ -5,55 +5,57 @@ A package can also know in which package is defined
 
 "
 Class {
-	#name : #RGPackageDefinition,
-	#superclass : #RGContainer,
+	#name : 'RGPackageDefinition',
+	#superclass : 'RGContainer',
 	#instVars : [
 		'package'
 	],
-	#category : #'Ring-Definitions-Containers-Base'
+	#category : 'Ring-Definitions-Containers-Base',
+	#package : 'Ring-Definitions-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGPackageDefinition >> addElement: aRGDefinition in: aCollection [
 
 	aRGDefinition package: self.
-	super addElement: aRGDefinition in: aCollection.
+	super addElement: aRGDefinition in: aCollection
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGPackageDefinition >> addInContainer: anRGContainer [
 
 	anRGContainer addPackage: self
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGPackageDefinition >> addMethod: aRGMethodDefinition [
 	"aRGMethodDefinition needs to satisfy the status isMethod"
 
 	aRGMethodDefinition isMethod ifFalse:[ ^self ].
 	aRGMethodDefinition package: self.	"Needed to evaluate #isExtension if it was not set in advance"
-	self 
-		addElement: aRGMethodDefinition 
-		in: (aRGMethodDefinition isExtension 
+	self
+		addElement: aRGMethodDefinition
+		in: (aRGMethodDefinition isExtension
 			ifTrue: [ self extensionMethods ]
 			ifFalse:[ super methods ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> categories [
 	"Retrieves class categories of the receiver"
-	
+
 	^self elements at: #categories
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> categories: aCollection [
 	"Set the class categories collection"
-	
+
 	self elements at: #categories put: (aCollection asOrderedCollection)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> classNames [
 
 	^ self classes isDictionary
@@ -61,42 +63,42 @@ RGPackageDefinition >> classNames [
 		ifFalse:[ self classes collect:[ :class|  class name ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> classes [
 	"Retrieves a collection (by default a dictionary) of classes defined in the receiver and classes holding extension methods"
-	
+
 	^self definedClasses, self extendedClasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> definedClassNames [
 
 	^ super classNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> definedTraits [
 	"Retrieves the traits defined in the receiver"
 
 	^self traits
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinition >> definesClass: aRGBehaviorDefinition [
 	"Returns true if the receiver includes aRGBehaviorDefinition in the defined classes"
 
 	^ self includesClass: aRGBehaviorDefinition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinition >> definesOrExtendsClass: aRGBehaviorDefinition [
-	"Returns true whether the class, aRGBehaviorDefinition, is one locally defined classes of the receiver or 
+	"Returns true whether the class, aRGBehaviorDefinition, is one locally defined classes of the receiver or
 	if the receiver extends such class (that is defined in another package)"
-	
+
 	^ (self definesClass: aRGBehaviorDefinition) or:[ self extendsClass: aRGBehaviorDefinition ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> extendedClassNames [
 
 	^ self extendedClasses isDictionary
@@ -104,88 +106,88 @@ RGPackageDefinition >> extendedClassNames [
 		ifFalse:[ self extendedClasses collect:[ :each| each name ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> extendedClasses [
 	"Retrieves the classes holding the extension methods and returns a dictionary as well"
 	|  classesOfExt |
 	classesOfExt := Dictionary new.
-	
+
 	self extensionMethods
 		do:[ :mth| (classesOfExt includesKey: mth parentName)
 					ifFalse:[ classesOfExt at: mth parentName put: mth parent ] ].
-	
+
 	^classesOfExt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> extendedSelectors [
 	"Retrieves the names of the methods"
-	
+
 	^ self extensionMethods keys
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinition >> extendsClass: aRGBehaviorDefinition [
 	"Returns true if the receiver extends aRGBehaviorDefinition (that is defined in another package)"
-	
+
 	^ self extendedClasses includes: aRGBehaviorDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> extensionMethods [
 	"Retrieves extension methods"
-	
+
 	^self elements at: #extensionMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> extensionMethods: aCollection [
 	"Set the extension methods collection"
-	
+
 	self elements at: #extensionMethods put: aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGPackageDefinition >> initialize [
 
 	super initialize.
 	self withoutPackages.	"By default the receiver has no child packages"
-	self extensionMethods: IdentityDictionary new.		
-	self categories: OrderedCollection new.
+	self extensionMethods: IdentityDictionary new.
+	self categories: OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinition >> isPackage [
 
 	^true
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 RGPackageDefinition >> lookupClassNamed: className [
 	"Look for the class named className in the receiver's defined classes or in any of its package children"
 	| class |
-	
+
 	class:= self classNamed: className.
 	class ifNotNil:[ ^class ].
-	
+
 	self packages
 		do:[ :each| class:= each lookupClassNamed: className.
 				    class ifNotNil:[ ^class ] ].
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> methods [
-	"Retrieves all the methods defined in the receiver. 
+	"Retrieves all the methods defined in the receiver.
 	#methods holds the methods of defined classes"
-	
+
 	^super methods, self extensionMethods
 ]
 
-{ #category : #metrics }
+{ #category : 'metrics' }
 RGPackageDefinition >> numberOfLinesOfCode [
-	
-	^ self 
+
+	^ self
 		annotationNamed: #numberOfLinesOfCode
 		ifAbsentPut: [
 			| number |
@@ -194,28 +196,28 @@ RGPackageDefinition >> numberOfLinesOfCode [
 			number ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> package [
 	"Retrieves the  package in which self is contained"
 
 	^package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> package: aRGPackage [
 	"Sets the outer package of the receiver if exists"
 
 	package:= aRGPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> parent [
 	"Retrieves the environment linked to this package"
-	
+
 	^self environment
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGPackageDefinition >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
@@ -224,23 +226,23 @@ RGPackageDefinition >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGPackageDefinition >> realPackage [
 
 	^ RPackageOrganizer default packageNamed: self name
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGPackageDefinition >> removeMethod: aRGMethodDefinition [
 
-	self 
-		removeElement: aRGMethodDefinition 
-		from: (aRGMethodDefinition isExtension 
+	self
+		removeElement: aRGMethodDefinition
+		from: (aRGMethodDefinition isExtension
 				ifTrue: [ self extensionMethods ]
 				ifFalse:[ super methods ])
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGPackageDefinition >> withoutCategories [
 
 	self removeElementsCategorized: #categories

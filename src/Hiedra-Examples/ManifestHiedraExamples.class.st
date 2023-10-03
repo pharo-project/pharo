@@ -6,7 +6,9 @@ It uses Athens, and provides support for Morphic and Spec.
 I contains the examples of the project.
 "
 Class {
-	#name : #ManifestHiedraExamples,
-	#superclass : #PackageManifest,
-	#category : #'Hiedra-Examples-Manifest'
+	#name : 'ManifestHiedraExamples',
+	#superclass : 'PackageManifest',
+	#category : 'Hiedra-Examples-Manifest',
+	#package : 'Hiedra-Examples',
+	#tag : 'Manifest'
 }

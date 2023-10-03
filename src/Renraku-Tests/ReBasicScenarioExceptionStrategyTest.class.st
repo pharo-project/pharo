@@ -1,10 +1,11 @@
 Class {
-	#name : #ReBasicScenarioExceptionStrategyTest,
-	#superclass : #ReExceptionStrategyBaseTest,
-	#category : #'Renraku-Tests'
+	#name : 'ReBasicScenarioExceptionStrategyTest',
+	#superclass : 'ReExceptionStrategyBaseTest',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReBasicScenarioExceptionStrategyTest >> testIgnore [
 	| critiques |
 	ReExceptionStrategy current: ReIgnoreExceptionStrategy.
@@ -14,38 +15,38 @@ ReBasicScenarioExceptionStrategyTest >> testIgnore [
 	self assertEmpty: critiques
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReBasicScenarioExceptionStrategyTest >> testLog [
 	| critiques |
 
 	ReExceptionStrategy current: ReLogExceptionStrategy.
-	
+
 	self
 		shouldnt: [
 			critiques := self validationScenario  ]
 		raise: MyTestError.
-		
+
 	self assert: critiques isNotEmpty.
 	self assert: (
 		critiques anySatisfy: [ :crit |
-		 (crit isKindOf: ReExceptionProperty) and: [ 
+		 (crit isKindOf: ReExceptionProperty) and: [
 			crit message includesSubstring: self errorMessage ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReBasicScenarioExceptionStrategyTest >> testPass [
 
 	ReExceptionStrategy current: RePassExceptionStrategy.
-	
+
 	self
 		should: [ self validationScenario  ]
 		raise: MyTestError
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReBasicScenarioExceptionStrategyTest >> validationScenario [
 	| critiques |
-	
+
 	critiques := Set new.
 
 	[ MyTestError signal: self errorMessage ]
@@ -56,6 +57,6 @@ ReBasicScenarioExceptionStrategyTest >> validationScenario [
 				about: self
 				forPropertiesDo: [ :prop |
 					critiques add: prop ] ].
-			
+
 	^ critiques
 ]

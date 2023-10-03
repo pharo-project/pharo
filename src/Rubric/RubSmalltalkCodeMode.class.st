@@ -2,15 +2,17 @@
 I represent the mode to use for editing smalltalk code
 "
 Class {
-	#name : #RubSmalltalkCodeMode,
-	#superclass : #RubAbstractSmalltalkMode,
+	#name : 'RubSmalltalkCodeMode',
+	#superclass : 'RubAbstractSmalltalkMode',
 	#instVars : [
 		'classOrMetaclass'
 	],
-	#category : #'Rubric-Editing-Code'
+	#category : 'Rubric-Editing-Code',
+	#package : 'Rubric',
+	#tag : 'Editing-Code'
 }
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCodeMode class >> editingModeMenuOn: aBuilder [
 	"Specify the menu used to select an editing mode"
 
@@ -20,17 +22,17 @@ RubSmalltalkCodeMode class >> editingModeMenuOn: aBuilder [
 		action: [:model | model textArea editingMode: self new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSmalltalkCodeMode class >> label [
 	^ 'Smalltalk code'
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCodeMode class >> menuKeyword [
 	^ #RubSmalltalkCodeMenu
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCodeMode class >> menuOn: aBuilder [
 	"Specify the menu used when writing code."
 
@@ -42,17 +44,22 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #doIt;
 		help: nil;
 		iconName: #smallDoIt.
-	(aBuilder item: #'Print it' translated)
+	(aBuilder item: #'Do & print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
 		iconName: #smallPrintIt.
-	(aBuilder item: #'Inspect it' translated)
+	(aBuilder item: #'Do & inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
 		iconName: #smallInspectIt.
-	(aBuilder item: #'Basic Inspect it' translated)
+	(aBuilder item: #'Do & browse its class' translated)
+		keyText: 'b';
+		selector: #browseFullClass;
+		help: nil;
+		iconName: #smallSystemBrowser.
+	(aBuilder item: #'Do & basic inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
 		help: nil;
@@ -64,7 +71,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		iconName: #smallDebug.
 	(aBuilder item: #'Profile it' translated)
 		selector: #tallyIt;
-		iconName: #smallDebug;
+		iconName: #smallProfile;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
@@ -106,10 +113,28 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 	(aBuilder item: #'Paste Recent' translated)
 		selector: #pasteRecent;
 		help: nil;
-		iconName: #smallCopy;
+		iconName: #smallCopy.
+	(aBuilder item: #'Indent' translated)
+		keyText: 'R';
+		selector: #indent;
+		help: nil.
+	(aBuilder item: #'Outdent' translated)
+		keyText: 'L';
+		selector: #outdent;
+		help: nil.
+	(aBuilder item: #'Widen selection' translated)
+		keyText: '2';
+		selector: #widenSelectionOfIt;
+		help: nil;
+		iconName: #smallFullscreen.
+	(aBuilder item: #'Compare selection to clipboard' translated)
+		keyText: 'C';
+		selector: #compareToClipboard;
+		help: nil;
+		iconName: #diff;
 		withSeparatorAfter.
 	aBuilder model
-		ifNotNil: [ :mod | 
+		ifNotNil: [ :mod |
 			mod model
 				ifNotNil: [ (aBuilder item: #Accept translated)
 						keyText: 's';
@@ -121,91 +146,92 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 						iconName: #smallCancel ] ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> bindingOf: varName [
 	^ self model bindingOf: varName
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> bindings [
 	^ self model bindings
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
 	classOrMetaclass := aBehavior.
 	self updateStyler
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
-	tree := RBParser parseMethod: source onError: [ :msg :pos | ^ self ].
+	tree := self parseSource: source.
+	tree checkFaulty: [ :msg :pos | ^self ].
 	formatted := tree formattedCodeIn: classOrMetaclass.
 	formatted = source
 		ifTrue: [ ^ self ].
 	self textArea updateTextWith: formatted
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> hasBindingOf: aString [
 	" For the shout styler "
 	^ self model notNil and: [ self model hasBindingOf: aString ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RubSmalltalkCodeMode >> parseExpression: aString [
 
 	^RBParser parseFaultyExpression: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RubSmalltalkCodeMode >> parseSource: aString [
 
 	^RBParser parseFaultyMethod: aString
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 	^ self model isNil
-		or: [ 
+		or: [
 			(self model interactionModel respondsTo: #shoutAboutToStyle:) not
 				or: [ self model interactionModel shoutAboutToStyle: self ] ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> shoutStyler [
 	^ self textArea shoutStyler
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> updateStyler [
 
 	self textArea ifNil: [ ^ self ].
 	self textArea shoutStyler ifNotNil: [ :s | s classOrMetaClass: classOrMetaclass ]
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RubSmalltalkCodeMode >> updateTextAreaWhenPlugged [
 	self withShoutStyler.
 	super updateTextAreaWhenPlugged
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RubSmalltalkCodeMode >> updateTextAreaWhenUnplugged [
 	self textArea withoutShoutStyler.
 	super updateTextAreaWhenUnplugged
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> withShoutStyler [
 	self textArea withDecoratorNamed: #shoutStyler.
-	self updateStyler.
+	self updateStyler
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> withoutShoutStyler [
 	self textArea withoutDecoratorNamed: #shoutStyler
 ]

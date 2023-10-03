@@ -2,8 +2,8 @@
 Various types used by SDL2
 "
 Class {
-	#name : #SDL2Types,
-	#superclass : #SharedPool,
+	#name : 'SDL2Types',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'Int16',
 		'Int32',
@@ -28,10 +28,12 @@ Class {
 		'Uint64',
 		'Uint8'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Types class >> initialize [
 	"
 	self initialize
@@ -48,14 +50,14 @@ SDL2Types class >> initialize [
 	Uint64 := #uint64.
 	Int64 := #int64.
 	Sint64 := #int64.
-	
+
 	SDL_Keycode := Sint32.
 	SDL_Keymod := Uint32.
 	SDL_Scancode := Uint32.
 	SDL_BlendMode := Uint32.
 	SDL_BlendFactor := Uint32.
 	SDL_BlendOperation := Uint32.
-	
+
 	SDL_GLattr := #int.
 	SDL_AudioDeviceID := #uint32.
 	SDL_AudioFormat := #uint16.

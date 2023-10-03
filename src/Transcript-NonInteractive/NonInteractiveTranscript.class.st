@@ -15,77 +15,79 @@ or
 
 "
 Class {
-	#name : #NonInteractiveTranscript,
-	#superclass : #Object,
+	#name : 'NonInteractiveTranscript',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'fileName',
 		'accessSemaphore'
 	],
-	#category : #'Transcript-NonInteractive-Base'
+	#category : 'Transcript-NonInteractive-Base',
+	#package : 'Transcript-NonInteractive',
+	#tag : 'Base'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 NonInteractiveTranscript class >> defaultLogFileName [
 	"The default file name that will be used to write to.
 	This should probably become a system setting."
-	
+
 	^ 'PharoTranscript.log'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NonInteractiveTranscript class >> file [
-	"Create a new NonInteractiveTranscript that will output 
+	"Create a new NonInteractiveTranscript that will output
 	to the default file named by #defaultLogFileName."
-	
-	^ self onFileNamed: self defaultLogFileName 
+
+	^ self onFileNamed: self defaultLogFileName
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 NonInteractiveTranscript class >> initialize [
 	"Make sure to cleanup on shutdown"
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NonInteractiveTranscript class >> isInstalled [
 	^ Transcript class = self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NonInteractiveTranscript class >> onFileNamed: fileName [
 	"Create a NonInteractiveTranscript that will write to fileName."
-	
+
 	^ self new
 		fileName: fileName;
 		yourself
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 NonInteractiveTranscript class >> shutDown [
 	"Send close to all our instances.
 	Their streams will be reopened on first use later on."
-	
+
 	self allInstances do: #close
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NonInteractiveTranscript class >> stderr [
-	"Create a new NonInteractiveTranscript that will output 
+	"Create a new NonInteractiveTranscript that will output
 	to the special standard error output stream of the virtual machine process."
-	
+
 	^ self onFileNamed: #stderr
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NonInteractiveTranscript class >> stdout [
-	"Create a new NonInteractiveTranscript that will output 
+	"Create a new NonInteractiveTranscript that will output
 	to the special standard output stream of the virtual machine process."
-	
+
 	^ self onFileNamed: #stdout
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
 	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
@@ -96,191 +98,191 @@ NonInteractiveTranscript >> << anObject [
  	anObject putOn: self
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> clear [
 	"Clear the receiver, removing all existing output"
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> close [
 	"Close the receiver, indicating it is not longer needed"
-	
-	self critical: [ 
-		stream ifNotNil: [ 
+
+	self critical: [
+		stream ifNotNil: [
 			(self isStdout or: [ self isStderr ])
 				ifTrue: [ stream flush ]
 				ifFalse: [ stream close ].
 			stream := nil ] ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> cr [
 	"Output a cr on the receiver, buffered and not yet shown"
-	
+
 	self newLine
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> crShow: anObject [
 	"Output anObject asString on the receiver preceded by a cr and show the output"
-	
+
 	self critical: [ self cr; show: anObject ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> critical: block [
 	"Execute block making sure only one thread accesses the receiver"
 
-	^ accessSemaphore critical: block 
+	^ accessSemaphore critical: block
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> endEntry [
 	"Show the currently buffered output"
 
 	self flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NonInteractiveTranscript >> fileName [
 	"The file name that I will write to.
 	Lazy initialized to a default.
-	When I connect to the standard output stream of the 
+	When I connect to the standard output stream of the
 	virtual machine process I return #stdout."
-	
+
 	^ fileName ifNil: [ fileName := self class defaultLogFileName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NonInteractiveTranscript >> fileName: anObject [
 	"Initialize me to write to a file stream described by anObject.
 	anObject is either a String naming a file or the special #stdout value
 	for using the standard output stream of the virtual machine process."
-	
+
 	self close.
 	fileName := anObject
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> flush [
 	"Show the currently buffered output"
 
 	self critical: [ self stream flush ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NonInteractiveTranscript >> initialize [
 	super initialize.
 	accessSemaphore := Mutex new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NonInteractiveTranscript >> initializeStream [
 	"Open the file stream that I write to or connect to #stdout/#stderr.
 	I will use the platform line end convention.
 	I will append to regular files."
-	
-	^ stream := self isStdout 
+
+	^ stream := self isStdout
 		ifTrue: [ Stdio stdout ]
-		ifFalse: [ 
+		ifFalse: [
 			self isStderr
 				ifTrue: [ Stdio stderr ]
 				ifFalse: [ (File named: self fileName) openForAppend ] ]
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 NonInteractiveTranscript >> install [
 	"Install me as a replacement for Transcript"
-	
-	Smalltalk globals 
-		at: #Transcript 
+
+	Smalltalk globals
+		at: #Transcript
 		put: self
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 NonInteractiveTranscript >> isSelfEvaluating [
 
-	^self == Transcript 
+	^self == Transcript
 		ifTrue: [ true ]
 		ifFalse: [ super isSelfEvaluating ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NonInteractiveTranscript >> isStderr [
-	
+
 	^ fileName = #stderr
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NonInteractiveTranscript >> isStdout [
 	"Answer true when I am setup to be connected to the special
 	standard output stream of the virtual machine process."
-	
+
 	^ fileName = #stdout
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> newLine [
 	"Output a cr on the receiver, buffered and not yet shown"
-	
+
 	self nextPutAll: OSPlatform current lineEnding
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> nextPut: aCharacter [
 	"Output character on the receiver, buffered, not yet shown"
 
 	self critical: [  self stream nextPut: aCharacter ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> nextPutAll: aCollection [
 	"Output string on the receiver, buffered, not yet shown"
 
 	self critical: [ self stream nextPutAll: aCollection ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> print: anObject [
 	"Output anObject asString on the receiver, buffered, not yet shown"
-	
+
 	self nextPutAll: anObject asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 NonInteractiveTranscript >> printOn: aStream [
 	self == Transcript ifFalse: [ ^ super printOn: aStream ].
 	aStream nextPutAll: 'Transcript'
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> show: anObject [
 	"Output anObject asString on the receiver and show the output"
-	
+
 	self critical: [ self print: anObject; endEntry ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> space [
 	"Output a space on the receiver, buffered and not yet shown"
 
 	self nextPut: Character space
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NonInteractiveTranscript >> stepGlobal [
 	"ignored"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NonInteractiveTranscript >> stream [
 	"The file stream I am writing to.
 	Lazy initialized so as not to create the file when it is not used."
-	
+
 	^ stream ifNil: [ self initializeStream ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 NonInteractiveTranscript >> tab [
 	"Output a tab on the receiver, buffered and not yet shown"
 

@@ -2,12 +2,14 @@
 SUnit tests for TextEmphasis
 "
 Class {
-	#name : #TextEmphasisTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextEmphasisTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextEmphasisTest >> setUp [
 	super setUp.
 	prototypes add: TextEmphasis bold;
@@ -15,10 +17,10 @@ TextEmphasisTest >> setUp [
 		 add: TextEmphasis narrow;
 		 add: TextEmphasis normal;
 		 add: TextEmphasis struckOut;
-		 add: TextEmphasis underlined 
+		 add: TextEmphasis underlined
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testAdd [
 	| t1 |
 	t1 := TextEmphasis bold.
@@ -26,26 +28,25 @@ TextEmphasisTest >> testAdd [
 	self assert: (t1 = 2r11) description: 'bold and italics didn''t add correctly'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testBold [
-	self assert: TextEmphasis bold equals: 1.
-
+	self assert: TextEmphasis bold equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testDominatedByCmd0 [
 	self assert: TextEmphasis new dominatedByCmd0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testDominates [
 	| text |
 	"self domination"
 	#(#bold #italic  #underlined #narrow #struckOut) do: [ :anEmphasis |
 		self assert: ((TextEmphasis perform: anEmphasis) dominates: (TextEmphasis perform: anEmphasis)) ].
 	"different emphasis can be mixed, no dominant attribute"
-	#(#bold #italic  #underlined #narrow #struckOut) 
-		with: #(#struckOut #underlined  #narrow #italic #bold) 
+	#(#bold #italic  #underlined #narrow #struckOut)
+		with: #(#struckOut #underlined  #narrow #italic #bold)
 		do: [:emph1 :emph2 | self deny: ((TextEmphasis perform: emph1) dominates: (TextEmphasis perform: emph2)) ].
 	"In action"
 	text := 'Pharo is cool' asText.
@@ -62,10 +63,10 @@ TextEmphasisTest >> testDominates [
 	"and even in italic"
 	text addAttribute: TextEmphasis italic.
 	self assert: (text attributesAt: 1) size equals: 3.
-	self assert: (text attributesAt: 1) third emphasisCode equals: 2.
+	self assert: (text attributesAt: 1) third emphasisCode equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testEmphasisCode [
 	| attr |
 	"test each emphasis code value"
@@ -79,39 +80,36 @@ TextEmphasisTest >> testEmphasisCode [
 	attr := TextEmphasis bold emphasisCode: 4.
 	self assert: attr equals: 4.
 	"We can add the emphasisCode"
-	attr := TextEmphasis new emphasisCode: 
-		TextEmphasis italic emphasisCode 
-		+ TextEmphasis bold emphasisCode 
+	attr := TextEmphasis new emphasisCode:
+		TextEmphasis italic emphasisCode
+		+ TextEmphasis bold emphasisCode
 		+ TextEmphasis struckOut  emphasisCode.
 	self assert: attr emphasisCode equals: 2r10011
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testFromCode [
 	| t1 |
 	t1 := TextEmphasis fromCode: 2r10101.
 	self assert: t1 value equals: 2r10101
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testItalic [
 	self assert: TextEmphasis italic equals: 2
-
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testNarrow [
 	self assert: TextEmphasis narrow  equals: 8
-
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testNormal [
 	self assert: TextEmphasis normal equals: 0
-
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testRemove [
 	| t1  |
 	t1 := TextEmphasis bold.
@@ -120,7 +118,7 @@ TextEmphasisTest >> testRemove [
 	self assert: t1 = TextEmphasis italic description: 'Removing bold didn''t leave italics'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testSet [
 	"Not set with normal emphasis..."
 	self deny: TextEmphasis normal set.
@@ -132,22 +130,20 @@ TextEmphasisTest >> testSet [
 		| attr |
 		attr := TextEmphasis perform: anEmphasis.
 		attr turnOff.
-		self deny: attr set].
+		self deny: attr set]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testStruckOut [
 	self assert: TextEmphasis struckOut equals: 16
-
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testUnderlined [
 	self assert: TextEmphasis underlined equals: 4
-
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testValue [
 	| attr |
 	"asking for the value return the emphasis code"
@@ -159,9 +155,9 @@ TextEmphasisTest >> testValue [
 	self assert: TextEmphasis struckOut value equals: 16.
 
 	"We can add the emphasisCode, value should respond accordingly"
-	attr := TextEmphasis new emphasisCode: 
-		TextEmphasis italic emphasisCode 
-		+ TextEmphasis bold emphasisCode 
+	attr := TextEmphasis new emphasisCode:
+		TextEmphasis italic emphasisCode
+		+ TextEmphasis bold emphasisCode
 		+ TextEmphasis struckOut  emphasisCode.
 	self assert: attr value equals: 2r10011.
 	"equality is based on the value"

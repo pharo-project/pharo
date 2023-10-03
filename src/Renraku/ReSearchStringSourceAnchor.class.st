@@ -2,31 +2,33 @@
 This class stores a searchString which will be searched for in the entities source code on demand to find an interval of substring
 "
 Class {
-	#name : #ReSearchStringSourceAnchor,
-	#superclass : #ReSourceAnchor,
+	#name : 'ReSearchStringSourceAnchor',
+	#superclass : 'ReSourceAnchor',
 	#instVars : [
 		'searchString'
 	],
-	#category : #'Renraku-SourceAnchors'
+	#category : 'Renraku-SourceAnchors',
+	#package : 'Renraku',
+	#tag : 'SourceAnchors'
 }
 
-{ #category : #'instance creation' }
-ReSearchStringSourceAnchor class >> entity: anEntity string: aString [ 
-	
-	^ self basicNew 
+{ #category : 'instance creation' }
+ReSearchStringSourceAnchor class >> entity: anEntity string: aString [
+
+	^ self basicNew
 		initializeEnitity: anEntity
 		searchString: aString;
 		yourself
 ]
 
-{ #category : #initialization }
-ReSearchStringSourceAnchor >> initializeEnitity: anEntiy searchString: aString [ 
-	
+{ #category : 'initialization' }
+ReSearchStringSourceAnchor >> initializeEnitity: anEntiy searchString: aString [
+
 	self initializeEnitity: anEntiy.
 	searchString := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSearchStringSourceAnchor >> interval [
 
 	| start tweekedSubstring |
@@ -41,13 +43,13 @@ ReSearchStringSourceAnchor >> interval [
 	^ start to: start + tweekedSubstring size - 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReSearchStringSourceAnchor >> providesInterval [
 
 	^ searchString notNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSearchStringSourceAnchor >> searchString [
 	^ searchString
 ]

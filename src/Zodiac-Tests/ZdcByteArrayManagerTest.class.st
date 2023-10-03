@@ -2,12 +2,13 @@
 ZdcByteArrayManagerTests holds unit tests for ZdcByteArrayManager
 "
 Class {
-	#name : #ZdcByteArrayManagerTest,
-	#superclass : #TestCase,
-	#category : #'Zodiac-Tests'
+	#name : 'ZdcByteArrayManagerTest',
+	#superclass : 'TestCase',
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcByteArrayManagerTest >> testClearing [
 	| byteArrayManager one two |
 	byteArrayManager := ZdcByteArrayManager new.
@@ -20,7 +21,7 @@ ZdcByteArrayManagerTest >> testClearing [
 	self assert: two equals: (ByteArray new: 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcByteArrayManagerTest >> testSimple [
 	| byteArrayManager byteArray |
 	byteArrayManager := ZdcByteArrayManager new.

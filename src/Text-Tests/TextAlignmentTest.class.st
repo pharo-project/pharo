@@ -2,34 +2,36 @@
 SUnit tests for class TextAlignment
 "
 Class {
-	#name : #TextAlignmentTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextAlignmentTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextAlignmentTest >> setUp [
 	super setUp.
 	prototypes add: TextAlignment centered;
 		 add: TextAlignment justified;
 		 add: TextAlignment leftFlush;
-		 add: TextAlignment rightFlush 
+		 add: TextAlignment rightFlush
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextAlignmentTest >> testAlignment [
 	| attribute |
-	self assert: TextAlignment leftFlush alignment equals: TextConstants LeftFlush. 
-	self assert: TextAlignment rightFlush alignment equals: TextConstants RightFlush. 
-	self assert: TextAlignment centered alignment equals: TextConstants Centered . 
-	self assert: TextAlignment justified  alignment equals: TextConstants Justified . 
+	self assert: TextAlignment leftFlush alignment equals: TextConstants LeftFlush.
+	self assert: TextAlignment rightFlush alignment equals: TextConstants RightFlush.
+	self assert: TextAlignment centered alignment equals: TextConstants Centered .
+	self assert: TextAlignment justified  alignment equals: TextConstants Justified .
 	"We can change alignment"
 	attribute := TextAlignment leftFlush.
 	attribute alignment: TextConstants RightFlush.
-	self assert: attribute alignment equals: TextConstants RightFlush 
+	self assert: attribute alignment equals: TextConstants RightFlush
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextAlignmentTest >> testDominates [
 	| text |
 	self assert: (TextAlignment centered dominates: TextAlignment rightFlush).

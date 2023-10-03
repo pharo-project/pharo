@@ -20,34 +20,36 @@ Internal Representation and Key Implementation Points.
 	hierarchy:		<ClyClassHierarchy>
 "
 Class {
-	#name : #ClyMethodVisibilityGroupsResult,
-	#superclass : #ClyBrowserQueryResult,
+	#name : 'ClyMethodVisibilityGroupsResult',
+	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
 		'hierarchy'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodVisibilityGroupsResult class >> defaultHierarchy [
 
 	^ClyMethodVisibilityProviderAnnotation defaultHierarchy
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodVisibilityGroupsResult class >> withDefaultHierarchy [
 
 	^self withHierarchy: self defaultHierarchy
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodVisibilityGroupsResult class >> withHierarchy: aClassHierarchy [
 
 	^self new
 		hierarchy: aClassHierarchy
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodVisibilityGroupsResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -57,7 +59,7 @@ ClyMethodVisibilityGroupsResult >> = anObject [
 	^ hierarchy = anObject hierarchy
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodVisibilityGroupsResult >> buildGroupFor: aClass depth: depth toShowMethodsFrom: aScope [
 
 	| group item |
@@ -67,7 +69,7 @@ ClyMethodVisibilityGroupsResult >> buildGroupFor: aClass depth: depth toShowMeth
 	items add: item
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodVisibilityGroupsResult >> fillWith: classes [
 	| actualClassScope classMap addedClasses |
 	actualClassScope := self scope asLocalClassScope.
@@ -79,19 +81,19 @@ ClyMethodVisibilityGroupsResult >> fillWith: classes [
 			self buildGroupFor: each depth: depth toShowMethodsFrom: actualClassScope]]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodVisibilityGroupsResult >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: hierarchy hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityGroupsResult >> hierarchy [
 	^ hierarchy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityGroupsResult >> hierarchy: anObject [
 	hierarchy := anObject
 ]

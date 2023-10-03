@@ -4,28 +4,30 @@ I am the adapter used to realise a ProfilerTreeTablePresenter.
 I will create a tree table (using FTTableMorph), but my datasource uses ProfilerFTBasicItem and ProfilerFTRoot item, which optimize the performance rendering the tree, but use more memory.
 "
 Class {
-	#name : #SpMorphicProfilerTreeTableAdapter,
-	#superclass : #SpMorphicTreeTableAdapter,
-	#category : #'ProfilerUI-SpecAdapters'
+	#name : 'SpMorphicProfilerTreeTableAdapter',
+	#superclass : 'SpMorphicTreeTableAdapter',
+	#category : 'ProfilerUI-SpecAdapters',
+	#package : 'ProfilerUI',
+	#tag : 'SpecAdapters'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpMorphicProfilerTreeTableAdapter >> addModelTo: tableMorph [
 
 	self ensureAtLeastOneColumnIn: tableMorph.
 
-	self presenter selection isMultipleSelection ifTrue: [ 
+	self presenter selection isMultipleSelection ifTrue: [
 		tableMorph beMultipleSelection ].
 
 	tableMorph setBalloonText: self model help.
 
-	self presenter selection isEmpty ifFalse: [ 
+	self presenter selection isEmpty ifFalse: [
 		self updateSelectionOf: tableMorph ].
 
 	self presenter whenRootsChangedDo: [ tableMorph buildContents ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SpMorphicProfilerTreeTableAdapter >> buildWidget [
 	| tableMorph |
 
@@ -41,56 +43,56 @@ SpMorphicProfilerTreeTableAdapter >> buildWidget [
 		doubleClickSelector: #browseItem;
 		rowColorForEven: self theme lightBackgroundColor;
 		yourself.
-	
-	self addModelTo: tableMorph.	
+
+	self addModelTo: tableMorph.
 	tableMorph buildContents.
-	
+
 	widget := tableMorph.
-	
+
 	^ tableMorph
 ]
 
-{ #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> collapseAll [ 
+{ #category : 'accessing' }
+SpMorphicProfilerTreeTableAdapter >> collapseAll [
 	^ widget collapseAll
 ]
 
-{ #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> collapsePath: anArray [ 
-	
+{ #category : 'accessing' }
+SpMorphicProfilerTreeTableAdapter >> collapsePath: anArray [
+
 	widget collapseNodePath: anArray
 ]
 
-{ #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> expandAll [ 
+{ #category : 'accessing' }
+SpMorphicProfilerTreeTableAdapter >> expandAll [
 	^ widget expandAll
 ]
 
-{ #category : #accessing }
-SpMorphicProfilerTreeTableAdapter >> expandPath: anArray [ 
-	
+{ #category : 'accessing' }
+SpMorphicProfilerTreeTableAdapter >> expandPath: anArray [
+
 	widget expandNodePath: anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpMorphicProfilerTreeTableAdapter >> expandRoots [
 
 	widget expandRoots
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SpMorphicProfilerTreeTableAdapter >> refreshTree [
 
 	widget updateList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpMorphicProfilerTreeTableAdapter >> scrollToSelection [
 	self widget scrollSelectionIntoView
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpMorphicProfilerTreeTableAdapter >> selectedItem [
-	
+
 	^ self widget selectedMorph complexContents
 ]

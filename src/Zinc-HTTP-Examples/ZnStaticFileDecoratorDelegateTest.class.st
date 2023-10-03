@@ -2,16 +2,17 @@
 Unit test for ZnStaticFileDecoratorDelegate
 "
 Class {
-	#name : #ZnStaticFileDecoratorDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnStaticFileDecoratorDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileDecoratorDelegateTest >> testServeStaticFile [
 	|  delegate handled response file |
 	handled := false.
-	
+
 	file := (FileSystem memory / 'tmp/some.html') ensureCreateFile; yourself.
 	file writeStream nextPutAll: 'test123'; close .
 
@@ -26,8 +27,5 @@ ZnStaticFileDecoratorDelegateTest >> testServeStaticFile [
 
 	"request does not match on the filesystem an the value delegate is called"
 	response := delegate handleRequest: (ZnRequest get: '/other.html' asZnUrl).
-	self assert: handled.
-	
-	
-	
+	self assert: handled
 ]

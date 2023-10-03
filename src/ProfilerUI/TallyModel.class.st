@@ -2,25 +2,27 @@
 I am an abstract adapter for tallies (from different system profilers) to be used by the ProfilerPresenter
 "
 Class {
-	#name : #TallyModel,
-	#superclass : #MorphTreeNodeModel,
-	#category : #'ProfilerUI-Model'
+	#name : 'TallyModel',
+	#superclass : 'MorphTreeNodeModel',
+	#category : 'ProfilerUI-Model',
+	#package : 'ProfilerUI',
+	#tag : 'Model'
 }
 
-{ #category : #comparing }
-TallyModel >> <= aTallyModelAndreas [ 
+{ #category : 'comparing' }
+TallyModel >> <= aTallyModelAndreas [
 	^ self item tally <= aTallyModelAndreas item tally
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TallyModel >> = aTallyModel [
 
-	^ self item tally = aTallyModel item tally and: [ 
-		  self item class = aTallyModel item class and: [ 
+	^ self item tally = aTallyModel item tally and: [
+		  self item class = aTallyModel item class and: [
 			self item method = aTallyModel item method ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TallyModel >> asString [
 
 	^ [ self reportString ]
@@ -28,44 +30,39 @@ TallyModel >> asString [
 		  do: [ 'error printing' ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 TallyModel >> asTallyModel [
 	^ self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 TallyModel >> browseItem [
 	self item originMethod browse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TallyModel >> childrenItems [
 	| perCent threshold |
-	
+
 	model tallyRoot ifNil: [ ^#() ].
-	
+
 	perCent := model showNodeThreshold.
 	threshold := (perCent asFloat / 100 * model tallyRoot tally) rounded.
-	
+
 	^ (self item sonsOver: threshold) asSortedCollection reverse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TallyModel >> data [
 	^ self
 ]
 
-{ #category : #actions }
-TallyModel >> exploreItem [
-	self item inspect
-]
-
-{ #category : #actions }
+{ #category : 'actions' }
 TallyModel >> inspectItem [
 	self inspect
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TallyModel >> keyDown: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
@@ -73,23 +70,21 @@ TallyModel >> keyDown: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
-{ #category : #'collecting leaves' }
+{ #category : 'collecting leaves' }
 TallyModel >> leavesInto: aCollection fromSender: anObject [
 
 	item leavesInto: aCollection fromSender: anObject.
-	aCollection associationsDo: [ :assoc | 
+	aCollection associationsDo: [ :assoc |
 		assoc value: (assoc value asTallyModel
 				 model: model;
 				 yourself) ]
 ]
 
-{ #category : #menu }
-TallyModel >> menu: menu shifted: b [ 
+{ #category : 'menu' }
+TallyModel >> menu: menu shifted: b [
 	(menu
 		add: 'Browse (b)'
 		target: self
@@ -97,15 +92,10 @@ TallyModel >> menu: menu shifted: b [
 	(menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem) icon: (self iconNamed: #glamorousInspect).
-	(menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem) icon: (self iconNamed: #smallFind).
-
+		selector: #inspectItem) icon: (self iconNamed: #glamorousInspect)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TallyModel >> methodName [
 
 	^ item methodClassName , '>>' , (item method
@@ -113,62 +103,62 @@ TallyModel >> methodName [
 		   ifNil: [ 'nil' ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TallyModel >> methodOrBlock [
 	item ifNil: [ ^ nil ].
 	^ item method
 ]
 
-{ #category : #path }
+{ #category : 'path' }
 TallyModel >> relativePath [
 
 	| rootPath |
 	rootPath := model tallyRoot path.
 
-	rootPath doWithIndex: [ :each :index | 
+	rootPath doWithIndex: [ :each :index |
 		self assert: each = (self path at: index) ].
 	^ self path copyFrom: rootPath size to: self path size
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TallyModel >> reportString [
 
 	^ (self weightToRoot printShowingDecimalPlaces: 1) , '% {'
 	  , (self time printShowingDecimalPlaces: 1) , 'ms} ' , self methodName
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TallyModel >> sons [
 
 	^ self sonsOver: 0
 ]
 
-{ #category : #accessing }
-TallyModel >> sonsOver: minTally [ 
-	^ (item sonsOver: minTally) collect: [ :each | 
+{ #category : 'accessing' }
+TallyModel >> sonsOver: minTally [
+	^ (item sonsOver: minTally) collect: [ :each |
 		  each asTallyModel
 			  model: model;
 			  yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TallyModel >> tally [
 	^ item tally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TallyModel >> time [
-	^ (self weight * self model totalTime / 100) 
+	^ (self weight * self model totalTime / 100)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TallyModel >> weight [
-	self tally isZero ifTrue: [ ^ 0 ]. 
+	self tally isZero ifTrue: [ ^ 0 ].
 	^ self tally asFloat / model totalTally * 100.0
 ]
 
-{ #category : #accessing }
-TallyModel >> weightToRoot [  
+{ #category : 'accessing' }
+TallyModel >> weightToRoot [
 	self tally isZero ifTrue: [ ^ 0 ].
 	model tallyRoot tally isZero ifTrue: [ self error: 'this shouldnt happen' ].
 	^ self tally asFloat / model tallyRoot tally * 100.0

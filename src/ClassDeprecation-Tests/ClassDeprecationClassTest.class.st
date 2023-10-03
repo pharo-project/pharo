@@ -4,25 +4,26 @@ I am a copy of class ClassDeprecationMetaLinkTest. This comment is copied from t
 This class contains tests
 "
 Class {
-	#name : #ClassDeprecationClassTest,
-	#superclass : #ClassDeprecationTest,
-	#category : #'ClassDeprecation-Tests'
+	#name : 'ClassDeprecationClassTest',
+	#superclass : 'ClassDeprecationTest',
+	#category : 'ClassDeprecation-Tests',
+	#package : 'ClassDeprecation-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationClassTest >> setUp [
 	super setUp.
 	referencingClass compile: referencingOriginalSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationClassTest >> testDeprecationTransformationExpression [
 	self
 		assert: deprecatedClass deprecationTransformationExpression
 		equals: replacementClass name
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationClassTest >> testInstallDeprecationTransformMetaLinks [
 	| globalNodes |
 	globalNodes := self globalNodes: referencingClass >> #references.
@@ -36,7 +37,7 @@ ClassDeprecationClassTest >> testInstallDeprecationTransformMetaLinks [
 	self deny: globalNodes third hasDeprecationTransformMetaLink
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationClassTest >> testIsDeprecatedTransformable [
 	self deny: referencingClass isDeprecatedTransformable.
 	self assert: deprecatedClass isDeprecatedTransformable.
@@ -55,7 +56,7 @@ ClassDeprecationClassTest >> testIsDeprecatedTransformable [
 	self deny: deprecatedClass isDeprecatedTransformable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationClassTest >> testUninstallDeprecationTransformMetaLinks [
 	| globalNodes |
 	deprecatedClass installDeprecationTransformMetaLinks.

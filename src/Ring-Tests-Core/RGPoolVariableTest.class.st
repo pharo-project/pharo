@@ -1,21 +1,22 @@
 Class {
-	#name : #RGPoolVariableTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGPoolVariableTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGPoolVariableTest >> testPoolVariableImplicitEnvironment [
 
 	| poolVariable |
-	
+
 	poolVariable := RGPoolVariable unnamed.
 	self assert: (poolVariable hasUnresolved: #name).
 	self assert: (poolVariable parent isClass).
-	self checkImplicitSingleClassEnvironmentOf: poolVariable parent.
+	self checkImplicitSingleClassEnvironmentOf: poolVariable parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGPoolVariableTest >> testResolvingConsistency [
 
 	| anObject |

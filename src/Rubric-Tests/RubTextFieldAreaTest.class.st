@@ -1,16 +1,18 @@
 Class {
-	#name : #RubTextFieldAreaTest,
-	#superclass : #TestCase,
-	#category : #'Rubric-Tests-Editing-Core'
+	#name : 'RubTextFieldAreaTest',
+	#superclass : 'TestCase',
+	#category : 'Rubric-Tests-Editing-Core',
+	#package : 'Rubric-Tests',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter [
 
 	^ self simulatedKeyDownFromChar: aCharacter alt: false ctrl: false command: false shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: useCtrl command: useCommand shift: useShift [
 	| event modifier code |
 	event := KeyboardEvent new.
@@ -30,19 +32,19 @@ RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: u
 		position: 0 @ 0
 		keyValue: code
 		charCode: code
-		hand: self currentWorld currentHand 
+		hand: self currentWorld currentHand
 		stamp: Time now.
 	event key: (KeyboardKey fromCharacter: aCharacter).
 	^ event
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter [
 
 	^ self simulatedKeyStrokeFromChar: aCharacter alt: false ctrl: false command: false shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl: useCtrl command: useCommand shift: useShift [
 	| event modifier code |
 	event := KeyboardEvent new.
@@ -62,12 +64,12 @@ RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl:
 		position: 0 @ 0
 		keyValue: code
 		charCode: code
-		hand: self currentWorld currentHand 
+		hand: self currentWorld currentHand
 		stamp: Time now.
 	^ event
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testInsertionWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -85,7 +87,7 @@ RubTextFieldAreaTest >> testInsertionWithMaxLength [
 	self assert: m string equals: 'BBD'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testKeyStrokeBackSpaceWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -105,7 +107,7 @@ RubTextFieldAreaTest >> testKeyStrokeBackSpaceWithMaxLength [
 	self assert: m string equals: 'ac'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testKeyStrokeWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -121,10 +123,10 @@ RubTextFieldAreaTest >> testKeyStrokeWithMaxLength [
 	m keyStroke: (self simulatedKeyStrokeFromChar: $b).
 	self assert: m string equals: 'ab'.
 	m keyStroke: (self simulatedKeyStrokeFromChar: $c).
-	self assert: m string equals: 'ab'.
+	self assert: m string equals: 'ab'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testMaxLengthIsNegative [
 	| m |
 	m := RubTextFieldArea new
@@ -132,10 +134,10 @@ RubTextFieldAreaTest >> testMaxLengthIsNegative [
 		maxLength: -10;
 		yourself.
 	m setTextWith: '01234567890123456'.
-	self assert: m text size equals: 0.
+	self assert: m text size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testMaxLengthIsSet [
 	| m |
 	m := RubTextFieldArea new
@@ -145,7 +147,7 @@ RubTextFieldAreaTest >> testMaxLengthIsSet [
 	self assert: m maxLength equals: 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testMaxLengthTruncatesText [
 	| m |
 	m := RubTextFieldArea new
@@ -155,21 +157,21 @@ RubTextFieldAreaTest >> testMaxLengthTruncatesText [
 	m setTextWith: '01234567890123456'.
 	" the text should be truncated "
 	self assert: m text size equals: 15.
-	
+
 	" the text is different to ensure that the input is validate and update is sent instead of set "
 	m updateTextWith: '7890123456789012345'.
 	self assert: m text size equals: 15.
-	
+
 	" with a text of size less than maxlength  to check that maxLength has no effect "
 	m setTextWith: ''.
-	self assert: m text size equals: 0.	
+	self assert: m text size equals: 0.
 	m setTextWith: 'A'.
 	self assert: m text size equals: 1.
 	m updateTextWith: ''.
 	self assert: m text size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testPrivateReplaceFromTo [
 	| m |
 	m := RubTextFieldArea new
@@ -186,7 +188,7 @@ RubTextFieldAreaTest >> testPrivateReplaceFromTo [
 	self assert: m string equals: 'BBDDDCCC'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testReplacementWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -203,14 +205,14 @@ RubTextFieldAreaTest >> testReplacementWithMaxLength [
 	self assert: m string equals: 'XXX'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testWhenWeHaveTheRubTextFieldAreaInsideOtherMorphHasToHonorTheExtentAssignedToIt [
 
 	| dropList widthOfButton |
 
 	"The drop list has two morphs inside, one RubTextFieldArea and a Button.
-	The button has a fixed side. 
-	The text field takes all the remaining size."	
+	The button has a fixed side.
+	The text field takes all the remaining size."
 	dropList := DropListMorph new
 		     list: { (String loremIpsum: 100) };
 		     enabled: true;
@@ -218,17 +220,17 @@ RubTextFieldAreaTest >> testWhenWeHaveTheRubTextFieldAreaInsideOtherMorphHasToHo
 		     yourself.
 
 	dropList extent: 100 @ 18.
-	dropList computeBounds. 
-	
+	dropList computeBounds.
+
 	self assert: dropList extent x equals: 100.
 
 	widthOfButton := (dropList submorphs at: 2) extent x.
-	
-	"The text area should take the remaining size without overlapping in the button"	
-	self assert: (dropList submorphs at: 1) extent x equals: 74.
+
+	"The text area should take the remaining size without overlapping in the button"
+	self assert: (dropList submorphs at: 1) extent x equals: 74
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testnewSizeAfterUpdate [
 	| m |
 	" "
@@ -244,7 +246,7 @@ RubTextFieldAreaTest >> testnewSizeAfterUpdate [
 	m setTextWith: 'AAAA'.
 	self assert: m string equals: 'AAAA'.
 	"the receiver text  size after the replacement 'BBB' would be 4 "
-	self 
+	self
 		assert: (m newSizeAfterUpdateFrom: 1 to: 3 with: 'BBB')
 		equals: 4.
 	self

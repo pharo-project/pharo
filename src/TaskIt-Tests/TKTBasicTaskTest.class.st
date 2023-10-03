@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTBasicTaskTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTBasicTaskTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTBasicTaskTest >> testFutureExecutes [
 
 	| done sema |
@@ -13,20 +15,18 @@ TKTBasicTaskTest >> testFutureExecutes [
 	[ done := true.
 	sema signal ] future.
 	sema wait.
-	
+
 	self assert: done
-	
-	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTBasicTaskTest >> testFutureExecutesByDefaultInGlobalWorkerPool [
 	| future |
 	future := [ TKTConfiguration runner ] future.
 	self assert: (future synchronizeTimeout: 1 second) equals: TKTConfiguration runner
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTBasicTaskTest >> testFutureExecutesConcurrently [
 	| results future1 future2 |
 	results := OrderedCollection new.
@@ -41,7 +41,7 @@ TKTBasicTaskTest >> testFutureExecutesConcurrently [
 	self assert: results asArray equals: #(2 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTBasicTaskTest >> testFutureReturnsAssociatedFutureObject [
 	| done sema |
 	done := false.
@@ -52,17 +52,17 @@ TKTBasicTaskTest >> testFutureReturnsAssociatedFutureObject [
 	self assert: done
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTBasicTaskTest >> testFutureWithFutureInsideSchedulesOk [
 
 	| future |
 
 	future := [ [TKTConfiguration runner] schedule ] future.
 
-	self shouldnt: (future synchronizeTimeout: 1 second) raise: UnhandledError.
+	self shouldnt: (future synchronizeTimeout: 1 second) raise: UnhandledError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTBasicTaskTest >> testScheduleExecutes [
 	| done sema |
 	done := false.

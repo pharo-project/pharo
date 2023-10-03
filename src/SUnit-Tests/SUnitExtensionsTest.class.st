@@ -2,32 +2,34 @@
 SUnit tests for extensions to SUnit
 "
 Class {
-	#name : #SUnitExtensionsTest,
-	#superclass : #TestCase,
+	#name : 'SUnitExtensionsTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'stream'
 	],
-	#category : #'SUnit-Tests-Core'
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #history }
+{ #category : 'history' }
 SUnitExtensionsTest class >> lastStoredRun [
 	^ ((Dictionary new) add: (#passed->((Set new) add: #testNoExceptionWithMatchingString; add: #testNoExceptionWithNoMatchingString; add: #testExceptionWithMatchingString; add: #testExceptionWithoutMatchingString; add: #testValidShouldNotTakeMoreThan; add: #testInvalidShouldNotTakeMoreThanMilliseconds; add: #testDifferentExceptionInShouldRaiseWithExceptionDo; add: #testShouldRaiseWithExceptionDo; add: #testShouldFix; add: #testAssertionFailedInRaiseWithExceptionDo; add: #testAutoDenyFalse; add: #testAutoDenyTrue; add: #testAutoAssertFalse; add: #testAutoAssertTrue; add: #testValidShouldNotTakeMoreThanMilliseconds; add: #testErrorInRaiseWithExceptionDo; add: #testNoExceptionInShouldRaiseWithExceptionDo; add: #testInvalidShouldNotTakeMoreThan; yourself)); add: (#timeStamp->'22 November 2008 10:11:35 pm'); add: (#failures->((Set new))); add: (#errors->((Set new))); yourself)
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> assertionFailedInRaiseWithExceptionDoTest [
 
-	self 
+	self
 		should: [ Error signal ]
 		raise: Error
 		withExceptionDo: [ :anException | self assert: false ]
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> differentExceptionInShouldRaiseWithExceptionDoTest [
 
-	[ self 
+	[ self
 		should: [ Error signal ]
 		raise: Halt
 		withExceptionDo: [ :anException | self assert: false description: 'should:raise:withExceptionDo: handled an exception that should not handle'] ]
@@ -35,68 +37,68 @@ SUnitExtensionsTest >> differentExceptionInShouldRaiseWithExceptionDoTest [
 	do: [ :anException | anException return: nil ]
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> errorInRaiseWithExceptionDoTest [
 
-	self 
+	self
 		should: [ Error  signal ]
 		raise: Error
 		withExceptionDo: [ :anException | Error signal: 'A forced error' ]
 ]
 
-{ #category : #'test support' }
+{ #category : 'test support' }
 SUnitExtensionsTest >> failureLog [
 	^self stream
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> invalidShouldNotTakeMoreThan [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan: 50 milliSeconds.
+	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan: 50 milliSeconds
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> invalidShouldNotTakeMoreThanMilliseconds [
 
 	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThanMilliseconds: 50
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitExtensionsTest >> isLogging [
 	^true
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> noExceptionInShouldRaiseWithExceptionDoTest [
 
-	self 
+	self
 		should: [  ]
 		raise: Error
 		withExceptionDo: [ :anException | Error signal: 'Should not get here' ]
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> shouldFixTest [
 
 	self shouldFix: [ Error signal: 'any kind of error' ]
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> shouldRaiseWithExceptionDoTest [
 	self should: [ Error signal: '1' ] raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> shouldRaiseWithSignalDoTest [
 	self should: [ Error signal: '1' ] raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SUnitExtensionsTest >> stream [
-	^stream ifNil: [stream := String new writeStream].
+	^stream ifNil: [stream := String new writeStream]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testAssertionFailedInRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #assertionFailedInRaiseWithExceptionDoTest.
@@ -108,7 +110,7 @@ SUnitExtensionsTest >> testAssertionFailedInRaiseWithExceptionDo [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testAutoAssertFalse [
 	| booleanCondition |
 	self assert: self isLogging.
@@ -117,13 +119,13 @@ SUnitExtensionsTest >> testAutoAssertFalse [
 	self assert: booleanCondition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testAutoAssertTrue [
 	self assert: 1 equals: 1.
 	self assert: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testAutoDenyFalse [
 	| booleanCondition |
 	self assert: self isLogging.
@@ -132,13 +134,13 @@ SUnitExtensionsTest >> testAutoDenyFalse [
 	self assert: booleanCondition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testAutoDenyTrue [
 	self deny: 1 equals: 2.
 	self deny: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testDifferentExceptionInShouldRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #differentExceptionInShouldRaiseWithExceptionDoTest.
@@ -150,7 +152,7 @@ SUnitExtensionsTest >> testDifferentExceptionInShouldRaiseWithExceptionDo [
 	self assert: testResult passed size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testErrorInRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #errorInRaiseWithExceptionDoTest.
@@ -162,21 +164,21 @@ SUnitExtensionsTest >> testErrorInRaiseWithExceptionDo [
 	self assertEmpty: testResult passed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testExceptionWithMatchingString [
 	self should: [ Object obsolete ] raise: Error whoseDescriptionIncludes: 'NOT obsolete' description: 'tested obsoleting Object'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testExceptionWithoutMatchingString [
-	self 
+	self
 		should: [ Object obsolete ]
 		raise: Error
 		whoseDescriptionDoesNotInclude: 'Zero'
 		description: 'tested obsoleting Object'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThan [
 	| testCase testResult |
 	testCase := self class selector: #invalidShouldNotTakeMoreThan.
@@ -188,7 +190,7 @@ SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThan [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThanMilliseconds [
 	| testCase testResult |
 	testCase := self class selector: #invalidShouldNotTakeMoreThanMilliseconds.
@@ -200,7 +202,7 @@ SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThanMilliseconds [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testNoExceptionInShouldRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #noExceptionInShouldRaiseWithExceptionDoTest.
@@ -212,17 +214,19 @@ SUnitExtensionsTest >> testNoExceptionInShouldRaiseWithExceptionDo [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testNoExceptionWithMatchingString [
-	self 
+	<ignoreNotImplementedSelectors: #(messageNotUnderstoodByObject)>
+	self
 		shouldnt: [ Object messageNotUnderstoodByObject ]
-		raise: MessageNotUnderstood 
+		raise: MessageNotUnderstood
 		whoseDescriptionIncludes: 'Zero'
 		description: 'tested obsoleting Object'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testNoExceptionWithNoMatchingString [
+	<ignoreNotImplementedSelectors: #(messageNotUnderstoodByObject)>
 	self
 		shouldnt: [ Object messageNotUnderstoodByObject ]
 		raise: MessageNotUnderstood
@@ -230,7 +234,7 @@ SUnitExtensionsTest >> testNoExceptionWithNoMatchingString [
 		description: 'tested obsoleting Object'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testShouldFix [
 	| testCase testResult |
 	testCase := self class selector: #shouldFixTest.
@@ -242,7 +246,7 @@ SUnitExtensionsTest >> testShouldFix [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testShouldRaiseWithExceptionDo [
 	| testCase testResult |
 	testCase := self class selector: #shouldRaiseWithExceptionDoTest.
@@ -254,7 +258,7 @@ SUnitExtensionsTest >> testShouldRaiseWithExceptionDo [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testValidShouldNotTakeMoreThan [
 	| testCase testResult |
 	testCase := self class selector: #validShouldNotTakeMoreThan.
@@ -266,7 +270,7 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThan [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitExtensionsTest >> testValidShouldNotTakeMoreThanMilliseconds [
 	| testCase testResult |
 	testCase := self class selector: #validShouldNotTakeMoreThanMilliseconds.
@@ -278,13 +282,13 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThanMilliseconds [
 	self assertEmpty: testResult errors
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> validShouldNotTakeMoreThan [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan:  200 milliSeconds.
+	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan:  200 milliSeconds
 ]
 
-{ #category : #'real tests' }
+{ #category : 'real tests' }
 SUnitExtensionsTest >> validShouldNotTakeMoreThanMilliseconds [
 
 	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThanMilliseconds: 200

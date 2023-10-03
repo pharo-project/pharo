@@ -1,17 +1,19 @@
 Class {
-	#name : #RBUnfinishedStatementErrorNode,
-	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#name : 'RBUnfinishedStatementErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBUnfinishedStatementErrorNode >> isUnfinishedStatement [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBUnfinishedStatementErrorNode >> statement [
 
-	^ content first
+	^ contents first
 ]

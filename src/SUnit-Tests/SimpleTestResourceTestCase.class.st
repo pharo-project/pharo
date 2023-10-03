@@ -2,28 +2,30 @@
 SUnit tests for simple test resources
 "
 Class {
-	#name : #SimpleTestResourceTestCase,
-	#superclass : #TestCase,
+	#name : 'SimpleTestResourceTestCase',
+	#superclass : 'TestCase',
 	#instVars : [
 		'resource'
 	],
-	#category : #'SUnit-Tests-Core'
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #history }
+{ #category : 'history' }
 SimpleTestResourceTestCase class >> lastStoredRun [
 	^ ((Dictionary new) add: (#passed->((Set new) add: #testResourceInitRelease; add: #testResourcesCollection; yourself)); add: (#timeStamp->'22 November 2008 10:11:35 pm'); add: (#failures->((Set new))); add: (#errors->((Set new))); yourself)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleTestResourceTestCase class >> resources [
 	^Array with: SimpleTestResource
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SimpleTestResourceTestCase >> clearOuterResourceStateDuring: aBlock [
 	"This self-testing test must clear the outer state of its resources before starting and after finishing, so that it can construct test cases and suites of itself and test them."
-	
+
 	self
 		assert: SimpleTestResource isAlreadyAvailable
 		description: 'The resource was not set up for the test'.
@@ -42,26 +44,26 @@ SimpleTestResourceTestCase >> clearOuterResourceStateDuring: aBlock [
 				description: 'The resource was not set up again after the test']
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SimpleTestResourceTestCase >> dummy [
 	self assert: resource hasSetup
 		description: 'This test uses a resource but it was not set up'.
 	self setRun.
 	self assert: resource hasRun
-		description: 'This test uses a resource but we could not interact with it'.
+		description: 'This test uses a resource but we could not interact with it'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SimpleTestResourceTestCase >> error [
 	'foo' odd
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SimpleTestResourceTestCase >> setRun [
 	resource setRun
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimpleTestResourceTestCase >> setUp [
 	"Ensure that we error, not just fail, if resource is nil so that #should:raise: checks cannot mistake such an error for what they are trapping."
 	super setUp.
@@ -77,24 +79,24 @@ SimpleTestResourceTestCase >> setUp [
 		description: 'This test uses a resource but it was not set up'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimpleTestResourceTestCase >> testDebugTestWithResource [
 	"The debug will raise an error if the resource is not set up properly."
-	
+
 	self clearOuterResourceStateDuring: [(self class selector: #setRun) debug]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimpleTestResourceTestCase >> testResourceCollection [
 	self assert: self class buildSuiteFromSelectors resources size = self resources size
 		description: 'The suite should have the same number of resources as its test'.
 	self class buildSuiteFromSelectors resources do:
 		[:each |
 		self assert: (self resources includes: each)
-			description: each name , ':  I have this resource but my suite does not'].
+			description: each name , ':  I have this resource but my suite does not']
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimpleTestResourceTestCase >> testResourceInitRelease [
 	| suite error failure |
 	suite := self classForTestSuite new.
@@ -105,7 +107,7 @@ SimpleTestResourceTestCase >> testResourceInitRelease [
 	self assert: resource hasSetup
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimpleTestResourceTestCase >> testRunSuiteWithResource [
 	| suite |
 	suite :=  self classForTestSuite new.
@@ -115,10 +117,10 @@ SimpleTestResourceTestCase >> testRunSuiteWithResource [
 	self clearOuterResourceStateDuring:
 		[self
 			assert: suite run printString = '3 ran, 1 passed, 0 skipped, 0 expected failures, 1 failure, 1 error, 0 passed unexpected'
-			description: 'A suite of tests needing SimpleTestResource did not run as expected'].
+			description: 'A suite of tests needing SimpleTestResource did not run as expected']
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimpleTestResourceTestCase >> testRunTestWithResource [
 	self clearOuterResourceStateDuring:
 		[self

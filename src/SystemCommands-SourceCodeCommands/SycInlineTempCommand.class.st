@@ -2,34 +2,35 @@
 I am a command to inline selected temp variable (represented by source node)
 "
 Class {
-	#name : #SycInlineTempCommand,
-	#superclass : #SycSourceCodeRefactoringCommand,
-	#category : #'SystemCommands-SourceCodeCommands'
+	#name : 'SycInlineTempCommand',
+	#superclass : 'SycSourceCodeRefactoringCommand',
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isTempVariableSelected]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycInlineTempCommand >> asRefactorings [
 	| assignment |
-	assignment := sourceNode methodNode assignmentNodes 
+	assignment := sourceNode methodNode assignmentNodes
 		detect: [:each | each variable = sourceNode ].
 
-	^ { RBInlineTemporaryRefactoring	
+	^ { RBInlineTemporaryRefactoring
 		inline: assignment sourceInterval
 		from: method selector
 		in: method origin}
 ]
 
-{ #category : #accessing }
-SycInlineTempCommand >> defaultMenuIconName [ 
+{ #category : 'accessing' }
+SycInlineTempCommand >> defaultMenuIconName [
 	^ ##smallRightFlushIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycInlineTempCommand >> defaultMenuItemName [
 	^'Inline temp'
 ]

@@ -1,20 +1,21 @@
 Class {
-	#name : #SendsDeprecatedMethodToGlobalRuleTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'SendsDeprecatedMethodToGlobalRuleTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'testClass',
 		'globalName'
 	],
-	#category : #'Kernel-Tests-Rules'
+	#category : 'Kernel-Tests-Rules',
+	#package : 'Kernel-Tests-Rules'
 }
 
-{ #category : #properties }
+{ #category : 'properties' }
 SendsDeprecatedMethodToGlobalRuleTest >> deprecatedMethodName [
 
 	^ 'deprecatedMethod'
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 SendsDeprecatedMethodToGlobalRuleTest >> globalName [
 
 	^ globalName ifNil: [
@@ -25,13 +26,13 @@ SendsDeprecatedMethodToGlobalRuleTest >> globalName [
 			testingEnvironment includesKey: globalName ] ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 SendsDeprecatedMethodToGlobalRuleTest >> nonDeprecatedMethodName [
 
 	^ 'not', self deprecatedMethodName
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SendsDeprecatedMethodToGlobalRuleTest >> setUp [
 	| deprClass |
 	super setUp.
@@ -44,7 +45,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> setUp [
 	testClass := Object newAnonymousSubclass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SendsDeprecatedMethodToGlobalRuleTest >> tearDown [
 
 	testingEnvironment removeKey: self globalName ifAbsent: [ ].
@@ -53,7 +54,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck [
 
 	| testMethod |
@@ -64,7 +65,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck [
 		eprop rule class = SendsDeprecatedMethodToGlobalRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck1 [
 
 	| testMethod |
@@ -75,7 +76,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck1 [
 		eprop rule class = SendsDeprecatedMethodToGlobalRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck2 [
 
 	| testMethod |
@@ -86,7 +87,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck2 [
 		eprop rule class = SendsDeprecatedMethodToGlobalRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SendsDeprecatedMethodToGlobalRuleTest >> testBasicCheck3 [
 
 	| testMethod |

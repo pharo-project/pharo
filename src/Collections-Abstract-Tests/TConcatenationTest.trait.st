@@ -2,28 +2,30 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TConcatenationTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TConcatenationTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConcatenationTest >> empty [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConcatenationTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConcatenationTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TConcatenationTest >> test0FixtureConcatenationTest [
 	self firstCollection.
 	self denyEmpty: self firstCollection.
@@ -33,7 +35,7 @@ TConcatenationTest >> test0FixtureConcatenationTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - concatenation' }
+{ #category : 'tests - concatenation' }
 TConcatenationTest >> testConcatenation [
 
 "| collection1 collection2 result |
@@ -53,7 +55,7 @@ result do: [ :each | self assert: (result occurrencesOf: each) = (( collection1 
 self assert: result size = (collection1 size + collection2 size)
 ]
 
-{ #category : #'tests - concatenation' }
+{ #category : 'tests - concatenation' }
 TConcatenationTest >> testConcatenationWithDuplicate [
 
 
@@ -66,7 +68,7 @@ result do: [ :each | self assert: (result occurrencesOf: each) = (( collection1 
 self assert: result size = (collection1 size * 2)
 ]
 
-{ #category : #'tests - concatenation' }
+{ #category : 'tests - concatenation' }
 TConcatenationTest >> testConcatenationWithEmpty [
 	| result |
 	result := self firstCollection , self empty.

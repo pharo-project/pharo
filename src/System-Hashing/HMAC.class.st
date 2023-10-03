@@ -4,56 +4,58 @@ HMAC is a mechanism for message authentication using cryptographic hash function
 See RFC 2114.
 "
 Class {
-	#name : #HMAC,
-	#superclass : #Object,
+	#name : 'HMAC',
+	#superclass : 'Object',
 	#instVars : [
 		'hash',
 		'key',
 		'ipad',
 		'epad'
 	],
-	#category : #'System-Hashing-Core'
+	#category : 'System-Hashing-Core',
+	#package : 'System-Hashing',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HMAC class >> on: aHashFunction [
 	^ self new setHash: aHashFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HMAC >> destroy [
 	key destroy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HMAC >> digestMessage: aByteArray [
 	^ hash hashMessage: (key bitXor: epad), (hash hashMessage: (key bitXor: ipad), aByteArray)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HMAC >> digestSize [
 	^ hash hashSize
 ]
 
-{ #category : #accessing }
-HMAC >> key: aByteArray [ 
+{ #category : 'accessing' }
+HMAC >> key: aByteArray [
 	key := aByteArray.
 	key size > hash blockSize ifTrue: [ key := hash hashMessage: key ].
 	key size < hash blockSize ifTrue: [ key := key , (ByteArray new: hash blockSize - key size) ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HMAC >> printOn: aStream [
 	aStream nextPutAll: 'HMAC-'; print: hash
 ]
 
-{ #category : #initialization }
-HMAC >> setHash: aHash [ 
+{ #category : 'initialization' }
+HMAC >> setHash: aHash [
 	hash := aHash.
-	ipad := ByteArray 
+	ipad := ByteArray
 		new: aHash blockSize
 		withAll: 54.
-	epad := ByteArray 
+	epad := ByteArray
 		new: aHash blockSize
 		withAll: 92
 ]

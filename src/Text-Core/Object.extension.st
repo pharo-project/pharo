@@ -1,8 +1,8 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 Object >> asStringOrText [
 	"Answer a string that represents the receiver."
 
-	^ self asString 
+	^ self asString
 ]

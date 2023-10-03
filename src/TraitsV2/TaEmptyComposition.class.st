@@ -3,146 +3,146 @@ I am an empty composition
 I have no methods or slots :(
 "
 Class {
-	#name : #TaEmptyComposition,
-	#superclass : #TaAbstractComposition,
-	#category : #'TraitsV2-Compositions'
+	#name : 'TaEmptyComposition',
+	#superclass : 'TaAbstractComposition',
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaEmptyComposition >> , anotherTrait [
 	^ anotherTrait
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaEmptyComposition >> - anArrayOfSelectors [
-	self error:'Could not remove a selector from an empty composition'.
+	self error:'Could not remove a selector from an empty composition'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaEmptyComposition >> = anotherTrait [
 	^ self class = anotherTrait class
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaEmptyComposition >> @ anAssociation [
 	self error:'Could not perform on empty composition'
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaEmptyComposition >> @= anAssociation [
 	self error:'Could not perform on empty composition'
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaEmptyComposition >> @@ anAssociation [
 	self error:'Could not perform on empty composition'
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaEmptyComposition >> addToSequence: sequence [
 	"I am empty I will not add my self to anybody"
 	^ sequence
 ]
 
-{ #category : #users }
-TaEmptyComposition >> addUser: aClass [ 
+{ #category : 'users' }
+TaEmptyComposition >> addUser: aClass [
 
 	"Nothing to do.... I am empty"
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaEmptyComposition >> allTraits [
 	^ #()
 ]
 
-{ #category : #testing }
-TaEmptyComposition >> changesSourceCode: aString [ 
-	
+{ #category : 'testing' }
+TaEmptyComposition >> changesSourceCode: aString [
+
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaEmptyComposition >> classComposition [
-	^ self class new.
+	^ self class new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaEmptyComposition >> compiledMethodAt: aSelector [
 	NotFound signalFor: aSelector
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaEmptyComposition >> copyTraitExpression [
 	^ self
-	
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaEmptyComposition >> copyWithoutTrait: aTrait [
 	^ self
-	
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaEmptyComposition >> hash [
 	^ 1
 ]
 
-{ #category : #testing }
-TaEmptyComposition >> isAliasSelector: aString [ 
-	
+{ #category : 'testing' }
+TaEmptyComposition >> isAliasSelector: aString [
+
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaEmptyComposition >> isEmpty [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaEmptyComposition >> methods [
 	^ #()
 ]
 
-{ #category : #users }
-TaEmptyComposition >> removeUser: aClass [ 
+{ #category : 'users' }
+TaEmptyComposition >> removeUser: aClass [
 
 	"Nothing to do.... I am empty"
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaEmptyComposition >> reverseAlias: aSelector [
-	
+
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaEmptyComposition >> selectors [
 	^#()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaEmptyComposition >> slots [
 	^ #()
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaEmptyComposition >> traitCompositionExpression [
-	
+
 	^ '{}'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaEmptyComposition >> traitCompositionExpressionWithParens [
 	^ self traitCompositionExpression
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaEmptyComposition >> traitDefining: aSelector [
 	NotFound signalFor: aSelector
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaEmptyComposition >> traits [
 	^ #()
 ]

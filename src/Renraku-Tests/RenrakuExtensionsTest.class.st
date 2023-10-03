@@ -1,10 +1,11 @@
 Class {
-	#name : #RenrakuExtensionsTest,
-	#superclass : #TestCase,
-	#category : #'Renraku-Tests'
+	#name : 'RenrakuExtensionsTest',
+	#superclass : 'TestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuExtensionsTest >> testBanLevelCandidatesForClass [
 	| class candidates |
 	class := self class.
@@ -12,10 +13,10 @@ RenrakuExtensionsTest >> testBanLevelCandidatesForClass [
 	self assert: (candidates includes: class).
 	self assert: (candidates includes: class package).
 	self assert: (candidates includes: ReImageRuleBaner).
-	self assert: (candidates includes: RePersistentImageRuleBaner).
+	self assert: (candidates includes: RePersistentImageRuleBaner)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuExtensionsTest >> testBanLevelCandidatesForMethod [
 	| method candidates |
 	method := thisContext  method.
@@ -24,15 +25,15 @@ RenrakuExtensionsTest >> testBanLevelCandidatesForMethod [
 	self assert: (candidates includes: self class).
 	self assert: (candidates includes: self class package).
 	self assert: (candidates includes: ReImageRuleBaner).
-	self assert: (candidates includes: RePersistentImageRuleBaner).
+	self assert: (candidates includes: RePersistentImageRuleBaner)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuExtensionsTest >> testBanLevelCandidatesForPackage [
 	| package candidates |
 	package := self class package.
 	candidates := package banLevelCandidates.
 	self assert: (candidates includes: package).
 	self assert: (candidates includes: ReImageRuleBaner).
-	self assert: (candidates includes: RePersistentImageRuleBaner).
+	self assert: (candidates includes: RePersistentImageRuleBaner)
 ]

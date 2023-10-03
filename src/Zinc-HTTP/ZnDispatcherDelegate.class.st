@@ -9,36 +9,36 @@ ZnDispatcherDelegate API:
 		map: '/counter' to: [ :request :response | counterApplication handleRequest: request response: response ]).
 "
 Class {
-	#name : #ZnDispatcherDelegate,
-	#superclass : #Object,
+	#name : 'ZnDispatcherDelegate',
+	#superclass : 'Object',
 	#instVars : [
 		'dispatcherDictionary'
 	],
-	#category : #'Zinc-HTTP-Client-Server'
+	#category : 'Zinc-HTTP-Client-Server',
+	#package : 'Zinc-HTTP',
+	#tag : 'Client-Server'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDispatcherDelegate >> dispatcherDictionary [
 	^ dispatcherDictionary ifNil: [ dispatcherDictionary := Dictionary new ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnDispatcherDelegate >> handleRequest: request [
 	| handler |
-	handler := self dispatcherDictionary 
-		at: request uri pathPrintString 
-		ifAbsent: [ ^ ZnResponse notFound: request uri ].	
-	^ handler 
-		value: request 
+	handler := self dispatcherDictionary
+		at: request uri pathPrintString
+		ifAbsent: [ ^ ZnResponse notFound: request uri ].
+	^ handler
+		value: request
 		value: (ZnResponse new
 			statusLine: (ZnStatusLine ok);
 			headers: ZnHeaders defaultResponseHeaders;
-			yourself).
-
-
+			yourself)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnDispatcherDelegate >> map: relativeUrlString to: handler [
 	self dispatcherDictionary at: relativeUrlString put: handler
 ]

@@ -24,8 +24,8 @@ AndreasSystemProfiler is driven from a high-priority process in a loop waiting o
 That said there are still limitations with primitives and Cog.  Currently Cog only samples ""interpreter"" primitives.  Those primitives it implements in machine code (integer and float arithmetic, closure evaluation, at:, identityHash) are not sampled and won't show up; they will be charged to the calling method.  This is fixable, since Cog actually compiles the sampling direct into interpreter primitive invocation when profiling is in effect and not at other times, but sampling could be a significant cost in these simple and performance-critical primitives.
 "
 Class {
-	#name : #AndreasSystemProfiler,
-	#superclass : #Object,
+	#name : 'AndreasSystemProfiler',
+	#superclass : 'Object',
 	#instVars : [
 		'semaphore',
 		'ticks',
@@ -38,10 +38,12 @@ Class {
 		'ticksPerMSec',
 		'totalTicks'
 	],
-	#category : #'Tool-Profilers-System'
+	#category : 'Tool-Profilers-System',
+	#package : 'Tool-Profilers',
+	#tag : 'System'
 }
 
-{ #category : #LICENSE }
+{ #category : 'LICENSE' }
 AndreasSystemProfiler class >> LICENSE [
 	^'Project Squeak
 
@@ -59,37 +61,37 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 AndreasSystemProfiler class >> default [
 	^self new
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AndreasSystemProfiler class >> exampleSpyForSeconds [
 
 	self spyFor: 5
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AndreasSystemProfiler class >> exampleSpyOnBlock [
 
 	self spyOn: [ 10000 timesRepeat: [ 3.14159 printString ] ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AndreasSystemProfiler class >> exampleSpyOnWorld [
 
 	self spyOnWorldFor: 5
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 AndreasSystemProfiler class >> spyFor: seconds [
 	"Run the system profiler for the specified number of seconds"
 
-	^self spyOn: [ (Delay forSeconds: seconds) wait ].
+	^self spyOn: [ (Delay forSeconds: seconds) wait ]
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 AndreasSystemProfiler class >> spyOn: aBlock [
 	"The main method for profiling and showing the report "
 
@@ -99,43 +101,43 @@ AndreasSystemProfiler class >> spyOn: aBlock [
 		ensure: [ profiler doReport ]
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 AndreasSystemProfiler class >> spyOnWorldFor: seconds [
 	"Run the system profiler for the specified number of seconds,
-	 spying on the morphic world in which it was launched. 
+	 spying on the morphic world in which it was launched.
 	 Handy for running Workspace do-its."
 
 	^self spyOn: [  | deadline |
 		deadline := Time totalSeconds + seconds.
-		MorphicRenderLoop new doOneCycleWhile: [Time totalSeconds < deadline] ].
+		MorphicRenderLoop new doOneCycleWhile: [Time totalSeconds < deadline] ]
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 AndreasSystemProfiler >> doReport [
 	"Report the results of this profiler run"
-	UIManager default edit: self report label: 'Spy Results'.
+	UIManager default edit: self report label: 'Spy Results'
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 AndreasSystemProfiler >> report [
 	"Answer a report, with cutoff percentage of each element of the tree"
 	^String streamContents: [ :s | self report: s ]
 ]
 
-{ #category : #reporting }
-AndreasSystemProfiler >> report: strm [ 
-	"Print a report, with cutoff percentage of each element of the tree 
+{ #category : 'reporting' }
+AndreasSystemProfiler >> report: strm [
+	"Print a report, with cutoff percentage of each element of the tree
 	(leaves, roots, tree)=2, on the stream, strm."
 
 	self report: strm cutoff: 1
 ]
 
-{ #category : #reporting }
-AndreasSystemProfiler >> report: strm cutoff: threshold [ 
+{ #category : 'reporting' }
+AndreasSystemProfiler >> report: strm cutoff: threshold [
 	tallyRoot ifNil: [ strm nextPutAll: 'The profiler has not been run'. ^ self ].
-	
+
 	tallyRoot tally isZero
-		ifTrue: [ strm nextPutAll: ' - no tallies obtained' ] 
+		ifTrue: [ strm nextPutAll: ' - no tallies obtained' ]
 		ifFalse: [
 			strm nextPutAll: 'Reporting - ', totalTally asStringWithCommas,' tallies, ',
 							 totalTime asStringWithCommas, ' msec.'; cr; cr.
@@ -145,10 +147,10 @@ AndreasSystemProfiler >> report: strm cutoff: threshold [
 	totalTime isZero ifFalse: [
 		self reportGCStatsOn: strm.
 		self reportProcessStatsOn: strm.
-	].
+	]
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 AndreasSystemProfiler >> reportGCStatsOn: str [
 	| oldSpaceEnd youngSpaceEnd memoryEnd fullGCs fullGCTime incrGCs incrGCTime tenureCount upTime rootOverflows |
 	upTime := totalTime.
@@ -196,11 +198,10 @@ AndreasSystemProfiler >> reportGCStatsOn: str [
 	str	cr.
 	str	nextPutAll: '	root table	';
 		nextPutAll: rootOverflows asStringWithCommas; nextPutAll:' overflows'.
-	str cr.
-
+	str cr
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 AndreasSystemProfiler >> reportProcessStatsOn: str [
 	| totalSwitches pageOverflows pageDivorces actualSwitches |
 	vmStats size >= 61 ifFalse: [ ^ self ]. "don't try this on the closure VM"
@@ -214,11 +215,10 @@ AndreasSystemProfiler >> reportProcessStatsOn: str [
 	str tab; nextPutAll: 'Total process switches: ', totalSwitches printString; cr.
 	str tab; nextPutAll: 'Without Profiler: ', actualSwitches printString; cr.
 	str tab; nextPutAll: 'Stack page overflows: ', pageOverflows printString; cr.
-	str tab; nextPutAll: 'Stack page divorces: ', pageDivorces printString; cr.
-
+	str tab; nextPutAll: 'Stack page divorces: ', pageDivorces printString; cr
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 AndreasSystemProfiler >> runProfilerProcess [
 	"Run the profiler process"
 	| process tallyStart tallyTicks tallyStop method leaf |
@@ -242,21 +242,19 @@ AndreasSystemProfiler >> runProfilerProcess [
 			leaf := tallyRoot tally: (process suspendedContext ifNil: [ thisContext ] ) by: tallyTicks.
 			method ifNotNil: [ leaf tallyMethod: method by: tallyTicks ].
 		].
-	].
-
+	]
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 AndreasSystemProfiler >> spyOn: aBlock [
-	"Profile system activity during execution of aBlock. 
+	"Profile system activity during execution of aBlock.
 	The argument is the desired samples per *milli* second.
 	Mostly for polymorphism with MessageTally."
 	self startProfiling.
 	aBlock ensure: [ self stopProfiling ]
-
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 AndreasSystemProfiler >> startProfiling [
 	"Start the profiler process taking samplesPerMsec samples per *milli* second"
 	| t0 |
@@ -266,28 +264,26 @@ AndreasSystemProfiler >> startProfiling [
 	[Time millisecondClockValue >= t0] whileFalse.
 	ticksPerMSec := Smalltalk highResClock.
 	[Time millisecondClockValue >= (t0 + 100)] whileFalse.
-	ticksPerMSec := (Smalltalk highResClock - ticksPerMSec) 
+	ticksPerMSec := (Smalltalk highResClock - ticksPerMSec)
 			// (Time millisecondClockValue - t0).
 	"Try to get 10 samples per msec"
 	ticks := ticksPerMSec // 10.
 	startTime := Time millisecondClockValue.
 	vmStats := Smalltalk vm getParameters.
-	profilerProcess := [ self runProfilerProcess ] forkAt: Processor timingPriority - 1.
-
+	profilerProcess := [ self runProfilerProcess ] forkAt: Processor timingPriority - 1
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 AndreasSystemProfiler >> stopProfiling [
 	"Stop the profiler process"
 	Smalltalk profileSemaphore: nil.
 	Smalltalk profileStart: 0. "<- profile stops now"
 	totalTime := Time millisecondClockValue - startTime.
-	Smalltalk vm getParameters keysAndValuesDo: [ :idx :value | 
+	Smalltalk vm getParameters keysAndValuesDo: [ :idx :value |
 		value isInteger ifTrue: [ vmStats at: idx put: (value - ((vmStats at: idx) ifNil: [ 0 ])) ].
 	].
 	profilerProcess ifNotNil: [
 		profilerProcess suspend.
 		profilerProcess := nil.
-	].
-
+	]
 ]

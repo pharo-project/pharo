@@ -1,34 +1,46 @@
 "
-Removes a class from the image.
+Removes a potential non empty class (to your own risk) and reparent its children to the superclass to avoid fully breaking the subclasses.
 
-Usage:
-| transformation |
-transformation := (RBRemoveClassTransformation
+## Usage:
+
+```
+(RBRemoveClassTransformation
 	className: #RBRemoveClassTransformationTest)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	execute.
+```
 
-Preconditions:
+To get the changes
+
+```
+| transf | 
+transf := (RBRemoveClassTransformation
+	className: #RBRemoveClassTransformationTest)
+	generateChanges.
+(StRefactoringPreviewPresenter changes: transf scopes: {RBBrowserEnvironment new}) open
+```
+
+To view changes check `StRefactoringPreviewPresenter changes: aCompositeRefactoring scopes: scopes
+
+## Preconditions:
 - class must exist
-- class to be removed should not be referenced
-- class to be removed must not have subclasses
-- if it is a trait, it should not be used
 
 "
 Class {
-	#name : #RBRemoveClassTransformation,
-	#superclass : #RBClassTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#name : 'RBRemoveClassTransformation',
+	#superclass : 'RBClassTransformation',
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveClassTransformation class >> cannotRemoveTopLevelClassErrorMesssage [
 
 	^ 'Cannot remove top level class' , String cr
 	  , 'when it has subclasses'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> className: aClassName [
 
 	^ self new
@@ -36,15 +48,15 @@ RBRemoveClassTransformation class >> className: aClassName [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> classNames: aCollection [
 
-	^ self 
+	^ self
 		model: RBTransformation new model
 		classNames: aCollection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> model: aRBSmalltalk className: aClassName [
 
 	^ self new
@@ -53,7 +65,7 @@ RBRemoveClassTransformation class >> model: aRBSmalltalk className: aClassName [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 
 	^ RBCompositeTransformation new
@@ -62,75 +74,24 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRemoveClassTransformation >> environmentWithReferencesTo: aClass [
+{ #category : 'preconditions' }
+RBRemoveClassTransformation >> applicabilityPreconditions [ 
 
-	^ RBBrowserEnvironment new 
-		referencesTo: (self environment 
-			associationAt: aClass 
-			ifAbsent: [ aClass ])
+		| aClassOrTrait |
+		aClassOrTrait := self model classNamed: className.
+		aClassOrTrait ifNil: [ self refactoringError: 'No such class or trait named ', className ].
+		^ (self preconditionIsNotMetaclass: aClassOrTrait)
+			
 ]
 
-{ #category : #preconditions }
-RBRemoveClassTransformation >> environmentWithUsersOf: aTrait [
-
-	^ RBClassEnvironment 
-		onEnvironment: RBBrowserEnvironment new
-		classes: aTrait realClass users
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditionHasNoReferences: aClass [
-
-	| env |
-	env := self environmentWithReferencesTo: aClass.
-	^ (RBCondition withBlock: [ env isEmpty ])
-		errorMacro: aClass , ' is referenced.<n>Browse references?';
-		errorBlock: [ self openBrowserOn: (env) ];
-		yourself
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditionHasNoSubclasses: aClass [
-
-	^ (RBCondition withBlock: [ aClass subclasses isEmpty ])
-		errorMacro: self class cannotRemoveTopLevelClassErrorMesssage;
-		yourself
-]
-
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditionHasNoUsers: aClassOrTrait [
-
-	^ (RBCondition withBlock: [ aClassOrTrait realClass users isEmpty ])
-		errorMacro: aClassOrTrait name , ' Trait is used.<n>Browse classes using it?';
-		errorBlock: [ self openBrowserOn: (self environmentWithUsersOf: aClassOrTrait) ];
-		yourself
-]
-
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveClassTransformation >> preconditionIsNotMetaclass: aClass [
 
 	^ ((RBCondition isMetaclass: aClass)
 		errorMacro: 'Cannot remove just the metaclass') not
 ]
 
-{ #category : #preconditions }
-RBRemoveClassTransformation >> preconditions [
-
-	^ className inject: RBCondition empty into: [ :cond :aClass |
-		| aClassOrTrait |
-		aClassOrTrait := self model classNamed: className asSymbol.
-		aClassOrTrait ifNil: [ self
-			refactoringError: 'No such class or trait named ', className ].
-		
-		cond 
-			& ( (self preconditionIsNotMetaclass: aClassOrTrait) 
-			& (self preconditionHasNoReferences: className)
-			& (self preconditionHasNoSubclasses: aClassOrTrait)
-			& (self preconditionHasNoUsers: aClassOrTrait ) ) ]
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveClassTransformation >> privateTransform [
 
 	self
@@ -138,22 +99,22 @@ RBRemoveClassTransformation >> privateTransform [
 		removeClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveClassTransformation >> removeClass [
 
 	self model removeClassNamed: className
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveClassTransformation >> reparentSubclasses [
 
-	self model 
-		reparentClasses: self definingClass subclasses copy 
+	self model
+		reparentClasses: self definingClass subclasses copy
 		to: self definingClass superclass
 ]
 
-{ #category : #printing }
-RBRemoveClassTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBRemoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

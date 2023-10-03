@@ -2,18 +2,20 @@
 SUnit tests for year handling
 "
 Class {
-	#name : #YearTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#name : 'YearTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 YearTest >> classToBeTested [
 
 	^ Year
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 YearTest >> testFirstThursday [
 
 	1800 to: 2000 do:
@@ -25,7 +27,7 @@ YearTest >> testFirstThursday [
 			self assert: (firstThursday - 1 week) year equals: y - 1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 YearTest >> testOffset [
 	"Check that the offset is maintained when creating a new instance of Month from a DateAndTime"
 
@@ -36,7 +38,7 @@ YearTest >> testOffset [
 	self assert: newYear asDateAndTime offset equals: dt offset
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 YearTest >> testPreviousInLeapYear [
 	| leap |
 	leap := Year year: 2008.
@@ -44,14 +46,14 @@ YearTest >> testPreviousInLeapYear [
 	self assert: (Year year: leap year - 1) equals: leap previous
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 YearTest >> testStart [
 	| yyyy |
 	yyyy := DateAndTime now year.
 	self assert: Year current start equals: (DateAndTime year: yyyy month: 1 day: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 YearTest >> testcurrentYear [
 
 	| yyyy |
@@ -59,7 +61,7 @@ YearTest >> testcurrentYear [
 	self assert: Date today asYear equals: yyyy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 YearTest >> testcurrentYearNumber [
 
 	| yyyy |
@@ -67,7 +69,7 @@ YearTest >> testcurrentYearNumber [
 	self assert: Date today year equals: yyyy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 YearTest >> testdaysInMonth [
 
 	self assert: ((Year year: 2018) daysInMonth:1) equals: 31. "January"

@@ -4,50 +4,38 @@ I'm a domain object used by Equals tests.
 I'm a fruit with a maturity stage.
 "
 Class {
-	#name : #EqFruit,
-	#superclass : #Object,
+	#name : 'EqFruit',
+	#superclass : 'Object',
 	#traits : 'TEquality',
 	#classTraits : 'TEquality classTrait',
 	#instVars : [
 		'stage'
 	],
-	#category : #'Equals-Tests'
+	#category : 'Equals-Tests',
+	#package : 'Equals-Tests'
 }
 
-{ #category : #comparing }
-EqFruit >> = anObject [ 
-	self species = anObject species ifFalse: [^false].
-	^self valuesToCompareForEquality = anObject valuesToCompareForEquality
-]
-
-{ #category : #staging }
+{ #category : 'staging' }
 EqFruit >> beRipe [
 	stage := #ripe
 ]
 
-{ #category : #staging }
+{ #category : 'staging' }
 EqFruit >> beRotten [
 	stage := #rotten
 ]
 
-{ #category : #staging }
+{ #category : 'staging' }
 EqFruit >> beUnripe [
 	stage := #unripe
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EqFruit >> color [
 	^self subclassResponsibility
 ]
 
-{ #category : #comparing }
-EqFruit >> hash [
-	^self valuesToCompareForEquality inject: self species hash into: [:hash :comparisonValue|
-		(hash bitXor: comparisonValue hash) hashMultiply]
-
-]
-
-{ #category : #'initialize - release' }
+{ #category : 'initialization' }
 EqFruit >> initialize [
 	super initialize.
 	self beUnripe

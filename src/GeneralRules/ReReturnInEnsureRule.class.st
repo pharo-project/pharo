@@ -2,30 +2,32 @@
 Checks for return statements within ensure: blocks that can have unintended side-effects.
 "
 Class {
-	#name : #ReReturnInEnsureRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReReturnInEnsureRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnInEnsureRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ReturnInEnsureRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReReturnInEnsureRule >> afterCheck: aNode mappings: mappingDict [
 	^ (mappingDict at: '`@.Stmts')
 		anySatisfy: #containsReturn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnInEnsureRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReReturnInEnsureRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -33,7 +35,7 @@ ReReturnInEnsureRule >> initialize [
 		'`@rcv ifCurtailed: [| `@temps | `@.Stmts]')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnInEnsureRule >> name [
 	^ 'Contains a return in an ensure: block'
 ]

@@ -1,72 +1,73 @@
 Class {
-	#name : #ReCritiqueTest,
-	#superclass : #ReCodeBasedTestCase,
-	#category : #'Renraku-Tests'
+	#name : 'ReCritiqueTest',
+	#superclass : 'ReCodeBasedTestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testBan [
 	| criticToSkip |
-		
+
 	criticToSkip := testClass critiques detect: [ :critic |
 		critic rule class = ScreamerRule ].
-	
+
 	criticToSkip ban.
-	
+
 	self assert: (testClass critiques noneSatisfy: [ :critic |
-		critic rule class = ScreamerRule ]).
+		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testBan1 [
 	| criticToSkip |
-	
-		
+
+
 	criticToSkip := testMethod critiques detect: [ :critic |
 		critic rule class = ScreamerRule ].
-	
+
 	criticToSkip ban.
-	
+
 	self assert: (testMethod critiques noneSatisfy: [ :critic |
-		critic rule class = ScreamerRule ]).
+		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testDescription [
 	| rule critic |
-	
+
 	rule := (ReAbstractRule allSubclasses select: #isVisible) anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
-	
+
 	self assert: critic description equals: rule rationale
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testRule [
 	| rule critic |
-	
+
 	rule := (ReAbstractRule allSubclasses select: #isVisible)	 anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
-	
+
 	self assert: critic rule equals: rule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testTarget [
 	| rule critic |
-	
+
 	rule := (ReAbstractRule allSubclasses select: #isVisible)	 anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
-	
+
 	self assert: critic sourceAnchor entity equals: thisContext method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testTitle [
 	| rule critic |
-	
+
 	rule := (ReAbstractRule allSubclasses select: #isVisible)	 anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
-	
+
 	self assert: critic title equals: rule name
 ]

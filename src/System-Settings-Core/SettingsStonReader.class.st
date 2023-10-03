@@ -17,44 +17,46 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SettingsStonReader,
-	#superclass : #Object,
+	#name : 'SettingsStonReader',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'storedSettings'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings-Builder'
+	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings-Builder',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-StoredSettings-Builder'
 }
 
-{ #category : #loading }
+{ #category : 'loading' }
 SettingsStonReader >> load [
 	"It loads all instances of StoredSetting from a stream."
 	stream ifNil: [ ^ #() ].
 	stream atEnd ifTrue: [ ^ #() ].
-	[ | reader | 
+	[ | reader |
 		reader := STON reader on: stream; yourself.
 		storedSettings := reader next.
 	] ensure: [ stream close ].
 	^ storedSettings
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 SettingsStonReader >> secureLoad [
 	[ self load ] on: STONReaderError do: [ :ex | "ignore" ].
-	^ self storedSettings ifNil: [ #() ].
+	^ self storedSettings ifNil: [ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingsStonReader >> storedSettings [
 	^ storedSettings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingsStonReader >> stream [
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingsStonReader >> stream: anObject [
 	stream := anObject
 ]

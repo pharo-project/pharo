@@ -1,18 +1,19 @@
 Class {
-	#name : #ZnEasyTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnEasyTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEasyTest >> smallHtmlUrl [
 	^ 'http://zn.stfx.eu/zn/small.html' asZnUrl
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testDelete [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response |
 			response := ZnEasy
 				delete:
@@ -25,7 +26,7 @@ ZnEasyTest >> testDelete [
 			self assert: (response entity string includesSubstring: 'foo') ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testGetGif [
 	| url result |
 	url := 'http://zn.stfx.eu/zn/Hot-Air-Balloon.gif'.
@@ -33,7 +34,7 @@ ZnEasyTest >> testGetGif [
 	self assert: result isForm
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testGetJpeg [
 	| url result |
 	url := 'http://stfx.eu/sun-fire-x2100.jpg'.
@@ -41,7 +42,7 @@ ZnEasyTest >> testGetJpeg [
 	self assert: result isForm
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testGetPng [
 	| url result |
 	url := 'http://pharo.org/web/files/pharo.png'.
@@ -49,7 +50,7 @@ ZnEasyTest >> testGetPng [
 	self assert: result isForm
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testGetSmallHTMLDocument [
 	| url response |
 	url := self smallHtmlUrl.
@@ -59,7 +60,7 @@ ZnEasyTest >> testGetSmallHTMLDocument [
 	self assert: (response entity string includesSubstring: 'small')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testHeadSmallHTMLDocument [
 	| url response |
 	url := self smallHtmlUrl.
@@ -69,10 +70,10 @@ ZnEasyTest >> testHeadSmallHTMLDocument [
 	self assert: response hasEntity not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testPost [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response data |
 			data := String streamContents: [ :stream | 1 to: 32 do: [ :each | stream nextPut: 'abc' atRandom ] ].
 			response := ZnEasy
@@ -87,10 +88,10 @@ ZnEasyTest >> testPost [
 			self assert: (response entity string includesSubstring: data) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testPostUnicodeUtf8 [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response data |
 			data := String streamContents: [ :stream | 0 to: 16r024F do: [ :each | stream nextPut: each asCharacter ] ].
 			response := ZnEasy
@@ -105,10 +106,10 @@ ZnEasyTest >> testPostUnicodeUtf8 [
 			self assert: (response entity string includesSubstring: data) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testPut [
 	self
-		withServerDo: [ :server | 
+		withServerDo: [ :server |
 			| response data |
 			data := String streamContents: [ :stream | 1 to: 32 do: [ :each | stream nextPut: 'abc' atRandom ] ].
 			response := ZnEasy
@@ -123,29 +124,18 @@ ZnEasyTest >> testPut [
 			self assert: (response entity string includesSubstring: data) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEasyTest >> testTimeout [
 	self withServerDo: [ : server |
-		self 
-			should: [ 
-				ZnConnectionTimeout 
-					value: 1 
-					during: [ ZnEasy get: (server localUrl addPathSegment: 'echo'; queryAt: 'delay' put: '2'; yourself) ] ] 
+		self
+			should: [
+				ZnConnectionTimeout
+					value: 1
+					during: [ ZnEasy get: (server localUrl addPathSegment: 'echo'; queryAt: 'delay' put: '2'; yourself) ] ]
 			raise: ConnectionTimedOut ]
-	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEasyTest >> withServerDo: block [
-	| server |
-	server := ZnServer on: 1700 + 32 atRandom.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		self assert: server isRunning & server isListening.
-		block cull: server
-	] 
-		ensure: [ server stop ]
+	ZnServer withOSAssignedPortDo: block
 ]

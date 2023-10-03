@@ -2,39 +2,41 @@
 I am responsible for storing information about ThemeIcons objects.
 "
 Class {
-	#name : #ThemeIconsStoredSetting,
-	#superclass : #AbstractStoredSetting,
+	#name : 'ThemeIconsStoredSetting',
+	#superclass : 'AbstractStoredSetting',
 	#instVars : [
 		'name',
 		'url'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings'
+	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-StoredSettings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIconsStoredSetting >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIconsStoredSetting >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIconsStoredSetting >> realValue [
-	^ ThemeIcons new 
+	^ ThemeIcons new
 		name: self name;
 		url: self url;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIconsStoredSetting >> url [
 	^ url
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIconsStoredSetting >> url: anObject [
 	url := anObject
 ]

@@ -2,24 +2,26 @@
 i have settings for QA recording functions
 "
 Class {
-	#name : #ReSettings,
-	#superclass : #Object,
+	#name : 'ReSettings',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Renraku-Utility'
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ReSettings class >> cleanUp [
-	
+
 	uniqueInstance := nil
 ]
 
-{ #category : #'settings-definition' }
+{ #category : 'settings-definition' }
 ReSettings class >> resetButtonSettingsOn: aBuilder [
 	<systemsettings>
-		
+
 	(aBuilder group: #'resetRules')
 		order: 10;
 		target: self;
@@ -32,28 +34,28 @@ ReSettings class >> resetButtonSettingsOn: aBuilder [
 				label: 'Reset rule cache';
 				actionSelector: #resetWithInform;
 				themeChanged;
-				yourself ].
+				yourself ]
 ]
 
-{ #category : #'settings-accessing' }
+{ #category : 'settings-accessing' }
 ReSettings class >> showErrors [
 	self flag: 'switch to exception strategy completely'.
 	"Utilize the ReExceptionStrategy to either skip the exception,
 	pass it on, or create a list of exceptions as a reparete
 	'category' with all the exceptions that happened."
-	
+
 	^ ReExceptionStrategy current = RePassExceptionStrategy
 ]
 
-{ #category : #'settings-accessing' }
+{ #category : 'settings-accessing' }
 ReSettings class >> showErrors: aBoolean [
 
-	ReExceptionStrategy current: (aBoolean 
+	ReExceptionStrategy current: (aBoolean
 		ifTrue: [ RePassExceptionStrategy ]
-		ifFalse: [ ReIgnoreExceptionStrategy ]).
+		ifFalse: [ ReIgnoreExceptionStrategy ])
 ]
 
-{ #category : #'settings-definition' }
+{ #category : 'settings-definition' }
 ReSettings class >> showErrorsSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showErrors)
@@ -62,11 +64,11 @@ ReSettings class >> showErrorsSettingsOn: aBuilder [
 		default: false;
 		label: 'Show errors (dev. only!)';
 		description: 'Signal errors that happen during critique-checking (and related). This should be used by developers.';
-		parent: #qualityAssistant.
+		parent: #qualityAssistant
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSettings class >> uniqueInstance [
-	
+
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]

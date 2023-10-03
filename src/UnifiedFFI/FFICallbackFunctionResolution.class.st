@@ -21,60 +21,60 @@ absolute: aNumber
 
 "
 Class {
-	#name : #FFICallbackFunctionResolution,
-	#superclass : #FFIFunctionResolutionStrategy,
+	#name : 'FFICallbackFunctionResolution',
+	#superclass : 'FFIFunctionResolutionStrategy',
 	#classVars : [
 		'CallbackRegistry'
 	],
-	#category : #'UnifiedFFI-Callouts'
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #private }
-FFICallbackFunctionResolution class >> callbackNamed: functionName ifAbsent: aBlock [ 
-	^ self callbackRegistry 
+{ #category : 'private' }
+FFICallbackFunctionResolution class >> callbackNamed: functionName ifAbsent: aBlock [
+	^ self callbackRegistry
 		at: functionName asSymbol
 		ifAbsent: aBlock
 ]
 
-{ #category : #private }
-FFICallbackFunctionResolution class >> callbackRegistry [ 
+{ #category : 'private' }
+FFICallbackFunctionResolution class >> callbackRegistry [
 	^ CallbackRegistry ifNil: [ CallbackRegistry := Dictionary new ]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 FFICallbackFunctionResolution class >> cleanUp [
 	self reset
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 FFICallbackFunctionResolution class >> registerCallback: aCallback as: functionName [
-	self callbackRegistry 
-		at: functionName asSymbol 
-		put: aCallback.
-
+	self callbackRegistry
+		at: functionName asSymbol
+		put: aCallback
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFICallbackFunctionResolution class >> reset [
 	CallbackRegistry := nil
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 FFICallbackFunctionResolution class >> unregister: functionName [
-	self callbackRegistry removeKey: functionName asSymbol 
-		
+	self callbackRegistry removeKey: functionName asSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFICallbackFunctionResolution >> isApplicableFor: aRequestor [
 	^ aRequestor optionAt: #optCallbackCall
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FFICallbackFunctionResolution >> resolveFunction: anExternalFunction [
 	| callback |
-	callback := self class 
+	callback := self class
 		callbackNamed: anExternalFunction name
 		ifAbsent: [ self error: 'Callback #', anExternalFunction name, ' not registered!' ].
-	^ callback thunk asExternalAddress 
+	^ callback thunk asExternalAddress
 ]

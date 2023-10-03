@@ -5,23 +5,25 @@
  
 "
 Class {
-	#name : #RubLipsumWithSegmentsExample,
-	#superclass : #RubLipsumBasicExample,
-	#category : #'Rubric-Editing-Widgets-Examples'
+	#name : 'RubLipsumWithSegmentsExample',
+	#superclass : 'RubLipsumBasicExample',
+	#category : 'Rubric-Editing-Widgets-Examples',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLipsumWithSegmentsExample >> loremIpsum [
 	^ String loremIpsum: 2000
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubLipsumWithSegmentsExample >> newScrolledText [
 	| st r conf |
 	st := super newScrolledText.
 	conf := RubConfigurationChange new.
 	conf
-		configurationBlock: [ :scrolledText | 
+		configurationBlock: [ :scrolledText |
 			scrolledText withTextSegmentIcons.
 			scrolledText addSegment: (r := RubUnderlinedSegmentMorph from: 1 to: 29).
 			r icon: (self iconNamed: #smallError).
@@ -31,7 +33,7 @@ RubLipsumWithSegmentsExample >> newScrolledText [
 			r icon: (self iconNamed: #smallError).
 			r label: 'Remove'.
 			r
-				iconBlock: [ :seg :event | 
+				iconBlock: [ :seg :event |
 					seg textArea selectFrom: seg firstIndex to: seg lastIndex.
 					seg textArea replaceSelectionWith: ''.
 					seg delete ].
@@ -52,7 +54,7 @@ RubLipsumWithSegmentsExample >> newScrolledText [
 			scrolledText addSegment: (r := RubPlainSegmentMorph from: 1300 to: 1610).
 			r label: 'Remove'.
 			r
-				iconBlock: [ :seg :event | 
+				iconBlock: [ :seg :event |
 					seg textArea selectFrom: seg firstIndex to: seg lastIndex.
 					seg textArea replaceSelectionWith: ''.
 					seg delete ].

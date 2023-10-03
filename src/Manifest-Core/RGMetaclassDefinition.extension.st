@@ -1,6 +1,6 @@
-Extension { #name : #RGMetaclassDefinition }
+Extension { #name : 'RGMetaclassDefinition' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RGMetaclassDefinition >> arrayStringForManifest [
 	| array |
 	array := Array new: 2.
@@ -13,7 +13,7 @@ RGMetaclassDefinition >> arrayStringForManifest [
 	^ array
 ]
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RGMetaclassDefinition class >> manifestReadOn: aArray [
 
 	^ (self named:( aArray at:1))

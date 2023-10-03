@@ -6,24 +6,26 @@ I am a slot that compiles accessor methods in the Class that it is installed in.
 This example shows how Slots can change the class that they are part of.
 "
 Class {
-	#name : #AccessorInstanceVariableSlot,
-	#superclass : #InstanceVariableSlot,
-	#category : #'Slot-Examples-Base'
+	#name : 'AccessorInstanceVariableSlot',
+	#superclass : 'InstanceVariableSlot',
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 AccessorInstanceVariableSlot >> installingIn: aClass [
-	| reader writer | 
-	
+	| reader writer |
+
 	reader := String streamContents: [ :str |
-		str 
+		str
 			nextPutAll: self name;
 			cr;tab;
 			nextPutAll: ' ^';
 			nextPutAll: self name.
 		 ].
 	writer := String streamContents: [ :str |
-		str 
+		str
 			nextPutAll: self name;
 			nextPutAll: ': anObject';
 			cr;tab;
@@ -31,5 +33,5 @@ AccessorInstanceVariableSlot >> installingIn: aClass [
 			nextPutAll: ':= anObject.'.
 		].
 	aClass compile: reader classified: 'accessing'.
-	aClass compile: writer classified: 'accessing'.
+	aClass compile: writer classified: 'accessing'
 ]

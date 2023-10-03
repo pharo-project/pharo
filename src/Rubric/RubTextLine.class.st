@@ -2,8 +2,8 @@
 I represent a line of text
 "
 Class {
-	#name : #RubTextLine,
-	#superclass : #Object,
+	#name : 'RubTextLine',
+	#superclass : 'Object',
 	#instVars : [
 		'left',
 		'right',
@@ -21,99 +21,100 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubTextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesInteger paddingWidth: padWidthInteger [
-	"Answer an instance of me with the arguments as the start, stop points, 
+	"Answer an instance of me with the arguments as the start, stop points,
 	number of spaces in the line, and width of the padding."
 	| line |
 	line := self new firstIndex: startInteger lastIndex: stopInteger.
 	^ line internalSpaces: spacesInteger paddingWidth: padWidthInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubTextLine >> = line [
 	^ self species = line species
-		ifTrue: [ ((firstIndex = line first and: [ lastIndex = line last ]) and: [ internalSpaces = line internalSpaces ]) and: [ paddingWidth = line paddingWidth ] ]
-		ifFalse: [ false ]
+		and: [ firstIndex = line first and: [ lastIndex = line last and: [ internalSpaces = line internalSpaces and: [ paddingWidth = line paddingWidth ] ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> actualWidth [
 	^ actualWidth ifNil: [ 0 ] "self right - self paddingWidth"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> actualWidth: anObject [
 	actualWidth := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> baseline [
 	^ baseline
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> bottom [
 	^ bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> bottomLeft [
 	^ left@bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> bottomRight [
 	^ right@bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> first [
 	^ firstIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextLine >> firstIndex: firstInteger lastIndex: lastInteger [
 	firstIndex := firstInteger.
 	lastIndex := lastInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubTextLine >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 	^firstIndex hash bitXor: lastIndex hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> height [
 	^ self bottom - self top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> internalSpaces [
 	"Answer the number of spaces in the line."
 
 	^internalSpaces
 ]
 
-{ #category : #accessing }
-RubTextLine >> internalSpaces: spacesInteger [ 
+{ #category : 'accessing' }
+RubTextLine >> internalSpaces: spacesInteger [
 	"Set the number of spaces in the line to be spacesInteger."
 
 	internalSpaces := spacesInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextLine >> internalSpaces: spacesInteger paddingWidth: padWidthInteger [
 
 	internalSpaces := spacesInteger asInteger.
 	paddingWidth := padWidthInteger asInteger
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubTextLine >> justifiedPadFor: spaceIndex [
 	"Compute the width of pad for a given space in a line of justified text."
 
@@ -125,7 +126,7 @@ RubTextLine >> justifiedPadFor: spaceIndex [
 		ifFalse: [ pad ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubTextLine >> justifiedPadFor: spaceIndex font: aFont [
 	"Compute the width of pad for a given space in a line of justified text."
 
@@ -140,9 +141,9 @@ RubTextLine >> justifiedPadFor: spaceIndex font: aFont [
 				ifFalse: [pad]]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubTextLine >> justifiedTabDeltaFor: spaceIndex [
-	"Compute the delta for a tab in a line of justified text, so tab falls 
+	"Compute the delta for a tab in a line of justified text, so tab falls
 	somewhere plausible when line is justified."
 
 	| pad extraPad |
@@ -154,90 +155,90 @@ RubTextLine >> justifiedTabDeltaFor: spaceIndex [
 		ifFalse: [ extraPad * (pad + 1) + ((spaceIndex - extraPad) * pad) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> last [
 	^ lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> left [
 	^ left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> leftMargin [
 	"This has to get fixed -- store during composition"
 	^ self left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> leftMargin: lm [
 	left := lm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> leftMarginForAlignment: alignmentCode [
 	alignmentCode = RightFlush ifTrue: [^ self left + paddingWidth].
 	alignmentCode = Centered ifTrue: [^ self left + (paddingWidth//2)].
 	^ self left  "leftFlush and justified"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> lineHeight [
 	^ bottom - top
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextLine >> lineHeight: height baseline: ascent [
 	bottom := top + height.
 	baseline := ascent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> lineNumber [
 	^ lineNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> lineNumber: anInteger [
 	lineNumber := anInteger
 ]
 
-{ #category : #updating }
-RubTextLine >> moveBy: delta [ 
+{ #category : 'updating' }
+RubTextLine >> moveBy: delta [
 	"Move my rectangle by the given delta"
 	left := left + delta x.
 	right := right + delta x.
 	top := top + delta y.
-	bottom := bottom + delta y.
+	bottom := bottom + delta y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> paddingWidth [
 	"Answer the amount of space to be added to the font."
 
 	^paddingWidth
 ]
 
-{ #category : #accessing }
-RubTextLine >> paddingWidth: padWidthInteger [ 
+{ #category : 'accessing' }
+RubTextLine >> paddingWidth: padWidthInteger [
 	"Set the amount of space to be added to the font to be padWidthInteger."
 
 	paddingWidth := padWidthInteger asInteger
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RubTextLine >> printOn: aStream [
 	super printOn: aStream.
 	aStream space; print: firstIndex; nextPutAll: ' to: '; print: lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> rectangle [
 	^ self topLeft corner: self bottomRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> rectangle: lineRectangle [
 	left := lineRectangle left.
 	right := lineRectangle right.
@@ -245,31 +246,31 @@ RubTextLine >> rectangle: lineRectangle [
 	bottom := lineRectangle bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> right [
 	^ right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> rightMargin [
 	"This has to get fixed -- store during composition"
 	^ self right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> setRight: x [
 	right := x
 ]
 
-{ #category : #updating }
-RubTextLine >> slide: delta [ 
+{ #category : 'updating' }
+RubTextLine >> slide: delta [
 	"Change the starting and stopping points of the line by delta."
 
 	firstIndex := firstIndex + delta.
 	lastIndex := lastIndex + delta
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RubTextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 	"Relocate my character indices and y-values.
 	Used to slide constant text up or down in the wake of a text replacement."
@@ -277,42 +278,42 @@ RubTextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 	firstIndex := firstIndex + delta.
 	lastIndex := lastIndex + delta.
 	bottom := bottom + (newTop - top).
-	top := newTop.
+	top := newTop
 ]
 
-{ #category : #accessing }
-RubTextLine >> stop: stopInteger [ 
+{ #category : 'accessing' }
+RubTextLine >> stop: stopInteger [
 	"Set the stopping point in the string of the line to be stopInteger."
 
 	lastIndex := stopInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> stopCondition [
 	^ stopCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> stopCondition: aSymbol [
 	stopCondition := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> top [
 	^ top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> topLeft [
 	^ left @ top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> topRight [
 	^ right @ top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextLine >> width [
 	^ right - left
 ]

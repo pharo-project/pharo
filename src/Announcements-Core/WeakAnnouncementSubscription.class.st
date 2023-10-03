@@ -9,118 +9,29 @@ To switch between subscription types, use makeStrong/makeWeak on the subscriptio
 Note, that list and next must be first instance variables.
 "
 Class {
-	#name : #WeakAnnouncementSubscription,
-	#superclass : #Object,
-	#type : #weak,
+	#name : 'WeakAnnouncementSubscription',
+	#superclass : 'AbstractAnnouncementSubscription',
+	#type : 'weak',
 	#instVars : [
-		'list',
-		'next',
-		'announcer',
-		'announcementClass',
-		'action'
+		'next'
 	],
-	#classVars : [
-		'FinalizationList'
-	],
-	#category : #'Announcements-Core-Subscription'
+	#category : 'Announcements-Core-Subscription',
+	#package : 'Announcements-Core',
+	#tag : 'Subscription'
 }
 
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizationList [
-
-	^ FinalizationList ifNil: [ FinalizationList := WeakFinalizationList new ]
-]
-
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizeValues [
-
-	| head |
-
-	head := self finalizationList swapWithNil.
-
-	[ head notNil ] whileTrue: [
-		head finalize.
-		head := head next
-	]
-]
-
-{ #category : #'class initialization' }
-WeakAnnouncementSubscription class >> initialize [
-
-	WeakArray
-		removeWeakDependent: self;
-		addWeakDependent: self
-
-	"Make sure that it is not added twice."
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WeakAnnouncementSubscription class >> new [
 	^ (self basicNew: 1) initialize
 ]
 
-{ #category : #accessing }
-WeakAnnouncementSubscription >> action [
-
-	^ action
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> action: anObject [
-
-	action := anObject
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcementClass [
-
-	^ announcementClass
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcementClass: anObject [
-
-	announcementClass := anObject
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcer [
-
-	^ announcer
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> announcer: anAnnouncer [
-	announcer := anAnnouncer
-]
-
-{ #category : #announcing }
-WeakAnnouncementSubscription >> deliver: anAnnouncement [
-	" deliver an announcement to receiver. In case of failure, it will be handled in separate process"
-
-	^ (self handlesAnnouncement: anAnnouncement ) ifTrue: [
-		[action cull: anAnnouncement cull: announcer]
-			on: UnhandledError fork: [:ex | ex pass ]]
-]
-
-{ #category : #finalization }
+{ #category : 'finalization' }
 WeakAnnouncementSubscription >> finalize [
 
 	announcer removeSubscription: self
 ]
 
-{ #category : #'error handling' }
-WeakAnnouncementSubscription >> handlesAnnouncement: anAnnouncement [
-
-	^ announcementClass handlesAnnouncement: anAnnouncement
-]
-
-{ #category : #initialization }
-WeakAnnouncementSubscription >> initialize [
-	list := self class finalizationList
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 WeakAnnouncementSubscription >> makeStrong [
 
 	| sub |
@@ -136,40 +47,31 @@ WeakAnnouncementSubscription >> makeStrong [
 		announcementClass: announcementClass)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WeakAnnouncementSubscription >> makeWeak [
+
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakAnnouncementSubscription >> next [
+
 	^ next
 ]
 
-{ #category : #printing }
-WeakAnnouncementSubscription >> printOn: stream [
-
-	super printOn: stream.
-
-	stream
-		nextPut: $(;
-		print: action;
-		nextPut: $)
-]
-
-{ #category : #finalization }
+{ #category : 'finalization' }
 WeakAnnouncementSubscription >> register [
-	self weakRegistry
-		add: self subscriber executor: self
+
+	self finalizationRegistry add: self subscriber finalizer: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakAnnouncementSubscription >> subscriber [
 
 	^ self basicAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakAnnouncementSubscription >> subscriber: anObject [
 
 	self subscriber ifNotNil: [ self error: 'subscriber already set' ].
@@ -177,20 +79,8 @@ WeakAnnouncementSubscription >> subscriber: anObject [
 	self register
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 WeakAnnouncementSubscription >> unregister [
 
-	self subscriber ifNotNil: [:sub |  self weakRegistry remove: sub ]
-]
-
-{ #category : #accessing }
-WeakAnnouncementSubscription >> valuable: aValuable [
-	"Used when subscriber should be extracted from valuable object"
-	self action:  aValuable.
-	self subscriber: aValuable receiver
-]
-
-{ #category : #finalization }
-WeakAnnouncementSubscription >> weakRegistry [
-	^ WeakRegistry default
+	self subscriber ifNotNil: [:sub |  self finalizationRegistry remove: sub ]
 ]

@@ -5,12 +5,13 @@ This is the unit test for the class MailAddressParser. Unit tests are a good way
 	- the sunit class category
 "
 Class {
-	#name : #MailAddressParserTest,
-	#superclass : #TestCase,
-	#category : #'Network-Mail-Tests'
+	#name : 'MailAddressParserTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Mail-Tests',
+	#package : 'Network-Mail-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailAddressParserTest >> testAddressesAndNamePairsIn [
 
 	| address |
@@ -19,7 +20,7 @@ MailAddressParserTest >> testAddressesAndNamePairsIn [
 	self assert: address first equals: #('first last' 'person@company.com')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailAddressParserTest >> testAddressesIn [
 
 	| testString correctAnswer |
@@ -31,7 +32,7 @@ correctAnswer := #('joe@lama.com' 'joe2@lama.com' 'joe3@lama.com' 'joe4' 'joe5@a
 	self assert: (MailAddressParser addressesIn: testString) equals:  correctAnswer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailAddressParserTest >> testAmpersand [
 
 	| testString correctAnswer |

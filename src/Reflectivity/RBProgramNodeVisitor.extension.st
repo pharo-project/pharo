@@ -1,11 +1,11 @@
-Extension { #name : #RBProgramNodeVisitor }
+Extension { #name : 'RBProgramNodeVisitor' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RBProgramNodeVisitor >> visitStoreIntoTempNode: aNode [
 	^ aNode
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RBProgramNodeVisitor >> visitStorePopIntoTempNode: aNode [
 	^ aNode
 ]

@@ -8,16 +8,18 @@ I also handle the migration of an object from its original class to an anonymous
 I consider that for one anonymous subclass i hold one object reference. I therefore cannot work as is with other clients using anonymous subclasses.
 "
 Class {
-	#name : #MetaLinkAnonymousClassBuilder,
-	#superclass : #Object,
+	#name : 'MetaLinkAnonymousClassBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'classes',
 		'migratedObjects'
 	],
-	#category : #'Reflectivity-Installer'
+	#category : 'Reflectivity-Installer',
+	#package : 'Reflectivity',
+	#tag : 'Installer'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetaLinkAnonymousClassBuilder >> allSubclassesOf: class withSelector: selector [
 	| subclasses |
 	class isAnonymous
@@ -26,12 +28,12 @@ MetaLinkAnonymousClassBuilder >> allSubclassesOf: class withSelector: selector [
 	^ (subclasses select: [ :c | c selectors includes: selector ]) asOrderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetaLinkAnonymousClassBuilder >> anonSubclassesFor: aClass [
 	^ classes at: aClass ifAbsent: [ ^ Array new ]
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 MetaLinkAnonymousClassBuilder >> anonymousClassForObject: anObject [
 	"Building the anonymous subclass for an object.
 	If the object already is instance of an anonymous class, its class is returned as is.
@@ -45,57 +47,57 @@ MetaLinkAnonymousClassBuilder >> anonymousClassForObject: anObject [
 		ifFalse: [ self newAnonymousSubclassFor: class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetaLinkAnonymousClassBuilder >> classAccessorsForAnonymousClasses [
 	^{'class
-		thisContext sender methodClass == MetaLinkAnonymousClassBuilder 
+		thisContext sender methodClass == MetaLinkAnonymousClassBuilder
 			ifTrue:[^self realClass].
 		^self originalClass'.
-		
+
 	'originalClass
 		^super class superclass'.
-		
+
 	'realClass
-		^super class'				
+		^super class'
 	}
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 MetaLinkAnonymousClassBuilder >> compileClassAccessorForAnonymousClass: anAnonymousClass [
 	self classAccessorsForAnonymousClasses
 		do: [ :sourceCode | anAnonymousClass compile: sourceCode ]
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 MetaLinkAnonymousClassBuilder >> compileMethodFrom: aNode in: anAnonymousClass [
 	| selector source |
 	selector := aNode methodNode selector.
 	(anAnonymousClass methodDict at: selector ifAbsent: [ nil ]) ifNotNil: [ :compiledMethod | ^ compiledMethod ].
 	source := aNode methodNode source.
-	anAnonymousClass compile: source.	
+	anAnonymousClass compile: source.
 	^ anAnonymousClass >> selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetaLinkAnonymousClassBuilder >> compiledMethodsOfSelector: selector inAnonSubClassesOf: class [
 	| anonSubClasses |
 	anonSubClasses := self anonSubclassesFor: class.
 	^ self compiledMethodsOfSelector: selector inClasses: anonSubClasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetaLinkAnonymousClassBuilder >> compiledMethodsOfSelector: selector inClasses: someClasses [
 	^ (someClasses select: [ :ac | ac selectors includes: selector ])
 		collect: [ :ac | ac compiledMethodAt: selector ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetaLinkAnonymousClassBuilder >> initialize [
 	classes := Dictionary new.
 	migratedObjects := WeakIdentityKeyDictionary new
 ]
 
-{ #category : #migration }
+{ #category : 'migration' }
 MetaLinkAnonymousClassBuilder >> migrateObject: anObject toAnonymousClass: anonClass [
 	anObject class == anonClass
 		ifTrue: [ ^ self ].
@@ -103,7 +105,7 @@ MetaLinkAnonymousClassBuilder >> migrateObject: anObject toAnonymousClass: anonC
 	migratedObjects at: anonClass put: (WeakArray with: anObject)
 ]
 
-{ #category : #migration }
+{ #category : 'migration' }
 MetaLinkAnonymousClassBuilder >> migrateObjectToOriginalClass: anObject [
 	| class |
 	class := anObject class.
@@ -113,7 +115,7 @@ MetaLinkAnonymousClassBuilder >> migrateObjectToOriginalClass: anObject [
 	class superclass adoptInstance: anObject
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 MetaLinkAnonymousClassBuilder >> newAnonymousSubclassFor: aClass [
 	| anonSubclass |
 	anonSubclass := aClass newAnonymousSubclass.
@@ -123,17 +125,17 @@ MetaLinkAnonymousClassBuilder >> newAnonymousSubclassFor: aClass [
 	^ anonSubclass
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 MetaLinkAnonymousClassBuilder >> removeMethodNode: aNode fromObject: anObject [
 	anObject class isAnonymous ifFalse:[^self].
-	anObject class removeSelector: aNode methodNode selector.
+	anObject class removeSelector: aNode methodNode selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetaLinkAnonymousClassBuilder >> soleInstanceOf: anAnonymousClass [
 	| weakArray |
 	anAnonymousClass
-		ifNil: [ 
+		ifNil: [
 			"Because anonymous subclasses are weakly referenced by the builder,
 			we assume other tools could do the same and ask for the sole instance
 			of a nilled reference (e.g., recovered from a weak array).

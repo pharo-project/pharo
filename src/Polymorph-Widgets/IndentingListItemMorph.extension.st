@@ -1,6 +1,6 @@
-Extension { #name : #IndentingListItemMorph }
+Extension { #name : 'IndentingListItemMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> changed [
 	"Need to invalidate the selection frame."
 
@@ -9,22 +9,22 @@ IndentingListItemMorph >> changed [
 	super changed
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> drawMouseDownHighlightOn: aCanvas [
 	"Draw with a dotted border."
-	
+
 	|frame|
 	self highlightedForMouseDown ifTrue: [
 		container ifNil: [^super drawMouseDownHighlightOn: aCanvas].
 		frame := self selectionFrame.
-		aCanvas 
+		aCanvas
 			frameRectangle: frame
 			width: 1
 			colors: {container mouseDownHighlightColor. Color transparent}
 			 dashes: #(1 1)]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> lastChild [
 	"Answer the last child."
 
@@ -34,7 +34,7 @@ IndentingListItemMorph >> lastChild [
 	^c
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> measureContents [
 	"Round up in case fractional."
 
@@ -47,11 +47,11 @@ IndentingListItemMorph >> measureContents [
 		@ ((contents heightToDisplayInTree: self) max: f height) + (self layoutInset * 2)) ceiling
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> openItemPath: anArray [
 	"Open a path based on wrapper item equivalence. Generally more specific
 	than #openPath: (string based)."
-	
+
 	| found |
 	anArray isEmpty
 		ifTrue: [^ container setSelectedMorph: nil].
@@ -74,17 +74,17 @@ IndentingListItemMorph >> openItemPath: anArray [
 	^container setSelectedMorph: nil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> outerBounds [
 	"Return the 'outer' bounds of the receiver, e.g., the bounds that need to be invalidated when the receiver changes."
-	
+
 	|box|
 	box := super outerBounds.
 	container ifNil: [^box].
 	^box left: (box left min: self selectionFrame left)
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> selectionFrame [
 	"Answer the selection frame rectangle."
 

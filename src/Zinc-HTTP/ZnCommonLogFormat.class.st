@@ -14,47 +14,49 @@ ZnLogEvent announcer
 
 "
 Class {
-	#name : #ZnCommonLogFormat,
-	#superclass : #Object,
+	#name : 'ZnCommonLogFormat',
+	#superclass : 'Object',
 	#instVars : [
 		'combined'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCommonLogFormat >> clientIPAddressFrom: event [
-	^ event request headers 
-		at: ZnConstants remoteAddressHeader 
+	^ event request headers
+		at: ZnConstants remoteAddressHeader
 		ifAbsent: [ '-' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCommonLogFormat >> combined [
 	^ combined
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCommonLogFormat >> combined: boolean [
-	"If boolean is true (the default), use the 'Combined' format, 
+	"If boolean is true (the default), use the 'Combined' format,
 	adding Referer and User-Agent fields."
-	
+
 	combined := boolean
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnCommonLogFormat >> format: event on: stream [
 	"Output a ZnServerTransactionEvent on a text stream in Common Log Format"
-	
+
 	stream << (self clientIPAddressFrom: event); << ' - '.
 	stream << (self userFrom: event); space.
 	self formatTimestamp: event timestamp on: stream.
 	self formatRequest: event on: stream.
-	self formatResponse: event on: stream. 
+	self formatResponse: event on: stream.
 	combined ifTrue: [ self formatCombinedFields: event request on: stream ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCommonLogFormat >> formatCombinedFields: request on: stream [
 	| referer userAgent |
 	referer := request headers at: 'Referer' ifAbsent: [ '-' ].
@@ -63,10 +65,9 @@ ZnCommonLogFormat >> formatCombinedFields: request on: stream [
 	stream nextPut: $"; << referer; nextPut: $".
 	stream space.
 	stream nextPut: $"; << userAgent; nextPut: $"
-
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCommonLogFormat >> formatRequest: event on: stream [
 	| requestLine |
 	stream space.
@@ -77,20 +78,19 @@ ZnCommonLogFormat >> formatRequest: event on: stream [
 	stream << $"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCommonLogFormat >> formatResponse: event on: stream [
 	| size |
 	stream space.
 	stream print: event response code.
 	stream space.
-	size := event response hasEntity 
-		ifTrue: [ event response contentLength ] 
+	size := event response hasEntity
+		ifTrue: [ event response contentLength ]
 		ifFalse: [ 0 ].
 	stream print: size
-
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCommonLogFormat >> formatTimestamp: timestamp on: stream [
 	stream nextPut: $[.
 	timestamp dayOfMonth printOn: stream base: 10 length: 2 padded: true.
@@ -108,13 +108,13 @@ ZnCommonLogFormat >> formatTimestamp: timestamp on: stream [
 	stream nextPut: $]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnCommonLogFormat >> initialize [
 	super initialize.
-	combined := true.
+	combined := true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCommonLogFormat >> userFrom: event [
 	^ [ event request basicAuthentication first ]
 		on: Error

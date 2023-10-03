@@ -4,40 +4,42 @@ I represent a the result of a failured task.
 I ignore success callbacks and schedule for execution failure callbacks
 "
 Class {
-	#name : #TKTFutureFailure,
-	#superclass : #TKTFutureState,
+	#name : 'TKTFutureFailure',
+	#superclass : 'TKTFutureState',
 	#instVars : [
 		'value'
 	],
-	#category : #'TaskIt-Futures'
+	#category : 'TaskIt-Futures',
+	#package : 'TaskIt',
+	#tag : 'Futures'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTFutureFailure >> isFailure [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureFailure >> onFailureDo: aBlockClosure inFuture: aFuture [
-	
+
 	aFuture scheduleCallbackTask: [ aBlockClosure value: value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureFailure >> value [
-	
+
 	value signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureFailure >> value: aValue [
 
 	value := aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureFailure >> valueForFuture: aFuture [
-	
+
 	 value signal
 ]

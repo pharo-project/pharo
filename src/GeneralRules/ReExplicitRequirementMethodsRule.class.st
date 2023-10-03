@@ -2,23 +2,25 @@
 Classes that use traits with explicit requirement methods should either implement the method or inherit it.
 "
 Class {
-	#name : #ReExplicitRequirementMethodsRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReExplicitRequirementMethodsRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReExplicitRequirementMethodsRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExplicitRequirementMethodsRule class >> uniqueIdentifierName [
 
 	^ 'ExplicitRequirementMethodsRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReExplicitRequirementMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock [
 	| explicitRequirementMethods |
 	aClass isTrait ifTrue: [ ^ self ].
@@ -40,12 +42,12 @@ ReExplicitRequirementMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock
 						yourself) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExplicitRequirementMethodsRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExplicitRequirementMethodsRule >> name [
 	^ 'Explicit requirement methods'
 ]

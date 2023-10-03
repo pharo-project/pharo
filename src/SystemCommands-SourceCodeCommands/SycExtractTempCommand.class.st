@@ -8,27 +8,28 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SycExtractTempCommand,
-	#superclass : #SycSourceCodeRefactoringCommand,
+	#name : 'SycExtractTempCommand',
+	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
 		'tempName'
 	],
-	#category : #'SystemCommands-SourceCodeCommands'
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 		^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isMethodSelected not ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
-	
+
 	aSourceCodeContext showVariableNamed: tempName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractTempCommand >> asRefactorings [
 
 	^ {RBExtractToTemporaryTransformation
@@ -38,22 +39,22 @@ SycExtractTempCommand >> asRefactorings [
 		  in: method origin}
 ]
 
-{ #category : #accessing }
-SycExtractTempCommand >> defaultMenuIconName [ 
+{ #category : 'accessing' }
+SycExtractTempCommand >> defaultMenuIconName [
 	^ ##smallUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycExtractTempCommand >> defaultMenuItemName [
 	^ 'Extract temp'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
-	
-	tempName := UIManager default 
-		request: 'New temp name' 
+
+	tempName := UIManager default
+		request: 'New temp name'
 		initialAnswer: ''
 		title: 'Extract code to temp variable'.
 	tempName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]

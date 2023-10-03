@@ -1,6 +1,6 @@
-Extension { #name : #MacOSPlatform }
+Extension { #name : 'MacOSPlatform' }
 
-{ #category : #'*UnifiedFFI' }
-MacOSPlatform >> ffiLibraryName: aLibrary [ 
+{ #category : '*UnifiedFFI' }
+MacOSPlatform >> ffiLibraryName: aLibrary [
 	^ aLibrary macLibraryName
 ]

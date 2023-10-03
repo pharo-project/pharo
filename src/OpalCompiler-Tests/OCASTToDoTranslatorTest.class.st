@@ -1,17 +1,19 @@
 Class {
-	#name : #OCASTToDoTranslatorTest,
-	#superclass : #OCASTSingleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTToDoTranslatorTest',
+	#superclass : 'OCASTSingleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTToDoTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineToDo . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineToDo))
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoExecutesBlock [
 
 
@@ -24,11 +26,11 @@ OCASTToDoTranslatorTest >> testToDoExecutesBlock [
 	 ^ total'
 		withTemps: #('total')
 		withBlock: '[ :index | total := total + index ]'.
-	
-	self assert: result equals: 15.
+
+	self assert: result equals: 15
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoReturnsReceiver [
 
 
@@ -38,11 +40,11 @@ OCASTToDoTranslatorTest >> testToDoReturnsReceiver [
 	{definition}.
 	^ 1 to: 5 do: {argument}'
 		withBlock: '[ :index | 1+2 ]'.
-	
-	self assert: result equals: 1.
+
+	self assert: result equals: 1
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithCalculatedArguments [
 
 
@@ -57,11 +59,11 @@ OCASTToDoTranslatorTest >> testToDoWithCalculatedArguments [
 	 ^ total'
 		withTemps: #('begin' 'end' 'total')
 		withBlock: '[ :index | total := total + index ]'.
-	
-	self assert: result equals: 15.
+
+	self assert: result equals: 15
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithTempInBlock [
 
 	| result |
@@ -74,14 +76,14 @@ OCASTToDoTranslatorTest >> testToDoWithTempInBlock [
 	begin to: end - 1 do: {argument}.
 	 ^ total'
 		withTemps: #('begin' 'end' 'total')
-		withBlock: '[ :index | | tempInBlock | 
+		withBlock: '[ :index | | tempInBlock |
 			tempInBlock := index.
 			total := total + tempInBlock ]'.
-	
-	self assert: result equals: 15.
+
+	self assert: result equals: 15
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithTempOutsideBlock [
 
 	| result |
@@ -97,6 +99,6 @@ OCASTToDoTranslatorTest >> testToDoWithTempOutsideBlock [
 		withBlock: '[ :index |
 			tempOutsideBlock := index.
 			total := total + tempOutsideBlock ]'.
-	
-	self assert: result equals: 15.
+
+	self assert: result equals: 15
 ]

@@ -8,37 +8,39 @@ The write stream that I wrap can be both binary as well as character based.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnBivalentWriteStream,
-	#superclass : #Object,
+	#name : 'ZnBivalentWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'binary'
 	],
-	#category : #'Zinc-HTTP-Streaming'
+	#category : 'Zinc-HTTP-Streaming',
+	#package : 'Zinc-HTTP',
+	#tag : 'Streaming'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnBivalentWriteStream class >> on: writeStream [
 	"Wrap writeStream as a ZnBivalentWriteStream, unless it is already one"
-	
+
 	(writeStream isKindOf: self) ifTrue: [ ^ writeStream ].
-	
+
 	^ self basicNew
 		on: writeStream;
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBivalentWriteStream >> close [
 	stream close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBivalentWriteStream >> flush [
 	stream flush
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBivalentWriteStream >> isBinary [
 
 	binary
@@ -46,51 +48,51 @@ ZnBivalentWriteStream >> isBinary [
 	^ binary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBivalentWriteStream >> isStream [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBivalentWriteStream >> next: count putAll: collection startingAt: offset [
 	| buffer |
 	self isBinary
-		ifTrue: [ 
+		ifTrue: [
 			(collection isKindOf: ByteArray)
 				ifTrue: [ stream next: count putAll: collection startingAt: offset ]
-				ifFalse: [ 
+				ifFalse: [
 					buffer := ByteArray new: count.
 					buffer replaceFrom: 1 to: count with: collection startingAt: offset.
 					stream nextPutAll: buffer ] ]
-		ifFalse: [ 
+		ifFalse: [
 			(collection isKindOf: ByteArray)
-				ifTrue: [ 
+				ifTrue: [
 					buffer := String new: count.
 					buffer replaceFrom: 1 to: count with: collection startingAt: offset.
 					stream nextPutAll: buffer ]
 				ifFalse: [ stream next: count putAll: collection startingAt: offset ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBivalentWriteStream >> nextPut: object [
 	self isBinary
 		ifTrue: [ stream nextPut: object asInteger ]
 		ifFalse: [ stream nextPut: object asCharacter ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBivalentWriteStream >> nextPutAll: collection [
 	self isBinary
 		ifTrue: [ stream nextPutAll: collection asByteArray ]
 		ifFalse: [ stream nextPutAll: collection asString ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBivalentWriteStream >> on: writeStream [
 	stream := writeStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBivalentWriteStream >> space [
 	self nextPut: Character space
 ]

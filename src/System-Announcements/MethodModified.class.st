@@ -4,17 +4,19 @@ This announcement is emitted when we RE-compile a method in a class or a trait, 
 The action of renaming a method will be handled by SystemMethodRemovedAnnouncement and SystemMethodAddedAnnouncement, since this refactoring is concretely composed by removing the old method and add a new with the new name  
 "
 Class {
-	#name : #MethodModified,
-	#superclass : #MethodAnnouncement,
+	#name : 'MethodModified',
+	#superclass : 'MethodAnnouncement',
 	#instVars : [
 		'oldMethod',
 		'oldProtocol'
 	],
-	#category : #'System-Announcements-System-Methods'
+	#category : 'System-Announcements-System-Methods',
+	#package : 'System-Announcements',
+	#tag : 'System-Methods'
 }
 
-{ #category : #'instance creation' }
-MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [ 
+{ #category : 'instance creation' }
+MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [
 	^ self new
 		method: newMethod;
 		oldMethod: oldMethod;
@@ -22,53 +24,54 @@ MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: 
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MethodModified >> affectsMethod: aMethod [
 	^(super affectsMethod: aMethod) or: [oldMethod == aMethod]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MethodModified >> affectsMethodsDefinedInPackage: aPackage [
 
-	^(super affectsMethodsDefinedInPackage: aPackage) or: [ 
+	^(super affectsMethodsDefinedInPackage: aPackage) or: [
 		oldMethod package == aPackage ]
 ]
 
-{ #category : #testing }
-MethodModified >> affectsMethodsTaggedWith: tagName [
-	^(super affectsMethodsTaggedWith: tagName) or: [ oldProtocol = tagName ]
+{ #category : 'testing' }
+MethodModified >> affectsMethodsInProtocol: protocol [
+
+	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> newMethod [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> newProtocol [
-	
+
 	^ self protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldMethod [
 	^ oldMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldMethod: aCompiledMethod [
-	oldMethod := aCompiledMethod.
+	oldMethod := aCompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldProtocol [
-	
+
 	^ oldProtocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldProtocol: anObject [
-	
+
 	oldProtocol := anObject
 ]

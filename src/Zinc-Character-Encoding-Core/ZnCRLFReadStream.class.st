@@ -21,8 +21,8 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #ZnCRLFReadStream,
-	#superclass : #Object,
+	#name : 'ZnCRLFReadStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'next'
@@ -31,41 +31,42 @@ Class {
 		'Cr',
 		'Lf'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'class initialization' }
-ZnCRLFReadStream class >> initialize [ 
+{ #category : 'class initialization' }
+ZnCRLFReadStream class >> initialize [
 
 	Cr := Character cr asInteger.
-	Lf := Character lf asInteger.
+	Lf := Character lf asInteger
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnCRLFReadStream class >> on: aBinaryReadStream [
 
-	^self new on: aBinaryReadStream 
+	^self new on: aBinaryReadStream
 ]
 
-{ #category : #accessing }
-ZnCRLFReadStream >> atEnd [ 
+{ #category : 'accessing' }
+ZnCRLFReadStream >> atEnd [
 
 	^stream atEnd
 ]
 
-{ #category : #'open/close' }
-ZnCRLFReadStream >> close [ 
+{ #category : 'open/close' }
+ZnCRLFReadStream >> close [
 
 	stream close
 ]
 
-{ #category : #accessing }
-ZnCRLFReadStream >> isBinary [ 
+{ #category : 'accessing' }
+ZnCRLFReadStream >> isBinary [
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCRLFReadStream >> next [
 	"Answer the next character from the stream, converting end-of-lines to CRLF"
 
@@ -90,7 +91,7 @@ ZnCRLFReadStream >> next [
 	^byte
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCRLFReadStream >> next: n into: aCollection [
 	"Read n objects into the given collection.
 	Return aCollection or a partial copy if less than
@@ -98,26 +99,26 @@ ZnCRLFReadStream >> next: n into: aCollection [
 	^self next: n into: aCollection startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCRLFReadStream >> next: requestedCount into: aCollection startingAt: startIndex [
-	"Read requestedCount objects into the given collection. 
+	"Read requestedCount objects into the given collection.
 	Return aCollection or a partial copy if less elements have been read."
 
 	| readCount |
 	readCount := self readInto: aCollection startingAt: startIndex count: requestedCount.
 	^ readCount = requestedCount
-		ifTrue: [ ^ aCollection ]
-		ifFalse: [ ^ aCollection copyFrom: 1 to: startIndex + readCount - 1 ]
+		ifTrue: [ aCollection ]
+		ifFalse: [ aCollection copyFrom: 1 to: startIndex + readCount - 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCRLFReadStream >> on: aBinaryReadStream [
 
 	self assert: aBinaryReadStream isBinary.
-	stream := aBinaryReadStream 
+	stream := aBinaryReadStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCRLFReadStream >> peek [
 	"Answer the next character from the stream, converting end-of-lines to CRLF"
 
@@ -130,22 +131,22 @@ ZnCRLFReadStream >> peek [
 	^byte
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCRLFReadStream >> readInto: collection startingAt: offset count: requestedCount [
 
 	0 to: requestedCount - 1 do: [ :count | | byte |
-		(byte := self next) ifNil: [ ^ count ].  
+		(byte := self next) ifNil: [ ^ count ].
 		collection at: offset + count put: byte ].
 	^ requestedCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCRLFReadStream >> readStream [
 	^ self
 ]
 
-{ #category : #accessing }
-ZnCRLFReadStream >> upToEnd [ 
+{ #category : 'accessing' }
+ZnCRLFReadStream >> upToEnd [
 	"Answer a ByteArray of the stream from the current position to the last"
 
 	^ByteArray streamContents: [ :newStream | | nextByte |

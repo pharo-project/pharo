@@ -5,15 +5,16 @@ I wrap another binary WriteStream and use a ZnCharacerEncoder to allow Integer c
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnCodePointWriteStream,
-	#superclass : #ZnEncodedWriteStream,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnCodePointWriteStream',
+	#superclass : 'ZnEncodedWriteStream',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCodePointWriteStream >> nextPut: object [
-	self encoder 
-		nextPutCodePoint: object 
+	self encoder
+		nextPutCodePoint: object
 		toStream: stream.
 	^ object
 ]

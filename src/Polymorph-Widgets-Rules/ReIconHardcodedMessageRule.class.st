@@ -8,34 +8,35 @@ Instead of
 	Smalltalk ui icons iconNamed: #symbol
 "
 Class {
-	#name : #ReIconHardcodedMessageRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'Polymorph-Widgets-Rules'
+	#name : 'ReIconHardcodedMessageRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'Polymorph-Widgets-Rules',
+	#package : 'Polymorph-Widgets-Rules'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReIconHardcodedMessageRule >> group [
 
 	^ 'API Change'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReIconHardcodedMessageRule >> initialize [
 	super initialize.
 	self
 		replace: 'Smalltalk ui icons `iconName'
-		byEvaluating: [ :node :matchMap | 
+		byEvaluating: [ :node :matchMap |
 			RBParser
 				parseExpression: 'self iconNamed: #' , (matchMap at: #'`iconName') ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReIconHardcodedMessageRule >> name [
 
 	^ 'Use self iconNamed: #symbol instead of asIcon or Smalltalk ui icons iconNamed: #symbol'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReIconHardcodedMessageRule >> severity [
 
 	^ #error

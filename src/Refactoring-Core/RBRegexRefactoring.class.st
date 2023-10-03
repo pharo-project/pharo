@@ -33,30 +33,32 @@ RBClassRegexRefactoring new
 
 "
 Class {
-	#name : #RBRegexRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'RBRegexRefactoring',
+	#superclass : 'RBRefactoring',
 	#instVars : [
 		'matchers'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRegexRefactoring class >> isAbstract [
 
 	^ self == RBRegexRefactoring
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRegexRefactoring >> execute: aString [
 	"Perform all searches on aString and return the transformation."
-	
-	^ matchers 
+
+	^ matchers
 		inject: aString asString
 		into: [ :string :assoc | self execute: string replace: assoc key with: assoc value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRegexRefactoring >> execute: aString replace: aRegex with: aReadStream [
 	| stream |
 	^ aRegex copy: aString translatingMatchesUsing: [ :match |
@@ -71,37 +73,37 @@ RBRegexRefactoring >> execute: aString replace: aRegex with: aReadStream [
 		stream contents ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRegexRefactoring >> initialize [
 	super initialize.
 	matchers := OrderedCollection new
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRegexRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 RBRegexRefactoring >> replace: aFindString with: aReplaceString [
 	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups.
 	Central method of the regex based refactoring. To be used in collaboration with renameClasses and others
-	
+
 	RBClassRegexRefactoring new
 		model: model;
 		renameClasses;
 		replace: '^YK(.*)$' with: newClassPrefix,'$1';
  		 execute.
-	Check class comment for a full script. 
+	Check class comment for a full script.
 	"
 	self replace: aFindString with: aReplaceString ignoreCase: false
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 RBRegexRefactoring >> replace: aFindString with: aReplaceString ignoreCase: aBoolean [
 	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups. See replace:with: comment too."
-	
+
 	| regex stream |
 	regex := RxParser preferredMatcherClass
 		for: (RxParser new parse: aFindString)

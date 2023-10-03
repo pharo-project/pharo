@@ -7,23 +7,25 @@ complicated setup. Kent says: ""Never forget, however, that if the tests are har
 to write, something is probably wrong with the design"".
 "
 Class {
-	#name : #SUnitTest,
-	#superclass : #TestCase,
+	#name : 'SUnitTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'hasRun',
 		'hasSetup',
 		'hasRanOnce',
 		'forkedProcesses'
 	],
-	#category : #'SUnit-Tests-Core'
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #history }
+{ #category : 'history' }
 SUnitTest class >> lastStoredRun [
 	^ ((Dictionary new) add: (#passed->((Set new) add: #testWithExceptionDo; add: #testAssert; add: #testRanOnlyOnce; add: #testDialectLocalizedException; add: #testFail; add: #testDefects; add: #testIsNotRerunOnDebug; add: #testResult; add: #testRunning; add: #testError; add: #testException; add: #testShould; add: #testSuite; yourself)); add: (#timeStamp->'22 November 2008 10:11:35 pm'); add: (#failures->((Set new))); add: (#errors->((Set new))); yourself)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount [
 
 	self assert: aResult runCount equals: aRunCount.
@@ -32,7 +34,7 @@ SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCou
 	self assert: aResult errorCount equals: anErrorCount
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount expectedFailures: anExpectedFailureCount [
 	self assert: aResult runCount equals: aRunCount.
 	self assert: aResult expectedPassCount equals: aPassedCount.
@@ -41,7 +43,7 @@ SUnitTest >> assertForTestResult: aResult runCount: aRunCount passed: aPassedCou
 	self assert: aResult expectedDefectCount equals: anExpectedFailureCount
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SUnitTest >> assertTerminationOfFailedChildProcesses [
 
 	| failedProcesses |
@@ -50,50 +52,53 @@ SUnitTest >> assertTerminationOfFailedChildProcesses [
 	self assert: (failedProcesses allSatisfy: #isTerminated)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SUnitTest >> deprecatedMessage [
 	self deprecated: 'Deprecated method used by #testIgnoreDeprecationWarnings' on: '' in: ''
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> error [
+	<ignoreNotImplementedSelectors: #(zork)>
 	3 zork
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> errorShouldntRaise [
+	<ignoreNotImplementedSelectors: #(someMessageThatIsntUnderstood)>
+
 	self someMessageThatIsntUnderstood
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> expectedFailureFails [
 	<expectedFailure>
-	self assert: false.
+	self assert: false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> expectedFailurePasses [
 	<expectedFailure>
-	self assert: true.
+	self assert: true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> failedChildProcessTest [
 	"During this test forked process should signal error.
 	It means that after fork we should give the process control"
-	
+
 	| process |
 	process := [ self error: 'error from child process'] forkNamed: 'failed child for ', testSelector.
 	forkedProcesses add: process.
-	Processor yield.
+	Processor yield
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SUnitTest >> failedChildProcesses [
 	^forkedProcesses select: [: each | each name beginsWith: 'failed child']
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> failedTestWithFailedChildProcessTest [
 	"This failing test first launches a subprocess that fails and then fails."
 	self failedChildProcessTest.
@@ -101,17 +106,17 @@ SUnitTest >> failedTestWithFailedChildProcessTest [
 	self error: 'failed test with failed child process'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SUnitTest >> forkedProcesses [
 	^forkedProcesses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SUnitTest >> forkedProcesses: aCollection [
 	forkedProcesses := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> hangedChildProcessTest [
 
 	| process |
@@ -119,36 +124,36 @@ SUnitTest >> hangedChildProcessTest [
 	forkedProcesses add: process
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> hangedTestDueToFailedChildProcess [
 	self timeLimit: 10 milliSeconds.
-	
+
 	self failedChildProcessTest.
-	
-	20 milliSeconds wait.
+
+	20 milliSeconds wait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SUnitTest >> hasRun [
 	^hasRun
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SUnitTest >> hasSetup [
 	^hasSetup
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> longRunningTest [
 
 	self timeLimit: 10 milliSeconds.
 	20 milliSeconds wait
 ]
 
-{ #category : #helpers }
-SUnitTest >> newTestCase: myTestSelector [ 
+{ #category : 'helpers' }
+SUnitTest >> newTestCase: myTestSelector [
 	| testCase |
-	testCase := self class selector: myTestSelector.	
+	testCase := self class selector: myTestSelector.
 	"During the #run the #tearDown logic resets to nil all inst vars of #testCase instance.
 	Here is a hook to collect any required state inside the receiver so that it can be accessed directly from the receiver despite on the reset #testCase.
 	#forkedProcesses variable is used to keep all processes forked during the testCase execution"
@@ -157,11 +162,11 @@ SUnitTest >> newTestCase: myTestSelector [
 	^testCase
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> noop [
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> raiseDeprecationWarnings [
 	| oldRaiseWarning |
 	oldRaiseWarning := Deprecation raiseWarning.
@@ -171,24 +176,24 @@ SUnitTest >> raiseDeprecationWarnings [
 		ensure: [ Deprecation raiseWarning: oldRaiseWarning ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SUnitTest >> setRun [
 	hasRun := true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SUnitTest >> setUp [
 	super setUp.
 	hasSetup := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testAssert [
 	self assert: true.
 	self deny: false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testChildProcessShouldNotBeStoredStronglyByTestEnvironment [
 
 	| process weak |
@@ -197,11 +202,11 @@ SUnitTest >> testChildProcessShouldNotBeStoredStronglyByTestEnvironment [
 	process := nil.
 	Processor yield.
 	Smalltalk garbageCollect.
-	
+
 	self assert: weak first equals: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testDefects [
 	| result suite error failure |
 	suite := self classForTestSuite new.
@@ -217,7 +222,7 @@ SUnitTest >> testDefects [
 		errors: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testDialectLocalizedException [
 
 	self
@@ -225,10 +230,10 @@ SUnitTest >> testDialectLocalizedException [
 		raise: self defaultTestFailure.
 	self
 		should: [self classForTestResult signalErrorWith: 'Foo']
-		raise: self defaultTestError.
+		raise: self defaultTestError
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testError [
 
 	| case result |
@@ -244,7 +249,7 @@ SUnitTest >> testError [
 
 	case := self newTestCase: #errorShouldntRaise.
 	result := case run.
-	self 
+	self
 		assertForTestResult: result
 		runCount: 1
 		passed: 0
@@ -252,16 +257,16 @@ SUnitTest >> testError [
 		errors: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testErrorShouldResetWatchDog [
 
 	| case result |
-	
+
 	DefaultExecutionEnvironment beActive.
-	TestExecutionEnvironment new beActiveDuring: [ 
+	TestExecutionEnvironment new beActiveDuring: [
 		case := self newTestCase: #fail.
 		result := case run.
-		1 seconds wait]. 
+		1 seconds wait].
 
 	self
 		assertForTestResult: result
@@ -271,7 +276,7 @@ SUnitTest >> testErrorShouldResetWatchDog [
 		errors: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testException [
 
 	self
@@ -279,7 +284,7 @@ SUnitTest >> testException [
 		raise: self defaultTestError
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testExecutionEnvironmentShouldBeInstalled [
 
 	| env |
@@ -289,7 +294,7 @@ SUnitTest >> testExecutionEnvironmentShouldBeInstalled [
 	self assert: env testCase equals: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testExpectedFailure [
 
 	| case result |
@@ -302,16 +307,16 @@ SUnitTest >> testExpectedFailure [
 		passed: 0
 		failed: 0
 		errors: 0
-		expectedFailures: 1.
+		expectedFailures: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testExpectedFailureDetection [
 	self assert: self expectedFailures size equals: 2.
 	self assert: (self expectedFailures includesAll: #(expectedFailureFails expectedFailurePasses))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testExpectedFailurePass [
 
 	| case result |
@@ -324,10 +329,10 @@ SUnitTest >> testExpectedFailurePass [
 		passed: 0
 		failed: 1
 		errors: 0
-		expectedFailures: 0.
+		expectedFailures: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testFail [
 
 	| case result |
@@ -343,12 +348,12 @@ SUnitTest >> testFail [
 		errors: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testFailedChildProcessTest [
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self newTestCase: #failedChildProcessTest.	
+	case := self newTestCase: #failedChildProcessTest.
 	result := case run.
 
 	self
@@ -356,41 +361,20 @@ SUnitTest >> testFailedChildProcessTest [
 		runCount: 1
 		passed: 0
 		failed: 0
-		errors: 1.		
+		errors: 1.
 	self assertTerminationOfFailedChildProcesses
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testFailedChildProcessTestShouldNotEffectFollowingAnotherTest [
 
 	| result case1 case2 |
 	DefaultExecutionEnvironment beActive.
-	TestExecutionEnvironment new beActiveDuring: [ 
-		case1 := self newTestCase: #failedChildProcessTest.	
+	TestExecutionEnvironment new beActiveDuring: [
+		case1 := self newTestCase: #failedChildProcessTest.
 		result := case1 run.
-		
-		case2 := self newTestCase: #noop.	
-		result := case2 run].
 
-	self
-		assertForTestResult: result
-		runCount: 1
-		passed: 1
-		failed: 0
-		errors: 0.		
-	self assertTerminationOfFailedChildProcesses
-]
-
-{ #category : #testing }
-SUnitTest >> testFailedTestWithFailedChildProcessTestShouldNotEffectFollowingAnotherTest [
-
-	| result case1 case2 |
-	DefaultExecutionEnvironment beActive.
-	TestExecutionEnvironment new beActiveDuring: [ 
-		case1 := self newTestCase: #failedTestWithFailedChildProcessTest.	
-		result := case1 run.
-		
-		case2 := self newTestCase: #noop.	
+		case2 := self newTestCase: #noop.
 		result := case2 run].
 
 	self
@@ -402,7 +386,28 @@ SUnitTest >> testFailedTestWithFailedChildProcessTestShouldNotEffectFollowingAno
 	self assertTerminationOfFailedChildProcesses
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+SUnitTest >> testFailedTestWithFailedChildProcessTestShouldNotEffectFollowingAnotherTest [
+
+	| result case1 case2 |
+	DefaultExecutionEnvironment beActive.
+	TestExecutionEnvironment new beActiveDuring: [
+		case1 := self newTestCase: #failedTestWithFailedChildProcessTest.
+		result := case1 run.
+
+		case2 := self newTestCase: #noop.
+		result := case2 run].
+
+	self
+		assertForTestResult: result
+		runCount: 1
+		passed: 1
+		failed: 0
+		errors: 0.
+	self assertTerminationOfFailedChildProcesses
+]
+
+{ #category : 'testing' }
 SUnitTest >> testFileOutResult [
 	| suite result fileout |
 	suite := self classForTestSuite new.
@@ -424,7 +429,7 @@ SUnitTest>>#error
 '
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testGreenTestThenLongRunningTest [
 
 	| case result |
@@ -442,12 +447,12 @@ SUnitTest >> testGreenTestThenLongRunningTest [
 		errors: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testHangedChildProcessTestWhenItIsAllowedToLeaveProcessesAfterTest [
 
 	| case result hangedProcess |
-	
-	case := self newTestCase: #hangedChildProcessTest.	
+
+	case := self newTestCase: #hangedChildProcessTest.
 	case executionProcessMonitor allowTestToLeaveProcesses.
 	result := case run.
 
@@ -457,17 +462,17 @@ SUnitTest >> testHangedChildProcessTestWhenItIsAllowedToLeaveProcessesAfterTest 
 		passed: 1
 		failed: 0
 		errors: 0.
-		
+
 	hangedProcess := forkedProcesses detect: [: each | each name = #hangedChildProcessTest].
 	self assert: hangedProcess isTerminated
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testHangedChildProcessTestWhenLeftProcessIsConsideredAsFailure [
 
 	| case result |
 
-	case := self newTestCase: #hangedChildProcessTest.	
+	case := self newTestCase: #hangedChildProcessTest.
 	case executionProcessMonitor failTestLeavingProcesses.
 	result := case run.
 
@@ -479,12 +484,12 @@ SUnitTest >> testHangedChildProcessTestWhenLeftProcessIsConsideredAsFailure [
 		errors: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testHangedTestDueToFailedChildProcess [
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self newTestCase: #hangedTestDueToFailedChildProcess.	
+	case := self newTestCase: #hangedTestDueToFailedChildProcess.
 	result := case run.
 
 	self
@@ -493,21 +498,28 @@ SUnitTest >> testHangedTestDueToFailedChildProcess [
 		passed: 0
 		failed: 0
 		errors: 1.
-		
+
 	self assertTerminationOfFailedChildProcesses
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testIgnoreDeprecationWarnings [
-	| oldRaiseWarning |
+	| oldRaiseWarning oldShowWarning reachedHere |
+	"save old state to recover it later"
 	oldRaiseWarning := Deprecation raiseWarning.
+	oldShowWarning :=  Deprecation showWarning.
+	reachedHere := false.
 	[ Deprecation raiseWarning: false.
+	  Deprecation showWarning: false.
 	self deprecatedMessage.
-	self assert: true ]
-		ensure: [ Deprecation raiseWarning: oldRaiseWarning ]
+	reachedHere := true.
+	self assert: true. ]
+		ensure: [ Deprecation raiseWarning: oldRaiseWarning. Deprecation showWarning: oldRaiseWarning ].
+	"we reached reachedHere".
+	self assert: reachedHere
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testIsNotRerunOnDebug [
 
 	| case |
@@ -517,7 +529,7 @@ SUnitTest >> testIsNotRerunOnDebug [
 	case debug
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testLongRunningTest [
 
 	| case result |
@@ -533,7 +545,7 @@ SUnitTest >> testLongRunningTest [
 		errors: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testLongRunningTestThenGreenTest [
 
 	| case result |
@@ -551,7 +563,7 @@ SUnitTest >> testLongRunningTestThenGreenTest [
 		errors: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testRaiseDeprecationWarnings [
 	| case result |
 	case := self newTestCase: #raiseDeprecationWarnings.
@@ -565,7 +577,7 @@ SUnitTest >> testRaiseDeprecationWarnings [
 		errors: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testRan [
 
 	| case |
@@ -579,17 +591,17 @@ SUnitTest >> testRan [
 		case tearDown.
 		case cleanUpInstanceVariables].
 	self assert: case hasSetup isNil.
-	self assert: case hasRun isNil.
+	self assert: case hasRun isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testRanOnlyOnce [
 
 	self assert: hasRanOnce ~= true.
 	hasRanOnce := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testResult [
 
 	| case result |
@@ -605,25 +617,25 @@ SUnitTest >> testResult [
 		errors: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testRunning [
 
 	10 milliSeconds wait
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testRunningLongTime [
 	self timeLimit: 3 seconds.
-	
+
 	2 seconds wait
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testSelectorWithArg: anObject [
 	"should not result in error"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testShould [
 
 	self
@@ -631,19 +643,19 @@ SUnitTest >> testShould [
 		shouldnt: [false]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testShouldIgnoreTimeLimitWhenTestProcessIsSuspended [
-	"If you open debugger on test (by halt or error) and will not close it more then test time limit then following interaction with debugger will fail. 
+	"If you open debugger on test (by halt or error) and will not close it more then test time limit then following interaction with debugger will fail.
 	As simple fix watch dog should check that test process is not suspended. It of course will open possibility to hang test execution when tested code will suspend active process by incident. But we could live with it and probably it could be addressed too in future"
 	| testProcess |
 	self timeLimit: 30 milliSeconds.
 	testProcess := Processor activeProcess.
 	[ 50 milliSeconds wait. testProcess resume ] fork.
 	testProcess suspend.
-	self assert: true.
+	self assert: true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testSuite [
 	| suite result |
 	suite := self classForTestSuite new.
@@ -660,7 +672,7 @@ SUnitTest >> testSuite [
 		errors: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testWatchDogProcessShouldNotBeCatchedAsForkedProcess [
 	| env |
 	env := self executionEnvironment.
@@ -668,7 +680,7 @@ SUnitTest >> testWatchDogProcessShouldNotBeCatchedAsForkedProcess [
 	self assertEmpty: env forkedProcesses
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SUnitTest >> testWithExceptionDo [
 
 	self

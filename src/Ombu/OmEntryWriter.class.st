@@ -2,37 +2,39 @@
 I implement how to write entries to a stream.
 "
 Class {
-	#name : #OmEntryWriter,
-	#superclass : #Object,
+	#name : 'OmEntryWriter',
+	#superclass : 'Object',
 	#instVars : [
 		'store'
 	],
-	#category : #'Ombu-Persistence'
+	#category : 'Ombu-Persistence',
+	#package : 'Ombu',
+	#tag : 'Persistence'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmEntryWriter class >> newForStore: aFileStore [
-	
+
 	^ self basicNew
 		initializeWithStore: aFileStore;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmEntryWriter >> initializeWithStore: aFileStore [
 
 	self initialize.
-	store := aFileStore.
+	store := aFileStore
 ]
 
-{ #category : #writing }
-OmEntryWriter >> on: aStream nextEntryPut: anEntry [ 
+{ #category : 'writing' }
+OmEntryWriter >> on: aStream nextEntryPut: anEntry [
 	"Write the entry on the stream."
-	
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmEntryWriter >> store [
 	^ store
 ]

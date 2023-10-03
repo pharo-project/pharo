@@ -4,12 +4,14 @@ I am a joystick device added event.
 This event is generated when a joystick is connected to the computer.
 "
 Class {
-	#name : #OSJoyDeviceAddedEvent,
-	#superclass : #OSJoyDeviceEvent,
-	#category : #'OSWindow-Core-Events'
+	#name : 'OSJoyDeviceAddedEvent',
+	#superclass : 'OSJoyDeviceEvent',
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSJoyDeviceAddedEvent >> accept: aVisitor [
 	^ aVisitor visitJoyDeviceAddedEvent: self
 ]

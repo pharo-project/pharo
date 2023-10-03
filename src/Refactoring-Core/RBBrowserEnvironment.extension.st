@@ -1,8 +1,11 @@
-Extension { #name : #RBBrowserEnvironment }
+Extension { #name : 'RBBrowserEnvironment' }
 
-{ #category : #'*Refactoring-Core' }
-RBBrowserEnvironment >> classesInPackages: aColl do: aBlock [ 
-	self systemDictionaryClassesDo: [ :each |
-		(self includesClass: each) & (aColl anySatisfy: [ :cat | cat , '*' match: each category ])
-			ifTrue: [aBlock value: each ] ]
+{ #category : '*Refactoring-Core' }
+RBBrowserEnvironment >> classesInPackages: aColl do: aBlock [
+
+	self systemDictionaryClassesDo: [ :aClass |
+		((self includesClass: aClass) and: [
+			 | classPackageName |
+			 classPackageName := aClass category.
+			 aColl anySatisfy: [ :packageName | packageName , '*' match: classPackageName ] ]) ifTrue: [ aBlock value: aClass ] ]
 ]

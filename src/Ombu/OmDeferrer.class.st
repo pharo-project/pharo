@@ -2,8 +2,8 @@
 I schedule and postpone a message send until the specified duration passed.
 "
 Class {
-	#name : #OmDeferrer,
-	#superclass : #Object,
+	#name : 'OmDeferrer',
+	#superclass : 'Object',
 	#instVars : [
 		'process',
 		'lastSchedule',
@@ -11,10 +11,12 @@ Class {
 		'selector',
 		'object'
 	],
-	#category : #'Ombu-Common'
+	#category : 'Ombu-Common',
+	#package : 'Ombu',
+	#tag : 'Common'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OmDeferrer class >> initialize [
 	"
 	self initialize
@@ -22,13 +24,13 @@ OmDeferrer class >> initialize [
 	SessionManager default registerUserClassNamed: self name
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmDeferrer class >> new [
 
 	^ self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmDeferrer class >> send: selector to: object after: aDuration [
 
 	^ self basicNew
@@ -37,86 +39,86 @@ OmDeferrer class >> send: selector to: object after: aDuration [
 		duration: aDuration
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OmDeferrer class >> shutDown: quitting [
 	"Force my instances to flush before image quits"
 
-	self allInstancesDo: [:each | each flush ].
+	self allInstancesDo: [:each | each flush ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> duration: aDuration [
 
 	duration := aDuration
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 OmDeferrer >> flush [
 
 	process ifNotNil: [
 		"Execute deferred action and clean up"
-		[ self sendMessage ] ensure: [ process := nil ] 
-	].
+		[ self sendMessage ] ensure: [ process := nil ]
+	]
 ]
 
-{ #category : #initialization }
-OmDeferrer >> initializeWithSelector: aSelector object: anObject duration: aDuration [ 
-	
+{ #category : 'initialization' }
+OmDeferrer >> initializeWithSelector: aSelector object: anObject duration: aDuration [
+
 	self initialize.
 	selector := aSelector.
 	object := anObject.
-	duration := aDuration.
+	duration := aDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> object [
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> object: anObject [
 	object := anObject
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 OmDeferrer >> runMessageProcess [
-	process := [ 
+	process := [
 		"Loop until enough time passed since last #schedule"
 		[ DateAndTime now < (lastSchedule + duration) ]
 			whileTrue: [ duration wait ].
-			
+
 		"Execute deferred action (if not flushed before) and clean up"
 		self flush.
 	] fork
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 OmDeferrer >> schedule [
 	lastSchedule := DateAndTime now.
 
-	process ifNil: [ 
+	process ifNil: [
 		"Deferrer can be activated during tests which intercept any forked processes.
 		To prevent it we should ensure here that message process is running out of tests environment"
 		DefaultExecutionEnvironment beActiveDuring: [ self runMessageProcess ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> selector: anObject [
 	selector := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmDeferrer >> sendMessage [
-	
+
 	object perform: selector
 ]

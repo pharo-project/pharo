@@ -2,40 +2,42 @@
 An option reifies the relationship in between a selector / property with it potential values. 
 "
 Class {
-	#name : #ParametrizedTestOption,
-	#superclass : #Object,
+	#name : 'ParametrizedTestOption',
+	#superclass : 'Object',
 	#instVars : [
 		'selector',
 		'values'
 	],
-	#category : #'ParametrizedTests-Core'
+	#category : 'ParametrizedTests-Core',
+	#package : 'ParametrizedTests',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestOption >> expand [
 	^ values
-		collect: [ :each | 
+		collect: [ :each |
 			ParametrizedTestExpandedParameter new
 				selector: selector;
 				valuable: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestOption >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestOption >> selector: anObject [
 	selector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestOption >> values [
 	^ values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestOption >> values: anObject [
 	values := anObject
 ]

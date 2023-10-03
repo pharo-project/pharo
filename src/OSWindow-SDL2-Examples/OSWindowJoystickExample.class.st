@@ -5,8 +5,8 @@ To launch the example:
 self new open
 "
 Class {
-	#name : #OSWindowJoystickExample,
-	#superclass : #OSWindowGenericRendererExample,
+	#name : 'OSWindowJoystickExample',
+	#superclass : 'OSWindowGenericRendererExample',
 	#instVars : [
 		'characterPosition',
 		'characterVelocity',
@@ -14,36 +14,38 @@ Class {
 		'currentTime',
 		'bullets'
 	],
-	#category : #'OSWindow-SDL2-Examples-Joystick'
+	#category : 'OSWindow-SDL2-Examples-Joystick',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Joystick'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowJoystickExample >> characterPosition [
 	^ characterPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowJoystickExample >> characterPosition: anObject [
 	characterPosition := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowJoystickExample >> characterVelocity [
 	^ characterVelocity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowJoystickExample >> characterVelocity: anObject [
 	characterVelocity := anObject
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSWindowJoystickExample >> createEventHandler [
-	^ OSWindowJoystickExampleEventHandler new 
+	^ OSWindowJoystickExampleEventHandler new
 		example: self
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 OSWindowJoystickExample >> drawBullets [
 	renderer
 		color: (Color r: (currentTime * 2.0) cos * 0.4 + 0.6 g: (currentTime * 3.0) sin * 0.4 + 0.6 b: 0.0).
@@ -52,40 +54,40 @@ OSWindowJoystickExample >> drawBullets [
 	]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 OSWindowJoystickExample >> drawCharacter [
 	renderer
 		color: (Color r: 0.0 g: (currentTime*2.0) cos * 0.3 + 0.5 b: 1.0);
 		fillRectangle: (characterPosition extent: 20@40)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowJoystickExample >> initialize [
 	super initialize.
 	bullets := OrderedCollection new.
-	self reset.
+	self reset
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 OSWindowJoystickExample >> redraw [
 	self simulate.
 	renderer
 		color: Color black;
 		clear.
-		
+
 	self
 		drawCharacter;
 		drawBullets
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowJoystickExample >> reset [
 	characterPosition := 320@240.
 	characterVelocity := 0@0.
-	bullets removeAll.
+	bullets removeAll
 ]
 
-{ #category : #'game controls' }
+{ #category : 'game controls' }
 OSWindowJoystickExample >> shoot [
 	| position velocity |
 	position := characterPosition.
@@ -93,32 +95,32 @@ OSWindowJoystickExample >> shoot [
 	bullets add: { position . velocity }
 ]
 
-{ #category : #simulation }
+{ #category : 'simulation' }
 OSWindowJoystickExample >> simulate [
 	| deltaTime |
 	lastSimulationTime ifNil: [ lastSimulationTime := Time millisecondClockValue * 0.001].
 	currentTime := Time millisecondClockValue * 0.001.
 	deltaTime := currentTime - lastSimulationTime.
 	lastSimulationTime := currentTime.
-	
+
 	self
 		simulateCharacter: deltaTime;
-		simulateBullets: deltaTime.
+		simulateBullets: deltaTime
 ]
 
-{ #category : #simulation }
+{ #category : 'simulation' }
 OSWindowJoystickExample >> simulateBullets: delta [
 	| position velocity |
-	
+
 	bullets do: [ :bullet |
 		position := bullet first.
 		velocity	:= bullet second.
 		position := position + (velocity * delta).
 		bullet at: 1 put: position.
-	].
+	]
 ]
 
-{ #category : #simulation }
+{ #category : 'simulation' }
 OSWindowJoystickExample >> simulateCharacter: deltaTime [
-	characterPosition := characterPosition + (characterVelocity * deltaTime).
+	characterPosition := characterPosition + (characterVelocity * deltaTime)
 ]

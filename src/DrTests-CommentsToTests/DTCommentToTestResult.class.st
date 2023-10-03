@@ -6,15 +6,17 @@ I build a tree with the testsResult created by comments listed in groups:
 I am used in DrTestsUI to show the results in a orderly manner.
 "
 Class {
-	#name : #DTCommentToTestResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTCommentToTestResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'testsResult'
 	],
-	#category : #'DrTests-CommentsToTests-Base'
+	#category : 'DrTests-CommentsToTests-Base',
+	#package : 'DrTests-CommentsToTests',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCommentToTestResult >> buildTreeForUI [
 	<dtCommentToTestResultTreeNamed: 'Grouped by type of result' order: 1>
 
@@ -24,7 +26,7 @@ DTCommentToTestResult >> buildTreeForUI [
 				name: 'Errors';
 				subResults: (self testResults errors collect: [:each | each asResultForDrTest ]);
 				startExpanded;
-				displayColorIfNotEmpty: self theme testColorError;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForErrorTest;
 				yourself).
 			(DTTreeNode new
 				name: 'Failures';
@@ -32,22 +34,22 @@ DTCommentToTestResult >> buildTreeForUI [
 					collect:  [:each | each asResultForDrTest]
 					as: OrderedCollection);
 				startExpanded;
-				displayColorIfNotEmpty: self theme testColorFailure;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForFailureTest;
 				yourself).
 			(DTTreeNode new
 				name: 'Passed tests';
 				subResults: (self testResults passed collect:  [:each | each asResultForDrTest] );
-				displayColorIfNotEmpty: self theme testColorPassing;
+				displayColorIfNotEmpty: TestResult defaultColorBackGroundForPassingTest;
 				yourself) };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCommentToTestResult >> testResults [
 	^ testsResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCommentToTestResult >> testResults: anObject [
 	testsResult := anObject
 ]

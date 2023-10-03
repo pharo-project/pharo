@@ -12,17 +12,19 @@ Preconditions:
 overriden from RBRemoveVariableTransformation and RBAddVariableAccessorTransformation
 "
 Class {
-	#name : #RBPullUpVariableTransformation,
-	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBPullUpVariableTransformation',
+	#superclass : 'RBCompositeVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBPullUpVariableTransformation >> buildTransformations [
 
 	^ OrderedCollection new
 		addAll: (self variableDefinitionsInHierarchy
-			collect: [ :each | 
+			collect: [ :each |
 				RBRemoveVariableTransformation
 				model: self model
 				variable: variableName
@@ -36,24 +38,24 @@ RBPullUpVariableTransformation >> buildTransformations [
 		yourself
 ]
 
-{ #category : #preconditions }
-RBPullUpVariableTransformation >> preconditions [ 
-	^ isClassVariable 
-		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ] 
-		ifFalse: [ RBCondition withBlock: 
-			[(self definingClass hierarchyDefinesInstanceVariable: variableName) 
-				ifFalse: [self refactoringFailure: 'No subclass defines ' , variableName].
-			(self definingClass subclasses 
-				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not]) 
-				ifTrue: 
-					[self 
-						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?' 
+{ #category : 'preconditions' }
+RBPullUpVariableTransformation >> preconditions [
+	^ isClassVariable
+		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ]
+		ifFalse: [ RBCondition withBlock:
+			[(self definingClass hierarchyDefinesInstanceVariable: variableName)
+				ifFalse: [self refactoringError: 'No subclass defines ' , variableName].
+			(self definingClass subclasses
+				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
+				ifTrue:
+					[self
+						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?'
 								, variableName , '.'].
 			true] ]
 ]
 
-{ #category : #printing }
-RBPullUpVariableTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBPullUpVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -66,15 +68,15 @@ RBPullUpVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPullUpVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBPullUpVariableTransformation >> variableDefinitionsInHierarchy [
 
 	^ self definingClass allSubclasses

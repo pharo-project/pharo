@@ -2,30 +2,31 @@
 ZdcSecureSocketStreamTests tests ZdcSecureSocketStream 
 "
 Class {
-	#name : #ZdcSecureSocketStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zodiac-Tests'
+	#name : 'ZdcSecureSocketStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSocketStreamTest >> isNativeSSLPluginPresent [
 	"Return whether the SSL VM plugin can be instanciated and intialized."
-	
+
 	^ [ ZdcPluginSSLSession new destroy. true ]
 			on: ZdcPluginMissing
 			do: [ false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcSecureSocketStreamTest >> testIsNativeSSLPluginPresent [
 	"This test succeeds when the SSL VM plugin can be instantiated and intialized."
-	
-	self 
-		assert: self isNativeSSLPluginPresent 
+
+	self
+		assert: self isNativeSSLPluginPresent
 		description: 'It seems that the native VM SSL plugin cannot be instantiated and initialized. (VM plugin missing ? OS libraries missing ?)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcSecureSocketStreamTest >> testPlain [
 	| query stream request response |
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
@@ -43,7 +44,7 @@ ZdcSecureSocketStreamTest >> testPlain [
 		stream flush.
 		stream upToEnd asString.
 	] ensure: [ stream close ].
-	self assert: (response includesSubstring: '200 OK').      
+	self assert: (response includesSubstring: '200 OK').
 	self assert: (response includesSubstring: 'Duck').
-	self assert: (response includesSubstring: query).
+	self assert: (response includesSubstring: query)
 ]

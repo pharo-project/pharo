@@ -4,8 +4,8 @@ I combine a progress title and a JobPorgressBarMorph to a visual representation 
 Usually I am contained in the global instance of the SystemProgressMorph
 "
 Class {
-	#name : #JobProgressMorph,
-	#superclass : #Morph,
+	#name : 'JobProgressMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'bar',
 		'endValue',
@@ -17,21 +17,23 @@ Class {
 		'result',
 		'startValue'
 	],
-	#category : #'Morphic-Base-ProgressBar'
+	#category : 'Morphic-Base-ProgressBar',
+	#package : 'Morphic-Base',
+	#tag : 'ProgressBar'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 JobProgressMorph class >> job: aJob [
 	^ self new initializeJob: aJob
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> beComplete [
 
 	self close
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 JobProgressMorph >> changed [
 
 	| msRefreshRate isTimeForRefresh |
@@ -41,65 +43,65 @@ JobProgressMorph >> changed [
 		super changed ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> close [
 
 	SystemProgressMorph uniqueInstance close: self.
 	self removeDependent: SystemProgressMorph uniqueInstance
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> current [
 
 	^ bar value
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> current: aNumber [
 
 	bar value: aNumber.
 	self changed
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 JobProgressMorph >> debug [
 
 	job isRunning ifTrue: [ job debug ]
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> decrement [
 
 	bar decrement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> do: aBlock [
 
 	self changed. "We may be in the UI thread, so this will give us a change to dsiplay ourselves before the block starts"
 	^ [ aBlock value: self ] ensure: [ self close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> forceRefreshOnNextChange [
 
 	lastRefresh := 0
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> increment [
 
 	bar increment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 JobProgressMorph >> initialize [
 
 	super initialize.
 	self addDependent: SystemProgressMorph uniqueInstance
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> initializeJob: aJob [
 
 	super initialize.
@@ -128,19 +130,19 @@ JobProgressMorph >> initializeJob: aJob [
 	self updateLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobProgressMorph >> job: aJob [
 
 	job := aJob
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> label [
 
 	^ self labelMorph contents
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> label: aString [
 
 	self label isEmpty ifTrue: [
@@ -161,31 +163,31 @@ JobProgressMorph >> label: aString [
 	self changed: #width
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> labelMorph [
 
 	^ labelMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobProgressMorph >> lastRefresh [
 
 	^ lastRefresh ifNil: [ lastRefresh := 0 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> max: aNumber [
 
 	endValue := aNumber
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> progress [
 
 	^ bar progress
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 JobProgressMorph >> progress: aNormalizedNumber [
 
 	bar progress = aNormalizedNumber ifFalse: [
@@ -193,20 +195,20 @@ JobProgressMorph >> progress: aNormalizedNumber [
 		self changed: #progressValue ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> refresh [
 
 	lastRefresh := Time millisecondClockValue.
 	self width: labelMorph width + 25
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> result [
 
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> result: anObject [
 
 	lock critical: [
@@ -214,19 +216,19 @@ JobProgressMorph >> result: anObject [
 		result := anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> start: aNumber [
 
 	startValue := aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> startAt: aNumber [
 
 	startValue := aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressMorph >> updateLayout [
 
 	labelMorph contents isEmpty

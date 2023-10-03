@@ -1,68 +1,69 @@
 Class {
-	#name : #RGMetaclassTraitTest,
-	#superclass : #RGTest,
+	#name : 'RGMetaclassTraitTest',
+	#superclass : 'RGTest',
 	#traits : 'TRGBehaviorTest',
 	#classTraits : 'TRGBehaviorTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetaclassTraitTest >> behaviorClass [
 
 	^ RGMetaclassTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testEnsureProtocol [
 
 	| behavior |
-	
+
 	behavior := self behaviorClass named: #SomeClass.
 	behavior ensureProtocolNamed: #SomeProtocol.
 	self assert: behavior protocols size equals: 1.
-	self assert: behavior protocols first equals: #SomeProtocol.
+	self assert: behavior protocols first equals: #SomeProtocol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testImplicitConversionFromClass [
 
 	| env |
-	
+
 	env := RGEnvironment new.
 	env ensureClassNamed: #SomeTrait.
 	self assert: (env ask behaviors select: [ :e | e name = #'SomeTrait' ]) size equals: 1.
 	self assert: (env ask behaviors select: [ :e | e name = #'SomeTrait clss' ]) size equals: 0.
-	
+
 	env ensureTraitNamed: #'SomeTrait'.
 	self assert: (env ask behaviors select: [ :e | e name = #'SomeTrait' ]) size equals: 1.
 	self assert: (env ask behaviors select: [ :e | e name = #'SomeTrait classTrait' ]) size equals: 0.
 	self assert: (env ask behaviors select: [ :e | e name = #'SomeTrait clss' ]) size equals: 0.
-	env.
+	env
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testImplicitConversionFromClassProperties [
 
 	| env entity |
-	
+
 	env := RGEnvironment new.
-	entity := env ensureClassNamed: #SomeTrait.	
+	entity := env ensureClassNamed: #SomeTrait.
 	entity := env ensureTraitNamed: #'SomeTrait'.
 	self assert: entity classTrait isTrait.
-	self assert: entity classTrait baseTrait equals: entity.
+	self assert: entity classTrait baseTrait equals: entity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testMetaclassTraitImplicitEnvironment [
 
 	| trait |
-	
+
 	trait := RGMetaclassTrait unnamed.
 	self assert: (trait hasUnresolved: #name).
-	self checkImplicitSingleTraitEnvironmentOf: trait baseTrait.
+	self checkImplicitSingleTraitEnvironmentOf: trait baseTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testNewMetaclassTrait [
 	| trait baseTrait |
 	trait := RGMetaclassTrait unnamed.

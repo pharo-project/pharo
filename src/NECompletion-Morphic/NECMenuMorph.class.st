@@ -13,8 +13,8 @@ Ctrl+t: Toggle the expand flag. When expand is disabled, you don't see selectors
 
 "
 Class {
-	#name : #NECMenuMorph,
-	#superclass : #Morph,
+	#name : 'NECMenuMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'selected',
 		'firstVisible',
@@ -25,32 +25,33 @@ Class {
 		'detailPosition',
 		'engine'
 	],
-	#category : #'NECompletion-Morphic'
+	#category : 'NECompletion-Morphic',
+	#package : 'NECompletion-Morphic'
 }
 
-{ #category : #'preferences-colors' }
+{ #category : 'preferences-colors' }
 NECMenuMorph class >> backgroundColor [
 	^NECPreferences backgroundColor
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 NECMenuMorph class >> convertToSHSymbol: aSymbol [
 	^ (SHRBTextStyler new attributesFor: aSymbol) isNotEmpty
 		ifTrue: [ aSymbol ]
 		ifFalse: [ #default ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NECMenuMorph class >> engine: aCompletionEngine position: aPoint [
 	^ self new engine: aCompletionEngine position: aPoint
 ]
 
-{ #category : #'help text' }
+{ #category : 'help text' }
 NECMenuMorph class >> explanationAttributes [
 	^{TextIndent tabs: 2}
 ]
 
-{ #category : #'help text' }
+{ #category : 'help text' }
 NECMenuMorph class >> helpText [
 	| stream |
 	stream := TextStream on: Text new.
@@ -143,43 +144,43 @@ NECMenuMorph class >> helpText [
 	^ stream contents
 ]
 
-{ #category : #'help text' }
+{ #category : 'help text' }
 NECMenuMorph class >> helpTitle [
 
 	^ 'Completion Keyboard Help'
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 NECMenuMorph class >> itemHeight [
 	^ (self selectFontFor: #default) height + 2
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 NECMenuMorph class >> itemWidth [
 	^ 250
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 NECMenuMorph class >> maxLength [
 	^ 20
 ]
 
-{ #category : #'preferences-fonts' }
+{ #category : 'preferences-fonts' }
 NECMenuMorph class >> messageFont [
 	^ StandardFonts menuFont
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 NECMenuMorph class >> scrollArrowSize [
 	^ 8
 ]
 
-{ #category : #'preferences-colors' }
+{ #category : 'preferences-colors' }
 NECMenuMorph class >> scrollColor [
 	^ self theme selectionColor
 ]
 
-{ #category : #'help text' }
+{ #category : 'help text' }
 NECMenuMorph class >> section: aString on: aTextStream [
 	aTextStream
 		withAttributes: self sectionAttributes
@@ -187,19 +188,19 @@ NECMenuMorph class >> section: aString on: aTextStream [
 	aTextStream cr
 ]
 
-{ #category : #'help text' }
+{ #category : 'help text' }
 NECMenuMorph class >> sectionAttributes [
 	^ {TextEmphasis bold}
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 NECMenuMorph class >> selectColorFor: aSymbol [
 	| attribute |
 	attribute := self convertToSHSymbol: aSymbol.
 	^ (SHRBTextStyler new attributesFor: attribute) first color
 ]
 
-{ #category : #'preferences-fonts' }
+{ #category : 'preferences-fonts' }
 NECMenuMorph class >> selectFontFor: aSymbol [
 	| emphasized attributes |
 	attributes := SHRBTextStyler new
@@ -211,7 +212,7 @@ NECMenuMorph class >> selectFontFor: aSymbol [
 		emphasized: emphasized
 ]
 
-{ #category : #'help text' }
+{ #category : 'help text' }
 NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [
 	aTextStream
 		withAttributes: self shortcutAttributes
@@ -223,28 +224,28 @@ NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [
 				 cr]
 ]
 
-{ #category : #'help text' }
+{ #category : 'help text' }
 NECMenuMorph class >> shortcutAttributes [
 	^ {TextIndent  tabs: 1. TextEmphasis italic }
 ]
 
-{ #category : #'preferences-fonts' }
+{ #category : 'preferences-fonts' }
 NECMenuMorph class >> titleFont [
 	^ StandardFonts windowTitleFont
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> browse [
 	(self selectedEntry browse)
 		ifTrue: [ engine closeMenu ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> close [
 	self delete
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NECMenuMorph >> createTitle [
 	| titleString transformationMorph |
 	titleString := context title ifNil: [ ^ self ].
@@ -263,35 +264,33 @@ NECMenuMorph >> createTitle [
 	self resize
 ]
 
-{ #category : #paging }
+{ #category : 'paging' }
 NECMenuMorph >> currentPage [
 	^(self selected - 1 // self pageHeight ) + 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECMenuMorph >> delete [
 	super delete.
 	engine menuClosed
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> detailMessage [
 
-	^ String streamContents: [:stream |
-		NECPreferences captureNavigationKeys ifTrue: [
-			stream << (detailMorph
-				ifNil: ['cmd-> open detail']
-				ifNotNil: ['cmd<- close detail']	) ] ]
+	^ self itemsCount isZero
+		  ifTrue: [ 'no entries' ]
+		  ifFalse: [ 'cmd+B browse entry' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECMenuMorph >> detailPosition: aPoint [
 	detailPosition := aPoint.
 
 	self updateDetail
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [
 	| aPoligon point arrowHeight |
 	point := self bounds bottomLeft translateBy: 6 @ -12.
@@ -305,7 +304,7 @@ NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [
 		fillStyle: Color black
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 	| necEntry font type string preString highlightRectangle |
 
@@ -335,7 +334,7 @@ NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 		color: (self selectColor: type)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [
 	self hasMessage ifFalse: [ ^ self ].
 	context hasEntries ifTrue: [
@@ -348,7 +347,7 @@ NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [
 		in: rectangle
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [
 	| message |
 	message := context hasMessage
@@ -361,7 +360,7 @@ NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [
 		color: Color gray
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> drawOn: aCanvas [
 	| rectangle |
 	"draw background"
@@ -387,7 +386,7 @@ NECMenuMorph >> drawOn: aCanvas [
 		in: rectangle
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> drawTopScrollArrowOn: aCanvas [
 	| aPolygon point arrowHeight |
 	arrowHeight := self class scrollArrowSize.
@@ -401,13 +400,13 @@ NECMenuMorph >> drawTopScrollArrowOn: aCanvas [
 		fillStyle: Color black
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> end [
 	self gotoPage: self pageCount.
 	self changed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NECMenuMorph >> engine: aCompletionEngine position: aPoint [
 	engine := aCompletionEngine.
 	context := engine context.
@@ -417,12 +416,12 @@ NECMenuMorph >> engine: aCompletionEngine position: aPoint [
 	self openInWorld
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECMenuMorph >> firstVisible [
 	^firstVisible min: context entryCount
 ]
 
-{ #category : #paging }
+{ #category : 'paging' }
 NECMenuMorph >> gotoPage: anInteger [
 	| item |
 	item := (anInteger - 1) * self pageHeight + 1.
@@ -433,27 +432,33 @@ NECMenuMorph >> gotoPage: anInteger [
 	self selected: firstVisible
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 NECMenuMorph >> handlesMouseDown: anEvent [
 	^ true
 ]
 
-{ #category : #drawing }
+{ #category : 'actions' }
+NECMenuMorph >> hasDetail [
+
+	^ detailMorph notNil
+]
+
+{ #category : 'drawing' }
 NECMenuMorph >> hasMessage [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECMenuMorph >> height [
 	^ 10
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> help [
 	self class helpText asMorph openInWindowLabeled: self class helpTitle
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> hideDetail [
 	detailMorph ifNil: [ ^ false ].
 	self removeMorph: detailMorph.
@@ -463,20 +468,20 @@ NECMenuMorph >> hideDetail [
 	^ true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> home [
 	self gotoPage: 1.
 	self changed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NECMenuMorph >> initialize [
 	super initialize.
 	self color: self class backgroundColor.
 	self borderStyle: (BorderStyle color: Color gray width: 1)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> insertSelected [
 	self delete.
 	context hasEntries ifFalse: [^ false].
@@ -484,23 +489,23 @@ NECMenuMorph >> insertSelected [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECMenuMorph >> isClosed [
 	^ owner isNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECMenuMorph >> itemsCount [
 	^context entryCount
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECMenuMorph >> lastVisible [
 
 	^ (self firstVisible + self height-1)  min: (self itemsCount)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 NECMenuMorph >> mouseDown: evt [
 	(self bounds containsPoint: evt cursorPoint)
 		ifTrue: [
@@ -512,13 +517,19 @@ NECMenuMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	evt wasHandled: false.
 	self flag: #pharoFixMe "ugly hack".
-	engine editor morph owner owner
-		takeKeyboardFocus;
-		handleMouseDown: evt.
+	
+	engine editor morph ifNotNil: [ :aMorph | 
+		aMorph owner ifNotNil: [ :anOwner | 
+			anOwner owner ifNotNil: [ :ownersOwner |
+				ownersOwner
+					takeKeyboardFocus;
+					handleMouseDown: evt.
+		 ] ] ].
+
 	self close
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> moveDown [
 	self selected: self selected + 1.
 	(self selected > self lastVisible
@@ -527,7 +538,7 @@ NECMenuMorph >> moveDown [
 	self changed
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> moveUp [
 	(self selected = 0
 			and: [self firstVisible = 1])
@@ -538,7 +549,7 @@ NECMenuMorph >> moveUp [
 	self changed
 ]
 
-{ #category : #paging }
+{ #category : 'paging' }
 NECMenuMorph >> pageCount [
 	| count |
 	self itemsCount == self pageHeight
@@ -549,29 +560,29 @@ NECMenuMorph >> pageCount [
 	^count
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> pageDown [
 	self gotoPage: self currentPage + 1.
 	self changed
 ]
 
-{ #category : #paging }
+{ #category : 'paging' }
 NECMenuMorph >> pageHeight [
 	^pageHeight
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> pageUp [
 	self gotoPage: self currentPage - 1.
 	self changed
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> prepareRectForNextRow: aRectangle [
 	^aRectangle translateBy: 0 @ self class itemHeight
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> refreshSelection [
 
 	self selected: 0.
@@ -581,7 +592,7 @@ NECMenuMorph >> refreshSelection [
 	^ true
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> resize [
 	| extent height |
 	firstVisible := 1.
@@ -595,17 +606,17 @@ NECMenuMorph >> resize [
 	self extent: extent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> selectColor: type [
 	^ self class selectColorFor: type
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 NECMenuMorph >> selectFont: aSymbol [
 	^ self class selectFontFor: aSymbol
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 NECMenuMorph >> selectIndexAtPoint: aPoint [
 	| yPos  |
 	yPos := aPoint y - self bounds top.
@@ -613,33 +624,33 @@ NECMenuMorph >> selectIndexAtPoint: aPoint [
 	selected := selected min: context entries size max: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECMenuMorph >> selected [
 	"Answer the value of selected"
 	selected ifNil: [ selected := self firstVisible ].
 	^ selected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECMenuMorph >> selected: aNumber [
 	"Set the value of selected"
 	context hasEntries ifTrue:
 		[ ((1 to: self itemsCount) includes: aNumber) ifTrue: [ aNumber ~= selected ifTrue: [ selected := aNumber ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECMenuMorph >> selectedEntry [
 	^ context entries at: self selected
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> show [
 	self resize.
 	self activeHand ifNotNil: [ :hand | hand newMouseFocus: self ].
 	self changed
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 NECMenuMorph >> showDetail [
 	detailMorph ifNotNil: [ ^ self browse ].
 	self itemsCount isZero ifTrue: [ ^ self ].
@@ -648,22 +659,23 @@ NECMenuMorph >> showDetail [
 	self updateDetail
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NECMenuMorph >> takesKeyboardFocus [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECMenuMorph >> updateDetail [
 	detailMorph
 		ifNil: [^ self].
+	detailPosition ifNil: [^ self].
 	detailMorph
 		entryDescription: (self selectedEntry description);
 		position: detailPosition menuWidth: self width;
 		show
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECMenuMorph >> visibleItemsCount [
 
 	^ self lastVisible - self firstVisible + 1

@@ -19,8 +19,8 @@ The ==stream resetContents== is moved to #step so this occurs directly after ==s
 
 "
 Class {
-	#name : #ThreadSafeTranscript,
-	#superclass : #Model,
+	#name : 'ThreadSafeTranscript',
+	#superclass : 'Model',
 	#instVars : [
 		'stream',
 		'accessSemaphore',
@@ -28,30 +28,32 @@ Class {
 		'deferredEndEntry',
 		'stepContents'
 	],
-	#category : #'Transcript-Core-Base'
+	#category : 'Transcript-Core-Base',
+	#package : 'Transcript-Core',
+	#tag : 'Base'
 }
 
-{ #category : #declare }
+{ #category : 'declare' }
 ThreadSafeTranscript class >> install [
 
 	self installThreadSafeAsTranscript
 ]
 
-{ #category : #declare }
+{ #category : 'declare' }
 ThreadSafeTranscript class >> installThreadSafeAsTranscript [
 	<script>
 
 	Smalltalk globals at: #Transcript put: (self new)
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 ThreadSafeTranscript class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#transcript
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
 	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
@@ -62,114 +64,109 @@ ThreadSafeTranscript >> << anObject [
  	anObject putOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreadSafeTranscript >> characterLimit [
 
 	^ 20000
 ]
 
-{ #category : #streaming }
-ThreadSafeTranscript >> clear [ 
-"	Clear all characters by resetting the stream and voiding any previously flagged deferredEndEntry.
-	Redisplays the view by signalling for #step to send #changed: .
-"	
-	self 
-		critical: [ 
-			deferredClear := true.
-			deferredEndEntry := false.
-			stream reset ]
+{ #category : 'streaming' }
+ThreadSafeTranscript >> clear [
+	"Clear all characters by resetting the stream and voiding any previously flagged deferredEndEntry.
+	Redisplays the view by signalling for #step to send #changed:"
+
+	self critical: [
+		deferredClear := true.
+		deferredEndEntry := false.
+		stream := String new writeStream ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> close [
 	self flush.
 	self critical: [ stream close ]
-	
 ]
 
-{ #category : #'protected low level' }
-ThreadSafeTranscript >> contents [ 
-"	Cannot directly return == stream contents == since Morphic assumes multiple calls will return 
-	the same value within the one cycle.  WorldState>>runStepMethodsIn:  sends #step to 
+{ #category : 'protected low level' }
+ThreadSafeTranscript >> contents [
+"	Cannot directly return == stream contents == since Morphic assumes multiple calls will return
+	the same value within the one cycle.  WorldState>>runStepMethodsIn:  sends #step to
 	do == stepContents := stream contents ==.
 "
 	^ stepContents
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> cr [
 	"Output a cr on the receiver, buffered and not yet shown"
-	
+
 	self nextPut: Character cr
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> crShow: anObject [
 	"Output anObject asString on the receiver preceded by a cr and show the output"
-	
+
 	self critical: [ self cr; show: anObject ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> critical: block [
 	"Execute block making sure only one thread accesses the receiver"
 
-	^ accessSemaphore critical: block 
+	^ accessSemaphore critical: block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreadSafeTranscript >> doItContext [
 	^nil
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> endEntry [
-"	
+"
 	The next #stepGlobal message (usually invoked by Morhic stepping) will raise an #appendEntry update and reset the stream.
-"  
-  	self critical: [ deferredEndEntry := true ].
+"
+  	self critical: [ deferredEndEntry := true ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> flush [
 	self endEntry
-
 ]
 
-{ #category : #'ui building' }
+{ #category : 'ui building' }
 ThreadSafeTranscript >> initialExtent [
-	
-	^447@300
+
+	^ (447@300) scaledByDisplayScaleFactor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ThreadSafeTranscript >> initialize [
- 
+
 	super initialize.
 	accessSemaphore := Mutex new.
 	stream := String new writeStream.
 	deferredClear := false.
 	deferredEndEntry := false.
-	stepContents := ''.
-
-	
+	stepContents := ''
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 ThreadSafeTranscript >> isSelfEvaluating [
 
-	^self == Transcript 
+	^self == Transcript
 		ifTrue: [ true ]
 		ifFalse: [ super isSelfEvaluating ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreadSafeTranscript >> menu [
 	" return nil to let the editing mode build the right menu"
 	^nil
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> nextPut: value [
 	"Output character on the receiver, buffered, not yet shown"
 
@@ -177,7 +174,7 @@ ThreadSafeTranscript >> nextPut: value [
 	^ value
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> nextPutAll: value [
 	"Output string on the receiver, buffered, not yet shown"
 
@@ -185,91 +182,90 @@ ThreadSafeTranscript >> nextPutAll: value [
 	^ value
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> print: anObject [
 	"Output anObject asString on the receiver, buffered, not yet shown"
-	
+
 	self nextPutAll: anObject asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ThreadSafeTranscript >> printOn: aStream [
 
 	self == Transcript ifFalse: [^super printOn: aStream].
 	aStream nextPutAll: 'Transcript'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreadSafeTranscript >> selectedClassOrMetaClass [
 	^ nil
 ]
 
-{ #category : #updating }
-ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
+{ #category : 'updating' }
+ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ false
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> show: anObject [
 	"Output anObject asString on the receiver and show the output"
-	
+
 	self critical: [ self print: anObject; endEntry ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> space [
 	"Output a space on the receiver, buffered and not yet shown"
 
 	self nextPut: Character space
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ThreadSafeTranscript >> stepGlobal [
-"	The superclass method Model>>step indicates a convention that might be used to interoperate 
-	synchronously with the UI-thread.  However when multiple Transcript windows are open, their 
-	PluggableTextMorphs share a single instance, from the global Transcript.  To avoid potential trouble, 
-	this method should not be named #step.  
-	
-	As well, we need this method to execute even when no Transcript windows are open, so the stream 
-	continues to be reset periodically, otherwise it would grow indefinitely. So this method is invoked 
-	from WorldState>>runStepMethodsIn:. 
+"	The superclass method Model>>step indicates a convention that might be used to interoperate
+	synchronously with the UI-thread.  However when multiple Transcript windows are open, their
+	PluggableTextMorphs share a single instance, from the global Transcript.  To avoid potential trouble,
+	this method should not be named #step.
+
+	As well, we need this method to execute even when no Transcript windows are open, so the stream
+	continues to be reset periodically, otherwise it would grow indefinitely. So this method is invoked
+	from WorldState>>runStepMethodsIn:.
 "
 
 	"Next three lines required temporarily to initialize instance variables added to existing instance"
 	deferredClear ifNil: [ deferredClear := false ].
 	deferredEndEntry ifNil: [ deferredEndEntry := false ].
 	stepContents ifNil: [ stepContents := '' ].
-	
-	deferredClear ifTrue: 
-	[ 	deferredClear := false.  
+
+	deferredClear ifTrue:
+	[ 	deferredClear := false.
 		stepContents := ''.
 		self changed: #clearText.
 	].
-	deferredEndEntry ifTrue: 
-	[	deferredEndEntry := false.  	
-		self critical: 
+	deferredEndEntry ifTrue:
+	[	deferredEndEntry := false.
+		self critical:
 		[	stepContents := stream contents.
-			stream resetContents.	
+			stream resetContents.
 		].
-		self changed: #appendEntry.	
-	].
-	
+		self changed: #appendEntry.
+	]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ThreadSafeTranscript >> tab [
 	"Output a tab on the receiver, buffered and not yet shown"
 
 	self nextPut: Character tab
 ]
 
-{ #category : #'ui building' }
+{ #category : 'ui building' }
 ThreadSafeTranscript >> title [
 
 	^ 'Transcript'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThreadSafeTranscript >> variableBindings [
 
 	^ Dictionary new

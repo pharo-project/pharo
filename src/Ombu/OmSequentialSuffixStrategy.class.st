@@ -2,18 +2,20 @@
 Use FileReference>>nextVersion to find the new name.
 "
 Class {
-	#name : #OmSequentialSuffixStrategy,
-	#superclass : #OmSessionStoreNamingStrategy,
-	#category : #'Ombu-Strategies'
+	#name : 'OmSequentialSuffixStrategy',
+	#superclass : 'OmSessionStoreNamingStrategy',
+	#category : 'Ombu-Strategies',
+	#package : 'Ombu',
+	#tag : 'Strategies'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSequentialSuffixStrategy >> nextTo: aName in: aDirectory [
-	
+
 	| fileReference |
 	fileReference := OmFileStore
 		fileReferenceForStoreNamed: aName
 		inDirectory: aDirectory.
-	
+
 	^ fileReference nextVersion basenameWithoutExtension
 ]

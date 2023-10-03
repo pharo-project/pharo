@@ -1,37 +1,39 @@
 Class {
-	#name : #MetacelloProjectRegistrationVersionInfo,
-	#superclass : #Object,
+	#name : 'MetacelloProjectRegistrationVersionInfo',
+	#superclass : 'Object',
 	#instVars : [
 		'versionString',
 		'projectVersion'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistrationVersionInfo >> projectVersion [
   ^ projectVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistrationVersionInfo >> projectVersion: anObject [
   projectVersion := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistrationVersionInfo >> setVersionString: anObject [
   "set versionString, only if it does not already have avalue"
 
   versionString ifNil: [ self versionString: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistrationVersionInfo >> versionString [
 
    ^versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistrationVersionInfo >> versionString: anObject [
   versionString := anObject.
   projectVersion := nil

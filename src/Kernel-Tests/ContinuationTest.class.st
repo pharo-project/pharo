@@ -2,21 +2,23 @@
 I represent intentend to provide complete coverage for the Continuation class.
 "
 Class {
-	#name : #ContinuationTest,
-	#superclass : #TestCase,
+	#name : 'ContinuationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'tmp',
 		'tmp2'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ContinuationTest >> callcc: aBlock [
 	^ Continuation currentDo: aBlock
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersect: aSet withAll: sets [
 	^ sets
 		ifEmpty: [ aSet ]
@@ -25,7 +27,7 @@ ContinuationTest >> intersect: aSet withAll: sets [
 				withCollection: (self intersect: sets first withAll: sets allButFirst) ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersect: aSet withAll: sets continuation: hop [
 	^ aSet
 		ifEmpty: [ hop value: aSet ]
@@ -40,7 +42,7 @@ ContinuationTest >> intersect: aSet withAll: sets continuation: hop [
 								continuation: hop) ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersect: aLinkedList withCollection: aCollection [
 	^ aLinkedList
 		ifNotEmpty: [ (self
@@ -50,20 +52,20 @@ ContinuationTest >> intersect: aLinkedList withCollection: aCollection [
 				ifNotNil: [ :link | LinkedList with: link ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersect: aLinkedList withCollection: aCollection continuation: hop [
 	^ aCollection
 		ifEmpty: [ hop value: aCollection ]
 		ifNotEmpty: [ self intersect: aLinkedList withCollection: aCollection ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersectAll: sets [
 	^ sets
 		ifNotEmpty: [ self intersect: sets first withAll: sets allButFirst ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersectAllWithCC: sets [
 	^ sets
 		ifNotEmpty: [ Continuation
@@ -71,7 +73,7 @@ ContinuationTest >> intersectAllWithCC: sets [
 					[ :cc | self intersect: sets first withAll: sets allButFirst continuation: cc ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersectValueLink: aValueLink withCollection: anotherSet [
 	^ aValueLink
 		ifNotNil: [ | car cdr |
@@ -84,7 +86,7 @@ ContinuationTest >> intersectValueLink: aValueLink withCollection: anotherSet [
 				ifFalse: [ cdr ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
 	^ aSet
 		ifEmpty: [ hop value: aSet ]
@@ -100,7 +102,7 @@ ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
 						continuation: hop ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> intersectWithCCAllWithCC: sets [
 	^ sets
 		ifNotEmpty: [ Continuation
@@ -111,13 +113,13 @@ ContinuationTest >> intersectWithCCAllWithCC: sets [
 						continuation: cc ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> leftmost: aBlock tree: aTree [
 	^ self
 		callcc: [ :skip | self leftmost: aBlock tree: aTree continuation: skip ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> leftmost: aBlock tree: aTree continuation: out [
 	^ (aTree isNotNil and: [ aTree isMemberOf: ValueLink ])
 		ifTrue: [ | car |
@@ -130,13 +132,13 @@ ContinuationTest >> leftmost: aBlock tree: aTree continuation: out [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ContinuationTest >> printStringOfTree: aValueLink [
 	^ String
 		streamContents: [ :aStream | self printStringOfTree: aValueLink onStream: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ContinuationTest >> printStringOfTree: aValueLink onStream: aStream [
 	aStream nextPut: $(.
 	(aValueLink isMemberOf: Link)
@@ -158,7 +160,7 @@ ContinuationTest >> printStringOfTree: aValueLink onStream: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> remove: anObj oneStar: aTree [
 	| newTree sentinel |
 	sentinel := #absent.
@@ -174,7 +176,7 @@ ContinuationTest >> remove: anObj oneStar: aTree [
 		ifFalse: [ newTree ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> remove: anObj oneStar: aTree sentinel: aSymbol continuation: oh [
 	^ aTree
 		ifNil: [ oh value: aSymbol ]
@@ -205,14 +207,14 @@ ContinuationTest >> remove: anObj oneStar: aTree sentinel: aSymbol continuation:
 						ifFalse: naturalRecursion ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> remove: anObj oneStarWithTry: aTree [
 	^ Continuation
 		try: [ :oh | self remove: anObj oneStarWithTry: aTree continuation: oh ]
 		otherwise: [ aTree ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> remove: anObj oneStarWithTry: aTree continuation: oh [
 	^ aTree
 		ifNil: [ oh value: #absent ]
@@ -237,7 +239,7 @@ ContinuationTest >> remove: anObj oneStarWithTry: aTree continuation: oh [
 						ifFalse: naturalRecursion ] ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> remove: anObj uptoLast: aLinkedList [
 	^ aLinkedList
 		ifNotEmpty: [ | valueLink |
@@ -250,7 +252,7 @@ ContinuationTest >> remove: anObj uptoLast: aLinkedList [
 			LinkedList with: valueLink ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 ContinuationTest >> remove: anObj uptoLastValueLink: aValueLink continuation: skip [
 	^ aValueLink
 		ifNotNil: [ | car cdr |
@@ -264,7 +266,7 @@ ContinuationTest >> remove: anObj uptoLastValueLink: aValueLink continuation: sk
 				ifFalse: [ car ~~> cdr ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testBlockEscape [
 	| x |
 	tmp := 0.
@@ -279,7 +281,7 @@ ContinuationTest >> testBlockEscape [
 	self assert: tmp equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testBlockTemps [
 	| y |
 	#(1 2 3)
@@ -300,7 +302,7 @@ ContinuationTest >> testBlockTemps [
 	self assert: y equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testBlockVars [
 	| continuation |
 	tmp := 0.
@@ -319,7 +321,7 @@ ContinuationTest >> testBlockVars [
 	self assert: tmp equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testIntersectAll [
 	self
 		assert:
@@ -367,7 +369,7 @@ ContinuationTest >> testIntersectAll [
 		equals: {}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testIntersectWith [
 	self
 		assert:
@@ -389,7 +391,7 @@ ContinuationTest >> testIntersectWith [
 		equals: {}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testLeftmost [
 	| tree |
 	tree := #a ~~> nil ~~> nil
@@ -404,7 +406,7 @@ ContinuationTest >> testLeftmost [
 	self assert: (self leftmost: [ :v | v = 5 ] tree: tree) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testMethodTemps [
 	| i continuation |
 	i := 0.
@@ -413,7 +415,7 @@ ContinuationTest >> testMethodTemps [
 	i = 2 ifFalse: [ continuation value: 2 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testReentrant [
 	| assoc |
 	assoc := self callcc: [ :cc | cc -> 0 ].
@@ -423,7 +425,7 @@ ContinuationTest >> testReentrant [
 		ifFalse: [ assoc key value: assoc ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testRemoveOneStar [
 	| tree1 tree2 |
 	tree1 := #Swedish ~~> (#rye ~~> nil)
@@ -456,7 +458,7 @@ ContinuationTest >> testRemoveOneStar [
 		equals: '((#pasta) #pasta (#noodles #meat #sauce) #meat #tomatoes)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testRemoveUptoLast [
 	self
 		assert:
@@ -498,7 +500,7 @@ ContinuationTest >> testRemoveUptoLast [
 				yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testSimpleCallCC [
 	| x continuation |
 	x := self callcc: [ :cc | continuation := cc. false ].
@@ -506,7 +508,7 @@ ContinuationTest >> testSimpleCallCC [
 	self assert: x
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testSimpleStoreCallCC [
 	| x continuation |
 	continuation := self callcc: #yourself.
@@ -518,14 +520,14 @@ ContinuationTest >> testSimpleStoreCallCC [
 	self assert: x
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testSimplestCallCC [
 	| x |
 	x := self callcc: [ :cc | cc value: true ].
 	self assert: x
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContinuationTest >> testTwoInARow [
 	| tree1 tree2 |
 	tree1 := #solid ~~> (#food ~~> nil ~~> (Link new ~~> nil))

@@ -2,8 +2,8 @@
 I scan a paragraph
 "
 Class {
-	#name : #RubCompositionScanner,
-	#superclass : #RubCharacterScanner,
+	#name : 'RubCompositionScanner',
+	#superclass : 'RubCharacterScanner',
 	#instVars : [
 		'spaceX',
 		'lineHeight',
@@ -13,10 +13,12 @@ Class {
 		'baselineAtBreak',
 		'breakAtSpace'
 	],
-	#category : #'Rubric-TextScanning'
+	#category : 'Rubric-TextScanning',
+	#package : 'Rubric',
+	#tag : 'TextScanning'
 }
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle firstLine: firstLine leftSide: leftSide rightSide: rightSide [
 	"Answer an instance of TextLineInterval that represents the next line in the paragraph."
 	| runLength stopCondition |
@@ -43,7 +45,7 @@ RubCompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle firs
 	line leftMargin: leftMargin.
 
 	[false]
-		whileFalse: 
+		whileFalse:
 			[stopCondition := self scanCharactersFrom: lastIndex to: runStopIndex
 				in: text string rightX: rightMargin stopConditions: stopConditions
 				kern: kern.
@@ -53,9 +55,9 @@ RubCompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle firs
 				ifTrue: [^ line lineHeight: lineHeight + textStyle leading baseline: baseline + textStyle leading]]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> cr [
-	"Answer true. Set up values for the text line interval currently being 
+	"Answer true. Set up values for the text line interval currently being
 	composed."
 
 	pendingKernX := 0.
@@ -66,10 +68,10 @@ RubCompositionScanner >> cr [
 	^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> crossedX [
-	"There is a word that has fallen across the right edge of the composition 
-	rectangle. This signals the need for wrapping which is done to the last 
+	"There is a word that has fallen across the right edge of the composition
+	rectangle. This signals the need for wrapping which is done to the last
 	space that was encountered, as recorded by the space stop condition."
 
 	pendingKernX := 0.
@@ -118,13 +120,13 @@ RubCompositionScanner >> crossedX [
 	line stop: breakableIndex.
 	lineHeight := lineHeightAtBreak.
 	baseline := baselineAtBreak.
-	^ true.
+	^ true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> endOfRun [
-	"Answer true if scanning has reached the end of the paragraph. 
-	Otherwise step conditions (mostly install potential new font) and answer 
+	"Answer true if scanning has reached the end of the paragraph.
+	Otherwise step conditions (mostly install potential new font) and answer
 	false."
 
 	| runLength |
@@ -140,7 +142,7 @@ RubCompositionScanner >> endOfRun [
 			false ]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	| descent |
 	"Workaround: The following should really use #textAnchorType"
@@ -157,11 +159,11 @@ RubCompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCompositionScanner >> registerBreakableIndex [
 
-	"Record left x and character index of the line-wrappable point. 
-	Used for wrap-around. Answer whether the character has crossed the 
+	"Record left x and character index of the line-wrappable point.
+	Used for wrap-around. Answer whether the character has crossed the
 	right edge of the composition rectangle of the paragraph."
 
 	(text at: lastIndex) = Character space ifTrue: [
@@ -178,23 +180,29 @@ RubCompositionScanner >> registerBreakableIndex [
 		baselineAtBreak := baseline.
 		breakableIndex := lastIndex - 1.
 	].
-	^ false.
+	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCompositionScanner >> rightX [
-	"Meaningful only when a line has just been composed -- refers to the 
-	line most recently composed. This is a subtrefuge to allow for easy 
-	resizing of a composition rectangle to the width of the maximum line. 
-	Useful only when there is only one line in the form or when each line 
+	"Meaningful only when a line has just been composed -- refers to the
+	line most recently composed. This is a subtrefuge to allow for easy
+	resizing of a composition rectangle to the width of the maximum line.
+	Useful only when there is only one line in the form or when each line
 	is terminated by a carriage return. Handy for sizing menus and lists."
 
 	breakAtSpace ifTrue: [^ spaceX].
 
-	^ destX.
+	^ destX
 ]
 
-{ #category : #scanning }
+{ #category : 'accessing' }
+RubCompositionScanner >> scale [
+
+	^ 1
+]
+
+{ #category : 'scanning' }
 RubCompositionScanner >> setActualFont: aFont [
 	"Keep track of max height and ascent for auto lineheight"
 	| descent |
@@ -209,23 +217,23 @@ RubCompositionScanner >> setActualFont: aFont [
 				lineHeight := lineHeight max: baseline + descent]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> setFont [
 	super setFont.
 	breakAtSpace := false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
-	
+
 	self setFont
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> tab [
-	"Advance destination x according to tab settings in the paragraph's 
-	textStyle. Answer whether the character has crossed the right edge of 
+	"Advance destination x according to tab settings in the paragraph's
+	textStyle. Answer whether the character has crossed the right edge of
 	the composition rectangle of the paragraph."
 
 	pendingKernX := 0.

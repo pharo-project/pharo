@@ -2,28 +2,23 @@
 A link in text referring to class and methods. 
 "
 Class {
-	#name : #TextLink,
-	#superclass : #TextAction,
+	#name : 'TextLink',
+	#superclass : 'TextAction',
 	#instVars : [
 		'classAndMethod'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
-TextLink class >> scanFrom: strm [
-	"read a link in the funny format used by Text styles on files. LPoint +;LPoint Comment;"
-
-	^ self new classAndMethod: (strm upTo: $;)
-]
-
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextLink >> = anotherObject [
 
 	^self class == anotherObject class and: [ classAndMethod = anotherObject info ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextLink >> analyze: aString [
 
 	| list |
@@ -32,7 +27,7 @@ TextLink >> analyze: aString [
 	^ list at: 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextLink >> analyze: aString with: nonMethod [
 	"Initalize this attribute holder with a piece text the user typed into a paragraph.  Returns the text to emphesize (may be different from selection)  Does not return self!.  nonMethod is what to show when clicked, i.e. the last part of specifier (Comment, Definition, or Hierarchy).  May be of the form:
 Point
@@ -67,29 +62,29 @@ Click Here<Point>
 				ifFalse: [ "Illegal -- <> has text on both sides" nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLink >> classAndMethod: aString [
 	classAndMethod := aString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextLink >> hash [
 
-	^(self class hash + classAndMethod hash) hashMultiply 
+	^(self class hash + classAndMethod hash) hashMultiply
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLink >> info [
 	^ classAndMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextLink >> mayHaveExternalReferences [
 	"Text links can keep references to external objects like AST nodes"
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextLink >> validate: specString [
 	"Can this string be decoded to be Class space Method (or Comment, Definition, Hierarchy)? If so, return it in valid format, else nil"
 
@@ -98,7 +93,7 @@ TextLink >> validate: specString [
 	list ifEmpty: [ ^ nil ].
 	last := list last.
 	last first isUppercase
-		ifTrue: [ 
+		ifTrue: [
 			(#('Comment' 'Definition' 'Hierarchy') includes: last)
 				ifFalse: [ ^ nil ].	"Check for 'Rectangle Comment Comment' and remove last one"
 			(list at: list size - 1 ifAbsent: [ ^ nil ]) = last
@@ -111,7 +106,7 @@ TextLink >> validate: specString [
 	first ifNil: [ ^ nil ].
 	Smalltalk globals at: first ifAbsent: [ ^ nil ].
 	mid := list size = 3
-		ifTrue: [ 
+		ifTrue: [
 			(list at: 2) = 'class'
 				ifTrue: [ 'class ' ]
 				ifFalse: [ ^ nil ] ]

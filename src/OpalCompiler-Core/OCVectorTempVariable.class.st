@@ -13,37 +13,39 @@ reading and writing thus is a multi step process:
 4) use the index to access this array
 "
 Class {
-	#name : #OCVectorTempVariable,
-	#superclass : #TemporaryVariable,
+	#name : 'OCVectorTempVariable',
+	#superclass : 'TemporaryVariable',
 	#instVars : [
 		'vectorName'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #emitting }
+{ #category : 'emitting' }
 OCVectorTempVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeRemoteTemp: name inVector: vectorName.
+	methodBuilder storeRemoteTemp: name inVector: vectorName
 ]
 
-{ #category : #emitting }
+{ #category : 'emitting' }
 OCVectorTempVariable >> emitValue: methodBuilder [
 
-	methodBuilder pushRemoteTemp: name inVector: vectorName.
+	methodBuilder pushRemoteTemp: name inVector: vectorName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCVectorTempVariable >> isRemote [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCVectorTempVariable >> isTempVectorTemp [
 	^true
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 
 	| theVector |
@@ -51,37 +53,37 @@ OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 	^theVector at: self index
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 OCVectorTempVariable >> readVectorFromContext: aContext scope: contextScope [
 	| tempVectorVar theVector |
 	"We need to first read the temp vector. We use the closest copied var up the stack possible as
 	 as the definition context could be already garbage collected"
 	tempVectorVar := contextScope lookupVar: vectorName.
-	"We might be called from the debugger for a context that actually does not access the temp vector, 
+	"We might be called from the debugger for a context that actually does not access the temp vector,
 	so we need to read possibly from a context above aContext"
 	theVector := tempVectorVar readFromContext: aContext scope: contextScope.
 	"We can call this method on a context in any state, e.g. even when the copied var is not yet initialized.
 	In this case, we lookup in the outer context with the corresponding outer scope"
-	^ theVector ifNil: [ aContext outerContext 
+	^ theVector ifNil: [ aContext outerContext
 		"but there might be no outer context, so in that case, just return an empty array of the correct size"
 			ifNil: [ Array new: tempVectorVar originalVar scope tempVector size ]
 			ifNotNil: [: ctxt | self readVectorFromContext: ctxt scope: contextScope outerScope ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCVectorTempVariable >> vectorName [
 	^ vectorName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCVectorTempVariable >> vectorName: anObject [
 	vectorName := anObject
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| theVector |
 	theVector := self readVectorFromContext: aContext scope: contextScope.
-	^theVector at: self index put: aValue.
+	^theVector at: self index put: aValue
 ]

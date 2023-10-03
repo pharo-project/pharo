@@ -1,10 +1,11 @@
 Class {
-	#name : #T2OverloadingOfMethodsInTraitedClassTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2OverloadingOfMethodsInTraitedClassTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> createT1 [
 	| t1 |
 	t1 := self newTrait: #T1 with: '' asSlotCollection.
@@ -29,12 +30,12 @@ T2OverloadingOfMethodsInTraitedClassTest >> createT1 [
 	^ t1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> createT2 [
 	^ self newTrait: #T2 with: '' asSlotCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
 	TraitedClass
 		removeSelector: #isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
@@ -43,8 +44,9 @@ T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
+		<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
 	| t1 c1 |
 	t1 := self createT1.
 	c1 := self newClass: #C1 with: '' asSlotCollection uses: t1.
@@ -53,8 +55,9 @@ T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 			c1 isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
+	<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
 	| t1 t2 superclass subclass |
 	t1 := self createT1.
 	t2 := self createT2.
@@ -62,7 +65,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
 		newClass: #C2Superclass
 		with: '' asSlotCollection
 		uses: t2.
-		
+
 	subclass := self
 		newClass: #C1Subclass
 		superclass: superclass

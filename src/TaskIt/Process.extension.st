@@ -1,16 +1,14 @@
-Extension { #name : #Process }
+Extension { #name : 'Process' }
 
-{ #category : #'*TaskIt' }
+{ #category : '*TaskIt' }
 Process class >> disableDebugger [
-	
 ]
 
-{ #category : #'*TaskIt' }
+{ #category : '*TaskIt' }
 Process class >> enableDebugger [
-	
 ]
 
-{ #category : #'*TaskIt' }
+{ #category : '*TaskIt' }
 Process class >> isDebuggingCompatible [
 	^ false
 ]

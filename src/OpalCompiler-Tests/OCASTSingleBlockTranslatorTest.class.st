@@ -1,78 +1,80 @@
 Class {
-	#name : #OCASTSingleBlockTranslatorTest,
-	#superclass : #OCASTTranslatorTest,
+	#name : 'OCASTSingleBlockTranslatorTest',
+	#superclass : 'OCASTTranslatorTest',
 	#instVars : [
 		'extractBlockInTemp'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTSingleBlockTranslatorTest class >> isAbtract [
 
 	^ self == OCASTSingleBlockTranslatorTest
 ]
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTSingleBlockTranslatorTest class >> testParameters [
 
-	^ super testParameters * 
+	^ super testParameters *
 		(ParametrizedTestMatrix new
 			forSelector: #extractBlockInTemp addOptions: { true . false };
 			yourself)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSingleBlockTranslatorTest >> extractBlockInTemp [
 
 	^ extractBlockInTemp	ifNil: [ extractBlockInTemp := false ]
 ]
 
-{ #category : #accessing }
-OCASTSingleBlockTranslatorTest >> extractBlockInTemp: aBoolean [ 
+{ #category : 'accessing' }
+OCASTSingleBlockTranslatorTest >> extractBlockInTemp: aBoolean [
 	extractBlockInTemp := aBoolean
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: blockCode [
 
 	^ self testComposedExample: template withBlock: blockCode withArguments: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: blockCode withArguments: arguments [
-	
+
 	^ self
 		testComposedExample: template
-		withTemps: #() 
+		withTemps: #()
 		withBlock: blockCode
 		withArguments: arguments
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withTemps: temps withBlock: blockCode [
 
 	^ self testComposedExample: template  withTemps: temps withBlock: blockCode withArguments: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template  withTemps: temps withBlock: blockCode withArguments: arguments [
 	| declaration argument source methodTemps |
 	methodTemps := OrderedCollection withAll: temps.
-	self extractBlockInTemp ifTrue: [ 
+	self extractBlockInTemp ifTrue: [
 			methodTemps add: 'block'.
 			declaration := 'block := ', blockCode.
 			argument := 'block' ]
 		ifFalse: [
 			declaration := ''.
 			argument := blockCode ].
-	
+
 	declaration := String streamContents: [ :stream |
 		stream nextPut: $|.
 		methodTemps do: [ :each | stream nextPutAll: each; space ].
 		stream nextPut: $|.
 		stream nextPutAll: declaration. ].
-	source := template format: { 
+	source := template format: {
 		'definition' -> declaration.
 		'argument' -> argument } asDictionary.
 	^ self testSource: source withArguments: arguments

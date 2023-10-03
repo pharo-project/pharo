@@ -13,30 +13,39 @@ Instance Variables
 
 "
 Class {
-	#name : #RBDumpVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'RBDumpVisitor',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'stream'
 	],
-	#category : #'AST-Core-Visitors'
+	#category : 'AST-Core-Visitors',
+	#package : 'AST-Core',
+	#tag : 'Visitors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDumpVisitor >> contents [
 	^ stream contents
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDumpVisitor >> initialize [
 	stream := String new writeStream
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDumpVisitor >> stream [
 	^ stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
+RBDumpVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+	stream
+		nextPutAll: aRBAnnotationValueNode class name;
+		nextPutAll: ' new'
+]
+
+{ #category : 'visiting' }
 RBDumpVisitor >> visitArrayNode: anArrayNode [
 	stream
 		nextPutAll: anArrayNode class name;
@@ -48,7 +57,7 @@ RBDumpVisitor >> visitArrayNode: anArrayNode [
 	stream nextPut: $}
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitAssignmentNode: anAssignmentNode [
 	stream
 		nextPutAll: anAssignmentNode class name;
@@ -59,7 +68,7 @@ RBDumpVisitor >> visitAssignmentNode: anAssignmentNode [
 	stream nextPut: $)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitBlockNode: aBlockNode [
 	stream nextPutAll: aBlockNode class name.
 	aBlockNode arguments
@@ -74,7 +83,7 @@ RBDumpVisitor >> visitBlockNode: aBlockNode [
 	stream nextPut: $)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 	stream
 		nextPutAll: aCascadeNode class name;
@@ -86,43 +95,55 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 	stream nextPut: $}
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+
 	stream
 		nextPutAll: '(';
 		nextPutAll: anEnglobingErrorNode class name;
-		nextPutAll: ' content: {'.
-	anEnglobingErrorNode content
-		do: [ :each |
-			each acceptVisitor: self.
-			stream nextPutAll: '. ' ].
-	stream nextPut: $}.
-	stream nextPutAll: ' start: '.
-	anEnglobingErrorNode start printOn: stream.
-	stream nextPutAll: ' stop: '.
-	anEnglobingErrorNode stop printOn: stream.
-	stream nextPutAll: ' errorMessage: '.
-	anEnglobingErrorNode errorMessage printOn: stream.
+		nextPutAll: ' new contents: {'.
+	anEnglobingErrorNode contents do: [ :each |
+		each acceptVisitor: self.
+		stream nextPutAll: '. ' ].
 	stream
-		nextPutAll: ') value: ';
-		nextPutAll: anEnglobingErrorNode value printString
+		nextPutAll: '}; start: ';
+		print: anEnglobingErrorNode start;
+		nextPutAll: '; stop: ';
+		print: anEnglobingErrorNode stop;
+		nextPutAll: '; errorPosition: ';
+		print: anEnglobingErrorNode errorPosition;
+		nextPutAll: '; errorMessage: ';
+		print: anEnglobingErrorNode errorMessage;
+		nextPutAll: '; value: ';
+		print: anEnglobingErrorNode value;
+		nextPutAll: '; valueAfter: ';
+		print: anEnglobingErrorNode valueAfter;
+		nextPutAll: '; yourself)'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
-	stream
-		nextPutAll: aLiteralArrayNode class name;
-		nextPutAll: ' value: #('.
-	(aLiteralArrayNode contents collect: [ :each | each value ]) printOn: stream delimiter: ' '.
-	stream nextPutAll: ')'
+
+	stream nextPutAll: aLiteralArrayNode class name;
+		nextPutAll: ' value: ';
+		nextPutAll: (
+	aLiteralArrayNode isForByteArray
+		ifTrue: [ '#['  ]
+		ifFalse: [ '#(' ]).
+	(aLiteralArrayNode contents collect: [ :each | each value ])
+		printOn: stream
+		delimiter: ' '.
+	stream nextPutAll: (aLiteralArrayNode isForByteArray
+			 ifTrue: [ ']' ]
+			 ifFalse: [ ')' ])
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitLiteralNode: aLiteralNode [
 	self visitLiteralValueNode: aLiteralNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitLiteralValueNode: aLiteralValueNode [
 	stream
 		nextPutAll: aLiteralValueNode class name;
@@ -130,7 +151,7 @@ RBDumpVisitor >> visitLiteralValueNode: aLiteralValueNode [
 	aLiteralValueNode value printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitMessageNode: aMessageNode [
 	stream
 		nextPutAll: aMessageNode class name;
@@ -147,7 +168,7 @@ RBDumpVisitor >> visitMessageNode: aMessageNode [
 			stream nextPut: $} ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitMethodNode: aMethodNode [
 	| hasPragmas |
 	hasPragmas := aMethodNode pragmas isNotEmpty.
@@ -178,19 +199,23 @@ RBDumpVisitor >> visitMethodNode: aMethodNode [
 	stream nextPut: $}
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitParseErrorNode: aParseErrorNode [
 	stream
 		nextPutAll: aParseErrorNode class name;
-		nextPutAll: ' errorMessage: '.
-	aParseErrorNode errorMessage printOn: stream.
-	stream nextPutAll: ' value: '.
-	aParseErrorNode value printOn: stream.
-	stream nextPutAll: ' at: '.
-	aParseErrorNode start printOn: stream
+		nextPutAll: ' new errorMessage: ';
+		print: aParseErrorNode errorMessage;
+		nextPutAll: '; value: ';
+		print: aParseErrorNode value;
+		nextPutAll: '; start: ';
+		print: aParseErrorNode start;
+		nextPutAll: '; stop: ';
+		print: aParseErrorNode stop;
+		nextPutAll: '; errorPosition: ';
+		print: aParseErrorNode errorPosition
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitPragmaNode: aPragmaNode [
 	stream
 		nextPutAll: aPragmaNode class name;
@@ -204,7 +229,7 @@ RBDumpVisitor >> visitPragmaNode: aPragmaNode [
 	stream nextPut: $}
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitReturnNode: aReturnNode [
 	stream
 		nextPutAll: aReturnNode class name;
@@ -213,7 +238,7 @@ RBDumpVisitor >> visitReturnNode: aReturnNode [
 	stream nextPut: $)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitSequenceNode: aSequenceNode [
 	stream nextPutAll: aSequenceNode class name.
 	aSequenceNode temporaries
@@ -231,7 +256,7 @@ RBDumpVisitor >> visitSequenceNode: aSequenceNode [
 	stream nextPut: $}
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBDumpVisitor >> visitVariableNode: aVariableNode [
 	stream
 		nextPutAll: aVariableNode class name;

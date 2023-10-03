@@ -1,17 +1,18 @@
 Class {
-	#name : #BaselineOfParametrizedTests,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfParametrizedTests
+	#name : 'BaselineOfParametrizedTests',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfParametrizedTests',
+	#package : 'BaselineOfParametrizedTests'
 }
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 BaselineOfParametrizedTests class >> DevelopmentSupport [
 
 "See the methods in the 'development support' category on the class-side of MetacelloBaseConfiguration. Decide what development support methods you would like to use and copy them the the class-side of your configuration."
 	<apiDocumentation>
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BaselineOfParametrizedTests class >> baseConfigurationClassIfAbsent: aBlock [
 
 	^self environment
@@ -21,13 +22,13 @@ BaselineOfParametrizedTests class >> baseConfigurationClassIfAbsent: aBlock [
 			self environment at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BaselineOfParametrizedTests class >> ensureMetacello [
 
 	(self baseConfigurationClassIfAbsent: []) ensureMetacello
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BaselineOfParametrizedTests class >> ensureMetacelloBaseConfiguration [
 
 	self environment
@@ -43,14 +44,14 @@ BaselineOfParametrizedTests class >> ensureMetacelloBaseConfiguration [
 					version workingCopy repositoryGroup addRepository: repository ] ]
 ]
 
-{ #category : #'metacello tool support' }
+{ #category : 'metacello tool support' }
 BaselineOfParametrizedTests class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
 	
 	^true
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 BaselineOfParametrizedTests class >> load [
 	"Load the #stable version defined for this platform. The #stable version is the version that is recommended to be used on this platform."
 
@@ -60,7 +61,7 @@ BaselineOfParametrizedTests class >> load [
 	^(self project version: #stable) load
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 BaselineOfParametrizedTests class >> loadBleedingEdge [
 	"Load the latest versions of the mcz files defined for this project. It is not likely that the #bleedingEdge has been tested."
 
@@ -70,7 +71,7 @@ BaselineOfParametrizedTests class >> loadBleedingEdge [
 	^(self project version: #bleedingEdge) load
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 BaselineOfParametrizedTests class >> loadDevelopment [
 	"Load the #development version defined for this platform. The #development version will change over time and is not expected to be stable."
 
@@ -80,7 +81,7 @@ BaselineOfParametrizedTests class >> loadDevelopment [
 	^(self project version: #development) load
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 BaselineOfParametrizedTests class >> validate [
 	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
 	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
@@ -94,7 +95,7 @@ BaselineOfParametrizedTests class >> validate [
 	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfParametrizedTests >> baseline: spec [
 	<baseline>
 	spec for: #common do: [ spec package: #ParametrizedTests ]

@@ -10,44 +10,45 @@ index is the external semaphore index to be used on primitive calls.
 
 "
 Class {
-	#name : #TFExternalSemaphore,
-	#superclass : #Object,
+	#name : 'TFExternalSemaphore',
+	#superclass : 'Object',
 	#instVars : [
 		'semaphore',
 		'index'
 	],
-	#category : #'ThreadedFFI-Base'
+	#category : 'ThreadedFFI-Base',
+	#package : 'ThreadedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalSemaphore >> index [
 
 	^ index
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFExternalSemaphore >> initialize [
-	
+
 	super initialize.
 	semaphore := Semaphore new.
 	index := Smalltalk registerExternalObject: semaphore
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFExternalSemaphore >> release [
 
 	super release.
-	Smalltalk unregisterExternalObject: semaphore.
-
+	Smalltalk unregisterExternalObject: semaphore
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFExternalSemaphore >> reset [
 
 	semaphore consumeAllSignals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalSemaphore >> semaphore [
 
 	^ semaphore

@@ -26,86 +26,46 @@ Configuration methods like #class:, #context:, #receiver:, #noPattern: perform t
 
 "
 Class {
-	#name : #OCSemanticScope,
-	#superclass : #OCAbstractScope,
-	#category : #'OpalCompiler-Core-Semantics'
+	#name : 'OCSemanticScope',
+	#superclass : 'OCAbstractScope',
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #testing }
-OCSemanticScope class >> isAbstract [ 
-	^self = OCSemanticScope 
+{ #category : 'testing' }
+OCSemanticScope class >> isAbstract [
+	^self = OCSemanticScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCSemanticScope >> allTemps [
 	^#()
 ]
 
-{ #category : #'code evaluation' }
-OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [ 
+{ #category : 'code evaluation' }
+OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 
 	aSystemAnnouncer evaluated: aSourceString context: nil
 ]
 
-{ #category : #converting }
-OCSemanticScope >> asDoItScope [
-	self subclassResponsibility 
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForContext: aContext [ 
-	^OCContextualDoItSemanticScope targetingContext: aContext
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItScopeForReceiver: anObject [
-	^OCReceiverDoItSemanticScope targetingReceiver: anObject
-]
-
-{ #category : #'code compilation' }
-OCSemanticScope >> compileMethodFromASTBy: aCompiler [
-	self subclassResponsibility 
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
-	
-	(self targetClass hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	
-	^super hasBindingThatBeginsWith: aString
 
+	(self targetClass hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+
+	^super hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #testing }
-OCSemanticScope >> isDoItScope [ 
+{ #category : 'testing' }
+OCSemanticScope >> isDoItScope [
 	^false
 ]
 
-{ #category : #lookup }
-OCSemanticScope >> lookupVar: name declare: aBoolean [
+{ #category : 'lookup' }
+OCSemanticScope >> lookupVar: name [
 
-	(self targetClass lookupVar: name declare: aBoolean) ifNotNil: [ :v | ^v ].
-	
-	^outerScope ifNotNil: [ outerScope lookupVar: name declare: aBoolean ]
-	
-]
+	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].
 
-{ #category : #'code compilation' }
-OCSemanticScope >> parseASTBy: aParser [
-	self subclassResponsibility 
-]
-
-{ #category : #printing }
-OCSemanticScope >> scopeLevel [ 
-	^0
-]
-
-{ #category : #accessing }
-OCSemanticScope >> targetClass [ 
-	self subclassResponsibility  
-]
-
-{ #category : #accessing }
-OCSemanticScope >> targetEnvironment [ 
-	^self targetClass environment 
+	^ super lookupVar: name
 ]

@@ -30,8 +30,8 @@ and every reference to the old vars color / font / style will be replaced by tex
 
 "
 Class {
-	#name : #RBSplitClassRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'RBSplitClassRefactoring',
+	#superclass : 'RBRefactoring',
 	#instVars : [
 		'class',
 		'instanceVariables',
@@ -39,11 +39,13 @@ Class {
 		'referenceVariableName',
 		'newClass'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
-RBSplitClassRefactoring class >> class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
+{ #category : 'instance creation' }
+RBSplitClassRefactoring class >> class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
 	^ self new
 		class: class
 			instanceVariables: instVars
@@ -52,9 +54,9 @@ RBSplitClassRefactoring class >> class: class instanceVariables: instVars newCla
 		yourself
 ]
 
-{ #category : #'instance creation' }
-RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
-	^ self new 
+{ #category : 'instance creation' }
+RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
+	^ self new
 		model: aRBSmalltalk;
 		class: class
 			instanceVariables: instVars
@@ -63,7 +65,7 @@ RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariab
 		yourself
 ]
 
-{ #category : #'private - transforming' }
+{ #category : 'private - transforming' }
 RBSplitClassRefactoring >> abstractReferenceTo: each [
 
 	| setterMethod replacer accessorRef getterMethod |
@@ -71,7 +73,7 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 		               variable: each
 		               class: newClass
 		               classVariable: false.
-	self performCompositeRefactoring: accessorRef.
+	self generateChangesFor: accessorRef.
 	getterMethod := accessorRef getterMethodName.
 	setterMethod := accessorRef setterMethodName.
 	replacer := self parseTreeRewriterClass
@@ -81,75 +83,83 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 		            receiver: referenceVariableName.
 	self
 		convertClasses: class withAllSubclasses
-		select: [ :aClass | 
+		select: [ :aClass |
 		aClass whichSelectorsReferToInstanceVariable: each ]
 		using: replacer.
-	self performCompositeRefactoring:
+	self generateChangesFor:
 		(RBRemoveInstanceVariableRefactoring remove: each from: class)
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBSplitClassRefactoring >> abstractVariableReferences [
 	instanceVariables do: [:each | self abstractReferenceTo: each]
 ]
 
-{ #category : #'private - transforming' }
+{ #category : 'private - transforming' }
 RBSplitClassRefactoring >> addClass [
-	self performCompositeRefactoring: (RBInsertClassRefactoring 
+	self generateChangesFor: (RBInsertNewClassRefactoring
 				model: self model
 				addClass: newClassName
 				superclass: Object
 				subclasses: #()
 				category: class category).
-	newClass := self model classNamed: newClassName asSymbol
+	newClass := self model classNamed: newClassName
 ]
 
-{ #category : #'private - transforming' }
+{ #category : 'private - transforming' }
 RBSplitClassRefactoring >> addInstanceVariables [
-	instanceVariables do: 
-			[:each | 
-			self performCompositeRefactoring: (RBAddInstanceVariableRefactoring 
+	instanceVariables do:
+			[:each |
+			self generateChangesFor: (RBAddInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newClass)]
 ]
 
-{ #category : #initialization }
-RBSplitClassRefactoring >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
+{ #category : 'initialization' }
+RBSplitClassRefactoring >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
 	class := self model classObjectFor: aClass.
 	instanceVariables := instVars.
 	newClassName := className.
 	referenceVariableName := newVariable
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBSplitClassRefactoring >> createNewClass [
 	self
 		addClass;
 		addInstanceVariables
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBSplitClassRefactoring >> createReference [
-	self performCompositeRefactoring: (RBAddInstanceVariableRefactoring 
+	self generateChangesFor: (RBAddInstanceVariableRefactoring
 				variable: referenceVariableName
 				class: class)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBSplitClassRefactoring >> preconditions [
-	^(RBCondition isValidClassName: newClassName) 
-		& (RBCondition isGlobal: newClassName in: self model) not 
-			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class) 
-			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName) 
-					not 
-			& (RBCondition isGlobal: referenceVariableName in: self model) not 
-			& (RBCondition definesTemporaryVariable: referenceVariableName in: class) 
+	^(RBCondition isValidClassName: newClassName)
+		& (RBCondition isGlobal: newClassName in: self model) not
+			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
+			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName)
+					not
+			& (RBCondition isGlobal: referenceVariableName in: self model) not
+			& (RBCondition definesTemporaryVariable: referenceVariableName in: class)
 					not
 ]
 
-{ #category : #printing }
-RBSplitClassRefactoring >> storeOn: aStream [ 
+{ #category : 'transforming' }
+RBSplitClassRefactoring >> privateTransform [
+	self
+		createNewClass;
+		createReference;
+		abstractVariableReferences
+]
+
+{ #category : 'printing' }
+RBSplitClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' class: '.
@@ -162,12 +172,4 @@ RBSplitClassRefactoring >> storeOn: aStream [
 		nextPutAll: ' referenceVariableName: ''';
 		nextPutAll: referenceVariableName;
 		nextPutAll: ''')'
-]
-
-{ #category : #transforming }
-RBSplitClassRefactoring >> transform [
-	self
-		createNewClass;
-		createReference;
-		abstractVariableReferences
 ]

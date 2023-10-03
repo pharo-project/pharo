@@ -2,18 +2,20 @@
 I am a panel in the ProfilerPresenter containing user defined inputs to start profiling
 "
 Class {
-	#name : #ProfilerInputPresenter,
-	#superclass : #SpPresenter,
+	#name : 'ProfilerInputPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'profilerDropList',
 		'profileItButton',
 		'codeInput',
 		'viewModel'
 	],
-	#category : #'ProfilerUI-View'
+	#category : 'ProfilerUI-View',
+	#package : 'ProfilerUI',
+	#tag : 'View'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 ProfilerInputPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -28,20 +30,20 @@ ProfilerInputPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerInputPresenter >> initializeActions [
 
-	profilerDropList whenSelectedItemChangedDo: [ :item | 
+	profilerDropList whenSelectedItemChangedDo: [ :item |
 		viewModel profilerClass: item ].
 
 
-	profileItButton action: [ 
-		codeInput text 
+	profileItButton action: [
+		codeInput text
 			ifEmpty: [ self notify: 'Must enter code' at: 0 in: codeInput text ]
 			ifNotEmpty: [ viewModel profileCode: codeInput text notifying: self] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerInputPresenter >> initializePresenters [
 
 	codeInput := self newCode beForScripting; yourself.
@@ -64,37 +66,35 @@ ProfilerInputPresenter >> initializePresenters [
 	self initializeActions
 ]
 
-{ #category : #'error handling' }
-ProfilerInputPresenter >> notify: errorMessage at: positionIndex in: sourceCode [ 
+{ #category : 'error handling' }
+ProfilerInputPresenter >> notify: errorMessage at: positionIndex in: sourceCode [
 
 	codeInput notify: errorMessage at: positionIndex in: sourceCode .
 	codeInput takeKeyboardFocus
-
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 ProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
 
 	viewModel := aDomainObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
-	viewModel announcer 
-		when: ProfilingStartedAnnouncement 
+	viewModel announcer
+		when: ProfilingStartedAnnouncement
 		do: [ self enabled: false ];
-		
-		when: ProfilingResultsDisplayedAnnouncement 
-		do: [ self enabled: true ].
-	
+
+		when: ProfilingResultsDisplayedAnnouncement
+		do: [ self enabled: true ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerInputPresenter >> unsubscribeFromProfilingAnnouncements [
 	viewModel announcer unsubscribe: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerInputPresenter >> viewModel [
 	^ viewModel
 ]

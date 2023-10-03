@@ -1,10 +1,12 @@
 Class {
-	#name : #ShCreateClassTest,
-	#superclass : #ShAbstractClassBuilderTest,
-	#category : #'Shift-ClassBuilder-Tests-Base'
+	#name : 'ShCreateClassTest',
+	#superclass : 'ShAbstractClassBuilderTest',
+	#category : 'Shift-ClassBuilder-Tests-Base',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testClassWithClassSlots [
 	builder
 		name: #SHTestClassWithClassSlots;
@@ -18,14 +20,14 @@ ShCreateClassTest >> testClassWithClassSlots [
 	self
 		validateSlots:
 			{#anSlot => InstanceVariableSlot}.
-			
+
 	self
 		validateClassSlots:
 			{#aClassSlot => InstanceVariableSlot.}
 		superclass: Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testClassWithInheritedSlots [
 	builder
 		name: #SHTestClassWithInheritedSlots;
@@ -43,7 +45,7 @@ ShCreateClassTest >> testClassWithInheritedSlots [
 			#anotherSlot => InstanceVariableSlot}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testClassWithSlots [
 	builder
 		name: #SHTestClassWithSlots;
@@ -59,16 +61,16 @@ ShCreateClassTest >> testClassWithSlots [
 			(#anotherSlot => InstanceVariableSlot)}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testEmptyClass [
 	builder name: #SHTestEmptyClass.
 	result := builder build.
-	
+
 	self validateResult.
 	self validateSuperclass: Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testSharedPool [
 	builder name: #SHClassWithSharedPool.
 	result := builder
@@ -80,7 +82,7 @@ ShCreateClassTest >> testSharedPool [
 	self validateSharedPools: {ShTestSharedPool}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testSharedVariables [
 	builder name: #SHClassWithSharedVariable.
 	result := builder
@@ -92,7 +94,7 @@ ShCreateClassTest >> testSharedVariables [
 	self validateSharedVariables: #(aSharedVariable)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testSharedVariablesAsArray [
 	builder name: #SHClassWithSharedVariable.
 	result := builder
@@ -104,7 +106,7 @@ ShCreateClassTest >> testSharedVariablesAsArray [
 	self validateSharedVariables: #(aSharedVariable)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testSharedVariablesAsString [
 	builder name: #SHClassWithSharedVariable.
 	result := builder
@@ -116,13 +118,13 @@ ShCreateClassTest >> testSharedVariablesAsString [
 	self validateSharedVariables: #(aSharedVariable)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testSharedVariablesWithSlot [
 	builder name: #SHClassWithSharedVariable.
 	self should: [ builder sharedVariablesFromString: {#aSharedVariable asSlot} ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testVariableLayout [
 	builder name: #SHClassWithVariableLayout.
 	result := builder
@@ -137,7 +139,7 @@ ShCreateClassTest >> testVariableLayout [
 	self assert: result classLayout class equals: VariableLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShCreateClassTest >> testWordLayout [
 	builder name: #SHClassWithWordLayout.
 	result := builder

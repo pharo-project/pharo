@@ -19,15 +19,17 @@ Observations about the transformation:
 - If there is no access, the message send will be the first statement of the method.
 "
 Class {
-	#name : #RBAddMessageSendTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddMessageSendTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'message'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMessageSendTransformation class >> messageSend: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -37,7 +39,7 @@ RBAddMessageSendTransformation class >> messageSend: aString inMethod: aSelector
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -48,7 +50,35 @@ RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inM
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'preconditions' }
+RBAddMessageSendTransformation >> applicabilityPreconditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [
+				   | messageNode |
+				   messageNode := self parserClass parseExpression: message.
+				   messageNode allVariables allSatisfy: [ :e |
+					   (self definingMethod hasArgumentNamed: e name) or: [
+						   self definingMethod hasTemporaryNamed: e name ] ] ]
+			   errorString:
+				   ('Some variables in this message send are not defined in method named <1s>.'
+					    expandMacrosWith: selector))
+]
+
+{ #category : 'preconditions' }
+RBAddMessageSendTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
+{ #category : 'api' }
 RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -56,29 +86,7 @@ RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector 
 	message := aMessageSend
 ]
 
-{ #category : #preconditions }
-RBAddMessageSendTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		&
-			(RBCondition
-				withBlock: [ self definingClass canUnderstand: selector ]
-				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ | messageNode |
-					messageNode := self parserClass parseExpression: message.
-					messageNode allVariables
-						allSatisfy: [ :e | 
-							(self definingMethod hasArgumentNamed: e name)
-								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
-				errorString:
-					('Some variables in this message send are not defined in method named <1s>.'
-						expandMacrosWith: selector))
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddMessageSendTransformation >> privateTransform [
 	| methodTree messageNode assignments variables previousNode |
 	methodTree := self definingMethod.
@@ -95,7 +103,7 @@ RBAddMessageSendTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddMessageSendTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

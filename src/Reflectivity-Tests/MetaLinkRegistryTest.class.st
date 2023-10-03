@@ -1,14 +1,16 @@
 Class {
-	#name : #MetaLinkRegistryTest,
-	#superclass : #TestCase,
+	#name : 'MetaLinkRegistryTest',
+	#superclass : 'ReflectivityTestCase',
 	#instVars : [
 		'registry',
 		'permalink'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MetaLinkRegistryTest >> setUp [
 
 	super setUp.
@@ -18,13 +20,13 @@ MetaLinkRegistryTest >> setUp [
 	permalink slotOrVarClass: ReflectivityExamples2.
 	permalink slotOrVariable: (ReflectivityExamples2 lookupVar: #instVar2).
 	registry registerPermaLink: permalink.
-	registry slotSourcesAt: ReflectivityExamples2 ifAbsentPut: [ 
+	registry slotSourcesAt: ReflectivityExamples2 ifAbsentPut: [
 		Set new
 			add: permalink slotOrVariable;
 			yourself ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkRegistryTest >> testPermaLinksForMethod [
 	|plinks|
 	plinks := registry permaLinksForMethod: ReflectivityExamples2Subclass>>#useInstVarInSubclass.
@@ -32,7 +34,7 @@ MetaLinkRegistryTest >> testPermaLinksForMethod [
 	self assert: plinks first identicalTo: permalink
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkRegistryTest >> testSlotSourcesConsiderClassesHierarchy [
 
 	| slotSources |

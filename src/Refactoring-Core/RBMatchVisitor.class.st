@@ -2,54 +2,56 @@
 I am a visitor to change temporaries and arguments to generic names (`tempMatch , `argMatch)
 "
 Class {
-	#name : #RBMatchVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'RBMatchVisitor',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'arguments',
 		'temporaries',
 		'difference'
 	],
-	#category : #'Refactoring-Core-Base'
+	#category : 'Refactoring-Core-Base',
+	#package : 'Refactoring-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMatchVisitor >> difference [
 	^ difference
 ]
 
-{ #category : #initialization }
-RBMatchVisitor >> initialize [ 	
+{ #category : 'initialization' }
+RBMatchVisitor >> initialize [
 	super initialize .
 	arguments := 0 .
 	temporaries := 0.
 	difference := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMatchVisitor >> replace: temp with: aString [
 	|definingNode|
 	definingNode := temp whoDefines: temp name.
-	(RBParseTreeRewriter rename: temp name to: aString) executeTree: definingNode.
+	(RBParseTreeRewriter rename: temp name to: aString) executeTree: definingNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMatchVisitor >> visitBlockNode: aBlockNode [
-	aBlockNode arguments do: [ :arg | 
+	aBlockNode arguments do: [ :arg |
 		self replace: arg with: ('tempMatch', temporaries  asString).
 		temporaries := temporaries + 1 ].
 	super visitBlockNode: aBlockNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMatchVisitor >> visitMethodNode: aMethodNode [
-	aMethodNode arguments do: [ :arg | 
+	aMethodNode arguments do: [ :arg |
 		difference := difference + (('argMatch', arguments  asString )size- (arg name asString )size + 2 ).
 		self replace: arg with: ('argMatch', arguments  asString).
 		arguments := arguments + 1 ].
-	super visitMethodNode: aMethodNode.
+	super visitMethodNode: aMethodNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMatchVisitor >> visitSequenceNode: aSequenceNode [
 	|isMethod|
 	isMethod := aSequenceNode parent isMethod.
@@ -58,5 +60,5 @@ RBMatchVisitor >> visitSequenceNode: aSequenceNode [
 			difference := difference + (('tempMatch', temporaries  asString ) size- (temp name asString ) size + 2 )].
 		self replace: temp with: ('tempMatch' , temporaries  asString).
 		temporaries := temporaries + 1].
-	super visitSequenceNode: aSequenceNode.
+	super visitSequenceNode: aSequenceNode
 ]

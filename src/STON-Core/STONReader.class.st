@@ -15,8 +15,8 @@ Customization options are:
 	sequence to use as EOL
 "
 Class {
-	#name : #STONReader,
-	#superclass : #Object,
+	#name : 'STONReader',
+	#superclass : 'Object',
 	#instVars : [
 		'readStream',
 		'objects',
@@ -27,39 +27,41 @@ Class {
 		'newLine',
 		'convertNewLines'
 	],
-	#category : #'STON-Core-Reader'
+	#category : 'STON-Core-Reader',
+	#package : 'STON-Core',
+	#tag : 'Reader'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 STONReader class >> on: readStream [
 	^ self new
 		on: readStream;
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> acceptUnknownClasses: boolean [
 	acceptUnknownClasses := boolean
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> allowComplexMapKeys: boolean [
 	"This is a no-op, this used to be an option, but it is now always enabled"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONReader >> atEnd [
 	^ readStream atEnd
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> close [
 	readStream ifNotNil: [
 		readStream close.
 		readStream := nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> consumeWhitespace [
 	"Strip whitespaces from the input stream."
 
@@ -67,16 +69,16 @@ STONReader >> consumeWhitespace [
 		whileTrue: [ readStream next ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> convertNewLines: boolean [
-	"When true, any newline CR, LF or CRLF read unescaped inside strings or symbols 
+	"When true, any newline CR, LF or CRLF read unescaped inside strings or symbols
 	will be converted to the newline convention chosen, see #newLine:
 	The default is false, not doing any conversions."
-	
+
 	convertNewLines := boolean
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 STONReader >> error: aString [
 	| streamPosition |
 	"Remain compatible with streams that don't understand #position"
@@ -85,7 +87,7 @@ STONReader >> error: aString [
 	^ STONReaderError signal: aString streamPosition: streamPosition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> expectChar: character [
 	"Expect character and consume input and optional whitespace at the end,
 	 throw an error otherwise."
@@ -94,7 +96,7 @@ STONReader >> expectChar: character [
 		ifFalse: [ self error: character asString, ' expected' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 STONReader >> initialize [
 	super initialize.
 	objects := IdentityDictionary new.
@@ -104,67 +106,67 @@ STONReader >> initialize [
 	unresolvedReferences := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> isClassChar: char [
 	^ char isAlphaNumeric or: [ char = $_ ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> isClassStartChar: char [
 	^ char isLetter and: [ char isUppercase ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> isSimpleSymbolChar: char [
 	^char isLetter or: ['0123456789-_./' includes: char]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> lookupClass: name [
 	"name is a symbol at this point"
-	Smalltalk globals 
-		at: name 
+	Smalltalk globals
+		at: name
 		ifPresent: [ :class | ^ class ].
 	"note that classes is an identity dictionary"
-	^ classes 
-		at: name 
+	^ classes
+		at: name
 		ifAbsentPut: [
-			Object allSubclasses 
+			Object allSubclasses
 				detect: [ :class | class isMeta not and: [ class stonName = name ]  ]
 				ifNone: [ NotFound signalFor: name ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> match: string do: block [
 	"Try to read and consume string and execute block if successful.
 	Else do nothing (but do not back up)"
 
 	(string allSatisfy: [ :each | readStream peekFor: each ])
-		ifTrue: [ 
+		ifTrue: [
 			self consumeWhitespace.
 			block value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> matchChar: character [
-	"Tries to match character, consume input and 
+	"Tries to match character, consume input and
 	answer true if successful and consumes whitespace at the end."
 
 	^ (readStream peekFor: character)
-		ifTrue: [ 
+		ifTrue: [
 			self consumeWhitespace.
 			true ]
 		ifFalse: [ false ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> newLine: string [
 	"Set the newline convention to be used when converting newlines, see #convertNewLines"
-	
+
 	newLine := string
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> newReference [
 	| index reference |
 	index := objects size + 1.
@@ -173,7 +175,7 @@ STONReader >> newReference [
 	^ reference
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 STONReader >> next [
 	| object |
 	self consumeWhitespace.
@@ -185,19 +187,19 @@ STONReader >> next [
 	^ object
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> on: aReadStream [
 	readStream := aReadStream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> optimizeForLargeStructures [
 	self class environment
 		at: #FLLargeIdentityDictionary
 		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ]
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseCharacter [
 	| char |
 	^ (char := readStream next) = $\
@@ -205,23 +207,23 @@ STONReader >> parseCharacter [
 		ifFalse: [ char ]
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseCharacterConvertingNewLinesOn: writeStream [
 	| char |
 	(char := readStream next) = $\
 		ifTrue: [ writeStream nextPut: self parseEscapedCharacter ]
-		ifFalse: [ 
-			char = Character lf 
+		ifFalse: [
+			char = Character lf
 				ifTrue: [ writeStream nextPutAll: newLine ]
-				ifFalse: [ 
-					char = Character cr 
-						ifTrue: [ 
+				ifFalse: [
+					char = Character cr
+						ifTrue: [
 							readStream peekFor: Character lf.
 							writeStream nextPutAll: newLine ]
 						ifFalse: [ writeStream nextPut: char ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> parseCharacterHex [
 	| value codePoint |
 	value := self parseCharacterHex4Value.
@@ -237,19 +239,19 @@ STONReader >> parseCharacterHex [
 	^ Character codePoint: codePoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> parseCharacterHex4Value [
 	| value |
 	value := self parseCharacterHexDigit.
-	3 timesRepeat: [ 
+	3 timesRepeat: [
 		value := (value << 4) + self parseCharacterHexDigit ].
 	^ value
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseCharacterHexDigit [
 	| digit |
-	readStream atEnd ifFalse: [ 
+	readStream atEnd ifFalse: [
 		digit := readStream next asInteger.
 		(digit between: "$0" 48 and: "$9" 57)
 			ifTrue: [ ^ digit - 48 ].
@@ -260,22 +262,22 @@ STONReader >> parseCharacterHexDigit [
 	self error: 'hex-digit expected'
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseClass [
 	| className |
 	className := self stringStreamContents: [ :stream |
-		[ readStream atEnd not and: [ self isClassChar: readStream peek ] ] whileTrue: [ 
+		[ readStream atEnd not and: [ self isClassChar: readStream peek ] ] whileTrue: [
 			stream nextPut: readStream next ] ].
 	self consumeWhitespace.
 	^ self lookupClass: className asSymbol
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseConstantDo: block [
-	"Parse and consume either true|false|nil|null and execute block 
+	"Parse and consume either true|false|nil|null and execute block
 	or else do nothing (but do not back up).
 	Hand written implementation to avoid the use of #position:"
-	
+
 	(readStream peek = $t)
 		ifTrue: [
 			^ self match: 'true' do: [ block value: true ] ].
@@ -293,7 +295,7 @@ STONReader >> parseConstantDo: block [
 					self match: 'ull' do: [ block value: nil ] ] ]
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseEscapedCharacter [
 	| char |
 	char := readStream next.
@@ -315,7 +317,7 @@ STONReader >> parseEscapedCharacter [
 	^ char
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseList [
 	| reference array |
 	reference := self newReference.
@@ -325,7 +327,7 @@ STONReader >> parseList [
 	^ array
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseListDo: block [
 	| index |
 	self expectChar: $[.
@@ -339,7 +341,7 @@ STONReader >> parseListDo: block [
 	self error: 'end of list expected'
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseListSingleton [
 	| value |
 	value := nil.
@@ -348,7 +350,7 @@ STONReader >> parseListSingleton [
 	^ value
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseMap [
 	| map |
 	map := STON mapClass new.
@@ -358,7 +360,7 @@ STONReader >> parseMap [
 	^ map
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseMapDo: block [
 	self expectChar: ${.
 	(self matchChar: $}) ifTrue: [ ^ self ]. "short cut for empty maps"
@@ -373,11 +375,11 @@ STONReader >> parseMapDo: block [
 	self error: 'end of map expected'
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseMapOrListRepresentation [
 	"Parse either a map or list to be used as a representation, not considering it as a referenceable object"
-	readStream atEnd 
-		ifFalse: [ 
+	readStream atEnd
+		ifFalse: [
 			readStream peek = ${
 				ifTrue: [ | map |
 					map := STON mapClass new.
@@ -385,40 +387,43 @@ STONReader >> parseMapOrListRepresentation [
 						map at: key put: value ].
 					^ map ].
 			readStream peek = $[
-				ifTrue: [ 
+				ifTrue: [
 					^ STON listClass streamContents: [ :stream |
 						self parseListDo: [ :each | stream nextPut: each ] ] ] ].
 	self error: 'invalid input'
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseNamedInstVarsFor: anObject [
 	self parseMapDo: [ :instVarName :value |
 		anObject instVarNamed: instVarName asString put: value ]
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseNumber [
 	| negated number |
 	negated := readStream peekFor: $-.
 	number := self parseNumberInteger.
 	(readStream peekFor: $/)
-		ifTrue: [ 
+		ifTrue: [
 			number := Fraction numerator: number denominator: self parseNumberInteger.
 			(readStream peekFor: $s)
 				ifTrue: [ number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger ] ]
-		ifFalse: [ 
+		ifFalse: [ | isFloat |
+			isFloat := false.
 			(readStream peekFor: $.)
-				ifTrue: [ number := number + self parseNumberFraction ].
+				ifTrue: [ number := number + self parseNumberFraction. isFloat := true ].
 			((readStream peekFor: $e) or: [ readStream peekFor: $E ])
-				ifTrue: [ number := number * self parseNumberExponent ] ].
+				ifTrue: [ number := number * self parseNumberExponent ].
+			isFloat
+				ifTrue: [ number := number asFloat ] ].
 	negated
 		ifTrue: [ number := number negated ].
 	self consumeWhitespace.
 	^ number
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseNumberExponent [
 	| number negated |
 	number := 0.
@@ -431,27 +436,27 @@ STONReader >> parseNumberExponent [
 	^ 10 raisedTo: number
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseNumberFraction [
 	| number power |
 	number := 0.
-	power := 1.0.
+	power := 1.
 	[ readStream atEnd not and: [ readStream peek isDigit ] ] whileTrue: [
 		number := 10 * number + readStream next digitValue.
-		power := power * 10.0 ].
+		power := power * 10 ].
 	^ number / power
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseNumberInteger [
 	| number |
 	number := 0.
-	[ readStream atEnd not and: [ readStream peek isDigit ] ] whileTrue: [ 
+	[ readStream atEnd not and: [ readStream peek isDigit ] ] whileTrue: [
 		number := 10 * number + readStream next digitValue ].
 	^ number
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseObject [
 	| targetClass reference object |
 	[
@@ -459,10 +464,10 @@ STONReader >> parseObject [
 		targetClass := self parseClass.
 		object := targetClass fromSton: self .
 		self setReference: reference to: object ]
-		on: NotFound 
+		on: NotFound
 		do: [ :notFound |
-			acceptUnknownClasses 
-				ifTrue: [ 
+			acceptUnknownClasses
+				ifTrue: [
 					object := STON mapClass new.
 					self storeReference: object.
 					self parseMapDo: [ :key :value |
@@ -472,7 +477,7 @@ STONReader >> parseObject [
 	^ object
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseReference [
 	| index |
 	self expectChar: $@.
@@ -482,11 +487,11 @@ STONReader >> parseReference [
 	^ STONReference index: index
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseSimpleValue [
 	| char |
-	readStream atEnd ifFalse: [ 
-		(self isClassStartChar: (char := readStream peek)) 
+	readStream atEnd ifFalse: [
+		(self isClassStartChar: (char := readStream peek))
 			ifTrue: [ ^ self parseObject ].
 		char = ${
 			ifTrue: [ ^ self parseMap ].
@@ -504,31 +509,31 @@ STONReader >> parseSimpleValue [
 	self error: 'invalid input'
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseString [
 	^ self parseStringInternal
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseStringInternal [
 	| result delimiter |
 	delimiter := readStream next.
 	(delimiter = $' or: [ delimiter = $" ])
 		ifFalse: [ self error: ''' or " expected' ].
 	result := self
-		stringStreamContents: [ :stream | 
+		stringStreamContents: [ :stream |
 			convertNewLines
-				ifTrue: [ 
-					[ readStream atEnd or: [ readStream peek = delimiter ] ] 
+				ifTrue: [
+					[ readStream atEnd or: [ readStream peek = delimiter ] ]
 						whileFalse: [ self parseCharacterConvertingNewLinesOn: stream ] ]
-				ifFalse: [ 
-					[ readStream atEnd or: [ readStream peek = delimiter ] ] 
+				ifFalse: [
+					[ readStream atEnd or: [ readStream peek = delimiter ] ]
 						whileFalse: [ stream nextPut: self parseCharacter ] ] ].
 	self expectChar: delimiter.
 	^ result
 ]
 
-{ #category : #'parsing-internal' }
+{ #category : 'parsing-internal' }
 STONReader >> parseSymbol [
 	| string |
 	self expectChar: $#.
@@ -538,20 +543,20 @@ STONReader >> parseSymbol [
 		[ readStream atEnd not and: [ self isSimpleSymbolChar: readStream peek ] ] whileTrue: [
 			stream nextPut: readStream next ] ].
 	string isEmpty
-		ifFalse: [ 
+		ifFalse: [
 			self consumeWhitespace.
 			^ string asSymbol ].
 	self error: 'unexpected input'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> parseTrailingSurrogateHexEscape [
 	(readStream next = $\ and: [ readStream next = $u ])
 		ifTrue: [ ^ self parseCharacterHex4Value ]
 		ifFalse: [ self error: 'trailing surrogate hex escape expected' ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 STONReader >> parseValue [
 	| value |
 	value := self parseSimpleValue.
@@ -560,14 +565,14 @@ STONReader >> parseValue [
 		ifFalse: [ value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> processSubObjectsOf: object [
 	| unresolvedReferencesCount |
 	unresolvedReferencesCount := unresolvedReferences.
-	object stonProcessSubObjects: [ :each | 
+	object stonProcessSubObjects: [ :each |
 		each isStonReference
 			ifTrue: [ self resolveReference: each ]
-			ifFalse: [ 
+			ifFalse: [
 				each stonContainSubObjects
 					ifTrue: [ self processSubObjectsOf: each ]
 					ifFalse: [ each ] ] ].
@@ -576,29 +581,29 @@ STONReader >> processSubObjectsOf: object [
 	^ object
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 STONReader >> reset [
 	unresolvedReferences := 0.
 	objects removeAll
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> resolveReference: reference [
 	unresolvedReferences := unresolvedReferences - 1.
 	^ self resolveReferenceIndex: reference index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> resolveReferenceIndex: index [
 	^ objects at: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> setReference: reference to: object [
 	objects at: reference index put: object
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> storeReference: object [
 	| index |
 	index := objects size + 1.
@@ -606,9 +611,9 @@ STONReader >> storeReference: object [
 	^ index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONReader >> stringStreamContents: block [
-	stringStream ifNil: [ 
+	stringStream ifNil: [
 		stringStream := (String new: 32) writeStream ].
 	stringStream reset.
 	block value: stringStream.

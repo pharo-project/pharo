@@ -2,34 +2,42 @@
 I'm in charge to style an ast when there are metalink in the ast
 "
 Class {
-	#name : #MetaLinkIconStyler,
-	#superclass : #IconStyler,
-	#category : #'Reflectivity-Tools-Breakpoints'
+	#name : 'MetaLinkIconStyler',
+	#superclass : 'IconStyler',
+	#category : 'Reflectivity-Tools-Breakpoints',
+	#package : 'Reflectivity-Tools',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #defaults }
+{ #category : 'testing' }
+MetaLinkIconStyler class >> isStaticStyler [
+
+	^ true
+]
+
+{ #category : 'defaults' }
 MetaLinkIconStyler >> highlightColor [
 	^(Color orange alpha: 0.1)
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetaLinkIconStyler >> iconBlock: aNode [
 	^ [ aNode links inspect ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetaLinkIconStyler >> iconFor: aNode [
 	^ self iconNamed: #smallDebug
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetaLinkIconStyler >> iconLabel: aNode [
 	^ 'Metalinks...'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetaLinkIconStyler >> shouldStyleNode: aNode [
 
-	^ aNode hasMetaLinks and: [ 
+	^ aNode hasMetaLinks and: [
 		  aNode links anySatisfy: [ :link | link hasOption: #optionStyler ] ]
 ]

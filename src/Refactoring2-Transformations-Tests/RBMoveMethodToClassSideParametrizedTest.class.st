@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMoveMethodToClassSideParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBMoveMethodToClassSideParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveMethodToClassSideRefactoring };
@@ -12,38 +14,33 @@ RBMoveMethodToClassSideParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
-RBMoveMethodToClassSideParametrizedTest >> constructor [ 
+{ #category : 'accessing' }
+RBMoveMethodToClassSideParametrizedTest >> constructor [
 	^ #method:class:
 ]
 
-{ #category : #'failure tests' }
-RBMoveMethodToClassSideParametrizedTest >> testClassIsNotMeta [
+{ #category : 'failure tests' }
+RBMoveMethodToClassSideParametrizedTest >> testFailureClassIsNotMeta [
+
 	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp class.
+	className := RBClassDataForRefactoringTest class.
 	someClass := model classNamed: className name.
-	someClass compile: 'threeElementPoint ^ self new' classified: {#example}.
-	method := someClass methodFor: ('threeElement', 'Point') asSymbol.
-	refactoring := self createRefactoringWithModel: model andArguments: { method . className }.
-	self shouldFail: refactoring.
+	someClass
+		compile: 'threeElementPoint ^ self new'
+		classified: { #example }.
+	method := someClass methodFor: ('threeElement' , 'Point') asSymbol.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               method.
+				               className }.
+	self shouldFail: refactoring
 ]
 
-{ #category : #'failure tests' }
-RBMoveMethodToClassSideParametrizedTest >> testExistsMethodInClassSide [
-	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp.
-	method := className >> ('threeElement', 'Point') asSymbol.
-	refactoring := self createRefactoringWithArguments: { method . className }.
-	model := refactoring model.
-	someClass := model classNamed: className name, ' class'.
-	someClass compile: 'threeElementPoint ^ self new' classified: {#example}.
-	self shouldFail: refactoring.
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSide [
 	| method someClass className refactoring |
-	className := RBRefactoryTestDataApp.
+	className := RBClassDataForRefactoringTest.
 	method := className >> ('threeElement', 'Point') asSymbol.
 	refactoring := self createRefactoringWithArguments: { method . className }.
 	self executeRefactoring: refactoring.
@@ -51,10 +48,10 @@ RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSide [
 	someClass := model classNamed: className name.
 	self assert: (someClass parseTreeForSelector: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^ self class threeElementPoint').
 	someClass := model classNamed: className name, ' class'.
-	self assert: (someClass parseTreeForSelector: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^5 @ 5 + 6 @ 6').
+	self assert: (someClass parseTreeForSelector: ('threeElement', 'Point') asSymbol) equals: (self parseMethod: 'threeElementPoint ^5 @ 5 + 6 @ 6')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSideWithInsAndMetReferences [
 	| method someClass className refactoring |
 	className := RBTransformationRuleTestData.
@@ -71,5 +68,5 @@ RBMoveMethodToClassSideParametrizedTest >> testMoveMethodToClassSideWithInsAndMe
 	| aRBTransformationRuleTestData |
 	aRBTransformationRuleTestData := self new.
 	aRBTransformationRuleTestData rewriteRule: searchReplacer.
-	aRBTransformationRuleTestData resetResult').
+	aRBTransformationRuleTestData resetResult')
 ]

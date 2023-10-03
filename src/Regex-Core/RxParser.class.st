@@ -8,8 +8,8 @@ Instance variables:
 	lookahead	<Character>
 "
 Class {
-	#name : #RxParser,
-	#superclass : #Object,
+	#name : 'RxParser',
+	#superclass : 'Object',
 	#instVars : [
 		'input',
 		'lookahead'
@@ -18,10 +18,12 @@ Class {
 		'BackslashConstants',
 		'BackslashSpecials'
 	],
-	#category : #'Regex-Core-Base'
+	#category : 'Regex-Core-Base',
+	#package : 'Regex-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> doHandlingMessageNotUnderstood: aBlock [
 	"MNU should be trapped and resignaled as a match error in a few places in the matcher.
 	This method factors out this dialect-dependent code to make porting easier."
@@ -30,7 +32,7 @@ RxParser class >> doHandlingMessageNotUnderstood: aBlock [
 		do: [:ex | RxParser signalMatchException: 'invalid predicate selector']
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxParser class >> initialize [
 
 	self
@@ -38,7 +40,7 @@ RxParser class >> initialize [
 		initializeBackslashSpecials
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxParser class >> initializeBackslashConstants [
 	"self initializeBackslashConstants"
 
@@ -50,7 +52,7 @@ RxParser class >> initializeBackslashConstants [
 		at: $t put: Character tab
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxParser class >> initializeBackslashSpecials [
 	"Keys are characters that normally follow a \, the values are
 	associations of classes and initialization selectors on the instance side
@@ -70,7 +72,7 @@ RxParser class >> initializeBackslashSpecials [
 		at: $> put: (Association key: RxsContextCondition value: #beEndOfWord)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RxParser class >> parse: aString [
 	"Parse the argument and return the result (the parse tree).
 	In case of a syntax error, the corresponding exception is signaled."
@@ -78,7 +80,7 @@ RxParser class >> parse: aString [
 	^self new parse: aString
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 RxParser class >> preferredMatcherClass [
 	"The matcher to use. For now just one is available, but in
 	principle this determines the matchers built implicitly,
@@ -89,7 +91,7 @@ RxParser class >> preferredMatcherClass [
 	^RxMatcher
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RxParser class >> safelyParse: aString [
 	"Parse the argument and return the result (the parse tree).
 	In case of a syntax error, return nil.
@@ -97,47 +99,47 @@ RxParser class >> safelyParse: aString [
 	^ [self new parse: aString] on: RegexSyntaxError do: [:ex | nil]
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalCompilationException: errorString [
 	RegexCompilationError new signal: errorString
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalMatchException: errorString [
 	RegexMatchingError new signal: errorString
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalSyntaxException: errorString [
 	RegexSyntaxError new signal: errorString
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalSyntaxException: errorString at: errorPosition [
 	RegexSyntaxError signal: errorString at: errorPosition
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> atom [
 	"An atom is one of a lot of possibilities, see below."
 
 	| atom |
-	(lookahead = #epsilon 
-	or: [ lookahead = $| 
+	(lookahead = #epsilon
+	or: [ lookahead = $|
 	or: [ lookahead = $)
 	or: [ lookahead = $*
-	or: [ lookahead = $+ 
+	or: [ lookahead = $+
 	or: [ lookahead = $? ]]]]])
 		ifTrue: [ ^RxsEpsilon new ].
-		
-	lookahead = $( 
+
+	lookahead = $(
 		ifTrue: [
 			"<atom> ::= '(' <regex> ')' "
 			self match: $(.
 			atom := self regex.
 			self match: $).
 			^atom ].
-	
+
 	lookahead = $[
 		ifTrue: [
 			"<atom> ::= '[' <characterSet> ']' "
@@ -145,38 +147,38 @@ RxParser >> atom [
 			atom := self characterSet.
 			self match: $].
 			^atom ].
-	
-	lookahead = $: 
+
+	lookahead = $:
 		ifTrue: [
 			"<atom> ::= ':' <messagePredicate> ':' "
 			self match: $:.
 			atom := self messagePredicate.
 			self match: $:.
 			^atom ].
-	
-	lookahead = $. 
+
+	lookahead = $.
 		ifTrue: [
 			"any non-whitespace character"
 			self next.
 			^RxsContextCondition new beAny].
-	
-	lookahead = $^ 
+
+	lookahead = $^
 		ifTrue: [
 			"beginning of line condition"
 			self next.
 			^RxsContextCondition new beBeginningOfLine].
-	
-	lookahead = $$ 
+
+	lookahead = $$
 		ifTrue: [
 			"end of line condition"
 			self next.
 			^RxsContextCondition new beEndOfLine].
-		
-	lookahead = $\ 
+
+	lookahead = $\
 		ifTrue: [
 			"<atom> ::= '\' <character>"
 			self next.
-			lookahead = #epsilon 
+			lookahead = #epsilon
 				ifTrue: [ self signalParseError: 'bad quotation' ].
 			(BackslashConstants includesKey: lookahead)
 				ifTrue: [
@@ -185,30 +187,30 @@ RxParser >> atom [
 					^atom].
 			self ifSpecial: lookahead
 				then: [:node | self next. ^node]].
-		
+
 	"If passed through the above, the following is a regular character."
 	atom := RxsCharacter with: lookahead.
 	self next.
 	^atom
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> branch [
 	"<branch> ::= e | <piece> <branch>"
 
 	| piece branch |
 	piece := self piece.
-	(lookahead = #epsilon 
-	or: [ lookahead = $| 
+	(lookahead = #epsilon
+	or: [ lookahead = $|
 	or: [ lookahead = $) ]])
 		ifTrue: [ branch := nil ]
 		ifFalse: [ branch := self branch ].
-	^RxsBranch new 
-		initializePiece: piece 
+	^RxsBranch new
+		initializePiece: piece
 		branch: branch
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> characterSet [
 	"Match a range of characters: something between `[' and `]'.
 	Opening bracked has already been seen, and closing should
@@ -218,16 +220,16 @@ RxParser >> characterSet [
 	| spec errorMessage |
 	errorMessage := ' no terminating "]"'.
 	spec := self inputUpTo: $] nestedOn: $[ errorMessage: errorMessage.
-	(spec isEmpty 
-	or: [spec = '^']) 
+	(spec isEmpty
+	or: [spec = '^'])
 		ifTrue: [
-			"This ']' was literal." 
+			"This ']' was literal."
 			self next.
 			spec := spec, ']', (self inputUpTo: $] nestedOn: $[ errorMessage: errorMessage)].
 	^self characterSetFrom: spec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> characterSetFrom: setSpec [
 	"<setSpec> is what goes between the brackets in a charset regex
 	(a String). Make a string containing all characters the spec specifies.
@@ -244,7 +246,7 @@ RxParser >> characterSetFrom: setSpec [
 		negated: negated
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> ifSpecial: aCharacter then: aBlock [
 	"If the character is such that it defines a special node when follows a $\,
 	then create that node and evaluate aBlock with the node as the parameter.
@@ -255,7 +257,7 @@ RxParser >> ifSpecial: aCharacter then: aBlock [
 	^aBlock value: (classAndSelector key new perform: classAndSelector value)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> inputUpTo: aCharacter errorMessage: aString [
 	"Accumulate input stream until <aCharacter> is encountered
 	and answer the accumulated chars as String, not including
@@ -273,8 +275,8 @@ RxParser >> inputUpTo: aCharacter errorMessage: aString [
 	^accumulator contents
 ]
 
-{ #category : #private }
-RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aString [ 
+{ #category : 'private' }
+RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aString [
 	"Accumulate input stream until <aCharacter> is encountered
 	and answer the accumulated chars as String, not including
 	<aCharacter>. Signal error if end of stream is encountered,
@@ -283,7 +285,7 @@ RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aStri
 	| accumulator nestLevel |
 	accumulator := WriteStream on: (String new: 20).
 	nestLevel := 0.
-	[lookahead ~= aCharacter or: [nestLevel > 0]] whileTrue: 
+	[lookahead ~= aCharacter or: [nestLevel > 0]] whileTrue:
 			[#epsilon = lookahead ifTrue: [self signalParseError: aString].
 			accumulator nextPut: lookahead.
 			lookahead = anotherCharacter ifTrue: [nestLevel := nestLevel + 1].
@@ -292,7 +294,7 @@ RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aStri
 	^accumulator contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> inputUpToAny: aDelimiterString errorMessage: aString [
 	"Accumulate input stream until any character from <aDelimiterString> is encountered
 	and answer the accumulated chars as String, not including the matched characters from the
@@ -310,9 +312,9 @@ RxParser >> inputUpToAny: aDelimiterString errorMessage: aString [
 	^accumulator contents
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> lookAround [
-	"Parse a lookaround expression after: (?<lookround>) 
+	"Parse a lookaround expression after: (?<lookround>)
 	<lookround> ::= !<regex> | =<regex>"
 	| lookaround |
 	(lookahead = $!
@@ -325,17 +327,17 @@ RxParser >> lookAround [
 	^ lookaround
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> match: aCharacter [
 	"<aCharacter> MUST match the current lookeahead.
 	If this is the case, advance the input. Otherwise, blow up."
 
-	aCharacter ~= lookahead 
+	aCharacter ~= lookahead
 		ifTrue: [^self signalParseError].	"does not return"
 	self next
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> messagePredicate [
 	"Match a message predicate specification: a selector (presumably
 	understood by a Character) enclosed in :'s ."
@@ -343,16 +345,16 @@ RxParser >> messagePredicate [
 	| spec negated |
 	spec := self inputUpTo: $: errorMessage: ' no terminating ":"'.
 	negated := false.
-	spec first = $^ 
+	spec first = $^
 		ifTrue: [
 			negated := true.
 			spec := spec copyFrom: 2 to: spec size].
-	^RxsMessagePredicate new 
+	^RxsMessagePredicate new
 		initializeSelector: spec asSymbol
 		negated: negated
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> next [
 	"Advance the input storing the just read character
 	as the lookahead."
@@ -362,7 +364,7 @@ RxParser >> next [
 		ifFalse: [lookahead := input next]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxParser >> parse: aString [
 	"Parse input from a string <aString>.
 	On success, answers an RxsRegex -- parse tree root.
@@ -372,7 +374,7 @@ RxParser >> parse: aString [
 	^self parseStream: (ReadStream on: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxParser >> parseStream: aStream [
 	"Parse an input from a character stream <aStream>.
 	On success, answers an RxsRegex -- parse tree root.
@@ -388,43 +390,43 @@ RxParser >> parseStream: aStream [
 	^tree
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> piece [
 	"<piece> ::= <atom> | <atom>* | <atom>+ | <atom>? | <atom>{<number>,<number>}"
 
 	| atom |
 	atom := self atom.
-	
+
 	lookahead = $*
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			atom isNullable
 				ifTrue: [ self signalNullableClosureParserError ].
 			^ RxsPiece new initializeStarAtom: atom ].
 
 	lookahead = $+
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			atom isNullable
 				ifTrue: [ self signalNullableClosureParserError ].
 			^ RxsPiece new initializePlusAtom: atom ].
 
 	lookahead = $?
-		ifTrue: [ 
+		ifTrue: [
 			self next.
 			atom isNullable
-				ifTrue: [ 
+				ifTrue: [
 					^ self lookAround ].
 			^ RxsPiece new initializeOptionalAtom: atom ].
-	
+
 	lookahead = ${
 		ifTrue: [
 			^ self quantifiedAtom: atom ].
-		
+
 	^ RxsPiece new initializeAtom: atom
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> quantifiedAtom: atom [
 	"Parse a quanitifer expression which can have one of the following forms
 		{<min>,<max>}    match <min> to <max> occurrences
@@ -440,48 +442,48 @@ RxParser >> quantifiedAtom: atom [
 	lookahead = $,
 		ifTrue: [
 			self next.
-			max := (self inputUpToAny: ',}' errorMessage: ' no terminating "}"') asUnsignedInteger ].	
+			max := (self inputUpToAny: ',}' errorMessage: ' no terminating "}"') asUnsignedInteger ].
 	self match: $}.
 	atom isNullable
 		ifTrue: [ self signalNullableClosureParserError ].
 	(max isNotNil and: [ max < min ])
 		ifTrue: [ self signalParseError: ('wrong quantifier, expected ', min asString, ' <= ', max asString) ].
-	^ RxsPiece new 
+	^ RxsPiece new
 		initializeAtom: atom
 		min: min
 		max: max
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> regex [
 	"<regex> ::= e | <branch> `|' <regex>"
 
 	| branch regex |
 	branch := self branch.
-	
-	(lookahead = #epsilon 
+
+	(lookahead = #epsilon
 	or: [ lookahead = $) ])
 		ifTrue: [ regex := nil ]
 		ifFalse: [
 			self match: $|.
 			regex := self regex ].
-		
+
 	^RxsRegex new initializeBranch: branch regex: regex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> signalNullableClosureParserError [
-	self signalParseError: ' nullable closure'.
+	self signalParseError: ' nullable closure'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> signalParseError [
 
-	self class 
+	self class
 		signalSyntaxException: 'Regex syntax error' at: input position
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> signalParseError: aString [
 
 	self class signalSyntaxException: aString at: input position

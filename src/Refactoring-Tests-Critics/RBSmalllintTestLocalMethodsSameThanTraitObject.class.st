@@ -2,26 +2,28 @@
 This class should trigger the RBLocalMethodsSameThanTraitRule
 "
 Class {
-	#name : #RBSmalllintTestLocalMethodsSameThanTraitObject,
-	#superclass : #RBSmalllintTestSuperclassObject,
+	#name : 'RBSmalllintTestLocalMethodsSameThanTraitObject',
+	#superclass : 'RBSmalllintTestSuperclassObject',
 	#traits : 'TAssertable',
 	#classTraits : 'TAssertable classTrait',
-	#category : #'Refactoring-Tests-Critics'
+	#category : 'Refactoring-Tests-Critics-Base',
+	#package : 'Refactoring-Tests-Critics',
+	#tag : 'Base'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RBSmalllintTestLocalMethodsSameThanTraitObject >> skip [
 	"Don't run this test, and don't mark it as failure"
 	TestSkipped signal
 ]
 
-{ #category : #extensions }
+{ #category : 'extensions' }
 RBSmalllintTestLocalMethodsSameThanTraitObject >> skip: aComment [
 	"Don't run this test, and don't mark it as failure"
 	TestSkipped signal: aComment
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RBSmalllintTestLocalMethodsSameThanTraitObject >> skipUnless: aBooleanOrBlock [
 	" If the assumption in aBooleanOrBlock is not true, abandon the running test
 	and mark it as passed. "

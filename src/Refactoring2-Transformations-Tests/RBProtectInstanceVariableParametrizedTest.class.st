@@ -1,10 +1,12 @@
 Class {
-	#name : #RBProtectInstanceVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBProtectInstanceVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBProtectInstanceVariableParametrizedTest class >> testParameters [
 self flag: 'need change tranformation to have the same behavior of ref'.
 	^ ParametrizedTestMatrix new
@@ -15,17 +17,26 @@ self flag: 'need change tranformation to have the same behavior of ref'.
 	"	yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBProtectInstanceVariableParametrizedTest >> setUp [
 
 	super setUp.
-	model := self abstractVariableTestData.
+	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'failure tests' }
+RBProtectInstanceVariableParametrizedTest >> testFailureVariableNotDefined [
+
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'rewrite'. #RBSubclassOfClassToRename }).
+	self shouldFail: (self createRefactoringWithArguments:
+			 { 'foo'. #RBBasicLintRuleTestData })
+]
+
+{ #category : 'tests' }
 RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:  
+	refactoring := self createRefactoringWithArguments:
 		{('rewrite' , 'Rule1') . #RBSubclassOfClassToRename}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBSubclassOfClassToRename.
@@ -35,12 +46,4 @@ RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 								^rewriteRule1 := rewriteRule1 , rewriteRule1').
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1') asSymbol).
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1:') asSymbol)
-]
-
-{ #category : #'failure tests' }
-RBProtectInstanceVariableParametrizedTest >> testVariableNotDefined [
-	self shouldFail:
-		(self createRefactoringWithArguments: {'rewrite' . #RBSubclassOfClassToRename}).
-	self shouldFail: 
-		(self createRefactoringWithArguments: {'foo' . #RBBasicLintRuleTestData}).
 ]

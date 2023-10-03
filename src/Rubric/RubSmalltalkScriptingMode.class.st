@@ -2,12 +2,14 @@
 I represent the mode to use for editing smalltalk script (class creation script for example)
 "
 Class {
-	#name : #RubSmalltalkScriptingMode,
-	#superclass : #RubSmalltalkCodeMode,
-	#category : #'Rubric-Editing-Code'
+	#name : 'RubSmalltalkScriptingMode',
+	#superclass : 'RubSmalltalkCodeMode',
+	#category : 'Rubric-Editing-Code',
+	#package : 'Rubric',
+	#tag : 'Editing-Code'
 }
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkScriptingMode class >> editingModeMenuOn: aBuilder [
 	"Specify the menu used to select an editing mode"
 
@@ -17,29 +19,29 @@ RubSmalltalkScriptingMode class >> editingModeMenuOn: aBuilder [
 		action: [:model | model textArea editingMode: self new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSmalltalkScriptingMode class >> label [
 	^ 'Smalltalk script'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubSmalltalkScriptingMode >> isScripting [
 	^ true
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RubSmalltalkScriptingMode >> parseSource: aString [
 
 	^RBParser parseFaultyExpression: aString
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkScriptingMode >> updateStyler [
 	super updateStyler.
 	self textArea shoutStyler beForSmalltalkScripting
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RubSmalltalkScriptingMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged.
 	self textArea shoutStyler beForSmalltalkScripting

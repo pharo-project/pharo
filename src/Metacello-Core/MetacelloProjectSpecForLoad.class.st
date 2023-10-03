@@ -1,30 +1,32 @@
 Class {
-	#name : #MetacelloProjectSpecForLoad,
-	#superclass : #Object,
+	#name : 'MetacelloProjectSpecForLoad',
+	#superclass : 'Object',
 	#instVars : [
 		'projectSpec',
 		'useDetermineVersionForLoad',
 		'overrideProjectSpec'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectSpecForLoad >> hasOverride [
     ^ self overrideProjectSpec ~~ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecForLoad >> overrideProjectSpec [
 	^ overrideProjectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecForLoad >> overrideProjectSpec: anObject [
 	overrideProjectSpec := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloProjectSpecForLoad >> performCurrentVersionTestAgainst: vrsn operator: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
   "answer true if the current state of image is to be left as is"
 
@@ -81,7 +83,7 @@ MetacelloProjectSpecForLoad >> performCurrentVersionTestAgainst: vrsn operator: 
         signal) == existing ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloProjectSpecForLoad >> performLoad [
   | displayString spec |
   spec := self projectSpec.
@@ -111,23 +113,23 @@ displayString := 'Project: ' , spec name.
       (spec asProjectSpecForVersion: vrsn) loadVersion: vrsn ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecForLoad >> projectSpec [
 	^ projectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecForLoad >> projectSpec: anObject [
 	projectSpec := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecForLoad >> useDetermineVersionForLoad [
     useDetermineVersionForLoad ifNil: [ useDetermineVersionForLoad := true ].
     ^ useDetermineVersionForLoad
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecForLoad >> useDetermineVersionForLoad: anObject [
 	useDetermineVersionForLoad := anObject
 ]

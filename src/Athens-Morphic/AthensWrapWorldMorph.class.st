@@ -7,21 +7,22 @@ Instance Variables
 
 "
 Class {
-	#name : #AthensWrapWorldMorph,
-	#superclass : #AthensWrapMorph,
+	#name : 'AthensWrapWorldMorph',
+	#superclass : 'AthensWrapMorph',
 	#instVars : [
 		'worldmorph',
 		'wrappedWorldDisplay'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensWrapWorldMorph >> defaultExtent [
 	^ 400 @ 400
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensWrapWorldMorph >> initialize [
 	super initialize.
 	self extent: self defaultExtent.
@@ -35,18 +36,18 @@ AthensWrapWorldMorph >> initialize [
 	self addMorph: worldmorph
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 AthensWrapWorldMorph >> layoutChanged [
 	super layoutChanged.
 	worldmorph ifNotNil:[:w |  w extent: self extent]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensWrapWorldMorph >> step [
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensWrapWorldMorph >> stepTime [
 	^ 50
 ]

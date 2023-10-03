@@ -2,72 +2,73 @@
 SUnit tests for registration on the Pharo session manager
 "
 Class {
-	#name : #SessionManagerRegistrationTest,
-	#superclass : #TestCase,
+	#name : 'SessionManagerRegistrationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'manager'
 	],
-	#category : #'System-SessionManager-Tests'
+	#category : 'System-SessionManager-Tests',
+	#package : 'System-SessionManager-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SessionManagerRegistrationTest >> setUp [
 	super setUp.
 	manager := SessionManager new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenARegisteredClassHandlerShouldHasRegisteredReturnsTrue [
 	manager registerSystemClassNamed: #Foo.
 
 	self assert: (manager hasRegistered: #Foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandlerIsUpdated [
 
 	manager registerSystemClassNamed: #Foo.
 	manager renamedClass: self from: #Foo to: #Bar.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar ).
+		equals: #( Bar )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategoriesShoudlLastClassRegistrationBeTheOnlyOccurrenceInStartupList [
 
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Bar.
 	manager registerGuiClassNamed: #Foo atPriority: 30.
 	manager registerGuiClassNamed: #Foo atPriority: 50.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar Foo ).
+		equals: #( Bar Foo )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryAtDifferentPriorityShoudlAClassBePresentOnlyOnceInStartupList [
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Bar atPriority: 15.
 	manager registerSystemClassNamed: #Foo atPriority: 10.
 	manager registerSystemClassNamed: #Foo atPriority: 20.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar Foo ).
+		equals: #( Bar Foo )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryShoudlAClassBePresentOnlyOnceInStartupList [
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Bar.
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Foo.
-	self 
+	self
 		assert: (manager startupList collect: [:each | each handledId])
-		equals: #( Bar Foo ).
+		equals: #( Bar Foo )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenUnknonwnHandledIdShouldHasRegisteredReturnsFalse [
 	self deny: (manager hasRegistered: #Foo)
 ]

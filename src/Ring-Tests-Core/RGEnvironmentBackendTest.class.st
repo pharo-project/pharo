@@ -1,16 +1,17 @@
 Class {
-	#name : #RGEnvironmentBackendTest,
-	#superclass : #RGBackendTest,
+	#name : 'RGEnvironmentBackendTest',
+	#superclass : 'RGBackendTest',
 	#traits : 'TRGReadOnlyTest',
 	#classTraits : 'TRGReadOnlyTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testAST [
 
 	| method anAst |
-	
+
 	method := RGMethod new.
 	method sourceCode: 'someMethod ^ true'.
 	anAst := method ast.
@@ -18,7 +19,7 @@ RGEnvironmentBackendTest >> testAST [
 	self assert: (anAst lastIsReturn)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testCreationOfDefinitions [
 	| env1 method |
 	env1 := RGEnvironment new.
@@ -31,21 +32,21 @@ RGEnvironmentBackendTest >> testCreationOfDefinitions [
 	self assert: method environment identicalTo: env1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testDefaultEnvironmentContent [
-	
+
 	| env |
-	
+
 	env := RGEnvironment unnamed.
-	
+
 	self testDefaultContentFor: env.
-	
+
 "	self assert: env ask behaviors size equals: 12.
 	self assert: env ask packages size equals: 1.
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testDefinitionsIdentity [
 	| env1 |
 	env1 := RGEnvironment new.
@@ -55,9 +56,9 @@ RGEnvironmentBackendTest >> testDefinitionsIdentity [
 	self assert: (Object >> #isRGObject ensureRingDefinitionIn: env1) parent identicalTo: (Object >> #isRGObject ensureRingDefinitionIn: env1) parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testImplicitEnvironmentContentForClassDefinition [
-	
+
 	| def def2 env |
 
 	def := RGClass named: #SomeClass.
@@ -66,33 +67,33 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForClassDefinition [
 	"we have SomeClass, SomeClass class, SomeClass superclass, SomeClass superclass class"
 	self assert: env ask behaviors size equals: 4.
 
-	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass 
-	and SomeClass superclass class"	
+	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass
+	and SomeClass superclass class"
 	self assert: env ask packages size equals: 2.
 	self assert: (env ask behaviors select: #isMeta) size equals: 2.
 
 	self checkHierarchyConsistencyOf: def.
-	
+
 	self assert: (def isRingResolved).
 	self deny: (def superclass isRingResolved).
 	self deny: (def metaclass isRingResolved).
 	self deny: (def superclass metaclass isRingResolved).
-	
+
 	def2 := RGClass named: #SomeOtherClass parent: env.
-	self assert: env ask behaviors size equals: 8. 
+	self assert: env ask behaviors size equals: 8.
 	self assert: env ask packages size equals: 4.
-	
+
 	self checkHierarchyConsistencyOf: def2.
 
 	self assert: (def2 isRingResolved).
 	self deny: (def2 superclass isRingResolved).
 	self deny: (def2 metaclass isRingResolved).
-	self deny: (def2 superclass metaclass isRingResolved).
+	self deny: (def2 superclass metaclass isRingResolved)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMetaclassDefinition [
-	
+
 	| def env baseClass|
 
 	def := RGMetaclass named: #'SomeClass class'.
@@ -101,23 +102,23 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMetaclassDefinition
 	"we have SomeClass, SomeClass class, SomeClass superclass, SomeClass superclass class"
 	self assert: env ask behaviors size equals: 4.
 
-	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass 
-	and SomeClass superclass class"	
+	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass
+	and SomeClass superclass class"
 	self assert: env ask packages size equals: 2.
 	self assert: (env ask behaviors select: #isMeta) size equals: 2.
 
 	baseClass := def baseClass.
 	self checkHierarchyConsistencyOf: baseClass.
-	
+
 	self deny: (baseClass isRingResolved).
 	self deny: (baseClass superclass isRingResolved).
 	self assert: (baseClass metaclass isRingResolved).
-	self deny: (baseClass superclass metaclass isRingResolved).
+	self deny: (baseClass superclass metaclass isRingResolved)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMethodDefinition [
-	
+
 	| def env |
 
 	def := RGMethod named: #someMethod.
@@ -126,15 +127,15 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMethodDefinition [
 	"we have SomeClass, SomeClass class, SomeClass superclass, SomeClass superclass class"
 	self assert: env ask behaviors size equals: 4.
 
-	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass 
-	and SomeClass superclass class"	
+	"we have one package for SomeClass and SomeClass class, other for SomeClass superclass
+	and SomeClass superclass class"
 	self assert: env ask packages size equals: 2.
 	self assert: (env ask behaviors select: #isMeta) size equals: 2.
 
 	self checkHierarchyConsistencyOf: def parent.
-	
+
 	self deny: (def parent isRingResolved).
 	self deny: (def parent superclass isRingResolved).
 	self deny: (def parent metaclass isRingResolved).
-	self deny: (def parent superclass metaclass isRingResolved).
+	self deny: (def parent superclass metaclass isRingResolved)
 ]

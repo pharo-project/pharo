@@ -1,7 +1,7 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*ThreadedFFI' }
-Integer >> tfPointerAddress [ 
+{ #category : '*ThreadedFFI' }
+Integer >> tfPointerAddress [
 
     ^ExternalAddress new fromInteger: self
 ]

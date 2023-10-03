@@ -19,8 +19,8 @@ Another important aspect of new implementation is that all values in PSS are hel
 as well as no need to manually unregistering a process-specific keys , once they are no longer in use.
 "
 Class {
-	#name : #Process,
-	#superclass : #Link,
+	#name : 'Process',
+	#superclass : 'Link',
 	#instVars : [
 		'suspendedContext',
 		'priority',
@@ -36,10 +36,12 @@ Class {
 		'PSKeys',
 		'PSKeysSema'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #'process specific' }
+{ #category : 'process specific' }
 Process class >> allocatePSKey: aPSVariable [
 
 	"Add a new process-specific key.
@@ -79,7 +81,7 @@ Process class >> allocatePSKey: aPSVariable [
 	^ index
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Process class >> forContext: aContext priority: anInteger [
 	"Answer an instance of me that has suspended aContext at priority
 	anInteger."
@@ -92,14 +94,14 @@ Process class >> forContext: aContext priority: anInteger [
 	^newProcess
 ]
 
-{ #category : #'process specific' }
+{ #category : 'process specific' }
 Process class >> psKeysSema [
 	"Isolate handling of class variable"
 
 	^PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ]
 ]
 
-{ #category : #'process specific' }
+{ #category : 'process specific' }
 Process class >> updateInheritableKeys [
 "
 	self updateInheritableKeys
@@ -111,7 +113,7 @@ Process class >> updateInheritableKeys [
 	InheritablePSKeys := keys asArray ifEmpty: [ nil ]
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> activateReturn: aContext value: value [
 	"Activate 'aContext return: value', so execution will return to aContext's sender"
 
@@ -120,12 +122,12 @@ Process >> activateReturn: aContext value: value [
 		onBehalfOf: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Process >> browserPrintString [
 	^self browserPrintStringWith: suspendedContext
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Process >> browserPrintStringWith: anObject [
 	| stream |
 	stream := (String new: 100) writeStream.
@@ -141,7 +143,7 @@ Process >> browserPrintStringWith: anObject [
 	^ stream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> calleeOf: aContext [
 	"Return the context whose sender is aContext.  Return nil if aContext is on top.  Raise error if aContext is not in process chain."
 
@@ -150,7 +152,7 @@ Process >> calleeOf: aContext [
 		ifNil: [self error: 'aContext not in process chain']
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> complete: aContext [
 	"Run self until aContext is popped or an unhandled error is raised.  Return self's new top context, unless an unhandled error was raised then return the signal context (rather than open a debugger)."
 
@@ -166,7 +168,7 @@ Process >> complete: aContext [
 		ifNotNil: [ :error | error completeProcess: self with: aContext ]
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> completeStep: aContext [
 	"Resume self until aContext is on top, or if already on top, complete next step"
 
@@ -179,7 +181,7 @@ Process >> completeStep: aContext [
 	^ self complete: callee  "finish send"
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> completeTo: aContext [
 	"Resume self until aContext is on top"
 
@@ -187,18 +189,18 @@ Process >> completeTo: aContext [
 	^ self complete: (self calleeOf: aContext)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> copyStack [
 
 	^ self copy install: suspendedContext copyStack
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 Process >> debug [
 	^ self debugWithTitle: 'Debug'
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 Process >> debugWithTitle: title [
 
 	| context |
@@ -211,7 +213,7 @@ Process >> debugWithTitle: title [
 		inContext: context
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Process >> doTerminationFromAnotherProcess [
 
   "Stop this process forever from another process.
@@ -260,11 +262,7 @@ Process >> doTerminationFromAnotherProcess [
 		ctxt unwindComplete ifNil: [
 			ctxt unwindComplete: true.
 			unwindBlock := ctxt unwindBlock.
-			"Create a context for the unwind block and execute it on the unwind block's stack.
-			Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing
-			the unwind on the wrong stack preventing the correct execution of non-local returns."
-			suspendedContext := unwindBlock asContextWithSender: ctxt.
-			suspendedContext runUntilErrorOrReturnFrom: suspendedContext].
+			unwindBlock valueUnwindInContext: ctxt ].
 		ctxt := ctxt findNextUnwindContextUpTo: nil].
 
 	"Mark the context as terminated"
@@ -272,7 +270,7 @@ Process >> doTerminationFromAnotherProcess [
 	suspendedContext setSender: nil receiver: self method: (Process>>#endProcess) arguments: {}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Process >> doTerminationFromYourself [
 	"Stop this process forever from the process itself.
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
@@ -282,7 +280,7 @@ Process >> doTerminationFromYourself [
 	^self endProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> effectiveProcess [
 	"effectiveProcess is a mechanism to allow process-faithful debugging.  The debugger executes code
 	 on behalf of processes, so unless some effort is made the identity of Processor activeProcess is not
@@ -292,12 +290,12 @@ Process >> effectiveProcess [
 	^effectiveProcess ifNil: [self]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> effectiveProcess: aProcess [
 	effectiveProcess := aProcess
 ]
 
-{ #category : #'changing process state' }
+{ #category : 'changing process state' }
 Process >> endProcess [
 	"When I reach this method, I'm terminated. Suspending or terminating me is harmless."
 
@@ -310,7 +308,7 @@ Process >> endProcess [
 	"^thisContext restart"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Process >> evaluate: aBlock onBehalfOf: aProcess [
 	"Evaluate aBlock setting effectiveProcess to aProcess.  Used
 	 in the execution simulation machinery to ensure that
@@ -321,14 +319,14 @@ Process >> evaluate: aBlock onBehalfOf: aProcess [
 	^aBlock ensure: [effectiveProcess := oldEffectiveProcess]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Process >> initialize [
 	super initialize.
 
 	terminating := false
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> install: aContext [
 	"Replace the suspendedContext with aContext."
 
@@ -337,7 +335,7 @@ Process >> install: aContext [
 	suspendedContext := aContext
 ]
 
-{ #category : #'process specific' }
+{ #category : 'process specific' }
 Process >> installEnvIntoForked: newProcess [
 	env ifNil: [ ^ self ].
 	InheritablePSKeys ifNil: [ ^self ].
@@ -351,13 +349,13 @@ Process >> installEnvIntoForked: newProcess [
 				varValue ifNotNil: [ (PSKeys at: varIndex) installValue: varValue intoForked: newProcess from: self ] ]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Process >> isActiveProcess [
 
 	^ self == Processor activeProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Process >> isSuspended [
 	"Answer true if I was never scheduled yet (new process, never been sent #resume) or paused (was sent #suspend)"
 	self isActiveProcess ifTrue: [ ^false ].
@@ -365,7 +363,7 @@ Process >> isSuspended [
 	^myList isNil or: [ myList isEmpty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Process >> isTerminated [
 
 	"Answer if the receiver is terminated, i.e. if the receiver is not active and
@@ -381,13 +379,13 @@ Process >> isTerminated [
 			(suspendedContext method == (self class >> #endProcess))]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Process >> isTerminating [
 	"lazy initialization is a fallback only for processes that existed before this addition"
 	^ terminating ifNil: [ false ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Process >> longPrintOn: stream [
 	| ctxt |
 	super printOn: stream.
@@ -401,19 +399,19 @@ Process >> longPrintOn: stream [
 			ctxt := ctxt sender ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> name [
 
  	^name ifNil: [ self hash asString forceTo: 10 paddingStartWith: $ ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 Process >> on: exception do: handlerAction [
 	"This method inject new bottom context into process with exception handler.
 	It uses context jump tricks to achieve it"
@@ -430,7 +428,7 @@ Process >> on: exception do: handlerAction [
 		ifFalse: [ self install: newRoot ]
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> popTo: aContext [
 	"Pop self down to aContext by remote returning from aContext's callee.  Unwind blocks will be executed on the way.
 	This is done by pushing a new context on top which executes 'aContext callee return' then resuming self until aContext is reached.  This way any errors raised in an unwind block will get handled by senders in self and not by senders in the activeProcess.
@@ -447,7 +445,7 @@ Process >> popTo: aContext [
 				onBehalfOf: self]
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> popTo: aContext value: aValue [
 	"Replace the suspendedContext with aContext, releasing all contexts
 	 between the currently suspendedContext and it."
@@ -463,7 +461,7 @@ Process >> popTo: aContext value: aValue [
 				onBehalfOf: self]
 ]
 
-{ #category : #'changing process state' }
+{ #category : 'changing process state' }
 Process >> primitiveResume [
 	"Primitive. Allow the process that the receiver represents to continue. Put
 	the receiver in line to become the activeProcess. Fail if the receiver is
@@ -474,7 +472,7 @@ Process >> primitiveResume [
 	self primitiveFailed
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Process >> printOn: aStream [
 
 	super printOn: aStream.
@@ -482,14 +480,14 @@ Process >> printOn: aStream [
 	suspendedContext printOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> priority [
 	"Answer the priority of the receiver."
 
 	^priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> priority: anInteger [
 	"Set the receiver's priority to anInteger.
 	When changing the process priority we need to yield to make it reschedule the processor"
@@ -499,7 +497,7 @@ Process >> priority: anInteger [
 		ifFalse: [ self error: 'Invalid priority: ' , anInteger printString ]
 ]
 
-{ #category : #'process specific' }
+{ #category : 'process specific' }
 Process >> psValueAt: index [
 	"Answer a process-specific value at given index, or nil if value at given index is not defined"
 
@@ -508,7 +506,7 @@ Process >> psValueAt: index [
 	^ env at: index ifAbsent: nil
 ]
 
-{ #category : #'process specific' }
+{ #category : 'process specific' }
 Process >> psValueAt: index put: value [
 	"Set a value for given index in process-specific storage"
 
@@ -519,7 +517,7 @@ Process >> psValueAt: index put: value [
 	^ env at: index put: value
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 Process >> pvtSignal: anException list: aList [
 	"Private. This method is used to signal an exception from another
 	process...the receiver must be the active process.  If the receiver
@@ -551,7 +549,7 @@ Process >> pvtSignal: anException list: aList [
 	blocker wait
 ]
 
-{ #category : #'process specific' }
+{ #category : 'process specific' }
 Process >> resetPSValueAt: index [
 
 	"NOTE: this method are PRIVATE. "
@@ -562,21 +560,21 @@ Process >> resetPSValueAt: index [
 	env at: index put: nil
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> restartTop [
 	"Rollback top context and replace with new method.  Assumes self is suspended"
 
 	suspendedContext privRefresh
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> restartTopWith: method [
 	"Rollback top context and replace with new method.  Assumes self is suspended"
 
 	suspendedContext privRefreshWith: method
 ]
 
-{ #category : #'changing process state' }
+{ #category : 'changing process state' }
 Process >> resume [
 	"Allow the process that the receiver represents to continue. Put
 	the receiver in line to become the activeProcess. Check for a nil
@@ -587,7 +585,7 @@ Process >> resume [
 	^ self primitiveResume
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> return: aContext value: value [
 	"Pop thread down to aContext's sender.  Execute any unwind blocks on the way.  See #popTo: comment and #runUntilErrorOrReturnFrom: for more details."
 
@@ -599,7 +597,7 @@ Process >> return: aContext value: value [
 	^self complete: aContext
 ]
 
-{ #category : #'changing process state' }
+{ #category : 'changing process state' }
 Process >> run [
 	"Suspend current process and execute self instead"
 
@@ -610,7 +608,7 @@ Process >> run [
 	] forkAt: Processor highestPriority
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 Process >> signalException: anException [
 	"Signal an exception in the receiver process...if the receiver is currently
 	suspended, the exception will get signaled when the receiver is resumed.  If
@@ -640,7 +638,7 @@ Process >> signalException: anException [
 	oldList ifNotNil: [self resume]
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> step [
 
 	^Processor activeProcess
@@ -648,7 +646,7 @@ Process >> step [
 		onBehalfOf: self
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> step: aContext [
 	"Resume self until aContext is on top, or if already on top, do next step"
 
@@ -660,7 +658,7 @@ Process >> step: aContext [
 		onBehalfOf: self
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> stepToCallee [
 	"Step until top context changes"
 
@@ -674,7 +672,7 @@ Process >> stepToCallee [
 	^suspendedContext
 ]
 
-{ #category : #'changing suspended state' }
+{ #category : 'changing suspended state' }
 Process >> stepToHome: aContext [
 	| ctxt pair error |
 	ctxt := suspendedContext.
@@ -701,7 +699,7 @@ Process >> stepToHome: aContext [
 	^ suspendedContext
 ]
 
-{ #category : #'changing process state' }
+{ #category : 'changing process state' }
 Process >> suspend [
 	"Primitive. Stop the process that the receiver represents in such a way
 	that it can be restarted at a later time (by sending the receiver the
@@ -719,27 +717,27 @@ Process >> suspend [
 	^oldList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> suspendedContext [
 	"Answer the context the receiver has suspended."
 
 	^suspendedContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Process >> suspendedContext: aContext [
 
 	suspendedContext := aContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Process >> suspendingList [
 	"Answer the list on which the receiver has been suspended."
 
 	^myList
 ]
 
-{ #category : #'changing process state' }
+{ #category : 'changing process state' }
 Process >> terminate [
 	"Stop the process that the receiver represents forever.  Unwind to execute pending ensure:/ifCurtailed: blocks before terminating."
 

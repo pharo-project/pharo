@@ -1,7 +1,7 @@
-Extension { #name : #FFIBit }
+Extension { #name : 'FFIBit' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIBit >> tfExternalType [
-	
+
 	^ FFIArchitecture forCurrentArchitecture tfBitType
 ]

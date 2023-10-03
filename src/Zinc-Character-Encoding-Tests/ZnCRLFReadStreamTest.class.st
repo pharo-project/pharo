@@ -1,11 +1,12 @@
 Class {
-	#name : #ZnCRLFReadStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnCRLFReadStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #tests }
-ZnCRLFReadStreamTest >> testBasicStream [ 
+{ #category : 'tests' }
+ZnCRLFReadStreamTest >> testBasicStream [
 
 	| lines input output |
 
@@ -26,12 +27,12 @@ ZnCRLFReadStreamTest >> testBasicStream [
 			<< String crlf;
 			<< lines third;
 			<< String crlf ].
-	self 
-		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd 
-		equals: output asByteArray.
+	self
+		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd
+		equals: output asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnCRLFReadStreamTest >> testDoubleEnding [
 
 	| lines input output |
@@ -59,12 +60,12 @@ ZnCRLFReadStreamTest >> testDoubleEnding [
 			<< lines third;
 			<< String crlf;
 			<< String crlf ].
-	self 
-		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd 
-		equals: output asByteArray.
+	self
+		assert: (ZnCRLFReadStream on: input asByteArray readStream) upToEnd
+		equals: output asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnCRLFReadStreamTest >> testPeek [
 
 	| input stream |
@@ -78,14 +79,14 @@ ZnCRLFReadStreamTest >> testPeek [
 			<< 'c';
 			<< String crlf ].
 	stream := ZnCRLFReadStream on: input asByteArray readStream.
-	self 
+	self
 		assert: stream peek
 		equals: $a asInteger.
 	self
-		assert: stream next 
+		assert: stream next
 		equals: $a asInteger.
 	self
-		assert: stream next 
+		assert: stream next
 		equals: Character cr asInteger.
 	self
 		assert: stream peek
@@ -98,6 +99,5 @@ ZnCRLFReadStreamTest >> testPeek [
 		equals: $b asInteger.
 	self
 		assert: stream next
-		equals: $b asInteger.
-
+		equals: $b asInteger
 ]

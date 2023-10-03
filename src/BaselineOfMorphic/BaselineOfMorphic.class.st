@@ -16,18 +16,19 @@ Installs:
 - some other packages
 "
 Class {
-	#name : #BaselineOfMorphic,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfMorphic',
+	#superclass : 'BaselineOf',
 	#instVars : [
 		'initializersEnabled'
 	],
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfMorphic
+	#category : 'BaselineOfMorphic',
+	#package : 'BaselineOfMorphic'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfMorphic >> baseline: spec [ 
     
 	<baseline>
@@ -115,8 +116,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
-		spec package: 'Unicode-Initialization'.
-
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
@@ -130,7 +129,7 @@ BaselineOfMorphic >> baseline: spec [
 	].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 
 	Author fullName: self class name.
@@ -138,9 +137,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
 	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
-	Behavior flushObsoleteSubclasses.
 	World cleanseOtherworldlySteppers.
-	Smalltalk organization removeEmptyCategories.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
@@ -151,26 +148,20 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Smalltalk garbageCollect.
 	HashedCollection rehashAll.
 	Symbol rehash.
-	  
-	  "Remove empty categories, which are not in MC packages, because MC does
-	  not do this (this script does not make packages dirty)"
-	  Smalltalk organization removeEmptyCategories.
-	  Smalltalk
-	    allClassesAndTraitsDo: [ :class |
-	      [ :each |
-	        each
-	          removeEmptyCategories;
-	          sortCategories ]
-	            value: class organization;
-	            value: class class organization ].
-	Smalltalk organization sortCategories.
+
+	"Remove empty packages and protocols"
+	self packageOrganizer removeEmptyPackagesAndTags.
+	Smalltalk allClassesAndTraitsDo: [ :class |
+		class removeEmptyProtocols.
+		class class removeEmptyProtocols ].
+
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Smalltalk garbageCollect.
-	Author reset.
+	Author reset
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> exportBitmapDejaVuSans [
 
 	| familyName styleNames pointSizes family font fileName fontCopy style |
@@ -200,7 +191,7 @@ BaselineOfMorphic >> exportBitmapDejaVuSans [
 			STON put: fontCopy onStream: (fileName, '.ston') asFileReference writeStream ]].
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> loadBitmapDejaVuSans [
 
 	| dejaVu |
@@ -213,7 +204,7 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejaVu.
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 	| fonts fileName directoryReference |
 	directoryReference := (Smalltalk os environment
@@ -260,7 +251,7 @@ BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 	^ TextStyle fontArray: fonts
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> loadBitmapSourcePro [
 
 	| sansPro codePro |
@@ -272,7 +263,7 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	| array |
@@ -289,7 +280,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 		
 	"Initialize Fuel"
 	FLLargeIdentityHashedCollection initialize.
-	FLPlatform reset.
 
 	Stdio stdout nextPutAll: 'starting...'; lf.
 
@@ -338,7 +328,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: UIManager forCurrentSystemConfiguration.
 	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
 
-	TextEditor initialize.
 
 	MenubarMorph initialize.	
 
@@ -348,7 +337,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Smalltalk cleanOutUndeclared.
 
-	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
+	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].
 
 	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.
@@ -365,13 +354,17 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Initialized := true.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphic >> preload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
 	SystemNotification signal: 'Starting preload action'.
+
+	"Declare global variables"
+	Smalltalk globals at: #World put: nil.
+	Smalltalk globals at: #ActiveWorld put: nil.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
@@ -379,7 +372,7 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	Author fullName: self class name
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfMorphic >> project [
 	
 	| aProject |

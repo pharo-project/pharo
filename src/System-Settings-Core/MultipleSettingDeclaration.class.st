@@ -2,32 +2,34 @@
 A declaration for multiple settings
 "
 Class {
-	#name : #MultipleSettingDeclaration,
-	#superclass : #SettingDeclaration,
+	#name : 'MultipleSettingDeclaration',
+	#superclass : 'SettingDeclaration',
 	#instVars : [
 		'domainValues'
 	],
-	#category : #'System-Settings-Core-Base'
+	#category : 'System-Settings-Core-Base',
+	#package : 'System-Settings-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleSettingDeclaration >> domainValues [
 	^ domainValues ifNil: [domainValues := OrderedCollection new]
 ]
 
-{ #category : #accessing }
-MultipleSettingDeclaration >> domainValues: aCollection [ 
+{ #category : 'accessing' }
+MultipleSettingDeclaration >> domainValues: aCollection [
 	domainValues := aCollection asArray collect: [ :v | v settingFixedDomainValueNodeFrom: self]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 MultipleSettingDeclaration >> domainValuesLabels [
 	^ self domainValues
 		collect: [:f | f name]
 ]
 
-{ #category : #'user interface' }
-MultipleSettingDeclaration >> fixedDomainValueNodeForAssociation: anAssociation [ 
+{ #category : 'user interface' }
+MultipleSettingDeclaration >> fixedDomainValueNodeForAssociation: anAssociation [
 	| s |
 	^ (s := (SettingDeclaration new name: anAssociation key translated))
 		target: s;
@@ -35,8 +37,8 @@ MultipleSettingDeclaration >> fixedDomainValueNodeForAssociation: anAssociation 
 		default: anAssociation value
 ]
 
-{ #category : #'user interface' }
-MultipleSettingDeclaration >> fixedDomainValueNodeForObject: anObject [ 
+{ #category : 'user interface' }
+MultipleSettingDeclaration >> fixedDomainValueNodeForObject: anObject [
 	| s |
 	^ (s := (SettingDeclaration new name: anObject asString))
 		target: s;
@@ -44,7 +46,7 @@ MultipleSettingDeclaration >> fixedDomainValueNodeForObject: anObject [
 		default: anObject
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 MultipleSettingDeclaration >> hasEditableList [
 	^ false
 ]

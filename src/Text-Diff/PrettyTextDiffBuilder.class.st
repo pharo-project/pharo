@@ -9,27 +9,28 @@ sourceClass
 
 "
 Class {
-	#name : #PrettyTextDiffBuilder,
-	#superclass : #TextDiffBuilder,
+	#name : 'PrettyTextDiffBuilder',
+	#superclass : 'TextDiffBuilder',
 	#instVars : [
 		'sourceClass'
 	],
-	#category : #'Text-Diff-Building'
+	#category : 'Text-Diff-Building',
+	#package : 'Text-Diff',
+	#tag : 'Building'
 }
 
-{ #category : #'instance creation' }
-PrettyTextDiffBuilder class >> from: srcString to: dstString inClass: srcClass [ 
+{ #category : 'instance creation' }
+PrettyTextDiffBuilder class >> from: srcString to: dstString inClass: srcClass [
 	^ (self new sourceClass: srcClass) from: srcString to: dstString
-		
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 PrettyTextDiffBuilder >> sourceClass: aClass [
-	sourceClass := aClass.
+	sourceClass := aClass
 ]
 
-{ #category : #initialize }
-PrettyTextDiffBuilder >> split: aString [ 
+{ #category : 'initialize' }
+PrettyTextDiffBuilder >> split: aString [
 	| formatted trimmed |
 	trimmed := aString asString trimBoth.
 	trimmed isEmpty ifTrue: [ ^super split: '' ].

@@ -2,27 +2,29 @@
 SUnit tests for MessageTally
 "
 Class {
-	#name : #MessageTallyTest,
-	#superclass : #TestCase,
-	#category : #'Tool-Profilers-Tests-Messages'
+	#name : 'MessageTallyTest',
+	#superclass : 'TestCase',
+	#category : 'Tool-Profilers-Tests-Messages',
+	#package : 'Tool-Profilers-Tests',
+	#tag : 'Messages'
 }
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTallyTest >> testClosedTally [
 
 	| tally |
 	tally := MessageTally
-				tallySendsTo: nil 
-				inBlock:  [ 3.14159 printString ] 
-				showTree: true 
-				closeAfter: true 
+				tallySendsTo: nil
+				inBlock:  [ 3.14159 printString ]
+				showTree: true
+				closeAfter: true
 				openResultWindow: false.
-				
+
 	"The tally is closed, therefore nothing may be accessed"
 	self assert: tally receivers isNil
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 MessageTallyTest >> testInstantiation [
 
 	| messageTally |
@@ -31,24 +33,22 @@ MessageTallyTest >> testInstantiation [
 	self assert: messageTally tally equals: 0
 ]
 
-{ #category : #sampling }
+{ #category : 'sampling' }
 MessageTallyTest >> testSampling1 [
 
 	| tally |
 	tally := MessageTally
-				spyOn: [ 1000  timesRepeat: [ 3.14159 printString  ] ]  
-				reportOtherProcesses: false 
-				cutoff: 1 
+				spyOn: [ 1000  timesRepeat: [ 3.14159 printString  ] ]
+				reportOtherProcesses: false
+				cutoff: 1
 				openResultWindow: false
 				closeAfter: false.
 
 	"No process is accessible from the tally, the reason is that using the sampling method execute the block in the current process"
 	self assert: tally process isNil
-
-
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTallyTest >> testTallySends [
 	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest|
 	allProcesses := Process allInstances.
@@ -103,17 +103,16 @@ MessageTallyTest >> testTallySends [
 	tally close
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTallyTest >> testTallyShouldNotContainsAReturn [
 
 	"The block passed to MessageTally should not have a ^ "
-	
+
 	self should: [ MessageTally
-						tallySendsTo: nil 
-						inBlock:  [ ^ 3.14159 printString ] 
-						showTree: true 
-						closeAfter: false 
-						openResultWindow: false ] 
+						tallySendsTo: nil
+						inBlock:  [ ^ 3.14159 printString ]
+						showTree: true
+						closeAfter: false
+						openResultWindow: false ]
 		 raise: Error
-	
 ]

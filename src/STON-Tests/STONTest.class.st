@@ -3,69 +3,96 @@ STONTests tests the API offered by STON.
 
 "
 Class {
-	#name : #STONTest,
-	#superclass : #TestCase,
-	#category : #'STON-Tests-Facade'
+	#name : 'STONTest',
+	#superclass : 'TestCase',
+	#category : 'STON-Tests-Facade',
+	#package : 'STON-Tests',
+	#tag : 'Facade'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 STONTest class >> fastReadFromFileNamed: path [
 	^ path asFileReference
-		readStreamDo: [ :stream | 
+		readStreamDo: [ :stream |
 			STON reader
 				on: (ZnBufferedReadStream on: stream);
 				optimizeForLargeStructures;
 				next ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 STONTest class >> fastWrite: object toFileNamed: path [
 	^ path asFileReference
-		writeStreamDo: [ :fileStream | 
+		writeStreamDo: [ :fileStream |
 			ZnBufferedWriteStream
 				on: fileStream
-				do: [ :stream | 
+				do: [ :stream |
 					STON writer
 						on: stream;
 						optimizeForLargeStructures;
 						nextPut: object ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 STONTest class >> readFromFileNamed: path [
 	^ path asFileReference
-		readStreamDo: [ :stream | 
+		readStreamDo: [ :stream |
 			STON reader
 				on: stream;
 				next ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 STONTest class >> write: object toFileNamed: path [
 	^ path asFileReference
-		writeStreamDo: [ :stream | 
+		writeStreamDo: [ :stream |
 			STON writer
 				on: stream;
 				nextPut: object ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+STONTest >> testAssociationClass [
+	self assert: (STON fromString: '#foo : 100') class equals: STON associationClass
+]
+
+{ #category : 'tests' }
+STONTest >> testClassNameKey [
+	self
+		assert: ((STON reader
+							acceptUnknownClasses: true;
+							on: 'FooBarBaz { #foo : 100 }' readStream;
+							next) at: STON classNameKey)
+		equals: #FooBarBaz
+]
+
+{ #category : 'tests' }
 STONTest >> testFromString [
 	| object |
 	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.
 	self assert: (STON fromString: '[1,0,-1,true,false,nil]') equals: object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONTest >> testFromStringWithComments [
 	| object |
 	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
-	self 
+	self
 		assert: (STON fromStringWithComments: '// comment\[1, /* comment */ 0, -1, true, false, nil] // comment' withCRs)
 		equals: object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+STONTest >> testListClass [
+	self assert: (STON fromString: '[1 , 2 , 3]') class equals: STON listClass
+]
+
+{ #category : 'tests' }
+STONTest >> testMapClass [
+	self assert: (STON fromString: '{ #foo : 1 , #bar : 2 }') class equals: STON mapClass
+]
+
+{ #category : 'tests' }
 STONTest >> testPrettyPrinting [
 	| object |
 	object := STONTestUser dummy.
@@ -74,7 +101,7 @@ STONTest >> testPrettyPrinting [
 	self assert: (STON fromString: (STON toStringPretty: object)) equals: object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONTest >> testRoomExitCycles [
 	| model room1 room2 exit1 exit2 ston object |
 	(room1 := STONTestMap new) at: #name put: 'Room 1'.
@@ -105,7 +132,7 @@ STONTest >> testRoomExitCycles [
 	self assert: (STON toString: object) equals: ston
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONTest >> testToString [
 	| object |
 	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.

@@ -2,25 +2,27 @@
 I represent the mode to use for editing class comments
 "
 Class {
-	#name : #RubSmalltalkCommentMode,
-	#superclass : #RubAbstractSmalltalkMode,
-	#category : #'Rubric-Editing-Code'
+	#name : 'RubSmalltalkCommentMode',
+	#superclass : 'RubAbstractSmalltalkMode',
+	#category : 'Rubric-Editing-Code',
+	#package : 'Rubric',
+	#tag : 'Editing-Code'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSmalltalkCommentMode class >> label [
 	^ 'Smalltalk comment'
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCommentMode class >> menuKeyword [
 	^ 'RubSmalltalkCommentMenu'
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCommentMode class >> menuOn: aBuilder [
 	"Specify the menu used when writing code. Try it with:
-	(PragmaMenuBuilder 
+	(PragmaMenuBuilder
 		pragmaKeyword: 'RubSmalltalkCommentMenu'
 		model: RubEditingArea new) menu popUpInWorld
 	"
@@ -30,24 +32,24 @@ RubSmalltalkCommentMode class >> menuOn: aBuilder [
 	RubSmalltalkCodeMode menuOn: aBuilder
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RubSmalltalkCommentMode >> formatMethodCode [
 	"do nothing for code comments"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubSmalltalkCommentMode >> isCompletionEnabled [
 	^ false
 ]
 
-{ #category : #parsing }
-RubSmalltalkCommentMode >> parseExpression: aString [ 
-	
+{ #category : 'parsing' }
+RubSmalltalkCommentMode >> parseExpression: aString [
+
 	^ RBParser parseFaultyExpression: aString
 ]
 
-{ #category : #parsing }
-RubSmalltalkCommentMode >> parseSource: aString [ 
+{ #category : 'parsing' }
+RubSmalltalkCommentMode >> parseSource: aString [
 
 	^ RBParser parseFaultyExpression: aString
 ]

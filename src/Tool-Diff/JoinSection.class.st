@@ -2,8 +2,8 @@
 A join section
 "
 Class {
-	#name : #JoinSection,
-	#superclass : #Model,
+	#name : 'JoinSection',
+	#superclass : 'Model',
 	#instVars : [
 		'src',
 		'dst',
@@ -15,15 +15,17 @@ Class {
 		'additionHighlightColor',
 		'removalHighlightColor'
 	],
-	#category : #'Tool-Diff-Joins'
+	#category : 'Tool-Diff-Joins',
+	#package : 'Tool-Diff',
+	#tag : 'Joins'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 JoinSection >> addHighlightsFrom: srcBlock to: dstBlock to: aCollection color: aColor [
 	"Add the highlights required for the given character blocks
 	of a paragraph. May be up to three highlights depending
 	on the line spans."
-	
+
 	srcBlock textLine = dstBlock textLine
 		ifTrue: [aCollection add: (TextHighlightByBounds new
 				color: aColor;
@@ -41,25 +43,25 @@ JoinSection >> addHighlightsFrom: srcBlock to: dstBlock to: aCollection color: a
 							bounds: (dstBlock textLine topLeft corner: dstBlock bottomRight))]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> additionHighlightColor [
 	^ additionHighlightColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> additionHighlightColor: anObject [
 	additionHighlightColor := anObject.
 	self updateHighlights
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> borderColor [
 	"Answer the value of borderColor"
 
 	^ borderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> borderColor: aColor [
 	"Set the value of borderColor"
 
@@ -67,21 +69,21 @@ JoinSection >> borderColor: aColor [
 	self updateHighlights
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> borderColorToUse [
 	"Answer the border color to use."
-	
+
 	^self borderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> borderWidth [
 	"Answer the value of borderWidth"
 
 	^ borderWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> borderWidth: anInteger [
 	"Set the value of borderWidth"
 
@@ -92,7 +94,7 @@ JoinSection >> borderWidth: anInteger [
 		self dst highlight borderWidth: anInteger]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 JoinSection >> clicked [
 	"The receiver or a highlight was clicked."
 
@@ -101,14 +103,14 @@ JoinSection >> clicked [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 JoinSection >> containsPoint: aPoint [
 	"Answer whether the receiver contains the given point."
 
 	^self shape containsPoint: aPoint
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 JoinSection >> createHighlights [
 	"Create and store the src and dst highlights."
 
@@ -129,7 +131,7 @@ JoinSection >> createHighlights [
 	self dst highlights: d
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 	"Create and store the src and dst highlights.
 	Use the given paragraphs to determine inline
@@ -138,14 +140,14 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 	| s d si di srcText dstText diffs i sb eb line |
 	self createHighlights.
 	self src lineRange notEmpty
-		ifTrue: [ 
+		ifTrue: [
 			line := srcPara lines at: self src lineRange first.
 			si := line first.
 			line := srcPara lines at: self src lineRange last.
 			srcText := srcPara string copyFrom: si to: line last ]
 		ifFalse: [ srcText := '' ].
 	self dst lineRange notEmpty
-		ifTrue: [ 
+		ifTrue: [
 			line := dstPara lines at: self dst lineRange first.
 			di := line first.
 			line := dstPara lines at: self dst lineRange last.
@@ -159,15 +161,15 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 	d := self dst highlights.
 	diffs := (InlineTextDiffBuilder from: srcText to: dstText) buildPatchSequence groupByRuns: [ :e | e key ].
 	diffs
-		do: [ :c | 
+		do: [ :c |
 			c first key = #match
-				ifTrue: [ 
+				ifTrue: [
 					c
-						do: [ :a | 
+						do: [ :a |
 							si := si + a value size.
 							di := di + a value size ] ].
 			c first key = #insert
-				ifTrue: [ 
+				ifTrue: [
 					i := di.
 					c do: [ :a | di := di + a value size ].
 					sb := dstPara characterBlockForIndex: i.
@@ -178,7 +180,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 						to: d
 						color: self additionHighlightColor ].
 			c first key = #remove
-				ifTrue: [ 
+				ifTrue: [
 					i := si.
 					c do: [ :a | si := si + a value size ].
 					sb := srcPara characterBlockForIndex: i.
@@ -190,10 +192,10 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 						color: self removalHighlightColor ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 JoinSection >> drawMapOn: aCanvas in: rect scale: scale [
 	"Draw the join on the given canvas scaled into the given rectangle."
-	
+
 	self type = #match ifTrue: [^self].
 	aCanvas
 		frameAndFillRectangle: (rect left @ (((self dst range first max: 0) * scale) truncated + rect top)
@@ -203,10 +205,10 @@ JoinSection >> drawMapOn: aCanvas in: rect scale: scale [
 		borderColor: self borderColorToUse
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 JoinSection >> drawOn: aCanvas [
 	"Draw the join on the given canvas."
-	
+
 	|v bc|
 	(self src color isTransparent and: [self dst color isTransparent])
 		ifTrue: [^self].
@@ -227,35 +229,35 @@ JoinSection >> drawOn: aCanvas [
 			color: bc]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> dst [
 	"Answer the value of dst"
 
 	^ dst
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> dst: anObject [
 	"Set the value of dst"
 
 	dst := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> dstColor: aColor [
 	"Set the dst color"
 
 	self dst color: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> dstLineRange: anInterval [
 	"Set the dst lineRange."
 
 	self dst lineRange: anInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> dstOffset: aPoint [
 	"Set the dst offset."
 
@@ -263,7 +265,7 @@ JoinSection >> dstOffset: aPoint [
 	self updateShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> dstRange: anInterval [
 	"Set the dst range."
 
@@ -271,10 +273,10 @@ JoinSection >> dstRange: anInterval [
 	self updateShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> fillStyleFor: rect [
 	"Answer the fillStyle to use for the given rectangle."
-	
+
 	^self src color = self dst color
 		ifTrue: [self src color]
 		ifFalse: [(GradientFillStyle ramp: {0.0 -> self src color. 1.0 -> self dst color})
@@ -282,7 +284,7 @@ JoinSection >> fillStyleFor: rect [
 				origin: rect topLeft]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 JoinSection >> initialize [
 	"Initialize the receiver."
 
@@ -297,7 +299,7 @@ JoinSection >> initialize [
 		type: #modification
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 JoinSection >> newHighlight [
 	"Anwser a new highlight."
 
@@ -307,60 +309,60 @@ JoinSection >> newHighlight [
 		fillWidth: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> removalHighlightColor [
 	^ removalHighlightColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> removalHighlightColor: anObject [
 	removalHighlightColor := anObject.
-	self updateHighlights.
+	self updateHighlights
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> shape [
 	"Answer the value of shape"
 
 	^ shape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> shape: anObject [
 	"Set the value of shape"
 
 	shape := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> src [
 	"Answer the value of src"
 
 	^ src
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> src: anObject [
 	"Set the value of src"
 
 	src := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> srcColor: aColor [
 	"Set the src color."
 
 	self src color: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> srcLineRange: anInterval [
 	"Set the src lneRange."
 
 	self src lineRange: anInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> srcOffset: aPoint [
 	"Set the src offset"
 
@@ -368,7 +370,7 @@ JoinSection >> srcOffset: aPoint [
 	self updateShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> srcRange: anInterval [
 	"Set the  src range"
 
@@ -376,21 +378,21 @@ JoinSection >> srcRange: anInterval [
 	self updateShape
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> type [
 	"Answer the value of type"
 
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> type: anObject [
 	"Set the value of type"
 
 	type := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> updateHighlights [
 	"Update the highlight border colors."
 
@@ -403,7 +405,7 @@ JoinSection >> updateHighlights [
 		self dst highlight borderColor: bc]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 JoinSection >> updateShape [
 	"Update the receiver's shape."
 
@@ -413,21 +415,21 @@ JoinSection >> updateShape [
 		(self width @ self dst range last) + self dst offset. (0@self src range last) + self src offset})
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 JoinSection >> wantsClick [
 	"Don't if we are transparent for now."
 
 	^(self src color isTransparent and: [self dst color isTransparent]) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> width [
 	"Answer the value of width"
 
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinSection >> width: anObject [
 	"Set the value of width"
 

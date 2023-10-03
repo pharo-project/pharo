@@ -43,8 +43,8 @@ Now this is not replacing a composite logger.
 
 "
 Class {
-	#name : #SignalLogger,
-	#superclass : #Object,
+	#name : 'SignalLogger',
+	#superclass : 'Object',
 	#instVars : [
 		'beacon',
 		'name'
@@ -52,10 +52,12 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Beacon-Core-Loggers'
+	#category : 'Beacon-Core-Loggers',
+	#package : 'Beacon-Core',
+	#tag : 'Loggers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SignalLogger class >> for: aBeacon [
 
 	^ self new
@@ -63,19 +65,19 @@ SignalLogger class >> for: aBeacon [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SignalLogger class >> instance [
 
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SignalLogger class >> isAbstract [
 
 	^ self == SignalLogger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SignalLogger class >> named: aString [
 
 	^ (Beacon loggersOf: self)
@@ -83,34 +85,34 @@ SignalLogger class >> named: aString [
 		  ifNone: [ self new name: aString ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SignalLogger class >> resetAllInstances [
 	<script>
 
 	self withAllSubclassesDo: [ :each | each resetInstance ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SignalLogger class >> resetInstance [
 	<script>
 
 	instance := nil
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger class >> runDuring: aBlock [
 
 	^ self instance runDuring: aBlock
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger class >> start [
 	<script>
 
 	^ self instance start
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger class >> startFor: anAnnouncementOrASetOfAnnouncements [
 	"Start listening to announcements.
 
@@ -123,7 +125,7 @@ SignalLogger class >> startFor: anAnnouncementOrASetOfAnnouncements [
 	^ self instance startFor: anAnnouncementOrASetOfAnnouncements
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 SignalLogger class >> startSingleGlobalLogger [
 	"Stop any other loggers and start a global instances of the receiver"
 	<script>
@@ -134,33 +136,33 @@ SignalLogger class >> startSingleGlobalLogger [
 	self start
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger class >> stop [
 	<script>
 
 	^ self instance stop
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger class >> stopAll [
 	<script>
 
 	self withAllSubclassesDo: #stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SignalLogger >> beacon [
 
 	^ beacon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SignalLogger >> beacon: anAnnouncer [
 
 	beacon := anAnnouncer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SignalLogger >> initialize [
 
 	super initialize.
@@ -169,39 +171,39 @@ SignalLogger >> initialize [
 	name := 'unnamed'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SignalLogger >> isRunning [
 	Beacon instance announcer subscriptions
 		subscriptionsOf: self do: [ :x | ^ true ].
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SignalLogger >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SignalLogger >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SignalLogger >> nextPut: aSignal [
 	"Gets a BeaconSignal into the logger"
 
 	self subclassResponsibility
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SignalLogger >> nextPutAll: aCollection [
 
 	aCollection do: [ :each | self nextPut: each ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SignalLogger >> printOn: aStream [
 
 	super printOn: aStream.
@@ -210,7 +212,7 @@ SignalLogger >> printOn: aStream [
 		nextPutAll: name asString
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger >> runDuring: aBlock [
 	"Make all BeaconSignals go to me during aBlock"
 
@@ -219,7 +221,7 @@ SignalLogger >> runDuring: aBlock [
 		ensure: [ self stop ]
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger >> runFor: anAnnouncementOrASetOfAnnouncements during: aBlock [
 	"Makes all provided BeaconSignals got to me during aBlock.
 
@@ -229,13 +231,13 @@ SignalLogger >> runFor: anAnnouncementOrASetOfAnnouncements during: aBlock [
 	[ aBlock value ] ensure: [ self stop ]
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger >> start [
 
 	self startFor: BeaconSignal
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger >> startFor: anAnnouncementOrASetOfAnnouncements [
 	"Make sure that when anAnnouncementOrASetOfAnnouncements is signaled, I receive them as argument of nextPut:."
 
@@ -246,7 +248,7 @@ SignalLogger >> startFor: anAnnouncementOrASetOfAnnouncements [
 		to: self
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 SignalLogger >> stop [
 
 	self beacon unsubscribe: self

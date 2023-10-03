@@ -3,37 +3,39 @@ STONReaderError is the error/exception signalled by STONReader when illegal/inco
 
 "
 Class {
-	#name : #STONReaderError,
-	#superclass : #Error,
+	#name : 'STONReaderError',
+	#superclass : 'Error',
 	#instVars : [
 		'streamPosition'
 	],
-	#category : #'STON-Core-Reader'
+	#category : 'STON-Core-Reader',
+	#package : 'STON-Core',
+	#tag : 'Reader'
 }
 
-{ #category : #'instance creation' }
-STONReaderError class >> signal: aString streamPosition: streamPosition [ 
+{ #category : 'instance creation' }
+STONReaderError class >> signal: aString streamPosition: streamPosition [
 	^ self new
 		streamPosition: streamPosition;
 		signal: aString;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONReaderError >> messageText [
-	^ streamPosition 
-		ifNil: [ 
-			super messageText ] 
-		ifNotNil: [ :pos | 
+	^ streamPosition
+		ifNil: [
+			super messageText ]
+		ifNotNil: [ :pos |
 			'At character <1P>: <2P>' expandMacrosWith: pos with: super messageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONReaderError >> streamPosition [
 	^ streamPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONReaderError >> streamPosition: aNumber [
 	streamPosition := aNumber
 ]

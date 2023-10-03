@@ -3,30 +3,31 @@ I'm an object holding the result of loading a file containing Pharo code definit
 I create Ring definitions for the elements inside the chunk stream.
 "
 Class {
-	#name : #RGChunkImporter,
-	#superclass : #Object,
+	#name : 'RGChunkImporter',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'package',
 		'doIts'
 	],
-	#category : #'Ring-ChunkImporter'
+	#category : 'Ring-ChunkImporter',
+	#package : 'Ring-ChunkImporter'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGChunkImporter class >> fromFileNamed: fileName [
 
 	^ self new fromFileNamed: fileName; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGChunkImporter class >> fromStream: aStream [
 
 	^ self new fileInFrom: aStream; yourself
 ]
 
-{ #category : #accessing }
-RGChunkImporter >> allowedSelectors [ 
+{ #category : 'accessing' }
+RGChunkImporter >> allowedSelectors [
 
 	^ #(
 #ephemeronSubclass:instanceVariableNames:classVariableNames:package:
@@ -101,10 +102,10 @@ instanceVariableNames:
 )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> classDefinition: aString with: chgRec [
 	| tokens theClass superclass |
-	
+
 	tokens := self scannedSource: aString.
 
 	theClass := self classNamed: tokens third.
@@ -113,79 +114,79 @@ RGChunkImporter >> classDefinition: aString with: chgRec [
 	superclass metaclass makeResolved.
 	theClass superclass: superclass.
 	theClass metaclass superclass: superclass metaclass.
-	
+
 	theClass cleanClassVariables.
 	theClass cleanSharedPools.
-	
+
 	"theClass definitionSource: aString."
-	
+
 	theClass category: tokens last.
-	
+
 	tokens size = 11
-	ifTrue:[ 
+	ifTrue:[
 		theClass instanceVariables: (tokens fifth findTokens: ' ');
 			 	classVariables: (tokens seventh findTokens: ' ');
 				 sharedPools: (tokens ninth findTokens: ' ') ].
-	
+
 	tokens size = 13
 	ifTrue:[
 		RGTraitCompositionVisitor new parse: (tokens fifth) for: theClass traitComposition.
-		theClass 
+		theClass
 			instanceVariables: (tokens seventh findTokens: ' ');
 			classVariables: (tokens ninth findTokens: ' ');
-			sharedPools: ((tokens at: 11) findTokens: ' '). ].
+			sharedPools: ((tokens at: 11) findTokens: ' '). ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> classNamed: className [
 
 	| behavior |
 	behavior := self environment ask behaviorNamed: className.
-	^ behavior 
+	^ behavior
 		ifNotNil: [ behavior ]
 		ifNil: [ self environment ensureClassNamed: className asSymbol. ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> classes [
 	^ package classes values
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> createBehavior: subclassName superclassName: superclassName instanceVariableNames: instanceVariableNames classVariableNames: classVariableNames categoryName: categoryName packageName: packageName poolDictionariesNames: poolDictionariesNames layoutClass: layoutClass layoutDefinition: layoutDefinition slotsDefinition: slotsDefinition traits: traitsDefinition isTrait: isTrait hasNilSuperclass: hasNilSuperclass [
 
 	| behavior superclass |
-	
-	self assert: subclassName notNil.	
-		
-	isTrait 
-		ifTrue: [ 
+
+	self assert: subclassName notNil.
+
+	isTrait
+		ifTrue: [
 			superclass := nil.
-			behavior := (subclassName endsWith: ' classTrait') 
-				ifTrue: [ 
+			behavior := (subclassName endsWith: ' classTrait')
+				ifTrue: [
 					self environment ensureMetaclassTraitNamed: subclassName ]
-				ifFalse: [ 
+				ifFalse: [
 					self assert: (superclassName = #Trait).
 					self environment ensureTraitNamed: subclassName ]]
-		ifFalse: [ 
-			behavior := self environment ensureClassNamed: subclassName. 
+		ifFalse: [
+			behavior := self environment ensureClassNamed: subclassName.
 			hasNilSuperclass
 				ifTrue: [ behavior superclass: nil. ]
 				ifFalse: [
-					superclassName ifNotNil: [ 
-						| theSuperclass | 
-						theSuperclass := self environment ensureClassNamed: superclassName. 
+					superclassName ifNotNil: [
+						| theSuperclass |
+						theSuperclass := self environment ensureClassNamed: superclassName.
 						behavior superclass: theSuperclass ] ] ].
 
-	isTrait ifFalse: [ 
-		layoutClass ifNotNil: [ 
+	isTrait ifFalse: [
+		layoutClass ifNotNil: [
 			behavior layout: (layoutClass parent: behavior).
 			"TODO: unknown layout definition"]].
 
-	slotsDefinition ifNotNil: [ 
+	slotsDefinition ifNotNil: [
 		behavior layout: (layoutClass parent: behavior).
 		slotsDefinition children do: [:child |
-			| newSlot | 
+			| newSlot |
 			newSlot := (child isLiteralNode and: [ child value isSymbol ])
 				ifTrue: [ RGInstanceVariableSlot named: child value parent: behavior layout ]
 				ifFalse: [
@@ -197,96 +198,96 @@ RGChunkImporter >> createBehavior: subclassName superclassName: superclassName i
 			behavior layout addSlot: newSlot] .].
 
 	"process instance variables after layout and slots"
-	instanceVariableNames ifNotNil: [ 
+	instanceVariableNames ifNotNil: [
 		behavior instanceVariables: (instanceVariableNames substrings collect: [:each | each asSymbol])].
 
-	classVariableNames ifNotNil: [ 
+	classVariableNames ifNotNil: [
 		behavior classVariables: (classVariableNames substrings collect: [:each | each asSymbol]) ].
 
-	poolDictionariesNames ifNotNil: [ 
+	poolDictionariesNames ifNotNil: [
 		behavior sharedPools: (poolDictionariesNames substrings collect: [:each | each asSymbol])].
 
-	categoryName ifNotNil: [ 
+	categoryName ifNotNil: [
 		behavior category: categoryName ].
 
-	packageName ifNotNil: [ 
+	packageName ifNotNil: [
 		| pkg |
 		pkg := environment ensurePackageNamed: packageName.
 		behavior package: pkg ].
 
-	traitsDefinition ifNotNil: [ 
+	traitsDefinition ifNotNil: [
 		| composition transformations |
 		composition := RGTraitComposition parent: behavior.
 		transformations := RGTraitCompositionVisitor new parse: traitsDefinition for: composition.
 		behavior traitComposition: composition.
 		transformations do: [ :each |
 			composition addTransformation: each ].
-		].
+		]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> createTraitNamed: traitName [
 
 	| trait |
 	trait := RGTraitDefinition named: traitName.
 	trait withMetaclass.
 	package addTrait: trait.
-	^ trait.
+	^ trait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> doIts [
 	^ doIts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> environment [
 
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> environment: anRGEnvironment [
 
 	environment := anRGEnvironment
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 RGChunkImporter >> fileInFrom: aStream [
 
 	| changes |
 	changes := (CodeImporter readStream: aStream) parseChunks.
-	changes do: [ :change | change accept: self ].
+	changes do: [ :change | change accept: self ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 RGChunkImporter >> fromFileNamed: aName [
-	
+
 	package := RGPackageDefinition named: aName.
-	self fileInFrom: aName asFileReference readStream.
+	self fileInFrom: aName asFileReference readStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> if: selectorParts in: ast includes: aSymbol do: aBlock [
 
 	| index |
-	
+
 	index := selectorParts indexOf: aSymbol ifAbsent: [^ self].
-	aBlock value: (ast arguments at: index).
+	aBlock value: (ast arguments at: index)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGChunkImporter >> initialize [
 	super initialize.
 	environment := RGEnvironment new.
 	package := RGPackageDefinition named: 'ChangeSet'.
-	doIts := Set new.
+	doIts := Set new
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> isNilSuperclassDefinition: ast [
 
-	^ (ast isSequence) 
+	^ (ast isSequence)
 		and: [(ast statements size = 2)
 		and: [(ast statements allSatisfy: #isMessage)
 		and: [(self allowedSelectors includes: ast statements first selector)
@@ -295,32 +296,32 @@ RGChunkImporter >> isNilSuperclassDefinition: ast [
 		and: [((ast statements first arguments first value withoutPrefix: '#') = ast statements second receiver formattedCode)]]]]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> metaClassDefinition: string with: chgRec [
 	| tokens theClass |
-	
+
 	tokens := self scannedSource: string.
-	
+
 	theClass := self classNamed: tokens first.
 	theClass classSide instanceVariables: (tokens fourth findTokens: ' ')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> metaTraitDefinition: string with: chgRec [
 	| tokens trait |
-	
+
 	tokens := self scannedSource: string.
 	trait := environment ensureTraitNamed: tokens first.
-	
+
 "	trait classSide definitionSource: string"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> msgClassComment: string with: chgRec [
 
 	| tokens theClass |
 	tokens := self scannedSource: string.
-	
+
 	(tokens size >= 3
 		and:[ tokens last isString ])
 	ifTrue:[
@@ -330,19 +331,19 @@ RGChunkImporter >> msgClassComment: string with: chgRec [
 		ifFalse:[ theClass ]) comment: tokens last asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> packages [
-	
+
 	^ { package }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> scannedSource: aString [
 
 	^ Smalltalk compiler parseLiterals: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> slotNameFor: definitionAST [
 
 	^ (definitionAST respondsTo: #receiver)
@@ -350,7 +351,7 @@ RGChunkImporter >> slotNameFor: definitionAST [
 		ifFalse: [ definitionAST value  ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> traitDefinition: aString with: chgRec [
 
 	| tokens trait |
@@ -361,102 +362,102 @@ RGChunkImporter >> traitDefinition: aString with: chgRec [
 	trait category: tokens last
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitClassCommentChunk: aChunk [
 
 	| class comment |
-	
+
 	class := self classNamed: aChunk behaviorName.
 	comment := RGComment parent: class.
 	comment content: aChunk contents.
 	comment author: (RGStampParser authorForStamp: aChunk stamp).
 	comment time: (RGStampParser timeForStamp: aChunk stamp).
-	class comment: comment.
+	class comment: comment
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitClassOrganizationChunk: aChunk [
 
 	"Do nothing with class organizations for the moment"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitDoItChunk: aChunk [
 
 	| contents ast layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames categoryName packageName poolDictionariesNames layoutDefinition slotsDefinition traitsDefinition isTrait hasNilSuperclass |
 
 	contents := aChunk contents trimBoth.
 	(contents endsWith: '!') ifTrue: [ contents := contents allButLast ].
-	
-	ast := RBParser parseExpression: contents onError: [ 
+
+	ast := RBParser parseExpression: contents onError: [
 		doIts add: aChunk.
 		^ self ].
-	
-	layoutClass := selectorParts := superclassName := subclassName := instanceVariableNames := 
-		classVariableNames := categoryName := packageName := poolDictionariesNames := layoutDefinition := 
+
+	layoutClass := selectorParts := superclassName := subclassName := instanceVariableNames :=
+		classVariableNames := categoryName := packageName := poolDictionariesNames := layoutDefinition :=
 		slotsDefinition := traitsDefinition := nil.
-		
+
 	isTrait := false.
-	
+
 	hasNilSuperclass := self isNilSuperclassDefinition: ast.
-	hasNilSuperclass 
-		ifTrue: [ ast := ast statements first ].	
-	
-	(ast isMessage and: [self allowedSelectors includes: ast selector]) ifTrue: [ 
+	hasNilSuperclass
+		ifTrue: [ ast := ast statements first ].
+
+	(ast isMessage and: [self allowedSelectors includes: ast selector]) ifTrue: [
 		superclassName := ast receiver formattedCode.
 		self assert: ast arguments isNotEmpty.
 		selectorParts := ast selector findBetweenSubstrings: {$:}.
-		
-		(superclassName endsWith: ' classTrait') 
+
+		(superclassName endsWith: ' classTrait')
 			ifTrue: [isTrait := true]. "for usage of #uses:"
-		
+
 		"TODO: handle removeSelector:, comment:"
 
 		self if: selectorParts in: ast includes: #subclass do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			layoutClass := RGFixedLayout. ].
 
 		self if: selectorParts in: ast includes: #named do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			isTrait := true.
 			layoutClass := RGFixedLayout. ].
 
 		self if: selectorParts in: ast includes: #immediateSubclass do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			layoutClass := RGImmediateLayout ].
 
 		self if: selectorParts in: ast includes: #variableSubclass do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			layoutClass := RGVariableLayout ].
 
 		self if: selectorParts in: ast includes: #variableByteSubclass do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			layoutClass := RGByteLayout ].
-		
+
 		self if: selectorParts in: ast includes: #variableWordSubclass do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			layoutClass := RGWordLayout ].
 
 		self if: selectorParts in: ast includes: #weakSubclass do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			layoutClass := RGWeakLayout ].
-		
+
 		self if: selectorParts in: ast includes: #ephemeronSubclass do: [:argument |
-			subclassName := argument value. 
+			subclassName := argument value.
 			layoutClass := RGEphemeronLayout ].
-		
+
 		self if: selectorParts in: ast includes: #instanceVariableNames do: [:argument |
 			instanceVariableNames := argument value. ].
 
 		self if: selectorParts in: ast includes: #classVariableNames do: [:argument |
 			classVariableNames := argument value. ].
-		
+
 		self if: selectorParts in: ast includes: #category do: [:argument |
 			categoryName := argument value. ].
 
 		self if: selectorParts in: ast includes: #package do: [:argument |
 			packageName := argument value. ].
-		
+
 		self if: selectorParts in: ast includes: #poolDictionaries do: [:argument |
 			poolDictionariesNames := argument value. ].
 
@@ -468,34 +469,34 @@ RGChunkImporter >> visitDoItChunk: aChunk [
 
 		self if: selectorParts in: ast includes: #uses do: [:argument |
 			traitsDefinition := argument formattedCode. ].
-		
+
 		hasNilSuperclass ifTrue: [superclassName := nil].
-		
+
 		(#(#instanceVariableNames: uses: uses:instanceVariableNames:) includes: ast selector) ifTrue: [ 			subclassName := ast receiver formattedCode asSymbol.
 			superclassName := nil ].
-		
-		(#(CompiledBlock CompiledCode CompiledMethod) includes: subclassName) ifTrue: [ 
+
+		(#(CompiledBlock CompiledCode CompiledMethod) includes: subclassName) ifTrue: [
 			layoutClass := RGCompiledMethodLayout ].
-		
+
 		^ self createBehavior: subclassName
-			superclassName: superclassName 
-			instanceVariableNames: instanceVariableNames 
-			classVariableNames: classVariableNames 
-			categoryName: categoryName 
-			packageName: packageName 
-			poolDictionariesNames: poolDictionariesNames 
-			layoutClass: layoutClass 
-			layoutDefinition: layoutDefinition 
-			slotsDefinition: slotsDefinition 
-			traits: traitsDefinition 
+			superclassName: superclassName
+			instanceVariableNames: instanceVariableNames
+			classVariableNames: classVariableNames
+			categoryName: categoryName
+			packageName: packageName
+			poolDictionariesNames: poolDictionariesNames
+			layoutClass: layoutClass
+			layoutDefinition: layoutDefinition
+			slotsDefinition: slotsDefinition
+			traits: traitsDefinition
 			isTrait: isTrait
 			hasNilSuperclass: hasNilSuperclass.
 	].
 
-	doIts add: aChunk.
+	doIts add: aChunk
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitMethodChunk: aChunk [
 
 	| theClass theMethod theProtocol |
@@ -511,7 +512,7 @@ RGChunkImporter >> visitMethodChunk: aChunk [
 	theMethod time: (RGStampParser timeForStamp: aChunk stamp)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitStyleChunk: aChunk [
 
 	"Do nothing with styles"

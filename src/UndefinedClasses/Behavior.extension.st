@@ -1,13 +1,13 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*UndefinedClasses' }
+{ #category : '*UndefinedClasses' }
 Behavior >> isDefined [
-	
+
 	^ self isUndefined not
 ]
 
-{ #category : #'*UndefinedClasses' }
+{ #category : '*UndefinedClasses' }
 Behavior >> isUndefined [
-	
+
 	^ self instanceSide inheritsFrom: UndefinedClass
 ]

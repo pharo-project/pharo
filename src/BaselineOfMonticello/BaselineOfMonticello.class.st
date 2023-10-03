@@ -2,24 +2,25 @@
 This baseline is used to store information about Monticello packages. It is not directly used for the packages loading during bootstrap.
 "
 Class {
-	#name : #BaselineOfMonticello,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfMonticello
+	#name : 'BaselineOfMonticello',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfMonticello',
+	#package : 'BaselineOfMonticello'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfMonticello class >> corePackageNames [
 
 	^ self packagesOfGroupNamed: #Core
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfMonticello class >> remoteRepositoriesPackageNames [
 
 	^ self packagesOfGroupNamed: #RemoteRepositories
 ]
 
-{ #category : #baseline }
+{ #category : 'baselines' }
 BaselineOfMonticello >> baseline: spec [
 	<baseline>
 
@@ -27,7 +28,7 @@ BaselineOfMonticello >> baseline: spec [
 		spec 
 			package: 'Ring-Definitions-Core';
 			package: 'Ring-Definitions-Containers';
-			package: 'Ring-OldChunkImporter';
+			package: 'Ring-OldChunkImporter' with: [ spec requires: #('Ring-Definitions-Core') ];
 			package: 'Zinc-Resource-Meta-Core';
 			package: 'System-Changes';
 			package: 'Compression';

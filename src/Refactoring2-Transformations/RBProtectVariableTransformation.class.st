@@ -12,12 +12,14 @@ Preconditions:
 overriden from RBAddAccessorsForClassTransformation and RBRemoveDirectAccessToVariableTransformation
 "
 Class {
-	#name : #RBProtectVariableTransformation,
-	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBProtectVariableTransformation',
+	#superclass : 'RBCompositeVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBProtectVariableTransformation >> buildTransformations [
 
 	^ OrderedCollection
@@ -33,8 +35,8 @@ RBProtectVariableTransformation >> buildTransformations [
 				classVariable: isClassVariable)
 ]
 
-{ #category : #printing }
-RBProtectVariableTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBProtectVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -47,10 +49,10 @@ RBProtectVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBProtectVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
 
 	variableName := aVariableName.
 	isClassVariable := aBoolean.
-	className := aClassName.
+	className := aClassName
 ]

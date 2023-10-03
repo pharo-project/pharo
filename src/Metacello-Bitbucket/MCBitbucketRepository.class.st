@@ -1,35 +1,46 @@
 Class {
-	#name : #MCBitbucketRepository,
-	#superclass : #MCPrivateHostableRepository,
-	#category : #'Metacello-Bitbucket'
+	#name : 'MCBitbucketRepository',
+	#superclass : 'MCPrivateHostableRepository',
+	#category : 'Metacello-Bitbucket',
+	#package : 'Metacello-Bitbucket'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCBitbucketRepository class >> basicDescription [
   ^ 'bitbucket'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
+MCBitbucketRepository class >> basicFromUrl: aZnUrl [ 
+	^ self location: aZnUrl asString
+]
+
+{ #category : 'instance creation' }
 MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createBitbucketRepository: aRepositorySpec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCBitbucketRepository class >> defaultHostname [
 	^ 'bitbucket.org'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCBitbucketRepository class >> isAvailableFor: type [
 	^ type = 'bitbucket'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCBitbucketRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   ^ 'https://bitbucket.org/' , projectPath , '/get/' , versionString , '.zip'
 ]
 
-{ #category : #private }
+{ #category : 'accessing' }
+MCBitbucketRepository class >> urlSchemes [
+	^ #(bitbucket)
+]
+
+{ #category : 'private' }
 MCBitbucketRepository >> normalizeTagsData: jsonObject [
   "return a dictionay mapping the tag name to the commit SHA"
 
@@ -54,7 +65,7 @@ MCBitbucketRepository >> normalizeTagsData: jsonObject [
   ^ tagDict
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCBitbucketRepository >> projectTagsUrlFor: projectPath2 [
   ^ 'https://bitbucket.org/api/1.0/repositories/' , projectPath2 , '/tags'
 ]

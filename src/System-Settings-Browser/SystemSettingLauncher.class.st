@@ -2,20 +2,21 @@
 Used to launch a setting
 "
 Class {
-	#name : #SystemSettingLauncher,
-	#superclass : #PragmaSetting,
+	#name : 'SystemSettingLauncher',
+	#superclass : 'PragmaSetting',
 	#instVars : [
 		'script'
 	],
-	#category : #'System-Settings-Browser'
+	#category : 'System-Settings-Browser',
+	#package : 'System-Settings-Browser'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingLauncher >> defaultIcon [
 	^ self iconNamed: #smallDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingLauncher >> inputWidget [
 	^ (self theme
 		newButtonIn: self
@@ -36,24 +37,24 @@ SystemSettingLauncher >> inputWidget [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingLauncher >> launch [
-	self script 
-			ifNotNil: [:s | s isSymbol 
-				ifTrue: [s numArgs = 0 
+	self script
+			ifNotNil: [:s | s isSymbol
+				ifTrue: [s numArgs = 0
 					ifTrue: [self settingReceiver perform: s]
 					ifFalse: [self settingReceiver perform: s with: self]]
-				ifFalse: [s numArgs = 0 
+				ifFalse: [s numArgs = 0
 					ifTrue: [s value]
 					ifFalse: [s value: self]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingLauncher >> script [
 	^ script ifNil: [script := []]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemSettingLauncher >> script: aValuableOrSymbol [
 	script := aValuableOrSymbol
 ]

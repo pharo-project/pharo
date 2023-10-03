@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfHeuristicCompletion,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfHeuristicCompletion
+	#name : 'BaselineOfHeuristicCompletion',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfHeuristicCompletion',
+	#package : 'BaselineOfHeuristicCompletion'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfHeuristicCompletion >> baseline: spec [
 	<baseline>
 	

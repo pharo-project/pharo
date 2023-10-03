@@ -2,12 +2,13 @@
 Unit tests for new ValueHolder
 "
 Class {
-	#name : #NewValueHolderTest,
-	#superclass : #TestCase,
-	#category : #'NewValueHolder-Tests'
+	#name : 'NewValueHolderTest',
+	#superclass : 'TestCase',
+	#category : 'NewValueHolder-Tests',
+	#package : 'NewValueHolder-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 NewValueHolderTest >> testChange [
 	| valueHolder fired |
 	valueHolder := 'word' asValueHolder.
@@ -19,12 +20,12 @@ NewValueHolderTest >> testChange [
 	self assert: valueHolder value equals: 'new'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NewValueHolderTest >> testValuesInBlock [
 	| valueHolder old new ann |
 	valueHolder := 'old' asValueHolder.
 	valueHolder
-		whenChangedDo: [ :newValue :oldValue :a | 
+		whenChangedDo: [ :newValue :oldValue :a |
 			new := newValue.
 			old := oldValue.
 			ann := a ].

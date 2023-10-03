@@ -64,8 +64,8 @@ scrollPaneWidth
 
 "
 Class {
-	#name : #IdentifierChooserMorph,
-	#superclass : #BorderedMorph,
+	#name : 'IdentifierChooserMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'requestor',
 		'labels',
@@ -76,10 +76,12 @@ Class {
 		'scrollPaneWidth',
 		'baseColor'
 	],
-	#category : #'Polymorph-Widgets-Base'
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph class >> allowedArea [
 	"The area allowed for the building and positioning of the morph"
 	| allowedArea |
@@ -88,70 +90,70 @@ IdentifierChooserMorph class >> allowedArea [
 	^allowedArea
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IdentifierChooserMorph class >> example [
 
-	(self 
-		labels: #('aaa' 'bbb' 'ccc') 
+	(self
+		labels: #('aaa' 'bbb' 'ccc')
 		chooseBlock:  [ :currText | currText matches: '*bb'])
 	openInWorld
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IdentifierChooserMorph class >> labels: aCollection chooseBlock: aBlock [
 	"return a new chooser or nil"
 	^ aCollection isEmpty
-		ifFalse: [ self new chooseBlock: aBlock; labels: aCollection; yourself].
+		ifFalse: [ self new chooseBlock: aBlock; labels: aCollection; yourself]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> activate: evt [
 	"Backstop."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> allowedArea [
 	^ self class allowedArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> baseColor [
 	^ baseColor ifNil: [baseColor := self defaultBaseColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> baseColor: aColor [
 	baseColor := aColor.
 	self setColor: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> choiceMenuItems [
 	"Answer the value of choiceMenus"
 
-	^ Array streamContents: [:strm | self choiceMenus  do: [:menu | strm nextPutAll: menu menuItems]].
+	^ Array streamContents: [:strm | self choiceMenus  do: [:menu | strm nextPutAll: menu menuItems]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> choiceMenus [
 	"Answer the value of choiceMenus"
 
 	^ choiceMenus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> choiceMenus: anObject [
 	"Set the value of choiceMenus"
 
 	choiceMenus := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> choicesMorph: aMorph [
 	choicesMorph := aMorph
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 IdentifierChooserMorph >> choose: index [
 	"Set the given choice and ok."
 	| chosen |
@@ -161,35 +163,35 @@ IdentifierChooserMorph >> choose: index [
 	requestor ifNotNil: [requestor takeKeyboardFocus]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> chooseBlock: aBlock [
 	chooseBlock := aBlock
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 IdentifierChooserMorph >> close [
-	self delete.
+	self delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> defaultBaseColor [
 	^ Color transparent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> deleteIfPopUp: evt [
 	"For compatibility with MenuMorph."
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> forcesHeight: aHeight [
 	| sp |
 	(sp := self scrollPane) minHeight: aHeight.
 	sp height: sp minHeight.
- 	self height: sp height.
+ 	self height: sp height
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> handlesKeyboard: evt [
 	"True when either the filter morph doesn't have the focus and the key
 	is a text key or backspace or no menus have the focus and is up or down arrow."
@@ -208,7 +210,7 @@ IdentifierChooserMorph >> handlesKeyboard: evt [
 						or: [evt keyCharacter = Character arrowRight]]]]]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IdentifierChooserMorph >> initialize [
 	super initialize.
 	self borderWidth: 1.
@@ -216,15 +218,15 @@ IdentifierChooserMorph >> initialize [
 	self changeTableLayout.
 	self hResizing: #shrinkWrap.
 	self vResizing: #shrinkWrap.
-	self color: self defaultBaseColor.
+	self color: self defaultBaseColor
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> keyDown: anEvent [
-	anEvent keyCharacter = Character escape 
-		ifTrue: [self close. 
-			requestor 
-				ifNotNil: [requestor takeKeyboardFocus]. 
+	anEvent keyCharacter = Character escape
+		ifTrue: [self close.
+			requestor
+				ifNotNil: [requestor takeKeyboardFocus].
 				^true].
 	anEvent keyCharacter = Character arrowUp ifTrue: [self selectPreviousItem. ^true].
 	anEvent keyCharacter = Character arrowDown ifTrue: [self selectNextItem. ^true].
@@ -235,54 +237,54 @@ IdentifierChooserMorph >> keyDown: anEvent [
 	^false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> keyStroke: anEvent [
 	anEvent keyCharacter = Character space
 		ifTrue: [ ^self processEnter: anEvent ].
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> labels [
 	"Answer the value of labels"
 
 	^ labels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> labels: aCollectionOfString [
 	"Set the value of labels"
 	labels := aCollectionOfString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> listHeight [
 	"Answer the height for the list."
 
 	^ choicesMorph height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> listMorph [
 	"Answer the height for the list."
 
 	^ choicesMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> maxLines [
 	^ maxLines ifNil: [maxLines := 6]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> maxLines: anInteger [
 	maxLines := anInteger
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> newChoiceButtonFor: index [
 	"Answer a new choice button."
-	^ (self labels at: index) 
+	^ (self labels at: index)
 		ifNotNil: [:v | (ToggleMenuItemMorph new
 			contents: v asText;
 			target: self;
@@ -293,7 +295,7 @@ IdentifierChooserMorph >> newChoiceButtonFor: index [
 		ifNil: [MenuLineMorph new]
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> newChoicesMorph [
 
 	"Answer a row of columns of buttons and separators based on the model."
@@ -328,7 +330,7 @@ IdentifierChooserMorph >> newChoicesMorph [
 	^ answer
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> newContentMorph [
 	"Answer a new content morph."
 
@@ -347,14 +349,14 @@ IdentifierChooserMorph >> newContentMorph [
 	^ sp
 ]
 
-{ #category : #'ui-building' }
-IdentifierChooserMorph >> newMenu [ 
+{ #category : 'ui-building' }
+IdentifierChooserMorph >> newMenu [
 	^ self theme
 		newEmbeddedMenuIn: self
 		for: self
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> newMenuWith: menuItems [
 	"Answer menu with the given morphs."
 
@@ -373,7 +375,7 @@ IdentifierChooserMorph >> newMenuWith: menuItems [
 	^ menu
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> newRow [
 	^ AlignmentMorph new
 		listDirection: #leftToRight;
@@ -381,17 +383,17 @@ IdentifierChooserMorph >> newRow [
 		vResizing: #spaceFill;
 		extent: 1@1;
 		borderWidth: 0;
-		color: Color transparent.
+		color: Color transparent
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> newScrollPaneFor: aMorph [
 	^ self theme
 		newScrollPaneIn: self
 		for: aMorph
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> newVerticalSeparator [
 
 	^ SeparatorMorph new
@@ -401,72 +403,72 @@ IdentifierChooserMorph >> newVerticalSeparator [
 		vResizing: #spaceFill
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> oneMenuOfWidth: anInteger [
 	self maxLines: 999999999.
-	scrollPaneWidth := anInteger.
+	scrollPaneWidth := anInteger
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> open [
 	self addMorph: self newContentMorph.
-	self openInWorld.
+	self openInWorld
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> processEnter: anEvent [
-	self choiceMenus do: [:embeddedMenu | 
+	self choiceMenus do: [:embeddedMenu |
 		embeddedMenu selectedItem ifNotNil: [:item |
 			item invokeWithEvent: anEvent.
 			^true ] ].
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> requestor [
 	^ requestor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IdentifierChooserMorph >> requestor: aTextMorph [
 	requestor := aTextMorph
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> scrollPane [
 	"Answer the scroll pane."
 
 	^self findDeeplyA: GeneralScrollPaneMorph
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> selectFirstItem [
 	"Select the first item in the embedded menus"
 
 	self choiceMenus first selectItem:  self choiceMenuItems first event: nil.
-	self takeKeyboardFocus.
+	self takeKeyboardFocus
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> selectLastItem [
 	"Select the last item in the embedded menus"
 
 	self choiceMenus last selectItem:  self choiceMenuItems last event: nil.
-	self activeHand newKeyboardFocus: self.
+	self activeHand newKeyboardFocus: self
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> selectNextItem [
 	"Select the next item in the embedded menus"
 
 	| idx next |
-	self choiceMenus 
-		do: [:embeddedMenu | embeddedMenu menuItems 
+	self choiceMenus
+		do: [:embeddedMenu | embeddedMenu menuItems
 			do: [:mi | ((mi isMenuItemMorph)  and: [mi isSelected])
 				ifTrue: [idx := embeddedMenu menuItems indexOf: mi.
 					idx = embeddedMenu menuItems size
 						ifTrue: [idx := 0].
-					idx := idx + 1. 
+					idx := idx + 1.
 					[(embeddedMenu menuItems at: idx) isMenuItemMorph]
 						whileFalse: [idx := idx+ 1].
 					next := embeddedMenu menuItems at: idx.
@@ -476,48 +478,48 @@ IdentifierChooserMorph >> selectNextItem [
 	self selectFirstItem
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> selectPreviousItem [
 	"Select the previous item in the embedded menus"
 
 	| idx previous |
-	self choiceMenus 
-		do: [:embeddedMenu | embeddedMenu menuItems 
+	self choiceMenus
+		do: [:embeddedMenu | embeddedMenu menuItems
 			do: [:mi | ((mi isMenuItemMorph)  and: [mi isSelected])
 				ifTrue: [idx := embeddedMenu menuItems indexOf: mi.
 					idx = 1
 						ifTrue: [idx := embeddedMenu menuItems size + 1].
-					idx := idx - 1. 
+					idx := idx - 1.
 					[(embeddedMenu menuItems at: idx) isMenuItemMorph]
 						whileFalse: [idx := idx- 1].
 					previous := embeddedMenu menuItems at: idx.
 					self scrollPane ifNotNil: [:sp | sp scrollToShow: previous bounds].
 					^ embeddedMenu selectItem: previous event: nil]]].
-	self selectFirstItem.
+	self selectFirstItem
 ]
 
-{ #category : #'ui-building' }
+{ #category : 'ui-building' }
 IdentifierChooserMorph >> setColor: aColor [
 	self color: aColor.
-	self choiceMenus 
-		ifNotNil: [:menus | menus 
+	self choiceMenus
+		ifNotNil: [:menus | menus
 			do: [:cm | cm color: aColor]]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> switchToNextColumn [
 	"Give the next embedded menu keyboard focus."
 
-	self switchToOtherColumn: [:prevIdx | 
+	self switchToOtherColumn: [:prevIdx |
 		prevIdx =  self choiceMenus size
 				ifTrue: [1]
 				ifFalse: [prevIdx + 1]]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> switchToOtherColumn: aBlock [
 
-	"Give the next embedded menu keyboard focus. 
+	"Give the next embedded menu keyboard focus.
 	The next menu indice is computed by the argument"
 
 	| menuWithFocus idx menu sub subIdx |
@@ -525,9 +527,9 @@ IdentifierChooserMorph >> switchToOtherColumn: aBlock [
 	( self choiceMenus isNil or: [ self choiceMenus isEmpty ] )
 		ifTrue: [ ^ self ].
 	menuWithFocus := self choiceMenus
-		detect: [ :m | 
+		detect: [ :m |
 			m menuItems
-				anySatisfy: [ :sm | 
+				anySatisfy: [ :sm |
 					( sm isMenuItemMorph and: [ sm isSelected ] )
 						ifTrue: [ sub := sm ].
 					sm isSelected
@@ -548,11 +550,11 @@ IdentifierChooserMorph >> switchToOtherColumn: aBlock [
 	self activeHand newKeyboardFocus: self
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 IdentifierChooserMorph >> switchToPreviousColumn [
 	"Give the previous embedded menu keyboard focus."
 
-	self switchToOtherColumn: [:prevIdx | 
+	self switchToOtherColumn: [:prevIdx |
 		prevIdx =  1
 			ifTrue: [self choiceMenus size]
 			ifFalse: [prevIdx - 1]]

@@ -2,15 +2,17 @@
 I represent the no-reference. I implement the null object design pattern.
 "
 Class {
-	#name : #OmNullReference,
-	#superclass : #OmAbstractReference,
+	#name : 'OmNullReference',
+	#superclass : 'OmAbstractReference',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Ombu-Entries'
+	#category : 'Ombu-Entries',
+	#package : 'Ombu',
+	#tag : 'Entries'
 }
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 OmNullReference class >> fromSton: stonReader [
 
 	stonReader parseListDo: [ :each :index | "nothing to read" ].
@@ -18,31 +20,31 @@ OmNullReference class >> fromSton: stonReader [
 	^ self uniqueInstance
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmNullReference class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OmNullReference >> isNull [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OmNullReference >> printOn: aStream [
-	aStream 
+	aStream
 		nextPutAll: 'null:reference'
 ]
 
-{ #category : #'ston persistence' }
-OmNullReference >> stonContainSubObjects [ 
+{ #category : 'ston persistence' }
+OmNullReference >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 OmNullReference >> stonOn: stonWriter [
 
-	stonWriter 
-		writeObject: self 
+	stonWriter
+		writeObject: self
 		streamShortList: [ :writer |  ]
 ]

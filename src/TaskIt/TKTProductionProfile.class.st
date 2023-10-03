@@ -3,24 +3,26 @@ The production profile.
 Deployed applications should use this.
 "
 Class {
-	#name : #TKTProductionProfile,
-	#superclass : #TKTProfile,
-	#category : #'TaskIt-Profiles'
+	#name : 'TKTProductionProfile',
+	#superclass : 'TKTProfile',
+	#category : 'TaskIt-Profiles',
+	#package : 'TaskIt',
+	#tag : 'Profiles'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TKTProductionProfile class >> priority [
 
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTProductionProfile class >> profileName [
-	
+
 	^ #production
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTProductionProfile class >> profileValues [
 
 	^ {(#debugging -> false) .

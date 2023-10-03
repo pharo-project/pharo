@@ -2,16 +2,18 @@
 I am especially designed to contain a list selection (an index + an object)
 "
 Class {
-	#name : #SelectionValueHolder,
-	#superclass : #NewValueHolder,
+	#name : 'SelectionValueHolder',
+	#superclass : 'NewValueHolder',
 	#instVars : [
 		'index',
 		'selection'
 	],
-	#category : #'NewValueHolder-Core-Base'
+	#category : 'NewValueHolder-Core-Base',
+	#package : 'NewValueHolder-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SelectionValueHolder class >> index: indexValueHolder selection: selectionValueHolder [
 
 	^ self new
@@ -20,31 +22,31 @@ SelectionValueHolder class >> index: indexValueHolder selection: selectionValueH
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionValueHolder >> index [
 
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionValueHolder >> index: anIndex [
 
 	index := anIndex.
 	self valueChanged: index
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SelectionValueHolder >> initialize [
 
 	super initialize.
 	index := 0 asValueHolder.
 	selection := nil asValueHolder.
-	
+
 	index whenChangedSend: #valueChanged to: self.
-	selection whenChangedSend: #valueChanged to: self.
+	selection whenChangedSend: #valueChanged to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SelectionValueHolder >> reset [
 
 	self index value: 0.
@@ -52,20 +54,20 @@ SelectionValueHolder >> reset [
 	self valueChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionValueHolder >> selection [
 
 	^ selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionValueHolder >> selection: aSelection [
 
 	selection := aSelection.
 	self valueChanged: selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionValueHolder >> value [
 
 	^ {index. selection}

@@ -2,23 +2,25 @@
 I represent the colored feedback to alert a too long method
 "
 Class {
-	#name : #RubCodeSizeFeedback,
-	#superclass : #RubScrolledTextExtraSurface,
-	#category : #'Rubric-Editing-Widgets'
+	#name : 'RubCodeSizeFeedback',
+	#superclass : 'RubScrolledTextExtraSurface',
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubCodeSizeFeedback class >> key [
 	^ #codeSizeFeedback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCodeSizeFeedback >> alertLimit [
 
 	^ 2 * self warningLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCodeSizeFeedback >> backgroundColor [
 	"Return the current fillStyle of the receiver."
 
@@ -27,13 +29,13 @@ RubCodeSizeFeedback >> backgroundColor [
 	self paragraph ifNil: [ ^Color transparent ].
 	size := self textSize.
 	size >= self warningLimit
-		ifTrue: [ 
+		ifTrue: [
 			|  overshoot transitionSpan transitionColor |
 			transitionSpan := self warningLimit.
 			transitionColor := Color yellow mixed: 0.6 with: basicColor.
 			size >= self alertLimit
 				ifFalse: [ overshoot := size - self warningLimit ]
-				ifTrue: [ 
+				ifTrue: [
 					transitionSpan := self alertLimit - self warningLimit.
 					basicColor := transitionColor mixed: 0.5 with: basicColor.
 					transitionColor := (Color orange mixed: 0.5 with: Color red) mixed: 0.5 with: basicColor.
@@ -61,22 +63,22 @@ RubCodeSizeFeedback >> backgroundColor [
 	^ self normalColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCodeSizeFeedback >> computedPositionFrom: aRectangle [
 	^  ((aRectangle right min: self scrollBounds right) - (self computedWidthFrom: aRectangle)) @ aRectangle top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCodeSizeFeedback >> computedWidthFrom: aRectangle [
-	^  (super computedWidthFrom: aRectangle) min: 50.
+	^  (super computedWidthFrom: aRectangle) min: 50
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubCodeSizeFeedback >> defaultBackgroundColor [
 	^ self backgroundColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubCodeSizeFeedback >> drawOn: aCanvas [
 	| font s |
 	super drawOn: aCanvas.
@@ -91,7 +93,7 @@ RubCodeSizeFeedback >> drawOn: aCanvas [
 		color: self stringColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubCodeSizeFeedback >> drawOnAthensCanvas: anAthensCanvas [
 	| font s bnds |
 	super drawOnAthensCanvas: anAthensCanvas.
@@ -103,30 +105,30 @@ RubCodeSizeFeedback >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas morphicDrawString: s in: bnds font: font color: self stringColor
 ]
 
-{ #category : #geometry }
-RubCodeSizeFeedback >> extent: aPoint [ 
+{ #category : 'geometry' }
+RubCodeSizeFeedback >> extent: aPoint [
 	self updateColor.
 	super extent: aPoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCodeSizeFeedback >> ignoredCharacters [
 
 	^ { Character space. Character tab. Character cr. $.. $;. $:. $'. $(. $) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCodeSizeFeedback >> normalColor [
 	^ Color transparent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCodeSizeFeedback >> scrollerOffsetChanged [
 	self updateColor.
 	super scrollerOffsetChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCodeSizeFeedback >> stringColor [
 	| size |
 	size := self textSize.
@@ -136,39 +138,39 @@ RubCodeSizeFeedback >> stringColor [
 				size >= self alertLimit
 					ifTrue: [ Color red ]
 					ifFalse: [ Color orange ]]
-			ifFalse: [ Color black ].
+			ifFalse: [ Color black ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCodeSizeFeedback >> textChanged [
 	self updateColor.
 	super textChanged
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCodeSizeFeedback >> textSize [
 	| result count ignoredCharacters |
 	result := 0.
 	count := true.
 	ignoredCharacters := self ignoredCharacters.
 	self text string
-		do: [ :char | 
-			result > (self alertLimit * 3) 
+		do: [ :char |
+			result > (self alertLimit * 3)
 				ifTrue: [ ^result ].
 			(#($' $") includes: char)
 				ifTrue: [ count := count not ]
-				ifFalse: [ 
+				ifFalse: [
 					((ignoredCharacters includes: char) not and: [ count ])
 						ifTrue: [ result := result + 1 ] ] ].
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCodeSizeFeedback >> updateColor [
 	self color: self backgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCodeSizeFeedback >> warningLimit [
 
 	^ 350

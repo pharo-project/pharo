@@ -1,49 +1,49 @@
-Extension { #name : #RBParseTreeSearcher }
+Extension { #name : 'RBParseTreeSearcher' }
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeSearcher class >> matchingTreeForMethod: aCompiledMethod [
 
 	| searchCode tree variables |
 	tree := aCompiledMethod ast.
 	searchCode := tree body sourceCode.
-	
+
 	"if there's just a return, remove it"
-	tree body lastIsReturn ifTrue: [ 
+	tree body lastIsReturn ifTrue: [
 		searchCode := searchCode copyReplaceAll: '^' with: '' ].
-	
+
 	"replace arguments by wildcards"
 	variables := tree arguments
 		collect: [ :e | ' ', e name asString ].
 	variables doWithIndex: [ :e :i |
 		searchCode := searchCode copyReplaceAll: e with: '``@a',i asString ].
-	
+
 	^ searchCode
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeSearcher class >> matchingTreeForSubtree: subtree [
 
 	| searchCode argumentNodes |
 	searchCode := subtree formattedCode.
 
 	"if there's just a return, remove it"
-	subtree lastIsReturn ifTrue: [ 
+	subtree lastIsReturn ifTrue: [
 		searchCode := searchCode copyReplaceAll: '^' with: '' ].
-	
+
 	"replace literal values by wildcards"
 	argumentNodes := subtree allChildren
 		select: #isLiteralNode
 		thenCollect: [ :e | ' ', e value printString ].
 	argumentNodes doWithIndex: [ :e :i |
 		searchCode := searchCode
-							copyReplaceAll: e 
+							copyReplaceAll: e
 							with: '``@a',i asString,'`{ :aNode | aNode isArgument }' ].
-	
+
 	^ searchCode
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
-RBParseTreeSearcher class >> treeMatchings: aString in: aParseTree [ 
+{ #category : '*Refactoring2-Transformations' }
+RBParseTreeSearcher class >> treeMatchings: aString in: aParseTree [
 
 	| allMatches |
 	allMatches := OrderedCollection new.
@@ -53,15 +53,12 @@ RBParseTreeSearcher class >> treeMatchings: aString in: aParseTree [
 	^ allMatches
 ]
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParseTreeSearcher class >> whichMethodIn: aCollection matches: subtree [
 
 	| isGetterBlock searchTree |
 	isGetterBlock := self new
-		matchesAnyMethodOf: #(
-			'`method ^ `@aValue`{ :aNode |
-				(aNode isKindOf: RBInstanceVariableNode)
-				or: [ aNode isKindOf: RBLiteralValueNode ] }' )
+		matchesAnyMethodOf: #( '`method ^ `@aValue`{ :aNode | aNode isKindOf: RBLiteralValueNode }' )
 		do: [ :node :answer | true ].
 	searchTree := self matchingTreeForSubtree: subtree.
 

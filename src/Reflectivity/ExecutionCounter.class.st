@@ -7,8 +7,8 @@ To install a watchpoint in a node:
 Class CounterIconStyler then renders an icon in the editor, mouse over it to see the current counter value.
 "
 Class {
-	#name : #ExecutionCounter,
-	#superclass : #Object,
+	#name : 'ExecutionCounter',
+	#superclass : 'Object',
 	#instVars : [
 		'node',
 		'link',
@@ -17,15 +17,17 @@ Class {
 	#classVars : [
 		'Counters'
 	],
-	#category : #'Reflectivity-Breakpoints'
+	#category : 'Reflectivity-Breakpoints',
+	#package : 'Reflectivity',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExecutionCounter class >> allCounters [
 	^ Counters ifNil: [ Counters := WeakKeyDictionary new ]
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 ExecutionCounter class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Reset Counters')
@@ -35,7 +37,7 @@ ExecutionCounter class >> debugWorldMenuOn: aBuilder [
 		action: [ ExecutionCounter resetAll ]
 ]
 
-{ #category : #'system annoucements' }
+{ #category : 'system annoucements' }
 ExecutionCounter class >> handleClassRemoved: anAnnouncement [
 	self allCounters copy do: [ :breakpoint |
 		breakpoint link methods
@@ -43,29 +45,29 @@ ExecutionCounter class >> handleClassRemoved: anAnnouncement [
 			ifFound: [ self allCounters remove: breakpoint ] ]
 ]
 
-{ #category : #'system annoucements' }
+{ #category : 'system annoucements' }
 ExecutionCounter class >> handleMethodModified: anAnnouncement [
 	self removeFromMethod: anAnnouncement oldMethod
 ]
 
-{ #category : #'system annoucements' }
+{ #category : 'system annoucements' }
 ExecutionCounter class >> handleMethodRemoved: anAnnouncement [
 	self removeFromMethod: anAnnouncement method
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExecutionCounter class >> initialize [
 	self registerInterestToSystemAnnouncement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExecutionCounter class >> installOn: aRBProgramNode [
 	^self new
 		node: aRBProgramNode;
-		install.
+		install
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExecutionCounter class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 
@@ -75,82 +77,82 @@ ExecutionCounter class >> registerInterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ExecutionCounter class >> removeAll [
 	self allCounters values do: [ :aWatchpoint| aWatchpoint uninstall].
-	Counters := nil.
+	Counters := nil
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ExecutionCounter class >> removeFrom: aNode [
 
 	(self allCounters at: aNode ifAbsent: [ ^self ]) uninstall
 ]
 
-{ #category : #cleanup }
-ExecutionCounter class >> removeFromMethod: aMethod [ 
+{ #category : 'cleanup' }
+ExecutionCounter class >> removeFromMethod: aMethod [
 	self allCounters copy do: [ :counter |
 		counter link methods
 			detect: [ :m | m == aMethod ]
 			ifFound: [ counter uninstall] ]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ExecutionCounter class >> resetAll [
 	self allCounters values do: [ :counter | counter reset ].
 	Counters := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExecutionCounter >> count [
 	^ count
 ]
 
-{ #category : #counter }
+{ #category : 'counter' }
 ExecutionCounter >> increase [
 	count := count + 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExecutionCounter >> initialize [
 	super initialize.
-	count := 0.
+	count := 0
 ]
 
-{ #category : #'add/remove' }
+{ #category : 'add/remove' }
 ExecutionCounter >> install [
 
-	link := MetaLink new 
+	link := MetaLink new
 				metaObject: self;
 				selector: #increase;
 				options: #(+ optionAnnounce).
 	node link: link.
-	self class allCounters at: node put: self.
+	self class allCounters at: node put: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExecutionCounter >> link [
 	^ link
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExecutionCounter >> node [
 	^ node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExecutionCounter >> node: anObject [
 	node := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExecutionCounter >> reset [
 	count := 0
 ]
 
-{ #category : #'add/remove' }
+{ #category : 'add/remove' }
 ExecutionCounter >> uninstall [
 	node hasExecutionCounter ifFalse: [ ^self ].
 	link uninstall.
-	self class allCounters removeKey: node.
+	self class allCounters removeKey: node
 ]

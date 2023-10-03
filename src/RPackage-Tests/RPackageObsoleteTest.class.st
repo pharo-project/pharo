@@ -2,61 +2,59 @@
 SUnit tests for RPackage
 "
 Class {
-	#name : #RPackageObsoleteTest,
-	#superclass : #RPackageIncrementalTest,
+	#name : 'RPackageObsoleteTest',
+	#superclass : 'RPackageIncrementalTest',
 	#instVars : [
 		'notRun'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #accessing }
-RPackageObsoleteTest >> setNotRun [ 
+{ #category : 'accessing' }
+RPackageObsoleteTest >> setNotRun [
 	notRun := true
 ]
 
-{ #category : #tests }
-RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [	
-	| foo | 	
-	[ notRun := false.
-	  SystemAnnouncer uniqueInstance 
-		when: ClassRemoved send: #setNotRun to: self.
-	foo := self createNewClassNamed: #FooForTest2.
+{ #category : 'tests' }
+RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
+
+	| foo |
+	[
+	notRun := false.
+	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #setNotRun to: self.
+	foo := self newClassNamed: #FooForTest2 in: self p1Name.
 	self deny: notRun.
 	foo removeFromSystem.
-	self assert: notRun ]
-ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
+	self assert: notRun ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
-	
-	| pack method foo | 
-	[
-	pack := self createNewPackageNamed: 'P1'.
-	foo := self createNewClassNamed: #FooForTest inPackage: pack.
-	foo compile: 'bar ^42'.
-	method := foo>>#bar.
 
+	| pack method foo |
+	pack := self ensurePackage: 'P1'.
+	foo := self newClassNamed: #FooForTest in: pack.
+	foo compile: 'bar ^42'.
+	method := foo >> #bar.
+
+	[
 	foo obsolete.
-	self assert: (method packageFromOrganizer: pack organizer) equals: foo package.
-	] ensure: [ 
-		foo ifNotNil: [ 
+	self assert: method package equals: foo package ] ensure: [
+		foo ifNotNil: [
 			foo setName: foo originalName.
-			foo removeFromSystem.
-			].
-		testingEnvironment removeKey: #FooForTest  ifAbsent:  [].
-	]
+			foo removeFromSystem ].
+		testingEnvironment removeKey: #FooForTest ifAbsent: [  ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageObsoleteTest >> testMethodPackageOfRemovedClass [
-	
-	| pack method foo | 
-	pack := self createNewPackageNamed: 'P1'.
-	foo := self createNewClassNamed: #FooForTest2 inPackage: pack.
-	foo compileSilently: 'bar ^42'.
-	method := foo>>#bar.
+
+	| pack method foo |
+	pack := self ensurePackage: 'P1'.
+	foo := self newClassNamed: #FooForTest2 in: pack.
+	foo compile: 'bar ^42'.
+	method := foo >> #bar.
 	foo removeFromSystem.
-	self deny: (pack includesClassNamed: #FooForTest2 )
+	self deny: (pack includesClassNamed: #FooForTest2)
 ]

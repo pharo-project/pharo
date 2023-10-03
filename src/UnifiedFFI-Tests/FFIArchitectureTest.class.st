@@ -2,28 +2,30 @@
 Unit tests for FFI architectures
 "
 Class {
-	#name : #FFIArchitectureTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Architecture'
+	#name : 'FFIArchitectureTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Architecture',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Architecture'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIArchitectureTest >> testAbstractArchitectures [
 
 	self assert: FFIArchitecture isAbstract.
-	self assert: FFI_x86_64 isAbstract.
+	self assert: FFI_x86_64 isAbstract
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIArchitectureTest >> testArchitectureProvided [
 
-	self assert: FFIArchitecture forCurrentArchitecture isNotNil 
+	self assert: FFIArchitecture forCurrentArchitecture isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIArchitectureTest >> testConcreteArchitectures [
 
 	self deny: FFI_i386 isAbstract.
 	self deny: FFI_x86_64_SystemV isAbstract.
-	self deny: FFI_x86_64_Windows isAbstract.
+	self deny: FFI_x86_64_Windows isAbstract
 ]

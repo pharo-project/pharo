@@ -7,45 +7,46 @@ Internal Representation and Key Implementation Points.
 	newName:		<String>
 "
 Class {
-	#name : #SycRenameClassCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'SycRenameClassCommand',
+	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'newName'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #accessing }
-SycRenameClassCommand >> defaultMenuIconName [ 
+{ #category : 'accessing' }
+SycRenameClassCommand >> defaultMenuIconName [
 	^ #edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameClassCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameClassCommand >> execute [
-	
+
 	| refactoring |
-	refactoring := RBRenameClassTransformation
+	refactoring := RBRenameClassRefactoring
 		rename: targetClass name
 		to: newName.
 	refactoring execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameClassCommand >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameClassCommand >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
@@ -55,6 +56,6 @@ SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
 		           initialAnswer: targetClass name
 		           title: 'Rename a class'.
 
-	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [ 
+	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [
 		CmdCommandAborted signal ]
 ]

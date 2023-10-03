@@ -2,48 +2,50 @@
 The service manager keeps a list of the currently installed tests and their state.
 "
 Class {
-	#name : #TKTServiceManager,
-	#superclass : #Object,
+	#name : 'TKTServiceManager',
+	#superclass : 'Object',
 	#instVars : [
 		'services'
 	],
-	#category : #'TaskIt-Services'
+	#category : 'TaskIt-Services',
+	#package : 'TaskIt',
+	#tag : 'Services'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTServiceManager >> initialize [
 
 	super initialize.
-	services := Set new.
+	services := Set new
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 TKTServiceManager >> isDebuggingCompatible [
 	^ true
 ]
 
-{ #category : #purging }
+{ #category : 'purging' }
 TKTServiceManager >> purge [
-	
+
 	services := services select: [ :each | each isRunning ]
 ]
 
-{ #category : #purging }
+{ #category : 'purging' }
 TKTServiceManager >> removeService: aService [
 
-	services remove: aService ifAbsent: [  ].
+	services remove: aService ifAbsent: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTServiceManager >> services [
 	^ services
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTServiceManager >> startService: aService [
 	services
 		detect: [ :any | any name = aService name ]
-		ifFound: [ :s | 
+		ifFound: [ :s |
 			s = aService
 				ifFalse: [ self
 						error:
@@ -51,10 +53,4 @@ TKTServiceManager >> startService: aService [
 								format: {('name' -> aService name)} asDictionary) ] ]
 		ifNone: [ aService launch.
 			services add: aService ]
-]
-
-{ #category : #'start-stop' }
-TKTServiceManager >> stopService: aService [
-
-	aService requestStop
 ]

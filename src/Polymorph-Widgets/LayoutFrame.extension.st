@@ -1,9 +1,9 @@
-Extension { #name : #LayoutFrame }
+Extension { #name : 'LayoutFrame' }
 
-{ #category : #'*Polymorph-Widgets-override' }
+{ #category : '*Polymorph-Widgets-override' }
 LayoutFrame >> minExtentFrom: minExtent [
 	"Return the minimal extent the given bounds can be represented in."
-	
+
 	| width height widthProp heightProp |
 	"calculate proportional area. bottom/right offsets extend in +ve direction."
 	width := minExtent x + leftOffset - rightOffset.

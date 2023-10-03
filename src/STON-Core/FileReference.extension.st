@@ -1,6 +1,6 @@
-Extension { #name : #FileReference }
+Extension { #name : 'FileReference' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 FileReference >> stonOn: stonWriter [
 	self fileSystem isDiskFileSystem
 		ifTrue: [ | diskFilePath |
@@ -8,10 +8,10 @@ FileReference >> stonOn: stonWriter [
 			diskFilePath := path isWorkingDirectory
 				ifTrue: [ '.' ]
 				ifFalse: [ path pathString ].
-			stonWriter 
-				writeObject: self 
-				named: STONFileReference stonName 
+			stonWriter
+				writeObject: self
+				named: STONFileReference stonName
 				listSingleton: diskFilePath ]
-		ifFalse: [ 
+		ifFalse: [
 			super stonOn: stonWriter ]
 ]

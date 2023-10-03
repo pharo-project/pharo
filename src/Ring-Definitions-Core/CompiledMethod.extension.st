@@ -1,18 +1,18 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asActiveRingDefinition [
 	"Retrieves an active RGMethodDefinition object based on the data of the receiver.
 	Source, protocol and stamp are retrieved from the compiled method"
-	
-	^ RGMethodDefinition new 
+
+	^ RGMethodDefinition new
 			name: self selector;
 			parentName: self methodClass name;
-			isMetaSide: self methodClass isMeta;
-			asActive.
+			isMeta: self methodClass isMeta;
+			asActive
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asFullRingDefinition [
 
 	"Retrieves an active RGMethodDefinition which knows its parent <class>.
@@ -25,7 +25,7 @@ CompiledMethod >> asFullRingDefinition [
 	^ rgMethod
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asHistoricalRingDefinition [
 
 	"Retrieves a historical RGMethodDefinition object based on the data of the receiver.
@@ -33,56 +33,56 @@ CompiledMethod >> asHistoricalRingDefinition [
 	| ring |
 	ring := (RGMethodDefinition named: self selector)
 				parentName: self methodClass name;
-				isMetaSide: self methodClass isMeta.
+				isMeta: self methodClass isMeta.
 
 	self sourcePointer isZero
 		ifTrue: [ "this should not happen but sometimes the system looks corrupted"
-			ring protocol: self category;
+			ring protocol: self protocolName;
 				sourceCode: self sourceCode;
 				stamp: self timeStamp ]
-		ifFalse: [ 
+		ifFalse: [
 			ring sourcePointer: self sourcePointer ].
-	ring asHistorical.	
-	
+	ring asHistorical.
+
 	^ ring
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asPassiveRingDefinition [
 	"Retrieves a passive RGMethodDefinition object based on the data of the receiver.
 	Source, protocol and stamp are retrieved from value assigned in creation"
-	
-	^RGMethodDefinition new 
+
+	^RGMethodDefinition new
 		 	name: self selector;
 			parentName: self methodClass name;
-			isMetaSide: self methodClass isMeta;
-			protocol: self category;
+			isMeta: self methodClass isMeta;
+			protocol: self protocolName;
 			sourceCode: self sourceCode;
 			stamp: self timeStamp;
-			asPassive.
+			asPassive
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asRingDefinition [
 	"Retrieves an active RGMethodDefinition object based on the receiver.
 	Note that its class is not converted."
-	
+
 	^ self asActiveRingDefinition
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> methodReference [
 
 	| class selector |
 	class := self methodClass ifNil: [^nil].
 	selector := self selector ifNil: [^nil].
-	^(RGMethodDefinition realClass: class selector: selector) 
+	^(RGMethodDefinition realClass: class selector: selector)
 		package: self package asRingDefinition; yourself
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 CompiledMethod >> realClass [
 	"answer the class that I am installed in"
-	
+
 	^ self methodClass
 ]

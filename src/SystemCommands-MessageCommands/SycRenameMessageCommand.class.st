@@ -8,64 +8,65 @@ Internal Representation and Key Implementation Points.
 	newSignature:		<SycMessageDescription>
 "
 Class {
-	#name : #SycRenameMessageCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
+	#name : 'SycRenameMessageCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSignature'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #requesting }
-SycRenameMessageCommand >> canAddArgs [ 
+{ #category : 'requesting' }
+SycRenameMessageCommand >> canAddArgs [
 	^false
 ]
 
-{ #category : #requesting }
-SycRenameMessageCommand >> canRemoveArgs [ 
+{ #category : 'requesting' }
+SycRenameMessageCommand >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessageCommand >> createRefactoring [
 
 	^ (RBRenameMethodRefactoring
 		model: model
-		renameMethod: originalMessage selector 
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
-		to: newSignature selector 
+		renameMethod: originalMessage selector
+		in:  refactoredClass 
+		to: newSignature selector
 		permutation: newSignature permutation)
 			renameMap: newSignature renameMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuIconName [
 	^#edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> newSignature [
 	^ newSignature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> newSignature: anObject [
 	newSignature := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	newSignature := self requestNewMessageIn: aToolContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessageCommand >> resultMessageSelector [
 	^newSignature selector
 ]

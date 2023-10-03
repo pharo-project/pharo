@@ -2,52 +2,52 @@
 I'm a transformation whose focus is class.  
 "
 Class {
-	#name : #RBClassTransformation,
-	#superclass : #RBTransformation,
+	#name : 'RBClassTransformation',
+	#superclass : 'RBTransformation',
 	#instVars : [
 		'className',
 		'class',
 		'environment'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> className [
-
-	^ className ifNil: [ 
+	self flag: #popUp.
+	^ className ifNil: [
 		self uiManager
 			chooseOrRequestFrom: (self environment allClasses collect: [:each | each name])
 			title: 'Class name was not defined to perform ', self class baseClass name,
 					 '. Please select a class to resume this transformation.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> className: anObject [
 
 	className := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> definingClass [
 
-	^ class ifNil: [ 
-		class := self model 
-					classObjectFor: self className ]
+	^ class ifNil: [ class := self model classObjectFor: self className ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #initialization }
-RBClassTransformation >> initialize [ 
+{ #category : 'initialization' }
+RBClassTransformation >> initialize [
 	super initialize.
 	environment := Smalltalk globals
 ]

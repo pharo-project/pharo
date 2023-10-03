@@ -2,12 +2,14 @@
 A ZLib read stream
 "
 Class {
-	#name : #ZLibReadStream,
-	#superclass : #FastInflateStream,
-	#category : #'Compression-Streams'
+	#name : 'ZLibReadStream',
+	#superclass : 'FastInflateStream',
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZLibReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	"Check the header of the ZLib stream."
 	| method byte |
@@ -21,13 +23,13 @@ ZLibReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	(byte anyMask: 32) ifTrue:[^self error:'Need preset dictionary']
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 ZLibReadStream >> updateCrc: oldCrc from: start to: stop in: aCollection [
 	"Answer an updated CRC for the range of bytes in aCollection"
 	^ Adler32 update: oldCrc from: start to: stop in: aCollection
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 ZLibReadStream >> verifyCrc [
 	| stored |
 	stored := 0.

@@ -1,6 +1,6 @@
-Extension { #name : #ImmediateLayout }
+Extension { #name : 'ImmediateLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 ImmediateLayout class >> mcTypeSymbol [ 	
 	^ #immediate
 ]

@@ -1,14 +1,14 @@
-Extension { #name : #ZnUrl }
+Extension { #name : 'ZnUrl' }
 
-{ #category : #'*STON-Extensions' }
+{ #category : '*STON-Extensions' }
 ZnUrl >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*STON-Extensions' }
+{ #category : '*STON-Extensions' }
 ZnUrl >> stonOn: stonWriter [
-	stonWriter 
-		writeObject: self 
-		named: STONZnUrl stonName 
+	stonWriter
+		writeObject: self
+		named: STONZnUrl stonName
 		listSingleton: self asString
 ]

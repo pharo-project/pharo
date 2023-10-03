@@ -1,10 +1,12 @@
 Class {
-	#name : #RelationSetTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-Examples - Associations'
+	#name : 'RelationSetTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-Examples - Associations',
+	#package : 'Slot-Tests',
+	#tag : 'Examples - Associations'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSetTest >> testCopy [
 	"A copy of an RelationSet should give us a regular Set."
 
@@ -15,11 +17,11 @@ RelationSetTest >> testCopy [
 	self deny: movie actors copy class equals: RelationSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSetTest >> testSelect [
 
 	| movie result |
-	
+
 	movie := SlotExampleMovie named: 'Thelma and Louise'.
 	movie
 		addActor: (SlotExamplePerson named: 'P1') ;
@@ -28,5 +30,5 @@ RelationSetTest >> testSelect [
 	result := movie actors select: [ :e | e name = 'P1' ].
 	self assert: result class equals: Set.
 	self assert: result size equals: 1.
-	self assert: result anyOne name equals: 'P1'.
+	self assert: result anyOne name equals: 'P1'
 ]

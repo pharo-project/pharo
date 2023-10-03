@@ -2,31 +2,32 @@
 A StoredSettingsMergerTest is a test class for testing the behavior of StoredSettingsMerger
 "
 Class {
-	#name : #StoredSettingsMergerTest,
-	#superclass : #TestCase,
+	#name : 'StoredSettingsMergerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'merger'
 	],
-	#category : #'System-Settings-Tests'
+	#category : 'System-Settings-Tests',
+	#package : 'System-Settings-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 StoredSettingsMergerTest >> setUp [
 	super setUp.
-	merger := StoredSettingsMerger new.
+	merger := StoredSettingsMerger new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StoredSettingsMergerTest >> testEmpty [
 	self assertEmpty: merger storedSettings
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StoredSettingsMergerTest >> testStoredSettings [
 	| numberOfNodeSettings |
 	numberOfNodeSettings := MockSettings nodeSettings size.
 	merger addStoredSettings: MockSettings storedSettings.
 	self assert: merger storedSettings size equals: numberOfNodeSettings.
 	merger addStoredSettings: MockSettings storedSettings.
-	self assert: merger storedSettings size equals: numberOfNodeSettings.
+	self assert: merger storedSettings size equals: numberOfNodeSettings
 ]

@@ -18,16 +18,18 @@ Observations about the transformation:
 -  If the method has more than one assignment to the given variable, the transformation will remove the assignment that is more similar to the specified value, in terms of AST nodes.
 "
 Class {
-	#name : #RBRemoveAssignmentTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemoveAssignmentTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'variableName',
 		'value'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveAssignmentTransformation class >> model: aRBModel variable: aVariableName value: anExpression inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -39,7 +41,7 @@ RBRemoveAssignmentTransformation class >> model: aRBModel variable: aVariableNam
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveAssignmentTransformation class >> variable: aVariableName value: anExpression inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -50,30 +52,44 @@ RBRemoveAssignmentTransformation class >> variable: aVariableName value: anExpre
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRemoveAssignmentTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		& (RBCondition
-			withBlock: [ (self definingMethod allChildren
-				select: #isVariable thenCollect: #name)
-				anySatisfy: [ :e | e asString = variableName ] ]
-			errorString: ('Method named <1s> does not have an assignment for variable named <2s>'
-				expandMacrosWith: selector with: variableName))
-		& (RBCondition
-			withBlock: [ (self definingMethod allChildren
-				select: #isAssignment thenCollect: #variable)
-				anySatisfy: [ :e | e name asString = variableName ] ]
-			errorString: ('Method named <1s> does not have an assignment for variable named <2s>'
-				expandMacrosWith: selector with: variableName))
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allChildren
+					    select: #isVariable
+					    thenCollect: #name) anySatisfy: [ :e |
+					   e asString = variableName ] ]
+			   errorString:
+				   ('Method named <1s> does not have an assignment for variable named <2s>'
+					    expandMacrosWith: selector
+					    with: variableName)) & (RBCondition
+		   withBlock: [
+			   (self definingMethod allChildren
+				    select: [ :each | each isAssignment ]
+				    thenCollect: [ :var | var variable ]) anySatisfy: [ :e |
+				   e name asString = variableName ] ]
+		   errorString:
+			   ('Method named <1s> does not have an assignment for variable named <2s>'
+				    expandMacrosWith: selector
+				    with: variableName))
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBRemoveAssignmentTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
+{ #category : 'executing' }
 RBRemoveAssignmentTransformation >> privateTransform [
 	| methodTree valueNode assignments nodeToRemove |
 	methodTree := self definingMethod.
@@ -83,15 +99,15 @@ RBRemoveAssignmentTransformation >> privateTransform [
 		ifTrue: [ assignments first ]
 		ifFalse: [ valueNode := self parserClass parseExpression: value.
 			assignments
-				detectMax: [ :node | 
+				detectMax: [ :node |
 					((node allChildren collect: [:each | each class])
 						intersection: (valueNode allChildren collect: [:each | each class])) size ] ].
 	nodeToRemove parent removeNode: nodeToRemove.
 	class compileTree: methodTree
 ]
 
-{ #category : #printing }
-RBRemoveAssignmentTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBRemoveAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -107,7 +123,7 @@ RBRemoveAssignmentTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveAssignmentTransformation >> variable: aVariableName value: anExpression inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.

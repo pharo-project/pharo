@@ -10,42 +10,43 @@ Usage:
 This will look on every request if there is a file in the local web/ directory if there is a matching file for the URI. If not myRESTHandler gets the request instead
 "
 Class {
-	#name : #ZnStaticFileDecoratorDelegate,
-	#superclass : #Object,
+	#name : 'ZnStaticFileDecoratorDelegate',
+	#superclass : 'Object',
 	#instVars : [
 		'delegate',
 		'staticDelegate'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 ZnStaticFileDecoratorDelegate class >> decorate: aDelegate servingFilesFrom: aPathString [
 	^ self new
 		delegate: aDelegate;
-		path: aPathString 
+		path: aPathString
 ]
 
-{ #category : #accessing }
-ZnStaticFileDecoratorDelegate >> delegate: aServerDelegate [ 
-	delegate := aServerDelegate 
+{ #category : 'accessing' }
+ZnStaticFileDecoratorDelegate >> delegate: aServerDelegate [
+	delegate := aServerDelegate
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnStaticFileDecoratorDelegate >> handleRequest: znRequest [
 	"try to resolve the uri path into a file for response. If not found dispatch the
 	request to the given delegate"
 	| response |
 	(znRequest method = 'GET')
-		ifTrue: [  
+		ifTrue: [
 			response := (staticDelegate handleRequest: znRequest).
-			response isSuccess ifTrue: [ 
+			response isSuccess ifTrue: [
 				^ response  ] ].
 	^ delegate handleRequest: znRequest
 ]
 
-{ #category : #accessing }
-ZnStaticFileDecoratorDelegate >> path: aString [ 
+{ #category : 'accessing' }
+ZnStaticFileDecoratorDelegate >> path: aString [
 	staticDelegate := ZnStaticFileServerDelegate new
-		directory: aString asFileReference 
+		directory: aString asFileReference
 ]

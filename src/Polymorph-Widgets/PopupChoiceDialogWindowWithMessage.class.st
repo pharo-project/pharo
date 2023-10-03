@@ -9,43 +9,45 @@ UIManager default inform:
                 title: 'PopupChoiceDialogWindowWithMessage example').
 "
 Class {
-	#name : #PopupChoiceDialogWindowWithMessage,
-	#superclass : #PopupChoiceDialogWindow,
+	#name : 'PopupChoiceDialogWindowWithMessage',
+	#superclass : 'PopupChoiceDialogWindow',
 	#instVars : [
 		'textMorph',
 		'iconMorph',
 		'textFont',
 		'message'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> icon [
 	"Answer an icon for the receiver."
 
 	^ self iconNamed: #question
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> iconMorph [
 	"Answer the value of iconMorph"
 
 	^ iconMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> iconMorph: anObject [
 	"Set the value of iconMorph"
 
 	iconMorph := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PopupChoiceDialogWindowWithMessage >> initialExtent [
 	"Answer the initial extent for the receiver.
 	Adjust the text if the text	would be wider than 1/2 the display width."
-	
+
 	|ext|
 	ext := super initialExtent.
 	self textMorph width > (Display width // 2) ifTrue: [
@@ -57,19 +59,19 @@ PopupChoiceDialogWindowWithMessage >> initialExtent [
 	^ext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> message [
-	
+
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> message: aStringOrText [
-	
+
 	message := aStringOrText
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PopupChoiceDialogWindowWithMessage >> newContentMorph [
 	| top bottom |
 	self textMorph: self newTextMorph.
@@ -77,27 +79,27 @@ PopupChoiceDialogWindowWithMessage >> newContentMorph [
 	self iconMorph: self newIconMorph.
 	top := self newRow: {self iconMorph. self textMorph}.
 	bottom := super newContentMorph.
-	^ self newGroupboxFor: (self newColumn: {top. bottom}).
+	^ self newGroupboxFor: (self newColumn: {top. bottom})
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PopupChoiceDialogWindowWithMessage >> newIconMorph [
 	"Answer an icon for the receiver."
-	
+
 	^ImageMorph new form: self icon
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PopupChoiceDialogWindowWithMessage >> newTextMorph [
 	"Answer a text morph."
-	
+
 	^self newText: ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> text: aStringOrText [
 	"Set the text."
-	
+
 	|t|
 	t := aStringOrText isString
 		ifTrue: [aStringOrText asText addAttribute: (TextFontReference toFont: self textFont); yourself]
@@ -106,28 +108,28 @@ PopupChoiceDialogWindowWithMessage >> text: aStringOrText [
 	self textMorph newContents: t
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> textFont [
 	"Answer the text font."
-	
+
 	^textFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> textFont: aFont [
 	"Set the text font."
-	
+
 	textFont :=  aFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> textMorph [
 	"Answer the value of textMorph"
 
 	^ textMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceDialogWindowWithMessage >> textMorph: anObject [
 	"Set the value of textMorph"
 

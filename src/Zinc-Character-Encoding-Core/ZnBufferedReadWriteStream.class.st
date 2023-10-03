@@ -12,24 +12,25 @@ I can wrap both binary or character streams and act accordingly.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnBufferedReadWriteStream,
-	#superclass : #Object,
+	#name : 'ZnBufferedReadWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'readStream',
 		'writeStream',
 		'lastRead'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnBufferedReadWriteStream class >> on: writeStream [
 	^ self basicNew
 		on: writeStream;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnBufferedReadWriteStream class >> on: readStream do: block [
 	"Execute block with as argument a ZnBufferedReadStream on readStream.
 	Return the value of block."
@@ -37,205 +38,204 @@ ZnBufferedReadWriteStream class >> on: readStream do: block [
 	^ block value: (self on: readStream)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadWriteStream >> atEnd [
-	
+
 	^ self readingActionDo: [ readStream atEnd ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> close [
-	
+
 	writeStream flush.
-	writeStream close.
+	writeStream close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadWriteStream >> closed [
 	^ readStream closed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> flush [
-	
+
 	self writingActionDo: [ writeStream flush ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadWriteStream >> isBinary [
-	
+
 	^ readStream isBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadWriteStream >> isReadOnly [
-	
+
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadWriteStream >> isStream [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> next [
-	
-	^ self readingActionDo: [ 
+
+	^ self readingActionDo: [
 		readStream next ]
 ]
 
-{ #category : #accessing }
-ZnBufferedReadWriteStream >> next: anInteger [ 
-	
-	^ self readingActionDo: [ 
+{ #category : 'accessing' }
+ZnBufferedReadWriteStream >> next: anInteger [
+
+	^ self readingActionDo: [
 		readStream next: anInteger ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> next: count putAll: collection [
 
-	self writingActionDo: [ 
+	self writingActionDo: [
 		writeStream next: count putAll: collection ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> next: count putAll: collection startingAt: offset [
-	
+
 	self writingActionDo: [
 		writeStream next: count putAll: collection startingAt: offset ]
 ]
 
-{ #category : #accessing }
-ZnBufferedReadWriteStream >> nextPut: aCharacter [ 
-	
+{ #category : 'accessing' }
+ZnBufferedReadWriteStream >> nextPut: aCharacter [
+
 	self writingActionDo: [ writeStream nextPut: aCharacter ]
 ]
 
-{ #category : #accessing }
-ZnBufferedReadWriteStream >> nextPutAll: aString [ 
-	
+{ #category : 'accessing' }
+ZnBufferedReadWriteStream >> nextPutAll: aString [
+
 	^ self writingActionDo: [ writeStream nextPutAll: aString ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnBufferedReadWriteStream >> on: aStream [
 
 	lastRead := true.
 	readStream := ZnBufferedReadStream on: aStream.
-	writeStream := ZnBufferedWriteStream on: aStream.
+	writeStream := ZnBufferedWriteStream on: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> peek [
-	
-	^ self readingActionDo: [ 
+
+	^ self readingActionDo: [
 		readStream peek ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> position [
-	
+
 	^ lastRead
 		ifTrue: [ readStream position ]
 		ifFalse: [ writeStream position ]
 ]
 
-{ #category : #accessing }
-ZnBufferedReadWriteStream >> position: anInteger [ 
-	
-	self writingActionDo: [ 
+{ #category : 'accessing' }
+ZnBufferedReadWriteStream >> position: anInteger [
+
+	self writingActionDo: [
 		writeStream position: anInteger ]
-	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> readInto: collection startingAt: offset count: requestedCount [
-	
-	^ self readingActionDo: [ 
+
+	^ self readingActionDo: [
 		readStream readInto: collection startingAt: offset count: requestedCount ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedReadWriteStream >> readingActionDo: aBlock [
 
 	"Reading from the read stream.
-	We should 
+	We should
 	 - flush the write stream
 	 - discard the read buffer (which may contain incorrect data).
 	 - and then perform the read."
-	
-	lastRead ifFalse: [ 
+
+	lastRead ifFalse: [
 		writeStream flush.
 		readStream discardBuffer ].
 	^ aBlock ensure: [ lastRead := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> setToEnd [
-	
-	^ self writingActionDo: [ 
+
+	^ self writingActionDo: [
 		writeStream setToEnd ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> size [
 	^ readStream size
 ]
 
-{ #category : #'initialize-release' }
-ZnBufferedReadWriteStream >> sizeBuffer: anInteger [ 
-	
+{ #category : 'initialize-release' }
+ZnBufferedReadWriteStream >> sizeBuffer: anInteger [
+
 	readStream sizeBuffer: anInteger.
-	writeStream sizeBuffer: anInteger.
+	writeStream sizeBuffer: anInteger
 ]
 
-{ #category : #accessing }
-ZnBufferedReadWriteStream >> skip: anInteger [ 
-	
-	self readingActionDo: [ 
+{ #category : 'accessing' }
+ZnBufferedReadWriteStream >> skip: anInteger [
+	anInteger < 0 ifTrue: [ self error: 'cannot skip backwards' ].
+	self readingActionDo: [
 		readStream skip: anInteger ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> truncate [
-	
+
 	self writingActionDo: [ writeStream truncate ]
 ]
 
-{ #category : #accessing }
-ZnBufferedReadWriteStream >> truncate: anInteger [ 
-	
+{ #category : 'accessing' }
+ZnBufferedReadWriteStream >> truncate: anInteger [
+
 	self writingActionDo: [ writeStream truncate: anInteger ]
 ]
 
-{ #category : #accessing }
-ZnBufferedReadWriteStream >> upTo: aCharacter [ 
-	
+{ #category : 'accessing' }
+ZnBufferedReadWriteStream >> upTo: aCharacter [
+
 	^ self readingActionDo: [ readStream upTo: aCharacter ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> upToEnd [
-	
+
 	^ self readingActionDo: [ readStream upToEnd ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> wrappedStream [
 
 	^ readStream wrappedStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadWriteStream >> writingActionDo: aBlock [
-	
+
 	"Writing to the write stream.
-	We should 
+	We should
 	 - write the write stream
 	 - discard the read buffer (which may contain incorrect data)"
-	lastRead ifTrue: [ 
+	lastRead ifTrue: [
 		writeStream discardBuffer ].
 	readStream discardBuffer.
 	^ aBlock ensure: [ lastRead := false ]

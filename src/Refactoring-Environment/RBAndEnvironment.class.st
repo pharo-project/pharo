@@ -6,119 +6,116 @@ Do not construct instances of me directly, use method #& for two existing enviro
 env1 & env2 -> a RBAndEnvironment.
 "
 Class {
-	#name : #RBAndEnvironment,
-	#superclass : #RBCompositeEnvironment,
-	#category : #'Refactoring-Environment'
+	#name : 'RBAndEnvironment',
+	#superclass : 'RBCompositeEnvironment',
+	#category : 'Refactoring-Environment',
+	#package : 'Refactoring-Environment'
 }
 
-{ #category : #'instance creation' }
-RBAndEnvironment class >> onEnvironment: anEnvironment and: anotherEnvironment [ 
+{ #category : 'instance creation' }
+RBAndEnvironment class >> onEnvironment: anEnvironment and: anotherEnvironment [
 	^(self onEnvironment: anEnvironment)
 		andedEnvironment: anotherEnvironment;
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAndEnvironment >> andedEnvironment [
 	^ otherEnvironment
 ]
 
-{ #category : #initialization }
-RBAndEnvironment >> andedEnvironment: aBrowserEnvironment [ 
+{ #category : 'initialization' }
+RBAndEnvironment >> andedEnvironment: aBrowserEnvironment [
 	otherEnvironment := aBrowserEnvironment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAndEnvironment >> classes [
 	^ environment classes & self andedEnvironment classes
 ]
 
-{ #category : #accessing }
-RBAndEnvironment >> classesDo: aBlock [ 
-	environment 
+{ #category : 'accessing' }
+RBAndEnvironment >> classesDo: aBlock [
+	environment
 		classesDo: [:each | (self includesClass: each) ifTrue: [aBlock value: each]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAndEnvironment >> definesClass: aClass [
-	^ (environment definesClass: aClass) and: [ 
+	^ (environment definesClass: aClass) and: [
 		self andedEnvironment definesClass: aClass ]
 ]
 
-{ #category : #testing }
-RBAndEnvironment >> includesCategory: aCategory [ 
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
-RBAndEnvironment >> includesClass: aClass [ 
+{ #category : 'testing' }
+RBAndEnvironment >> includesClass: aClass [
 	| doesntHaveSelectors |
 	(environment includesClass: aClass) ifFalse: [^false].
 	(self andedEnvironment includesClass: aClass) ifFalse: [^false].
 	doesntHaveSelectors := true.
 	environment selectorsForClass: aClass
-		do: 
-			[:each | 
+		do:
+			[:each |
 			doesntHaveSelectors := false.
 			(self andedEnvironment includesSelector: each in: aClass) ifTrue: [^true]].
 	^doesntHaveSelectors
 ]
 
-{ #category : #testing }
-RBAndEnvironment >> includesProtocol: aProtocol in: aClass [ 
-	^ (environment includesProtocol: aProtocol in: aClass)
-		and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
+{ #category : 'testing' }
+RBAndEnvironment >> includesProtocol: aProtocol in: aClass [
+
+	^ (environment includesProtocol: aProtocol in: aClass) and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
 ]
 
-{ #category : #testing }
-RBAndEnvironment >> includesSelector: aSelector in: aClass [ 
-	^(environment includesSelector: aSelector in: aClass) 
+{ #category : 'testing' }
+RBAndEnvironment >> includesSelector: aSelector in: aClass [
+	^(environment includesSelector: aSelector in: aClass)
 		and: [ self andedEnvironment includesSelector: aSelector in: aClass ]
 ]
 
-{ #category : #printing }
+{ #category : 'accessing' }
+RBAndEnvironment >> methodsForClass: aClass do: aBlock [
+
+	environment methodsForClass: aClass do: [ :method | (self andedEnvironment includesSelector: method selector in: aClass) ifTrue: [ aBlock value: method ] ]
+]
+
+{ #category : 'printing' }
 RBAndEnvironment >> operator [
 	^ ' & '
 ]
 
-{ #category : #accessing }
-RBAndEnvironment >> packages [
-	^ environment packages & self andedEnvironment packages
-]
-
-{ #category : #printing }
-RBAndEnvironment >> printOn: aStream [ 
+{ #category : 'printing' }
+RBAndEnvironment >> printOn: aStream [
 	environment printOn: aStream.
 	aStream nextPutAll: self operator.
-	self andedEnvironment printOn: aStream.
+	self andedEnvironment printOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAndEnvironment >> problemCount [
-	^environment isClassEnvironment 
+	^environment isClassEnvironment
 		ifTrue: [self numberClasses]
 		ifFalse: [super problemCount]
 ]
 
-{ #category : #accessing }
-RBAndEnvironment >> selectionIntervalFor: aString [ 
+{ #category : 'accessing' }
+RBAndEnvironment >> selectionIntervalFor: aString [
 	| interval |
 	interval := super selectionIntervalFor: aString.
 	interval ifNotNil: [^interval].
 	^ self andedEnvironment selectionIntervalFor: aString
 ]
 
-{ #category : #accessing }
-RBAndEnvironment >> selectorsForClass: aClass do: aBlock [ 
+{ #category : 'accessing' }
+RBAndEnvironment >> selectorsForClass: aClass do: aBlock [
 	environment selectorsForClass: aClass
-		do: 
-			[:each | 
-			(self andedEnvironment includesSelector: each in: aClass) 
+		do:
+			[:each |
+			(self andedEnvironment includesSelector: each in: aClass)
 				ifTrue: [aBlock value: each]]
 ]
 
-{ #category : #printing }
-RBAndEnvironment >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBAndEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	environment storeOn: aStream.
 	aStream nextPutAll: ' & '.

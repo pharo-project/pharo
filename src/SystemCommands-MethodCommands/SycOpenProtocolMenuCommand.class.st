@@ -1,20 +1,21 @@
 Class {
-	#name : #SycOpenProtocolMenuCommand,
-	#superclass : #SycOpenContextMenuCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycOpenProtocolMenuCommand',
+	#superclass : 'SycOpenContextMenuCommand',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
-SycOpenProtocolMenuCommand >> activationStrategy [ 
+{ #category : 'execution' }
+SycOpenProtocolMenuCommand >> activationStrategy [
 	^ SycProtocolMenuActivation
 ]
 
-{ #category : #'context menu' }
-SycOpenProtocolMenuCommand >> cmCommandClass [ 
+{ #category : 'context menu' }
+SycOpenProtocolMenuCommand >> cmCommandClass [
 	^ SycProtocolCmCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycOpenProtocolMenuCommand >> defaultMenuItemName [
 	^'Scope'
 ]

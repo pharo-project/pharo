@@ -12,18 +12,20 @@ This refactoring will
 - replace every sender of the prior method with the new one, using the specified default argument.
 "
 Class {
-	#name : #RBAddParameterRefactoring,
-	#superclass : #RBChangeMethodNameRefactoring,
+	#name : 'RBAddParameterRefactoring',
+	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
 		'newArgs',
 		'senders'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
-RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [ 
-	^ self new 
+{ #category : 'instance creation' }
+RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [
+	^ self new
 		addParameterToMethod: aSelector
 		in: aClass
 		newSelector: newSelector
@@ -31,8 +33,8 @@ RBAddParameterRefactoring class >> addParameterToMethod: aSelector in: aClass ne
 		newArgs: aColl2
 ]
 
-{ #category : #'instance creation' }
-RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [ 
+{ #category : 'instance creation' }
+RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSelector in: aClass newSelector: newSelector permutation: aColl1 newArgs: aColl2 [
 	^ self new
 		model: aRBSmalltalk;
 		addParameterToMethod: aSelector
@@ -43,23 +45,23 @@ RBAddParameterRefactoring class >> model: aRBSmalltalk addParameterToMethod: aSe
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelector: newSel permutation: aColl1 newArgs: aColl2 [
-	self 
+	self
 		renameMethod: aSelector
 		in: aClass
 		to: newSel
 		permutation: aColl1.
-	newArgs := aColl2.
+	newArgs := aColl2
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> checkSendersAccessTo: name [
 
 	(#('self' 'super') includes: name) ifTrue: [ ^ self ].
 	self senders
 		detect: [ :each | (self canReferenceVariable: name in: each) not ]
-		ifFound: [ :violatorClass | 
+		ifFound: [ :violatorClass |
 			self
 				refactoringError:
 					('<1s> doesn''t appear to be defined in <2p>'
@@ -67,132 +69,93 @@ RBAddParameterRefactoring >> checkSendersAccessTo: name [
 						with: violatorClass) ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
-
 	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var'
-		do: [ :aNode :answer | 
+		do: [ :aNode :answer |
 			| name |
-
 			name := aNode name.
-			( aNode whoDefines: name ) ifNil: [ self checkSendersAccessTo: name ]
-			].
+			(aNode whoDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| argNames index |
 	argNames := newArgs collect: [ :arg | | newArg |
 		newArg := self safeVariableNamed: arg newName for: aClass temporaries: (parseTree temporaryNames, parseTree argumentNames).
 	index := 0.
 		newArg ].
-	parseTree 
+	parseTree
 		renameSelector: newSelector
-		andArguments: ((permutation 
+		andArguments: ((permutation
 			collect: [ :e | parseTree argumentNames at: e ifAbsent: [ index := index +1.
-				argNames at: index	] ]) 
+				argNames at: index	] ])
 				collect: [:e | RBVariableNode named: e ]).
-	self renameArgumentsIn: parseTree.
+	self renameArgumentsIn: parseTree
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> myConditions [
-	^RBCondition withBlock: 
-		[oldSelector numArgs < newSelector numArgs 
-			ifFalse: 
-				[self refactoringFailure: newSelector printString, 
+	^RBCondition withBlock:
+		[oldSelector numArgs < newSelector numArgs
+			ifFalse:
+				[self refactoringError: newSelector printString,
 				' doesn''t have the proper number of arguments.'].
-		self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg value1 ].
+		self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
 		true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddParameterRefactoring >> newArgs [
 	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
-{ #category : #private }
-RBAddParameterRefactoring >> newSelectorString [
-	| stream keywords indexNewArgs |
-	stream := WriteStream on: String new.
-	keywords := newSelector keywords.
-	indexNewArgs := 0.
-	permutation
-		doWithIndex: 
-			[:each :index |
-			stream nextPutAll: (keywords at: index).
-			each < 0
-				ifTrue: 
-					[ indexNewArgs := indexNewArgs - 1.
-					stream
-						nextPut: $(;
-						nextPutAll: (newArgs at: indexNewArgs * -1) value1;
-						nextPut: $)]
-				ifFalse: 
-					[stream
-						nextPutAll: ' ``@arg';
-						nextPutAll: each printString].
-			stream nextPut: $ ].
-	^stream contents
-]
-
-{ #category : #private }
-RBAddParameterRefactoring >> parseTreeRewriter [
-	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
-	oldString := self buildSelectorString: oldSelector.
-	newString := self newSelectorString.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^rewriteRule
-]
-
-{ #category : #action }
+{ #category : 'action' }
 RBAddParameterRefactoring >> renameArgumentsIn: parseTree [
 	| newArgNames |
-	newArgNames := newArgs collect: [ :arg | arg name ].	
+	newArgNames := newArgs collect: [ :arg | arg name ].
 	self renameMap do: [ :arg |
-		(newArgNames includes: arg name) ifFalse: [ 
+		(newArgNames includes: arg name) ifFalse: [
 		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
 	] ]
 ]
 
-{ #category : #private }
-RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars [ 
+{ #category : 'private' }
+RBAddParameterRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars [
 	| baseString index newString |
 	newString := baseString := 'anObject'.
 	index := 0.
-	
-	[(allTempVars includes: newString) 
-		or: [aClass definesInstanceVariable: newString]] 
-			whileTrue: 
+
+	[(allTempVars includes: newString)
+		or: [aClass definesInstanceVariable: newString]]
+			whileTrue:
 				[index := index + 1.
 				newString := baseString , index printString].
 	^newString
 ]
 
-{ #category : #private }
-RBAddParameterRefactoring >> safeVariableNamed: argName for: aClass temporaries: allTempVars [ 
+{ #category : 'private' }
+RBAddParameterRefactoring >> safeVariableNamed: argName for: aClass temporaries: allTempVars [
 	| baseString index newString |
-	((allTempVars includes: argName) 
+	((allTempVars includes: argName)
 		or: [aClass definesInstanceVariable: argName]) ifFalse: [ ^ argName ].
 	newString := baseString := 'anObject'.
 	index := 0.
-	
-	[(allTempVars includes: newString) 
-		or: [aClass definesInstanceVariable: newString]] 
-			whileTrue: 
+
+	[(allTempVars includes: newString)
+		or: [aClass definesInstanceVariable: newString]]
+			whileTrue:
 				[index := index + 1.
 				newString := baseString , index printString].
 	^newString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddParameterRefactoring >> senders [
 
 	senders
@@ -202,15 +165,15 @@ RBAddParameterRefactoring >> senders [
 	^ senders
 ]
 
-{ #category : #printing }
-RBAddParameterRefactoring >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBAddParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' addParameterToMethod: #';
 		nextPutAll: oldSelector;
 		nextPutAll: ' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.
 	aStream
 		nextPutAll: ' newSelector: #';
 		nextPutAll: newSelector;
@@ -219,16 +182,16 @@ RBAddParameterRefactoring >> storeOn: aStream [
 		nextPutAll: ' newArgs: '''.
 	newArgs storeOn: aStream.
 	aStream
-		nextPutAll: ''')'.
+		nextPutAll: ''')'
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddParameterRefactoring >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass
 		parseExpression: initializer
-		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because:.', msg ].
+		onError: [ :msg :index | self refactoringError: 'Illegal initialization code because:.', msg ].
 	tree isValue
-		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
-	self checkVariableReferencesIn: tree.
+		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
+	self checkVariableReferencesIn: tree
 ]

@@ -2,16 +2,18 @@
 I am an in-memory store of entries.
 "
 Class {
-	#name : #OmMemoryStore,
-	#superclass : #OmStore,
+	#name : 'OmMemoryStore',
+	#superclass : 'OmStore',
 	#instVars : [
 		'entries',
 		'globalName'
 	],
-	#category : #'Ombu-Stores'
+	#category : 'Ombu-Stores',
+	#package : 'Ombu',
+	#tag : 'Stores'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmMemoryStore class >> named: aGlobalName [
 
 	^ self basicNew
@@ -19,37 +21,38 @@ OmMemoryStore class >> named: aGlobalName [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmMemoryStore class >> new [
 
 	^ self named: UUID new asString36
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmMemoryStore class >> withAllContents: aCollection [
 	| entries |
 	entries := aCollection collect: [ :each | OmEntry content: each ].
 	^ self withAllEntries: entries
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmMemoryStore class >> withAllEntries: aCollection [
-	^ self new
-		in: [ :store | aCollection do: [ :entry | store newEntry: entry ] ];
-		yourself
+	| store |
+	store := self new. 
+	aCollection do: [ :entry | store newEntry: entry ].
+	^ store 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmMemoryStore >> entries [
 	^ entries
 ]
 
-{ #category : #enumerating }
-OmMemoryStore >> entriesDo: aBlockClosure [ 
+{ #category : 'enumerating' }
+OmMemoryStore >> entriesDo: aBlockClosure [
 	entries do: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmMemoryStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
 	| entry |
@@ -59,16 +62,16 @@ OmMemoryStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: a
 	entry := entries
 		at: aReference localName asInteger
 		ifAbsent: [ ^ absentBlockClosure value ].
-		
+
 	^ presentBlockClosure cull: entry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmMemoryStore >> globalName [
 	^ globalName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmMemoryStore >> headReference [
 	"Answer a reference to the last entry added to this store, or OmNullReference uniqueInstance when empty."
 
@@ -77,33 +80,33 @@ OmMemoryStore >> headReference [
 		ifNotEmpty: [ self referenceTo: entries last ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmMemoryStore >> initializeWithGlobalName: aName [
 
 	self initialize.
 	globalName := aName.
-	
-	entries := OrderedCollection new.
+
+	entries := OrderedCollection new
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OmMemoryStore >> newEntry: anEntry [
 
 	| localName newReference |
 	localName := (entries size + 1) asString.
 	newReference := self referenceToLocalName: localName.
 	anEntry tags at: self selfReferenceKey put: newReference.
-	entries add: anEntry.
+	entries add: anEntry
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmMemoryStore >> refresh [
 	"Nothing to refresh"
-	
+
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmMemoryStore >> writingFileReference [
 	"Stub"
 

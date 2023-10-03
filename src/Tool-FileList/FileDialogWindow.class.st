@@ -2,8 +2,8 @@
 Dialog based file chooser for selecting or saving files. Supports various types of answer (file stream, file name, directory path etc) with optional extension filters and image or text file preview.
 "
 Class {
-	#name : #FileDialogWindow,
-	#superclass : #DialogWindowMorph,
+	#name : 'FileDialogWindow',
+	#superclass : 'DialogWindowMorph',
 	#instVars : [
 		'directoryTreeMorph',
 		'fileListMorph',
@@ -23,114 +23,115 @@ Class {
 		'previewMorph',
 		'preferredFileSystem'
 	],
-	#category : #'Tool-FileList'
+	#category : 'Tool-FileList',
+	#package : 'Tool-FileList'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 FileDialogWindow class >> example [
 	<example>
 	(self onFileSystem: FileSystem disk) open
 ]
 
-{ #category : #'initialize - release' }
+{ #category : 'initialize - release' }
 FileDialogWindow class >> onFileSystem: aFileSystem [
 	^ self basicNew
 		initializeOn: aFileSystem;
 		yourself
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 FileDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallOpen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> actionSelector [
 	"Answer the value of actionSelector"
 
 	^ actionSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> actionSelector: anObject [
 	"Set the value of actionSelector"
 
 	actionSelector := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> addInitialPanel [
 	super addInitialPanel.
 	self selectDirectory: self preferredFileSystem workingDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> answer [
 	"Answer the result of performing the action selector."
-	
+
 	self cancelled ifTrue: [^nil].
 	^answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> answer: anObject [
 	"Set the answer."
-	
+
 	answer := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> answerDirectory [
 	"Set the receiver to answer a directory."
-	
+
 	self actionSelector: #selectedAnyFileDirectory.
 	self fileSelectionBlock: self directoryFileSelectionBlock.
 	self changed: #okEnabled
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> answerFileEntry [
 	"Set the receiver to answer the selected file entry."
-	
+
 	self actionSelector: #selectedFileEntry.
 	self changed: #okEnabled
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> answerFileName [
 	"Set the receiver to answer the selected file name."
-	
+
 	self actionSelector: #selectedFileName.
 	self changed: #okEnabled
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> answerOpenFile [
 	"Set the receiver to answer a new file stream on an existing file."
-	
+
 	self actionSelector: #openSelectedFile.
 	self changed: #okEnabled
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> answerPathName [
 	"Set the receiver to answer the selected path name."
-	
+
 	self actionSelector: #selectedPathName.
 	self changed: #okEnabled
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> answerSaveFile [
 	"Set the receiver to answer a new file stream."
-	
+
 	self actionSelector: #saveSelectedFile.
 	self changed: #okEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> cache: dir [
 	"Cache the contents of the given directory and answer them."
 
@@ -142,7 +143,7 @@ FileDialogWindow >> cache: dir [
 	^self entryCache
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> clearEntryCache [
 	"Clear the entry cache."
 
@@ -151,36 +152,36 @@ FileDialogWindow >> clearEntryCache [
 		entryCacheDirectory: nil
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> confirmDeleteDirectoryEntry: entry [
 	(self proceed: 'Are you sure you wish to delete the\selected directory along with its files?' withCRs translated
 	      title: 'Delete Directory' translated)
 		ifTrue: [ self deleteDirectoryEntry: entry ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> confirmDeleteFileEntry: entry [
 	(self
 		 proceed: 'Are you sure you wish to delete the\file' withCRs translated , ' "' , entry name , '"?'
-		 title: 'Delete File' translated) 
+		 title: 'Delete File' translated)
 		ifTrue: [ self deleteFileEntry: entry ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> defaultExtension [
 	"Answer the value of defaultExtension"
 
 	^ defaultExtension
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> defaultExtension: anObject [
 	"Set the value of defaultExtension"
 
 	defaultExtension := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> defaultFileSelectionBlock [
 	"Answer the default file selection block."
 
@@ -190,7 +191,7 @@ FileDialogWindow >> defaultFileSelectionBlock [
 			ifFalse: [self fileNamePattern match: entry basename]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> defaultFileSortBlock [
 	"Answer the default file stor block"
 
@@ -204,14 +205,14 @@ FileDialogWindow >> defaultFileSortBlock [
 									ifFalse: [entry1 basename caseInsensitiveLessOrEqual: entry2 basename]]]]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> defaultLabel [
 	"Answer the default label for the receiver."
 
 	^'File' translated
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> deleteDirectoryEntry: entry [
 	entry asFileReference deleteAll.
 	self
@@ -219,16 +220,16 @@ FileDialogWindow >> deleteDirectoryEntry: entry [
 		updateDirectories
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> deleteFileEntry: entry [
 	entry asFileReference delete.
 	self
 		selectedFileIndex: 0;
 		clearEntryCache;
-		updateFiles 
+		updateFiles
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> deleteFileOrDirectory [
 
 	"Delete the selected file or directory."
@@ -241,7 +242,7 @@ FileDialogWindow >> deleteFileOrDirectory [
 		ifFalse: [ self confirmDeleteFileEntry: entry ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileDialogWindow >> dirEntriesOrEmptyListFor: aDirectory [
 |entries|
 	aDirectory isReadable ifFalse:[ ^ #()].
@@ -249,54 +250,54 @@ FileDialogWindow >> dirEntriesOrEmptyListFor: aDirectory [
 	^ entries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> directories [
 	^ directories
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> directories: anObject [
 	"Set the value of directories"
 
 	directories := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileDialogWindow >> directoriesFor: item [
 	"Answer the filtered entries."
-	
+
 	^item directories
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> directoryFileSelectionBlock [
 	"Answer the directory file selection block."
 
 	^[:de |
 		de isDirectory
 			ifTrue: [self showDirectoriesInFileList]
-			ifFalse: [false]] 
+			ifFalse: [false]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> directoryTreeMorph [
 	"Answer the value of directoryTreeMorph"
 
 	^ directoryTreeMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> directoryTreeMorph: anObject [
 	"Set the value of directoryTreeMorph"
 
 	directoryTreeMorph := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> doubleClickFile [
 	"If the selected entry is a directory then navigate it
 	otherwise ok the dialog."
-	
+
 	|fe de sm|
 	fe := self selectedFileEntry.
 	fe ifNil: [^self].
@@ -310,63 +311,63 @@ FileDialogWindow >> doubleClickFile [
 		ifFalse: [self ok]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> entryCache [
 	"Answer the value of entryCache"
 
 	^ entryCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> entryCache: anObject [
 	"Set the value of entryCache"
 
 	entryCache := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> entryCacheDirectory [
 	"Answer the value of entryCacheDirectory"
 
 	^ entryCacheDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> entryCacheDirectory: anObject [
 	"Set the value of entryCacheDirectory"
 
 	entryCacheDirectory := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileListMorph [
 	"Answer the value of fileListMorph"
 
 	^ fileListMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileListMorph: anObject [
 	"Set the value of fileListMorph"
 
 	fileListMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileNamePattern [
 	"Answer the file name pattern to filter on."
-	
+
 	^self fileNameText trimBoth, '*'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileNameText [
 	"Answer the typed file name."
 
 	^fileNameText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileNameText: aString [
 	"The typed file name has changed."
 
@@ -379,14 +380,14 @@ FileDialogWindow >> fileNameText: aString [
 	self selectFileFromPattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileSelectionBlock [
 	"Answer the value of fileSelectionBlock"
 
 	^ fileSelectionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileSelectionBlock: anObject [
 	"Set the value of fileSelectionBlock"
 
@@ -394,47 +395,47 @@ FileDialogWindow >> fileSelectionBlock: anObject [
 	self updateFiles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileSortBlock [
 	"Answer the value of fileSortBlock"
 
 	^ fileSortBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> fileSortBlock: anObject [
 	"Set the value of fileSortBlock"
 
 	fileSortBlock := anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FileDialogWindow >> files [
 	"Answer the contents of the selected directory."
 
 	self selectedFileDirectory ifNil: [ ^#() ].
-	
+
 	^Cursor wait showWhile: [ | cache filteredCache |
 		cache := self cache: self selectedFileDirectory.
 		filteredCache := cache select: self fileSelectionBlock.
-		filteredCache asSortedCollection: self fileSortBlock ].
+		filteredCache asSortedCollection: self fileSortBlock ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileDialogWindow >> hasParentDirectory [
 	"Answer whether the selected directory in the tree part has a parent."
 
-	^ self selectedFileDirectory ifNotNil: [ :dir | dir isRoot not ] ifNil: [ false ].
+	^ self selectedFileDirectory ifNotNil: [ :dir | dir isRoot not ] ifNil: [ false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileDialogWindow >> hasSelectedFileOrDirectory [
 	"Answer whether a file or directopry is selected in the file list."
 
 	^ self selectedFileIndex ~= 0
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 FileDialogWindow >> iconFor: anEntry [
 	"Answer the icon to use for the directory entry."
 
@@ -445,7 +446,7 @@ FileDialogWindow >> iconFor: anEntry [
 				ifFalse: [ self iconNamed: #smallLeftFlushIcon ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> initialDirectories [
 	"Answer the initial directories."
 
@@ -460,12 +461,12 @@ FileDialogWindow >> initialDirectories [
 	^ dirList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileDialogWindow >> initialExtent [
 	^ 750@550
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileDialogWindow >> initialize [
 	selectedFileIndex := 0.
 	fileNameText := ''.
@@ -478,13 +479,13 @@ FileDialogWindow >> initialize [
 	super initialize	"Must be at end or signals error. No idea why - SeanDeNigris"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileDialogWindow >> initializeOn: aFileSystem [
 	self preferredFileSystem: aFileSystem.
 	self initialize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileDialogWindow >> isImageFile: aString [
 	"Answer whether the file name indicates an image file."
 
@@ -493,17 +494,17 @@ FileDialogWindow >> isImageFile: aString [
 		includes: aString asFileReference extension asLowercase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> isResizeable [
 	"Answer whether we are not we can be resized."
 
 	^true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newActionButtonRow [
 	"Answer a new row with the action buttons."
-	
+
 	^(self newRow: {
 		self newUpButton.
 		self newNewDirectoryButton.
@@ -511,7 +512,7 @@ FileDialogWindow >> newActionButtonRow [
 		listCentering: #bottomRight
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
@@ -534,7 +535,7 @@ FileDialogWindow >> newContentMorph [
 		vResizing: #spaceFill
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newDeleteButton [
 	"Answer a new delete button."
 
@@ -548,7 +549,7 @@ FileDialogWindow >> newDeleteButton [
 		help: 'Press to delete the selected file or directory' translated
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newDirectory [
 	"Create a new directory within the selected directory."
 
@@ -559,7 +560,7 @@ FileDialogWindow >> newDirectory [
 		textEntry: 'Enter directory name' translated
 		title: title.
 	dirName ifNil: [^self].
-	
+
 	[
 		(dir / dirName) exists
 			ifTrue: [
@@ -581,10 +582,10 @@ FileDialogWindow >> newDirectory [
 		updateDirectories
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newDirectoryTree [
 	"Answer a new directory tree."
-	
+
 	^(self newTreeFor: self
 		list: #directories
 		selected: #selectedDirectory
@@ -593,10 +594,10 @@ FileDialogWindow >> newDirectoryTree [
 		minWidth: 180
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newFileList [
 	"Answer a new file list."
-	
+
 	^(self
 			newListFor: self
 			list: #files
@@ -610,7 +611,7 @@ FileDialogWindow >> newFileList [
 		minWidth: 200
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newFileNameTextEntry [
 	"Answer a new file name text entry morph."
 
@@ -622,7 +623,7 @@ FileDialogWindow >> newFileNameTextEntry [
 		help: 'File name filter pattern' translated
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newImagePreviewMorph [
 	"Answer a new image preview morph."
 
@@ -632,7 +633,7 @@ FileDialogWindow >> newImagePreviewMorph [
 		size: self previewSize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newNewDirectoryButton [
 	"Answer a new 'new directory' button."
 
@@ -648,7 +649,7 @@ FileDialogWindow >> newNewDirectoryButton [
 				translated
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 FileDialogWindow >> newOKButton [
 	"Answer a new OK button."
 
@@ -657,7 +658,7 @@ FileDialogWindow >> newOKButton [
 		getEnabled: #okEnabled
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newPreviewMorph [
 	"Answer a new preview morph."
 
@@ -666,7 +667,7 @@ FileDialogWindow >> newPreviewMorph [
 	^nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newTextPreviewMorph [
 	"Answer a new text preview morph."
 
@@ -679,7 +680,7 @@ FileDialogWindow >> newTextPreviewMorph [
 		enabled: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDialogWindow >> newUpButton [
 	"Answer a new up one directory level button."
 
@@ -693,7 +694,7 @@ FileDialogWindow >> newUpButton [
 		help: 'Press to switch to the parent of the current directory' translated
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> ok [
 	"Apply the changes and close."
 
@@ -706,7 +707,7 @@ FileDialogWindow >> ok [
 	super ok
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileDialogWindow >> okEnabled [
 	"Answer wether the ok button should be enabled."
 
@@ -719,7 +720,7 @@ FileDialogWindow >> okEnabled [
 	^self selectedFileName notNil and: [self selectedFileEntry isDirectory not]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 FileDialogWindow >> openSelectedFile [
 	"Open a stream on the selected file if available and return it."
 
@@ -728,34 +729,34 @@ FileDialogWindow >> openSelectedFile [
 	f := self selectedFileName ifNil: [^nil].
 	self selectedFileEntry isDirectory ifTrue: [^nil].
 	fileRef := d/f.
-	^ fileRef exists ifTrue: [ fileRef readStream ] ifFalse: nil  
+	^ fileRef exists ifTrue: [ fileRef readStream ] ifFalse: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> preferredFileSystem [
 	^ preferredFileSystem ifNil: [ FileSystem disk ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> preferredFileSystem: aFileSystem [
 	preferredFileSystem := aFileSystem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> previewMorph [
 	"Answer the value of previewMorph"
 
 	^ previewMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> previewMorph: anObject [
 	"Set the value of previewMorph"
 
 	previewMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> previewSize [
 	"Answer the size of preview to use."
 
@@ -763,14 +764,14 @@ FileDialogWindow >> previewSize [
 	^128@128
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> previewType [
 	"Answer the value of previewType"
 
 	^ previewType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> previewType: anObject [
 	"Set the value of previewType.
 	See #updatePreview for supported types."
@@ -778,7 +779,7 @@ FileDialogWindow >> previewType: anObject [
 	previewType := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> saveForcedSelectedFile [
 	"Open a stream on the selected file if available and return it."
 
@@ -789,22 +790,22 @@ FileDialogWindow >> saveForcedSelectedFile [
 	^d forceNewFileNamed: f
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> saveSelectedFile [
 	"Open a stream on the selected file if available and return it."
 
 	|d f|
-	
+
 	d := self selectedFileDirectory ifNil: [^nil].
 	f := self selectedFileName ifNil: [self fileNameText trimBoth].
 	f ifEmpty: [ ^ nil ].
-	
+
 	f := d asFileReference / f.
 	(f extension isEmpty and: [self defaultExtension notNil])
 		 ifTrue: [ f := f, self defaultExtension].
-	f exists 
+	f exists
 		ifFalse: [ ^ f ].
-		
+
 	^(self
 		proceed: ('The file {1} already exists.
 Overwrite the file?' translated format: {f printString})
@@ -812,7 +813,7 @@ Overwrite the file?' translated format: {f printString})
 			ifTrue: [ f delete ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectDirectory: aFileReference [
 	"Expand and select the given directory."
 
@@ -823,7 +824,7 @@ FileDialogWindow >> selectDirectory: aFileReference [
 	self changed: #(openPath) , pathSegments
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectFileFromPattern [
 	"If there is a single file matching the pattern then select it.
 	If none then try for a directory."
@@ -840,7 +841,7 @@ FileDialogWindow >> selectFileFromPattern [
 	self selectedFileIndex: 0
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectParentDirectory [
 	"Switch to the parent directory."
 
@@ -848,7 +849,7 @@ FileDialogWindow >> selectParentDirectory [
 	self selectDirectory: self selectedFileDirectory asFileReference parent
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectPath: aPathOrFileReference [
 	"Select the directory and set the file name text from the given path."
 
@@ -865,7 +866,7 @@ FileDialogWindow >> selectPath: aPathOrFileReference [
 	self fileNameText: reference basename
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectedAnyFileDirectory [
 	"If a directory is selected in the 'File' pane, return that. Otherwise, return the directory selected in 'Directory pane (i.e. the tree)"
 
@@ -874,17 +875,17 @@ FileDialogWindow >> selectedAnyFileDirectory [
 	isDirectorySelected := selectedFile isNil not and: [ selectedFile isDirectory ].
 	^ isDirectorySelected
 			ifTrue: [ selectedFile asFileReference ]
-			ifFalse: [ self selectedFileDirectory ].
+			ifFalse: [ self selectedFileDirectory ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> selectedDirectory [
 	"Answer the value of selectedDirectory"
 
 	^ selectedDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> selectedDirectory: anObject [
 	selectedDirectory := anObject.
 	self
@@ -893,14 +894,14 @@ FileDialogWindow >> selectedDirectory: anObject [
 		updateFiles
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectedFileDirectory [
 	"Answer the selected file directory in the tree part."
 
 	^ (self selectedDirectory ifNil: [^nil]) item
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectedFileEntry [
 	"Answer the selected file."
 
@@ -908,14 +909,14 @@ FileDialogWindow >> selectedFileEntry [
 	^self files at: self selectedFileIndex ifAbsent: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> selectedFileIndex [
 	"Answer the value of selectedFileIndex"
 
 	^ selectedFileIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> selectedFileIndex: anObject [
 	"Set the value of selectedFileIndex"
 
@@ -923,30 +924,30 @@ FileDialogWindow >> selectedFileIndex: anObject [
 	self updateSelectedFile
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectedFileName [
 
 	^ self selectedFileEntry ifNotNil: [ :dir | dir basename ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> selectedPathName [
 	"Answer the name of the selected path."
 
 	selectedDirectory := self selectedFileDirectory ifNil: [^nil].
-	^ self selectedFileName 
+	^ self selectedFileName
 		ifNil: [ selectedDirectory fullName ]
-		ifNotNil: [ :filename | (selectedDirectory / filename) fullName ].
+		ifNotNil: [ :filename | (selectedDirectory / filename) fullName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> showDirectoriesInFileList [
 	"Answer the value of showDirectoriesInFileList"
 
 	^ showDirectoriesInFileList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDialogWindow >> showDirectoriesInFileList: anObject [
 	"Set the value of showDirectoriesInFileList"
 
@@ -954,7 +955,7 @@ FileDialogWindow >> showDirectoriesInFileList: anObject [
 	self updateFiles
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> updateDirectories [
 	"Update the directory tree and reselect the current."
 
@@ -965,14 +966,14 @@ FileDialogWindow >> updateDirectories [
 	self updateFiles
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 FileDialogWindow >> updateFiles [
 	"Notify that the files have changed."
 
 	self changed: #files
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 FileDialogWindow >> updateImagePreview [
 	"Update the image preview."
 
@@ -992,7 +993,7 @@ FileDialogWindow >> updateImagePreview [
 		size: self previewSize
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> updatePreview [
 	"Update the preview."
 
@@ -1000,7 +1001,7 @@ FileDialogWindow >> updatePreview [
 	self previewType == #text ifTrue: [self updateTextPreview]
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 FileDialogWindow >> updateSelectedDirectory [
 	"Notify that the selected directory has changed."
 
@@ -1011,7 +1012,7 @@ FileDialogWindow >> updateSelectedDirectory [
 		changed: #hasParentDirectory
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 FileDialogWindow >> updateSelectedFile [
 	"Notify that the selected file has changed."
 
@@ -1025,7 +1026,7 @@ FileDialogWindow >> updateSelectedFile [
 	self updatePreview
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 FileDialogWindow >> updateTextPreview [
 	"Update the text preview."
 
@@ -1040,10 +1041,10 @@ FileDialogWindow >> updateTextPreview [
 		setText: text
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FileDialogWindow >> validExtensions: aList [
 	"Set the filter for the files to be those with the given extensions."
-	
+
 	aList notEmpty
 		ifTrue: [self defaultExtension: aList first].
 	self fileSelectionBlock: [:de |
@@ -1051,5 +1052,5 @@ FileDialogWindow >> validExtensions: aList [
 			ifTrue: [self showDirectoriesInFileList]
 			ifFalse: [
 				(self fileNamePattern match: de name) and: [
-						aList includes: de extension asLowercase]]] 
+						aList includes: de extension asLowercase]]]
 ]

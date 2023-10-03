@@ -4,64 +4,65 @@ As a result, the new trait includes both methods, the original and the newone wi
 I implement the #@ operator.
 "
 Class {
-	#name : #TaAliasMethod,
-	#superclass : #TaSingleComposition,
+	#name : 'TaAliasMethod',
+	#superclass : 'TaSingleComposition',
 	#instVars : [
 		'aliases'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaAliasMethod class >> alias:anArrayOfAssociations to: aTrait [
 	^ self new
 		aliases: anArrayOfAssociations asDictionary;
 		inner: aTrait;
 		checkAssociations;
-		yourself.
+		yourself
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : 'transforming selectors' }
 TaAliasMethod >> aliasSelector: aSelector [
 	^ (self hasAliasForOld: aSelector)
 		ifTrue: [ self newSelectorFor: aSelector ]
 		ifFalse: [ inner aliasSelector: aSelector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaAliasMethod >> aliases [
 	^ aliases
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaAliasMethod >> aliases: anObject [
 	aliases := anObject
 ]
 
-{ #category : #'transforming selectors' }
-TaAliasMethod >> changesSourceCode: aSelector [ 
-	
-	^ self hasAliasForNew: aSelector
+{ #category : 'transforming selectors' }
+TaAliasMethod >> changesSourceCode: aSelector [
 
+	^ self hasAliasForNew: aSelector
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 TaAliasMethod >> checkAssociations [
 	"I check the validity of the associations used for aliasing"
 	self aliases
-		associationsDo: [ :assoc | 
+		associationsDo: [ :assoc |
 			| old new |
 			new := assoc key.
 			old := assoc value.
 			new = old ifTrue: [ self error: 'The alias and the alieased are the same' ].
 			(self aliases includesKey: old) ifTrue: [ self error: 'An alias is refering other alias' ].
 			new numArgs = old numArgs ifFalse: [ self error: 'Number of parameters in aliases should be the same.' ].
-			"For now I am not checking that the aliased method exists, 
+			"For now I am not checking that the aliased method exists,
 			this is the same behavior than before.
 			(inner compiledMethodAt: old) ifNil: [ NotFound signalFor: old ]" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaAliasMethod >> compiledMethodAt: aSelector [
 
 	^ (self hasAliasForNew: aSelector)
@@ -69,19 +70,18 @@ TaAliasMethod >> compiledMethodAt: aSelector [
 		ifFalse: [ inner compiledMethodAt: aSelector ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaAliasMethod >> copyTraitExpression [
 	^ self class alias: aliases to: inner
-
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaAliasMethod >> copyWithoutTrait: aTrait [
- 
+
 	^ self inner = aTrait ifTrue: [ TaEmptyComposition new ] ifFalse: [ self copy ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaAliasMethod >> existingAliasedSelectors [
 	| innerSelectors |
 	"I calculate the new aliases selectors"
@@ -92,58 +92,56 @@ TaAliasMethod >> existingAliasedSelectors [
 		thenCollect: [ :a | a key ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaAliasMethod >> hasAliasForNew: aSelector [
 	"Check if there is a alias for a new selector"
 	^ aliases includesKey: aSelector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaAliasMethod >> hasAliasForOld: aSelector [
 	"Check if there is a alias for a old selector"
 	^ aliases values includes: aSelector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaAliasMethod >> isAliasSelector: aSelector [
 
 	^ (self aliases includesKey: aSelector) or: [ inner isAliasSelector: aSelector ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaAliasMethod >> isLocalAliasSelector: aSymbol [
 	^ (self hasAliasForNew: aSymbol) or: [ inner isLocalAliasSelector: aSymbol ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaAliasMethod >> newSelectorFor: aSelector [
 	^ aliases keyAtValue: aSelector
 ]
 
-{ #category : #aliasing }
+{ #category : 'aliasing' }
 TaAliasMethod >> oldSelectorFor: aSelector [
 	^ aliases at: aSelector
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaAliasMethod >> originSelectorOf: aSelector [
 
 	^ aliases at: aSelector ifAbsent: [ aSelector ]
-	
-	
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaAliasMethod >> reverseAlias: aSelector [
 	^ (inner reverseAlias: aSelector) , (aliases associations select: [ :a | a value = aSelector ] thenCollect: #key)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaAliasMethod >> selectors [
-	^ inner selectors , self existingAliasedSelectors. 
+	^ inner selectors , self existingAliasedSelectors.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaAliasMethod >> sourceCodeAt: aSelector [
 	^ (self hasAliasForNew: aSelector)
 		ifTrue: [ (inner compiledMethodAt: (self oldSelectorFor: aSelector))
@@ -151,13 +149,13 @@ TaAliasMethod >> sourceCodeAt: aSelector [
 		ifFalse: [ super sourceCodeAt: aSelector ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaAliasMethod >> traitCompositionExpression [
-	
+
 	^ self inner traitCompositionExpressionWithParens , ' @ ' , aliases associations printString
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaAliasMethod >> traitDefining: aSelector [
 	^ (self hasAliasForNew: aSelector)
 		ifTrue: [ inner traitDefining: (self oldSelectorFor: aSelector) ]

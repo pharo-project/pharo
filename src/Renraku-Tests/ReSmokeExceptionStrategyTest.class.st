@@ -1,66 +1,67 @@
 Class {
-	#name : #ReSmokeExceptionStrategyTest,
-	#superclass : #ReExceptionStrategyBaseTest,
+	#name : 'ReSmokeExceptionStrategyTest',
+	#superclass : 'ReExceptionStrategyBaseTest',
 	#instVars : [
 		'brokenRule'
 	],
-	#category : #'Renraku-Tests'
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ReSmokeExceptionStrategyTest >> setUp [
 	super setUp.
 
-	brokenRule := self class classInstaller make: [ :aClassBuilder | 
-		aClassBuilder 
+	brokenRule := self class classInstaller make: [ :aClassBuilder |
+		aClassBuilder
 			name: #ReBrokenRuleForTesting;
 			superclass: ReAbstractRule;
 			package: self class category ].
 
-		
+
 	brokenRule class
 		compile: 'checksMethod ^ true'.
-		
+
 	brokenRule
 		compile: 'name ^ ''A purpously broken rule to test exception handling''';
 		compile: 'check: aNode forCritiquesDo: aBlock
 						MyTestError signal: ',
 						self errorMessage surroundedBySingleQuotes.
-						
+
 	ReRuleManager reset
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReSmokeExceptionStrategyTest >> tearDown [
 
 	brokenRule removeFromSystem.
 	brokenRule := nil.
-	super tearDown.
+	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmokeExceptionStrategyTest >> testIgnore [
 	| critiques |
 
 	ReExceptionStrategy current: ReIgnoreExceptionStrategy.
-	
+
 	self shouldnt: [
 			critiques := thisContext method method critiques ]
-		raise: MyTestError.
+		raise: MyTestError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmokeExceptionStrategyTest >> testLog [
 	| critiques method |
 	method := thisContext method.
 
 	ReExceptionStrategy current: ReLogExceptionStrategy.
-	
+
 	self shouldnt: [
 		critiques := method critiques ]
 		raise: MyTestError.
-		
-	self assert: (critiques anySatisfy: [ :crit | 
+
+	self assert: (critiques anySatisfy: [ :crit |
 		(crit isKindOf: ReExceptionProperty) and: [
 		 crit sourceAnchor entity = method and: [
 		(crit message includesSubstring: self errorMessage) and: [
@@ -68,11 +69,11 @@ ReSmokeExceptionStrategyTest >> testLog [
 			context method = method ] ] ] ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmokeExceptionStrategyTest >> testPass [
 
 	ReExceptionStrategy current: RePassExceptionStrategy.
-	
+
 	self should: [ thisContext method method critiques ]
-		raise: MyTestError.
+		raise: MyTestError
 ]

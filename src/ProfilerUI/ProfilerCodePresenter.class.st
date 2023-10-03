@@ -2,21 +2,23 @@
 I show the source code of the selected node in the profiler results tree
 "
 Class {
-	#name : #ProfilerCodePresenter,
-	#superclass : #SpCodePresenter,
-	#category : #'ProfilerUI-View'
+	#name : 'ProfilerCodePresenter',
+	#superclass : 'SpCodePresenter',
+	#category : 'ProfilerUI-View',
+	#package : 'ProfilerUI',
+	#tag : 'View'
 }
 
-{ #category : #initialization }
-ProfilerCodePresenter >> initialize [ 
+{ #category : 'initialization' }
+ProfilerCodePresenter >> initialize [
 	super initialize.
 	self beNotEditable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerCodePresenter >> methodOrBlock: methodOrBlock [
 
-	methodOrBlock ifNil: [ 
+	methodOrBlock ifNil: [
 		self text: ''.
 		self clearInteractionModel.
 		^ self ].
@@ -24,7 +26,7 @@ ProfilerCodePresenter >> methodOrBlock: methodOrBlock [
 	self text: methodOrBlock sourceCode.
 	self beForMethod: methodOrBlock originMethod.
 	methodOrBlock isCompiledBlock
-		ifTrue: [ 
+		ifTrue: [
 			self addTextSegmentDecoration:
 				(SpTextPresenterDecorator forHighlight
 					 interval: (methodOrBlock sourceNode sourceInterval first to:

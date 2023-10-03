@@ -1,32 +1,33 @@
 Class {
-	#name : #RGMetaclassTraitStrategyTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGMetaclassTraitStrategyTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
-	
+
 	anRGBehavior := RGBehavior newMetaclassTrait.
-	self assert: (anRGBehavior isBehavior).	
-	self assert: (anRGBehavior behaviorStrategy isMetaclassTraitStrategy).
+	self assert: (anRGBehavior isBehavior).
+	self assert: (anRGBehavior behaviorStrategy isMetaclassTraitStrategy)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitStrategyTest >> testKind [
 
 	| strategy |
-	
+
 	strategy := RGBehavior newMetaclassTrait behaviorStrategy.
 	self deny: strategy isClassStrategy.
 	self deny: strategy isMetaclassStrategy.
 	self deny: strategy isTraitStrategy.
-	self assert: strategy isMetaclassTraitStrategy.
+	self assert: strategy isMetaclassTraitStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitStrategyTest >> testResolvingConsistency [
 
 	| anObject |

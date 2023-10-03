@@ -11,8 +11,8 @@ Every concrete subclass has to add its own precondition (see `myPrecondition`).
 
 "
 Class {
-	#name : #RBChangeMethodNameRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBChangeMethodNameRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'newSelector',
 		'oldSelector',
@@ -20,16 +20,28 @@ Class {
 		'implementors',
 		'renameMap'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBChangeMethodNameRefactoring class >> isAbstract [
 
 	^ self == RBChangeMethodNameRefactoring
 ]
 
-{ #category : #testing }
+{ #category : 'preconditions' }
+RBChangeMethodNameRefactoring >> doesNotOverrideExistingMethodPrecondition [
+	"Check that the new selector is not already defined in superclasses"
+	
+	^ self implementors
+		inject: RBCondition true 
+		into: [ :condition :each |
+			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ]
+]
+
+{ #category : 'testing' }
 RBChangeMethodNameRefactoring >> hasPermutedArguments [
 	oldSelector numArgs = newSelector numArgs ifFalse: [^true].
 	1 to: oldSelector numArgs
@@ -37,96 +49,106 @@ RBChangeMethodNameRefactoring >> hasPermutedArguments [
 	^false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBChangeMethodNameRefactoring >> implementors [
 
 	implementors ifNil: [ implementors := self model allImplementorsOf: oldSelector ].
 	^ implementors
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBChangeMethodNameRefactoring >> implementorsCanBePrimitives [
 	^false
 ]
 
-{ #category : #private }
-RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClass [ 
+{ #category : 'preconditions' }
+RBChangeMethodNameRefactoring >> isValidMethodNamePrecondition [
+	^ (RBCondition isValidMethodName: newSelector for: class)
+
+	
+]
+
+{ #category : 'private' }
+RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| oldArgs |
 	oldArgs := parseTree arguments.
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBChangeMethodNameRefactoring >> myConditions [
 	"^self subclassResponsibility"
 ]
 
-{ #category : #accessing }
+{ #category : 'instance creation' }
+RBChangeMethodNameRefactoring >> newArgs [ 
+
+	^ OrderedCollection new
+]
+
+{ #category : 'accessing' }
 RBChangeMethodNameRefactoring >> newSelector [
-	^newSelector
+	^ newSelector
 ]
 
-{ #category : #private }
-RBChangeMethodNameRefactoring >> parseTreeRewriter [
-	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriterClass new.
-	oldString := self buildSelectorString: oldSelector.
-	newString := self buildSelectorString: newSelector
-				withPermuteMap: permutation.
-	rewriteRule replace: '``@object ' , oldString
-		with: '``@object ' , newString.
-	^rewriteRule
+{ #category : 'accessing' }
+RBChangeMethodNameRefactoring >> newSelector: aSymbol [
+	newSelector := aSymbol
 ]
 
-{ #category : #preconditions }
+{ #category : 'accessing' }
+RBChangeMethodNameRefactoring >> permutation: anObject [
+
+	permutation := anObject
+]
+
+{ #category : 'preconditions' }
 RBChangeMethodNameRefactoring >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |
-	conditions := self myConditions 
-				& (RBCondition definesSelector: oldSelector in: class) 
-				& (RBCondition isValidMethodName: newSelector for: class).
-					
-	conditions := self implementors 
-		inject: conditions into: [ :condition :each | 
-			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
-		
-	^conditions & (RBCondition withBlock: 
-		[self implementors size > 1 
-			ifTrue: 
-				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?' 
-							expandMacrosWith: self implementors size)].
-		true])
+	conditions := self myConditions
+	              & (RBCondition definesSelector: oldSelector in: class)
+	              & self isValidMethodNamePrecondition.
+
+	^ conditions & self doesNotOverrideExistingMethodPrecondition
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
+RBChangeMethodNameRefactoring >> privateTransform [
+	self renameImplementors.
+	self replaceMessageSends.
+	self removeRenamedImplementors
+]
+
+{ #category : 'transforming' }
 RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 	oldSelector = newSelector
 		ifTrue: [ ^ self ].
-	self implementors 
+	self implementors
 		do: [ :each | each removeMethod: oldSelector ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 RBChangeMethodNameRefactoring >> renameArgumentsIn: parseTree [
 	self renameMap do: [ :arg |
 		(self parseTreeRewriterClass rename: arg name to: arg newName) executeTree: parseTree
 	]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBChangeMethodNameRefactoring >> renameImplementors [
 
 	self implementors
-		do: [ :each | 
+		do: [ :each |
 			| parseTree |
 
 			parseTree := each parseTreeForSelector: oldSelector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse source code.' ].
+			parseTree ifNil: [ self refactoringError: 'Could not parse source code.' ].
 			self implementorsCanBePrimitives
 				ifFalse: [ parseTree isPrimitive
 						ifTrue: [ self
-								refactoringFailure:
+								refactoringError:
 									( '<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each with: oldSelector )
 							]
 					].
@@ -135,37 +157,42 @@ RBChangeMethodNameRefactoring >> renameImplementors [
 			]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBChangeMethodNameRefactoring >> renameMap [
 	^renameMap ifNil: [ renameMap := { } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBChangeMethodNameRefactoring >> renameMap: aColl [
 	renameMap := aColl
 ]
 
-{ #category : #transforming }
-RBChangeMethodNameRefactoring >> renameMessageSends [
-	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
-]
+{ #category : 'initialization' }
+RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass [
+	"Watch out this is for partial configuration of the refactoring"
 
-{ #category : #transforming }
-RBChangeMethodNameRefactoring >> renameMessageSendsIn: classes [
-	self convertAllReferencesTo: oldSelector of: classes using: self parseTreeRewriter
-]
-
-{ #category : #initialization }
-RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [ 
 	oldSelector := aSelector asSymbol.
-	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
-	permutation := aMap.
+	
 ]
 
-{ #category : #transforming }
-RBChangeMethodNameRefactoring >> transform [
-	self renameImplementors.
-	self renameMessageSends.
-	self removeRenamedImplementors
+{ #category : 'initialization' }
+RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [
+	
+	self renameMethod: aSelector asSymbol in: aClass.
+	newSelector := newSel asSymbol.
+	permutation := aMap
+]
+
+{ #category : 'transforming' }
+RBChangeMethodNameRefactoring >> replaceMessageSends [
+
+	self generateChangesFor: (RBReplaceMessageSendTransformation
+			 model: self model
+			 replaceMethod: oldSelector
+			 in: class
+			 to: newSelector
+			 permutation: permutation
+			 inAllClasses: true
+			 newArgs: self newArgs)
 ]

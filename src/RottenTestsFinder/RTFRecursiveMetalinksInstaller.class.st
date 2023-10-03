@@ -4,12 +4,14 @@ I recursively install metalinks in all helpers methods directly reachable from t
 Stores the Metalink in RTFSelfCallNode I visit.
 "
 Class {
-	#name : #RTFRecursiveMetalinksInstaller,
-	#superclass : #RTFSelfCallVisitor,
-	#category : #'RottenTestsFinder-SelfInterpreter'
+	#name : 'RTFRecursiveMetalinksInstaller',
+	#superclass : 'RTFSelfCallVisitor',
+	#category : 'RottenTestsFinder-SelfInterpreter',
+	#package : 'RottenTestsFinder',
+	#tag : 'SelfInterpreter'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RTFRecursiveMetalinksInstaller >> installMetaLinkOn: aRTFSelfCallNode [
 	|metalink|
 	metalink := MetaLink new
@@ -20,14 +22,14 @@ RTFRecursiveMetalinksInstaller >> installMetaLinkOn: aRTFSelfCallNode [
 	aRTFSelfCallNode metaLink: metalink
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RTFRecursiveMetalinksInstaller >> visitRTFSelfCallNode: aRTFSelfCallNode [
 	self installMetaLinkOn: aRTFSelfCallNode.
 	aRTFSelfCallNode subCalls do: [ :selfCallSubNode |
 		selfCallSubNode acceptVisitor: self. ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RTFRecursiveMetalinksInstaller >> visitRTFSelfCallRootNode: aRTFSelfCallRootNode [
 	aRTFSelfCallRootNode subCalls do: [ :subSelfCall |
 		subSelfCall acceptVisitor: self ]

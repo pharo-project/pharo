@@ -17,15 +17,17 @@ Observations about the transformation:
 - The transformation is straightforward: parse the return value and add the resulting node to the end of the method
 "
 Class {
-	#name : #RBAddReturnStatementTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddReturnStatementTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'returnValue'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddReturnStatementTransformation class >> model: aRBModel return: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -36,7 +38,7 @@ RBAddReturnStatementTransformation class >> model: aRBModel return: aString inMe
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddReturnStatementTransformation class >> return: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -46,35 +48,39 @@ RBAddReturnStatementTransformation class >> return: aString inMethod: aSelector 
 		yourself
 ]
 
-{ #category : #preconditions }
-RBAddReturnStatementTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		&
-			(RBCondition
-				withBlock: [ self definingClass canUnderstand: selector ]
-				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ self definingMethod lastIsReturn not ]
-				errorString:
-					('Method named <1s> already has a return statement'
-						expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ | returnNode |
-					returnNode := self parserClass parseExpression: returnValue.
-					returnNode allVariables
-						allSatisfy: [ :e | 
-							(self definingMethod hasArgumentNamed: e name)
-								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
-				errorString:
-					('Some variables in this return statement are not defined in method named <1s>.'
-						expandMacrosWith: selector))
+{ #category : 'preconditions' }
+RBAddReturnStatementTransformation >> applicabilityPreconditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [ self definingMethod lastIsReturn not ]
+			   errorString:
+				   ('Method named <1s> already has a return statement'
+					    expandMacrosWith: selector)) & (RBCondition
+		   withBlock: [
+			   | returnNode |
+			   returnNode := self parserClass parseExpression: returnValue.
+			   returnNode allVariables allSatisfy: [ :e |
+				   (self definingMethod hasArgumentNamed: e name) or: [
+					   self definingMethod hasTemporaryNamed: e name ] ] ]
+		   errorString:
+			   ('Some variables in this return statement are not defined in method named <1s>.'
+				    expandMacrosWith: selector))
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBAddReturnStatementTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
+{ #category : 'executing' }
 RBAddReturnStatementTransformation >> privateTransform [
 	"the transformation is straighforward: just add the node at the last position of the method.
 	 #todo the case in which the context is a block"
@@ -86,7 +92,7 @@ RBAddReturnStatementTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -94,8 +100,8 @@ RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector i
 	returnValue := anExpression
 ]
 
-{ #category : #printing }
-RBAddReturnStatementTransformation >> storeOn: aStream [ 
+{ #category : 'printing' }
+RBAddReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.

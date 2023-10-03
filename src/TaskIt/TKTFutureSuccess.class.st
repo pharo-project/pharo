@@ -4,45 +4,47 @@ I represent a the result of a success task.
 I ignore failure callbacks and schedule for execution success callbacks
 "
 Class {
-	#name : #TKTFutureSuccess,
-	#superclass : #TKTFutureState,
+	#name : 'TKTFutureSuccess',
+	#superclass : 'TKTFutureState',
 	#instVars : [
 		'value'
 	],
-	#category : #'TaskIt-Futures'
+	#category : 'TaskIt-Futures',
+	#package : 'TaskIt',
+	#tag : 'Futures'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureSuccess >> basicValue [
 
 	^ value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTFutureSuccess >> isSuccess [
 
 	^ true
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 TKTFutureSuccess >> onSuccessDo: aBlockClosure inFuture: aFuture [
-	
+
 	aFuture scheduleCallbackTask: [ aBlockClosure value: value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureSuccess >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureSuccess >> value: aValue [
 
 	value := aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTFutureSuccess >> valueForFuture: aFuture [
 
 	^ value

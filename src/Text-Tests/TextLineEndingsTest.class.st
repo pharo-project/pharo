@@ -4,12 +4,14 @@ This is a test case for Text>>withSqueakLineEndings and String>>withSqueakLineEn
 The main problem we've seen with the Text version is that it doesn't preserve formatting correctly.
 "
 Class {
-	#name : #TextLineEndingsTest,
-	#superclass : #TestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextLineEndingsTest',
+	#superclass : 'TestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testDecoratedTextConversionCrLF [
 
 	| text newText |
@@ -24,7 +26,7 @@ TextLineEndingsTest >> testDecoratedTextConversionCrLF [
 	self assert: (newText attributesAt: 8) equals: (text attributesAt: 9)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testDecoratedTextConversionJustLF [
 
 	| text newText |
@@ -39,7 +41,7 @@ TextLineEndingsTest >> testDecoratedTextConversionJustLF [
 	self assert: (newText attributesAt: 8) equals: (text attributesAt: 8)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testDecoratedTextConversionNoLF [
 
 	| text newText |
@@ -51,20 +53,20 @@ TextLineEndingsTest >> testDecoratedTextConversionNoLF [
 	self assert: (text size) equals: newText size.
 	self assert: newText size equals: newText runs size.
 	self assert: (newText attributesAt: 6) equals: (text attributesAt: 6).
-	self assert: (newText attributesAt: 8) equals: (text attributesAt: 8).
+	self assert: (newText attributesAt: 8) equals: (text attributesAt: 8)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testSimpleTextConversionCrLF [
 
 	| string newText |
 	string := 'This is a test', String crlf, 'of the conversion'.
 	newText := string asText withInternalLineEndings.
 	self assert: (string size - 1) equals: newText size.
-	self assert: newText size equals: newText runs size.
+	self assert: newText size equals: newText runs size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testSimpleTextConversionJustCR [
 
 	| string newText |
@@ -74,7 +76,7 @@ TextLineEndingsTest >> testSimpleTextConversionJustCR [
 	self assert: newText size equals: newText runs size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testSimpleTextConversionJustLF [
 
 	| string newText |
@@ -84,7 +86,7 @@ TextLineEndingsTest >> testSimpleTextConversionJustLF [
 	self assert: newText size equals: newText runs size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testStringConversionCrLF [
 
 	| string newString |
@@ -93,7 +95,7 @@ TextLineEndingsTest >> testStringConversionCrLF [
 	self assert: (string size - 1) equals: newString size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testStringConversionJustLF [
 
 	| string newString |
@@ -102,7 +104,7 @@ TextLineEndingsTest >> testStringConversionJustLF [
 	self assert: string size equals: newString size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextLineEndingsTest >> testStringConversionNoLF [
 
 	| string newString |

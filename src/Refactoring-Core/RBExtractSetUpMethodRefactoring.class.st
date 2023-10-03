@@ -47,59 +47,61 @@ RBDataTest >> testExample
 
 "
 Class {
-	#name : #RBExtractSetUpMethodRefactoring,
-	#superclass : #RBExtractMethodRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBExtractSetUpMethodRefactoring',
+	#superclass : 'RBExtractMethodRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [ 
+{ #category : 'transforming' }
+RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 	| node outsideVars removeAssigned |
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
-	outsideVars := variableNames 
+	outsideVars := variableNames
 				select: [:each | (node whoDefines: each) references: each].
 	outsideVars do: [ :var | self checkSingleAssignment: var ].
 	removeAssigned removeAll: outsideVars.
 	(RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
-		in: extractedParseTree) ifNotEmpty: 
+		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
 	self updateTemporariesInExtractedMethodFor: variableNames
 ]
 
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [ 
+{ #category : 'transforming' }
+RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 
 	((RBReadBeforeWrittenTester isVariable: varName
-		readBeforeWrittenIn: extractedParseTree) 
-			or: [extractedParseTree containsReturn]) 
-			ifTrue: 
-				[self 
+		readBeforeWrittenIn: extractedParseTree)
+			or: [extractedParseTree containsReturn])
+			ifTrue:
+				[self
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	modifiedParseTree body removeTemporaryNamed: varName.
-	self performCompositeRefactoring: (RBTemporaryToInstanceVariableRefactoring 
+	self generateChangesFor: (RBTemporaryToInstanceVariableRefactoring
 		model: self model
 		class: class
 		selector: selector
 		variable: varName)
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 	| args |
 	args := parameters collect: [ :parm | RBVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
-	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: '#callToSetUp' in: modifiedParseTree.
+	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: '#callToSetUp' in: modifiedParseTree
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBExtractSetUpMethodRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class) &
 	(self requestExistingSelector ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
-	ifNotNil: [ self emptyCondition ]) &
+	ifNotNil: [ self trueCondition ]) &
 	(RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
-		& (RBCondition withBlock: 
+		& (RBCondition withBlock:
 			[self extractMethod.
 			self checkSpecialExtractions.
 			self checkReturn.
@@ -108,21 +110,8 @@ RBExtractSetUpMethodRefactoring >> preconditions [
 			true])
 ]
 
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
-	^ true
-]
-
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
-	| node |
-	node := class parseTreeForSelector: selector.
-	^ node statements ifEmpty: [ node body start ]
-		ifNotEmpty: [ node statements first start ]
-]
-
-{ #category : #transforming }
-RBExtractSetUpMethodRefactoring >> transform [
+{ #category : 'transforming' }
+RBExtractSetUpMethodRefactoring >> privateTransform [
 
 	| existingSelector |
 	existingSelector := self existingSelector.
@@ -130,11 +119,28 @@ RBExtractSetUpMethodRefactoring >> transform [
 	existingSelector ifNil: [
 		self renameAllParameters.
 		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
-		class compile: extractedParseTree newSource classified: #running ].
+		self generateChangesFor:
+			(RBAddMethodTransformation
+				sourceCode: extractedParseTree newSource
+				in: class
+				withProtocol: #running)].
 	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
 	class compileTree: modifiedParseTree
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
+RBExtractSetUpMethodRefactoring >> shouldExtractAssignmentTo: name [
+	^ true
+]
+
+{ #category : 'transforming' }
+RBExtractSetUpMethodRefactoring >> startLimit: aNumber [
+	| node |
+	node := class parseTreeForSelector: selector.
+	^ node statements ifEmpty: [ node body start ]
+		ifNotEmpty: [ node statements first start ]
+]
+
+{ #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> updateTemporariesInExtractedMethodFor: variableNames [
 ]

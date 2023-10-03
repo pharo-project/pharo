@@ -2,139 +2,140 @@
 I am the superclass of all the operations that modifies a single trait.
 "
 Class {
-	#name : #TaSingleComposition,
-	#superclass : #TaAbstractComposition,
+	#name : 'TaSingleComposition',
+	#superclass : 'TaAbstractComposition',
 	#instVars : [
 		'inner'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaSingleComposition >> = another [
 	^ (another class = self class) and: [ another inner = inner ]
 ]
 
-{ #category : #users }
-TaSingleComposition >> addUser: aClass [ 
+{ #category : 'users' }
+TaSingleComposition >> addUser: aClass [
 	"I propagate to the inner trait"
 	inner addUser: aClass
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : 'transforming selectors' }
 TaSingleComposition >> aliasSelector: aSelector [
-	^ inner aliasSelector: aSelector.
+	^ inner aliasSelector: aSelector
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSingleComposition >> allTraits [
 	^ inner allTraits
 ]
 
-{ #category : #testing }
-TaSingleComposition >> changesSourceCode: aSelector [ 
-	
+{ #category : 'testing' }
+TaSingleComposition >> changesSourceCode: aSelector [
+
 	^ inner changesSourceCode: aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSingleComposition >> classComposition [
 	^ inner classComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSingleComposition >> compiledMethodAt: aSelector [
-	^ inner compiledMethodAt: aSelector.
+	^ inner compiledMethodAt: aSelector
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaSingleComposition >> copyWithoutTrait: aTrait [
 	(self = aTrait or: [ inner = aTrait ])
 		ifTrue: [ ^ inner copyWithoutTrait: aTrait ].
-		
+
 	^ self copy
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaSingleComposition >> hash [
 	^ inner hash
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : 'transforming selectors' }
 TaSingleComposition >> initializeSelectorForMe [
-	^ inner initializeSelectorForMe.
+	^ inner initializeSelectorForMe
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSingleComposition >> inner [
 	^ inner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSingleComposition >> inner: anObject [
 	inner := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaSingleComposition >> isAliasSelector: aSymbol [
-	^ inner isAliasSelector: aSymbol 
+	^ inner isAliasSelector: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaSingleComposition >> isLocalAliasSelector: aSymbol [
-	^ inner isLocalAliasSelector: aSymbol 
+	^ inner isLocalAliasSelector: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSingleComposition >> methods [
 	^ inner methods
 ]
 
-{ #category : #accessing }
-TaSingleComposition >> name [ 
+{ #category : 'accessing' }
+TaSingleComposition >> name [
 	^ inner name
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSingleComposition >> originSelectorOf: aSelector [
 
 	^ inner originSelectorOf: aSelector
-
 ]
 
-{ #category : #users }
-TaSingleComposition >> removeUser: aClass [ 
+{ #category : 'users' }
+TaSingleComposition >> removeUser: aClass [
 	"I propagate to the inner trait"
 	inner removeUser: aClass
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSingleComposition >> reverseAlias: aSelector [
-	
+
 	^ inner reverseAlias: aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSingleComposition >> selectors [
 	^ inner selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSingleComposition >> slots [
-	^ inner slots. 
+	^ inner slots.
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSingleComposition >> traitDefining: selector [
 	^ inner traitDefining: selector
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSingleComposition >> traits [
 	^ inner traits
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaSingleComposition >> without: anotherTrait [
 	"Returns a single composition without the trait passed as parameter"
 	^ (anotherTrait = self or: [ inner = anotherTrait ])

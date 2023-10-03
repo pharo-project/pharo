@@ -12,34 +12,35 @@ Usage:
 	pharo Pharo.image clean --release
 "
 Class {
-	#name : #ImageCleanerCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #'Tool-ImageCleaner'
+	#name : 'ImageCleanerCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'Tool-ImageCleaner',
+	#package : 'Tool-ImageCleaner'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleanerCommandLineHandler class >> commandName [
 	^ 'clean'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleanerCommandLineHandler class >> description [
 	^ 'Run image cleanup'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ImageCleanerCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
 	self cleanUpImage.
-	Smalltalk snapshot: true andQuit: true.
+	Smalltalk snapshot: true andQuit: true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ImageCleanerCommandLineHandler >> cleanUpImage [
 	(self hasOption: 'release')
 		ifTrue: [^ImageCleaner cleanUpForRelease].
-	(self hasOption: 'production')	
+	(self hasOption: 'production')
 		ifTrue: [ ^ImageCleaner cleanUpForProduction].
-	Smalltalk cleanUp: true except: #() confirming: false.	
+	Smalltalk cleanUp: true except: #() confirming: false.
 ]

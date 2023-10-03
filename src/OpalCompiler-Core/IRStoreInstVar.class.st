@@ -2,24 +2,26 @@
 store inst var
 "
 Class {
-	#name : #IRStoreInstVar,
-	#superclass : #IRInstVarAccess,
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#name : 'IRStoreInstVar',
+	#superclass : 'IRInstVarAccess',
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRStoreInstVar >> accept: aVisitor [
 	^ aVisitor visitStoreInstVar: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRStoreInstVar >> isStore [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRStoreInstVar >> popIntoNode [
 	^ IRPopIntoInstVar new
-		index: index; 
+		index: index;
 		yourself
 ]

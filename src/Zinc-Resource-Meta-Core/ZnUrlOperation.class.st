@@ -19,16 +19,17 @@ A concrete example is ZnUrl>>#retrieveContents with subclasses ZnHttpRetrieveCon
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnUrlOperation,
-	#superclass : #Object,
+	#name : 'ZnUrlOperation',
+	#superclass : 'Object',
 	#instVars : [
 		'url',
 		'argument'
 	],
-	#category : #'Zinc-Resource-Meta-Core'
+	#category : 'Zinc-Resource-Meta-Core',
+	#package : 'Zinc-Resource-Meta-Core'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnUrlOperation class >> handlerForOperation: operation with: argument on: url [
 	"Search for a subclass that can handle operation with argument on url.
 	Signal an Error when no matching handler is found."
@@ -36,70 +37,69 @@ ZnUrlOperation class >> handlerForOperation: operation with: argument on: url [
 	self subclassesDo: [ :each |
 		(each handlesOperation: operation with: argument on: url)
 			ifTrue: [ ^ each ] ].
-	self error: 
-		('No URL hander found for operation {1} on URL {2} with {3}' 
+	self error:
+		('No URL hander found for operation {1} on URL {2} with {3}'
 			format: { operation. url. argument })
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlOperation class >> handlesOperation: operation with: argument on: url [
 	"Return true when my instances can handle operation with argument on url.
 	This can optionally be overridden for a more specific test."
-	
+
 	^ self operation = operation and: [ self schemes includes: url scheme ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlOperation class >> operation [
 	"Return the operation that I implement.
 	Subclasses can/should override this method."
-	
+
 	^ nil
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnUrlOperation class >> performOperation: operation with: argument on: url [
 	"Search for a subclass that can handle operation with argument on url.
 	Instanciate the operation, execute it and return the result.
 	Signal an Error when no matching handler is found."
-	
+
 	| handlerClass |
 	handlerClass := self handlerForOperation: operation with: argument on: url.
 	^ handlerClass new
 		url: url;
 		argument: argument;
-		performOperation 
+		performOperation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlOperation class >> schemes [
 	"Return a collection of scheme identifiers that I handle.
 	Subclasses can/should override this method."
-	
+
 	^ #( )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlOperation >> argument [
-	
+
 	^ argument
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlOperation >> argument: anObject [
-	
+
 	argument := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnUrlOperation >> performOperation [
 	"Perform the actual operation using url and the optional argument."
-	
-	self subclassResponsibility 
 
+	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnUrlOperation >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(; print: self class operation; space; print: self url.
@@ -107,14 +107,14 @@ ZnUrlOperation >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlOperation >> url [
-	
+
 	^ url
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUrlOperation >> url: aUrl [
-	
+
 	url := aUrl
 ]

@@ -3,21 +3,23 @@ I am a toolbar used to navigate the results tree of the profiling.
 My items are the buttons I contain which can be clicked by users
 "
 Class {
-	#name : #ProfilerToolbarPresenter,
-	#superclass : #SpToolbarPresenter,
+	#name : 'ProfilerToolbarPresenter',
+	#superclass : 'SpToolbarPresenter',
 	#instVars : [
 		'selectedItem'
 	],
-	#category : #'ProfilerUI-View'
+	#category : 'ProfilerUI-View',
+	#package : 'ProfilerUI',
+	#tag : 'View'
 }
 
-{ #category : #'adding-removing items' }
+{ #category : 'adding-removing items' }
 ProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
 
 	| newItem |
 	(self getItemWith: aTallyModel) ifNotNil: [ :found | ^ found ].
 
-	self selectedItem ifNotNil: [ :selected | 
+	self selectedItem ifNotNil: [ :selected |
 		self removeItemsAfter: selected ].
 
 	newItem := self newItemFrom: aTallyModel.
@@ -25,7 +27,7 @@ ProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
 	^ newItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerToolbarPresenter >> getItemWith: anObject [
 
 	^ (self items select: [ :item | item object == anObject ])
@@ -33,7 +35,7 @@ ProfilerToolbarPresenter >> getItemWith: anObject [
 		  ifNotEmpty: [ :result | result anyOne ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 
 	| button |
@@ -44,7 +46,7 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 		label: aTallyModel methodName;
 		selectedObject: aTallyModel;
 		help: 'Display ' , aTallyModel methodName , ' as root';
-		action: [ 
+		action: [
 			aTallyModel model setTallyRoot: aTallyModel.
 			self setSelectedItem: button
 			].
@@ -52,13 +54,13 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 	^ button
 ]
 
-{ #category : #'adding-removing items' }
+{ #category : 'adding-removing items' }
 ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 	| toKeep item i |
 
 	toKeep := #() asOrderedCollection.
 	i := 1.
-	[ 
+	[
 	item := self items at: i.
 	toKeep add: item.
 	i := i + 1.
@@ -67,30 +69,28 @@ ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 	toKeep do: [ :itm | self addItem: itm ]
 ]
 
-{ #category : #reseting }
+{ #category : 'reseting' }
 ProfilerToolbarPresenter >> reset [
 	self selectedItem: nil.
-	self removeAllItems.
-		
+	self removeAllItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerToolbarPresenter >> selectedItem [
 
 	^ selectedItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerToolbarPresenter >> selectedItem: anObject [
 
 	selectedItem := anObject
 ]
 
-{ #category : #accessing }
-ProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [ 
-	
+{ #category : 'accessing' }
+ProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [
+
 	self items do: [:itm | itm icon: nil ].
 	aToolbarButtonPresenter icon: (self iconNamed: 'windowMenu').
 	self selectedItem: aToolbarButtonPresenter
-	
 ]

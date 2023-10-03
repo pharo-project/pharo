@@ -4,58 +4,60 @@ I uses an special dictionary inside that compares literals using #literalEquals 
 I am optimised to guarantee that literals all unique and have an unique index.
 "
 Class {
-	#name : #OCLiteralList,
-	#superclass : #Object,
+	#name : 'OCLiteralList',
+	#superclass : 'Object',
 	#instVars : [
 		'literalsDict',
 		'first'
 	],
-	#category : #'OpalCompiler-Core-Extras'
+	#category : 'OpalCompiler-Core-Extras',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Extras'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 OCLiteralList >> addLiteral: anObject [
 
 	"I keep the first element, so it can be easily returned"
 	literalsDict ifEmpty: [ first := anObject ].
-	
+
 	"The index of the last inserted element is the the size of the literalsDict,
 	as the elements are always added and never removed"
 	^ literalsDict at: anObject ifAbsentPut: [ literalsDict size + 1 ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OCLiteralList >> asArray [
 
 	| result |
-	
+
 	result := Array new: literalsDict size.
-	
+
 	literalsDict associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
-	
-	^ result.
+
+	^ result
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OCLiteralList >> first [
-	
-	^ first 
+
+	^ first
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCLiteralList >> initialize [
 
 	super initialize.
 	literalsDict := OCLiteralDictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCLiteralList >> isEmpty [
 
 	^ literalsDict isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCLiteralList >> literalIndexOf: anElement ifAbsent: exceptionBlock [
 
 	^ literalsDict at: anElement ifAbsent: exceptionBlock

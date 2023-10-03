@@ -1,49 +1,51 @@
 Class {
-	#name : #RGMetaclassTraitStrategy,
-	#superclass : #RGTraitDescriptionStrategy,
+	#name : 'RGMetaclassTraitStrategy',
+	#superclass : 'RGTraitDescriptionStrategy',
 	#instVars : [
 		'baseTrait'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #visiting }
-RGMetaclassTraitStrategy >> acceptVisitor: aVisitor [ 
+{ #category : 'visiting' }
+RGMetaclassTraitStrategy >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitClassTrait: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> baseBehavior [
 
 	^ self baseTrait
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> baseTrait [
 
 	^ self backend forBehavior metaclassTraitBaseTraitFor: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> baseTrait: anRGClass [
 
 	self backend forBehavior setMetaclassTraitBaseTraitFor: self to: anRGClass
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> category [
 
 	^ self baseTrait category
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> comment [
 
 	^ self baseTrait comment
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> definition [
 	^String streamContents: [:stream |
 		stream
@@ -54,57 +56,57 @@ RGMetaclassTraitStrategy >> definition [
 			nextPutAll: self owner traitCompositionString]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> instanceSide [
 
 	^ self baseTrait
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> isMeta [
 
 	^true
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> isMetaclassTrait [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetaclassTraitStrategy >> isMetaclassTraitStrategy [
 
 	^ true
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> makeResolved [
 
-	
+
 	"try to set the correct name before resolving of it"
-	((self owner hasUnresolved: #name) and: [ self baseClass isRingResolved and: [ self baseTrait hasResolvedName] ]) ifTrue: [ 
+	((self owner hasUnresolved: #name) and: [ self baseClass isRingResolved and: [ self baseTrait hasResolvedName] ]) ifTrue: [
 		self owner pvtName: (self baseTrait name, ' classTrait') asSymbol.
 		 ].
 
 	super makeResolved.
-	
-	baseTrait := self baseTrait markAsRingResolved.
+
+	baseTrait := self baseTrait markAsRingResolved
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> package [
 
 	^ self baseTrait package
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> pvtBaseTrait [
 
 	^ baseTrait value
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> pvtBaseTrait: anRGTrait [
 
 	self owner environment verifyOwnership: anRGTrait.
@@ -112,34 +114,34 @@ RGMetaclassTraitStrategy >> pvtBaseTrait: anRGTrait [
 	^ baseTrait := anRGTrait
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
-		#baseTrait -> baseTrait. 
+		#baseTrait -> baseTrait.
    	}
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> referencedBehaviors [
 
 	^ super referencedBehaviors, {self baseTrait}
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> sibling [
 
-	^ self baseTrait.
+	^ self baseTrait
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetaclassTraitStrategy >> storeName [
 
 	^ 'RGMetaclassTrait'
 ]
 
-{ #category : #'private - backend access' }
-RGMetaclassTraitStrategy >> traitTransformationString [		
-		
+{ #category : 'private - backend access' }
+RGMetaclassTraitStrategy >> traitTransformationString [
+
 	^ self owner name
 ]

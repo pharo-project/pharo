@@ -19,8 +19,8 @@ Instance Variables
 	
 "
 Class {
-	#name : #SycRefactoringPreviewPresenter,
-	#superclass : #SpPresenter,
+	#name : 'SycRefactoringPreviewPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'changes',
 		'scopeDropList',
@@ -30,10 +30,11 @@ Class {
 		'diffPresenter',
 		'existsChanges'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 SycRefactoringPreviewPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
@@ -42,85 +43,86 @@ SycRefactoringPreviewPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycRefactoringPreviewPresenter class >> for: aCommand scopes: scopes [
 	^ self new
 		command: aCommand;
 		scopes: scopes
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 SycRefactoringPreviewPresenter class >> title [
 	^ 'Refactoring changes'
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 SycRefactoringPreviewPresenter >> accept [
 	self okToChange ifFalse: [ ^ self ].
-	[ self pickedChanges do: [ :change | 
-		RBRefactoryChangeManager instance 
-			performChange: change; 
+	
+	[ self pickedChanges do: [ :change |
+		RBRefactoryChangeManager instance
+			performChange: change;
 			addUndoPointer: (RBRefactoryChangeManager nextCounter) ] ] asJob
 		title: 'Refactoring';
 		run
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> activeRBEnvironment [
 	^ self activeScope asRBEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> activeScope [
 	^ scopeDropList selectedItem
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SycRefactoringPreviewPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
-	aString isEmptyOrNil ifFalse: [ self uiManager alert: aString ]
+	aString isEmptyOrNil ifFalse: [ self inform: aString ]
 ]
 
-{ #category : #'epicea support' }
+{ #category : 'epicea support' }
 SycRefactoringPreviewPresenter >> asEpiceaEvent [
 	"thanks to this method epicia know that is a refactoring"
-	
+
 	self flag: #todo. "This is a workaround for a problem found by RewriteTool"
 	(changes allSatisfy: [ :each | each respondsTo: #asEpiceaEvent ])
 		ifFalse: [ ^ EpCompositeRefactoring withAll: #() ].
 
 	^ changes size > 1
 		ifTrue: [ EpCompositeRefactoring withAll: changes ]
-		ifFalse: [ changes anyOne asEpiceaEvent ].
+		ifFalse: [ changes anyOne asEpiceaEvent ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SycRefactoringPreviewPresenter >> buildDiffFor: aChange [
 	^ diffPresenter
 		leftText: aChange oldVersionTextToDisplay;
 		rightText: aChange textToDisplay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> changes [
 	^ changes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> changes: aCollection [
 	changes := aCollection.
 	self generateChanges
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SycRefactoringPreviewPresenter >> changesFrom: aCompositeChange forEnvironment: anEnvironment [
 
-	^ (aCompositeChange whatToDisplayIn: self) select: [ :change | 
+	^ (aCompositeChange whatToDisplayIn: self) select: [ :change |
 		  anEnvironment includesClass: change changeClass ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRefactoringPreviewPresenter >> columns [
 
 	^ { (SpCompositeTableColumn new
@@ -133,74 +135,74 @@ SycRefactoringPreviewPresenter >> columns [
 		   yourself) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> command: aCommand [
 	command := aCommand
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRefactoringPreviewPresenter >> connectPresenters [
-	table bindKeyCombination: Character backspace asShortcut 
+	table bindKeyCombination: Character backspace asShortcut
 		toAction: [ self toggleSelectionOf: table selectedItem ].
-	
-	{ table . scopeDropList . diffPresenter } do: [ :each | 
-		each bindKeyCombination: Character cr asKeyCombination 
+
+	{ table . scopeDropList . diffPresenter } do: [ :each |
+		each bindKeyCombination: Character cr asKeyCombination
 			toAction: [ self owner triggerOkAction; close ];
-		bindKeyCombination: Character escape asKeyCombination 
+		bindKeyCombination: Character escape asKeyCombination
 			toAction: [ self owner triggerCancelAction; close ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> existChanges [
 	^ existsChanges ifNil: [ existsChanges := false ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SycRefactoringPreviewPresenter >> generateChanges [
 
 	| rbEnvironment |
 	changes := command asRefactorings.
 	rbEnvironment := self activeRBEnvironment.
-	changes do: [ :each | 
+	changes do: [ :each |
 		each model environment: rbEnvironment.
-		each primitiveExecute ]
+		each generateChanges ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 	aDialogWindowPresenter
 		title: self title;
 		initialExtent: 500 @ 500;
 		addButton: 'Apply'
-			do: [ :presenter | 
+			do: [ :presenter |
 			self accept.
 			presenter close ];
 		addButton: 'Cancel' do: [ :presenter | presenter close ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRefactoringPreviewPresenter >> initializePresenter [
 	super initializePresenter.
 	table
-		whenSelectionChangedDo: [ :selection | 
-			selection selectedItem ifNotNil: [ 
+		whenSelectionChangedDo: [ :selection |
+			selection selectedItem ifNotNil: [
 				self buildDiffFor: selection selectedItem ] ].
-	
+
 	table
-		whenActivatedDo: [ :selectedElement | 
+		whenActivatedDo: [ :selectedElement |
 			self toggleSelectionOf: selectedElement widget selection selectedItem ].
-	
+
 	scopeDropList
 		whenSelectedItemChangedDo: [ :scope | self updateChanges ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRefactoringPreviewPresenter >> initializeWidgets [
 
 	diffPresenter := self newDiff.
 	scopeDropList := self newDropList.
 	table := self newTable.
-	
+
 	table columns: self columns;
 		hideColumnHeaders.
 
@@ -212,42 +214,42 @@ SycRefactoringPreviewPresenter >> initializeWidgets [
 		setFocus
 ]
 
-{ #category : #'epicea support' }
+{ #category : 'epicea support' }
 SycRefactoringPreviewPresenter >> isEpiceaInterestingJobOwner [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> pickedChanges [
 	^ table items select: [ :item | selectedRefactorings at: item ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> scopeDropList [
 	^ scopeDropList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> scopes: aCollectionOfScopes [
 	scopeDropList items: aCollectionOfScopes "It also sets up first item as selection"
 ]
 
-{ #category : #private }
-SycRefactoringPreviewPresenter >> selectItemBelow: aRefactoring [ 
+{ #category : 'private' }
+SycRefactoringPreviewPresenter >> selectItemBelow: aRefactoring [
 
 	| nextIndex |
 	nextIndex := (self table items indexOf: aRefactoring) + 1.
 	self table selectIndex: nextIndex scrollToSelection: true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SycRefactoringPreviewPresenter >> selectectAllCheckBox [
 	selectedRefactorings := Dictionary new.
 	table items do: [ :refactoring | selectedRefactorings at: refactoring put: true ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRefactoringPreviewPresenter >> setFocus [
 	self focusOrder
 		add: table;
@@ -255,42 +257,42 @@ SycRefactoringPreviewPresenter >> setFocus [
 		add: diffPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> table [
 	^ table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRefactoringPreviewPresenter >> title [
 	^ self class title
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SycRefactoringPreviewPresenter >> toggleSelectionOf: aRefactoring [
 	"it's normal it's impossible that anItem doesn't store in dictionary because at initialize I fill the dictionary and at each scope change"
 	selectedRefactorings at: aRefactoring put: (selectedRefactorings at: aRefactoring) not.
 	self selectItemBelow: aRefactoring
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 SycRefactoringPreviewPresenter >> updateChanges [
 	self generateChanges.
 	self updateTablePresenter.
 	self selectectAllCheckBox
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 SycRefactoringPreviewPresenter >> updateTablePresenter [
 
 	| aCompositeChange anEnvironment |
 	"We get the environment to apply the changes from any element in the changes instance variable"
 	anEnvironment := self activeRBEnvironment.
-	aCompositeChange := RBCompositeRefactoryChange new 
+	aCompositeChange := RBCompositeRefactoryChange new
 		onSystemDictionary: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
 
 	table items: (self changesFrom: aCompositeChange forEnvironment: anEnvironment).
-	table items ifNotEmpty: [ 
+	table items ifNotEmpty: [
 		table selectIndex: 1.
 		existsChanges := true ]
 ]

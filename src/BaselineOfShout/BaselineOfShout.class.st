@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfShout,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfShout
+	#name : 'BaselineOfShout',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfShout',
+	#package : 'BaselineOfShout'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfShout >> baseline: spec [
 	<baseline>
 	| repository |

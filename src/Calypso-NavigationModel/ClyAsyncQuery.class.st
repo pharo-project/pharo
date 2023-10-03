@@ -34,15 +34,17 @@ Internal Representation and Key Implementation Points.
 	asyncResult:		<ClyAsyncQueryResult>
 "
 Class {
-	#name : #ClyAsyncQuery,
-	#superclass : #ClyWrapperQuery,
+	#name : 'ClyAsyncQuery',
+	#superclass : 'ClyWrapperQuery',
 	#instVars : [
 		'asyncResult'
 	],
-	#category : #'Calypso-NavigationModel-Query'
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyAsyncQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -51,27 +53,27 @@ ClyAsyncQuery >> = anObject [
 	^ asyncResult = anObject asyncResult
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAsyncQuery >> async [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAsyncQuery >> asyncResult [
 	^ asyncResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAsyncQuery >> asyncResult: anObject [
 	asyncResult := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAsyncQuery >> buildResult: aQueryResult [
 	self shouldNotImplement
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAsyncQuery >> checkEmptyResult [
 	| result |
 	result := self execute.
@@ -79,32 +81,32 @@ ClyAsyncQuery >> checkEmptyResult [
 	^false "If actual result is still in processing then we can not be sure about empty check"
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyAsyncQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: asyncResult hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyAsyncQuery >> initialize [
 	super initialize.
 
 	asyncResult := ClyAsyncQueryResult new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAsyncQuery >> isAsync [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAsyncQuery >> prepareNewResult [
 
 	^asyncResult prepareNewFor: self actualQuery in: self environment
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAsyncQuery >> semiAsync [
 	^self copy
 		asyncResult: ClySemiAsyncQueryResult new

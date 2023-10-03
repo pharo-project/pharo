@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*RottenTestsFinder' }
+{ #category : '*RottenTestsFinder' }
 ClassDescription >> generateRottenTestFromCompiledMethod: aCompiledMethod testCase: aTestCase [
 	^ aCompiledMethod methodClass = aTestCase class
 		ifTrue: [ RottenTest compiledMethod: aCompiledMethod ]

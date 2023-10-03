@@ -2,34 +2,36 @@
 I am an object that doesn't always hash correctly.  I am used for testing the HashTester.
 "
 Class {
-	#name : #BadHasher,
-	#superclass : #Object,
+	#name : 'BadHasher',
+	#superclass : 'Object',
 	#classInstVars : [
 		'lastRandomIndex'
 	],
-	#category : #'SUnit-Core-Utilities'
+	#category : 'SUnit-Core-Utilities',
+	#package : 'SUnit-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BadHasher class >> randomValue [
 
 	"For every call return different value. Not really random but we do not want to create
 	dependency on random number generators."
 
 	| randomNumbers |
-	
-	randomNumbers := #(2 2 1 2 2 1 2 2 2 2 1 2 1 2 2 2 2 2 1 2). 
+
+	randomNumbers := #(2 2 1 2 2 1 2 2 2 2 1 2 1 2 2 2 2 2 1 2).
 
 	lastRandomIndex ifNil: [ lastRandomIndex := randomNumbers size ].
-	
-	lastRandomIndex := lastRandomIndex + 1.	
-	lastRandomIndex > randomNumbers size 
+
+	lastRandomIndex := lastRandomIndex + 1.
+	lastRandomIndex > randomNumbers size
 		ifTrue: [ lastRandomIndex := 1 ].
-	
-	^ randomNumbers at: lastRandomIndex.
+
+	^ randomNumbers at: lastRandomIndex
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BadHasher >> hash [
 	"Answer with a different hash some of the time"
 

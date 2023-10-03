@@ -1,6 +1,6 @@
-Extension { #name : #RBParseTreeLintRule }
+Extension { #name : 'RBParseTreeLintRule' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RBParseTreeLintRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	(self matcher canMatchMethod: aMethod) ifTrue: [
@@ -8,14 +8,14 @@ RBParseTreeLintRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		node := self matcher
 			executeTree: aMethod ast
 			initialAnswer: nil.
-		node ifNotNil: [ 
-			^ aCriticBlock cull: ( 
-				self critiqueFor: node about: aMethod) ] ].
+		node ifNotNil: [
+			^ aCriticBlock cull: (
+				self critiqueFor: node about: aMethod) ] ]
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RBParseTreeLintRule >> critiqueFor: aNode about: aMethod [
-	| anchor | 
+	| anchor |
 
 	anchor := (aNode isKindOf: RBProgramNode)
 		ifFalse: [ ReSourceAnchor entity: aMethod ]
@@ -23,8 +23,8 @@ RBParseTreeLintRule >> critiqueFor: aNode about: aMethod [
 			ReIntervalSourceAnchor
 				entity: aMethod
 				interval: aNode sourceInterval ].
-			
+
 	^ ReTrivialCritique
-		withAnchor: anchor 
+		withAnchor: anchor
 		by: self
 ]

@@ -5,23 +5,25 @@ I do not care about the possible existence of any other debugger.
 I am equivalent to the debugger selection strategy encoded in MorphicUIManager prior to the integration of DebuggerSelector.
 "
 Class {
-	#name : #OupsSingleDebuggerSelector,
-	#superclass : #OupsDebuggerSelectionStrategy,
-	#category : #'Debugger-Oups-Strategies'
+	#name : 'OupsSingleDebuggerSelector',
+	#superclass : 'OupsDebuggerSelectionStrategy',
+	#category : 'Debugger-Oups-Strategies',
+	#package : 'Debugger-Oups',
+	#tag : 'Strategies'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OupsSingleDebuggerSelector >> initialize [
 	super initialize.
 	handled := true
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 OupsSingleDebuggerSelector >> nextDebugger [
 	^ debuggers first
 ]
 
-{ #category : #debuggers }
+{ #category : 'debuggers' }
 OupsSingleDebuggerSelector >> openDebuggerForSession: aDebugSession [
 
 	[ self nextDebugger debugSession: aDebugSession ]

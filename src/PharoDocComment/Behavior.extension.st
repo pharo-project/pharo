@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*PharoDocComment' }
+{ #category : '*PharoDocComment' }
 Behavior >> hasDocComment [
 	^ self methods anySatisfy: [:method | method hasDocComment ]
 ]

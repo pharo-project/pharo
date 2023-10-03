@@ -2,30 +2,32 @@
 The subclasses of this class define how Renraku should handle exceptions signalled by analyzers
 "
 Class {
-	#name : #ReExceptionStrategy,
-	#superclass : #Object,
+	#name : 'ReExceptionStrategy',
+	#superclass : 'Object',
 	#classInstVars : [
 		'current'
 	],
-	#category : #'Renraku-Utility'
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionStrategy class >> current [
 
 	^ current ifNil: [ current := ReLogExceptionStrategy ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionStrategy class >> current: aStrategy [
 
 	^ current := aStrategy
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
 	<systemsettings>
-	
+
 	(aBuilder pickOne: #current)
 		label: 'Exception handling strategy';
 		target: self;
@@ -37,21 +39,21 @@ ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
 				c strategyTitle -> c ])
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ReExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo: aBlock [
 	"do something with anException that occured during anEntity validation.
 	in case you want to produce a new renraku property evaluate aBlock with it"
-	
+
 	self subclassResponsibility
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ReExceptionStrategy class >> settingDescription [
-	
+
 	^ String streamContents: [ :stream |
 		stream nextPutAll: 'The selected strategy defines how to handle exceptions that occur during a renraku validation of an entity.'.
 		stream cr.
-		
+
 		self allSubclassesDo: [ :cls |
 			stream
 				cr;
@@ -60,14 +62,14 @@ ReExceptionStrategy class >> settingDescription [
 				nextPutAll: cls strategyDescription ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionStrategy class >> strategyDescription [
 	"a string that will be used as a part of the setting explenation"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionStrategy class >> strategyTitle [
 	"a string the will be displayed for the setting option"
 

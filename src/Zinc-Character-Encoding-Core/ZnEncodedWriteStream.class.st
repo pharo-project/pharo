@@ -4,12 +4,13 @@ I am ZnEncodedWriteStream, an abstract support class for write streams on a bina
 Part of Zinc HTTP Components
 "
 Class {
-	#name : #ZnEncodedWriteStream,
-	#superclass : #ZnEncodedStream,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnEncodedWriteStream',
+	#superclass : 'ZnEncodedStream',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedWriteStream >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
 	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
@@ -20,42 +21,42 @@ ZnEncodedWriteStream >> << anObject [
  	anObject putOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedWriteStream >> flush [
 	stream flush
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEncodedWriteStream >> isBinary [
 	^ false
 ]
 
-{ #category : #accessing }
-ZnEncodedWriteStream >> next: count putAll: collection [	
-	self 
-		next: count 
-		putAll: collection 
+{ #category : 'accessing' }
+ZnEncodedWriteStream >> next: count putAll: collection [
+	self
+		next: count
+		putAll: collection
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedWriteStream >> next: count putAll: collection startingAt: offset [
 	"Write count items from collection starting at offset.
 	This is an inefficient abstract implementation writing one by one."
-	
-	0 to: count - 1 do: [ :each | 
+
+	0 to: count - 1 do: [ :each |
 		self nextPut: (collection at: offset + each) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedWriteStream >> nextPut: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedWriteStream >> nextPutAll: collection [
-	self 
-		next: collection size 
-		putAll: collection 
+	self
+		next: collection size
+		putAll: collection
 		startingAt: 1
 ]

@@ -1,26 +1,29 @@
 Class {
-	#name : #RBRenameVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
+	#name : 'RBRenameVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
 	#instVars : [
 		'extraArgument'
 	],
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #builder }
+{ #category : 'builder' }
 RBRenameVariableParametrizedTest >> createRefactoringWithArguments: aParameterCollection [
-	^ (self renameVariableClass 
-		perform: constructor 
-		withArguments: aParameterCollection , extraArgument) asRefactoring
+
+	^ self renameVariableClass
+		  perform: constructor
+		  withArguments: aParameterCollection , extraArgument
 ]
 
-{ #category : #parameterization }
+{ #category : 'parameterization' }
 RBRenameVariableParametrizedTest >> extraArgument: anObject [
 
 	extraArgument := anObject
 ]
 
-{ #category : #parameterization }
-RBRenameVariableParametrizedTest >> renameVariableClass [ 
+{ #category : 'parameterization' }
+RBRenameVariableParametrizedTest >> renameVariableClass [
 	^ rbClass
 ]

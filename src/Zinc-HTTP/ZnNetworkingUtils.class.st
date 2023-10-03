@@ -11,8 +11,8 @@ ZnNetworkingUtils default socketStreamClass: ZdcSocketStream.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnNetworkingUtils,
-	#superclass : #Object,
+	#name : 'ZnNetworkingUtils',
+	#superclass : 'Object',
 	#instVars : [
 		'socketStreamClass',
 		'secureSocketStreamClass',
@@ -22,187 +22,189 @@ Class {
 		'Default',
 		'DefaultSocketStreamTimeout'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils class >> default: instance [
-	Default := instance 
+	Default := instance
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZnNetworkingUtils class >> defaultSocketStreamTimeout [
 	"Global default timeout in seconds for SocketStream IO"
-	
+
 	^ DefaultSocketStreamTimeout
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZnNetworkingUtils class >> defaultSocketStreamTimeout: seconds [
 	"Global default timeout in seconds for SocketStream IO"
-	
+
 	^ DefaultSocketStreamTimeout := seconds
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ZnNetworkingUtils class >> initialize [
 	"The default will try to use ZdcSocketStream and ZdcSecureSocketStream"
-	 
+
 	Default := self new.
 	DefaultSocketStreamTimeout := 30
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnNetworkingUtils class >> ipAddressToString: byteArray [
 	^ String streamContents: [ :stream |
-			byteArray 
-				do: [ :each | stream print: each ] 
+			byteArray
+				do: [ :each | stream print: each ]
 				separatedBy: [ stream nextPut: $. ] ]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZnNetworkingUtils class >> listenBacklogSize [
 	"Server socket backlog size (number of pending connection waiting to be accepted)"
-	
+
 	^ 32
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils class >> proxyAuthorizationHeaderValueToUrl: url [
 	"Answer the Proxy-Authorization header value for HTTP access to url, or nil if none"
-	
-	^ self default proxyAuthorizationHeaderValueToUrl: url  
+
+	^ self default proxyAuthorizationHeaderValueToUrl: url
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils class >> proxyUrl [
 	"Answer the host:port URL the HTTP/S proxy"
-	
+
 	^ self default proxyUrl
 ]
 
-{ #category : #networking }
+{ #category : 'networking' }
 ZnNetworkingUtils class >> secureSocketStreamOn: socket [
-	^ self default 
-		secureSocketStreamOn: socket  
+	^ self default
+		secureSocketStreamOn: socket
 ]
 
-{ #category : #networking }
+{ #category : 'networking' }
 ZnNetworkingUtils class >> serverSocketOn: port [
-	^ self default 
-		serverSocketOn: port  
+	^ self default
+		serverSocketOn: port
 ]
 
-{ #category : #networking }
+{ #category : 'networking' }
 ZnNetworkingUtils class >> serverSocketOn: port interface: address [
-	^ self default 
-		serverSocketOn: port interface: address 
+	^ self default
+		serverSocketOn: port interface: address
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils class >> shouldProxyUrl: url [
 	"Answer if we should proxy HTTP access to url."
-	
-	^ self default shouldProxyUrl: url  
+
+	^ self default shouldProxyUrl: url
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZnNetworkingUtils class >> socketBufferSize [
 	"Size in bytes for Sockets and SocketStream IO buffers"
 
 	^ 4096
 ]
 
-{ #category : #networking }
+{ #category : 'networking' }
 ZnNetworkingUtils class >> socketStreamOn: socket [
-	^ self default 
-		socketStreamOn: socket  
+	^ self default
+		socketStreamOn: socket
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZnNetworkingUtils class >> socketStreamTimeout [
 	"Access the current timeout in seconds for SocketStream IO"
-	
-	^ ZnConnectionTimeout value 
+
+	^ ZnConnectionTimeout value
 		ifNil: [ self defaultSocketStreamTimeout ]
 ]
 
-{ #category : #networking }
+{ #category : 'networking' }
 ZnNetworkingUtils class >> socketStreamToUrl: url [
 	^ self default
-		socketStreamToUrl: url  
+		socketStreamToUrl: url
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils >> bufferSize [
 	^ self class socketBufferSize
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> httpProxyPassword [
 	"Return the password for proxy authorization"
-	
-	^ NetworkSystemSettings proxyPassword 
+
+	^ NetworkSystemSettings proxyPassword
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> httpProxyPort [
 	"Return the port of the proxy server to use"
-	
+
 	^ NetworkSystemSettings httpProxyPort
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> httpProxyServer [
 	"Return the hostname of the proxy server to use"
-	
+
 	^ NetworkSystemSettings httpProxyServer
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> httpProxyUser [
 	"Return the user for proxy authorization"
-	
+
 	^ NetworkSystemSettings proxyUser
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnNetworkingUtils >> initialize [
 	super initialize.
 	self socketStreamClass: (Smalltalk globals at: #ZdcSocketStream ifAbsent: [ SocketStream ]).
-	self secureSocketStreamClass: (Smalltalk globals at: #ZdcSecureSocketStream ifAbsent: [ nil ]).	
-	self sslSessionClass: (Smalltalk globals at: #ZdcPluginSSLSession ifAbsent: [ nil ]).
+	self secureSocketStreamClass: (Smalltalk globals at: #ZdcSecureSocketStream ifAbsent: [ nil ]).
+	self sslSessionClass: (Smalltalk globals at: #ZdcPluginSSLSession ifAbsent: [ nil ])
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> isProxyAuthorizationRequired [
 	"Does the proxy require authorization ?"
-	
+
 	^ self isProxySet and: [ NetworkSystemSettings useNetworkAuthentification ]
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> isProxySet [
 	"Should a proxy be used ?"
-	
-	^ NetworkSystemSettings useHTTPProxy 
+
+	^ NetworkSystemSettings useHTTPProxy
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> proxyAuthorizationHeaderValueToUrl: url [
 	"Answer the Proxy-Authorization header value for HTTP access to url, or nil if none"
-	
+
 	^ (self isProxyAuthorizationRequired and: [ self shouldProxyUrl: url ])
-		ifTrue: [ 'Basic ', (ZnUtils encodeBase64: (self httpProxyUser, ':', self httpProxyPassword)) ] 
-		ifFalse: [ nil ]  
+		ifTrue: [ 'Basic ', (ZnUtils encodeBase64: (self httpProxyUser, ':', self httpProxyPassword)) ]
+		ifFalse: [ nil ]
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> proxyUrl [
 	"System settings do currently not support HTTPS proxies."
 
@@ -213,26 +215,26 @@ ZnNetworkingUtils >> proxyUrl [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils >> secureSocketStreamClass [
-	^ secureSocketStreamClass ifNil: [ 
+	^ secureSocketStreamClass ifNil: [
 		secureSocketStreamClass := Smalltalk globals at: #ZdcSecureSocketStream ifAbsent: [ nil ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnNetworkingUtils >> secureSocketStreamClass: anObject [
 	secureSocketStreamClass := anObject
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnNetworkingUtils >> secureSocketStreamOn: socket [
 	| stream |
 	stream := self secureSocketStreamClass on: socket.
-	self setSocketStreamParameters: stream.  
+	self setSocketStreamParameters: stream.
 	^ stream
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnNetworkingUtils >> serverSocketOn: port [
 	| socket |
 	socket := Socket newTCP.
@@ -243,121 +245,120 @@ ZnNetworkingUtils >> serverSocketOn: port [
 	^ socket
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnNetworkingUtils >> serverSocketOn: port interface: address [
 	| socket |
 	socket := Socket newTCP.
 	self setServerSocketOptions: socket.
-	socket 
-		listenOn: port 
-		backlogSize: self class listenBacklogSize 
+	socket
+		listenOn: port
+		backlogSize: self class listenBacklogSize
 		interface: address.
 	socket isValid
 		ifFalse: [ self error: 'Cannot create socket on port ', port printString ].
 	^ socket
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnNetworkingUtils >> setServerSocketOptions: socket [
 	socket
 		setOption: 'TCP_NODELAY' value: 1;
 		setOption: 'SO_SNDBUF' value: self class socketBufferSize;
-		setOption: 'SO_RCVBUF' value: self class socketBufferSize 
+		setOption: 'SO_RCVBUF' value: self class socketBufferSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnNetworkingUtils >> setSocketStreamParameters: stream [
-	stream 
+	stream
 		binary;
 		shouldSignal: true;
 		autoFlush: false;
 		bufferSize: self bufferSize;
-		timeout: self timeout.
-
+		timeout: self timeout
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> shouldProxyUrl: url [
 	"Even when a proxy is set, some URLs should not be proxied.
 	There is no setting for this in the image.
 	We exclude localhost and explicit exceptions from being proxied."
-	
+
 	self isProxySet ifFalse: [ ^ false ].
 	^ url isLocalHost not
-		and: [ 
+		and: [
 			[ (NetworkSystemSettings isAnExceptionFor: url) not ]
 				on: MessageNotUnderstood
 				do: [ true ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils >> socketStreamClass [
 	^ socketStreamClass ifNil: [ socketStreamClass := SocketStream ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnNetworkingUtils >> socketStreamClass: anObject [
 	socketStreamClass := anObject
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnNetworkingUtils >> socketStreamOn: socket [
 	| stream |
 	stream := self socketStreamClass on: socket.
-	self setSocketStreamParameters: stream.  
+	self setSocketStreamParameters: stream.
 	^ stream
 ]
 
-{ #category : #proxy }
+{ #category : 'proxy' }
 ZnNetworkingUtils >> socketStreamToProxy [
 	^ self socketStreamToUrlDirectly: self proxyUrl
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnNetworkingUtils >> socketStreamToUrl: url [
-	url hasHost ifFalse: [ ZnMissingHost signal ].  
+	url hasHost ifFalse: [ ZnMissingHost signal ].
 	^ (self shouldProxyUrl: url)
-		ifTrue: [ self socketStreamToProxy ] 
+		ifTrue: [ self socketStreamToProxy ]
 		ifFalse: [ self socketStreamToUrlDirectly: url ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnNetworkingUtils >> socketStreamToUrlDirectly: url [
 	| stream address |
 	address := NetNameResolver addressForName: url host timeout: self timeout.
 	(address isNil or: [ address = SocketAddress zero ])
 		ifTrue: [ ^ NameLookupFailure signalFor: url host ].
-	stream := (self streamClassForScheme: url scheme) 
+	stream := (self streamClassForScheme: url scheme)
 		openConnectionToHost: address
 		port: url portOrDefault
-		timeout: self timeout.  
-	self setSocketStreamParameters: stream. 
+		timeout: self timeout.
+	self setSocketStreamParameters: stream.
 	"note that for TLS/SSL, #connect should be called"
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils >> sslSessionClass [
-	^ sslSessionClass ifNil: [ 
+	^ sslSessionClass ifNil: [
 		sslSessionClass := Smalltalk globals at: #ZdcPluginSSLSession ifAbsent: [ nil ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnNetworkingUtils >> sslSessionClass: anObject [
 	sslSessionClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils >> streamClassForScheme: scheme [
-	(#(http ws) includes: scheme) ifTrue: [ 
+	(#(http ws) includes: scheme) ifTrue: [
 		^ self socketStreamClass ].
-	(#(https wss) includes: scheme) ifTrue: [ 
+	(#(https wss) includes: scheme) ifTrue: [
 		^ self secureSocketStreamClass ifNil: [
 			self error: 'No secure socket stream class set or available' ] ].
 	(ZnUnknownScheme scheme: scheme) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNetworkingUtils >> timeout [
 	^ self class socketStreamTimeout
 ]

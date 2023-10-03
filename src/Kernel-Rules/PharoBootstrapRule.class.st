@@ -2,28 +2,29 @@
 A package from the bootstrap layer (minimal image) is depending on an external package.
 "
 Class {
-	#name : #PharoBootstrapRule,
-	#superclass : #ReAbstractRule,
+	#name : 'PharoBootstrapRule',
+	#superclass : 'ReAbstractRule',
 	#classVars : [
 		'DependencyChecker'
 	],
-	#category : #'Kernel-Rules'
+	#category : 'Kernel-Rules',
+	#package : 'Kernel-Rules'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PharoBootstrapRule class >> checksPackage [
 
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PharoBootstrapRule >> basicCheck: aPackage [
-	(self bootstrapPackages includes: aPackage packageName)
-		ifFalse: [ ^ false "Do not check" ].
+
+	(self bootstrapPackages includes: aPackage name) ifFalse: [ ^ false "Do not check" ].
 	^ self newExternalDependencyExistFor: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoBootstrapRule >> bootstrapPackages [
 	^ #(
 	#'AST-Core'
@@ -82,7 +83,7 @@ PharoBootstrapRule >> bootstrapPackages [
 	)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PharoBootstrapRule >> critiqueFor: aPackage [
 
 	^ ArchitecturalCritique
@@ -90,27 +91,28 @@ PharoBootstrapRule >> critiqueFor: aPackage [
 		by: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoBootstrapRule >> dependencyChecker [
 	^ (DependencyChecker ifNil: [ DADependencyChecker ]) new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoBootstrapRule >> group [
 
 	^ 'Architectural'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoBootstrapRule >> name [
 	^ 'Illegal dependency of Bootstrap Layer'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PharoBootstrapRule >> newExternalDependencyExistFor: aPackage [
 	"Check if there are new dependencies to a package outside this layer"
+
 	| dependencies newDependencies |
-	dependencies := self dependencyChecker dependenciesOf: aPackage packageName.
+	dependencies := self dependencyChecker dependenciesOf: aPackage name.
 	newDependencies := dependencies difference: self bootstrapPackages.
 	^ newDependencies notEmpty
 ]

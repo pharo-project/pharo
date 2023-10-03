@@ -1,17 +1,17 @@
-Extension { #name : #SystemWindow }
+Extension { #name : 'SystemWindow' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> aboutText [
 	"Answer the text to use for the About dialog."
 
 	^self model
 		ifNil: ['This is a system window without a model' translated]
-		ifNotNil: [self model class instanceSide organization classComment
+		ifNotNil: [self model class instanceSide comment
 					ifEmpty: ['The model of this window has no class comment']
 					ifNotEmpty: [:comment | comment]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> aboutTitle [
 	"Answer the title to use for the About dialog."
 
@@ -24,31 +24,31 @@ SystemWindow >> aboutTitle [
 	^'About {1}' translated format: {title}
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> activeFillStyle [
 	"Return the active fillStyle for the receiver."
-	
+
 	^self theme windowActiveFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> activeLabelFillStyle [
 	"Return the active label fillStyle for the receiver."
-	
+
 	^self theme windowActiveLabelFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> activeTitleFillStyle [
 	"Return the active title fillStyle for the receiver."
-	
+
 	^self theme windowActiveTitleFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addCollapseBox [
 	"If I have a labelArea, add a collapse box to it."
-	
+
 	labelArea
 		ifNil: [^ self].
 	collapseBox := self createCollapseBox.
@@ -56,10 +56,10 @@ SystemWindow >> addCollapseBox [
 	labelArea addMorphBack: collapseBox
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addCornerGrips [
 	"Should add these to the front!"
-	
+
 	|tl tr lh|
 	lh := self labelHeight.
 	tl  := TopLeftGripMorph new target: self; position: self position.
@@ -73,10 +73,10 @@ SystemWindow >> addCornerGrips [
 		addMorph: (BottomRightGripMorph new target: self;position: self position)
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addEdgeGrips [
 	"Should add these to the front!"
-	
+
 	|t l r lh|
 	lh := self labelHeight.
 	t  := WindowEdgeGripMorph new target: self; position: self position; edgeName: #top.
@@ -94,7 +94,7 @@ SystemWindow >> addEdgeGrips [
 		addMorph: (WindowEdgeGripMorph new target: self;position: self position; edgeName: #bottom)
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addExpandBox [
 	"If I have a labelArea, add a close box to it"
 	labelArea
@@ -105,23 +105,23 @@ SystemWindow >> addExpandBox [
 	labelArea addMorphBack: expandBox
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addGrips [
 	"Add the edge and corner grips."
-	
+
 	self
 		addCornerGrips;
 		addEdgeGrips
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addGripsIfWanted [
 	"Add the edge and corner grips if the window wants them."
-	
+
 	self wantsGrips ifTrue: [self addGrips]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addMenuControl [
 	"If I have a label area, add a menu control to it."
 
@@ -131,10 +131,10 @@ SystemWindow >> addMenuControl [
 	labelArea addMorphBack: (menuBox := self createMenuBox)
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addMorph: aMorph fullFrame: aLayoutFrame [
 	"Add a morph to the receiver with the given layout frame."
-	
+
 	| left right bottom top windowBorderWidth frame |
 	frame := aLayoutFrame asLayoutFrame.
 	windowBorderWidth := self class borderWidth.
@@ -144,7 +144,7 @@ SystemWindow >> addMorph: aMorph fullFrame: aLayoutFrame [
 
 	bottom := frame bottomOffset.
 	top := frame topOffset.
-	
+
 	frame rightFraction = 1 ifTrue: [frame rightOffset: right - windowBorderWidth - self theme windowRightOffset].
 	frame leftFraction = 0
 		ifTrue: [frame leftOffset: left + windowBorderWidth + self theme windowLeftOffset]
@@ -156,24 +156,24 @@ SystemWindow >> addMorph: aMorph fullFrame: aLayoutFrame [
 		ifTrue: [frame topOffset: top+ self theme windowTopOffset]
 		ifFalse: [frame topFraction = 1 ifFalse: [
 					frame topOffset: top + ProportionalSplitterMorph splitterWidth]].
-	
+
 	super addMorph: aMorph fullFrame: frame.
 
-	paneMorphs := paneMorphs copyReplaceFrom: 1 to: 0 with: (Array with: aMorph).
+	paneMorphs := paneMorphs copyReplaceFrom: 1 to: 0 with: {aMorph}.
 	"aMorph adoptPaneColor: self paneColor."
 	aMorph
 		borderStyle: (self theme windowPaneBorderStyleFor: aMorph in: self).
 	self addMorphBack: aMorph. "reorder panes so flop-out right-side scrollbar is visible"
-		
+
 	self owner ifNotNil: [self addPaneSplitters] "do when opened for performance"
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addPaneHSplitterBetween: topMorphs and: bottomMorphs [
 	"Add a horizontal splitter for the given morphs that share a common bottom fraction.
 	If there is a horizontal discontinuity apply the splitter to the first contiguous group.
 	Answer the morphs to which the splitter was applied."
-	
+
 	|targetY fixed rightFraction leftFrame rightFrame sorted morph topGroup bottomGroup splitter offset|
 	topMorphs ifEmpty: [^self].
 	targetY := topMorphs first layoutFrame bottomFraction.
@@ -193,7 +193,7 @@ SystemWindow >> addPaneHSplitterBetween: topMorphs and: bottomMorphs [
 		rightFraction := morph layoutFrame rightFraction].
 	leftFrame := topGroup first layoutFrame.
 	rightFrame := topGroup last layoutFrame.
-	bottomGroup := (bottomMorphs 
+	bottomGroup := (bottomMorphs
 			reject: [:m | m layoutFrame topFraction = m layoutFrame bottomFraction])
 			select: [:m |
 		(m layoutFrame leftFraction
@@ -204,7 +204,7 @@ SystemWindow >> addPaneHSplitterBetween: topMorphs and: bottomMorphs [
 			and: rightFrame rightFraction]].
 	offset := (topGroup collect: [:m | m layoutFrame bottomOffset ]) max.
 	splitter := ProportionalSplitterMorph new beSplitsTopAndBottom.
-	splitter layoutFrame: ((leftFrame leftFraction @ targetY corner: rightFrame rightFraction @ targetY) asLayoutFrame 
+	splitter layoutFrame: ((leftFrame leftFraction @ targetY corner: rightFrame rightFraction @ targetY) asLayoutFrame
 									leftOffset: leftFrame leftOffset ;
 									topOffset: offset;
 									rightOffset: rightFrame rightOffset;
@@ -216,7 +216,7 @@ SystemWindow >> addPaneHSplitterBetween: topMorphs and: bottomMorphs [
 	^topGroup
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addPaneHSplitters [
 	"Add the horizontal pane splitters."
 
@@ -234,22 +234,22 @@ SystemWindow >> addPaneHSplitters [
 			copyWithoutAll: (self addPaneHSplitterBetween: sameBottom and: sameTop)]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addPaneSplitters [
 	"Add the vertical and horizontal pane splitters."
-	
+
 	self removePaneSplitters.
 	self addPaneVSplitters.
 	self addPaneHSplitters.
 	self linkSplittersToSplitters
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addPaneVSplitterBetween: leftMorphs and: rightMorphs [
 	"Add a vertical splitter for the given morphs that share a common right fraction.
 	If there is a vertical discontinuity apply the splitter to the first contiguous group.
 	Answer the morphs to which the splitter was applied."
-	
+
 	|targetX fixed bottomFraction topFrame bottomFrame sorted morph leftGroup rightGroup splitter offset|
 	leftMorphs ifEmpty: [^self].
 	targetX := leftMorphs first layoutFrame rightFraction.
@@ -279,8 +279,8 @@ SystemWindow >> addPaneVSplitterBetween: leftMorphs and: rightMorphs [
 	splitter := ProportionalSplitterMorph new.
 	splitter layoutFrame: ((targetX @ topFrame topFraction corner: targetX @ bottomFrame bottomFraction) asLayoutFrame
 								leftOffset: offset ;
-								topOffset: topFrame topOffset ; 
-								rightOffset: 4 + offset; 
+								topOffset: topFrame topOffset ;
+								rightOffset: 4 + offset;
 								bottomOffset: bottomFrame bottomOffset).
 	leftGroup := leftGroup, fixed.
 	leftGroup do: [:m | splitter addLeftOrTop: m].
@@ -289,7 +289,7 @@ SystemWindow >> addPaneVSplitterBetween: leftMorphs and: rightMorphs [
 	^leftGroup
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> addPaneVSplitters [
 	"Add the vertical pane splitters."
 
@@ -308,7 +308,7 @@ SystemWindow >> addPaneVSplitters [
 			copyWithoutAll: (self addPaneVSplitterBetween: sameRight and: sameLeft)]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> allowedToClose [
 	"Answer whether the window is currently allowed to close."
 
@@ -316,10 +316,10 @@ SystemWindow >> allowedToClose [
 		self modalChild isNil]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> animateClose [
 	"Animate closing."
-	
+
 	| smallRect restoredRect rects steps|
 	self isMinimized ifTrue: [^self].
 	restoredRect := self bounds.
@@ -332,10 +332,10 @@ SystemWindow >> animateClose [
 	self fastAnimateRectangles: rects
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> animateMaximize [
 	"Animate maximizing from restored."
-	
+
 	|expandedRect restoredRect rects steps|
 	expandedRect := self fullscreenBounds.
 	restoredRect := self bounds.
@@ -345,10 +345,10 @@ SystemWindow >> animateMaximize [
 	self fastAnimateRectangles: rects
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> animateMinimize [
 	"Animate minimizing."
-	
+
 	|tb buttonRect restoredRect rects steps|
 	tb := self worldTaskbar ifNil: [^self].
 	buttonRect := ((tb taskButtonOf: self) ifNil: [^self]) bounds.
@@ -363,10 +363,10 @@ SystemWindow >> animateMinimize [
 	self fastAnimateRectangles: rects
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> animateRestore [
 	"Animate restoring from maximised."
-	
+
 	|expandedRect restoredRect rects steps|
 	expandedRect := self bounds.
 	restoredRect := self unexpandedFrame.
@@ -376,10 +376,10 @@ SystemWindow >> animateRestore [
 	self fastAnimateRectangles: rects
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> animateRestoreFromMinimized [
 	"Animate restoring from minimised."
-	
+
 	|tb buttonRect restoredRect rects steps|
 	tb := self worldTaskbar ifNil: [^self].
 	buttonRect := ((tb taskButtonOf: self) ifNil: [^self]) bounds.
@@ -394,21 +394,21 @@ SystemWindow >> animateRestoreFromMinimized [
 	self fastAnimateRectangles: rects
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> basicIsSticky [
 	"Answer the super isSticky."
 
 	^super isSticky
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> basicLabel [
 	"Answer the actual label morph."
 
 	^label
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> beWithGrips [
 	"Add the grips and set a property to
 	indicate that grips are wanted."
@@ -418,7 +418,7 @@ SystemWindow >> beWithGrips [
 		self addGripsIfWanted]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> beWithoutGrips [
 	"Remove the grips and set a property to
 	indicate that grips are not wanted."
@@ -427,7 +427,7 @@ SystemWindow >> beWithoutGrips [
 	self removeGrips
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> bringBehind: aMorph [
 	"Make the receiver be directly behind the given morph.
 	Take into account any modal owner and propagate."
@@ -439,7 +439,7 @@ SystemWindow >> bringBehind: aMorph [
 	self modalOwner ifNotNil: [:mo | mo bringBehind: self]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> closeBoxHit [
 	"The user clicked on the close-box control in the window title.
 	For Mac users only, the Mac convention of option-click-on-close-box is obeyed if the mac option key is down.
@@ -451,18 +451,18 @@ SystemWindow >> closeBoxHit [
 	self close
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> collapseBoxHit [
 	"The user has clicked on the collapse box.
 	Collapse or expand the receiver as appropriate."
-	
+
 	self isCollapsed
 		ifTrue: [self playRestoreUpSound]
 		ifFalse: [self playMinimizeSound].
 	self collapseOrExpand
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> configureForEmbedding [
 	"Set up the window so it can be embedded into another morph."
 
@@ -475,7 +475,7 @@ SystemWindow >> configureForEmbedding [
 		self submorphsDo: [:m | m unlock]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> configureForUnembedding [
 
 	"Set up the window so it can be unembedded and placed in the world."
@@ -489,57 +489,57 @@ SystemWindow >> configureForUnembedding [
 			]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> createCloseBox [
 	"Answer a button for closing the window."
-	
+
 	^self theme createCloseBoxFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> createCollapseBox [
 	"Answer a button for minimising the window."
-	
+
 	^self theme createCollapseBoxFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> createExpandBox [
 	"Answer a button for maximising/restoring the window."
-	
+
 	^self theme createExpandBoxFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> createMenuBox [
 	"Answer a button for the window menu."
-	
+
 	^self theme createMenuBoxFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> doubleClick: event [
 	"Handle a double click. Maximize/restore the window.
 	Works in title bar area."
 
 	self isResizeable ifFalse: [ ^ self ].
-	
+
 	(labelArea containsPoint: event position)
 		ifTrue: [self expandBoxHit]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> doubleClickTimeout: event [
 	"Forget the #inactiveDoubleClick property.
 	The property is set if an inactive window was double-clicked."
-	
+
  	self removeProperty: #inactiveDoubleClick
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> drawDropShadowOn: aCanvas [
 	"Get the theme to draw the drop shawdow for the receiver."
-	
+
 	|dropAreas|
 	dropAreas := self areasRemainingToFill: (self bounds expandBy: self shadowMargins).
 	(dropAreas anySatisfy: [:rect | aCanvas isVisible: rect])
@@ -553,7 +553,7 @@ SystemWindow >> drawDropShadowOn: aCanvas [
 					on: aCanvas]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> expandBoxHit [
 	"The fullscreen expand box has been hit"
 
@@ -581,10 +581,10 @@ SystemWindow >> expandBoxHit [
 	self setExpandBoxBalloonText
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> fastAnimateRectangles: rects [
 	"Animate the given rectangles using the fast method."
-	
+
 	|delay col merged|
 	rects ifEmpty: [^self].
 	delay := Delay forMilliseconds: (self theme animationSettings delay).
@@ -602,16 +602,16 @@ SystemWindow >> fastAnimateRectangles: rects [
 	self currentWorld invalidRect: merged from: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> fillStyleToUse [
 	"Answer the basic fill style for the receiver."
 
-	^self isActive 
-		ifTrue: [self activeFillStyle] 
+	^self isActive
+		ifTrue: [self activeFillStyle]
 		ifFalse: [self inactiveFillStyle]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> fullscreen [
 	"Zoom Window to Full World size with possible DeskMargins"
 	"SystemWindow fullscreen"
@@ -619,24 +619,24 @@ SystemWindow >> fullscreen [
 	self bounds: self fullscreenBounds
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> getRawLabel [
 	"Answer a shallowCopy of the label with the contents fitted."
-	
+
 	|contentsFit|
 	contentsFit := label shallowCopy fitContents.
 	contentsFit extent: (label extent x min: contentsFit extent x) @ contentsFit extent y.
 	^contentsFit
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> handlesDropShadowInHand [
 	"Answer whether the receiver will handle drop shadow drawing when picked up in the hand."
 
 	^self theme handlesWindowDropShadowInHandFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event"
 
@@ -649,56 +649,56 @@ SystemWindow >> handlesKeyboard: evt [
 		evt keyCharacter = Character tab ]]]]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> hasCloseBox [
 	"Answer whether the receiver currently has a close box."
 
 	^closeBox notNil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> hasCollapseBox [
 	"Answer whether the receiver currently has a collapse box."
 
 	^collapseBox notNil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> hasExpandBox [
 	"Answer whether the receiver currently has an expand box."
 
 	^expandBox notNil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> hasMenuBox [
 	"Answer whether the receiver currently has a menu box."
 
 	^menuBox notNil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> inactiveFillStyle [
 	"Return the active fillStyle for the receiver."
-	
+
 	^self theme windowInactiveFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> inactiveLabelFillStyle [
 	"Return the inactive label fillStyle for the receiver."
-	
+
 	^self theme windowInactiveLabelFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> inactiveTitleFillStyle [
 	"Return the inactive title fillStyle for the receiver."
-	
+
 	^self theme windowInactiveTitleFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> indicateModalChild [
 	"Make the user aware that this is the topmost modal child
 	by flashing."
@@ -709,10 +709,10 @@ SystemWindow >> indicateModalChild [
 		ifFalse: [self flash]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> initializeLabelArea [
 	"Initialize the label area (titlebar) for the window."
-	
+
 	label := self theme windowLabelFor: self.
 	"Add default inital boxes"
 	collapseBox := self createCollapseBox. "Add collapse box so #labelHeight will work"
@@ -721,24 +721,22 @@ SystemWindow >> initializeLabelArea [
 		expandBox := self createExpandBox.
 		self setExpandBoxBalloonText].
 	menuBox := self createMenuBox.
-	stripes := Array
-						with: (Morph newBounds: bounds)
-						with: (Morph newBounds: bounds).
+	stripes := {Morph newBounds: bounds . Morph newBounds: bounds }.
 	self addLabelArea.
 	labelArea
 		goBehind.
 	self replaceBoxes.
-	labelArea fillStyle: self activeTitleFillStyle.
+	labelArea fillStyle: self activeTitleFillStyle
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isActive [
 	"Answer active if no owner too to avoid color flickering."
-	
+
 	^self isWindowActive: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isEmbedded [
 	"Answer whether the receiver is embedded, i.e.
 	has an owner that is not the world or the hand."
@@ -746,52 +744,52 @@ SystemWindow >> isEmbedded [
 	^self owner isNotNil and: [self owner ~= self world and: [self owner ~= self activeHand]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isMaximized [
 	"Answer whether we are maximised."
 
 	^self unexpandedFrame notNil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isMinimized [
 	"Answer whether we are minimised."
 
 	^self isCollapsed
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isNotMaximized [
 	"Answer whether we are not maximised."
 
 	^self unexpandedFrame isNil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isNotMinimized [
 	"Answer whether we are not minimised."
 
 	^self isCollapsed not
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isNotRestored [
 	"Answer whether we are maximised or minimised."
 
 	^self isMinimized or: [self isMaximized]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> isRestored [
 	"Answer whether we are neither expanded or collapsed."
 
 	^(self isMinimized or: [self isMaximized]) not
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> justDroppedInto: aMorph event: anEvent [
 	"Release the mouse focus as well."
-	
+
 	isCollapsed
 		ifTrue: [
 			self position: ((self position max: 0@0) grid: 8@8).
@@ -801,13 +799,13 @@ SystemWindow >> justDroppedInto: aMorph event: anEvent [
 			fullFrame := self bounds.
 			self isTopWindow ifFalse: [self activate]
 		].
-	
+
 	anEvent hand releaseMouseFocus.
-	
+
 	^super justDroppedInto: aMorph event: anEvent
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> keyDown: evt [
 	"Check for close window."
 	super keyDown: evt.
@@ -815,14 +813,14 @@ SystemWindow >> keyDown: evt [
 	^false
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> labelArea [
 	"Answer the label area."
 
 	^labelArea
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> labelHeight [
 	"Answer the height for the window label.  The standard behavior is at bottom; a hook is provided so that models can stipulate other heights, in support of various less-window-looking demos.
 	If no label answer the class border width instead."
@@ -832,7 +830,7 @@ SystemWindow >> labelHeight [
 		(collapseBox ifNotNil: [collapseBox height] ifNil: [10])
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> labelString [
 
 	"Answer the actual label string."
@@ -840,7 +838,7 @@ SystemWindow >> labelString [
 	^ label ifNil: [ labelString ] ifNotNil: [ label contents asString ]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> layoutChanged [
 	"No need to propagate to the world.
 	Fixed to always flush layout cache."
@@ -851,10 +849,10 @@ SystemWindow >> layoutChanged [
 	self layoutPolicy ifNotNil: [:layout | layout flushLayoutCache]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> linkSplittersToSplitters [
 	"The pane morphs are already linked. Cross link the splitters as appropriate."
-	
+
 	self splitters do: [:each |
 		each splitsTopAndBottom
 			ifTrue: [self splitters do: [:eachMorph |
@@ -871,7 +869,7 @@ SystemWindow >> linkSplittersToSplitters [
 							ifTrue: [each addRightOrBottom: eachMorph]]]]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> lockInactivePortions [
 	"Make me unable to respond to mouse and keyboard.  Control boxes remain active."
 
@@ -879,7 +877,7 @@ SystemWindow >> lockInactivePortions [
 	self submorphsDo: [:m | m == labelArea ifFalse: [m lock]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> makeBordered [
 	"Add the border and border width offsets."
 
@@ -895,7 +893,7 @@ SystemWindow >> makeBordered [
 	self theme configureWindowBorderFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> makeBorderless [
 	"Remove the border and border width offsets.."
 
@@ -910,17 +908,17 @@ SystemWindow >> makeBorderless [
 	self borderWidth: 0
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> makeClosable [
 	"Reinstate the close box. Go via theme to maintain box order."
-	
+
 	mustNotClose := false.
 	closeBox
 		ifNil: [closeBox := self createCloseBox.
 				self replaceBoxes]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> maximize [
 	"Maximise the receiver. If collapsed the uncollapse first."
 
@@ -928,24 +926,24 @@ SystemWindow >> maximize [
 	self isMaximized ifFalse: [self expandBoxHit]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> menuBox [
 	"Answer the receiver's menu box."
 
 	^menuBox
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> minimize [
 	"Minimise the receiver."
 
 	self isMinimized ifFalse: [self collapseBoxHit]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> model: anObject [
 	"Set the model."
-	
+
 	super model: anObject.
 	self paneColorTracksModel ifTrue: [
 		self
@@ -963,7 +961,7 @@ SystemWindow >> model: anObject [
 			height: self boxExtent y]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> navigateFocusForward [
 	"Change the keyboard focus to the next morph or the receiver
 	in none are interested."
@@ -973,7 +971,7 @@ SystemWindow >> navigateFocusForward [
 		ifNotNil: [super navigateFocusForward]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> navigationKey: event [
 	"Check for tab key activity and change focus as appropriate.
 	Check for menu key to do popup.
@@ -987,7 +985,7 @@ SystemWindow >> navigationKey: event [
 	^false
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> nextMorphAcrossInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its next sibling or owner's next sibling etc.
@@ -998,7 +996,7 @@ SystemWindow >> nextMorphAcrossInWindow [
 		ifFalse: [ super nextMorphAcrossInWindow ]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> nextMorphInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its first pane."
@@ -1007,29 +1005,29 @@ SystemWindow >> nextMorphInWindow [
 		ifTrue: [self submorphs first]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> paneColor [
 
 	"Answer the basic pane color that should be used."
-	
+
 	^self theme paneColorFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> paneColorOrNil [
 	"Answer the window's pane color or nil otherwise."
 
 	^self paneColor
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> paneColorTracksModel [
 	"Answer true if the colour of the window should be taken from the model."
-	
+
 	^true
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> passivate [
 	"Make me unable to respond to mouse and keyboard"
 
@@ -1042,66 +1040,66 @@ SystemWindow >> passivate [
 		[self adjustBorderUponDeactivationWhenLabeless]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow class >> passivateTopWindow [
 	"Make no window the top window."
 
-	TopWindow ifNotNil: [ :window | 
+	TopWindow ifNotNil: [ :window |
 		TopWindow := nil.
 		window privateBePassive.
 	]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> playCloseSound [
 	"Play the themed sound for closing."
-	
+
 	self theme windowCloseSound play
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> playMaximizeSound [
 	"Play the themed sound for maximizing."
-	
+
 	self theme windowMaximizeSound play
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> playMinimizeSound [
 	"Play the themed sound for maximizing."
-	
+
 	self theme windowMinimizeSound play
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> playOpenSound [
 	"Play the themed sound for opening."
-	
+
 	self theme windowOpenSound play
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> playRestoreDownSound [
 	"Play the themed sound for restoring from maximized."
-	
+
 	self theme windowRestoreDownSound play
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> playRestoreUpSound [
 	"Play the themed sound for restoring from minimized."
-	
+
 	self theme windowRestoreUpSound play
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> preferredCornerStyle [
 	"Answer the preferred corner style."
 
 	^self theme windowPreferredCornerStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> previousMorphInWindow [
 	"Answer the previous morph in the window. This will be the
 	last submorph recursively of the first pane morph."
@@ -1110,22 +1108,22 @@ SystemWindow >> previousMorphInWindow [
 		ifTrue: [self lastSubmorphRecursive]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> rememberKeyboardFocus: aMorph [
 	"Record the current keyboard focus for the receiver."
-	
+
 	(aMorph isNil or: [(aMorph hasOwner: self) not]) ifFalse: [
 		self setProperty: #rememberedFocus toValue: aMorph]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> rememberedKeyboardFocus [
 	"Answer the remembered keyboard focus for the receiver."
-	
+
 	^self valueOfProperty: #rememberedFocus
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> removeBoxes [
 	"Remove all label area boxes."
 
@@ -1135,60 +1133,60 @@ SystemWindow >> removeBoxes [
 	collapseBox ifNotNil: [collapseBox delete. collapseBox := nil]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> removeCloseBox [
 	"Remove the close box."
 
 	closeBox ifNotNil: [closeBox delete. closeBox := nil]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> removeCollapseBox [
 	"Remove the collapse box."
 
 	collapseBox ifNotNil: [collapseBox delete. collapseBox := nil]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> removeEdgeGrips [
 	"Remove the window edge grips."
-	
+
 	|edges|
 	edges := self submorphsSatisfying: [:each | each isKindOf: WindowEdgeGripMorph].
 	edges do: [:each | each delete]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> removeExpandBox [
 	"Remove the expand box."
 
 	expandBox ifNotNil: [expandBox delete. expandBox := nil]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> removeGrips [
 	"Remove the edge and corner grips."
-	
+
 	self
 		removeCornerGrips;
 		removeEdgeGrips
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> removeLabelArea [
 	"Remove the entire label area."
 
 	self removeGrips.
 	labelArea delete.
-	label := nil.	
+	label := nil.
 	(self isCollapsed not or: [self isTaskbarPresent]) ifTrue: [
 		self addGripsIfWanted]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> replaceBoxes [
 	"Rebuild the various boxes."
-	
+
 	labelArea removeAllMorphs.
 	self setLabelWidgetAllowance.
 	self theme configureWindowLabelAreaFor: self.
@@ -1196,14 +1194,14 @@ SystemWindow >> replaceBoxes [
 	self isActive ifFalse: [labelArea passivate]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> resetCollapsedFrame [
 	"Reset the collapsed frame."
 
 	collapsedFrame := nil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow class >> resetForms [
 	"Set the box forms to nil so that they will be taken from the current theme.
 	Don't touch the expand or menu ones, delegated to theme anyway."
@@ -1212,7 +1210,7 @@ SystemWindow class >> resetForms [
 	CollapseBoxImage := nil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> restore [
 	"Restore the receiver's normal size."
 
@@ -1221,7 +1219,7 @@ SystemWindow >> restore [
 		ifFalse: [self isMaximized ifTrue: [self expandBoxHit]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> restoreAndActivate [
 	"Restore the window if minimised then activate."
 
@@ -1231,7 +1229,7 @@ SystemWindow >> restoreAndActivate [
 		ifFalse: [self activate]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> setExpandBoxBalloonText [
 	"Set the expand box balloon help text as appropriate."
 
@@ -1241,62 +1239,62 @@ SystemWindow >> setExpandBoxBalloonText [
 		ifNotNil: [expandBox setBalloonText: 'Contract to original size' translated]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> setFramesForLabelArea [
 	"Set the layout for the label area."
-	
+
 	self theme configureWindowLabelAreaFrameFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> setLabelWidgetAllowance [
 	"Set the extra space required, in general, apart from the label.
 	Should make theme based (for centered titles), leave enough room
 	for the moment."
-	
-	^labelWidgetAllowance :=  (self boxExtent x * 7) 
+
+	^labelWidgetAllowance :=  (self boxExtent x * 7)
 	"allow for three on one side and centering plus a bit"
 ]
 
-{ #category : #'*Polymorph-Widgets' }
-SystemWindow >> setStripeColorsFrom: paneColor [ 
+{ #category : '*Polymorph-Widgets' }
+SystemWindow >> setStripeColorsFrom: paneColor [
 	"Set the stripe color based on the given paneColor.
 	Removed box color update for Pharo compatability."
 
 	stripes ifNil: [^self].
 	self fillStyle: self fillStyleToUse.
-	self isActive 
+	self isActive
 		ifTrue: [label ifNotNil: [label color: self activeLabelFillStyle].
-				labelArea fillStyle: self activeTitleFillStyle] 
+				labelArea fillStyle: self activeTitleFillStyle]
 		ifFalse: [label ifNotNil: [label color: self inactiveLabelFillStyle].
 				labelArea fillStyle: self inactiveTitleFillStyle].
 	self adoptPaneColor: self paneColor
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> setWindowColor: incomingColor [
 	"Removed existing color check - looked useless!"
-	
+
 	| aColor |
 	incomingColor ifNil: [^ self].  "it happens"
 	aColor := incomingColor.
 	self setProperty: #paneColor toValue: aColor.
 	self setStripeColorsFrom: aColor.
-	self theme fadedBackgroundWindows 
+	self theme fadedBackgroundWindows
 		ifFalse: [self adoptPaneColor: aColor]. "reverse optimisation"
-	self changed.
+	self changed
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> showAbout [
 
-	self theme  
+	self theme
 		longMessageIn: self
 		text: self aboutText
 		title: self aboutTitle
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> theme [
 	"Answer the ui theme that provides controls.
 	Don't call super since that implementation may delegate here."
@@ -1305,7 +1303,7 @@ SystemWindow >> theme [
 	^self class theme
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> themeChanged [
 	"Update the window colour and control boxes."
 
@@ -1320,13 +1318,13 @@ SystemWindow >> themeChanged [
 	self setStripeColorsFrom: self paneColor.
 	(self isCollapsed not or: [self isTaskbarPresent]) ifTrue: [
 		self addGripsIfWanted].
-	
+
 	self isEmbedded ifTrue: [ self borderWidth: 0 ].
-	
+
 	super themeChanged
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> toggleVisibleAndRaise [
 	"Toggle the visibility of the receiver, bringing to
 	the front if becoming visible. Activate or passivate here."
@@ -1336,21 +1334,21 @@ SystemWindow >> toggleVisibleAndRaise [
 	self visible ifTrue: [self activate]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> wantsGrips [
 	"Answer whether the window wants edge and corner grips."
-	
+
 	^self isResizeable
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> wantsRoundedCorners [
 	"Answer whether rounded corners are wanted."
-	
+
 	^(self theme windowPreferredCornerStyleFor: self) == #rounded
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SystemWindow >> window [
 	"Answer the receiver's window."
 

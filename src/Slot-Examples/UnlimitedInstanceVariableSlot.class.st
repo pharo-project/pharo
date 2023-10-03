@@ -2,15 +2,17 @@
 We store state in a hidden array. Contrary to normal instance variables the number is unlimited.
 "
 Class {
-	#name : #UnlimitedInstanceVariableSlot,
-	#superclass : #DerivedSlot,
+	#name : 'UnlimitedInstanceVariableSlot',
+	#superclass : 'DerivedSlot',
 	#instVars : [
 		'offset'
 	],
-	#category : #'Slot-Examples-Base'
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot at: index put: <stackTop>'"
 	| tempName |
@@ -25,7 +27,7 @@ UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 		send: #at:put:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
 	"generate bytecode for '<baseSlot> at: offset'"
 	methodBuilder
@@ -34,49 +36,49 @@ UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
 		send: #at:
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 UnlimitedInstanceVariableSlot >> growBaseSlot: aClass [
 	baseSlot default: (baseSlot default grownBy: 1)
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 UnlimitedInstanceVariableSlot >> installingIn: aClass [
 	| unlimitedSlots |
 	super installingIn: aClass.
-	
+
 	"we reuse a baseSlot if it is already there, if not, we add it"
 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
-	aClass classLayout 
-		resolveSlot: #'_ivarArrayBaseSlot'   
+	aClass classLayout
+		resolveSlot: #'_ivarArrayBaseSlot'
 		ifFound:  [: slot |  baseSlot := slot. self growBaseSlot: aClass. ]
 		ifNone: [aClass addSlot: (baseSlot := #'_ivarArrayBaseSlot' => BaseSlot default: (Array new: 1))].
-	
+
 	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
 	unlimitedSlots := aClass allSlots select: [ :each | each isKindOf: self class ].
 	offset := unlimitedSlots indexOf: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnlimitedInstanceVariableSlot >> offset [
 	^offset
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> read: anObject [
 	^(baseSlot read: anObject) at: offset
 ]
 
-{ #category : #TODO }
+{ #category : 'TODO' }
 UnlimitedInstanceVariableSlot >> todo [
 	'
     - adding a slots in between --> offsets need to be updated?
-	 - removing slot in the middle	
+	 - removing slot in the middle
 	 - adding slot higher in the hierarchy: move baseselot (same as in TODO for DictionarySlot)
 	 - instance migration?
 	'
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> write: aValue to: anObject [
-	^(baseSlot read: anObject) at: offset put: aValue.
+	^(baseSlot read: anObject) at: offset put: aValue
 ]

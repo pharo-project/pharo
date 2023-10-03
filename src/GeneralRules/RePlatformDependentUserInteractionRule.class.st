@@ -4,24 +4,26 @@ Check the methods that  use platform dependent user interactions.
 This rule should be updated.
 "
 Class {
-	#name : #RePlatformDependentUserInteractionRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'RePlatformDependentUserInteractionRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePlatformDependentUserInteractionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'PlatformDependentUserInteractionRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePlatformDependentUserInteractionRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RePlatformDependentUserInteractionRule >> initialize [
 	super initialize.
 	 self matchesAny: #(
@@ -38,17 +40,17 @@ RePlatformDependentUserInteractionRule >> initialize [
 			 )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePlatformDependentUserInteractionRule >> name [
 	^ 'Platform dependent user interaction'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePlatformDependentUserInteractionRule >> rationale [
 	^ 'Check the methods that  use platform dependent user interactions.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePlatformDependentUserInteractionRule >> severity [
 	^ #error
 ]

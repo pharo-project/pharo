@@ -1,40 +1,42 @@
 Class {
-	#name : #MethodMapExamples,
-	#superclass : #Object,
+	#name : 'MethodMapExamples',
+	#superclass : 'Object',
 	#instVars : [
 		'ivar'
 	],
-	#category : #'OpalCompiler-Tests-Misc'
+	#category : 'OpalCompiler-Tests-Misc',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Misc'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> defineCopiedVarBecomeDeadContext [
 	| a b |
 	b := [ a := 1.a := a + 1. thisContext tempNamed:'a' ].
 	^ b
 ]
 
-{ #category : #examples }
-MethodMapExamples >> exampleAccessOuterFromCleanBlock [ 
+{ #category : 'examples' }
+MethodMapExamples >> exampleAccessOuterFromCleanBlock [
 	<compilerOptions: #(+ optionCleanBlockClosure)>
 	| b |
-	b := 1. 
+	b := 1.
 	^[ thisContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleCopiedVarFromDeadContext [
 	^ self defineCopiedVarBecomeDeadContext value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleSimpleTemp [
 	| b |
 	b := 1.
 	^thisContext tempNamed: 'b'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedCopying [
 	| b |
 	b := 1.
@@ -42,7 +44,7 @@ MethodMapExamples >> exampleTempNamedCopying [
 		 a := b . thisContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedCopying2 [
 	| b |
 	b := 1.
@@ -50,7 +52,7 @@ MethodMapExamples >> exampleTempNamedCopying2 [
 		a := b . thisContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedPutCopying [
 	| b |
 	b := 1.
@@ -58,7 +60,7 @@ MethodMapExamples >> exampleTempNamedPutCopying [
 		 a := b . thisContext tempNamed: 'b'  put: 2. thisContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedPutCopying2 [
 	| b |
 	b := 1.
@@ -66,7 +68,7 @@ MethodMapExamples >> exampleTempNamedPutCopying2 [
 		 a := b .thisContext tempNamed: 'b' put: 2. thisContext outerContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedPutCopying3 [
 	| b |
 	b := 1.
@@ -74,7 +76,7 @@ MethodMapExamples >> exampleTempNamedPutCopying3 [
 		 a := b .thisContext tempNamed: 'b' put: 2. thisContext outerContext tempNamed: 'b' ] value ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedPutTempVector [
 	| b |
 	b := 1.
@@ -82,7 +84,7 @@ MethodMapExamples >> exampleTempNamedPutTempVector [
 		 b := 2 . thisContext tempNamed: 'b' put: 3. thisContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedPutTempVector2 [
 	| b |
 	b := 1.
@@ -90,9 +92,9 @@ MethodMapExamples >> exampleTempNamedPutTempVector2 [
 		 b := 2 . thisContext tempNamed: 'b' put: 3. thisContext outerContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
-	
+
 	^[| b |
 		b := 1.
 		[   | a |
@@ -100,17 +102,17 @@ MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
 		 a := b . thisContext tempNamed: 'b' ] value] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock2 [
 	 | a |
-		 a := 2. 
-	^[| b | 
+		 a := 2.
+	^[| b |
 		b := 1.
-		[  
+		[
 		 a := b . thisContext tempNamed: 'b' ] value] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedTempVector [
 	| b |
 	b := 1.
@@ -118,7 +120,7 @@ MethodMapExamples >> exampleTempNamedTempVector [
 		 b := 2 . thisContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedTempVector2 [
 	| b |
 	b := 1.
@@ -126,9 +128,9 @@ MethodMapExamples >> exampleTempNamedTempVector2 [
 		 b := 2 . thisContext tempNamed: 'b' ] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedTempVectorInOptimizedBlock [
-"temp a is in a temp vector and is accessed from with in the optimized ifTrue:ifFalse: block. But 
+"temp a is in a temp vector and is accessed from with in the optimized ifTrue:ifFalse: block. But
 the definition is not in the outer block, but in the method scope"
 	| result a |
 	[ a := 1.
@@ -138,9 +140,9 @@ the definition is not in the outer block, but in the method scope"
 	^ result
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedTempVectorInlinedLoop [
-"This test is for accessing temp var c within an inlined loop scope. 
+"This test is for accessing temp var c within an inlined loop scope.
 Temp var c is written in the loop and closed in a block -> therefore it is in a tempvector. "
 	| a b c |
 	c := nil.
@@ -152,24 +154,24 @@ Temp var c is written in the loop and closed in a block -> therefore it is in a 
 	^ b
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> exampleTempNamedTempVectorNestedBlock [
 	 | a |
       a  := 1.
 	^[| b |
 		b := a.
-		[  
+		[
 		 b := 2 . thisContext tempNamed: 'b' ] value] value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> helperMethod12 [
 	| i |
 	i := 5.
-	[ i=0 ] whileFalse: [ i := i - 1 ].
+	[ i=0 ] whileFalse: [ i := i - 1 ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> helperMethod13 [
 	| i |
 	i := 5.
@@ -177,14 +179,14 @@ MethodMapExamples >> helperMethod13 [
 	^[ 1 + 2 ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> helperMethod14: aVisitor [
 	 [ aVisitor ]
 		 on: Error
 		 do: [ aVisitor ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MethodMapExamples >> ivar [
 	^ivar
 ]

@@ -2,12 +2,14 @@
 SUnit tests for comment definitions
 "
 Class {
-	#name : #RGCommentDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGCommentDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinitionTest >> testActiveComment [
 	| rgComment |
 	rgComment := RGCommentDefinition realClass: RGClassDefinition.
@@ -38,10 +40,10 @@ RGCommentDefinitionTest >> testActiveComment [
 	self assert: rgComment content ~= ''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinitionTest >> testCommentFromSourceFile [
 	| rgComment |
-	
+
 	rgComment := (RGCommentDefinition realClass: RGClassDefinition) asHistorical.
 	self assert: rgComment isHistorical.
 	self assert: rgComment sourcePointer notNil.
@@ -49,19 +51,19 @@ RGCommentDefinitionTest >> testCommentFromSourceFile [
 	self assert: rgComment stamp notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinitionTest >> testCommentWithoutAuthor [
 	| newComment |
-	
+
 	newComment:= RGCommentDefinition new
 						content: 'This is a comment for test';
 						stamp: '3/22/2011 14:51';
 						yourself.
-	
-	self assert: (newComment hasAuthor not).
+
+	self assert: (newComment hasAuthor not)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinitionTest >> testNewComment [
 	| newComment |
 	newComment := RGCommentDefinition new
@@ -82,7 +84,7 @@ RGCommentDefinitionTest >> testNewComment [
 	self assert: newComment environment equals: Smalltalk globals
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinitionTest >> testSorting [
 
 	| rgComm1 rgComm2 |
@@ -91,13 +93,13 @@ RGCommentDefinitionTest >> testSorting [
 	self assert: rgComm1 <= rgComm2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinitionTest >> testingConversion [
-	
+
 	| rgComm |
 	rgComm := RGCommentDefinition realClass: RGClassDefinition.
 	self assert: rgComm asString equals: 'RGClassDefinition Comment'.
-	
+
 	rgComm := RGCommentDefinition class: (RGClassDefinition named: #Foo).
 	self assert: rgComm asString equals: 'Foo Comment'
 ]

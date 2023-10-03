@@ -1,50 +1,52 @@
 Class {
-	#name : #RGMergeError,
-	#superclass : #Error,
+	#name : 'RGMergeError',
+	#superclass : 'Error',
 	#instVars : [
 		'property',
 		'target',
 		'source'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGMergeError class >> property: propertySymbol target: targetDefinition source: sourceDefinition [
 
 	^ self new
 		property: propertySymbol;
 		target: targetDefinition;
 		source: sourceDefinition;
-		signal.
+		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMergeError >> property [
 	^ property
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMergeError >> property: anObject [
 	property := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMergeError >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMergeError >> source: anObject [
 	source := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMergeError >> target [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMergeError >> target: anObject [
 	target := anObject
 ]

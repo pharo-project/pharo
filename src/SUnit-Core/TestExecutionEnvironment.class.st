@@ -69,8 +69,8 @@ Internal Representation and Key Implementation Points.
 	testCompleted:		<Boolean>
 "
 Class {
-	#name : #TestExecutionEnvironment,
-	#superclass : #ExecutionEnvironment,
+	#name : 'TestExecutionEnvironment',
+	#superclass : 'ExecutionEnvironment',
 	#instVars : [
 		'watchDogProcess',
 		'watchDogSemaphore',
@@ -80,23 +80,25 @@ Class {
 		'services',
 		'mainTestProcess'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'fuel support' }
+{ #category : 'fuel support' }
 TestExecutionEnvironment class >> fuelIgnoredInstanceVariableNames [
     ^#('watchDogProcess' 'watchDogSemaphore' 'mainTestProcess')
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TestExecutionEnvironment class >> settingsOn: aBuilder [
-	<systemsettings>	
+	<systemsettings>
 
-	TestExecutionService defaultServiceClasses do: [ :each | 
+	TestExecutionService defaultServiceClasses do: [ :each |
 		each settingsOn: aBuilder]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> activated [
 
 	mainTestProcess := Processor activeProcess.
@@ -104,27 +106,27 @@ TestExecutionEnvironment >> activated [
 	self startWatchDog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> backgroundFailures [
 	^self processMonitor testBackgroundFailures
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> cleanUpAfterTest [
-	"Cleanup is performed over all services (enabled and disabled) 
+	"Cleanup is performed over all services (enabled and disabled)
 	because service can change its state during test execution
 	(user can disable it in the middle of test)"
-	
+
 	services do: [ :each | each cleanUpAfterTest]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> deactivated [
 
 	watchDogProcess ifNotNil: [watchDogProcess terminate]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> disableService: aTestExecutionServiceClass [
 
 	| service |
@@ -132,7 +134,7 @@ TestExecutionEnvironment >> disableService: aTestExecutionServiceClass [
 	service disable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> enableService: aTestExecutionServiceClass [
 
 	| service |
@@ -142,7 +144,7 @@ TestExecutionEnvironment >> enableService: aTestExecutionServiceClass [
 	^service
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> enableService: aTestExecutionServiceClass using: aBlock [
 
 	| service |
@@ -151,122 +153,122 @@ TestExecutionEnvironment >> enableService: aTestExecutionServiceClass using: aBl
 	^service
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> enabledServicesDo: aBlock [
-	
+
 	services select: [ :each | each isEnabled ] thenDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> failures [
 	^self processMonitor testFailures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> findService: aTestExecutionServiceClass [
 	^services detect: [:each | each isKindOf: aTestExecutionServiceClass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> findService: aTestExecutionServiceClass ifAbsent: absentBlock [
 	^services detect: [:each | each isKindOf: aTestExecutionServiceClass] ifNone: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> forkedProcesses [
 	^ self processMonitor forkedProcesses
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> handleCompletedTest [
-	
-	self enabledServicesDo: [ :each | each handleCompletedTest].
+
+	self enabledServicesDo: [ :each | each handleCompletedTest]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> handleException: anException [
 
 	self enabledServicesDo: [ :each | each handleException: anException].
-	
+
 	anException pass
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> handleNewProcess: aProcess [
 
-	self enabledServicesDo: [ :each | each handleNewProcess: aProcess ].
+	self enabledServicesDo: [ :each | each handleNewProcess: aProcess ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TestExecutionEnvironment >> initialize [
 	super initialize.
 	services := OrderedCollection new.
 	testCompleted := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isMainTestProcess: aProcess [
 	^mainTestProcess = aProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isMainTestProcessActive [
 	^self isMainTestProcess: Processor activeProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isMainTestProcessFailed [
 	^self processMonitor isMainTestProcessFailed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isTest [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> mainTestProcess [
 	^ mainTestProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> maxTimeForTest [
 	^ maxTimeForTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> maxTimeForTest: aDuration [
 	maxTimeForTest := aDuration.
-	watchDogSemaphore ifNotNil: [ 
+	watchDogSemaphore ifNotNil: [
 		"we need restart watch dog timer for new timeout"
-		watchDogSemaphore signal ].
+		watchDogSemaphore signal ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	| processBlock |
 	watchDogProcess ifNil: [ ^self ]. "we should not catch watchDogProcess which is always the first one"
 	aProcess suspendedContext sender ifNotNil: [ ^self ]. "Some existing tests in system create processes on arbitrary block and then check suspendedContext state. Without this 'if' all these tests will fail"
 	processBlock := aProcess suspendedContext receiver.
 	processBlock isClosure ifFalse: [ ^self ]. "same case as in previous comment"
-	
+
 	self handleNewProcess: aProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> processMonitor [
 	^self findService: ProcessMonitorTestService
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> registerDefaultServices [
 
 	TestExecutionService enabledServiceClasses do: [ :each |
-		self registerService: each new	
+		self registerService: each new
 	 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> registerService: aTestExecutionService [
 
 	aTestExecutionService executionEnvironment: self.
@@ -274,84 +276,84 @@ TestExecutionEnvironment >> registerService: aTestExecutionService [
 	^aTestExecutionService
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> removeAllServices [
 
 	services removeAll
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> runTestCase: aTestCase [
 	testCase := aTestCase.
 	maxTimeForTest := testCase defaultTimeLimit.
 	testCompleted := false.
-	watchDogSemaphore signal. "signal about new test case"	
+	watchDogSemaphore signal. "signal about new test case"
 	[self runTestCaseUnderWatchdog: aTestCase] ensure: [
 		testCompleted := true.
-		watchDogSemaphore signal.  "signal that test case is completed"	
-		self cleanUpAfterTest	].
+		watchDogSemaphore signal.  "signal that test case is completed"
+		self cleanUpAfterTest	]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> runTestCaseUnderWatchdog: aTestCase [
-	
+
 	[
 		[aTestCase runCase] ensure: [
 			"Terminated test is not considered as completed (user just closed a debugger for example)"
-			mainTestProcess isTerminating ifFalse: [ 
+			mainTestProcess isTerminating ifFalse: [
 				self handleCompletedTest ]]
-	] on: Exception do: [ :err | 
-			self handleException: err 
+	] on: Exception do: [ :err |
+			self handleException: err
 	]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> runTestsBy: aBlock [
 
 	aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> services [
 	^ services
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> services: anObject [
 	services := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> startWatchDog [
-	
+
 	watchDogSemaphore := Semaphore new.
 	watchDogProcess := [self watchDogLoop] newProcess.
 	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
-	watchDogProcess 
+	watchDogProcess
 		name: 'Tests execution watch dog';
 		priority: Processor timingPriority-1;
 		resume
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> testCase [
 	^ testCase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> testCase: anObject [
 	testCase := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> watchDogLoop [
 
 	| timeIsGone |
-	[	"waiting new test case" 
-		watchDogSemaphore wait. 
+	[	"waiting new test case"
+		watchDogSemaphore wait.
 		"waiting while test completes"
 		[timeIsGone := watchDogSemaphore wait: maxTimeForTest.
-		testCompleted] whileFalse: [ 
+		testCompleted] whileFalse: [
 			"this subloop allows to dynamically change time limit and restart watch dog"
 			timeIsGone ifTrue: [
 				"The main purpose of following condition is to ignore timeout when test is under debug.
@@ -361,7 +363,7 @@ TestExecutionEnvironment >> watchDogLoop [
 	] repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> watchDogProcess [
 	^ watchDogProcess
 ]

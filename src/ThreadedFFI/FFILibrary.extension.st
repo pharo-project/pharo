@@ -1,6 +1,6 @@
-Extension { #name : #FFILibrary }
+Extension { #name : 'FFILibrary' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFILibrary >> ffiCall: fnSpec [
 	<ffiCalloutTranslator>
 
@@ -10,10 +10,10 @@ FFILibrary >> ffiCall: fnSpec [
 		function: fnSpec module: self
 ]
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFILibrary >> ffiCall: fnSpec options: callOptions [
 	<ffiCalloutTranslator>
-	
+
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		options: (self ffiLibrary options), callOptions;
