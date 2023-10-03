@@ -41,5 +41,5 @@ RGMethodDefinitionTest >> testStoreOn [
 		streamContents: [ :s |
 			(Point >> #x) asRingDefinition storeOn: s.
 			s contents ].
-	self assert: st equals: '(RGMethodDefinition className: ''Point'' selector: #x isMetaSide: false)'
+	self assert: st equals: '(RGMethodDefinition className: ''Point'' selector: #x isMeta: false)'
 ]
