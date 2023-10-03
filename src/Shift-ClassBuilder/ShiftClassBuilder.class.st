@@ -333,7 +333,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
 		package: aClass package name;
-		tag: (aClass packageTag ifNotNil: [ :tag | tag name ]);
+		tag: (aClass packageTag ifNotNil: [ :aTag | aTag name ]);
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
 
