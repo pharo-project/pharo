@@ -630,11 +630,6 @@ Canvas >> paragraph: paragraph bounds: bounds color: c [
 	^self subclassResponsibility
 ]
 
-{ #category : 'drawing' }
-Canvas >> render: anObject [
-	"Do some 3D operations with the object if possible"
-]
-
 { #category : 'drawing - general' }
 Canvas >> roundCornersOf: aMorph during: aBlock [
 	^self roundCornersOf: aMorph in: aMorph bounds during: aBlock

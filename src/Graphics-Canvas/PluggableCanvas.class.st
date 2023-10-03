@@ -164,12 +164,6 @@ PluggableCanvas >> paragraph: paragraph bounds: bounds color: color [
 		c paragraph: paragraph bounds: bounds color: color ]
 ]
 
-{ #category : 'drawing' }
-PluggableCanvas >> render: anObject [
-	self apply: [ :c |
-		c render: anObject ]
-]
-
 { #category : 'drawing - general' }
 PluggableCanvas >> roundCornersOf: aMorph in: bounds during: aBlock [
 	aMorph wantsRoundedCorners ifFalse:[^aBlock value].
