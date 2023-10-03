@@ -5,7 +5,7 @@ CompiledMethod >> asEpiceaRingDefinition [
 
 	^ (RGMethodDefinition named: self selector)
 		  parentName: self methodClass name;
-		  isMetaSide: self methodClass isMeta;
+		  isMeta: self methodClass isMeta;
 		  protocol: self protocolName;
 		  sourceCode: self sourceCode;
 		  stamp: self timeStamp;
