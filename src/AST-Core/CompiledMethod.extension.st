@@ -3,6 +3,13 @@ Extension { #name : 'CompiledMethod' }
 { #category : '*AST-Core' }
 CompiledMethod >> ast [
 	"return an AST for this method. The AST is cached. see class comment of ASTCache"
+	
+	"It is important that the AST is in sync with the CompiledMethod. With Pharo12.
+	 we (for now) might end with a reflective variable access due to repaired Undeclared reads"
+	
+	((self hasLiteral: #runtimeUndeclaredRead) or: [self hasLiteral: #runtimeUndeclaredWrite:]) 
+			ifTrue: [self recompile].
+	
 	^ ASTCache at: self
 ]
 
