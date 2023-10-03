@@ -9,31 +9,33 @@ Internal Representation and Key Implementation Points.
 	iconName:		<Symbol>
 "
 Class {
-	#name : #ClyIconProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyIconProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'iconName'
 	],
-	#category : #'Calypso-NavigationModel-Property'
+	#category : 'Calypso-NavigationModel-Property',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Property'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyIconProperty class >> named: aString [
 	^self new
 		iconName: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyIconProperty >> iconName [
 	^ iconName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyIconProperty >> iconName: anObject [
 	iconName := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyIconProperty >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.

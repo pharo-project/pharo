@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ClassDescription >> fuelRecomputeSlotScopeWithTraits [
 	"We only know about trait variables once the trait composition
 	has been fully materialized. Now we need to update the slot scope
@@ -32,12 +32,12 @@ ClassDescription >> fuelRecomputeSlotScopeWithTraits [
 	self setFormat: self classLayout format
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ClassDescription >> instanceVariableNamesDo: anUnaryBlock [
 	"This is part of the interface between the compiler and a class's instance or field names.
 	 The class should enumerate anUnaryBlock with the instance variable name strings.  The order is important. Names evaluated later will override the
 	 same names occurring earlier."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	| superInstSize |
 	(superInstSize := self superclass notNil ifTrue: [self superclass instSize] ifFalse: [0]) > 0 ifTrue:
 		[self superclass instanceVariableNamesDo: anUnaryBlock].

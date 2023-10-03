@@ -1,6 +1,6 @@
-Extension { #name : #DropListMorph }
+Extension { #name : 'DropListMorph' }
 
-{ #category : #'*Keymapping-Settings' }
+{ #category : '*Keymapping-Settings' }
 DropListMorph >> initializeShortcuts: aKMDispatcher [
 	super initializeShortcuts: aKMDispatcher.
 	aKMDispatcher attachCategory: #MorphFocusNavigation

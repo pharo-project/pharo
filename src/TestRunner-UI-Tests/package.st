@@ -1,1 +1,1 @@
-Package { #name : #'TestRunner-UI-Tests' }
+Package { #name : 'TestRunner-UI-Tests' }

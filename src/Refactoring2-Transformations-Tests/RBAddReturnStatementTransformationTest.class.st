@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddReturnStatementTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddReturnStatementTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddReturnStatementTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,14 +14,14 @@ RBAddReturnStatementTransformationTest >> methodAfter [
 	^ variable
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddReturnStatementTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testAccessIsNotDefined [
 
 	self shouldFail: (RBAddReturnStatementTransformation
@@ -28,7 +30,7 @@ RBAddReturnStatementTransformationTest >> testAccessIsNotDefined [
 			 inClass: #RBAddReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testAlreadyDefinesReturn [
 
 	self shouldFail: (RBAddReturnStatementTransformation
@@ -37,7 +39,7 @@ RBAddReturnStatementTransformationTest >> testAlreadyDefinesReturn [
 			 inClass: #RBAddReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
@@ -46,7 +48,7 @@ RBAddReturnStatementTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
@@ -55,7 +57,7 @@ RBAddReturnStatementTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBAddReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -74,7 +76,7 @@ RBAddReturnStatementTransformationTest >> testRefactoring [
 		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testTransform [
 
 	| transformation class |

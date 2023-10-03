@@ -1,10 +1,12 @@
 Class {
-	#name : #RBSplitClassTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBSplitClassTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassTransformationTest >> testClassVariable [
 
 	self shouldFail: (RBSplitClassTransformation
@@ -14,7 +16,7 @@ RBSplitClassTransformationTest >> testClassVariable [
 			 referenceVariableName: #receiver)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassTransformationTest >> testNonExistantName [
 
 	self shouldFail: (RBSplitClassTransformation
@@ -24,7 +26,7 @@ RBSplitClassTransformationTest >> testNonExistantName [
 			 referenceVariableName: #newName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassTransformationTest >> testTransform [
 
 	| transformation class |

@@ -1,1 +1,1 @@
-Package { #name : #'SUnit-Visitor' }
+Package { #name : 'SUnit-Visitor' }

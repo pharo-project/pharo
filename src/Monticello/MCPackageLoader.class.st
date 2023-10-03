@@ -13,8 +13,8 @@ Instance Variables
 
 "
 Class {
-	#name : #MCPackageLoader,
-	#superclass : #Object,
+	#name : 'MCPackageLoader',
+	#superclass : 'Object',
 	#instVars : [
 		'requirements',
 		'unloadableDefinitions',
@@ -25,36 +25,37 @@ Class {
 		'provisions',
 		'methodAdditions'
 	],
-	#category : #'Monticello-Loading'
+	#category : 'Monticello-Loading',
+	#package : 'Monticello',
+	#tag : 'Loading'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader class >> installSnapshot: aSnapshot [
 	self new
 		installSnapshot: aSnapshot;
 		load
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader class >> unloadPackage: aPackage [
-	self new
-		unloadPackage: aPackage;
-		loadWithNameLike: aPackage name, '-unload'
+
+	self new unloadPackage: aPackage
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader class >> updatePackage: aPackage withSnapshot: aSnapshot [
 	self new
 		updatePackage: aPackage withSnapshot: aSnapshot;
 		load
 ]
 
-{ #category : #'patch ops' }
+{ #category : 'patch ops' }
 MCPackageLoader >> addDefinition: aDefinition [
 	additions add: aDefinition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> analyze [
 	| sorter |
 	sorter := self sorterForItems: additions.
@@ -66,13 +67,13 @@ MCPackageLoader >> analyze [
 	removals := sorter orderedItems reversed.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> basicLoad [
     errorDefinitions := OrderedCollection new.
     SourceFiles deferFlushDuring: [self basicLoadDefinitions].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> basicLoadDefinitions [
 	"FIXME. Do a separate pass on loading class definitions as the very first thing.
 	This is a workaround for a problem with the so-called 'atomic' loading (you wish!)
@@ -98,7 +99,7 @@ MCPackageLoader >> basicLoadDefinitions [
 	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> dependencyWarning [
 	| packageName |
 	
@@ -117,7 +118,7 @@ MCPackageLoader >> dependencyWarning [
 		unloadableDefinitions do: [:ea | stream space; space; nextPutAll: ea summary; cr]] 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> errorDefinitionWarning [
 	^ String streamContents:
 		[:s |
@@ -125,7 +126,7 @@ MCPackageLoader >> errorDefinitionWarning [
 		errorDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCPackageLoader >> initialize [
 	super initialize.
 	additions := OrderedCollection new.
@@ -135,7 +136,7 @@ MCPackageLoader >> initialize [
 
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader >> installSnapshot: aSnapshot [
 	| patch |
 	patch := aSnapshot patchRelativeToBase: MCSnapshot empty.
@@ -143,14 +144,14 @@ MCPackageLoader >> installSnapshot: aSnapshot [
 
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader >> load [
 
 	self validate.
 	self useNewChangeSetDuring: [ self basicLoad ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> loadClassDefinition: aDefinition [
 
 	[ aDefinition isClassDefinition 
@@ -159,55 +160,55 @@ MCPackageLoader >> loadClassDefinition: aDefinition [
 		errorDefinitions add: aDefinition ].
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader >> loadWithName: baseName [
 	self validate.
 	self useChangeSetNamed: baseName during: [self basicLoad]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader >> loadWithNameLike: baseName [
 	self validate.
 	self useNewChangeSetNamedLike: baseName during: [self basicLoad]
 ]
 
-{ #category : #'patch ops' }
+{ #category : 'patch ops' }
 MCPackageLoader >> modifyDefinition: old to: new [
 	self addDefinition: new.
 	obsoletions at: new put: old.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> obsoletionFor: aDefinition [
 	^ obsoletions at: aDefinition ifAbsent: [nil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> orderDefinitionsForLoading: aCollection [
 	^ (self sorterForItems: aCollection) orderedItems
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> orderedAdditions [
 	^ additions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> provisions [
 	^ provisions ifNil: [provisions := Set withAll: Smalltalk globals keys]
 ]
 
-{ #category : #'patch ops' }
+{ #category : 'patch ops' }
 MCPackageLoader >> removeDefinition: aDefinition [
 	removals add: aDefinition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> shouldWarnAboutErrors [
 	^ errorDefinitions isEmpty not and: [false "should make this a setting ?"]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> sorterForItems: aCollection [
 	| sorter |
 	sorter := MCDependencySorter items: aCollection.
@@ -215,18 +216,24 @@ MCPackageLoader >> sorterForItems: aCollection [
 	^ sorter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> tryToLoad: aDefinition [
-	[aDefinition addMethodAdditionTo: methodAdditions] on: Error do: [errorDefinitions add: aDefinition].
+	"Here we are only interested by method definition. We want to avoid recompilating classes or traits for example."
+
+	aDefinition isMethodDefinition ifFalse: [ ^ self ].
+
+	[ aDefinition addMethodAdditionTo: methodAdditions ]
+		on: Error
+		do: [ errorDefinitions add: aDefinition ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader >> unloadPackage: aPackage [
 
 	self updatePackage: aPackage withSnapshot: MCSnapshot empty
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCPackageLoader >> updatePackage: aPackage withSnapshot: aSnapshot [
 	|  patch packageSnap |
 	packageSnap := aPackage snapshot.
@@ -236,7 +243,7 @@ MCPackageLoader >> updatePackage: aPackage withSnapshot: aSnapshot [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> useChangeSetNamed: baseName during: aBlock [
 	"Use the named change set, or create one with the given name."
 	| oldChanges newChanges |
@@ -247,28 +254,28 @@ MCPackageLoader >> useChangeSetNamed: baseName during: aBlock [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> useNewChangeSetDuring: aBlock [
 	^self useNewChangeSetNamedLike: 'MC' during: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> useNewChangeSetNamedLike: baseName during: aBlock [
 	^self useChangeSetNamed: (ChangeSet uniqueNameLike: baseName) during: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> validate [
 	self analyze.
 	unloadableDefinitions isEmpty ifFalse: [self warnAboutDependencies].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> warnAboutDependencies [ 
 	self notify: self dependencyWarning
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageLoader >> warnAboutErrors [
 	self notify: self errorDefinitionWarning.
 

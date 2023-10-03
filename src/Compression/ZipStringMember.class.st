@@ -3,26 +3,28 @@ ZipStringMember instances are used to represent files that are going to be writt
 Their data comes from in-image strings, though.
 "
 Class {
-	#name : #ZipStringMember,
-	#superclass : #ZipArchiveMember,
+	#name : 'ZipStringMember',
+	#superclass : 'ZipArchiveMember',
 	#instVars : [
 		'contents',
 		'stream'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipStringMember class >> newFrom: aString named: aFileName [
 	^(self new) contents: aString; localFileName: aFileName; yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipStringMember >> contents [
 	^contents
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipStringMember >> contents: aString [
 	contents := aString.
 	compressedSize := uncompressedSize := aString size.
@@ -30,19 +32,19 @@ ZipStringMember >> contents: aString [
 	self modifiedAt: DateAndTime now
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipStringMember >> initialize [
 	super initialize.
 	self contents: ''.
 	compressionMethod := desiredCompressionMethod := CompressionStored
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipStringMember >> readRawChunk: n [
 	^stream next: n
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipStringMember >> rewindData [
 	super rewindData.
 	stream := contents readStream.

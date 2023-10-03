@@ -2,24 +2,26 @@
 Replaces ""a >= b and: [a <= c]"" by ""a between: b and: c.
 "
 Class {
-	#name : #ReBetweenAndRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReBetweenAndRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReBetweenAndRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'BetweenAndRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReBetweenAndRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReBetweenAndRule >> initialize [
 	super initialize.
 	self
@@ -41,7 +43,7 @@ ReBetweenAndRule >> initialize [
 		replace: '``@c >= ``@a & (``@b <= ``@a)' with: '``@a between: ``@b and: ``@c'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReBetweenAndRule >> name [
 	^ '"a >= b and: [a <= c]" -> "a between: b and: c"'
 ]

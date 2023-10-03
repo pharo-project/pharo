@@ -2,12 +2,14 @@
 A ClyNotRemoveAndShowUsersClassStrategyTest is a test class for testing the behavior of ClyNotRemoveAndShowUsersClassStrategy
 "
 Class {
-	#name : #ClyNotRemoveAndShowUsersClassStrategyTest,
-	#superclass : #TestCase,
-	#category : #'Calypso-SystemTools-QueryBrowser-Tests-Commands-Classes'
+	#name : 'ClyNotRemoveAndShowUsersClassStrategyTest',
+	#superclass : 'TestCase',
+	#category : 'Calypso-SystemTools-QueryBrowser-Tests-Commands-Classes',
+	#package : 'Calypso-SystemTools-QueryBrowser-Tests',
+	#tag : 'Commands-Classes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotRemoveAndShowUsersClassStrategyTest >> testExecutingCommand [
 	| browser command strategy |
 	browser := ClyBrowserMock new.

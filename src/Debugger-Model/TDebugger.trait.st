@@ -15,53 +15,55 @@ This API method is the entry point to open a debugger on a DebugSession instance
 It is the preferred debugger opening entry point used by the system to open a debugger.
 "
 Trait {
-	#name : #TDebugger,
+	#name : 'TDebugger',
 	#classInstVars : [
 		'rank',
 		'availableAutomatically'
 	],
-	#category : #'Debugger-Model-Core'
+	#category : 'Debugger-Model-Core',
+	#package : 'Debugger-Model',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDebugger classSide >> availableAutomatically [
 	^ availableAutomatically ifNil: [
 		  availableAutomatically := DebuggerSettings defaultAvailability ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDebugger classSide >> availableAutomatically: anObject [
 	availableAutomatically := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDebugger classSide >> closeAllDebuggers [
 	^ self explicitRequirement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TDebugger classSide >> debugSession: aDebugSession [
 	self explicitRequirement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDebugger classSide >> defaultDebuggerRank [
 
 	^ DebuggerSettings defaultDebuggerRank
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 TDebugger classSide >> handlesDebugSession: aDebugSession [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDebugger classSide >> rank [
 	^rank ifNil:[rank := self defaultDebuggerRank]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDebugger classSide >> rank: anInteger [
 	rank := anInteger
 ]

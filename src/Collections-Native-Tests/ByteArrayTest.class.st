@@ -2,30 +2,32 @@
 SUnit tests for ByteArray
 "
 Class {
-	#name : #ByteArrayTest,
-	#superclass : #TestCase,
+	#name : 'ByteArrayTest',
+	#superclass : 'TestCase',
 	#traits : 'TSequenceableTruncatedToSize',
 	#classTraits : 'TSequenceableTruncatedToSize classTrait',
 	#instVars : [
 		'collectionWith5Elements'
 	],
-	#category : #'Collections-Native-Tests-Base'
+	#category : 'Collections-Native-Tests-Base',
+	#package : 'Collections-Native-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ByteArrayTest >> collectionWith5Elements [
 
 	^ collectionWith5Elements
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ByteArrayTest >> setUp [
 
 	super setUp.
 	collectionWith5Elements := #[1 2 3 5 4]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testBooleanAt [
 	"Checking the result of ByteArray>>#booleanAt on a few instances of ByteArray. It should return false on 0-valued bytes and true on all other bytes (according to the integer to boolean C convention)."
 
@@ -36,7 +38,7 @@ ByteArrayTest >> testBooleanAt [
 	self assert: (#[255] booleanAt: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testFallbackReplaceFromToWithForString [
 	| testString byteArray stringByteSize |
 	testString := 'Test string'.
@@ -54,7 +56,7 @@ ByteArrayTest >> testFallbackReplaceFromToWithForString [
 		description: 'Primitive 105 should be optional for ByteArray'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testFallbackReplaceFromToWithForWideString [
 	| testString byteArray stringByteSize |
 	testString := 'Test string' asWideString.
@@ -72,14 +74,14 @@ ByteArrayTest >> testFallbackReplaceFromToWithForWideString [
 		description: 'Primitive 105 should be optional for ByteArray'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testFourthByteArraysReturnTheCorrectValues [
 
 	self assert: (#[16r3F 16r80 0 0]  floatAt:1 bigEndian: true) equals: 1.0.
 	self assert: (#[16rC0 0 0 0]  floatAt:1 bigEndian: true) equals: -2.0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testHex [
 	self assert: #[122 43 213 7] hex equals: '7a2bd507'.
 	self
@@ -93,7 +95,7 @@ ByteArrayTest >> testHex [
 		equals: #[122 43 213 7]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testHexDumponmax [
 
 	| source display expected |
@@ -107,13 +109,13 @@ ByteArrayTest >> testHexDumponmax [
 	self assert: display equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testIsLiteral [
 	self assert: #[122 43 213 7] isLiteral description: 'ByteArray instances are literal'.
 	self deny: thisContext method isLiteral description: 'ByteArray sub instances are not literal'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ByteArrayTest >> testindexOfStartingAt [
 	|array|
 	array := #[1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 0 0].

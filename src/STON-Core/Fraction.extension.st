@@ -1,6 +1,6 @@
-Extension { #name : #Fraction }
+Extension { #name : 'Fraction' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Fraction >> stonOn: stonWriter [
 	stonWriter writeFraction: self
 ]

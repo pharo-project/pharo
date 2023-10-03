@@ -8,104 +8,106 @@ We avoid this problem by only sharing the task queue. Then, the process does not
   - if the worker (and all its associated futures) are garbage collected, since the worker process is unreachable we can schedule a #stop task. See method TKTWorker>> #finalize.
 "
 Class {
-	#name : #TKTWorkerProcess,
-	#superclass : #TKTAbstractExecutor,
+	#name : 'TKTWorkerProcess',
+	#superclass : 'TKTAbstractExecutor',
 	#instVars : [
 		'taskQueue',
 		'name',
 		'process',
 		'currentTaskExecution'
 	],
-	#category : #'TaskIt-Worker'
+	#category : 'TaskIt-Worker',
+	#package : 'TaskIt',
+	#tag : 'Worker'
 }
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> currentTaskExecution [
 	^ currentTaskExecution
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> executeTask: aTaskExecution [
 	currentTaskExecution := aTaskExecution.
 	super executeTask: aTaskExecution.
 	currentTaskExecution := nil
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> isFree [
 	^ currentTaskExecution isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTWorkerProcess >> isRunning [
 
 	^ process notNil and: [ process isTerminated not ]
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> kill [
 	self stop.
 	taskQueue := nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerProcess >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerProcess >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerProcess >> priority [
 	^self process priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerProcess >> priority: anInteger [
 	self process priority: anInteger
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> privateNextTask [
 	^ taskQueue next
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTWorkerProcess >> process [
 
 	^ process
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> start [
 	process := TKTConfiguration processProvider
 		createProcessDoing: (MessageSend receiver: self selector: #workerLoop)
 		named: name
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> stop [
 	process ifNotNil: [
 		process terminate.
 		process := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerProcess >> taskQueue [
 	^ taskQueue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorkerProcess >> taskQueue: aQueue [
 	taskQueue := aQueue
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorkerProcess >> workerLoop [
 	[ self executeTask: self privateNextTask ] repeat
 ]

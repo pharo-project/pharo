@@ -2,27 +2,28 @@
 SUnit tests for class ConfigurationCommandLineHandler
 "
 Class {
-	#name : #ConfigurationCommandLineHandlerTest,
-	#superclass : #TestCase,
-	#category : #'ConfigurationCommandLineHandler-Tests'
+	#name : 'ConfigurationCommandLineHandlerTest',
+	#superclass : 'TestCase',
+	#category : 'ConfigurationCommandLineHandler-Tests',
+	#package : 'ConfigurationCommandLineHandler-Tests'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ConfigurationCommandLineHandlerTest >> activate: arguments [
 	^ PharoCommandLineHandler activateWith: (self argumentsWith: arguments)
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ConfigurationCommandLineHandlerTest >> argumentsWith: aCollection [
 	^ CommandLineArguments withArguments: aCollection
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ConfigurationCommandLineHandlerTest >> command: arguments [
 	^ ConfigurationCommandLineHandler commandLine: (self argumentsWith: arguments)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurationCommandLineHandlerTest >> testGroups [
 	| cli |
 	cli := self command: #('http://ss3.gemstone.com/ss/MetaRepoForPharo20' '--group=foo').
@@ -32,7 +33,7 @@ ConfigurationCommandLineHandlerTest >> testGroups [
 	self assertCollection: cli groups equals: {'foo' . 'boo'}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurationCommandLineHandlerTest >> testHasConfiguration [
 	| cli |
 	cli := self command: #('http://ss3.gemstone.com/ss/MetaRepoForPharo20').
@@ -45,13 +46,13 @@ ConfigurationCommandLineHandlerTest >> testHasConfiguration [
 	self assert: cli hasConfiguration.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurationCommandLineHandlerTest >> testListConfigurations [
 	self skip: 'Currently quits the image when in non-interactive mode'.
 	self activate: #('config' 'http://ss3.gemstone.com/ss/MetaRepoForPharo20').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurationCommandLineHandlerTest >> testResponsibility [
 	| args |
 	args := self argumentsWith: #('config').

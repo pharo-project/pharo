@@ -4,25 +4,27 @@ If a package contains classes that are not tagged then this is OK. But when a ta
 The goal is to have no classes that are shown as ""Uncategorized"" in the system browser.
 "
 Class {
-	#name : #ReClassNotCategorizedRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReClassNotCategorizedRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReClassNotCategorizedRule class >> checksClass [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNotCategorizedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ReClassNotCategorizedRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassNotCategorizedRule >> basicCheck: aClass [
 
 	aClass isMeta ifTrue: [ ^ false ].
@@ -30,23 +32,23 @@ ReClassNotCategorizedRule >> basicCheck: aClass [
 	^ aClass packageTag isRoot and: [ aClass package classTags size > 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNotCategorizedRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNotCategorizedRule >> name [
 
 	^ 'Uncategorized class - missing class tag'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNotCategorizedRule >> rationale [
 	^ 'Classes should be categorized with a tag if other class tags exist in the package. Use "Base" as default if you can not provide a better name.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassNotCategorizedRule >> severity [
 
 	^ #information

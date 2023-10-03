@@ -1,8 +1,7 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Trait >> asRingDefinition [
-
 	"A triat is converted to a ring class. Only the receiver is converted.
 	Methods, superclasses, subclasses are not generated"
 
@@ -23,7 +22,7 @@ Trait >> asRingDefinition [
 	^ ring
 ]
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Trait >> asRingDefinitionWithMethods: methodsBoolean withSuperclasses: supersBoolean withSubclasses: subsBoolean withPackageKeys: packageKeys in: aRGSlice [
 
 	| rgClass rgMethod rgSuper sup |

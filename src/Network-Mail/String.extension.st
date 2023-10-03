@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Network-Mail' }
+{ #category : '*Network-Mail' }
 String >> asEmailHeaderString [
 	^ self
 ]

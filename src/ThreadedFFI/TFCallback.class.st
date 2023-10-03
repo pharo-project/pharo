@@ -2,8 +2,8 @@
 I am the Backend implementation of callbacks for UFFI. I use TFFI as a backend
 "
 Class {
-	#name : #TFCallback,
-	#superclass : #FFIExternalReference,
+	#name : 'TFCallback',
+	#superclass : 'FFIExternalReference',
 	#instVars : [
 		'callbackData',
 		'parameterHandlers',
@@ -15,10 +15,12 @@ Class {
 		'runStrategy',
 		'success'
 	],
-	#category : #'ThreadedFFI-Callbacks'
+	#category : 'ThreadedFFI-Callbacks',
+	#package : 'ThreadedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 TFCallback class >> finalizeResourceData: aCallbackDataHandler [
 
 	aCallbackDataHandler isNull ifTrue: [ ^ self ].
@@ -27,7 +29,7 @@ TFCallback class >> finalizeResourceData: aCallbackDataHandler [
 	aCallbackDataHandler beNull
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFCallback class >> forCallback: aCallback parameters: parameterTypes returnType: returnType runner: aRunner [
 
 	^ self new
@@ -40,53 +42,53 @@ TFCallback class >> forCallback: aCallback parameters: parameterTypes returnType
 		yourself
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 TFCallback class >> primUnregister: callbackHandle [
 	<primitive: 'primitiveUnregisterCallback'>
 
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> beFailed [
 
 	success := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> beNull [
 
 	self setHandle: ExternalAddress null
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> beSuccess [
 
 	success := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> callbackData [
 	^ callbackData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> callbackData: anObject [
 	callbackData := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> frontendCallback [
 
 	^ frontendCallback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> frontendCallback: anObject [
 	frontendCallback := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFCallback >> initialize [
 
 	super initialize.
@@ -95,7 +97,7 @@ TFCallback >> initialize [
 	parameterHandlers := #()
 ]
 
-{ #category : #invoking }
+{ #category : 'invoking' }
 TFCallback >> invokeAsFunctionWithArguments: aCollection [
 
 	| definition function preparedArguments |
@@ -115,23 +117,23 @@ TFCallback >> invokeAsFunctionWithArguments: aCollection [
 	^ self returnType marshallFromPrimitive: (self runner invokeFunction: function withArguments: preparedArguments)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TFCallback >> isSuccess [
 
 	^ success == true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> parameterTypes [
 	^ parameterTypes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> parameterTypes: anObject [
 	parameterTypes := anObject
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 TFCallback >> register [
 
 	handle isNull ifFalse: [ ^ self error: 'Callback already registered' ].
@@ -142,62 +144,62 @@ TFCallback >> register [
 	TFCallbackQueue uniqueInstance registerCallback: self
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 TFCallback >> registerCallback [
 	"TODO: This is still here to allow updating. We need to remove it soon!"
 	<primitive: 'primitiveRegisterCallback'>
 	^ self primitiveFailed
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 TFCallback >> registerCallback: debugString [
 
 	<primitive: 'primitiveRegisterCallback'>
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> resourceData [
 
 	^ self callbackData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> returnType [
 	^ returnType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> returnType: anObject [
 	returnType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> runStrategy [
 	^ runStrategy ifNil: [ TFCallbackForkRunStrategy new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> runStrategy: anObject [
 	runStrategy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> runner [
 	^ runner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> runner: anObject [
 	runner := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallback >> thunk [
 	^ self getHandle
 ]
 
-{ #category : #'private - operations' }
+{ #category : 'private - operations' }
 TFCallback >> validateTypes [
 
 	parameterTypes do: [ :each | each validate ].

@@ -48,17 +48,19 @@ currentRoot
 
 "
 Class {
-	#name : #PragmaMenuBuilder,
-	#superclass : #MenuRegistration,
+	#name : 'PragmaMenuBuilder',
+	#superclass : 'MenuRegistration',
 	#instVars : [
 		'pragmaKeywords',
 		'model',
 		'currentRoot'
 	],
-	#category : #'MenuRegistration-Core'
+	#category : 'MenuRegistration-Core',
+	#package : 'MenuRegistration',
+	#tag : 'Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PragmaMenuBuilder class >> itemSortBlock [
 	"The block which is used to sort a menu tree"
 	^ [:a :b |
@@ -69,7 +71,7 @@ PragmaMenuBuilder class >> itemSortBlock [
 				ifFalse: [a order ifNil: [false] ifNotNil: [true]]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PragmaMenuBuilder class >> orderAssignBlock [
 	"The block which is used to set MenuRegistration tree node order inst var (which is used to sort the tree)"
 
@@ -94,13 +96,13 @@ PragmaMenuBuilder class >> orderAssignBlock [
 		ifNone: [ list ]	"No order has been set - do not touch anything, the list order is ok" ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaMenuBuilder class >> pragmaKeyword: aPragmaKeyword model: aModel [
 	"Build a builder using aPragmaKeyword as the pragma keyword and aModel a the model of the resulting builder"
 	^ self withAllPragmaKeywords: {aPragmaKeyword} model: aModel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaMenuBuilder class >> withAllPragmaKeywords: aCollection model: aModel [
 	"Build a builder using aPragmaKeyword as the pragma keyword and aModel a the model of the resulting builder"
 	^ self new
@@ -109,14 +111,14 @@ PragmaMenuBuilder class >> withAllPragmaKeywords: aCollection model: aModel [
 		yourself
 ]
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 PragmaMenuBuilder >> allMisplacedItems [
 	| misplaced |
 	self collectMisplacedItemsIn: (misplaced := OrderedCollection new).
 	^ misplaced
 ]
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 PragmaMenuBuilder >> arrangeRegistrations [
 	self allMisplacedItems do: [:item |
 		(self itemNamed: item parentName)
@@ -125,7 +127,7 @@ PragmaMenuBuilder >> arrangeRegistrations [
 				newOwner addItem: item]]
 ]
 
-{ #category : #'menu building' }
+{ #category : 'menu building' }
 PragmaMenuBuilder >> buildTree [
 	"Retrieve all menu registrations with the help of a PragmaCollector then,
 	reorganise the tree and sort it  - see class comment for more informations"
@@ -135,12 +137,12 @@ PragmaMenuBuilder >> buildTree [
 	self sortRegistrations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuBuilder >> builder [
 	^ self
 ]
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 PragmaMenuBuilder >> collectRegistrations [
 	"Retrieve all pragma methods and evaluate them by passing the
 	MenuRegistration class as argument. The result is a list of trees
@@ -158,7 +160,7 @@ PragmaMenuBuilder >> collectRegistrations [
 	self interpretRegistration: menu
 ]
 
-{ #category : #'menu building' }
+{ #category : 'menu building' }
 PragmaMenuBuilder >> currentRoot: anItem while: aBlock [
 	| old |
 	old := currentRoot.
@@ -166,7 +168,7 @@ PragmaMenuBuilder >> currentRoot: anItem while: aBlock [
 	[aBlock value] ensure: [currentRoot := old]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PragmaMenuBuilder >> initialize [
 	super initialize.
 	isGroup := true.
@@ -174,7 +176,7 @@ PragmaMenuBuilder >> initialize [
 	pragmaKeywords := OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PragmaMenuBuilder >> interpretRegistration: aRegistration [
 	| root |
 	root := MenuRegistration owner: self.
@@ -210,18 +212,18 @@ PragmaMenuBuilder >> interpretRegistration: aRegistration [
 				ifTrue: [ node withSeparatorAfter ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuBuilder >> itemReceiver [
 	^ model
 ]
 
-{ #category : #'public menu building' }
+{ #category : 'public menu building' }
 PragmaMenuBuilder >> menuSpec [
 	"returns a PluggableMenuSpec build from my contents"
 	^ self menuSpecAt: nil
 ]
 
-{ #category : #'public menu building' }
+{ #category : 'public menu building' }
 PragmaMenuBuilder >> menuSpecAt: aName [
 	"returns a PluggableMenuSpec build from my contents starting at
 	the inner MenuRegistration named aName or from here if aName is nil"
@@ -233,17 +235,17 @@ PragmaMenuBuilder >> menuSpecAt: aName [
 	^ root
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuBuilder >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuBuilder >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #'menu building' }
+{ #category : 'menu building' }
 PragmaMenuBuilder >> newSubItem [
 	| reg |
 	reg := MenuRegistration owner: currentRoot.
@@ -251,25 +253,25 @@ PragmaMenuBuilder >> newSubItem [
 	^ reg
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuBuilder >> pragmaKeyword: aString [
 	"Set the pragma keyword used to select pragmas"
 	pragmaKeywords add: aString asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuBuilder >> pragmaKeywords [
 	"Returns the pragma keyword used to select pragmas (see #pragmaCollector)"
 	^  pragmaKeywords
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuBuilder >> pragmaKeywords: aCollection [
 	"Returns the pragma keyword used to select pragmas (see #pragmaCollector)"
 	pragmaKeywords addAll: (aCollection collect: [:k | k asSymbol])
 ]
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 PragmaMenuBuilder >> pragmas [
 
 	"Return all pragmas which keyword is self pragmaKeyword"
@@ -278,7 +280,7 @@ PragmaMenuBuilder >> pragmas [
 		  select: [ :prg | prg methodSelector numArgs = 1 ]
 ]
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 PragmaMenuBuilder >> sortRegistrations [
 	"Try to update MenuRegistration order inst. var and the sort the trees"
 	self assignOrderWithBlock: self class orderAssignBlock.

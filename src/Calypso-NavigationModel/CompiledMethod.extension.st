@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 CompiledMethod >> calypsoName [
 
 	^ self selector

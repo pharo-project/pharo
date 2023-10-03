@@ -1,68 +1,70 @@
 Class {
-	#name : #InstructionStreamTest,
-	#superclass : #TestCase,
+	#name : 'InstructionStreamTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'operations'
 	],
-	#category : #'Kernel-Tests-Extended-Methods'
+	#category : 'Kernel-Tests-Extended-Methods',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Methods'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 InstructionStreamTest >> blockReturnTop [
 
 		operations add: { #blockReturnTop }
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 InstructionStreamTest >> classUnderTest [
 
 	^ ClassUsedInInstructionStreamTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 InstructionStreamTest >> directedSuperSend: aString numArgs: anInteger [
 
 	operations add: { #directSuperSend:numArgs:. aString. anInteger }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InstructionStreamTest >> pc: anInteger [
 
 	"Ignore the PC"
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 InstructionStreamTest >> pushConstant: anInteger [
 
 	operations add: { #pushConstant. anInteger }
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 InstructionStreamTest >> pushLiteralVariable: aLiteralVariable [
 
 	operations add: { #pushConstant. aLiteralVariable }
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 InstructionStreamTest >> pushReceiver [
 
 	operations add: {#pushReceiver}
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 InstructionStreamTest >> send: aString super: aBoolean numArgs: anInteger [
 
 	operations add: { #send:super:numArgs:. aString. aBoolean. anInteger }
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 InstructionStreamTest >> setUp [
 
 	super setUp.
 	operations := OrderedCollection new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InstructionStreamTest >> testBlockWithASuperSendHasCorrectNumberOfArguments [
 
 	| aMethod aCompiledBlock aStream |
@@ -78,7 +80,7 @@ InstructionStreamTest >> testBlockWithASuperSendHasCorrectNumberOfArguments [
 	self assert: operations fifth equals: { #directSuperSend:numArgs:. #aSuperMethod:with:. 2 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumberOfArguments [
 
 	| aMethod aCompiledBlock aStream |
@@ -94,7 +96,7 @@ InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumber
 	self assert: operations third equals: { #directSuperSend:numArgs:. #yourself. 0 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 
 	| stream methodToTest ir startingPc |
@@ -114,7 +116,7 @@ InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 	self assert: (stream nextPc: 16rE0) equals: startingPc + 4
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext [
 
 	| initialContext aContext receiver semaphore process suspendedProcess return errorThatHappen |
@@ -136,7 +138,7 @@ InstructionStreamTest >> testSimulatedTerminationOfProcessDoNotCorruptTheContext
 	self assert: receiver expectedValue equals: 42
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -155,7 +157,7 @@ InstructionStreamTest >> testSimulatingAMethodWithHaltHasCorrectContext [
 	self assert: return size equals: 1
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepContextNonTakenConditionalJumpBytecodes [
 
 	| context |
@@ -169,7 +171,7 @@ InstructionStreamTest >> testStepContextNonTakenConditionalJumpBytecodes [
 	self assert: context top equals: 8
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepContextTakenConditionalJumpBytecodes [
 
 	| context |
@@ -183,7 +185,7 @@ InstructionStreamTest >> testStepContextTakenConditionalJumpBytecodes [
 	self assert: context top equals: 2
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepNonTakenConditionalJumpBytecodes [
 
 	| context stream |
@@ -198,7 +200,7 @@ InstructionStreamTest >> testStepNonTakenConditionalJumpBytecodes [
 	self assert: context top equals: 8
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepSendPopsArgumentsAndPushesResultBytecodes [
 
 	| context stream |
@@ -212,7 +214,7 @@ InstructionStreamTest >> testStepSendPopsArgumentsAndPushesResultBytecodes [
 	self assert: context top equals: 3
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepSingleBytecode [
 
 	| context stream |
@@ -224,7 +226,7 @@ InstructionStreamTest >> testStepSingleBytecode [
 	self assert: context top equals: 1
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepTakenConditionalJumpBytecodes [
 
 	| context stream |
@@ -239,7 +241,7 @@ InstructionStreamTest >> testStepTakenConditionalJumpBytecodes [
 	self assert: context top equals: 2
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepThroughInAMethodWithMNU [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -257,7 +259,7 @@ InstructionStreamTest >> testStepThroughInAMethodWithMNU [
 	self assert: return method equals: (self classUnderTest lookupSelector: #doesNotUnderstand:)
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepThroughInAMethodWithoutError [
 
 	| initialContext aContext receiver suspendedProcess return |
@@ -276,7 +278,7 @@ InstructionStreamTest >> testStepThroughInAMethodWithoutError [
 	self assert: return top equals: 42
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testStepTwoBytecodes [
 
 	| context stream |
@@ -289,7 +291,7 @@ InstructionStreamTest >> testStepTwoBytecodes [
 	self assert: context top equals: 2
 ]
 
-{ #category : #'tests - example' }
+{ #category : 'tests - example' }
 InstructionStreamTest >> testSteppingSendsDirectSend [
 
 	| initialContext aContext receiver |

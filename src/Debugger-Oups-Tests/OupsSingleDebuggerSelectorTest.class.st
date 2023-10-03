@@ -1,14 +1,16 @@
 Class {
-	#name : #OupsSingleDebuggerSelectorTest,
-	#superclass : #TestCase,
+	#name : 'OupsSingleDebuggerSelectorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'debuggers',
 		'debuggerSelector'
 	],
-	#category : #'Debugger-Oups-Tests-Tests - strategies'
+	#category : 'Debugger-Oups-Tests-Tests - strategies',
+	#package : 'Debugger-Oups-Tests',
+	#tag : 'Tests - strategies'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OupsSingleDebuggerSelectorTest >> performTest [
 	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
 
@@ -16,7 +18,7 @@ OupsSingleDebuggerSelectorTest >> performTest [
 	self perform: testSelector asSymbol
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OupsSingleDebuggerSelectorTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 
@@ -25,7 +27,7 @@ OupsSingleDebuggerSelectorTest >> setUp [
 	debuggerSelector := OupsSingleDebuggerSelector with: debuggers copy
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OupsSingleDebuggerSelectorTest >> tearDown [
 	debuggers
 		do: [ :dbg |
@@ -34,12 +36,12 @@ OupsSingleDebuggerSelectorTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsSingleDebuggerSelectorTest >> testError [
 	self deny: OupsDebuggerSelector new hasErrors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsSingleDebuggerSelectorTest >> testErrorWhenOpeningDebugger [
 	| session |
 	session := OupsDummyDebugger dummySession.
@@ -51,7 +53,7 @@ OupsSingleDebuggerSelectorTest >> testErrorWhenOpeningDebugger [
 	self deny: debuggerSelector handled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsSingleDebuggerSelectorTest >> testHandled [
 	| session |
 	session := OupsDummyDebugger dummySession.
@@ -63,7 +65,7 @@ OupsSingleDebuggerSelectorTest >> testHandled [
 	self deny: debuggerSelector handled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsSingleDebuggerSelectorTest >> testNextDebugger [
 	self
 		assert: debuggerSelector nextDebugger
@@ -76,7 +78,7 @@ OupsSingleDebuggerSelectorTest >> testNextDebugger [
 		identicalTo: debuggers first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsSingleDebuggerSelectorTest >> testOpenDebuggerForSession [
 	| session |
 	session := OupsDummyDebugger dummySession.

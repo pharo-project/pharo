@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddAccessorsForClassTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddAccessorsForClassTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddAccessorsForClassTransformationTest >> testRefactoring [
 
 	| refactoring class |
@@ -23,7 +25,7 @@ RBAddAccessorsForClassTransformationTest >> testRefactoring [
 		(self parseMethod: 'variableName: anObject variableName := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddAccessorsForClassTransformationTest >> testTransform [
 
 	| transformation class |
@@ -32,8 +34,7 @@ RBAddAccessorsForClassTransformationTest >> testTransform [
 
 	self assert: transformation model changes changes size equals: 2.
 
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self
 		assert: (class parseTreeForSelector: #instVar)
 		equals: (self parseMethod: 'instVar ^instVar').

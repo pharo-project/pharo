@@ -1,6 +1,6 @@
-Extension { #name : #ByteArray }
+Extension { #name : 'ByteArray' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ByteArray >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitBytesObject: self

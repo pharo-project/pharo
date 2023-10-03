@@ -16,15 +16,17 @@ Preconditions:
 - the method does not have a pragma with the same selector. 
 "
 Class {
-	#name : #RBAddPragmaTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddPragmaTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'pragma'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddPragmaTransformation class >> model: aRBModel pragma: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -35,7 +37,7 @@ RBAddPragmaTransformation class >> model: aRBModel pragma: aString inMethod: aSe
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -45,7 +47,7 @@ RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: 
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddPragmaTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
@@ -64,7 +66,7 @@ RBAddPragmaTransformation >> applicabilityPreconditions [
 					    with: (self parserClass parsePragma: pragma) selector))
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddPragmaTransformation >> classExist [
 
 	^ RBCondition
@@ -73,7 +75,7 @@ RBAddPragmaTransformation >> classExist [
 		  ('Class named <1s> does not exist' expandMacrosWith: className)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -81,7 +83,7 @@ RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClass
 	pragma := aString
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddPragmaTransformation >> privateTransform [
 	"the transformation is straighforward: just add the node at the last position of the method.
 	 #todo the case in which the context is a block"
@@ -93,7 +95,7 @@ RBAddPragmaTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddPragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

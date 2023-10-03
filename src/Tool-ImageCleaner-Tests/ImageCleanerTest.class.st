@@ -2,18 +2,19 @@
 An ImageCleanerTest is a test class for testing the behavior of ImageCleaner
 "
 Class {
-	#name : #ImageCleanerTest,
-	#superclass : #TestCase,
-	#category : #'Tool-ImageCleaner-Tests'
+	#name : 'ImageCleanerTest',
+	#superclass : 'TestCase',
+	#category : 'Tool-ImageCleaner-Tests',
+	#package : 'Tool-ImageCleaner-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleanerTest >> imageCleanerClass [ 
 	"returns the class that represents image cleaner"
 	^ ImageCleaner
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageCleanerTest >> testTestPackages [
 	"ImageCleaner testPackages method returns just symbols. Maybe it should be renamed."
 

@@ -4,52 +4,54 @@ I wrap a stream and generate documentation in a concrete format.
 The intent is that sister classes will implement various concrete formats (HTML, Man page, LaTeX, colored terminal output…)
 "
 Class {
-	#name : #ClapDocumentationFormatter,
-	#superclass : #Object,
+	#name : 'ClapDocumentationFormatter',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Clap-Core-Documentation'
+	#category : 'Clap-Core-Documentation',
+	#package : 'Clap-Core',
+	#tag : 'Documentation'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClapDocumentationFormatter class >> on: aCharacterWriteStream [
 	^ self new
 		stream: aCharacterWriteStream;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapDocumentationFormatter >> columnIndent [
 	^ 16
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapDocumentationFormatter >> columnSeparation [
 	^ 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapDocumentationFormatter >> contents [
 	^ stream contents
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 ClapDocumentationFormatter >> flush [
 	stream flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapDocumentationFormatter >> listIndent [
 	^ 4
 ]
 
-{ #category : #formattting }
+{ #category : 'formattting' }
 ClapDocumentationFormatter >> newLine [
 	^ stream newLine
 ]
 
-{ #category : #formattting }
+{ #category : 'formattting' }
 ClapDocumentationFormatter >> section: titleString with: contentsBlock [
 	| contents |
 	contents := self class new.
@@ -62,24 +64,24 @@ ClapDocumentationFormatter >> section: titleString with: contentsBlock [
 			nextPutAll: contents contents ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapDocumentationFormatter >> space [
 	^ stream space
 ]
 
-{ #category : #formattting }
+{ #category : 'formattting' }
 ClapDocumentationFormatter >> space: anInteger [
 	anInteger timesRepeat: [ stream space ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapDocumentationFormatter >> stream: aStream [
 	stream := 	(aStream respondsTo: #newLine)
 		ifTrue: [ aStream ]
 		ifFalse: [ ZnNewLineWriterStream on: aStream ]
 ]
 
-{ #category : #formattting }
+{ #category : 'formattting' }
 ClapDocumentationFormatter >> tabularize: associations [
 	associations do: [ :each |
 		| keyWidth |
@@ -93,7 +95,7 @@ ClapDocumentationFormatter >> tabularize: associations [
 		self newLine ]
 ]
 
-{ #category : #formattting }
+{ #category : 'formattting' }
 ClapDocumentationFormatter >> text: aString [
 	stream nextPutAll: aString
 ]

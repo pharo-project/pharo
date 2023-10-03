@@ -1,10 +1,11 @@
 Class {
-	#name : #T2TraitChangesTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitChangesTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
@@ -27,7 +28,7 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 	self assertEmpty: builder changes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
@@ -52,7 +53,7 @@ T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 	self assertEmpty: builder changes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariableNamesPackageName [
 
 	| builder |

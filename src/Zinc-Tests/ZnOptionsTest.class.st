@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnOptionsTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnOptionsTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #options }
+{ #category : 'options' }
 ZnOptionsTest class >> bar [
 	"Test option bar"
 
@@ -13,7 +14,7 @@ ZnOptionsTest class >> bar [
 	^ 2
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 ZnOptionsTest class >> foo [
 	"Test option foo"
 
@@ -22,7 +23,7 @@ ZnOptionsTest class >> foo [
 	^ 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnOptionsTest >> testAllBindings [
 	| options |
 	options := (ZnOptions onClass: self class) clone.
@@ -34,7 +35,7 @@ ZnOptionsTest >> testAllBindings [
 	self assert: options allBindings equals: { #foo -> -1. #bar -> -2 } asDictionary.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnOptionsTest >> testClone [
 	| options |
 	options := (ZnOptions onClass: self class) clone.
@@ -48,7 +49,7 @@ ZnOptionsTest >> testClone [
 	self assert: (options at: #foo) equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnOptionsTest >> testCreate [
 	| options |
 	options := ZnOptions onClass: self class.
@@ -61,7 +62,7 @@ ZnOptionsTest >> testCreate [
 	self should: [ options writable: true ] raise: ModificationForbidden
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnOptionsTest >> testCurrent [
 	| options |
 	self should: [ ZnCurrentOptions at: #foo ] raise: KeyNotFound.
@@ -76,7 +77,7 @@ ZnOptionsTest >> testCurrent [
 	self assert: (options at: #foo) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnOptionsTest >> testCurrentConditionally [
 	| options |
 	self should: [ ZnCurrentOptions at: #foo ] raise: KeyNotFound.
@@ -98,7 +99,7 @@ ZnOptionsTest >> testCurrentConditionally [
 	self assert: (options at: #foo) equals: 1.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnOptionsTest >> testPublicAPI [
 	| localOptions originalValue |
 	localOptions := ZnOptions globalDefault clone.

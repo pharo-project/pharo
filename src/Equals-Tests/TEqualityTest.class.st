@@ -1,25 +1,26 @@
 Class {
-	#name : #TEqualityTest,
-	#superclass : #TestCase,
+	#name : 'TEqualityTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'classFactory'
 	],
-	#category : #'Equals-Tests'
+	#category : 'Equals-Tests',
+	#package : 'Equals-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TEqualityTest >> setUp [
 	super setUp.
 	classFactory := ClassFactoryForTestCase new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TEqualityTest >> tearDown [
 	classFactory cleanUp.
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithIVs [
 
 	| set object class |
@@ -43,7 +44,7 @@ TEqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithIVs [
 	self assert: set size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithNoIVs [
 	| set |
 	set := Set new.
@@ -55,7 +56,7 @@ TEqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithNoIVs [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithIVs [
 
 	| set otherClass yetAnotherClass |
@@ -85,7 +86,7 @@ TEqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithIVs [
 	self assert: (set includes: (yetAnotherClass x: 'abc' y: 123))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithNoIVs [
 
 	| set otherClass |
@@ -98,7 +99,7 @@ TEqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithNoIVs [
 	self assert: (set includes: otherClass new)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testTwoInstancesOfTheSameClassWithDifferentIvValuessAreNotEqual [
 
 	| class |
@@ -117,7 +118,7 @@ TEqualityTest >> testTwoInstancesOfTheSameClassWithDifferentIvValuessAreNotEqual
 	self deny: (class x: 1 y: 'abc') equals: (class x: 1 y: 'zyx')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testTwoInstancesOfTheSameClassWithNoIVsAreEqual [
 
 	self
@@ -125,7 +126,7 @@ TEqualityTest >> testTwoInstancesOfTheSameClassWithNoIVsAreEqual [
 		equals: ComparableObjectForEqualityTest new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testTwoInstancesOfTheSameClassWithSameIvValuessAreEqual [
 
 	| class |
@@ -144,7 +145,7 @@ TEqualityTest >> testTwoInstancesOfTheSameClassWithSameIvValuessAreEqual [
 	self assert: (class x: 1 y: 'abc') equals: (class x: 1 y: 'abc')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TEqualityTest >> testTwoInstancesOfTowDifferentClassesWithNoIVsAreNotEqual [
 
 	| otherClass |

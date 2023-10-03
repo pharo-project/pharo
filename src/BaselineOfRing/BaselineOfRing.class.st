@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfRing,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfRing
+	#name : 'BaselineOfRing',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfRing',
+	#package : 'BaselineOfRing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfRing >> baseline: spec [
 	<baseline>
 	spec for: #common
@@ -22,7 +23,7 @@ BaselineOfRing >> baseline: spec [
 				package: 'Calypso-Ring' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfRing >> repository [
 	^ self packageRepositoryURL
 ]

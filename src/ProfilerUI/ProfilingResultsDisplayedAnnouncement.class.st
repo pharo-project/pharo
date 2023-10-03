@@ -1,5 +1,7 @@
 Class {
-	#name : #ProfilingResultsDisplayedAnnouncement,
-	#superclass : #Announcement,
-	#category : #'ProfilerUI-Announcements'
+	#name : 'ProfilingResultsDisplayedAnnouncement',
+	#superclass : 'Announcement',
+	#category : 'ProfilerUI-Announcements',
+	#package : 'ProfilerUI',
+	#tag : 'Announcements'
 }

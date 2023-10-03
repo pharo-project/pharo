@@ -1,30 +1,32 @@
 Class {
-	#name : #StepIntoTest,
-	#superclass : #DebuggerTest,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'StepIntoTest',
+	#superclass : 'DebuggerTest',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepIntoTest >> callQuickMethodWithoutReturningItsResult [
 	self quickMethod
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepIntoTest >> quickMethod [
 	^1
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepIntoTest >> returnQuickMethodResult [
 	^ self quickMethod
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepIntoTest >> stepA1 [
 	^42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepIntoTest >> testStepIntoDeadContext [
 	self settingUpSessionAndProcessAndContextForBlock: [ self returnQuickMethodResult ].
 	"we step till the block returns"
@@ -37,7 +39,7 @@ StepIntoTest >> testStepIntoDeadContext [
 	session stepInto
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepIntoTest >> testStepIntoDoIt [
 
 	| method node |
@@ -79,7 +81,7 @@ StepIntoTest >> testStepIntoDoIt [
 	self assert: session interruptedProcess isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepIntoTest >> testStepIntoMethodCallShouldActivateIt [
 	"Stepping into a method call should create a context for it at the top of the context stack"
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
@@ -91,7 +93,7 @@ StepIntoTest >> testStepIntoMethodCallShouldActivateIt [
 		equals: self class >> #stepA1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepIntoTest >> testStepIntoQuickMethodCallNotReturnedShouldLeaveTheValueStackEmpty [
 	"Stepping into a quick method whose result is not used should leave the value stack empty"
 	self settingUpSessionAndProcessAndContextForBlock: [ self callQuickMethodWithoutReturningItsResult].
@@ -107,7 +109,7 @@ StepIntoTest >> testStepIntoQuickMethodCallNotReturnedShouldLeaveTheValueStackEm
 		equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepIntoTest >> testStepIntoQuickMethodCallReturnedShouldPushReturnValueToTheStack [
 	"Stepping into a call to a quick method whose result is used should push its return value to the stack"
 	self settingUpSessionAndProcessAndContextForBlock: [ self returnQuickMethodResult].
@@ -123,7 +125,7 @@ StepIntoTest >> testStepIntoQuickMethodCallReturnedShouldPushReturnValueToTheSta
 		equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepIntoTest >> testStepIntoUntilTermination [
 	"Stepping until termination."
 	self settingUpSessionAndProcessAndContextForBlock: [ 1+2 ].
@@ -133,7 +135,7 @@ StepIntoTest >> testStepIntoUntilTermination [
 	self assert: session interruptedProcess isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepIntoTest >> testStepIntoUntilTerminationClean [
 	"Stepping until termination."
 	self settingUpSessionAndProcessAndContextForCleanBlock: [ ].

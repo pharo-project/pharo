@@ -6,12 +6,14 @@ Keep in mind:
 - there is the overhead of the Dictionary. Only if there are multiple ones of me in the class hierarchy you will save memory
 "
 Class {
-	#name : #PropertySlot,
-	#superclass : #DerivedSlot,
-	#category : #'Slot-Examples-Base'
+	#name : 'PropertySlot',
+	#superclass : 'DerivedSlot',
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 PropertySlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot at: 1 put: <stackTop>'"
 	| tempName |
@@ -26,7 +28,7 @@ PropertySlot >> emitStore: methodBuilder [
 		send: #at:put:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 PropertySlot >> emitValue: methodBuilder [
 	"generate bytecode for '<baseSlot> at: name ifAbsent: nil'"
 	methodBuilder
@@ -36,7 +38,7 @@ PropertySlot >> emitValue: methodBuilder [
 		send: #at:ifAbsent:
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 PropertySlot >> installingIn: aClass [
 	super installingIn: aClass.
 
@@ -48,12 +50,12 @@ PropertySlot >> installingIn: aClass [
 		ifNone: [aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new)]
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 PropertySlot >> read: anObject [
 	^ (baseSlot read: anObject) at: self name ifAbsent: nil
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 PropertySlot >> write: aValue to: anObject [
 	^ (baseSlot read: anObject) at: self name put: aValue
 ]

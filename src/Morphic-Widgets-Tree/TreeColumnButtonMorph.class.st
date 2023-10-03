@@ -2,22 +2,23 @@
 A button in a morphic based tree
 "
 Class {
-	#name : #TreeColumnButtonMorph,
-	#superclass : #SimpleButtonMorph,
+	#name : 'TreeColumnButtonMorph',
+	#superclass : 'SimpleButtonMorph',
 	#instVars : [
 		'model',
 		'icon'
 	],
-	#category : #'Morphic-Widgets-Tree'
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TreeColumnButtonMorph class >> initialize [
 
 	self deprecatedAliases: { #MorphTreeColumnButton }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeColumnButtonMorph >> acceptDroppingMorph: aMorph event: evt [
 	self model container swapColumn: self model withColumn: aMorph passenger.
 	evt hand releaseMouseFocus: self.
@@ -26,23 +27,23 @@ TreeColumnButtonMorph >> acceptDroppingMorph: aMorph event: evt [
 	Cursor normal show
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeColumnButtonMorph >> asPotentialDropTarget [
 	self model asPotentialDropTarget
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TreeColumnButtonMorph >> handlesMouseOverDragging: evt [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeColumnButtonMorph >> icon [
 
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeColumnButtonMorph >> icon: anIcon [
 
 	icon ifNotNil: [ self removeMorph: icon ].
@@ -52,7 +53,7 @@ TreeColumnButtonMorph >> icon: anIcon [
 		self addMorphFront: anIcon ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TreeColumnButtonMorph >> initialize [
 	super initialize.
 	self enableDragNDrop: true.
@@ -60,22 +61,22 @@ TreeColumnButtonMorph >> initialize [
 	self borderStyle: (self theme morphTreeColumnBorderStyleFor: self)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TreeColumnButtonMorph >> isDefault [
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TreeColumnButtonMorph >> model [
 	^ model
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TreeColumnButtonMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TreeColumnButtonMorph >> mouseDown: anEvent [
 	| selectors |
 	selectors := Array
@@ -87,7 +88,7 @@ TreeColumnButtonMorph >> mouseDown: anEvent [
 	super mouseDown: anEvent
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TreeColumnButtonMorph >> mouseEnterDragging: evt [
 	(evt hand hasSubmorphs and:[self dropEnabled]) ifFalse: ["no d&d"
 		^ super mouseEnterDragging: evt].
@@ -97,29 +98,29 @@ TreeColumnButtonMorph >> mouseEnterDragging: evt [
 		]
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TreeColumnButtonMorph >> mouseLeaveDragging: evt [
 	self noMorePotentialDropTarget
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TreeColumnButtonMorph >> mouseUp: evt [
 	self noMorePotentialDropTarget.
 	super mouseUp: evt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeColumnButtonMorph >> noMorePotentialDropTarget [
 	self model noMorePotentialDropTarget
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeColumnButtonMorph >> removeIcon [
 
 	icon ifNotNil: [ self removeMorph: icon ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TreeColumnButtonMorph >> startDrag: anEvent [
 	| aTransferMorph |
 	self dragEnabled ifFalse: [^ self].
@@ -135,12 +136,12 @@ TreeColumnButtonMorph >> startDrag: anEvent [
 	anEvent hand releaseMouseFocus: self
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 TreeColumnButtonMorph >> themedFillStyle [
 	^ self theme morphTreeColumnFillStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeColumnButtonMorph >> wantsDroppedMorph: aMorph event: anEvent [
 	^ model container columnDropUnabled and: [(aMorph isTransferable) and: [(aMorph passenger isKindOf: MorphTreeColumn) and: [aMorph passenger ~= self model]]]
 ]

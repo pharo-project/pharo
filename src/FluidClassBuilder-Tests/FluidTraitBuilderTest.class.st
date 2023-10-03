@@ -2,19 +2,21 @@
 This class contains tests for `FluidTraitBuilder`
 "
 Class {
-	#name : #FluidTraitBuilderTest,
-	#superclass : #FluidClassBuilderAbstractTest,
-	#category : #'FluidClassBuilder-Tests-Base'
+	#name : 'FluidTraitBuilderTest',
+	#superclass : 'FluidClassBuilderAbstractTest',
+	#category : 'FluidClassBuilder-Tests-Base',
+	#package : 'FluidClassBuilder-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FluidTraitBuilderTest >> setUp [
 
 	super setUp.
 	builder := FluidTraitBuilder new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FluidTraitBuilderTest >> tearDown [
 
 	"self class environment
@@ -23,7 +25,7 @@ FluidTraitBuilderTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #'tests - classBuilder generation' }
+{ #category : 'tests - classBuilder generation' }
 FluidTraitBuilderTest >> testBuildSimplePoint2 [
 
 	| trait |
@@ -36,14 +38,14 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 	self assert: trait slots size equals: 2
 ]
 
-{ #category : #'class side' }
+{ #category : 'class side' }
 FluidTraitBuilderTest >> testClassSlots [
 
 	builder classSlots: {#string . #runs}.
 	self assert: builder classSlotsToBuild equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 
 	| instBuilder newTrait |
@@ -62,7 +64,7 @@ FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 	self assert: newTrait category equals: self packageNameForTest
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 
 	| instBuilder newTrait |
@@ -86,7 +88,7 @@ FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 	self assert: newTrait category equals: self packageNameForTest , '-lala'
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 FluidTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingInstanceSide [
 
 	| instBuilder newTrait |
@@ -108,7 +110,7 @@ FluidTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingIn
 	self assert: newTrait class slotNames equals: #( AAA )
 ]
 
-{ #category : #'tests - class creation' }
+{ #category : 'tests - class creation' }
 FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSide [
 
 	| instBuilder newTrait classBuilder |
@@ -131,7 +133,7 @@ FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSi
 	self assert: newTrait slotNames equals: #( aaa )
 ]
 
-{ #category : #'tests - classBuilder generation' }
+{ #category : 'tests - classBuilder generation' }
 FluidTraitBuilderTest >> testFillShiftClassBuilder [
 
 	| shift |
@@ -151,7 +153,7 @@ FluidTraitBuilderTest >> testFillShiftClassBuilder [
 	"self assert: clas package packageName equals: self packageNameForTest"
 ]
 
-{ #category : #'tests - install' }
+{ #category : 'tests - install' }
 FluidTraitBuilderTest >> testInstallMinimalMockClass [
 
 	| shiftClassBuilder installedClass |
@@ -171,7 +173,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 	self assert: installedClass traitComposition isEmpty
 ]
 
-{ #category : #'tests - install' }
+{ #category : 'tests - install' }
 FluidTraitBuilderTest >> testInstallSimplePoint2 [
 
 	| trait |
@@ -186,20 +188,19 @@ FluidTraitBuilderTest >> testInstallSimplePoint2 [
 	self assert: trait slots size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 
 	| trait |
-	builder := Trait << #TPoint3
-						package: 'Fake'.
+	builder := Trait << #TPoint3 package: 'Fake'.
 
 	trait := builder build.
 
 	self assert: trait name equals: #TPoint3.
-	self assert: trait package packageName equals: '_UnpackagedPackage'
+	self assert: trait package name equals: '_UnpackagedPackage'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FluidTraitBuilderTest >> testTraitUse [
 
 	| trait |
@@ -210,5 +211,5 @@ FluidTraitBuilderTest >> testTraitUse [
 
 	self assert: trait name equals: #TPoint3.
 	self assert: trait traitComposition innerClass equals: TViewModelMock.
-	self assert: trait package packageName equals: '_UnpackagedPackage'
+	self assert: trait package name equals: '_UnpackagedPackage'
 ]

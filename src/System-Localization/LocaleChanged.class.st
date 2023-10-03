@@ -2,16 +2,18 @@
 Announce that a locale was changed
 "
 Class {
-	#name : #LocaleChanged,
-	#superclass : #Announcement,
+	#name : 'LocaleChanged',
+	#superclass : 'Announcement',
 	#instVars : [
 		'newLocale',
 		'oldLocale'
 	],
-	#category : #'System-Localization-Announcements'
+	#category : 'System-Localization-Announcements',
+	#package : 'System-Localization',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LocaleChanged class >> from: oldLocale to: newLocale [
 
 	^(self new)
@@ -20,22 +22,22 @@ LocaleChanged class >> from: oldLocale to: newLocale [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocaleChanged >> newLocale [
 	^ newLocale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocaleChanged >> newLocale: anObject [
 	newLocale := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocaleChanged >> oldLocale [
 	^ oldLocale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocaleChanged >> oldLocale: anObject [
 	oldLocale := anObject
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddInstanceVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAddInstanceVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBAddInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddInstanceVariableRefactoring .
@@ -14,13 +16,13 @@ RBAddInstanceVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddInstanceVariableParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -33,25 +35,26 @@ RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 		directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddToModel [
+
 	| refactoring |
 	model := RBNamespace new.
 	model name: 'Add instance variable'.
-	model defineClass: 'Object << #FOOBAR
-		slots: { #fdsa };
-		package: #''Refactory-Test data'''.
-	refactoring := self createRefactoringWithModel: model
-		andArguments: {'asdf' .  #FOOBAR }.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #fdsa };
+			package: #'Refactory-Test data' ].
+	refactoring := self createRefactoringWithModel: model andArguments: { 'asdf'. #FOOBAR }.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model
-		classNamed: #FOOBAR)
-		directlyDefinesInstanceVariable: 'asdf')
+	self assert: ((refactoring model classNamed: #FOOBAR) directlyDefinesInstanceVariable: 'asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testInvalidVariableName [
 
 	self shouldFail: (self createRefactoringWithArguments:

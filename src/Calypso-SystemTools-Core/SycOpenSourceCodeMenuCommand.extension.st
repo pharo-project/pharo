@@ -1,13 +1,13 @@
-Extension { #name : #SycOpenSourceCodeMenuCommand }
+Extension { #name : 'SycOpenSourceCodeMenuCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycOpenSourceCodeMenuCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $t meta for: ClySourceCodeContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycOpenSourceCodeMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

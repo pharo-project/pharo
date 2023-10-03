@@ -6,12 +6,14 @@ Baseline to load libraries used in base image:
  - ...
 "
 Class {
-	#name : #BaselineOfBaseLibraries,
-	#superclass : #BaselineOf,
-	#category : #'BaselineOfBaseLibraries-Base'
+	#name : 'BaselineOfBaseLibraries',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfBaseLibraries-Base',
+	#package : 'BaselineOfBaseLibraries',
+	#tag : 'Base'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfBaseLibraries >> baseline: spec [
 	<baseline>
 	| repository |

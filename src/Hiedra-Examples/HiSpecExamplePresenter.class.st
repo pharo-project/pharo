@@ -2,22 +2,24 @@
 I am an example of use of Hiedra in the Spec library (with Morph as backend).
 "
 Class {
-	#name : #HiSpecExamplePresenter,
-	#superclass : #SpPresenter,
+	#name : 'HiSpecExamplePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'hiedraColumnController',
 		'table',
 		'actionBar'
 	],
-	#category : #'Hiedra-Examples-Spec2'
+	#category : 'Hiedra-Examples-Spec2',
+	#package : 'Hiedra-Examples',
+	#tag : 'Spec2'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 HiSpecExamplePresenter class >> example60RandomCommits [
 	^ self openExample: #randomlyGenerated
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 HiSpecExamplePresenter class >> openExample: selector [
 
 	| commits |
@@ -33,13 +35,13 @@ HiSpecExamplePresenter class >> openExample: selector [
 		yourself
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 HiSpecExamplePresenter >> close [
 
 	self window close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSpecExamplePresenter >> commits: commits [
 
 	table items: commits.
@@ -56,7 +58,7 @@ HiSpecExamplePresenter >> commits: commits [
 	table columns first width: hiedraColumnController rulerWidth
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 HiSpecExamplePresenter >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #table;
@@ -64,25 +66,25 @@ HiSpecExamplePresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> forceRefreshHiedra [
 	hiedraColumnController reset.
 	table withAdapterDo: #refreshList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> initializeActionBar [
 
 	| refreshButton inspectButton |
 	refreshButton := self newButton
 		label: 'Redraw';
 		help: 'Refresh the table (and redraw all Hiedra cells with current rendering parameters).';
-		action: [ UIManager default defer: [ self forceRefreshHiedra ] ];
+		action: [ self defer: [ self forceRefreshHiedra ] ];
 		yourself.
 	inspectButton := self newButton
 		label: 'Renderer';
 		help: ('Inspect the Hiedra renderer, that has the rendering parameters. Press on {1} button to see the effect of any change on the renderer.' format: { refreshButton label });
-		action: [ UIManager default defer: [ hiedraColumnController renderer inspect ] ];
+		action: [ self defer: [ hiedraColumnController renderer inspect ] ];
 		yourself.
 
 	actionBar := self newActionBar
@@ -91,13 +93,13 @@ HiSpecExamplePresenter >> initializeActionBar [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> initializePresenters [
 	self initializeTable.
 	self initializeActionBar
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSpecExamplePresenter >> initializeTable [
 	table := self newTable.
 

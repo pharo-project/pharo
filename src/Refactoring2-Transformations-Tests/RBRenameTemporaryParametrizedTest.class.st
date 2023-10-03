@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameTemporaryParametrizedTest,
-	#superclass : #RBWithDifferentsArgumentsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenameTemporaryParametrizedTest',
+	#superclass : 'RBWithDifferentsArgumentsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameTemporaryParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -17,7 +19,7 @@ RBRenameTemporaryParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameTemporaryParametrizedTest >> testFailureBadIntervalAndVariableDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -43,7 +45,7 @@ RBRenameTemporaryParametrizedTest >> testFailureBadIntervalAndVariableDoesNotExi
 				 #testMethod })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameTemporaryParametrizedTest >> testFailureBadName [
 	self
 		shouldFail:
@@ -54,7 +56,7 @@ RBRenameTemporaryParametrizedTest >> testFailureBadName [
 				'a b' . #RBLintRuleTestData . #openEditor })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameTemporaryParametrizedTest >> testFailureExistingVariable [
 
 	self
@@ -74,7 +76,7 @@ RBRenameTemporaryParametrizedTest >> testFailureExistingVariable [
 						 #openEditor })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameTemporaryParametrizedTest >> testFailureModelBadName [
 
 	| class |
@@ -101,7 +103,7 @@ RBRenameTemporaryParametrizedTest >> testFailureModelBadName [
 						 #aMethod: })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameTemporaryParametrizedTest >> testFailureModelExistingVariable [
 
 	| transformation |
@@ -126,7 +128,7 @@ RBRenameTemporaryParametrizedTest >> testFailureModelExistingVariable [
 					 #foo })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameTemporaryParametrizedTest >> testRenameArg [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: { { (7 to: 13) . #aString } .
@@ -137,7 +139,7 @@ RBRenameTemporaryParametrizedTest >> testRenameArg [
 	name := asdf')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameTemporaryParametrizedTest >> testRenameTemporary [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: { {(15 to: 19) . #rules} .

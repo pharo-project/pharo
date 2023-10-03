@@ -2,16 +2,18 @@
 A test mock for pairs
 "
 Class {
-	#name : #FLPair,
-	#superclass : #Object,
+	#name : 'FLPair',
+	#superclass : 'Object',
 	#instVars : [
 		'left',
 		'right'
 	],
-	#category : #'Fuel-Core-Tests-Support-Mocks'
+	#category : 'Fuel-Core-Tests-Support-Mocks',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Support-Mocks'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLPair >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -22,35 +24,35 @@ FLPair >> = anObject [
 	^ self right = anObject right and: [ self left = anObject left ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLPair >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ self right hash bitXor: self left hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPair >> left [
 	^ left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPair >> left: anObject [
 	left := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPair >> method1 [
 	self name.
 	self printString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPair >> method2 [
 	self name.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPair >> methodWithTemp [
 	| string |
 	string := 'test'.
@@ -58,7 +60,7 @@ FLPair >> methodWithTemp [
 	self printString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLPair >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 
@@ -71,12 +73,12 @@ FLPair >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPair >> right [
 	^ right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPair >> right: anObject [
 	right := anObject
 ]

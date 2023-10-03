@@ -2,18 +2,20 @@
 Unload
 "
 Class {
-	#name : #GoferUnload,
-	#superclass : #GoferWorking,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferUnload',
+	#superclass : 'GoferWorking',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GoferUnload >> defaultModel [
 
 	^ (Smalltalk globals at: #MCMultiPackageLoader ifAbsent: [ MCPackageLoader ]) new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferUnload >> execute [
 
 	self workingCopies
@@ -24,14 +26,14 @@ GoferUnload >> execute [
 		do: [ :copy | self unregister: copy ]
 ]
 
-{ #category : #unloading }
+{ #category : 'unloading' }
 GoferUnload >> unload: aWorkingCopy [
 
 	self unloadClasses: aWorkingCopy.
 	self unloadPackage: aWorkingCopy
 ]
 
-{ #category : #unloading }
+{ #category : 'unloading' }
 GoferUnload >> unloadClasses: aWorkingCopy [
 
 	aWorkingCopy packageSet methods do: [ :each |
@@ -39,13 +41,13 @@ GoferUnload >> unloadClasses: aWorkingCopy [
 			ifTrue: [ each methodClass instanceSide unload ] ]
 ]
 
-{ #category : #unloading }
+{ #category : 'unloading' }
 GoferUnload >> unloadPackage: aWorkingCopy [
 
 	self model unloadPackage: aWorkingCopy package
 ]
 
-{ #category : #unregistering }
+{ #category : 'unregistering' }
 GoferUnload >> unregister: aWorkingCopy [
 
 	self
@@ -55,19 +57,19 @@ GoferUnload >> unregister: aWorkingCopy [
 		unregisterPackageInfo: aWorkingCopy
 ]
 
-{ #category : #unregistering }
+{ #category : 'unregistering' }
 GoferUnload >> unregisterPackageInfo: aWorkingCopy [
 
 	self packageOrganizer removePackage: aWorkingCopy packageName
 ]
 
-{ #category : #unregistering }
+{ #category : 'unregistering' }
 GoferUnload >> unregisterPackageSet: aWorkingCopy [
 
-	aWorkingCopy packageSet unregister
+	aWorkingCopy packageSet removeFromSystem
 ]
 
-{ #category : #unregistering }
+{ #category : 'unregistering' }
 GoferUnload >> unregisterRepositories: aWorkingCopy [
 
 	aWorkingCopy repositoryGroup repositories allButFirst do: [ :repository |
@@ -75,7 +77,7 @@ GoferUnload >> unregisterRepositories: aWorkingCopy [
 		MCRepositoryGroup default removeRepository: repository ]
 ]
 
-{ #category : #unregistering }
+{ #category : 'unregistering' }
 GoferUnload >> unregisterWorkingCopy: aWorkingCopy [
 
 	aWorkingCopy unregister

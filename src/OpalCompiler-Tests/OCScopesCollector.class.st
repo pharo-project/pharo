@@ -10,32 +10,34 @@ scopes := (OCScopesCollector new visitNode: ast) scopes.
 ivar := scopes first lookupVar: #iVar
 "
 Class {
-	#name : #OCScopesCollector,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'OCScopesCollector',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'scopes'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCScopesCollector >> initialize [
 	scopes := OrderedCollection new.
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCScopesCollector >> scopes [
 	^scopes
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCScopesCollector >> visitBlockNode: aBlockNode [
 	scopes add: aBlockNode owningScope.
 	super visitBlockNode: aBlockNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCScopesCollector >> visitMethodNode: aMethodNode [
 	scopes add: aMethodNode owningScope.
 	super visitMethodNode: aMethodNode

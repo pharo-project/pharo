@@ -1,6 +1,6 @@
 Class {
-	#name : #RBInlineMethodTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBInlineMethodTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'sourceInterval',
 		'inlineParseTree',
@@ -10,10 +10,12 @@ Class {
 		'checkOverridden',
 		'classOfTheMethodToInline'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineMethodTransformation class >> inline: anInterval inMethod: aSelector forClass: aClass [
 	^ self new
 		inline: anInterval
@@ -21,7 +23,7 @@ RBInlineMethodTransformation class >> inline: anInterval inMethod: aSelector for
 		forClass: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineMethodTransformation class >> model: aRBSmalltalk inline: anInterval inMethod: aSelector forClass: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -31,12 +33,12 @@ RBInlineMethodTransformation class >> model: aRBSmalltalk inline: anInterval inM
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> addSelfReturn [
 	inlineParseTree addSelfReturn
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> addTemporary: sourceNode assignedTo: replacementNode [
 	| newName |
 	newName := self renameConflictingTemporary: sourceNode name.
@@ -46,7 +48,7 @@ RBInlineMethodTransformation >> addTemporary: sourceNode assignedTo: replacement
 					value: replacementNode)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInlineMethodTransformation >> applicabilityPreconditions [
 
 	^ (RBCondition definesSelector: sourceSelector in: class)
@@ -70,12 +72,12 @@ RBInlineMethodTransformation >> applicabilityPreconditions [
 			   true ])
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> checkOverridden [
 	^ checkOverridden ifNil: [ checkOverridden := true ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> checkSuperMessages [
 
 	self classOfTheMethodToInline = class
@@ -92,7 +94,7 @@ RBInlineMethodTransformation >> checkSuperMessages [
 			]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> classOfTheMethodToInline [
 
 	^ classOfTheMethodToInline
@@ -103,13 +105,13 @@ RBInlineMethodTransformation >> classOfTheMethodToInline [
 		ifNotNil: [ classOfTheMethodToInline ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> compileMethod [
 
 	class compileTree: sourceParseTree
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> findSelectedMessage [
 
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
@@ -125,7 +127,7 @@ RBInlineMethodTransformation >> findSelectedMessage [
 		ifFalse: [ self refactoringError: 'Cannot inline non-self messages' ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> hasMultipleReturns [
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
 
@@ -143,26 +145,26 @@ RBInlineMethodTransformation >> hasMultipleReturns [
 	^ false
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> inline: anInterval inMethod: aSelector forClass: aClass [
 	sourceSelector := aSelector.
 	class := self model classObjectFor: aClass.
 	sourceInterval := anInterval
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> inlineParseTree [
 	^ inlineParseTree
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> inlineSelector [
 
 	sourceMessage ifNil: [ self findSelectedMessage ].
 	^ sourceMessage selector
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> inlineSourceReplacing: aParseTree [
 	| statements nodeUnderSequence |
 	statements := inlineParseTree body statements.
@@ -180,7 +182,7 @@ RBInlineMethodTransformation >> inlineSourceReplacing: aParseTree [
 			 ifFalse: [ statements last ])
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> insertInlinedMethod [
 	| node |
 
@@ -200,7 +202,7 @@ RBInlineMethodTransformation >> insertInlinedMethod [
 	self removeImmediateBlocks
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> isOverridden [
 	| aSelector |
 	aSelector := self inlineSelector.
@@ -210,12 +212,12 @@ RBInlineMethodTransformation >> isOverridden [
 	^ false
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> isPrimitive [
 	^inlineParseTree isPrimitive
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> moveComments [
 	inlineParseTree nodesDo:
 			[:each |
@@ -231,7 +233,7 @@ RBInlineMethodTransformation >> moveComments [
 							RBComment with: aComment contents at: start])]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> normalizeIfTrues [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -244,7 +246,7 @@ RBInlineMethodTransformation >> normalizeIfTrues [
 		whileTrue: [inlineParseTree := rewriter tree]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> normalizeReturns [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -269,7 +271,7 @@ RBInlineMethodTransformation >> normalizeReturns [
 		whileTrue: [inlineParseTree := rewriter tree]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> parseInlineMethod [
 
 	self classOfTheMethodToInline
@@ -285,7 +287,7 @@ RBInlineMethodTransformation >> parseInlineMethod [
 		ifFalse: [ inlineParseTree addSelfReturn ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> privateTransform [
 	self
 		renameConflictingTemporaries;
@@ -293,7 +295,7 @@ RBInlineMethodTransformation >> privateTransform [
 		compileMethod
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> removeEmptyIfTrues [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -310,7 +312,7 @@ RBInlineMethodTransformation >> removeEmptyIfTrues [
 		ifTrue: [sourceParseTree := rewriter tree]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> removeImmediateBlocks [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -325,7 +327,7 @@ RBInlineMethodTransformation >> removeImmediateBlocks [
 		ifTrue: [sourceParseTree := rewriter tree]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> removeReturnsOf: parseTree [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -335,13 +337,13 @@ RBInlineMethodTransformation >> removeReturnsOf: parseTree [
 	^ parseTree
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> renameConflictingTemporaries [
 	inlineParseTree allDefinedVariables
 		do: [:each | self renameConflictingTemporary: each]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> renameConflictingTemporary: aName [
 	| allNames newName index seqNode |
 	allNames := (Set new)
@@ -364,7 +366,7 @@ RBInlineMethodTransformation >> renameConflictingTemporary: aName [
 	^newName
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> renameTemporary: oldName to: newName [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -375,7 +377,7 @@ RBInlineMethodTransformation >> renameTemporary: oldName to: newName [
 		ifTrue: [inlineParseTree := rewriter tree]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> replaceArgument: sourceNode with: replacementNode [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -384,7 +386,7 @@ RBInlineMethodTransformation >> replaceArgument: sourceNode with: replacementNod
 		ifTrue: [inlineParseTree body: rewriter tree]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> replaceArguments [
 	sourceMessage arguments reversed
 		with: inlineParseTree arguments reversed
@@ -394,7 +396,7 @@ RBInlineMethodTransformation >> replaceArguments [
 				ifFalse: [ self addTemporary: source assignedTo: replacement ] ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> rewriteCascadedMessage [
 	| index messages |
 
@@ -409,7 +411,7 @@ RBInlineMethodTransformation >> rewriteCascadedMessage [
 	inlineParseTree addReturn
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> rewriteInlinedTree [
 	sourceMessage parent isReturn
 		ifTrue:
@@ -423,7 +425,7 @@ RBInlineMethodTransformation >> rewriteInlinedTree [
 				addSelfReturn]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -437,7 +439,7 @@ RBInlineMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBInlineMethodTransformation >> writeGuardClauses [
 	| rewriter |
 	rewriter := self parseTreeRewriter.

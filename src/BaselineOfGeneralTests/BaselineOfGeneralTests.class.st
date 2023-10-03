@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfGeneralTests,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfGeneralTests
+	#name : 'BaselineOfGeneralTests',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfGeneralTests',
+	#package : 'BaselineOfGeneralTests'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfGeneralTests >> baseline: spec [
 	<baseline>
 	"Needs to be re-sorted"
@@ -56,7 +57,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-Settings-Tests';
 			package: 'System-Support-Tests';
 			package: 'Text-Diff-Tests';
-			package: 'Text-Edition-Tests';
 			package: 'Tool-ExternalBrowser-Tests';			
 			package: 'Tool-FileList-Tests';
 			package: 'Tool-Finder-Tests';

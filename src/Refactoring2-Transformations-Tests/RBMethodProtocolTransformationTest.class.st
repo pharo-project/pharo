@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMethodProtocolTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBMethodProtocolTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMethodProtocolTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBMethodProtocolTransformation
@@ -13,7 +15,7 @@ RBMethodProtocolTransformationTest >> testClassDoesNotExist [
 			 inClass: #RBDummyEmptyClass123)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMethodProtocolTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBMethodProtocolTransformation
@@ -22,7 +24,7 @@ RBMethodProtocolTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBDummyEmptyClass)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMethodProtocolTransformationTest >> testRefactoring [
 
 	| refactoring |
@@ -46,7 +48,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMethodProtocolTransformationTest >> testTransform [
 
 	| transformation |

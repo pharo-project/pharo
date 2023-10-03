@@ -1,1 +1,1 @@
-Package { #name : #'SystemCommands-MessageCommands' }
+Package { #name : 'SystemCommands-MessageCommands' }

@@ -1,6 +1,6 @@
-Extension { #name : #NonInteractiveUIManager }
+Extension { #name : 'NonInteractiveUIManager' }
 
-{ #category : #'*Monticello-GUI-Diff' }
+{ #category : '*Monticello-GUI-Diff' }
 NonInteractiveUIManager >> merge: merger informing: aString [
 	"Check for conflicts, if there are none, just continue. 
 	 Merger will accept all conflicts"

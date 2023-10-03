@@ -1,6 +1,6 @@
-Extension { #name : #SystemNavigation }
+Extension { #name : 'SystemNavigation' }
 
-{ #category : #'*HeuristicCompletion-Model' }
+{ #category : '*HeuristicCompletion-Model' }
 SystemNavigation >> allSentMessagesInClass: aClass [
 	"Answer the set of selectors which are sent somewhere in the system."
 	| sent |
@@ -9,7 +9,7 @@ SystemNavigation >> allSentMessagesInClass: aClass [
 	^ sent
 ]
 
-{ #category : #'*HeuristicCompletion-Model' }
+{ #category : '*HeuristicCompletion-Model' }
 SystemNavigation >> allSentMessagesInClass: aClass do: aBlock [
 	"Answer the set of selectors which are sent somewhere in the system."
 	aClass methodsDo: [:method | "Include all sels, but not if sent by self"
@@ -24,7 +24,7 @@ SystemNavigation >> allSentMessagesInClass: aClass do: aBlock [
 		do: [:index | aBlock value: (Smalltalk specialSelectorAt: index)]
 ]
 
-{ #category : #'*HeuristicCompletion-Model' }
+{ #category : '*HeuristicCompletion-Model' }
 SystemNavigation >> allSentMessagesInPackage: aPackage [
 	| sent |
 	sent := IdentitySet new.
@@ -32,7 +32,7 @@ SystemNavigation >> allSentMessagesInPackage: aPackage [
 	^ sent
 ]
 
-{ #category : #'*HeuristicCompletion-Model' }
+{ #category : '*HeuristicCompletion-Model' }
 SystemNavigation >> allSentMessagesInPackage: aPackage do: aBlock [
 	"Answer the set of selectors which are sent somewhere in the system."
 

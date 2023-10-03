@@ -25,49 +25,51 @@ next
 
 "
 Class {
-	#name : #FileSystemResolver,
-	#superclass : #Object,
+	#name : 'FileSystemResolver',
+	#superclass : 'Object',
 	#instVars : [
 		'next'
 	],
-	#category : #'FileSystem-Core-Base-Resolver'
+	#category : 'FileSystem-Core-Base-Resolver',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Resolver'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemResolver >> addResolver: aResolver [
 	next
 		ifNil: [next := aResolver]
 		ifNotNil: [next addResolver: aResolver]
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileSystemResolver >> canResolve: aSymbol [
 	^ self supportedOrigins includes: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemResolver >> flushCaches [
 	self flushLocalCache.
 	next ifNotNil: [next flushCaches]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemResolver >> flushLocalCache [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemResolver >> next [
 	^ next
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileSystemResolver >> resolve: aSymbol [
 	^ (self canResolve: aSymbol)
 		ifTrue: [self perform: aSymbol]
 		ifFalse: [self unknownOrigin: aSymbol]
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileSystemResolver >> resolveString: aString [
 	| fs |
 	fs := FileSystem disk.
@@ -76,12 +78,12 @@ FileSystemResolver >> resolveString: aString [
 		path: (fs pathFromString: aString)
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileSystemResolver >> supportedOrigins [
 	^ (Pragma allNamed: #origin from: self class to: FileSystemResolver) collect: [:each | each methodSelector]
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileSystemResolver >> unknownOrigin: aSymbol [
 	^ next ifNotNil: [next resolve: aSymbol]
 ]

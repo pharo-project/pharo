@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfExternalProjectLoader,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfExternalProjectLoader
+	#name : 'BaselineOfExternalProjectLoader',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfExternalProjectLoader',
+	#package : 'BaselineOfExternalProjectLoader'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfExternalProjectLoader >> baseline: spec [
 	<baseline>
 	| repository |

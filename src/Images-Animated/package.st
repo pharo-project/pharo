@@ -1,1 +1,1 @@
-Package { #name : #'Images-Animated' }
+Package { #name : 'Images-Animated' }

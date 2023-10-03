@@ -22,17 +22,19 @@ TextFontReference and TextAnchor are not supported.
 See PositionableStream nextChunkText and RunArray class scanFrom:.
 "
 Class {
-	#name : #RemoteString,
-	#superclass : #Object,
+	#name : 'RemoteString',
+	#superclass : 'Object',
 	#instVars : [
 		'sourceFileNumber',
 		'filePositionHi',
 		'sourceFileArray'
 	],
-	#category : #'System-Sources-Utilities'
+	#category : 'System-Sources-Utilities',
+	#package : 'System-Sources',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RemoteString class >> newFileNumber: sourceIndex position: anInteger [
 	"Answer an instance of me fora file indexed by sourceIndex, at the
 	position anInteger. Assume that the string is already stored on the file
@@ -41,7 +43,7 @@ RemoteString class >> newFileNumber: sourceIndex position: anInteger [
 	^self new fileNumber: sourceIndex position: anInteger
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RemoteString class >> newString: aString [
 	"Answer an instance of me for string, aString, on changes file.
 	Put the string on the file and create the remote reference."
@@ -49,7 +51,7 @@ RemoteString class >> newString: aString [
 	^self new string: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RemoteString class >> newString: aString onFileNumber: sourceIndex toFile: aFileStream [
 	"Answer an instance of me for string, aString, on file indexed by
 	sourceIndex. Put the string on the file, aFileStream, and create the
@@ -59,49 +61,49 @@ RemoteString class >> newString: aString onFileNumber: sourceIndex toFile: aFile
 	^self new string: aString onFileNumber: sourceIndex toFile: aFileStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RemoteString >> fileNumber: fileNumber position: position [
 
 	sourceFileNumber := fileNumber.
 	filePositionHi := position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RemoteString >> last [
 	^self string ifNotNil: [ :s | s last ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RemoteString >> position [
 	"Answer the location of the string on a file."
 
 	^ filePositionHi
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RemoteString >> sourceFileArray [
 	^ sourceFileArray ifNil: [ SourceFiles ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RemoteString >> sourceFileArray: anObject [
 	sourceFileArray := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RemoteString >> sourceFileNumber [
 	"Answer the index of the file on which the string is stored."
 
 	^ sourceFileNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RemoteString >> sourcePointer [
 	sourceFileNumber ifNil: [ ^ 0 ].
 	^ SourceFiles sourcePointerFromFileIndex: sourceFileNumber andPosition: filePositionHi
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RemoteString >> string [
 	"Answer the receiver's string if remote files are enabled, or nil."
 
@@ -112,7 +114,7 @@ RemoteString >> string [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RemoteString >> string: aString [
 	"Store this as my string if source files exist."
 
@@ -124,7 +126,7 @@ RemoteString >> string: aString [
 			toFile: theFile ]
 ]
 
-{ #category : #chunk }
+{ #category : 'chunk' }
 RemoteString >> string: aString onFileNumber: fileNumber toFile: aFileStream [
 	"Store this as the receiver's string if source files exist."
 

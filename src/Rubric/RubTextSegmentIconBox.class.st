@@ -1,33 +1,35 @@
 Class {
-	#name : #RubTextSegmentIconBox,
-	#superclass : #Morph,
+	#name : 'RubTextSegmentIconBox',
+	#superclass : 'Morph',
 	#instVars : [
 		'previouslyIn'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubTextSegmentIconBox class >> key [
 	^ #textSegmentIcons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconBox >> backgroundColor [
 	^ Color orange veryMuchLighter
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconBox >> handlesMouseMove: evt [
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconBox >> mouseEnter: anEvent [
 	self color: (Color lightGray alpha: 0.04)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconBox >> mouseEnter: anEvent in: aSegment [
 	previouslyIn = aSegment
 		ifTrue: [ ^ self ].
@@ -35,7 +37,7 @@ RubTextSegmentIconBox >> mouseEnter: anEvent in: aSegment [
 	aSegment showMouseHasEntered
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconBox >> mouseLeave: anEvent [
 	self color: self defaultBackgroundColor.
 	previouslyIn
@@ -44,12 +46,12 @@ RubTextSegmentIconBox >> mouseLeave: anEvent [
 			previouslyIn := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconBox >> textColor [
 	^ self textArea lineNumbersTextColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconBox >> verticalSeparatorBounds [
 	| bnds  |
 	bnds := self bounds.
@@ -58,12 +60,12 @@ RubTextSegmentIconBox >> verticalSeparatorBounds [
 		ifFalse: [ (bnds topLeft corner: bnds bottomLeft + (self verticalSeparatorWidth @ 0)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconBox >> verticalSeparatorColor [
 	^ (self textArea backgroundColor contrastingBlackAndWhiteColor ) alpha: 0.3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconBox >> verticalSeparatorWidth [
 	^ 1
 ]

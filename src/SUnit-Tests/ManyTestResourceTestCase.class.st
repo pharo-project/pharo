@@ -2,23 +2,25 @@
 SUnit tests for handling of many test resources
 "
 Class {
-	#name : #ManyTestResourceTestCase,
-	#superclass : #SimpleTestResourceTestCase,
-	#category : #'SUnit-Tests-Core'
+	#name : 'ManyTestResourceTestCase',
+	#superclass : 'SimpleTestResourceTestCase',
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ManyTestResourceTestCase class >> resources [
 	^super resources
 		, (Array with: SimpleTestResourceA with: SimpleTestResourceB)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ManyTestResourceTestCase class >> shouldInheritSelectors [
 	^true
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ManyTestResourceTestCase >> clearOuterResourceStateDuring: aBlock [
 	"This self-testing test must clear the outer state of its resources before starting and after finishing, so that it can construct test cases and suites of itself and test them."
 
@@ -49,7 +51,7 @@ ManyTestResourceTestCase >> clearOuterResourceStateDuring: aBlock [
 				description: 'The resource was not set up again after the test']
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ManyTestResourceTestCase >> testTearDownOrder [
 	| myResourceSetUpOrder myResourceReverseTearDownOrder |
 	myResourceReverseTearDownOrder := OrderedCollection new: 7.

@@ -2,35 +2,37 @@
 Checks for unconditional recursion that might cause the image to hang when executed.
 "
 Class {
-	#name : #ReUnconditionalRecursionRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReUnconditionalRecursionRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReUnconditionalRecursionRule class >> checksMethod [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UnconditionalRecursionRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReUnconditionalRecursionRule >> afterCheck: aNode mappings: mappingDict [
 	^ (mappingDict at: '`@.before') noneSatisfy: #containsReturn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReUnconditionalRecursionRule >> initialize [
 	super initialize.
 	self addMatchingMethod:
@@ -41,12 +43,12 @@ ReUnconditionalRecursionRule >> initialize [
 			`@.after'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule >> name [
 	^ 'Unconditional recursion'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule >> severity [
 	^ #error
 ]

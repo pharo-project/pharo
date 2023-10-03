@@ -1,29 +1,31 @@
 Class {
-	#name : #ClassRenameFixTest,
-	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'System-Changes-Tests-Base'
+	#name : 'ClassRenameFixTest',
+	#superclass : 'AbstractEnvironmentTestCase',
+	#category : 'System-Changes-Tests-Base',
+	#package : 'System-Changes-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRenameFixTest >> newClassName [
 
 	^ #ClassRenameMockClass2
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClassRenameFixTest >> packageName [
 
 	^ 'ClassRenameFix-GeneradClass'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassRenameFixTest >> setUp [
 
 	super setUp.
 	SystemAnnouncer uniqueInstance weak when: ClassRenamed send: #verifyRenameEvent: to: self
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassRenameFixTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
@@ -31,7 +33,7 @@ ClassRenameFixTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassRenameFixTest >> testRenameClassUsingClass [
 
 	| createdClass foundClasses |
@@ -43,13 +45,13 @@ ClassRenameFixTest >> testRenameClassUsingClass [
 	createdClass rename: self newClassName.
 	self assert: (testingEnvironment classNamed: #ClassRenameMockClass1) isNil.
 	self assert: (testingEnvironment classNamed: self newClassName) isNotNil.
-	foundClasses := testingEnvironment organization listAtCategoryNamed: self packageName.
+	foundClasses := (testingEnvironment organization packageNamed: self packageName) definedClassNames.
 
 	self assert: (foundClasses includes: self newClassName).
 	self assert: createdClass name equals: self newClassName
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClassRenameFixTest >> verifyRenameEvent: aRenamedEvent [
 
 	| renamedClass |

@@ -6,8 +6,8 @@ Usage:
 self open.
 "
 Class {
-	#name : #EpLogNodeGraphPresenter,
-	#superclass : #SpPresenter,
+	#name : 'EpLogNodeGraphPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'directory',
 		'monitor',
@@ -15,10 +15,12 @@ Class {
 		'hiedraCheckBox',
 		'logNodesTable'
 	],
-	#category : #'EpiceaBrowsers-UI-Graph'
+	#category : 'EpiceaBrowsers-UI-Graph',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Graph'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLogNodeGraphPresenter class >> open [
 	<script>
 	^ self new
@@ -27,14 +29,14 @@ EpLogNodeGraphPresenter class >> open [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNodeGraphPresenter >> directory [
 
 	^ directory ifNil: [
 		directory := self monitor sessionStore baseLocator ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNodeGraphPresenter >> directory: aFileReference [
 
 	directory := aFileReference.
@@ -42,7 +44,7 @@ EpLogNodeGraphPresenter >> directory: aFileReference [
 	self refresh
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogNodeGraphPresenter >> initializeHiedraCheckBox [
 	hiedraCheckBox
 		help: 'Analyze and display connections between log files.';
@@ -51,7 +53,7 @@ EpLogNodeGraphPresenter >> initializeHiedraCheckBox [
 		whenChangedDo: [ self refresh ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogNodeGraphPresenter >> initializeHiedraController [
 
 	hiedraColumnController := HiColumnController new.
@@ -65,7 +67,7 @@ EpLogNodeGraphPresenter >> initializeHiedraController [
 	hiedraColumnController renderer rowHeight: FTTableMorph defaultRowHeight floor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogNodeGraphPresenter >> initializeLogNodesTable [
 	self initializeHiedraController.
 
@@ -83,7 +85,7 @@ EpLogNodeGraphPresenter >> initializeLogNodesTable [
 			evaluated: [ :item | item smallName ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogNodeGraphPresenter >> initializePresenters [
 
 	self layout: (SpBoxLayout newTopToBottom
@@ -98,30 +100,30 @@ EpLogNodeGraphPresenter >> initializePresenters [
 	self initializeHiedraCheckBox
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogNodeGraphPresenter >> isMonitorDirectory [
 
 	^ self monitor sessionStore directory asFileReference = self directory asFileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNodeGraphPresenter >> monitor [
 
 	^ monitor ifNil: [ EpMonitor current ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNodeGraphPresenter >> monitor: anEpMonitor [
 
 	monitor := anEpMonitor
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogNodeGraphPresenter >> refresh [
 	self refreshLogNodesTreePresenter
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogNodeGraphPresenter >> refreshLogNodesTreePresenter [
 	| nodes |
 	nodes := #().
@@ -144,24 +146,24 @@ EpLogNodeGraphPresenter >> refreshLogNodesTreePresenter [
 	logNodesTable items: nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNodeGraphPresenter >> rowHeight [
 
 	^ 23
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogNodeGraphPresenter >> selectDirectory [
-	(UIManager default chooseDirectoryFrom: self directory)
+	(self application selectDirectoryTitle: self directory)
 		ifNotNil: [ :selectedDirectory | self directory: selectedDirectory ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNodeGraphPresenter >> selectedLogNodes [
 	^ logNodesTable selection selectedItems
 ]
 
-{ #category : #'api - events' }
+{ #category : 'api - events' }
 EpLogNodeGraphPresenter >> whenSelectionChangedDo: aBlock [
 	logNodesTable whenSelectionChangedDo: aBlock
 ]

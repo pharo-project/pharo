@@ -1,22 +1,24 @@
 Class {
-	#name : #RBRemoveSharedVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBRemoveSharedVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveSharedVariableRefactoring class >> model: aNamespace remove: variable from: class [
 
 	^ self model: aNamespace variable: variable class: class
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemoveSharedVariableRefactoring class >> remove: variable from: class [
 
 	^ self variable: variable class: class
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ ( RBCondition isMetaclass: class ) not
@@ -24,7 +26,7 @@ RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 	
 	^ (RBCondition
@@ -32,9 +34,11 @@ RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 		   referencesSharedVariable: variableName) not
 ]
 
-{ #category : #actions }
+{ #category : 'executing' }
 RBRemoveSharedVariableRefactoring >> generateChanges [
-	
+
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
@@ -46,18 +50,18 @@ RBRemoveSharedVariableRefactoring >> generateChanges [
 	^ self changes
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveSharedVariableRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveSharedVariableRefactoring >> privateTransform [
 	class removeClassVariable: variableName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveSharedVariableRefactoring >> refactoredClass [
 
 	^ class

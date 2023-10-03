@@ -1,47 +1,48 @@
 Class {
-	#name : #TFBasicTypeTest,
-	#superclass : #TFTestCase,
-	#category : #'ThreadedFFI-Tests'
+	#name : 'TFBasicTypeTest',
+	#superclass : 'TFTestCase',
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testBasicTypesAreValid [
 
 	TFBasicType types do: #validate.
 	self assert: (TFBasicType types allSatisfy: #isValid)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testCharSize [
 
 	self assert: TFBasicType uchar byteSize equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testIntSize [
 
 	self assert: TFBasicType uint byteSize equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testPointerSize [
 
 	self assert: TFBasicType pointer byteSize equals: Smalltalk wordSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testSInt32Size [
 
 	self assert: TFBasicType sint32 byteSize equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testSIntSize [
 
 	self assert: TFBasicType sint byteSize equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testSignedLongUnix [
 
 	OSPlatform current isWindows ifTrue: [
@@ -50,7 +51,7 @@ TFBasicTypeTest >> testSignedLongUnix [
 	self assert: TFBasicType slong byteSize equals: Smalltalk wordSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testSignedLongWindows [
 
 	OSPlatform current isWindows ifFalse: [
@@ -59,13 +60,13 @@ TFBasicTypeTest >> testSignedLongWindows [
 	self assert: TFBasicType slong byteSize equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testUInt32Size [
 
 	self assert: TFBasicType uint32 byteSize equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testUnsignedLongUnix [
 
 	OSPlatform current isWindows ifTrue: [
@@ -74,7 +75,7 @@ TFBasicTypeTest >> testUnsignedLongUnix [
 	self assert: TFBasicType ulong byteSize equals: Smalltalk wordSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testUnsignedLongWindows [
 
 	OSPlatform current isWindows ifFalse: [
@@ -83,7 +84,7 @@ TFBasicTypeTest >> testUnsignedLongWindows [
 	self assert: TFBasicType ulong byteSize equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testWriteDouble [
 
 	| aByteArray |
@@ -95,7 +96,7 @@ TFBasicTypeTest >> testWriteDouble [
 	self assert: (TFBasicType double readValue: aByteArray) equals: 1.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testWriteFloat [
 
 	| aByteArray |
@@ -107,7 +108,7 @@ TFBasicTypeTest >> testWriteFloat [
 	self assert: (TFBasicType float readValue: aByteArray) equals: 1.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testWriteSINT32 [
 
 	| aByteArray |
@@ -119,7 +120,7 @@ TFBasicTypeTest >> testWriteSINT32 [
 	self assert: (TFBasicType sint32 readValue: aByteArray) equals: -42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeTest >> testWriteUINT32 [
 
 	| aByteArray |

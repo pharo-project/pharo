@@ -3,37 +3,39 @@ This is a private class for handling clipboard text. There's no direct use of it
 For setting/retrieving clipboard text, use clipboardText/clipboardText: accessors of OSWindow instances.
 "
 Class {
-	#name : #OSWindowClipboard,
-	#superclass : #Clipboard,
-	#category : #'OSWindow-Core-Base'
+	#name : 'OSWindowClipboard',
+	#superclass : 'Clipboard',
+	#category : 'OSWindow-Core-Base',
+	#package : 'OSWindow-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowClipboard >> beDefault [
 
 	Default := self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowClipboard >> chooseRecentClipping [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowClipboard >> clipboardText [
 	^ self worldRenderer clipboardText withInternalLineEndings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowClipboard >> clipboardText: aString [
 	self worldRenderer clipboardText: aString asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindowClipboard >> noteRecentClipping: text [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowClipboard >> worldRenderer [
 
 	^ self currentWorld worldState worldRenderer

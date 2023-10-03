@@ -1,6 +1,6 @@
-Extension { #name : #RGTraitComposition }
+Extension { #name : 'RGTraitComposition' }
 
-{ #category : #'*Ring-RuntimeSupport' }
+{ #category : '*Ring-RuntimeSupport' }
 RGTraitComposition >> allTraits [
 
 	^self traits flatCollect: [:trait |

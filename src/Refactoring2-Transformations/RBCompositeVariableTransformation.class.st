@@ -1,15 +1,17 @@
 Class {
-	#name : #RBCompositeVariableTransformation,
-	#superclass : #RBCompositeTransformation,
+	#name : 'RBCompositeVariableTransformation',
+	#superclass : 'RBCompositeTransformation',
 	#instVars : [
 		'variableName',
 		'isClassVariable',
 		'className'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeVariableTransformation class >> classVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -19,7 +21,7 @@ RBCompositeVariableTransformation class >> classVariable: aVariableName class: a
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeVariableTransformation class >> instanceVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -29,7 +31,7 @@ RBCompositeVariableTransformation class >> instanceVariable: aVariableName class
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeVariableTransformation class >> model: aRBModel classVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -40,7 +42,7 @@ RBCompositeVariableTransformation class >> model: aRBModel classVariable: aVaria
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeVariableTransformation class >> model: aRBModel instanceVariable: aVariableName class: aClassName [
 
 	^ self new
@@ -51,7 +53,7 @@ RBCompositeVariableTransformation class >> model: aRBModel instanceVariable: aVa
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeVariableTransformation class >> model: aRBModel variable: aVariableName class: aClassName isClassVariable: aBoolean [
 
 	^ self new
@@ -62,7 +64,7 @@ RBCompositeVariableTransformation class >> model: aRBModel variable: aVariableNa
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeVariableTransformation class >> variable: aVariableName class: aClassName isClassVariable: aBoolean [
 
 	^ self new
@@ -72,7 +74,7 @@ RBCompositeVariableTransformation class >> variable: aVariableName class: aClass
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeVariableTransformation >> definingClass [
 
 	^ self model classObjectFor: className

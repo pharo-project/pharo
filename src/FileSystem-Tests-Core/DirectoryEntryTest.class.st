@@ -2,17 +2,19 @@
 SUnit tests for FileSystemDirectoryEntry
 "
 Class {
-	#name : #DirectoryEntryTest,
-	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Core-Base'
+	#name : 'DirectoryEntryTest',
+	#superclass : 'TestCase',
+	#category : 'FileSystem-Tests-Core-Base',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DirectoryEntryTest >> entry [
 	^ FileLocator image resolve entry
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testCreationTimeIsADateAndTimeInstance [
 	"While creation is the message sent to a directory entry, creation returns a DateAndTime object"
 
@@ -21,7 +23,7 @@ DirectoryEntryTest >> testCreationTimeIsADateAndTimeInstance [
 	self assert: creation class equals: DateAndTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testIfAbsent [
 	| reference entry |
 	reference := FileLocator temp / 'plonk'.
@@ -33,7 +35,7 @@ DirectoryEntryTest >> testIfAbsent [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testIfExists [
 	| reference entry |
 	reference := FileLocator temp / 'plonk'.
@@ -45,7 +47,7 @@ DirectoryEntryTest >> testIfExists [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testIfExistsIfAbsent [
 	| reference entry |
 	reference := FileLocator temp / 'plonk'.
@@ -57,7 +59,7 @@ DirectoryEntryTest >> testIfExistsIfAbsent [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testIsDirectory [
 	| ref entry |
 	ref := FileLocator imageDirectory resolve.
@@ -66,25 +68,25 @@ DirectoryEntryTest >> testIsDirectory [
 	self assert: FileLocator imageDirectory resolve equals: Smalltalk imageDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testIsFile [
 	self assert: self entry isFile.
 	self deny: self entry isDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testIsNotDirectory [
 	self deny: self entry isDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testIsNotFile [
 	| ref |
 	ref := FileLocator imageDirectory resolve.
 	self deny: ref entry isFile
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testModificationTimeIsADateAndTimeInstance [
 	"While modification is the message sent to a directory entry, modification returns a DateAndTime object"
 
@@ -93,7 +95,7 @@ DirectoryEntryTest >> testModificationTimeIsADateAndTimeInstance [
 	self assert: modification class equals: DateAndTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testReference [
 	| ref entry |
 	ref := FileLocator image resolve.
@@ -101,7 +103,7 @@ DirectoryEntryTest >> testReference [
 	self assert: entry reference equals: ref
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testRootEntry [
 	"Check that the root entry contains sensible values.
 	On Windows this requires a pseudo entry to be available."
@@ -118,7 +120,7 @@ DirectoryEntryTest >> testRootEntry [
 	self deny: rootEntry isWritable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DirectoryEntryTest >> testSize [
 	self assert: self entry size isInteger
 ]

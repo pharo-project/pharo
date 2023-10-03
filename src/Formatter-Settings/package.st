@@ -1,1 +1,1 @@
-Package { #name : #'Formatter-Settings' }
+Package { #name : 'Formatter-Settings' }

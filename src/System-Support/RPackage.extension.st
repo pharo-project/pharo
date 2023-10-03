@@ -1,6 +1,6 @@
-Extension { #name : #RPackage }
+Extension { #name : 'RPackage' }
 
-{ #category : #'*System-Support' }
+{ #category : '*System-Support' }
 RPackage >> allUnsentMessages [
 
 	^ SystemNavigation new

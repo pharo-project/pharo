@@ -2,13 +2,15 @@
 I represent a relative path (a position starting from Path workingDirectory)
 "
 Class {
-	#name : #RelativePath,
-	#superclass : #Path,
-	#type : #variable,
-	#category : #'FileSystem-Path-Base'
+	#name : 'RelativePath',
+	#superclass : 'Path',
+	#type : 'variable',
+	#category : 'FileSystem-Path-Base',
+	#package : 'FileSystem-Path',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelativePath >> emptyPathString [
 	"Answer the string representing an empty (size = 0) instance of the receiver.
 	For a relative path, this is the current directory"
@@ -16,17 +18,17 @@ RelativePath >> emptyPathString [
 	^'.'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelativePath >> isAbsolute [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelativePath >> isRoot [
 	^ false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RelativePath >> printOn: aStream [
 
 	aStream nextPutAll: 'Path '.
@@ -45,7 +47,7 @@ RelativePath >> printOn: aStream [
 					nextPut: $' ]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RelativePath >> printOn: aStream delimiter: aCharacter [
 	self isWorkingDirectory ifTrue: [aStream nextPut: $.. ^ self].
 	super printOn: aStream delimiter: aCharacter

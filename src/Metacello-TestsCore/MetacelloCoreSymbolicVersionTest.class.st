@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloCoreSymbolicVersionTest,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsCore-Configs'
+	#name : 'MetacelloCoreSymbolicVersionTest',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsCore-Configs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Configs'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloCoreSymbolicVersionTest >> baseline10: spec [
     <version: '1.0-baseline'>
     spec
@@ -22,7 +24,7 @@ MetacelloCoreSymbolicVersionTest >> baseline10: spec [
                         yourself ] ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloCoreSymbolicVersionTest >> baseline20: spec [
     <version: '2.0-baseline'>
     spec
@@ -40,19 +42,19 @@ MetacelloCoreSymbolicVersionTest >> baseline20: spec [
                         yourself ] ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloCoreSymbolicVersionTest >> bleedingEdge: spec [
     <symbolicVersion: #'bleedingEdge'>
     spec for: #'platformVersion1.x' version: '1.0-baseline'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCoreSymbolicVersionTest >> project [
 
 	^self projectWith: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCoreSymbolicVersionTest >> projectWith: projectAttributes [
     | project |
     "Construct Metacello project"
@@ -62,13 +64,13 @@ MetacelloCoreSymbolicVersionTest >> projectWith: projectAttributes [
     ^ project
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloCoreSymbolicVersionTest >> stableVersion: spec [
     <symbolicVersion: #'stable'>
     spec for: #'platformVersion1.x' version: '1.0'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreSymbolicVersionTest >> testBasicBleedingEdgeVersion [
 	| project version expected actual |
 	project := self projectWith: #(#'platformVersion1.x').
@@ -84,7 +86,7 @@ spec project: ''Example Project'' with: [
 	self assert: expected equals: actual
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreSymbolicVersionTest >> testBasicStableVersion [
 	| project version expected actual |
 	project := self projectWith: #(#'platformVersion1.x').
@@ -100,21 +102,21 @@ spec project: ''Example Project'' with: [
 	self assert: expected equals: actual
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreSymbolicVersionTest >> testBleedingEdgeMethod [
 	| project |
 	project := self projectWith: #(#'platformVersion1.x').
 	self assert: (project version: #bleedingEdge) equals: project bleedingEdge
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreSymbolicVersionTest >> testStableVersionMethod [
 	| project |
 	project := self projectWith: #(#'platformVersion1.x').
 	self assert: (project version: #stable) equals: project stableVersion
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloCoreSymbolicVersionTest >> version10: spec [
     <version: '1.0' imports: #('1.0-baseline')>
     spec for: #'common' do: [ spec blessing: #'release' ]

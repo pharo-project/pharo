@@ -2,8 +2,8 @@
 My instances implement OSWindowFormRenderer interface using SDL2 library
 "
 Class {
-	#name : #OSSDL2FormRenderer,
-	#superclass : #OSWindowFormRenderer,
+	#name : 'OSSDL2FormRenderer',
+	#superclass : 'OSWindowFormRenderer',
 	#instVars : [
 		'texture',
 		'renderer',
@@ -14,10 +14,12 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-Rendering'
+	#category : 'OSWindow-SDL2-Rendering',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Rendering'
 }
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2FormRenderer >> copyAndPresentTextureRectangle: rectangle [
 	| sdlRectangle |
 
@@ -29,12 +31,12 @@ OSSDL2FormRenderer >> copyAndPresentTextureRectangle: rectangle [
 	renderer present
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2FormRenderer >> createRenderer [
 	renderer := backendWindow sdl2Window createDefaultRenderer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2FormRenderer >> createTexture [
 	"Existing texture released explicitly to avoid memory leak on resize (issue#11183)"
 	texture ifNotNil: [ texture destroy ].
@@ -43,14 +45,14 @@ OSSDL2FormRenderer >> createTexture [
 	extent := form extent
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2FormRenderer >> deferUpdatesWhile: aBlock [
 	deferUpdates := true.
 	aBlock ensure: [ deferUpdates := false. ].
 	self useDeferredUpdates
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 OSSDL2FormRenderer >> destroy [
 	mutex critical: [
 		(texture isNil or: [ renderer isNil ])
@@ -62,14 +64,14 @@ OSSDL2FormRenderer >> destroy [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSSDL2FormRenderer >> initialize [
 	super initialize.
 	deferUpdates := false.
 	mutex := Mutex new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2FormRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
 
 	"We need to do this ugly hack because the Mutex that is used in the renderer is not correctly liberated when there is an exception. Issue #10156. Once it is fixed, we can signal the exception as normal people."
@@ -78,7 +80,7 @@ OSSDL2FormRenderer >> primitiveUpdateRectangle: rectangle externalForm: external
 		on:Exception do: [ :e | ('There was an error during copy, we should not throw an exception here:' , e printString) traceCr ]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2FormRenderer >> updateAll [
 	mutex critical: [
 		self validate
@@ -93,7 +95,7 @@ OSSDL2FormRenderer >> updateAll [
 	]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2FormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 
 	| pixels pitch intersection updateUnion externalForm |
@@ -131,7 +133,7 @@ OSSDL2FormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 			self copyAndPresentTextureRectangle: updateUnion ] ]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2FormRenderer >> updateRectangle: rectangle [
 
 	| intersection pixels pitch externalForm |
@@ -160,7 +162,7 @@ OSSDL2FormRenderer >> updateRectangle: rectangle [
 		self copyAndPresentTextureRectangle: intersection ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2FormRenderer >> useDeferredUpdates [
 	mutex critical: [
 		renderer
@@ -169,7 +171,7 @@ OSSDL2FormRenderer >> useDeferredUpdates [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2FormRenderer >> validate [
 	form ifNil: [ ^ false ].
 	(renderer isNil or: [renderer isNull]) ifTrue: [ self createRenderer ].

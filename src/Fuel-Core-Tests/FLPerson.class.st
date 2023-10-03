@@ -2,15 +2,17 @@
 FLPerson is a class just to be able to change the hash of an object and try to test problems with hash.
 "
 Class {
-	#name : #FLPerson,
-	#superclass : #Object,
+	#name : 'FLPerson',
+	#superclass : 'Object',
 	#instVars : [
 		'id'
 	],
-	#category : #'Fuel-Core-Tests-Support-Mocks'
+	#category : 'Fuel-Core-Tests-Support-Mocks',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Support-Mocks'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLPerson >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -21,19 +23,19 @@ FLPerson >> = anObject [
 	^ id = anObject id
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLPerson >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPerson >> id [
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLPerson >> id: anObject [
 	id := anObject
 ]

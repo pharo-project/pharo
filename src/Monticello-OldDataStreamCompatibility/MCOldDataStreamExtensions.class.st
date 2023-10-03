@@ -4,12 +4,14 @@ This is an extension class for the MCDataStream, it should only used if you need
 This package is unloadeable.
 "
 Class {
-	#name : #MCOldDataStreamExtensions,
-	#superclass : #Object,
-	#category : #'Monticello-OldDataStreamCompatibility-Base'
+	#name : 'MCOldDataStreamExtensions',
+	#superclass : 'Object',
+	#category : 'Monticello-OldDataStreamCompatibility-Base',
+	#package : 'Monticello-OldDataStreamCompatibility',
+	#tag : 'Base'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCOldDataStreamExtensions class >> initialize [
 	MCDataStream registerReaderSelector: #readStringOld atIndex: 5.
 	MCDataStream registerClass: ByteArray atIndex: 7  usingReadSelector: #readByteArray usingWriteSelector: #writeByteArray:.

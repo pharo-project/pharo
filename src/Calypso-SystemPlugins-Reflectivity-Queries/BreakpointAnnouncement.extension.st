@@ -1,6 +1,6 @@
-Extension { #name : #BreakpointAnnouncement }
+Extension { #name : 'BreakpointAnnouncement' }
 
-{ #category : #'*Calypso-SystemPlugins-Reflectivity-Queries' }
+{ #category : '*Calypso-SystemPlugins-Reflectivity-Queries' }
 BreakpointAnnouncement >> canAffectResultOfMethodQuery: aMethodQuery [
 
 	^ self link methods anySatisfy: [:each |

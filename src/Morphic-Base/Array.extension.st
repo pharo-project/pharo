@@ -1,6 +1,6 @@
-Extension { #name : #Array }
+Extension { #name : 'Array' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Array >> asLayoutFrame [
 	 ^ LayoutFrame new fromArray: self
 ]

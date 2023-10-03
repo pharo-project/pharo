@@ -6,28 +6,29 @@ Do not construct instances of me directly, use method #not for an existing envir
 env1 not -> a RBNotEnvironment.
 "
 Class {
-	#name : #RBNotEnvironment,
-	#superclass : #RBBrowserEnvironmentWrapper,
-	#category : #'Refactoring-Environment'
+	#name : 'RBNotEnvironment',
+	#superclass : 'RBBrowserEnvironmentWrapper',
+	#category : 'Refactoring-Environment',
+	#package : 'Refactoring-Environment'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotEnvironment >> definesClass: aClass [
 	^ (environment definesClass: aClass) not
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 RBNotEnvironment >> description [
 	^ '(', environment shortDescription, ') not'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotEnvironment >> includesClass: aClass [
 	(environment includesClass: aClass) ifFalse: [^true].
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotEnvironment >> includesProtocol: aProtocol in: aClass [
 
 	(aClass hasProtocol: aProtocol) ifFalse: [ ^ false ].
@@ -35,17 +36,17 @@ RBNotEnvironment >> includesProtocol: aProtocol in: aClass [
 	^ (aClass selectorsInProtocol: aProtocol) anySatisfy: [ :selector | self includesSelector: selector in: aClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotEnvironment >> includesSelector: aSelector in: aClass [
 	^(environment includesSelector: aSelector in: aClass) not
 ]
 
-{ #category : #environments }
+{ #category : 'environments' }
 RBNotEnvironment >> not [
 	^environment
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBNotEnvironment >> storeOn: aStream [
 	environment storeOn: aStream.
 	aStream nextPutAll: ' not'

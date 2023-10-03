@@ -17,12 +17,14 @@ Preconditions:
 - the class defines a variable with the given name
 "
 Class {
-	#name : #RBRemoveVariableTransformation,
-	#superclass : #RBVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBRemoveVariableTransformation',
+	#superclass : 'RBVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveVariableTransformation >> applicabilityPreconditions [ 
 
 	class := self definingClass.
@@ -32,21 +34,21 @@ RBRemoveVariableTransformation >> applicabilityPreconditions [
 		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveVariableTransformation >> applicabilityPreconditionsForClassVariable [
 
 	^ (RBCondition isMetaclass: class) not
 	  & (RBCondition definesClassVariable: variableName in: class)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 	"For now only remove an instance variable that is locally defined in a class."
 	
 	^ (RBCondition directlyDefinesInstanceVariable: variableName asString in: class)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveVariableTransformation >> breakingChangePreconditionsForClassVariable [
 
 	^ RBCondition
@@ -55,13 +57,13 @@ RBRemoveVariableTransformation >> breakingChangePreconditionsForClassVariable [
 		  showIn: self
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
 
 	^ (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRemoveVariableTransformation >> privateTransform [
 
 	isClassVariable

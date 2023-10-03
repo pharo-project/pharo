@@ -30,12 +30,14 @@ self showDocumentation
 ""
 "
 Class {
-	#name : #SplitJoinTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Abstract-Tests-SplitJoin'
+	#name : 'SplitJoinTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Abstract-Tests-SplitJoin',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'SplitJoin'
 }
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 SplitJoinTest class >> documentation [
 	<ignoreForCoverage>
 	"self showDocumentation"
@@ -116,61 +118,61 @@ so:"
 '
 ]
 
-{ #category : #sunitgui }
+{ #category : 'sunitgui' }
 SplitJoinTest class >> packageNamesUnderTest [
 	<ignoreForCoverage>
 	^ #('SplitJoin')
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinArrayUsingArray [
 	self assert: ((1 to: 4) joinUsing: #(8 9))
 		equals: #(1 8 9 2 8 9 3 8 9 4)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinArrayUsingChar [
 	self assert: ((1 to: 4) joinUsing: $:)
 		equals:  '1:2:3:4'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinArrayUsingObject [
 	self assert: ((1 to: 4) joinUsing: 0)
 		equals: #(1 0 2 0 3 0 4)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinArrayUsingOrderedCollection [
 	self assert: ((1 to: 4) joinUsing: #(8 9) asOrderedCollection)
 		equals: #(1 8 9 2 8 9 3 8 9 4) asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinArrayUsingSortedCollection [
 	self assert: ((1 to: 4) joinUsing: #(8 9) asSortedCollection)
 		equals: #(1 8 9 2 8 9 3 8 9 4) asSortedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinArrayUsingString [
 	self assert: ((1 to: 4) joinUsing: '--')
 		equals: '1--2--3--4'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinStringUsingChar [
 	self assert: ('splitjoin' joinUsing: $-)
 		equals: 's-p-l-i-t-j-o-i-n'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinStringUsingString [
 	self assert: ('bda' joinUsing: 'an')
 		equals: 'bandana'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinUsingLastOnArray [
 
 	{	{  1. 2. 3 } 	-> '1, 2 and 3' .
@@ -183,32 +185,32 @@ SplitJoinTest >> testJoinUsingLastOnArray [
 		]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testJoinUsingLastOnArrayOfStrings [
 	self
 		assert: (#('Pharo is modern' 'open source' 'highly portable' 'fast' 'full-featured' ) joinUsing: ', ' last: ' and ')
 		equals: 'Pharo is modern, open source, highly portable, fast and full-featured'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitArrayOnBlock [
 	self assert: ((1 to: 10) asArray splitOn: [:n| n even])
 		equals: #(#(1) #(3) #(5) #(7) #(9) #()) asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitArrayOnElement [
 	self assert: ((1 to: 10) asArray splitOn: 4)
 		equals: #(#(1 2 3) #(5 6 7 8 9 10)) asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitArrayOnSequence [
 	self assert: ((1 to: 10) asArray splitOn: (4 to: 5))
 		equals: #(#(1 2 3) #(6 7 8 9 10)) asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitJoinBoundaryCases [
 	"Empty splitter, joiner or sequence."
 	self assert: (#() join: (#() split: #())) equals: #().
@@ -221,7 +223,7 @@ SplitJoinTest >> testSplitJoinBoundaryCases [
 	self assert: ('ana' join: ('ana' split: 'banana')) equals: 'banana'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitJoinIdentity [
 	| array string |
 	array := #(5 1 4 1 3 1 2 1).
@@ -232,67 +234,67 @@ SplitJoinTest >> testSplitJoinIdentity [
 	self assert: ('ow' join: ('ow' split: string)) equals: string
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitJoinOnElement [
 	self assert: (0 join: (3 split: #(1 2 3 4 5)))
 		equals: #(1 2 0 4 5)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitJoinOnSequence [
 	self assert: (#(6 6 6) join: (#(3 4) split: #(1 2 3 4 5)))
 		equals: #(1 2 6 6 6 5)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitJoinStringOnChar [
 	self assert: ($: join: (Character space split: 'how now brown cow?'))
 		equals: 'how:now:brown:cow?'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitJoinStringOnString [
 	self assert: ('oo' join: ('ow' split: 'how now brown cow?'))
 		equals: 'hoo noo broon coo?'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitOrderedCollectionOnElement [
 	self assert: (((1 to: 10) asOrderedCollection) splitOn: 4)
 		equals: {(1 to: 3) asOrderedCollection . (5 to: 10) asOrderedCollection} asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitOrderedCollectionOnOrderedCollection [
 	self assert: (((1 to: 10) asOrderedCollection) splitOn: ((4 to: 5) asOrderedCollection))
 		equals: {(1 to: 3) asOrderedCollection . (6 to: 10) asOrderedCollection} asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitSortedCollectionOnElement [
 	self assert: (((1 to: 10) asSortedCollection) splitOn: 4)
 		equals: {(1 to: 3) asSortedCollection . (5 to: 10) asSortedCollection} asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitSortedCollectionOnSortedCollection [
 	self assert: (((1 to: 10) asSortedCollection) splitOn: ((4 to: 5) asSortedCollection))
 		equals: {(1 to: 3) asSortedCollection . (6 to: 10) asSortedCollection} asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitStringOnBlock [
 	self assert: ('foobar' splitOn: [:ch | 'aeiou' includes: ch])
 		equals: #('f' '' 'b' 'r') asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitStringOnChar [
 	self assert: ('does eat oats and lambs eat oats' splitOn: Character space)
 		equals: #('does' 'eat' 'oats' 'and' 'lambs' 'eat' 'oats') asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SplitJoinTest >> testSplitStringOnSubstring [
 	self assert: ('the banana man can can bananas' splitOn: 'an')
 		equals: #('the b' '' 'a m' ' c' ' c' ' b' '' 'as') asOrderedCollection

@@ -1,1 +1,1 @@
-Package { #name : #'Shift-ClassBuilder' }
+Package { #name : 'Shift-ClassBuilder' }

@@ -1,10 +1,12 @@
 Class {
-	#name : #FLMaterializerTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Configuration'
+	#name : 'FLMaterializerTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Configuration',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Configuration'
 }
 
-{ #category : #'tests-configuring' }
+{ #category : 'tests-configuring' }
 FLMaterializerTest >> testDisableMethodChangedWarning [
 	self deny: self materializer isMethodChangedWarningDisabled.
 	
@@ -12,7 +14,7 @@ FLMaterializerTest >> testDisableMethodChangedWarning [
 	self assert: self materializer isMethodChangedWarningDisabled
 ]
 
-{ #category : #'tests-running' }
+{ #category : 'tests-running' }
 FLMaterializerTest >> testMaterialize [
 	| object materialized |
 	object := FLPair new
@@ -31,7 +33,7 @@ FLMaterializerTest >> testMaterialize [
 	self assert: 1 equals: materialized roots size
 ]
 
-{ #category : #'tests-running' }
+{ #category : 'tests-running' }
 FLMaterializerTest >> testMaterializeHeader [
 	| object materialized |
 	object := FLPair new
@@ -47,7 +49,7 @@ FLMaterializerTest >> testMaterializeHeader [
 	self assert: 'simpson' equals: (materialized additionalObjectAt: #homer)
 ]
 
-{ #category : #'tests-running' }
+{ #category : 'tests-running' }
 FLMaterializerTest >> testMaterializeObjectCollection [
 	| object1 object2 materialized |
 	object1 := FLPair new
@@ -71,7 +73,7 @@ FLMaterializerTest >> testMaterializeObjectCollection [
 	self assert: object2 equals: materialized roots second
 ]
 
-{ #category : #'tests-running' }
+{ #category : 'tests-running' }
 FLMaterializerTest >> testMaterializeRoot [
 	| object materialized |
 	object := FLPair new
@@ -86,7 +88,7 @@ FLMaterializerTest >> testMaterializeRoot [
 	self assert: object equals: materialized
 ]
 
-{ #category : #'tests-configuring-migrations' }
+{ #category : 'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedToClass [
 	| migration |
 	self assert: self materializer migrations isEmpty.
@@ -102,7 +104,7 @@ FLMaterializerTest >> testMigrateClassNamedToClass [
 	self assert: migration targetClass identicalTo: Object
 ]
 
-{ #category : #'tests-configuring-migrations' }
+{ #category : 'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedToClassMustBeSymbolAndClassOrSymbol [
 	{
 		Object new -> Object.
@@ -152,7 +154,7 @@ FLMaterializerTest >> testMigrateClassNamedToClassMustBeSymbolAndClassOrSymbol [
 			raise: FLConfigurationError ]
 ]
 
-{ #category : #'tests-configuring-migrations' }
+{ #category : 'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedToClassMustHaveUniqueSource [
 	self materializer
 		migrateClassNamed: #Object
@@ -166,7 +168,7 @@ FLMaterializerTest >> testMigrateClassNamedToClassMustHaveUniqueSource [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-migrations' }
+{ #category : 'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedToClassSourceAndTargetCanBeTheSame [
 	self
 		shouldnt: [
@@ -176,7 +178,7 @@ FLMaterializerTest >> testMigrateClassNamedToClassSourceAndTargetCanBeTheSame [
 		raise: FLConfigurationError
 ]
 
-{ #category : #'tests-configuring-migrations' }
+{ #category : 'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedToClassVariables [
 	| migration |
 	self assert: self materializer migrations isEmpty.
@@ -193,7 +195,7 @@ FLMaterializerTest >> testMigrateClassNamedToClassVariables [
 	self assert: migration targetClass identicalTo: Object
 ]
 
-{ #category : #'tests-configuring-migrations' }
+{ #category : 'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedVariables [
 	| migration |
 	self assert: self materializer migrations isEmpty.
@@ -209,7 +211,7 @@ FLMaterializerTest >> testMigrateClassNamedVariables [
 	self assert: migration targetClass identicalTo: FLPair
 ]
 
-{ #category : #'tests-configuring-migrations' }
+{ #category : 'tests-configuring-migrations' }
 FLMaterializerTest >> testMigrateClassNamedVariablesMustBeSymbolAndDictionary [
 	{
 		Object new -> Dictionary new.

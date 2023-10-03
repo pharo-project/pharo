@@ -1,10 +1,11 @@
 Class {
-	#name : #EFInternalTest,
-	#superclass : #TestCase,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFInternalTest',
+	#superclass : 'TestCase',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFInternalTest >> testCurrentLineLength [
 	
 	| formatter |
@@ -15,7 +16,7 @@ EFInternalTest >> testCurrentLineLength [
 	self assert: formatter currentLineLength equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFInternalTest >> testCurrentLineLengthWithStringContainingCR [
 
 	| formatter |
@@ -24,7 +25,7 @@ EFInternalTest >> testCurrentLineLengthWithStringContainingCR [
 	self assert: formatter currentLineLength equals: 'ef' size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFInternalTest >> testLineStartIsCorrectAfterIndent [
 	
 	| formatter |
@@ -37,7 +38,7 @@ EFInternalTest >> testLineStartIsCorrectAfterIndent [
 	"indeed the lineStart in the beginning of the last line."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFInternalTest >> testLineStartIsCorrectAfterNewLines [
 	
 	| formatter |
@@ -46,7 +47,7 @@ EFInternalTest >> testLineStartIsCorrectAfterNewLines [
 	self assert: formatter lineStart equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFInternalTest >> testLineStartIsInitializedToZero [
 	
 	| formatter |
@@ -54,7 +55,7 @@ EFInternalTest >> testLineStartIsInitializedToZero [
 	self assert: formatter lineStart equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFInternalTest >> testLineStartIsOkAfterWriteString [
 	
 	| formatter |
@@ -64,7 +65,7 @@ EFInternalTest >> testLineStartIsOkAfterWriteString [
 	self assert: formatter lineStart equals: 0.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFInternalTest >> testLineStartStringContainingCR [
 
 	| formatter |

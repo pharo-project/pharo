@@ -1,19 +1,21 @@
 Class {
-	#name : #DAMessageSendAnalyzerTest,
-	#superclass : #TestCase,
+	#name : 'DAMessageSendAnalyzerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'analyzer'
 	],
-	#category : #'Tool-DependencyAnalyser-Tests-Core'
+	#category : 'Tool-DependencyAnalyser-Tests-Core',
+	#package : 'Tool-DependencyAnalyser-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DAMessageSendAnalyzerTest >> setUp [
 	super setUp.
 	analyzer := DAMessageSendAnalyzer on: 'Tool-DependencyAnalyser-Tests-Data'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAMessageSendAnalyzerTest >> testRPackage [
 
 	self assert: (analyzer rPackage isKindOf: RPackage).
@@ -25,7 +27,7 @@ DAMessageSendAnalyzerTest >> testRPackage [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAMessageSendAnalyzerTest >> testRPackageIsAnsweredWithLoadedPackage [
 
 	self
@@ -33,14 +35,14 @@ DAMessageSendAnalyzerTest >> testRPackageIsAnsweredWithLoadedPackage [
 		hasSameElements: { DASomeClass }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAMessageSendAnalyzerTest >> testShouldFindDependencyWhenUnimplementedCalls [
 	self
 		assert: analyzer missingMethods size
 		equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAMessageSendAnalyzerTest >> testShouldGetPotentialMatchForUnimplementedCalls [
 
 	self

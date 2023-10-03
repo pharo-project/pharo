@@ -14,16 +14,18 @@ Most users of me are refactoring operations and use my methods on the class side
 
 "
 Class {
-	#name : #RBCondition,
-	#superclass : #RBAbstractCondition,
+	#name : 'RBCondition',
+	#superclass : 'RBAbstractCondition',
 	#instVars : [
 		'block',
 		'errorBlock'
 	],
-	#category : #'Refactoring-Core-Conditions'
+	#category : 'Refactoring-Core-Conditions',
+	#package : 'Refactoring-Core',
+	#tag : 'Conditions'
 }
 
-{ #category : #'variable accessing' }
+{ #category : 'variable accessing' }
 RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTransformation [
 
 	self flag: #popUp.
@@ -43,7 +45,7 @@ RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTra
 			true ]
 ]
 
-{ #category : #'variable accessing' }
+{ #category : 'variable accessing' }
 RBCondition class >> accessesInstanceVariable: variableName in: aClass showIn: aTransformation [
 
 	| references |
@@ -58,7 +60,7 @@ RBCondition class >> accessesInstanceVariable: variableName in: aClass showIn: a
 	^ references not
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> canUnderstand: aSelector in: aClass [
 
 	^self new
@@ -66,7 +68,7 @@ RBCondition class >> canUnderstand: aSelector in: aClass [
 		errorString: aClass printString , ' <1?:does not >understand<1?s:> ' , aSelector printString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBCondition class >> checkClassVarName: aName in: aClass [
 	| string |
 	aName isString ifFalse: [^false].
@@ -77,7 +79,7 @@ RBCondition class >> checkClassVarName: aName in: aClass [
 	^RBScanner isVariable: string
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBCondition class >> checkInstanceVariableName: aName in: aClass [
 	| string |
 	aName isString ifFalse: [^false].
@@ -88,14 +90,14 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 	^RBScanner isVariable: string
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBCondition class >> checkMethodName: aString [
 	"Return whether the argument aName is can represent a selector"
 
 	^ aString isString and: [ aString isValidSelector ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBCondition class >> checkMethodName: aString in: aClass [
 	"Return whether the argument aName is can represent a selector"
 	"You probably look for checkMethodName: since the second argument is ignored"
@@ -103,7 +105,7 @@ RBCondition class >> checkMethodName: aString in: aClass [
 	^aString isString and: [ aString isValidSelector ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> definesClassVariable: aString in: aClass [
 	^self new
 		block: [aClass definesClassVariable: aString]
@@ -111,7 +113,7 @@ RBCondition class >> definesClassVariable: aString in: aClass [
 				, ' <1?:does not >define<1?s:> class variable ' , aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> definesInstanceVariable: aString in: aClass [
 	^self new
 		block: [aClass definesInstanceVariable: aString]
@@ -119,14 +121,14 @@ RBCondition class >> definesInstanceVariable: aString in: aClass [
 				, ' <1?:does not >define<1?s:> instance variable ' , aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> definesSelector: aSelector in: aClass [
 	^self new
 		block: [aClass directlyDefinesMethod: aSelector]
 		errorString: aClass printString , ' <1?:does not >define<1?s:> ' , aSelector printString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMethod [
 	^self new
 		block: [(aClass directlyDefinesMethod: aSelector)
@@ -136,7 +138,7 @@ RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMeth
 		errorString: aClass printString , ' <1?:does not >define<1?s:> ' , aSelector printString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
 
 	| condition |
@@ -159,7 +161,7 @@ RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
 	^ condition
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> definesTemporaryVariable: aString in: aClass [
 
 	| condition |
@@ -181,7 +183,7 @@ RBCondition class >> definesTemporaryVariable: aString in: aClass [
 	^ condition
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> directlyDefinesClassVariable: aString in: aClass [
 	^self new
 		block: [aClass directlyDefinesClassVariable: aString]
@@ -189,7 +191,7 @@ RBCondition class >> directlyDefinesClassVariable: aString in: aClass [
 				, ' <1?:does not >directly define<1?s:> class variable ' , aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
 	^self new
 		block: [aClass directlyDefinesInstanceVariable: aString]
@@ -197,7 +199,7 @@ RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
 				, ' <1?:does not >directly define<1?s:> instance variable ' , aString
 ]
 
-{ #category : #'variable accessing' }
+{ #category : 'variable accessing' }
 RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: aClass showIn: aTransformation [
 
 	| references |
@@ -212,42 +214,28 @@ RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: 
 	^ references not
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> empty [
 	"Returns an empty condition"
 	self deprecated: 'Use RBCondition true instead' transformWith: '`@rec empty' -> '`@ true'.
 	^ self true
 ]
 
-{ #category : #'instance creation' }
-RBCondition class >> hasSubclasses: aClass [
-	^self new
-		block: [aClass subclasses isNotEmpty ]
-		errorString: aClass printString , ' has <1?:no >subclasses'
-]
-
-{ #category : #'instance creation' }
-RBCondition class >> hasSubclasses: aClass excluding: classList [
-	^self new
-		block: [ ((aClass subclasses collect: [:each | each name]) copyWithoutAll: classList) isNotEmpty ]
-		errorString: aClass printString , ' has <1?:no >subclasses'
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> hasSuperclass: aClass [
 	^self new
 		block: [aClass superclass isNil not]
 		errorString: aClass printString , ' has <1?a:no> superclass'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> hierarchyOf: aClass canUnderstand: aSelector [
 	^self new
 		block: [aClass hierarchyDefinesMethod: aSelector]
 		errorString: aClass printString , ' <1? and/or part of it''s Hierarchy already: and/or part of it''s Hierarchy do not> understand<1?s:> ' , aSelector printString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> hierarchyOf: aClass definesVariable: aString [
 	^self new
 		block: [aClass hierarchyDefinesVariable: aString]
@@ -256,7 +244,7 @@ RBCondition class >> hierarchyOf: aClass definesVariable: aString [
 					, aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 
 	^ self new
@@ -268,7 +256,7 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 			  , '#' , aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> hierarchyOf: aClass referencesSharedVariable: aString [
 	"Returns whether a shared variable is accessed anywhere in a class hierarchy, being it class or instance side."
 	
@@ -284,7 +272,7 @@ RBCondition class >> hierarchyOf: aClass referencesSharedVariable: aString [
 			  , '#' , aString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBCondition class >> invalidArgumentNamesForSelector: aSymbol in: aModel [
 	"Return the list of elements that when added as argument to a selector would break it e.g., an argument cannot have the same name as a instance variables or the same name as an already existing argument."
 	
@@ -298,7 +286,7 @@ RBCondition class >> invalidArgumentNamesForSelector: aSymbol in: aModel [
 	^ invalidArgNames
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isAbstractClass: aClass [
 
 	^ self new
@@ -306,48 +294,35 @@ RBCondition class >> isAbstractClass: aClass [
 		  errorString: aClass printString , ' is <1?:not >an abstract class'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isClass: anObject [
 	^self new
 		block: [anObject isBehavior]
 		errorString: anObject printString , ' is <1?:not >a behavior'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCondition class >> isClass: aRBClass definedIn: aRBNamespace [ 
 	^ self isClassNamed: aRBClass name definedIn: aRBNamespace 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isClassNamed: className definedIn: aModel [
 
 	^ self new 
 		block: [ | aClassOrTrait |
-				aClassOrTrait := aModel classNamed: className asSymbol.
+				aClassOrTrait := aModel classNamed: className.
 				aClassOrTrait isNotNil ]
 		errorString: [ className , ' is <1?:not > defined' ]
 ]
 
-{ #category : #'instance creation' }
-RBCondition class >> isEmptyClass: anObject [
-
-	^ self new
-		  block: [
-			  anObject classVariableNames isEmpty and: [
-				  anObject instanceVariableNames isEmpty and: [
-					  anObject selectors isEmpty ] ] ]
-		  errorString: anObject printString , ' is <1?:not > empty'
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isGlobal: aString in: aRBSmalltalk [
 
-	^ self new
-		  block: [ aRBSmalltalk includesGlobal: aString asSymbol ]
-		  errorString: aString , ' is <1?:not >a class or global variable'
+	^ self new block: [ aRBSmalltalk includesGlobal: aString asSymbol ] errorString: aString , ' is <1?:not >a class or global variable'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isImmediateSubclass: subclass of: superClass [
 
 	^ self new
@@ -357,7 +332,7 @@ RBCondition class >> isImmediateSubclass: subclass of: superClass [
 			  , superClass printString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isMetaclass: anObject [
 
 	^ self new
@@ -365,7 +340,7 @@ RBCondition class >> isMetaclass: anObject [
 		  errorString: anObject printString , ' is <1?:not >a metaclass'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isSubclass: subclass of: superClass [
 
 	^ self new
@@ -374,7 +349,7 @@ RBCondition class >> isSubclass: subclass of: superClass [
 			  , superClass printString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isSymbol: aString [
 
 	^ self new
@@ -382,7 +357,7 @@ RBCondition class >> isSymbol: aString [
 		  errorString: aString , ' is <1?:not >a symbol'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isValidClassName: aString [
 
 	^ self new
@@ -390,7 +365,7 @@ RBCondition class >> isValidClassName: aString [
 		  errorString: aString , ' is <1?:not >a valid class name'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isValidClassVarName: aString for: aClass [
 
 	^ self new
@@ -398,7 +373,7 @@ RBCondition class >> isValidClassVarName: aString for: aClass [
 		  errorString: aString , ' is <1?:not >a valid class variable name'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isValidInstanceVariableName: aString for: aClass [
 
 	^ self new
@@ -407,7 +382,7 @@ RBCondition class >> isValidInstanceVariableName: aString for: aClass [
 		  aString , ' is <1?:not >a valid instance variable name'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> isValidMethodName: aString for: aClass [
 
 	^ self new
@@ -416,7 +391,7 @@ RBCondition class >> isValidMethodName: aString for: aClass [
 		  aString printString , ' is <1?:not >a valid method name'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock [
 
 	| searcher method |
@@ -433,7 +408,7 @@ RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock 
 	^ nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> referencesInstanceVariable: aString in: aClass [
 
 	^ self new
@@ -443,12 +418,12 @@ RBCondition class >> referencesInstanceVariable: aString in: aClass [
 			  , ' <1?:does not >reference<1?s:> instance variable ' , aString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBCondition class >> reservedNames [
 	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> subclassesOf: aClass isDoingASuperSendFor: aSelector [
 
 	^ self new
@@ -463,7 +438,7 @@ RBCondition class >> subclassesOf: aClass isDoingASuperSendFor: aSelector [
 			  , aSelector printString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> true [
 	"Returns a true condition. It is useful when chaining condition. It acts as neutral element of the operation such AND."
 
@@ -472,40 +447,41 @@ RBCondition class >> true [
 		errorString: 'true'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> withBlock: aBlock [
 	^self new withBlock: aBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCondition class >> withBlock: aBlock errorString: aString [
 
 	^ self new block: aBlock errorString: aString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBCondition >> block: aBlock errorString: aString [
 
 	block := aBlock.
 	self errorMacro: aString
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 RBCondition >> check [
 	^block value
 ]
 
-{ #category : #initialization }
+{ #category : 'accessing' }
+RBCondition >> errorBlock [
+
+	^ errorBlock
+]
+
+{ #category : 'initialization' }
 RBCondition >> errorBlock: anObject [
 	errorBlock := anObject
 ]
 
-{ #category : #accessing }
-RBCondition >> errorBlockFor: aBoolean [
-	^errorBlock
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBCondition >> withBlock: aBlock [
 	block := aBlock
 ]

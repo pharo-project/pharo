@@ -1,10 +1,12 @@
 Class {
-	#name : #ClyMultipleClassRelationScopeTest,
-	#superclass : #ClyClassHierarchyScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyMultipleClassRelationScopeTest',
+	#superclass : 'ClyClassHierarchyScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMultipleClassRelationScopeTest >> multipleScopeSample [
 	| newScope |
 	newScope := super multipleScopeSample.
@@ -12,12 +14,12 @@ ClyMultipleClassRelationScopeTest >> multipleScopeSample [
 	^newScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMultipleClassRelationScopeTest >> scopeClass [
 	^ClyMultipleClassRelationScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMultipleClassRelationScopeTest >> singleScopeSample [
 	| newScope |
 	newScope := super singleScopeSample.
@@ -25,7 +27,7 @@ ClyMultipleClassRelationScopeTest >> singleScopeSample [
 	^newScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMultipleClassRelationScopeTest >> testComparisonWithDifferentRelationScopes [
 	| scope2 |
 	scope := ClyMultipleClassRelationScope of: #() merging: {ClySuperclassScope}.
@@ -34,7 +36,7 @@ ClyMultipleClassRelationScopeTest >> testComparisonWithDifferentRelationScopes [
 	self deny: scope equals: scope2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMultipleClassRelationScopeTest >> testConvertingToInterestingClassScope [
 	| convertedScope |
 	scope := ClyMultipleClassRelationScope of: {String} merging: {ClySuperclassScope . ClySubclassScope}.
@@ -50,7 +52,7 @@ ClyMultipleClassRelationScopeTest >> testConvertingToInterestingClassScope [
 	self assert: convertedScope environment equals: scope environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMultipleClassRelationScopeTest >> testRepresentsClassOfScope [
 
 	scope := ClyMultipleClassRelationScope of: #() merging: { ClySuperclassScope }.

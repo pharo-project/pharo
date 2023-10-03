@@ -1,10 +1,11 @@
 Class {
-	#name : #EFTemporariesExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFTemporariesExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> basicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -20,7 +21,7 @@ EFTemporariesExpressionTest >> basicCommentFormatConfiguration [
 	indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> commentWithStatementsConfiguration [
 
 	^ self contextClass basicNew
@@ -33,7 +34,7 @@ EFTemporariesExpressionTest >> commentWithStatementsConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> dontRetainBlankLinesBeforeComments [
 	"Here we can control explicitely the configuration we want."
 
@@ -49,7 +50,7 @@ EFTemporariesExpressionTest >> dontRetainBlankLinesBeforeComments [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> newLinesAfterTemporariesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -65,7 +66,7 @@ EFTemporariesExpressionTest >> newLinesAfterTemporariesConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> noNewLinesAfterTemporariesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -81,7 +82,7 @@ EFTemporariesExpressionTest >> noNewLinesAfterTemporariesConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> notBasicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -98,7 +99,7 @@ EFTemporariesExpressionTest >> notBasicCommentFormatConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> retainBlankLinesBeforeComments [
 	"Here we can control explicitely the configuration we want."
 
@@ -114,7 +115,7 @@ EFTemporariesExpressionTest >> retainBlankLinesBeforeComments [
 		indentExtraSpaces:0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testCommentBasicFormat [
 	| source |
 	configurationSelector := #basicCommentFormatConfiguration.
@@ -122,7 +123,7 @@ EFTemporariesExpressionTest >> testCommentBasicFormat [
 	self assert: source equals: '| d "    comment     " e |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testCommentNotBasicFormat [
 	| source |
 	configurationSelector := #notBasicCommentFormatConfiguration.
@@ -134,7 +135,7 @@ EFTemporariesExpressionTest >> testCommentNotBasicFormat [
 " e |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testDontRetainBlankLinesBeforeComments [
 	| source |
 	configurationSelector := #dontRetainBlankLinesBeforeComments.
@@ -148,7 +149,7 @@ EFTemporariesExpressionTest >> testDontRetainBlankLinesBeforeComments [
 			'| d "comment" e |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testDontRetainBlankLinesBeforeComments2 [
 	| source |
 	configurationSelector := #dontRetainBlankLinesBeforeComments.
@@ -163,7 +164,7 @@ EFTemporariesExpressionTest >> testDontRetainBlankLinesBeforeComments2 [
 		equals: '| d "comment" e |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testNewLineAfterTemporaries [
 	| source |
 	configurationSelector := #newLinesAfterTemporariesConfiguration.
@@ -174,7 +175,7 @@ EFTemporariesExpressionTest >> testNewLineAfterTemporaries [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testNoNewLineAfterTemporaries [
 	| source |
 	configurationSelector := #noNewLinesAfterTemporariesConfiguration.
@@ -182,7 +183,7 @@ EFTemporariesExpressionTest >> testNoNewLineAfterTemporaries [
 	self assert: source equals: '| d e |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments [
 	| source |
 	configurationSelector := #retainBlankLinesBeforeComments.
@@ -198,7 +199,7 @@ EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments2 [
 	| source |
 	configurationSelector := #retainBlankLinesBeforeComments.
@@ -216,7 +217,7 @@ EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments2 [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments3 [
 	| source |
 	configurationSelector := #retainBlankLinesBeforeComments.
@@ -228,7 +229,7 @@ EFTemporariesExpressionTest >> testRetainBlankLinesBeforeComments3 [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testSpaceBetweenTemporaries [
 	| source |
 	configurationSelector := #noNewLinesAfterTemporariesConfiguration.
@@ -236,7 +237,7 @@ EFTemporariesExpressionTest >> testSpaceBetweenTemporaries [
 	self assert: source equals: '| a |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testSpaceBetweenTemporaries2 [
 	| source |
 	configurationSelector := #noNewLinesAfterTemporariesConfiguration.
@@ -244,7 +245,7 @@ EFTemporariesExpressionTest >> testSpaceBetweenTemporaries2 [
 	self assert: source equals: '| a b |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testSpaceBetweenVarAndComment [
 	| source |
 	configurationSelector := #commentWithStatementsConfiguration.
@@ -252,7 +253,7 @@ EFTemporariesExpressionTest >> testSpaceBetweenVarAndComment [
 	self assert: source equals: '| d "comment" |'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFTemporariesExpressionTest >> testTwoLinesAfterTemporaries [
 	| source |
 	configurationSelector := #twoLinesAfterTemporariesConfiguration.
@@ -265,7 +266,7 @@ EFTemporariesExpressionTest >> testTwoLinesAfterTemporaries [
 '
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFTemporariesExpressionTest >> twoLinesAfterTemporariesConfiguration [
 	"Here we can control explicitely the configuration we want."
 

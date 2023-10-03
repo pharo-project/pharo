@@ -3,15 +3,17 @@ I am used to test the behavior of Context>>jump in MethodContextTest. My example
 
 "
 Class {
-	#name : #SimulationMock,
-	#superclass : #Object,
+	#name : 'SimulationMock',
+	#superclass : 'Object',
 	#instVars : [
 		'instVar1'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SimulationMock >> exampleClosure [
 	<sampleInstance>
 	"This is a pathological case where the method has no arguments, no temporaries, and the instance variable store is followed by the creation of a closure with no copied values."
@@ -20,7 +22,7 @@ SimulationMock >> exampleClosure [
 	^ thisContext copy
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SimulationMock >> exampleSelfReturnCall [
 
 	"A simple case where a yourself message is sent to an object"
@@ -29,7 +31,7 @@ SimulationMock >> exampleSelfReturnCall [
 	self yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SimulationMock >> exampleSend [
 	<sampleInstance>
 	"This is a pathological case where the method has no arguments, no temporaries, and the instance variable store is followed by the creation of a closure with no copied values."
@@ -38,7 +40,7 @@ SimulationMock >> exampleSend [
 	^ thisContext copy
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SimulationMock >> exampleStore [
 	<sampleInstance>
 	"This is a pathological case where the method has no arguments, no temporaries, and the instance variable store is followed by the creation of a closure with no copied values."

@@ -1,10 +1,12 @@
 Class {
-	#name : #LazySlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'LazySlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazySlotTest >> testLazySlotCompiled [
 	| slot object|
 	<ignoreNotImplementedSelectors: #(slot1)>
@@ -17,7 +19,7 @@ LazySlotTest >> testLazySlotCompiled [
 	self assert: object slot1 equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazySlotTest >> testLazySlotPrint [
 	| slot |
 	slot := #mySlot => LazySlot default: 5 .
@@ -29,7 +31,7 @@ LazySlotTest >> testLazySlotPrint [
 	self assert: slot printString equals: '#mySlot => LazySlot default: [ 5 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazySlotTest >> testLazySlotReadReflective [
 	| slot object|
 	slot := #slot1 => LazySlot default: 5.
@@ -43,7 +45,7 @@ LazySlotTest >> testLazySlotReadReflective [
 	self assert: (slot read: object) equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazySlotTest >> testLazySlotReadReflectiveBlock [
 	| slot object|
 	slot := #slot1 => LazySlot default: [:o | o class] .

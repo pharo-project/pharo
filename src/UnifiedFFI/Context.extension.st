@@ -1,6 +1,6 @@
-Extension { #name : #Context }
+Extension { #name : 'Context' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Context >> methodProperties [
 	^ self compiledCode properties
 ]

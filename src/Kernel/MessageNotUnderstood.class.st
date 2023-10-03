@@ -2,30 +2,32 @@
 This exception is provided to support Object>>doesNotUnderstand:.
 "
 Class {
-	#name : #MessageNotUnderstood,
-	#superclass : #Error,
+	#name : 'MessageNotUnderstood',
+	#superclass : 'Error',
 	#instVars : [
 		'message',
 		'receiver',
 		'reachedDefaultHandler'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MessageNotUnderstood class >> initialize [
 
 	self deprecatedAliases: { #VariableNotDeclared }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> defaultAction [
 
 	reachedDefaultHandler := true.
 	super defaultAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> description [
 
 	"Returns a textual description of the exception (based on the message instance variable). If message is nil, it returns the defaultDescription instead."
@@ -38,34 +40,34 @@ MessageNotUnderstood >> description [
 	  , ' did not understand ' , message selector printString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MessageNotUnderstood >> initialize [
 
 	super initialize.
 	reachedDefaultHandler := false
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 MessageNotUnderstood >> isResumable [
 	"Determine whether an exception is resumable."
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> message [
 	"Answer the selector and arguments of the message that failed."
 
 	^message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> message: aMessage [
 
 	message := aMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> messageText [
 	"Return an exception's message text."
 
@@ -79,19 +81,19 @@ MessageNotUnderstood >> messageText [
 							ifFalse: ['Message not understood: ', message lookupClass printString, ' >> #', message selector asString]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> reachedDefaultHandler [
 	^reachedDefaultHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> receiver [
 	"Answer the receiver that did not understand the message"
 
 	^ receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageNotUnderstood >> receiver: obj [
 
 	receiver := obj

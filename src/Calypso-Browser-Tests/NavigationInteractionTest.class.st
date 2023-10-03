@@ -1,10 +1,11 @@
 Class {
-	#name : #NavigationInteractionTest,
-	#superclass : #TestCase,
-	#category : #'Calypso-Browser-Tests'
+	#name : 'NavigationInteractionTest',
+	#superclass : 'TestCase',
+	#category : 'Calypso-Browser-Tests',
+	#package : 'Calypso-Browser-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 NavigationInteractionTest >> testBrowseClassViaImplementorActuallyBrowseTheClass [
 
 	| browser res |
@@ -14,7 +15,7 @@ NavigationInteractionTest >> testBrowseClassViaImplementorActuallyBrowseTheClass
 	res first close
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NavigationInteractionTest >> testBrowseMethodViaImplementorActuallyBrowseTheClass [
 
 	| browser res |
@@ -27,7 +28,7 @@ NavigationInteractionTest >> testBrowseMethodViaImplementorActuallyBrowseTheClas
 	res first close
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NavigationInteractionTest >> testSenderOnClassViaSenderActuallyBrowseSenders [
 
 	| browser res |

@@ -2,12 +2,13 @@
 A TrivialCritique with and extended actions to open a dependency browser for ArchitecturalRule
 "
 Class {
-	#name : #ArchitecturalCritique,
-	#superclass : #ReTrivialCritique,
-	#category : #'Kernel-Rules'
+	#name : 'ArchitecturalCritique',
+	#superclass : 'ReTrivialCritique',
+	#category : 'Kernel-Rules',
+	#package : 'Kernel-Rules'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 ArchitecturalCritique >> actions [
 	^ super actions copyWith:
 		(RePropertyAction new
@@ -18,9 +19,8 @@ ArchitecturalCritique >> actions [
 			yourself)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ArchitecturalCritique >> openDependencyAnalyzerOn: package [
 
-	^ (DAPackageDependenciesPresenter
-			onPackagesNamed: {package packageName}) open
+	^ (DAPackageDependenciesPresenter onPackagesNamed: { package name }) open
 ]

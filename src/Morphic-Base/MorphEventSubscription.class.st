@@ -2,18 +2,20 @@
 I represent a subscription to an event.  I'm kind of an announcement, that's why I will be replaced by them soon :)
 "
 Class {
-	#name : #MorphEventSubscription,
-	#superclass : #Object,
+	#name : 'MorphEventSubscription',
+	#superclass : 'Object',
 	#instVars : [
 		'event',
 		'selector',
 		'recipient',
 		'valueParameter'
 	],
-	#category : #'Morphic-Base-Events'
+	#category : 'Morphic-Base-Events',
+	#package : 'Morphic-Base',
+	#tag : 'Events'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphEventSubscription class >> on: anEvent send: aSelector to: anObject [
 	^self new
 		event: anEvent;
@@ -22,7 +24,7 @@ MorphEventSubscription class >> on: anEvent send: aSelector to: anObject [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphEventSubscription class >> on: anEvent send: aMessageSelector to: anObject withValue: aValue [
 	^self new
 		event: anEvent;
@@ -32,44 +34,44 @@ MorphEventSubscription class >> on: anEvent send: aMessageSelector to: anObject 
 		yourself
 ]
 
-{ #category : #'events-triggering' }
+{ #category : 'events-triggering' }
 MorphEventSubscription >> click: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #'events-triggering' }
+{ #category : 'events-triggering' }
 MorphEventSubscription >> doubleClick: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #'events-triggering' }
+{ #category : 'events-triggering' }
 MorphEventSubscription >> doubleClickTimeout: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> event [
 
 	^ event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> event: anEvent [
 
 	event := anEvent
 ]
 
-{ #category : #'events-triggering' }
+{ #category : 'events-triggering' }
 MorphEventSubscription >> mouseEnter: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #'events-triggering' }
+{ #category : 'events-triggering' }
 MorphEventSubscription >> mouseLeave: anEvent fromMorph: aMorph [
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #'events-triggering' }
+{ #category : 'events-triggering' }
 MorphEventSubscription >> notify: anEvent from: sourceMorph [
 	| arity |
 	recipient ifNil: [^ self].
@@ -85,37 +87,37 @@ MorphEventSubscription >> notify: anEvent from: sourceMorph [
 	self error: 'Event handling selectors must be Symbols and take 0-3 arguments'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> recipient [
 
 	^ recipient
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> recipient: anObject [
 
 	recipient := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> selector [
 
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> selector: anObject [
 
 	selector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> valueParameter [
 
 	^ valueParameter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphEventSubscription >> valueParameter: anObject [
 
 	valueParameter := anObject

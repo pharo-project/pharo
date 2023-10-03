@@ -2,63 +2,74 @@
 I'm a model for user interaction for the remove method refactoring.
 "
 Class {
-	#name : #RBRemoveMethodDriver,
-	#superclass : #RBDriver,
+	#name : 'RBRemoveMethodDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'class',
-		'refactoring',
 		'methods',
 		'senders'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRemoveMethodDriver >> browseSenders [
 
 	StMessageBrowserPresenter  
 		browse: (senders collect: [ :each | each value methodClass realClass >> each value selector ]) 
-		asSendersOf: refactoring selector 
+		asSendersOf: (refactoring refactorings flatCollect: [ :ref | ref selectors ])
 	"this does not work for multiple selectors remove."
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBRemoveMethodDriver >> configureRefactoring [
 
-	refactoring := RBRemoveMethodRefactoring
-		               model: model
-		               removeMethods: (methods collect: [ :each | each selector ])
-		               from: class
+	| refactorings |
+	refactorings := OrderedCollection new.
+	(methods groupedBy: [ :m | m origin ])
+		keysAndValuesDo: [ :k :v |
+			refactorings add: (
+				RBRemoveMethodsRefactoring
+	            model: model
+	            selectors: (v collect: [ :each | each selector ])
+	         		from: k
+				)
+			].
+	refactoring := RBCompositeRefactoring new
+							model: model;
+							refactorings: refactorings 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveMethodDriver >> refactoring [
 
 	^ refactoring
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRemoveMethodDriver >> removeMethodChanges [ 
 
-	self openPreviewWithChanges: refactoring removeMethodChanges
+	refactoring refactorings do: [ :ref | ref removeMethodChanges ].
+	self openPreviewWithChanges: refactoring changes
 
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRemoveMethodDriver >> runRefactoring [
 
 	| select |
 	self configureRefactoring.
 	[
 	[
-	senders := refactoring senders.
+	senders := refactoring refactorings flatCollect: [ :ref | ref senders ].
 
-	senders size = 0
-		ifTrue: [ self openPreviewWithChanges: refactoring generateChanges ]
-		ifFalse: [ 
+	senders
+		ifEmpty: [ self openPreviewWithChanges: refactoring generateChanges ]
+		ifNotEmpty: [ 
 		
 		select := SpSelectDialog new 
-			title: 'There are ', senders size asString,  ' methods calling ', refactoring selector;
+			title: 'There are ', senders size asString,  ' methods calling method(s) you want to delete';
 			label: 'Select a strategy';
 			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new driver: self]);
 			display: [ :each | each description ];
@@ -77,18 +88,18 @@ RBRemoveMethodDriver >> runRefactoring [
 
 ]
 
-{ #category : #initialization }
-RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod for: aClass [
+{ #category : 'initialization' }
+RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod [
 	
 	scopes := refactoringScopes.
-	methods := {aMethod}.
-	class := aClass
+	model := self refactoringScopeOn: scopes first.
+	methods := { aMethod }
 ]
 
-{ #category : #initialization }
-RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods for: aClass [
+{ #category : 'initialization' }
+RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
 	
 	scopes := refactoringScopes.
-	methods := aMethods.
-	class := aClass
+	model := self refactoringScopeOn: scopes first.
+	methods := aMethods
 ]

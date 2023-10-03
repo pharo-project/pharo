@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAbstractClassVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAbstractClassVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBAbstractClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAbstractClassVariableReferencesRefactoring .
@@ -14,13 +16,13 @@ RBAbstractClassVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAbstractClassVariableParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractClassVariableParametrizedTest >> testAbstractClassVariable [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:
@@ -48,14 +50,14 @@ RBAbstractClassVariableParametrizedTest >> testAbstractClassVariable [
 												classified: aSmalllintContext protocols]]')"
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testFailureInheritedName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #DependentsFields. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testFailureInvalidClass [
 
 	self shouldFail:
@@ -63,21 +65,21 @@ RBAbstractClassVariableParametrizedTest >> testFailureInvalidClass [
 		 #Object })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testFailureMetaClassFailure [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #RecursiveSelfRule. #'RBTransformationRuleTestData class' })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAbstractClassVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #Foo. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractClassVariableParametrizedTest >> testModelAbstractClassVariable [
 	| refactoring meta class |
 	class := model classNamed: #Foo.
@@ -103,7 +105,7 @@ RBAbstractClassVariableParametrizedTest >> testModelAbstractClassVariable [
 						instVarName1 := instVarName1 + instVarName2 + self class classVarName1')"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAbstractClassVariableParametrizedTest >> testModelAbstractClassVariableOverridenMethodsInSubclass [
 	| refactoring meta class |
 	class := model classNamed: #Foo.

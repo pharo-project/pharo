@@ -1,13 +1,13 @@
-Extension { #name : #DurationTest }
+Extension { #name : 'DurationTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DurationTest >> testAsDays [
 	self assert: (Duration days: 2) asDays equals: 2.
 	self assert: (Duration weeks: 1) asDays equals: 7.
 	self assert: (aDuration asDays closeTo: 1.08546)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DurationTest >> testAsHour [
 	| full half quarter |
 	full := Duration minutes: 60.
@@ -21,14 +21,14 @@ DurationTest >> testAsHour [
 		assert: (1 / 4) hour equals: quarter
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DurationTest >> testAsHours [
 	self assert: (Duration hours: 2) asHours equals: 2.
 	self assert: (Duration days: 1) asHours equals: 24.
 	self assert: (aDuration asHours closeTo: 26.0511)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DurationTest >> testAsMinutes [
 	self assert: (Duration seconds: 60) asMinutes equals: 1.
 	self assert: (Duration hours: 1) asMinutes equals: 60.
@@ -36,7 +36,7 @@ DurationTest >> testAsMinutes [
 	self assert: ((Duration milliSeconds: 100) asMinutes closeTo: 1 / 600)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DurationTest >> testMonthDurations [
 	| jan feb dec |
 	jan := Duration month: #January.

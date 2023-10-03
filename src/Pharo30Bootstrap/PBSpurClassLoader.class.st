@@ -1,13 +1,14 @@
 Class {
-	#name : #PBSpurClassLoader,
-	#superclass : #PBClassLoader,
+	#name : 'PBSpurClassLoader',
+	#superclass : 'PBClassLoader',
 	#instVars : [
 		'nextClassIndex'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> classDefinitionFor: aClass [
 	"Answer a String that defines the receiver."
 
@@ -50,7 +51,7 @@ PBSpurClassLoader >> classDefinitionFor: aClass [
 			'aTraitComposition' -> aClass traitCompositionString } asDictionary.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> map: aClassMirror with: aDefinition [
 
 	"We create a mapping between the real classes and their definitions for later"
@@ -74,14 +75,14 @@ PBSpurClassLoader >> map: aClassMirror with: aDefinition [
 	definitionMirrorMap at: aDefinition classSide put: classSideMirror.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> newClassIndex [
 	
 	nextClassIndex ifNil: [ nextClassIndex := 1024 ].
 	^ nextClassIndex := nextClassIndex + 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean [
 
 	"If it existed before, we migrate its state"

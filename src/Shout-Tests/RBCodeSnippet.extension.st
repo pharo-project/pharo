@@ -1,6 +1,6 @@
-Extension { #name : #RBCodeSnippet }
+Extension { #name : 'RBCodeSnippet' }
 
-{ #category : #'*Shout-Tests' }
+{ #category : '*Shout-Tests' }
 RBCodeSnippet >> mockedStyledText [
 
 	| text |
@@ -16,7 +16,7 @@ RBCodeSnippet >> mockedStyledText [
 		  as: String
 ]
 
-{ #category : #'*Shout-Tests' }
+{ #category : '*Shout-Tests' }
 RBCodeSnippet >> styledText [
 
 	| text |

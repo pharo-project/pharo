@@ -2,24 +2,26 @@
 Fetch packages using Gofer
 "
 Class {
-	#name : #GoferFetch,
-	#superclass : #GoferSynchronize,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferFetch',
+	#superclass : 'GoferSynchronize',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GoferFetch >> defaultModel [
 	^ Set new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferFetch >> execute [
 	self model
 		do: [ :reference | self cacheRepository storeVersion: reference version ]
 		displayingProgress: 'Fetching Versions'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferFetch >> initializeOn: aGofer [
 	super initializeOn: aGofer.
 	self gofer references do: [ :reference |

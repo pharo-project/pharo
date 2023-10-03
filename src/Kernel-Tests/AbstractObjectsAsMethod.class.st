@@ -4,42 +4,44 @@ This class shows the API that an object needs to implement if it is supposed to 
 The vm calls run:with:in:, see the subclass for a simple example.
 "
 Class {
-	#name : #AbstractObjectsAsMethod,
-	#superclass : #Object,
-	#category : #'Kernel-Tests-Methods'
+	#name : 'AbstractObjectsAsMethod',
+	#superclass : 'Object',
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> cachePragmas [
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> flushCache [
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> methodClass: aMethodClass [
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> origin [
 	^self class
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> package [
 	^self class package
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> pragmas [
 	^#()
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> removeFromPackage [
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> selector: aSymbol [
 ]

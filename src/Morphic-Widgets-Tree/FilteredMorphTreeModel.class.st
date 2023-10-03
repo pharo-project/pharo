@@ -45,18 +45,19 @@ Instance Variables
 	patternModel:		<RubScrolledTextModel>
 "
 Class {
-	#name : #FilteredMorphTreeModel,
-	#superclass : #MorphTreeModel,
+	#name : 'FilteredMorphTreeModel',
+	#superclass : 'MorphTreeModel',
 	#instVars : [
 		'patternModel',
 		'ghostString',
 		'initialRootItems',
 		'autoAccept'
 	],
-	#category : #'Morphic-Widgets-Tree'
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 FilteredMorphTreeModel class >> example [
 	"self example"
 
@@ -72,13 +73,13 @@ FilteredMorphTreeModel class >> example [
 	window openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredMorphTreeModel >> autoAccept: aBoolean [
 	"If true (default) the filter acts immediately on the list, else, the user has to enter a carriage return or to accept with cms-s"
 	autoAccept := aBoolean
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 FilteredMorphTreeModel >> defaultMorphIn: aThemable [
 	| treeMorph patternMorph |
 	treeMorph := self defaultTreeMorph buildContents.
@@ -95,7 +96,7 @@ FilteredMorphTreeModel >> defaultMorphIn: aThemable [
 		for: {patternMorph. treeMorph}
 ]
 
-{ #category : #'accessing - pattern' }
+{ #category : 'accessing - pattern' }
 FilteredMorphTreeModel >> ensureSafePattern: aPattern [
 	" do not throw an error if the pattern is bad - important in case of auto-accepting"
 	^ [ aPattern asRegexIgnoringCase ]
@@ -103,24 +104,24 @@ FilteredMorphTreeModel >> ensureSafePattern: aPattern [
 		do: [ :ex | ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredMorphTreeModel >> ghostString [
 	^ ghostString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredMorphTreeModel >> ghostString: aString [
 	"set the help text that is displayed in the filter text field when empty"
 	ghostString := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredMorphTreeModel >> initialRootItems [
 	"contains the full list, the filtered list is in rootItems"
 	^ initialRootItems ifNil: [ initialRootItems := #() ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FilteredMorphTreeModel >> initialize [
 	super initialize.
 	patternModel := RubScrolledTextModel new.
@@ -132,19 +133,19 @@ FilteredMorphTreeModel >> initialize [
 	ghostString := ''
 ]
 
-{ #category : #'accessing - pattern' }
+{ #category : 'accessing - pattern' }
 FilteredMorphTreeModel >> pattern [
 	" the pattern to use to filter the list"
 	^ self ensureSafePattern: patternModel getText asString trimBoth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredMorphTreeModel >> patternModel [
 	"The filter model"
 	^ patternModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredMorphTreeModel >> rootItems: aListOfItems [
 	"set the root items as in superclass with a copy + keep the list locally"
 	initialRootItems := aListOfItems.
@@ -152,20 +153,20 @@ FilteredMorphTreeModel >> rootItems: aListOfItems [
 	self updateList
 ]
 
-{ #category : #'accessing - pattern' }
+{ #category : 'accessing - pattern' }
 FilteredMorphTreeModel >> updateList [
 	"update the list by applying the pattern on the initial root item list"
 	super rootItems: (self initialRootItems select: [ :p | (self pattern matchesIn: p name) notEmpty ]).
 	super updateList
 ]
 
-{ #category : #'accessing - pattern' }
+{ #category : 'accessing - pattern' }
 FilteredMorphTreeModel >> whenPatternChanged: anAnnouncement [
 	"just update the list"
 	self updateList
 ]
 
-{ #category : #'accessing - pattern' }
+{ #category : 'accessing - pattern' }
 FilteredMorphTreeModel >> whenReturnInFilter: anAnnouncement [
 	"needed if auto-accept is false"
 	patternModel acceptEditsInView

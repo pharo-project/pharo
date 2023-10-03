@@ -4,8 +4,8 @@ I am a refactoring for moving the definition of a variable to the block/scope wh
 For a method temporary variable declared but not initialized in the method scope and only used within a block, the definition can be moved to the block using this variable.
 "
 Class {
-	#name : #RBMoveVariableDefinitionToSmallestValidScopeRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBMoveVariableDefinitionToSmallestValidScopeRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'selector',
 		'interval',
@@ -14,10 +14,12 @@ Class {
 		'blockNodes',
 		'definingNode'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> bindTight: anInterval in: aClass selector: aSelector [
 	^ self new
 		class: aClass
@@ -25,7 +27,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> bindTight: anIn
 		interval: anInterval
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> model: aRBSmalltalk bindTight: anInterval in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -35,7 +37,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> model: aRBSmall
 		yourself
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkNodes: sequenceNodes [
 	(sequenceNodes
 		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each])
@@ -50,7 +52,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkNodes: sequenceN
 	^true
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkParseTree [
 
 	| node |
@@ -68,14 +70,14 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkParseTree [
 		ifFalse: [ self refactoringError: 'Variable is possibly read before written' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> class: aClass selector: aSelector interval: anInterval [
 	interval := anInterval.
 	class := self classObjectFor: aClass.
 	selector := aSelector
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:
@@ -95,14 +97,14 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> preconditions [
 					true])
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> privateTransform [
 	definingNode removeTemporaryNamed: name.
 	blockNodes do: [:each | each body addTemporaryNamed: name].
 	class compileTree: parseTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -116,7 +118,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> subblocksIn: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -131,7 +133,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> subblocksIn: aParseTr
 		initialAnswer: OrderedCollection new
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> usesDirectly: aParseTree [
 	| searcher |
 	searcher := self parseTreeSearcher.

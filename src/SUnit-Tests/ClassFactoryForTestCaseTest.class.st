@@ -2,46 +2,48 @@
 SUnit tests for ClassFactoryForTestCase 
 "
 Class {
-	#name : #ClassFactoryForTestCaseTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'ClassFactoryForTestCaseTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'factory'
 	],
-	#category : #'SUnit-Tests-Core'
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest class >> shouldInheritSelectors [
 
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassFactoryForTestCaseTest >> environment [
 
 	^ testingEnvironment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassFactoryForTestCaseTest >> organization [
 
 	^ self environment organization
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassFactoryForTestCaseTest >> setUp [
 	super setUp.
 	factory := ClassFactoryForTestCase new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassFactoryForTestCaseTest >> tearDown [
 
 	factory cleanUp.
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest >> testClassCreationInDifferentTags [
 
 	| firstThreeClasses lastTwoClasses |
@@ -53,32 +55,7 @@ ClassFactoryForTestCaseTest >> testClassCreationInDifferentTags [
 	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , #Two) asSymbol ])
 ]
 
-{ #category : #testing }
-ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
-
-	| createdClassNames allClasses allTraits |
-	3 timesRepeat: [
-		factory
-			newClass;
-			newTrait ].
-
-	createdClassNames := factory createdClassNames.
-
-	factory cleanUp.
-
-	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
-	self assert: (factory createdTraits allSatisfy: [ :trait | trait isObsolete ]).
-
-	allClasses := self environment allClasses.
-	allTraits := self environment allTraits.
-
-	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
-	self assert: (factory createdTraits noneSatisfy: [ :trait | allTraits includes: trait ]).
-	self deny: (self organization categories includes: factory defaultCategory).
-	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest >> testMultipleClassCreation [
 
 	5 timesRepeat: [ factory newClass ].
@@ -87,7 +64,7 @@ ClassFactoryForTestCaseTest >> testMultipleClassCreation [
 	self assertCollection: (self organization packageNamed: factory packageName) definedClasses hasSameElements: factory createdClasses
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest >> testPackageCleanUp [
 
 	| createdClassNames allClasses |
@@ -102,7 +79,7 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest >> testSingleClassCreation [
 
 	| class |
@@ -113,12 +90,12 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 			         sharedVariablesFromString: 'X Y';
 			         tag: factory defaultTagPostfix ].
 	self assert: (self environment allClasses includes: class).
-	self assert: (self organization listAtCategoryNamed: factory defaultCategory) equals: { class name }.
+	self assert: class category equals: factory packageName , '-' , factory defaultTagPostfix.
 	self assert: class instVarNames equals: #( a b c ).
 	self assert: class classPool keys asSet equals: #( X Y ) asSet
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest >> testSingleTraitCreation [
 
 	| trait |
@@ -128,7 +105,7 @@ ClassFactoryForTestCaseTest >> testSingleTraitCreation [
 	self assertEmpty: trait traits
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest >> testTraitCreationInDifferentCategories [
 
 	| firstThreeTraits lastTwoTraits |

@@ -1,15 +1,17 @@
 Class {
-	#name : #RubUnderlinedSegmentMorph,
-	#superclass : #RubTextSegmentMorph,
+	#name : 'RubUnderlinedSegmentMorph',
+	#superclass : 'RubTextSegmentMorph',
 	#instVars : [
 		'underlineColor',
 		'straight',
 		'underlineShape'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubUnderlinedSegmentMorph >> computeVertices [
 	| lpos rpos fln lln |
 	super computeVertices.
@@ -31,34 +33,34 @@ RubUnderlinedSegmentMorph >> computeVertices [
 		underlineShape add: (self underlineShapeFromPosition: lpos toPosition: rpos) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubUnderlinedSegmentMorph >> defaultBorderColor [
 	^ super defaultColor alpha: 0.5
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubUnderlinedSegmentMorph >> defaultColor [
 	^ Color white alpha: 0.05
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubUnderlinedSegmentMorph >> defaultUnderlineColor [
 	^ super defaultColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubUnderlinedSegmentMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
 	self drawUnderlineOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubUnderlinedSegmentMorph >> drawOnAthensCanvas: anAthensCanvas [
 	super drawOnAthensCanvas: anAthensCanvas.
 	self drawUnderlineOnAthensCanvas: anAthensCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubUnderlinedSegmentMorph >> drawUnderlineOn: aCanvas [
 	underlineShape
 		do: [ :s |
@@ -77,7 +79,7 @@ RubUnderlinedSegmentMorph >> drawUnderlineOn: aCanvas [
 						color: self underlineColor ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubUnderlinedSegmentMorph >> drawUnderlineOnAthensCanvas: aCanvas [
 	underlineShape
 		do: [ :s |
@@ -99,33 +101,33 @@ RubUnderlinedSegmentMorph >> drawUnderlineOnAthensCanvas: aCanvas [
 					aCanvas drawShape: path ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubUnderlinedSegmentMorph >> straight [
 	^ straight ifNil: [ straight := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubUnderlinedSegmentMorph >> straight: aBoolean [
 	straight := aBoolean.
 	self computeVertices
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubUnderlinedSegmentMorph >> tabLineDashes [
 	^ { 1. 1}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubUnderlinedSegmentMorph >> underlineColor [
 	^ underlineColor ifNil: [ underlineColor := self defaultUnderlineColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubUnderlinedSegmentMorph >> underlineColor: aColor [
 	underlineColor := aColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubUnderlinedSegmentMorph >> underlineShapeFromPosition: firstPos toPosition: lastPos [
 	| shape ygap pos |
 	shape := OrderedCollection new.

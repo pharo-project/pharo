@@ -1,6 +1,6 @@
-Extension { #name : #SmallDictionaryTest }
+Extension { #name : 'SmallDictionaryTest' }
 
-{ #category : #'*Kernel-Tests-WithCompiler' }
+{ #category : '*Kernel-Tests-WithCompiler' }
 SmallDictionaryTest >> testStoreOnRoundTrip [
 	| dictionary storeString evalutated |
 	dictionary := self classToBeTested new.

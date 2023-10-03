@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfRefactoring,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfRefactoring
+	#name : 'BaselineOfRefactoring',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfRefactoring',
+	#package : 'BaselineOfRefactoring'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRefactoring >> baseline: spec [
 	<baseline>
 
@@ -19,12 +20,13 @@ BaselineOfRefactoring >> baseline: spec [
 			package: 'GeneralRules';
 			package: 'Rubric-Rules';
 			package: 'Refactoring-DataForTesting';
+			package: 'Refactoring-UI-Tests' with: [ spec requires: #( 'Refactoring-DataForTesting' ) ];
 			package: 'Refactoring-Tests-Core';
 			package: 'Refactoring-Tests-Changes';
 			package: 'Refactoring-Tests-Critics';
 			package: 'Refactoring-Tests-Environment'.
 		spec 
 			group: 'Rules' with: #('SUnit-Rules' 'Kernel-Tests-Rules' 'Polymorph-Widgets-Rules' 'System-Settings-Rules' 'GeneralRules' 'Rubric-Rules');
-			group: 'Tests' with: #('Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment' 'SUnit-Rules-Tests');
+			group: 'Tests' with: #('Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment' 'SUnit-Rules-Tests' 'Refactoring-UI-Tests');
 			group: 'default' with: #('Rules' 'Tests') 
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #CollectionTest }
+Extension { #name : 'CollectionTest' }
 
-{ #category : #'*Random-Tests' }
+{ #category : '*Random-Tests' }
 CollectionTest >> testAtRandomWeighting [
 
 	| random collection hits |
@@ -22,7 +22,7 @@ CollectionTest >> testAtRandomWeighting [
 	self assert: (hits occurrencesOf: 4) equals: 412. "approx 40%"
 ]
 
-{ #category : #'*Random-Tests' }
+{ #category : '*Random-Tests' }
 CollectionTest >> testAtRandomWeightingEmpty [
 
 	| random collection |
@@ -34,7 +34,7 @@ CollectionTest >> testAtRandomWeightingEmpty [
 	self should: [  collection atRandom: random weighting: [ :x | x ] ] raise: Error.
 ]
 
-{ #category : #'*Random-Tests' }
+{ #category : '*Random-Tests' }
 CollectionTest >> testAtRandomWeightingMultiple [
 
 	| random collection hits |
@@ -54,7 +54,7 @@ CollectionTest >> testAtRandomWeightingMultiple [
 	self assert: (hits occurrencesOf: 5) equals: 495. "approx 50%"
 ]
 
-{ #category : #'*Random-Tests' }
+{ #category : '*Random-Tests' }
 CollectionTest >> testAtRandomWeightingNegative [
 
 	| random collection |

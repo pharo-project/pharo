@@ -2,12 +2,14 @@
 Groupbox without title with a vertical layout. Appears in a lighter colour than the owner's pane colour.
 "
 Class {
-	#name : #PlainGroupboxMorph,
-	#superclass : #PanelMorph,
-	#category : #'Polymorph-Widgets-Base'
+	#name : 'PlainGroupboxMorph',
+	#superclass : 'PanelMorph',
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PlainGroupboxMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
 
@@ -15,7 +17,7 @@ PlainGroupboxMorph >> adoptPaneColor: paneColor [
 	self borderStyle: (self theme plainGroupPanelBorderStyleFor: self)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PlainGroupboxMorph >> initialize [
 	"Initialize the receiver."
 
@@ -29,7 +31,7 @@ PlainGroupboxMorph >> initialize [
 		hResizing: #spaceFill
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PlainGroupboxMorph >> paneColorOrNil [
 	"Answer the window's pane color or nil otherwise."
 

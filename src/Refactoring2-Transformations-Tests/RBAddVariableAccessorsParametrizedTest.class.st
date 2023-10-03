@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddVariableAccessorsParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBAddVariableAccessorsParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBCreateAccessorsForVariableTransformation };
@@ -12,13 +14,13 @@ RBAddVariableAccessorsParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBAddVariableAccessorsParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsParametrizedTest >> testExistingClassVariableAccessors [
 
 	| refactoring |
@@ -31,7 +33,7 @@ RBAddVariableAccessorsParametrizedTest >> testExistingClassVariableAccessors [
 	self assertEmpty: refactoring changes changes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsParametrizedTest >> testExistingInstanceVariableAccessors [
 
 	| refactoring |
@@ -44,21 +46,21 @@ RBAddVariableAccessorsParametrizedTest >> testExistingInstanceVariableAccessors 
 	self assertEmpty: refactoring changes changes
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddVariableAccessorsParametrizedTest >> testFailureNonExistantClassVariable [
 
 	self shouldFail:
 		(rbClass classVariable: 'Foo' class: #RBBasicLintRuleTestData)
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBAddVariableAccessorsParametrizedTest >> testFailureNonExistantInstanceVariable [
 
 	self shouldFail:
 		(rbClass instanceVariable: 'foo' class: #RBBasicLintRuleTestData)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsParametrizedTest >> testNewClassVariableAccessors [
 
 	| refactoring class |
@@ -78,7 +80,7 @@ RBAddVariableAccessorsParametrizedTest >> testNewClassVariableAccessors [
 		equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddVariableAccessorsParametrizedTest >> testNewInstanceVariableAccessors [
 
 	| refactoring class |

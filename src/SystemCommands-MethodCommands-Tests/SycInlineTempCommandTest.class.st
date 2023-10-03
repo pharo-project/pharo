@@ -1,10 +1,11 @@
 Class {
-	#name : #SycInlineTempCommandTest,
-	#superclass : #TestCase,
-	#category : #'SystemCommands-MethodCommands-Tests'
+	#name : 'SycInlineTempCommandTest',
+	#superclass : 'TestCase',
+	#category : 'SystemCommands-MethodCommands-Tests',
+	#package : 'SystemCommands-MethodCommands-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycInlineTempCommandTest >> testCanExecuteOnArgumentNode [
 
 	| argNode sourceCodeContext |
@@ -14,7 +15,7 @@ SycInlineTempCommandTest >> testCanExecuteOnArgumentNode [
 	self deny: (SycInlineTempCommand canBeExecutedInContext: sourceCodeContext)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycInlineTempCommandTest >> testCanExecuteOnTemporaryNode [
 
 	| sourceCodeContext tempNode |

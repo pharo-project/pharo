@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfClassAnnotation }
+Package { #name : 'BaselineOfClassAnnotation' }

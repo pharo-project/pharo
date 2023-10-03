@@ -2,75 +2,77 @@
 A MCRemoval represents the removal of an entity of a given snapshot.
 "
 Class {
-	#name : #MCRemoval,
-	#superclass : #MCPatchOperation,
+	#name : 'MCRemoval',
+	#superclass : 'MCPatchOperation',
 	#instVars : [
 		'definition'
 	],
-	#category : #'Monticello-Patching'
+	#category : 'Monticello-Patching',
+	#package : 'Monticello',
+	#tag : 'Patching'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCRemoval class >> of: aDefinition [
 	^ self new intializeWithDefinition: aDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> baseDefinition [
 	^ definition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> basicApplyTo: anObject [
 	anObject removeDefinition: definition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> definition [
 	^ definition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> fromSource [
 	^ definition diffSource
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 MCRemoval >> intializeWithDefinition: aDefinition [
 	definition := aDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> inverse [
 	^ MCAddition of: definition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCRemoval >> isClassPatch [
 	^definition isClassDefinition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCRemoval >> isRemoval [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> summarySuffix [
 	^ ' (removed)'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> targetClass [
 	^ definition actualClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> targetDefinition [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemoval >> toSource [
 	^ ''
 ]

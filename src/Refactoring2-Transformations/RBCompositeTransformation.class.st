@@ -9,16 +9,18 @@ For example do we push up instance variable when we push up a method that uses s
 
 "
 Class {
-	#name : #RBCompositeTransformation,
-	#superclass : #RBTransformation,
+	#name : 'RBCompositeTransformation',
+	#superclass : 'RBTransformation',
 	#instVars : [
 		'previousTransformations',
 		'transformations'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeTransformation class >> model: aRBModel with: aCollection [
 
 	^ self new
@@ -27,7 +29,7 @@ RBCompositeTransformation class >> model: aRBModel with: aCollection [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCompositeTransformation class >> with: aCollection [
 
 	^ self new
@@ -35,18 +37,18 @@ RBCompositeTransformation class >> with: aCollection [
 		yourself
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBCompositeTransformation >> buildTransformations [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeTransformation >> previousTransformations [
 	^ previousTransformations ifNil: [ previousTransformations := OrderedCollection new ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBCompositeTransformation >> privateTransform [
 	"in refactoring mode, the transformation can do its own precondition checking,
 	 therefore not needing checking from its containing transformations"
@@ -62,13 +64,13 @@ RBCompositeTransformation >> privateTransform [
 			generateChanges ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeTransformation >> transformations [
 
 	^ transformations ifNil: [ transformations := self buildTransformations ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeTransformation >> transformations: anObject [
 	transformations := anObject
 ]

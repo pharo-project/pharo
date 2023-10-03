@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameAndDeprecateClassTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRenameAndDeprecateClassTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameAndDeprecateClassTransformationTest >> testTransform [
 
 	| transformation class |
@@ -12,11 +14,10 @@ RBRenameAndDeprecateClassTransformationTest >> testTransform [
 		                   rename: self changeMockClass name
 		                   to: #RBRefactoringChangeMock2) generateChanges.
 
-	self assert: transformation model changes changes size equals: 10.
+	self assert: transformation model changes changes size equals: 7.
 
 	"old class"
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self deny: class isNil.
 	self assertEmpty: class selectors.
 	self assert: class superclass name equals: #RBRefactoringChangeMock2.

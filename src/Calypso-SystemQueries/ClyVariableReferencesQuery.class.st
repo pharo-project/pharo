@@ -28,48 +28,50 @@ Internal Representation and Key Implementation Points.
 	variableQuery:		<ClyVariableQuery>
 "
 Class {
-	#name : #ClyVariableReferencesQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyVariableReferencesQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'variableQuery'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClyVariableReferencesQuery class >> from: aScope toVariablesFrom: aVariableQuery [
 	^(self from: aScope)
 		variableQuery: aVariableQuery
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClyVariableReferencesQuery class >> of: aVariable [
 	^self ofAny: { aVariable }
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClyVariableReferencesQuery class >> of: aVariable from: aScope [
 	^self ofAny: { aVariable } from: aScope
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClyVariableReferencesQuery class >> ofAny: variables [
 	^self new
 		variableQuery: (ClyConstantQuery returning: variables)
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClyVariableReferencesQuery class >> ofAny: variables from: aScope [
 	^aScope adoptQuery: (self toVariablesFrom: (ClyConstantQuery returning: variables))
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClyVariableReferencesQuery class >> toVariablesFrom: aVariableQuery [
 	^self new
 		variableQuery: aVariableQuery
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyVariableReferencesQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -78,7 +80,7 @@ ClyVariableReferencesQuery >> = anObject [
 	^ variableQuery = anObject variableQuery
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyVariableReferencesQuery >> buildResult: aQueryResult [
 	| filteredMethods vars |
 	vars := variableQuery execute items.
@@ -90,40 +92,40 @@ ClyVariableReferencesQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: filteredMethods
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyVariableReferencesQuery >> description [
 
 	^'references to ', self printVariables
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableReferencesQuery >> doesMethod: aMethod useAnyOf: vars [
 
 	^vars anySatisfy: [ :each |
 		self doesMethod: aMethod useVar: each]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableReferencesQuery >> doesMethod: aMethod useVar: aVariable [
 
 	^aVariable isAccessedIn: aMethod
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyVariableReferencesQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: variableQuery hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyVariableReferencesQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	aStream nextPutAll: self printVariables
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyVariableReferencesQuery >> printVariables [
 
 	^variableQuery scope == scope
@@ -131,7 +133,7 @@ ClyVariableReferencesQuery >> printVariables [
 		ifFalse: [ variableQuery fullDescription ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableReferencesQuery >> selectsMethod: aMethod [
 
 	| vars |
@@ -140,12 +142,12 @@ ClyVariableReferencesQuery >> selectsMethod: aMethod [
 	^self doesMethod: aMethod useAnyOf: vars items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariableReferencesQuery >> variableQuery [
 	^ variableQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariableReferencesQuery >> variableQuery: aVariableQuery [
 	variableQuery := aVariableQuery
 ]

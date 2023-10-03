@@ -2,8 +2,8 @@
 i am used to render freetype glyphs using balloon primitives.
 "
 Class {
-	#name : #FT2GlyphRenderer,
-	#superclass : #GlyphRenderer,
+	#name : 'FT2GlyphRenderer',
+	#superclass : 'GlyphRenderer',
 	#instVars : [
 		'pixelSize',
 		'form',
@@ -25,28 +25,30 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : #'Athens-Balloon-Text'
+	#category : 'Athens-Balloon-Text',
+	#package : 'Athens-Balloon',
+	#tag : 'Text'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FT2GlyphRenderer class >> forFont: aFont surface: aSurface [
 
 	^ self new initForFont: aFont surface: aSurface
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2GlyphRenderer >> clearBitmap [
 
 	form bits atAllPut: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2GlyphRenderer >> form [
 
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2GlyphRenderer >> getAdvance [
 	"aPoint is a text origin in user's coordinate system,
 	and anvance is accumulated advance came from another renderer instance, expressed in surface's coordinate system"
@@ -56,7 +58,7 @@ FT2GlyphRenderer >> getAdvance [
 	^ pt
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 
 	self assert: (aFont class == FreeTypeFont).
@@ -89,13 +91,13 @@ FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 	translation := IntegerArray new: 2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2GlyphRenderer >> loadSlotInfo [
 
 	slot loadFrom: font face
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2GlyphRenderer >> loadSurfaceTransform [
 	| m org xaxis yaxis sum xmin xmax ymin ymax formW formH fix face bbox |
 
@@ -152,7 +154,7 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 		at: 4 put: (m sy * fix) rounded
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2GlyphRenderer >> loadUnicode: unicode [
 
 	| flags face |
@@ -167,13 +169,13 @@ FT2GlyphRenderer >> loadUnicode: unicode [
 	self loadSlotInfo
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2GlyphRenderer >> pixelValue32Of: aColor [
 
 	^ aColor pixelWordForDepth: 32
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2GlyphRenderer >> renderGlyphsIn: text from: start to: stop [
 
 	| face |
@@ -209,7 +211,7 @@ FT2GlyphRenderer >> renderGlyphsIn: text from: start to: stop [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2GlyphRenderer >> setColor: color [
 	"Set the color which will be used to render glyphs."
 
@@ -228,7 +230,7 @@ FT2GlyphRenderer >> setColor: color [
 "	colorMap at: 1 put: (Color red  alpha: 0.1) pixelValue32."
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2GlyphRenderer >> setPosition: aPoint advance: advancePt baseline: baselineOffset [
 	"aPoint is a text origin in user's coordinate system,
 	and andvance is accumulated advance came from another renderer instance, expressed in surface's coordinate system"

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveProtocolTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveProtocolTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveProtocolTransformationTest >> testRefactoring [
 
 	| refactoring |
@@ -20,7 +22,7 @@ RBRemoveProtocolTransformationTest >> testRefactoring [
 	self assert: refactoring model changes changes size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveProtocolTransformationTest >> testTransform [
 
 	| transformation |

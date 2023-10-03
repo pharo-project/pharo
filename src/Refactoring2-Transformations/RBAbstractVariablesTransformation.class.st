@@ -2,8 +2,8 @@
 My responsibility is to add accessors to all variables both on instance and class side and then convert direct accesses to those variables to generated accessors.
 "
 Class {
-	#name : #RBAbstractVariablesTransformation,
-	#superclass : #RBTransformation,
+	#name : 'RBAbstractVariablesTransformation',
+	#superclass : 'RBTransformation',
 	#instVars : [
 		'tree',
 		'fromClass',
@@ -14,10 +14,12 @@ Class {
 		'toClasses',
 		'ignore'
 	],
-	#category : #'Refactoring2-Transformations-To be removed'
+	#category : 'Refactoring2-Transformations-To be removed',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'To be removed'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAbstractVariablesTransformation class >> model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection [
 	^self
 		model: aRBModel
@@ -27,7 +29,7 @@ RBAbstractVariablesTransformation class >> model: aRBModel abstractVariablesIn: 
 		ignoring: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAbstractVariablesTransformation class >> model: aRBSmalltalk abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 	^ self new
 		model: aRBSmalltalk;
@@ -38,7 +40,7 @@ RBAbstractVariablesTransformation class >> model: aRBSmalltalk abstractVariables
 		yourself
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> abstractClassVariable: aString [
 
 	| transformation rewriter nonMetaClass |
@@ -67,7 +69,7 @@ RBAbstractVariablesTransformation >> abstractClassVariable: aString [
 	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> abstractClassVariables [
 	| variables |
 	(classVarReaders isEmpty and: [ classVarWriters isEmpty ])
@@ -79,7 +81,7 @@ RBAbstractVariablesTransformation >> abstractClassVariables [
 	variables do: [ :each | self abstractClassVariable: each ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> abstractInstanceVariable: aString [
 
 	| transformation rewriter |
@@ -98,7 +100,7 @@ RBAbstractVariablesTransformation >> abstractInstanceVariable: aString [
 	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> abstractInstanceVariables [
 	| variables |
 	(instVarReaders isEmpty and: [ instVarWriters isEmpty ])
@@ -110,7 +112,7 @@ RBAbstractVariablesTransformation >> abstractInstanceVariables [
 	variables do: [ :each | self abstractInstanceVariable: each ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 
 	| poolTransformation |
@@ -127,14 +129,14 @@ RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: f
 	self computeVariablesToAbstract
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> classVariableNames [
 	| nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
 	^ (nonMetaClass allClassVariableNames collect: [ :each | each asString ]) asSet
 ]
 
-{ #category : #'for driver' }
+{ #category : 'for driver' }
 RBAbstractVariablesTransformation >> computeVariablesToAbstract [
 	| searcher |
 	instVarReaders := Set new.
@@ -151,22 +153,22 @@ RBAbstractVariablesTransformation >> computeVariablesToAbstract [
 	self removeDefinedClassVariables
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> hasVariablesToAbstract [
 	^ instVarReaders notEmpty or: [ instVarWriters notEmpty or: [ classVarReaders notEmpty or: [ classVarWriters notEmpty ] ] ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> instanceVariableNames [
 	^fromClass allInstanceVariableNames asSet
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> parseTree [
 	^tree
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBAbstractVariablesTransformation >> privateTransform [
 	self flag: #popUp.
 	self hasVariablesToAbstract
@@ -178,7 +180,7 @@ RBAbstractVariablesTransformation >> privateTransform [
 	self abstractClassVariables
 ]
 
-{ #category : #'for driver' }
+{ #category : 'for driver' }
 RBAbstractVariablesTransformation >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
@@ -190,7 +192,7 @@ RBAbstractVariablesTransformation >> processAssignmentNode: aNode [
 		ifTrue: [classVarWriters add: varName]
 ]
 
-{ #category : #'for driver' }
+{ #category : 'for driver' }
 RBAbstractVariablesTransformation >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
@@ -202,7 +204,7 @@ RBAbstractVariablesTransformation >> processReferenceNode: aNode [
 		ifTrue: [classVarReaders add: varName]
 ]
 
-{ #category : #'for driver' }
+{ #category : 'for driver' }
 RBAbstractVariablesTransformation >> removeDefinedClassVariables [
 	| selectionBlock nonMetaClass |
 	nonMetaClass := fromClass instanceSide.

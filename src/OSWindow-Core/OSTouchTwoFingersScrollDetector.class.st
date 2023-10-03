@@ -6,27 +6,29 @@ I send these event back to my handler:
 	- OSTouchTwoFingersScrollEndEvent 
 "
 Class {
-	#name : #OSTouchTwoFingersScrollDetector,
-	#superclass : #OSTouchScrollDetector,
-	#category : #'OSWindow-Core-Gestures'
+	#name : 'OSTouchTwoFingersScrollDetector',
+	#superclass : 'OSTouchScrollDetector',
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchTwoFingersScrollDetector >> eventClassBeginGesture [
 	^ OSTouchTwoFingersScrollBeginEvent
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchTwoFingersScrollDetector >> eventClassEndGesture [
 	^ OSTouchTwoFingersScrollEndEvent
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchTwoFingersScrollDetector >> eventClassMoveGesture [
 	^ OSTouchTwoFingersScrollMoveEvent
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchTwoFingersScrollDetector >> necessaryFingers [
 	^ 2
 ]

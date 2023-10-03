@@ -2,28 +2,29 @@
 I am a command to move method to the instance side of defining class
 "
 Class {
-	#name : #SycMoveMethodsToInstanceSideCommand,
-	#superclass : #SycMethodCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycMoveMethodsToInstanceSideCommand',
+	#superclass : 'SycMethodCommand',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMoveMethodsToInstanceSideCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
 		and: [ aToolContext isClassSideMethodSelected ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToInstanceSideCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
 	^'Move to instance side'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToInstanceSideCommand >> execute [
 
 	methods

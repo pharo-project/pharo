@@ -4,47 +4,49 @@ A Pharo AST visitor used internally to compute the callgraph of nodes.
 See `CoverageCollector>>#callgraph` for details.
 "
 Class {
-	#name : #SequenceGraphVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'SequenceGraphVisitor',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'edges',
 		'currentNode',
 		'collector'
 	],
-	#category : #'Coverage-Base'
+	#category : 'Coverage-Base',
+	#package : 'Coverage',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SequenceGraphVisitor >> collector [
 
 	^ collector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SequenceGraphVisitor >> collector: anObject [
 
 	collector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SequenceGraphVisitor >> edges [
 
 	^ edges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SequenceGraphVisitor >> edges: anObject [
 
 	edges := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SequenceGraphVisitor >> initialize [
 
 	edges := OrderedCollection new.
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SequenceGraphVisitor >> visitMessageNode: aMessageNode [
 
 	"Visit recusively"
@@ -61,7 +63,7 @@ SequenceGraphVisitor >> visitMessageNode: aMessageNode [
 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SequenceGraphVisitor >> visitSequenceNode: aSequenceNode [
 
 	"Dot not visit sub-sequences, just mark an edge"

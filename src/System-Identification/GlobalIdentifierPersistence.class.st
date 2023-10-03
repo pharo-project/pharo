@@ -26,50 +26,51 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #GlobalIdentifierPersistence,
-	#superclass : #Object,
+	#name : 'GlobalIdentifierPersistence',
+	#superclass : 'Object',
 	#instVars : [
 		'preferences',
 		'previousPersistence',
 		'checker'
 	],
-	#category : #'System-Identification'
+	#category : 'System-Identification',
+	#package : 'System-Identification'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlobalIdentifierPersistence class >> fuel [
 	^ GlobalIdentifierFuelPersistence new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlobalIdentifierPersistence class >> ston [
 	^ GlobalIdentifierStonPersistence new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistence >> checker [
 	"Return a GlobalIdentifierPersistenceChecker object."
 	^ checker ifNil: [ checker := GlobalIdentifierPersistenceChecker new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistence >> checker: aGlobalIdentifierPersistenceChecker [
 	checker := aGlobalIdentifierPersistenceChecker
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 GlobalIdentifierPersistence >> defaultPreferences [
 	^ FileLocator preferences / 'pharo' / self fileName
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 GlobalIdentifierPersistence >> delete [
 	"self deletePreferences"
 	[ self preferences ensureDelete ]
 	on: Error do: [ "ignore" ]
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifierPersistence >> ensure: globalIdentifier [
 	"It proceeds all backward compatibility work."
 	self shouldCallPreviousPersistence ifTrue: [
@@ -77,22 +78,22 @@ GlobalIdentifierPersistence >> ensure: globalIdentifier [
 	self load: globalIdentifier
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 GlobalIdentifierPersistence >> ensureDirectory [
 	self preferences parent ensureCreateDirectory
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 GlobalIdentifierPersistence >> fileName [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlobalIdentifierPersistence >> hasPreviousPersistence [
 	^ previousPersistence notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlobalIdentifierPersistence >> isEnabled [
 	"If HOME directory does not exists, ignore the persistence mechanism.
 	HOME directory may not exists in case of a server deployment.
@@ -100,13 +101,13 @@ GlobalIdentifierPersistence >> isEnabled [
 	^ self checker isEnabled
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifierPersistence >> load [
 	"It loads and returns stored dictionary."
 	^ self subclassResponsibility
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifierPersistence >> load: globalIdentifier [
 	"It loads stored information into existingDictionary."
 	self isEnabled ifFalse: [ ^ self ].
@@ -125,14 +126,14 @@ GlobalIdentifierPersistence >> load: globalIdentifier [
 		self mayOverwrite: globalIdentifier persistedInformation ]
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifierPersistence >> mayOverwrite: aDictionary [
 	"If I keep previous persistence strategy, I am the main one and I can overwrite the current preference file.
 	I am called only on loading failure; it means when I cannot load preference file."
 	self hasPreviousPersistence ifTrue: [ self save: aDictionary ]
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 GlobalIdentifierPersistence >> mergeExisting: globalIdentifier stored: storedDictionary [
 
 	"If the stored version does not have a computerUUID, we have to ensure the new one
@@ -146,33 +147,33 @@ GlobalIdentifierPersistence >> mergeExisting: globalIdentifier stored: storedDic
 			merge
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistence >> preferences [
 	^ preferences ifNil: [ preferences := self defaultPreferences ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistence >> preferences: anObject [
 	preferences := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistence >> preferencesContents [
 
 	^ self preferences binaryReadStreamDo: [ :stream | stream contents ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistence >> previous [
 	^ previousPersistence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistence >> previous: aGlobalIdentifierPersistence [
 	previousPersistence := aGlobalIdentifierPersistence
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifierPersistence >> save: aDictionary [
 	self isEnabled ifFalse: [ ^ self ].
 	self delete.
@@ -181,13 +182,13 @@ GlobalIdentifierPersistence >> save: aDictionary [
 			self save: aDictionary into: aPreferenceStream ]
 ]
 
-{ #category : #'load and saving' }
+{ #category : 'load and saving' }
 GlobalIdentifierPersistence >> save: aDictionary into: aWriteStream [
 	"Saves aDictionary into aWriteStream"
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlobalIdentifierPersistence >> shouldCallPreviousPersistence [
 	^ self preferences exists not and: [ self hasPreviousPersistence ]
 ]

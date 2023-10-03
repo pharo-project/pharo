@@ -1,20 +1,22 @@
 Class {
-	#name : #EpLogTest,
-	#superclass : #TestCase,
+	#name : 'EpLogTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'log',
 		'logBuilder'
 	],
-	#category : #'Epicea-Tests-Log'
+	#category : 'Epicea-Tests-Log',
+	#package : 'Epicea-Tests',
+	#tag : 'Log'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 EpLogTest class >> shouldLogWithEpicea [
 
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpLogTest >> setUp [
 	super setUp.
 
@@ -22,24 +24,24 @@ EpLogTest >> setUp [
 	log := logBuilder oneTriggerWithFourChildrenLog
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpLogTest >> tearDown [
 
 	logBuilder cleanUp.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testEntries [
 	self assert: log entries size equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testEntriesCount [
 	self assert: log entriesCount equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testEntryReferences [
 
 	| entryReferences entries |
@@ -55,14 +57,14 @@ EpLogTest >> testEntryReferences [
 	self assert: entryReferences size equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testFirstEntryIfAbsent [
 	self
 		assert: (log firstEntryIfAbsent: [ self fail ])
 		equals: log entries first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testFromDetect [
 	| reference isPrior entry |
 	reference := log priorReferenceAt: log head.
@@ -83,7 +85,7 @@ EpLogTest >> testFromDetect [
 		equals: (log entryFor: (log priorReferenceAt: entry))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testFromDetectIfNotFound [
 	| reference |
 	reference := log priorReferenceAt: log head.
@@ -96,7 +98,7 @@ EpLogTest >> testFromDetectIfNotFound [
 		equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testFromHeadDetect [
 
 	" Assert for head "
@@ -105,7 +107,7 @@ EpLogTest >> testFromHeadDetect [
 		equals: log head
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testFromHeadDetectIfNotFound [
 
 	" Assert for getting 42 when entry is not found. "
@@ -116,7 +118,7 @@ EpLogTest >> testFromHeadDetectIfNotFound [
 		equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testFromNullReferenceDetectNotFound [
 
 	self
@@ -124,19 +126,19 @@ EpLogTest >> testFromNullReferenceDetectNotFound [
 		raise: KeyNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testHeadReference [
 	self deny: log headReference isNull
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testPriorEntriesFromNullReferenceIsEmpty [
 	| priorEntries |
 	priorEntries := log priorEntriesFrom: log nullReference.
 	self assertEmpty: priorEntries
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testShouldKeepHeadReferenceAfterReOpen [
 	| anotherLog |
 
@@ -145,7 +147,7 @@ EpLogTest >> testShouldKeepHeadReferenceAfterReOpen [
 	self assert: anotherLog headReference equals: log headReference
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLogTest >> testShouldKeepHeadReferenceAfterRefresh [
 	| headReference |
 	headReference := log headReference.

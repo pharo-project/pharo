@@ -1,10 +1,11 @@
 Class {
-	#name : #RGMCTraitCompositionVisitorTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGMCTraitCompositionVisitorTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testAlias [
 
 	| composition result |
@@ -22,7 +23,7 @@ RGMCTraitCompositionVisitorTest >> testAlias [
 	self assert: result first aliases first equals: (#a -> #c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testAliasWithMultipleAliases [
 
 	| composition result |
@@ -42,7 +43,7 @@ RGMCTraitCompositionVisitorTest >> testAliasWithMultipleAliases [
 	self assert: result first aliases second equals: (#c: -> #d:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testClassTrait [
 
 	| composition result |
@@ -55,7 +56,7 @@ RGMCTraitCompositionVisitorTest >> testClassTrait [
 	self assert: (result collect: [:each | each name]) equals: #('Trait1 classTrait' 'Trait2 classTrait') asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testComplexDefinition [
 	| composition result |
 	composition := RGTraitComposition unnamed.
@@ -84,7 +85,7 @@ RGMCTraitCompositionVisitorTest >> testComplexDefinition [
 	self assert: result third exclusions asArray equals: #(#e #f:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testEmpty [
 
 	| composition result |
@@ -102,7 +103,7 @@ RGMCTraitCompositionVisitorTest >> testEmpty [
 	self assert: result isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testExclusion [
 	| composition result |
 	composition := RGTraitComposition unnamed.
@@ -118,7 +119,7 @@ RGMCTraitCompositionVisitorTest >> testExclusion [
 	self assert: result first exclusions asArray equals: #(#c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testExclusionWithLiteralArray [
 	| composition result |
 	composition := RGTraitComposition unnamed.
@@ -134,7 +135,7 @@ RGMCTraitCompositionVisitorTest >> testExclusionWithLiteralArray [
 	self assert: result first exclusions asArray equals: #(#c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testExclusionWithMultipleExclusions [
 	| composition result |
 	composition := RGTraitComposition unnamed.
@@ -150,7 +151,7 @@ RGMCTraitCompositionVisitorTest >> testExclusionWithMultipleExclusions [
 	self assert: result first exclusions asArray equals: #(#a #b: #c:d:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testMultipleTraits [
 
 	| composition result |
@@ -166,7 +167,7 @@ RGMCTraitCompositionVisitorTest >> testMultipleTraits [
 	self assert: (result collect: [:each | each name ]) equals: #(Trait1 Trait2 Trait3 Trait4) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testSingleTrait [
 
 	| composition result |
@@ -180,7 +181,7 @@ RGMCTraitCompositionVisitorTest >> testSingleTrait [
 	self assert: (result collect: [:each | each name]) equals: #(Trait1) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testTwoTraits [
 
 	| composition result |

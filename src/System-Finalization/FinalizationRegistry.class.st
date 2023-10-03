@@ -44,32 +44,34 @@ When the GC detects an object of interest is going to be collected, the `Finaliz
 I procceed to send #finalize to the finalizer, and remove the entry from myself.
 "
 Class {
-	#name : #FinalizationRegistry,
-	#superclass : #Object,
+	#name : 'FinalizationRegistry',
+	#superclass : 'Object',
 	#instVars : [
-		'ephemeronCollection',
 		'semaphore',
-		'errorHandler'
+		'errorHandler',
+		'ephemeronListHead'
 	],
 	#classVars : [
 		'Default'
 	],
-	#category : #'System-Finalization-Registry'
+	#category : 'System-Finalization-Registry',
+	#package : 'System-Finalization',
+	#tag : 'Registry'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry class >> default [
 
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> add: anObject [
 
 	^ self add: anObject finalizer: anObject finalizer
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> add: anObject executor: finalizer [
 
 	self
@@ -79,27 +81,41 @@ FinalizationRegistry >> add: anObject executor: finalizer [
 	^ self add: anObject finalizer: finalizer
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> add: anObject finalizer: finalizer [
 
-	self protected: [ 
-		ephemeronCollection add:
-			(FinalizationRegistryEntry key: anObject value: finalizer container: self) ].
+	self protected: [ | newEntry |
+		newEntry := FinalizationRegistryEntry key: anObject value: finalizer container: self.
+		ephemeronListHead chainNext: newEntry.
+	].
 	^ anObject
 ]
 
-{ #category : #finalization }
+{ #category : 'adding' }
+FinalizationRegistry >> ephemeronAtKey: aKey [
+	| current |
+	current := ephemeronListHead.
+	[ current notNil ] whileTrue: [
+		current key == aKey
+			ifTrue: [ ^ current ].
+		current := current next
+	].
+	"Not found"
+	^ nil
+]
+
+{ #category : 'finalization' }
 FinalizationRegistry >> errorHandler [
 	
 	^ errorHandler ifNil: [ self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry >> errorHandler: anErrorHandler [ 
 	errorHandler := anErrorHandler
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FinalizationRegistry >> finalizeEphemeron: anEphemeron [
 
 	"Finalize the ephemeron finalizer and remove it from myself.
@@ -110,49 +126,52 @@ FinalizationRegistry >> finalizeEphemeron: anEphemeron [
 		anEphemeron value finalize ]
 ]
 
-{ #category : #'private - synchronization' }
+{ #category : 'private - synchronization' }
 FinalizationRegistry >> handleErrorsDuring: aBlock [
 
-	aBlock	 on: Error fork: [ :e | e pass ]
+	aBlock on: Error fork: [ :e | e pass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinalizationRegistry >> includes: anObject [
 
-    ^ ephemeronCollection anySatisfy: [ :entry | entry key == anObject ]
+    ^ ephemeronListHead includes: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FinalizationRegistry >> initialize [
 
 	super initialize.
-	ephemeronCollection := IdentitySet new.
+
+	"We have a head with an empty entry, this is to keep the linked list only"
+	ephemeronListHead := FinalizationRegistryEntry new.
+
 	semaphore := Semaphore forMutualExclusion.
 	errorHandler := self.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinalizationRegistry >> isEmpty [
-	
-	^ ephemeronCollection isEmpty
+		
+	^ ephemeronListHead next isNil
 ]
 
-{ #category : #adding }
+{ #category : 'accessing' }
 FinalizationRegistry >> keys [
 
-	^ ephemeronCollection collect: [ :e | e key ]
+	^ ephemeronListHead keys
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FinalizationRegistry >> postCopy [
-	"should we prohibit any attempts to copy receiver?"
+	"should we prohibit any attempts to copy the receiver?"
 	self protected: [
 		semaphore := Semaphore forMutualExclusion.
-		ephemeronCollection := ephemeronCollection copy
+		ephemeronListHead := ephemeronListHead copy
 	]
 ]
 
-{ #category : #'private - synchronization' }
+{ #category : 'private - synchronization' }
 FinalizationRegistry >> protected: aBlock [
 	"Execute aBlock protected by the accessLock"
 
@@ -161,31 +180,34 @@ FinalizationRegistry >> protected: aBlock [
 		ifError: [ :err | err signal ]
 ]
 
-{ #category : #adding }
-FinalizationRegistry >> remove: anEphemeron ifAbsent: aBlock [
-
-	^ self protected: [ ephemeronCollection remove: anEphemeron ifAbsent: aBlock ]
+{ #category : 'adding' }
+FinalizationRegistry >> remove: aKey ifAbsent: aBlock [
+	| ephemeron |
+	ephemeron := self ephemeronAtKey: aKey.
+	ephemeron ifNil: [ ^ aBlock value ].
+	^ self removeEphemeron: ephemeron
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> removeEphemeron: anEphemeron [
 
-	self protected: [ ephemeronCollection remove: anEphemeron ]
+	self protected: [ 
+		anEphemeron removeFromChain ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry >> size [
 
-	^ ephemeronCollection size
+	^ ephemeronListHead size - 1 "The head does not count"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry >> values [
 
-	^ ephemeronCollection collect: [ :e | e value ]
+	^ ephemeronListHead values
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FinalizationRegistry >> valuesDo: aBlock [
 
 	^ self values do: aBlock

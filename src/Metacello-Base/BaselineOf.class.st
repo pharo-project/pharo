@@ -66,12 +66,13 @@ reference](MetacelloScriptingAPI.md). There more information on [working with Gi
 
 "
 Class {
-	#name : #BaselineOf,
-	#superclass : #ConfigurationOf,
-	#category : #'Metacello-Base'
+	#name : 'BaselineOf',
+	#superclass : 'ConfigurationOf',
+	#category : 'Metacello-Base',
+	#package : 'Metacello-Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOf class >> validate [
   "Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
 	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
@@ -88,7 +89,7 @@ BaselineOf class >> validate [
     recurse: false) inspect
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOf >> baseline: spec [
 	<baseline>
 	"subclasses should redefine me"
@@ -106,18 +107,18 @@ BaselineOf >> baseline: spec [
 	"
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOf >> pharoVersionsFrom: aVersion [
 
 	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOf >> projectClass [
     ^ MetacelloMCBaselineProject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOf >> versionNumberClass [
     ^ MetacelloVersionNumber
 ]

@@ -15,8 +15,8 @@ BMPReadWriter
 (ImageMorph withForm: (BMPReadWriter formFromFileNamed: '/tmp/screenshot.bmp')) openInWindow.
 "
 Class {
-	#name : #BMPReadWriter,
-	#superclass : #ImageReadWriter,
+	#name : 'BMPReadWriter',
+	#superclass : 'ImageReadWriter',
 	#instVars : [
 		'bfType',
 		'bfSize',
@@ -33,10 +33,11 @@ Class {
 		'biClrUsed',
 		'biClrImportant'
 	],
-	#category : #'Graphics-Files'
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 BMPReadWriter class >> displayAllFrom: fd [
 	"BMPReadWriter displayAllFrom: FileDirectory default"
 	fd fileNames do:[:fName|
@@ -49,7 +50,7 @@ BMPReadWriter class >> displayAllFrom: fd [
 	]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BMPReadWriter class >> readAllFrom: fd [
 	"MessageTally spyOn:[BMPReadWriter readAllFrom: FileDirectory default]"
 	fd fileNames do:[:fName|
@@ -62,13 +63,13 @@ BMPReadWriter class >> readAllFrom: fd [
 	]
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 BMPReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
 	^#('bmp')
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 BMPReadWriter >> nextImage [
 	| colors |
 	self readHeader.
@@ -78,7 +79,7 @@ BMPReadWriter >> nextImage [
 	^self readIndexedBmpFile: colors
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 BMPReadWriter >> nextPutImage: aForm [
 	| bhSize rowBytes rgb data colorValues depth image ppw scanLineLen pixline |
 	depth := aForm depth.
@@ -137,7 +138,7 @@ BMPReadWriter >> nextPutImage: aForm [
 	]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 BMPReadWriter >> read24BmpFile [
 	"Read 24-bit pixel data from the given a BMP stream."
 	| form formBits pixelLine bitsIndex bitBlt |
@@ -165,7 +166,7 @@ BMPReadWriter >> read24BmpFile [
 	^ form
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 BMPReadWriter >> read24BmpLine: pixelLine into: formBits startingAt: formBitsIndex width: width [
 	"Swizzles the bytes in a 24bpp scanline and fills in the given 32bpp form bits. Ensures that color black is represented as 16rFF000001 so that Form paint works properly."
 	<primitive: 'primitiveRead24BmpLine' module:'BMPReadWriterPlugin'>
@@ -181,7 +182,7 @@ BMPReadWriter >> read24BmpLine: pixelLine into: formBits startingAt: formBitsInd
 		formBits at: (bitsIndex := bitsIndex+1) put: rgb]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 BMPReadWriter >> readColorMap [
 	"Read colorCount BMP color map entries from the given binary stream. Answer an array of Colors."
 	| colorCount colors maxLevel b g r ccStream |
@@ -218,7 +219,7 @@ BMPReadWriter >> readColorMap [
 	^ colors
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 BMPReadWriter >> readHeader [
 
 	bfType := self nextLittleEndianNumber: 2.
@@ -238,7 +239,7 @@ BMPReadWriter >> readHeader [
 	biClrImportant := self nextLittleEndianNumber: 4
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 BMPReadWriter >> readIndexedBmpFile: colors [
 	"Read uncompressed pixel data of depth d from the given BMP stream, where d is 1, 4, 8, or 16"
 	| form bytesPerRow pixelData pixelLine startIndex map bitBlt mask |
@@ -291,7 +292,7 @@ BMPReadWriter >> readIndexedBmpFile: colors [
 	^ form
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 BMPReadWriter >> store24BitBmpLine: pixelLine from: formBits startingAt: formBitsIndex width: width [
 	"Stores a single scanline containing 32bpp RGBA values in a 24bpp scanline. Swizzles the bytes as needed."
 	<primitive: 'primitiveWrite24BmpLine' module:'BMPReadWriterPlugin'>
@@ -307,7 +308,7 @@ BMPReadWriter >> store24BitBmpLine: pixelLine from: formBits startingAt: formBit
 	]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BMPReadWriter >> understandsImageFormat [
 	self readHeader.
 	bfType = 19778 "BM" ifFalse:[^false].

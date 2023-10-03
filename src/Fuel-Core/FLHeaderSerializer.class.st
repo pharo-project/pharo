@@ -4,12 +4,14 @@ I am a specialization of FLSerializer that knows how to serializer the header.
 I copy the current configuration and manipulated some values to make the configuration works for header serialization. I also prevent recursive header serialization.
 "
 Class {
-	#name : #FLHeaderSerializer,
-	#superclass : #FLSerializer,
-	#category : #'Fuel-Core-Configuration'
+	#name : 'FLHeaderSerializer',
+	#superclass : 'FLSerializer',
+	#category : 'Fuel-Core-Configuration',
+	#package : 'Fuel-Core',
+	#tag : 'Configuration'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLHeaderSerializer >> initialize [
 	super initialize.
 	
@@ -23,7 +25,7 @@ FLHeaderSerializer >> initialize [
 	self prepare
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLHeaderSerializer >> prepare [
 	#(
 		object
@@ -40,7 +42,7 @@ FLHeaderSerializer >> prepare [
 			ifAbsent: [] ]
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 FLHeaderSerializer >> serialize [
 	(FLCurrentConfiguration value isMemberOf: self class) ifTrue: [
 		"prevent recursion"
@@ -51,12 +53,12 @@ FLHeaderSerializer >> serialize [
 	super serialize
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 FLHeaderSerializer >> shouldFinalizeStream [
 	^ false
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 FLHeaderSerializer >> useDuring: aBlock [
 	| stream |
 	stream := FLCurrentContext value stream.

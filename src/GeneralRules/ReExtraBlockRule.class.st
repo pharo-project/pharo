@@ -3,19 +3,21 @@ Check for blocks that are immediately evaluated. Since the block is immediately 
 For example, [:x | 1 + x] value: 4 is equivalent to 1 + 4
 "
 Class {
-	#name : #ReExtraBlockRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReExtraBlockRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExtraBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ExtraBlockRule'
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ReExtraBlockRule >> basicCheck: node [
 	node isMessage ifFalse: [ ^ false ].
 	node receiver isBlock ifFalse: [ ^ false ].
@@ -23,7 +25,7 @@ ReExtraBlockRule >> basicCheck: node [
 	^ self blockEvaluatingMessages includes: node selector
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ReExtraBlockRule >> blockEvaluatingMessages [
 	^ #(value
 	value: value:value: value:value:value: value:value:value:value:
@@ -31,17 +33,17 @@ ReExtraBlockRule >> blockEvaluatingMessages [
 	#valueWithArguments: valueWithPossibleArgs: valueWithPossibleArgument)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExtraBlockRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExtraBlockRule >> name [
 	^ 'Block immediately evaluated'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExtraBlockRule >> severity [
 	^ #information
 ]

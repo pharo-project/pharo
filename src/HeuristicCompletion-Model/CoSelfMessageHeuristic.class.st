@@ -5,18 +5,20 @@ I provide a fetcher for messages for the hierarchy of self class.
 See my superclass for details.
 "
 Class {
-	#name : #CoSelfMessageHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoSelfMessageHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoSelfMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ aNode receiver isSelfVariable
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoSelfMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 	| completionClass |
 

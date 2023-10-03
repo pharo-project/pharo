@@ -25,35 +25,37 @@ The action block can takes 3 parameters:
 - The selected element on the table
 "
 Class {
-	#name : #FTActionFilterFunction,
-	#superclass : #FTFilterFunction,
+	#name : 'FTActionFilterFunction',
+	#superclass : 'FTFilterFunction',
 	#instVars : [
 		'actionButton',
 		'actionBlock'
 	],
-	#category : #'Morphic-Widgets-FastTable-Functions'
+	#category : 'Morphic-Widgets-FastTable-Functions',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Functions'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FTActionFilterFunction class >> initialize [
 
 	self deprecatedAliases: { #FTFilterFunctionWithAction }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTActionFilterFunction class >> table: aFTTableMorph action: aBlockClosure named: aString [
 	^ (self table: aFTTableMorph)
 		action: aBlockClosure named: aString;
 		yourself
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 FTActionFilterFunction >> action: aBlockClosure named: aString [
 	actionBlock := aBlockClosure.
 	self initializeActionButtonNamed: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTActionFilterFunction >> beExplicit [
 	super beExplicit.
 	table addMorph: actionButton.
@@ -61,7 +63,7 @@ FTActionFilterFunction >> beExplicit [
 		ifTrue: [ table selectIndex: 1 ]
 ]
 
-{ #category : #execute }
+{ #category : 'execute' }
 FTActionFilterFunction >> execute [
 	actionBlock
 		cull: table dataSource
@@ -72,7 +74,7 @@ FTActionFilterFunction >> execute [
 				ifTrue: [ nil ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTActionFilterFunction >> initializeActionButtonNamed: aString [
 	actionButton := PluggableButtonMorph
 		newButtonFor: self
@@ -81,7 +83,7 @@ FTActionFilterFunction >> initializeActionButtonNamed: aString [
 		help: nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTActionFilterFunction >> resizeButton [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
@@ -90,7 +92,7 @@ FTActionFilterFunction >> resizeButton [
 	actionButton bounds: (topLeft corner: bottomRight)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTActionFilterFunction >> resizeField [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
@@ -100,13 +102,13 @@ FTActionFilterFunction >> resizeField [
 	field bounds: (topLeft corner: bottomRight)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTActionFilterFunction >> resizeWidget [
 	self resizeField.
 	self resizeButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTActionFilterFunction >> showWidget [
 	super showWidget.
 	table addMorph: actionButton.

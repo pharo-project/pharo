@@ -2,12 +2,14 @@
 A KeyboardKeyTest is a test class for testing the behavior of KeyboardKey
 "
 Class {
-	#name : #KeyboardKeyTest,
-	#superclass : #TestCase,
-	#category : #'System-Platforms-Tests-Utilities'
+	#name : 'KeyboardKeyTest',
+	#superclass : 'TestCase',
+	#category : 'System-Platforms-Tests-Utilities',
+	#package : 'System-Platforms-Tests',
+	#tag : 'Utilities'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyboardKeyTest >> testEqual [
 
 	self
@@ -17,7 +19,7 @@ KeyboardKeyTest >> testEqual [
 			yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyboardKeyTest >> testNamed [
 	"These assertions have been written using data available in KeyboardKey class>>#initializeKeyTable"
 	self assert: (KeyboardKey named: 'SHIFT_L') equals: (KeyboardKey value: 65505).
@@ -31,7 +33,7 @@ KeyboardKeyTest >> testNamed [
 	self assert: (KeyboardKey named: 'A') equals: (KeyboardKey value: 65)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyboardKeyTest >> testValue [
 	| key |
 	key := KeyboardKey value: 65505.

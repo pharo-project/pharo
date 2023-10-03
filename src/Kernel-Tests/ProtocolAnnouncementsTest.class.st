@@ -2,29 +2,31 @@
 I am a test case specialized in checking that the announcements linked to protocol management are right.
 "
 Class {
-	#name : #ProtocolAnnouncementsTest,
-	#superclass : #ProtocolTest,
+	#name : 'ProtocolAnnouncementsTest',
+	#superclass : 'AbstractClassDescriptionTest',
 	#instVars : [
 		'numberOfAnnouncements'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ProtocolAnnouncementsTest >> setUp [
 
 	super setUp.
 	numberOfAnnouncements := 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ProtocolAnnouncementsTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	super tearDown
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 ProtocolAnnouncementsTest >> testAddProtocolAnnouncement [
 
 	self when: ProtocolAdded do: [ :ann |
@@ -35,7 +37,7 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 ProtocolAnnouncementsTest >> testAddProtocolAnnouncement2 [
 
 	self when: ProtocolAdded do: [ :ann |
@@ -46,7 +48,7 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement2 [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 ProtocolAnnouncementsTest >> testAddProtocolAnnouncementDuringCompilation [
 
 	self when: ProtocolAdded do: [ :ann |
@@ -57,7 +59,7 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncementDuringCompilation [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolAnnouncementsTest >> testClassifyUnderAnnounceNewProtocol [
 
 	self when: ProtocolAdded do: [ :ann |
@@ -68,7 +70,7 @@ ProtocolAnnouncementsTest >> testClassifyUnderAnnounceNewProtocol [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement [
 
 	class addProtocol: #titan.
@@ -82,7 +84,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement2 [
 
 	class addProtocol: #titan.
@@ -96,7 +98,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement2 [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement3 [
 
 	class addProtocol: #titan.
@@ -113,7 +115,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement3 [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement4 [
 
 	class addProtocol: #titan.
@@ -127,7 +129,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncement4 [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncementDuringCompilation [
 
 	class compile: 'king ^1' classified: #titan.
@@ -141,7 +143,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolAnnouncementDuringCompilation [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonEmptyProtocolDoesNotAnnounceAnything [
 
 	class addProtocol: #titan.
@@ -156,7 +158,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonEmptyProtocolDoesNo
 	self assert: numberOfAnnouncements equals: 0
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoesNotAnnounceAnything [
 
 	self when: ProtocolRemoved do: [ :ann | self fail ].
@@ -166,7 +168,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoe
 	self assert: numberOfAnnouncements equals: 0
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoesNotAnnounceAnything2 [
 
 	self when: ProtocolRemoved do: [ :ann | self fail ].
@@ -176,7 +178,7 @@ ProtocolAnnouncementsTest >> testRemoveProtocolIfEmptyWithNonExistingProtocolDoe
 	self assert: numberOfAnnouncements equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
 
 	class classify: #king under: #demon.
@@ -190,7 +192,7 @@ ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ProtocolAnnouncementsTest >> when: anAnnouncement do: aBlock [
 
 	SystemAnnouncer uniqueInstance

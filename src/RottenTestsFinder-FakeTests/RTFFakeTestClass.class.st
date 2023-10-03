@@ -1,30 +1,31 @@
 Class {
-	#name : #RTFFakeTestClass,
-	#superclass : #RTFFakeTestSuperClass,
-	#category : #'RottenTestsFinder-FakeTests'
+	#name : 'RTFFakeTestClass',
+	#superclass : 'RTFFakeTestSuperClass',
+	#category : 'RottenTestsFinder-FakeTests',
+	#package : 'RottenTestsFinder-FakeTests'
 }
 
-{ #category : #wrapper }
+{ #category : 'wrapper' }
 RTFFakeTestClass >> assertHelper [
 	self assert: true
 ]
 
-{ #category : #wrapper }
+{ #category : 'wrapper' }
 RTFFakeTestClass >> helperHelper [
 	self assertHelper
 ]
 
-{ #category : #wrapper }
+{ #category : 'wrapper' }
 RTFFakeTestClass >> rottenHelper [
 	false ifTrue: [ self assert: true ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testCallingSuperHelper [
 	self superAssertHelper
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testFailingButNotConsideredAsRotten [
 
 	self assert: false.
@@ -32,37 +33,37 @@ RTFFakeTestClass >> testFailingButNotConsideredAsRotten [
 	self assert: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithAssertionInHelperRun [
 	self assertHelper
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithAssertionInSuperHelperRun [
 	self superAssertHelper
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithAssertionRun [
 	self assert: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithHelperHelper [
 	self helperHelper
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithNoAssertionInHelperRun [
 	self rottenHelper
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithNoAssertionInSuperHelperRun [
 	self superNotAssertHelper
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFFakeTestClass >> testWithoutAssertionRun [
 	false
 		ifTrue: [ self assert: true ]

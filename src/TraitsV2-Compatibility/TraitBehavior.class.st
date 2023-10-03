@@ -3,7 +3,9 @@ This class is only kept for compatibility to load extension methods. Will be rem
 Check Trait for the new implementation of traits
 "
 Class {
-	#name : #TraitBehavior,
-	#superclass : #Object,
-	#category : #'TraitsV2-Compatibility-Base'
+	#name : 'TraitBehavior',
+	#superclass : 'Object',
+	#category : 'TraitsV2-Compatibility-Base',
+	#package : 'TraitsV2-Compatibility',
+	#tag : 'Base'
 }

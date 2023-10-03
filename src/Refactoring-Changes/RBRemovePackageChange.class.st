@@ -2,27 +2,29 @@
 I am a refactory change for a package removing. The RBRefactory api is implemented in my super class, I just define the concrete ""package"" removing.
 "
 Class {
-	#name : #RBRemovePackageChange,
-	#superclass : #RBRefactoryPackageChange,
+	#name : 'RBRemovePackageChange',
+	#superclass : 'RBRefactoryPackageChange',
 	#instVars : [
 		'packageName'
 	],
-	#category : #'Refactoring-Changes-Changes-Packages'
+	#category : 'Refactoring-Changes-Changes-Packages',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Packages'
 }
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemovePackageChange class >> removePackageNamed: aString [
 
 	^ self new removePackageNamed: aString
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBRemovePackageChange >> asUndoOperation [
 
 	^ changeFactory addPackageNamed: packageName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemovePackageChange >> generateChanges [
 
 	| pkg |
@@ -30,13 +32,13 @@ RBRemovePackageChange >> generateChanges [
 	pkg ifNotNil: [ pkg removeFromSystem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemovePackageChange >> package [
 
 	^ (browserEnvironment packageAt: packageName ifAbsent: [nil])
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemovePackageChange >> removePackageNamed: aString [
 
 	packageName := aString

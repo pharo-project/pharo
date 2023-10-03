@@ -9,21 +9,22 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SycPromotePackageFromTagCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycPromotePackageFromTagCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'package',
 		'classTag'
 	],
-	#category : #'SystemCommands-PackageCommands'
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycPromotePackageFromTagCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected and: [aToolContext isClassTagSelected]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPromotePackageFromTagCommand >> applyResultInContext: aBrowserContext [
 
 	| newPackage |
@@ -31,18 +32,18 @@ SycPromotePackageFromTagCommand >> applyResultInContext: aBrowserContext [
 	aBrowserContext showPackage: newPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPromotePackageFromTagCommand >> defaultMenuItemName [
 	^'Promote as package'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPromotePackageFromTagCommand >> execute [
 
 	(package classTagNamed: classTag) promoteAsPackage
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPromotePackageFromTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

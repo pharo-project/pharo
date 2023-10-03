@@ -2,12 +2,14 @@
 This announcement is thrown when a test suite just finished (more precisely when hisoties are updated)
 "
 Class {
-	#name : #TestSuiteEnded,
-	#superclass : #TestCaseAnnouncement,
-	#category : #'SUnit-Core-Announcements'
+	#name : 'TestSuiteEnded',
+	#superclass : 'TestCaseAnnouncement',
+	#category : 'SUnit-Core-Announcements',
+	#package : 'SUnit-Core',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TestSuiteEnded class >> result: aResult [
 
 	^ self new

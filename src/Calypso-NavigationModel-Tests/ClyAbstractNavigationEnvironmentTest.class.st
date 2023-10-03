@@ -1,24 +1,25 @@
 Class {
-	#name : #ClyAbstractNavigationEnvironmentTest,
-	#superclass : #TestCase,
+	#name : 'ClyAbstractNavigationEnvironmentTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'environment'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAbstractNavigationEnvironmentTest class >> isAbstract [
 	^self = ClyAbstractNavigationEnvironmentTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAbstractNavigationEnvironmentTest >> setUp [
 	super setUp.
 	self setUpEnvironment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAbstractNavigationEnvironmentTest >> setUpEnvironment [
 	environment := ClyNavigationEnvironment new
 ]

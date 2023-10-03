@@ -2,147 +2,149 @@
 I visit an IRMethod instructions and write them out to a print stream.
 "
 Class {
-	#name : #IRVisitor,
-	#superclass : #Object,
-	#category : #'OpalCompiler-Core-IR-Manipulation'
+	#name : 'IRVisitor',
+	#superclass : 'Object',
+	#category : 'OpalCompiler-Core-IR-Manipulation',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Manipulation'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitBlockReturnTop: blockReturnTop [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitInstruction: instr [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitJump: jump [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitJumpIf: jumpIf [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitMethod: method [
 	self visitNodes: method allSequences
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitNode: elem [
 	^ elem accept: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitNodes: col [
 	col do: [ :each | self visitNode: each ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPop: pop [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPopIntoInstVar: instVar [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPopIntoLiteralVariable: litVar [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPopIntoRemoteTemp: remoteTemp [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPopIntoTemp: tmp [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushArray: pushArray [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushDup: pushDup [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushFullClosure: fullBlock [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushInstVar: pushInstVar [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushLiteral: pushLiteral [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushLiteralVariable: pushLiteralVariable [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushReceiver: receiver [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushRemoteTemp: pushRemoteTemp [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushTemp: pushTemp [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushThisContext: pushThisContext [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitPushThisProcess: pushThisProcess [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitReturn: return [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitReturnInstVar: instVar [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitReturnLiteral: lit [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitReturnReceiver: rec [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitSend: send [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitSequence: sequence [
 	sequence do: [ :instr | self visitInstruction: instr]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitStoreInstVar: storeInstVar [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitStoreLiteralVariable: storeLiteralVariable [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitStoreRemoteTemp: storeRemoteTemp [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitStoreTemp: storeTemp [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRVisitor >> visitTempVector: tempVector [
 ]

@@ -2,17 +2,19 @@
 A FLDictionaryCollectionCluster is a cluster that rather than using the default (variable object) serialization, uses #keysAndValuesDo: to iterate objects and #add: during materialization. This way we avoid analyzing/serializing lots of nil. Also, the rehash is not needed. So far we use it for Dictionary, IdentityDictionary and MethodDictionary.
 "
 Class {
-	#name : #FLDictionaryCollectionCluster,
-	#superclass : #FLAbstractCollectionCluster,
-	#category : #'Fuel-Core-Clusters-Optimized'
+	#name : 'FLDictionaryCollectionCluster',
+	#superclass : 'FLAbstractCollectionCluster',
+	#category : 'Fuel-Core-Clusters-Optimized',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters-Optimized'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLDictionaryCollectionCluster >> encodeExtraInformationForReferencesFor: aDictionary with: anEncoder [
 	anEncoder encodeByte: (self hasRealAssociations: aDictionary) asBit
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLDictionaryCollectionCluster >> hasRealAssociations: aDictionary [
 	"Only check the first association, assume that all other entries
 	are of the same type"
@@ -26,19 +28,19 @@ FLDictionaryCollectionCluster >> hasRealAssociations: aDictionary [
 	^ true
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLDictionaryCollectionCluster >> materializeAssociationsOf: aDictionary from: aDecoder [
 	aDecoder nextEncodedUint32 timesRepeat: [
 		aDictionary add: aDecoder nextEncodedReference ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLDictionaryCollectionCluster >> materializeKeysAndValuesOf: aDictionary from: aDecoder [
 	aDecoder nextEncodedUint32 timesRepeat: [
 		aDictionary add: aDecoder nextEncodedReference -> aDecoder nextEncodedReference ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLDictionaryCollectionCluster >> materializeReferencesOf: aDictionary with: aDecoder [
 	aDecoder nextEncodedByte = true asBit
 		ifTrue: [
@@ -51,7 +53,7 @@ FLDictionaryCollectionCluster >> materializeReferencesOf: aDictionary with: aDec
 				from: aDecoder ]
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLDictionaryCollectionCluster >> referencesOf: aDictionary do: aBlock [	
 	"In Pharo 9 the class pool is a dictionary containing ClassVariables
 	pretending to be Associations. For that case we need to skip the optimization."

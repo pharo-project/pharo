@@ -2,12 +2,14 @@
 SUnit tests for Ring classtrait definitions
 "
 Class {
-	#name : #RGMetatraitDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGMetatraitDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetatraitDefinitionTest >> testAsClassTraitfinition [
 	| rgCTrait cTrait |
 	cTrait := TSortable classTrait.

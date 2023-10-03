@@ -1,10 +1,11 @@
 Class {
-	#name : #TFStructTest,
-	#superclass : #TFTestCase,
-	#category : #'ThreadedFFI-Tests'
+	#name : 'TFStructTest',
+	#superclass : 'TFTestCase',
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> longStructSize [
 
 	^ TFWorker default
@@ -17,7 +18,7 @@ TFStructTest >> longStructSize [
 		withArguments: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> pointSize [
 
 	^ self runner
@@ -30,7 +31,7 @@ TFStructTest >> pointSize [
 		withArguments: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> testLongStructSize [
 	| pointType |
 	pointType := TFStructType
@@ -46,7 +47,7 @@ TFStructTest >> testLongStructSize [
 	self assert: TFLongTestStruct byteSize equals: self longStructSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> testPointStructSize [
 
 	| pointType |
@@ -56,7 +57,7 @@ TFStructTest >> testPointStructSize [
 	self assert: pointType byteSize equals: TFPointTestStruct byteSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFStructTest >> testReturnsAnStruct [
 	| pointType fun aPoint |
 

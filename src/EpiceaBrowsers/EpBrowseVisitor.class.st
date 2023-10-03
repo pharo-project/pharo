@@ -2,14 +2,16 @@
 I implement how to browse EpCodeChange instances.
 "
 Class {
-	#name : #EpBrowseVisitor,
-	#superclass : #EpLogBrowserOperationVisitor,
+	#name : 'EpBrowseVisitor',
+	#superclass : 'EpLogBrowserOperationVisitor',
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
-	#category : #'EpiceaBrowsers-Visitors'
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBrowseVisitor >> visitBehaviorChange: aChange [
 
 	self
@@ -17,12 +19,12 @@ EpBrowseVisitor >> visitBehaviorChange: aChange [
 		ifPresent: #browse
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBrowseVisitor >> visitCodeChange: aChange [
 	^ self error: 'Should not be reached'
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBrowseVisitor >> visitMethodChange: aChange [
 
 	self
@@ -37,13 +39,13 @@ EpBrowseVisitor >> visitMethodChange: aChange [
 					behavior browse ] ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBrowseVisitor >> visitPackageChange: aChange [
 
 	(self packageOrganizer packageNamed: aChange packageName ifAbsent: [ ^ self inform: 'Package ' , aChange packageName , ' not found.' ]) browse
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBrowseVisitor >> visitPackageTagChange: aPackageTagChange [
 
 	Smalltalk tools browser openOnPackage: ((self packageOrganizer

@@ -2,23 +2,25 @@
 one-arg block
 "
 Class {
-	#name : #ConstantBlockClosure1Arg,
-	#superclass : #ConstantBlockClosure,
-	#type : #variable,
-	#category : #'Kernel-Methods'
+	#name : 'ConstantBlockClosure1Arg',
+	#superclass : 'ConstantBlockClosure',
+	#type : 'variable',
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure1Arg >> value [
 	self numArgsError: 0
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure1Arg >> value: anObject [
 	^literal
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure1Arg >> valueWithArguments: anArray [
 	(anArray size ~= 1) ifTrue: [self numArgsError: anArray size].
 	^literal

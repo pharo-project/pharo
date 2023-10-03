@@ -5,12 +5,14 @@ Scope should support #instanceVariablesDo:.
 Now only class scopes support it.
 "
 Class {
-	#name : #ClyAllInstanceVariablesQuery,
-	#superclass : #ClyVariableQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyAllInstanceVariablesQuery',
+	#superclass : 'ClyVariableQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllInstanceVariablesQuery >> buildResult: aQueryResult [
 
 	| vars |
@@ -21,7 +23,7 @@ ClyAllInstanceVariablesQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: vars
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllInstanceVariablesQuery >> checkEmptyResult [
 
 	scope instanceVariablesDo: [ :each | ^false ].
@@ -29,13 +31,13 @@ ClyAllInstanceVariablesQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllInstanceVariablesQuery >> description [
 
 	^'instance variables'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAllInstanceVariablesQuery >> retrievesItem: aVariable [
 	^aVariable isKindOf: ClyInstanceVariable
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #TextLineTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Morphic-Tests-Text Support'
+	#name : 'TextLineTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Morphic-Tests-Text Support',
+	#package : 'Morphic-Tests',
+	#tag : 'Text Support'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextLineTest >> setUp [
 	super setUp.
 	prototypes

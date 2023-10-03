@@ -1,10 +1,12 @@
 Class {
-	#name : #RBReplaceSubtreeTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBReplaceSubtreeTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBReplaceSubtreeTransformationTest >> testEmptyCode [
 
 	self shouldFail: (RBReplaceSubtreeTransformation
@@ -14,7 +16,7 @@ RBReplaceSubtreeTransformationTest >> testEmptyCode [
 			 inClass: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBReplaceSubtreeTransformationTest >> testFailureExtract [
 
 	self shouldFail: (RBReplaceSubtreeTransformation
@@ -24,7 +26,7 @@ RBReplaceSubtreeTransformationTest >> testFailureExtract [
 			 inClass: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBReplaceSubtreeTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBReplaceSubtreeTransformation
@@ -34,7 +36,7 @@ RBReplaceSubtreeTransformationTest >> testMethodDoesNotExist [
 			 inClass: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBReplaceSubtreeTransformationTest >> testParseFailure [
 
 	self shouldFail: (RBReplaceSubtreeTransformation
@@ -44,7 +46,7 @@ RBReplaceSubtreeTransformationTest >> testParseFailure [
 			 inClass: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBReplaceSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
@@ -69,7 +71,7 @@ RBReplaceSubtreeTransformationTest >> testRefactoring [
 			isReturn
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBReplaceSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
@@ -83,7 +85,7 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+		         self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
 	self
 		assert: (class parseTreeForSelector: #one) body statements size
@@ -96,7 +98,7 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 		equals: 123
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 
 	| transformation class |

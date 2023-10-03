@@ -6,12 +6,13 @@ I specify some changes to better fit the needs of the DrTests coverage plugin an
 The main change is in `DTCoverageCollector>>#collectResult` where I omit the ""reset"" step.
 "
 Class {
-	#name : #DTCoverageCollector,
-	#superclass : #CoverageCollector,
-	#category : #'DrTests-TestCoverage'
+	#name : 'DTCoverageCollector',
+	#superclass : 'CoverageCollector',
+	#category : 'DrTests-TestCoverage',
+	#package : 'DrTests-TestCoverage'
 }
 
-{ #category : #basic }
+{ #category : 'basic' }
 DTCoverageCollector >> basicCollectResult [
 	"Collect the results but does not reset the annotations."
 
@@ -27,7 +28,7 @@ DTCoverageCollector >> basicCollectResult [
 	^ res
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 DTCoverageCollector >> collectResult [
 	"Collect the results.
 	This also remaps the methods and  NOT resets the annotations."
@@ -36,7 +37,7 @@ DTCoverageCollector >> collectResult [
 	^ self basicCollectResult
 ]
 
-{ #category : #precalculations }
+{ #category : 'precalculations' }
 DTCoverageCollector >> hasAllNodesCovered: aMethod [
 
 	aMethod ast nodesDo: [ :node |

@@ -2,8 +2,8 @@
 I implement the `FT_CharMap_Rec`
 "
 Class {
-	#name : #FTCharMapRec,
-	#superclass : #FFIExternalStructure,
+	#name : 'FTCharMapRec',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_ENCODING',
 		'OFFSET_ENCODING_ID',
@@ -13,10 +13,12 @@ Class {
 	#pools : [
 		'FT2Types'
 	],
-	#category : #'FreeType-Bindings'
+	#category : 'FreeType-Bindings',
+	#package : 'FreeType',
+	#tag : 'Bindings'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FTCharMapRec class >> fieldsDesc [
 
 	"self rebuildFieldAccessors"
@@ -29,56 +31,56 @@ FTCharMapRec class >> fieldsDesc [
 )
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding [
 	"This method was automatically generated"
 
 	^ handle signedLongAt: OFFSET_ENCODING
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding: anObject [
 	"This method was automatically generated"
 
 	handle signedLongAt: OFFSET_ENCODING put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding_id [
 	"This method was automatically generated"
 
 	^ handle unsignedShortAt: OFFSET_ENCODING_ID
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding_id: anObject [
 	"This method was automatically generated"
 
 	handle unsignedShortAt: OFFSET_ENCODING_ID put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> face [
 	"This method was automatically generated"
 
 	^ FTFaceRec fromHandle: (handle pointerAt: OFFSET_FACE)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> face: anObject [
 	"This method was automatically generated"
 
 	handle pointerAt: OFFSET_FACE put: anObject getHandle
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> platform_id [
 	"This method was automatically generated"
 
 	^ handle unsignedShortAt: OFFSET_PLATFORM_ID
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTCharMapRec >> platform_id: anObject [
 	"This method was automatically generated"
 

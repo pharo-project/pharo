@@ -1,177 +1,50 @@
 Class {
-	#name : #RBRemoveMethodParametrizedTest,
-	#superclass : #RBComposeParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRemoveMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodParametrizedTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-			addCase: {
-				  (#rbClass -> RBRemoveMethodTransformation).
-				  (#constructor -> #selector:from:).
-				  (#isComposed -> false) };
-		  addCase: {
-				  (#rbClass -> RBRemoveMethodRefactoring).
-				  (#constructor -> #removeMethods:from:).
-				  (#isComposed -> true) };
-		  
+		  addCase: { (#rbClass -> RBRemoveMethodRefactoring) };
+		  addCase: { (#rbClass -> RBRemoveMethodTransformation) };
 		  yourself
 ]
 
-{ #category : #builder }
+{ #category : 'builder' }
 RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArguments: aParameterCollection [
 
 	^ rbClass
-		  perform: #model: , constructor
+		  perform: #model: , #selector:from:
 		  withArguments: { rbNamespace } , aParameterCollection
 ]
 
-{ #category : #builder }
-RBRemoveMethodParametrizedTest >> createRefactoringWithModel: rbNamespace andArgumentsColl: aParameterCollection andOtherArgs: argCollection [
-	^ isComposed
-	ifTrue: [ {self createRefactoringWithModel: rbNamespace
-		andArguments: {aParameterCollection}, argCollection} ]
-	ifFalse: [ aParameterCollection collect: [ :e |
-		self createRefactoringWithModel: rbNamespace
-		andArguments: {e}, argCollection
-	] ]
-]
-
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRemoveMethodParametrizedTest >> testFailureRemoveNonExistingMethod [
 
 	self shouldFail: (self
 			 createRefactoringWithModel: model
-			 andArgumentsColl: #( #nonExistingMethod )
-			 andOtherArgs: { #RBBasicLintRuleTestData })
+			 andArguments: #( #nonExistingMethod #RBBasicLintRuleTestData ))
 ]
 
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testFailureRemoveReferenced [
-
-	self shouldWarn: (self
-			 createRefactoringWithModel: model
-			 andArgumentsColl: #( #checkClass: )
-			 andOtherArgs: { #RBBasicLintRuleTestData })
-]
-
-{ #category : #'failure tests' }
-RBRemoveMethodParametrizedTest >> testFailureRemoveSameMethodButSendsSuper [
-
-	<expectedFailure>
-	self shouldWarn: (self
-			 createRefactoringWithModel: model
-			 andArgumentsColl: #( #new )
-			 andOtherArgs: { #'RBBasicLintRuleTestData class' })
-]
-
-{ #category : #tests }
-RBRemoveMethodParametrizedTest >> testJustSendsSuper [
-
-	| refactoring selectors |
-	selectors := Array with: #justSuperSendInSubclass.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArgumentsColl: selectors
-		               andOtherArgs: { #RBSubclassOfClassToRename }.
-
-	selectors do: [ :symbol |
-		self assert: ((model classNamed: #RBSubclassOfClassToRename)
-				 directlyDefinesMethod: symbol) ].
-	
-	self assert: (refactoring first justSendsSuper: #justSuperSendInSubclass)
-]
-
-{ #category : #tests }
-RBRemoveMethodParametrizedTest >> testJustSendsSuperFailing [
-
-	| refactoring selectors |
-	selectors := { #justSuperSendInSubclassBroken}.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArgumentsColl: selectors
-		               andOtherArgs: { #RBSubclassOfClassToRename }.
-	selectors do: [ :symbol |
-		self assert: ((model classNamed: #RBSubclassOfClassToRename)
-				 directlyDefinesMethod: symbol) ].
-	self deny: (refactoring first justSendsSuper: #justSuperSendInSubclassBroken)
-]
-
-{ #category : #tests }
-RBRemoveMethodParametrizedTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
-	| class otherClass |
-	class := model classNamed: #Object.
-	class compile: 'someMethodThatIsNotReferenced ^2' classified: #(#accessing).
-	self assert: (class definesMethod: 'someMethodThatIsNotReferenced' asSymbol).
-	otherClass := model metaclassNamed: self class superclass name.
-	otherClass
-		compile: 'someMethodThatIsNotReferenced ^3 someMethodThatIsNotReferenced'
-		classified: #(#accessing).
-	model removeClassNamed: self class name.
-
-	self executeRefactorings: (self createRefactoringWithModel: model
-		andArgumentsColl: {'someMethodThatIsNotReferenced' asSymbol}
-		andOtherArgs: { #Object }).
-	self deny: (class definesMethod: 'someMethodThatIsNotReferenced' asSymbol)
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveMethodParametrizedTest >> testRemoveMethod [
-	| refactoring selectors |
-	selectors := Array with: 'selectorNotReferenced' asSymbol.
+	| refactoring selector |
+	selector := 'selectorNotReferenced' asSymbol.
 	refactoring := self createRefactoringWithModel: model
-		andArgumentsColl: selectors
-		andOtherArgs: { #RBClassDataForRefactoringTest }.
+		andArguments: { selector . #RBClassDataForRefactoringTest }.
 
-	selectors do: [ :symbol |
-		self assert:
-			(( model classNamed: #RBClassDataForRefactoringTest)
-				directlyDefinesMethod: symbol).
-	].
-
-	self executeRefactorings: refactoring.
-
-	selectors do: [ :symbol |
-		self deny:
-			(( model classNamed: #RBClassDataForRefactoringTest)
-				directlyDefinesMethod: symbol)
-	]
-]
-
-{ #category : #tests }
-RBRemoveMethodParametrizedTest >> testSendersIncludesSuperCalls [
-
-	| refactoring selectors |
-	selectors := Array with: #justSuperSendInSubclass.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArgumentsColl: selectors
-		               andOtherArgs: { #RBSubclassOfClassToRename }.
 	self assert:
-		(refactoring first sendersOf: { #justSuperSendInSubclass })
-			isNotEmpty
-]
+		(( model classNamed: #RBClassDataForRefactoringTest)
+			directlyDefinesMethod: selector).
 
-{ #category : #tests }
-RBRemoveMethodParametrizedTest >> testSendersOfUnsentMessage [
+	self executeRefactoring: refactoring.
 
-	| refactoring selectors rbclasses rbNamespace2|
-	 
-	rbclasses := RBClassEnvironment classes: {
-			             RBClassToRename.
-			             RBSubclassOfClassToRename }.
-	rbNamespace2 := RBNamespace onEnvironment: rbclasses.
-
-	
-	selectors := Array with: #methodThatIsNotUsedForSure.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArgumentsColl: selectors
-		               andOtherArgs: { #RBSubclassOfClassToRename }.
-	refactoring first model: rbNamespace2.
-	self assert:
-		(refactoring first sendersOf: { #methodThatIsNotUsedForSure }) size equals: 0.
-	"this is because this test method is taken into account."
+	self deny:
+		(( model classNamed: #RBClassDataForRefactoringTest)
+			directlyDefinesMethod: selector)
 ]

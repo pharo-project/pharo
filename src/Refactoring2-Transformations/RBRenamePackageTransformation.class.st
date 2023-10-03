@@ -13,15 +13,17 @@ transformation := (RBRenamePackageTransformation
 				transform.
 "
 Class {
-	#name : #RBRenamePackageTransformation,
-	#superclass : #RBPackageTransformation,
+	#name : 'RBRenamePackageTransformation',
+	#superclass : 'RBPackageTransformation',
 	#instVars : [
 		'package'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenamePackageTransformation class >> model: aRBSmalltalk rename: aSymbol to: aNewName [
 	^ self new
 		model: aRBSmalltalk;
@@ -29,13 +31,13 @@ RBRenamePackageTransformation class >> model: aRBSmalltalk rename: aSymbol to: a
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenamePackageTransformation class >> rename: aString to: aNewName [
 	^ self new
 		packageName: aString newName: aNewName
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenamePackageTransformation >> buildTransformations [
 
 	transformations := OrderedCollection new.
@@ -47,21 +49,21 @@ RBRenamePackageTransformation >> buildTransformations [
 	^ transformations
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenamePackageTransformation >> manifestClassNameFor: aPackageName [
 	"Returns a symbol representing a suitable name for a Manifest class for the given package"
 
 	^('Manifest', (aPackageName select: [:each | each isAlphaNumeric ])) asSymbol
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenamePackageTransformation >> packageName: aName newName: aNewName [
 	packageName := aName asSymbol.
 	package := self model packageNamed: packageName.
 	newName := aNewName asSymbol
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenamePackageTransformation >> preconditions [
 	^ super preconditions
 		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
@@ -71,23 +73,23 @@ RBRenamePackageTransformation >> preconditions [
 			   errorString: 'The system already includes a package named ' , newName)
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenamePackageTransformation >> renameManifestClass [
 	| manifest |
 	manifest := package realPackage packageManifestOrNil.
 	manifest ifNotNil: [
-	transformations add: ( RBRenameClassTransformation
+	transformations add: ( RBRenameClassRefactoring
 		model: self model
 		rename: manifest name
 		to: (self manifestClassNameFor: newName)) ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenamePackageTransformation >> renamePackage [
 	self model renamePackage: package to: newName
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRenamePackageTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

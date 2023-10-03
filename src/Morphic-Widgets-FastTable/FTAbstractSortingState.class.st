@@ -16,42 +16,44 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTAbstractSortingState,
-	#superclass : #Object,
+	#name : 'FTAbstractSortingState',
+	#superclass : 'Object',
 	#instVars : [
 		'context'
 	],
-	#category : #'Morphic-Widgets-FastTable-Sorting'
+	#category : 'Morphic-Widgets-FastTable-Sorting',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Sorting'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTAbstractSortingState class >> context: aContext [
 	^ self new
 		context: aContext;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractSortingState >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractSortingState >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTAbstractSortingState >> executeSortingOn: aDataSource [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractSortingState >> nextState [
 	^ self subclassResponsibility
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTAbstractSortingState >> sort: aDataSource [
 	| nextState |
 	nextState := self nextState.
@@ -59,7 +61,7 @@ FTAbstractSortingState >> sort: aDataSource [
 	nextState executeSortingOn: aDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractSortingState >> sortingIcon [
 	^ self subclassResponsibility
 ]

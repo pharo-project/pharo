@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodsInProtocolGroup }
+Extension { #name : 'ClyMethodsInProtocolGroup' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClyMethodsInProtocolGroup >> tag [
 
 	self deprecated: 'Use #protocol instead' transformWith: '`@rcv tag' -> '`@rcv protocol'.

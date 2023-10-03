@@ -2,60 +2,76 @@
 I'm a model for user interaction for the remove instance variable refactoring.
 "
 Class {
-	#name : #RBRemoveInstanceVariablesDriver,
-	#superclass : #RBDriver,
+	#name : 'RBRemoveInstanceVariablesDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
-		'variables',
-		'refactoring'
+		'variables'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #resources }
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> applyChanges [
+
+	self openPreviewWithChanges: refactoring privateTransform
+]
+
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
+
+	StMessageBrowserPresenter
+		browse: refactoring violators
+		
+]
+
+{ #category : 'resources' }
 RBRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := RBCompositeRefactoring new
+	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
 							refactorings: (variables collect: [:each | 
 									RBRemoveInstanceVariableRefactoring model: model remove: each from: class]);
-								yourself 
+								yourself.
+	refactoring prepareForInteractiveMode
 ]
 
-{ #category : #resources }
-RBRemoveInstanceVariablesDriver >> refactoring [
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
 
-	refactoring := RBRemoveInstanceVariableRefactoring model: model remove: variables first from: class
+	| select items |
+	items := OrderedCollection new.
+	items add: (RBBrowseReferencedInstanceVariableChoice new
+						driver: self ; yourself).
+	items add: (RBRemoveInstanceVariableChoice new driver: self; yourself).
+	items add: (RBRemoveInstanceVariableAndShowChoice new driver: self; yourself).
+	
+	select := SpSelectDialog new
+		          title: 'There are references to variables!';
+		          items: items;
+		          display: [ :each | each description ];
+		          displayIcon: [ :each |  self iconNamed: each systemIconName ];
+		          openModal.
+
+	select ifNotNil: [ select action ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
-	[
-		[ 
-			| changes |
-			changes := refactoring generateChanges.
-			self openPreviewWithChanges: changes ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           		^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-								| dialog |
-								dialog := SpConfirmDialog 
-									 new
-										title: 'Methods still accessing variables';
-										label: 'Do you want to browse them?';
-										acceptLabel: 'Sure!';
-										cancelLabel: 'No, forget it';
-										openModal.
-								dialog 
-									ifTrue: [ self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring)].  err return ].
 	
+	refactoring checkApplicabilityPreconditions.
+	
+	refactoring breakingChangePreconditions check
+		ifTrue: [ self applyChanges ]
+		ifFalse: [ self handleBreakingChanges ]
+
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
 	
 	scopes := refactoringScopes.

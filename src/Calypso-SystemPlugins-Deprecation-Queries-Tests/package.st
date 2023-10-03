@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Deprecation-Queries-Tests' }
+Package { #name : 'Calypso-SystemPlugins-Deprecation-Queries-Tests' }

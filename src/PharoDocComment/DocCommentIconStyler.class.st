@@ -2,51 +2,53 @@
 IconStyler for highlight example expressions in method documents (seee PharoDocCommentNode). Enabled / Disabled by a Setting in group ""Code Browsing""
 "
 Class {
-	#name : #DocCommentIconStyler,
-	#superclass : #IconStyler,
-	#category : #'PharoDocComment-Styling'
+	#name : 'DocCommentIconStyler',
+	#superclass : 'IconStyler',
+	#category : 'PharoDocComment-Styling',
+	#package : 'PharoDocComment',
+	#tag : 'Styling'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DocCommentIconStyler class >> isStaticStyler [
 
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DocCommentIconStyler >> exampleIsFaulty: aNode [
 	^ aNode comments
 		anySatisfy: [ :commentNode | commentNode pharoDocCommentNodes anySatisfy: [ :node |
 				node expression isFaulty ]]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 DocCommentIconStyler >> highlightColor [
 	^ (Color green alpha: 0.8)
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 DocCommentIconStyler >> iconBlock: aNode [
 	^ (self exampleIsFaulty: aNode)
 		ifTrue: [ self notifySourceError: aNode ]
 		ifFalse: [ self runExampleBlock: aNode ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 DocCommentIconStyler >> iconFor: aNode [
 	^ (self exampleIsFaulty: aNode)
 		ifTrue: [ self iconNamed: #smallWarning ]
 		ifFalse: [ self iconNamed: #smallInfo ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 DocCommentIconStyler >> iconLabel: aNode [
 	^ (self exampleIsFaulty: aNode)
 		ifTrue: [ 'Faulty Example' ]
 		ifFalse: [ 'Runnable Example' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DocCommentIconStyler >> notifySourceError: aNode [
 	"If a code in an example is faulty notify the user"
 
@@ -57,7 +59,7 @@ DocCommentIconStyler >> notifySourceError: aNode [
 		RBParser parseExpression: faultyExample expression source ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DocCommentIconStyler >> runExampleBlock: aNode [
 	^ [ | examples |
 		examples := aNode pharoDocCommentNodes.
@@ -66,14 +68,14 @@ DocCommentIconStyler >> runExampleBlock: aNode [
 			{ example expression expressionNode formattedCode . example expression evaluate}]) inspect]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DocCommentIconStyler >> shouldStyleNode: aNode [
 	^ self stylingEnabled
 		and: [ aNode isMethod
 				and: [ aNode comments anySatisfy: [ :commentNode | commentNode hasDocComment ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DocCommentIconStyler >> stylingEnabled [
 	^ PharoDocCommentNode docCommentEnabled
 ]

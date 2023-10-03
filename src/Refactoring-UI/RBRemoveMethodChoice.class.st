@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRemoveMethodChoice,
-	#superclass : #RBChoice,
-	#category : #'Refactoring-UI-Choices'
+	#name : 'RBRemoveMethodChoice',
+	#superclass : 'RBChoice',
+	#category : 'Refactoring-UI-Choices',
+	#package : 'Refactoring-UI',
+	#tag : 'Choices'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveMethodChoice >> action [
 
 	self subclassResponsibility 

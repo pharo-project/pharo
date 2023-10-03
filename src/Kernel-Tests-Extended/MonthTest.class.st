@@ -3,21 +3,23 @@ This is the unit test for the class Month.
 
 "
 Class {
-	#name : #MonthTest,
-	#superclass : #ClassTestCase,
+	#name : 'MonthTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'month'
 	],
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 MonthTest >> classToBeTested [
 
 	^ Month
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 MonthTest >> selectorsToBeIgnored [
 
 	| deprecated private special |
@@ -28,26 +30,26 @@ MonthTest >> selectorsToBeIgnored [
 	^ super selectorsToBeIgnored, deprecated, private, special
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MonthTest >> setUp [
 
 	super setUp.
 	month := Month year: 1998 month: 7
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MonthTest >> tearDown [
 
 	month := nil.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testConverting [
 	self assert: month asDate equals: '1 July 1998' asDate
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testEnumerating [
 	| weeks |
 	weeks := OrderedCollection new.
@@ -56,7 +58,7 @@ MonthTest >> testEnumerating [
 	self assertEmpty: weeks
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testIndexOfMonth [
 	| m |
 	m := #(#January #February #March #April #May #June #July #August #September #October #November #December).
@@ -69,7 +71,7 @@ MonthTest >> testIndexOfMonth [
 	self should: [ Month indexOfMonth: #UnexistingMonth ] raise: self defaultTestError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testIndexOfMonthCaseInsensitive [
 	self assert: (Month indexOfMonth: 'january') equals: 1.
 	self assert: (Month indexOfMonth: #january) equals: 1.
@@ -77,7 +79,7 @@ MonthTest >> testIndexOfMonthCaseInsensitive [
 	self assert: (Month indexOfMonth: #jAnUaRy) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testIndexOfMonthIncompleteMonths [
 	| m |
 	m := #(Jan Feb Mar Apr May Jun Jul Aug Sept Oct Nov Dec).
@@ -85,7 +87,7 @@ MonthTest >> testIndexOfMonthIncompleteMonths [
 	m withIndexDo: [ :item :index | self assert: (Month indexOfMonth: item) equals: index ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testIndexOfMonthWithStrings [
 	| m |
 	m := #(#January #February #March #April #May #June #July #August #September #October #November #December)
@@ -95,7 +97,7 @@ MonthTest >> testIndexOfMonthWithStrings [
 		self assert: (Month indexOfMonth: item) equals: index ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testInquiries [
 	self
 		assert: month index equals: 7;
@@ -103,7 +105,7 @@ MonthTest >> testInquiries [
 		assert: month duration equals: 31 days
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testInstanceCreation [
 	| m1 m2 |
 	m1 := Month starting: '4 July 1998' asDate.
@@ -113,7 +115,7 @@ MonthTest >> testInstanceCreation [
 		assert: month equals: m2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testNameOfMonth [
 	| m |
 	m := #(#January #February #March #April #May #June #July #August #September #October #November #December).
@@ -125,7 +127,7 @@ MonthTest >> testNameOfMonth [
 	self should: [ Month nameOfMonth: #January ] raise: self defaultTestError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testOffset [
 	"Check that the offset is maintained when creating a new instance of Month from a DateAndTime"
 
@@ -136,7 +138,7 @@ MonthTest >> testOffset [
 	self assert: newMonth asDateAndTime offset equals: dt offset
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testPreviousNext [
 	| n p |
 	n := month next.
@@ -149,12 +151,12 @@ MonthTest >> testPreviousNext [
 		assert: p index equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testPrinting [
 	self assert: month printString equals: 'July 1998'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonthTest >> testReadFrom [
 	| m |
 	m := Month readFrom: 'July 1998' readStream.

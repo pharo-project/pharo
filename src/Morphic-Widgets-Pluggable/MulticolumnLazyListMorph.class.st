@@ -2,15 +2,17 @@
 A variant of LazyListMorph that can display multi-column lists.
 "
 Class {
-	#name : #MulticolumnLazyListMorph,
-	#superclass : #LazyListMorph,
+	#name : 'MulticolumnLazyListMorph',
+	#superclass : 'LazyListMorph',
 	#instVars : [
 		'columnWidths'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Lists'
+	#category : 'Morphic-Widgets-Pluggable-Lists',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Lists'
 }
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 MulticolumnLazyListMorph >> display: items atRow: row on: canvas [
 	"display the specified item, which is on the specified row; for Multicolumn
 	lists, items will be a list of strings"
@@ -38,7 +40,7 @@ MulticolumnLazyListMorph >> display: items atRow: row on: canvas [
 				from: self ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MulticolumnLazyListMorph >> drawBoundsForRow: row [
 	"calculate the bounds that row should be drawn at.  This might be outside our bounds!"
 	| topLeft drawBounds item width height |
@@ -52,7 +54,7 @@ MulticolumnLazyListMorph >> drawBoundsForRow: row [
 	^drawBounds
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MulticolumnLazyListMorph >> drawOn: aCanvas [
 	self getListSize = 0 ifTrue:[ ^self ].
 
@@ -62,12 +64,12 @@ MulticolumnLazyListMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas
 ]
 
-{ #category : #'list access' }
+{ #category : 'list access' }
 MulticolumnLazyListMorph >> getListItem: index [
 	^listSource getListRow: index
 ]
 
-{ #category : #'scroll range' }
+{ #category : 'scroll range' }
 MulticolumnLazyListMorph >> hUnadjustedScrollRange [
 "bvr - Introduce here the old version of the super method just waiting for this class to be deleted"
 
@@ -94,7 +96,7 @@ MulticolumnLazyListMorph >> hUnadjustedScrollRange [
 	^maxWidth + 150
 ]
 
-{ #category : #'list access' }
+{ #category : 'list access' }
 MulticolumnLazyListMorph >> item: index [
 	"return the index-th item, using the 'listItems' cache"
 	| newItem itemWidth |
@@ -113,13 +115,13 @@ MulticolumnLazyListMorph >> item: index [
 	^listItems at: index
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 MulticolumnLazyListMorph >> listChanged [
 	columnWidths := nil.
 	super listChanged
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MulticolumnLazyListMorph >> setColumnWidthsFor: aCanvas [
         | row topRow bottomRow |
         "set columnWidths for drawing on the specified canvas"
@@ -138,7 +140,7 @@ MulticolumnLazyListMorph >> setColumnWidthsFor: aCanvas [
 					ifFalse: [ currentWidth ] ] ]
 ]
 
-{ #category : #'scroll range' }
+{ #category : 'scroll range' }
 MulticolumnLazyListMorph >> widthToDisplayItem: item [
 	"This class will be removed soon, so this method will disappear"
 	| widths |
