@@ -18,7 +18,9 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
-		'category'
+		'category',
+		'packageName',
+		'tagName'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -116,10 +118,22 @@ RBCopyClassRefactoring >> copyVariables [
 		class: className) ]
 ]
 
+{ #category : 'accessing' }
+RBCopyClassRefactoring >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+RBCopyClassRefactoring >> packageName: anObject [
+
+	packageName := anObject
+]
+
 { #category : 'preconditions' }
 RBCopyClassRefactoring >> preconditions [
-	^ (RBCondition isValidClassName: className)
-		& (RBCondition isGlobal: className in: self model) not
+
+	^ (RBCondition isValidClassName: className) & (RBCondition isGlobal: className in: self model) not
 ]
 
 { #category : 'transforming' }
@@ -127,4 +141,16 @@ RBCopyClassRefactoring >> privateTransform [
 	self copyClass.
 	self copyVariables.
 	self copyMethods
+]
+
+{ #category : 'accessing' }
+RBCopyClassRefactoring >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+RBCopyClassRefactoring >> tagName: anObject [
+
+	tagName := anObject
 ]

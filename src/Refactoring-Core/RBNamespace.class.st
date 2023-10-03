@@ -325,7 +325,9 @@ RBNamespace >> createNewClassFor: aBehavior [
 		].
 	nonMeta := rbType existingNamed: className model: self.
 	meta := rbMetaType existingNamed: className model: self.
-	nonMeta category: aBehavior category.
+	nonMeta packageName: aBehavior package name.
+	self flag: #package. "In the future we should have the undefined tag"
+	nonMeta tagName: (aBehavior packageTag ifNotNil: [ :tag | tag name ]).
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 

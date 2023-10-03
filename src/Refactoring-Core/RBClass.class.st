@@ -12,7 +12,6 @@ Class {
 	#instVars : [
 		'classVariableNames',
 		'poolDictionaryNames',
-		'category',
 		'comment',
 		'classPool',
 		'packageName',
@@ -95,18 +94,12 @@ RBClass >> allPoolDictionaryNames [
 { #category : 'accessing' }
 RBClass >> category [
 
-	category ifNil: [
-		self packageName ifNotNil: [ :package |
-			^ (self tagName isNil or: [ self tagName = package ])
+	^ self packageName
+		  ifNil: [ self realClass category ]
+		  ifNotNil: [ :package |
+			  (self tagName isNil or: [ self tagName = package ])
 				  ifTrue: [ package ]
-				  ifFalse: [ package , '-' , self tagName ] ] ].
-
-	^ category ifNil: [ category := self realClass category ]
-]
-
-{ #category : 'accessing' }
-RBClass >> category: aSymbol [
-	category := aSymbol
+				  ifFalse: [ package , '-' , self tagName ] ]
 ]
 
 { #category : 'accessing' }
