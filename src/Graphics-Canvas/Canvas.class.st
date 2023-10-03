@@ -630,12 +630,6 @@ Canvas >> paragraph: paragraph bounds: bounds color: c [
 	^self subclassResponsibility
 ]
 
-{ #category : 'drawing - support' }
-Canvas >> preserveStateDuring: aBlock [
-	"Preserve the full canvas state during the execution of aBlock"
-	^aBlock value: self copy
-]
-
 { #category : 'drawing' }
 Canvas >> render: anObject [
 	"Do some 3D operations with the object if possible"
