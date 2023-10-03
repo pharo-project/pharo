@@ -28,41 +28,33 @@ Class {
 }
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> copyClass: cls withName: aSymbol [
-	^ self new copyClass: cls withName: aSymbol
+RBCopyClassRefactoring class >> copyClass: aClass withName: aSymbol [
+
+	^ self new copyClass: aClass withName: aSymbol
 ]
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> copyClass: cls withName: copyName in: aSymbol [
-	^ self new
-		category: aSymbol;
-		copyClass: cls withName: copyName
+RBCopyClassRefactoring class >> copyClass: aClass withName: copyName in: aSymbol [
+
+	^ (self copyClass: aClass withName: copyName)
+		  packageName: aSymbol;
+		  yourself
 ]
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> model: aRBSmalltalk copyClass: cls withName: aSymbol [
-	^ self new
-		model: aRBSmalltalk;
-		copyClass: cls withName: aSymbol
+RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName [
+
+	^ (self copyClass: aClass withName: copyName)
+		  model: aRBNamespace;
+		  yourself
 ]
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> model: aRBSmalltalk copyClass: cls withName: copyName in: aSymbol [
-	^ self new
-		model: aRBSmalltalk;
-		category: aSymbol;
-		copyClass: cls withName: copyName
-]
+RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
 
-{ #category : 'accessing' }
-RBCopyClassRefactoring >> category [
-
-	^ category ifNil: [ category := aClass category ]
-]
-
-{ #category : 'accessing' }
-RBCopyClassRefactoring >> category: aSymbol [
-	category := aSymbol
+	^ (self copyClass: aClass withName: copyName in: aSymbol)
+		  model: aRBNamespace;
+		  yourself
 ]
 
 { #category : 'transforming' }
@@ -72,7 +64,7 @@ RBCopyClassRefactoring >> copyClass [
 		addClass: className
 		superclass: aClass superclass
 		subclasses: #()
-		category: self category
+		category: self packageName
 		comment: aClass comment)
 ]
 
@@ -121,7 +113,7 @@ RBCopyClassRefactoring >> copyVariables [
 { #category : 'accessing' }
 RBCopyClassRefactoring >> packageName [
 
-	^ packageName
+	^ packageName ifNil: [ aClass packageName ]
 ]
 
 { #category : 'accessing' }
@@ -141,16 +133,4 @@ RBCopyClassRefactoring >> privateTransform [
 	self copyClass.
 	self copyVariables.
 	self copyMethods
-]
-
-{ #category : 'accessing' }
-RBCopyClassRefactoring >> tagName [
-
-	^ tagName
-]
-
-{ #category : 'accessing' }
-RBCopyClassRefactoring >> tagName: anObject [
-
-	tagName := anObject
 ]
