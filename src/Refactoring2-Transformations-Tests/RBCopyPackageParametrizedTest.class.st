@@ -55,7 +55,7 @@ RBCopyPackageParametrizedTest >> testCopyPackageAndChangesCopyReferences [
 				 (#RBFTTest2 -> #BarFTTest2) } asDictionary).
 	aModel := refactoring model.
 
-	self assert: (aModel classNamed: #BarFTTest1) category equals: #RefactoringCOPYSmallPackageForTest.
+	self assert: (aModel classNamed: #BarFTTest1) packageName equals: #RefactoringCOPYSmallPackageForTest.
 	self assert: (aModel classNamed: #BarFTTest2) superclass name equals: #Object.
 
 	self assert: ((aModel classNamed: #BarFTTest1) parseTreeForSelector: #foo) equals: (self parseMethod: 'foo

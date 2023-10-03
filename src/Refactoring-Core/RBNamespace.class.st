@@ -134,32 +134,30 @@ RBNamespace >> allClassesDo: aBlock [
 RBNamespace >> allClassesInPackages: aColl do: aBlock [
 
 	| seen evalBlock |
-
 	seen := Set new.
-	evalBlock := [ :each |
-	seen add: each first name.
-	aBlock
-		value: each first;
-		value: each last
-	].
-	(newClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
-	(changedClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
-	self environment
-		classesInPackages: aColl do: [ :each |
-			each isObsolete
-				ifFalse: [ | class |
-
-					class := each instanceSide.
-					( ( seen includes: class name ) or: [ self hasRemoved: ( self classNameFor: class ) ] )
-						ifFalse: [ ( class := self classFor: each )
-								ifNotNil: [ seen add: class name.
-									aBlock
-										value: class;
-										value: class classSide
-									]
-							]
-					]
-			]
+	evalBlock := [ :class |
+	             seen add: class first name.
+	             aBlock
+		             value: class first;
+		             value: class last ].
+	(newClasses select: [ :class |
+		 | classPackage |
+		 classPackage := class first packageName.
+		 aColl anySatisfy: [ :packageName | packageName sameAs: classPackage ] ]) do: evalBlock.
+	(changedClasses select: [ :class |
+		 | classPackage |
+		 classPackage := class first packageName.
+		 aColl anySatisfy: [ :packageName | packageName sameAs: classPackage ] ]) do: evalBlock.
+	self environment classesInPackages: aColl do: [ :each |
+		each isObsolete ifFalse: [
+			| class |
+			class := each instanceSide.
+			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
+				(class := self classFor: each) ifNotNil: [
+					seen add: class name.
+					aBlock
+						value: class;
+						value: class classSide ] ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -705,7 +703,8 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 				slots: aClass instanceVariableNames;
 				sharedVariables: aClass classVariableNames;
 				sharedPools: (' ' join: aClass sharedPoolNames);
-				category: aClass category ] ]
+				package: aClass packageName;
+				tag: aClass tagName ] ]
 ]
 
 { #category : 'accessing' }

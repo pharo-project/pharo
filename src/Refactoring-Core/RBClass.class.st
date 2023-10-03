@@ -92,17 +92,6 @@ RBClass >> allPoolDictionaryNames [
 ]
 
 { #category : 'accessing' }
-RBClass >> category [
-
-	^ self packageName
-		  ifNil: [ self realClass category ]
-		  ifNotNil: [ :package |
-			  (self tagName isNil or: [ self tagName = package ])
-				  ifTrue: [ package ]
-				  ifFalse: [ package , '-' , self tagName ] ]
-]
-
-{ #category : 'accessing' }
 RBClass >> classPool [
 	^classPool ifNil: [ classPool := Dictionary new ]
 ]
