@@ -55,19 +55,18 @@ RBCopyPackageParametrizedTest >> removePackageNamed: packageName [
 
 { #category : 'running' }
 RBCopyPackageParametrizedTest >> setUp [
+
 	super setUp.
 	model := self defaultNamespaceClass new.
-	self
-		createPackageNamed: 'RefactoringSmallPackageForTest'
-		withClasses: #('RBFTTest1' 'RBFTTest2').
-	self addMethodWithRefTo: 'RBFTTest2' inClass: 'RBFTTest1'
+	self createPackageNamed: #RefactoringSmallPackageForTest withClasses: #( #RBFTTest1 #RBFTTest2 ).
+	self addMethodWithRefTo: #RBFTTest2 inClass: #RBFTTest1
 ]
 
 { #category : 'running' }
 RBCopyPackageParametrizedTest >> tearDown [
 
-	(RBRefactoryChangeFactory instance removePackageNamed: 'RefactoringSmallPackageForTest')
-		execute.
+	(RBRefactoryChangeFactory instance removePackageNamed: #RefactoringSmallPackageForTest) execute.
+	(RBRefactoryChangeFactory instance removePackageNamed: #RefactoringCOPYSmallPackageForTest) execute.
 	super tearDown
 ]
 

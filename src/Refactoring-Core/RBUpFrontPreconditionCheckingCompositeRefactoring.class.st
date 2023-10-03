@@ -16,30 +16,25 @@ RBUpFrontPreconditionCheckingCompositeRefactoring >> applicabilityPreconditions 
 	"basically this is checking up front all preconditions and I need a way to not rexecute them 
 	when executing the refactoring.
 	"
-	
-	
-	
-	"^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each applicabilityPreconditions ]"
-	
+
+	""
+
 	refactorings ifEmpty: [ ^ self ].
-	refactorings size = 1
-		ifTrue: [ ^ refactorings first applicabilityPreconditions ].
-	^ refactorings fold: [ :sum :each | sum & each applicabilityPreconditions ]
-	
+	refactorings size = 1 ifTrue: [ ^ refactorings first applicabilityPreconditions ].
+	^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each applicabilityPreconditions ]
 ]
 
 { #category : 'preconditions' }
-RBUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [ 
+RBUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [
 	"basically this is checking up front all preconditions and I need a way to not rexecute them 
 	when executing the refactoring.
 	"
-	
+
 	"^ refactorings allSatisfy: [ :each | each applicabilityPreconditions check ] this is bad since it does not return a condition"
+
 	refactorings ifEmpty: [ ^ self ].
-	refactorings size = 1
-		ifTrue: [ ^ refactorings first breakingChangePreconditions ].
-	^ refactorings fold: [ :sum :each | sum & each breakingChangePreconditions ]
-	
+	refactorings size = 1 ifTrue: [ ^ refactorings first breakingChangePreconditions ].
+	^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each applicabilityPreconditions ]
 ]
 
 { #category : 'preconditions' }

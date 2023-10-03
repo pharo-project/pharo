@@ -26,32 +26,46 @@ RBPushDownInstanceVariableParametrizedTest >> testFailureNonExistantName [
 { #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownOnMetaclassSide [
 
-	model defineClass: 'Object << #SomeClass package: #''Refactory-Test data'''.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #SomeClass;
+			package: #'Refactory-Test data' ].
 	(model metaclassNamed: #SomeClass) addInstanceVariable: 'foo'.
-	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
-	(model metaclassNamed: #Subclass)
-		compile: 'foo ^foo'
-		classified: #(#accessing).
-	self executeRefactoring: (self createRefactoringWithModel: model
-		andArguments: {'foo' . #'SomeClass class'}).
-	self
-		deny: ((model metaclassNamed: #SomeClass) directlyDefinesVariable: 'foo').
-	self
-		assert: ((model metaclassNamed: #Subclass) directlyDefinesVariable: 'foo')
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclassName: #SomeClass;
+			name: #Subclass;
+			package: #'Refactory-Test data' ].
+	(model metaclassNamed: #Subclass) compile: 'foo ^foo' classified: #( #accessing ).
+	self executeRefactoring: (self createRefactoringWithModel: model andArguments: { 'foo'. #'SomeClass class' }).
+	self deny: ((model metaclassNamed: #SomeClass) directlyDefinesVariable: 'foo').
+	self assert: ((model metaclassNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
 
 { #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclasses [
-	model defineClass: 'Object << #SomeClass
-		slots: { #foo } ;
-		package: #''Refactory-Test data'''.
-	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
-	(model classNamed: #Subclass) compile: 'foo ^foo' classified: #(#accessing).
-	model defineClass: 'SomeClass << #AnotherSubclass package: #''Refactory-Test data'''.
-	(model classNamed: #AnotherSubclass) compile: 'bar ^foo'
-		classified: #(#accessing).
-	self executeRefactoring: (self createRefactoringWithModel: model
-		andArguments: {'foo' . #SomeClass}).
+
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #SomeClass;
+				slots: { #foo };
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #SomeClass;
+				name: #Subclass;
+				package: #'Refactory-Test data' ].
+	(model classNamed: #Subclass) compile: 'foo ^foo' classified: #( #accessing ).
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclassName: #SomeClass;
+			name: #AnotherSubclass;
+			package: #'Refactory-Test data' ].
+	(model classNamed: #AnotherSubclass) compile: 'bar ^foo' classified: #( #accessing ).
+	self executeRefactoring: (self createRefactoringWithModel: model andArguments: { 'foo'. #SomeClass }).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: 'foo').
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo').
 	self assert: ((model classNamed: #AnotherSubclass) directlyDefinesVariable: 'foo')
@@ -59,13 +73,21 @@ RBPushDownInstanceVariableParametrizedTest >> testModelPushDownToMultipleSubclas
 
 { #category : 'tests' }
 RBPushDownInstanceVariableParametrizedTest >> testModelRemoveUnusedVariable [
-	model defineClass: 'Object << #SomeClass
-		slots: { #foo} ;
-		package: #''Refactory-Test data'''.
-	model defineClass: 'SomeClass << #Subclass package: #''Refactory-Test data'''.
 
-	self executeRefactoring: (self createRefactoringWithModel: model
-		andArguments: {'foo' . #SomeClass}).
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #SomeClass;
+				slots: { #foo };
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #SomeClass;
+				name: #Subclass;
+				package: #'Refactory-Test data' ].
+
+	self executeRefactoring: (self createRefactoringWithModel: model andArguments: { 'foo'. #SomeClass }).
 	self deny: ((model classNamed: #SomeClass) directlyDefinesVariable: 'foo').
 	self assert: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo')
 ]
