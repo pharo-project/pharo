@@ -425,11 +425,6 @@ Canvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sourc
 ]
 
 { #category : 'testing' }
-Canvas >> isBalloonCanvas [
-	^false
-]
-
-{ #category : 'testing' }
 Canvas >> isShadowDrawing [
 	^false
 ]
