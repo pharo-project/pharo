@@ -1746,16 +1746,16 @@ String >> format: collection [
 	"('Five is {five}.' format: (Dictionary with: #five -> 5)) >>>  'Five is 5.'"
 	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
 	"('In \{1\} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In {1} you can escape { by prefixing it with \' "
-	| stream currentChar expression index |
-	"The temps are extracted from their block because of a bootstrap bug found in 2023. If you're from the future you can try to put the declarations in the right blocks to see if we fixed the scope resolution in the bootstrap. Don't worry, if it's not fix you'll not be able to produce a new Pharo image at all."
+
 	^ self species
 		new: self size
 		streamContents: [ :result |
+			| stream |
 			stream := self readStream.
 			[ stream atEnd ]
-				whileFalse: [
+				whileFalse: [ | currentChar |
 					(currentChar := stream next) == ${
-						ifTrue: [
+						ifTrue: [ | expression index |
 							expression := stream upTo: $}.
 							index := Integer readFrom: expression ifFail: [ expression ].
 							result nextPutAll: (collection at: index) asString ]
