@@ -64,7 +64,11 @@ RBMoveMethodToClassTransformation >> privateTransform [
 	originalProtocol := method protocolName.
 	oldClass removeMethod: method selector.
 	newClass addMethod: rbMethod.
-	newClass compile: rbMethod source classified: {originalProtocol}
+	(RBAddMethodTransformation
+		model: self model
+		sourceCode: rbMethod
+		in: newClass
+		withProtocol: originalProtocol) generateChanges
 ]
 
 { #category : 'printing' }
