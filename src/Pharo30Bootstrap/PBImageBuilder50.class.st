@@ -307,9 +307,19 @@ PBImageBuilder50 >> createInitialObjects [
 		((self classNamed: #Character) classPool at: #CharacterTable).
 	objectSpace characterTable: characterTable.
 
-	PBSubStepFinishedSignal emit: 'Initializing String AsciiTable'.
+	PBSubStepFinishedSignal emit: 'Initializing String Ascii and CaseInsensitive Table'.
 	self bootstrapInterpreter evaluateCode:
-		'String classPool at: #AsciiOrder put: ((0 to: 255) as: ByteArray).'.
+		'| asciiOrder caseInsesitiveOrder |
+		asciiOrder := ((0 to: 255) as: ByteArray).
+	caseInsesitiveOrder := asciiOrder copy.
+    (0 to: 255) do:[ :v |
+            | char lower |
+            char := v asCharacter.
+            lower := char asLowercase.
+            caseInsesitiveOrder at: lower asciiValue + 1 put: (caseInsesitiveOrder at: char asciiValue + 1) ].
+		
+		String classPool at: #AsciiOrder put: asciiOrder.
+		String classPool at: #CaseInsesitiveOrder put: caseInsesitiveOrder'.
 
 	PBSubStepFinishedSignal emit: 'Initializing SmallInteger constants'.
 	self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: '
