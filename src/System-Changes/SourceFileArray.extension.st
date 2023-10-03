@@ -25,7 +25,7 @@ SourceFileArray >> changeRecordsFor: aMethodDefinition do: aUnaryBlock [
 	^ self
 		changeRecordsFrom: aMethodDefinition sourcePointer
 		className: aMethodDefinition instanceSideParentName
-		isMeta: aMethodDefinition isMetaSide
+		isMeta: aMethodDefinition isMeta
 		do: aUnaryBlock
 ]
 

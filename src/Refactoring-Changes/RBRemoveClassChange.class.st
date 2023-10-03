@@ -29,14 +29,11 @@ RBRemoveClassChange >> asUndoOperation [
 
 	| classChanges |
 	classChanges := changeFactory compositeRefactoryChange.
-	self changeClass withAllSubclasses do: [ :each |
-		classChanges defineClass: each oldDefinition.
-		each class instVarNames
-			do: [ :varName | classChanges addInstanceVariable: varName to: each class ].
-		each selectors
-			do: [ :selector | classChanges compile: (each sourceCodeAt: selector) in: each ].
-		each class selectors
-			do: [ :selector | classChanges compile: (each class sourceCodeAt: selector) in: each class ] ].
+	self changeClass withAllSubclasses do: [ :class |
+		classChanges defineClass: [ :aBuilder | aBuilder fillFor: class ].
+		class class instVarNames do: [ :varName | classChanges addInstanceVariable: varName to: class class ].
+		class selectors do: [ :selector | classChanges compile: (class sourceCodeAt: selector) in: class ].
+		class class selectors do: [ :selector | classChanges compile: (class class sourceCodeAt: selector) in: class class ] ].
 	^ classChanges
 ]
 

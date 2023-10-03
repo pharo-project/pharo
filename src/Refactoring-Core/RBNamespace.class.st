@@ -343,42 +343,32 @@ RBNamespace >> createNewPackageFor: aPackage [
 ]
 
 { #category : 'changes' }
-RBNamespace >> defineClass: aString [
+RBNamespace >> defineClass: aBlock [
 
 	| change newClass newClassName |
-	change := changes defineClass: aString.
+	change := changes defineClass: aBlock.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
-	newClass
-		ifNil: [ | newMetaclass |
-
-			self unmarkAsRemoved: newClassName.
-			newClass := modelFactory rbClass named: newClassName.
-			newMetaclass := modelFactory rbMetaclass named: newClassName.
-			newClass model: self.
-			newMetaclass model: self.
-			newClasses at: newClassName put: ( Array with: newClass with: newMetaclass )
-			].
-	newClass superclass: ( self classNamed: change superclassName ).
+	newClass ifNil: [
+		| newMetaclass |
+		self unmarkAsRemoved: newClassName.
+		newClass := modelFactory rbClass named: newClassName.
+		newMetaclass := modelFactory rbMetaclass named: newClassName.
+		newClass model: self.
+		newMetaclass model: self.
+		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].
+	newClass superclass: (self classNamed: change superclassName).
 	newClass superclass
-		ifNil: [ self rootClasses add: newClass.
-			newClass classSide superclass: ( self classFor: Object class superclass )
-			]
+		ifNil: [
+			self rootClasses add: newClass.
+			newClass classSide superclass: (self classFor: Object class superclass) ]
 		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
-	newClass instanceVariableNames: (change instanceVariableNames ifNil: ['']).
-	newClass classVariableNames: (change classVariableNames ifNil: ['']).
-	newClass poolDictionaryNames: (change sharedPoolNames ifNil: ['']).
+	self flag: #refacto. "We shoult let the change create and fill the RB class IMO."
+	newClass instanceVariableNames: (change instanceVariableNames ifNil: [ '' ]).
+	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
+	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
+	change comment ifNotNil: [ :comment | newClass comment: comment ].
 	newClass category: change category.
-	^ change
-]
-
-{ #category : 'changes' }
-RBNamespace >> defineClass: aString withComment: aCommentString [
-
-	| change newClass |
-	change := self defineClass: aString.
-	newClass := self classNamed: change changeClassName.
-	newClass comment: aCommentString.
 	^ change
 ]
 
@@ -703,18 +693,16 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 
 { #category : 'changes' }
 RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
-	aRBClassCollection do:
-			[:aClass |
-			self defineClass: (self replaceClassNameIn: aClass definitionString
-						to: newClass name)]
-]
 
-{ #category : 'private - changes' }
-RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [
-	| parseTree |
-	parseTree := self parserClass parseExpression: definitionString.
-	parseTree receiver: (RBVariableNode named: aSymbol).
-	^parseTree formattedCode
+	aRBClassCollection do: [ :aClass |
+		self defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: newClass name;
+				name: aClass name;
+				slots: aClass instanceVariableNames;
+				sharedVariables: aClass classVariableNames;
+				sharedPools: (' ' join: aClass sharedPoolNames);
+				category: aClass category ] ]
 ]
 
 { #category : 'accessing' }

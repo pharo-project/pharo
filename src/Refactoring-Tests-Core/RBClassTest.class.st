@@ -13,15 +13,19 @@ Class {
 
 { #category : 'running' }
 RBClassTest >> setUp [
+
 	super setUp.
 	rbNamespace := RBClassModelFactory rbNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
-	rbNamespace defineClass: 'Object << #SomeClassName
-	slots: { #instanceVariable1 . #instanceVariable2};
-	sharedVariables: { #ClassVariable1};
-	sharedPools: {TextConstants};
-	package: #''Refactory-Testing'''.
+	rbNamespace defineClass: [ :aBuilder |
+		aBuilder
+			name: #SomeClassName;
+			superclass: Object;
+			slots: { #instanceVariable1. #instanceVariable2 };
+			sharedVariables: { #ClassVariable1 };
+			sharedPools: 'TextConstants';
+			package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
