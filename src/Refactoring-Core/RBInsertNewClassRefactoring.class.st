@@ -1,7 +1,7 @@
 "
 I am a refactoring for creating new classes. 
 
-You can define the name, superclass, category and subclasses.
+You can define the name, superclass, package/tag and subclasses.
 
 I am used by other refactorings that may create new classes, for example, RBSplitClassRefactoring.
 
@@ -12,27 +12,16 @@ Class {
 	#name : 'RBInsertNewClassRefactoring',
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
-		'category',
 		'superclass',
 		'subclasses',
-		'comment'
+		'comment',
+		'packageName',
+		'tagName'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
 }
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> category [
-
-	^ category
-]
-
-{ #category : 'accessing' }
-RBInsertNewClassRefactoring >> category: anObject [
-
-	category := anObject
-]
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> comment [
@@ -52,6 +41,18 @@ RBInsertNewClassRefactoring >> initialize [
 	subclasses := #(  )
 ]
 
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> packageName: anObject [
+
+	packageName := anObject
+]
+
 { #category : 'preconditions' }
 RBInsertNewClassRefactoring >> preconditions [
 
@@ -60,8 +61,8 @@ RBInsertNewClassRefactoring >> preconditions [
 	cond := subclasses inject: cond into: [ :sub :each |
 		        sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
 		        & (RBCondition isImmediateSubclass: each of: superclass) ].
-	^ cond & (RBCondition isValidClassName: className) & (RBCondition isGlobal: className in: self model) not & (RBCondition isSymbol: category)
-	  & ((RBCondition withBlock: [ category isNotEmpty ]) errorMacro: 'Invalid category name')
+	^ cond & (RBCondition isValidClassName: className) & (RBCondition isGlobal: className in: self model) not & (RBCondition isSymbol: packageName)
+	  & ((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro: 'Invalid package name')
 ]
 
 { #category : 'transforming' }
@@ -72,24 +73,28 @@ RBInsertNewClassRefactoring >> privateTransform [
 			aBuilder
 				superclass: superclass;
 				name: className;
-				package: self category;
+				package: packageName;
+				tag: tagName;
 				comment: self comment ];
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
 { #category : 'printing' }
 RBInsertNewClassRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
+
+	aStream nextPutAll: '(('.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' addClass: #';
+		nextPutAll: ' className: #';
 		nextPutAll: className;
-		nextPutAll: ' superclass: '.
+		nextPutAll: ') superclass: '.
 	superclass storeOn: aStream.
-	aStream nextPutAll: ' subclasses: '.
+	aStream nextPutAll: '; subclasses: '.
 	subclasses asArray storeOn: aStream.
-	aStream nextPutAll: ' category: '.
-	category storeOn: aStream.
+	aStream nextPutAll: '; packageName: '.
+	packageName storeOn: aStream.
+	aStream nextPutAll: '; tagName: '.
+	tagName storeOn: aStream.
 	aStream nextPut: $)
 ]
 
@@ -103,4 +108,16 @@ RBInsertNewClassRefactoring >> subclasses: aCollection [
 RBInsertNewClassRefactoring >> superclass: aClass [
 
 	superclass := self classObjectFor: aClass
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> tagName: anObject [
+
+	tagName := anObject
 ]

@@ -27,7 +27,7 @@ RBCopyPackageParametrizedTest >> setUp [
 	#( #RBFTTest1 #RBFTTest2 ) do: [ :className |
 		(RBInsertNewClassTransformation className: className)
 			superclass: #Object;
-			category: #RefactoringSmallPackageForTest;
+			packageName: #RefactoringSmallPackageForTest;
 			execute ].
 
 	(RBAddMethodTransformation

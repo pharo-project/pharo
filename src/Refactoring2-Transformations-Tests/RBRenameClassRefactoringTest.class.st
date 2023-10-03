@@ -138,7 +138,7 @@ rename class B to A
 	classC := 'TestUnmarkClassRenameTarget' asSymbol.
 	addClass := (RBInsertNewClassTransformation model: model className: classB)
 		            superclass: #Object;
-		            category: self class package name;
+		            packageName: self class package name;
 		            yourself.
 	addClass generateChanges.
 	self assert: (model includesClassNamed: classA).

@@ -85,7 +85,8 @@ RBSplitClassTransformation >> addClass [
 
 	transformations add: ((RBInsertNewClassTransformation model: self model className: newClassName)
 			 superclass: #Object;
-			 category: class category;
+			 packageName: class packageName;
+			 tagName: class tagName;
 			 yourself)
 ]
 

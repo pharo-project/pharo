@@ -62,7 +62,8 @@ RBChildrenToSiblingsRefactoring >> addSuperclass [
 	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: parent superclass;
 			 subclasses: { parent };
-			 category: parent category;
+			 packageName: parent packageName;
+			 tagName: parent tagName;
 			 yourself)
 ]
 

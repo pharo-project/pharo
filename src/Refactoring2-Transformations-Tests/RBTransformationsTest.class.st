@@ -132,7 +132,7 @@ RBTransformationsTest >> testCompositeTransform [
 	transformation := RBCompositeTransformation new transformations: (OrderedCollection new
 			                   add: ((RBInsertNewClassTransformation className: newClassName)
 					                    superclass: #Object;
-					                    category: self class category);
+					                    packageName: self class package name);
 			                   add: (RBAddVariableTransformation instanceVariable: 'asdf' class: newClassName);
 			                   add: (RBAddMethodTransformation sourceCode: 'printString1 ^super printString' in: newClassName withProtocol: #accessing);
 			                   yourself).

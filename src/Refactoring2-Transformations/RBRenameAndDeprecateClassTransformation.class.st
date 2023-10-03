@@ -50,10 +50,13 @@ RBRenameAndDeprecateClassTransformation class >> rename: aClassName to: aNewClas
 RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [
+		  | class |
+		  class := self model classNamed: className.
 		  transformations := OrderedCollection
 			                     with: ((RBInsertNewClassTransformation className: self tmpName)
 					                      superclass: className asSymbol;
-					                      category: (self model classNamed: className) category;
+					                      packageName: class packageName;
+					                      tagName: class tagName;
 					                      yourself)
 			                     with: (RBRenameClassRefactoring rename: className to: newClassName)
 			                     with: (RBRenameClassRefactoring rename: self tmpName to: className)

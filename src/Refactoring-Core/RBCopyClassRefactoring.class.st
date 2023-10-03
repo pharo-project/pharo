@@ -18,7 +18,6 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
-		'category',
 		'packageName',
 		'tagName'
 	],
@@ -62,7 +61,7 @@ RBCopyClassRefactoring >> copyClass [
 
 	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: aClass superclass;
-			 category: self packageName;
+			 packageName: self packageName;
 			 comment: aClass comment;
 			 yourself)
 ]

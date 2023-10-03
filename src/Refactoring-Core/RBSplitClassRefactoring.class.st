@@ -100,7 +100,8 @@ RBSplitClassRefactoring >> addClass [
 
 	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: newClassName)
 			 superclass: Object;
-			 category: class category;
+			 packageName: class packageName;
+			 tagName: class tagName;
 			 yourself).
 	newClass := self model classNamed: newClassName
 ]

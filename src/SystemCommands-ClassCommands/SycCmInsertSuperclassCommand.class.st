@@ -12,10 +12,12 @@ Class {
 { #category : 'executing' }
 SycCmInsertSuperclassCommand >> executeRefactoring [
 
+	self flag: #package. "Remove ifNotNil: when undefined tag will be here."
 	(RBInsertNewClassRefactoring className: newClassName)
 		superclass: targetClass superclass asString;
 		subclasses: { targetClass };
-		category: targetClass category;
+		packageName: targetClass package name;
+		tagName: (targetClass packageTag ifNotNil: [ :tag | tag name ]);
 		execute
 ]
 

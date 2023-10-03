@@ -29,12 +29,12 @@ RBInsertClassParametrizedTest >> setUp [
 ]
 
 { #category : 'failure tests' }
-RBInsertClassParametrizedTest >> testFailureEmptyCategory [
+RBInsertClassParametrizedTest >> testFailureEmptyPackage [
 
 	self shouldFail: ((rbClass className: #FooTest)
 			 superclass: #RBAbstractRefactoringTest;
 			 subclasses: { self class };
-			 category: #'')
+			 packageName: #'')
 ]
 
 { #category : 'failure tests' }
@@ -42,7 +42,7 @@ RBInsertClassParametrizedTest >> testFailureExistingClassName [
 
 	self shouldFail: ((rbClass className: #Object)
 			 superclass: self class name;
-			 category: #'Refactoring-Testirg')
+			 packageName: #'Refactoring-Testirg')
 ]
 
 { #category : 'failure tests' }
@@ -50,7 +50,7 @@ RBInsertClassParametrizedTest >> testFailureModelExistingClassName [
 
 	self shouldFail: ((rbClass model: model className: #Foo)
 			 superclass: #Object;
-			 category: #'Refactoring-Testing')
+			 packageName: #'Refactoring-Testing')
 ]
 
 { #category : 'failure tests' }
@@ -59,7 +59,7 @@ RBInsertClassParametrizedTest >> testFailureModelInvalidSubclass [
 	self shouldFail: ((rbClass model: model className: #Foo2)
 			 superclass: #Object;
 			 subclasses: { (model classNamed: #Bar) };
-			 category: #'Refactoring-Testing')
+			 packageName: #'Refactoring-Testing')
 ]
 
 { #category : 'failure tests' }
@@ -68,7 +68,7 @@ RBInsertClassParametrizedTest >> testFailureNonImmediateSubclassOfSuperclass [
 	self shouldFail: ((rbClass className: #Foo)
 			 superclass: #RBCompositeLintRuleTestData;
 			 subclasses: { RBBasicLintRuleTestData };
-			 category: #'Refactoring-Testing')
+			 packageName: #'Refactoring-Testing')
 ]
 
 { #category : 'failure tests' }
@@ -77,7 +77,7 @@ RBInsertClassParametrizedTest >> testFailureSubclassIsMetaslass [
 	self shouldFail: ((rbClass className: #Foo)
 			 superclass: #RBLintRuleTestData;
 			 subclasses: { RBCompositeLintRuleTestData class };
-			 category: #'Refactoring-Testing')
+			 packageName: #'Refactoring-Testing')
 ]
 
 { #category : 'failure tests' }
@@ -85,7 +85,7 @@ RBInsertClassParametrizedTest >> testFailureSuperclassIsMetaclass [
 
 	self shouldFail: ((rbClass className: #Foo)
 			 superclass: self class class name;
-			 category: #'Refactoring-Testing')
+			 packageName: #'Refactoring-Testing')
 ]
 
 { #category : 'tests' }
@@ -95,7 +95,7 @@ RBInsertClassParametrizedTest >> testInsertClassWithinExistingHiearchy [
 	refactoring := (rbClass className: #InsertedClass)
 		               superclass: #RBAbstractRefactoringTest;
 		               subclasses: { self class };
-		               category: #'Refactoring-Testing'.
+		               packageName: #'Refactoring-Testing'.
 	self executeRefactoring: refactoring.
 
 	insertedClass := refactoring model classNamed: #InsertedClass.
@@ -129,7 +129,7 @@ RBInsertClassParametrizedTest >> testModelInsertClass [
 	refactoring := (rbClass model: model className: #InsertedClass)
 		               superclass: superClass name;
 		               subclasses: { subclass };
-		               category: #'Refactoring-Testing'.
+		               packageName: #'Refactoring-Testing'.
 
 	self executeRefactoring: refactoring.
 
