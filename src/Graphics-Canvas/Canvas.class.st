@@ -37,18 +37,6 @@ Canvas >> asShadowDrawingCanvas: aColor [
 ]
 
 { #category : 'drawing - support' }
-Canvas >> cache: aRectangle using: aCache during: aBlock [
-	"Cache the execution of aBlock by the given cache.
-	Note: At some point we may want to actually *create* the cache here;
-		for now we're only using it."
-
-	(aCache notNil
-		and: [(aCache isForm) and: [aCache extent = aRectangle extent]])
-			ifTrue: [^self paintImage: aCache at: aRectangle origin].
-	aBlock value: self
-]
-
-{ #category : 'drawing - support' }
 Canvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle active only during the execution of aBlock.
 	Note: In the future we may want to have more general clip shapes - not just rectangles"
