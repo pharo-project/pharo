@@ -218,6 +218,8 @@ PBImageBuilder50 >> createBehaviorFromDefinition: aRFiDefinition [
 PBImageBuilder50 >> createClasses [
 
 	| definitions total smalltalkInstance |
+	
+	self log: 'Create classes'.
 	definitions := self systemDefinition ask allClassesAndTraits sorted: [ 
 		               :a 
 		               :b | a name < b name ].
@@ -256,6 +258,8 @@ PBImageBuilder50 >> createInitialObjects [
 	| characterTable |
 	"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
 	PBStepFinishedSignal emit: 'initializing globals'.
+	
+	self log: 'Initializing objects.'.
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
 
@@ -406,7 +410,7 @@ PBImageBuilder50 >> createTrue [
 { #category : 'running' }
 PBImageBuilder50 >> createVMStubs [
 
-	PBStepStartedSignal log: 'creating initial Objects needed by the VM'.
+	PBStepStartedSignal log: 'Creating initial Objects needed by the VM'.
 	
 	objectSpace backend specialObjectsArray: (objectSpace createObjectWithFormat: (Array format) withSize: 59).
 	self createNil.
@@ -547,7 +551,7 @@ PBImageBuilder50 >> initializeBackend [
 
 { #category : 'running' }
 PBImageBuilder50 >> initializeBootstrapEnvironment [
-	
+	self log: 'Initializing bootstrap environment.'.
 	bootstrapEnvironment := Dictionary new.
 	
 	"We initialize the object space with a boot symbol table and character table.
@@ -573,6 +577,7 @@ PBImageBuilder50 >> initializeBootstrapEnvironment [
 PBImageBuilder50 >> initializeImage [
 
 	| process |
+	self log: 'Initializing image.'.
 	self flag: 'should migrate this method'.
 	self checkpoint: 'image_initialization'.
 
@@ -584,45 +589,38 @@ PBImageBuilder50 >> initializeImage [
 
 	"Initialize the processor association for the special objects array.
 	Enchancement possible: This should be automatically managed by the createVMStubs method"
-	objectSpace backend processorAssociation:
-		(self bootstrapInterpreter evaluateCode:
-			 'Smalltalk globals associationAt: #Processor.').
+	objectSpace backend processorAssociation: (self bootstrapInterpreter evaluateCode: 'Smalltalk globals associationAt: #Processor.').
 
-	process := objectSpace
-		           createProcessWithPriority: 40
-		           doing: ('PharoBootstrapInitialization 
+	process := objectSpace createProcessWithPriority: 40 doing: ('PharoBootstrapInitialization 
 			initializeImageOfType: ''Pharo'' 
 			major: {major} 
 			minor: {minor} 
 			patch: {patch}
 			suffix: ''{suffix}'' 
 			build: {build} 
-			commitHash: ''{hash}''.' format: { 
-					            ('major' -> versionInfo major).
-					            ('minor' -> versionInfo minor).
-					            ('patch' -> versionInfo patch).
-					            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
-					            ('build' -> versionInfo buildNumber).
-					            ('hash' -> versionInfo commitHash) } asDictionary).
+			commitHash: ''{hash}''.' format: {
+				            ('major' -> versionInfo major).
+				            ('minor' -> versionInfo minor).
+				            ('patch' -> versionInfo patch).
+				            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
+				            ('build' -> versionInfo buildNumber).
+				            ('hash' -> versionInfo commitHash) } asDictionary).
 	objectSpace installAsActiveProcess: process.
 
 	self followForwardingPointers.
 
-	espellBackend simulator stackPages pages do: [ :page | 
-		espellBackend simulator stackPages freeStackPage: page ].
+	espellBackend simulator stackPages pages do: [ :page | espellBackend simulator stackPages freeStackPage: page ].
 	espellBackend simulator freeUntracedStackPages.
-	[ 
+	[
 	[ espellBackend objectMemory flushNewSpace ]
 		on: Halt
 		do: [ :ex | "suppress halts from the usual suspects (development time halts)"
-			(#( #fullGC #compactImage #doScavenge: ) includes:
-				 ex signalerContext sender selector)
+			(#( #fullGC #compactImage #doScavenge: ) includes: ex signalerContext sender selector)
 				ifTrue: [ ex resume ]
 				ifFalse: [ ex pass ] ] ]
 		on: AssertionFailure
-		do: [ :e | 
-			(e signalerContext sender method selector == #assert: and: [ 
-				 e signalerContext sender sender method selector = #mapStackPages ])
+		do: [ :e |
+			(e signalerContext sender method selector == #assert: and: [ e signalerContext sender sender method selector = #mapStackPages ])
 				ifTrue: [ e resume ]
 				ifFalse: [ e pass ] ].
 
@@ -652,6 +650,8 @@ PBImageBuilder50 >> initializeSpecialObjectArray [
 PBImageBuilder50 >> installExtensionMethods [
 
 	| definitions total |
+	
+	self log: 'Installing extension methods.'.
 	definitions := self systemDefinition packages sorted: [ :a :b | 
 		               a name < b name ].
 	total := definitions size.
@@ -713,6 +713,8 @@ PBImageBuilder50 >> installMethod: method inBehavior: theClass [
 PBImageBuilder50 >> installMethods [
 
 	| definitions total |
+	
+	self log: 'Installing methods'.
 	definitions := self systemDefinition ask allClassesAndTraits sorted: [ 
 		               :a 
 		               :b | a name < b name ].
