@@ -20,7 +20,7 @@ RGTraitDefinitionTest >> testAddingMethods [
 			'sort
 									self sort: [:a :b | a <= b]'.
 
-	self assert: newMethod isMetaSide not.
+	self assert: newMethod isMeta not.
 	self assert: newClass hasMethods not.
 
 	newClass addMethod: newMethod.

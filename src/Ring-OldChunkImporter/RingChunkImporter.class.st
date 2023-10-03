@@ -245,7 +245,7 @@ RingChunkImporter >> visitMethodChunk: aChunk [
 							stamp: aChunk stamp.
 	aChunk isMeta
 		ifTrue: [
-			theMethod isMetaSide: true.
+			theMethod isMeta: true.
 			theClass classSide addMethod: theMethod. ]
 		ifFalse:[ theClass addMethod: theMethod ]
 ]

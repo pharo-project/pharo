@@ -655,7 +655,7 @@ ChangeSet >> changedMessageList [
 				[messageList add:
 					((RGMethodDefinition named: mAssoc key)
 						parentName: className;
-						isMetaSide: classIsMeta) asActive ]]].
+						isMeta: classIsMeta) asActive ]]].
 	^ messageList asArray sort
 ]
 

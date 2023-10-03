@@ -13,7 +13,7 @@ Class {
 RGClassInstanceVariableDefinition >> initialize [
 
 	super initialize.
-	self isMetaSide: true
+	self isMeta: true
 ]
 
 { #category : 'testing' }

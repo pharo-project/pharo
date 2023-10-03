@@ -145,9 +145,9 @@ RGElementDefinition class >> isAbstract [
 ]
 
 { #category : 'elements-annotations' }
-RGElementDefinition class >> isMetaSideKey [
+RGElementDefinition class >> isMetaKey [
 
-	^#isMetaSide
+	^#isMeta
 ]
 
 { #category : 'parsing stamp' }
@@ -224,7 +224,7 @@ RGElementDefinition >> = aRGElementDefinition [
 
 	^self class = aRGElementDefinition class
 		and:[ self parentName == aRGElementDefinition parentName
-			and:[ self isMetaSide = aRGElementDefinition isMetaSide ] ]
+			and:[ self isMeta = aRGElementDefinition isMeta ] ]
 ]
 
 { #category : 'backward compatibility' }
@@ -256,7 +256,7 @@ RGElementDefinition >> fullName: aString [
 RGElementDefinition >> hash [
 	"Hash is re-implemented because #= is re-implemented"
 
-	^self class hash bitXor: (self parentName hash bitXor: self isMetaSide hash)
+	^self class hash bitXor: (self parentName hash bitXor: self isMeta hash)
 ]
 
 { #category : 'generic parent api' }
@@ -281,18 +281,30 @@ RGElementDefinition >> isDefined [
 ]
 
 { #category : 'accessing' }
-RGElementDefinition >> isMetaSide [
+RGElementDefinition >> isMeta [
 	"Even thought several class elements do not define this property (ie. class variables, pool variables) they understand it"
 	"This is a derived property from the class definining the receiver and thus its value is kept as an annotation"
 	"Default value is false"
 
-	^self annotationNamed: self class isMetaSideKey ifAbsentPut: [ false ]
+	^self annotationNamed: self class isMetaKey ifAbsentPut: [ false ]
+]
+
+{ #category : 'accessing' }
+RGElementDefinition >> isMeta: aBoolean [
+
+	self annotationNamed: self class isMetaKey put: aBoolean
+]
+
+{ #category : 'accessing' }
+RGElementDefinition >> isMetaSide [
+	
+	^self isMeta
 ]
 
 { #category : 'accessing' }
 RGElementDefinition >> isMetaSide: aBoolean [
 
-	self annotationNamed: self class isMetaSideKey put: aBoolean
+	self isMeta: aBoolean
 ]
 
 { #category : 'testing' }
@@ -353,7 +365,7 @@ RGElementDefinition >> realParent [
 		          ifNil: [ self rootEnvironment classNamed: self parentName ].
 	parent ifNil: [ ^ nil ].
 	
-	self isMetaSide ifTrue: [ parent := parent classSide ].
+	self isMeta ifTrue: [ parent := parent classSide ].
 	^ parent
 ]
 
@@ -369,5 +381,5 @@ RGElementDefinition >> setParentInfo: anObject [
 	"anObject is aRGBehaviorDefinition or aClass/aTrait"
 
 	self parentName: anObject name.
-	self isMetaSide: anObject isMeta
+	self isMeta: anObject isMeta
 ]
