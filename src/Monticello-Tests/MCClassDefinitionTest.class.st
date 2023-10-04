@@ -31,18 +31,6 @@ MCClassDefinitionTest >> classAComment [
 	^ self class classAComment
 ]
 
-{ #category : 'running' }
-MCClassDefinitionTest >> setUp [
-	super setUp.
-	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
-]
-
-{ #category : 'running' }
-MCClassDefinitionTest >> tearDown [
-	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
-	super tearDown
-]
-
 { #category : 'tests' }
 MCClassDefinitionTest >> testCannotLoad [
 	| d |
@@ -194,7 +182,7 @@ MCClassDefinitionTest >> testValidTraitComposition [
 MCClassDefinitionTest >> testValidTraitComposition2 [
 	"Related to http://code.google.com/p/pharo/issues/detail?id=2148"
 
-	| d className cls |
+	| d className class |
 	className := 'MCMockClassC'.
 	d := (MCClassDefinition named: className)
 		     traitComposition: 'MCTraitMock1';
@@ -202,18 +190,20 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
+	[
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
-	cls := testingEnvironment at: #MCMockClassC.
-	self assert: (cls includesSelector: #c1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1)
+	class := testingEnvironment at: #MCMockClassC.
+	self assert: (class includesSelector: #c1).
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1) ] ensure: [
+		testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ] ]
 ]
 
 { #category : 'tests' }
 MCClassDefinitionTest >> testValidTraitComposition3 [
 	"Related to http://code.google.com/p/pharo/issues/detail?id=2148"
 
-	| d className cls |
+	| d className class |
 	className := 'MCMockClassC'.
 	d := (MCClassDefinition named: className)
 		     traitComposition: 'MCTraitMock1 + MCTraitMock2';
@@ -221,13 +211,15 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
+	[
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
-	cls := testingEnvironment at: #MCMockClassC.
-	self assert: (cls includesSelector: #c1).
-	self assert: (cls includesSelector: #c2).
+	class := testingEnvironment at: #MCMockClassC.
+	self assert: (class includesSelector: #c1).
+	self assert: (class includesSelector: #c2).
 	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock2)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock2) ] ensure: [
+		testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ] ]
 ]
 
 { #category : 'tests' }
@@ -242,9 +234,10 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		     comment: (self commentForClass: className);
 		     commentStamp: (self commentStampForClass: className);
 		     yourself.
+	[
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls selectors includesAll: { #c }).
-	self deny: (cls selectors includesAnyOf: { #c1 })
+	self deny: (cls selectors includesAnyOf: { #c1 }) ] ensure: [ testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ] ]
 ]
