@@ -10,9 +10,6 @@ and try to uncomment it
 Class {
 	#name : 'RPackageMCSynchronisationTest',
 	#superclass : 'RPackageTestCase',
-	#instVars : [
-		'oldAnnouncer'
-	],
 	#category : 'Monticello-Tests-RPackage',
 	#package : 'Monticello-Tests',
 	#tag : 'RPackage'
@@ -68,27 +65,6 @@ RPackageMCSynchronisationTest >> ensureYPackage [
 RPackageMCSynchronisationTest >> ensureZPackage [
 
 	^ self organizer ensurePackage: #ZZZZZ
-]
-
-{ #category : 'announcer handling' }
-RPackageMCSynchronisationTest >> initializeAnnouncers [
-
-	oldAnnouncer := MCWorkingCopy announcer.
-	MCWorkingCopy announcer: SystemAnnouncer uniqueInstance
-]
-
-{ #category : 'announcer handling' }
-RPackageMCSynchronisationTest >> restoreAnnouncers [
-
-	MCWorkingCopy announcer: oldAnnouncer
-]
-
-{ #category : 'running' }
-RPackageMCSynchronisationTest >> runCase [
-
-	[
-	self initializeAnnouncers.
-	super runCase ] ensure: [ self restoreAnnouncers ]
 ]
 
 { #category : 'running' }
