@@ -128,6 +128,7 @@ ChunkImportTestCase >> testImportAClass [
 	| class |
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
 		class := self importAClass.
+		self assert: class superclass equals: Object.
 		self assert: #CodeImportTestCaseTestClass equals: class name.
 		self assert: (class instVarNames includes: 'var1').
 		self assert: (class instVarNames includes: 'var2').
