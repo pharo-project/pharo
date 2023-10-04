@@ -583,7 +583,7 @@ RPackageOrganizer >> testPackages [
 	^ self packages select: [ :package | package isTestPackage ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 RPackageOrganizer >> undefinedPackage [
 
 	^ self packages detect: [ :package | package isUndefined ]

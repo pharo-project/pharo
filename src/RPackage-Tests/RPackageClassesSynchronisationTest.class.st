@@ -17,7 +17,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageBestMatchName 
 
 	class := self newClassNamed: 'NewClass' inTag: tag.
 
-	self assert: (package definesClass: class).
+	self assert: (package includesClass: class).
 	self assert: class package equals: package
 ]
 
@@ -30,7 +30,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageExactName [
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
-	self assert: (xPackage definesClass: class).
+	self assert: (xPackage includesClass: class).
 	self assert: class package equals: xPackage
 ]
 

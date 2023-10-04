@@ -36,7 +36,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
 
 	class := self newTraitNamed: 'NewClass' inTag: tag.
 
-	self assert: (xPackage definesClass: class).
+	self assert: (xPackage includesClass: class).
 	self assert: xPackage equals: class package
 ]
 
@@ -49,7 +49,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
 
 	class := self newTraitNamed: 'NewClass' in: xPackage.
 
-	self assert: (xPackage definesClass: class).
+	self assert: (xPackage includesClass: class).
 	self assert: xPackage equals: class package
 ]
 

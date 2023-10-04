@@ -47,8 +47,7 @@ PackageRenamed >> affectsMethods [
 { #category : 'testing' }
 PackageRenamed >> affectsMethodsDefinedInClass: aClass [
 
-	^(package definesClass: aClass)
-		or: [ package extendsClass: aClass ]
+	^ (package includesClass: aClass) or: [ package extendsClass: aClass ]
 ]
 
 { #category : 'testing' }
