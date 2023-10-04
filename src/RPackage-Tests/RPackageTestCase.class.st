@@ -103,6 +103,7 @@ RPackageTestCase >> runCase [
 RPackageTestCase >> tearDown [
 
 	self organizer environment allClasses do: [ :cls | cls removeFromSystem ].
+	self organizer packages do: [ :package | package removeFromSystem ].
 
 	super tearDown
 ]
