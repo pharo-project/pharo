@@ -479,11 +479,6 @@ CompiledMethod >> isInstalled [
 ]
 
 { #category : 'testing' }
-CompiledMethod >> isMeta [
-	^self isClassSide
-]
-
-{ #category : 'testing' }
 CompiledMethod >> isOverridden [
 	| selector|
 	selector := self selector.
