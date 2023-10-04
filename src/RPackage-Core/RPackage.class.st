@@ -753,7 +753,7 @@ RPackage >> removeTag: aTag [
 		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
-	tag classes do: [ :class | class removeFromSystem ].
+	tag classes asArray do: [ :class | class removeFromSystem ].
 
 	classTags remove: tag ifAbsent: [ ^ self ].
 
@@ -847,8 +847,11 @@ RPackage >> tagNames [
 RPackage >> tagOf: aClass [
 
 	^ self classTags
-		  detect: [ :tag | tag hasClass: aClass ]
-		  ifNone: [ nil ]
+		  detect: [ :tag | tag includesClass: aClass ]
+		  ifNone: [
+			  self error: ('No tag containing {1} found in package {2}' format: {
+						   aClass name.
+						   self name }) ]
 ]
 
 { #category : 'private' }

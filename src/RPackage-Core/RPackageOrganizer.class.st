@@ -552,7 +552,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 	method origin = ann methodClass ifFalse: [ ^ self ]. "Methods from traits are not treated"
 
-	ann methodClass package ifNil: [ ^ self ]. "Classes that are not packages are not treated"
+	ann methodClass package isUndefined ifTrue: [ ^ self ]. "Classes that are not packages are not treated"
 
 	"If the new protocol is nil it means we are removing the method and this will be managed by the method removal"
 	ann newProtocol ifNotNil: [ :newProtocol |
