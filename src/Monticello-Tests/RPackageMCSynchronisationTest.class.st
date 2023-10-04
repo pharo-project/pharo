@@ -11,7 +11,6 @@ Class {
 	#name : 'RPackageMCSynchronisationTest',
 	#superclass : 'RPackageTestCase',
 	#instVars : [
-		'emptyOrganizer',
 		'oldAnnouncer'
 	],
 	#category : 'Monticello-Tests-RPackage',
@@ -45,12 +44,6 @@ RPackageMCSynchronisationTest >> createMethodNamed: methodName inClass: aClass i
 RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClass: aClass inCategory: aCategoryName [ 
 
 	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
-]
-
-{ #category : 'accessing' }
-RPackageMCSynchronisationTest >> emptyOrganizer [ 
-
-	^ emptyOrganizer
 ]
 
 { #category : 'utilities' }
@@ -99,20 +92,8 @@ RPackageMCSynchronisationTest >> runCase [
 ]
 
 { #category : 'running' }
-RPackageMCSynchronisationTest >> setUp [
-
-	super setUp.
-
-	emptyOrganizer := self organizer.
-	emptyOrganizer ensurePackage: 'as yet unclassified'.
-
-	Author fullName ifNil: [ Author fullName: 'Tester' ]
-]
-
-{ #category : 'running' }
 RPackageMCSynchronisationTest >> tearDown [
 
-	MCWorkingCopy removeDependent: self emptyOrganizer.
 	self cleanClassesPackagesAndCategories.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	super tearDown
