@@ -45,7 +45,7 @@ RGMethodDefinition >> basicAsMCMethodDefinition [
 		ifFalse: [
 		   ^ MCMethodDefinition
 				className: self instanceSideParentName
-		 	   	classIsMeta: self isMetaSide
+		 	   	classIsMeta: self isMeta
 				selector: self selector
 				category: self protocol
 				timeStamp: self stamp

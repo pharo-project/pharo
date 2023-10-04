@@ -49,6 +49,12 @@ ClassDescription >> packageFromOrganizer: anOrganizer [
 ]
 
 { #category : '*RPackage-Core' }
+ClassDescription >> packageName [
+
+	^ self package ifNotNil: [ :package | package name ]
+]
+
+{ #category : '*RPackage-Core' }
 ClassDescription >> packageTag [
 	"Package tags are sub parts of packages to have a better organization of the packages."
 

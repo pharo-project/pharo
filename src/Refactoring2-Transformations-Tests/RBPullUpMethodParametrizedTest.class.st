@@ -16,29 +16,54 @@ RBPullUpMethodParametrizedTest class >> testParameters [
 
 { #category : 'tests' }
 RBPullUpMethodParametrizedTest >> addClassHierarchy [
-	model defineClass: 'Object << #SomeClass
-		sharedVariables: {Foo};
-		package: #''Refactory-Test data'''.
-	model defineClass: 'SomeClass << #Subclass
-		package: #''Refactory-Test data'''.
-	model defineClass: 'Subclass << #Foo1
-		package: #''Refactory-Test data'''.
-	model defineClass: 'Subclass << #Foo2
-		package: #''Refactory-Test data'''
+
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #SomeClass;
+				sharedVariables: { #Foo };
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #SomeClass;
+				name: #Subclass;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #Subclass;
+				name: #Foo1;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #Subclass;
+				name: #Foo2;
+				package: #'Refactory-Test data' ]
 ]
 
 { #category : 'tests' }
 RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
-	model defineClass: 'SharedPool << #TotoSharedPool
-		sharedVariables: { #SP };
-		package: #''Refactory-Test data'''.
 
-	model defineClass: 'Object << #TotoSuperclass package: #''Refactory-Test data'''.
-	model defineClass: 'TotoSuperclass << #Toto
-		sharedPools: {TotoSharedPool};
-		package: #''Refactory-Test data'''.
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: SharedPool;
+				name: #TotoSharedPool;
+				sharedVariables: { #SP };
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #TotoSuperclass;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #TotoSuperclass;
+				name: #Toto;
+				sharedPools: 'TotoSharedPool';
+				package: #'Refactory-Test data' ].
 
-	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #(#accessing)
+	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #( #accessing )
 ]
 
 { #category : 'accessing' }
@@ -77,30 +102,38 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
 RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectlyImplement [
 
 	| classEnvironment classes |
-	classes := #( #ClassA #ClassB #ClassC )
-		           inject: OrderedCollection new
-		           into: [ :sum :each |
-			           testingEnvironment at: each ifPresent: [ :class |
-				           sum
-					           add: class;
-					           add: class class ].
-			           sum ].
+	classes := #( #ClassA #ClassB #ClassC ) inject: OrderedCollection new into: [ :sum :each |
+		           testingEnvironment at: each ifPresent: [ :class |
+			           sum
+				           add: class;
+				           add: class class ].
+		           sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
 	model name: 'Test'.
 	"Classes"
-	#( 'Object << #ClassA package: ''Testing'' '
-	   'ClassA << #ClassB package: ''Testing'' '
-	   'ClassB << #ClassC package: ''Testing'' ' ) do: [ :each |
-		model defineClass: each ].
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #ClassA;
+				package: 'Testing' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #ClassA;
+				name: #ClassB;
+				package: 'Testing' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #ClassB;
+				name: #ClassC;
+				package: 'Testing' ].
 	#( #( #ClassA #( #( 'foo
 			^ ''ClassA foo''' #private ) ) ) #( #ClassC #( #( 'foo
 			^ ''ClassC foo''' #private ) ) ) ) do: [ :each |
 		| class |
 		class := model classNamed: each first.
-		each last do: [ :methodPair |
-			class compile: methodPair first classified: methodPair last ] ].
-	self shouldntWarn:
-		(self createRefactoringWithModel: model andArguments: {
+		each last do: [ :methodPair | class compile: methodPair first classified: methodPair last ] ].
+	self shouldntWarn: (self createRefactoringWithModel: model andArguments: {
 				 #( #foo ).
 				 (model classNamed: #ClassC) })
 ]
@@ -125,15 +158,15 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
 { #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWithMethodThatCannotBePullUp [
 
-	model defineClass: 'Object << #SomeClass
-		sharedVariables: {#Foo};
-		package: #''Refactory-Test data'''.
-	(model classNamed: #SomeClass)
-		compile: 'yourself ^54'
-		classified: #( #accessing ).
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #SomeClass;
+			sharedVariables: { #Foo };
+			package: #'Refactory-Test data' ].
+	(model classNamed: #SomeClass) compile: 'yourself ^54' classified: #( #accessing ).
 
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
+	self shouldFail: (self createRefactoringWithModel: model andArguments: {
 				 #( #yourself ).
 				 (model classNamed: #SomeClass) })
 ]

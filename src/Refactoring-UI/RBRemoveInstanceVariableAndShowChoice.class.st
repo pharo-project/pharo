@@ -10,7 +10,7 @@ Class {
 RBRemoveInstanceVariableAndShowChoice >> action [
 
 	driver browseInstanceVariableReferences.
-	driver removeInstanceVariables
+	driver applyChanges
 ]
 
 { #category : 'accessing' }

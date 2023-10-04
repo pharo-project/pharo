@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> applyChanges [
+
+	self openPreviewWithChanges: refactoring privateTransform
+]
+
+{ #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
 	StMessageBrowserPresenter
@@ -53,45 +59,16 @@ RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
 ]
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> removeInstanceVariables [
-
-	| changes |
-	changes := refactoring privateTransform.
-	self openPreviewWithChanges: changes
-]
-
-{ #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
-	refactoring applicabilityPreconditions check ifFalse: [
-		RBRefactoringError signal: refactoring applicabilityPreconditions errorString ].
+	refactoring checkApplicabilityPreconditions.
+	
 	refactoring breakingChangePreconditions check
-		ifTrue: [ self removeInstanceVariables ]
+		ifTrue: [ self applyChanges ]
 		ifFalse: [ self handleBreakingChanges ]
 
-	"[
-		[ 
-			| changes |
-			changes := refactoring generateChanges.
-			self openPreviewWithChanges: changes ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           		^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-								| dialog |
-								dialog := SpConfirmDialog 
-									 new
-										title: 'Methods still accessing variables';
-										label: 'Do you want to browse them?';
-										acceptLabel: 'Sure!';
-										cancelLabel: 'No, forget it';
-										openModal.
-								dialog 
-									ifTrue: [ self furtherActionFor: (RBInstanceVariableStillReferenced new refactoring: refactoring)].  err return ]."
-	
 ]
 
 { #category : 'initialization' }

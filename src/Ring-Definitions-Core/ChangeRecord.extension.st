@@ -27,7 +27,7 @@ ChangeRecord >> createMethodDefinition [
 
 	^(RGMethodDefinition named: self methodSelector)
 		parentName: self methodClassName;
-		isMetaSide: meta;
+		isMeta: meta;
 		sourceCode: self string;
 		protocol: protocol;
 		stamp: stamp;

@@ -165,6 +165,11 @@ ShiftClassBuilder >> classNamed: aName [
 ]
 
 { #category : 'accessing' }
+ShiftClassBuilder >> classSlots [
+	^ self layoutDefinition classSlots
+]
+
+{ #category : 'accessing' }
 ShiftClassBuilder >> classSlots: aSlotCollection [
 	self layoutDefinition classSlots: aSlotCollection
 ]
@@ -554,8 +559,9 @@ ShiftClassBuilder >> superclass [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> superclass: aSuperclass [
-	aSuperclass ifNil: [ superclassName := nil ].
-	superclass := aSuperclass
+
+	superclass := aSuperclass.
+	superclassName := superclass ifNotNil: [ superclass name ]
 ]
 
 { #category : 'accessing' }

@@ -91,13 +91,13 @@ RBInsertNewClassRefactoring >> preconditions [
 { #category : 'transforming' }
 RBInsertNewClassRefactoring >> privateTransform [
 
-	| classDefinitionString |
-	classDefinitionString := '<1p> %<%< #<2s> package: <3p>'
-		                         expandMacrosWith: superclass
-		                         with: className
-		                         with: category asString.
 	self model
-		defineClass: classDefinitionString withComment: comment;
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: superclass;
+				name: className;
+				package: category;
+				comment: comment ];
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 

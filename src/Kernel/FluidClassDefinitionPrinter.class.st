@@ -205,33 +205,36 @@ FluidClassDefinitionPrinter >> expandedTraitClassDefinitionString [
 FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 
 	^ String streamContents: [ :s |
-		| tag |
-		s nextPutAll: 'Trait'.
-		self msgAndClassNameOn: s.
+		  | tag |
+		  s nextPutAll: 'Trait'.
+		  self msgAndClassNameOn: s.
 
-		s crtab.
-		s nextPutAll: 'traits: '.
-		forClass hasTraitComposition
-			ifTrue: [ s nextPutAll: '{'; nextPutAll: forClass traitCompositionString; nextPutAll: '};' ]
-			ifFalse: [ s nextPutAll: '{};' ].
-		self slotsOn: s.
-		s crtab.
+		  s crtab.
+		  s nextPutAll: 'traits: '.
+		  forClass hasTraitComposition
+			  ifTrue: [
+				  s
+					  nextPutAll: '{';
+					  nextPutAll: forClass traitCompositionString;
+					  nextPutAll: '};' ]
+			  ifFalse: [ s nextPutAll: '{};' ].
+		  self slotsOn: s.
+		  s crtab.
 
-		forClass packageTag ifNotNil: [:t |
-							tag := t name.
-							tag = forClass package name
-								ifFalse:  [
-									s nextPutAll: 'tag: ';
-					nextPut: $';
-					nextPutAll: tag asString ;
-					nextPutAll: ''';'.
-					s crtab
-				]].
+		  forClass packageTag ifNotNil: [ :t |
+			  tag := t name.
+			  tag = forClass package name ifFalse: [
+				  s
+					  nextPutAll: 'tag: ';
+					  nextPut: $';
+					  nextPutAll: tag asString;
+					  nextPutAll: ''';'.
+				  s crtab ] ].
 
-				s
-					nextPutAll: 'package: ''';
-					nextPutAll: forClass package packageName;
-					nextPutAll: '''' ]
+		  s
+			  nextPutAll: 'package: ''';
+			  nextPutAll: forClass package name;
+			  nextPutAll: '''' ]
 ]
 
 { #category : 'definition double dispatch API' }

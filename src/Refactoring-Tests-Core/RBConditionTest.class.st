@@ -18,11 +18,14 @@ RBConditionTest >> setUp [
 	rbNamespace := RBClassModelFactory rbNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
-	rbNamespace defineClass: 'Object << #SomeClassName
-	slots: { #instanceVariable1 . #instanceVariable2};
-	sharedVariables: { #ClassVariable1};
-	sharedPools: {TextConstants};
-	package: #''Refactory-Testing'''.
+	rbNamespace defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #SomeClassName;
+			slots: { #instanceVariable1. #instanceVariable2 };
+			sharedVariables: { #ClassVariable1 };
+			sharedPools: 'TextConstants';
+			package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
@@ -173,54 +176,60 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableNotAccessing [
 RBConditionTest >> testInvalidArgumentsForSelector [
 
 	| aModel aClass |
-	aModel := RBNamespace new. 
-	aModel defineClass: 'Object << #FOOBAR
-				slots: { #asdf };
-				package: #''Refactory-Test data'''.
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
 	aClass := aModel classNamed: #FOOBAR.
 	aClass compile: 'eiffel: tower ^ self ' classified: 'dummy'.
-	
-	self 
-		assert: (RBCondition invalidArgumentNamesForSelector: #eiffel: in: aModel) asArray
-		equals: #(#asdf #tower).
-	
+
+	self assert: (RBCondition invalidArgumentNamesForSelector: #eiffel: in: aModel) asArray equals: #( #asdf #tower )
 ]
 
 { #category : 'tests' }
 RBConditionTest >> testIsClassDefinedInModel [
 
 	| aModel aClass |
-	aModel := RBNamespace new. 
-	aModel defineClass: 'Object << #FOOBAR
-				slots: { #asdf };
-				package: #''Refactory-Test data'''.
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
 	aClass := aModel classNamed: #FOOBAR.
-	self assert: (RBCondition isClass: aClass definedIn: aModel ) check
-	
+	self assert: (RBCondition isClass: aClass definedIn: aModel) check
 ]
 
 { #category : 'tests' }
 RBConditionTest >> testIsClassNamedDefinedIn [
 
 	| aModel |
-	aModel := RBNamespace new. 
-	aModel defineClass: 'Object << #FOOBAR
-				slots: { #asdf };
-				package: #''Refactory-Test data'''.
-	self assert: (RBCondition isClassNamed: #FOOBAR definedIn: aModel ) check
-	
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
+	self assert: (RBCondition isClassNamed: #FOOBAR definedIn: aModel) check
 ]
 
 { #category : 'tests' }
 RBConditionTest >> testIsClassNamedDefinedInNot [
 
 	| aModel |
-	aModel := RBNamespace new. 
-	aModel defineClass: 'Object << #FOOBAR
-				slots: { #asdf };
-				package: #''Refactory-Test data'''.
-	self deny: (RBCondition isClassNamed: #FOOBAR2 definedIn: aModel ) check
-	
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
+	self deny: (RBCondition isClassNamed: #FOOBAR2 definedIn: aModel) check
 ]
 
 { #category : 'tests' }
