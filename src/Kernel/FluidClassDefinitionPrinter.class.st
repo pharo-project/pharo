@@ -402,7 +402,7 @@ FluidClassDefinitionPrinter >> slotsOn: s [
 	s nextPutAll: ';'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> tagOn: aStream [
 
 	forClass packageTag isRoot ifFalse: [
