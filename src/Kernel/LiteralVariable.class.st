@@ -211,6 +211,11 @@ LiteralVariable >> runtimeUndeclaredRead [
 	"This method is used internally to compile polymorphic read on undeclared variables.
 	Do not call it youself to not polute senders."
 
+	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
+	 When we reach here, the Variable is not undeclared.
+	 We force recompile to recompile without the #runtimeUndeclaredRead"
+	Smalltalk hasCompiler ifTrue: [thisContext sender homeMethod recompile].
+
 	^ self read
 ]
 
@@ -219,6 +224,10 @@ LiteralVariable >> runtimeUndeclaredWrite: anObject [
 	"This method is used internally to compile polymorphic write on undeclared variables.
 	Do not call it youself to not polute senders."
 
+	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
+	 When we reach here, the Variable is not undeclared.
+	 We force recompile to recompile without the runtimeUndeclaredWrite:"
+	Smalltalk hasCompiler ifTrue: [thisContext sender homeMethod recompile].
 	^ self write: anObject
 ]
 
