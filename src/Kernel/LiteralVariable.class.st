@@ -214,7 +214,11 @@ LiteralVariable >> runtimeUndeclaredRead [
 	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
 	 When we reach here, the Variable is not undeclared.
 	 We force recompile to recompile without the #runtimeUndeclaredRead"
-	Smalltalk hasCompiler ifTrue: [thisContext sender homeMethod recompile].
+	Smalltalk hasCompiler ifTrue: [
+		| method |
+		method := thisContext sender homeMethod.
+		method isInstalled ifTrue: [ method recompile]
+	].
 
 	^ self read
 ]
@@ -227,7 +231,11 @@ LiteralVariable >> runtimeUndeclaredWrite: anObject [
 	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
 	 When we reach here, the Variable is not undeclared.
 	 We force recompile to recompile without the runtimeUndeclaredWrite:"
-	Smalltalk hasCompiler ifTrue: [thisContext sender homeMethod recompile].
+	Smalltalk hasCompiler ifTrue: [
+		| method |
+		method := thisContext sender homeMethod.
+		method isInstalled ifTrue: [ method recompile]
+	].
 	^ self write: anObject
 ]
 
