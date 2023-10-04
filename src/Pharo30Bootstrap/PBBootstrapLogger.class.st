@@ -12,7 +12,10 @@ Class {
 { #category : 'logging-Deprecated' }
 PBBootstrapLogger >> basicLog: anItem [
 
-	Stdio stdout nextPutAll: anItem value asString ;cr; flush.
+	Stdio stdout
+		nextPutAll: anItem value asString;
+		cr;
+		flush
 ]
 
 { #category : 'logging-Deprecated' }
