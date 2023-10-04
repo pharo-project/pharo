@@ -1,65 +1,19 @@
-"
-I had some problems using the 'ensure:' method. There was some conflicts with the organizer used for the test when trying to clean the classes, categories and packages generated for the test. 
-There is something I don't get with this method. Therefore I choosed to clean by default all possible generated classes, categories and packages after each test using the tearDown method.
-
-For now, all that was in the 'ensure:' methods has been commented.
-Look for example at:
-    testAddMethodInClassicCategoryAddMethodToTheParentPackageOfItsClass
-and try to uncomment it
-"
 Class {
-	#name : 'RPackageMCSynchronisationTest',
+	#name : 'RPackageSynchronisationTest',
 	#superclass : 'RPackageTestCase',
-	#category : 'Monticello-Tests-RPackage',
-	#package : 'Monticello-Tests',
-	#tag : 'RPackage'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : 'private' }
-RPackageMCSynchronisationTest >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
-
-	^ aClass compile: (methodName, ' ^nil') classified: aCategoryName.
-]
-
-{ #category : 'private' }
-RPackageMCSynchronisationTest >> createMethodNamed: methodName inClassSideOfClass: aClass inCategory: aCategoryName [ 
-
-	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
-]
-
-{ #category : 'utilities' }
-RPackageMCSynchronisationTest >> ensureTagYinX [
-
-	^ self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
-]
-
-{ #category : 'utilities' }
-RPackageMCSynchronisationTest >> ensureXPackage [
-
-	^ self organizer ensurePackage: #XXXXX
-]
-
-{ #category : 'utilities' }
-RPackageMCSynchronisationTest >> ensureYPackage [
-
-	^ self organizer ensurePackage: #YYYYY
-]
-
-{ #category : 'utilities' }
-RPackageMCSynchronisationTest >> ensureZPackage [
-
-	^ self organizer ensurePackage: #ZZZZZ
-]
-
 { #category : 'running' }
-RPackageMCSynchronisationTest >> tearDown [
+RPackageSynchronisationTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	super tearDown
 ]
 
 { #category : 'to move to a simple RPackage test case' }
-RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMovingInSameExtensionCategory [
+RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMovingInSameExtensionCategory [
 
 	| ann class |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
@@ -76,7 +30,7 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodBy
 ]
 
 { #category : 'to move to a simple RPackage test case' }
-RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCategories [
+RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCategories [
 
 	| ann class |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
@@ -92,8 +46,26 @@ RPackageMCSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicC
 	self assert: ann isNil
 ]
 
+{ #category : 'tests - recategorizing class' }
+RPackageSynchronisationTest >> testRecategorizeClassRaisesClassRepackagedEvent [
+	"test that when we recategorize a class, the organizer is updated so that the class name point the the new RPackage"
+
+	| xPackage yPackage class ann |
+	SystemAnnouncer uniqueInstance when: ClassRepackaged do: [ :a | ann := a ] for: self.
+
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	class category: 'YYYYY'.
+
+	self assert: ann isNotNil.
+	self assert: ann classRepackaged equals: class.
+	self assert: ann oldPackage equals: xPackage.
+	self assert: ann newPackage equals: yPackage
+]
+
 { #category : 'to move to a simple RPackage test case' }
-RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromClassicCategoryToExtensionCategory [
+RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromClassicCategoryToExtensionCategory [
 
 	| ann class xPackage yPackage |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
@@ -117,7 +89,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 ]
 
 { #category : 'to move to a simple RPackage test case' }
-RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromDifferentExtensionCategories [
+RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromDifferentExtensionCategories [
 
 	| ann class yPackage zPackage |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
@@ -138,7 +110,7 @@ RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMov
 ]
 
 { #category : 'to move to a simple RPackage test case' }
-RPackageMCSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromExtensionCategoryToClassicCategory [
+RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromExtensionCategoryToClassicCategory [
 
 	| ann class xPackage yPackage |
 	SystemAnnouncer uniqueInstance when: MethodRepackaged do: [ :a | ann := a ] for: self.
