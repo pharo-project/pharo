@@ -32,6 +32,29 @@ MCClassDefinitionTest >> classAComment [
 ]
 
 { #category : 'tests' }
+MCClassDefinitionTest >> mockClass: className super: superclassName [
+
+	^ (MCClassDefinition named: className)
+		  superclassName: superclassName;
+		  packageName: self packageForTestName;
+		  comment: (self commentForClass: className);
+		  commentStamp: (self commentStampForClass: className);
+		  yourself
+]
+
+{ #category : 'private' }
+MCClassDefinitionTest >> packageForTestName [
+	^ 'Generated-Monticello-Tests'
+]
+
+{ #category : 'running' }
+MCClassDefinitionTest >> tearDown [
+
+	self packageOrganizer removePackage: self packageForTestName.
+	super tearDown
+]
+
+{ #category : 'tests' }
 MCClassDefinitionTest >> testCannotLoad [
 	| d |
 	self deny: (Smalltalk hasClassNamed: 'MCMockClassC').
@@ -142,6 +165,7 @@ MCClassDefinitionTest >> testKindOfSubclass [
 
 { #category : 'tests' }
 MCClassDefinitionTest >> testLoadAndUnload [
+
 	| d c |
 	d := self mockClass: 'MCMockClassC' super: 'Object'.
 	d load.
@@ -152,7 +176,7 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	self assertEmpty: c instVarNames.
 	self assertEmpty: c classVarNames.
 	self assertEmpty: c sharedPools.
-	self assert: c category equals: self mockCategoryName.
+	self assert: c category equals: self packageForTestName.
 	self assert: c comment equals: (self commentForClass: 'MCMockClassC').
 	self assert: c commentStamp equals: (self commentStampForClass: 'MCMockClassC').
 	d unload.
@@ -165,12 +189,8 @@ MCClassDefinitionTest >> testValidTraitComposition [
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition named: className)
-		     traitComposition: '{MCTraitMock1}';
-		     packageName: self mockCategoryName;
-		     comment: (self commentForClass: className);
-		     commentStamp: (self commentStampForClass: className);
-		     yourself.
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: '{MCTraitMock1}'.
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
@@ -184,19 +204,13 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 
 	| d className class |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition named: className)
-		     traitComposition: 'MCTraitMock1';
-		     packageName: self mockCategoryName;
-		     comment: (self commentForClass: className);
-		     commentStamp: (self commentStampForClass: className);
-		     yourself.
-	[
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: '{MCTraitMock1}'.
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	class := testingEnvironment at: #MCMockClassC.
 	self assert: (class includesSelector: #c1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1) ] ensure: [
-		testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ] ]
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1)
 ]
 
 { #category : 'tests' }
@@ -205,21 +219,15 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 
 	| d className class |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition named: className)
-		     traitComposition: 'MCTraitMock1 + MCTraitMock2';
-		     packageName: self mockCategoryName;
-		     comment: (self commentForClass: className);
-		     commentStamp: (self commentStampForClass: className);
-		     yourself.
-	[
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: 'MCTraitMock1 + MCTraitMock2'.
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	class := testingEnvironment at: #MCMockClassC.
 	self assert: (class includesSelector: #c1).
 	self assert: (class includesSelector: #c2).
 	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1).
-	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock2) ] ensure: [
-		testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ] ]
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock2)
 ]
 
 { #category : 'tests' }
@@ -228,16 +236,12 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := (MCClassDefinition named: className)
-		     traitComposition: 'MCTraitMock1 - {#c1}';
-		     packageName: self mockCategoryName;
-		     comment: (self commentForClass: className);
-		     commentStamp: (self commentStampForClass: className);
-		     yourself.
-	[
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: 'MCTraitMock1 - {#c1}'.
+
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls selectors includesAll: { #c }).
-	self deny: (cls selectors includesAnyOf: { #c1 }) ] ensure: [ testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ] ]
+	self deny: (cls selectors includesAnyOf: { #c1 })
 ]
