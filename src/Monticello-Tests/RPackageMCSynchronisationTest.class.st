@@ -24,7 +24,7 @@ RPackageMCSynchronisationTest >> allWorkingCopies [
 { #category : 'setup' }
 RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 
-	#( 'OriginalCategory' 'XXXXX' 'XXXX' 'YYYYY' 'YYYY' 'Yyyyy' 'YyYyY' 'Y' 'ZZZZZ' 'Zzzzz' 'FooPackage-Core' 'FooPackage-Other' 'FooPackage' 'Zork' ) do: [
+	#( 'OriginalCategory' 'XXXXX' 'XXXX' 'YYYYY' 'YYYY' 'Yyyyy' 'YyYyY' 'Y' 'ZZZZZ' 'Zzzzz' 'FooPackage-Core' 'FooPackage-Other' 'FooPackage' ) do: [
 		:packageName |
 		self allWorkingCopies
 			detect: [ :each | each packageName = packageName ]
