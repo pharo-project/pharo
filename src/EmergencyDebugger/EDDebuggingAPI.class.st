@@ -63,10 +63,7 @@ EDDebuggingAPI class >> terminateProcesses: processes [
 
 { #category : 'API - Revert' }
 EDDebuggingAPI >> changeRecordsForMethod: aCompiledMethod [
-	^ SourceFiles
-		changeRecordsFrom: aCompiledMethod sourcePointer
-		className: aCompiledMethod methodClass name
-		isMeta: aCompiledMethod methodClass isMeta
+	^ SourceFiles changeRecordsFor: aCompiledMethod
 ]
 
 { #category : 'accessing' }
