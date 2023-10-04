@@ -15,22 +15,6 @@ Class {
 	#tag : 'RPackage'
 }
 
-{ #category : 'accessing' }
-RPackageMCSynchronisationTest >> allWorkingCopies [
-
-	^ MCWorkingCopy allWorkingCopies
-]
-
-{ #category : 'setup' }
-RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
-
-	#(  'XXXXX' 'YYYYY' 'ZZZZZ' ) do: [
-		:packageName |
-		self allWorkingCopies
-			detect: [ :each | each packageName = packageName ]
-			ifFound: [ :mCPackage | mCPackage unregister ] ]
-]
-
 { #category : 'private' }
 RPackageMCSynchronisationTest >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
 
@@ -70,7 +54,6 @@ RPackageMCSynchronisationTest >> ensureZPackage [
 { #category : 'running' }
 RPackageMCSynchronisationTest >> tearDown [
 
-	self cleanClassesPackagesAndCategories.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	super tearDown
 ]

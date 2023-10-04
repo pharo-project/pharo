@@ -9,6 +9,12 @@ Class {
 	#tag : 'RPackage'
 }
 
+{ #category : 'accessing' }
+RPackageMonticelloSynchronisationTest >> allWorkingCopies [
+
+	^ MCWorkingCopy allWorkingCopies
+]
+
 { #category : 'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 	"test that when we create a MCPackage, a corresponding package is created"
