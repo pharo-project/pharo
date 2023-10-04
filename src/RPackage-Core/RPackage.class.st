@@ -753,7 +753,8 @@ RPackage >> removeTag: aTag [
 		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
-	tag classes do: [ :class | class removeFromSystem ].
+	"The #asArray is there to not remove elements from the #classes inst var while iterating it."
+	tag classes asArray do: [ :class | class removeFromSystem ].
 
 	classTags remove: tag ifAbsent: [ ^ self ].
 
