@@ -532,7 +532,6 @@ RPackage >> moveClass: aClass toTag: aTag [
 	oldTag = newTag ifTrue: [ ^ self ].
 
 	aClass package removeClass: aClass.
-	self importClass: aClass inTag: newTag.
 
 	self removeAllMethodsFromClass: aClass.
 	
