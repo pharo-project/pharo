@@ -128,6 +128,12 @@ ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect fon
 		scale: scale
 ]
 
+{ #category : 'accessing' }
+ScalingCanvas >> extent [
+
+	^ formCanvas extent / scale
+]
+
 { #category : 'initialization' }
 ScalingCanvas >> flush [
 
@@ -174,6 +180,12 @@ ScalingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 		formCanvas image: (FormMapping at: aForm) at: aPoint * scale sourceRect: (sourceRect scaleBy: scale) rule: rule.
 		^ self ].
 	super image: aForm at: aPoint sourceRect: sourceRect rule: rule
+]
+
+{ #category : 'accessing' }
+ScalingCanvas >> origin [
+
+	^ formCanvas origin / scale
 ]
 
 { #category : 'drawing' }
