@@ -239,7 +239,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvar
 			  slots: #(aSlot);
 			  sharedVariables: #(ClassVar);
 			  traitComposition: t1;
-			  category: 'TraitsV2-Tests-TestClasses' ].
+			  package: 'TraitsV2-Tests-TestClasses' ].
 	createdClasses add: c1.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
