@@ -526,22 +526,31 @@ RPackage >> methodsForClass: aClass [
 { #category : 'private' }
 RPackage >> moveClass: aClass toTag: aTag [
 
-	| oldPackage tag |
-	tag := self ensureTag: aTag.
-	aClass packageTag = tag ifTrue: [ ^ self ].
+	| oldPackage newTag oldTag |
+	newTag := self ensureTag: aTag.
+	oldTag := aClass packageTag.
+	oldTag = newTag ifTrue: [ ^ self ].
 
 	oldPackage := aClass package.
-
-	oldPackage removeClass: aClass.
 	
-	self removeAllMethodsFromClass: aClass.
-	
-	tag addClass: aClass instanceSide.
+	"It is possible that we are just updating the tag and not the package.
+	If we update the package we should remove the class from the old one and update the methods"
+	oldPackage = self
+		ifTrue: [ oldTag removeClass: aClass ]
+		ifFalse: [
+			oldPackage removeClass: aClass.
+			
+			"In case I contain extension methods."
+			self removeAllMethodsFromClass: aClass.
 
-	{ aClass . aClass classSide } do: [ :class |
-		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
+			{ aClass. aClass classSide } do: [ :class |
+				(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
-		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
+				class protocols
+					reject: [ :protocol | protocol isExtensionProtocol ]
+					thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ] ].
+
+	newTag addClass: aClass instanceSide.
 
 	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
 ]
