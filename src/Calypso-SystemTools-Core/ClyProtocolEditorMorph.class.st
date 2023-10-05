@@ -114,7 +114,7 @@ ClyProtocolEditorMorph >> isExtensionActive [
 
 { #category : 'operations' }
 ClyProtocolEditorMorph >> openEditor [
-
+1halt.
 	self requestChangeBy: [
 		self isExtensionActive
 			ifTrue: [ self requestPackage]
