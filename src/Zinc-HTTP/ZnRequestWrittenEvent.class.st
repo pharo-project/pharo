@@ -26,7 +26,7 @@ ZnRequestWrittenEvent >> duration: anObject [
 { #category : 'printing' }
 ZnRequestWrittenEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Request Written '; print: request; space; print: duration; << 'ms'
+	stream << 'Request Written '; print: request; space; print: duration; << 'ms'
 ]
 
 { #category : 'accessing' }

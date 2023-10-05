@@ -161,7 +161,7 @@ RBRemoveClassRefactoring >> preconditions [
 RBRemoveClassRefactoring >> prepareForExecution [
 
 	classesDictionary := (classNames collect: [ :className |
-		            className -> (self model classNamed: className asSymbol) ])
+		            className -> (self model classNamed: className) ])
 		           asDictionary
 ]
 

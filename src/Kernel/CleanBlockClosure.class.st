@@ -133,6 +133,7 @@ CleanBlockClosure >> refersToLiteral: aLiteral [
 { #category : 'debugger access' }
 CleanBlockClosure >> sender [
 	" clean blocks do not know the sender"
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^nil
 ]
 

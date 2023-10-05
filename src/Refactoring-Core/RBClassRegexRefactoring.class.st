@@ -57,23 +57,22 @@ RBClassRegexRefactoring >> createClasses [
 
 { #category : 'private' }
 RBClassRegexRefactoring >> duplicate: aClass name: aSymbol deep: aBoolean [
+
 	| superclass superclassName name class |
-	(self model includesClassNamed: aSymbol)
-		ifTrue: [ ^ nil ].
-	superclass := aClass superclass
-		ifNil: [ self rootClass ].
+	(self model includesClassNamed: aSymbol) ifTrue: [ ^ nil ].
+	superclass := aClass superclass ifNil: [ self rootClass ].
 	superclassName := (self model includesClassNamed: superclass name)
-		ifFalse: [ superclass name ]
-		ifTrue: [
-			(name := self execute: superclass name) = superclass name
-				ifFalse: [ self duplicate: superclass name: name deep: aBoolean ].
-			name ].
-	self model defineClass: ('<1s> %<%< #<2s> package: <3p>'
-			expandMacrosWith: superclassName
-			with: aSymbol with: aClass category asString).
+		                  ifFalse: [ superclass name ]
+		                  ifTrue: [
+			                  (name := self execute: superclass name) = superclass name ifFalse: [ self duplicate: superclass name: name deep: aBoolean ].
+			                  name ].
+	self model defineClass: [ :aBuilder |
+		aBuilder
+			superclassName: superclassName;
+			name: aSymbol;
+			package: aClass package name ].
 	aBoolean ifTrue: [
-		(class := self model classNamed: aSymbol)
-			ifNil: [ ^ self ].
+		(class := self model classNamed: aSymbol) ifNil: [ ^ self ].
 		self copyFrom: aClass to: class.
 		self copyFrom: aClass classSide to: class classSide ].
 	^ nil

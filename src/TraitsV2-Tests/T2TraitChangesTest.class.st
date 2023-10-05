@@ -14,7 +14,7 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 
 	builder := ShiftClassBuilder new
 		name: #T1;
-		category: 'TraitsV2-Tests-TestClasses';
+		package: 'TraitsV2-Tests-TestClasses';
 		traitComposition: TEmpty;
 		tryToFillOldClass;
 		detectBuilderEnhancer;
@@ -36,7 +36,7 @@ T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 
 	builder := ShiftClassBuilder new
 		           name: #T1;
-		           category: 'TraitsV2-Tests-TestClasses';
+		           package: 'TraitsV2-Tests-TestClasses';
 		           traitComposition: TEmpty;
 		           beTrait;
 		           yourself.
@@ -61,7 +61,7 @@ T2TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariab
 		           name: #T1;
 		           beTrait;
 		           slotsFromString: 'a b';
-		           category: 'TraitsV2-Tests-TestClasses'.
+		           package: 'TraitsV2-Tests-TestClasses'.
 
 	self assert: builder slots size equals: 2.
 	self assert: builder slots first name equals: 'a'.

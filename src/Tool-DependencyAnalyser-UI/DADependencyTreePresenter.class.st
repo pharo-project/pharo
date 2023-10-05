@@ -283,13 +283,13 @@ DADependencyTreePresenter >> nodesFor: anItemList [
 
 { #category : 'accessing' }
 DADependencyTreePresenter >> packagesEntryCompletion [
+
 	| applicants |
-	applicants := (self packageOrganizer packages collect: [ :package | package packageName asString ]).
+	applicants := self packageOrganizer packages collect: [ :package | package name asString ].
 
 	^ EntryCompletion new
-				dataSourceBlock: [:currText | applicants];
-				filterBlock: [:currApplicant :currText | currText size > 3
-						and: [currApplicant asUppercase includesSubstring: currText asString asUppercase]]
+		  dataSourceBlock: [ :currText | applicants ];
+		  filterBlock: [ :currApplicant :currText | currText size > 3 and: [ currApplicant asUppercase includesSubstring: currText asString asUppercase ] ]
 ]
 
 { #category : 'accessing' }

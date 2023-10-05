@@ -259,8 +259,7 @@ RBProtectVariableTransformationTest >> testVariableIsNotAccessed [
 		                  instanceVariable: 'instVar'
 		                  class: self changeMockClass name.
 
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self deny: (class directlyDefinesLocalMethod: #instVar).
 	self deny: (class directlyDefinesLocalMethod: #instVar:).
 

@@ -13,6 +13,13 @@ Class {
 }
 
 { #category : 'actions' }
+RBRemoveClassDriver >> applyChanges [
+
+	self openPreviewWithChanges: refactoring removeClassChanges
+
+]
+
+{ #category : 'actions' }
 RBRemoveClassDriver >> browseReferences [
 
 	haveNoReferences violators keysAndValuesDo: [ :violator :references |
@@ -49,7 +56,7 @@ RBRemoveClassDriver >> handleBreakingChanges [
 		ifTrue: [ ^ items first action ].
 		
 	select := SpSelectDialog new
-		          title: 'There are potentital breaking changes!';
+		          title: 'There are potential breaking changes!';
 		          label: self labelBasedOnBreakingChanges;
 		          items: items;
 		          display: [ :each | each description ];
@@ -82,13 +89,6 @@ RBRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 	self openPreviewWithChanges: refactoring removeClassesChanges
 ]
 
-{ #category : 'actions' }
-RBRemoveClassDriver >> removeClassChanges [
-
-	self openPreviewWithChanges: refactoring removeClassChanges
-
-]
-
 { #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
 	
@@ -100,7 +100,7 @@ RBRemoveClassDriver >> runRefactoring [
 	noSubclasses := refactoring preconditionHaveNoSubclasses.
 
 	haveNoReferences check & emptyClasses check & noSubclasses check
-			ifTrue: [ self removeClassChanges ]
+			ifTrue: [ self applyChanges ]
 			ifFalse: [ self handleBreakingChanges ]
 
 ]

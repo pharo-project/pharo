@@ -2,7 +2,7 @@ Extension { #name : 'Class' }
 
 { #category : '*Shift-ClassInstaller' }
 Class >> addClassSlot: aSlot [
-
+	<reflection: 'Class structural modification - Slot modification'>
 	^ self classInstaller update: self to: [ :builder |
 		builder
 			classSlots: (self class classLayout slots copyWith: aSlot)]
@@ -11,6 +11,7 @@ Class >> addClassSlot: aSlot [
 { #category : '*Shift-ClassInstaller' }
 Class >> addSlot: aSlot [
 
+	<reflection: 'Class structural modification - Slot modification'>
 	^ self classInstaller
 		  update: self
 		  to: [ :builder | builder slots: (self localSlots copyWith: aSlot) ]
@@ -18,7 +19,7 @@ Class >> addSlot: aSlot [
 
 { #category : '*Shift-ClassInstaller' }
 Class >> removeClassSlot: aSlot [
-
+	<reflection: 'Class structural modification - Slot modification'>
 	^ self classInstaller update: self to: [ :builder |
 		builder
 			classSlots: (self class classLayout slots copyWithout: aSlot)]
@@ -26,7 +27,7 @@ Class >> removeClassSlot: aSlot [
 
 { #category : '*Shift-ClassInstaller' }
 Class >> removeSlot: aSlot [
-
+	<reflection: 'Class structural modification - Slot modification'>
 	(self classLayout slots includes: aSlot) ifFalse: [
 		self error: aSlot name , ' is not one of my slots' ].
 

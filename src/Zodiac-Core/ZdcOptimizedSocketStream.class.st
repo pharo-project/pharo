@@ -18,6 +18,7 @@ ZdcOptimizedSocketStream >> next: count putAll: collection startingAt: offset [
 	"Write count bytes from collection starting at offset. Overwritten, optimized"
 
 	| totalWritten |
+	writeBuffer isFull ifTrue: [ self flushWriteBuffer ].
 	totalWritten := 0.
 	[ | toWrite |
 		toWrite := (count - totalWritten) min: writeBuffer availableForWriting.
@@ -50,6 +51,7 @@ ZdcOptimizedSocketStream >> skip: count [
 	"Skip over count bytes. Overwritten, optimized"
 
 	| skipCount |
+	count < 0 ifTrue: [ self error: 'cannot skip backwards' ].
 	skipCount := 0.
 	[ | leftToSkip skipping |
 		leftToSkip := count - skipCount.

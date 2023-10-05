@@ -8,7 +8,7 @@ CompiledMethod >> asActiveRingDefinition [
 	^ RGMethodDefinition new
 			name: self selector;
 			parentName: self methodClass name;
-			isMetaSide: self methodClass isMeta;
+			isMeta: self methodClass isMeta;
 			asActive
 ]
 
@@ -33,7 +33,7 @@ CompiledMethod >> asHistoricalRingDefinition [
 	| ring |
 	ring := (RGMethodDefinition named: self selector)
 				parentName: self methodClass name;
-				isMetaSide: self methodClass isMeta.
+				isMeta: self methodClass isMeta.
 
 	self sourcePointer isZero
 		ifTrue: [ "this should not happen but sometimes the system looks corrupted"
@@ -55,7 +55,7 @@ CompiledMethod >> asPassiveRingDefinition [
 	^RGMethodDefinition new
 		 	name: self selector;
 			parentName: self methodClass name;
-			isMetaSide: self methodClass isMeta;
+			isMeta: self methodClass isMeta;
 			protocol: self protocolName;
 			sourceCode: self sourceCode;
 			stamp: self timeStamp;

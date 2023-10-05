@@ -282,7 +282,7 @@ ZnSingleThreadedServer >> logConnectionClosed: socketStream [
 		emit
 ]
 
-{ #category : 'private logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logConnectionRejected: socketStream [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnConnectionRejectedEvent)
@@ -442,7 +442,7 @@ ZnSingleThreadedServer >> loggingOn [
 { #category : 'private - logging' }
 ZnSingleThreadedServer >> newLogEvent: logEventClass [
 	^ logEventClass new
-		serverId: self route;
+		serverId: (self serverId ifNil: [ self route ]);
 		yourself
 ]
 
@@ -478,6 +478,8 @@ ZnSingleThreadedServer >> printOn: stream [
 	stream nextPutAll: (self isRunning ifTrue: [ 'running' ] ifFalse: [ 'stopped' ]).
 	self port ifNotNil: [ :port | stream space; print: port ].
 	self bindingAddress ifNotNil: [ :bindingAddress | stream space; print: bindingAddress ].
+	self serverId ifNotNil: [ :id | stream space; print: id ].
+	self route ifNotNil: [ :id | stream space; print: id ].
 	stream nextPut: $)
 ]
 
@@ -542,7 +544,9 @@ ZnSingleThreadedServer >> serveConnectionOn: listeningSocket [
 { #category : 'private' }
 ZnSingleThreadedServer >> serverProcessName [
 	^ String streamContents: [ :stream |
-		stream nextPutAll: self class name; nextPutAll: ' HTTP port '; print: self port ]
+		stream nextPutAll: self class name; nextPutAll: ' HTTP port '; print: self port.
+		self serverId ifNotNil: [ :id | stream space; << id ].
+		self route ifNotNil: [ :id | stream space; << id ] ]
 ]
 
 { #category : 'accessing' }

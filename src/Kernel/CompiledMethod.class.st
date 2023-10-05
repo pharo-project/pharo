@@ -330,11 +330,13 @@ CompiledMethod >> hasNonLocalReturn [
 
 { #category : 'testing' }
 CompiledMethod >> hasPragma [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self hasProperties and: [self pragmas isNotEmpty]
 ]
 
 { #category : 'accessing - pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
 ]
 
@@ -381,6 +383,7 @@ CompiledMethod >> isBinarySelector [
 
 { #category : 'testing' }
 CompiledMethod >> isClassSide [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^self methodClass isClassSide
 ]
 
@@ -459,7 +462,7 @@ CompiledMethod >> isFaulty [
 { #category : 'testing' }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	| origin |
 	origin := self origin.
 	^ origin isTrait and: [ origin ~= self methodClass ]
@@ -620,6 +623,7 @@ CompiledMethod >> postCopy [
 { #category : 'accessing - pragmas & properties' }
 CompiledMethod >> pragmaAt: aKey [
 	"Answer the first pragma with selector aKey, or nil if none."
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self pragmas detect: [ :pragma | pragma selector == aKey ] ifNone: nil
 ]
 
@@ -633,6 +637,7 @@ CompiledMethod >> pragmaRefersToLiteral: literal [
 { #category : 'accessing - pragmas & properties' }
 CompiledMethod >> pragmas [
 	| selectorOrProperties |
+	<reflection: 'Class structural inspection - Pragma'>
 	^(selectorOrProperties := self penultimateLiteral) isMethodProperties
 		ifTrue: [selectorOrProperties pragmas]
 		ifFalse: [#()]
@@ -640,6 +645,7 @@ CompiledMethod >> pragmas [
 
 { #category : 'accessing - pragmas & properties' }
 CompiledMethod >> pragmasDo: aBlock [
+	<reflection: 'Class structural inspection - Pragma'>
 	| selectorOrProperties |
 	(selectorOrProperties := self penultimateLiteral) isMethodProperties
 		ifTrue: [selectorOrProperties pragmasDo: aBlock]
@@ -742,7 +748,7 @@ CompiledMethod >> propertyAt: aKey ifAbsentPut: aBlock [
 CompiledMethod >> propertyAt: propName ifPresent: aBlock [
 	| propertiesOrSelector |
 	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
-		ifTrue: [propertiesOrSelector at: propName ifPresent: aBlock]
+		ifTrue: [propertiesOrSelector propertyAt: propName ifPresent: aBlock]
 		ifFalse: [nil]
 ]
 
@@ -814,6 +820,7 @@ CompiledMethod >> receiver: aReceiver withArguments: anArray executeMethod: aMet
 	
 	We have this method here in addition to ProtoObject>>#withArgs:executeMethod:
 	so we can execute a method without sending a message to aReceiver"
+		<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	<primitive: 188>
 	self primitiveFailed
 ]
@@ -875,6 +882,7 @@ CompiledMethod >> selector [
 	"Answer a method's selector.  This is either the penultimate literal,
 	 or, if the method has any properties or pragmas, the selector of
 	 the MethodProperties stored in the penultimate literal."
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	| penultimateLiteral |
 	^(penultimateLiteral := self penultimateLiteral) isMethodProperties
 		ifTrue: [penultimateLiteral selector]
@@ -886,6 +894,7 @@ CompiledMethod >> selector: aSelector [
 	"Set a method's selector.  This is either the penultimate literal,
 	 or, if the method has any properties or pragmas, the selector of
 	 the MethodProperties stored in the penultimate literal."
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	| penultimateLiteral nl |
 	(penultimateLiteral := self penultimateLiteral) isMethodProperties
 		ifTrue: [penultimateLiteral selector: aSelector]
@@ -1003,11 +1012,13 @@ CompiledMethod >> usesUndeclareds [
 
 { #category : 'evaluating' }
 CompiledMethod >> valueWithReceiver: aReceiver [
+	<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	^self receiver: aReceiver withArguments: #() executeMethod: self
 ]
 
 { #category : 'evaluating' }
 CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [
+	<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	^self receiver: aReceiver withArguments: anArray executeMethod: self
 ]
 

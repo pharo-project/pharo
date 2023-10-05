@@ -55,3 +55,9 @@ RBNegationCondition >> violationMessageOn: aStream [
 
 	condition violationMessageOn: aStream
 ]
+
+{ #category : 'accessing' }
+RBNegationCondition >> violators [
+	
+	^ condition violators
+]

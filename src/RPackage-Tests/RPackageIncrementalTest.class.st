@@ -43,20 +43,6 @@ RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
 	testingEnvironment at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
 ]
 
-{ #category : 'running' }
-RPackageIncrementalTest >> setUp [
-	super setUp.
-	Author fullName ifNil: [Author fullName: 'RPackage']
-]
-
-{ #category : 'running' }
-RPackageIncrementalTest >> tearDown [
-
-	self organizer packages do: [ :package | package removeFromSystem ].
-
-	super tearDown
-]
-
 { #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testAddClassNoDuplicate [
 
