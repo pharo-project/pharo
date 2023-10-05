@@ -40,7 +40,10 @@ RBSourceRegexTransformation >> privateTransform [
 						ifFalse: [ ( self parseMethod: replacement )
 								ifNotNil: [ protocols := class protocolsFor: selector.
 									( self parseSelector: replacement ) = selector
-										ifFalse: [ class removeMethod: selector ].
+										ifFalse: [ self generateChangesFor: 
+											(RBRemoveMethodTransformation
+												selector: selector
+												from: class) ].
 										self generateChangesFor:
 											(RBAddMethodTransformation
 												sourceCode: replacement

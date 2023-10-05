@@ -63,12 +63,6 @@ RPackageTag >> environment [
 ]
 
 { #category : 'testing' }
-RPackageTag >> hasClass: aClass [
-
-	^ self classes includes: aClass instanceSide
-]
-
-{ #category : 'testing' }
 RPackageTag >> hasClassNamed: aSymbol [
 	^ self classNames includes: aSymbol
 ]
@@ -77,7 +71,7 @@ RPackageTag >> hasClassNamed: aSymbol [
 RPackageTag >> includesClass: aClass [
 	"To deprecate in favor of #hasClass:"
 
-	^ self hasClass: aClass
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : 'initialization' }
@@ -96,6 +90,12 @@ RPackageTag >> isEmpty [
 RPackageTag >> isRoot [
 
 	^ self name = self package rootTagName
+]
+
+{ #category : 'testing' }
+RPackageTag >> isUndefined [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -154,11 +154,9 @@ RPackageTag >> promoteAsPackage [
 { #category : 'accessing' }
 RPackageTag >> removeClass: aClass [
 
-	| oldObject |
-	oldObject := classes remove: aClass ifAbsent: [  ].
+	classes remove: aClass ifAbsent: [ ^ self ].
 	self organizer unregisterPackage: self package forClass: aClass.
-	self isEmpty ifTrue: [ self removeFromPackage ].
-	^ oldObject
+	self isEmpty ifTrue: [ self removeFromPackage ]
 ]
 
 { #category : 'accessing' }
