@@ -4,9 +4,8 @@ A MCSystemCategoryParser extracts or set a category/protocol to the correspondin
 Class {
 	#name : 'MCSystemCategoryParser',
 	#superclass : 'MCDoItParser',
-	#category : 'Monticello-Chunk Format',
-	#package : 'Monticello',
-	#tag : 'Chunk Format'
+	#category : 'Monticello-BackwardCompatibility',
+	#package : 'Monticello-BackwardCompatibility'
 }
 
 { #category : 'factory identification hook' }
