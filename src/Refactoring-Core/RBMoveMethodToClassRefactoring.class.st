@@ -65,8 +65,10 @@ RBMoveMethodToClassRefactoring >> privateTransform [
 	newClass := self classModelOf: class.
 	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
-	oldClass removeMethod: method selector.
-	newClass addMethod: rbMethod.
+	self generateChangesFor: 
+		(RBRemoveMethodTransformation 
+			selector: method selector
+			from: oldClass).
 	self generateChangesFor:
 		(RBAddMethodTransformation
 			sourceCode: rbMethod source
