@@ -48,11 +48,6 @@ ClippingCanvas >> form [
 ]
 
 { #category : 'testing' }
-ClippingCanvas >> isBalloonCanvas [
-	^canvas isBalloonCanvas
-]
-
-{ #category : 'testing' }
 ClippingCanvas >> isShadowDrawing [
 	^canvas isShadowDrawing
 ]

@@ -50,14 +50,13 @@ RBAddInstanceVariableRefactoringTest >> testFailureNewExistingName [
 	| refactoring |
 	model := RBNamespace new.
 	model name: 'Add instance variable'.
-	model defineClass: 'Object << #FOOBAR
-		slots: { #asdf };
-		package: #''Refactory-Test data'''.
-
-	refactoring := RBAddInstanceVariableRefactoring
-		               model: model
-		               variable: 'asdf'
-		               class: #FOOBAR.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
+	refactoring := RBAddInstanceVariableRefactoring model: model variable: 'asdf' class: #FOOBAR.
 
 	self shouldFail: refactoring
 ]
@@ -69,18 +68,20 @@ RBAddInstanceVariableRefactoringTest >> testFailureNewHierarchyExistingName [
 	model := RBNamespace new.
 	model name: 'Add instance variable'.
 
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
 
-	model defineClass: 'Object << #FOOBAR
-		slots: { #asdf };
-		package: #''Refactory-Test data'''.
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclassName: #FOOBAR;
+			name: #BARFOO;
+			package: 'Refactory-Test data' ].
 
-	model defineClass:
-		'FOOBAR << #BARFOO package: ''Refactory-Test data'''.
-
-	refactoring := RBAddInstanceVariableRefactoring
-		               model: model
-		               variable: 'asdf'
-		               class: #BARFOO.
+	refactoring := RBAddInstanceVariableRefactoring model: model variable: 'asdf' class: #BARFOO.
 
 	self shouldFail: refactoring
 ]

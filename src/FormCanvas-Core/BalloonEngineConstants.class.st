@@ -504,3 +504,9 @@ BalloonEngineConstants class >> initializeInstVarNames: aClass prefixedBy: aStri
 	(self bindingOf: token) ifNil: [ self addClassVarNamed: token ].
 	(self bindingOf: token) value: aClass instSize
 ]
+
+{ #category : 'initialization' }
+BalloonEngineConstants >> initialize [
+		<ignoreUnusedClassVariables: #( BEDestOffsetIndex BEPostFlushNeededIndex BEBitBltIndex BESpanIndex ETZValueIndex BEDeferredIndex BEClipRectIndex BEBalloonEngineSize BEFormsIndex FTBalloonFillDataSize BEColorTransformIndex ETYValueIndex FTDestFormIndex FTYValueIndex ETIndexIndex ETBalloonEdgeDataSize BEWorkBufferIndex FTIndexIndex FTMaxXIndex BEAaLevelIndex BEEdgeTransformIndex ETXValueIndex ETSourceIndex FTSourceIndex BEExternalsIndex FTMinXIndex ETLinesIndex )>
+		super initialize.
+]

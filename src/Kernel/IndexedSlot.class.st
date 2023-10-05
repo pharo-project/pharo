@@ -56,7 +56,7 @@ IndexedSlot >> object: anObject instVarAt: anIndex [
 	 variables corresponds to the named instance variables. Fail if the index
 	 is not an Integer or is not the index of a fixed variable. Essential for the
 	 debugger. See  Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 73>
 	"instead of copying the fail code here, just call the method that has it"
 	^thisContext object: anObject instVarAt: anIndex
@@ -71,7 +71,7 @@ IndexedSlot >> object: anObject instVarAt: anIndex put: aValue [
 	 message violates the  principle that each object has sovereign control
 	 over the storing of values into its instance variables. Essential for the
 	 debugger. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Modification - State modification'>
 	<primitive: 74>
 	"instead of copying the fail code here, just call the method that has it"
 	^thisContext object: anObject instVarAt: anIndex put: aValue
@@ -79,10 +79,12 @@ IndexedSlot >> object: anObject instVarAt: anIndex put: aValue [
 
 { #category : 'meta-object-protocol' }
 IndexedSlot >> read: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ self object: anObject instVarAt: index
 ]
 
 { #category : 'meta-object-protocol' }
 IndexedSlot >> write: aValue to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	^ self object: anObject instVarAt: index put: aValue
 ]

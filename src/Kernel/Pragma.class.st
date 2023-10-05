@@ -14,11 +14,9 @@ and to browse all nonprimitive methods with pragmas evaluate
 "
 Class {
 	#name : 'Pragma',
-	#superclass : 'Object',
+	#superclass : 'Message',
 	#instVars : [
-		'method',
-		'arguments',
-		'selector'
+		'method'
 	],
 	#classInstVars : [
 		'pragmaCache'
@@ -126,7 +124,7 @@ Pragma class >> pragmaCache [
 	^ pragmaCache ifNil: [ pragmaCache := Dictionary new ]
 ]
 
-{ #category : 'private' }
+{ #category : 'instance creation' }
 Pragma class >> selector: aSymbol arguments: anArray [
 	^ self new
 		selector: aSymbol;
@@ -183,19 +181,20 @@ Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
 			ifAbsent: [ ^ aBlockClosure value])
 ]
 
-{ #category : 'accessing - pragma' }
+{ #category : 'accessing' }
 Pragma >> arguments [
 	"Answer the arguments of the receiving pragma. For a pragma defined as <key1: val1 key2: val2> this will answer #(val1 val2)."
-
+	<reflection: 'Class structural inspection - Pragma'>
 	^ arguments
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 Pragma >> arguments: anArray [
+	<reflection: 'Class structural inspection - Pragma'>
 	arguments := anArray
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 Pragma >> displayStringOn: stream [
 	self method displayStringOn: stream.
 	stream space.
@@ -204,8 +203,9 @@ Pragma >> displayStringOn: stream [
 
 { #category : 'testing' }
 Pragma >> hasLiteral: aLiteral [
-	^self selector == aLiteral
-	   or: [arguments hasLiteral: aLiteral]
+	"Answer <true> if the receiver references the argument, literal."
+
+	^ self selector == aLiteral or: [ arguments hasLiteral: aLiteral ]
 ]
 
 { #category : 'comparing' }
@@ -229,7 +229,7 @@ Pragma >> key [
 { #category : 'accessing' }
 Pragma >> message [
 	"Answer the message of the receiving pragma."
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^ Message selector: self selector arguments: self arguments
 ]
 
@@ -260,10 +260,10 @@ Pragma >> methodSelector [
 	^method selector
 ]
 
-{ #category : 'accessing - pragma' }
+{ #category : 'accessing' }
 Pragma >> numArgs [
 	"Answer the number of arguments in the pragma."
-
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self arguments size
 ]
 
@@ -289,19 +289,20 @@ Pragma >> refersToLiteral: aLiteral [
 Pragma >> selector [
 	"Answer the selector of the pragma.
 	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
-
+	<reflection: 'Class structural inspection - Pragma'>
 	^ selector
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 Pragma >> selector: aSymbol [
+	<reflection: 'Class structural inspection - Pragma'>
 	selector := aSymbol
 ]
 
 { #category : 'sending' }
 Pragma >> sendTo: anObject [
 	"Send the pragma keyword together with its arguments to anObject and answer the result."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	^ anObject perform: self selector withArguments: self arguments
 ]
 

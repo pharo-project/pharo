@@ -11,3 +11,9 @@ Class {
 	#package : 'Shout-Tests',
 	#tag : 'Styling'
 }
+
+{ #category : 'initialization' }
+SHRBMockSharedPoolStyler >> initialize [
+		<ignoreUnusedClassVariables: #( PoolVar )>
+		super initialize.
+]

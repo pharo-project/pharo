@@ -179,13 +179,13 @@ RGMethodDefinitionTest >> testAsPassive [
 ]
 
 { #category : 'testing' }
-RGMethodDefinitionTest >> testClassNameSelectorIsMetaSide [
+RGMethodDefinitionTest >> testClassNameSelectorIsMeta [
 	| rg |
-	rg := RGMethodDefinition className: 'Point' selector: #x isMetaSide: false.
+	rg := RGMethodDefinition className: 'Point' selector: #x isMeta: false.
 	self assert: rg parentName equals: 'Point'.
 	self assert: (rg parent isKindOf: RGClassDefinition).
 	self assert: rg selector equals: #x.
-	self assert: rg isMetaSide not
+	self assert: rg isMeta not
 ]
 
 { #category : 'testing' }
@@ -241,7 +241,7 @@ RGMethodDefinitionTest >> testExistingMethodWithClass [
 
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #add:.
-	self assert: newMethod isMetaSide not.
+	self assert: newMethod isMeta not.
 
 	self assert: newMethod parent equals: newClass.
 	self assert: newMethod parentName identicalTo: newClass name.
@@ -274,7 +274,7 @@ RGMethodDefinitionTest >> testExistingMethodWithoutClass [
 	newMethod := (RGMethodDefinition named: #add:)
 		parentName: #OrderedCollection;
 		selector: #add:;
-		isMetaSide: false;
+		isMeta: false;
 		protocol: 'adding';
 		sourceCode:
 			'add: newObject
@@ -282,7 +282,7 @@ RGMethodDefinitionTest >> testExistingMethodWithoutClass [
 
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #add:.
-	self assert: newMethod isMetaSide not.
+	self assert: newMethod isMeta not.
 	self assert: newMethod protocol equals: #adding.
 	self assert: newMethod fullName equals: 'OrderedCollection>>add:'.
 	self
@@ -413,7 +413,7 @@ RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #foo.
-	self assert: newMethod isMetaSide.
+	self assert: newMethod isMeta.
 	self assert: newMethod protocol equals: nil.
 
 	self assert: newMethod parent equals: newClass classSide.
@@ -442,7 +442,7 @@ RGMethodDefinitionTest >> testSorting [
 
 	| rgMethod1 rgMethod2 |
 	rgMethod1 := RGMethodDefinition realClass: RGInstanceVariableDefinition selector: #isInstanceVariable.
-	rgMethod2 := RGMethodDefinition realClass: RGElementDefinition selector: #isMetaSide.
+	rgMethod2 := RGMethodDefinition realClass: RGElementDefinition selector: #isMeta.
 	self assert: rgMethod2 <= rgMethod1.
 
 	rgMethod1 := RGMethodDefinition realClass: RGElementDefinition selector: #parentName.

@@ -887,3 +887,9 @@ Unicode class >> value: code [
 
 	^ Character value: code
 ]
+
+{ #category : 'initialization' }
+Unicode >> initialize [
+		<ignoreUnusedClassVariables: #( Cn )>
+		super initialize.
+]

@@ -58,6 +58,7 @@ RGClassDefinition >> addSharedPool: aRGPoolVariableDefinition [
 
 { #category : 'shared pools' }
 RGClassDefinition >> addSharedPoolNamed: poolName [
+	<reflection: 'Class structural modification - Shared pool modification'>
 	| pool |
 	pool:= (RGPoolVariableDefinition named:  poolName) parent: self.
 	self addVariable: pool in: sharedPools.

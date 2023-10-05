@@ -33,7 +33,7 @@ FluidClassBuilderAbstractTest >> packageNameForTest [
 { #category : 'running' }
 FluidClassBuilderAbstractTest >> tearDown [
 
-	self packageOrganizer packageNamed: self packageNameForTest ifPresent: [ :x | x removeFromSystem ].
+	self packageOrganizer removePackage: self packageNameForTest.
 
 	super tearDown
 ]

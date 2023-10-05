@@ -71,11 +71,13 @@ ObservableSlot >> isObservableSlot [
 
 { #category : 'meta-object-protocol' }
 ObservableSlot >> rawRead: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ super read: anObject
 ]
 
 { #category : 'meta-object-protocol' }
 ObservableSlot >> read: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ (self rawRead: anObject) value
 ]
 
@@ -86,6 +88,7 @@ ObservableSlot >> wantsInitialization [
 
 { #category : 'meta-object-protocol' }
 ObservableSlot >> write: aValue to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	(self rawRead: anObject) ifNotNil: [ :v | v value: aValue ].
 	^ aValue
 ]

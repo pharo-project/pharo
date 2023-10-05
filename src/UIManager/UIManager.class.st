@@ -521,10 +521,6 @@ UIManager >> nonInteractiveManager [
 	^NonInteractiveUIManager replacing: self
 ]
 
-{ #category : 'events' }
-UIManager >> onEventSensorStartup: anEventSensor [
-]
-
 { #category : 'default actions' }
 UIManager >> onFontsChanged [
 ]

@@ -50,6 +50,7 @@ AbstractLayout >> checkSanity [
 
 { #category : 'api' }
 AbstractLayout >> definesSlot: aSlot [
+	<reflection: 'Object Inspection - Slot inspection'>
 	^self slots identityIncludes: aSlot
 ]
 

@@ -86,8 +86,8 @@ ClassDescription >> classComment: aString [
 
 { #category : '*Deprecated12' }
 ClassDescription >> classesThatImplementAllOf: selectorSet [
-	"Return an array of any classes that implement all the messages in selectorSet."
-
+	"Return an array of any classes that implement all the messages in selectorSet."	
+		<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	| found remaining |
 	self deprecated: 'This method will be removed in the next version of Pharo.'.
 	found := OrderedCollection new.
@@ -300,8 +300,7 @@ ClassDescription >> untagFrom: aSymbol [
 	"Any class or trait could be tagged by multiple symbols for user purpose.
 	For now we could only model single tag with RPackageTag"
 	package := self package.
-	packageTag := package tagOf: self.
-	packageTag ifNil: [ ^ #(  ) ].
+	packageTag := self packageTag.
 	packageTag isRoot ifTrue: [ ^ #(  ) ].
 	packageTag name = aSymbol ifFalse: [ ^ self ].
 	packageTag removeClass: self.

@@ -23,7 +23,7 @@ RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
 	[
 	notRun := false.
 	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #setNotRun to: self.
-	foo := self createNewClassNamed: #FooForTest2.
+	foo := self newClassNamed: #FooForTest2 in: self p1Name.
 	self deny: notRun.
 	foo removeFromSystem.
 	self assert: notRun ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ]
@@ -34,7 +34,7 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 
 	| pack method foo |
 	pack := self ensurePackage: 'P1'.
-	foo := self createNewClassNamed: #FooForTest inPackage: pack.
+	foo := self newClassNamed: #FooForTest in: pack.
 	foo compile: 'bar ^42'.
 	method := foo >> #bar.
 
@@ -52,7 +52,7 @@ RPackageObsoleteTest >> testMethodPackageOfRemovedClass [
 
 	| pack method foo |
 	pack := self ensurePackage: 'P1'.
-	foo := self createNewClassNamed: #FooForTest2 inPackage: pack.
+	foo := self newClassNamed: #FooForTest2 in: pack.
 	foo compile: 'bar ^42'.
 	method := foo >> #bar.
 	foo removeFromSystem.

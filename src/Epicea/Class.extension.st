@@ -15,7 +15,7 @@ Class >> asEpiceaRingDefinition [
 		        comment: self comment;
 		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
-		        package: self packageName;
+		        package: self package name;
 		        withMetaclass.
 
 	ring classSide

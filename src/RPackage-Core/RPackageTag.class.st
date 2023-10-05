@@ -63,12 +63,6 @@ RPackageTag >> environment [
 ]
 
 { #category : 'testing' }
-RPackageTag >> hasClass: aClass [
-
-	^ self classes includes: aClass instanceSide
-]
-
-{ #category : 'testing' }
 RPackageTag >> hasClassNamed: aSymbol [
 	^ self classNames includes: aSymbol
 ]
@@ -77,7 +71,7 @@ RPackageTag >> hasClassNamed: aSymbol [
 RPackageTag >> includesClass: aClass [
 	"To deprecate in favor of #hasClass:"
 
-	^ self hasClass: aClass
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : 'initialization' }
@@ -94,7 +88,14 @@ RPackageTag >> isEmpty [
 
 { #category : 'testing' }
 RPackageTag >> isRoot [
-	^ self name = self packageName
+
+	^ self name = self package rootTagName
+]
+
+{ #category : 'testing' }
+RPackageTag >> isUndefined [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -153,11 +154,9 @@ RPackageTag >> promoteAsPackage [
 { #category : 'accessing' }
 RPackageTag >> removeClass: aClass [
 
-	| oldObject |
-	oldObject := classes remove: aClass ifAbsent: [  ].
+	classes remove: aClass ifAbsent: [ ^ self ].
 	self organizer unregisterPackage: self package forClass: aClass.
-	self isEmpty ifTrue: [ self removeFromPackage ].
-	^ oldObject
+	self isEmpty ifTrue: [ self removeFromPackage ]
 ]
 
 { #category : 'accessing' }
@@ -186,9 +185,9 @@ RPackageTag >> renameTo: newTagName [
 	oldTagName = newTagName ifTrue: [ ^ self ].
 
 	self basicRenameTo: newTagName.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self flag: #package. "This should be removed with the system organizer."
-		self classes do: [ :each | each category: newCategoryName ] ].
+
+	self flag: #package. "This should be removed later when the class will know its tag."
+	self classes do: [ :class | class basicCategory: newCategoryName ].
 	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 

@@ -145,15 +145,8 @@ RPackageOrganizer >> tagForCategory: category [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> unregisterPackage: aPackage [
-
-	self deprecated: 'Use #removePackage: instead.' transformWith: '`@rcv unregisterPackage: `@arg' -> '`@rcv removePackage: `@arg'.
-	^ self removePackage: aPackage
-]
-
-{ #category : '*Deprecated12' }
 RPackageOrganizer >> unregisterPackageNamed: symbol [
 
-	self deprecated: 'Use #removePackage: instead.' transformWith: '`@rcv unregisterPackageNamed: `@arg' -> '`@rcv removePackage: `@arg'.
-	^ self removePackage: symbol
+	self deprecated: 'Use #unregisterPackage: instead.' transformWith: '`@rcv unregisterPackageNamed: `@arg' -> '`@rcv unregisterPackage: `@arg'.
+	^ self unregisterPackage: symbol
 ]

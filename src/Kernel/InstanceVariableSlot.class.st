@@ -59,6 +59,8 @@ InstanceVariableSlot >> emitValue: methodBuilder [
 
 { #category : 'testing' }
 InstanceVariableSlot >> isAccessedIn: aCompiledCode [
+	"Return whether the receiver is accessed in the arg. Pay attention that the compiler is free to remove unused variable so the access is only garanteed for used instance variables e.g. part of return, expression, assignment..."
+	
 	^ aCompiledCode accessesField: index
 ]
 

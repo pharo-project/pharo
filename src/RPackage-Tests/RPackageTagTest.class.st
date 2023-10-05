@@ -13,7 +13,7 @@ RPackageTagTest >> testAddClass [
 
 	| package1 package2 tag class |
 	package1 := self ensurePackage: #Test1.
-	class := self createNewClassNamed: 'TestClass' inPackage: package1.
+	class := self newClassNamed: 'TestClass' in: package1.
 
 	self assert: (package1 includesClass: class).
 
@@ -35,7 +35,7 @@ RPackageTagTest >> testAddClassFromTag [
 
 	| package1 package2 class |
 	package1 := self ensurePackage: #Test1.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG1'.
 
 	self assert: (package1 includesClass: class).
 	self assert: (package1 hasTag: #TAG1).
@@ -52,20 +52,20 @@ RPackageTagTest >> testAddClassFromTag [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testHasClass [
+RPackageTagTest >> testIncludesClass [
 
 	| package class tag |
 	package := self ensurePackage: #Test1.
-	class := self createNewClassNamed: 'TestClass' inCategory: package name , '-TAG'.
+	class := self newClassNamed: 'TestClass' in: package tag: 'TAG'.
 	tag := class packageTag.
 
 	self assert: (package includesClass: class).
 	self assert: (package hasTag: tag).
 	self assert: tag name equals: 'TAG'.
 
-	self assert: (tag hasClass: class).
-	self assert: (tag hasClass: class class). "We want it to work with class side too"
-	self deny: (tag hasClass: self class)
+	self assert: (tag includesClass: class).
+	self assert: (tag includesClass: class class). "We want it to work with class side too"
+	self deny: (tag includesClass: self class)
 ]
 
 { #category : 'tests' }
@@ -73,7 +73,7 @@ RPackageTagTest >> testPromoteAsPackage [
 
 	| package1 package2 class tag1 |
 	package1 := self ensurePackage: #Test1.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	tag1 := package1 classTagNamed: 'TAG1'.
@@ -92,7 +92,7 @@ RPackageTagTest >> testRemoveClass [
 	| package tag class |
 	package := self ensurePackage: #Test1.
 	tag := package ensureTag: #TAG.
-	class := self createNewClassNamed: 'TestClass' inCategory: package name , '-TAG'.
+	class := self newClassNamed: 'TestClass' in: package tag: 'TAG'.
 
 	self assert: (tag includesClass: class).
 
@@ -109,7 +109,7 @@ RPackageTagTest >> testRemoveClassRemoveTagIfEmpty [
 	| package tag class |
 	package := self ensurePackage: #Test1.
 	tag := package ensureTag: #TAG.
-	class := self createNewClassNamed: 'TestClass' inCategory: package name , '-TAG'.
+	class := self newClassNamed: 'TestClass' in: package tag: 'TAG'.
 
 	self assert: (tag includesClass: class).
 	self assert: (package hasTag: tag).

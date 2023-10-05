@@ -25,13 +25,12 @@ ReEquivalentSuperclassMethodsRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
+
 	(self ignoredSelectors includes: aMethod selector) ifTrue: [ ^ false ].
 
-	^ aMethod methodClass superclass
-		ifNotNil: [ :superclass | (superclass lookupSelector: aMethod selector)
-			ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
-			ifNil: [ false ] ]
-		ifNil: [ false ]
+	^ aMethod overriddenMethod
+		  ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
+		  ifNil: [ false ]
 ]
 
 { #category : 'accessing' }

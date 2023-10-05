@@ -1014,7 +1014,7 @@ HandMorph >> restoreSavedPatchOn: aCanvas [
 
 	hasChanged := false.
 	savedPatch ifNotNil:
-			[aCanvas drawImage: savedPatch at: savedPatch offset.
+			[aCanvas restoreSavedPatch: savedPatch at: savedPatch offset.
 			submorphs notEmpty ifTrue: [^self].
 			(temporaryCursor notNil and: [hardwareCursor isNil]) ifTrue: [^self].
 
@@ -1042,9 +1042,9 @@ HandMorph >> savePatchFrom: aCanvas [
 		ifTrue:
 			["allocate new patch form if needed"
 
-			savedPatch := aCanvas form allocateForm: myBnds extent].
+			savedPatch := aCanvas allocateSavedPatch: myBnds extent].
 	aCanvas contentsOfArea: (myBnds translateBy: aCanvas origin)
-		into: savedPatch.
+		intoSavedPatch: savedPatch.
 	savedPatch offset: myBnds topLeft.
 	^damageRect
 ]

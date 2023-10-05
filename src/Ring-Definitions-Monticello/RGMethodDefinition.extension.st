@@ -8,7 +8,7 @@ RGMethodDefinition >> sameAsMCDefinition: anMCMethodDefinition [
 			anMCMethodDefinition className = self className
 				and:
 					[
-					anMCMethodDefinition classIsMeta = self isMetaSide
+					anMCMethodDefinition classIsMeta = self isMeta
 						and:
 							[
 							anMCMethodDefinition category = self protocol

@@ -64,16 +64,16 @@ RGMethodTest >> testMetaSide [
 
 	anEnvironemnt := RGEnvironment new.
 	aMethod := (anEnvironemnt ensureClassNamed: 'SomeClass class') ensureLocalMethodNamed: #someMethod.
-	self assert: aMethod isMetaSide.
+	self assert: aMethod isMeta.
 	self deny: aMethod isFromTrait.
 	aMethod := (anEnvironemnt ensureClassNamed: 'SomeClass') ensureLocalMethodNamed: #someMethod.
-	self deny: aMethod isMetaSide.
+	self deny: aMethod isMeta.
 	self deny: aMethod isFromTrait.
 	aMethod := (anEnvironemnt ensureTraitNamed: 'SomeTrait classTrait') ensureLocalMethodNamed: #someMethod.
-	self assert: aMethod isMetaSide.
+	self assert: aMethod isMeta.
 	self assert: aMethod isFromTrait.
 	aMethod := (anEnvironemnt ensureTraitNamed: 'SomeTrait') ensureLocalMethodNamed: #someMethod.
-	self deny: aMethod isMetaSide.
+	self deny: aMethod isMeta.
 	self assert: aMethod isFromTrait
 ]
 
@@ -122,7 +122,7 @@ RGMethodTest >> testNewNamedMethod [
 	self assert: method selector equals: 'someMessage'.
 	self assert: method sourceCode lines first equals: 'someMessage'.
 
-	self deny: method isMetaSide
+	self deny: method isMeta
 ]
 
 { #category : 'tests' }

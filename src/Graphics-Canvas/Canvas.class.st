@@ -37,18 +37,6 @@ Canvas >> asShadowDrawingCanvas: aColor [
 ]
 
 { #category : 'drawing - support' }
-Canvas >> cache: aRectangle using: aCache during: aBlock [
-	"Cache the execution of aBlock by the given cache.
-	Note: At some point we may want to actually *create* the cache here;
-		for now we're only using it."
-
-	(aCache notNil
-		and: [(aCache isForm) and: [aCache extent = aRectangle extent]])
-			ifTrue: [^self paintImage: aCache at: aRectangle origin].
-	aBlock value: self
-]
-
-{ #category : 'drawing - support' }
 Canvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle active only during the execution of aBlock.
 	Note: In the future we may want to have more general clip shapes - not just rectangles"
@@ -267,11 +255,6 @@ Canvas >> finish [
 Canvas >> flush [
 ]
 
-{ #category : 'other' }
-Canvas >> flushDisplay [
-	"Empty hook method."
-]
-
 { #category : 'accessing' }
 Canvas >> form [
 
@@ -439,11 +422,6 @@ Canvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 Canvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sourceAlpha [
 	"Privately used for blending forms w/ constant alpha. Fall back to simpler case by defaul."
 	^self image: aForm at: aPoint sourceRect: sourceRect rule: rule
-]
-
-{ #category : 'testing' }
-Canvas >> isBalloonCanvas [
-	^false
 ]
 
 { #category : 'testing' }
@@ -652,17 +630,6 @@ Canvas >> paragraph: paragraph bounds: bounds color: c [
 	^self subclassResponsibility
 ]
 
-{ #category : 'drawing - support' }
-Canvas >> preserveStateDuring: aBlock [
-	"Preserve the full canvas state during the execution of aBlock"
-	^aBlock value: self copy
-]
-
-{ #category : 'drawing' }
-Canvas >> render: anObject [
-	"Do some 3D operations with the object if possible"
-]
-
 { #category : 'drawing - general' }
 Canvas >> roundCornersOf: aMorph during: aBlock [
 	^self roundCornersOf: aMorph in: aMorph bounds during: aBlock
@@ -765,23 +732,4 @@ Canvas >> translucentImage: aForm at: aPoint sourceRect: sourceRect [
 		at: aPoint
 		sourceRect: sourceRect
 		rule: Form blend
-]
-
-{ #category : 'drawing - images' }
-Canvas >> warpImage: aForm transform: aTransform [
-	"Warp the given form using aTransform"
-	^self warpImage: aForm transform: aTransform at: 0@0
-]
-
-{ #category : 'drawing - images' }
-Canvas >> warpImage: aForm transform: aTransform at: extraOffset [
-	"Warp the given form using aTransform.
-	TODO: Use transform to figure out appropriate cell size"
-	^self warpImage: aForm transform: aTransform at: extraOffset sourceRect: aForm boundingBox cellSize: 1
-]
-
-{ #category : 'drawing - images' }
-Canvas >> warpImage: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
-	"Warp the given using the appropriate transform and offset."
-	^self subclassResponsibility
 ]
