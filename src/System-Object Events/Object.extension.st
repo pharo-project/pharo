@@ -1,13 +1,13 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> actionForEvent: anEventSelector [
     "Answer the action to be evaluated when <anEventSelector> has been triggered."
 
 	^ self actionForEvent: anEventSelector ifAbsent: [nil]
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> actionForEvent: anEventSelector
 ifAbsent: anExceptionBlock [
     "Answer the action to be evaluated when <anEventSelector> has been triggered."
@@ -21,13 +21,13 @@ ifAbsent: anExceptionBlock [
 		ifNotNil: [:act | act asMinimalRepresentation ]
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> actionMap [
 
 	^ EventManager actionMapFor: self
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> actionSequenceForEvent: anEventSelector [
 
 	^ (self actionMap
@@ -35,32 +35,32 @@ Object >> actionSequenceForEvent: anEventSelector [
 		   ifAbsent: [ ^ WeakActionSequence new ]) asActionSequence
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> actionsDo: aBlock [
 
 	self actionMap do: aBlock
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> asActionSequence [
 
 	^WeakActionSequence with: self
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> createActionMap [
 
 	^IdentityDictionary new
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> hasActionForEvent: anEventSelector [
     "Answer true if there is an action associated with anEventSelector"
 
     ^(self actionForEvent: anEventSelector) notNil
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> hasActionsWithReceiver: anObject [
 
 	^self actionMap keys anySatisfy:
@@ -69,13 +69,13 @@ Object >> hasActionsWithReceiver: anObject [
 				anySatisfy: [:anAction | anAction receiver == anObject]]
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> releaseActionMap [
 
 	EventManager releaseActionMapFor: self
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> removeAction: anAction
 forEvent: anEventSelector [
 
@@ -84,7 +84,7 @@ forEvent: anEventSelector [
         forEvent: anEventSelector
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> removeActionsForEvent: anEventSelector [
 
 	| map |
@@ -93,10 +93,10 @@ Object >> removeActionsForEvent: anEventSelector [
 	map ifEmpty: [ self releaseActionMap ]
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> removeActionsSatisfying: aBlock [
 
-	self actionMap keysDo:
+	self actionMap copy keysDo:
 		[:eachEventSelector |
 			self
    				removeActionsSatisfying: aBlock
@@ -104,7 +104,7 @@ Object >> removeActionsSatisfying: aBlock [
 		]
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> removeActionsSatisfying: aOneArgBlock
 forEvent: anEventSelector [
 
@@ -115,18 +115,14 @@ forEvent: anEventSelector [
         forEvent: anEventSelector
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> removeActionsWithReceiver: anObject [
 
-	self actionMap copy keysDo:
-		[:eachEventSelector |
-			self
-   				removeActionsSatisfying: [:anAction | anAction receiver == anObject]
-				forEvent: eachEventSelector
-		]
+	self removeActionsSatisfying: [ :anAction |
+		anAction receiver == anObject ]
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> removeActionsWithReceiver: anObject
 forEvent: anEventSelector [
 
@@ -137,7 +133,7 @@ forEvent: anEventSelector [
         forEvent: anEventSelector
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> setActionSequence: actionSequence forEvent: anEventSelector [
 
 	actionSequence asMinimalRepresentation
@@ -146,14 +142,14 @@ Object >> setActionSequence: actionSequence forEvent: anEventSelector [
 			self updateableActionMap at: anEventSelector asSymbol put: action ]
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> triggerEvent: anEventSelector [
 	"Evaluate all actions registered for <anEventSelector>. Return the value of the last registered action."
 
     ^(self actionForEvent: anEventSelector) value
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> triggerEvent: anEventSelector
 with: anObject [
 
@@ -162,7 +158,7 @@ with: anObject [
 		withArguments: { anObject }
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> triggerEvent: anEventSelector
 withArguments: anArgumentList [
 
@@ -170,13 +166,13 @@ withArguments: anArgumentList [
         valueWithArguments: anArgumentList
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> updateableActionMap [
 
 	^EventManager updateableActionMapFor: self
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> when: anEventSelector evaluate: anAction [
 
 	| actions |
@@ -188,7 +184,7 @@ Object >> when: anEventSelector evaluate: anAction [
 		forEvent: anEventSelector
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject [
@@ -200,7 +196,7 @@ to: anObject [
             selector: aMessageSelector)
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject
@@ -214,7 +210,7 @@ with: anArg [
 		arguments: {anArg})
 ]
 
-{ #category : #'*System-Object Events' }
+{ #category : '*System-Object Events' }
 Object >> when: anEventSelector
 send: aMessageSelector
 to: anObject

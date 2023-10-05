@@ -20,47 +20,48 @@ You can use one of my 2 methods:
 	remove the versionner
 "
 Class {
-	#name : #ImageCleaner,
-	#superclass : #Object,
+	#name : 'ImageCleaner',
+	#superclass : 'Object',
 	#instVars : [
 		'literalTable'
 	],
-	#category : #'Tool-ImageCleaner'
+	#category : 'Tool-ImageCleaner',
+	#package : 'Tool-ImageCleaner'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ImageCleaner class >> cleanUpForProduction [
 	<script>
 	self new cleanUpForProduction
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ImageCleaner class >> cleanUpForRelease [
 	<script>
 	self new cleanUpForRelease
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleaner class >> examplePackages [
 	<script: 'self examplePackages inspect'>
 
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleaner class >> helpPackages [
 	<script: 'self helpPackages inspect'>
 
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ImageCleaner class >> shareLiterals [
 	<script>
 	self new shareLiterals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageCleaner class >> testPackages [
 	"All test packages to wipe out, except ReleeaseTests package."
 
@@ -68,7 +69,7 @@ ImageCleaner class >> testPackages [
 	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ImageCleaner >> cleanUpForProduction [
 	<script: 'self new cleanUpForProduction'>
 
@@ -84,7 +85,7 @@ ImageCleaner >> cleanUpForProduction [
 	self cleanUpForRelease
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ImageCleaner >> cleanUpForRelease [
 	<script: 'self new cleanUpForRelease'>
 
@@ -96,9 +97,8 @@ ImageCleaner >> cleanUpForRelease [
 			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
 				ifTrue: [ each releaseCachedState ] ].
 
-	self
-		removeEmptyCategories;
-		removeEmptyPackages.
+	self removeEmptyCategories.
+	self packageOrganizer removeEmptyPackagesAndTags.
 
 	Smalltalk
 		garbageCollect;
@@ -113,7 +113,7 @@ ImageCleaner >> cleanUpForRelease [
 	Author reset
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> cleanUpMethods [
 	"Make sure that all methods in use are restarted"
 	<script: 'self new cleanUpMethods'>
@@ -129,7 +129,7 @@ ImageCleaner >> cleanUpMethods [
 	Smalltalk restartMethods
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> cleanUpProcesses [
 	(Process allInstances
 		reject: [ :p |
@@ -146,7 +146,7 @@ ImageCleaner >> cleanUpProcesses [
 				terminate ]
 ]
 
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> createLiteralTable [
 	| arrays |
 	literalTable := OCLiteralSet new.
@@ -169,25 +169,25 @@ ImageCleaner >> createLiteralTable [
 			array beReadOnlyObject ]
 ]
 
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> detroyLiteralTable [
 	"in case someone keeps in instance of ImageCleaner, make sure the table gets GCed"
 	literalTable := nil
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> examplePackages [
 
 	^ self class examplePackages
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> helpPackages [
 
 	^ self class helpPackages
 ]
 
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> literalsDo: aBlock [
 
 	CompiledCode allSubInstancesDo: [ :cm |
@@ -197,7 +197,7 @@ ImageCleaner >> literalsDo: aBlock [
 				ifTrue: [ aBlock value: literal value: cm ] ] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> packagesForCleanUpInProduction [
 	"A list of packages who will be unloaded when going to production.
 	 WARNING, ORDER IS IMPORTANT"
@@ -205,25 +205,18 @@ ImageCleaner >> packagesForCleanUpInProduction [
 	^#('MonticelloMocks')
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> removeEmptyCategories [
 	"Remove empty categories, which are not in MC packages, because MC does
 	not do this (this script does not make packages dirty)"
 
-	self packageOrganizer removeEmptyPackages.
+	self packageOrganizer removeEmptyPackagesAndTags.
 	Smalltalk allClassesAndTraitsDo: [ :class |
 		class removeEmptyProtocols.
 		class class removeEmptyProtocols ]
 ]
 
-{ #category : #cleaning }
-ImageCleaner >> removeEmptyPackages [
-	| empty |
-	empty := RPackageOrganizer default packages select: #isEmpty.
-	empty do: #unregister
-]
-
-{ #category : #'literal sharing' }
+{ #category : 'literal sharing' }
 ImageCleaner >> shareLiterals [
 	"We go over all methods and replace all the literals that are equal by one copy"
 	self createLiteralTable.
@@ -232,7 +225,7 @@ ImageCleaner >> shareLiterals [
 	self detroyLiteralTable
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ImageCleaner >> testPackages [
 
 	^ self class testPackages

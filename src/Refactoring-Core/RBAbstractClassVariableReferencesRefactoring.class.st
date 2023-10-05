@@ -6,15 +6,17 @@ I create new accessor methods for the variables and replace every read and write
 
 "
 Class {
-	#name : #RBAbstractClassVariableReferencesRefactoring,
-	#superclass : #RBVariableRefactoring,
+	#name : 'RBAbstractClassVariableReferencesRefactoring',
+	#superclass : 'RBVariableRefactoring',
 	#instVars : [
 		'accessorsRefactoring'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractClassVariableReferencesRefactoring >> abstractClassSideReferences [
 	| replacer |
 	replacer := self parseTreeRewriterClass
@@ -32,7 +34,7 @@ RBAbstractClassVariableReferencesRefactoring >> abstractClassSideReferences [
 		using: replacer
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractClassVariableReferencesRefactoring >> abstractInstanceSideReferences [
 	| replacer |
 	replacer := self parseTreeRewriterClass
@@ -45,7 +47,7 @@ RBAbstractClassVariableReferencesRefactoring >> abstractInstanceSideReferences [
 		using: replacer
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RBAbstractClassVariableReferencesRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
@@ -58,12 +60,12 @@ RBAbstractClassVariableReferencesRefactoring >> accessorsRefactoring [
 		ifNotNil: [ accessorsRefactoring ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractClassVariableReferencesRefactoring >> createAccessors [
-	self performCompositeRefactoring: self accessorsRefactoring
+	self generateChangesFor: self accessorsRefactoring
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAbstractClassVariableReferencesRefactoring >> preconditions [
 	^(RBCondition isMetaclass: class) not
 		& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
@@ -72,8 +74,8 @@ RBAbstractClassVariableReferencesRefactoring >> preconditions [
 					errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')
 ]
 
-{ #category : #transforming }
-RBAbstractClassVariableReferencesRefactoring >> transform [
+{ #category : 'transforming' }
+RBAbstractClassVariableReferencesRefactoring >> privateTransform [
 	self createAccessors.
 	self abstractInstanceSideReferences.
 	self abstractClassSideReferences

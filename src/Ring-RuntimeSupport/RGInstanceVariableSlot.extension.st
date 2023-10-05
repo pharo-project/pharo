@@ -1,18 +1,18 @@
-Extension { #name : #RGInstanceVariableSlot }
+Extension { #name : 'RGInstanceVariableSlot' }
 
-{ #category : #'*Ring-RuntimeSupport' }
+{ #category : '*Ring-RuntimeSupport' }
 RGInstanceVariableSlot >> emitStore: methodBuilder [
 
 	methodBuilder storeInstVar: self index
 ]
 
-{ #category : #'*Ring-RuntimeSupport' }
+{ #category : '*Ring-RuntimeSupport' }
 RGInstanceVariableSlot >> emitValue: methodBuilder [
 
 	methodBuilder pushInstVar: self index
 ]
 
-{ #category : #'*Ring-RuntimeSupport' }
+{ #category : '*Ring-RuntimeSupport' }
 RGInstanceVariableSlot >> index [
 
 	"TODO!"

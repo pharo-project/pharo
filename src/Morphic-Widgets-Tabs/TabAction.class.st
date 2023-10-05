@@ -7,17 +7,19 @@ I contains
 	- a label to add indication about what I am supposed to do
 "
 Class {
-	#name : #TabAction,
-	#superclass : #Object,
+	#name : 'TabAction',
+	#superclass : 'Object',
 	#instVars : [
 		'action',
 		'icon',
 		'label'
 	],
-	#category : #'Morphic-Widgets-Tabs-Base'
+	#category : 'Morphic-Widgets-Tabs-Base',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabAction class >> action: action icon: icon label: label [
 
 	^ self new
@@ -27,24 +29,24 @@ TabAction class >> action: action icon: icon label: label [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabAction >> action [
 	^ action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabAction >> action: anObject [
 
 	action := anObject.
 	icon on: #click send: #value to: action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabAction >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabAction >> icon: aForm [
 
 	icon image: aForm.
@@ -53,7 +55,7 @@ TabAction >> icon: aForm [
 	action ifNotNil: [ icon on: #click send: #value to: action ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabAction >> initialize [
 
 	super initialize.
@@ -61,12 +63,12 @@ TabAction >> initialize [
 	icon := ImageMorph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabAction >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabAction >> label: aLabel [
 
 	label := aLabel.

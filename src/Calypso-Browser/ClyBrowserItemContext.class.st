@@ -13,21 +13,23 @@ Internal Representation and Key Implementation Points.
 	itemType:		<Class>
 "
 Class {
-	#name : #ClyBrowserItemContext,
-	#superclass : #AnnotationContext,
+	#name : 'ClyBrowserItemContext',
+	#superclass : 'AnnotationContext',
 	#instVars : [
 		'itemType'
 	],
-	#category : #'Calypso-Browser-Contexts'
+	#category : 'Calypso-Browser-Contexts',
+	#package : 'Calypso-Browser',
+	#tag : 'Contexts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserItemContext class >> itemType: scopeClass [
 	^self new
 		itemType: scopeClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyBrowserItemContext >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -38,25 +40,25 @@ ClyBrowserItemContext >> = anObject [
 	^ itemType = anObject itemType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItemContext >> describes: aBrowserContext [
 
 	^aBrowserContext isAboutBrowserItemType: itemType
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyBrowserItemContext >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ itemType hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItemContext >> itemType [
 	^ itemType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItemContext >> itemType: aClass [
 	itemType := aClass
 ]

@@ -1,14 +1,16 @@
 Class {
-	#name : #SHRBTextStylerTest,
-	#superclass : #TestCase,
+	#name : 'SHRBTextStylerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'styler',
 		'oldSetting'
 	],
-	#category : #'Shout-Tests-Styling'
+	#category : 'Shout-Tests-Styling',
+	#package : 'Shout-Tests',
+	#tag : 'Styling'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SHRBTextStylerTest >> setUp [
 
 	super setUp.
@@ -16,7 +18,7 @@ SHRBTextStylerTest >> setUp [
 	oldSetting := SHRBTextStyler instVarNamed: #formatIncompleteIdentifiers
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 SHRBTextStylerTest >> style: aText [
 
 	| ast |
@@ -27,14 +29,14 @@ SHRBTextStylerTest >> style: aText [
 	^ ast
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SHRBTextStylerTest >> tearDown [
 
 	SHRBTextStyler formatIncompleteIdentifiers: oldSetting.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBTextStylerTest >> testClassAfterMessageToASymbolLowercaseShouldBeColored [
 
 	| aText index attributes |
@@ -56,7 +58,7 @@ SHRBTextStylerTest >> testClassAfterMessageToASymbolLowercaseShouldBeColored [
 		TextColor color: SHPreferences globalVarStyle color }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBTextStylerTest >> testClassAfterMessageToASymbolUppercaseShouldBeColored [
 
 	| aText index attributes |
@@ -78,7 +80,7 @@ SHRBTextStylerTest >> testClassAfterMessageToASymbolUppercaseShouldBeColored [
 		TextColor color: SHPreferences globalVarStyle color}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBTextStylerTest >> testIncompleteIdentifierVariable [
 
 	| aText ast |
@@ -98,7 +100,7 @@ SHRBTextStylerTest >> testIncompleteIdentifierVariable [
 	self assert: (styler resolveStyleFor: ast variableNodes first) equals: #undefinedIdentifier
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBTextStylerTest >> testSettingFalseTheIncompleteMessageShouldNotFormatIt [
 
 	| aText index attributes ast node |
@@ -121,7 +123,7 @@ SHRBTextStylerTest >> testSettingFalseTheIncompleteMessageShouldNotFormatIt [
 		TextColor red }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHRBTextStylerTest >> testSettingTrueTheIncompleteMessageShouldFormatIt [
 
 	| aText index attributes ast node |

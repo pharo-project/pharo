@@ -3,12 +3,14 @@ I extend a notebook by adding sortable capabilities.
 
 "
 Class {
-	#name : #ClyNotebookMorph,
-	#superclass : #SpNotebookMorph,
-	#category : #'Calypso-Browser-Tabs'
+	#name : 'ClyNotebookMorph',
+	#superclass : 'SpNotebookMorph',
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookMorph >> addActions: aCollection [
 
 	self toolbarMorph
@@ -16,7 +18,7 @@ ClyNotebookMorph >> addActions: aCollection [
 		addAllMorphs: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 	"Add a page and its tab."
 	| index |
@@ -30,20 +32,20 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 	self tabSelectorMorph addTab: aStringOrMorph beforeIndex: index
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 ClyNotebookMorph >> addToSelection: aPage [
 
 	self selectedPageIndex: (pageMorphs indexOf: aPage)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNotebookMorph >> initialize [
 
 	toolbarMorph := self newToolbarMorph.
 	super initialize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookMorph >> newHeaderMorph [
 
 	^ (self theme newRowIn: self theme for: { self tabSelectorMorph. self toolbarMorph })
@@ -52,7 +54,7 @@ ClyNotebookMorph >> newHeaderMorph [
 		borderWidth: 0
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 ClyNotebookMorph >> newTabSelectorMorph [
 
 	^ super newTabSelectorMorph
@@ -60,7 +62,7 @@ ClyNotebookMorph >> newTabSelectorMorph [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookMorph >> newToolbarMorph [
 
 	^ SpNotebookPanelMorph new
@@ -76,20 +78,20 @@ ClyNotebookMorph >> newToolbarMorph [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookMorph >> postAddPage: aPage [
 
 	self addActions: aPage actions
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 ClyNotebookMorph >> removeFromSelection: aPage [
 
 	self selectedPageIndex = (pageMorphs indexOf: aPage)
 		ifTrue: [ self selectedPageIndex: 0 ]
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 ClyNotebookMorph >> themeChanged [
 
 	super themeChanged.
@@ -101,13 +103,13 @@ ClyNotebookMorph >> themeChanged [
 	self pages do: [ :each | each themeChanged ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookMorph >> toolbarMorph [
 
 	^ toolbarMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookMorph >> useSortedTabsBy: aBlock [
 
 	self pageMorphs: (SortedCollection sortBlock: aBlock)

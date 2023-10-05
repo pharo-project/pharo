@@ -2,33 +2,35 @@
 This class represents the symbols containing 8bit characters.
 "
 Class {
-	#name : #ByteSymbol,
-	#superclass : #Symbol,
-	#type : #bytes,
-	#category : #'Collections-Strings-Base'
+	#name : 'ByteSymbol',
+	#superclass : 'Symbol',
+	#type : 'bytes',
+	#category : 'Collections-Strings-Base',
+	#package : 'Collections-Strings',
+	#tag : 'Base'
 }
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteSymbol class >> findFirstInString: aString inSet: inclusionMap startingAt: start [
 	^ByteString findFirstInString: aString  inSet: inclusionMap startingAt: start
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteSymbol class >> indexOfAscii: anInteger inString: aString startingAt: start [
 	^ByteString indexOfAscii: anInteger inString: aString startingAt: start
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteSymbol class >> stringHash: aString initialHash: speciesHash [
 	^ByteString stringHash: aString initialHash: speciesHash
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteSymbol class >> translate: aString from: start  to: stop  table: table [
 	^ByteString translate: aString from: start  to: stop  table: table
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ByteSymbol >> asByteArray [
 	| ba sz |
 	sz := self byteSize.
@@ -37,12 +39,12 @@ ByteSymbol >> asByteArray [
 	^ba
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ByteSymbol >> asOctetString [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteSymbol >> at: index [
 	"Primitive. Answer the Character stored in the field of the receiver
 	indexed by the argument. Fail if the index argument is not an Integer or
@@ -52,24 +54,24 @@ ByteSymbol >> at: index [
 	^ Character value: (super at: index)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteSymbol >> byteAt: index [
 	<primitive: 60>
 	^(self at: index) asciiValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteSymbol >> byteAt: anInteger put: anObject [
 	"You cannot modify the receiver."
 	^ self modificationForbiddenFor: #byteAt:put: index: anInteger value: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteSymbol >> byteSize [
 	^self size
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ByteSymbol >> compareWith: anotherString [
 	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
 
@@ -77,7 +79,7 @@ ByteSymbol >> compareWith: anotherString [
 	^ self compareWith: anotherString collated: AsciiOrder
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ByteSymbol >> compareWith: anotherString collated: order [
 	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
 
@@ -98,26 +100,26 @@ ByteSymbol >> compareWith: anotherString collated: order [
 		  ifFalse: [ 1 ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ByteSymbol >> findSubstring: key in: body startingAt: start matchTable: matchTable [
 	"Answer the index in the string body at which the substring key first occurs, at or beyond start.  The match is determined using matchTable, which can be used to effect, eg, case-insensitive matches.  If no match is found, zero will be returned."
 	<primitive: 'primitiveFindSubstring' module: 'MiscPrimitivePlugin'>
 	^super findSubstring: key in: body startingAt: start matchTable: matchTable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteSymbol >> hasWideCharacterFrom: start to: stop [
 	"Always false because I only contains byte characters"
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteSymbol >> indexOfAnyOf: aCollection startingAt: start [
 	"Use double dispatching for speed"
 	^aCollection findFirstInByteString: self startingAt: start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteSymbol >> indexOfAnyOf: aCollection startingAt: start ifAbsent: aBlock [
 	"Use double dispatching for speed"
 	| index |
@@ -126,13 +128,13 @@ ByteSymbol >> indexOfAnyOf: aCollection startingAt: start ifAbsent: aBlock [
 		ifFalse: [index]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteSymbol >> isByteString [
 	"Answer whether the receiver is a ByteString"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteSymbol >> isOctetString [
 	"Answer whether the receiver can be represented as a byte string.
 	This is different from asking whether the receiver *is* a ByteString
@@ -140,7 +142,7 @@ ByteSymbol >> isOctetString [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ByteSymbol >> privateAt: index put: aCharacter [
 	"Primitive. Store the Character in the field of the receiver indicated by
 	the index. Fail if the index is not an Integer or is out of bounds, or if
@@ -158,13 +160,13 @@ ByteSymbol >> privateAt: index put: aCharacter [
 		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ]
 ]
 
-{ #category : #accessing }
+{ #category : 'private' }
 ByteSymbol >> species [
 	"Answer the preferred class for reconstructing the receiver."
 	^ByteString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ByteSymbol >> string: aString [
 	1 to: aString size do: [:j |
 		self privateAt: j put: (aString at: j)].

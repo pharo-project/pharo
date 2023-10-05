@@ -2,8 +2,8 @@
 Utility class for calculating
 "
 Class {
-	#name : #EllipseMidpointTracer,
-	#superclass : #Object,
+	#name : 'EllipseMidpointTracer',
+	#superclass : 'Object',
 	#instVars : [
 		'x',
 		'y',
@@ -15,10 +15,12 @@ Class {
 		'd2',
 		'inFirstRegion'
 	],
-	#category : #'Graphics-Primitives-Utilities'
+	#category : 'Graphics-Primitives-Utilities',
+	#package : 'Graphics-Primitives',
+	#tag : 'Utilities'
 }
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 EllipseMidpointTracer >> on: aRectangle [
 	a := aRectangle width // 2.
 	b := aRectangle height // 2.
@@ -31,7 +33,7 @@ EllipseMidpointTracer >> on: aRectangle [
 	inFirstRegion := true
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 EllipseMidpointTracer >> stepInY [
 	"Step to the next y value"
 	inFirstRegion ifTrue:[

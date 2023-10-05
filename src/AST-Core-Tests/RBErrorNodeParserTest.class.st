@@ -1,10 +1,12 @@
 Class {
-	#name : #RBErrorNodeParserTest,
-	#superclass : #RBParserTest,
-	#category : #'AST-Core-Tests-Parser'
+	#name : 'RBErrorNodeParserTest',
+	#superclass : 'RBParserTest',
+	#category : 'AST-Core-Tests-Parser',
+	#package : 'AST-Core-Tests',
+	#tag : 'Parser'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyAssigment [
 
 	| node |
@@ -19,7 +21,7 @@ RBErrorNodeParserTest >> testFaultyAssigment [
 	self assert: node formattedCode equals: ':= 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyAssigment2 [
 
 	| node |
@@ -33,7 +35,7 @@ RBErrorNodeParserTest >> testFaultyAssigment2 [
 	self assert: node formattedCode equals: 'a := '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
 
 	| node |
@@ -51,7 +53,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
 	self assert: node formattedCode equals: '12 + '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentInside [
 
 	| node0 node |
@@ -71,7 +73,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentInside [
 	self assert: node0 formattedCode equals: '[ 12 +  ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrectMessage [
 
 	| node |
@@ -82,7 +84,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrect
 	self assert: node selector equals: #+
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiver [
 
 	| node |
@@ -100,7 +102,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiver [
 	self assert: node formattedCode equals: ' + 12'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiverInside [
 
 	| node0 node |
@@ -120,7 +122,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiverInside [
 	self assert: node0 formattedCode equals: '[  + 12 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHaveTheCorrectMessage [
 
 	| node |
@@ -134,7 +136,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHav
 	self assert: node arguments first value equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBlockUnclosed [
 
 	| node |
@@ -146,7 +148,7 @@ RBErrorNodeParserTest >> testFaultyBlockUnclosed [
 	self assert: node formattedCode equals: '[ 1 + 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyBlockUnopeneed [
 
 	| node |
@@ -158,7 +160,7 @@ RBErrorNodeParserTest >> testFaultyBlockUnopeneed [
 	self assert: node formattedCode equals: '1 + 2 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascade [
 
 	| node |
@@ -169,7 +171,7 @@ RBErrorNodeParserTest >> testFaultyCascade [
 	self assert: node children first messages first isParseError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected [
 
 	| node |
@@ -193,7 +195,7 @@ RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected [
 		equals: '1<r><t>foo;<r><t>' expandMacros
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected2 [
 
 	| node |
@@ -220,7 +222,7 @@ RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected2 [
 		equals: '1<r><t>foo;<r><t>;<r><t>bar' expandMacros
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected3 [
 
 	| node |
@@ -251,7 +253,7 @@ RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected3 [
 		equals: '1<r><t>foo;<r><t>;<r><t>' expandMacros
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
 
 	| node |
@@ -276,7 +278,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
 		equals: '<r><t>;<r><t>foo' expandMacros
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
 
 	| node |
@@ -308,7 +310,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
 		equals: '<r><t>;<r><t>;<r><t>foo' expandMacros
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
 
 	| node |
@@ -337,7 +339,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
 		equals: '1 foo<r><t>;<r><t>bar' expandMacros
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 
 	| node |
@@ -365,7 +367,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 		equals: '1<r><t>;<r><t>bar' expandMacros
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 
 	| source node |
@@ -391,7 +393,7 @@ RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 	self assert: node formattedCode equals: source
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyMessageSendShouldHaveTheCorrectMessage [
 
 	| node |
@@ -402,7 +404,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendShouldHaveTheCorrectMessage [
 	self assert: node selector equals: #msg:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyMessageSendWithLiteralArgumentShouldHaveTheCorrectMessage [
 
 	| node |
@@ -417,7 +419,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithLiteralArgumentShouldHaveTheCo
 	self assert: node arguments first value equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCorrectMessage [
 
 	| node |
@@ -433,7 +435,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCo
 	self assert: node arguments second value equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
 
 	| parser |
@@ -444,7 +446,7 @@ RBErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
 	self assert: parser atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyMethodWithSignatureKeepsSignature [
 
 	| node |
@@ -454,7 +456,7 @@ RBErrorNodeParserTest >> testFaultyMethodWithSignatureKeepsSignature [
 	self assert: node selector equals: #ret
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContinueParsing [
 
 	| node |
@@ -469,7 +471,7 @@ RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContin
 	self assert: node body statements second selector equals: #between:and:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyNumericLiteral [
 
 	| node |
@@ -486,7 +488,7 @@ RBErrorNodeParserTest >> testFaultyNumericLiteral [
 	self assert: node formattedCode equals: '000 r'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
 
 	| node |
@@ -503,7 +505,7 @@ RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
 	self assert: node formattedCode equals: '2r x'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyStringLiteral [
 
 	| node |
@@ -520,7 +522,7 @@ RBErrorNodeParserTest >> testFaultyStringLiteral [
 	self assert: node formattedCode equals: '''foo'' , ''bar'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBErrorNodeParserTest >> testFaultyStringLiteral2 [
 
 	| node |

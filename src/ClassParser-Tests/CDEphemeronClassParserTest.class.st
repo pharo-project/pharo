@@ -1,10 +1,11 @@
 Class {
-	#name : #CDEphemeronClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDEphemeronClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDEphemeronClassParserTest >> classDefinitionString [
 
 	^ '{superclassName} ephemeronSubclass: #{classname}
@@ -20,7 +21,7 @@ CDEphemeronClassParserTest >> classDefinitionString [
 				'classvar2' -> self secondClassVariableName. } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDEphemeronClassParserTest >> testEphemeronClassIsEphemeron [
 
 	self assert: classDefinition layoutClass equals: EphemeronLayout

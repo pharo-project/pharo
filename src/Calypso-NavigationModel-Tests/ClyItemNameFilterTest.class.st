@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyItemNameFilterTest,
-	#superclass : #ClyItemFilterTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyItemNameFilterTest',
+	#superclass : 'ClyItemFilterTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyItemNameFilterTest >> testComparisonWithAnotherFilter [
 	| anotherFilter |
 	filter := ClyItemNameFilter substringPattern: 'filter'.
@@ -17,7 +18,7 @@ ClyItemNameFilterTest >> testComparisonWithAnotherFilter [
 	self deny: filter equals: anotherFilter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyItemNameFilterTest >> testFilterClassWithName [
 
 	filter := ClyItemNameFilter substringPattern: 'ject'. "Object"
@@ -26,7 +27,7 @@ ClyItemNameFilterTest >> testFilterClassWithName [
 	self deny: (filter matches: Array)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyItemNameFilterTest >> testFilterMethodWithSelector [
 
 	filter := ClyItemNameFilter substringPattern: 'collect'.
@@ -35,11 +36,11 @@ ClyItemNameFilterTest >> testFilterMethodWithSelector [
 	self deny: (filter matches: Collection >> #add:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyItemNameFilterTest >> testFilterPackageWithName [
 
 	filter := ClyItemNameFilter substringPattern: 'kernel'.
 
-	self assert: (filter matches: (RPackage organizer packageNamed: #Kernel)).
-	self deny: (filter matches: (RPackage organizer packageNamed: #Jobs))
+	self assert: (filter matches: (self packageOrganizer packageNamed: #Kernel)).
+	self deny: (filter matches: (self packageOrganizer packageNamed: #Jobs))
 ]

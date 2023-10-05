@@ -4,46 +4,48 @@ Sometimes instance variables are used instead of method arguments or temporaries
 The defined number of instance variables can be edited in #variablesCount.
 "
 Class {
-	#name : #ReExcessiveVariablesRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReExcessiveVariablesRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReExcessiveVariablesRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveVariablesRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ExcessiveVariablesRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReExcessiveVariablesRule >> basicCheck: aClass [
 	^ aClass instVarNames size >= self variablesCount or: [
 		"Shared pools are just there to define vars, so it is ok for them to have a lot"
 		(aClass instanceSide isPool not) and: [aClass classVarNames size >= self variablesCount ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveVariablesRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveVariablesRule >> name [
 	^ 'Excessive number of variables'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveVariablesRule >> rationale [
 	^ 'Classes that have too many instance variables (10+) could be redesigned to have fewer fields, possibly through some nested object grouping.'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReExcessiveVariablesRule >> variablesCount [
 	^ 10
 ]

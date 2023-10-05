@@ -1,13 +1,13 @@
-Extension { #name : #StringTest }
+Extension { #name : 'StringTest' }
 
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 StringTest >> testAsClass [
 	self
 		assert: 'String' asClass
 		equals: String
 ]
 
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 StringTest >> testAsClassIfAbsent [
 
 	self
@@ -18,7 +18,7 @@ StringTest >> testAsClassIfAbsent [
 	self fail
 ]
 
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 StringTest >> testAsClassIfPresent [
 
 	'String' asClassIfPresent: [ :class |

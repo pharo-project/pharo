@@ -4,26 +4,27 @@ An AthensWorldState is a subclass of WorldState, that uses a special (fake) Disp
 
 "
 Class {
-	#name : #AthensWorldState,
-	#superclass : #WorldState,
+	#name : 'AthensWorldState',
+	#superclass : 'WorldState',
 	#instVars : [
 		'display',
 		'canvas'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensWorldState >> display [
 	^ display
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensWorldState >> display: aDisplay [
 	display := aDisplay
 ]
 
-{ #category : #'update cycle' }
+{ #category : 'update cycle' }
 AthensWorldState >> doDeferredUpdatingFor: aWorld [
 	"overwritten from WorldState to use ower own display"
 

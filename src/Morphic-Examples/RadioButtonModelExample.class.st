@@ -2,42 +2,44 @@
 Model used for radio buttons in example of basic controls (see ""UITheme exampleBasicControls"").
 "
 Class {
-	#name : #RadioButtonModelExample,
-	#superclass : #Model,
+	#name : 'RadioButtonModelExample',
+	#superclass : 'Model',
 	#instVars : [
 		'option'
 	],
-	#category : #'Morphic-Examples-Widgets'
+	#category : 'Morphic-Examples-Widgets',
+	#package : 'Morphic-Examples',
+	#tag : 'Widgets'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RadioButtonModelExample class >> initialize [
 
 	self deprecatedAliases: { #ExampleRadioButtonModel }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> beCenter [
 	"Set the option to #center."
 
 	self option: #center
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> beLeft [
 	"Set the option to #left."
 
 	self option: #left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> beRight [
 	"Set the option to #right."
 
 	self option: #right
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RadioButtonModelExample >> initialize [
 	"Initialize the receiver."
 
@@ -46,35 +48,35 @@ RadioButtonModelExample >> initialize [
 		option: #left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> isCenter [
 	"Answer whether the option if #center."
 
 	^self option == #center
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> isLeft [
 	"Answer whether the option if #left."
 
 	^self option == #left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> isRight [
 	"Answer whether the option if #right."
 
 	^self option == #right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> option [
 	"Answer the value of option"
 
 	^ option
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadioButtonModelExample >> option: aSymbol [
 	"Set the value of option"
 

@@ -1,41 +1,49 @@
 Class {
-	#name : #EpFilterTest,
-	#superclass : #TestCase,
-	#category : #'EpiceaBrowsers-Tests-Filters'
+	#name : 'EpFilterTest',
+	#superclass : 'TestCase',
+	#category : 'EpiceaBrowsers-Tests-Filters',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Filters'
 }
 
-{ #category : #running }
+{ #category : 'asserting' }
+EpFilterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
+{ #category : 'running' }
 EpFilterTest >> assert: aFilter accepts: anEvent rejects: anotherEvent [
 	self assert: (aFilter accepts: anEvent).
 	self deny: (aFilter accepts: anotherEvent)
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpFilterTest >> classAddition [
 	^ self entryWith: (EpClassAddition class: Object)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpFilterTest >> entryWith: anEvent [
 	^ OmEntry content: anEvent
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpFilterTest >> methodAddition [
 	^ self entryWith: (EpMethodAddition method: Object >> #printOn:)
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpFilterTest >> redo [
 	^ self entryWith: (EpRedo forAll: #())
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 EpFilterTest >> refactoring [
 	^ self entryWith: (EpRenameClassRefactoring rename: Object to: #Object42)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpFilterTest >> testAnd [
 	| aFilter |
 	aFilter := EpAndFilter withAll: {
@@ -48,7 +56,7 @@ EpFilterTest >> testAnd [
 		rejects: self classAddition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpFilterTest >> testEquality [
 	self
 		assert: EpPluggableFilter methodFilter
@@ -59,7 +67,7 @@ EpFilterTest >> testEquality [
 		equals: (EpOrFilter withAll: EpPluggableFilter allFilters)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpFilterTest >> testLogBrowserOperation [
 	self
 		assert: EpPluggableFilter logBrowserOperationFilter
@@ -67,7 +75,7 @@ EpFilterTest >> testLogBrowserOperation [
 		rejects: self methodAddition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpFilterTest >> testMethod [
 	self
 		assert: EpPluggableFilter methodFilter
@@ -75,7 +83,7 @@ EpFilterTest >> testMethod [
 		rejects: self classAddition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpFilterTest >> testNoTrigger [
 	| expressionEvaluationWithTrigger |
 	expressionEvaluationWithTrigger := self classAddition.

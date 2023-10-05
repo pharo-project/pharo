@@ -15,7 +15,9 @@ NativeBrowserOpenVisitor openOn: FileLocator home.
 ```
 "
 Class {
-	#name : #ManifestNativeBrowser,
-	#superclass : #PackageManifest,
-	#category : #'Native-Browser-Manifest'
+	#name : 'ManifestNativeBrowser',
+	#superclass : 'PackageManifest',
+	#category : 'Native-Browser-Manifest',
+	#package : 'Native-Browser',
+	#tag : 'Manifest'
 }

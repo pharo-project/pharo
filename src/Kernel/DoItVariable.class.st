@@ -33,16 +33,18 @@ Internal Representation and Key Implementation Points.
 	doItContext:		<Context>
 "
 Class {
-	#name : #DoItVariable,
-	#superclass : #Variable,
+	#name : 'DoItVariable',
+	#superclass : 'Variable',
 	#instVars : [
 		'actualVariable',
 		'doItContext'
 	],
-	#category : #'Kernel-Variables'
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DoItVariable class >> fromContext: aContext variable: aVariable [
 
 	^self new
@@ -50,40 +52,40 @@ DoItVariable class >> fromContext: aContext variable: aVariable [
 		actualVariable: aVariable
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DoItVariable class >> named: aString fromContext: aContext [
 	^self
 		fromContext: aContext
 		variable: (aContext lookupVar: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoItVariable >> actualVariable [
 	^ actualVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoItVariable >> actualVariable: aVariable [
 	actualVariable := aVariable.
 	name := actualVariable name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> allowsShadowing [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoItVariable >> doItContext [
 	^ doItContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoItVariable >> doItContext: anObject [
 	doItContext := anObject
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 DoItVariable >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
@@ -97,94 +99,94 @@ DoItVariable >> emitStore: aMethodBuilder [
 		send: #write:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 DoItVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
 		pushLiteral: self;
 		send: #read
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isArgumentVariable [
 	^actualVariable isArgumentVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isClassVariable [
 	^actualVariable isClassVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isGlobalVariable [
 	^actualVariable isGlobalVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isInstanceVariable [
 	^actualVariable isInstanceVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isLiteralVariable [
 	^actualVariable isLiteralVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isLocalVariable [
 	^actualVariable isLocalVariable
 ]
 
-{ #category : #testing }
-DoItVariable >> isReservedVariable [
-	^actualVariable isReservedVariable
+{ #category : 'testing' }
+DoItVariable >> isPseudoVariable [
+	^actualVariable isPseudoVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isSelfVariable [
 	^actualVariable isSelfVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isSuperVariable [
 	^actualVariable isSuperVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isTempVariable [
 	^actualVariable isTempVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isThisContextVariable [
 	^actualVariable isThisContextVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isThisProcessVariable [
 	^actualVariable isThisProcessVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isUndeclaredVariable [
 	^actualVariable isUndeclaredVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isUninitialized [
 	^actualVariable isUninitialized
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoItVariable >> isWorkspaceVariable [
 	^actualVariable isWorkspaceVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoItVariable >> key [
 	^self name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DoItVariable >> printOn: aStream [
 	super printOn: aStream.
 
@@ -193,32 +195,32 @@ DoItVariable >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 DoItVariable >> read [
 	^actualVariable readInContext: doItContext
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 DoItVariable >> readInContext: aContext [
 	^self read
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoItVariable >> scope [
 	^ actualVariable scope
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 DoItVariable >> usingMethods [
 	^actualVariable usingMethods
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 DoItVariable >> write: aValue [
 	^actualVariable write: aValue inContext: doItContext
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 DoItVariable >> write: aValue inContext: aContext [
 	self write: aValue
 ]

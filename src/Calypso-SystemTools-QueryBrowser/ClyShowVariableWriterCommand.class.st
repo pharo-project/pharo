@@ -9,47 +9,49 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyShowVariableWriterCommand,
-	#superclass : #SycVariableCommand,
+	#name : 'ClyShowVariableWriterCommand',
+	#superclass : 'SycVariableCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Queries'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Queries'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowVariableWriterCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2001 for: ClyFullBrowserVariableContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowVariableWriterCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $m meta for: ClyFullBrowserVariableContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowVariableWriterCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowVariableWriterCommand >> defaultMenuItemName [
 	^'Writers'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowVariableWriterCommand >> execute [
 
 	browser spawnQueryBrowserOn: (ClyVariableWritersQuery ofAny: variables)
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowVariableWriterCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

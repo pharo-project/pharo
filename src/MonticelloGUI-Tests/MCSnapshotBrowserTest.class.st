@@ -1,45 +1,46 @@
 Class {
-	#name : #MCSnapshotBrowserTest,
-	#superclass : #MCTestCase,
+	#name : 'MCSnapshotBrowserTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'model',
 		'morph'
 	],
-	#category : #'MonticelloGUI-Tests'
+	#category : 'MonticelloGUI-Tests',
+	#package : 'MonticelloGUI-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> allCategories [
 	^ Array with: model extensionsCategory with: self mockCategoryName.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> allMethods [
 	^ MCSnapshotResource current definitions
 		select: [:def | def isMethodDefinition]
 		thenCollect: [:def | def selector]		
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> allProtocols [
 	^ MCSnapshotResource current definitions
 		select: [:def | def isMethodDefinition]
 		thenCollect: [:def | def category]		
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 MCSnapshotBrowserTest >> annotationTextMorph [
 	^ (self morphsOfClass: TextMorph) first
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> assertAListIncludes: anArrayOfStrings [
 	self listMorphs 
 			detect: [:m | m getList includesAll: anArrayOfStrings]
 			ifNone: [self assert: false].
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> assertAListMatches: strings [
 
 	| lists |
@@ -49,19 +50,19 @@ MCSnapshotBrowserTest >> assertAListMatches: strings [
 		ifNone: [ self fail: 'Could not find all "' , strings asArray asString , '" ' , 'in any of "' , (lists collect: #asArray) asArray asString , '"' ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> assertButtonExists: aString [
 	self buttonMorphs detect: [:m | m label = aString] ifNone: [self assert: false].
 				
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> assertButtonOn: aString [
 	self assert: (self findButtonWithLabel: aString) getModelState.
 	
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> assertTextIs: aString [
 
 	self 
@@ -69,64 +70,64 @@ MCSnapshotBrowserTest >> assertTextIs: aString [
 		equals: aString
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 MCSnapshotBrowserTest >> buttonMorphs [
 	^ self morphsOfClass: PluggableButtonMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> classABooleanMethods [
 	^ #(falsehood moreTruth truth)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> classAClassProtocols [
 
 	^ self mockClassA class protocolNames
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> classAComment [
 	^ self mockClassA comment.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> classADefinitionString [
 
 	^ self mockClassA oldDefinition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> classAProtocols [
 	^ self mockClassA protocolNames
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> classAclassDefinitionString [
 
 	^ (ClassDefinitionPrinter oldPharo for: self mockClassA class) definitionString
 ]
 
-{ #category : #simulating }
+{ #category : 'simulating' }
 MCSnapshotBrowserTest >> clickOnButton: aString [
 	(self findButtonWithLabel: aString) performAction.
 ]
 
-{ #category : #simulating }
+{ #category : 'simulating' }
 MCSnapshotBrowserTest >> clickOnListItem: aString [
 	| listMorph |
 	listMorph := self findListContaining: aString.
 	listMorph changeModelSelection: (listMorph getList indexOf: aString).
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> definedClasses [
 	^ MCSnapshotResource current definitions 
 		select: [:def | def isClassDefinition] 
 		thenCollect: [:def | def className].
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> denyAListHasSelection: aString [
 	| found |
 	found := true.
@@ -136,7 +137,7 @@ MCSnapshotBrowserTest >> denyAListHasSelection: aString [
 	self deny: found.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> denyAListIncludesAnyOf: anArrayOfStrings [
 	| found |
 	found := true.
@@ -146,34 +147,34 @@ MCSnapshotBrowserTest >> denyAListIncludesAnyOf: anArrayOfStrings [
 	self deny: found.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCSnapshotBrowserTest >> denyButtonOn: aString [
 	self deny: (self findButtonWithLabel: aString) getModelState.
 	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCSnapshotBrowserTest >> falsehoodMethodSource [
 	^ 'falsehood
 	^ false'
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 MCSnapshotBrowserTest >> findButtonWithLabel: aString [
 	^ self buttonMorphs detect: [:m | m label = aString]
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 MCSnapshotBrowserTest >> findListContaining: aString [
 	^ self listMorphs detect: [:m | m getList includes: aString]
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 MCSnapshotBrowserTest >> listMorphs [
 	^ self morphsOfClass: PluggableListMorph
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 MCSnapshotBrowserTest >> morphsOfClass: aMorphClass [
 	| morphs |
 	morphs := OrderedCollection new.
@@ -181,21 +182,21 @@ MCSnapshotBrowserTest >> morphsOfClass: aMorphClass [
 	^ morphs
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowserTest >> selectMockClassA [
 	self clickOnListItem: self mockCategoryName.
 	self clickOnListItem: 'MCMockClassA'.
 	
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotBrowserTest >> setUp [
 	super setUp.
 	model := MCSnapshotBrowser forSnapshot: MCSnapshotResource current snapshot.
 	morph := model buildWindow.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testButtonMutex [
 	self assertButtonOn: 'instance'.
 	self denyButtonOn: '?'.
@@ -213,7 +214,7 @@ MCSnapshotBrowserTest >> testButtonMutex [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testCategorySelected [
 	self clickOnListItem: self mockCategoryName.
 	
@@ -224,7 +225,7 @@ MCSnapshotBrowserTest >> testCategorySelected [
 	self assertTextIs: ''.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testClassSelected [
 	self selectMockClassA.
 	
@@ -235,7 +236,7 @@ MCSnapshotBrowserTest >> testClassSelected [
 	self assertTextIs: self classADefinitionString.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testClassSideClassSelected [
 	self clickOnButton: 'class'.
 	self selectMockClassA.
@@ -247,7 +248,7 @@ MCSnapshotBrowserTest >> testClassSideClassSelected [
 	self assertTextIs: self classAclassDefinitionString.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testComment [
 	self clickOnButton: '?'.
 	self assertTextIs: ''.
@@ -259,12 +260,12 @@ MCSnapshotBrowserTest >> testComment [
 	self assertTextIs: self classAComment.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testFourColumns [
 	self assert: self listMorphs size equals: 4
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testMethodIsCleared [
 	self clickOnListItem: self mockCategoryName.
 	self clickOnListItem: 'MCMockClassA'.
@@ -275,7 +276,7 @@ MCSnapshotBrowserTest >> testMethodIsCleared [
 	self denyAListHasSelection: 'falsehood'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testMethodSelected [
 	self clickOnListItem: self mockCategoryName.
 	self clickOnListItem: 'MCMockClassA'.
@@ -289,7 +290,7 @@ MCSnapshotBrowserTest >> testMethodSelected [
 	self assertTextIs: self falsehoodMethodSource.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testNoSelection [
 	self assertAListMatches: self allCategories.
 	self denyAListIncludesAnyOf: self definedClasses.
@@ -299,17 +300,18 @@ MCSnapshotBrowserTest >> testNoSelection [
 	self assertTextIs: '(package defines no scripts)'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testProtocolIsCleared [
+
 	self clickOnListItem: self mockCategoryName.
 	self clickOnListItem: 'MCMockASubclass'.
-	self clickOnListItem: 'as yet unclassified'.
+	self clickOnListItem: Protocol unclassified.
 	self clickOnListItem: 'MCMockClassA'.
-	
-	self denyAListHasSelection: 'as yet unclassified'.
+
+	self denyAListHasSelection: Protocol unclassified
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testProtocolSelected [
 	self clickOnListItem: self mockCategoryName.
 	self clickOnListItem: 'MCMockClassA'.
@@ -322,19 +324,19 @@ MCSnapshotBrowserTest >> testProtocolSelected [
 	self assertTextIs: ''.		
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testTextPane [
 	self textMorph
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSnapshotBrowserTest >> testThreeButtons [
 	self assertButtonExists: 'instance'.
 	self assertButtonExists: '?'.
 	self assertButtonExists: 'class'.
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 MCSnapshotBrowserTest >> textMorph [
 	^ (self morphsOfClass: RubPluggableTextMorph) last
 ]

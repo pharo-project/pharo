@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 BlockClosure >> cleanCopy [
 	"Answer a copy of myself preserving in outerContext just the receiver and method, which are the only needed by a clean block closure."
 
@@ -9,14 +9,14 @@ BlockClosure >> cleanCopy [
 		yourself
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 BlockClosure >> cleanOuterContext [
 	"Clean my outerContext preserving just the receiver and method, which are the only needed by a clean block closure. outerContext can already be nil if the block was compiled without context"
 
 	outerContext ifNotNil: [ outerContext := outerContext cleanCopy ]
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 BlockClosure >> fuelAccept: aGeneralMapper [
 
 	^ self shouldBeSubstitutedByMinimalCopy
@@ -29,7 +29,7 @@ BlockClosure >> fuelAccept: aGeneralMapper [
 		ifFalse: [ aGeneralMapper visitVariableObject: self ]
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 BlockClosure >> shouldBeSubstitutedByMinimalCopy [
 	"Clean blocks can be made smaller by replacing the outer context.
 	Un unclean closure can't be 'cleaned' so it will just be serialized

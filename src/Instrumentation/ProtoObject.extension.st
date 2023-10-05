@@ -1,11 +1,12 @@
-Extension { #name : #ProtoObject }
+Extension { #name : 'ProtoObject' }
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 ProtoObject >> insIsEqual: anObject [
-	"Primitive. Answer whether the receiver and the argument are the same
-	object (have the same object pointer). Do not redefine the message == in
-	any other class! Essential. No Lookup. Do not override in any subclass.
-	See Object documentation whatIsAPrimitive."
+	"I am a redefinition of the ProtoObject>>#== method. I have the same implementation of
+	ProtoObject>>#== except for the instrumentation pragmas. I re-implement the method because
+	when instrumenting I need to compare (see my senders) two numbers to control the
+	concurrency. If the user instruments the method ProtoObject>>#== I will enter to an
+	endless loop."
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>
 	<noInstrumentation>

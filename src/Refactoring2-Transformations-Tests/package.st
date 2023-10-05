@@ -1,1 +1,1 @@
-Package { #name : #'Refactoring2-Transformations-Tests' }
+Package { #name : 'Refactoring2-Transformations-Tests' }

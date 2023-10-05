@@ -13,49 +13,46 @@ My instances can be created using following expression:
 	OCReceiverDoItSemanticScope targetingReceiver: anObject
 "
 Class {
-	#name : #OCReceiverDoItSemanticScope,
-	#superclass : #OCDoItSemanticScope,
+	#name : 'OCReceiverDoItSemanticScope',
+	#superclass : 'OCDoItSemanticScope',
 	#instVars : [
 		'targetReceiver'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OCReceiverDoItSemanticScope class >> targetingNilReceiver [
 	^self targetingReceiver: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OCReceiverDoItSemanticScope class >> targetingReceiver: anObject [
 	^self new
 		targetReceiver: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCReceiverDoItSemanticScope >> receiver [
 
 	^ targetReceiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCReceiverDoItSemanticScope >> receiver: anObject [
 
 	targetReceiver := anObject
 ]
 
-{ #category : #accessing }
-OCReceiverDoItSemanticScope >> targetClass [
-	^targetReceiver class
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCReceiverDoItSemanticScope >> targetReceiver [
 
 	^ targetReceiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCReceiverDoItSemanticScope >> targetReceiver: anObject [
 
 	targetReceiver := anObject

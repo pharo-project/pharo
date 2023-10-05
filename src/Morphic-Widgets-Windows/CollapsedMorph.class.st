@@ -4,15 +4,17 @@ This Morph is used to show  a collapsed Morph when the World lacks a Taskbar.
 
 "
 Class {
-	#name : #CollapsedMorph,
-	#superclass : #SystemWindow,
+	#name : 'CollapsedMorph',
+	#superclass : 'SystemWindow',
 	#instVars : [
 		'uncollapsedMorph'
 	],
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #'collapse/expand' }
+{ #category : 'collapse/expand' }
 CollapsedMorph >> beReplacementFor: aMorph [
 
 	| itsWorld priorPosition |
@@ -28,7 +30,7 @@ CollapsedMorph >> beReplacementFor: aMorph [
 		[self position: priorPosition]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 CollapsedMorph >> buildWindowMenu [
 	"Answer the menu to be put up in response to the user's clicking on the window-menu control in the window title.  Specialized for CollapsedMorphs."
 
@@ -51,7 +53,7 @@ CollapsedMorph >> buildWindowMenu [
 	^aMenu
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 CollapsedMorph >> collapseOrExpand [
 
 	"Toggle the expand/collapsd state of the receiver.  If expanding, copy the window title back to the name of the expanded morph"
@@ -71,7 +73,7 @@ CollapsedMorph >> collapseOrExpand [
 		ifFalse: [ super collapseOrExpand ]
 ]
 
-{ #category : #'collapse/expand' }
+{ #category : 'collapse/expand' }
 CollapsedMorph >> uncollapseToHand [
 	"Hand the uncollapsedMorph to the user, placing it in her hand, after remembering appropriate state for possible future use"
 
@@ -84,7 +86,7 @@ CollapsedMorph >> uncollapseToHand [
 	self activeHand attachMorph: nakedMorph
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 CollapsedMorph >> wantsExpandBox [
 	"Answer whether I'd like an expand box"
 

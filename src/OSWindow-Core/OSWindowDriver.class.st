@@ -12,17 +12,19 @@ Driver selection mechanism:
  - on session change, i scan all of my subclasses to pick a most suitable driver which will be used on current platform (see #current on my class side)
 "
 Class {
-	#name : #OSWindowDriver,
-	#superclass : #Object,
+	#name : 'OSWindowDriver',
+	#superclass : 'Object',
 	#classVars : [
 		'Current',
 		'DriverClass',
 		'Session'
 	],
-	#category : #'OSWindow-Core-Utilities'
+	#category : 'OSWindow-Core-Utilities',
+	#package : 'OSWindow-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowDriver class >> current [
 
 	Session == Smalltalk session ifTrue: [
@@ -32,13 +34,13 @@ OSWindowDriver class >> current [
 	^ Current := self driverClass new
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSWindowDriver class >> driverClass [
 
 	^ DriverClass ifNil: [ DriverClass := self pickDriverClass ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSWindowDriver class >> driverClass: aClass [
 
 	self driverClass = aClass ifTrue: [ ^ self ].
@@ -48,31 +50,31 @@ OSWindowDriver class >> driverClass: aClass [
 	self inform: 'You need to restart your image for this changes to take effect.'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSWindowDriver class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSWindowDriver class >> isSuitable [
 	"Answer true if receiver is most suitable for using in current session/platform"
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSWindowDriver class >> isSupported [
 	"Answer true if receiver is most suitable for using in current session/platform"
 	^ false
 ]
 
-{ #category : #'driver selection' }
+{ #category : 'driver selection' }
 OSWindowDriver class >> pickDriverClass [
 
 	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s ] ].
 	^ OSNullWindowDriver
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSWindowDriver class >> settingsOn: aBuilder [
 	<systemsettings>
 
@@ -90,7 +92,7 @@ You will need to restart the image to make this changes take effect.';
 				domainValues: (self allSubclasses select: [ :each | each isSuitable ]) ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSWindowDriver class >> shutDown: quitting [
 
 	quitting ifFalse: [ ^ self ].
@@ -110,28 +112,28 @@ OSWindowDriver class >> shutDown: quitting [
 		ifTrue: [ ActiveWorld := nil ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowDriver >> afterMainPharoWindowCreated: aWindow [
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowDriver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 ]
 
-{ #category : #'window creation' }
+{ #category : 'window creation' }
 OSWindowDriver >> createWindowWithAttributes: anOSWindowAttributes osWindow: osWindow [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSWindowDriver >> isNullDriver [
 	^ false
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSWindowDriver >> shutDown: quitting [
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSWindowDriver >> startUp: resuming [
 ]

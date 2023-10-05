@@ -1,10 +1,12 @@
 Class {
-	#name : #HiSpecExampleTest,
-	#superclass : #HiExamplesTest,
-	#category : #'Hiedra-Tests-Model'
+	#name : 'HiSpecExampleTest',
+	#superclass : 'HiExamplesTest',
+	#category : 'Hiedra-Tests-Model',
+	#package : 'Hiedra-Tests',
+	#tag : 'Model'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiSpecExampleTest class >> classWithExamplesToTest [
-	^ HiSpecExample
+	^ HiSpecExamplePresenter
 ]

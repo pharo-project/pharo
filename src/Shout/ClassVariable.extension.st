@@ -1,6 +1,6 @@
-Extension { #name : #ClassVariable }
+Extension { #name : 'ClassVariable' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 ClassVariable >> styleNameIn: aRBVariableNode [
 
 	^ self isPoolVariable

@@ -1,29 +1,31 @@
 "
-I model thisProcess keyword
+I model thisProcess
 "
 Class {
-	#name : #ThisProcessVariable,
-	#superclass : #ReservedVariable,
-	#category : #'Kernel-Variables'
+	#name : 'ThisProcessVariable',
+	#superclass : 'PseudoVariable',
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThisProcessVariable class >> variableName [
 	^#thisProcess
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ThisProcessVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushThisProcess 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ThisProcessVariable >> isThisProcessVariable [
 	^true
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 ThisProcessVariable >> readInContext: aContext [
 	"We expect this method to be called either from the same process or by debugger process that will read the correct process. Otherwise we cannot guarantee to read the correct process"
 	^ Processor activeProcess

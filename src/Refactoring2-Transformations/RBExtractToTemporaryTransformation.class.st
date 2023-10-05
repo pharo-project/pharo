@@ -5,17 +5,19 @@ As the code is now only evaluated once for initializing the variable value, this
 My preconditions verify that the new temporary name is a valid name and isn't already used (neither a temporary, an instance variable or a class variable).
 "
 Class {
-	#name : #RBExtractToTemporaryTransformation,
-	#superclass : #RBCompositeMethodTransformation,
+	#name : 'RBExtractToTemporaryTransformation',
+	#superclass : 'RBCompositeMethodTransformation',
 	#instVars : [
 		'sourceInterval',
 		'newVariableName',
 		'parseTree'
 	],
-	#category : #'Refactoring2-Transformations-Model-Migrated'
+	#category : 'Refactoring2-Transformations-Model-Migrated',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Migrated'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBExtractToTemporaryTransformation class >> extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		extract: anInterval
@@ -24,7 +26,7 @@ RBExtractToTemporaryTransformation class >> extract: anInterval to: aString from
 		in: aClass
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBExtractToTemporaryTransformation class >> model: aRBNamespace extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		model: aRBNamespace;
@@ -35,13 +37,23 @@ RBExtractToTemporaryTransformation class >> model: aRBNamespace extract: anInter
 		yourself
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBExtractToTemporaryTransformation >> applicabilityPreconditions [ 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
+			& (RBCondition withBlock:
+						[self verifySelectedInterval.
+						self checkVariableName.
+						true])
+]
+
+{ #category : 'executing' }
 RBExtractToTemporaryTransformation >> buildTransformations [
 
 	^ self insertTemporary
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBExtractToTemporaryTransformation >> checkVariableName [
 	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
 			[self refactoringError: ('<1p> defines an instance variable named <2s>'
@@ -57,14 +69,14 @@ RBExtractToTemporaryTransformation >> checkVariableName [
 						expandMacrosWith: newVariableName)]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractToTemporaryTransformation >> constructAssignmentFrom: aNode [
 	| valueNode |
 	valueNode := RBVariableNode named: newVariableName.
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSelector in: aClass [
 	class := self model classObjectFor: aClass.
 	selector := aSelector.
@@ -72,7 +84,7 @@ RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSel
 	newVariableName := aString
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBExtractToTemporaryTransformation >> insertTemporary [
 	^ {RBCustomTransformation
 	model: self model
@@ -91,7 +103,7 @@ RBExtractToTemporaryTransformation >> insertTemporary [
 		class compileTree: self parseTree]}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractToTemporaryTransformation >> nodeContainedBy: anInterval [
 	| node |
 	node := self parseTree whichNodeIsContainedBy: anInterval.
@@ -100,7 +112,7 @@ RBExtractToTemporaryTransformation >> nodeContainedBy: anInterval [
 	^ node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractToTemporaryTransformation >> parseTree [
 
 	parseTree
@@ -111,24 +123,14 @@ RBExtractToTemporaryTransformation >> parseTree [
 	^ parseTree doSemanticAnalysis
 ]
 
-{ #category : #preconditions }
-RBExtractToTemporaryTransformation >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
-			& (RBCondition withBlock:
-						[self verifySelectedInterval.
-						self checkVariableName.
-						true])
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractToTemporaryTransformation >> referencesTo: aNode [
 	| children |
 	children := self parseTree body allChildren.
 	^ children select: [ :each | each = aNode ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractToTemporaryTransformation >> selectedSource [
 
 	| source |
@@ -141,7 +143,7 @@ RBExtractToTemporaryTransformation >> selectedSource [
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBExtractToTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -157,7 +159,7 @@ RBExtractToTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBExtractToTemporaryTransformation >> verifySelectedInterval [
 	| selectedParseTree selectedSources |
 	selectedSources := self selectedSource.

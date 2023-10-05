@@ -2,17 +2,19 @@
 I interface to the microsecond based VM primitives.
 "
 Class {
-	#name : #DelayMicrosecondTicker,
-	#superclass : #AbstractDelayTicker,
-	#category : #'Kernel-Delays'
+	#name : 'DelayMicrosecondTicker',
+	#superclass : 'AbstractDelayTicker',
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMicrosecondTicker >> millisecondsUntilTick: microsecondsTick [
 	^((microsecondsTick - self nowTick) max: 0) / 1000
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMicrosecondTicker >> nowTick [
 	 "Copied from Time class >> primUTCMicrosecondsClock.
 	 Answer the number of micro-seconds ellapsed since epoch.
@@ -24,7 +26,7 @@ DelayMicrosecondTicker >> nowTick [
 	self primitiveFailed
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 DelayMicrosecondTicker >> primSignal: aSemaphore atUTCMicroseconds: aLargePositiveInteger [
 	"Signal the semaphore when the microsecond clock reaches the value of the second argument. Fail if the first argument is neither a Semaphore nor nil. Essential. See Object documentation whatIsAPrimitive."
 	<primitive: 242>
@@ -54,12 +56,12 @@ DelayMicrosecondTicker >> primSignal: aSemaphore atUTCMicroseconds: aLargePositi
 	self primitiveFailFor: PrimErrBadArgument"
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMicrosecondTicker >> tickAfterMilliseconds: milliseconds [
 	^self nowTick "microseconds" + (1000 * milliseconds)
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMicrosecondTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
 	|nextTick|
 	"Sleep until the active delay is due, or timingSemaphore signalled by DelayScheduler user-api."

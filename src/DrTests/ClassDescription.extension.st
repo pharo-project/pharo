@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*DrTests' }
+{ #category : '*DrTests' }
 ClassDescription >> drTestsBrowse [
 
 	Smalltalk tools browser openOnClass: self

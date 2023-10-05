@@ -1,18 +1,20 @@
 Class {
-	#name : #CompiledCodeTest,
-	#superclass : #TestCase,
+	#name : 'CompiledCodeTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'var'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 CompiledCodeTest >> compiledMethod1 [
 	^ self class >> #method1
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CompiledCodeTest >> method1 [
 
 	<pragma1: 123 foo: 'bar' >
@@ -22,13 +24,13 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CompiledCodeTest >> methodReturnOne [
 
 	^ 1
 ]
 
-{ #category : #'tests - scanning' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testAccessesRef [
 	| readMethod writeMethod classVar |
 	readMethod := SmalltalkImage class>>#compilerClass.
@@ -39,7 +41,7 @@ CompiledCodeTest >> testAccessesRef [
 	self assert: (writeMethod accessesRef: classVar)
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 CompiledCodeTest >> testBlockReturnSpecial [
 	"we do not compile blocks with quick returns for now"
 	self deny: [ ^ self ] compiledBlock isReturnSpecial.
@@ -56,7 +58,21 @@ CompiledCodeTest >> testBlockReturnSpecial [
 	self deny: [ ^ Object ] compiledBlock isReturnSpecial
 ]
 
-{ #category : #'tests - scanning' }
+{ #category : 'tests - flag' }
+CompiledCodeTest >> testClearFlag [
+	| method |
+	
+	method := self class >> #methodReturnOne.
+	
+	method clearFlag.
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	method clearFlag.
+	self deny: method flag.
+]
+
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testEquivalentTo [
 
 	| aClass origin |
@@ -81,7 +97,20 @@ CompiledCodeTest >> testEquivalentTo [
 	self deny: (origin equivalentTo: aClass >> #m1)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - flag' }
+CompiledCodeTest >> testFlag [
+	| method |
+	
+	method := self class >> #methodReturnOne.
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	method clearFlag.
+	self deny: method flag.
+
+]
+
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testHasLiteral [
 
 	| method |
@@ -115,7 +144,7 @@ CompiledCodeTest >> testHasLiteral [
 	self deny: (method hasLiteral: #method)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testHasLiteralSuchThat [
 
 	| method |
@@ -147,7 +176,7 @@ CompiledCodeTest >> testHasLiteralSuchThat [
 	self deny: (method hasLiteralSuchThat: [:literal | literal == #method])
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testHasSelector [
 
 	| method |
@@ -179,7 +208,7 @@ CompiledCodeTest >> testHasSelector [
 	self deny: (method hasSelector: #method)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 
 	| method specialIndex |
@@ -220,7 +249,7 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex)
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 CompiledCodeTest >> testHasTemporaries [
 	| method block |
 	method := self class >> #testHasTemporaries.
@@ -231,7 +260,7 @@ CompiledCodeTest >> testHasTemporaries [
 	self deny: block method hasTemporaries
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 
 	| method block |
@@ -260,7 +289,7 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 			#( #array )}
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 
 	self
@@ -269,13 +298,13 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 				refersToLiteral: (self class environment associationAt: self class name asSymbol))
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 
 	self deny: (self compiledMethod1 refersToLiteral: #method1)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 	"The behavior is different than literals"
 	| method |
@@ -308,7 +337,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 				#( #array ). }
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 
 	"The behavior is different than literals"
@@ -325,7 +354,7 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerCleanBlocks [
 		equals: #( 'b' #tempNamed: )
 ]
 
-{ #category : #'tests - scanning' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testLocalMessages [
 	| method |
 	method := self class compiler compile: 'method self doit. [Object class]'.
@@ -333,14 +362,14 @@ CompiledCodeTest >> testLocalMessages [
 	
 ]
 
-{ #category : #'tests - scanning' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testMessages [
 	| method |
 	method := self class compiler compile: 'method self doit. [Object class]'.
 	self assertCollection: method messages asArray hasSameElements: #(#doit #class).
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 CompiledCodeTest >> testMethodReturnSpecial [
 
 	| returnSpecialMethod normalMethod |
@@ -351,7 +380,7 @@ CompiledCodeTest >> testMethodReturnSpecial [
 	self deny: normalMethod isReturnSpecial
 ]
 
-{ #category : #'tests - scanning' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsRef [
 	| readMethod writeMethod classVar |
 	readMethod := SmalltalkImage class>>#compilerClass.
@@ -366,7 +395,7 @@ CompiledCodeTest >> testReadsRef [
 	self deny: ((DelayMutexScheduler>>#unschedule:) readsRef: DelayMutexScheduler binding)
 ]
 
-{ #category : #'tests - scanning' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsSelf [
 	| method |
 	method := self class compiler compile: 'method self doit'.
@@ -382,7 +411,7 @@ CompiledCodeTest >> testReadsSelf [
 	self assert: method readsSelf
 ]
 
-{ #category : #'tests - scanning' }
+{ #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsThisContext [
 	| method |
 	method := self class compiler compile: 'method ^thisContext'.
@@ -391,7 +420,7 @@ CompiledCodeTest >> testReadsThisContext [
 	self deny: method readsThisContext
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodPropertiesKey [
 
 	[ self compiledMethod1 propertyAt: #Once put: true.
@@ -399,52 +428,69 @@ CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodProper
 		ensure: [ self compiledMethod1 removeProperty: #Once ]
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsArrayOfLiterals [
 
 	self assert: (self compiledMethod1 refersToLiteral: #(#add #at: #remove))
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsByteString [
 
 	self assert: (self compiledMethod1 refersToLiteral: 'Pharo loves tests')
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsByteSymbol [
 
 	self assert: (self compiledMethod1 refersToLiteral: #printOn:)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsContainedInArrayOfLitterals [
 
 	self assert: (self compiledMethod1 refersToLiteral: #add)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsGlobalVariable [
 
 	self assert: (self compiledMethod1
 				refersToLiteral: (self class environment associationAt: #Array))
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaArguments [
 
 	self assert: (self compiledMethod1 refersToLiteral: 'bar').
 	self assert: (self compiledMethod1 refersToLiteral: 123)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector [
 
 	self assert: (self compiledMethod1
 				refersToLiteral: #pragma1:foo:)
 ]
 
-{ #category : #'tests - debugging support' }
+{ #category : 'tests - flag' }
+CompiledCodeTest >> testSetFlag [
+	| method |
+	method := self class >> #methodReturnOne.
+	
+	self deny: method flag.
+	method setFlag.
+	self assert: method flag.
+	"we can set it twice"
+	method setFlag.
+	self assert: method flag.
+	"we can execute the method"
+	self assert: self methodReturnOne equals: 1.
+	method clearFlag.
+	self deny: method flag.
+]
+
+{ #category : 'tests - debugging support' }
 CompiledCodeTest >> testStepIntoQuickMethods [
 	|ctx compiledBlock|
 

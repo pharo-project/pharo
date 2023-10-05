@@ -62,35 +62,37 @@ y isSorted
 ```
 "
 Class {
-	#name : #SortedCollection,
-	#superclass : #OrderedCollection,
+	#name : 'SortedCollection',
+	#superclass : 'OrderedCollection',
 	#instVars : [
 		'sortBlock'
 	],
-	#category : #'Collections-Sequenceable-Ordered'
+	#category : 'Collections-Sequenceable-Ordered',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Ordered'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SortedCollection class >> newFromArray: anArray [
 
 	^ (super newFromArray: anArray) reSort; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SortedCollection class >> sortBlock: aBlock [
 	"Answer an instance of me such that its elements are sorted according to the criterion specified in aBlock."
 
 	^ self sortUsing: aBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SortedCollection class >> sortUsing: aBlockOrSortFunction [
 	"Answer an instance of me such that its elements are sorted according to the criterion specified by the block or sort function."
 
 	^ self new sortBlock: aBlockOrSortFunction
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SortedCollection >> , otherCollection [
 	| newSortedCollection |
 	newSortedCollection := super , otherCollection.
@@ -98,7 +100,7 @@ SortedCollection >> , otherCollection [
 	^newSortedCollection
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SortedCollection >> = aSortedCollection [
 	"Answer true if my and aSortedCollection's species are the same,
 	and if our blocks are the same, and if our elements are the same."
@@ -107,12 +109,12 @@ SortedCollection >> = aSortedCollection [
 	^ sortBlock = aSortedCollection sortBlock and: [ super = aSortedCollection ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 SortedCollection >> add: newObject [
 	^ super insert: newObject before: (self indexForInserting: newObject)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 SortedCollection >> addAll: aCollection [
 	aCollection size > (self size // 3)
 		ifTrue:
@@ -122,17 +124,17 @@ SortedCollection >> addAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 SortedCollection >> addFirst: newObject [
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SortedCollection >> at: anInteger put: anObject [
 	self shouldNotImplement
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 SortedCollection >> collect: aBlock [
 	"Evaluate aBlock with each of my elements as the argument. Collect the
 	resulting values into an OrderedCollection. Answer the new collection.
@@ -146,14 +148,14 @@ SortedCollection >> collect: aBlock [
 	^ newCollection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SortedCollection >> copyEmpty [
 	"Answer a copy of the receiver without any of the receiver's elements."
 
 	^self species sortBlock: sortBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SortedCollection >> defaultSort: i to: j [
 	"Sort elements i through j of self to be nondescending according to
 	sortBlock."	"Assume the default sort block ([:x :y | x <= y])."
@@ -202,7 +204,7 @@ SortedCollection >> defaultSort: i to: j [
 				self defaultSort: k to: j]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 SortedCollection >> flatCollect: aBlock [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
@@ -211,7 +213,7 @@ SortedCollection >> flatCollect: aBlock [
 	^ self flatCollect: aBlock as: OrderedCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 SortedCollection >> groupedBy: aBlock [
 	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
 	| groups |
@@ -224,7 +226,7 @@ SortedCollection >> groupedBy: aBlock [
 	^ groups
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SortedCollection >> indexForInserting: newObject [
 
 	| index low high |
@@ -244,26 +246,26 @@ SortedCollection >> indexForInserting: newObject [
 	^low
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SortedCollection >> insert: anObject before: spot [
 	self shouldNotImplement
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 SortedCollection >> intersection: aCollection [
 	^ (self class sortBlock: sortBlock)
 		addAll: (self asSet intersection: aCollection);
 		yourself
 ]
 
-{ #category : #splitjoin }
+{ #category : 'splitjoin' }
 SortedCollection >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"Curiously addAllLast: does not trigger a reSort, so we must do it here."
 	^ (super join: aCollection) reSort; yourself
 ]
 
-{ #category : #'math functions' }
+{ #category : 'math functions' }
 SortedCollection >> median [
 	"Return the middle element, or as close as we can get."
 	"{1 . 2 . 3 . 4 . 5} asSortedCollection  median >>> 3"
@@ -276,12 +278,12 @@ SortedCollection >> median [
 			ifFalse: [ self at: middle ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SortedCollection >> reSort [
 	self sort: firstIndex to: lastIndex
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 SortedCollection >> sort: aSortBlock [
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
@@ -290,7 +292,7 @@ SortedCollection >> sort: aSortBlock [
  	sortBlock := aSortBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SortedCollection >> sort: i to: j [
 	"Sort elements i through j of self to be nondescending according to
 	sortBlock."
@@ -340,7 +342,7 @@ SortedCollection >> sort: i to: j [
 				self sort: k to: j]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SortedCollection >> sortBlock [
 	"Answer the blockContext which is the criterion for sorting elements of
 	the receiver."
@@ -348,7 +350,7 @@ SortedCollection >> sortBlock [
 	^sortBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SortedCollection >> sortBlock: aBlock [
 	"Make the argument, aBlock, be the criterion for ordering elements of the
 	receiver."

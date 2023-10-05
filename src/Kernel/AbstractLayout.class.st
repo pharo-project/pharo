@@ -3,183 +3,186 @@ I'm a container for slots.
 
 "
 Class {
-	#name : #AbstractLayout,
-	#superclass : #Object,
+	#name : 'AbstractLayout',
+	#superclass : 'Object',
 	#instVars : [
 		'host'
 	],
-	#category : #'Kernel-Layout'
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout class >> isAbstract [
 	^self == AbstractLayout
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractLayout >> = other [
 	^ self class = other class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> allSlots [
 	^ {}
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 AbstractLayout >> allSlotsDo: aBlock [
 	self slotScope allSlotsDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> allVisibleSlots [
 	^ {}
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 AbstractLayout >> checkIntegrity [
 	self checkSanity
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 AbstractLayout >> checkSanity [
 	host ifNil: [ self error: 'Host should not be nil' ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AbstractLayout >> definesSlot: aSlot [
+	<reflection: 'Object Inspection - Slot inspection'>
 	^self slots identityIncludes: aSlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> extend: arg1 [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> extendByte [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> extendDoubleByte [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> extendDoubleWord [
 	^ self subclassResponsibility
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 AbstractLayout >> extendImmediate [
 	^ ImmediateLayout new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> extendVariable: arg1 [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> extendWord [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> fieldSize [
 	^ 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout >> hasBindingThatBeginsWith: aString [
 	"Answer true if there is a Slot that begins with aString, false otherwise"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout >> hasFields [
 	^ false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AbstractLayout >> hasSlot: aSlot [
 	^ self allSlots identityIncludes: aSlot
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AbstractLayout >> hasSlotNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString.
 	this includs non-visible slots"
 	^self allSlots anySatisfy: [:slot | slot name = aString  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout >> hasSlots [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractLayout >> hash [
 	^ self class hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> host [
 	^ host
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> host: aClass [
 	host := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> instVarNames [
 	^ {}
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout >> isBits [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout >> isFixedLayout [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout >> isVariable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractLayout >> isWeak [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> resolveSlot: aName [
 	^SlotNotFound signalForName: aName
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AbstractLayout >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
 	^exceptionBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> slotScope [
 	^ LayoutEmptyScope instance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> slots [
 	^ {}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractLayout >> visibleSlots [
 	^self slots select: [:slot | slot isVisible]
 ]

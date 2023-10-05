@@ -4,30 +4,31 @@ I'm a domain object used by Equals tests.
 I'm a Teacher with an experience level.
 "
 Class {
-	#name : #EqTeacher,
-	#superclass : #EqPerson,
+	#name : 'EqTeacher',
+	#superclass : 'EqPerson',
 	#instVars : [
 		'experience'
 	],
-	#category : #'Equals-Tests'
+	#category : 'Equals-Tests',
+	#package : 'Equals-Tests'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EqTeacher class >> instVarNamesForEqualityComparison [
 	^super instVarNamesForEqualityComparison copyWith: #experience
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EqTeacher >> experience [
 	^ experience
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EqTeacher >> experience: anObject [
 	experience := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EqTeacher >> initialize [
 	super initialize.
 	self experience: 0

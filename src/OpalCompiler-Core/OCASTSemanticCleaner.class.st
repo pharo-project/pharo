@@ -5,30 +5,32 @@ I am cleaning the semantic analysis of the AST.
 -> binding from Variables
 "
 Class {
-	#name : #OCASTSemanticCleaner,
-	#superclass : #RBProgramNodeVisitor,
-	#category : #'OpalCompiler-Core-Semantics'
+	#name : 'OCASTSemanticCleaner',
+	#superclass : 'RBProgramNodeVisitor',
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 OCASTSemanticCleaner class >> clean: aMethodNode [
 	self new visitNode: aMethodNode.
 	^aMethodNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticCleaner >> visitBlockNode: aBlockNode [
 	aBlockNode removeProperty: #scope ifAbsent: [ ].
 	super visitBlockNode: aBlockNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticCleaner >> visitMethodNode: aMethodNode [
 	aMethodNode removeProperty: #scope ifAbsent: [ ].
 	super visitMethodNode: aMethodNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTSemanticCleaner >> visitVariableNode: aVariableNode [
 	aVariableNode variable: UnresolvedVariable instance
 ]

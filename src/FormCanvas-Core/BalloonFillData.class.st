@@ -2,8 +2,8 @@
 This class is a simulation of the code that's run by the Balloon engine. For debugging purposes only.
 "
 Class {
-	#name : #BalloonFillData,
-	#superclass : #Object,
+	#name : 'BalloonFillData',
+	#superclass : 'Object',
 	#instVars : [
 		'index',
 		'minX',
@@ -12,10 +12,12 @@ Class {
 		'source',
 		'destForm'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #computing }
+{ #category : 'computing' }
 BalloonFillData >> computeFill [
 	(destForm isNil or:[destForm width < self width]) ifTrue:[
 		destForm := Form extent: (self width + 10) @ 1 depth: 32.
@@ -23,67 +25,67 @@ BalloonFillData >> computeFill [
 	source computeFillFrom: minX to: maxX at: yValue in: destForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> destForm [
 	^destForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> destForm: aForm [
 	destForm := aForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> index [
 	^index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> index: anInteger [
 	index := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> maxX [
 	^maxX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> maxX: anInteger [
 	maxX := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> minX [
 	^minX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> minX: anInteger [
 	minX := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> source [
 	^source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> source: anObject [
 	source := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> width [
 	^maxX - minX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> yValue [
 	^yValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonFillData >> yValue: anInteger [
 	yValue := anInteger
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #MetaclassForTraits }
+Extension { #name : 'MetaclassForTraits' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 MetaclassForTraits >> fuelAccept: aMapper [
 	aMapper visitMetaclassForTraits: self
 ]

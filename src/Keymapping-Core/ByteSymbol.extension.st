@@ -1,6 +1,6 @@
-Extension { #name : #ByteSymbol }
+Extension { #name : 'ByteSymbol' }
 
-{ #category : #'*Keymapping-Core' }
+{ #category : '*Keymapping-Core' }
 ByteSymbol >> asKmCategoryIn: aKmRepository [
 	^aKmRepository categoryForName: self
 ]

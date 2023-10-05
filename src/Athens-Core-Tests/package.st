@@ -1,1 +1,1 @@
-Package { #name : #'Athens-Core-Tests' }
+Package { #name : 'Athens-Core-Tests' }

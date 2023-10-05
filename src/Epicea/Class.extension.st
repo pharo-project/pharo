@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Epicea' }
+{ #category : '*Epicea' }
 Class >> asEpiceaRingDefinition [
 
 	| ring |
@@ -15,7 +15,7 @@ Class >> asEpiceaRingDefinition [
 		        comment: self comment;
 		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
-		        package: (EpPlatform current packageNameFor: self);
+		        package: self package name;
 		        withMetaclass.
 
 	ring classSide

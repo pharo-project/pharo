@@ -24,60 +24,88 @@ worker := TFWorker named: 'QUEUE'.
 
 "
 Class {
-	#name : #TFProcessLocalWorker,
-	#superclass : #TFRunner,
+	#name : 'TFProcessLocalWorker',
+	#superclass : 'TFRunner',
 	#instVars : [
 		'defaultWorker'
 	],
 	#classInstVars : [
 		'worker'
 	],
-	#category : #'ThreadedFFI-Worker'
+	#category : 'ThreadedFFI-Worker',
+	#package : 'ThreadedFFI',
+	#tag : 'Worker'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TFProcessLocalWorker class >> initialize [
 
 	worker := ProcessLocalVariable new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+TFProcessLocalWorker class >> use: aWorker during: aBlock [
+	| oldWorker |
+	
+	oldWorker := self worker.
+	self worker: aWorker.
+	^ aBlock ensure: [ 
+		self worker: oldWorker ]
+]
+
+{ #category : 'accessing' }
+TFProcessLocalWorker class >> useMainThreadDuring: aBlock [ 
+
+	^ self 
+		use: TFMainThreadRunner uniqueInstance
+		during: aBlock
+]
+
+{ #category : 'accessing' }
+TFProcessLocalWorker class >> useSameThreadDuring: aBlock [ 
+
+	^ self 
+		use: TFSameThreadRunner uniqueInstance
+		during: aBlock
+]
+
+{ #category : 'accessing' }
 TFProcessLocalWorker class >> worker [
 
 	^ worker value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFProcessLocalWorker class >> worker: aWorker [
 
 	worker value: aWorker
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFProcessLocalWorker >> defaultWorker [
 
 	^ defaultWorker ifNil: [ TFSameThreadRunner uniqueInstance ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFProcessLocalWorker >> defaultWorker: aWorker [
 
 	defaultWorker := aWorker
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFProcessLocalWorker >> ensureInitialized [
 
 	self worker ensureInitialized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFProcessLocalWorker >> forCallback [
 
 	^ self worker
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFProcessLocalWorker >> invokeFunction: aTFExternalFunction withArguments: aCollection [
 
 	^ self worker
@@ -85,7 +113,7 @@ TFProcessLocalWorker >> invokeFunction: aTFExternalFunction withArguments: aColl
 		withArguments: aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFProcessLocalWorker >> primitivePerformWorkerCall: aTFExternalFunction
 		withArguments: argumentHolder
 		withReturnHolder: aReturnHolder
@@ -94,7 +122,7 @@ TFProcessLocalWorker >> primitivePerformWorkerCall: aTFExternalFunction
 	self error: 'Should not arrive here'
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFProcessLocalWorker >> worker [
 
 	^ self class worker ifNil: [ self defaultWorker ]

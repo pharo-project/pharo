@@ -2,15 +2,17 @@
 I represent a addition of a method in a class or a trait.
 "
 Class {
-	#name : #EpMethodAddition,
-	#superclass : #EpMethodChange,
+	#name : 'EpMethodAddition',
+	#superclass : 'EpMethodChange',
 	#instVars : [
 		'method'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpMethodAddition class >> method: aCompiledMethod [
 
 	^ self basicNew
@@ -18,50 +20,50 @@ EpMethodAddition class >> method: aCompiledMethod [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMethodAddition >> accept: aVisitor [
 
 	^ aVisitor visitMethodAddition: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodAddition >> affectedPackageName [
 
 	^ method package
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpMethodAddition >> initializeMethod: aCompiledMethod [
 
 	self initialize.
 	method := aCompiledMethod asEpiceaRingDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodAddition >> methodAdded [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodAddition >> methodAffected [
 
 	^ self methodAdded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodAddition >> protocol [
 
 	^ method protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodAddition >> selector [
 
 	^ method selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodAddition >> sourceCode [
 
 	^ method sourceCode

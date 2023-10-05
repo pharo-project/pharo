@@ -12,17 +12,19 @@ Use case: you have two lists A, and B, and you want to keep their selection sync
 This case is prevented by the use of a `lock` variable.
 "
 Class {
-	#name : #ObservableValueHolder,
-	#superclass : #Object,
+	#name : 'ObservableValueHolder',
+	#superclass : 'Object',
 	#instVars : [
 		'subscriptions',
 		'lock',
 		'value'
 	],
-	#category : #'VariablesLibrary-Observable'
+	#category : 'VariablesLibrary-Observable',
+	#package : 'VariablesLibrary',
+	#tag : 'Observable'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ObservableValueHolder class >> value: contents [
 
 	^ self new
@@ -30,14 +32,14 @@ ObservableValueHolder class >> value: contents [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObservableValueHolder >> initialize [
 	super initialize.
 	lock := false.
 	subscriptions := OrderedCollection new
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ObservableValueHolder >> printOn: aStream [
 	super printOn: aStream.
 
@@ -47,32 +49,32 @@ ObservableValueHolder >> printOn: aStream [
 		nextPutAll: ' ]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservableValueHolder >> rawValue: aValue [
 	value := aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservableValueHolder >> subscriptions [
 	^ subscriptions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservableValueHolder >> subscriptions: anObject [
 	subscriptions := anObject
 ]
 
-{ #category : #transfert }
+{ #category : 'transfert' }
 ObservableValueHolder >> transferSubscriptionsTo: aSpValueHolder [
 	aSpValueHolder subscriptions: subscriptions
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ObservableValueHolder >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservableValueHolder >> value: anObject [
 	"Handle circular references as explained in the class comment"
 	lock ifTrue: [ ^ self ].
@@ -86,17 +88,17 @@ ObservableValueHolder >> value: anObject [
 		ensure: [ lock := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservableValueHolder >> valueChanged [
 	self valueChanged: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservableValueHolder >> valueChanged: oldValue [
 	subscriptions do: [ :block | block cull: self value cull: oldValue ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ObservableValueHolder >> whenChangedDo: aBlock [
 	subscriptions add: aBlock
 ]

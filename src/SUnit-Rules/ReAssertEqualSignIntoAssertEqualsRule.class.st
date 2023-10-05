@@ -2,21 +2,23 @@
 Using assert:equals: produces better context on rule failure
 "
 Class {
-	#name : #ReAssertEqualSignIntoAssertEqualsRule,
-	#superclass : #ReNodeRewriteRule,
+	#name : 'ReAssertEqualSignIntoAssertEqualsRule',
+	#superclass : 'ReNodeRewriteRule',
 	#traits : 'ReTSUnitGroupedRule',
 	#classTraits : 'ReTSUnitGroupedRule classTrait',
-	#category : #'SUnit-Rules-Base'
+	#category : 'SUnit-Rules-Base',
+	#package : 'SUnit-Rules',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssertEqualSignIntoAssertEqualsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AssertEqualSignIntoAssertEquals'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReAssertEqualSignIntoAssertEqualsRule >> afterCheck: aNode mappings: mappingDict [
 	"would be nice to test if the class uses TAssertable,
 	 but it is more complicated"
@@ -26,7 +28,7 @@ ReAssertEqualSignIntoAssertEqualsRule >> afterCheck: aNode mappings: mappingDict
 		do: [ false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAssertEqualSignIntoAssertEqualsRule >> initialize [
 	super initialize.
 	self replace: 'self assert: ``@object1 = ``@object2' with: 'self assert: ``@object1 equals: ``@object2'.
@@ -35,7 +37,7 @@ ReAssertEqualSignIntoAssertEqualsRule >> initialize [
 	self replace: 'self deny: ``@object1 == ``@object2' with: 'self deny: ``@object1 identicalTo: ``@object2'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssertEqualSignIntoAssertEqualsRule >> name [
 
 	^ 'Use assert:equals: instead of assert: and = (or deny:/identicalTo: and ==)'

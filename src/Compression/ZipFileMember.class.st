@@ -3,23 +3,25 @@ ZipNewFileMember instances are used to represent files that have been read from 
 Their data stays in the file on disk, so the original Zip file cannot be directly overwritten.
 "
 Class {
-	#name : #ZipFileMember,
-	#superclass : #ZipArchiveMember,
+	#name : 'ZipFileMember',
+	#superclass : 'ZipArchiveMember',
 	#instVars : [
 		'externalFileName',
 		'stream',
 		'localHeaderRelativeOffset',
 		'dataOffset'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipFileMember class >> newFrom: stream named: fileName [
 	^(self new) stream: stream externalFileName: fileName
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> canonicalizeFileName [
 	"For security reasons, make all paths relative and remove any ../ portions"
 
@@ -27,23 +29,23 @@ ZipFileMember >> canonicalizeFileName [
 	fileName := fileName copyReplaceAll: '../' with: ''
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipFileMember >> close [
 	stream ifNotNil:[stream close]
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipFileMember >> copyDataTo: aStream [
 
 	self copyRawDataTo: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipFileMember >> externalFile: aFileReference [
 	externalFileName := aFileReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipFileMember >> initialize [
 	super initialize.
 	crc32 := 0.
@@ -51,18 +53,18 @@ ZipFileMember >> initialize [
 	dataOffset := 0
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipFileMember >> localHeaderRelativeOffset [
 	^localHeaderRelativeOffset
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipFileMember >> looksLikeDirectory [
 	^fileName last = $/
 		and: [ uncompressedSize = 0 ]
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	"Assumes aStream positioned after signature"
 
@@ -96,7 +98,7 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	self desiredCompressionMethod: compressionMethod
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> readFrom: aStream [
 	"assumes aStream positioned after CD header; leaves stream positioned after my CD entry"
 
@@ -106,7 +108,7 @@ ZipFileMember >> readFrom: aStream [
 	self canonicalizeFileName
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	"Positions stream as necessary. Will return stream to its original position"
 
@@ -148,12 +150,12 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	aStream position: oldPos
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> readRawChunk: n [
 	^stream next: n
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> rewindData [
 	super rewindData.
 	(stream isNil or: [ stream closed ])
@@ -162,7 +164,7 @@ ZipFileMember >> rewindData [
 	self skipLocalDirectoryFileHeaderFrom: stream
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [
 	"Assumes that stream is positioned after signature."
 
@@ -177,13 +179,13 @@ ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [
 	dataOffset := aStream position
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipFileMember >> stream: aStream externalFileName: aFileName [
 	stream := aStream.
 	externalFileName := aFileName
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipFileMember >> uncompressDataTo: aStream [
 
 	| decoder buffer crcErrorMessage |
@@ -203,7 +205,7 @@ ZipFileMember >> uncompressDataTo: aStream [
 	crcErrorMessage ifNotNil: [ self isCorrupt: true. CRCError signal: crcErrorMessage ]
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipFileMember >> uncompressDataTo: aStream from: start to: finish [
 
 	| decoder buffer chunkSize |
@@ -220,7 +222,7 @@ ZipFileMember >> uncompressDataTo: aStream from: start to: finish [
 	]
 ]
 
-{ #category : #'private - reading' }
+{ #category : 'private - reading' }
 ZipFileMember >> unzipTimestamp: dosTimestampInteger [
 
 	^ [ DateAndTime fromDosTimestamp: dosTimestampInteger ]
@@ -229,7 +231,7 @@ ZipFileMember >> unzipTimestamp: dosTimestampInteger [
 			DateAndTime fromSeconds: 2492992800 + dosTimestampInteger ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipFileMember >> usesFile: aFileReferenceOrFileName [
 	"Do I require aFileName? That is, do I care if it's clobbered?"
 	^ externalFileName asFileReference = aFileReferenceOrFileName asFileReference

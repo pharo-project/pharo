@@ -11,22 +11,24 @@ method
 
 "
 Class {
-	#name : #RBMoveMethodToClassRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBMoveMethodToClassRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'method'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMoveMethodToClassRefactoring class >> method: aMethod class: aClass [
 	^ self new
 		method: aMethod class: aClass;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod class: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -34,8 +36,9 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 		yourself
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBMoveMethodToClassRefactoring >> classModelOf: aClass [
+
 	| classModel |
 	classModel := aClass isMeta
 		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]
@@ -44,18 +47,36 @@ RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 	^classModel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
 	class := self classObjectFor: aClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBMoveMethodToClassRefactoring >> preconditions [
 	^(RBCondition definesSelector: method selector in: class) not
 ]
 
-{ #category : #printing }
+{ #category : 'transforming' }
+RBMoveMethodToClassRefactoring >> privateTransform [
+	| oldClass newClass rbMethod originalProtocol |
+	oldClass := self classModelOf: method methodClass.
+	newClass := self classModelOf: class.
+	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
+	originalProtocol := method protocolName.
+	self generateChangesFor: 
+		(RBRemoveMethodTransformation 
+			selector: method selector
+			from: oldClass).
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: rbMethod source
+			in: newClass
+			withProtocol: originalProtocol)
+]
+
+{ #category : 'printing' }
 RBMoveMethodToClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -66,16 +87,4 @@ RBMoveMethodToClassRefactoring >> storeOn: aStream [
 	class storeOn: aStream.
 	aStream
 		nextPutAll: ''')'
-]
-
-{ #category : #transforming }
-RBMoveMethodToClassRefactoring >> transform [
-	| oldClass newClass rbMethod originalProtocol |
-	oldClass := self classModelOf: method methodClass.
-	newClass := self classModelOf: class.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
-	originalProtocol := method protocolName.
-	oldClass removeMethod: method selector.
-	newClass addMethod: rbMethod.
-	newClass compile: rbMethod source classified: {originalProtocol}
 ]

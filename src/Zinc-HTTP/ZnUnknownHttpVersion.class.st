@@ -4,27 +4,29 @@ ZnUnknownHttpVersion is signalled when an unknown/unsupported HTTP version is fo
 Part of Zinc HTTP Components. 
 "
 Class {
-	#name : #ZnUnknownHttpVersion,
-	#superclass : #ZnParseError,
+	#name : 'ZnUnknownHttpVersion',
+	#superclass : 'ZnParseError',
 	#instVars : [
 		'version'
 	],
-	#category : #'Zinc-HTTP-Exceptions'
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUnknownHttpVersion class >> version: version [
 	^ self new
 		version: version;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnknownHttpVersion >> version [
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnknownHttpVersion >> version: anObject [
 	version := anObject
 ]

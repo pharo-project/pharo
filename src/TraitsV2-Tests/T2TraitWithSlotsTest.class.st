@@ -2,12 +2,13 @@
 Unit test for traits with slots
 "
 Class {
-	#name : #T2TraitWithSlotsTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitWithSlotsTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> createT1 [
 	| t1 |
 	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
@@ -26,7 +27,7 @@ T2TraitWithSlotsTest >> createT1 [
 	^ t1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 
 	| t1 c1 obj |
@@ -42,7 +43,7 @@ T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 	self assert: (obj instVarAt: 2) isNil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 
 	| t1 c1 |
@@ -53,7 +54,7 @@ T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 	self assertCollection: c1 slots hasSameElements: { c1 slotNamed: #aSlot }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 
 	| t1 c1 |
@@ -64,7 +65,7 @@ T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 	self assertCollection: c1 slots hasSameElements: { c1 slotNamed: #aSlot. c1 slotNamed: #anotherSlot }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testDefiningClass [
 
 	| t1 c1 |
@@ -83,7 +84,7 @@ T2TraitWithSlotsTest >> testDefiningClass [
 	self assert: (c1 slotNamed: #h) definingClass equals: c1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 	| t1 t2 c1 t3 t4 |
 
@@ -100,7 +101,7 @@ T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 	self assert: (c1 new perform: #m1) equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
 	| t1 t2 c1 |
 
@@ -114,7 +115,7 @@ T2TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
 	self assert: (c1 new perform: #m1) equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testOwningClass [
 
 	| t1 c1 |
@@ -133,7 +134,7 @@ T2TraitWithSlotsTest >> testOwningClass [
 	self assert: (c1 slotNamed: #h) owningClass equals: c1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testRedefiningSuperclass [
 
 	| t1 c1 t2 c2 |
@@ -157,7 +158,7 @@ T2TraitWithSlotsTest >> testRedefiningSuperclass [
 	self assertCollection: (c1 allSlots collect: [:each | each name]) hasSameElements: #(c d a b).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithSlotsTest >> testRedefiningTrait [
 
 | t1 |

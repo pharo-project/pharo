@@ -2,12 +2,14 @@
 SUnit tests for RBVariableNode
 "
 Class {
-	#name : #RBVariableNodeTest,
-	#superclass : #RBParseTreeTest,
-	#category : #'AST-Core-Tests-Nodes'
+	#name : 'RBVariableNodeTest',
+	#superclass : 'RBParseTreeTest',
+	#category : 'AST-Core-Tests-Nodes',
+	#package : 'AST-Core-Tests',
+	#tag : 'Nodes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableNodeTest >> testIsDefinedByBlock [
 
 	| ast temps args |
@@ -40,7 +42,7 @@ RBVariableNodeTest >> testIsDefinedByBlock [
 	self assert: args third isDefinedByBlock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableNodeTest >> testIsDefinition [
 
 	| ast temps |
@@ -67,7 +69,7 @@ RBVariableNodeTest >> testIsDefinition [
 	self deny: (temps at: 6) isDefinition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableNodeTest >> testStartForReplacement [
 
 	| source tree dTemporary |
@@ -82,7 +84,7 @@ RBVariableNodeTest >> testStartForReplacement [
 	self assert: (dTemporary start - dTemporary startForReplacement) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBVariableNodeTest >> testStartForReplacement02 [
 
 	| source tree dTemporary |

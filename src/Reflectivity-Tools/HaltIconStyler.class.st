@@ -2,33 +2,35 @@
 I'm in charge to style  the editor for  message sends with the ""halt"", ""halt:"" or ""haltIf:"" selectors, like ""self halt"".
 "
 Class {
-	#name : #HaltIconStyler,
-	#superclass : #IconStyler,
-	#category : #'Reflectivity-Tools-Breakpoints'
+	#name : 'HaltIconStyler',
+	#superclass : 'IconStyler',
+	#category : 'Reflectivity-Tools-Breakpoints',
+	#package : 'Reflectivity-Tools',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 HaltIconStyler class >> isStaticStyler [
 
 	^ true
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 HaltIconStyler >> highlightColor [
 	^(Color red alpha: 0.1)
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 HaltIconStyler >> iconFor: aNode [
 	^ self iconNamed: #halt
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 HaltIconStyler >> iconLabelBlock: aNode [
 	^ [aNode selector]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HaltIconStyler >> shouldStyleNode: aNode [
 	| selectorsToBeHighlighted |
 	selectorsToBeHighlighted := { 'halt'. 'halt:'. 'haltIf:'. 'haltIfNil' }.

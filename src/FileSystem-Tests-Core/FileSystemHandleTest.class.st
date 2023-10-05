@@ -2,32 +2,34 @@
 SUnit tests for FileSystemHandle
 "
 Class {
-	#name : #FileSystemHandleTest,
-	#superclass : #TestCase,
+	#name : 'FileSystemHandleTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'filesystem',
 		'handle',
 		'reference'
 	],
-	#category : #'FileSystem-Tests-Core-Base'
+	#category : 'FileSystem-Tests-Core-Base',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemHandleTest class >> isAbstract [
 	^ self name = #FileSystemHandleTest
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemHandleTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileSystemHandleTest >> createFileSystem [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileSystemHandleTest >> setUp [
 	super setUp.
 	filesystem := self createFileSystem.
@@ -35,20 +37,20 @@ FileSystemHandleTest >> setUp [
 	handle := reference openWritable: true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileSystemHandleTest >> tearDown [
 	handle ensureClosed.
 	reference ensureDelete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testAt [
 	handle at: 1 write: (ByteArray with: 3) startingAt: 1 count: 1.
 	self assert: (handle at: 1) equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testAtPut [
 	| in |
 	handle at: 1 put: 3.
@@ -57,13 +59,13 @@ FileSystemHandleTest >> testAtPut [
 	self assert: in first equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testAtPutBinaryAscii [
 	handle at: 1 put: 32.
 	handle at: 1 put: Character space
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testAtWriteBinaryAscii [
 	handle
 		at: 1
@@ -77,13 +79,13 @@ FileSystemHandleTest >> testAtWriteBinaryAscii [
 		count: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testClose [
 	handle close.
 	self deny: handle isOpen
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testCreatedOpen [
 
 
@@ -91,7 +93,7 @@ FileSystemHandleTest >> testCreatedOpen [
 	"self assert: handle isOpen"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testEnsureClosed [
 	filesystem := self createFileSystem.
 	reference := filesystem * 'plonk'.
@@ -105,7 +107,7 @@ FileSystemHandleTest >> testEnsureClosed [
 	handle ensureClosed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testIO [
 	| out in |
 	out := #(1 2 3) asByteArray.
@@ -115,7 +117,7 @@ FileSystemHandleTest >> testIO [
 	self assert: out equals: in
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testReadBufferTooLarge [
 	| out in result |
 	out := #(1 2 3) asByteArray.
@@ -127,7 +129,7 @@ FileSystemHandleTest >> testReadBufferTooLarge [
 	self assert: in equals: #(9 1 2 3 9) asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testReadOnly [
 	handle close.
 	handle := reference openWritable: false.
@@ -141,12 +143,12 @@ FileSystemHandleTest >> testReadOnly [
 		raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testReference [
 	self assert: handle reference equals: reference asAbsolute
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testSizeAfterGrow [
 	| out |
 	out := #(1 2 3) asByteArray.
@@ -154,7 +156,7 @@ FileSystemHandleTest >> testSizeAfterGrow [
 	self assert: handle size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testSizeNoGrow [
 	| bytes |
 	bytes := #(1 2 3 4) asByteArray.
@@ -163,7 +165,7 @@ FileSystemHandleTest >> testSizeNoGrow [
 	self assert: handle size equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testTruncate [
 	| out |
 	out := #(1 2 3 4 5) asByteArray.
@@ -172,7 +174,7 @@ FileSystemHandleTest >> testTruncate [
 	self assert: handle size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileSystemHandleTest >> testWriteStream [
 	| stream |
 	stream := handle binaryWriteStream.

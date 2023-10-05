@@ -5,12 +5,14 @@ I provide a fetcher for messages for the hierarchy of self class superclass.
 See my superclass for details.
 "
 Class {
-	#name : #CoSuperMessageHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoSuperMessageHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoSuperMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ (aNode isMessage
@@ -22,7 +24,7 @@ CoSuperMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 					and: [ aContext completionClass superclass notNil ] ] ]
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoSuperMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 	| completionClass fetcher entry |
 

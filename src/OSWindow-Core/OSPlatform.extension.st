@@ -1,6 +1,6 @@
-Extension { #name : #OSPlatform }
+Extension { #name : 'OSPlatform' }
 
-{ #category : #'*OSWindow-Core' }
+{ #category : '*OSWindow-Core' }
 OSPlatform >> osWindowScreenScaleFactorBaseDPI [
 	^ 96
 ]

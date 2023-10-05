@@ -4,18 +4,20 @@ My cells are responsible to show expansion icon and any other decoration tools: 
 I ask given queryView to decorate cell which will pass cell morph through all related table decorators.
 "
 Class {
-	#name : #ClyMainTableColumn,
-	#superclass : #ClyTableColumn,
-	#category : #'Calypso-Browser-Table'
+	#name : 'ClyMainTableColumn',
+	#superclass : 'ClyTableColumn',
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMainTableColumn class >> default [
 	^(self id: #item)
 		displayItemName
 ]
 
-{ #category : #'cells creation' }
+{ #category : 'cells creation' }
 ClyMainTableColumn >> createCellFor: aDataSourceItem in: aQueryView [
 
 	| cell |
@@ -26,7 +28,7 @@ ClyMainTableColumn >> createCellFor: aDataSourceItem in: aQueryView [
 	^cell
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMainTableColumn >> isMainColumn [
 
 	^ true

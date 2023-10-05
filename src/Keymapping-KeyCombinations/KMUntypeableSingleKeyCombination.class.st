@@ -2,16 +2,17 @@
 I am an abstract class for all single key combinations that correspond to characters that cannot be typed directly.
 "
 Class {
-	#name : #KMUntypeableSingleKeyCombination,
-	#superclass : #KMSingleKeyCombination,
+	#name : 'KMUntypeableSingleKeyCombination',
+	#superclass : 'KMSingleKeyCombination',
 	#instVars : [
 		'symbol',
 		'name'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> arrowDown [
 	^ self
 		key: Character arrowDown
@@ -19,7 +20,7 @@ KMUntypeableSingleKeyCombination class >> arrowDown [
 		symbol: '↓'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> arrowLeft [
 	^ self
 		key: Character arrowLeft
@@ -27,7 +28,7 @@ KMUntypeableSingleKeyCombination class >> arrowLeft [
 		symbol: '←'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> arrowRight [
 	^ self
 		key: Character arrowRight
@@ -35,7 +36,7 @@ KMUntypeableSingleKeyCombination class >> arrowRight [
 		symbol: '→'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> arrowUp [
 	^ self
 		key: Character arrowUp
@@ -43,7 +44,7 @@ KMUntypeableSingleKeyCombination class >> arrowUp [
 		symbol: '↑'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> backspace [
 	^ self
 		key: Character backspace
@@ -51,7 +52,7 @@ KMUntypeableSingleKeyCombination class >> backspace [
 		symbol: '⌫'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> delete [
 	^ self
 		key: Character delete
@@ -59,7 +60,7 @@ KMUntypeableSingleKeyCombination class >> delete [
 		symbol: '⌦'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> end [
 	^ self
 		key: Character end
@@ -67,7 +68,7 @@ KMUntypeableSingleKeyCombination class >> end [
 		symbol: '↘'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> enter [
 	^ self
 		key: Character enter
@@ -75,7 +76,7 @@ KMUntypeableSingleKeyCombination class >> enter [
 		symbol: '↩'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> escape [
 	^ self
 		key: Character escape
@@ -83,7 +84,7 @@ KMUntypeableSingleKeyCombination class >> escape [
 		symbol: '⎋'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> home [
 	^ self
 		key: Character home
@@ -91,14 +92,14 @@ KMUntypeableSingleKeyCombination class >> home [
 		symbol: '↖'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMUntypeableSingleKeyCombination class >> ifSpecialKey: aCharacter do: aBlock [
 	"Lookup if aCharacter needs to be handled by me, if so use one of the instance creation function for creating the corresponding KeyCombination."
 	 self specialKeys at: aCharacter ifPresent: [ :symbol |
 		aBlock value: (self perform: symbol) ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> key: aCharacter name: aString symbol: aVisualString [
 	^ self new
 		key: aCharacter;
@@ -107,7 +108,7 @@ KMUntypeableSingleKeyCombination class >> key: aCharacter name: aString symbol: 
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMUntypeableSingleKeyCombination class >> newSpecialKeys [
 	"Build a new dictionary that maps untypable characters to symbols for instacation creation methods on this class."
 	| dictionary |
@@ -118,7 +119,7 @@ KMUntypeableSingleKeyCombination class >> newSpecialKeys [
 	^ dictionary
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> pageDown [
 	^ self
 		key: Character pageDown
@@ -126,7 +127,7 @@ KMUntypeableSingleKeyCombination class >> pageDown [
 		symbol: '⇟'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> pageUp [
 	^ self
 		key: Character pageUp
@@ -134,14 +135,14 @@ KMUntypeableSingleKeyCombination class >> pageUp [
 		symbol: '⇞'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMUntypeableSingleKeyCombination class >> specialKeys [
 	^specialKeys
 		ifNil: [
 			specialKeys := self newSpecialKeys ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMUntypeableSingleKeyCombination class >> tab [
 	^ self
 		key: Character tab
@@ -149,24 +150,24 @@ KMUntypeableSingleKeyCombination class >> tab [
 		symbol: '⇥'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMUntypeableSingleKeyCombination >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMUntypeableSingleKeyCombination >> name: aString [
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMUntypeableSingleKeyCombination >> symbol [
 	"I return the visual symbol for this shortcut.
 	For instance for the Arrow Up key I contain a string with an arrow up key symbol: ↑ and now the Character arrowUp."
 	^ symbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMUntypeableSingleKeyCombination >> symbol: aString [
 
 	symbol := aString

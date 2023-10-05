@@ -1,1 +1,1 @@
-Package { #name : #'Math-Operations-Extensions-Tests' }
+Package { #name : 'Math-Operations-Extensions-Tests' }

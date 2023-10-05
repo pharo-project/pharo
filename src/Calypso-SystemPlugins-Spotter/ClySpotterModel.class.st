@@ -2,32 +2,33 @@
 I'm a model to collect options for ""spotter navigation"" mode in a full browser.
 "
 Class {
-	#name : #ClySpotterModel,
-	#superclass : #Object,
+	#name : 'ClySpotterModel',
+	#superclass : 'Object',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemPlugins-Spotter'
+	#category : 'Calypso-SystemPlugins-Spotter',
+	#package : 'Calypso-SystemPlugins-Spotter'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySpotterModel class >> new [
 	self error: 'Use #on:'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySpotterModel class >> on: aBrowser [
 	^ self basicNew 
 		initializeOn: aBrowser;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySpotterModel >> browser [
 	^ browser
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClySpotterModel >> collectCommandCandidatesInContext: aContext [
 	| allActivators allCommands |
 	allActivators := CmdContextMenuActivation createActivatorsExecutableInContext: aContext.
@@ -42,7 +43,7 @@ ClySpotterModel >> collectCommandCandidatesInContext: aContext [
 	^allActivators
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClySpotterModel >> collectGoToCandidates [
 	
 	| result |
@@ -55,7 +56,7 @@ ClySpotterModel >> collectGoToCandidates [
 	^result 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClySpotterModel >> commandListProcessorForContext: aContext step: aStep [
 	aStep listProcessor
 		order: 20;
@@ -70,23 +71,23 @@ ClySpotterModel >> commandListProcessorForContext: aContext step: aStep [
 			activator executeCommand ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClySpotterModel >> displayStringOn: stream [
 	stream << self browser newWindowTitle
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClySpotterModel >> gtDisplayOn: stream [
 	stream << self browser newWindowTitle
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClySpotterModel >> initializeOn: aBrowser [
 	browser := aBrowser.
 	self initialize	
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ClySpotterModel >> spotterForCommandsFor: aStep [
 	<stSpotterOrder: 20>
 
@@ -94,7 +95,7 @@ ClySpotterModel >> spotterForCommandsFor: aStep [
 		self commandListProcessorForContext: each step: aStep ]
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ClySpotterModel >> spotterForGoToFor: aStep [
 	<stSpotterOrder: 10>
 

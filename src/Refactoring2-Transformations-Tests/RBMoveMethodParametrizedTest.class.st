@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMoveMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBMoveMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveMethodRefactoring };
@@ -12,12 +14,12 @@ RBMoveMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveMethodParametrizedTest >> constructor [
 	^ #selector:class:variable:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveMethodParametrizedTest >> testFailureMovePrimitiveMethod [
 
 	| refactoring |
@@ -33,7 +35,7 @@ RBMoveMethodParametrizedTest >> testFailureMovePrimitiveMethod [
 	self shouldFail: refactoring
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	| refactoring class |
 	self proceedThroughWarning:
@@ -69,7 +71,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	self assert: (class parseTreeForSelector: #rewriteRule:) equals: (self parseMethod: 'rewriteRule: anObject rewriteRule := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
 	| refactoring class |
 	(model classFor: Object) compile: 'aTestMethodName ^ OrderedCollection new addAll: (1 to: 100); yourself' classified: #test.
@@ -92,7 +94,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
 		equals: (self parseMethod: 'oneToOneHundred ^ self new addAll: (1 to: 100); yourself')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 	| refactoring class |
 	self proceedThroughWarning:
@@ -127,7 +129,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 	self assert: (class parseTreeForSelector: #rewriteRule:) equals: (self parseMethod: 'rewriteRule: anObject rewriteRule := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 	| refactoring class |
 	self proceedThroughWarning:
@@ -162,7 +164,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 	self assert: (class parseTreeForSelector: #builder:) equals: (self parseMethod: 'builder: anObject builder := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodThatReferencesPoolDictionary [
 	| refactoring class |
 	self proceedThroughWarning:

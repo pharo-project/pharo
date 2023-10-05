@@ -2,19 +2,21 @@
 SUnit test to test digit logic of integers
 "
 Class {
-	#name : #IntegerDigitLogicTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Numbers'
+	#name : 'IntegerDigitLogicTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Numbers',
+	#package : 'Kernel-Tests',
+	#tag : 'Numbers'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntegerDigitLogicTest >> testAndSingleBitWithMinusOne [
 	"And a single bit with -1 and test for same value"
 
 	1 to: 100 do: [ :i | self assert: ((1 bitShift: i) bitAnd: -1) equals: (1 bitShift: i) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntegerDigitLogicTest >> testLargeShift [
 	"A sanity check for LargeInteger bitShifts"
 
@@ -35,14 +37,14 @@ IntegerDigitLogicTest >> testLargeShift [
 				self assert: rs equals: (bits copyFrom: 1 to: bits size - shift) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntegerDigitLogicTest >> testMixedSignDigitLogic [
 	"Verify that mixed sign logic with large integers works."
 
 	self assert: (-2 bitAnd: 16rFFFFFFFF) equals: 16rFFFFFFFE
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntegerDigitLogicTest >> testNBitAndNNegatedEqualsN [
 	"Verify that (n bitAnd: n negated) = n for single bits"
 
@@ -52,7 +54,7 @@ IntegerDigitLogicTest >> testNBitAndNNegatedEqualsN [
 		self assert: (n bitAnd: n negated) equals: n ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntegerDigitLogicTest >> testNNegatedEqualsNComplementedPlusOne [
 	"Verify that n negated = (n complemented + 1) for single bits"
 
@@ -62,14 +64,14 @@ IntegerDigitLogicTest >> testNNegatedEqualsNComplementedPlusOne [
 		self assert: n negated equals: (n bitXor: -1) + 1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntegerDigitLogicTest >> testShiftMinusOne1LeftThenRight [
 	"Shift -1 left then right and test for 1"
 
 	1 to: 100 do: [ :i | self assert: ((-1 bitShift: i) bitShift: i negated) equals: -1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntegerDigitLogicTest >> testShiftOneLeftThenRight [
 	"Shift 1 bit left then right and test for 1"
 

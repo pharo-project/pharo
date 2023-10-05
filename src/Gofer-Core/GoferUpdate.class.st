@@ -2,12 +2,14 @@
 Update
 "
 Class {
-	#name : #GoferUpdate,
-	#superclass : #GoferWorking,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferUpdate',
+	#superclass : 'GoferWorking',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GoferUpdate >> addReference: aReference [
 
 	super addReference: aReference.
@@ -15,13 +17,13 @@ GoferUpdate >> addReference: aReference [
 		 resolveWith: self gofer) version
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferUpdate >> defaultModel [
 
 	^ MCVersionLoader new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferUpdate >> execute [
 
 	self model hasVersions
@@ -29,7 +31,7 @@ GoferUpdate >> execute [
 	self gofer cleanup
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferUpdate >> referenceFor: aReference [
 
 	^ aReference

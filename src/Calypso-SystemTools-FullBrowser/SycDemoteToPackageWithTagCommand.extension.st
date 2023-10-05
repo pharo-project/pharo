@@ -1,6 +1,6 @@
-Extension { #name : #SycDemoteToPackageWithTagCommand }
+Extension { #name : 'SycDemoteToPackageWithTagCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycDemoteToPackageWithTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

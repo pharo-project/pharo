@@ -1,42 +1,44 @@
 "
-I model ""self"" keyword 
+I model ""self""
 "
 Class {
-	#name : #SelfVariable,
-	#superclass : #ReservedVariable,
-	#category : #'Kernel-Variables'
+	#name : 'SelfVariable',
+	#superclass : 'PseudoVariable',
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelfVariable class >> variableName [
 	^#self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 
 	^ aProgramNodeVisitor visitSelfNode: aNode
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 SelfVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushReceiver
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SelfVariable >> isSelfVariable [
 	^true
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 SelfVariable >> readInContext: aContext [
 	"self in a block is the receiver of the home context
 	For clean blocks it might not be known (nil)"
 	^aContext home ifNotNil: [:home | home receiver ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 SelfVariable >> usingMethods [
 	"Super sends are doing a pushSelf, too, we need to still check the AST level sometimes.
 	FFI methods after a first call do not have a self send in the bytecode, but one in the code"

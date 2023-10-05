@@ -2,24 +2,26 @@
 Check that the number of addDependent: message sends in a class is less than or equal to the number of removeDependent: messages. If there are more addDependent: messages that may signify that some dependents are not being released, which may lead to memory leaks.
 "
 Class {
-	#name : #ReAddRemoveDependentsRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReAddRemoveDependentsRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAddRemoveDependentsRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAddRemoveDependentsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AddRemoveDependentsRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReAddRemoveDependentsRule >> basicCheck: aClass [
 	| methods addSends removeSends |
 	addSends := 0.
@@ -33,12 +35,12 @@ ReAddRemoveDependentsRule >> basicCheck: aClass [
 	^ addSends > removeSends
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAddRemoveDependentsRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAddRemoveDependentsRule >> name [
 	^ 'Number of addDependent: messages > removeDependent:'
 ]

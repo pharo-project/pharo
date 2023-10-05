@@ -7,18 +7,20 @@ Internal Representation and Key Implementation Points.
 	label:		<StringMorph>
 "
 Class {
-	#name : #ClyTextLineNumbersSwitchMorph,
-	#superclass : #ClyTextMorphToolMorph,
+	#name : 'ClyTextLineNumbersSwitchMorph',
+	#superclass : 'ClyTextMorphToolMorph',
 	#instVars : [
 		'label'
 	],
 	#classInstVars : [
 		'showLineNumbers'
 	],
-	#category : #'Calypso-Browser-TextEditors'
+	#category : 'Calypso-Browser-TextEditors',
+	#package : 'Calypso-Browser',
+	#tag : 'TextEditors'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyTextLineNumbersSwitchMorph class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showLineNumbers)
@@ -29,12 +31,12 @@ ClyTextLineNumbersSwitchMorph class >> settingsOn: aBuilder [
 		description: 'If true, line numbers will appear in new system browsers for method editor'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyTextLineNumbersSwitchMorph class >> showLineNumbers [
 	^ showLineNumbers ifNil: [ false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyTextLineNumbersSwitchMorph class >> showLineNumbers: aBoolean [
 	showLineNumbers := aBoolean.
 	self allInstancesDo: [ :inst |
@@ -47,7 +49,7 @@ ClyTextLineNumbersSwitchMorph class >> showLineNumbers: aBoolean [
 		inst updateLabel ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
 	super attachToTextMorph.
 
@@ -61,7 +63,7 @@ ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
 		ifTrue: [ textMorph withLineNumbers ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTextLineNumbersSwitchMorph >> toggle [
 	textMorph lineNumbersRuler
 		ifNil: [ textMorph withLineNumbers ]
@@ -69,7 +71,7 @@ ClyTextLineNumbersSwitchMorph >> toggle [
 	self updateLabel
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyTextLineNumbersSwitchMorph >> updateLabel [
 
 	| newValue |

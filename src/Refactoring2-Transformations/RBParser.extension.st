@@ -1,6 +1,6 @@
-Extension { #name : #RBParser }
+Extension { #name : 'RBParser' }
 
-{ #category : #'*Refactoring2-Transformations' }
+{ #category : '*Refactoring2-Transformations' }
 RBParser >> parsePragmaAndReturn [
 
 	self parsePragma.

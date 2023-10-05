@@ -2,28 +2,30 @@
 A MCDirectoryRepository that looks in subdirectories too.
 "
 Class {
-	#name : #MCSubDirectoryRepository,
-	#superclass : #MCDirectoryRepository,
-	#category : #'Monticello-Repositories'
+	#name : 'MCSubDirectoryRepository',
+	#superclass : 'MCDirectoryRepository',
+	#category : 'Monticello-Repositories',
+	#package : 'Monticello',
+	#tag : 'Repositories'
 }
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 MCSubDirectoryRepository class >> description [
 	^ 'directory with subdirectories'
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MCSubDirectoryRepository >> allDirectories [
 	^directory allDirectories 
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 MCSubDirectoryRepository >> description [
 	^ (directory / '*') fullName
 
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCSubDirectoryRepository >> findFullNameForReading: aBaseName [
 	"Answer the latest version of aBaseName"
 	^((directory glob: [ :each | each basename = aBaseName])
@@ -31,7 +33,7 @@ MCSubDirectoryRepository >> findFullNameForReading: aBaseName [
 		first.
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCSubDirectoryRepository >> findFullNameForWriting: aBaseName [
 	| possible split prefix fpattern now |
 	split := self splitNameVersionExtensionFor: aBaseName.
@@ -58,7 +60,7 @@ MCSubDirectoryRepository >> findFullNameForWriting: aBaseName [
 	^ (possible first third) / aBaseName
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCSubDirectoryRepository >> loadAllFileNames [
 	"sorting {entry. dirName. name}"
 
@@ -73,7 +75,7 @@ MCSubDirectoryRepository >> loadAllFileNames [
 		collect: [:ea | ea third ]
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCSubDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 
 	| fileReference |
@@ -81,7 +83,7 @@ MCSubDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	fileReference binaryReadStreamDo: [ :stream | ^ aBlock value: stream ].
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCSubDirectoryRepository >> splitNameVersionExtensionFor: aBaseName [
 
 	| file version |
@@ -94,7 +96,7 @@ MCSubDirectoryRepository >> splitNameVersionExtensionFor: aBaseName [
 
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCSubDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace do: aBlock [ 
 
 	| fileReference |

@@ -2,16 +2,17 @@
 Functional unit tests for the key-value store REST interface example
 "
 Class {
-	#name : #ZnKeyValueStoreTest,
-	#superclass : #TestCase,
+	#name : 'ZnKeyValueStoreTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'client',
 		'server'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ZnKeyValueStoreTest >> setUp [
 	| port |
 	super setUp.
@@ -22,14 +23,14 @@ ZnKeyValueStoreTest >> setUp [
 	client httpClient port: port
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZnKeyValueStoreTest >> tearDown [
 	server stop.
 	client close.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnKeyValueStoreTest >> testUsage [
 	| key value |
 	key := 'key-' , 100 atRandom asString.

@@ -2,22 +2,24 @@
 A MCDefinition is the root of inheritance of entities representing code. 
 "
 Class {
-	#name : #MCDefinition,
-	#superclass : #Object,
-	#category : #'Monticello-Base'
+	#name : 'MCDefinition',
+	#superclass : 'Object',
+	#category : 'Monticello-Base',
+	#package : 'Monticello',
+	#tag : 'Base'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDefinition >> <= other [
 	^ self sortKey <= other sortKey
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDefinition >> = aDefinition [
 	^(aDefinition isKindOf: MCDefinition) and: [self isRevisionOf: aDefinition]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> actualClass [
 	"Since the targetClass call on a patch operation will fail
 	otherwise."
@@ -25,152 +27,152 @@ MCDefinition >> actualClass [
 	^nil
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCDefinition >> addMethodAdditionTo: aCollection [
 	self load
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> className [
 	"Answer the class name here or nil if not applicable."
 	
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> definition [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> description [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> diffSource [
 	^ self source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> fullClassName [
 	"Answer the className by default."
 	
 	^self className
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDefinition >> fullTimeStamp [
 	^ DateAndTime current
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDefinition >> hash [
 	^ self description hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDefinition >> isClassDefinition [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDefinition >> isClassDefinitionExtension [
 	"Answer true if this definition extends the regular class definition"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDefinition >> isMethodDefinition [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDefinition >> isOrganizationDefinition [
 	^false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDefinition >> isRevisionOf: aDefinition [
 	^ (aDefinition isKindOf: MCDefinition) and: [aDefinition description = self description]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDefinition >> isSameRevisionAs: aDefinition [
 	^ self = aDefinition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDefinition >> isScriptDefinition [
 	^false
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCDefinition >> load [
 	
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCDefinition >> loadOver: aDefinition [
 	self load
 	
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCDefinition >> postload [
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCDefinition >> postloadOver: aDefinition [
 	self postload
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 MCDefinition >> printAnnotations: requests on: aStream [
 	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
 
 	aStream nextPutAll: 'not yet implemented'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCDefinition >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: '(', self summary, ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> provisions [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> requirements [
 	^ #()
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDefinition >> sortKey [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDefinition >> source [
 	^ self subclassResponsibility.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCDefinition >> summary [
 	self subclassResponsibility 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCDefinition >> summarySuffixOver: previousDefinition [
 	^self source = previousDefinition source
 		ifTrue: [ ' (source same but rev changed)' ]
 		ifFalse: [ ' (changed)' ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCDefinition >> unload [
 ]

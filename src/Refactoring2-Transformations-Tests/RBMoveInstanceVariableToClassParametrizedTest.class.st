@@ -1,22 +1,24 @@
 Class {
-	#name : #RBMoveInstanceVariableToClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBMoveInstanceVariableToClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBMoveInstanceVariableToClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveInstanceVariableToClassTransformation };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveInstanceVariableToClassParametrizedTest >> constructor [
 	^ #variable:fromClass:toClass:
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableAlreadyExists [
 
 	self shouldFail: (self
@@ -25,7 +27,7 @@ RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableAlreadyExist
 			 { 'result'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableDoesNotExistInOldClass [
 
 	self shouldFail: (self
@@ -34,7 +36,7 @@ RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableDoesNotExist
 			 { 'abc'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 
 	| refactoring oldClass newClass |
@@ -48,18 +50,12 @@ RBMoveInstanceVariableToClassParametrizedTest >> testRefactoring [
 	self assert:
 		(oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self deny: (newClass directlyDefinesInstanceVariable: 'methodBlock').
-	self shouldFail: refactoring.
-	
-	"This test is now expected to fail since transform raises non-resumable RBRefactoringError.
-	The test expected resumable RBRefactoringError to be raised and we changed this in #13367.
-	Previously it would catch RBRefactoringError and resume."
-	"[ refactoring transform ]
-		on: RBRefactoringWarning
-		do: [ :e | e resume ].
+
+	refactoring generateChanges.
 	self assert: refactoring model changes changes size equals: 2.
 	oldClass := refactoring model classNamed: #RBBasicLintRuleTestData.
 	newClass := refactoring model classNamed: #RBFooLintRuleTestData.
 	self deny: (oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self assert:
-		(newClass directlyDefinesInstanceVariable: 'methodBlock')"
+		(newClass directlyDefinesInstanceVariable: 'methodBlock')
 ]

@@ -4,52 +4,62 @@ using ClassDescription >>removeSelector: or TraitDescription >> removeSelector.
 
 "
 Class {
-	#name : #MethodRemoved,
-	#superclass : #MethodAnnouncement,
+	#name : 'MethodRemoved',
+	#superclass : 'MethodAnnouncement',
 	#instVars : [
 		'protocol',
 		'methodOrigin'
 	],
-	#category : #'System-Announcements-System-Methods'
+	#category : 'System-Announcements-System-Methods',
+	#package : 'System-Announcements',
+	#tag : 'System-Methods'
 }
 
-{ #category : #'instance creation' }
-MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin: aBehavior [
-	^self new
-		method: aCompiledMethod;
-		protocol: aProtocol;
-		methodOrigin: aBehavior;
-		yourself
+{ #category : 'instance creation' }
+MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin: aBehavior package: aPackage [
+
+	^ self new
+		  method: aCompiledMethod;
+		  protocol: aProtocol;
+		  methodOrigin: aBehavior;
+		  methodPackage: aPackage;
+		  yourself
 ]
 
-{ #category : #testing }
-MethodRemoved >> affectsMethodsTaggedWith: tagName [
+{ #category : 'testing' }
+MethodRemoved >> affectsMethodsInProtocol: aProtocol [
 
-	^ (super affectsMethodsTaggedWith: tagName) or: [ self protocol name = tagName ]
+	^ self protocol name = aProtocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRemoved >> methodOrigin [
 	^ methodOrigin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRemoved >> methodOrigin: anObject [
 	methodOrigin := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MethodRemoved >> methodPackage: aPackage [
+
+	methodPackage := aPackage
+]
+
+{ #category : 'accessing' }
 MethodRemoved >> methodRemoved [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRemoved >> protocol [
 	^ protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRemoved >> protocol: anObject [
 
 	protocol := anObject

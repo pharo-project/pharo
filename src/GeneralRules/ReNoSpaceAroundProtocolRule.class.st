@@ -2,50 +2,56 @@
 Provide rule to have no leading or trailing space in method category name
 "
 Class {
-	#name : #ReNoSpaceAroundProtocolRule,
-	#superclass : #ReAbstractRule,
+	#name : 'ReNoSpaceAroundProtocolRule',
+	#superclass : 'ReAbstractRule',
 	#instVars : [
 		'protocolName'
 	],
-	#category : #'GeneralRules-Migrated'
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReNoSpaceAroundProtocolRule class >> checksMethod [
 
 	^ true
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 ReNoSpaceAroundProtocolRule class >> uniqueIdentifierName [
 
 	^ 'ReNoSpaceAroundMethodCategoryNameRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReNoSpaceAroundProtocolRule >> basicCheck: aMethod [
 
 	protocolName := aMethod protocolName.
 	^ (protocolName endsWith: ' ') or: [ protocolName beginsWith: ' ' ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReNoSpaceAroundProtocolRule >> critiqueFor: aMethod [
 
 	| proposedProtocol |
 	proposedProtocol := protocolName trimBoth.
 
-	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
-		  (RBMethodProtocolTransformation protocol: { proposedProtocol } inMethod: aMethod selector inClass: aMethod methodClass name asSymbol) asRefactoring
+	^ (ReRefactoringCritique
+		   withAnchor: (self anchorFor: aMethod)
+		   by: self) refactoring: (RBMethodProtocolTransformation
+			   protocol: { proposedProtocol }
+			   inMethod: aMethod selector
+			   inClass: aMethod methodClass name asSymbol)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNoSpaceAroundProtocolRule >> group [
 
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNoSpaceAroundProtocolRule >> name [
 
 	^ 'Protocol named "{1}" should be trimmed (includes space at start or end)' format: { protocolName }

@@ -8,28 +8,30 @@ I have a credentials dictionary with username->password associations.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnBasicAuthenticator,
-	#superclass : #Object,
+	#name : 'ZnBasicAuthenticator',
+	#superclass : 'Object',
 	#instVars : [
 		'credentials',
 		'realm'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicAuthenticator class >> defaultRealm [
 	^ 'ZincHTTPComponents'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnBasicAuthenticator class >> username: username password: password [
 	^ self new
 		atUsername: username putPassword: password;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnBasicAuthenticator class >> username: username password: password realm: realm [
 	^ self new
 		atUsername: username putPassword: password;
@@ -37,29 +39,29 @@ ZnBasicAuthenticator class >> username: username password: password realm: realm
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicAuthenticator >> atUsername: username putPassword: password [
 	credentials at: username put: password
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnBasicAuthenticator >> authHeader [
 	^ 'Basic realm=', self realm
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnBasicAuthenticator >> authenticateRequest: request do: block [
 	^ (self isRequestAuthenticated: request)
 		ifTrue: [ block value ]
 		ifFalse: [ ZnResponse unauthorized: self authHeader ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBasicAuthenticator >> initialize [
 	credentials := Dictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBasicAuthenticator >> isRequestAuthenticated: request [
 	| authorization username password |
 	authorization := [ request basicAuthentication ] on: Error do: [ ^ false ].
@@ -68,22 +70,22 @@ ZnBasicAuthenticator >> isRequestAuthenticated: request [
 	^ (credentials at: username ifAbsent: [ nil ]) = password
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicAuthenticator >> realm [
 	^ realm ifNil: [ realm := self class defaultRealm ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicAuthenticator >> realm: anObject [
 	realm := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicAuthenticator >> removeAll [
 	credentials removeAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicAuthenticator >> removeUsername: username [
 	credentials removeKey: username
 ]

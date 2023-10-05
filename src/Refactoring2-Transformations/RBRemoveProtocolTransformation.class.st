@@ -15,15 +15,17 @@ Preconditions:
 - No methods are categorized with this protocol.
 "
 Class {
-	#name : #RBRemoveProtocolTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBRemoveProtocolTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveProtocolTransformation class >> model: aRBModel protocol: aString inClass: aClassName [
 
 	^ self new
@@ -33,7 +35,7 @@ RBRemoveProtocolTransformation class >> model: aRBModel protocol: aString inClas
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveProtocolTransformation class >> protocol: aString inClass: aClassName [
 
 	^ self new
@@ -42,30 +44,43 @@ RBRemoveProtocolTransformation class >> protocol: aString inClass: aClassName [
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRemoveProtocolTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBRemoveProtocolTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition withBlock: [ self definingClass isNotNil ] errorString: 'Class named ' , className , ' does not exist') & (RBCondition
-		   withBlock: [ (model environment protocolsFor: self definingClass realClass) anySatisfy: [ :prot | prot name = protocol ] ]
-		   errorString: 'Protocol named ' , protocol , ' does not exist') & (RBCondition
-		   withBlock: [ (self definingClass realClass protocolNamed: protocol) isEmpty ]
-		   errorString: 'Protocol named ' , protocol , ' is not empty and it cannot be removed')
+	^ self classExist & (RBCondition
+		   withBlock: [
+			   (model environment protocolsFor: self definingClass realClass)
+				   anySatisfy: [ :prot | prot name = protocol ] ]
+		   errorString: 'Protocol named ' , protocol , ' does not exist')
+	  & (RBCondition
+			   withBlock: [
+			   (self definingClass realClass protocolNamed: protocol) isEmpty ]
+			   errorString: 'Protocol named ' , protocol
+				   , ' is not empty and it cannot be removed')
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBRemoveProtocolTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'Class named ' , className , ' does not exist' 
+]
+
+{ #category : 'executing' }
 RBRemoveProtocolTransformation >> privateTransform [
 
 	self definingClass removeProtocolNamed: protocol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveProtocolTransformation >> protocol: aString inClass: aClassName [
 
 	self className: aClassName.
 	protocol := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

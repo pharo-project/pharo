@@ -2,15 +2,16 @@
 I'm a change corresponding to a change in the class protocols. 
 "
 Class {
-	#name : #RBClassCategoryChange,
-	#superclass : #RBRefactoryClassChange,
+	#name : 'RBClassCategoryChange',
+	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
 		'category'
 	],
-	#category : #'Refactoring-Changes'
+	#category : 'Refactoring-Changes',
+	#package : 'Refactoring-Changes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBClassCategoryChange class >> category: aString for: aClass [
 
 	^ self new
@@ -19,7 +20,7 @@ RBClassCategoryChange class >> category: aString for: aClass [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBClassCategoryChange >> asUndoOperation [
 
 	self copy
@@ -27,39 +28,37 @@ RBClassCategoryChange >> asUndoOperation [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassCategoryChange >> category: anObject [
 	category := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassCategoryChange >> changeClass: aBehavior [
 
 	super changeClass: aBehavior.
 	isMeta := false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBClassCategoryChange >> changeString [
 
 	^ 'Category ', self displayCategoryName, ' in ', self displayClassName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBClassCategoryChange >> displayCategoryName [
 
 	^ category
 ]
 
-{ #category : #private }
-RBClassCategoryChange >> primitiveExecute [
+{ #category : 'private' }
+RBClassCategoryChange >> generateChanges [
 
-	self changeClass category: category.
-	SystemAnnouncer uniqueInstance
-		classReorganized: self changeClass
+	self changeClass category: category
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBClassCategoryChange >> printOn: aStream [
 
 	aStream

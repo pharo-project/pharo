@@ -6,12 +6,14 @@ I provide access to the current ZnOptions instance.
 
 "
 Class {
-	#name : #ZnCurrentOptions,
-	#superclass : #DynamicVariable,
-	#category : #'Zinc-HTTP-Variables'
+	#name : 'ZnCurrentOptions',
+	#superclass : 'DynamicVariable',
+	#category : 'Zinc-HTTP-Variables',
+	#package : 'Zinc-HTTP',
+	#tag : 'Variables'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCurrentOptions class >> at: key [
 	^ self value
 		ifNil: [ ZnOptions globalDefault at: key ]

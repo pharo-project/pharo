@@ -1,6 +1,6 @@
-Extension { #name : #ArgumentVariable }
+Extension { #name : 'ArgumentVariable' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 ArgumentVariable >> styleNameIn: aRBVariableNode [
 
 	^ self isDefinedByBlock

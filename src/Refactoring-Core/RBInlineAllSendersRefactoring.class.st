@@ -28,8 +28,8 @@ baz
 
 "
 Class {
-	#name : #RBInlineAllSendersRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBInlineAllSendersRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'selector',
 		'numberReplaced',
@@ -37,10 +37,12 @@ Class {
 		'pattern',
 		'selectorString'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineAllSendersRefactoring class >> model: aRBSmalltalk sendersOf: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -48,20 +50,20 @@ RBInlineAllSendersRefactoring class >> model: aRBSmalltalk sendersOf: aSelector 
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineAllSendersRefactoring class >> sendersOf: aSelector in: aClass [
 	^ self new
 		sendersOf: aSelector
 		in: aClass
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> checkInlinedMethods [
 	numberReplaced = 0
 		ifTrue: [self inform:  'Could not find any senders to inline into']
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> initializePatternFor: aClass [
 	pattern := nil.
 	(aClass = class or: [(aClass directlyDefinesMethod: selector) not]) ifTrue: [
@@ -72,7 +74,7 @@ RBInlineAllSendersRefactoring >> initializePatternFor: aClass [
 		pattern := 'super ' , self selectorString ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSelector [
 	| messagesToInline previousCountOfMessages rbMethod |
 	previousCountOfMessages := 4294967295.	"Some really large number > # of initial self sends."
@@ -85,7 +87,7 @@ RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSel
 				previousCountOfMessages := messagesToInline.
 				node := self selfSendIn: (aClass parseTreeForSelector: aSelector).
 				self onError:
-						[self performCompositeRefactoring: ((RBInlineMethodRefactoring
+						[self generateChangesFor: ((RBInlineMethodRefactoring
 									model: self model
 									inline: node sourceInterval
 									inMethod: aSelector
@@ -95,7 +97,7 @@ RBInlineAllSendersRefactoring >> inlineMessagesInClass: aClass andSelector: aSel
 	numberNotReplaced := numberNotReplaced + messagesToInline
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> inlineSelfSends [
 	class withAllSubclasses do:
 		[:each |
@@ -107,12 +109,12 @@ RBInlineAllSendersRefactoring >> inlineSelfSends [
 			selectors do: [:sel | self inlineMessagesInClass: each andSelector: sel]]]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> messagePattern [
 	^'self ' , (self buildSelectorString: selector)
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [
 	| search |
 	search := self parseTreeSearcher.
@@ -122,27 +124,35 @@ RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [
 	^ search executeTree: aParseTree initialAnswer: 0
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInlineAllSendersRefactoring >> preconditions [
 	^RBCondition canUnderstand: selector in: class
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
+RBInlineAllSendersRefactoring >> privateTransform [
+	self
+		inlineSelfSends;
+		removeMethod;
+		checkInlinedMethods
+]
+
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> removeMethod [
 	self onError:
-			[self performCompositeRefactoring: (RBRemoveMethodRefactoring
+			[self generateChangesFor: (RBRemoveMethodRefactoring
 						model: self model
-						removeMethods: (Array with: selector)
+						selector: selector
 						from: class)]
 		do: []
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> selectorString [
 	^selectorString ifNil: [ selectorString := self buildSelectorString: selector ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineAllSendersRefactoring >> selfSendIn: aTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -152,14 +162,14 @@ RBInlineAllSendersRefactoring >> selfSendIn: aTree [
 	^ searcher executeTree: aTree initialAnswer: nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBInlineAllSendersRefactoring >> sendersOf: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	numberReplaced := numberNotReplaced := 0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBInlineAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -169,12 +179,4 @@ RBInlineAllSendersRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBInlineAllSendersRefactoring >> transform [
-	self
-		inlineSelfSends;
-		removeMethod;
-		checkInlinedMethods
 ]

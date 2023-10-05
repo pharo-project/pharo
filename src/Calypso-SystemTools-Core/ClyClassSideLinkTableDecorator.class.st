@@ -3,12 +3,14 @@ I decorate tables in the full browser with special icon for methods and protocol
 The icon switches the browser to the class side
 "
 Class {
-	#name : #ClyClassSideLinkTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyClassSideLinkTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassSideLinkTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 	| command activator icon button |
 	super decorateMainTableCell: anItemCellMorph inContext: itemContext.
@@ -24,30 +26,30 @@ ClyClassSideLinkTableDecorator class >> decorateMainTableCell: anItemCellMorph i
 	anItemCellMorph definitionMorph: button
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassSideLinkTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassSideLinkTableDecorator class >> methodDecorationStrategy [
 	<classAnnotation>
 
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserMethodContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassSideLinkTableDecorator class >> methodGroupDecorationStrategy [
 	<classAnnotation>
 
-	^ClyTableDecorationStrategyAnnotation for: ClyTaggedMethodGroup asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: ClyMethodsInProtocolGroup asCalypsoItemContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassSideLinkTableDecorator class >> priority [
 	^100000
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassSideLinkTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 
 	| tagName |

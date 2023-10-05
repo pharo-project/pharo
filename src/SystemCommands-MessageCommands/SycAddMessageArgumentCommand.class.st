@@ -8,15 +8,16 @@ Internal Representation and Key Implementation Points.
 	newSelector:		<Symbol>
 "
 Class {
-	#name : #SycAddMessageArgumentCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
+	#name : 'SycAddMessageArgumentCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSelector'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 
 	"This method overrides the superclass definition to make appear this option only for methods.
@@ -27,57 +28,57 @@ SycAddMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodSelected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycAddMessageArgumentCommand >> canEditName [
 	^ false
 ]
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycAddMessageArgumentCommand >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddMessageArgumentCommand >> createRefactoring [
 
 	^(RBAddParameterRefactoring
 		model: model
 		addParameterToMethod: originalMessage selector
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: refactoredClass
 		newSelector: newSelector selector
 		permutation: newSelector permutation
 		newArgs: newSelector newArgs)
 		renameMap: newSelector renameMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddMessageArgumentCommand >> defaultMenuIconName [
 	^#smallAdd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddMessageArgumentCommand >> defaultMenuItemName [
 	^'Add argument'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddMessageArgumentCommand >> newSelector [
 	^ newSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddMessageArgumentCommand >> newSelector: anObject [
 	newSelector := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	newSelector := self requestNewMessageIn: aToolContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddMessageArgumentCommand >> resultMessageSelector [
 	^newSelector
 ]

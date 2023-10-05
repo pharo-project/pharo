@@ -1,10 +1,12 @@
 Class {
-	#name : #DTStyleContributor,
-	#superclass : #StPharoStyleContributor,
-	#category : #'DrTests-Spec'
+	#name : 'DTStyleContributor',
+	#superclass : 'StPharoStyleContributor',
+	#category : 'DrTests-Spec',
+	#package : 'DrTests',
+	#tag : 'Spec'
 }
 
-{ #category : #styles }
+{ #category : 'styles' }
 DTStyleContributor >> styleSheetContribution [
 
 	^ SpStyle newApplication
@@ -29,7 +31,7 @@ DTStyleContributor >> styleSheetContribution [
 		yourself
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 DTStyleContributor >> theme [
 
 	^ Smalltalk ui theme

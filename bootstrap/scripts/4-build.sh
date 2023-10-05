@@ -153,8 +153,6 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes OpalCompiler-Co
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "OpalCompiler register. CompilationContext initialize. OCASTTranslator initialize."
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SessionManager initializeKernelRegistrations" # While the SessionManager is still in the kernel group, let's initialize it here.
-
 echo $(date -u) "[Compiler] Initializing Unicode"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/02-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
 
@@ -197,7 +195,7 @@ zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 echo "[Metacello] Bootstrapping Metacello"
 ${VM} "${MC_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${METACELLO_IMAGE_NAME}
 ${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
-${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.19';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
+${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:Pharo12';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo $(date -u) "[Pharo] Reloading rest of packages"

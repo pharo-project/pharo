@@ -1,28 +1,29 @@
 Class {
-	#name : #CmdRootOfCommandExamples,
-	#superclass : #CmdCommand,
+	#name : 'CmdRootOfCommandExamples',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'savedParametersContext'
 	],
-	#category : #'Commander-Core-Tests'
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdRootOfCommandExamples class >> isAbstract [
 	^self = CmdRootOfCommandExamples
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdRootOfCommandExamples >> readParametersFromContext: aToolContext [
 	savedParametersContext := aToolContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdRootOfCommandExamples >> savedParametersContext [
 	^ savedParametersContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdRootOfCommandExamples >> savedParametersContext: anObject [
 	savedParametersContext := anObject
 ]

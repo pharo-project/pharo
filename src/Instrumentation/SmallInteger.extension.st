@@ -1,11 +1,12 @@
-Extension { #name : #SmallInteger }
+Extension { #name : 'SmallInteger' }
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 SmallInteger >> insMinus: aNumber [
-	"Primitive. Subtract the argument from the receiver and answer with the
-	result if it is a SmallInteger. Fail if the argument or the result is not a
-	SmallInteger. Essential. No Lookup. See Object documentation
-	whatIsAPrimitive."
+	"I am a re-implementation of the method SmallInteger>>#- and I have the same code except
+	for the instrumentation pragmas. I re-implemented the method just to be able to use it
+	without poluting the instrumentation. Let's say that one wants to instrument the method
+	SmallInteger>>#-. If we not override the  SmallInteger>>#- method we will enter to an
+	endless loop."
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>
 	<noInstrumentation>
@@ -13,11 +14,13 @@ SmallInteger >> insMinus: aNumber [
 	^ super - aNumber
 ]
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 SmallInteger >> insPlus: aNumber [
-	"Primitive. Add the receiver to the argument and answer with the result
-	if it is a SmallInteger. Fail if the argument or the result is not a
-	SmallInteger  Essential  No Lookup. See Object documentation whatIsAPrimitive."
+	"I am a re-implementation of the method SmallInteger>>#+ and I have the same code except
+	for the instrumentation pragmas. I re-implemented the method just to be able to use it
+	without poluting the instrumentation. Let's say that one wants to instrument the method
+	SmallInteger>>#+. If we not override the  SmallInteger>>#+ method we will enter to an
+	endless loop."
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>
 	<noInstrumentation>

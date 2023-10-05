@@ -1,59 +1,63 @@
 Class {
-	#name : #RBSplitClassTransformationTest,
-	#superclass : #RBAbstractTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBSplitClassTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassTransformationTest >> testClassVariable [
 
 	self shouldFail: (RBSplitClassTransformation
-							class:  #RBDummyLintRuleTest
-							instanceVariables: #(Foo1)
-							newClassName: #RBDummyLintRuleTest123
-							referenceVariableName: #receiver)
-							asRefactoring
+			 class: #RBDummyLintRuleTest
+			 instanceVariables: #( Foo1 )
+			 newClassName: #RBDummyLintRuleTest123
+			 referenceVariableName: #receiver)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassTransformationTest >> testNonExistantName [
 
 	self shouldFail: (RBSplitClassTransformation
-							class: #RBDummyLintRuleTest
-							instanceVariables: #(name1)
-							newClassName: #RBDummyLintRuleTest123
-							referenceVariableName: #newName)
-							asRefactoring
+			 class: #RBDummyLintRuleTest
+			 instanceVariables: #( name1 )
+			 newClassName: #RBDummyLintRuleTest123
+			 referenceVariableName: #newName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBSplitClassTransformation
-							class: #RBRemoveDirectAccessToVariableTransformation
-							instanceVariables: #(receiver)
-							newClassName: #RBRemoveDirectAccessWithReceiverTransformation
-							referenceVariableName: #newReceiver)
-							transform.
+		                   class:
+		                   #RBRemoveDirectAccessToVariableTransformation
+		                   instanceVariables: #( receiver )
+		                   newClassName:
+		                   #RBRemoveDirectAccessWithReceiverTransformation
+		                   referenceVariableName: #newReceiver)
+		                  generateChanges.
 
-	class := transformation model classNamed: #RBRemoveDirectAccessToVariableTransformation.
+	class := transformation model classNamed:
+		         #RBRemoveDirectAccessToVariableTransformation.
 	self deny: (class instanceVariableNames includes: #receiver).
 	self assert: (class instanceVariableNames includes: #newReceiver).
 
-	self assert: (class parseTreeForSelector: #receiver:)
-		  equals: (self parseMethod:
-				'receiver: aString
+	self
+		assert: (class parseTreeForSelector: #receiver:)
+		equals: (self parseMethod: 'receiver: aString
 					newReceiver receiver: aString').
 
-	self assert: (class parseTreeForSelector: #receiver)
-		  equals: (self parseMethod:
-				'receiver
+	self
+		assert: (class parseTreeForSelector: #receiver)
+		equals: (self parseMethod: 'receiver
 					^ newReceiver receiver
-						ifNil: [ self receiver: ', 'self' surroundedBySingleQuotes,
-						'. newReceiver receiver ]').
+						ifNil: [ self receiver: ' , 'self' surroundedBySingleQuotes
+				 , '. newReceiver receiver ]').
 
-	class := transformation model classNamed: #RBRemoveDirectAccessWithReceiverTransformation.
+	class := transformation model classNamed:
+		         #RBRemoveDirectAccessWithReceiverTransformation.
 	self deny: class isNil.
 	self assert: (class instanceVariableNames includes: #receiver).
 	self assert: (class directlyDefinesLocalMethod: #receiver).

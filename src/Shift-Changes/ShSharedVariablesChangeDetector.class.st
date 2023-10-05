@@ -2,17 +2,18 @@
 I know how to detect a change in the collection of the shared variables (class variables).
 "
 Class {
-	#name : #ShSharedVariablesChangeDetector,
-	#superclass : #ShAbstractClassChangeDetector,
-	#category : #'Shift-Changes'
+	#name : 'ShSharedVariablesChangeDetector',
+	#superclass : 'ShAbstractClassChangeDetector',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShSharedVariablesChangeDetector >> compareFrom: a to: b [
 	^ a asDictionary = b asDictionary
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShSharedVariablesChangeDetector >> initialize [
 	super initialize.
 	builderAccessor := [ :e | e layoutDefinition sharedVariables collect:[ :x | x key -> x class ] as: Array ].

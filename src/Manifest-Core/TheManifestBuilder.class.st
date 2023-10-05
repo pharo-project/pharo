@@ -5,82 +5,84 @@ My name is strange but this is to avoid to match with a Manifest class which is 
 
 "
 Class {
-	#name : #TheManifestBuilder,
-	#superclass : #Model,
+	#name : 'TheManifestBuilder',
+	#superclass : 'Model',
 	#instVars : [
 		'manifestClass'
 	],
-	#category : #'Manifest-Core-Base'
+	#category : 'Manifest-Core-Base',
+	#package : 'Manifest-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TheManifestBuilder class >> allManifestClasses [
 
 	^ PackageManifest subclasses
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> falsePositiveBeginningTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of false positive for a rule"
 
 	^ 'rule'
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> falsePositiveEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of false positive for a rule"
 
 	^ 'FalsePositive'
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> falsePositiveMiddleTag [
 	"the string that identifies uniquely the middle of a selector who give  the set of false positive for a rule"
 
 	^ 'V'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TheManifestBuilder class >> hasManifestFor: aItem [
 
 	^  (self new manifestOf: aItem) isNil not
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TheManifestBuilder class >> hasPackageNamed: aPackageName [
 
 	^ self allManifestClasses
 		anySatisfy: [:each | each category = aPackageName  ]
 ]
 
-{ #category : #'accessing - manifest' }
+{ #category : 'accessing - manifest' }
 TheManifestBuilder class >> manifestClassComment [
 
 	^ 'Please describe the package using the class comment of the included manifest class. The manifest class also includes other additional metadata for the package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser'
 ]
 
-{ #category : #'accessing - manifest' }
+{ #category : 'accessing - manifest' }
 TheManifestBuilder class >> manifestClassNameFor: aPackageName [
 	"Returns a symbol representing a suitable name for a Manifest class for the given package"
 
 	^(self manifestTag, (aPackageName select: [:each | each isAlphaNumeric ])) asSymbol
 ]
 
-{ #category : #'accessing - manifest' }
+{ #category : 'accessing - manifest' }
 TheManifestBuilder class >> manifestClassPrefix [
 	"Return a string that serves as a prefix for Manifest classes (identifies uniquely the beginning of a Manifest class name)"
 
 	^ 'Manifest'
 ]
 
-{ #category : #'accessing - manifest' }
+{ #category : 'accessing - manifest' }
 TheManifestBuilder class >> manifestTag [
 	"Return a string that serves as a tag within a package for Manifest classes"
 
 	^ 'Manifest'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TheManifestBuilder class >> of: aItem [
 	| mb  |
 
@@ -90,7 +92,7 @@ TheManifestBuilder class >> of: aItem [
 	^ mb
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TheManifestBuilder class >> ofPackageNamed: aPackageName [
 	| builder |
 	builder := self new.
@@ -101,55 +103,55 @@ TheManifestBuilder class >> ofPackageNamed: aPackageName [
 	^ builder
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> rejectClassesTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of rejected classes"
 
 	^ 'rejectClasses'
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> rejectRulesTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of rejected rules"
 
 	^ 'rejectRules'
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> toDoBeginningTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of TODO for a rule"
 
 	^ 'rule'
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> toDoEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of TODO for a rule"
 
 	^ 'TODO'
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> toDoMiddleTag [
 	"the string that identifies uniquely the middle of a selector who give  the set of TODO for a rule"
 
 	^ 'V'
 ]
 
-{ #category : #'accessing - tags' }
+{ #category : 'accessing - tags' }
 TheManifestBuilder class >> truePositiveEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of false positive for a rule"
 
 	^ 'TruePositive'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TheManifestBuilder >> = aObject [
 
 	^ aObject class = self class and: [ self manifest = aObject manifest ]
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> addAllFalsePositive: fp of: ruleId version: versionId [
 
 	| selector  |
@@ -160,7 +162,7 @@ TheManifestBuilder >> addAllFalsePositive: fp of: ruleId version: versionId [
 		ifTrue: [ self removeToDo: each of:  ruleId version: versionId ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> addAllItem: aSet selector: selector [
 	| set newSet arrayString |
 	set := (self manifest perform: selector) asOrderedCollection.
@@ -176,7 +178,7 @@ TheManifestBuilder >> addAllItem: aSet selector: selector [
 	self compileSelector: selector returnValue: arrayString
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> addAllToDo: aSet of: ruleId version: versionId [
 
 	| selector |
@@ -184,7 +186,7 @@ TheManifestBuilder >> addAllToDo: aSet of: ruleId version: versionId [
 	self addAllItem: aSet selector: selector
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> addFalsePositive: fp of: ruleId version: versionId [
 
 	| selector |
@@ -194,12 +196,12 @@ TheManifestBuilder >> addFalsePositive: fp of: ruleId version: versionId [
 		ifTrue: [self removeToDo: fp of:  ruleId version: versionId]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> addItem: fp selector: selector [
 	self addAllItem: {fp} selector: selector
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> addRejectClass: aClass [
 
 	|  falsePositives |
@@ -210,7 +212,7 @@ TheManifestBuilder >> addRejectClass: aClass [
 	self compileSelector:  (self class rejectClassesTag) returnValue: (self buildArrayString: falsePositives)
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> addRejectRule: ruleId [
 
 	|  nfp |
@@ -220,7 +222,7 @@ TheManifestBuilder >> addRejectRule: ruleId [
 	self compileSelector: (self class rejectRulesTag) returnValue: nfp asString
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> addToDo: fp of: ruleId version: versionId [
 
 	| selector |
@@ -230,7 +232,7 @@ TheManifestBuilder >> addToDo: fp of: ruleId version: versionId [
 		ifTrue: [ self removeFalsePositive: fp of:  ruleId version: versionId ]
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> addTruePositive: fp of: ruleId version: versionId [
 
 	| selector  |
@@ -242,12 +244,12 @@ TheManifestBuilder >> addTruePositive: fp of: ruleId version: versionId [
 		ifTrue: [ self removeFalsePositive: fp of:  ruleId version: versionId ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TheManifestBuilder >> browsedEnvironment [
 	^manifestClass environment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> buildArrayString: aCollection [
 
 	^ String streamContents: [:stream |
@@ -261,7 +263,7 @@ TheManifestBuilder >> buildArrayString: aCollection [
 		stream << ')']
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> cleanUp [
 
 	| tagfp |
@@ -271,7 +273,7 @@ TheManifestBuilder >> cleanUp [
 				ifTrue: [self removeObsoleteFalsePositiveOf: method] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> compileSelector: selector returnValue: aLiteral [
 	self
 		compileSelector: selector
@@ -279,7 +281,7 @@ TheManifestBuilder >> compileSelector: selector returnValue: aLiteral [
 		classified: 'code-critics'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> compileSelector: selector returnValue: aLiteral classified: aProtocolName [
 
 	| source |
@@ -297,26 +299,26 @@ TheManifestBuilder >> compileSelector: selector returnValue: aLiteral classified
 	manifestClass class compile: source classified: aProtocolName
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> containsFalsePositive: aItem onRule: ruleId version: versionId [
 
 	^  (self hasFalsePositiveOf: ruleId version: versionId)
 			and: [ (self falsePositiveOf: ruleId version: versionId) anySatisfy: [ :fp | fp = aItem ]]
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> containsRejectedClass: aClass [
 
 	^ self rejectClasses anySatisfy: [ :cl | cl = aClass ]
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> containsRejectedRule: aRuleId [
 
 	^ self rejectRules anySatisfy: [ :fp | fp = aRuleId ]
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> containsToDo: aItem onRule: ruleId version: versionId [
 
 	^  (self hasToDoOf: ruleId version: versionId)
@@ -324,14 +326,14 @@ TheManifestBuilder >> containsToDo: aItem onRule: ruleId version: versionId [
 			anySatisfy: [ :fp| fp = aItem ]]
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> containsTruePositive: aItem onRule: ruleId version: versionId [
 
 	^  (self hasTruePositiveOf: ruleId version: versionId)
 		and: [(self truePositiveOf: ruleId version: versionId) anySatisfy: [ :fp| fp = aItem ]]
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> createManifestNamed: packageName [
 
 	manifestClass := self class classInstaller make: [ :aBuilder |
@@ -340,18 +342,18 @@ TheManifestBuilder >> createManifestNamed: packageName [
 			package: packageName ].
 
 	manifestClass
-		tagWith: self class manifestTag;
+		packageTag: self class manifestTag;
 		comment: self class manifestClassComment.
 	^ manifestClass
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> createManifestOf: elem [
 
 	self createManifestNamed: (self packageNameOf: elem)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> dateOf: ringobject forSelector: aSelector [
 
 	| critics |
@@ -360,7 +362,7 @@ TheManifestBuilder >> dateOf: ringobject forSelector: aSelector [
 	^ ((critics detect: [:each | ((self definitionClassFor: each first first) manifestReadOn: (each first at: 2)) = ringobject ]) at: 2) asDateAndTime
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> dateOfFalsePositive: aItem onRule: ruleId version: versionId [
 
 	(self hasFalsePositiveOf: ruleId version: versionId)
@@ -369,7 +371,7 @@ TheManifestBuilder >> dateOfFalsePositive: aItem onRule: ruleId version: version
 	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorFalsePositiveOf: ruleId version: versionId)
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> dateOfToDo: aItem onRule: ruleId version: versionId [
 
 	 (self hasToDoOf: ruleId version: versionId)
@@ -377,7 +379,7 @@ TheManifestBuilder >> dateOfToDo: aItem onRule: ruleId version: versionId [
 	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorToDoOf: ruleId version: versionId)
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> dateOfTruePositive: aItem onRule: ruleId version: versionId [
 
 	(self hasTruePositiveOf: ruleId version: versionId)
@@ -385,7 +387,7 @@ TheManifestBuilder >> dateOfTruePositive: aItem onRule: ruleId version: versionI
 	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorTruePositiveOf: ruleId version: versionId)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> definitionClassFor: aName [
 
 	"find Ring definition for a given name. Handle classes renamings"
@@ -399,51 +401,51 @@ TheManifestBuilder >> definitionClassFor: aName [
 	^ self browsedEnvironment at: finalName
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> falsePositiveOf: ruleId version: versionId [
 
 	^ self unwrap: (self manifest perform: (self selectorFalsePositiveOf: ruleId version: versionId))
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> hasFalsePositiveOf: ruleId version: versionId [
 	^ self manifest respondsTo: (self selectorFalsePositiveOf: ruleId version: versionId)
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> hasToDoOf: ruleId version: versionId [
 	^ self manifest respondsTo: (self selectorToDoOf: ruleId version: versionId)
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> hasTruePositiveOf: ruleId version: versionId [
 	^ self manifest respondsTo: (self selectorTruePositiveOf: ruleId version: versionId)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TheManifestBuilder >> hash [
 	^ manifestClass hash bitXor: self class hash
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> installFalsePositiveOf: ruleId version: versionId [
 
 	self compileSelector: (self selectorFalsePositiveOf: ruleId version: versionId) returnValue: '#()'
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> installToDoOf: ruleId version: versionId [
 
 	self compileSelector: (self selectorToDoOf: ruleId version: versionId) returnValue: '#()'
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> installTruePositiveOf: ruleId version: versionId [
 
 	self compileSelector: (self selectorTruePositiveOf: ruleId version: versionId) returnValue: '#()'
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> isFalsePositive: anItem onRule: ruleId version: versionId [
 
 	^ ((self containsFalsePositive: anItem onRule: ruleId version: versionId) or:
@@ -451,27 +453,27 @@ TheManifestBuilder >> isFalsePositive: anItem onRule: ruleId version: versionId 
 				[(anItem class = RPackage) not and: [self containsRejectedClass: anItem criticClass]]])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TheManifestBuilder >> manifest [
 	^ manifestClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TheManifestBuilder >> manifestClass: aClass [
 	 manifestClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TheManifestBuilder >> manifestOf: elem [
 	^ manifestClass := elem package ifNotNil: [ :package | package packageManifestOrNil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> packageNameOf: elem [
 	^ elem package name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TheManifestBuilder >> printOn: aStream [
 
 	aStream
@@ -479,17 +481,17 @@ TheManifestBuilder >> printOn: aStream [
 		print: manifestClass
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> rejectClasses [
 	^ self unwrap: (self manifest rejectClasses)
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> rejectRules [
 	^ self manifest rejectRules
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> removeAllFalsePositive: aSet of: ruleId version: versionId [
 
 	| selector |
@@ -497,7 +499,7 @@ TheManifestBuilder >> removeAllFalsePositive: aSet of: ruleId version: versionId
 	self removeAllItem: aSet selector: selector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> removeAllItem: aSet selector: selector [
 	| set arrayString |
 	set := (self manifest perform: selector) asOrderedCollection.
@@ -510,7 +512,7 @@ TheManifestBuilder >> removeAllItem: aSet selector: selector [
 	self compileSelector: selector returnValue: arrayString
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> removeAllToDo: fp of: ruleId version: versionId [
 
 	| selector |
@@ -518,7 +520,7 @@ TheManifestBuilder >> removeAllToDo: fp of: ruleId version: versionId [
 	self removeAllItem: fp selector: selector
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> removeFalsePositive: fp of: ruleId version: versionId [
 
 	| selector |
@@ -526,19 +528,19 @@ TheManifestBuilder >> removeFalsePositive: fp of: ruleId version: versionId [
 	self removeItem: fp selector: selector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> removeItem: fp selector: selector [
 	self removeAllItem: {fp} selector: selector
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> removeManifestOf: aItem [
 
 	(self manifestOf: aItem) ifNotNil: [ :myManifest |
 			SystemNavigation new removeClass: myManifest  ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> removeObsoleteFalsePositiveOf: aMethod [
 
 	| set arrayString  |
@@ -548,7 +550,7 @@ TheManifestBuilder >> removeObsoleteFalsePositiveOf: aMethod [
 	self compileSelector: aMethod selector returnValue: arrayString
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> removeRejectClass: aClass [
 
 	|  classes |
@@ -558,7 +560,7 @@ TheManifestBuilder >> removeRejectClass: aClass [
 	self compileSelector: (self class rejectClassesTag) returnValue:  (self buildArrayString: classes)
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> removeRejectRule: ruleId [
 
 	|  nfp |
@@ -568,7 +570,7 @@ TheManifestBuilder >> removeRejectRule: ruleId [
 	self compileSelector: (self class rejectRulesTag) returnValue:   nfp asString
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> removeToDo: fp of: ruleId version: versionId [
 
 	| selector |
@@ -576,19 +578,19 @@ TheManifestBuilder >> removeToDo: fp of: ruleId version: versionId [
 	self removeItem: fp selector: selector
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> resetFalsePositiveOf: ruleId version: versionId [
 
 	self  installFalsePositiveOf: ruleId version: versionId
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 TheManifestBuilder >> resetToDoOf: ruleId version: versionId [
 
 	self installToDoOf: ruleId version: versionId
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> selectorFalsePositiveOf: ruleId version: versionId [
 
 	^ (self class falsePositiveBeginningTag, ruleId,
@@ -597,7 +599,7 @@ TheManifestBuilder >> selectorFalsePositiveOf: ruleId version: versionId [
 			asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> selectorToDoOf: ruleId version: versionId [
 
 	^ (self class toDoBeginningTag, ruleId ,
@@ -605,7 +607,7 @@ TheManifestBuilder >> selectorToDoOf: ruleId version: versionId [
 		self class toDoEndTag) asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> selectorTruePositiveOf: ruleId version: versionId [
 
 	^ (self class falsePositiveBeginningTag, ruleId ,
@@ -614,19 +616,19 @@ TheManifestBuilder >> selectorTruePositiveOf: ruleId version: versionId [
 		asSymbol
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> toDoOf: ruleId version: versionId [
 
 	^ self unwrap: (self manifest perform: (self selectorToDoOf: ruleId version: versionId))
 ]
 
-{ #category : #manifest }
+{ #category : 'manifest' }
 TheManifestBuilder >> truePositiveOf: ruleId version: versionId [
 
 	^ self unwrap: (self manifest perform: (self selectorTruePositiveOf: ruleId version: versionId))
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TheManifestBuilder >> unwrap: aCollection [
 
 	| unwrapCollection rgobject |

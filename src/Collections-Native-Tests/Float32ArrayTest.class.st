@@ -2,8 +2,8 @@
 These tests are used to assert that FloatArrayPlugin has same results as Float asIEEE32BitWord
 "
 Class {
-	#name : #Float32ArrayTest,
-	#superclass : #CollectionRootTest,
+	#name : 'Float32ArrayTest',
+	#superclass : 'CollectionRootTest',
 	#traits : 'TCreationWithTest + TSequencedStructuralEqualityTest + TSequencedConcatenationTest + TSetArithmetic + TAsStringCommaAndDelimiterSequenceableTest + TPrintOnSequencedTest + TBeginsEndsWith + TCloneTest + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + TConvertAsSortedTest + (TConvertAsSetForMultiplinessIdentityTest - {#testAsIdentitySetWithEqualsElements. #testAsIdentitySetWithIdentityEqualsElements. #testAsIdentitySetWithoutIdentityEqualsElements. #test0FixtureAsSetForIdentityMultiplinessTest}) + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TCopyTest + (TIncludesWithIdentityCheckTest - {#testIdentityIncludesNonSpecificComportement. #testIdentityIncludes. #test0FixtureIncludeWithIdentityTest}) + (TIndexAccess - {#testIdentityIndexOf. #testIdentityIndexOfIAbsent}) + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate}) + TIterateSequencedReadableTest + TPutTest + TPutBasicTest + TReplacementSequencedTest + TSequencedElementAccessTest + TSortTest + TSubCollectionAccess',
 	#classTraits : 'TCreationWithTest classTrait + TSequencedStructuralEqualityTest classTrait + TSequencedConcatenationTest classTrait + TSetArithmetic classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TPrintOnSequencedTest classTrait + TBeginsEndsWith classTrait + TCloneTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TCopyTest classTrait + TIncludesWithIdentityCheckTest classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TIterateSequencedReadableTest classTrait + TPutTest classTrait + TPutBasicTest classTrait + TReplacementSequencedTest classTrait + TSequencedElementAccessTest classTrait + TSortTest classTrait + TSubCollectionAccess classTrait',
 	#instVars : [
@@ -22,274 +22,276 @@ Class {
 		'replacementCollectionSameSize',
 		'sortedCollection'
 	],
-	#category : #'Collections-Native-Tests-Base'
+	#category : 'Collections-Native-Tests-Base',
+	#package : 'Collections-Native-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> aValue [
 " return a value to put into nonEmpty"
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> anIndex [
 " return an index in nonEmpty bounds"
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> anotherElementNotIn [
 " return an element different of 'elementNotIn'  not included in 'nonEmpty' "
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> anotherElementOrAssociationIn [
 	" return an element (or an association for Dictionary ) present  in 'collection' "
 	^ self collection anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> anotherValue [
 " return a value ( not eual to 'aValue' ) to put into nonEmpty "
 	^ elementInNonEmpty
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 Float32ArrayTest >> classToBeTested [
 
 	^ Float32Array
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collection [
 
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
 
 	^ Float32Array
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
 	^ collectionNotIncluded
 		ifNil: [ collectionNotIncluded := (Float32Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
 	^ collectionWith1TimeSubcollection ifNil: [ collectionWith1TimeSubcollection := collectionWithSameAtEndAndBegining  , self oldSubCollection , collectionWithSameAtEndAndBegining  ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWith2TimeSubcollection [
 " return a collection including 'oldSubCollection'  two or many time "
 	^ collectionWith2TimeSubcollection ifNil: [ collectionWith2TimeSubcollection := self collectionWith1TimeSubcollection, self oldSubCollection  ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
 	^ nonEmptySubcollection
 	ifNil: [ nonEmptySubcollection := (Float32Array new:2 ) at:1 put: self nonEmpty first ; at:2 put: self nonEmpty last ; yourself ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
 	^ collectionWithSameAtEndAndBegining
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
 	^ collectionWithSameAtEndAndBegining
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWithoutEqualElements [
 
 " return a collection not including equal elements "
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> elementInForElementAccessing [
 " return an element inculded in 'moreThan4Elements'"
 	^ elementInNonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> elementInForIndexAccessing [
 " return an element included in 'collectionMoreThan1NoDuplicates' "
 	^ elementInNonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> elementNotInForElementAccessing [
 " return an element not included in 'moreThan4Elements' "
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> elementNotInForIndexAccessing [
 " return an element not included in 'collectionMoreThan1NoDuplicates' "
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> elementToAdd [
 " return an element of type 'nonEmpy' elements'type'  not  yet included in nonEmpty"
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )
 	all elements included are elements for which copy is not identical to the element  "
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> empty [
 	^ empty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> firstIndex [
 " return an index between 'nonEmpty' bounds that is < to 'second index' "
 	^2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> indexArray [
 " return a Collection including indexes between bounds of 'nonEmpty' "
 
 	^ { 1. 4. 3.}
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> indexInForCollectionWithoutDuplicates [
 " return an index between 'collectionWithoutEqualsElements'  bounds"
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
 
 	^ 3
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> newElement [
 "return an element that will be put in the collection in place of another"
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> nonEmpty [
 
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
 	^ nonEmpty1Element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> nonEmptyMoreThan1Element [
 " return a collection that doesn't includes equal elements' and doesn't include nil elements'"
 	^nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> replacementCollection [
 " return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
 	^ collectionWithSameAtEndAndBegining
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> replacementCollectionSameSize [
 " return a collection of size (secondIndex - firstIndex + 1)"
 	^replacementCollectionSameSize
@@ -300,19 +302,19 @@ Float32ArrayTest >> replacementCollectionSameSize [
 				 ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
 	^ collectionWithEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> secondIndex [
 " return an index between 'nonEmpty' bounds that is > to 'first index' "
 	^self firstIndex +1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 Float32ArrayTest >> setUp [
 	super setUp.
 	empty := Float32Array new.
@@ -341,26 +343,26 @@ Float32ArrayTest >> setUp [
 		yourself
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> sizeCollection [
 	"Answers a collection not empty"
 	^ nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ sortedCollection ifNil: [ sortedCollection := ( Float32Array new: 3)at: 1 put: 1.0 ; at: 2 put: 2.0 ; at: 3 put: 3.0 ; yourself ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'moreThan4Elements' "
 	^ collectionNotIncluded
 		ifNil: [ collectionNotIncluded := (Float32Array new: 2) at:1 put: elementNotIn ; at: 2 put: elementNotIn  ; yourself ]
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 Float32ArrayTest >> testAddNoMutation [
 	"this test checks that addition does not impact the orginal arrays"
 
@@ -372,7 +374,7 @@ Float32ArrayTest >> testAddNoMutation [
 	self assert: b equals: { 1.2. 2.3 } asFloatArray
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 Float32ArrayTest >> testArithmeticCoercion [
 	"This test is related to http://bugs.squeak.org/view.php?id=6782"
 
@@ -386,7 +388,7 @@ Float32ArrayTest >> testArithmeticCoercion [
 	self assert: 3.0 - (Float32Array with: 2.0) equals: (Float32Array with: 1.0)
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 Float32ArrayTest >> testDotProduct [
 	| a b |
 	a := #(2.0 3.0 4.0 5.0) asFloatArray.
@@ -394,7 +396,7 @@ Float32ArrayTest >> testDotProduct [
 	self assert: (a dot: b) equals: 54
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Float32ArrayTest >> testFloatArrayPluginPrimitiveAt [
 	"if FloatArrayPlugin primitive are not here, this test is dumb.
 	Otherwise, it will compare primitive and #fromIEEE32Bit:"
@@ -427,7 +429,7 @@ Float32ArrayTest >> testFloatArrayPluginPrimitiveAt [
 	(Array with: Float nan) do: [ :e | self assert: (Float fromIEEE32Bit: ((Float32Array with: e) basicAt: 1)) isNaN ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Float32ArrayTest >> testFloatArrayPluginPrimitiveAtPut [
 	"if FloatArrayPlugin primitive are not here, this test is dumb.
 	Otherwise, it will compare primitive and #asIEEE32BitWord"
@@ -460,7 +462,7 @@ Float32ArrayTest >> testFloatArrayPluginPrimitiveAtPut [
 		with: Float nan) do: [ :e | self assert: ((Float32Array with: e) basicAt: 1) equals: e asIEEE32BitWord ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Float32ArrayTest >> testSumWithFloatScalar [
 	| floatArray scalar expectedResult actualResult |
 
@@ -473,7 +475,7 @@ Float32ArrayTest >> testSumWithFloatScalar [
 	self assert: actualResult equals: expectedResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Float32ArrayTest >> testSumWithIntegerArray [
 	| floatArray integerArray expectedResult actualResult |
 
@@ -486,7 +488,7 @@ Float32ArrayTest >> testSumWithIntegerArray [
 	self assert: actualResult equals: expectedResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Float32ArrayTest >> testSumWithIntegerScalar [
 	| floatArray scalar expectedResult actualResult |
 
@@ -499,7 +501,7 @@ Float32ArrayTest >> testSumWithIntegerScalar [
 	self assert: actualResult equals: expectedResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Float32ArrayTest >> testSumWithOrderedCollection [
 	| floatArray collection expectedResult actualResult |
 
@@ -512,13 +514,13 @@ Float32ArrayTest >> testSumWithOrderedCollection [
 	self assert: actualResult equals: expectedResult
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> unsortedCollection [
 " retur a collection that is not yat sorted"
 	^nonEmpty5ElementsNoDuplicate
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 Float32ArrayTest >> withEqualElements [
 	^ collectionWithEqualElements
 ]

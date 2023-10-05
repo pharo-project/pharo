@@ -4,12 +4,14 @@ I am a refactoring for removing class variables.
 My precondition verifies that there is no reference to this class variable.
 "
 Class {
-	#name : #RBRemoveClassVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBRemoveClassVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveClassVariableRefactoring >> preconditions [
 
 	^ ( RBCondition isMetaclass: class ) not
@@ -37,7 +39,7 @@ RBRemoveClassVariableRefactoring >> preconditions [
 					] )
 ]
 
-{ #category : #transforming }
-RBRemoveClassVariableRefactoring >> transform [
+{ #category : 'transforming' }
+RBRemoveClassVariableRefactoring >> privateTransform [
 	class removeClassVariable: variableName
 ]

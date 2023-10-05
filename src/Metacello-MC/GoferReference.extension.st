@@ -1,6 +1,6 @@
-Extension { #name : #GoferReference }
+Extension { #name : 'GoferReference' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 GoferReference >> matchesMetacelloGoferPackage: aMetacelloGoferPackage [
   | pFilename refFilename char |
   ((pFilename := aMetacelloGoferPackage packageFilename) == nil

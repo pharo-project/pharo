@@ -11,15 +11,14 @@ My main API is
 
 "
 Class {
-	#name : #RBTransformation,
-	#superclass : #RBAbstractTransformation,
-	#instVars : [
-		'preconditionChecking'
-	],
-	#category : #'Refactoring2-Transformations-Model'
+	#name : 'RBTransformation',
+	#superclass : 'RBAbstractTransformation',
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 RBTransformation class >> initializeRefactoringOptions [
 
 	RefactoringOptions := IdentityDictionary new.
@@ -55,49 +54,20 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
-{ #category : #converting }
+{ #category : 'preconditions' }
+RBTransformation >> applicabilityPreconditions [ 
+	
+	^ self trueCondition 
+]
+
+{ #category : 'converting' }
 RBTransformation >> asRefactoring [
 
-	self preconditionChecking: true.
+	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self yourself
 ]
 
-{ #category : #private }
-RBTransformation >> buildSelectorString: aSelector [
-	aSelector numArgs = 0 ifTrue: [^aSelector].
-	^self buildSelectorString: aSelector
-		withPermuteMap: (1 to: aSelector numArgs)
-]
-
-{ #category : #private }
-RBTransformation >> buildSelectorString: aSelector withPermuteMap: anIntegerCollection [
-	| stream keywords |
-	aSelector numArgs == 0 ifTrue: [^aSelector asString].
-	stream := WriteStream on: String new.
-	keywords := aSelector keywords.
-	keywords with: anIntegerCollection
-		do:
-			[:each :i |
-			stream
-				nextPutAll: each;
-				nextPutAll: ' ``@arg';
-				nextPutAll: i printString;
-				nextPut: $ ].
-	^stream contents
-]
-
-{ #category : #preconditions }
-RBTransformation >> checkPreconditions [
-
-	| conditions result |
-	conditions := self preconditions.
-
-	result := conditions check.
-	result ifFalse: [ self refactoringError: conditions errorString ].
-	^ result
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformation >> copyOptionsFrom: aDictionary [
 	| dict |
 	dict := self options.
@@ -110,75 +80,34 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #execution }
-RBTransformation >> execute [
-	self primitiveExecute.
-	RBRefactoryChangeManager instance
-		performChange: self changes;
-		addUndoPointer: (RBRefactoryChangeManager nextCounter)
-]
-
-{ #category : #initialization }
-RBTransformation >> initialize [
-	super initialize.
-	preconditionChecking := false
-]
-
-{ #category : #accessing }
-RBTransformation >> model [
-
-	^ model ifNil: [ model := self newModel ]
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditionChecking [
-
-	^ preconditionChecking
-]
-
-{ #category : #preconditions }
-RBTransformation >> preconditionChecking: aBoolean [
-
-	preconditionChecking := aBoolean
-]
-
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBTransformation >> preconditions [
 
-	^ self emptyCondition
+	^ self applicabilityPreconditions 
 ]
 
-{ #category : #executing }
-RBTransformation >> primitiveExecute [
-	"compatibility method RBRefactoring"
-	self transform
-]
-
-{ #category : #executing }
-RBTransformation >> privateTransform [
-
-	self subclassResponsibility
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformation >> setOption: aSymbol toUse: aBlock [
 
 	self options at: aSymbol put: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'transforming' }
 RBTransformation >> transform [
+
+	self deprecated: 'Use generateChanges instead' transformWith: '`@rec transform' -> '`@rec generateChanges'.
+	
 	"Performs this transformation in a model,
 	 then it adds the refactoring to the manager"
 
-	self preconditionChecking ifTrue: [ self checkPreconditions ].
+	self checkPreconditions.
 	self privateTransform
 
 	"below executes the refactoring without prompt"
 	"RBRefactoringManager instance addRefactoring: self"
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 RBTransformation >> whatToDisplayIn: aBrowser [
 
 	^ self changes changes

@@ -1,5 +1,6 @@
 Class {
-	#name : #UnrecognizedImageFormatError,
-	#superclass : #Exception,
-	#category : #'Graphics-Files'
+	#name : 'UnrecognizedImageFormatError',
+	#superclass : 'Exception',
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }

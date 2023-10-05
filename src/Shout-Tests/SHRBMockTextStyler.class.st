@@ -2,15 +2,20 @@
 I am a styler for tests that will add instances of SHRBTextFlagAttributes to the nodes instead of the normal style to ease the testing.
 "
 Class {
-	#name : #SHRBMockTextStyler,
-	#superclass : #SHRBTextStyler,
+	#name : 'SHRBMockTextStyler',
+	#superclass : 'SHRBTextStyler',
+	#instVars : [
+		'declared'
+	],
 	#classVars : [
 		'PatternStyleDictionary'
 	],
-	#category : #'Shout-Tests-Styling'
+	#category : 'Shout-Tests-Styling',
+	#package : 'Shout-Tests',
+	#tag : 'Styling'
 }
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBMockTextStyler class >> patternStyleDictionary [
 
 	^ PatternStyleDictionary ifNil: [
@@ -19,7 +24,7 @@ SHRBMockTextStyler class >> patternStyleDictionary [
 			                            as: Dictionary ]
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 SHRBMockTextStyler class >> patternStyleTable [
 	"Associate each style name to a single character (not injective) for easy testing"
 
@@ -99,8 +104,34 @@ SHRBMockTextStyler class >> patternStyleTable [
 			(pragma 								$<))
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHRBMockTextStyler >> attributesFor: aSymbol [
 
 	^ { (SHRBTextFlagAttribute named: aSymbol) }
+]
+
+{ #category : 'accessing' }
+SHRBMockTextStyler >> declared [
+
+	^ declared
+]
+
+{ #category : 'accessing' }
+SHRBMockTextStyler >> declared: anObject [
+
+	declared := anObject
+]
+
+{ #category : 'visiting' }
+SHRBMockTextStyler >> formatIncompleteSelector: aSymbol [
+
+	(declared includes: aSymbol) ifTrue: [ ^ nil ].
+	^ (declared anySatisfy: [ :each | each beginsWith: aSymbol ]) ifTrue: [ #incompleteSelector ] ifFalse: [ #undefinedSelector ]
+]
+
+{ #category : 'initialization' }
+SHRBMockTextStyler >> initialize [
+
+	super initialize.
+	declared := OrderedCollection new
 ]

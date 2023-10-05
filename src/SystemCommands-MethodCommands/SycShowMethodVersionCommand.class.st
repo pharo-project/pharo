@@ -9,35 +9,36 @@ Internal Representation and Key Implementation Points.
 	method:		<CompiledMethod>
 "
 Class {
-	#name : #SycShowMethodVersionCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycShowMethodVersionCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'method'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycShowMethodVersionCommand >> defaultMenuIconName [
 	^#history
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycShowMethodVersionCommand >> defaultMenuItemName [
 	^'Versions'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycShowMethodVersionCommand >> execute [
 	Smalltalk tools versionBrowser browseVersionsForMethod: method
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycShowMethodVersionCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

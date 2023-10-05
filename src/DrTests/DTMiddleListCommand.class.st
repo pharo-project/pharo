@@ -2,18 +2,20 @@
 I am an abstract command concerning DrTests' middle list.
 "
 Class {
-	#name : #DTMiddleListCommand,
-	#superclass : #DTCommand,
-	#category : #'DrTests-Commands'
+	#name : 'DTMiddleListCommand',
+	#superclass : 'DTCommand',
+	#category : 'DrTests-Commands',
+	#package : 'DrTests',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTMiddleListCommand class >> isAbstract [
 
 	^ self name = #DTMiddleListCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTMiddleListCommand >> selectedItems [
 
 	^ self context selectedItems

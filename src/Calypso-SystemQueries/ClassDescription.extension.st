@@ -1,13 +1,9 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*Calypso-SystemQueries' }
-ClassDescription >> tagsForAllMethods [
-	"I act as #tagsForMethods but I also takes into account methods comming from traits"
+{ #category : '*Calypso-SystemQueries' }
+ClassDescription >> protocolsForAllMethods [
 
-	| allProtocols |
-	allProtocols := self protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
-
-	^ allProtocols
-		select: [ :protocol | protocol methodSelectors ifEmpty: [ true ] ifNotEmpty: [ :methods | methods anySatisfy: [ :method | self selectors includes: method ] ] ]
-		thenCollect: #name
+	^ self protocols
+		  reject: [ :protocol | protocol isUnclassifiedProtocol or: [ protocol isExtensionProtocol ] ]
+		  thenCollect: #name
 ]

@@ -5,8 +5,8 @@ I'm the process performing the bootstrap of a Pharo 5.0 version.
 	
 "
 Class {
-	#name : #PBImageBuilder50,
-	#superclass : #Object,
+	#name : 'PBImageBuilder50',
+	#superclass : 'Object',
 	#instVars : [
 		'objectSpace',
 		'classLoader',
@@ -19,15 +19,16 @@ Class {
 		'imageFileReference',
 		'versionInfo'
 	],
-	#category : #Pharo30Bootstrap
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 PBImageBuilder50 >> behaviorFrom: aRFiClassOrTrait [ 
 	^ aRFiClassOrTrait accept: self
 ]
 
-{ #category : #'accessing instances and variables' }
+{ #category : 'accessing instances and variables' }
 PBImageBuilder50 >> bindingOf: aName [
 
 	(self includesClassNamed: aName)
@@ -38,7 +39,7 @@ PBImageBuilder50 >> bindingOf: aName [
 	^ nil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> bootstrap [
 
 	self
@@ -52,13 +53,13 @@ PBImageBuilder50 >> bootstrap [
 		initializeImage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> bootstrapEnvironment [
 	
 	^ bootstrapEnvironment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> bootstrapInitialProcess [
 	Smalltalk snapshotPrimitive.
 	ProcessorScheduler initialize.
@@ -113,20 +114,20 @@ Unicode classPool at: #Cn put: 0.
 	Processor terminateActive.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> bootstrapInitialProcessCode [
 	| instructions |
 	instructions := (self class>>#bootstrapInitialProcess) sourceCode.
 	^ instructions allButFirst: (instructions indexOf: Character cr) "remove method name"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> bootstrapInterpreter [
 	
 	^ bootstrapInterpreter
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> bootstrapWithResumableDebugger [
 	"If we do not fork the process, we get a post-mortem debugger"
 	[ self bootstrap ]
@@ -136,49 +137,49 @@ PBImageBuilder50 >> bootstrapWithResumableDebugger [
 				ex pass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> buildNumber: aNumber [
 
 	buildNumber := aNumber
 ]
 
-{ #category : #'class-loader' }
+{ #category : 'class-loader' }
 PBImageBuilder50 >> builtClassNames [
 	
 	^ classLoader loadedClassNames
 ]
 
-{ #category : #checkpoints }
+{ #category : 'checkpoints' }
 PBImageBuilder50 >> checkpoint: aString [ 
 	
 	"I do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> classForClassMirror: anEPClassMirror [
 
 	^ classLoader classForClassMirror: anEPClassMirror
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> classInstanceVariableIndexAt: anIndex [
 	"number of instances variables of the class Class. Classes that have more than this number in their fixed size have their own instance class variable that we should probably take care of."
 	^ (self classNamed: #Class) mirror fixedSize + anIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> classLoader [
 	^ classLoader
 ]
 
-{ #category : #'class-loader' }
+{ #category : 'class-loader' }
 PBImageBuilder50 >> classNamed: aString [ 
 		
 	^ (classLoader classNamed: aString)
 		asRemoteClassOrTraitFromEnvironment: self
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PBImageBuilder50 >> compactClassIndexForClassNamed: aName [
 	"To recompute, use the following expression in the image you want to bootstrap. For example, to boostrap pharo 50193, execute the expression in a pharo 50193 image.
 	(Smalltalk specialObjectsArray at: 29)
@@ -207,16 +208,18 @@ PBImageBuilder50 >> compactClassIndexForClassNamed: aName [
 	 indexOf: aName
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> createBehaviorFromDefinition: aRFiDefinition [
 
 	^ classLoader createBehaviorFromDefinition: aRFiDefinition
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> createClasses [
 
 	| definitions total smalltalkInstance |
+	
+	self log: 'Create classes'.
 	definitions := self systemDefinition ask allClassesAndTraits sorted: [ 
 		               :a 
 		               :b | a name < b name ].
@@ -242,19 +245,21 @@ PBImageBuilder50 >> createClasses [
 	self checkpoint: 'created_classes'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> createFalse [
 
 	objectSpace falseObject: (self createStubForClassNamed: #False) basicNew.
 	^ objectSpace falseObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> createInitialObjects [
 
 	| characterTable |
 	"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
 	PBStepFinishedSignal emit: 'initializing globals'.
+	
+	self log: 'Initializing objects.'.
 	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
 	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
 
@@ -357,7 +362,17 @@ PBImageBuilder50 >> createInitialObjects [
 	self checkpoint: 'created_initial_objects'
 ]
 
-{ #category : #running }
+{ #category : 'method-compiling' }
+PBImageBuilder50 >> createNewMethod: aMethodDefinition [
+
+	| method timeToCompile |
+	timeToCompile := [ method := self objectSpace crossCompiler compile: aMethodDefinition sourceCode forClass: aMethodDefinition methodClass inEnvironment: self ]
+		                 timeToRun.
+	self statistics addCompilationTime: timeToCompile.
+	^ method
+]
+
+{ #category : 'running' }
 PBImageBuilder50 >> createNil [
 
 	"Temporal nil: it is needed so the nil stub class can be initialized with it"
@@ -369,23 +384,23 @@ PBImageBuilder50 >> createNil [
 	^ objectSpace nilObject
 ]
 
-{ #category : #'class-loader' }
+{ #category : 'class-loader' }
 PBImageBuilder50 >> createStubForClassNamed: aString [ 
 	
 	^ classLoader createStubForClassNamed: aString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> createTrue [
 
 	objectSpace trueObject: (self createStubForClassNamed: #True) basicNew.
 	^ objectSpace trueObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> createVMStubs [
 
-	PBStepStartedSignal log: 'creating initial Objects needed by the VM'.
+	PBStepStartedSignal log: 'Creating initial Objects needed by the VM'.
 	
 	objectSpace backend specialObjectsArray: (objectSpace createObjectWithFormat: (Array format) withSize: 59).
 	self createNil.
@@ -423,29 +438,29 @@ PBImageBuilder50 >> createVMStubs [
 	objectSpace backend pointClass: (self createStubForClassNamed: #Point).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> definitionNamed: aName [
 
 	^ self systemDefinition classNamed: aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> environment [
 	
 	^ bootstrapEnvironment 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> espellBackend [
 	^ espellBackend 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> espellBackend: anObject [
 	espellBackend := anObject
 ]
 
-{ #category : #format }
+{ #category : 'format' }
 PBImageBuilder50 >> formatOfClass: aRFiClass [ 
 	
 	"A class format is composed by"
@@ -472,7 +487,7 @@ PBImageBuilder50 >> formatOfClass: aRFiClass [
 	^(size1 bitShift: 16) + (compactClassIndex bitShift: 11) + (instSpec bitShift: 7) + (size2 bitShift: 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> globalNamed: aString [ 
 	
 	(self includesClassNamed: aString)
@@ -480,32 +495,32 @@ PBImageBuilder50 >> globalNamed: aString [
 	self halt.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> globalNamed: aString put: aValue [
 	
 	bootstrapEnvironment at: aString put: aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> imageFileReference: aFileReference [ 
 	
 	imageFileReference := aFileReference
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBImageBuilder50 >> includesClassNamed: aString [
 	
 	^ self systemDefinition includesClassNamed: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBImageBuilder50 >> includesGlobalNamed: aString [ 
 	
 	"It is a global if we have it in our system definition"
 	^ self systemDefinition includesClassNamed: aString.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 PBImageBuilder50 >> initialize [
 
 	super initialize.
@@ -518,15 +533,15 @@ PBImageBuilder50 >> initialize [
 	self instantiateClassLoader.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 PBImageBuilder50 >> initializeBackend [
 
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> initializeBootstrapEnvironment [
-	
+	self log: 'Initializing bootstrap environment.'.
 	bootstrapEnvironment := Dictionary new.
 	
 	"We initialize the object space with a boot symbol table and character table.
@@ -548,10 +563,11 @@ PBImageBuilder50 >> initializeBootstrapEnvironment [
 	objectSpace interpreter: bootstrapInterpreter.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> initializeImage [
 
 	| process |
+	self log: 'Initializing image.'.
 	self flag: 'should migrate this method'.
 	self checkpoint: 'image_initialization'.
 
@@ -563,45 +579,38 @@ PBImageBuilder50 >> initializeImage [
 
 	"Initialize the processor association for the special objects array.
 	Enchancement possible: This should be automatically managed by the createVMStubs method"
-	objectSpace backend processorAssociation:
-		(self bootstrapInterpreter evaluateCode:
-			 'Smalltalk globals associationAt: #Processor.').
+	objectSpace backend processorAssociation: (self bootstrapInterpreter evaluateCode: 'Smalltalk globals associationAt: #Processor.').
 
-	process := objectSpace
-		           createProcessWithPriority: 40
-		           doing: ('PharoBootstrapInitialization 
+	process := objectSpace createProcessWithPriority: 40 doing: ('PharoBootstrapInitialization 
 			initializeImageOfType: ''Pharo'' 
 			major: {major} 
 			minor: {minor} 
 			patch: {patch}
 			suffix: ''{suffix}'' 
 			build: {build} 
-			commitHash: ''{hash}''.' format: { 
-					            ('major' -> versionInfo major).
-					            ('minor' -> versionInfo minor).
-					            ('patch' -> versionInfo patch).
-					            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
-					            ('build' -> versionInfo buildNumber).
-					            ('hash' -> versionInfo commitHash) } asDictionary).
+			commitHash: ''{hash}''.' format: {
+				            ('major' -> versionInfo major).
+				            ('minor' -> versionInfo minor).
+				            ('patch' -> versionInfo patch).
+				            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
+				            ('build' -> versionInfo buildNumber).
+				            ('hash' -> versionInfo commitHash) } asDictionary).
 	objectSpace installAsActiveProcess: process.
 
 	self followForwardingPointers.
 
-	espellBackend simulator stackPages pages do: [ :page | 
-		espellBackend simulator stackPages freeStackPage: page ].
+	espellBackend simulator stackPages pages do: [ :page | espellBackend simulator stackPages freeStackPage: page ].
 	espellBackend simulator freeUntracedStackPages.
-	[ 
+	[
 	[ espellBackend objectMemory flushNewSpace ]
 		on: Halt
 		do: [ :ex | "suppress halts from the usual suspects (development time halts)"
-			(#( #fullGC #compactImage #doScavenge: ) includes:
-				 ex signalerContext sender selector)
+			(#( #fullGC #compactImage #doScavenge: ) includes: ex signalerContext sender selector)
 				ifTrue: [ ex resume ]
 				ifFalse: [ ex pass ] ] ]
 		on: AssertionFailure
-		do: [ :e | 
-			(e signalerContext sender method selector == #assert: and: [ 
-				 e signalerContext sender sender method selector = #mapStackPages ])
+		do: [ :e |
+			(e signalerContext sender method selector == #assert: and: [ e signalerContext sender sender method selector = #mapStackPages ])
 				ifTrue: [ e resume ]
 				ifFalse: [ e pass ] ].
 
@@ -617,7 +626,7 @@ PBImageBuilder50 >> initializeImage [
 	PBStepFinishedSignal emit: 'Installed extension methods'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> initializeSpecialObjectArray [
 "	objectSpace mustRebuildSpecialObjectsArray.
 "	objectSpace specialObjectsArray: self newSpecialObjectsArray.
@@ -627,10 +636,12 @@ PBImageBuilder50 >> initializeSpecialObjectArray [
 		withTemps: { 'newArray' -> objectSpace backend specialObjectsArray }.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> installExtensionMethods [
 
 	| definitions total |
+	
+	self log: 'Installing extension methods.'.
 	definitions := self systemDefinition packages sorted: [ :a :b | 
 		               a name < b name ].
 	total := definitions size.
@@ -643,7 +654,7 @@ PBImageBuilder50 >> installExtensionMethods [
 	self checkpoint: 'installed_extension_methods'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> installExtensionMethodsOf: aPackageDefinition prefixed: aPrefix [
 
 	aPackageDefinition extensionMethods doWithIndex: [ 
@@ -651,8 +662,7 @@ PBImageBuilder50 >> installExtensionMethodsOf: aPackageDefinition prefixed: aPre
 		:index | 
 		| compiledMethod behaviorMirror methodClass logMessage |
 		methodClass := methodDefinition methodClass.
-		compiledMethod := self methodBuilder createNewMethod:
-			                  methodDefinition.
+		compiledMethod := self createNewMethod: methodDefinition.
 		behaviorMirror := bootstrapEnvironment at:
 			                  methodClass instanceSide name.
 		methodClass isMeta ifTrue: [ 
@@ -675,7 +685,7 @@ PBImageBuilder50 >> installExtensionMethodsOf: aPackageDefinition prefixed: aPre
 		self installMethod: compiledMethod inBehavior: behaviorMirror ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> installMethod: method inBehavior: theClass [
 
 	| timePerMethod |
@@ -689,10 +699,12 @@ PBImageBuilder50 >> installMethod: method inBehavior: theClass [
 	statistics addMethodTime: timePerMethod.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> installMethods [
 
 	| definitions total |
+	
+	self log: 'Installing methods'.
 	definitions := self systemDefinition ask allClassesAndTraits sorted: [ 
 		               :a 
 		               :b | a name < b name ].
@@ -705,27 +717,25 @@ PBImageBuilder50 >> installMethods [
 	self checkpoint: 'installed_methods'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilder50 >> installMethodsInBehaviorDefinition: behaviorDefinition prefixed: aPrefix [
 	| behaviorMirror  |
 	behaviorMirror := bootstrapEnvironment at: behaviorDefinition name.
 	self
 		installMethodsInBehaviorMapping: behaviorDefinition
-		using: self methodBuilder
 		onMirror: behaviorMirror
 		prefixed: aPrefix.
 	self
 		installMethodsInBehaviorMapping: behaviorDefinition classSide
-		using: self methodBuilder
 		onMirror: behaviorMirror basicClass
 		prefixed: aPrefix.
 ]
 
-{ #category : #running }
-PBImageBuilder50 >> installMethodsInBehaviorMapping: aBehaviorMapping using: aMethodBuilder onMirror: mirror prefixed: aPrefix [
+{ #category : 'running' }
+PBImageBuilder50 >> installMethodsInBehaviorMapping: aBehaviorMapping onMirror: mirror prefixed: aPrefix [
 
 	| newMethods theClass |
-	newMethods := (aMethodBuilder methodsFromDefinition: aBehaviorMapping) 
+	newMethods := (self methodsFromDefinition: aBehaviorMapping) 
 		              sorted: [ :a :b | a selector < b selector ].
 	theClass := (self classNamed: aBehaviorMapping instanceSide name)
 		            mirror.
@@ -739,75 +749,77 @@ PBImageBuilder50 >> installMethodsInBehaviorMapping: aBehaviorMapping using: aMe
 		self installMethod: method inBehavior: theClass ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 PBImageBuilder50 >> instantiateClassLoader [
 
 	classLoader := PBClassLoader new.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PBImageBuilder50 >> isMeta: aMirror [
 	
 	^ (self classNamed: #Metaclass) mirror = aMirror basicClass
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PBImageBuilder50 >> log: aLogStatement [
 
 	logger log: aLogStatement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> metaclassForClassMirror: anEPClassMirror [
 
 	^ EPRemoteMetaClass on: anEPClassMirror environment: self
 ]
 
-{ #category : #accessing }
-PBImageBuilder50 >> methodBuilder [
-	^ PBMethodCompiler new builder: self; yourself.	
+{ #category : 'method-compiling' }
+PBImageBuilder50 >> methodsFromDefinition: aBehaviorDefinition [
+	"Get all the methods we consider we want from the current environment and return a copy, binded to the new class"
+
+	^ aBehaviorDefinition localMethods collect: [ :m | self createNewMethod: m ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> objectSpace [
 	^ objectSpace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> statistics [
 
 	^ statistics
 ]
 
-{ #category : #definition }
+{ #category : 'definition' }
 PBImageBuilder50 >> systemDefinition [
 
 	^ systemDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> systemDefinition: anObject [
 	systemDefinition := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> versionInfo [
 	^ versionInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBImageBuilder50 >> versionInfo: anObject [
 	versionInfo := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 PBImageBuilder50 >> visitClass: aRFiClass [
 	^ EPRemoteClass 
 		on: (classLoader classNamed: aRFiClass name)
 		environment: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 PBImageBuilder50 >> visitTrait: aRFiTrait [ 
 	^ EPRemoteTrait 
 		on: (classLoader classNamed: aRFiTrait name)

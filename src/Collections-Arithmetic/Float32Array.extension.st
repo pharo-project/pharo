@@ -1,52 +1,52 @@
-Extension { #name : #Float32Array }
+Extension { #name : 'Float32Array' }
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> * anObject [
 	^self copy *= anObject
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> *= anObject [
 	^anObject isNumber
 		ifTrue:[self primMulScalar: anObject asFloat]
 		ifFalse:[self primMulArray: anObject]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> + anObject [
 	^self copy += anObject
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> += anObject [
 	^ anObject addAssignToFloatArray: self
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> - anObject [
 	^self shallowCopy -= anObject
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> -= anObject [
 	^anObject isNumber
 		ifTrue:[self primSubScalar: anObject asFloat]
 		ifFalse:[self primSubArray: anObject]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> / anObject [
 	^self copy /= anObject
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> /= anObject [
 	^anObject isNumber
 		ifTrue:[self primDivScalar: anObject asFloat]
 		ifFalse:[self primDivArray: anObject]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> \\= other [
 
 	other isNumber ifTrue: [
@@ -60,7 +60,7 @@ Float32Array >> \\= other [
 	]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> adaptToNumber: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Number. If possible,
 	convert it to a float and perform the (more efficient) primitive operation."
@@ -77,7 +77,7 @@ Float32Array >> adaptToNumber: rcvr andSend: selector [
 	^super adaptToNumber: rcvr andSend: selector
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Float32Array >> negated [
 	^self copy *= -1
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #ClassTrait }
+Extension { #name : 'ClassTrait' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ClassTrait >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitClassTrait: self

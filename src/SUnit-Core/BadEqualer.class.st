@@ -2,12 +2,14 @@
 I am an object that doesn't always report #= correctly.  Used for testing the EqualityTester.
 "
 Class {
-	#name : #BadEqualer,
-	#superclass : #Object,
-	#category : #'SUnit-Core-Utilities'
+	#name : 'BadEqualer',
+	#superclass : 'Object',
+	#category : 'SUnit-Core-Utilities',
+	#package : 'SUnit-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BadEqualer >> = other [
 	"Tell sometimes if the giving object and the receiver are the same object"
 

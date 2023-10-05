@@ -1,1 +1,1 @@
-Package { #name : #'Regex-Core-Tests' }
+Package { #name : 'Regex-Core-Tests' }

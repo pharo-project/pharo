@@ -3,26 +3,27 @@ I am a command to show all method implementors in full hierarchy of selected met
 I select current method in spawned browser by default.
 "
 Class {
-	#name : #ClyShowMethodInheritanceCommand,
-	#superclass : #ClyShowLocalImplementorsCommand,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
+	#name : 'ClyShowMethodInheritanceCommand',
+	#superclass : 'ClyShowLocalImplementorsCommand',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMethodInheritanceCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMethodInheritanceCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $h meta for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 
 	| classScope |
@@ -31,12 +32,12 @@ ClyShowMethodInheritanceCommand >> createInheritanceScopeFrom: classes [
 	^classScope asFullHierarchyScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowMethodInheritanceCommand >> defaultMenuItemName [
 	^'Inheritance'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowMethodInheritanceCommand >> selectMethodsIn: aQueryBrowser [
 
 	aQueryBrowser selectObject: methods last

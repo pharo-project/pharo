@@ -2,12 +2,14 @@
 STONWriterTests test serialization.
 "
 Class {
-	#name : #STONWriterTest,
-	#superclass : #TestCase,
-	#category : #'STON-Tests-Writer'
+	#name : 'STONWriterTest',
+	#superclass : 'TestCase',
+	#category : 'STON-Tests-Writer',
+	#package : 'STON-Tests',
+	#tag : 'Writer'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriterTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		STON writer
@@ -15,7 +17,7 @@ STONWriterTest >> serialize: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriterTest >> serializeAsciiOnly: anObject [
 	^ String streamContents: [ :stream |
 		STON writer
@@ -24,7 +26,7 @@ STONWriterTest >> serializeAsciiOnly: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriterTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
 		STON jsonWriter
@@ -32,7 +34,7 @@ STONWriterTest >> serializeJson: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriterTest >> serializePretty: anObject [
 	^ String streamContents: [ :stream |
 		STON writer
@@ -41,7 +43,7 @@ STONWriterTest >> serializePretty: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testAssociation [
 	self assert: (self serialize: 'foo' -> 1) equals: '''foo'':1'.
 	self assert: (self serialize: #bar -> 2) equals: '#bar:2'.
@@ -49,7 +51,7 @@ STONWriterTest >> testAssociation [
 	self assert: (self serialize: 123 -> 456) equals: '123:456'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testBag [
 	self
 		assert: (self serialize: (Bag withAll: #(a a)))
@@ -59,23 +61,23 @@ STONWriterTest >> testBag [
 		equals: 'Bag{}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testBoolean [
 	self assert: (self serialize: true) equals: 'true'.
 	self assert: (self serialize: false) equals: 'false'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testByteArray [
 	self assert: (self serialize: #(1 2 3) asByteArray) equals: 'ByteArray[''010203'']'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testClass [
 	self assert: (self serialize: Point) equals: 'Class[#Point]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testColor [
 	self
 		assert: (self serialize: Color red)
@@ -88,7 +90,7 @@ STONWriterTest >> testColor [
 		equals: 'Color{#red:1.0,#green:0.06060606060606061,#blue:0.06060606060606061,#alpha:1.0}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testCustomNewline [
 	| output |
 	output := String streamContents: [ :out |
@@ -101,7 +103,7 @@ STONWriterTest >> testCustomNewline [
 		equals: ('[\	1\]' withCRs replaceAll: Character cr with: Character lf)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testDate [
 	| date |
 	date := (Date year: 2012 month: 1 day: 1) translateToUTC.
@@ -110,7 +112,7 @@ STONWriterTest >> testDate [
 	self assert: (self serialize: date) equals: 'Date[''2012-01-01+01:00'']'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testDateAndTime [
 	| dateAndTime |
 	dateAndTime := DateAndTime
@@ -124,7 +126,7 @@ STONWriterTest >> testDateAndTime [
 	self assert: (self serialize: dateAndTime) equals: 'DateAndTime[''2012-01-01T06:30:15+01:00'']'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testDictionary [
 	| collection |
 	collection := STON mapClass new
@@ -135,14 +137,14 @@ STONWriterTest >> testDictionary [
 	self assert: (self serialize: STON mapClass new) equals: '{}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testDictionaryWithComplexKeys [
 	| collection |
 	collection := STON mapClass new at: true put: 1; at: #(foo) put: 2; yourself.
 	self assert: (#('{true:1,[#foo]:2}' '{[#foo]:2,true:1}') includes: (self serialize: collection))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testDiskFile [
 	self assert: (self serialize: 'foo.txt' asFileReference) equals: 'FILE[''foo.txt'']'.
 	self assert: (self serialize: '/tmp/foo.txt' asFileReference) equals: 'FILE[''/tmp/foo.txt'']'.
@@ -151,7 +153,7 @@ STONWriterTest >> testDiskFile [
 	self assert: (self serialize: '/tmp/' asFileReference) equals: 'FILE[''/tmp'']'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testDoubleQuotedString [
 	| string |
 	self assert: (self serializeJson: 'foo') equals: '"foo"'.
@@ -162,17 +164,17 @@ STONWriterTest >> testDoubleQuotedString [
 	self assert: (self serializeJson: string) equals: '"\"''\\/\t\r\n\f\b"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testEmptyArrayPretty [
 	self assert: (self serializePretty: STON listClass new) equals: '[ ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testEmptyDictionaryPretty [
 	self assert: (self serializePretty: STON mapClass new) equals: '{ }'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testFloat [
 	self assert: (self serialize: 1.5) equals: '1.5'.
 	self assert: (self serialize: 0.0) equals: '0.0'.
@@ -187,7 +189,7 @@ STONWriterTest >> testFloat [
 	self assert: (self serialize: Float negativeInfinity) equals: 'Float[#negativeInfinity]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testFraction [
 	self assert: (self serialize: 1/3) equals: '1/3'.
 	self assert: (self serialize: -1/3) equals: '-1/3'.
@@ -197,7 +199,7 @@ STONWriterTest >> testFraction [
 	self assert: (self serialize: 100/11) equals: '100/11'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testIdentityDictionary [
 	| collection |
 	collection := IdentityDictionary new
@@ -208,7 +210,7 @@ STONWriterTest >> testIdentityDictionary [
 	self assert: (self serialize: IdentityDictionary new) equals: 'IdentityDictionary{}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testInteger [
 	self assert: (self serialize: 1) equals: '1'.
 	self assert: (self serialize: 0) equals: '0'.
@@ -217,7 +219,7 @@ STONWriterTest >> testInteger [
 	self assert: (self serialize: -1234567890) equals: '-1234567890'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testIsSimpleSymbol [
 	self assert: (STON writer isSimpleSymbol: #foo).
 	self assert: (STON writer isSimpleSymbol: #az).
@@ -232,7 +234,7 @@ STONWriterTest >> testIsSimpleSymbol [
 	self deny: (STON writer isSimpleSymbol: #'#^&$%')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testKeepingNewLines [
 	| input result output |
 	input := 'line ending with CR', String cr,
@@ -252,14 +254,14 @@ STONWriterTest >> testKeepingNewLines [
 	self assert: result equals: output
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testList [
 	self assert: (self serialize: (STON listClass withAll: #(1 2 3))) equals: '[1,2,3]'.
 	self assert: (self serialize: STON listClass new) equals: '[]'.
 	self assert: (self serialize: (STON listClass withAll: {1 . -1 . 0 . #foo . 'a b c' . true . false . nil})) equals: '[1,-1,0,#foo,''a b c'',true,false,nil]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testMap [
 	| map |
 	(map := STON mapClass new)
@@ -275,12 +277,12 @@ STONWriterTest >> testMap [
 	self assert: (self serialize: map) equals: '{123:456}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testMetaclass [
 	self assert: (self serialize: Point class) equals: 'Metaclass[#Point]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testMimeType [
 	self
 		assert: (self serialize: ZnMimeType applicationJson)
@@ -290,12 +292,12 @@ STONWriterTest >> testMimeType [
 		equals: 'MimeType[''text/plain;charset=utf-8'']'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testNil [
 	self assert: (self serialize: nil) equals: 'nil'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testNonBMPCharacterEncoding [
 	"Characters not in the Basic Multilingual Plane are encoded as a UTF-16 surrogate pair"
 
@@ -306,12 +308,12 @@ STONWriterTest >> testNonBMPCharacterEncoding [
 	self assert: json equals: '''\uD834\uDD1E'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testNull [
 	self assert: (self serializeJson: nil) equals: 'null'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testOrderedCollection [
 	| collection |
 	collection := OrderedCollection with: 1 with: 2 with: 3.
@@ -319,12 +321,12 @@ STONWriterTest >> testOrderedCollection [
 	self assert: (self serialize: OrderedCollection new) equals: 'OrderedCollection[]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testPoint [
 	self assert: (self serialize: 1 @ 2) equals: 'Point[1,2]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testReferenceCycle [
 	| array |
 	array := STON listClass with: 1 with: nil.
@@ -332,7 +334,7 @@ STONWriterTest >> testReferenceCycle [
 	self assert: (self serialize: array) equals: '[1,@1]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testReferenceSharing [
 	| array one |
 	one := {#one}.
@@ -340,7 +342,7 @@ STONWriterTest >> testReferenceSharing [
 	self assert: (self serialize: array) equals: '[[#one],@2,@2]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testReferenceSharingError [
 	| serializer array one |
 	serializer := [ :object |
@@ -356,7 +358,7 @@ STONWriterTest >> testReferenceSharingError [
 		raise: STONWriterError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testReferenceSharingIgnore [
 	| serializer array one |
 	serializer := [ :object |
@@ -371,14 +373,14 @@ STONWriterTest >> testReferenceSharingIgnore [
 	self assert: (serializer value: array) equals: '[[#one],[#one],[#one]]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testRestrictedClassesInJsonMode [
 	self should: [ self serializeJson: 1@2 ] raise: STONWriterError.
 	self should: [ self serializeJson: #foo->100 ] raise: STONWriterError.
 	self should: [ self serializeJson: STONTestUser dummy ] raise: STONWriterError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testScaledDecimal [
 	self assert: (self serialize: 1/3s2) equals: '1/3s2'.
 	self assert: (self serialize: -1/3s2) equals: '-1/3s2'.
@@ -386,7 +388,7 @@ STONWriterTest >> testScaledDecimal [
 	self assert: (self serialize: -1/3s10) equals: '-1/3s10'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testString [
 	| string |
 	self assert: (self serialize: 'foo') equals: '''foo'''.
@@ -397,7 +399,7 @@ STONWriterTest >> testString [
 	self assert: (self serialize: string) equals: '''"\''\\/\t\r\n\f\b'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testSymbol [
 	self assert: (self serialize: #foo) equals: '#foo'.
 	self assert: (self serialize: #FOO) equals: '#FOO'.
@@ -410,13 +412,13 @@ STONWriterTest >> testSymbol [
 	self assert: (self serialize: #foo123) equals: '#foo123'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testSymbolAsString [
 	self assert: (self serializeJson: #foo) equals: '"foo"'.
 	self assert: (self serializeJson: #FOO) equals: '"FOO"'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testTime [
 	| time |
 	time := Time hour: 6 minute: 30 second: 15.
@@ -425,7 +427,7 @@ STONWriterTest >> testTime [
 	self assert: (self serialize: time) equals: 'Time[''06:30:15.000000123'']'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testURL [
 	self
 		assert: (self serialize: 'https://pharo.org/files/pharo.png' asUrl)
@@ -441,7 +443,7 @@ STONWriterTest >> testURL [
 		equals: 'URL[''scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag'']'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testUser [
 	| user |
 	(user := STONTestUser new)
@@ -452,7 +454,7 @@ STONWriterTest >> testUser [
 		equals: 'TestUser{#username:''john@foo.com'',#password:''secret1'',#enabled:true}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testUser2 [
 	| user |
 	(user := STONTestUser2 new)
@@ -463,7 +465,7 @@ STONWriterTest >> testUser2 [
 		equals: 'TestUser2{#username:''john@foo.com'',#password:''secret1'',#enabled:true}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testUser3Nil [
 	| user |
 	user := STONTestUser3 new.
@@ -472,7 +474,7 @@ STONWriterTest >> testUser3Nil [
 		equals: 'TestUser3{#username:nil,#password:nil,#enabled:true}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriterTest >> testUserNil [
 	| user |
 	user := STONTestUser new.

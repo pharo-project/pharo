@@ -6,18 +6,20 @@ This is the unit test for the class Boolean. Unit tests are a good way to exerci
 
 "
 Class {
-	#name : #BooleanTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'BooleanTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 BooleanTest >> classToBeTested [
 
 	^ Boolean
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 BooleanTest >> testNew [
 
 	self should: [Boolean new] raise: self defaultTestError

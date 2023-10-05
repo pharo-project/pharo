@@ -2,38 +2,35 @@
 A TimeProfilerNode represents a node in the tally tree
 "
 Class {
-	#name : #TimeProfilerNode,
-	#superclass : #MorphTreeNodeModel,
-	#category : #'Tool-Profilers-Time'
+	#name : 'TimeProfilerNode',
+	#superclass : 'MorphTreeNodeModel',
+	#category : 'Tool-Profilers-Time',
+	#package : 'Tool-Profilers',
+	#tag : 'Time'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 TimeProfilerNode >> asString [
 	^ String streamContents: [:s | self item printOn: s total: model tally totalTime: model time tallyExact: false]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 TimeProfilerNode >> browseItem [
 	Smalltalk tools browser
 		openOnClass: self methodClass  selector: self selector
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 TimeProfilerNode >> childrenItems [
 	^ (self item sonsOver: model threshold) asSortedCollection
 ]
 
-{ #category : #actions }
-TimeProfilerNode >> exploreItem [
-	self item inspect
-]
-
-{ #category : #actions }
+{ #category : 'actions' }
 TimeProfilerNode >> inspectItem [
 	self item inspect
 ]
 
-{ #category : #'ui specific' }
+{ #category : 'ui specific' }
 TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
@@ -41,12 +38,10 @@ TimeProfilerNode >> keyDown: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
-{ #category : #'ui specific' }
+{ #category : 'ui specific' }
 TimeProfilerNode >> menu: menu shifted: b [
 	menu
 		add: 'Browse (b)'
@@ -55,24 +50,20 @@ TimeProfilerNode >> menu: menu shifted: b [
 	menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem
+		selector: #inspectItem
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 TimeProfilerNode >> methodClass [
 	^self item method methodClass
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 TimeProfilerNode >> percentage [
 	^ self item tally asFloat / model time * 100.0 roundTo: 0.1
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : 'accessing - computed' }
 TimeProfilerNode >> selector [
 	^self item method selector
 ]

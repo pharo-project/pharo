@@ -5,29 +5,31 @@ Complete the set of defined methods of this class, by generating a ""self should
 Shows a warning if this class has abstract methods on its own.
 "
 Class {
-	#name : #RBRealizeClassTransformation,
-	#superclass : #RBClassTransformation,
-	#category : #'Refactoring2-Transformations-Model'
+	#name : 'RBRealizeClassTransformation',
+	#superclass : 'RBClassTransformation',
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 RBRealizeClassTransformation class >> basicMenuItemString [
 
 	^ 'Realize class'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRealizeClassTransformation class >> className: aName [
 	^ self new className: aName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRealizeClassTransformation class >> isTransformation [
 
 	^ true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRealizeClassTransformation class >> model: aRBModel className: aName [
 	^ self new
 		model: aRBModel;
@@ -35,18 +37,18 @@ RBRealizeClassTransformation class >> model: aRBModel className: aName [
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRealizeClassTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBRealizeClassTransformation >> applicabilityPreconditions [ 
 	^ (RBCondition isClassNamed: className definedIn: model)
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBRealizeClassTransformation >> privateTransform [
 	self transform: self theClass.
 	self transform: self theClass classSide
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRealizeClassTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -55,12 +57,12 @@ RBRealizeClassTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRealizeClassTransformation >> theClass [
 	^ (self model classObjectFor: className) instanceSide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRealizeClassTransformation >> transform: aClass [
 	"Transform all the subclassResponsibilities (inherited or not) methods of the class in the class."
 	

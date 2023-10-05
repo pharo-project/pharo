@@ -1,17 +1,17 @@
-Extension { #name : #MetacelloGroupSpec }
+Extension { #name : 'MetacelloGroupSpec' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer [
 	"noop"
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MetacelloGroupSpec >> resolveToLoadableSpec [
 
 	^nil
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool into: packages visited: visited [
   visited
     visit: self
@@ -33,7 +33,7 @@ MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjects
                 visited: visited ] ] ]
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool visited: visited [
   | packages |
   packages := Dictionary new.
@@ -45,7 +45,7 @@ MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjects
   ^ packages values asOrderedCollection
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec into: packages visited: visited [
   self
     resolveToPackagesIn: aVersionSpec
@@ -54,7 +54,7 @@ MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec into: packages visited: 
     visited: visited
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
   | packages |
   packages := Dictionary new.

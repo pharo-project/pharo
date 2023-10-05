@@ -1,14 +1,15 @@
 Class {
-	#name : #TimeMeasuringTest,
-	#superclass : #TestCase,
+	#name : 'TimeMeasuringTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'realTime',
 		'shouldProfile'
 	],
-	#category : #'TraitsV2-Tests'
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 TimeMeasuringTest >> debug [
 	self resources do: [:res |
 		res isAvailable ifFalse: [^res signalInitializationError]].
@@ -16,31 +17,31 @@ TimeMeasuringTest >> debug [
 		ensure: [self resources do: [:each | each reset]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TimeMeasuringTest >> initialize [
 	super initialize.
 	shouldProfile := false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TimeMeasuringTest >> instanceVariablesToKeep [
 
 	^ super instanceVariablesToKeep , #(shouldProfile)
 ]
 
-{ #category : #performance }
+{ #category : 'performance' }
 TimeMeasuringTest >> measure: measuredBlock [
 	shouldProfile
 		ifTrue: [Smalltalk tools timeProfiler onBlock: [10 timesRepeat: measuredBlock]].
 	realTime := measuredBlock timeToRun
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 TimeMeasuringTest >> openDebuggerOnFailingTestMethod [
 	shouldProfile := true
 ]
 
-{ #category : #performance }
+{ #category : 'performance' }
 TimeMeasuringTest >> reportPerformance [
 	| str |
 	str := ZnNewLineWriterStream on: (ZnCharacterWriteStream
@@ -55,30 +56,30 @@ TimeMeasuringTest >> reportPerformance [
 		close
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TimeMeasuringTest >> runCase [
 	[super runCase] ensure: [self reportPerformance]
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 TimeMeasuringTest >> setToDebug [
 	shouldProfile := true
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TimeMeasuringTest >> versionInfoForWorkingCopiesThat: wcPredicate [
-	^(MCWorkingCopy allManagers select: wcPredicate) inject: ''
-		into: [:s :e | s , e description]
+
+	^ (MCWorkingCopy allWorkingCopies select: wcPredicate) inject: '' into: [ :s :e | s , e description ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeMeasuringTest >> versionInformation [
 	| wcPredicate |
 	wcPredicate := self workingCopyPredicate.
 	^self versionInfoForWorkingCopiesThat: wcPredicate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeMeasuringTest >> workingCopyPredicate [
 	^[:e | '*Traits*' match: e package name]
 ]

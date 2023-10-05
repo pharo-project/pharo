@@ -29,15 +29,17 @@ See also:
   https://tools.ietf.org/html/rfc4122
 "
 Class {
-	#name : #UUID,
-	#superclass : #Object,
+	#name : 'UUID',
+	#superclass : 'Object',
 	#instVars : [
 		'uuidData'
 	],
-	#category : #'Network-UUID-Base'
+	#category : 'Network-UUID-Base',
+	#package : 'Network-UUID',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UUID class >> fromString36: aString [
 	"Decode a UUID from a base 36 string using 0-9 and lowercase a-z.
 	This is the shortest representation still being able to work as
@@ -53,7 +55,7 @@ UUID class >> fromString36: aString [
 	^object
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UUID class >> fromString: aString [
 	"Read a UUID from aString with my official representation, 32 lowercase hexadecimal (base 16) digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
 
@@ -64,7 +66,7 @@ UUID class >> fromString: aString [
 	^ uuid
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UUID class >> new [
 	|uuid|
 	uuid := super new.
@@ -72,21 +74,21 @@ UUID class >> new [
 	^uuid
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UUID class >> nilUUID [
 	"Return a empty un-initialized UUID, with all zero values, 00000000-0000-0000-0000-000000000000"
 
 	^ super new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UUID class >> nonStandardUUID [
 	"This method uses the legacy UUID generation method from Pharo."
 	
 	^ self nonStandardUUIDWithGenerator: UUIDGenerator default
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UUID class >> nonStandardUUIDWithGenerator: aGenerator [
 	"This method uses the legacy UUID generation method from Pharo."
 	
@@ -96,7 +98,7 @@ UUID class >> nonStandardUUIDWithGenerator: aGenerator [
 	^uuid
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> < aMagnitude [
 	"Answer whether the receiver is less than the argument."
 
@@ -108,34 +110,35 @@ UUID >> < aMagnitude [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> <= aMagnitude [
 	"Answer whether the receiver is less than or equal to the argument."
 
 	^(self > aMagnitude) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> = anUUID [
-	^(self uuidData = anUUID uuidData)
+	^self species == anUUID species and: [ 
+		(self uuidData = anUUID uuidData) ]
 	
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> > aMagnitude [
 	"Answer whether the receiver is greater than the argument."
 
 	^aMagnitude < self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> >= aMagnitude [
 	"Answer whether the receiver is greater than or equal to the argument."
 
 	^(self < aMagnitude) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUID >> asInteger [
 	
 	"Should be deprecated, but is still used by iceberg."
@@ -145,14 +148,14 @@ UUID >> asInteger [
 	^ uuidData asInteger
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 UUID >> asString [
 	"Return a String with my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
 
 	^ self printString
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 UUID >> asString36 [
 	"Return a String encoding the receiver as a base 36 number using 0-9 and lowercase a-z.
 	This is the shortest representation still being able to work as
@@ -165,7 +168,7 @@ UUID >> asString36 [
 	^ (num printStringBase: 36) asLowercase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUID >> at: aNumber [
 	
 	"Should be deprecated, but is still used by iceberg."
@@ -175,7 +178,7 @@ UUID >> at: aNumber [
 	^ uuidData at: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUID >> at: aNumber put: aByte [
 	
 	"Should be deprecated, but is still used by iceberg."
@@ -185,7 +188,7 @@ UUID >> at: aNumber put: aByte [
 	uuidData at: aNumber put: aByte
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> clockSequence [
 	"Returns the clock sequence for Verison 1 UUIDs. See https://tools.ietf.org/html/rfc4122"
 
@@ -194,73 +197,73 @@ UUID >> clockSequence [
 	^ (uuidData at: 9) & 16r3f << 8 + (uuidData at: 10)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> hash [
 	^uuidData hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UUID >> initialize [
 	uuidData := ByteArray new: 16.
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> isDCEBased [
 	"Checks if UUID is version 2. See https://tools.ietf.org/html/rfc4122"
 	
 	^ self isRFC4122 and: (self version = 2)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> isMD5NameBased [
 	"Checks if UUID is version 3. See https://tools.ietf.org/html/rfc4122"
 
 	^ self isRFC4122 and: (self version = 3)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUID >> isNilUUID [
 	"Return true when I am equal to the nilUUID, 00000000-0000-0000-0000-000000000000, false otherwise"
 
 	^ uuidData allSatisfy: [ :each | each isZero ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> isRFC4122 [
 	"Checks if UUID is built according to RFC 4122. See https://tools.ietf.org/html/rfc4122"
 
 	^ self variant & 2r110 = 2r100
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> isRandomBased [
 	"Checks if UUID is version 4. See https://tools.ietf.org/html/rfc4122"
 
 	^ self isRFC4122 and: (self version = 4)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> isSHA1NameBased [
 	"Checks if UUID is version 5. See https://tools.ietf.org/html/rfc4122"
 
 	^ self isRFC4122 and: (self version = 5)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> isTimeBased [
 	"Checks if UUID is version 1. See https://tools.ietf.org/html/rfc4122"
 
 	^ self isRFC4122 and: (self version = 1)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> node [
 	"Returns the node of the UUID as a ByteArray. See https://tools.ietf.org/html/rfc4122"
 
 	^uuidData copyFrom: 11 to: 16.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UUID >> printOn: aStream [
 	"Print my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens) on aStream"
 
@@ -275,7 +278,7 @@ UUID >> printOn: aStream [
 	11 to: 16 do: [ :i | (uuidData at: i) printLowercaseHexByteOn: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UUID >> printString [
 	"Return a String with my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
 
@@ -284,7 +287,7 @@ UUID >> printString [
 		streamContents: [ :stringStream | self printOn: stringStream ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UUID >> readFrom: aStream [
 	"Read my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens) from aStream"
 
@@ -299,7 +302,7 @@ UUID >> readFrom: aStream [
 	11 to: 16 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUID >> size [
 
 	self
@@ -309,7 +312,7 @@ UUID >> size [
 	^ 16
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUID >> timestamp [
 	"Returns the timestamp of the version 1 UUID as a local DateAndTime. See https://tools.ietf.org/html/rfc4122"
 
@@ -330,26 +333,26 @@ UUID >> timestamp [
 		  DateAndTime localOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUID >> uuidData [
 
 	^ uuidData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUID >> uuidData: anObject [
 
 	uuidData := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> variant [
 	"Returns the variant of the UUID. See https://tools.ietf.org/html/rfc4122"
 
 	^ (uuidData at: 9) >> 5
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UUID >> version [
 	"Returns the version of the UUID. See https://tools.ietf.org/html/rfc4122"
 

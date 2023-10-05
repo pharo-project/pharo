@@ -2,17 +2,19 @@
 A FTUnsortedSortingStateTest is a test class for testing the behavior of FTUnsortedSortingState
 "
 Class {
-	#name : #FTUnsortedSortingStateTest,
-	#superclass : #FTAbstractSortingStateTest,
-	#category : #'Morphic-Widgets-FastTable-Tests-Sorting'
+	#name : 'FTUnsortedSortingStateTest',
+	#superclass : 'FTAbstractSortingStateTest',
+	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Sorting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTUnsortedSortingStateTest >> actualClass [
 	^ FTUnsortedSortingState
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTUnsortedSortingStateTest >> testExecuteSortingOn [
 	| dataSource |
 	dataSource := self dataSourceForTesting.

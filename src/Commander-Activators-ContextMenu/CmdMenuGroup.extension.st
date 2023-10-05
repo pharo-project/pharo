@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenuGroup }
+Extension { #name : 'CmdMenuGroup' }
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> buildContextMenu: aMenu [
 
 	self isInlined
@@ -8,7 +8,7 @@ CmdMenuGroup >> buildContextMenu: aMenu [
 		ifFalse: [ self buildContextSubMenuIn: aMenu ]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> buildContextSubMenuIn: aMenu [
 
 	| submenu |
@@ -21,7 +21,7 @@ CmdMenuGroup >> buildContextSubMenuIn: aMenu [
 		self description ifNotNil: [:d | aMenu lastItem setBalloonText: d] ]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> inlineContextMenuItemsInto: aMenu [
 
 	aMenu addLine.
@@ -31,7 +31,7 @@ CmdMenuGroup >> inlineContextMenuItemsInto: aMenu [
 	aMenu addLine
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> registerContextMenuItemsWithBuilder: aBuilder [
 
 	self isActive ifFalse: [ ^self ].
@@ -47,7 +47,7 @@ CmdMenuGroup >> registerContextMenuItemsWithBuilder: aBuilder [
 		ifTrue: [ aBuilder withSeparatorAfter ]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> registerContextSubMenuWithBuilder: aBuilder [
 
 	(aBuilder item: self name)

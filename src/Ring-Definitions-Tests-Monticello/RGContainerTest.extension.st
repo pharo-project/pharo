@@ -1,6 +1,6 @@
-Extension { #name : #RGContainerTest }
+Extension { #name : 'RGContainerTest' }
 
-{ #category : #'*Ring-Definitions-Tests-Monticello' }
+{ #category : '*Ring-Definitions-Tests-Monticello' }
 RGContainerTest >> testRetrievingPackages [
 	| rgClass rgMethod |
 	rgClass := OrderedCollection asRingDefinition.

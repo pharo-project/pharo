@@ -2,22 +2,22 @@
 Cleanup working copies
 "
 Class {
-	#name : #GoferCleanup,
-	#superclass : #GoferWorking,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferCleanup',
+	#superclass : 'GoferWorking',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 GoferCleanup >> cleanup: aWorkingCopy [
 
-	| packageOrganizer |
-	packageOrganizer := self packageOrganizer.
-	aWorkingCopy packageSet systemCategories
-		select: [ :category | (packageOrganizer classesInCategory: category) isEmpty ]
-		thenDo: [ :category | packageOrganizer removeSystemCategory: category ]
+	aWorkingCopy systemPackage ifNotNil: [ :package |
+		package removeEmptyTags.
+		package isEmpty ifTrue: [ package removeFromSystem ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferCleanup >> execute [
 
 	self workingCopies do: [ :workingCopy | self cleanup: workingCopy ]

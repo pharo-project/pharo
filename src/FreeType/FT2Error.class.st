@@ -2,16 +2,18 @@
 This is an Error that knows how to get the Freetype2 error code and string.
 "
 Class {
-	#name : #FT2Error,
-	#superclass : #Error,
+	#name : 'FT2Error',
+	#superclass : 'Error',
 	#instVars : [
 		'errorCode',
 		'errorString'
 	],
-	#category : #'FreeType-Base'
+	#category : 'FreeType-Base',
+	#package : 'FreeType',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FT2Error class >> errorCode: code errorString: str signal: message [
 	^ self new
 		messageText: message;
@@ -20,7 +22,7 @@ FT2Error class >> errorCode: code errorString: str signal: message [
 		signal
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FT2Error class >> errorCode: code signal: message [
 	^ self new
 		messageText: message;
@@ -29,31 +31,31 @@ FT2Error class >> errorCode: code signal: message [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Error >> errorCode [
 
 	^ errorCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Error >> errorCode: anObject [
 
 	errorCode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Error >> errorString [
 
 	^ errorString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Error >> errorString: aString [
 
 	errorString := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Error >> messageText [
 
 	^ String streamContents: [ :strm |

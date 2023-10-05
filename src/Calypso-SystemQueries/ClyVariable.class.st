@@ -16,61 +16,63 @@ Internal Representation and Key Implementation Points.
 	declaringClass:		<Class>
 "
 Class {
-	#name : #ClyVariable,
-	#superclass : #Object,
+	#name : 'ClyVariable',
+	#superclass : 'Object',
 	#instVars : [
 		'actualVariable',
 		'definingClass'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'browser item preparation' }
+{ #category : 'browser item preparation' }
 ClyVariable class >> convertToCalypsoBrowserItem: myItem [
 
 	^ClyBrowserItem named: myItem name with: myItem
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyVariable class >> defaultSortFunctionForCalypso [
 	^ClySortByNameFunction ascending
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyVariable class >> itemsSortOrderForCalypso [
 	^1.2
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyVariable class >> named: aSymbol definedIn: aClass [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyVariable class >> on: aVariableOrSlot definedIn: aClass [
 	^self new
 		actualVariable: aVariableOrSlot;
 		definingClass: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyVariable class >> on: aVariableOrSlot visibleFrom: aClass [
 	^self new
 		actualVariable: aVariableOrSlot;
 		detectDefiningClassFrom: aClass
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyVariable class >> queryClass [
 	^ClyAllVariablesQuery
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyVariable class >> shortName [
 	^'Vars'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyVariable >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -82,40 +84,40 @@ ClyVariable >> = anObject [
 		and: [ actualVariable = anObject actualVariable ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariable >> actualVariable [
 	^ actualVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariable >> actualVariable: anObject [
 	actualVariable := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariable >> definingClass [
 	^ definingClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariable >> definingClass: anObject [
 	definingClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariable >> detectDefiningClassFrom: anUserClass [
 
 	self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyVariable >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ definingClass hash bitXor: actualVariable hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariable >> isAccessedIn: aMethod [
 
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
@@ -123,23 +125,23 @@ ClyVariable >> isAccessedIn: aMethod [
 	^actualVariable isAccessedIn: aMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariable >> isAccessibleFrom: aClass [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariable >> isClassVariable [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariable >> isLive [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariable >> isReadIn: aMethod [
 
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
@@ -147,7 +149,7 @@ ClyVariable >> isReadIn: aMethod [
 	^actualVariable isReadIn: aMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariable >> isWrittenIn: aMethod [
 
 	(self isAccessibleFrom: aMethod origin)	ifFalse: [ ^false ].
@@ -155,29 +157,29 @@ ClyVariable >> isWrittenIn: aMethod [
 	^actualVariable isWrittenIn: aMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyVariable >> name [
 	^actualVariable name
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyVariable >> openBrowser [
 
 	definingClass browse
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyVariable >> openInspector [
 
 	actualVariable inspect
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyVariable >> printAsConstantQueryItem [
 	^self name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyVariable >> printOn: aStream [
 	super printOn: aStream.
 	aStream

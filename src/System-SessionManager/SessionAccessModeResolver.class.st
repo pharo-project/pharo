@@ -2,12 +2,14 @@
 I check the image arguments and resolve if the access mode of the image. I am started very soon in the image start-up process.
 "
 Class {
-	#name : #SessionAccessModeResolver,
-	#superclass : #Object,
-	#category : #'System-SessionManager-Utilities'
+	#name : 'SessionAccessModeResolver',
+	#superclass : 'Object',
+	#category : 'System-SessionManager-Utilities',
+	#package : 'System-SessionManager',
+	#tag : 'Utilities'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SessionAccessModeResolver class >> initialize [
 
 	SessionManager default
@@ -16,7 +18,7 @@ SessionAccessModeResolver class >> initialize [
 		atPriority: SessionManager default defaultPriority - 90
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SessionAccessModeResolver class >> resolve [
 
 	"check if the image was started in the read-only mode"
@@ -39,7 +41,7 @@ SessionAccessModeResolver class >> resolve [
 	SessionManager default currentSession accessMode: mode
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 SessionAccessModeResolver class >> startUp: resuming [
 
 	resuming ifTrue: [

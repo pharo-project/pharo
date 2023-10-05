@@ -1,14 +1,16 @@
 Class {
-	#name : #RBRemoveParameterTransformation,
-	#superclass : #RBChangeMethodNameTransformation,
+	#name : 'RBRemoveParameterTransformation',
+	#superclass : 'RBChangeMethodNameTransformation',
 	#instVars : [
 		'parameterIndex',
 		'argument'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -18,7 +20,7 @@ RBRemoveParameterTransformation class >> model: aRBSmalltalk removeParameter: aS
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveParameterTransformation class >> removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		removeParameter: aString
@@ -26,8 +28,9 @@ RBRemoveParameterTransformation class >> removeParameter: aString in: aClass sel
 		selector: aSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveParameterTransformation >> computeNewSelector [
+
 	| keywords |
 	oldSelector numArgs == 0
 		ifTrue: [ self refactoringError: 'This method contains no arguments' ].
@@ -40,7 +43,7 @@ RBRemoveParameterTransformation >> computeNewSelector [
 	^ (String streamContents: [ :str | keywords do: [ :each | str nextPutAll: each ] ]) asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveParameterTransformation >> getNewSelector [
 	| tree |
 	(class directlyDefinesMethod: oldSelector)
@@ -53,37 +56,43 @@ RBRemoveParameterTransformation >> getNewSelector [
 	newSelector := self computeNewSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 
 	| tree |
-
 	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
-{ #category : #private }
-RBRemoveParameterTransformation >> myConditions [
+{ #category : 'private' }
+RBRemoveParameterTransformation >> localPreconditions [
+
 	| imps |
-	imps := self model allImplementorsOf: oldSelector.
 	self getNewSelector.
-	^imps inject: (RBCondition definesSelector: oldSelector in: class)
+	imps := self model allImplementorsOf: oldSelector.
+	^ imps inject: (RBCondition definesSelector: oldSelector in: class)
 		into:
 			[:cond :each |
-			cond
-				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
+			cond & (RBCondition 
+						withBlock: [ (self hasReferencesToTemporaryIn: each) not ]
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+RBRemoveParameterTransformation >> preconditions [ 
+	"It looks like the localPreconditions is doing a side effect!!! argh! "
+	^  self localPreconditions & super preconditions
+]
+
+{ #category : 'private' }
 RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self model classObjectFor: aClass.
 	argument := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

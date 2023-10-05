@@ -1,6 +1,6 @@
-Extension { #name : #RGWordLayout }
+Extension { #name : 'RGWordLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGWordLayout >> mcType [
 
 	^ #words

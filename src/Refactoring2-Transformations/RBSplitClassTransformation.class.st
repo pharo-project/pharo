@@ -17,18 +17,20 @@ Preconditions::
 -  the instance variable exists
 "
 Class {
-	#name : #RBSplitClassTransformation,
-	#superclass : #RBCompositeTransformation,
+	#name : 'RBSplitClassTransformation',
+	#superclass : 'RBCompositeTransformation',
 	#instVars : [
 		'class',
 		'instanceVariables',
 		'newClassName',
 		'referenceVariableName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBSplitClassTransformation class >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
 
 	^ self new
@@ -38,7 +40,7 @@ RBSplitClassTransformation class >> class: aClass instanceVariables: instVars ne
 		referenceVariableName: newVariable
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBSplitClassTransformation class >> model: aRBModel class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
 
 	^ self new
@@ -49,7 +51,7 @@ RBSplitClassTransformation class >> model: aRBModel class: aClass instanceVariab
 		referenceVariableName: newVariable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSplitClassTransformation >> abstractReferenceTo: instVar [
 
 	transformations add:
@@ -72,13 +74,13 @@ RBSplitClassTransformation >> abstractReferenceTo: instVar [
 			class: class)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSplitClassTransformation >> abstractVariableReferences [
 
 	instanceVariables do: [ :instVar | self abstractReferenceTo: instVar ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSplitClassTransformation >> addClass [
 
 	transformations add:
@@ -90,7 +92,7 @@ RBSplitClassTransformation >> addClass [
 			category: class category)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSplitClassTransformation >> addInstanceVariables [
 
 	instanceVariables
@@ -102,7 +104,28 @@ RBSplitClassTransformation >> addInstanceVariables [
 		thenDo: [ :each | transformations add: each ]
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBSplitClassTransformation >> applicabilityPreconditions [
+
+	class := self definingClass.
+
+	"check whether instVar exist"
+	^ (RBCondition isValidClassName: newClassName) & self isNotGlobal
+	  & (RBCondition
+			   isValidInstanceVariableName: referenceVariableName
+			   for: class)
+	  &
+		  (RBCondition
+			   hierarchyOf: class
+			   definesVariable: referenceVariableName) not
+	  & (RBCondition isGlobal: referenceVariableName in: self model) not
+	  &
+		  (RBCondition
+			   definesTemporaryVariable: referenceVariableName
+			   in: class) not
+]
+
+{ #category : 'executing' }
 RBSplitClassTransformation >> buildTransformations [
 
 	transformations := OrderedCollection new.
@@ -115,7 +138,7 @@ RBSplitClassTransformation >> buildTransformations [
 	^ transformations
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBSplitClassTransformation >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
 
 	class := self model classObjectFor: aClass.
@@ -124,7 +147,7 @@ RBSplitClassTransformation >> class: aClass instanceVariables: instVars newClass
 	referenceVariableName := newVariable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSplitClassTransformation >> createNewClass [
 
 	self
@@ -132,7 +155,7 @@ RBSplitClassTransformation >> createNewClass [
 		addInstanceVariables
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSplitClassTransformation >> createReference [
 
 	transformations add: (
@@ -142,29 +165,19 @@ RBSplitClassTransformation >> createReference [
 			class: class)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSplitClassTransformation >> definingClass [
 
 	^ self model classObjectFor: class
 ]
 
-{ #category : #preconditions }
-RBSplitClassTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBSplitClassTransformation >> isNotGlobal [
 
-	class := self definingClass.
-
-	"check whether instVar exist"
-	^(RBCondition isValidClassName: newClassName)
-		& (RBCondition isGlobal: newClassName in: self model) not
-		& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
-		& (RBCondition hierarchyOf: class definesVariable: referenceVariableName)
-				not
-		& (RBCondition isGlobal: referenceVariableName in: self model) not
-		& (RBCondition definesTemporaryVariable: referenceVariableName in: class)
-				not
+	^ (RBCondition isGlobal: newClassName in: self model) not
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBSplitClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

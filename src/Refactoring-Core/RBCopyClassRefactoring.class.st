@@ -14,35 +14,37 @@ Example
 ```
 "
 Class {
-	#name : #RBCopyClassRefactoring,
-	#superclass : #RBClassRefactoring,
+	#name : 'RBCopyClassRefactoring',
+	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
 		'category'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyClassRefactoring class >> copyClass: cls withName: aSymbol [
 	^ self new copyClass: cls withName: aSymbol
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyClassRefactoring class >> copyClass: cls withName: copyName in: aSymbol [
 	^ self new
 		category: aSymbol;
 		copyClass: cls withName: copyName
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyClassRefactoring class >> model: aRBSmalltalk copyClass: cls withName: aSymbol [
 	^ self new
 		model: aRBSmalltalk;
 		copyClass: cls withName: aSymbol
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyClassRefactoring class >> model: aRBSmalltalk copyClass: cls withName: copyName in: aSymbol [
 	^ self new
 		model: aRBSmalltalk;
@@ -50,20 +52,20 @@ RBCopyClassRefactoring class >> model: aRBSmalltalk copyClass: cls withName: cop
 		copyClass: cls withName: copyName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCopyClassRefactoring >> category [
 
 	^ category ifNil: [ category := aClass category ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCopyClassRefactoring >> category: aSymbol [
 	category := aSymbol
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBCopyClassRefactoring >> copyClass [
-	self performCompositeRefactoring: (RBInsertNewClassRefactoring
+	self generateChangesFor: (RBInsertNewClassRefactoring
 		model: self model
 		addClass: className
 		superclass: aClass superclass
@@ -72,13 +74,13 @@ RBCopyClassRefactoring >> copyClass [
 		comment: aClass comment)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyClassRefactoring >> copyClass: cls withName: aName [
 	self className: aName.
 	aClass := self classObjectFor: cls
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBCopyClassRefactoring >> copyMethods [
 	| newClass |
 	newClass := (self model classNamed: className).
@@ -86,42 +88,42 @@ RBCopyClassRefactoring >> copyMethods [
 	self copyMethodsOf: aClass classSide in: newClass classSide
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
 		rbMethod := rbClass1 methodFor: symbol.
-		self performCompositeRefactoringThroughWarning:
-			(RBAddMethodRefactoring
+		self generateChangesFor:
+			(RBAddMethodTransformation
 				model: self model
-				addMethod: rbMethod source
-				toClass: rbClass2
-				inProtocols: rbMethod protocols)
+				sourceCode: rbMethod source
+				in: rbClass2
+				withProtocol: rbMethod protocols)
 	]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBCopyClassRefactoring >> copyVariables [
 	aClass instanceVariableNames do: [ :varName |
-		self performCompositeRefactoring: (RBAddInstanceVariableRefactoring
+		self generateChangesFor: (RBAddInstanceVariableRefactoring
 		model: self model
 		variable: varName
 		class: className) ].
 
 	aClass classVariableNames do: [ :varName |
-		self performCompositeRefactoring: (RBAddClassVariableRefactoring
+		self generateChangesFor: (RBAddClassVariableRefactoring
 		model: self model
 		variable: varName
 		class: className) ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCopyClassRefactoring >> preconditions [
 	^ (RBCondition isValidClassName: className)
 		& (RBCondition isGlobal: className in: self model) not
 ]
 
-{ #category : #transforming }
-RBCopyClassRefactoring >> transform [
+{ #category : 'transforming' }
+RBCopyClassRefactoring >> privateTransform [
 	self copyClass.
 	self copyVariables.
 	self copyMethods

@@ -33,18 +33,20 @@ You can use the global `CoverageCollector class>>#uninstallAll` to remove all in
 Warning: because of the instrumentation, new instances of `CompiledMethod` can be created to replace existing one during the coverage computation. This means that the identity of method objects returned by expression like `Point>>#x` could be not reliable and that `=` and related methods may not behave as you expect if you use lower level methods.
 "
 Class {
-	#name : #CoverageCollector,
-	#superclass : #Object,
+	#name : 'CoverageCollector',
+	#superclass : 'Object',
 	#instVars : [
 		'metalink',
 		'methods',
 		'nodes',
 		'edges'
 	],
-	#category : #'Coverage-Base'
+	#category : 'Coverage-Base',
+	#package : 'Coverage',
+	#tag : 'Base'
 }
 
-{ #category : #installation }
+{ #category : 'installation' }
 CoverageCollector class >> uninstalAll [
 
 	"If for some reason metalinks are not removed, force a full image cleaning"
@@ -55,7 +57,7 @@ CoverageCollector class >> uninstalAll [
 			ifTrue: [ each uninstall ] ]
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 CoverageCollector >> basicCollectResult [
 
 	"Collect the results but does not reset the annotations."
@@ -71,7 +73,7 @@ CoverageCollector >> basicCollectResult [
 	^ res
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 CoverageCollector >> basicRun: aBlock [
 
 	"Just run the block. We consider that the correct setup is done and that a teardown will be performed."
@@ -79,7 +81,7 @@ CoverageCollector >> basicRun: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #callgraph }
+{ #category : 'callgraph' }
 CoverageCollector >> callgraph [
 
 	"Compute and return directed `edges` that connect nodes together.
@@ -104,7 +106,7 @@ CoverageCollector >> callgraph [
 	^ edges := visitor edges.
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 CoverageCollector >> collectResult [
 
 	"Collect the results.
@@ -117,12 +119,12 @@ CoverageCollector >> collectResult [
 	^ res
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageCollector >> edges [
 	^ edges
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoverageCollector >> initialize [
 
 	metalink := MetaLink new
@@ -132,7 +134,7 @@ CoverageCollector >> initialize [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoverageCollector >> initializeNodes [
 
 	"Visit methods and collect their sequence nodes"
@@ -145,7 +147,7 @@ CoverageCollector >> initializeNodes [
 	^ nodes.
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 CoverageCollector >> install [
 
 	"Prepare the metalink. This can be slow.
@@ -163,7 +165,7 @@ CoverageCollector >> install [
 	].
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CoverageCollector >> installOn: aBlock [
 
 	"just run a block, with installation and uninstallation."
@@ -172,25 +174,25 @@ CoverageCollector >> installOn: aBlock [
 	aBlock ensure: [ self uninstall ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageCollector >> metalink [
 
 	^ metalink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageCollector >> methods [
 
 	^ methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageCollector >> methods: anObject [
 
 	methods := anObject
 ]
 
-{ #category : #callgraph }
+{ #category : 'callgraph' }
 CoverageCollector >> nodeDistances: aNodeOrMethod isBackward: isBackward [
 
 	"Simple BFS to discover the distance of reachble nodes from a staring node.
@@ -237,7 +239,7 @@ CoverageCollector >> nodeDistances: aNodeOrMethod isBackward: isBackward [
 	^ result.
 ]
 
-{ #category : #callgraph }
+{ #category : 'callgraph' }
 CoverageCollector >> nodeDistancesFrom: aNodeOrMethod [
 
 	"Compute the distance of each node that is reached by `aNodeOrMethod` (according to `callgraph`).
@@ -247,7 +249,7 @@ CoverageCollector >> nodeDistancesFrom: aNodeOrMethod [
 	^ self nodeDistances: aNodeOrMethod isBackward: false
 ]
 
-{ #category : #callgraph }
+{ #category : 'callgraph' }
 CoverageCollector >> nodeDistancesTo: aNodeOrMethod [
 
 	"Compute the distance of each node that can reach `aNodeOrMethod` (according to `callgraph`).
@@ -257,13 +259,13 @@ CoverageCollector >> nodeDistancesTo: aNodeOrMethod [
 	^ self nodeDistances: aNodeOrMethod isBackward: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageCollector >> nodes [
 
 	^ nodes
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CoverageCollector >> printOn: aStream [
 
 	super printOn: aStream.
@@ -274,14 +276,14 @@ CoverageCollector >> printOn: aStream [
 		print: nodes size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CoverageCollector >> remapMethods [
 
 	"Because of metalinks, CompiledMethods can by recompiled, so this method is called to updates the list of methods with the 'current' list of methods."
 	^ methods := methods collect: [ :m | m classBinding value >> m selector ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoverageCollector >> reset [
 
 	"Cleanup the annotations, metalinks remain installed.
@@ -291,7 +293,7 @@ CoverageCollector >> reset [
 	nodes do: [ :each | each removeProperty: #tagExecuted ifAbsent: [ ] ].
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CoverageCollector >> runOn: aBlock [
 
 	"Fully run self, with installation, execution and uninstallation.
@@ -304,7 +306,7 @@ CoverageCollector >> runOn: aBlock [
 	^ self collectResult
 ]
 
-{ #category : #basic }
+{ #category : 'basic' }
 CoverageCollector >> uninstall [
 
 	"Remove the instrumentation.

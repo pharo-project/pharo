@@ -1,28 +1,30 @@
 Class {
-	#name : #RBExtractMethodAndOccurrencesParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBExtractMethodAndOccurrencesParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractMethodAndOccurrencesParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractMethodAndOccurrences };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBExtractMethodAndOccurrencesParametrizedTest >> constructor [
 	^ #extract:from:in:
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBExtractMethodAndOccurrencesParametrizedTest >> setUp [
 	super setUp.
 	model := self rbModelForExtractMethodTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
@@ -56,7 +58,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAnd
 	self stringArg: ''dfgdf'' streamArg: aStream')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
@@ -105,7 +107,7 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 	^ nil')
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBExtractMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
 	|class|
 	class := model classNamed: #MyClassA.

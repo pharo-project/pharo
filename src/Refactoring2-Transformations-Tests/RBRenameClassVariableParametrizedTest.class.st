@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameClassVariableParametrizedTest,
-	#superclass : #RBRenameVariableParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenameClassVariableParametrizedTest',
+	#superclass : 'RBRenameVariableParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'building suites' }
 RBRenameClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenameClassVariableRefactoring .
@@ -16,7 +18,7 @@ RBRenameClassVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameClassVariableParametrizedTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -25,7 +27,7 @@ RBRenameClassVariableParametrizedTest >> testFailureAlreadyExistingName [
 				 #RBTransformationRuleTestData })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameClassVariableParametrizedTest >> testFailureMetaClassFailure [
 
 	self shouldFail: (self createRefactoringWithArguments: {
@@ -34,14 +36,14 @@ RBRenameClassVariableParametrizedTest >> testFailureMetaClassFailure [
 				 RBTransformationRuleTestData class name asSymbol })
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameClassVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments:
 			 { #foo. #newFoo. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -84,7 +86,7 @@ RBRenameClassVariableParametrizedTest >> testRenameClassVar [
 													classified: aSmalllintContext protocols]]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameClassVariableParametrizedTest >> testRenameClassVarInSharedPool [
 	| refactoring class userClass |
 

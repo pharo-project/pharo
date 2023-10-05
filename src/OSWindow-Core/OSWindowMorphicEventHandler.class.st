@@ -6,8 +6,8 @@ So, that installing my instance as event handler for specific window would allow
 Later, the Morphic can be integrated with OSWindow API to avoid unnecessary conversion and thus eliminating the need in having this class.
 "
 Class {
-	#name : #OSWindowMorphicEventHandler,
-	#superclass : #OSWindowEventVisitor,
+	#name : 'OSWindowMorphicEventHandler',
+	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
 		'morphicWorld'
 	],
@@ -18,15 +18,17 @@ Class {
 	#pools : [
 		'OSKeySymbols'
 	],
-	#category : #'OSWindow-Core-Morphic'
+	#category : 'OSWindow-Core-Morphic',
+	#package : 'OSWindow-Core',
+	#tag : 'Morphic'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindowMorphicEventHandler class >> for: morphicWorld [
 	^ self new morphicWorld: morphicWorld; yourself
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSWindowMorphicEventHandler class >> initialize [
 	"
 	self initialize
@@ -67,19 +69,19 @@ OSWindowMorphicEventHandler class >> initialize [
 	} pairsDo: [ :key :val | SymbolCharacterMapping at: key put: val charCode ]
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 OSWindowMorphicEventHandler class >> simulateMiddleClick [
 
 	^ SimulateMiddleButton ifNil: [ SimulateMiddleButton := true ]
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 OSWindowMorphicEventHandler class >> simulateMiddleClick: aValue [
 
 	SimulateMiddleButton := aValue
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 OSWindowMorphicEventHandler class >> simulateMiddleClickSettingOn: aBuilder [
 	<systemsettings>
 
@@ -91,12 +93,12 @@ OSWindowMorphicEventHandler class >> simulateMiddleClickSettingOn: aBuilder [
 		description: 'Sets if we are simulating the middle button by doing Alt + Left button'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindowMorphicEventHandler >> activeHand [
 	^ self morphicWorld activeHand
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
 
 	anEvent button = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
@@ -104,7 +106,7 @@ OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
 	anEvent button = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 	| buttons |
 	buttons := 0.
@@ -120,13 +122,13 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 	^ buttons
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 OSWindowMorphicEventHandler >> convertPosition: aPosition [
 	morphicWorld ifNil: [ ^ aPosition ].
 	^ morphicWorld worldState worldRenderer convertWindowMouseEventPosition: aPosition
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 	morphicWorld defer: [
 		(morphicWorld activeHand isNotNil and: [ anEvent hand isNotNil ]) ifTrue: [
@@ -135,7 +137,7 @@ OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 	]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowMorphicEventHandler >> handleEvent: anEvent [
 
 	"convert the event to morphic one, and dispatch it whatever..."
@@ -147,24 +149,24 @@ OSWindowMorphicEventHandler >> handleEvent: anEvent [
 	self dispatchMorphicEvent: morphicEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> mapSymbolToKeyValue: symbol [
 	^ SymbolCharacterMapping at: symbol ifAbsent: [
 		 "Don't allow symbol values outside the unicode range"
 		 symbol >= 16r400000 ifTrue: [ 0 ] ifFalse: [ symbol ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowMorphicEventHandler >> morphicWorld [
 	^ morphicWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowMorphicEventHandler >> morphicWorld: aMorphicWorld [
 	morphicWorld := aMorphicWorld
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 	| keyEvent mods |
 
@@ -183,7 +185,7 @@ OSWindowMorphicEventHandler >> visitKeyDownEvent: anEvent [
 	self dispatchMorphicEvent: keyEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitKeyUpEvent: anEvent [
 	| keyEvent |
 	keyEvent := KeyboardEvent new
@@ -200,7 +202,7 @@ OSWindowMorphicEventHandler >> visitKeyUpEvent: anEvent [
 	^ keyEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
 	anEvent isWheel ifTrue: [
 		^ MouseWheelEvent new
@@ -220,7 +222,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
 		stamp: Time millisecondClockValue
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 	anEvent isWheel ifTrue: [ ^ nil ].
 
@@ -233,7 +235,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 		stamp: Time millisecondClockValue
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitMouseMoveEvent: anEvent [
 	| oldPos newPos |
 	oldPos := morphicWorld activeHand ifNil: [ 0@0 ] ifNotNil: [:hand | hand position ].
@@ -249,7 +251,7 @@ OSWindowMorphicEventHandler >> visitMouseMoveEvent: anEvent [
 		stamp: Time millisecondClockValue
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
 	| vertical |
 	vertical := anEvent scrollVertical.
@@ -264,7 +266,7 @@ OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
 		stamp: Time millisecondClockValue
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitTextEditingEvent: anEvent [
 
 	| keyEvent |
@@ -278,7 +280,7 @@ OSWindowMorphicEventHandler >> visitTextEditingEvent: anEvent [
 	^ keyEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 	anEvent text ifNil: [ ^ nil ].
 	(anEvent text size = 1 and: [ anEvent text first codePoint < 128 ])
@@ -306,20 +308,20 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 				  wasHandled: false ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 	self
 		traceCr: ('Unknown event: <1s>' expandMacrosWith: anEvent data printString)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
 
 	morphicWorld worldState worldRenderer handleOSWindowCloseEvent: anEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
 
 	| dropEvent |
@@ -335,20 +337,20 @@ OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
 	^ dropEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitWindowExposeEvent: anEvent [
 	"Completely redraw world when visible part of window changes to prevent some graphical glitches"
     morphicWorld worldState doFullRepaint
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"
 	morphicWorld worldState worldRenderer checkForNewScreenSize
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent [
 
 	morphicWorld worldState updateToNewResolution: anEvent

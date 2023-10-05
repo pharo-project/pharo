@@ -2,16 +2,17 @@
 A Stopwatch maintains a collection of timespans.
 "
 Class {
-	#name : #Stopwatch,
-	#superclass : #Object,
+	#name : 'Stopwatch',
+	#superclass : 'Object',
 	#instVars : [
 		'timespans',
 		'state'
 	],
-	#category : #'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 Stopwatch >> activate [
 
 	self isSuspended ifTrue:
@@ -20,7 +21,7 @@ Stopwatch >> activate [
 		self state: #active]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stopwatch >> duration [
 
 	| ts last |
@@ -37,25 +38,25 @@ Stopwatch >> duration [
 	^ (ts collect: [ :t | t duration ]) sum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stopwatch >> end [
 
 	^ self timespans last next
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Stopwatch >> isActive [
 
 	^ self state = #active
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Stopwatch >> isSuspended [
 
 	^ self state = #suspended
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Stopwatch >> printOn: aStream [
 
 	super printOn: aStream.
@@ -67,7 +68,7 @@ Stopwatch >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 Stopwatch >> reActivate [
 
 	self
@@ -75,32 +76,32 @@ Stopwatch >> reActivate [
 		activate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Stopwatch >> reset [
 
 	self suspend.
 	timespans := nil
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 Stopwatch >> start [
 
 	^ self timespans first start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stopwatch >> state [
 
 	^ state ifNil: [ state := #suspended ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Stopwatch >> state: aSymbol [
 
 	state := aSymbol
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 Stopwatch >> suspend [
 
 	| ts |
@@ -110,7 +111,7 @@ Stopwatch >> suspend [
 		self state: #suspended]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stopwatch >> timespans [
 
 	^ timespans ifNil: [ timespans := OrderedCollection new ]

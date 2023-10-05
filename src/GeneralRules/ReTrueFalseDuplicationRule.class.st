@@ -13,19 +13,21 @@ test
 	ifFalse: [ self baz ]
 "
 Class {
-	#name : #ReTrueFalseDuplicationRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReTrueFalseDuplicationRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'EndTrueFalseRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReTrueFalseDuplicationRule >> afterCheck: aNode mappings: mappingDict [
 
 	mappingDict
@@ -37,12 +39,12 @@ ReTrueFalseDuplicationRule >> afterCheck: aNode mappings: mappingDict [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReTrueFalseDuplicationRule >> initialize [
 	super initialize.
 	self
@@ -107,17 +109,17 @@ ReTrueFalseDuplicationRule >> initialize [
 		`.@PostStatements.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule >> name [
 	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule >> rationale [
 	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule >> severity [
 	^ #information
 ]

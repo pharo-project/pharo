@@ -10,28 +10,35 @@ My subclasses must implement several methods for doIt method compilation and eva
 See subclasses for examples
 "
 Class {
-	#name : #OCDoItSemanticScope,
-	#superclass : #OCSemanticScope,
-	#category : #'OpalCompiler-Core-Semantics'
+	#name : 'OCDoItSemanticScope',
+	#superclass : 'OCSemanticScope',
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCDoItSemanticScope class >> isAbstract [
 	^self = OCDoItSemanticScope
 ]
 
-{ #category : #'code evaluation' }
+{ #category : 'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 
 	^self receiver withArgs: #() executeMethod: doItMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCDoItSemanticScope >> isDoItScope [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCDoItSemanticScope >> receiver [
 	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+OCDoItSemanticScope >> targetClass [
+	^ self receiver class
 ]

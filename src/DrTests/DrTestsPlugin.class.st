@@ -4,55 +4,57 @@ I am a Plugin used to execute an analysis
 To run, I need a DTPluginConfiguration that contains the items I will analyse. I define the way to execute the analysis and create a result (could be a TestResult). 
 "
 Class {
-	#name : #DrTestsPlugin,
-	#superclass : #Object,
+	#name : 'DrTestsPlugin',
+	#superclass : 'Object',
 	#instVars : [
 		'announcer'
 	],
-	#category : #'DrTests-Model'
+	#category : 'DrTests-Model',
+	#package : 'DrTests',
+	#tag : 'Model'
 }
 
-{ #category : #'api - plugins' }
+{ #category : 'api - plugins' }
 DrTestsPlugin class >> availablePlugins [
 	^ (self allSubclasses reject: #isAbstract)
 			sort: [ :a :b | a weight < b weight ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DrTestsPlugin class >> isAbstract [
 	"Should return true if the plugin is abstract and should not be instantiated."
 	^ self = DrTestsPlugin
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DrTestsPlugin class >> pluginIcon [
 	^ self iconNamed: #blank
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DrTestsPlugin class >> pluginName [
 	"The name of the plugin to be displayed in DrTests UI."
 	^ self subclassResponsibility
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DrTestsPlugin class >> pluginResultClass [
 	"Returns the class that this plugin instantiate for its results."
 	^ self subclassResponsibility
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DrTestsPlugin class >> weight [
 	"The lighter is a plugin, the higher it is displayed in the drop list for plugin selection."
 	^ self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> allowMiniDrTests [
 	^ false
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 DrTestsPlugin >> announceResultsChanged: someResults [
 
 	self announcer announce: (DTUpdateResults new
@@ -60,18 +62,18 @@ DrTestsPlugin >> announceResultsChanged: someResults [
 			 yourself)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> announceStatusChanged: aMessage [
 
 	self announcer announce: (DTStatusUpdate message: aMessage)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DrTestsPlugin >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'configuration building' }
+{ #category : 'configuration building' }
 DrTestsPlugin >> buildConfigurationFrom: aDrTests [
 	"Builds a configuration from the plugin by reading the information held by the UI (aDrTests)."
 	^ DTPluginConfiguration
@@ -79,17 +81,17 @@ DrTestsPlugin >> buildConfigurationFrom: aDrTests [
 		packages: aDrTests packagesSelected
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> buildContextualMenuGroupWith: presenterInstance [
 	^ CmCommandGroup new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DrTestsPlugin >> firstListLabel [
 	^ 'items'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> itemsToBeAnalysedFor: packagesSelected [
 	"This method returns the items to be analysed by the plugin.
 	For most plugins it will be TestCases but some plugins will return other objects like comments."
@@ -99,44 +101,44 @@ DrTestsPlugin >> itemsToBeAnalysedFor: packagesSelected [
 			[ :p | p definedClasses select: [ :c | c isTestCase ] ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> packagesAvailableForAnalysis [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase ] ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> pluginName [
 	^ self class pluginName
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 DrTestsPlugin >> pluginPresenterClass [
 
 	^ DTDefaultPluginPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DrTestsPlugin >> pluginResultClass [
 	^ self class pluginResultClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DrTestsPlugin >> pragmaForResultTrees [
 	"Returns the selector of the pragma to gather result trees."
 	^ self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> reRunForConfiguration: aDTpluginConfiguration [
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> resultButtonHelp [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DrTestsPlugin >> resultTreeViews [
 	"Return result tree views available."
 
@@ -147,42 +149,42 @@ DrTestsPlugin >> resultTreeViews [
 		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ])
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> runForConfiguration: aDTpluginConfiguration [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DrTestsPlugin >> secondListLabel [
 	^ 'items'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> setSelectionModeOfItemsList: aListPresenter [
 	aListPresenter beMultipleSelection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> setSelectionModeOfPackageList: aListPresenter [
 	aListPresenter beMultipleSelection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> startButtonHelp [
 	^ self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> startButtonLabel [
 	^ self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> title [
 	^ self pluginName
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DrTestsPlugin >> unconfigureUI: aDrTestsUI [
 	"This hook is used by plugins to unconfigure the UI (e.g. unregister announcers).
 	 It is called just before the UI switch to another plugin.

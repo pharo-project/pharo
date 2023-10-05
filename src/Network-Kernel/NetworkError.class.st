@@ -2,7 +2,9 @@
 Abstract super class for all network related exceptions.
 "
 Class {
-	#name : #NetworkError,
-	#superclass : #Error,
-	#category : #'Network-Kernel-Exceptions'
+	#name : 'NetworkError',
+	#superclass : 'Error',
+	#category : 'Network-Kernel-Exceptions',
+	#package : 'Network-Kernel',
+	#tag : 'Exceptions'
 }

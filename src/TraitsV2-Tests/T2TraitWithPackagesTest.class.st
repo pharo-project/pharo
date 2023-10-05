@@ -2,34 +2,35 @@
 Unit test for trait packaging
 "
 Class {
-	#name : #T2TraitWithPackagesTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitWithPackagesTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> packageName [
 	^ 'TestPackage'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> packageName2 [
 	^ 'TestPackage2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> packageUnderTest [
 
 	^ self packageOrganizer packageNamed: self packageName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> packageUnderTest2 [
 
 	^ self packageOrganizer packageNamed: self packageName2
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 T2TraitWithPackagesTest >> tearDown [
 
 	(self packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
@@ -38,7 +39,7 @@ T2TraitWithPackagesTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraits [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
@@ -51,7 +52,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraits [
 	self assert: (t2 >> #m1) package equals: self packageUnderTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreation [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
@@ -63,7 +64,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreation [
 	self assert: (t2 >> #m1) package equals: self packageUnderTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreationOverriden [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
@@ -80,7 +81,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreationOverriden [
 	self assert: (t2 >> #m1) package equals: self packageUnderTest2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverriden [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
@@ -98,7 +99,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverriden [
 	self assert: (t2 >> #m1) package equals: self packageUnderTest2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenAndRemoved [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
@@ -121,7 +122,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenAndRemoved [
 	self assert: (t2 >> #m1) package equals: self packageUnderTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenModifiedKeepPackage [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
@@ -144,7 +145,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenModifiedKeepPac
 	self assert: (t2 >> #m1) package equals: self packageUnderTest2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
 
 	| t1 t2 |
@@ -165,18 +166,19 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
 	self assert: (t1 >> #m1) package equals: self packageUnderTest.
 	self assert: (t2 >> #m1) package equals: self packageUnderTest.
 
-	self assert: (self packageOrganizer packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) equals: self packageUnderTest.
+	self packageUnderTest includesSelector: #m1 ofClass: t1.
 
 	t1 removeSelector: #m1.
 
 	self assert: (t1 protocolOfSelector: #m1) isNil.
 	self assert: (t2 protocolOfSelector: #m1) isNil.
 
-	self assert: (self packageOrganizer packageDefiningOrExtendingSelector: #m1 inClassNamed: #T1) isNil.
-	self assert: (self packageOrganizer packageDefiningOrExtendingSelector: #m1 inClassNamed: #T2) isNil
+	self packageOrganizer packages do: [ :package |
+		self deny: (package includesSelector: #m1 ofClass: t1).
+		self deny: (package includesSelector: #m1 ofClass: t2) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
 
 	| t1 t2 |
@@ -200,15 +202,15 @@ T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
 	t2 removeFromSystem.
 
 	self assert: (self packageOrganizer packageOfClassNamed: #T1) equals: self packageUnderTest.
-	self assert: (self packageOrganizer packageOfClassNamed: #T2) isNil.
+	self assert: (self packageOrganizer packageOfClassNamed: #T2) equals: self packageOrganizer undefinedPackage.
 
 	t1 removeFromSystem.
 
-	self assert: (self packageOrganizer packageOfClassNamed: #T1) isNil.
-	self assert: (self packageOrganizer packageOfClassNamed: #T2) isNil
+	self assert: (self packageOrganizer packageOfClassNamed: #T1) equals: self packageOrganizer undefinedPackage.
+	self assert: (self packageOrganizer packageOfClassNamed: #T2) equals: self packageOrganizer undefinedPackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testTraitMethodPackage [
 	| t1 testPackage |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
@@ -219,7 +221,7 @@ T2TraitWithPackagesTest >> testTraitMethodPackage [
 	self assert: (t1 >> #m1) package equals: testPackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitWithPackagesTest >> testTraitPackage [
 	| t1 testPackage |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.

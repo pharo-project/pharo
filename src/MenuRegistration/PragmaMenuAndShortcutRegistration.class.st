@@ -2,18 +2,20 @@
 A PragmaMenuAndShortcutRegistration is the list items holder
 "
 Class {
-	#name : #PragmaMenuAndShortcutRegistration,
-	#superclass : #Object,
+	#name : 'PragmaMenuAndShortcutRegistration',
+	#superclass : 'Object',
 	#instVars : [
 		'items',
 		'currentRoot',
 		'platform',
 		'model'
 	],
-	#category : #'MenuRegistration-Core'
+	#category : 'MenuRegistration-Core',
+	#package : 'MenuRegistration',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaMenuAndShortcutRegistration class >> model: aModel [
 
 	^ self new
@@ -21,26 +23,26 @@ PragmaMenuAndShortcutRegistration class >> model: aModel [
 		yourself
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> action: aBlock [
 
 	self currentItem action: aBlock
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> arguments: anArray [
 
 	self currentItem arguments: anArray
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> category: aByteSymbol [
 
 	self currentItem
 		category: aByteSymbol
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> category: aByteSymbol default: aKMModifiedShortcut do: aBlockClosure [
 
 	self currentItem
@@ -49,7 +51,7 @@ PragmaMenuAndShortcutRegistration >> category: aByteSymbol default: aKMModifiedS
 		action: aBlockClosure
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> category: aByteSymbol default: aKMModifiedShortcut do: aBlockClosure description: aByteString [
 
 	self currentItem
@@ -59,7 +61,7 @@ PragmaMenuAndShortcutRegistration >> category: aByteSymbol default: aKMModifiedS
 		help: aByteString
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> category: aByteSymbol shortcut: aKMModifiedShortcut do: aBlockClosure [
 
 	self currentItem
@@ -68,7 +70,7 @@ PragmaMenuAndShortcutRegistration >> category: aByteSymbol shortcut: aKMModified
 		action: aBlockClosure
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> category: aByteSymbol shortcut: aKMModifiedShortcut do: aBlockClosure description: aByteString [
 
 	self currentItem
@@ -78,7 +80,7 @@ PragmaMenuAndShortcutRegistration >> category: aByteSymbol shortcut: aKMModified
 		help: aByteString
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> createNewItem [
 
 	items add: self itemClass new.
@@ -88,65 +90,65 @@ PragmaMenuAndShortcutRegistration >> createNewItem [
 		parent: currentRoot
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> currentItem [
 
 	^ items last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistration >> currentRoot [
 
 	^ currentRoot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistration >> currentRoot: aMenuRegistration [
 
 	currentRoot := aMenuRegistration
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> default: aKMModifiedShortcut [
 
 	self currentItem
 		default: aKMModifiedShortcut
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> description: aByteString [
 
 	self currentItem
 		help: aByteString
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> do: aBlockClosure [
 
 	self currentItem
 		action: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistration >> enabled: aBoolean [
 
 	self currentItem enabled: aBoolean
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> enabledBlock: aBlock [
 
 	self currentItem enabledBlock: aBlock
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> group: aSymbol [
 
 	self createNewItem.
 	self currentItem group: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistration >> handOutItems [
 	"we don't want to hold a reference to the items after they are hand out to the registration"
 
@@ -156,19 +158,19 @@ PragmaMenuAndShortcutRegistration >> handOutItems [
 	^ itemsCopy
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> help: aString [
 
 	self currentItem help: aString
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> icon: anIcon [
 
 	self currentItem icon: anIcon
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> iconName: aSymbol [
 	"instead of forcing clients to refer to an icon builder such Smalltalk ui icons
 	this message encapsulates it inside the builder itself. When removing uses of Smalltalk ui icons it avoid to force to subclass class with menu to inherit from Model."
@@ -176,7 +178,7 @@ PragmaMenuAndShortcutRegistration >> iconName: aSymbol [
 	self icon: (Smalltalk ui icons iconNamed: aSymbol)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PragmaMenuAndShortcutRegistration >> initialize [
 
 	super initialize.
@@ -184,67 +186,67 @@ PragmaMenuAndShortcutRegistration >> initialize [
 	items := OrderedCollection new
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> item: aSymbol [
 
 	self createNewItem.
 	self currentItem item: aSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PragmaMenuAndShortcutRegistration >> itemClass [
 
 	^ PragmaMenuAndShortcutRegistrationItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistration >> items [
 
 	^ items
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> keyText: aString [
 	self currentItem keyText: aString
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> keyText: aString if: aBoolean [
 	aBoolean ifFalse: [ ^ self ].
 	self keyText: aString
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> label: aString [
 
 	self currentItem label: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistration >> model [
 
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistration >> model: aModel [
 
 	model := aModel
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> order: anInteger [
 
 	self currentItem order: anInteger
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> parent: aSymbol [
 
 	self currentItem parent: aSymbol
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> platform: anArray [
 
 	anArray isEmpty
@@ -252,32 +254,32 @@ PragmaMenuAndShortcutRegistration >> platform: anArray [
 		ifFalse: [ platform := anArray first ]
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> precondition: aBlock [
 
 	self currentItem precondition: aBlock
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> selector: aSelector [
 
 	self currentItem selector: aSelector
 ]
 
-{ #category : #'keymapping protocol' }
+{ #category : 'keymapping protocol' }
 PragmaMenuAndShortcutRegistration >> shortcut: aSymbol [
 
 	self createNewItem.
 	self currentItem shortcut: aSymbol
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> target: aSymbol [
 
 	self currentItem target: aSymbol
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> with: aBlock [
 	| old itemOrGroup |
 	old := self currentRoot.
@@ -287,7 +289,7 @@ PragmaMenuAndShortcutRegistration >> with: aBlock [
 		ensure: [ self currentRoot: old ]
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> withSeparatorAfter [
 
 	self currentItem withSeparatorAfter

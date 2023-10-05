@@ -1,11 +1,11 @@
-Extension { #name : #FreeTypeFont }
+Extension { #name : 'FreeTypeFont' }
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 FreeTypeFont >> asFreetypeFont [
 	^ self
 ]
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 FreeTypeFont >> getGlyphWidth: aCharacter [
 	aCharacter asciiValue = 9 ifTrue: [
 		^  (self linearWidthOf: Character space) * 8
@@ -13,7 +13,7 @@ FreeTypeFont >> getGlyphWidth: aCharacter [
 	^ (self linearWidthOf: aCharacter)
 ]
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 FreeTypeFont >> getPreciseAscent [
 	"we using face bouding box for getting ascent value, otherwise two different
 	font sizes on same line won't align properly"
@@ -21,7 +21,7 @@ FreeTypeFont >> getPreciseAscent [
 	^(self face ascender * self pixelSize / self face unitsPerEm) asFloat
 ]
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 FreeTypeFont >> getPreciseDescent [
 	"we using face bouding box for getting ascent value, otherwise two different
 	font sizes on same line won't align properly"
@@ -29,14 +29,14 @@ FreeTypeFont >> getPreciseDescent [
 	^(self face descender * self pixelSize / self face unitsPerEm) asFloat negated
 ]
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 FreeTypeFont >> getPreciseHeight [
 	"get precise font ascent, can be floating value"
 
 	^(self face height * self pixelSize / self face unitsPerEm) asFloat
 ]
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 FreeTypeFont >> glyphRendererOn: anAthensSurface [
 
 	self validate.

@@ -5,51 +5,53 @@ A special node that matches a specific matcher state rather than any input chara
 The state is either at-beginning-of-line or at-end-of-line.
 "
 Class {
-	#name : #RxmSpecial,
-	#superclass : #RxmLink,
+	#name : 'RxmSpecial',
+	#superclass : 'RxmLink',
 	#instVars : [
 		'matchSelector'
 	],
-	#category : #'Regex-Core-Links'
+	#category : 'Regex-Core-Links',
+	#package : 'Regex-Core',
+	#tag : 'Links'
 }
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxmSpecial >> beBeginningOfLine [
 
 	matchSelector := #atBeginningOfLine
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSpecial >> beBeginningOfWord [
 
 	matchSelector := #atBeginningOfWord
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSpecial >> beEndOfLine [
 
 	matchSelector := #atEndOfLine
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSpecial >> beEndOfWord [
 
 	matchSelector := #atEndOfWord
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSpecial >> beNotWordBoundary [
 
 	matchSelector := #notAtWordBoundary
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmSpecial >> beWordBoundary [
 
 	matchSelector := #atWordBoundary
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmSpecial >> matchAgainst: aMatcher [
 	"Match without consuming any input, if the matcher is
 	in appropriate state."

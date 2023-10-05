@@ -1,9 +1,10 @@
 Trait {
-	#name : #TRGBehaviorTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'TRGBehaviorTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testBehavior [
 	| newBehavior method |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -22,7 +23,7 @@ TRGBehaviorTest >> testBehavior [
 	self deny: newBehavior hasTraitComposition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testBehaviorWithCategorizedMethods [
 	| newBehavior method |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -38,7 +39,7 @@ TRGBehaviorTest >> testBehaviorWithCategorizedMethods [
 	self assert: (newBehavior hasResolved: #tagsForMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testBehaviorWithMethods [
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -67,7 +68,7 @@ TRGBehaviorTest >> testBehaviorWithMethods [
 	self assert: newBehavior localMethods isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testBehaviorWithOneMethod [
 	| newBehavior method |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -94,7 +95,7 @@ TRGBehaviorTest >> testBehaviorWithOneMethod [
 	self assert: (newBehavior hasResolved: #localMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testBehaviorWithProtocols [
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -116,7 +117,7 @@ TRGBehaviorTest >> testBehaviorWithProtocols [
 	self assert: newBehavior protocols isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testBehaviorWithUnategorizedMethod [
 	| newBehavior method |
 
@@ -133,17 +134,17 @@ TRGBehaviorTest >> testBehaviorWithUnategorizedMethod [
 
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanProtocols.
 
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 
 	newBehavior cleanLocalMethods.
 	self assert: (newBehavior protocols isEmpty)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testBehaviorWithUnategorizedMethods [
 	| newBehavior method1 method2 |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -160,15 +161,15 @@ TRGBehaviorTest >> testBehaviorWithUnategorizedMethods [
 	newBehavior addLocalMethod: method2.
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanProtocols.
 	self assert: newBehavior protocols size equals: 1.
-	self assert: newBehavior protocols first equals: 'as yet unclassified'.
+	self assert: newBehavior protocols first equals: Protocol unclassified.
 	newBehavior cleanLocalMethods.
 	self assert: newBehavior protocols isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testCopyForBehaviorDefinition [
 
 	| env aClass copy |
@@ -187,7 +188,7 @@ TRGBehaviorTest >> testCopyForBehaviorDefinition [
 	self assert: copy tags sorted equals: #(tag1 tag2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testHasMethods [
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -203,7 +204,7 @@ TRGBehaviorTest >> testHasMethods [
 	self deny: newBehavior hasMethods
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testIsBehavior [
 
 	| newBehavior |
@@ -212,7 +213,7 @@ TRGBehaviorTest >> testIsBehavior [
 	self assert: newBehavior isBehavior
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testMakeReslolvedResolvesEverything [
 
 	| behavior |
@@ -222,7 +223,7 @@ TRGBehaviorTest >> testMakeReslolvedResolvesEverything [
 	self assert: behavior unresolvedProperties isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testNewBehavior [
 	| newBehavior newSuperclass |
 	newBehavior := self behaviorClass unnamed.
@@ -247,7 +248,7 @@ TRGBehaviorTest >> testNewBehavior [
 		assert: (newSuperclass hasUnresolvedAll: #(superclass localMethods protocols))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGBehaviorTest >> testProtocols [
 
 	| newBehavior |

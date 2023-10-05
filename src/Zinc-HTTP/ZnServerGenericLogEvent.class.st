@@ -8,15 +8,17 @@ Here are two examples:
 (ZnServerGenericLogEvent subject: { #id->123. #reason->#timeout } asDictionary) emit.
 "
 Class {
-	#name : #ZnServerGenericLogEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnServerGenericLogEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'subject'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnServerGenericLogEvent class >> subject: object [
 	"self subject: #(i 10 j -1)."
 	"self subject: 'How are you?'."
@@ -26,18 +28,18 @@ ZnServerGenericLogEvent class >> subject: object [
 		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerGenericLogEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream space; nextPutAll: subject asString
+	stream nextPutAll: subject asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerGenericLogEvent >> subject [
 	^ subject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerGenericLogEvent >> subject: anObject [
 	subject := anObject
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #TaAbstractComposition }
+Extension { #name : 'TaAbstractComposition' }
 
-{ #category : #'*Ring-TraitsV2Support' }
+{ #category : '*Ring-TraitsV2Support' }
 TaAbstractComposition >> asRingMinimalDefinitionIn: anRGEnvironment [
 	| def |
 	^ anRGEnvironment backend

@@ -1,6 +1,6 @@
-Extension { #name : #Point }
+Extension { #name : 'Point' }
 
-{ #category : #'*Tool-Finder' }
+{ #category : '*Tool-Finder' }
 Point class >> approvedSelectorsForMethodFinder [
 
 	^ self selectors

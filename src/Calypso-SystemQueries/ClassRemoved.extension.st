@@ -1,6 +1,6 @@
-Extension { #name : #ClassRemoved }
+Extension { #name : 'ClassRemoved' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClassRemoved >> canAffectResultOfMethodQuery: aMethodQuery [
 	^true
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenameMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenameMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenameMethodRefactoring };
@@ -12,31 +14,18 @@ RBRenameMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameMethodParametrizedTest >> constructor [
 	^ #renameMethod:in:to:permutation:
 ]
 
-{ #category : #'failure tests' }
-RBRenameMethodParametrizedTest >> testFailureExistingSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ #checkClass: . RBBasicLintRuleTestData . #runOnEnvironment: . (1 to: 1) })
-]
-
-{ #category : #'failure tests' }
-RBRenameMethodParametrizedTest >> testFailureMultipleSelectors [
-	"Renaming a method with multiple selectors should raise warning"
-	self shouldWarn: (self createRefactoringWithArguments:
-		{ #checkClass: . RBBasicLintRuleTestData . #foo: . (1 to: 1) })
-]
-
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBRenameMethodParametrizedTest >> testFailureWithNonCorrectNumberOfArgs [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #checkClass: . RBBasicLintRuleTestData . #checkClass . (1 to: 1) })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -60,7 +49,7 @@ RBRenameMethodParametrizedTest >> testRenameMethodFromTrait [
 		equals: #RBTDummy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 	| refactoring class |
 	model := (RBClassModelFactory rbNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-DataForTesting')).
@@ -76,13 +65,13 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 '	^classBlock value: aSmalllintContext value: result')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
 		{ ('demoRenameMethod:' , 'PermuteArgs:') asSymbol . RBClassDataForRefactoringTest .
 		('demoRenameMethod:' , 'PermuteArgs:') asSymbol . #(2 1) }.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self
 		assert:
@@ -100,13 +89,13 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #demoExampleCall), ' ^self demoRenameMethod: 2 PermuteArgs: 1')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
 		{ ('rename:' , 'two:') asSymbol . RBClassDataForRefactoringTest .
 		('rename:' , 'two:') asSymbol . #(2 1 ) }.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	
 	self 
@@ -118,7 +107,7 @@ RBRenameMethodParametrizedTest >> testRenamePermuteArgs [
 		equals: (self parseMethod: (self methodSignatureStringForUnarySymbol: #exampleCall), '<sampleInstance> ^self rename: 2 two: 1')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenamePrimitive [
 	| refactoring count |
 	count := 0.
@@ -136,7 +125,7 @@ RBRenameMethodParametrizedTest >> testRenamePrimitive [
 	self assert: count equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameTestMethod [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -160,7 +149,7 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod [
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloLoaderPolicy,
-	#superclass : #Object,
+	#name : 'MetacelloLoaderPolicy',
+	#superclass : 'Object',
 	#instVars : [
 		'overrideRepositories',
 		'repositoryMap',
@@ -12,16 +12,18 @@ Class {
 		'loadDirective',
 		'silently'
 	],
-	#category : #'Metacello-MC-Loaders'
+	#category : 'Metacello-MC-Loaders',
+	#package : 'Metacello-MC',
+	#tag : 'Loaders'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloLoaderPolicy class >> overrideRepositories: aCollection [
 
 	^self new overrideRepositories: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> cacheGofer [
 
 	cacheGofer == nil 
@@ -33,14 +35,14 @@ MetacelloLoaderPolicy >> cacheGofer [
 	^ cacheGofer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> cacheRepository [
 
 	cacheRepository == nil ifTrue: [ cacheRepository := MCDictionaryRepository new ].
 	^ cacheRepository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> cacheRepository: anMCRepository [
 
 	cacheRepository := anMCRepository.
@@ -48,35 +50,35 @@ MetacelloLoaderPolicy >> cacheRepository: anMCRepository [
 	ensuredMap := cacheGofer := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> ensuredMap [
 
 	ensuredMap == nil ifTrue: [ ensuredMap := Dictionary new ].
 	^ensuredMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> ensuredMap: anObject [
 	ensuredMap := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloLoaderPolicy >> hasRepositoryOverrides [
 
 	^self overrideRepositories ~~ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> ignoreImage [
 	^ ignoreImage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> ignoreImage: anObject [
 	ignoreImage := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloLoaderPolicy >> initialize [
 
 	self 
@@ -86,44 +88,44 @@ MetacelloLoaderPolicy >> initialize [
 	ignoreImage := false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloLoaderPolicy >> load [
 
 	overrideRepositories := Array with: self cacheRepository. "ensure that hasRepositoryOverrides is true"
 	self loadDirective loadWithPolicy: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> loadData [
 
  	loadData == nil ifTrue: [ loadData := MetacelloLoadData new ].
 	^loadData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> loadDirective [
 
 	loadDirective == nil ifTrue: [ loadDirective := MetacelloLinearLoadDirective new ].
 	^ loadDirective
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> overrideRepositories [
 	^ overrideRepositories
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> overrideRepositories: anObject [
 	overrideRepositories := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloLoaderPolicy >> pushAtomicLoadDirectivesDuring: aBlock for: aLoader [
 
 	self pushLoadDirective: (MetacelloAtomicLoadDirective loader: aLoader) during: aBlock.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloLoaderPolicy >> pushExplicitLoadDirectivesDuring: aBlock for: aLoader [
 
 	| directive |
@@ -132,13 +134,13 @@ MetacelloLoaderPolicy >> pushExplicitLoadDirectivesDuring: aBlock for: aLoader [
 	^directive
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloLoaderPolicy >> pushLinearLoadDirectivesDuring: aBlock for: aLoader [
 
 	self pushLoadDirective: (MetacelloLinearLoadDirective loader: aLoader) during: aBlock.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloLoaderPolicy >> pushLoadDirective: aLoaderDirective during: aBlock [
 
 	|  oldRoot |
@@ -148,32 +150,32 @@ MetacelloLoaderPolicy >> pushLoadDirective: aLoaderDirective during: aBlock [
 	aBlock ensure: [ loadDirective := oldRoot ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> repositoryMap [
 
 	repositoryMap == nil ifTrue: [ repositoryMap := Dictionary new ].
 	^repositoryMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> repositoryMap: anObject [
 	repositoryMap := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> resetCacheGofer [
 
 	cacheGofer := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> silently [
 
 	silently == nil ifTrue: [ silently := false ].
 	^ silently
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoaderPolicy >> silently: anObject [
 	silently := anObject
 ]

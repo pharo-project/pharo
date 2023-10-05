@@ -1,6 +1,6 @@
-Extension { #name : #LargePositiveIntegerTest }
+Extension { #name : 'LargePositiveIntegerTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 LargePositiveIntegerTest >> testLargeSqrtFloor [
 	"This test fails if a careless implementation naivly factors out the power of two (remove the trailing zeroes up to lowBit).
 	This was the case in a previous implementation, so this is a non regression test."
@@ -12,7 +12,7 @@ LargePositiveIntegerTest >> testLargeSqrtFloor [
 	self assert: (root + 1) squared > large
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 LargePositiveIntegerTest >> testMultDicAddSub [
 	| n f f1 |
 	n := 100.

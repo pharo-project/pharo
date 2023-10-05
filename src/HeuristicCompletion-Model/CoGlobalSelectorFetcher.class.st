@@ -4,12 +4,14 @@ I use the SystemNavigation to get all selectors and then filtering them.
 See the #entriesDo:
 "
 Class {
-	#name : #CoGlobalSelectorFetcher,
-	#superclass : #CoGlobalFetcher,
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#name : 'CoGlobalSelectorFetcher',
+	#superclass : 'CoGlobalFetcher',
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoGlobalSelectorFetcher >> entriesDo: aBlock [
 
 	astNode ifNotNil: [ :node | node parent ifNotNil: [ :parent | "Try first to continue the parent keyword message"

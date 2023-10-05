@@ -2,22 +2,24 @@
 A MCTraitParser extracts an MCTraitDefinition from the source.
 "
 Class {
-	#name : #MCTraitParser,
-	#superclass : #MCDoItParser,
-	#category : #'Monticello-Chunk Format'
+	#name : 'MCTraitParser',
+	#superclass : 'MCDoItParser',
+	#category : 'Monticello-Chunk Format',
+	#package : 'Monticello',
+	#tag : 'Chunk Format'
 }
 
-{ #category : #'factory identification hook' }
+{ #category : 'factory identification hook' }
 MCTraitParser class >> pattern [
 	^ 'Trait named:*'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCTraitParser >> addDefinitionsTo: aCollection [
+
 	| node compositionIndex categoryIndex slotsIndex traitName traitCompositionString slotsArray argumentNode categoryString definition |
-	 
 	node := RBParser parseExpression: source.
-	
+
 	node selector caseOf: { 
 		[#named:] -> [ 
 			compositionIndex := nil. slotsIndex := nil. categoryIndex := nil ].
@@ -35,34 +37,29 @@ MCTraitParser >> addDefinitionsTo: aCollection [
 
 	traitName := node arguments first value.
 
-	traitCompositionString := compositionIndex 
-		ifNotNil: [ 
-			argumentNode := node arguments at: compositionIndex.
-			argumentNode source copyFrom: argumentNode sourceInterval first to: argumentNode sourceInterval last ]
-		ifNil: [ '' ].
+	traitCompositionString := compositionIndex
+		                          ifNotNil: [
+			                          argumentNode := node arguments at: compositionIndex.
+			                          argumentNode source copyFrom: argumentNode sourceInterval first to: argumentNode sourceInterval last ]
+		                          ifNil: [ '' ].
 
-	slotsArray := slotsIndex 
-		ifNotNil: [ 
-			argumentNode := node arguments at: slotsIndex.
-			argumentNode statements collect: [ :each |
-				each source copyFrom: each sourceInterval first to: each sourceInterval last ] ]
-		ifNil: [ Array new ].
+	slotsArray := slotsIndex
+		              ifNotNil: [
+			              argumentNode := node arguments at: slotsIndex.
+			              argumentNode statements collect: [ :each | each source copyFrom: each sourceInterval first to: each sourceInterval last ] ]
+		              ifNil: [ Array new ].
 
-	categoryString := categoryIndex 
-		ifNotNil: [ 
-			argumentNode := node arguments at: categoryIndex.
-			argumentNode source copyFrom: argumentNode sourceInterval first to: argumentNode sourceInterval last ]
-		ifNil: [ 'Unclassified' ].
+	categoryString := categoryIndex
+		                  ifNotNil: [
+			                  argumentNode := node arguments at: categoryIndex.
+			                  argumentNode source copyFrom: argumentNode sourceInterval first to: argumentNode sourceInterval last ]
+		                  ifNil: [ 'Unclassified' ].
 
-	definition := MCTraitDefinition
-		name: traitName
-		traitComposition: traitCompositionString
-		category:  categoryString
-		instVarNames:  slotsArray
-		classInstVarNames: ''
-		classTraitComposition: nil
-		comment:  ''  
-		commentStamp: ''.
-		
-	aCollection add: definition.
+	definition := (MCTraitDefinition named: traitName)
+		              traitComposition: traitCompositionString;
+		              packageName: categoryString;
+		              instVarNames: slotsArray;
+		              yourself.
+
+	aCollection add: definition
 ]

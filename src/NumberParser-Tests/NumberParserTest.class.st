@@ -4,31 +4,32 @@ Provide tests for new clas aimed at parsing numbers.
 It duplicates NumberParsingTest, with few more tests.
 "
 Class {
-	#name : #NumberParserTest,
-	#superclass : #ClassTestCase,
-	#category : #'NumberParser-Tests'
+	#name : 'NumberParserTest',
+	#superclass : 'ClassTestCase',
+	#category : 'NumberParser-Tests',
+	#package : 'NumberParser-Tests'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NumberParserTest >> areLowercaseDigitsAllowed [
 	"Answer true if lowercase letter are allowed digits."
 
 	^(NumberParser parse: '16re' onError: [-1]) = 16rE
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NumberParserTest >> classToBeTested [
 
 	^ NumberParser
 ]
 
-{ #category : #'tests - Fail' }
+{ #category : 'tests - Fail' }
 NumberParserTest >> testFail [
 	"Verify that the value of a failblock is returned."
 	self assert: (NumberParser parse: 'blablabla' onError: [42]) equals: 42
 ]
 
-{ #category : #'tests - Fail' }
+{ #category : 'tests - Fail' }
 NumberParserTest >> testFailParsingGarbage [
 
 	| failed |
@@ -47,7 +48,7 @@ NumberParserTest >> testFailParsingGarbage [
 		assert: failed
 ]
 
-{ #category : #'tests - Fail' }
+{ #category : 'tests - Fail' }
 NumberParserTest >> testFailWithDetails [
 
 	| failed |
@@ -66,7 +67,7 @@ NumberParserTest >> testFailWithDetails [
 		assert: failed
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatFromStreamAsNumber [
 	"This covers parsing in Number>>readFrom:"
 
@@ -112,7 +113,7 @@ NumberParserTest >> testFloatFromStreamAsNumber [
 	self assert: rs upToEnd equals: 'z2'
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatFromStreamWithExponent [
 	"This covers parsing in Number>>readFrom:"
 
@@ -148,7 +149,7 @@ NumberParserTest >> testFloatFromStreamWithExponent [
 	self assert: rs upToEnd equals: 'e'
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatGradualUnderflow [
 	"Gradual underflow are tricky.
 	This is a non regression test for http://bugs.squeak.org/view.php?id=6976"
@@ -172,7 +173,7 @@ NumberParserTest >> testFloatGradualUnderflow [
 	self assert: (NumberParser parse: str contents) equals: float
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatMaxAndMin [
 	"This covers parsing in Number>>readFrom:"
 
@@ -194,7 +195,7 @@ NumberParserTest >> testFloatMaxAndMin [
 	self assert: rs atEnd
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatPrintString [
 	| f r bases |
 	f := Float basicNew: 2.
@@ -244,7 +245,7 @@ NumberParserTest >> testFloatPrintString [
 					self assert: (NumberParser parse: str contents) equals: f ] ]
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatReadError [
 	"This covers parsing in Number>>readFrom:"
 
@@ -284,7 +285,7 @@ NumberParserTest >> testFloatReadError [
 	self should: [NumberParser parse: rs] raise: Error
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatReadWithRadix [
 	"This covers parsing in Number>>readFrom:
 	Note: In most Smalltalk dialects, the radix notation is not used for numbers
@@ -299,7 +300,7 @@ NumberParserTest >> testFloatReadWithRadix [
 	self assert: rs upToEnd equals: 'e9'
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testFloatmin [
 	"Note that these are originally tests cases for former bugs of libc dtoa from netlib.
 	ref http://www.exploringbinary.com/gays-strtod-returns-zero-for-inputs-just-above-2-1075/
@@ -313,7 +314,7 @@ NumberParserTest >> testFloatmin [
 	self assert: moreThanHalfmin = Float fmin description: 'nearest Float of a Fraction > 0.5*Float fmin is Float fmin'
 ]
 
-{ #category : #'tests - Integer' }
+{ #category : 'tests - Integer' }
 NumberParserTest >> testIntegerReadFrom [
 	"Ensure remaining characters in a stream are not lost when parsing an integer."
 	| rs i s |
@@ -329,7 +330,7 @@ NumberParserTest >> testIntegerReadFrom [
 	self assert: '.s could be confused with a ScaledDecimal' equals: s
 ]
 
-{ #category : #'tests - Integer' }
+{ #category : 'tests - Integer' }
 NumberParserTest >> testIntegerReadWithRadix [
 	"This covers parsing in Number>>readFrom:
 	Note: In most Smalltalk dialects, the radix notation is not used for numbers
@@ -345,7 +346,7 @@ NumberParserTest >> testIntegerReadWithRadix [
 	self assert: rs upToEnd equals: 'eee'
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testIntegerWithNegExponentIsAFloat [
 	"Make sure a float literal like 1e(some possible neg exponent)
 	isn't evaluated to the non-literal Fraction"
@@ -360,7 +361,7 @@ NumberParserTest >> testIntegerWithNegExponentIsAFloat [
 	self assert: aFloat isFloat
 ]
 
-{ #category : #'tests - Float' }
+{ #category : 'tests - Float' }
 NumberParserTest >> testIsNumber [
 
 	self assert: (NumberParser isNumber: '-1.2') equals: true.
@@ -373,7 +374,7 @@ NumberParserTest >> testIsNumber [
 	self assert: (NumberParser isNumber: '1..2') equals: false
 ]
 
-{ #category : #'tests - ScaledDecimal' }
+{ #category : 'tests - ScaledDecimal' }
 NumberParserTest >> testScaledDecimalWithTrailingZeroes [
 	"This is a non regression tests for http://bugs.squeak.org/view.php?id=7169"
 
@@ -382,13 +383,13 @@ NumberParserTest >> testScaledDecimalWithTrailingZeroes [
 	self assert: (NumberParser parse: '0.050s3') equals: 1/20
 ]
 
-{ #category : #'tests - ScaledDecimal' }
+{ #category : 'tests - ScaledDecimal' }
 NumberParserTest >> testScaledDecimalWithoutScaleSpecification [
 	self assert: (NumberParser parse: '0.050s') equals: 1/20.
 	self assert: (NumberParser parse: '0.050s') scale equals: 3
 ]
 
-{ #category : #'tests - squeezing' }
+{ #category : 'tests - squeezing' }
 NumberParserTest >> testSqueezingOutNumbers [
 	"test that SqNumberParser squeezeNumberOutOfString finds numbers."
 
@@ -401,7 +402,7 @@ NumberParserTest >> testSqueezingOutNumbers [
 	self assert: 'blabla1230' squeezeOutNumber equals: 1230
 ]
 
-{ #category : #'tests - Integer' }
+{ #category : 'tests - Integer' }
 NumberParserTest >> testcheckForCoverage [
 	"Tests for old semantics of Number>>readFrom:"
 

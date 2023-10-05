@@ -2,18 +2,20 @@
 Trait for testing tutorials
 "
 Trait {
-	#name : #TTutorialTest,
-	#category : #'ProfStef-Tests-Traits'
+	#name : 'TTutorialTest',
+	#category : 'ProfStef-Tests-Traits',
+	#package : 'ProfStef-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TTutorialTest >> testEachSelectorExists [
 	self testedTutorial tutorial do: [:aSelector|
 		self assert: (self tutorial respondsTo: aSelector)
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TTutorialTest >> testEachSelectorReturnsALesson [
 	| answer |
 	self testedTutorial tutorial do: [:aSelector|
@@ -22,7 +24,7 @@ TTutorialTest >> testEachSelectorReturnsALesson [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TTutorialTest >> testLessonAtReturnsCorrespondingLesson [
 	| answer |
 	1 to: (self testedTutorial tutorial size) do: [:index|
@@ -31,17 +33,17 @@ TTutorialTest >> testLessonAtReturnsCorrespondingLesson [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TTutorialTest >> testNotEmpty [
 	self assert: self testedTutorial tutorial notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TTutorialTest >> testSizeReturnsNumberOfSelectors [
 	self assert: (self testedTutorial tutorial size) equals: self testedTutorial size
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TTutorialTest >> testedTutorial [
 	"Returns an instance of an AbstractTutorial subclass"
 	^ self explicitRequirement

@@ -2,8 +2,8 @@
 Constants for the FreeType cache
 "
 Class {
-	#name : #FreeTypeCacheConstants,
-	#superclass : #SharedPool,
+	#name : 'FreeTypeCacheConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'FreeTypeCacheGlyph',
 		'FreeTypeCacheGlyphLCD',
@@ -11,10 +11,12 @@ Class {
 		'FreeTypeCacheLinearWidth',
 		'FreeTypeCacheWidth'
 	],
-	#category : #'FreeType-Cache'
+	#category : 'FreeType-Cache',
+	#package : 'FreeType',
+	#tag : 'Cache'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FreeTypeCacheConstants class >> initialize [
 
 	FreeTypeCacheWidth := 0.

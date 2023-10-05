@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 Object >> matchesQueryBrowserFilter: aQueryBrowserFilter [
 
 	^self calypsoEnvironmentType match: self forQueryBrowserFilter: aQueryBrowserFilter

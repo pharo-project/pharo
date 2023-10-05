@@ -2,96 +2,110 @@
 I am an abstract class that represents a system event.
 "
 Class {
-	#name : #EpEvent,
-	#superclass : #Object,
-	#category : #'Epicea-Model'
+	#name : 'EpEvent',
+	#superclass : 'Object',
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 EpEvent class >> handlesAnnouncement: anAnnouncement [
 	"The receiver acts as a filter to determine whether subscribers who used the receiver as signaling tag (event identifier class or symbol) should receive incoming announcement. In particular, registering to a superclass will receive the announcements from all subclasses."
 
 	^ anAnnouncement class includesBehavior: self
 ]
 
-{ #category : #visitor }
+{ #category : 'testing' }
+EpEvent class >> isAbstract [
+
+	^ self == EpEvent
+]
+
+{ #category : 'visitor' }
 EpEvent >> accept: aVisitor [
 
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isCodeChange [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpBehaviorChange [
 
 	^ false
 ]
 
-{ #category : #testing }
-EpEvent >> isEpCategoryChange [
-
-	^ false
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpClassChange [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpEvent [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpLogEntriesComment [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpMethodChange [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+EpEvent >> isEpPackageChange [
+
+	^ false
+]
+
+{ #category : 'testing' }
+EpEvent >> isEpPackageTagChange [
+
+	^ false
+]
+
+{ #category : 'testing' }
 EpEvent >> isEpProtocolChange [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpRefactoring [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpTestResultSet [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isEpTraitChange [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isMonticelloVersionSave [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEvent >> isMonticelloVersionsLoad [
 
 	^ false

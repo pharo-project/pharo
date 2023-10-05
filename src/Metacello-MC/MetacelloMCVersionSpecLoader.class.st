@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloMCVersionSpecLoader,
-	#superclass : #Object,
+	#name : 'MetacelloMCVersionSpecLoader',
+	#superclass : 'Object',
 	#instVars : [
 		'versionSpec',
 		'required',
@@ -8,10 +8,12 @@ Class {
 		'loader',
 		'loaderPolicy'
 	],
-	#category : #'Metacello-MC-Loaders'
+	#category : 'Metacello-MC-Loaders',
+	#package : 'Metacello-MC',
+	#tag : 'Loaders'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloMCVersionSpecLoader class >> on: aVersionSpec [
 
 	^(self new) 
@@ -19,13 +21,13 @@ MetacelloMCVersionSpecLoader class >> on: aVersionSpec [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> label [
 
 	^self versionSpec label
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionSpecLoader >> load [
   | mcLoader |
   packages := Dictionary new.
@@ -51,7 +53,7 @@ MetacelloMCVersionSpecLoader >> load [
   ^ mcLoader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> loader [
 
 	loader == nil 
@@ -62,52 +64,52 @@ MetacelloMCVersionSpecLoader >> loader [
 	^loader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> loaderPolicy [
 	^ loaderPolicy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> loaderPolicy: anObject [
 	loaderPolicy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> name [
 
 	^self versionSpec name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> operator [
 
 	^self loader operator
 ]
 
-{ #category : #'spec compatibility' }
+{ #category : 'spec compatibility' }
 MetacelloMCVersionSpecLoader >> packageSpecsInLoadOrder [
     ^ self versionSpec packageSpecsInLoadOrderForMap: packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> packages [
 
 	^packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> project [
 
 	^self versionSpec project
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionSpecLoader >> repositories [
 
 	^self repositorySpecs
 ]
 
-{ #category : #'spec compatibility' }
+{ #category : 'spec compatibility' }
 MetacelloMCVersionSpecLoader >> repositorySpecs [
 
 	| repositoryMap |
@@ -117,19 +119,19 @@ MetacelloMCVersionSpecLoader >> repositorySpecs [
 	^repositoryMap values.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> required [
 
 	required == nil ifTrue: [ ^#() ].
 	^ required
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> required: anObject [
 	required := anObject
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionSpecLoader >> resolvePackageNames [
 
 	packages := Dictionary new.
@@ -137,22 +139,22 @@ MetacelloMCVersionSpecLoader >> resolvePackageNames [
 	^packages values collect: [:pkg | pkg name ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersionSpecLoader >> resolveToLoadableSpecs [
     self versionSpec resolveToLoadableSpecs: required forLoad: true map: packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> versionSpec [
 	^ versionSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> versionSpec: anObject [
 	versionSpec := anObject
 ]
 
-{ #category : #'spec compatibility' }
+{ #category : 'spec compatibility' }
 MetacelloMCVersionSpecLoader >> versionString [
 
 	^self versionSpec versionString

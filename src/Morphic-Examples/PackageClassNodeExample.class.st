@@ -2,27 +2,30 @@
 Example for a package class node
 "
 Class {
-	#name : #PackageClassNodeExample,
-	#superclass : #PackageAbstractNodeExample,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'PackageClassNodeExample',
+	#superclass : 'PackageAbstractNodeExample',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageClassNodeExample >> browseItem [
 	Smalltalk tools browser openOnClass: self item
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PackageClassNodeExample >> childNodeClassFromItem: anItem [
 	^PackageMethodCategoryNodeExample
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PackageClassNodeExample >> childrenItems [
-	^ self item organization categories
+
+	^ self item protocolNames
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PackageClassNodeExample >> methodsInCategory: aProtocol [
 
 	^ self item selectorsInProtocol: aProtocol

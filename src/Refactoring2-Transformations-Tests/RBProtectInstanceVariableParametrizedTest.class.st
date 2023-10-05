@@ -1,10 +1,12 @@
 Class {
-	#name : #RBProtectInstanceVariableParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBProtectInstanceVariableParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBProtectInstanceVariableParametrizedTest class >> testParameters [
 self flag: 'need change tranformation to have the same behavior of ref'.
 	^ ParametrizedTestMatrix new
@@ -15,14 +17,14 @@ self flag: 'need change tranformation to have the same behavior of ref'.
 	"	yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBProtectInstanceVariableParametrizedTest >> setUp [
 
 	super setUp.
 	model := self rbModelForVariableTest
 ]
 
-{ #category : #'failure tests' }
+{ #category : 'failure tests' }
 RBProtectInstanceVariableParametrizedTest >> testFailureVariableNotDefined [
 
 	self shouldFail: (self createRefactoringWithArguments:
@@ -31,7 +33,7 @@ RBProtectInstanceVariableParametrizedTest >> testFailureVariableNotDefined [
 			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

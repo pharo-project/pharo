@@ -3,15 +3,17 @@ I am a refactoring change for a method removement. I know about the class of thi
 class or instance side. On removing this method (selector) will be removed from the class.
 "
 Class {
-	#name : #RBRemoveMethodChange,
-	#superclass : #RBRefactoryClassChange,
+	#name : 'RBRemoveMethodChange',
+	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
 		'selector'
 	],
-	#category : #'Refactoring-Changes-Changes-Methods'
+	#category : 'Refactoring-Changes-Changes-Methods',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveMethodChange class >> remove: aSymbol from: aClass [
 
 	^ self new
@@ -20,7 +22,7 @@ RBRemoveMethodChange class >> remove: aSymbol from: aClass [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRemoveMethodChange >> = aRemoveMethodChange [
 
 	super = aRemoveMethodChange
@@ -28,7 +30,7 @@ RBRemoveMethodChange >> = aRemoveMethodChange [
 	^ selector = aRemoveMethodChange selector
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBRemoveMethodChange >> asUndoOperation [
 
 	^ changeFactory
@@ -36,7 +38,7 @@ RBRemoveMethodChange >> asUndoOperation [
 		  in: self changeClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveMethodChange >> changeString [
 
 	^ 'Remove <1s>>>#<2s>'
@@ -44,19 +46,19 @@ RBRemoveMethodChange >> changeString [
 		with: selector
 ]
 
-{ #category : #comparing }
+{ #category : 'private' }
+RBRemoveMethodChange >> generateChanges [
+
+	^ self changeClass removeSelector: selector
+]
+
+{ #category : 'comparing' }
 RBRemoveMethodChange >> hash [
 
 	^ selector hash
 ]
 
-{ #category : #private }
-RBRemoveMethodChange >> primitiveExecute [
-
-	^ self changeClass removeSelector: selector
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveMethodChange >> printOn: aStream [
 
 	aStream
@@ -66,13 +68,13 @@ RBRemoveMethodChange >> printOn: aStream [
 		nextPut: $!
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveMethodChange >> selector [
 
 	^ selector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRemoveMethodChange >> selector: aSymbol [
 
 	selector := aSymbol

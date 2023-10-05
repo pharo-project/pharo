@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloProjectRegistration,
-	#superclass : #Object,
+	#name : 'MetacelloProjectRegistration',
+	#superclass : 'Object',
 	#instVars : [
 		'projectName',
 		'configurationProjectSpec',
@@ -13,10 +13,12 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> baselineClasses [
     "Return a set of the Metacello baseline classes that have been loaded into the image."
 
@@ -25,14 +27,14 @@ MetacelloProjectRegistration class >> baselineClasses [
     ^ BaselineOf allSubclasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> baselineProjectSpecs [
     "MetacelloProjectRegistration baselineProjectSpecs"
 
     ^ self registry baselineProjectSpecs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> classRemoved: aClassRemovalAnnouncement [
   "aRemovalAnnouncement is platform-specific ... responds to #itemClass to 
    answer the class that was removed."
@@ -45,7 +47,7 @@ MetacelloProjectRegistration class >> classRemoved: aClassRemovalAnnouncement [
   registration unregisterProject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> configurationClasses [
 	"Return a set of the Metacello configuration classes that have been loaded into the image."
 
@@ -68,14 +70,14 @@ MetacelloProjectRegistration class >> configurationClasses [
 	^ answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> configurationProjectSpecs [
     "MetacelloProjectRegistration configurationProjectSpecs"
 
     ^ self registry configurationProjectSpecs
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloProjectRegistration class >> copyRegistryRestoreOnErrorWhile: aBlock [
   "install copy of registry for duration of <aBlock> execution."
 
@@ -96,7 +98,7 @@ MetacelloProjectRegistration class >> copyRegistryRestoreOnErrorWhile: aBlock [
   self registry: newRegistry	"if control returned, install newRegistry"
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloProjectRegistration class >> copyRegistryWhile: aBlock [
     "install copy of registry for duration of <aBlock> execution."
 
@@ -115,7 +117,7 @@ MetacelloProjectRegistration class >> copyRegistryWhile: aBlock [
             self registry: oldRegistry ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloProjectRegistration class >> fromMCBaselineProjectSpec: aProjectSpec [
     ^ self new
         projectName: aProjectSpec name;
@@ -123,7 +125,7 @@ MetacelloProjectRegistration class >> fromMCBaselineProjectSpec: aProjectSpec [
         yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloProjectRegistration class >> fromMCConfigurationProjectSpec: aProjectSpec [
     ^ self new
         projectName: aProjectSpec name;
@@ -131,26 +133,26 @@ MetacelloProjectRegistration class >> fromMCConfigurationProjectSpec: aProjectSp
         yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> primeRegistryFromImage [
     "MetacelloProjectRegistration primeRegistryFromImage"
 
     self registry primeRegistryFromImage
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectRegistration class >> projectSpecForClassNamed: aClassName ifAbsent: absentBlock [
     ^ self registry projectSpecForClassNamed: aClassName ifAbsent: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> projectSpecs [
     "MetacelloProjectRegistration projectSpecs"
 
     ^ self configurationProjectSpecs , self baselineProjectSpecs
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 MetacelloProjectRegistration class >> registerProjectSpec: aProjectSpec ifPresent: presentBlock [
     | newRegistration |
     newRegistration := aProjectSpec asProjectRegistration.
@@ -160,12 +162,12 @@ MetacelloProjectRegistration class >> registerProjectSpec: aProjectSpec ifPresen
         ifAbsent: [ newRegistration registerProject ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
     ^ self registry registrationForClassNamed: aClassName ifAbsent: absentBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec ifAbsent: absentBlock ifPresent: presentBlock [
     | newRegistration |
     newRegistration := aProjectSpec asProjectRegistration.
@@ -175,23 +177,23 @@ MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec i
         ifAbsent: [ ^ absentBlock value: newRegistration ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> registry [
     Registry ifNil: [ Registry := MetacelloProjectRegistry new ].
     ^ Registry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> registry: aMetacelloProjectRegistry [
     Registry := aMetacelloProjectRegistry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration class >> resetRegistry [
     Registry := nil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloProjectRegistration >> = aRegistration [
     aRegistration class == self class
         ifFalse: [ ^ false ].
@@ -199,19 +201,19 @@ MetacelloProjectRegistration >> = aRegistration [
         and: [ baselineProjectSpec registrationsCompareEqual: aRegistration baselineProjectSpec ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> baseName [
 	^ self projectSpec baseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> baselineProjectSpec [
   "only one of baselineProjectSpec or configurationProjectSpec should ever be set"
 
   ^ baselineProjectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> baselineProjectSpec: anObject [
   "force the registration to be consistent -- difficult for Metacello to 
    repair registrations during load -- I've tried. "
@@ -224,17 +226,20 @@ MetacelloProjectRegistration >> baselineProjectSpec: anObject [
   baselineProjectSpec := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> baselineProjectSpecIfAbsent: absentBlock [
   ^ baselineProjectSpec ifNil: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> baselineProjectSpecIfPresent: presentBlock ifAbsent: absentBlock [
-     ^ baselineProjectSpec ifNotNil: [ presentBlock cull: baselineProjectSpec ]  ifNil: absentBlock
+
+	^ baselineProjectSpec
+		  ifNotNil: [ presentBlock cull: baselineProjectSpec ]
+		  ifNil: [ absentBlock value ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectRegistration >> canDowngradeTo: aProjectRegistration [
     "true if there are no load conflicts
         OR
@@ -251,7 +256,7 @@ MetacelloProjectRegistration >> canDowngradeTo: aProjectRegistration [
     ^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
   "true if there are no load conflicts
         OR
@@ -276,14 +281,14 @@ MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
   ^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpec [
   "only one of baselineProjectSpec or configurationProjectSpec should ever be set"
 
   ^ configurationProjectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpec: anObject [
   "force the registration to be consistent -- difficult for Metacello to 
    repair registrations during load -- I've tried. "
@@ -296,17 +301,20 @@ MetacelloProjectRegistration >> configurationProjectSpec: anObject [
   configurationProjectSpec := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpecIfAbsent: absentBlock [
     ^ configurationProjectSpec ifNil: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpecIfPresent: presentBlock ifAbsent: absentBlock [
-    ^ configurationProjectSpec ifNotNil: [ presentBlock cull: configurationProjectSpec ]  ifNil: absentBlock
+
+	^ configurationProjectSpec
+		  ifNotNil: [ presentBlock cull: configurationProjectSpec ]
+		  ifNil: [ absentBlock value ]
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloProjectRegistration >> copyOnWrite: aBlock [
     "assume that only registered projects are immutable ... otherwise you'll get an error"
 
@@ -324,7 +332,7 @@ MetacelloProjectRegistration >> copyOnWrite: aBlock [
     ^ copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> currentBranchName [
   ^ self configurationProjectSpec
     ifNotNil: [ 
@@ -334,19 +342,19 @@ MetacelloProjectRegistration >> currentBranchName [
     ifNil: [ baselineProjectSpec repositoryBranchName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> currentVersionString [
   ^ self configurationProjectSpec
     ifNotNil: [ :aSpec | aSpec versionString ]
     ifNil: [ baselineProjectSpec repositoryVersionString ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
 	^ self projectSpec currentlyLoadedClassesInVersion asSet
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 	"5 combinations of loads with no load conflicts:
         No configs and baselines =
@@ -361,24 +369,24 @@ MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 	^ self projectSpec hasConflictWithProjectSpec: aProjectRegistration projectSpec
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloProjectRegistration >> hash [
     ^ ((String stringHash: projectName initialHash: 0) bitXor: configurationProjectSpec metacelloRegistrationHash)
         bitXor: baselineProjectSpec metacelloRegistrationHash
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloProjectRegistration >> immutable [
     mutable := false
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloProjectRegistration >> isMutable [
     mutable ifNil: [ ^ true ].
     ^ mutable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectRegistration >> isValid [
 
 	" has a name and one or the other of the projectSpecs is non-nil, but not both ... this is CRITICAL"
@@ -388,43 +396,43 @@ MetacelloProjectRegistration >> isValid [
 	^ baselineProjectSpec isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> loadedInImage [
     loadedInImage ifNil: [ loadedInImage := false ].
     ^ loadedInImage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> loadedInImage: anObject [
     self shouldBeMutable.
     loadedInImage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> locked [
     locked ifNil: [ locked := false ].
     ^ locked
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> locked: anObject [
     self shouldBeMutable.
     locked := anObject
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 MetacelloProjectRegistration >> lookupBaselineSpec [
   baselineProjectSpec ifNotNil: [ :spec | ^ spec ].
   ^ configurationProjectSpec
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 MetacelloProjectRegistration >> lookupConfigurationSpec [
   configurationProjectSpec ifNotNil: [ :spec | ^ spec ].
   ^ baselineProjectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> merge: aProjectRegistration [
   " ... merge is done when a spec has been loaded into the image"
 
@@ -446,18 +454,18 @@ MetacelloProjectRegistration >> merge: aProjectRegistration [
         versionString: baselineProjectSpec repositoryVersionString ]
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloProjectRegistration >> mutable [
     mutable := true
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloProjectRegistration >> postCopy [
     super postCopy.
     mutable := nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectRegistration >> printOn: aStream [
   | label versionString descriptions |
   self
@@ -486,18 +494,18 @@ MetacelloProjectRegistration >> printOn: aStream [
       aStream nextPut: $} ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> projectName [
 	^ projectName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> projectName: anObject [
     self shouldBeMutable.
     projectName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> projectSpec [
 	^ baselineProjectSpec
 		ifNil: [ 
@@ -505,7 +513,7 @@ MetacelloProjectRegistration >> projectSpec [
 			configurationProjectSpec ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> projectVersion [
   | pv |
   pv := self versionInfo projectVersion.
@@ -516,42 +524,42 @@ MetacelloProjectRegistration >> projectVersion [
   ^ pv
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 MetacelloProjectRegistration >> registerProject [
     "unconditionally register <newRegistration> ... use with care"
 
     self class registry registerProjectRegistration: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> repositoryDescriptions [
     ^ (self configurationProjectSpecIfAbsent: [ self baselineProjectSpec ]) repositoryDescriptions
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloProjectRegistration >> shouldBeMutable [
     self isMutable
         ifTrue: [ ^ self ].
     self error: 'Not allowed to modify an immutable object'
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 MetacelloProjectRegistration >> unregisterProject [
     self class registry unregisterProjectRegistration: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> validate [
 	self isValid
 		ifFalse: [ self error: 'Invalid project registration' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> version [
     ^ (self configurationProjectSpecIfAbsent: [ ^ MetacelloMCBaselineProject singletonVersionName ]) versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> versionInfo [
   versionInfo
     ifNil: [ 
@@ -565,7 +573,7 @@ MetacelloProjectRegistration >> versionInfo [
   ^ versionInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> versionInfo: aMetacelloProjectRegistrationVersionInfo [
   versionInfo := aMetacelloProjectRegistrationVersionInfo
 ]

@@ -12,12 +12,14 @@ Preconditions:
 overriden from RBRemoveVariableTransformation and RBAddVariableAccessorTransformation
 "
 Class {
-	#name : #RBPullUpVariableTransformation,
-	#superclass : #RBCompositeVariableTransformation,
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#name : 'RBPullUpVariableTransformation',
+	#superclass : 'RBCompositeVariableTransformation',
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBPullUpVariableTransformation >> buildTransformations [
 
 	^ OrderedCollection new
@@ -36,7 +38,7 @@ RBPullUpVariableTransformation >> buildTransformations [
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPullUpVariableTransformation >> preconditions [
 	^ isClassVariable
 		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ]
@@ -52,7 +54,7 @@ RBPullUpVariableTransformation >> preconditions [
 			true] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBPullUpVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -66,7 +68,7 @@ RBPullUpVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPullUpVariableTransformation >> variable: aVariableName class: aClassName classVariable: aBoolean [
 
 	variableName := aVariableName.
@@ -74,7 +76,7 @@ RBPullUpVariableTransformation >> variable: aVariableName class: aClassName clas
 	className := aClassName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBPullUpVariableTransformation >> variableDefinitionsInHierarchy [
 
 	^ self definingClass allSubclasses

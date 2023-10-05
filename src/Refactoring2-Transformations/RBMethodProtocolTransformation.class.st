@@ -14,21 +14,23 @@ Preconditions:
 - the method exists.
 "
 Class {
-	#name : #RBMethodProtocolTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBMethodProtocolTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodProtocolTransformation class >> isTransformation [
 
 	^ true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation class >> model: aRBModel protocol: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -39,7 +41,7 @@ RBMethodProtocolTransformation class >> model: aRBModel protocol: aString inMeth
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -49,17 +51,28 @@ RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector in
 		yourself
 ]
 
-{ #category : #preconditions }
-RBMethodProtocolTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBMethodProtocolTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition withBlock: [ protocol isNotNil ] errorString: ('Protocol of <1s> should not be nil' expandMacrosWith: className ))
+	^ self classExist
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [ protocol isNotNil ]
+			   errorString:
+			   ('Protocol of <1s> should not be nil' expandMacrosWith:
+				    className))
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBMethodProtocolTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
+{ #category : 'executing' }
 RBMethodProtocolTransformation >> privateTransform [
 
 	self model
@@ -68,7 +81,7 @@ RBMethodProtocolTransformation >> privateTransform [
 		classified: protocol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -76,7 +89,7 @@ RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass:
 	protocol := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

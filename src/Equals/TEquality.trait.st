@@ -17,17 +17,18 @@ Object << #EqPerson
 ```
 "
 Trait {
-	#name : #TEquality,
-	#category : #Equals
+	#name : 'TEquality',
+	#category : 'Equals',
+	#package : 'Equals'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TEquality >> = anObject [ 
 	self species = anObject species ifFalse: [^false].
 	^self valuesToCompareForEquality = anObject valuesToCompareForEquality
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TEquality >> hash [
 	^self valuesToCompareForEquality inject: self species hash into: [:hash :comparisonValue|
 		(hash bitXor: comparisonValue hash) hashMultiply]

@@ -1,60 +1,61 @@
 "
-Specific version of compiled code for block's.
+Specific version of compiled code for blocks.
 
-CompiledBlock are used only in the recent BlockClosure implementation by Eliot Miranda and Clement Bera, also known as FullBlockClosure. This new representation makes possible heavier runtime optimisations while simplifying a lot of code, both image-side and VM-side.
-
-In addition the execution mechanics, a compiled block have an extra optional literal. The last literal is the compiled code referring to the compiled block. 
+In addition the execution mechanics, a compiled block has an extra literal: the last literal is the compiled code of the outer method or block (see #outerCode)
 
 
 
 "
 Class {
-	#name : #CompiledBlock,
-	#superclass : #CompiledCode,
-	#type : #compiledMethod,
-	#category : #'Kernel-Methods'
+	#name : 'CompiledBlock',
+	#superclass : 'CompiledCode',
+	#type : 'compiledMethod',
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompiledBlock >> displayStringOn: stream [
 	self printOn: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> endPC [
 	"Answer the index of the last bytecode"
 	^ self size
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledBlock >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	^ (InstructionStream on: self) scanFor: [:byte |
 		 self encoderClass methodReturnBytecodes includes: byte]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledBlock >> hasPragmaNamed: aSymbol [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledBlock >> hasProperties [
 	^false
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 CompiledBlock >> hasProperty: aString [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledBlock >> hasSourceCode [
 	^ self method hasSourceCode
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompiledBlock >> hash [
 	"CompiledMethod>>#= compares code, i.e. same literals and same bytecode.
 	 So we look at the header, methodClass and some bytes between initialPC and endPC,
@@ -74,68 +75,68 @@ CompiledBlock >> hash [
 	"(CompiledMethod>>#hash) hash"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledBlock >> isCompiledBlock [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledBlock >> isEmbeddedBlock [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledBlock >> isInstalled [
 
 	^ self method isInstalled
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledBlock >> isTestMethod [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompiledBlock >> literalEqual: other [
 	"when there are two blocks with the same code, we want to still have both in the literal array"
 	^self == other
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledBlock >> literalsToSkip [
 
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> method [
 	"answer the compiled method that I am installed in, or nil if none."
 	^self outerCode method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> methodClass [
 	"answer the compiled method that I am installed in, or nil if none."
 	^self outerCode methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> methodNode [
 	^ self outerCode methodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> outerCode [
 	"answer the compiled code that I am installed in, or nil if none."
 	^self literalAt: self numLiterals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledBlock >> pcInOuter [
 	| outer end instructionStream |
 	outer := self outerCode.
@@ -159,18 +160,19 @@ CompiledBlock >> pcInOuter [
 	self error: 'block not installed in outer code'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> pragmas [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> primitive [
 	"for now we do not compile Quick CompiedBlocks, see IRBytecodeGenerator>>#compiledBlockWith:"
 	^0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompiledBlock >> printOn: anStream [
 
 	anStream
@@ -178,18 +180,18 @@ CompiledBlock >> printOn: anStream [
 		nextPutAll: self sourceNode sourceCode
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 CompiledBlock >> properties [
 	^ nil->nil
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 CompiledBlock >> propertyAt: aString [
 
 	^ nil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompiledBlock >> sameLiteralsAs: method [
 	"Compare my literals to those of method. This is needed to compare compiled methods."
 
@@ -206,27 +208,29 @@ CompiledBlock >> sameLiteralsAs: method [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> selector [
+
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self outerCode selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledBlock >> sourceCode [
 	^ self outerCode sourceCode
 ]
 
-{ #category : #'source code management' }
+{ #category : 'source code management' }
 CompiledBlock >> sourcePointer [
 	^self outerCode sourcePointer
 ]
 
-{ #category : #'debugger support' }
+{ #category : 'debugger support' }
 CompiledBlock >> stepIntoQuickMethods [
 	^self method stepIntoQuickMethods
 ]
 
-{ #category : #'debugger support' }
+{ #category : 'debugger support' }
 CompiledBlock >> stepIntoQuickMethods: aBoolean [
 	^self method stepIntoQuickMethods: aBoolean
 ]

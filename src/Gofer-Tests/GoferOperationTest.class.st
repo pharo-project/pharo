@@ -2,56 +2,52 @@
 SUnit tests for Gofer operations
 "
 Class {
-	#name : #GoferOperationTest,
-	#superclass : #GoferTest,
+	#name : 'GoferOperationTest',
+	#superclass : 'GoferTest',
 	#instVars : [
 		'environment'
 	],
-	#category : #'Gofer-Tests-Tests'
+	#category : 'Gofer-Tests-Tests',
+	#package : 'Gofer-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #utilities }
-GoferOperationTest >> allManagers [
-
-	^ MCWorkingCopy allManagers
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferOperationTest >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferOperationTest >> environment: anObject [
 
 	environment := anObject
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 GoferOperationTest >> hasClass: aSymbol [
 
 	^ environment includesKey: aSymbol
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 GoferOperationTest >> hasClass: aSymbol selector: aSelector [
 
 	^ (environment classNamed: aSymbol) includesSelector: aSelector
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 GoferOperationTest >> hasPackage: aString [
 
-	^ self allManagers anySatisfy: [ :package | package packageName = aString ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :package | package packageName = aString ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 GoferOperationTest >> hasVersion: aString [
 
-	^ self allManagers anySatisfy: [ :version | version ancestry ancestorString = aString ]
+	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :version | version ancestry ancestorString = aString ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferOperationTest >> setUp [
 
 	super setUp.
@@ -59,13 +55,13 @@ GoferOperationTest >> setUp [
 	gofer repository: self monticelloRepository
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferOperationTest >> setUpEnvironment [
 
 	environment := self class environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferOperationTest >> tearDown [
 
 	(self hasPackage: 'GoferFoo')
@@ -77,7 +73,7 @@ GoferOperationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testCleanup [
 
 	| class |
@@ -85,16 +81,16 @@ GoferOperationTest >> testCleanup [
 		package: 'GoferFoo';
 		load.
 	class := environment classNamed: #GoferFoo.
-	environment organization addCategory: #'GoferFoo-Empty'.
+	environment organization ensureTagNamed: #Empty inPackageNamed: #GoferFoo.
 	class addProtocol: #empty.
 	class class addProtocol: #empty.
 	gofer cleanup.
-	self deny: (self packageOrganizer categories includes: #'GoferFoo-Empty').
+	self deny: (self packageOrganizer hasTag: #Empty inPackage: #GoferFoo).
 	self deny: (class hasProtocol: #'GoferFoo-Empty').
 	self deny: (class class hasProtocol: #'GoferFoo-Empty')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testCommit [
 
 	| repository |
@@ -111,7 +107,7 @@ GoferOperationTest >> testCommit [
 	self assert: repository allVersionInfos size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testFetch [
 
 	gofer
@@ -119,7 +115,7 @@ GoferOperationTest >> testFetch [
 		fetch
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testLoad [
 
 	gofer version: 'GoferFoo-lr.1'.
@@ -128,7 +124,7 @@ GoferOperationTest >> testLoad [
 	self assert: (self hasClass: #GoferFoo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testLocalChanges [
 
 	| changes |
@@ -140,7 +136,7 @@ GoferOperationTest >> testLocalChanges [
 	self assert: changes operations size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testMerge [
 
 	| initial |
@@ -158,7 +154,7 @@ GoferOperationTest >> testMerge [
 	self assert: (self hasClass: #GoferBar selector: #foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testPush [
 
 	| repository |
@@ -169,14 +165,14 @@ GoferOperationTest >> testPush [
 	gofer push
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testRecompile [
 
 	gofer package: 'Gofer-Core'.
 	gofer recompile
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testReinitialize [
 
 	| class |
@@ -196,7 +192,7 @@ GoferOperationTest >> testReinitialize [
 	self assert: (class classPool at: #ClassSide)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testRemoteChanges [
 
 	| changes |
@@ -208,7 +204,7 @@ GoferOperationTest >> testRemoteChanges [
 	self assert: changes operations size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testRevert [
 
 	gofer
@@ -221,7 +217,7 @@ GoferOperationTest >> testRevert [
 	self assert: (environment classNamed: #GoferBar) category asSymbol equals: #GoferBar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testUnload [
 
 	gofer
@@ -232,7 +228,7 @@ GoferOperationTest >> testUnload [
 	self deny: (self hasClass: #GoferFoo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferOperationTest >> testUpdate [
 
 	| initial |

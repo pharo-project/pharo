@@ -1,11 +1,11 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Refactoring-Critics' }
+{ #category : '*Refactoring-Critics' }
 CompiledMethod >> selfMessages [
 	^self ast selfMessages
 ]
 
-{ #category : #'*Refactoring-Critics' }
+{ #category : '*Refactoring-Critics' }
 CompiledMethod >> superMessages [
 	^self ast superMessages
 ]

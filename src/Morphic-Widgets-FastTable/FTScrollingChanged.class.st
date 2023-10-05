@@ -1,14 +1,16 @@
 Class {
-	#name : #FTScrollingChanged,
-	#superclass : #FTAnnouncement,
+	#name : 'FTScrollingChanged',
+	#superclass : 'FTAnnouncement',
 	#instVars : [
 		'newScrollingIndex',
 		'oldScrollingIndex'
 	],
-	#category : #'Morphic-Widgets-FastTable-Announcement'
+	#category : 'Morphic-Widgets-FastTable-Announcement',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Announcement'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTScrollingChanged class >> from: oldIndex to: newIndex [
 	^ self new
 		oldScrollingIndex: oldIndex;
@@ -16,22 +18,22 @@ FTScrollingChanged class >> from: oldIndex to: newIndex [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTScrollingChanged >> newScrollingIndex [
 	^ newScrollingIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTScrollingChanged >> newScrollingIndex: anObject [
 	newScrollingIndex := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTScrollingChanged >> oldScrollingIndex [
 	^ oldScrollingIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTScrollingChanged >> oldScrollingIndex: anObject [
 	oldScrollingIndex := anObject
 ]

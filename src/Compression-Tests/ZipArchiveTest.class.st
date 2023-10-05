@@ -2,8 +2,8 @@
 SUnit tests for ZIP archives
 "
 Class {
-	#name : #ZipArchiveTest,
-	#superclass : #TestCase,
+	#name : 'ZipArchiveTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'fileToZip',
 		'zip',
@@ -11,15 +11,17 @@ Class {
 		'zipFile',
 		'fs'
 	],
-	#category : #'Compression-Tests-Archives'
+	#category : 'Compression-Tests-Archives',
+	#package : 'Compression-Tests',
+	#tag : 'Archives'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveTest class >> defaultTimeLimit [
 	^30 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> assertLastModificationTimeFrom: endianStream expected: fileModified [
 	| lastModificationTime |
 	lastModificationTime := DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4).
@@ -29,7 +31,7 @@ ZipArchiveTest >> assertLastModificationTimeFrom: endianStream expected: fileMod
 				and: fileModified + 2 seconds)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZipArchiveTest >> setUp [
 
 	super setUp.
@@ -42,7 +44,7 @@ ZipArchiveTest >> setUp [
 	zip := ZipArchive new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZipArchiveTest >> tearDown [
 	"Must close the zipfile before deleting all files.
 	Otherwise in windows the file will not be deleted as long as the file is open."
@@ -54,13 +56,13 @@ ZipArchiveTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testAddNonExistentFile [
 
 	self should: [ zip addFile: 'it_would_be_crazy_if_this_file_existed.ext' asFileReference ] raise: FileDoesNotExistException
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testAddTreeWhenNoContentInFileShouldSucceed [
 	| zipOutput  extractionDir |
 	(subdir/'testZipFileInDir') ensureCreateFile.
@@ -78,7 +80,7 @@ ZipArchiveTest >> testAddTreeWhenNoContentInFileShouldSucceed [
 	self assert:	 (extractionDir / 'test-zip-dir'/'DeeperDirectory'/'testZipFileInDir3') asFileReference isFile
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testAddTreeWithContentInFileShouldSucceed [
 	| zipOutput  extractionDir fileWithContentToZip fileContent extractedFile |
 	fileContent := 'some random text '.
@@ -96,7 +98,7 @@ ZipArchiveTest >> testAddTreeWithContentInFileShouldSucceed [
 	self assert:	 (extractedFile readStreamDo: [ :stream | stream contents]) equals: fileContent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
 	| zipOutput  extractionDir subSubDir fileInSubSubDIr |
 	extractionDir := fs root / 'extracted'.
@@ -114,7 +116,7 @@ ZipArchiveTest >> testAddTreeWithSubDirectoriesShouldSucceed [
 	self deny: (extractionDir / 'subSubDir') asFileReference isDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
 
 	"Smoke test showing that we can create zip archives with up to 1000 elements.
@@ -137,7 +139,7 @@ ZipArchiveTest >> testArchiveWithThousandFilesShouldWork [
 		(FileLocator temp / 'result.zip') ensureDelete. ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testCanUnzipFromFileName [
 	| nestedFileToZip subsubdir extracted |
 	subsubdir := subdir /'subsubdir'.
@@ -163,7 +165,7 @@ ZipArchiveTest >> testCanUnzipFromFileName [
 	zipFile ensureDelete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testCanUnzipFromStream [
 	| nestedFileToZip |
 	nestedFileToZip := (subdir / '_test-zip-file.txt')
@@ -183,7 +185,7 @@ ZipArchiveTest >> testCanUnzipFromStream [
 			close ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testCreateWithRelativeNames [
 	"Test creating a zip with a relative tree of files, so that the tree will
 	be created whereever the ."
@@ -304,7 +306,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: str atEnd ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testDate29Feb2000 [
 	"Ensure that dates with leap years don't screw up in the conversion"
 
@@ -316,7 +318,7 @@ ZipArchiveTest >> testDate29Feb2000 [
 	self assert: member lastModTime equals: theDate
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testFilePermissions [
 
 	| nestedFileToZip folderMember fileMember |
@@ -335,7 +337,7 @@ ZipArchiveTest >> testFilePermissions [
 	self assert: folderMember unixFileAttributes equals: 8r40755
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testParsePharoZipTimestamp [
 	"Issue 6054. We're testing a private method. Eventually, the zip timestamp handling should be refactored; maybe a ZipTimestamp subclass of DosTimestamp"
 
@@ -346,7 +348,7 @@ ZipArchiveTest >> testParsePharoZipTimestamp [
 	self assert: dateAndTime equals: '2011-09-29T04:01:06+00:00' asDateAndTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testSetLastModification [
 
 	| aDateAndTime member |
@@ -356,7 +358,7 @@ ZipArchiveTest >> testSetLastModification [
 	self assert: member lastModTime equals: aDateAndTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 	| nestedFileToZip fileModificationTime fileModificationTimeBlock |
 	fileModificationTimeBlock := [ (subdir / '_test-zip-file.txt') modificationTime ].
@@ -388,7 +390,7 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 	self deny: fileModificationTime ~= fileModificationTimeBlock value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testZip [
 
 	| localFileHeaderSignature versionNeededToExtract bitFlag deflateCompressionMethod realModificationStamp expectedCrc32 expectedCompressedSize expectedUncompressedSize centralDirectoryOffset centralDirectoryEnd |
@@ -463,7 +465,7 @@ ZipArchiveTest >> testZip [
 		self assert: str atEnd ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipArchiveTest >> testisZipArchive [
 	| nonArchive |
 	zip addFile: fileToZip as: fileToZip basename.

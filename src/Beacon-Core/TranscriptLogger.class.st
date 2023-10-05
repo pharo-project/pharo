@@ -9,12 +9,14 @@ TranscriptLogger new
 ```
 "
 Class {
-	#name : #TranscriptLogger,
-	#superclass : #SignalLogger,
-	#category : #'Beacon-Core-Loggers'
+	#name : 'TranscriptLogger',
+	#superclass : 'SignalLogger',
+	#category : 'Beacon-Core-Loggers',
+	#package : 'Beacon-Core',
+	#tag : 'Loggers'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TranscriptLogger >> nextPut: anAnnouncement [
 
 	Transcript crShow: anAnnouncement
