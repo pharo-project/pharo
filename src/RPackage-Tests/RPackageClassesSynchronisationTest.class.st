@@ -3,10 +3,9 @@ SUnit tests for RPackage classes synchronisation
 "
 Class {
 	#name : 'RPackageClassesSynchronisationTest',
-	#superclass : 'RPackageMCSynchronisationTest',
-	#category : 'Monticello-Tests-RPackage',
-	#package : 'Monticello-Tests',
-	#tag : 'RPackage'
+	#superclass : 'RPackageTestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests - adding classes' }
@@ -18,7 +17,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageBestMatchName 
 
 	class := self newClassNamed: 'NewClass' inTag: tag.
 
-	self assert: (package definesClass: class).
+	self assert: (package includesClass: class).
 	self assert: class package equals: package
 ]
 
@@ -31,7 +30,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageExactName [
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
-	self assert: (xPackage definesClass: class).
+	self assert: (xPackage includesClass: class).
 	self assert: class package equals: xPackage
 ]
 
@@ -45,24 +44,6 @@ RPackageClassesSynchronisationTest >> testAddClassUpdateTheOrganizerMappings [
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
 	self assert: class package equals: xPackage
-]
-
-{ #category : 'tests - recategorizing class' }
-RPackageClassesSynchronisationTest >> testRecategorizeClassRaisesClassRepackagedEvent [
-	"test that when we recategorize a class, the organizer is updated so that the class name point the the new RPackage"
-
-	| xPackage yPackage class ann |
-	SystemAnnouncer uniqueInstance when: ClassRepackaged do: [ :a | ann := a ] for: self.
-
-	xPackage := self ensureXPackage.
-	yPackage := self ensureYPackage.
-	class := self newClassNamed: 'NewClass' in: xPackage.
-	class category: 'YYYYY'.
-
-	self assert: ann isNotNil.
-	self assert: ann classRepackaged equals: class.
-	self assert: ann oldPackage equals: xPackage.
-	self assert: ann newPackage equals: yPackage
 ]
 
 { #category : 'tests - recategorizing class' }

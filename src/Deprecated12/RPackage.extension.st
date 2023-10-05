@@ -96,6 +96,14 @@ RPackage >> definedClassesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> definesClass: aClass [
+
+	self deprecated: 'Use #includesClass: instead.' transformWith: '`@rcv definesClass: `@arg' -> '`@rcv includesClass: `@arg'.
+
+	^ self includesClass: aClass
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> extensionCategoriesForClass: aClass [
 
 	self

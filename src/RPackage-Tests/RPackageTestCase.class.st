@@ -11,10 +11,46 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
+{ #category : 'private' }
+RPackageTestCase >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
+
+	^ aClass compile: (methodName, ' ^nil') classified: aCategoryName.
+]
+
+{ #category : 'private' }
+RPackageTestCase >> createMethodNamed: methodName inClassSideOfClass: aClass inCategory: aCategoryName [ 
+
+	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
+]
+
 { #category : 'utilities' }
 RPackageTestCase >> ensurePackage: aName [
 
 	^ self organizer ensurePackage: aName
+]
+
+{ #category : 'utilities' }
+RPackageTestCase >> ensureTagYinX [
+
+	^ self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
+]
+
+{ #category : 'utilities' }
+RPackageTestCase >> ensureXPackage [
+
+	^ self organizer ensurePackage: #XXXXX
+]
+
+{ #category : 'utilities' }
+RPackageTestCase >> ensureYPackage [
+
+	^ self organizer ensurePackage: #YYYYY
+]
+
+{ #category : 'utilities' }
+RPackageTestCase >> ensureZPackage [
+
+	^ self organizer ensurePackage: #ZZZZZ
 ]
 
 { #category : 'utilities' }
@@ -103,6 +139,7 @@ RPackageTestCase >> runCase [
 RPackageTestCase >> tearDown [
 
 	self organizer environment allClasses do: [ :cls | cls removeFromSystem ].
+	self organizer packages do: [ :package | package removeFromSystem ].
 
 	super tearDown
 ]
