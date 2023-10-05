@@ -134,6 +134,18 @@ ScalingCanvas >> flush [
 	formCanvas flush
 ]
 
+{ #category : 'accessing' }
+ScalingCanvas >> form [
+
+	^ formCanvas form
+]
+
+{ #category : 'accessing' }
+ScalingCanvas >> formCanvas [
+
+	^ formCanvas
+]
+
 { #category : 'initialization' }
 ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 
@@ -168,6 +180,12 @@ ScalingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 ScalingCanvas >> paragraph: paragraph bounds: bounds color: c [
 
 	formCanvas paragraph: paragraph bounds: (bounds scaleBy: scale) color: c scale: scale
+]
+
+{ #category : 'accessing' }
+ScalingCanvas >> scale [
+
+	^ scale
 ]
 
 { #category : 'drawing - support' }
