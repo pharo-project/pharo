@@ -328,6 +328,13 @@ ScalingCanvas >> shadowColor: aColor [
 	formCanvas shadowColor: aColor
 ]
 
+{ #category : 'drawing - images' }
+ScalingCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
+
+	formCanvas stencil: (stencilForm scaledToSize: stencilForm extent * scale)
+		at: aPoint truncated * scale sourceRect: (sourceRect scaleBy: scale) color: aColor
+]
+
 { #category : 'drawing - support' }
 ScalingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 
