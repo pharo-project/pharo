@@ -67,8 +67,8 @@ RPackageReadOnlyCompleteSetupTest >> testAddTag [
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: p1 classTags size equals: 2.
 
-	p1 importClass: a1 inTag: #foo.
-	p1 importClass: b1 inTag: #foo.
+	p1 moveClass: a1 toTag: #foo.
+	p1 moveClass: b1 toTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: p1 classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
@@ -91,8 +91,8 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagNames [
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: p1 classTags size equals: 2.
 
-	p1 importClass: a1 inTag: #foo.
-	p1 importClass: b1 inTag: #foo.
+	p1 moveClass: a1 toTag: #foo.
+	p1 moveClass: b1 toTag: #foo.
 	self assert: (p1 classTags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: p1 classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
 	self assert: ((p1 classTagNamed: #foo) classNames includes: #A1DefinedInP1).
@@ -112,15 +112,15 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
-	p1 importClass: a1 inTag: #foo.
+	p1 moveClass: a1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
-	p1 importClass: b1 inTag: #foo.
+	p1 moveClass: b1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
-	p1 importClass: b1 inTag: #zork.
+	p1 moveClass: b1 toTag: #zork.
 	self assert: (((p1 classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 	self assert: (p1 classesTaggedWith: #zork) size equals: 1
@@ -291,9 +291,9 @@ RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
 { #category : 'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 
-	p1 importClass: a1 inTag: #foo.
-	p1 importClass: b1 inTag: #foo.
-	p1 importClass: b1 inTag: #zork.
+	p1 moveClass: a1 toTag: #foo.
+	p1 moveClass: b1 toTag: #foo.
+	p1 moveClass: b1 toTag: #zork.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
 	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
