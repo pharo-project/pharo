@@ -35,13 +35,13 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'shiftClassBuilder',
-		'packageName',
 		'slotsToBuild',
 		'tagToBuild',
 		'uses',
 		'nameToBuild',
 		'classSlotsToBuild',
-		'classTraitsToBuild'
+		'classTraitsToBuild',
+		'package'
 	],
 	#category : 'FluidClassBuilder-Base',
 	#package : 'FluidClassBuilder',
@@ -114,7 +114,7 @@ FluidBuilder >> fillShiftClassBuilder [
 		                     name: nameToBuild;
 		                     slots: slotsToBuild;
 		                     traitComposition: uses;
-		                     package: packageName;
+		                     package: package;
 		                     tag: tagToBuild;
 		                     classSlots: classSlotsToBuild;
 		                     classTraitComposition: classTraitsToBuild;
@@ -160,17 +160,17 @@ FluidBuilder >> nameToBuild: aSymbol [
 	nameToBuild := aSymbol
 ]
 
+{ #category : 'accessing - mandatory' }
+FluidBuilder >> package [
+
+	^ package
+]
+
 { #category : 'API' }
 FluidBuilder >> package: aString [
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	packageName := aString
-]
-
-{ #category : 'accessing - mandatory' }
-FluidBuilder >> packageToBuild [
-
-	^ packageName
+	package := aString
 ]
 
 { #category : 'building' }

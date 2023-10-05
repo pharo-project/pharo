@@ -133,7 +133,7 @@ FluidClassBuilderTest >> testBuilderWithPackage [
 
 	builder package: 'Kernel-BasicObjects'.
 	self
-		assert: builder packageToBuild
+		assert: builder package
 		equals: 'Kernel-BasicObjects'
 ]
 
@@ -174,7 +174,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	clasBuilder := Object class << newClass class traits: { TViewModelMock classTrait }.
 
-	self assert: clasBuilder packageToBuild equals: instBuilder packageToBuild.
+	self assert: clasBuilder package equals: instBuilder package.
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
 	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
@@ -202,7 +202,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 
 	clasBuilder := Object class << newClass class.
 
-	self assert: clasBuilder packageToBuild equals: instBuilder packageToBuild.
+	self assert: clasBuilder package equals: instBuilder package.
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
 	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
