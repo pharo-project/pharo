@@ -105,6 +105,22 @@ RPackageTestCase >> newTraitNamed: aName in: aPackage [
 ]
 
 { #category : 'utilities' }
+RPackageTestCase >> newTraitNamed: aName in: aPackage tag: aTag [
+
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  beTrait;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
+			  tag: (aTag isString
+					   ifTrue: [ aTag ]
+					   ifFalse: [ aTag name ]) ]
+]
+
+{ #category : 'utilities' }
 RPackageTestCase >> newTraitNamed: aName inTag: aTag [
 
 	^ self class classInstaller make: [ :aBuilder |
