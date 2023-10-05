@@ -16,9 +16,8 @@ Class {
 { #category : 'examples' }
 ScalingCanvas class >> example [
 
-	| scale morph extent baseForm form1 form2 |
+	| morph |
 
-	scale := 2.
 	(morph := MenuMorph new)
 		addTitle: 'Lorem ipsum'.
 	(morph add: 'Dolor sit amet' target: nil selector: #yourself) keyText: 'x';
@@ -26,18 +25,8 @@ ScalingCanvas class >> example [
 	(morph add: 'Consectetur adipiscing elit' target: nil selector: #yourself) keyText: 'y'.
 	morph addLine.
 	(morph add: 'Sed do eiusmod' target: nil selector: #yourself) keyText: 'z'.
-	extent := morph fullBounds bottomRight.
 	
-	(baseForm := Form extent: extent depth: Display depth)
-		fillColor: Smalltalk ui theme backgroundColor.
-	baseForm getCanvas fullDrawMorph: morph.
-	form1 := baseForm scaledToSize: extent * scale.
-	
-	(form2 := Form extent: extent * scale depth: Display depth)
-		fillColor: Smalltalk ui theme backgroundColor.
-	(self formCanvas: form2 getCanvas scale: scale) fullDrawMorph: morph.
-
-	{ morph. form1. form2 } inspect
+	^ self privateExampleWithMorph: morph
 ]
 
 { #category : 'instance creation' }
@@ -64,6 +53,33 @@ ScalingCanvas class >> initialize [
 	icons allIconNames do: [ :iconName |
 		iconsScale2 icons at: iconName ifPresent: [ :formScale2 |
 			FormMapping at: (icons iconNamed: iconName) put: formScale2 ] ]
+]
+
+{ #category : 'private' }
+ScalingCanvas class >> privateExampleWithExtent: extent fillColor: fillColor scale: scale drawBlock: drawBlock do: doBlock [
+
+	| baseForm form1 form2 |
+	
+	(baseForm := Form extent: extent depth: Display depth)
+		fillColor: fillColor.
+	drawBlock value: baseForm getCanvas.
+	form1 := baseForm scaledToSize: extent * scale.
+	
+	(form2 := Form extent: extent * scale depth: Display depth)
+		fillColor: fillColor.
+	drawBlock value: (self formCanvas: form2 getCanvas scale: scale).
+	
+	^ doBlock value: form1 value: form2
+]
+
+{ #category : 'private' }
+ScalingCanvas class >> privateExampleWithMorph: morph [
+
+	^ self privateExampleWithExtent: morph fullBounds bottomRight
+		fillColor: Smalltalk ui theme backgroundColor
+		scale: 2
+		drawBlock: [ :canvas | canvas fullDrawMorph: morph ]
+		do: [ :form1 :form2 | { morph. form1. form2 } inspect ]
 ]
 
 { #category : 'private' }
