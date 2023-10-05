@@ -111,6 +111,12 @@ ScalingCanvas >> copyClipRect: newClipRect [
 	^ self class formCanvas: (formCanvas copyClipRect: (newClipRect scaleBy: scale)) scale: scale
 ]
 
+{ #category : 'accessing' }
+ScalingCanvas >> depth [
+
+	^ formCanvas depth
+]
+
 { #category : 'private' }
 ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 
@@ -132,6 +138,18 @@ ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect fon
 ScalingCanvas >> extent [
 
 	^ formCanvas extent / scale
+]
+
+{ #category : 'drawing' }
+ScalingCanvas >> fillColor: aColor [
+
+	formCanvas fillColor: aColor
+]
+
+{ #category : 'initialization' }
+ScalingCanvas >> finish [
+
+	formCanvas finish
 ]
 
 { #category : 'initialization' }
@@ -182,6 +200,12 @@ ScalingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	super image: aForm at: aPoint sourceRect: sourceRect rule: rule
 ]
 
+{ #category : 'testing' }
+ScalingCanvas >> isShadowDrawing [
+
+	^ formCanvas isShadowDrawing
+]
+
 { #category : 'accessing' }
 ScalingCanvas >> origin [
 
@@ -198,6 +222,18 @@ ScalingCanvas >> paragraph: paragraph bounds: bounds color: c [
 ScalingCanvas >> scale [
 
 	^ scale
+]
+
+{ #category : 'accessing' }
+ScalingCanvas >> shadowColor [
+
+	^ formCanvas shadowColor
+]
+
+{ #category : 'accessing' }
+ScalingCanvas >> shadowColor: aColor [
+
+	formCanvas shadowColor: aColor
 ]
 
 { #category : 'drawing - support' }
