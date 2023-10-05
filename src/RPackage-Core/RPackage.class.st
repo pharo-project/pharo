@@ -238,13 +238,6 @@ RPackage >> definedSelectorsForClass: aClass [
 ]
 
 { #category : 'testing' }
-RPackage >> definesClass: aClass [
-	"Returns true if the class, aClass, is one of the locally defined classes"
-	"should be probably removed since this is the same as includesClass: or the inverse"
-	^ self includesClass: aClass
-]
-
-{ #category : 'testing' }
 RPackage >> definesOrExtendsClass: aClass [
 	"Returns true whether the class, aClass, is one of the locally defined classes of the receiver or
 	if the receiver extends such class (that is defined in another package)"
@@ -753,6 +746,7 @@ RPackage >> removeTag: aTag [
 		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
+	"The #asArray is there to not remove elements from the #classes inst var while iterating it."
 	tag classes asArray do: [ :class | class removeFromSystem ].
 
 	classTags remove: tag ifAbsent: [ ^ self ].
