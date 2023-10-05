@@ -546,16 +546,15 @@ RPackage >> methodsForClass: aClass [
 { #category : 'private' }
 RPackage >> moveClass: aClass toTag: aTag [
 
-	| oldPackage tag |
-	tag := self ensureTag: aTag.
-	aClass packageTag = tag ifTrue: [ ^ self ].
+	| newTag oldTag |
+	newTag := self ensureTag: aTag.
+	oldTag := aClass packageTag.
+	oldTag = newTag ifTrue: [ ^ self ].
 
-	oldPackage := aClass package.
+	aClass package removeClass: aClass.
+	self importClass: aClass inTag: newTag.
 
-	oldPackage removeClass: aClass.
-	self importClass: aClass inTag: tag.
-
-	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
+	SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag)
 ]
 
 { #category : 'accessing' }
