@@ -126,7 +126,11 @@ RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 	oldSelector = newSelector
 		ifTrue: [ ^ self ].
 	self implementors
-		do: [ :each | each removeMethod: oldSelector ]
+		do: [ :each | 
+			self generateChangesFor:
+				(RBRemoveMethodTransformation
+					selector: oldSelector
+					from: each) ]
 ]
 
 { #category : 'action' }
