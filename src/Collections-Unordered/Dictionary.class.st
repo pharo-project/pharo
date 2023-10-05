@@ -615,6 +615,13 @@ Dictionary >> includesKey: key [
 	"We could use #notNil here, but ProtoObject doesn't understand it."
 ]
 
+{ #category : 'enumerating' }
+Dictionary >> intersection: aCollection [
+	"Answer the set theoretic intersection of two collections. "
+
+	^ self species newFrom: (self associations asSet intersection: aCollection associations)
+]
+
 { #category : 'testing' }
 Dictionary >> isDictionary [
 	^true

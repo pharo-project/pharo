@@ -185,7 +185,7 @@ PBImageBuilderSpur50 >> createTrue [
 PBImageBuilderSpur50 >> createVMStubs [
 
 	| specialObjectsArray |
-	super log: 'creating initial Objects needed by the VM'.
+	self log: 'Creating initial Objects needed by the VM'.
 
 	self createNil.	
 	self createFalse.
@@ -266,6 +266,8 @@ PBImageBuilderSpur50 >> firstOrdinaryClassIndex [
 PBImageBuilderSpur50 >> flushNewSpace [
 
 	| newHeap |
+	
+	self log: 'Flushing new space.'.
 	newHeap := espellBackend objectMemory.
 	newHeap initializePostBootstrap.
 	

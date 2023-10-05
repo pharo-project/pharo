@@ -49,11 +49,22 @@ ZnBufferedReadStream >> back [
 	^ position > limit
 		ifTrue: [
 			stream back ]
-		ifFalse: [ | char |
-			position = 1 ifTrue: [ self error: 'Cannot move back from beginning' ].
-			char := buffer at: position.
-			position := position - 1.
-			char ]
+		ifFalse: [ | targetPosition bufferPosition char |
+			position = 1 ifTrue: 
+				[ stream position = 0 ifTrue:
+					[ self error: 'Cannot move back from beginning' ]
+				ifFalse:
+					[ targetPosition := self position - 1.
+					"Assume that the caller may want to go back a few elements before reading forward again"
+					bufferPosition := targetPosition - 10 max: 0.
+					self position: bufferPosition.
+					self nextBuffer.
+					self position: targetPosition.
+					self peek ] ]
+			ifFalse:
+				[ char := buffer at: position.
+				position := position - 1.
+				char ] ]
 ]
 
 { #category : 'initialize-release' }
@@ -359,6 +370,7 @@ ZnBufferedReadStream >> skip: count [
 	"Skip over count elements.
 	This could be further optimzed."
 
+	count < 0 ifTrue: [ self error: 'cannot skip backwards' ].
 	count timesRepeat: [ self next ]
 ]
 

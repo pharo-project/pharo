@@ -36,6 +36,7 @@ ClassDescription >> acceptsLoggingOfCompilation [
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	| priorMethod priorOrigin oldProtocol newProtocol |
 	self compiledMethodAt: selector ifPresent: [ :method |
 		priorMethod := method.
@@ -59,7 +60,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 { #category : 'instance variables' }
 ClassDescription >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
-
+	<reflection: 'Class structural modification - Instance variable modification'>
 	self subclassResponsibility
 ]
 
@@ -83,12 +84,13 @@ ClassDescription >> addProtocol: aProtocol [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
-
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: nil
 ]
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
 ]
@@ -96,12 +98,14 @@ ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 { #category : 'instance variables' }
 ClassDescription >> addSlot: aSlot [
 
+	<reflection: 'Class structural modification - Slot modification'>
 	^self subclassResponsibility
 ]
 
 { #category : 'accessing - instances and variables' }
 ClassDescription >> allInstVarNames [
 	"Answer an Array of the receiver's instance variable names."
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 
 	^self allSlots collect: [ :each | each name ] as: Array
 ]
@@ -109,7 +113,7 @@ ClassDescription >> allInstVarNames [
 { #category : 'instance variables' }
 ClassDescription >> allInstVarNamesEverywhere [
 	"Answer the set of inst var names used by the receiver, all superclasses, and all subclasses"
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^ self withAllSuperAndSubclasses flatCollectAsSet: [ :cls | cls instVarNames ]
 ]
 
@@ -131,12 +135,13 @@ ClassDescription >> allSelectorsInProtocol: protocol [
 { #category : 'pool variable' }
 ClassDescription >> allSharedPools [
 	"Answer an ordered collection of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ OrderedCollection new
 ]
 
 { #category : 'slots' }
 ClassDescription >> allSlots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout allVisibleSlots
 ]
 
@@ -217,20 +222,21 @@ ClassDescription >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
 	"Point class classSide >>> Point class"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self subclassResponsibility
 ]
 
 { #category : 'instance variables' }
 ClassDescription >> classThatDefinesClassVariable: classVarName [
 	"Answer the class that defines the given class variable"
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	(self classPool includesKey: classVarName asSymbol) ifTrue: [^ self].
 	^self superclass ifNotNil: [self superclass classThatDefinesClassVariable: classVarName]
 ]
 
 { #category : 'instance variables' }
 ClassDescription >> classThatDefinesInstVarNamed: instVarName [
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
 		slotNamed: instVarName
 		 ifFound: [ :slot | slot definingClass  ]
@@ -264,7 +270,7 @@ ClassDescription >> classify: selector under: aProtocol [
 	
 	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
 	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
-		ExtensionPointsOwningPackageNotification signalFor: self packageName.
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
 		^ self classify: selector under: Protocol unclassified ].
 
 	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
@@ -368,13 +374,14 @@ ClassDescription >> copyAllMethodsFrom: originClass [
 { #category : 'slots' }
 ClassDescription >> definesSlot: aSlot [
 	"Return true whether the receiver defines an instance variable named aString"
-
+	<reflection: 'Object Inspection - Slot inspection'>
 	^ self slots identityIncludes: aSlot
 ]
 
 { #category : 'slots' }
 ClassDescription >> definesSlotNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString."
+	<reflection: 'Class structural inspection - Slot inspection'>
 
 	^ self slotNames includes: aString
 ]
@@ -513,13 +520,14 @@ ClassDescription >> forceNewFrom: anArray [
 
 { #category : 'accessing - parallel hierarchy' }
 ClassDescription >> hasClassSide [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^self subclassResponsibility
 ]
 
 { #category : 'instance variables' }
 ClassDescription >> hasInstVarNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^ self instVarNames includes: aString
 ]
 
@@ -532,6 +540,7 @@ ClassDescription >> hasProtocol: aProtocol [
 { #category : 'pool variable' }
 ClassDescription >> hasSharedPools [
 	"Only a class may have shared pools"
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ false
 ]
 
@@ -546,14 +555,14 @@ ClassDescription >> hasSlot: aSlot [
 ClassDescription >> hasSlotNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString.
 	this includes non-visible slots"
-
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ self classLayout hasSlotNamed: aString
 ]
 
 { #category : 'pool variable' }
 ClassDescription >> includesSharedPoolNamed:  aSharedPoolString [
 	"Answer whether the receiver uses the shared pool named aSharedPoolString"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self sharedPools anySatisfy: [:each | each name = aSharedPoolString]
 ]
 
@@ -567,14 +576,14 @@ ClassDescription >> initialize [
 { #category : 'instance variables' }
 ClassDescription >> instVarIndexFor: instVarName [
 	"Answer the index of the named instance variable."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self instVarIndexFor: instVarName ifAbsent: 0
 ]
 
 { #category : 'instance variables' }
 ClassDescription >> instVarIndexFor: instVarName ifAbsent: aBlock [
 	"Answer the index of the named instance variable."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
 		slotNamed: instVarName
 		ifFound: [ :slot | slot isVirtual ifTrue: [aBlock value] ifFalse: [slot index]]
@@ -593,7 +602,7 @@ ClassDescription >> instVarMappingFrom: oldClass [
 { #category : 'instance variables' }
 ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self slots collect: [ :each | each name ]
 ]
 
@@ -602,7 +611,7 @@ ClassDescription >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"
 	"Point class instanceSide >>> Point"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self subclassResponsibility
 ]
 
@@ -625,6 +634,7 @@ ClassDescription >> instanceVariablesString [
 { #category : 'accessing - parallel hierarchy' }
 ClassDescription >> isClassSide [
 	"Return true whether the receiver is a metaclass (in a couple class/metaclass sense)."
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	"Point isClassSide >>> false"
 	"Point class isClassSide >>> true"
 
@@ -641,18 +651,20 @@ ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
 	"Point isInstanceSide >>> true"
 	"Point class isInstanceSide >>> false"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self isClassSide not
 ]
 
 { #category : 'testing' }
 ClassDescription >> isLocalSelector: aSelector [
 
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict includesKey: aSelector
 ]
 
 { #category : 'accessing - deprecated parallel hierarchy' }
 ClassDescription >> isMeta [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^self isClassSide
 ]
 
@@ -695,6 +707,7 @@ ClassDescription >> linesOfCode [
 
 { #category : 'slots' }
 ClassDescription >> localSlots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
@@ -892,7 +905,7 @@ ClassDescription >> removeFromProtocols: aSelector [
 { #category : 'instance variables' }
 ClassDescription >> removeInstVarNamed: aString [
 	"Remove the argument, aString, as one of the receiver's instance variables."
-
+	<reflection: 'Class structural modification - Instance variable modification'>
 	^self removeSlot: (self slotNamed: aString)
 ]
 
@@ -939,6 +952,7 @@ ClassDescription >> removeSelector: selector [
 	"Remove the message whose selector is given from the method
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
+  <reflection: 'Class structural modification - Selector/Method modification'>
 	| method protocol package origin |
 	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := method origin.
@@ -948,6 +962,7 @@ ClassDescription >> removeSelector: selector [
 	method removeFromPackage.
 	"When we remove a method we do not want to announce a recategorization."
 	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self removeFromProtocols: selector ].
+
 	super removeSelector: selector.
 
 	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin package: package
@@ -955,7 +970,7 @@ ClassDescription >> removeSelector: selector [
 
 { #category : 'instance variables' }
 ClassDescription >> removeSlot: aSlot [
-
+	<reflection: 'Class structural modification - Slot modification'>
 	^self subclassResponsibility
 ]
 
@@ -969,7 +984,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 	
 	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
 	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
-		ExtensionPointsOwningPackageNotification signalFor: self packageName.
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
 		^ self ].
 
 		oldProtocol := self ensureProtocol: anOldProtocol.
@@ -1010,7 +1025,7 @@ ClassDescription >> selectorsInProtocol: aProtocol [
 { #category : 'pool variable' }
 ClassDescription >> sharedPoolOfVarNamed: aString [
 	"Only classes may have shared pools"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ nil
 ]
 
@@ -1031,6 +1046,7 @@ ClassDescription >> sharedPoolStringOn: aStream [
 
 { #category : 'pool variable' }
 ClassDescription >> sharedPools [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ OrderedCollection new
 ]
 
@@ -1067,26 +1083,31 @@ ClassDescription >> sharedPoolsString [
 
 { #category : 'slots' }
 ClassDescription >> slotNamed: aName [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout resolveSlot: aName asSymbol
 ]
 
 { #category : 'slots' }
 ClassDescription >> slotNamed: aName ifFound: foundBlock [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self slotNamed: aName ifFound: foundBlock ifNone: [ "do nothing" ]
 ]
 
 { #category : 'slots' }
 ClassDescription >> slotNamed: aName ifFound: foundBlock ifNone: exceptionBlock [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock
 ]
 
 { #category : 'slots' }
 ClassDescription >> slotNames [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self slots collect: [ :each | each name ]
 ]
 
 { #category : 'accessing' }
 ClassDescription >> slots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout visibleSlots
 ]
 
@@ -1166,13 +1187,14 @@ ClassDescription >> uncategorizedSelectors [
 
 { #category : 'pool variable' }
 ClassDescription >> usesLocalPoolVarNamed: aString [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^false
 ]
 
 { #category : 'pool variable' }
 ClassDescription >> usesPoolVarNamed: aString [
 	"Only classes may use a pool variable named: aString"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ false
 ]
 
@@ -1184,8 +1206,40 @@ ClassDescription >> wantsChangeSetLogging [
 ]
 
 { #category : 'queries' }
+ClassDescription >> whichMethodsAccess: instVarName [
+	"Answer the methods that access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isAccessedIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsRead: instVarName [
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isReadIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsWrite: instVarName [
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isWrittenIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
 ClassDescription >> whichSelectorsAccess: instVarName [
-	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1195,7 +1249,8 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 
 { #category : 'queries' }
 ClassDescription >> whichSelectorsRead: instVarName [
-	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1205,7 +1260,8 @@ ClassDescription >> whichSelectorsRead: instVarName [
 
 { #category : 'queries' }
 ClassDescription >> whichSelectorsWrite: instVarName [
-	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable"
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName

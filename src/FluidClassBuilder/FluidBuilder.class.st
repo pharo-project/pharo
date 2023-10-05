@@ -58,11 +58,14 @@ FluidBuilder class >> isAbstract [
 FluidBuilder >> build [
 	"Return a class that is not installed in the system."
 
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	^ self shiftClassBuilder build
 ]
 
 { #category : 'class side' }
 FluidBuilder >> classSlots: aCollection [
+
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	classSlotsToBuild := aCollection collect: [ :e | e asSlot ]
 ]
 
@@ -73,6 +76,8 @@ FluidBuilder >> classSlotsToBuild [
 
 { #category : 'class side' }
 FluidBuilder >> classTraits: aCollection [
+
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	classTraitsToBuild := aCollection asTraitComposition
 ]
 
@@ -94,6 +99,7 @@ FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 { #category : 'copying' }
 FluidBuilder >> fillInstanceSideFromClass: aClass [
 
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	slotsToBuild := aClass slots.
 	uses := aClass traitComposition.
 	self package: aClass package name.
@@ -157,6 +163,7 @@ FluidBuilder >> nameToBuild: aSymbol [
 { #category : 'API' }
 FluidBuilder >> package: aString [
 
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	packageName := aString
 ]
 
@@ -175,6 +182,7 @@ FluidBuilder >> shiftClassBuilder [
 { #category : 'API' }
 FluidBuilder >> slots: anArray [
 
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	slotsToBuild := anArray collect: [ :each | each asSlot ]
 ]
 
@@ -193,6 +201,7 @@ FluidBuilder >> tag [
 { #category : 'API' }
 FluidBuilder >> tag: aString [
 
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	tagToBuild := aString
 ]
 
@@ -214,6 +223,7 @@ FluidBuilder >> trait: aTraitComposition [
 { #category : 'API' }
 FluidBuilder >> traits: anArray [
 
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	uses := anArray asTraitComposition.
 	classTraitsToBuild := uses classComposition
 ]

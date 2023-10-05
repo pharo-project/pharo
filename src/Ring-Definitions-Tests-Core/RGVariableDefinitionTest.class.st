@@ -18,7 +18,7 @@ RGVariableDefinitionTest >> testClassInstanceVariable [
 	self assert: instVar isVariable.
 	self assert: instVar name equals: 'sizes'.
 	self assert: instVar parent isNil.
-	self assert: instVar isMetaSide.
+	self assert: instVar isMeta.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
 	newClass withMetaclass.
@@ -37,7 +37,7 @@ RGVariableDefinitionTest >> testClassVariable [
 	self assert: instVar isVariable.
 	self assert: instVar name equals: 'DependentsFields'.
 	self assert: instVar parent isNil.
-	self assert: instVar isMetaSide not.
+	self assert: instVar isMeta not.
 
 	newClass := RGClassDefinition named: #Object.
 	instVar := (RGClassVariableDefinition named: 'DependentsFields') parent: newClass.
@@ -58,7 +58,7 @@ RGVariableDefinitionTest >> testInstanceVariable [
 	self assert: instVar isVariable.
 	self assert: instVar name equals: 'size'.
 	self assert: instVar parent isNil.
-	self assert: instVar isMetaSide not.
+	self assert: instVar isMeta not.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
 	instVar := newClass addInstVarNamed: 'array'.
@@ -75,7 +75,7 @@ RGVariableDefinitionTest >> testPoolVariable [
 	self assert: poolVar isVariable.
 	self assert: poolVar name equals: 'TextConstants'.
 	self assert: poolVar parent isNil.
-	self assert: poolVar isMetaSide not.
+	self assert: poolVar isMeta not.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
 	poolVar := (RGPoolVariableDefinition named: 'TextConstants') parent: newClass.

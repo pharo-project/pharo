@@ -61,6 +61,7 @@ ComputedSlot >> printOn: aStream [
 { #category : 'meta-object-protocol' }
 ComputedSlot >> read: anObject [
 	"we use #cull: to support both 0-arg and 1-arg blocks"
+	<reflection: 'Object Inspection - State inspection'>
 	^block cull: anObject
 ]
 

@@ -182,14 +182,12 @@ SystemNavigation >> allReferencesTo: aLiteral [
 
 { #category : 'query' }
 SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
-	"Perform aBlock on all the references to aLiteral."
+	"Perform aBlock on all the references to aLiteral. As Literal Variables can not be in arrays or pragmas, use the faster non-thoroug version for them"
 
-	| symbol |
-	symbol := aLiteral isSymbol.
 	self allBehaviorsDo: [ :class |
-		symbol
-			ifFalse: [ class withMethodsReferTo: aLiteral do: aBlock ]
-			ifTrue: [ class withThorougMethodsReferTo: aLiteral do: aBlock ] ]
+		aLiteral isSymbol
+			ifFalse: [ (class whichMethodsReferTo: aLiteral) do: aBlock ]
+			ifTrue: [ (class thoroughWhichMethodsReferTo: aLiteral) do: aBlock ] ]
 ]
 
 { #category : 'query' }

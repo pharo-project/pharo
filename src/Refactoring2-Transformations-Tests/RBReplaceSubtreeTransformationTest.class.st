@@ -85,7 +85,7 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+		         self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
 	self
 		assert: (class parseTreeForSelector: #one) body statements size

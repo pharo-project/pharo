@@ -58,6 +58,7 @@ Behavior >> >> selector [
 { #category : 'obsolete subclasses' }
 Behavior >> addObsoleteSubclass: aClass [
 	"Weakly remember that aClass was a subclass of the receiver and is now obsolete"
+	<reflection: 'Class structural modification - Hierarchy modification'>
 
 	| obsoleteSubclasses |
 	obsoleteSubclasses := self basicObsoleteSubclasses
@@ -68,6 +69,7 @@ Behavior >> addObsoleteSubclass: aClass [
 
 { #category : 'adding-removing methods' }
 Behavior >> addSelector: selector withMethod: compiledMethod [
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	^ self addSelectorSilently: selector withMethod: compiledMethod
 ]
 
@@ -76,7 +78,7 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the
 	receiver's method dictionary.
 	Do this without sending system change notifications"
-
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	self methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
 	compiledMethod selector: selector.
@@ -88,6 +90,7 @@ Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 Behavior >> adoptInstance: anInstance [
 	"Change the class of anInstance to me.
 	Primitive (found in Cog and new VMs)  follows the same rules as primitiveChangeClassTo:, but returns the 	class rather than the modified instance"
+	<reflection: 'Object Modification - Object class change'>
 	<primitive: 160 error: ec>
 	anInstance primitiveChangeClassTo: self basicNew.
 	^self
@@ -96,7 +99,7 @@ Behavior >> adoptInstance: anInstance [
 { #category : 'accessing - instances and variables' }
 Behavior >> allClassVarNames [
 	"Answer the names of the receiver's and the receiver's ancestor's class variables."
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self superclass
 		ifNil: [ self classVarNames ]
 		ifNotNil: [ :sup | sup allClassVarNames , self classVarNames ]
@@ -107,6 +110,7 @@ Behavior >> allInstVarNames [
 	"Answer an Array of the names of the receiver's instance variables. The
 	Array ordering is the order in which the variables are stored and
 	accessed by the interpreter."
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 
 	^ self superclass
 		ifNil: [ self instVarNames ]
@@ -116,6 +120,7 @@ Behavior >> allInstVarNames [
 { #category : 'accessing - instances and variables' }
 Behavior >> allInstances [
 	"Answer all instances of the receiver."
+	<reflection: 'Memory Scanning - Instances of a class'>
 	<primitive: 177>
 	"The primitive can fail because memory is low.  If so, fall back on the old
 	 enumeration code, which gives the system a chance to GC and/or grow.
@@ -134,6 +139,7 @@ Behavior >> allInstances [
 { #category : 'enumerating' }
 Behavior >> allInstancesDo: aBlock [
 	"Evaluate aBlock with each of the current instances of the receiver."
+	<reflection: 'Memory Scanning - Instances of a class'>
 	| instances inst next |
 	instances := self allInstancesOrNil.
 	instances ifNotNil:
@@ -153,6 +159,7 @@ Behavior >> allInstancesDo: aBlock [
 Behavior >> allInstancesOrNil [
 	"Answer all instances of the receiver, or nil if the primitive
 	 fails, which it may be due to being out of memory."
+	<reflection: 'Memory Scanning - Instances of a class'>
 	<primitive: 177>
 	^nil
 ]
@@ -168,18 +175,21 @@ Behavior >> allMethods [
 { #category : 'queries' }
 Behavior >> allMethodsAccessingSlot: aSlot [
 	"return all methods that access aSlot in this class and subclasses"
+	<reflection: 'Structural queries on methods - Method slot uses'>
 	^self withAllSubclasses flatCollect: [ :class | class methodsAccessingSlot: aSlot ]
 ]
 
 { #category : 'queries' }
 Behavior >> allMethodsReadingSlot: aSlot [
 	"return all methods that access aSlot in this class and subclasses"
+	<reflection: 'Structural queries on methods - Method slot uses'>
 	^self withAllSubclasses flatCollect: [ :class | class methodsReadingSlot: aSlot]
 ]
 
 { #category : 'queries' }
 Behavior >> allMethodsWritingSlot: aSlot [
 	"return all methods that access aSlot in this class and subclasses"
+	<reflection: 'Structural queries on methods - Method slot uses'>
 	^self withAllSubclasses flatCollect: [ :class | class methodsWritingSlot: aSlot ]
 ]
 
@@ -234,18 +244,20 @@ Behavior >> allSelectorsWithout: behaviors [
 { #category : 'accessing - instances and variables' }
 Behavior >> allSharedPools [
 	"Answer an ordered collection of the shared pools that the receiver and the receiver's ancestors share."
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^self superclass allSharedPools
 ]
 
 { #category : 'accessing' }
 Behavior >> allSlots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^#()
 ]
 
 { #category : 'accessing - instances and variables' }
 Behavior >> allSubInstances [
 	"Answer a list of all current instances of the receiver and all of its subclasses."
+	<reflection: 'Memory Scanning - Instances of a class'>
 	| aCollection |
 	aCollection := OrderedCollection new.
 	self allSubInstancesDo:
@@ -257,7 +269,7 @@ Behavior >> allSubInstances [
 Behavior >> allSubInstancesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the current instances of the
 	receiver and all its subclasses."
-
+	<reflection: 'Memory Scanning - Instances of a class'>
 	self allInstancesDo: aBlock.
 	self allSubclassesDo: [:sub | sub allInstancesDo: aBlock]
 ]
@@ -265,7 +277,7 @@ Behavior >> allSubInstancesDo: aBlock [
 { #category : 'accessing - class hierarchy' }
 Behavior >> allSubclasses [
 	"Answer an orderedCollection of the receiver's and the receiver's descendent's subclasses. "
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| scan scanTop |
 	scan := OrderedCollection withAll: self subclasses.
 	scanTop := 1.
@@ -278,7 +290,7 @@ Behavior >> allSubclasses [
 { #category : 'enumerating' }
 Behavior >> allSubclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self subclassesDo:
 		[:cl |
 		aBlock value: cl.
@@ -288,6 +300,7 @@ Behavior >> allSubclassesDo: aBlock [
 { #category : 'accessing - class hierarchy' }
 Behavior >> allSubclassesWithLevelDo: classAndLevelBlock startingLevel: level [
 	"Walk the tree of subclasses, giving the class and its level"
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| subclassNames |
 	classAndLevelBlock value: self value: level.
 	self == Class ifTrue:  [^ self].  "Don't visit all the metaclasses"
@@ -305,6 +318,7 @@ Behavior >> allSuperclasses [
 	"Answer an OrderedCollection of the receiver's and the receiver's
 	ancestor's superclasses. The first element is the receiver's immediate
 	superclass, followed by its superclass; the last element is Object."
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| temp |
 	^ self superclass == nil
 		ifTrue: [ OrderedCollection new]
@@ -316,7 +330,7 @@ Behavior >> allSuperclasses [
 { #category : 'enumerating' }
 Behavior >> allSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self superclass == nil
 		ifFalse: [aBlock value: self superclass.
 				self superclass allSuperclassesDo: aBlock]
@@ -326,6 +340,7 @@ Behavior >> allSuperclassesDo: aBlock [
 Behavior >> allSuperclassesIncluding: aClass [
 	"Answer an OrderedCollection of the receiver's and the receiver's  ancestor's superclasses
 	up to aClass included. If aClass is not part of the receiver's superclass, returns up to the root."
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| temp |
 	self class == ProtoObject class ifTrue: [ ^ OrderedCollection new].
 	^ self superclass == aClass
@@ -351,6 +366,7 @@ Behavior >> basicIdentityHash [
 
 	 Primitive. Essential. Do not override. See Object documentation whatIsAPrimitive."
 
+	<reflection: 'Object Inspection - Accessing object identity'>
 	<primitive: 175>
 	self primitiveFailed
 ]
@@ -397,6 +413,7 @@ Behavior >> basicObsoleteSubclasses [
 
 { #category : 'accessing - class hierarchy' }
 Behavior >> basicSuperclass: aClass [
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	superclass := aClass
 ]
 
@@ -414,6 +431,7 @@ Behavior >> binding [
 { #category : 'accessing - instances and variables' }
 Behavior >> bindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver"
+	<reflection: 'Class structural inspection - Variable lookup'>
 	^self superclass bindingOf: varName
 ]
 
@@ -449,7 +467,7 @@ Behavior >> byteSizeOfInstanceOfSize: basicSize [
 Behavior >> canPerform: selector [
 	"Answer whether the receiver's instances can safely perform to the message whose selector
 	is the argument: it is not an abstract or cancelled method"
-
+	<reflection: 'Message sending and code execution - Method lookup'>
 	^ self classAndMethodFor: selector do: [:c :m | m isProvided] ifAbsent: [false]
 ]
 
@@ -457,7 +475,7 @@ Behavior >> canPerform: selector [
 Behavior >> canUnderstand: selector [
 	"Answer whether the receiver's instances can respond to the message whose selector
 	is the argument."
-
+	<reflection: 'Message sending and code execution - Method lookup'>
 	^ self
 		classAndMethodFor: selector
 		do: [ :c :m | true ]
@@ -477,6 +495,7 @@ Behavior >> classAndMethodFor: aSymbol do: binaryBlock ifAbsent: absentBlock [
 { #category : 'testing - method dictionary' }
 Behavior >> classBindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver's class"
+	<reflection: 'Class structural inspection - Variable lookup'>
 	^self bindingOf: varName
 ]
 
@@ -507,7 +526,7 @@ Behavior >> classLayout: aClassLayout [
 { #category : 'accessing - instances and variables' }
 Behavior >> classVarNames [
 	"Answer a collection of the receiver's class variable names."
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^#()
 ]
 
@@ -528,14 +547,14 @@ Behavior >> compiledMethodAt: selector [
 	"Answer the compiled method associated with the argument, selector (a
 	Symbol), a message selector in the receiver's method dictionary. If the
 	selector is not in the dictionary, create an error notification."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict at: selector
 ]
 
 { #category : 'accessing - method dictionary' }
 Behavior >> compiledMethodAt: selector ifAbsent: aBlock [
 	"Answer the compiled method associated with the argument, selector (a Symbol), a message selector in the receiver's method dictionary. If the selector is not in the dictionary, return the value of aBlock"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict at: selector ifAbsent: aBlock
 ]
 
@@ -545,7 +564,7 @@ Behavior >> compiledMethodAt: selector ifPresent: aBlock [
 	 a message selector in the receiver's method dictionary.
 	 If the selector is in the dictionary, return the value of aBlock.
 	"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict at: selector ifPresent: aBlock
 ]
 
@@ -556,7 +575,7 @@ Behavior >> compiledMethodAt: selector ifPresent: aBlock ifAbsent: anotherBlock 
 	 If the selector is in the dictionary, return the value of aBlock.
 	 If the selector is not in the dictionary, return the value of anotherBlock.
 	"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict at: selector ifPresent: aBlock ifAbsent: anotherBlock
 ]
 
@@ -570,6 +589,7 @@ Behavior >> deepCopy [
 { #category : 'accessing - instances and variables' }
 Behavior >> definedVariables [
 	"return all the Variables defined"
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^ self slots
 ]
 
@@ -621,6 +641,8 @@ Behavior >> findOriginClassOf: aMethod [
 
 	"I return the origin of my given method. In a basic class is always self.
 	Enhanced classes (eg. TraitedClasses) can do something else"
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+
 	^ self
 ]
 
@@ -630,6 +652,7 @@ Behavior >> findOriginMethodOf: aMethod [
 	When in a normal class it is the same. Enhanced classes (eg. TraitedClasses)
 	can do something difference"
 
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ aMethod
 ]
 
@@ -742,7 +765,7 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 Behavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 	"we do not use #anySatisfy: for speed"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
 	^false
 ]
@@ -754,15 +777,15 @@ Behavior >> hasBindingOf: aString [
 
 { #category : 'testing - method dictionary' }
 Behavior >> hasMethodAccessingVariable: aVariable [
-	"Answer true if any of my methods access the variable"
-
-	^self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
+	"Answer true if any of my methods access the variable. Pay attention that the compiler is free to optimize unused variable. Results are garanteed only for used variables e.g. variables in return, message sends, or assignment."
+  <reflection: 'Structural queries on methods - Method slot uses'>
+	^ self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
 ]
 
 { #category : 'testing - method dictionary' }
 Behavior >> hasMethods [
 	"Answer whether the receiver has any methods in its method dictionary."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict notEmpty
 ]
 
@@ -775,19 +798,20 @@ Behavior >> hasProperty: aKey [
 { #category : 'testing - method dictionary' }
 Behavior >> hasSelectorReferringTo: literal [
 	"Answer true if any of my methods access the argument as a literal"
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
 ]
 
 { #category : 'testing - class hierarchy' }
 Behavior >> includesBehavior: aClass [
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self isTrait ifTrue: [ ^false ].
 	^self == aClass or:[self inheritsFrom: aClass]
 ]
 
 { #category : 'testing - method dictionary' }
 Behavior >> includesLocalSelector: aSymbol [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self includesSelector: aSymbol
 ]
 
@@ -795,7 +819,7 @@ Behavior >> includesLocalSelector: aSymbol [
 Behavior >> includesMethod: aMethod [
 	"Answer whether aMethod is in the method dictionary. Use identityIncludes
 	as = of CompiledMethod is too weak (ignores the selector)"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict identityIncludes: aMethod
 ]
 
@@ -804,6 +828,7 @@ Behavior >> includesSelector: aSymbol [
 	"Answer whether the message whose selector is the argument is in the
 	method dictionary of the receiver's class."
 
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict includesKey: aSymbol
 ]
 
@@ -811,7 +836,7 @@ Behavior >> includesSelector: aSymbol [
 Behavior >> inheritsFrom: aClass [
 	"Answer whether the argument, aClass, is on the receiver's superclass
 	chain."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| aSuperclass |
 	aSuperclass := self superclass.
 	[aSuperclass == nil]
@@ -842,6 +867,7 @@ Behavior >> instSize [
 	(as opposed to indexed variables) of the receiver.
 	 Above Cog Spur the class format is
 		<5 bits inst spec><16 bits inst size>"
+			<reflection: 'Class structural inspection - Instance variable inspection'>
 	^format bitAnd: 16rFFFF
 ]
 
@@ -872,7 +898,7 @@ Behavior >> instVarNames [
 	up fake local instance variable names because Behaviors have instance
 	variables for the purpose of compiling methods, but these are not named
 	instance variables."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	| mySize superSize |
 	mySize := self instSize.
 	superSize := self superclass
@@ -896,6 +922,7 @@ Behavior >> instanceCount [
 { #category : 'accessing - instances and variables' }
 Behavior >> instanceVariables [
 	"in older version, this method was returning names, not objects"
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self slots
 ]
 
@@ -920,6 +947,7 @@ Behavior >> isAbstract [
 
 { #category : 'testing' }
 Behavior >> isAnonymous [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^true
 ]
 
@@ -990,6 +1018,7 @@ Behavior >> isCompiledMethodClass [
 
 { #category : 'testing - method dictionary' }
 Behavior >> isDisabledSelector: selector [
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self classAndMethodFor: selector do: [:c :m | m isDisabled] ifAbsent: [false]
 ]
 
@@ -1033,12 +1062,14 @@ Behavior >> isManifest [
 
 { #category : 'testing' }
 Behavior >> isMeta [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
 { #category : 'testing' }
 Behavior >> isObsolete [
 	"Return true if the receiver is obsolete."
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^self instanceCount = 0
 ]
 
@@ -1062,13 +1093,14 @@ Behavior >> isReferenced [
 
 { #category : 'testing - class hierarchy' }
 Behavior >> isRootInEnvironment [
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^self superclass isNil
 ]
 
 { #category : 'testing' }
 Behavior >> isUsed [
 	"the class is used somehow. This is client specific, subclasses can override"
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ self isReferenced
 ]
 
@@ -1114,6 +1146,7 @@ Behavior >> isWords [
 Behavior >> kindOfSubclass [
 	"Answer a String that is the keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self classLayout kindOfSubclass
 ]
 
@@ -1130,6 +1163,7 @@ Behavior >> lookupSelector: selector [
 	Return the corresponding method if found.
 	Otherwise chase the superclass chain and try again.
 	Return nil if no method is found."
+	<reflection: 'Message sending and code execution - Method lookup'>
 	| lookupClass |
 	lookupClass := self.
 	[lookupClass == nil]
@@ -1143,6 +1177,7 @@ Behavior >> lookupSelector: selector [
 
 { #category : 'lookup' }
 Behavior >> lookupVar: aName [
+	<reflection: 'Class structural inspection - Variable lookup'>
 	^ self classLayout
 		resolveSlot: aName asSymbol
 		ifFound: [:var | var]
@@ -1174,40 +1209,44 @@ Behavior >> methodDictionary: aDictionary [
 
 { #category : 'accessing - method dictionary' }
 Behavior >> methods [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict values
 ]
 
 { #category : 'queries' }
 Behavior >> methodsAccessingSlot: aSlot [
+	<reflection: 'Structural queries on methods - Method slot uses'>
 	^self methods select: [ :method | method accessesSlot: aSlot ]
 ]
 
 { #category : 'accessing - method dictionary' }
 Behavior >> methodsDo: aBlock [
 	"Evaluate aBlock for all the compiled methods in my method dictionary."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict valuesDo: aBlock
 ]
 
 { #category : 'queries' }
 Behavior >> methodsReadingSlot: aSlot [
+	<reflection: 'Structural queries on methods - Method slot uses'>
 	^self methods select: [ :method | method readsSlot: aSlot ]
 ]
 
 { #category : 'navigation' }
 Behavior >> methodsReferencingClass: aClass [
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	^self methodsReferencingClasses: { aClass }
 ]
 
 { #category : 'navigation' }
 Behavior >> methodsReferencingClasses: aCollectionOfClasses [
+	<reflection: 'Structural queries on methods - Method element references'>
 	^ self methods select: [ :meth | meth referencedClasses includesAny: aCollectionOfClasses ]
 ]
 
 { #category : 'queries' }
 Behavior >> methodsWritingSlot: aSlot [
+	<reflection: 'Structural queries on methods - Method slot uses'>
 	^self methods select: [ :method | method writesSlot: aSlot ]
 ]
 
@@ -1247,7 +1286,7 @@ Behavior >> obsolete [
 { #category : 'obsolete subclasses' }
 Behavior >> obsoleteSubclasses [
 	"Return all the weakly remembered obsolete subclasses of the receiver"
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self basicObsoleteSubclasses at: self ifAbsent: [ #(  ) ]
 ]
 
@@ -1275,11 +1314,13 @@ Behavior >> postCopy [
 
 { #category : 'queries' }
 Behavior >> pragmas [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self methods flatCollect: [ :method | method pragmas ]
 ]
 
 { #category : 'queries' }
 Behavior >> pragmasDo: aBlock [
+	<reflection: 'Class structural inspection - Pragma'>
 	self methodsDo: [ :method | method pragmasDo: aBlock ]
 ]
 
@@ -1327,7 +1368,7 @@ Behavior >> realClass [
 { #category : 'obsolete subclasses' }
 Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
-
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	self basicObsoleteSubclasses removeKey: self ifAbsent: [  ]
 ]
 
@@ -1358,6 +1399,7 @@ Behavior >> removeProperty: propName ifAbsent: aBlock [
 { #category : 'accessing - method dictionary' }
 Behavior >> removeSelector: aSelector [
 	"Assuming that the argument, selector (a Symbol), is a message selector in my method dictionary, remove it and its method."
+	<reflection: 'Class structural modification - Selector/Method modification'>
 
 	self methodDict removeKey: aSelector ifAbsent: []
 ]
@@ -1365,7 +1407,7 @@ Behavior >> removeSelector: aSelector [
 { #category : 'adding-removing methods' }
 Behavior >> removeSelectorSilently: selector [
 	"Remove selector without sending system change notifications"
-
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector]
 ]
 
@@ -1381,7 +1423,7 @@ Behavior >> selectSubclasses: aBlock [
 	which aBlock evaluates to true. In addition, evaluate aBlock for the
 	subclasses of each of these successful subclasses and collect into the set
 	those for which aBlock evaluates true. Answer the resulting set."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| aSet |
 	aSet := Set new.
 	self allSubclasses do:
@@ -1398,7 +1440,7 @@ Behavior >> selectSuperclasses: aBlock [
 	superclasses of each of these successful superclasses and collect into the
 	OrderedCollection ones for which aBlock evaluates to true. Answer the
 	resulting OrderedCollection."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| aSet |
 	aSet := Set new.
 	self allSuperclasses do:
@@ -1411,6 +1453,7 @@ Behavior >> selectSuperclasses: aBlock [
 Behavior >> selectors [
 	"Answer a Set of all the message selectors specified in the receiver's
 	method dictionary."
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 
 	^ self methodDict keys
 ]
@@ -1418,21 +1461,21 @@ Behavior >> selectors [
 { #category : 'accessing - method dictionary' }
 Behavior >> selectorsAndMethodsDo: selectorAndMethodBlock [
 	"Evaluate selectorAndMethodBlock with two arguments for each selector/method pair in my method dictionary."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict keysAndValuesDo: selectorAndMethodBlock
 ]
 
 { #category : 'accessing - method dictionary' }
 Behavior >> selectorsDo: selectorBlock [
 	"Evaluate selectorBlock for all the message selectors in my method dictionary."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict keysDo: selectorBlock
 ]
 
 { #category : 'accessing - method dictionary' }
 Behavior >> selectorsWithArgs: numberOfArgs [
 	"Return all selectors defined in this class that take this number of arguments"
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self selectors select: [:selector | selector numArgs = numberOfArgs]
 ]
 
@@ -1469,6 +1512,7 @@ Behavior >> shutDown: quitting [
 
 { #category : 'accessing' }
 Behavior >> slots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^#()
 ]
 
@@ -1477,7 +1521,7 @@ Behavior >> someInstance [
 	"Primitive. Answer the first instance in the enumeration of all instances
 	of the receiver. Fails if there are none. Essential. See Object
 	documentation whatIsAPrimitive."
-
+	<reflection: 'Memory Scanning - Instances of a class'>
 	<primitive: 77>
 	^nil
 ]
@@ -1553,7 +1597,7 @@ Behavior >> subclassInstVarNames [
 { #category : 'accessing - class hierarchy' }
 Behavior >> superclass [
 	"Answer the receiver's superclass, a Class."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^superclass
 ]
 
@@ -1564,7 +1608,7 @@ Behavior >> superclass: aClass [
 
 	"Note: Do not use 'aClass isKindOf: Behavior' here
 		in case we recompile from Behavior itself."
-
+		<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	aClass
 		ifNil: [ self basicSuperclass: aClass.
 			Object flushCache.
@@ -1589,6 +1633,7 @@ Behavior >> thoroughHasSelectorReferringTo: literal [
 	"Answer true if any of my methods access the argument as a
 	literal. Dives into the compact literal notation, making it slow but
 	thorough "
+	<reflection: 'Structural queries on methods - Method element references'>
 
 	| specialIndex |
 	"for speed we check the special selectors here once per class"
@@ -1602,7 +1647,7 @@ Behavior >> thoroughWhichMethodsReferTo: literal [
 	"Answer methods whose methods referes to the argument as a literal.
 	 Dives into the compact literal notation and embedded literal arrays,
     making it slow but thorough "
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	| specialIndex |
 	"for speed we check the special selectors here once per class"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
@@ -1614,12 +1659,13 @@ Behavior >> thoroughWhichMethodsReferTo: literal specialIndex: specialIndex [
 	"Answer methods whose methods referes to the argument as a literal.
 	 Dives into the compact literal notation and embedded literal arrays,
     making it slow but thorough "
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	^ self methods select: [ :method | method hasSelector: literal specialSelectorIndex: specialIndex ]
 ]
 
 { #category : 'testing - method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
+	<reflection: 'Structural queries on methods - Method element references'>
 	^ (self thoroughWhichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
@@ -1633,12 +1679,14 @@ Behavior >> unreferencedInstanceVariables [
 { #category : 'queries' }
 Behavior >> usingMethods [
 	"all methods that reference me"
+	<reflection: 'Structural queries on methods - Class references'>
 	self isAnonymous ifTrue: [ ^#() ].
 	^self binding usingMethods
 ]
 
 { #category : 'queries' }
 Behavior >> whichClassDefinesClassVar: aString [
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	Symbol hasInterned: aString ifTrue: [ :aSymbol |
 		^self whichSuperclassSatisfies:
 			[:aClass |
@@ -1648,6 +1696,7 @@ Behavior >> whichClassDefinesClassVar: aString [
 
 { #category : 'queries' }
 Behavior >> whichClassDefinesInstVar: aString [
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
 		whichSuperclassSatisfies: [:aClass | aClass instVarNames includes: aString]
 ]
@@ -1657,6 +1706,7 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 	"Answer the class on the receiver's superclass chain where the
 	argument, aSymbol (a message selector), will be found. Answer nil if none found."
 	"Rectangle whichClassIncludesSelector: #inspect."
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	(self includesSelector: aSymbol)
 		ifTrue: [^ self].
 	self superclass == nil
@@ -1667,23 +1717,26 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 { #category : 'testing - method dictionary' }
 Behavior >> whichMethodsReferTo: aLiteral [
 	"Answer methods whose methods directly refers to the argument as a literal"
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	^ self methods select: [ :method | method hasLiteral: aLiteral ]
 ]
 
 { #category : 'testing - method dictionary' }
 Behavior >> whichSelectorsReferTo: literal [
+	<reflection: 'Structural queries on methods - Method element references'>
 	^ (self whichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
 { #category : 'queries' }
 Behavior >> whichSuperclassSatisfies: aBlock [
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	(aBlock value: self) ifTrue: [^self].
 	^self superclass ifNotNil: [self superclass whichSuperclassSatisfies: aBlock]
 ]
 
 { #category : 'user interface' }
 Behavior >> withAllSubAndSuperclassesDo: aBlock [
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 
 	self withAllSubclassesDo: aBlock.
 	self allSuperclassesDo: aBlock
@@ -1693,7 +1746,7 @@ Behavior >> withAllSubAndSuperclassesDo: aBlock [
 Behavior >> withAllSubclasses [
 	"Answer a Set of the receiver, the receiver's descendent's, and the
 	receiver's descendent's subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self allSubclasses add: self;
 		 yourself
 ]
@@ -1701,14 +1754,14 @@ Behavior >> withAllSubclasses [
 { #category : 'accessing - class hierarchy' }
 Behavior >> withAllSubclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for the receiver and each of its subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self withAllSubclasses do: aBlock
 ]
 
 { #category : 'accessing - class hierarchy' }
 Behavior >> withAllSuperAndSubclasses [
 	"Answer the receiver's class hierarchy"
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^self allSuperclasses, self withAllSubclasses
 ]
 
@@ -1724,6 +1777,7 @@ Behavior >> withAllSuperclasses [
 	"Answer an OrderedCollection of the receiver and the receiver's superclasses.
 	The first element is the receiver, followed by its superclass;
 	the last element is Object."
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 
 	^self allSuperclasses
 		addFirst: self;
@@ -1733,6 +1787,7 @@ Behavior >> withAllSuperclasses [
 { #category : 'enumerating' }
 Behavior >> withAllSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	aBlock value: self.
 	self superclass == nil
 		ifFalse: [self superclass withAllSuperclassesDo: aBlock]

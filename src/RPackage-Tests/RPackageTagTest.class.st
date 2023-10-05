@@ -52,7 +52,7 @@ RPackageTagTest >> testAddClassFromTag [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testHasClass [
+RPackageTagTest >> testIncludesClass [
 
 	| package class tag |
 	package := self ensurePackage: #Test1.
@@ -63,9 +63,9 @@ RPackageTagTest >> testHasClass [
 	self assert: (package hasTag: tag).
 	self assert: tag name equals: 'TAG'.
 
-	self assert: (tag hasClass: class).
-	self assert: (tag hasClass: class class). "We want it to work with class side too"
-	self deny: (tag hasClass: self class)
+	self assert: (tag includesClass: class).
+	self assert: (tag includesClass: class class). "We want it to work with class side too"
+	self deny: (tag includesClass: self class)
 ]
 
 { #category : 'tests' }

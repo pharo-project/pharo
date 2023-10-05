@@ -245,7 +245,7 @@ WriteBarrierTest >> testMutateObjectInstVarShouldCatchRightFailure [
 
 	self assert: failure object identicalTo: guineaPig.
 	self assert: failure newValue equals: #test.
-	self assert: failure fieldIndex equals: 1
+	self assert: failure fieldIndex equals: 4
 ]
 
 { #category : 'tests - object' }

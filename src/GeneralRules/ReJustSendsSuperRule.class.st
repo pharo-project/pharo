@@ -26,7 +26,13 @@ ReJustSendsSuperRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReJustSendsSuperRule >> basicCheck: aMethod [
-	^ aMethod ast isPrimitive not and: [ matcher executeMethod: aMethod ast initialAnswer: false ]
+
+	aMethod ast isPrimitive ifTrue: [ ^ false ].
+
+	"If a method has pragmas, it is not doing nothing."
+	aMethod pragmas ifNotEmpty: [ ^ false ].
+
+	^ matcher executeMethod: aMethod ast initialAnswer: false
 ]
 
 { #category : 'accessing' }

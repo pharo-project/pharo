@@ -97,9 +97,15 @@ RGMethodDefinition class >> class: aRGBehaviorDefinition selector: aString [
 ]
 
 { #category : 'instance creation' }
+RGMethodDefinition class >> className: aString selector: aSelector isMeta: aBoolean [
+
+	^ (self class: (RGClassDefinition named: aString) selector: aSelector) isMeta: aBoolean; yourself
+]
+
+{ #category : 'instance creation' }
 RGMethodDefinition class >> className: aString selector: aSelector isMetaSide: aBoolean [
 
-	^ (self class: (RGClassDefinition named: aString) selector: aSelector) isMetaSide: aBoolean; yourself
+	^ self className: aString selector: aSelector isMeta: aBoolean
 ]
 
 { #category : 'elements-annotations' }
@@ -218,7 +224,7 @@ RGMethodDefinition >> category [
 { #category : 'to remove as soon as possible' }
 RGMethodDefinition >> classIsMeta [
 
-	^self isMetaSide
+	^self isMeta
 ]
 
 { #category : 'accessing' }

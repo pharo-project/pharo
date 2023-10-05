@@ -16,13 +16,14 @@ RBTemporaryToInstanceVariableParametrizedTest class >> testParameters [
 
 { #category : 'running' }
 RBTemporaryToInstanceVariableParametrizedTest >> addClassHierarchy [
-	model
-		defineClass: 'Foo << #Foo1
-		slots: { #foo};
-		package: #''Refactory-Test data'''.
-	(model classNamed: #Foo)
-		compile: 'someMethod | foo | foo := 4. ^foo'
-		classified: #(#accessing)
+
+	model defineClass: [ :aBuilder |
+		aBuilder
+			superclassName: #Foo;
+			name: #Foo1;
+			slots: { #foo };
+			package: #'Refactory-Test data' ].
+	(model classNamed: #Foo) compile: 'someMethod | foo | foo := 4. ^foo' classified: #( #accessing )
 ]
 
 { #category : 'accessing' }

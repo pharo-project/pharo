@@ -74,20 +74,6 @@ FileSystemStore >> basicIsSymlink: aNode [
 	^self subclassResponsibility
 ]
 
-{ #category : 'abstract' }
-FileSystemStore >> basicIsWritable: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is
-	a writable file or can be changed."
-	self subclassResponsibility
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicModificationTime: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is a readable
-	file or a directory whose contents can be listed."
-	self subclassResponsibility
-]
-
 { #category : 'error signalling' }
 FileSystemStore >> basicOpen: aPath writable: aBoolean [
 	"open the file at the given path and return an identifier"
@@ -366,9 +352,7 @@ FileSystemStore >> isSymlink: aPath [
 
 { #category : 'public' }
 FileSystemStore >> isWritable: aPath [
-	self nodeAt: aPath
-		ifPresent: [ :entry | ^ self basicIsWritable: entry ]
-		ifAbsent: [ ^ false ]
+	self subclassResponsibility
 ]
 
 { #category : 'public' }

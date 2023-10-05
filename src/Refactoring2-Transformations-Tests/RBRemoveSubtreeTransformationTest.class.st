@@ -81,7 +81,7 @@ RBRemoveSubtreeTransformationTest >> testTransform [
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+		         self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
 	self assertEmpty: (class parseTreeForSelector: #one) body statements
 ]
@@ -105,7 +105,7 @@ RBRemoveSubtreeTransformationTest >> testTransformNotSequenceNode [
 	self assert: transformation model changes changes size equals: 2.
 
 	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+		         self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #printString1).
 	self assertEmpty:
 		(class parseTreeForSelector: #printString1) body statements

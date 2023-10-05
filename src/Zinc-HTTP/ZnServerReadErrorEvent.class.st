@@ -13,5 +13,5 @@ Class {
 { #category : 'printing' }
 ZnServerReadErrorEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Server Read Error ';  print: exception
+	stream << 'Server Read Error ';  print: exception
 ]

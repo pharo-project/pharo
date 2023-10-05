@@ -29,7 +29,7 @@ Metaclass >> acceptsLoggingOfCompilation [
 { #category : 'instance variables' }
 Metaclass >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
-
+	<reflection: 'Class structural modification - Instance variable modification'>
 	| fullString |
 	fullString := String streamContents: [:strm |
 		self instVarNames do: [:aString2 | strm nextPutAll: aString2; space].
@@ -40,16 +40,19 @@ Metaclass >> addInstVarNamed: aString [
 { #category : 'class hierarchy' }
 Metaclass >> addObsoleteSubclass: aClass [
 	"Do nothing."
+	<reflection: 'Class structural modification - Hierarchy modification'>
 ]
 
 { #category : 'instance variables' }
 Metaclass >> addSlot: aClassSlot [
 
+	<reflection: 'Class structural modification - Slot modification'>
 	^self instanceSide addClassSlot: aClassSlot
 ]
 
 { #category : 'class hierarchy' }
 Metaclass >> addSubclass: aClass [
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	"Do nothing."
 ]
 
@@ -58,6 +61,7 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 	"Recreate any existing instances of the argument, oldClass, as instances of
 	the receiver, which is a newly changed class. Permute variables as
 	necessary."
+	<reflection: 'Object Modification - Object class change'>
 	thisClass class == self ifTrue:[^self error:'Metaclasses have only one instance'].
 	oldMetaClass isMeta ifFalse:[^self error:'Argument must be Metaclass'].
 	oldInstance class == oldMetaClass ifFalse:[^self error:'Not the class of argument'].
@@ -79,7 +83,7 @@ Metaclass >> binding [
 
 { #category : 'compiling' }
 Metaclass >> bindingOf: varName [
-
+	<reflection: 'Class structural inspection - Variable lookup'>
 	^self instanceSide classBindingOf: varName
 ]
 
@@ -91,7 +95,7 @@ Metaclass >> category [
 { #category : 'pool variables' }
 Metaclass >> classPool [
 	"Answer the dictionary of class variables."
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^self instanceSide classPool
 ]
 
@@ -100,14 +104,14 @@ Metaclass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
 	"Point class classSide >>> Point class"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self
 ]
 
 { #category : 'accessing - instances and variables' }
 Metaclass >> classVarNames [
 	"Answer the names of the class variables defined in the receiver's instance."
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^self instanceSide
 		ifNil: [ #() ]
 		ifNotNil: [ :class | class classVarNames ]
@@ -116,7 +120,7 @@ Metaclass >> classVarNames [
 { #category : 'class variables' }
 Metaclass >> classVariables [
 	"Answer the class variables defined in the receiver's instance."
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self instanceSide
 		ifNil: [ #() ]
 		ifNotNil: [ :class | class classVariables ]
@@ -188,12 +192,13 @@ Metaclass >> hasBindingThatBeginsWith: aString [
 
 { #category : 'accessing - parallel hierarchy - deprecated' }
 Metaclass >> hasClassSide [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ false
 ]
 
 { #category : 'accessing - instances and variables' }
 Metaclass >> hasClassVarNamed: aString [
-
+	<reflection: 'Class structural inspection - Class variable inspection'>
 	^self instanceSide
 		ifNil: [ false ]
 		ifNotNil: [ :class | class hasClassVarNamed: aString ]
@@ -216,23 +221,25 @@ Metaclass >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"
 	"Point class instanceSide >>> Point"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self soleInstance
 ]
 
 { #category : 'testing' }
 Metaclass >> isAnonymous [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^self soleInstance isAnonymous
 ]
 
 { #category : 'testing' }
 Metaclass >> isClass [
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ true
 ]
 
 { #category : 'testing' }
 Metaclass >> isMeta [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -247,6 +254,7 @@ Metaclass >> isMetaclassOfClassOrNil [
 { #category : 'testing' }
 Metaclass >> isObsolete [
 	"Return true if the receiver is obsolete"
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^self soleInstance isNil "Either no thisClass"
 		or:[self soleInstance classSide ~~ self "or I am not the class of thisClass"
 			or:[self soleInstance isObsolete]] "or my instance is obsolete"
@@ -266,6 +274,7 @@ Metaclass >> isSelfEvaluating [
 { #category : 'testing' }
 Metaclass >> isUsed [
 	"Metaclasses are used by default"
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -290,14 +299,14 @@ Metaclass >> new [
 
 { #category : 'instance creation' }
 Metaclass >> newAnonymousSubclass [
-
+	<reflection: 'Class structural modification - Anonymous class creation'>
 	^self instanceSide newAnonymousSubclass class
 ]
 
 { #category : 'class hierarchy' }
 Metaclass >> obsoleteSubclasses [
 	"Answer the receiver's subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
@@ -319,17 +328,19 @@ Metaclass >> postCopy [
 
 { #category : 'instance variables' }
 Metaclass >> removeSlot: aClassSlot [
-
+	<reflection: 'Class structural modification - Slot modification'>
 	^self instanceSide removeClassSlot: aClassSlot
 ]
 
 { #category : 'class hierarchy' }
 Metaclass >> removeSubclass: aClass [
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	"Do nothing."
 ]
 
 { #category : 'pool variables' }
 Metaclass >> sharedPoolNames [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^#()
 ]
 
@@ -367,7 +378,7 @@ Metaclass >> sourceCodeTemplate [
 { #category : 'class hierarchy' }
 Metaclass >> subclasses [
 	"Answer the receiver's subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
@@ -375,7 +386,7 @@ Metaclass >> subclasses [
 { #category : 'class hierarchy' }
 Metaclass >> subclassesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's immediate subclasses."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
 	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
 ]

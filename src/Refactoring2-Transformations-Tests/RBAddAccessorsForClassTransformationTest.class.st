@@ -34,8 +34,7 @@ RBAddAccessorsForClassTransformationTest >> testTransform [
 
 	self assert: transformation model changes changes size equals: 2.
 
-	class := transformation model classNamed:
-		         self changeMockClass name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self
 		assert: (class parseTreeForSelector: #instVar)
 		equals: (self parseMethod: 'instVar ^instVar').

@@ -53,7 +53,7 @@ RBChildrenToSiblingsRefactoring class >> name: aClassName class: aClass subclass
 
 { #category : 'private - accessing' }
 RBChildrenToSiblingsRefactoring >> abstractSuperclass [
-	^self model classNamed: className asSymbol
+	^self model classNamed: className
 ]
 
 { #category : 'transforming' }

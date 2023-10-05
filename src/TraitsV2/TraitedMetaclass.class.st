@@ -28,6 +28,7 @@ TraitedMetaclass class >> traitedClassTrait [
 
 { #category : 'accessing - method dictionary' }
 TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
+	<reflection: 'Class structural modification - Selector/Method modification'>
 
 	self localMethodDict at: selector put: compiledMethod.
 
@@ -38,7 +39,7 @@ TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 { #category : 'querying' }
 TraitedMetaclass >> allTraits [
-
+	<reflection: 'Class structural inspection - Traits'>
 	^ self traitComposition allTraits
 ]
 
@@ -84,6 +85,7 @@ TraitedMetaclass >> findOriginClassOf: aMethod [
 
 	"I return the myself or the trait that has the original implementation of a method.
 	If the method is an alias, the returned class includes the original aliased method"
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 
 	(aMethod hasProperty: #traitSource)
 		ifTrue: [ ^ aMethod traitSource innerClass ].
@@ -104,6 +106,7 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 	If it cames from a trait composition I look for the method in the trait composition.
 	First I try with the trait stored in the traitSource.
 	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 
 	(self isLocalSelector: aMethod selector)
 		ifTrue: [ ^ aMethod].
@@ -127,6 +130,7 @@ TraitedMetaclass >> hasTraitComposition [
 
 { #category : 'testing - method dictionary' }
 TraitedMetaclass >> includesLocalSelector: aSymbol [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self isLocalSelector: aSymbol
 ]
 
@@ -170,7 +174,7 @@ TraitedMetaclass >> isLocalAliasSelector: aSymbol [
 
 { #category : 'testing' }
 TraitedMetaclass >> isLocalSelector: aSelector [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ localMethods includesKey: aSelector
 ]
 
@@ -227,7 +231,7 @@ TraitedMetaclass >> localMethods [
 
 { #category : 'accessing' }
 TraitedMetaclass >> localSelectors [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ localMethods keys
 ]
 
@@ -294,6 +298,7 @@ TraitedMetaclass >> removeSelector: aSelector [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	super removeSelector: aSelector.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
@@ -302,7 +307,7 @@ TraitedMetaclass >> removeSelector: aSelector [
 
 { #category : 'slots' }
 TraitedMetaclass >> slots [
-
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ super slots reject: [ :e | composition slots includes: e ]
 ]
 
@@ -329,10 +334,13 @@ TraitedMetaclass >> traitCompositionString [
 { #category : 'accessing' }
 TraitedMetaclass >> traitUsers [
 
+	<reflection: 'Class structural inspection - Traits'>
 	^ #()
 ]
 
 { #category : 'initialization' }
 TraitedMetaclass >> traits [
+
+	<reflection: 'Class structural inspection - Traits'>
 	^ composition traits
 ]

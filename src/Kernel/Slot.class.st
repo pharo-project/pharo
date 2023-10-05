@@ -51,6 +51,7 @@ Slot class >> checkValidName: aSymbol [
 
 { #category : 'testing' }
 Slot class >> isUsed [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
@@ -173,7 +174,9 @@ Slot >> installingIn: aClass [
 
 { #category : 'testing' }
 Slot >> isAccessedIn: aCompiledCode [
-	^aCompiledCode ast instanceVariableNodes
+	"Return whether the receiver is accessed in the arg. Pay attention that the compiler is free to remove unused variable so the access is only garanteed for used instance variables e.g. part of return, expression, assignment..."
+	
+	^ aCompiledCode ast instanceVariableNodes
 		anySatisfy: [ :node | node binding == self ]
 ]
 
@@ -252,6 +255,7 @@ Slot >> printOn: aStream [
 
 { #category : 'meta-object-protocol' }
 Slot >> read: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ self subclassResponsibility
 ]
 
@@ -303,6 +307,7 @@ Slot >> storeOn: aStream [
 { #category : 'queries' }
 Slot >> usingMethods [
 	"All methods that read or write the slot"
+	<reflection: 'Structural queries on methods - Method element references'>
 	^self owningClass
 		ifNil: [ #() ]
 		ifNotNil: [:class | class allMethodsAccessingSlot: self]
@@ -321,5 +326,6 @@ Slot >> write: aValue inContext: aContext [
 
 { #category : 'meta-object-protocol' }
 Slot >> write: aValue to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	^self subclassResponsibility
 ]

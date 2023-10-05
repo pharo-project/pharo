@@ -227,17 +227,15 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processFullClassChange: aClassModific
 
 { #category : 'controlling' }
 ClyInheritanceAnalysisEnvironmentPlugin >> processMethodChange: aMethodAnnouncement [
+
 	| method |
 	self updateCacheForMethod: aMethodAnnouncement methodAffected.
 
 	method := aMethodAnnouncement methodAffected.
-	method methodClass superclass ifNotNil: [ :superclass |
-		(superclass lookupSelector: method selector) ifNotNil: [:overriddenMethod |
-			^environment systemChanged: (ClyOverriddenMethodChanged method: overriddenMethod)]
-	].
-	method methodClass subclasses ifEmpty: [ ^self ].
-	environment systemChanged: (
-		ClyOverridingMethodsChanged initiatedBy: self forOverriddenMethod: method)
+	method overriddenMethod ifNotNil: [ :overriddenMethod | ^ environment systemChanged: (ClyOverriddenMethodChanged method: overriddenMethod) ].
+	method methodClass subclasses ifEmpty: [ ^ self ].
+
+	environment systemChanged: (ClyOverridingMethodsChanged initiatedBy: self forOverriddenMethod: method)
 ]
 
 { #category : 'implementors cache' }
