@@ -61,6 +61,21 @@ ScalingCanvas class >> exampleFrameAndFillRectangle [
 					borderWidth: 0 borderColor: Color green ] ]
 ]
 
+{ #category : 'examples' }
+ScalingCanvas class >> exampleImageMorph [
+
+	^ self privateExampleWithMorph: (Morph new
+		color: Color veryVeryLightGray;
+		addMorph: ((ImageMorph withForm: (self iconNamed: #glamorousSearch))
+			position: 4@4;
+			yourself);
+		addMorph: ((ImageMorph withForm: (self iconNamed: #glamorousSearch) copy)
+			position: 24@4;
+			yourself);
+		extent: 44@24;
+		yourself)
+]
+
 { #category : 'instance creation' }
 ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 
@@ -252,10 +267,12 @@ ScalingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: bord
 { #category : 'private' }
 ScalingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 
-	(scale = 2 and: [ FormMapping includesKey: aForm ]) ifTrue: [
-		formCanvas image: (FormMapping at: aForm) at: aPoint * scale sourceRect: (sourceRect scaleBy: scale) rule: rule.
-		^ self ].
-	super image: aForm at: aPoint sourceRect: sourceRect rule: rule
+	| scaledForm |
+
+	scaledForm := (scale = 2 and: [ FormMapping includesKey: aForm ])
+		ifTrue: [ FormMapping at: aForm ]
+		ifFalse: [ aForm scaledToSize: aForm extent * scale ].
+	formCanvas image: scaledForm at: aPoint truncated * scale sourceRect: (sourceRect scaleBy: scale) rule: rule
 ]
 
 { #category : 'testing' }
@@ -268,6 +285,23 @@ ScalingCanvas >> isShadowDrawing [
 ScalingCanvas >> origin [
 
 	^ formCanvas origin / scale
+]
+
+{ #category : 'drawing - images' }
+ScalingCanvas >> paintImage: aForm at: aPoint [
+
+	self paintImage: aForm
+		at: aPoint
+		sourceRect: aForm boundingBox
+]
+
+{ #category : 'drawing - images' }
+ScalingCanvas >> paintImage: aForm at: aPoint sourceRect: sourceRect [
+
+	^self image: aForm
+		at: aPoint
+		sourceRect: sourceRect
+		rule: Form paint
 ]
 
 { #category : 'drawing' }
