@@ -29,6 +29,38 @@ ScalingCanvas class >> example [
 	^ self privateExampleWithMorph: morph
 ]
 
+{ #category : 'examples' }
+ScalingCanvas class >> exampleFillRectangle [
+
+	^ self privateExampleWithExtent: 11@3 fillColor: Color white scale: 10 drawBlock: [ :canvas |
+		{
+			1.0@1.0 extent: 1.0@1.0.
+			3.1@1.1 extent: 1.1@1.1.
+			5.1@1.1 extent: 1.9@1.9.
+			7.9@1.9 extent: 1.1@1.1.
+			9.9@1.9 extent: 1.9@1.9
+		} do: [ :rectangle |
+			canvas fillRectangle: rectangle color: Color blue ] ]
+]
+
+{ #category : 'examples' }
+ScalingCanvas class >> exampleFrameAndFillRectangle [
+
+	^ self privateExampleWithExtent: 10@24 fillColor: Color white scale: 10 drawBlock: [ :canvas |
+		{
+			1.0@2.0 extent: 3.0@3.0.
+			1.1@6.1 extent: 3.1@3.1.
+			1.1@10.1 extent: 3.9@3.9.
+			1.9@14.9 extent: 3.1@3.1.
+			1.9@18.9 extent: 3.9@3.9
+		} do: [ :rectangle |
+			canvas
+				frameAndFillRectangle: rectangle fillColor: Color blue
+					borderWidth: 0 borderColor: Color green;
+				frameAndFillRectangle: (rectangle translateBy: 5@1) fillColor: (Color blue alpha: 0.5)
+					borderWidth: 0 borderColor: Color green ] ]
+]
+
 { #category : 'instance creation' }
 ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 
@@ -53,6 +85,14 @@ ScalingCanvas class >> initialize [
 	icons allIconNames do: [ :iconName |
 		iconsScale2 icons at: iconName ifPresent: [ :formScale2 |
 			FormMapping at: (icons iconNamed: iconName) put: formScale2 ] ]
+]
+
+{ #category : 'private' }
+ScalingCanvas class >> privateExampleWithExtent: extent fillColor: fillColor scale: scale drawBlock: drawBlock [
+
+	^ self privateExampleWithExtent: extent fillColor: fillColor scale: scale
+		drawBlock: drawBlock
+		do: [ :form1 :form2 | { form1. form2 } inspect ]
 ]
 
 { #category : 'private' }
@@ -198,9 +238,11 @@ ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 ScalingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 
 	borderWidth = 0 ifTrue: [
-		| maxCorner scaledRectangle |
+		| maxCorner origin corner scaledRectangle |
 		maxCorner := (1 << 31 - 1) asPoint - formCanvas origin.
-		scaledRectangle := Rectangle origin: r origin * scale corner: (r corner * scale min: maxCorner).
+		origin := r origin truncated * scale.
+		corner := origin + (r extent truncated * scale).
+		scaledRectangle := Rectangle origin: r origin truncated * scale corner: (corner min: maxCorner).
 		formCanvas frameAndFillRectangle: scaledRectangle fillColor: fillColor
 			borderWidth: borderWidth borderColor: borderColor.
 		^ self ].
