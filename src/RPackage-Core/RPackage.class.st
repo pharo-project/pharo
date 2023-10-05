@@ -382,26 +382,6 @@ RPackage >> hierarchyRoots [
 ]
 
 { #category : 'private' }
-RPackage >> importClass: aClass inTag: aTag [
-	"Import a class already created but not attached to a package to the receiver. It will import the class and its methods.
-
-	Handle also *- convention. Methods defined in *category are not added to the package.
-	
-	If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted"
-
-	"Question: should we check that for each extension, there is a real package behind or not?"
-
-	self removeAllMethodsFromClass: aClass.
-	
-	(self ensureTag: aTag) addClass: aClass instanceSide.
-
-	{ aClass . aClass classSide } do: [ :class |
-		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
-
-		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ]
-]
-
-{ #category : 'private' }
 RPackage >> importProtocol: aProtocol forClass: aClass [
 	"import all the local methods of a protocol as defined in the receiver."
 
@@ -553,7 +533,15 @@ RPackage >> moveClass: aClass toTag: aTag [
 	oldPackage := aClass package.
 
 	oldPackage removeClass: aClass.
-	self importClass: aClass inTag: tag.
+	
+	self removeAllMethodsFromClass: aClass.
+	
+	tag addClass: aClass instanceSide.
+
+	{ aClass . aClass classSide } do: [ :class |
+		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
+
+		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
 
 	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
 ]
