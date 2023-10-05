@@ -535,7 +535,7 @@ RPackage >> moveClass: aClass toTag: aTag [
 
 	self removeAllMethodsFromClass: aClass.
 	
-	tag addClass: aClass instanceSide.
+	newTag addClass: aClass instanceSide.
 
 	{ aClass . aClass classSide } do: [ :class |
 		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
