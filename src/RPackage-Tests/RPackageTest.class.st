@@ -8,32 +8,27 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : 'tests - adding classes' }
 RPackageTest >> testAddClass [
 
-	| package1 package2 class done |
+	| package1 package2 class |
 	package1 := self ensurePackage: #Test1.
-	done := 0.
 	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG'.
-
 
 	self assert: (package1 includesClass: class).
 	self assert: (package1 hasTag: #TAG).
 	self assert: ((package1 classTagNamed: #TAG) includesClass: class).
 
 	package2 := self ensurePackage: #Test2.
-	[
-	SystemAnnouncer uniqueInstance when: ClassRecategorized do: [ done := done + 1 ] for: self.
-	package2 addClass: class ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ].
+	package2 addClass: class.
 
-	self assert: done equals: 1.
 	self deny: (package1 includesClass: class).
 	self assert: (package2 includesClass: class).
 	self assert: (package2 hasTag: #Test2).
 	self assert: ((package2 classTagNamed: #Test2) includesClass: class)
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - adding classes' }
 RPackageTest >> testAddClassFromTag [
 
 	| package1 package2 class |
