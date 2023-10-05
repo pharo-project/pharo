@@ -112,6 +112,9 @@ DoItChunk >> importFor: requestor logSource: logSource [
 
 	| ast layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait hasNilSuperclass |
 	(contents beginsWith: '----') ifTrue: [ ^ self ].
+	
+	'Importing: ' traceCr.
+	contents traceCr.
 
 	SystemAnnouncer announce: (DoItChunkImported new
 			 contents: contents;
