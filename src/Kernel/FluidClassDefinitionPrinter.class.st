@@ -403,18 +403,15 @@ FluidClassDefinitionPrinter >> slotsOn: s [
 ]
 
 { #category : 'expanded double dispatch API' }
-FluidClassDefinitionPrinter >> tagOn: s [
+FluidClassDefinitionPrinter >> tagOn: aStream [
 
-	| tag |
-	forClass packageTag ifNotNil: [ :t |
-		tag := t name.
-		tag = forClass package name ifFalse: [
-			s crtab.
-			s
-				nextPutAll: 'tag: ';
-				nextPut: $';
-				nextPutAll: tag asString;
-				nextPutAll: ''';' ] ]
+	forClass packageTag isRoot ifFalse: [
+		aStream
+			crtab;
+			nextPutAll: 'tag: ';
+			nextPut: $';
+			nextPutAll: forClass packageTag name asString;
+			nextPutAll: ''';' ]
 ]
 
 { #category : 'printing' }

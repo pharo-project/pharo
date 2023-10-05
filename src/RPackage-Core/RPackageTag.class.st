@@ -92,6 +92,12 @@ RPackageTag >> isRoot [
 	^ self name = self package rootTagName
 ]
 
+{ #category : 'testing' }
+RPackageTag >> isUndefined [
+
+	^ false
+]
+
 { #category : 'accessing' }
 RPackageTag >> name [
 	^ name
@@ -148,11 +154,9 @@ RPackageTag >> promoteAsPackage [
 { #category : 'accessing' }
 RPackageTag >> removeClass: aClass [
 
-	| oldObject |
-	oldObject := classes remove: aClass ifAbsent: [  ].
+	classes remove: aClass ifAbsent: [ ^ self ].
 	self organizer unregisterPackage: self package forClass: aClass.
-	self isEmpty ifTrue: [ self removeFromPackage ].
-	^ oldObject
+	self isEmpty ifTrue: [ self removeFromPackage ]
 ]
 
 { #category : 'accessing' }
