@@ -1,5 +1,3 @@
-*.image
-*.changes
 *.log
 *.sources
 *.dmp
@@ -21,7 +19,5 @@ github-cache/
 package-cache/
 iceberg-cache/
 play-cache/
-
-bootstrap-cache/
 
 github--*.zip
