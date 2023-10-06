@@ -4,7 +4,7 @@ Extension { #name : 'UndefinedObject' }
 UndefinedObject >> << aString [
 
 	^ FluidBuilder new
-		  superclassToBuild: self;
+		  superclass: self;
 		  nameToBuild: aString;
 		  yourself
 ]

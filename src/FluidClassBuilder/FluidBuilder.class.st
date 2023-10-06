@@ -38,7 +38,6 @@ Class {
 		'nameToBuild',
 		'package',
 		'isTrait',
-		'superclassToBuild',
 		'layout',
 		'sharedPools',
 		'sharedVariables',
@@ -46,7 +45,8 @@ Class {
 		'traitComposition',
 		'classTraitComposition',
 		'classSlots',
-		'slots'
+		'slots',
+		'superclass'
 	],
 	#category : 'FluidClassBuilder-Base',
 	#package : 'FluidClassBuilder',
@@ -146,7 +146,7 @@ FluidBuilder >> fillShiftClassBuilder [
 				sharedPools: '' ]
 		ifFalse: [
 			shiftClassBuilder
-				superclass: superclassToBuild;
+				superclass: superclass;
 				sharedVariables: sharedVariables;
 				sharedPools: sharedPools;
 				layoutClass: layout ].
@@ -266,21 +266,15 @@ FluidBuilder >> slots: anArray [
 ]
 
 { #category : 'accessing - mandatory' }
+FluidBuilder >> superclass [
+
+	^ superclass
+]
+
+{ #category : 'accessing - mandatory' }
 FluidBuilder >> superclass: aClass [
 
-	superclassToBuild := aClass
-]
-
-{ #category : 'accessing - mandatory' }
-FluidBuilder >> superclassToBuild [
-
-	^ superclassToBuild
-]
-
-{ #category : 'accessing - mandatory' }
-FluidBuilder >> superclassToBuild: aClass [
-
-	superclassToBuild := aClass
+	superclass := aClass
 ]
 
 { #category : 'accessing' }

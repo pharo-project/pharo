@@ -6,7 +6,7 @@ Behavior >> << aString [
 This way we can manipulate and test class definition without being forced to get them added to the environment."
 
 	^ FluidBuilder new
-		  superclassToBuild: self;
+		  superclass: self;
 		  nameToBuild: aString;
 		  fillClassSideFromEnvironment: self environment;
 		  yourself

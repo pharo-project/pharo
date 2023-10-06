@@ -14,7 +14,7 @@ FluidClassBuilderTest >> setUp [
 
 	super setUp.
 	builder := FluidBuilder new
-		           superclassToBuild: Object;
+		           superclass: Object;
 		           nameToBuild: #Point33;
 		           package: 'FakedPackage'
 ]
@@ -173,7 +173,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 	clasBuilder := Object class << newClass class traits: { TViewModelMock classTrait }.
 
 	self assert: clasBuilder package equals: instBuilder package.
-	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
+	self assert: clasBuilder superclass equals: instBuilder superclass.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
 	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
@@ -201,7 +201,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 	clasBuilder := Object class << newClass class.
 
 	self assert: clasBuilder package equals: instBuilder package.
-	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
+	self assert: clasBuilder superclass equals: instBuilder superclass.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
 	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
@@ -234,7 +234,7 @@ FluidClassBuilderTest >> testCreateBuilder [
 
 	builder := Object << #Point.
 
-	self assert: builder superclassToBuild equals: Object.
+	self assert: builder superclass equals: Object.
 	self assert: builder nameToBuild equals: #Point
 ]
 
@@ -243,7 +243,7 @@ FluidClassBuilderTest >> testCreateBuilderWithNil [
 
 	builder := nil << #NewProtoObject.
 
-	self assert: builder superclassToBuild equals: nil.
+	self assert: builder superclass isNil.
 	self assert: builder nameToBuild equals: #NewProtoObject
 ]
 
