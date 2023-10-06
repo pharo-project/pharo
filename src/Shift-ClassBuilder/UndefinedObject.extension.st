@@ -1,6 +1,6 @@
 Extension { #name : 'UndefinedObject' }
 
-{ #category : '*FluidClassBuilder' }
+{ #category : '*Shift-ClassBuilder' }
 UndefinedObject >> << aString [
 
 	^ ShiftClassBuilder new
