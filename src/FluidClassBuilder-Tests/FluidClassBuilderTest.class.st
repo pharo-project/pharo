@@ -98,7 +98,7 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 		sharedVariables: { #NonAsciiMap };
 		package: 'Collections-Strings'.
 
-	self assert: builder sharedVariablesToBuild equals: { #NonAsciiMap }.
+	self assert: builder sharedVariables equals: { #NonAsciiMap }.
 	self assert: builder layoutToBuild equals: ByteLayout
 ]
 
@@ -106,7 +106,7 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 FluidClassBuilderTest >> testBuilderTraits [
 
 	builder traits: TViewModelMock.
-	self assert: builder traitsToBuild equals: TViewModelMock asTraitComposition.
+	self assert: builder traitComposition equals: TViewModelMock asTraitComposition.
 	builder fillShiftClassBuilder
 ]
 
@@ -114,7 +114,7 @@ FluidClassBuilderTest >> testBuilderTraits [
 FluidClassBuilderTest >> testBuilderTraitsClass [
 
 	builder traits: TViewModelMock class.
-	self assert: builder traitsToBuild equals: TViewModelMock class asTraitComposition.
+	self assert: builder traitComposition equals: TViewModelMock class asTraitComposition.
 	builder fillShiftClassBuilder
 ]
 
@@ -122,9 +122,7 @@ FluidClassBuilderTest >> testBuilderTraitsClass [
 FluidClassBuilderTest >> testBuilderTraitsWithComposition [
 
 	builder traits: TViewModelMock + TViewModelMock2.
-	self
-		assert: builder traitsToBuild
-		equals: TViewModelMock + TViewModelMock2.
+	self assert: builder traitComposition equals: TViewModelMock + TViewModelMock2.
 	builder fillShiftClassBuilder
 ]
 
@@ -177,16 +175,16 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 	self assert: clasBuilder package equals: instBuilder package.
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
-	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
+	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
 	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
 	self assert: clasBuilder tag equals: instBuilder tag.
-	self assert: clasBuilder traitsToBuild name equals: TViewModelMock name.
+	self assert: clasBuilder traitComposition name equals: TViewModelMock name.
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 
 	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
-	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild
+	self assert: clasBuilder classTraitComposition equals: instBuilder classTraitComposition
 ]
 
 { #category : 'tests - class creation' }
@@ -205,16 +203,16 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 	self assert: clasBuilder package equals: instBuilder package.
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
-	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
+	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
 	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
 	self assert: clasBuilder tag equals: instBuilder tag.
-	self assert: clasBuilder traitsToBuild equals: instBuilder traitsToBuild.
+	self assert: clasBuilder traitComposition equals: instBuilder traitComposition.
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 
 	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
-	self assert: clasBuilder classTraitsToBuild equals: instBuilder classTraitsToBuild
+	self assert: clasBuilder classTraitComposition equals: instBuilder classTraitComposition
 ]
 
 { #category : 'tests - class creation' }
@@ -228,7 +226,7 @@ FluidClassBuilderTest >> testClassSlots [
 FluidClassBuilderTest >> testClassTraits [
 
 	builder classTraits: {TViewModel classSide}.
-	self assert: builder classTraitsToBuild equals: {TViewModel classSide} asTraitComposition
+	self assert: builder classTraitComposition equals: {TViewModel classSide} asTraitComposition
 ]
 
 { #category : 'tests - mandatory' }

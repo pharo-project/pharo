@@ -36,17 +36,17 @@ Class {
 	#instVars : [
 		'shiftClassBuilder',
 		'slotsToBuild',
-		'uses',
 		'nameToBuild',
 		'classSlotsToBuild',
-		'classTraitsToBuild',
 		'package',
 		'isTrait',
 		'superclassToBuild',
 		'layout',
 		'sharedPools',
 		'sharedVariables',
-		'tag'
+		'tag',
+		'traitComposition',
+		'classTraitComposition'
 	],
 	#category : 'FluidClassBuilder-Base',
 	#package : 'FluidClassBuilder',
@@ -86,15 +86,15 @@ FluidBuilder >> classSlotsToBuild [
 ]
 
 { #category : 'class side' }
-FluidBuilder >> classTraits: aCollection [
-
-	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	classTraitsToBuild := aCollection asTraitComposition
+FluidBuilder >> classTraitComposition [
+	^ classTraitComposition
 ]
 
 { #category : 'class side' }
-FluidBuilder >> classTraitsToBuild [
-	^ classTraitsToBuild
+FluidBuilder >> classTraits: aCollection [
+
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
+	classTraitComposition := aCollection asTraitComposition
 ]
 
 { #category : 'copying' }
@@ -104,7 +104,7 @@ FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 	oldClass := anEnvironment at: nameToBuild ifAbsent: [ ^ self ].
 
 	classSlotsToBuild := oldClass class slots.
-	classTraitsToBuild := oldClass class traitComposition
+	classTraitComposition := oldClass class traitComposition
 ]
 
 { #category : 'copying' }
@@ -112,7 +112,7 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	slotsToBuild := aClass slots.
-	uses := aClass traitComposition.
+	traitComposition := aClass traitComposition.
 	self package: aClass package name.
 
 	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
@@ -131,11 +131,11 @@ FluidBuilder >> fillShiftClassBuilder [
 	shiftClassBuilder := ShiftClassBuilder new
 		                     name: nameToBuild;
 		                     slots: slotsToBuild;
-		                     traitComposition: uses;
+		                     traitComposition: traitComposition;
 		                     package: package;
 		                     tag: self tag;
 		                     classSlots: classSlotsToBuild;
-		                     classTraitComposition: classTraitsToBuild;
+		                     classTraitComposition: classTraitComposition;
 		                     yourself.
 
 	isTrait
@@ -168,8 +168,8 @@ FluidBuilder >> initialize [
 	slotsToBuild := #(  ).
 	classSlotsToBuild := #(  ).
 
-	uses := TaEmptyComposition new.
-	classTraitsToBuild := uses classComposition.
+	traitComposition := TaEmptyComposition new.
+	classTraitComposition := traitComposition classComposition.
 
 	isTrait := false.
 
@@ -234,16 +234,16 @@ FluidBuilder >> sharedPools: aString [
 	sharedPools := aString
 ]
 
+{ #category : 'accessing' }
+FluidBuilder >> sharedVariables [
+
+	^ sharedVariables
+]
+
 { #category : 'API' }
 FluidBuilder >> sharedVariables: aCollection [
 
 	sharedVariables := aCollection
-]
-
-{ #category : 'accessing' }
-FluidBuilder >> sharedVariablesToBuild [
-
-	^ sharedVariables
 ]
 
 { #category : 'building' }
@@ -305,18 +305,18 @@ FluidBuilder >> trait: aTraitComposition [
 	^ self traits: aTraitComposition
 ]
 
+{ #category : 'accessing' }
+FluidBuilder >> traitComposition [
+
+	^ traitComposition
+]
+
 { #category : 'API' }
 FluidBuilder >> traits: anArray [
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	uses := anArray asTraitComposition.
-	classTraitsToBuild := uses classComposition
-]
-
-{ #category : 'accessing' }
-FluidBuilder >> traitsToBuild [
-
-	^ uses
+	traitComposition := anArray asTraitComposition.
+	classTraitComposition := traitComposition classComposition
 ]
 
 { #category : 'deprecated' }

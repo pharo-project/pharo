@@ -175,19 +175,6 @@ ShiftClassBuilder >> classSlots: aSlotCollection [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> classTraitComposition [
-	^ extensibleProperties at: #classTraitComposition ifAbsent: {}
-]
-
-{ #category : 'accessing' }
-ShiftClassBuilder >> classTraitComposition: aValue [
-
-	"The enhander needs to be put to nil in case the trait composition is updated."
-	builderEnhancer := nil.
-	^ extensibleProperties at: #classTraitComposition put: aValue
-]
-
-{ #category : 'accessing' }
 ShiftClassBuilder >> comment [
 	^ comment
 ]

@@ -10,6 +10,19 @@ ShiftClassBuilder >> beTrait [
 ]
 
 { #category : '*TraitsV2' }
+ShiftClassBuilder >> classTraitComposition [
+	^ extensibleProperties at: #classTraitComposition ifAbsent: {}
+]
+
+{ #category : '*TraitsV2' }
+ShiftClassBuilder >> classTraitComposition: aValue [
+
+	"The enhander needs to be put to nil in case the trait composition is updated."
+	builderEnhancer := nil.
+	^ extensibleProperties at: #classTraitComposition put: aValue
+]
+
+{ #category : '*TraitsV2' }
 ShiftClassBuilder >> isTrait [
 	^ self metaSuperclass isKindOf: Trait class
 ]

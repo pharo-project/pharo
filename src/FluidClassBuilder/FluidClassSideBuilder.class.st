@@ -31,5 +31,5 @@ FluidClassSideBuilder >> traits: aCollection [
 	"Pay attention that on class side we want to write traits: and not classTraits:"
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	classTraitsToBuild := aCollection asTraitComposition
+	classTraitComposition := aCollection asTraitComposition
 ]

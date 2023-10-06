@@ -49,6 +49,6 @@ FluidClassSideClassBuilderTest >> testBuilderWithTraits [
 	builder traits: { TViewModelMock classTrait }.
 	"the builder is class side builder so we are setting the class level"
 
-	self assert: builder traitsToBuild isEmpty.
-	self assert: builder classTraitsToBuild name equals: TViewModelMock classTrait name
+	self assertEmpty: builder traitComposition.
+	self assert: builder classTraitComposition name equals: TViewModelMock classTrait name
 ]
