@@ -80,17 +80,6 @@ EpMorphVisitor >> morphFactory [
 ]
 
 { #category : 'visitor' }
-EpMorphVisitor >> visitBehaviorCategoryChange: aClassRecategorizationChange [
-
-	^	(self displayOperation: 'Move'),
-		(self displayBehavior: aClassRecategorizationChange behaviorAffectedName),
-		(self displayOperation: 'from tag'),
-		(self displayString: aClassRecategorizationChange oldCategory),
-		(self displayOperation: 'to'),
-		(self displayString: aClassRecategorizationChange newCategory)
-]
-
-{ #category : 'visitor' }
 EpMorphVisitor >> visitBehaviorCommentChange: aChange [
 
 	^ self displayBehaviorComment: aChange behaviorAffectedName
@@ -109,6 +98,14 @@ EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 		(self displayBehavior: aClassRenamedChange oldName),
 		(self displayOperation: 'as'),
 		(self displayString: aClassRenamedChange newName)
+]
+
+{ #category : 'visitor' }
+EpMorphVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
+
+	^ (self displayOperation: 'Move ') , (self displayBehavior: aBehaviorRepackagedChange behaviorAffectedName) , (self displayOperation: 'from ')
+	  , (self displayTag: aBehaviorRepackagedChange oldTagName inPackage: aBehaviorRepackagedChange oldPackageName) , (self displayOperation: ' to ')
+	  , (self displayTag: aBehaviorRepackagedChange newTagName inPackage: aBehaviorRepackagedChange newPackageName)
 ]
 
 { #category : 'visitor' }

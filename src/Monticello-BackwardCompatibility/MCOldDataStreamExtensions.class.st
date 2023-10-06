@@ -6,9 +6,8 @@ This package is unloadeable.
 Class {
 	#name : 'MCOldDataStreamExtensions',
 	#superclass : 'Object',
-	#category : 'Monticello-OldDataStreamCompatibility-Base',
-	#package : 'Monticello-OldDataStreamCompatibility',
-	#tag : 'Base'
+	#category : 'Monticello-BackwardCompatibility',
+	#package : 'Monticello-BackwardCompatibility'
 }
 
 { #category : 'class initialization' }

@@ -84,7 +84,7 @@ Trait class >> named: aName uses: aCompositionOrArray [
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName [
 
 	^ self classInstaller make: [ :builder |
@@ -95,7 +95,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPacka
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -152,7 +152,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory [
 
 	^ self classInstaller make: [ :builder |
@@ -164,7 +164,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |

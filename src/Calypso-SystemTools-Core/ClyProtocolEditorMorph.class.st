@@ -117,9 +117,8 @@ ClyProtocolEditorMorph >> openEditor [
 
 	self requestChangeBy: [
 		self isExtensionActive
-			ifTrue: [ self requestPackage]
-			ifFalse: [ self requestProtocol ]
-	]
+			ifTrue: [ self requestPackage ]
+			ifFalse: [ self requestProtocol ] ]
 ]
 
 { #category : 'accessing' }

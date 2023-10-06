@@ -39,6 +39,25 @@ PackageAnnouncementsTest >> testAddClassAnnounceClassRecategorized [
 	self assert: numberOfAnnouncements equals: 1
 ]
 
+{ #category : 'tests' }
+PackageAnnouncementsTest >> testClassRepackagedNotFiredAtAClassAddition [
+
+	| xPackage class |
+	xPackage := self ensureXPackage.
+
+	self when: ClassRepackaged do: [ :ann |
+		self fail:
+			'When we are packaging the class for the first time, we should not raise a class repackaged because we already raise a class added with the package known.' ].
+
+	self when: ClassAdded do: [ :ann |
+		self assert: ann classAffected name equals: #NewClass.
+		self assert: ann packageAffected equals: xPackage ].
+
+	class := self newClassNamed: #NewClass in: xPackage.
+
+	self assert: numberOfAnnouncements equals: 1
+]
+
 { #category : 'running' }
 PackageAnnouncementsTest >> when: anAnnouncement do: aBlock [
 

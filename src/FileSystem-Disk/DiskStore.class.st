@@ -73,8 +73,10 @@ DiskStore class >> delimiter [
 
 { #category : 'class initialization' }
 DiskStore class >> initialize [
+
 	SessionManager default
 		registerSystemClassNamed: self name
+		atPriority: 90
 ]
 
 { #category : 'current' }

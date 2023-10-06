@@ -173,6 +173,14 @@ ClyMethodCodeEditorToolMorph >> extendingPackage: aPackage [
 	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
 ]
 
+{ #category : 'building' }
+ClyMethodCodeEditorToolMorph >> fillStatusBar [
+
+	super fillStatusBar.
+
+	statusBar addCommandItem: (ClyProtocolEditorMorph for: self)
+]
+
 { #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 

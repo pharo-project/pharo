@@ -18,10 +18,7 @@ Class {
 
 { #category : 'accessing' }
 BasicDatePrinter class >> default [
-	" I prefer to use any of my subclasses than myself.
-	I am a really basic implementation."
-	self subclassesDo: [ :subClass | subClass isAbstract ifFalse: [ ^ subClass new ]].
-	^ self new
+	^ ExtendedDatePrinter new
 ]
 
 { #category : 'printing' }

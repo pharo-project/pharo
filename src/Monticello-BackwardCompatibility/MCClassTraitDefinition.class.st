@@ -10,9 +10,8 @@ Class {
 		'packageName',
 		'tagName'
 	],
-	#category : 'Monticello-Modeling',
-	#package : 'Monticello',
-	#tag : 'Modeling'
+	#category : 'Monticello-BackwardCompatibility',
+	#package : 'Monticello-BackwardCompatibility'
 }
 
 { #category : 'instance creation' }
@@ -76,6 +75,12 @@ MCClassTraitDefinition >> category [
 MCClassTraitDefinition >> category: aCategoryString [
 
 	self packageName: aCategoryString
+]
+
+{ #category : 'accessing' }
+MCClassTraitDefinition >> classDefinitionString [
+
+	^self definitionString
 ]
 
 { #category : 'accessing' }
@@ -193,4 +198,9 @@ MCClassTraitDefinition >> tagName [
 MCClassTraitDefinition >> tagName: anObject [
 
 	tagName := anObject
+]
+
+{ #category : 'accessing' }
+MCClassTraitDefinition >> traitComposition [
+	^ self classTraitComposition 
 ]

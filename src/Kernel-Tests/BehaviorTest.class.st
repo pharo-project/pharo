@@ -249,6 +249,52 @@ BehaviorTest >> testRemoveProperty [
 ]
 
 { #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichMethodsReferTo [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichMethodsReferToSpecialIndex [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichSelectorsReferTo [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichSelectorsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichSelectorsReferTo: #x) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichSelectorsReferTo: #+) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichSelectorsReferTo: array first) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichSelectorsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
+]
+
+{ #category : 'tests - queries' }
 BehaviorTest >> testallMethodsAccessingSlot [
 	| methods |
 	"Check the source code availability to do not fail on images without sources"
@@ -296,32 +342,4 @@ BehaviorTest >> testsourceCodeTemplateFor [
 	"check for distictive source code templates for class-side and instance-side"
 	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side method').
 	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method')
-]
-
-{ #category : 'tests - queries' }
-BehaviorTest >> testthoroughWhichMethodsReferTo [
-	| array |
-	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
-	"normal case"
-	self assert: (Point thoroughWhichMethodsReferTo: #x) notEmpty.
-	"we understand send bytecodes for special selectors"
-	self assert: (Point thoroughWhichMethodsReferTo: #+) notEmpty.
-	"we dive into literal arrays"
-	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
-	"and we are false for non existing symbols"
-	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty
-]
-
-{ #category : 'tests - queries' }
-BehaviorTest >> testthoroughWhichMethodsReferToSpecialIndex [
-	| array |
-	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
-	"normal case"
-	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
-	"we understand send bytecodes for special selectors"
-	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
-	"we dive into literal arrays"
-	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
-	"and we are false for non existing symbols"
-	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty
 ]

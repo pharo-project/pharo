@@ -18,23 +18,10 @@ RBRealizeClassTransformation class >> basicMenuItemString [
 	^ 'Realize class'
 ]
 
-{ #category : 'api' }
-RBRealizeClassTransformation class >> className: aName [
-	^ self new className: aName
-]
-
 { #category : 'testing' }
 RBRealizeClassTransformation class >> isTransformation [
 
 	^ true
-]
-
-{ #category : 'api' }
-RBRealizeClassTransformation class >> model: aRBModel className: aName [
-	^ self new
-		model: aRBModel;
-		className: aName;
-		yourself
 ]
 
 { #category : 'preconditions' }
