@@ -38,17 +38,6 @@ EpHasImpactVisitor >> initializeWith: anEnvironment [
 ]
 
 { #category : 'visitor' }
-EpHasImpactVisitor >> visitBehaviorCategoryChange: aChange [
-
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^ behavior category ~= aChange behaviorAffected category ].
-
-	^ true
-]
-
-{ #category : 'visitor' }
 EpHasImpactVisitor >> visitBehaviorChange: aChange [
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
 		^ behavior definitionString ~= aChange behaviorAffected definitionSource or: [
@@ -77,6 +66,17 @@ EpHasImpactVisitor >> visitBehaviorNameChange: aChange [
 		ifPresent: [ :behavior | ^ true ].
 
 	^ false
+]
+
+{ #category : 'visitor' }
+EpHasImpactVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
+
+	self
+		behaviorNamed: aBehaviorRepackagedChange behaviorAffectedName
+		ifPresent: [ :behavior |
+			^ behavior category ~= aBehaviorRepackagedChange behaviorAffected category ].
+
+	^ true
 ]
 
 { #category : 'visitor' }

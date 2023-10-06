@@ -267,7 +267,7 @@ RPackageOrganizer >> ensurePackageOfExtensionProtocol: aProtocol [
 ]
 
 { #category : 'registration' }
-RPackageOrganizer >> ensureTagNamed: aTagName inPackageNamed: aPackageName [
+RPackageOrganizer >> ensureTag: aTagName inPackage: aPackageName [
 
 	^ (self ensurePackage: aPackageName) ensureTag: aTagName
 ]
