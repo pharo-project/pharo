@@ -221,16 +221,10 @@ ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm sav
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm parameterAt: 43 put: 32"
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MCCacheRepository uniqueInstance enable. FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
-${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" clean --release
+#${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" clean --release
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save "Pharo"
 echo "${PHARO_SHORT_VERSION}" > pharo.version
-
-# clean bak sources files
-rm -f *.bak
-
-# delete Pharo60 sources files
-rm PharoV60.sources*
 
 PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1 | cut -d'.' -f 1-2)
 zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version
