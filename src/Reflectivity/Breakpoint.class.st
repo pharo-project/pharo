@@ -151,7 +151,7 @@ Breakpoint class >> isInstalledIn: aMethod [
 	^ false
 ]
 
-{ #category : 'observers - experimental' }
+{ #category : 'notifications' }
 Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 
 	| announcement |
@@ -161,7 +161,7 @@ Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 	SystemAnnouncer announce: announcement
 ]
 
-{ #category : 'observers - experimental' }
+{ #category : 'notifications' }
 Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
 
 	| announcement |
@@ -171,7 +171,7 @@ Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: n
 	SystemAnnouncer announce: announcement
 ]
 
-{ #category : 'observers - experimental' }
+{ #category : 'notifications' }
 Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
 
 	| announcement |
