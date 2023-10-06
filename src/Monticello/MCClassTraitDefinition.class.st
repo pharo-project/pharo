@@ -129,6 +129,11 @@ MCClassTraitDefinition >> isClassDefinition [
 	^ true
 ]
 
+{ #category : 'testing' }
+MCClassTraitDefinition >> isTraitDefinition [
+	^ true
+]
+
 { #category : 'installing' }
 MCClassTraitDefinition >> load [	
 	self class compiler evaluate: self definitionString
