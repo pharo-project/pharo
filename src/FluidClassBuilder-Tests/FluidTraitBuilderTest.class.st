@@ -13,7 +13,7 @@ Class {
 FluidTraitBuilderTest >> setUp [
 
 	super setUp.
-	builder := FluidBuilder new
+	builder := ShiftClassBuilder new
 		           beTrait;
 		           yourself
 ]
@@ -138,19 +138,16 @@ FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSi
 { #category : 'tests - classBuilder generation' }
 FluidTraitBuilderTest >> testFillShiftClassBuilder [
 
-	| shift |
 	self categoryHack.
 	builder := (Trait << #TPoint2)
 		           slots: { #x. #y };
 		           traits: { TViewModelMock };
 		           tag: 'Mafia';
 		           package: self packageNameForTest;
-		           fillShiftClassBuilder;
 		           yourself.
-	shift := builder shiftClassBuilder.
-	self assert: shift name equals: #TPoint2.
-	self assert: shift slots size equals: 2.
-	self assert: shift category equals: self packageNameForTest , '-Mafia'.
+	self assert: builder name equals: #TPoint2.
+	self assert: builder slots size equals: 2.
+	self assert: builder category equals: self packageNameForTest , '-Mafia'.
 	self flag: #askPablo
 	"self assert: clas package packageName equals: self packageNameForTest"
 ]
@@ -158,14 +155,13 @@ FluidTraitBuilderTest >> testFillShiftClassBuilder [
 { #category : 'tests - install' }
 FluidTraitBuilderTest >> testInstallMinimalMockClass [
 
-	| shiftClassBuilder installedClass |
+	| installedClass |
 	builder := self class compilerClass new evaluate: 'Trait << #TMyClass
 	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''' , self packageNameForTest , ''''.
-	shiftClassBuilder := builder shiftClassBuilder.
-	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder.
+	ShiftClassInstaller new makeWithBuilder: builder.
 
 	installedClass := self class environment at: #TMyClass ifAbsent: [ self fail ].
 

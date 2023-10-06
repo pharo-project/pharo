@@ -13,7 +13,7 @@ Class {
 FluidClassBuilderTest >> setUp [
 
 	super setUp.
-	builder := FluidBuilder new
+	builder := ShiftClassBuilder new
 		           superclass: Object;
 		           name: #Point33;
 		           package: 'FakedPackage'
@@ -82,12 +82,13 @@ FluidClassBuilderTest >> testBuildSimplePoint2 [
 { #category : 'tests - gathering' }
 FluidClassBuilderTest >> testBuilderSharedPools [
 
-	builder slots: {#string . #runs};
+	builder
+		slots: { #string. #runs };
 		tag: 'Base';
 		sharedPools: 'TextConstants';
 		package: 'Text-Core'.
 
-	self assert: builder sharedPools equals: 'TextConstants'
+	self assert: builder sharedPools equals: #( TextConstants )
 ]
 
 { #category : 'tests - gathering' }
@@ -98,7 +99,7 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 		sharedVariables: { #NonAsciiMap };
 		package: 'Collections-Strings'.
 
-	self assert: builder sharedVariables equals: { #NonAsciiMap }.
+	self assert: (builder sharedVariables collect: [ :var | var name ]) equals: { #NonAsciiMap }.
 	self assert: builder layoutClass equals: ByteLayout
 ]
 
@@ -106,24 +107,14 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 FluidClassBuilderTest >> testBuilderTraits [
 
 	builder traits: TViewModelMock.
-	self assert: builder traitComposition equals: TViewModelMock asTraitComposition.
-	builder fillShiftClassBuilder
-]
-
-{ #category : 'tests - gathering' }
-FluidClassBuilderTest >> testBuilderTraitsClass [
-
-	builder traits: TViewModelMock class.
-	self assert: builder traitComposition equals: TViewModelMock class asTraitComposition.
-	builder fillShiftClassBuilder
+	self assert: builder traitComposition equals: TViewModelMock asTraitComposition
 ]
 
 { #category : 'tests - gathering' }
 FluidClassBuilderTest >> testBuilderTraitsWithComposition [
 
 	builder traits: TViewModelMock + TViewModelMock2.
-	self assert: builder traitComposition equals: TViewModelMock + TViewModelMock2.
-	builder fillShiftClassBuilder
+	self assert: builder traitComposition equals: TViewModelMock + TViewModelMock2
 ]
 
 { #category : 'tests - mandatory' }
@@ -232,10 +223,10 @@ FluidClassBuilderTest >> testClassTraits [
 { #category : 'tests - mandatory' }
 FluidClassBuilderTest >> testCreateBuilder [
 
-	builder := Object << #Point.
+	builder := Object << #ShiftClassBuilder.
 
 	self assert: builder superclass equals: Object.
-	self assert: builder name equals: #Point
+	self assert: builder name equals: #ShiftClassBuilder
 ]
 
 { #category : 'tests - mandatory' }
@@ -251,7 +242,6 @@ FluidClassBuilderTest >> testCreateBuilderWithNil [
 FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimum [
 	"check ClassDescription>>#definitionFullExpanded"
 
-	| shiftClassBuilder |
 	builder := self class compilerClass new evaluate: 'Object << #MyClass
 	layout: FixedLayout;
 	traits: {};
@@ -261,16 +251,15 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	sharedPools: {};
 	package: ''' , self packageNameForTest , ''''.
 	builder build.
-	shiftClassBuilder := builder shiftClassBuilder.
 
-	self assert: shiftClassBuilder superclass equals: Object.
-	self assert: shiftClassBuilder name equals: #MyClass.
-	self assert: shiftClassBuilder layoutDefinition slots isEmpty.
+	self assert: builder superclass equals: Object.
+	self assert: builder name equals: #MyClass.
+	self assert: builder layoutDefinition slots isEmpty.
 	"we should add slots to ShiftClassBuilder"
 	self flag: #Pablo.
-	self assert: shiftClassBuilder traitComposition isEmpty.
-	self assert: shiftClassBuilder layoutDefinition sharedVariables isEmpty.
-	self assert: shiftClassBuilder layoutDefinition sharedPools isEmpty
+	self assert: builder traitComposition isEmpty.
+	self assert: builder layoutDefinition sharedVariables isEmpty.
+	self assert: builder layoutDefinition sharedPools isEmpty
 ]
 
 { #category : 'tests - class creation' }
@@ -400,28 +389,25 @@ FluidClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 { #category : 'tests - classBuilder generation' }
 FluidClassBuilderTest >> testFillShiftClassBuilder [
 
-	| shift |
 	builder := Object << #Point2.
-	builder slots: { #x . #y }.
-	builder sharedVariables: {  #Share1 . #Share2 }.
+	builder slots: { #x. #y }.
+	builder sharedVariables: { #Share1. #Share2 }.
 	builder sharedPools: { ChronologyConstants }.
 	builder tag: 'Mafia'.
 	builder package: self packageNameForTest.
-	builder fillShiftClassBuilder.
-	shift := builder shiftClassBuilder.
-	self assert: shift superclass equals: Object.
-	self assert: shift name equals: #Point2.
-	self assert: shift slots size equals: 2.
-	self assert: shift sharedPools equals: {ChronologyConstants}.
-	self assert: shift category equals: self packageNameForTest, '-Mafia'.
-	self flag: #askPablo.
+	self assert: builder superclass equals: Object.
+	self assert: builder name equals: #Point2.
+	self assert: builder slots size equals: 2.
+	self assert: builder sharedPools equals: { ChronologyConstants }.
+	self assert: builder category equals: self packageNameForTest , '-Mafia'.
+	self flag: #askPablo
 	"self assert: clas package packageName equals: self packageNameForTest"
 ]
 
 { #category : 'tests - mandatory' }
 FluidClassBuilderTest >> testInstallMinimalMockClass [
 
-	| shiftClassBuilder installedClass |
+	| installedClass |
 	builder := self class compilerClass new evaluate: 'Object << #MyClass
 	layout: FixedLayout;
 	traits: {};
@@ -430,9 +416,7 @@ FluidClassBuilderTest >> testInstallMinimalMockClass [
 	tag: '''' ;
 	sharedPools: {};
 	package: ''' , self packageNameForTest , ''''.
-	builder build.
-	shiftClassBuilder := builder shiftClassBuilder.
-	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder.
+	ShiftClassInstaller new makeWithBuilder: builder.
 
 	installedClass := self class environment at: #MyClass ifAbsent: [ self fail ].
 

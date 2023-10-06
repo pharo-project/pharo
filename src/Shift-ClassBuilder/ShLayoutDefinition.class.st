@@ -78,11 +78,13 @@ ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
 
 { #category : 'initialization' }
 ShLayoutDefinition >> initialize [
+
 	super initialize.
 
-	slots := #().
-	sharedPools := #().
-	sharedVariables := #()
+	slots := #(  ).
+	classSlots := #(  ).
+	sharedPools := #(  ).
+	sharedVariables := #(  )
 ]
 
 { #category : 'testing' }

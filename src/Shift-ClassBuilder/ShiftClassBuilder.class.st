@@ -48,6 +48,12 @@ ShiftClassBuilder class >> defaultBuildEnhancer [
 	^ BuilderEnhancer ifNil: [ ShDefaultBuilderEnhancer ]
 ]
 
+{ #category : 'class initialization' }
+ShiftClassBuilder class >> initialize [
+
+	self deprecatedAliases: #( #FluidBuilder #FluidClassBuilder #FluidTraitBuilder )
+]
+
 { #category : 'accessing' }
 ShiftClassBuilder class >> setDefaultBuilderEnhancer: aClass [
 	BuilderEnhancer := aClass
@@ -307,6 +313,16 @@ ShiftClassBuilder >> environment: anObject [
 	^ self buildEnvironment: anObject
 ]
 
+{ #category : 'copying' }
+ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
+
+	| old |
+	old := anEnvironment at: name ifAbsent: [ ^ self ].
+
+	self classSlots: old class slots.
+	self classTraits: old class traitComposition
+]
+
 { #category : 'initialization' }
 ShiftClassBuilder >> fillFor: aClass [
 
@@ -323,6 +339,31 @@ ShiftClassBuilder >> fillFor: aClass [
 		oldClass: aClass.
 
 	self builderEnhancer fillBuilder: self from: aClass
+]
+
+{ #category : 'copying' }
+ShiftClassBuilder >> fillInstanceSideFromClass: aClass [
+
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
+	self privateSlots: aClass slots.
+	self privateTraitComposition: aClass traitComposition.
+	self package: aClass package name.
+
+	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
+
+	self superclass: aClass superclass.
+
+	self layout: aClass classLayout class.
+
+	self sharedVariables: aClass classVariables.
+	self sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray
+]
+
+{ #category : 'building' }
+ShiftClassBuilder >> fluidInstall [
+	"Install the class in the system environment, method #fluidInstall is implemented in behavior, too"
+
+	^ self install
 ]
 
 { #category : 'testing' }
@@ -350,6 +391,13 @@ ShiftClassBuilder >> initialize [
 	inRemake := false.
 
 	buildEnvironment := self class environment
+]
+
+{ #category : 'actions' }
+ShiftClassBuilder >> install [
+	"Install the class in the system environment"
+
+	^ ShiftClassInstaller new makeWithBuilder: self
 ]
 
 { #category : 'building' }

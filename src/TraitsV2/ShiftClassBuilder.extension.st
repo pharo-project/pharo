@@ -11,15 +11,16 @@ ShiftClassBuilder >> beTrait [
 
 { #category : '*TraitsV2' }
 ShiftClassBuilder >> classTraitComposition [
-	^ extensibleProperties at: #classTraitComposition ifAbsent: {}
+
+	^ extensibleProperties at: #classTraitComposition ifAbsent: [ {  } asTraitComposition ]
 ]
 
 { #category : '*TraitsV2' }
 ShiftClassBuilder >> classTraitComposition: aValue [
-
 	"The enhander needs to be put to nil in case the trait composition is updated."
+
 	builderEnhancer := nil.
-	^ extensibleProperties at: #classTraitComposition put: aValue
+	^ extensibleProperties at: #classTraitComposition put: aValue asTraitComposition
 ]
 
 { #category : '*TraitsV2' }
@@ -44,7 +45,8 @@ ShiftClassBuilder >> privateTraitComposition: aValue [
 
 { #category : '*TraitsV2' }
 ShiftClassBuilder >> traitComposition [
-	^ extensibleProperties at: #traitComposition ifAbsent: {}
+
+	^ extensibleProperties at: #traitComposition ifAbsent: [ {  } asTraitComposition ]
 ]
 
 { #category : '*TraitsV2' }

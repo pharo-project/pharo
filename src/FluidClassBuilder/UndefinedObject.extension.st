@@ -3,7 +3,7 @@ Extension { #name : 'UndefinedObject' }
 { #category : '*FluidClassBuilder' }
 UndefinedObject >> << aString [
 
-	^ FluidBuilder new
+	^ ShiftClassBuilder new
 		  superclass: self;
 		  name: aString;
 		  yourself

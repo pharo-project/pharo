@@ -121,7 +121,7 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 
 	self layout: aClass classLayout class.
 
-	self sharedVariables: (aClass classVariables collect: [ :e | e key ]).
+	self sharedVariables: aClass classVariables.
 	self sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray
 ]
 
