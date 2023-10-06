@@ -405,10 +405,9 @@ HandMorph >> fullDrawOn: aCanvas [
 								do: [:r | shadowCanvas fillRectangle: r color: Color black]]].
 			aCanvas roundCornersOf: rounded
 				during:
-					[aCanvas
-						drawImage: cacheCanvas form
-						at: subBnds origin
-						sourceRect: cacheCanvas form boundingBox].
+					[cacheCanvas
+						drawImageOn: aCanvas
+						at: subBnds origin].
 			^self drawOn: aCanvas	"draw the hand itself in front of morphs"].
 	"--> end rounded corners hack <---"
 
@@ -421,7 +420,7 @@ HandMorph >> fullDrawOn: aCanvas [
 				ifTrue:
 					["Have to draw the real shadow of the form"
 
-					shadowCanvas paintImage: cacheCanvas form at: subBnds origin]
+					cacheCanvas paintImageOn: shadowCanvas at: subBnds origin]
 				ifFalse:
 					["Much faster if only have to shade the edge of a solid rectangle"
 
@@ -430,12 +429,11 @@ HandMorph >> fullDrawOn: aCanvas [
 
 	"draw morphs in front of the shadow using the cached Form"
 	cachedCanvasHasHoles
-		ifTrue: [aCanvas paintImage: cacheCanvas form at: subBnds origin]
+		ifTrue: [cacheCanvas paintImageOn: aCanvas at: subBnds origin]
 		ifFalse: 	[
-			aCanvas
-			drawImage: cacheCanvas form
-			at: subBnds origin
-			sourceRect: cacheCanvas form boundingBox
+			cacheCanvas
+				drawImageOn: aCanvas
+				at: subBnds origin
 		].
 	self drawOn: aCanvas	"draw the hand itself in front of morphs"
 ]
@@ -1243,7 +1241,7 @@ HandMorph >> updateCacheCanvas: aCanvas [
 					^self]].
 	(cacheCanvas isNil or: [cacheCanvas extent ~= subBnds extent])
 		ifTrue:
-			[cacheCanvas := (aCanvas allocateForm: subBnds extent) getCanvas.
+			[cacheCanvas := aCanvas allocateCanvas: subBnds extent.
 			cacheCanvas translateBy: subBnds origin negated
 				during: [:tempCanvas | self drawSubmorphsOn: tempCanvas].
 			self submorphsDo:
@@ -1252,7 +1250,7 @@ HandMorph >> updateCacheCanvas: aCanvas [
 						ifTrue: [^cachedCanvasHasHoles := false]].
 			nPix := cacheCanvas form tallyPixelValues first.
 			"--> begin rounded corners hack <---"
-			cachedCanvasHasHoles := (nPix = 48
+			cachedCanvasHasHoles := (nPix = cacheCanvas numberOfTransparentPixelsForRoundedCorners
 						and: [submorphs size = 1 and: [submorphs first wantsRoundedCorners]])
 							ifTrue: [false]
 							ifFalse: [nPix > 0].
