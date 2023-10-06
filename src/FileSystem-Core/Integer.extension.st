@@ -12,8 +12,8 @@ Integer >> humanReadableByteSizeString [
 		inject: self
 		into: [ :value :each |
 			value < 1024
-				ifFalse: [ value // 1024 ]
-				ifTrue: [ ^ value asString , ' ' , each ] ]
+				ifFalse: [( value / 1024) asFloat ]
+				ifTrue: [ ^ (value printShowingDecimalPlaces: 2) , ' ' , each ] ]
 ]
 
 { #category : '*FileSystem-Core' }
