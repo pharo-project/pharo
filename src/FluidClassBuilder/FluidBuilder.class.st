@@ -103,8 +103,8 @@ FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 	| oldClass |
 	oldClass := anEnvironment at: name ifAbsent: [ ^ self ].
 
-	classSlots := oldClass class slots.
-	classTraitComposition := oldClass class traitComposition
+	self classSlots: oldClass class slots.
+	self classTraits: oldClass class traitComposition
 ]
 
 { #category : 'copying' }
@@ -129,13 +129,13 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 FluidBuilder >> fillShiftClassBuilder [
 
 	shiftClassBuilder := ShiftClassBuilder new
-		                     name: name;
-		                     slots: slots;
-		                     traitComposition: traitComposition;
-		                     package: package;
+		                     name: self name;
+		                     slots: self slots;
+		                     traitComposition: self traitComposition;
+		                     package: self package;
 		                     tag: self tag;
-		                     classSlots: classSlots;
-		                     classTraitComposition: classTraitComposition;
+		                     classSlots: self classSlots;
+		                     classTraitComposition: self classTraitComposition;
 		                     yourself.
 
 	isTrait
@@ -146,10 +146,10 @@ FluidBuilder >> fillShiftClassBuilder [
 				sharedPools: '' ]
 		ifFalse: [
 			shiftClassBuilder
-				superclass: superclass;
-				sharedVariables: sharedVariables;
-				sharedPools: sharedPools;
-				layout: layout ].
+				superclass: self superclass;
+				sharedVariables: self sharedVariables;
+				sharedPools: self sharedPools;
+				layout: self layoutClass ].
 
 	^ shiftClassBuilder
 ]
