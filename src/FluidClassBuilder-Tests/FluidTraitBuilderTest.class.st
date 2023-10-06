@@ -148,9 +148,7 @@ FluidTraitBuilderTest >> testFillShiftClassBuilder [
 	shift := builder shiftClassBuilder.
 	self assert: shift name equals: #TPoint2.
 	self assert: shift slots size equals: 2.
-	self assert: shift category equals: self packageNameForTest , '-Mafia'.
-	self flag: #askPablo
-	"self assert: clas package packageName equals: self packageNameForTest"
+	self assert: shift category equals: self packageNameForTest , '-Mafia'
 ]
 
 { #category : 'tests - install' }

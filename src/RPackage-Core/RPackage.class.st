@@ -272,6 +272,7 @@ RPackage >> ensureProperties [
 RPackage >> ensureTag: aTag [
 
 	| tagName newTag |
+	aTag ifNil: [ ^ self rootTag ].
 	tagName := aTag isString
 		           ifTrue: [ aTag ]
 		           ifFalse: [ aTag name ].
@@ -523,33 +524,32 @@ RPackage >> moveClass: aClass toTag: aTag [
 	"I am the main method to add a class to myself. 
 	I will take care of removing the class from its old package. I'll renamed its extensions protocols refering myself into the unclassified protocol. I'll add the class to the right tag and announce the change."
 
-	| oldPackage oldTag newTag |
+	| oldPackage newTag oldTag |
 	newTag := self ensureTag: aTag.
 	oldTag := aClass packageTag.
-
 	oldTag = newTag ifTrue: [ ^ self ].
 
 	oldPackage := aClass package.
 
 	"It is possible that we are just updating the tag and not the package.
 	If we update the package we should remove the class from the old one and update the methods"
-	oldPackage = self
-		ifTrue: [ oldTag removeClass: aClass ]
-		ifFalse: [
-			oldPackage removeClass: aClass.
-			self removeAllMethodsFromClass: aClass.
-			{
-				aClass.
-				aClass classSide } do: [ :class |
-				(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
-
-				class protocols
-					reject: [ :protocol | protocol isExtensionProtocol ]
-					thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ] ].
+	oldPackage = self ifTrue: [ oldTag removeClass: aClass ] ifFalse: [ oldPackage removeClass: aClass ].
 
 	newTag privateAddClass: aClass instanceSide.
+	
+	oldPackage = self ifFalse: [
+		"In case I contain extension methods."
+		self removeAllMethodsFromClass: aClass.
+		
+		{ aClass. aClass classSide } do: [ :class |
+			(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
-	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
+			class protocols
+				reject: [ :protocol | protocol isExtensionProtocol ]
+				thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ] ].
+
+	"If the tag is undefined, this means we are adding the class. In that case we do not want to announce a recategorization since there is already a ClassAddition announcement raised."
+	oldTag isUndefined ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
 { #category : 'accessing' }

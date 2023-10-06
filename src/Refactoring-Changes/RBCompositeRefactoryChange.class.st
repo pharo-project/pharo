@@ -80,12 +80,6 @@ RBCompositeRefactoryChange >> addProtocolNamed: aString in: aClass [
 ]
 
 { #category : 'accessing' }
-RBCompositeRefactoryChange >> category: aString for: aClass [
-
-	^ self addChange: (RBClassCategoryChange category: aString for: aClass)
-]
-
-{ #category : 'accessing' }
 RBCompositeRefactoryChange >> changeClass [
 
 	^ self subclassResponsibility

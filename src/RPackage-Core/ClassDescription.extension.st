@@ -43,6 +43,18 @@ ClassDescription >> package [
 ]
 
 { #category : '*RPackage-Core' }
+ClassDescription >> package: aPackage [
+
+	^ aPackage addClass: self
+]
+
+{ #category : '*RPackage-Core' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+]
+
+{ #category : '*RPackage-Core' }
 ClassDescription >> packageFromOrganizer: anOrganizer [
 	"returns the package that defines this class"
 	^ anOrganizer packageOf: self
@@ -64,7 +76,13 @@ ClassDescription >> packageTag [
 { #category : '*RPackage-Core' }
 ClassDescription >> packageTag: aTag [
 
+<<<<<<< HEAD
 	(self package ensureTag: aTag) addClass: self
+=======
+	(aTag isString
+		 ifTrue: [ self package ensureTag: aTag ]
+		 ifFalse: [ aTag ]) addClass: self
+>>>>>>> Pharo12
 ]
 
 { #category : '*RPackage-Core' }

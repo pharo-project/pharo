@@ -10,9 +10,8 @@ Class {
 		'packageName',
 		'tagName'
 	],
-	#category : 'Monticello-Modeling',
-	#package : 'Monticello',
-	#tag : 'Modeling'
+	#category : 'Monticello-BackwardCompatibility',
+	#package : 'Monticello-BackwardCompatibility'
 }
 
 { #category : 'instance creation' }
@@ -79,6 +78,12 @@ MCClassTraitDefinition >> category: aCategoryString [
 ]
 
 { #category : 'accessing' }
+MCClassTraitDefinition >> classDefinitionString [
+
+	^self definitionString
+]
+
+{ #category : 'accessing' }
 MCClassTraitDefinition >> className [
 	^self baseTrait
 ]
@@ -126,6 +131,11 @@ MCClassTraitDefinition >> hash [
 MCClassTraitDefinition >> isClassDefinition [
 	"Traits are treated the same like classes."
 	
+	^ true
+]
+
+{ #category : 'testing' }
+MCClassTraitDefinition >> isTraitDefinition [
 	^ true
 ]
 
@@ -188,4 +198,9 @@ MCClassTraitDefinition >> tagName [
 MCClassTraitDefinition >> tagName: anObject [
 
 	tagName := anObject
+]
+
+{ #category : 'accessing' }
+MCClassTraitDefinition >> traitComposition [
+	^ self classTraitComposition 
 ]
