@@ -531,7 +531,7 @@ RPackage >> moveClass: aClass toTag: aTag [
 	oldTag := aClass packageTag.
 	oldTag = newTag ifTrue: [ ^ self ].
 
-	aClass package removeClass: aClass.
+	oldPackage := aClass package.
 
 	"It is possible that we are just updating the tag and not the package.
 	If we update the package we should remove the class from the old one and update the methods"
