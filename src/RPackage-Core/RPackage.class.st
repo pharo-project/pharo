@@ -277,6 +277,7 @@ RPackage >> ensureProperties [
 RPackage >> ensureTag: aTag [
 
 	| tagName newTag |
+	aTag ifNil: [ ^ self rootTag ].
 	tagName := aTag isString
 		           ifTrue: [ aTag ]
 		           ifFalse: [ aTag name ].
@@ -379,26 +380,6 @@ RPackage >> hierarchyRoots [
 
 	^ self definedClasses
 		select: [ :each | (each superclass isNil or: [ each superclass package ~~ self ]) and: [ each hasSubclasses ] ]
-]
-
-{ #category : 'private' }
-RPackage >> importClass: aClass inTag: aTag [
-	"Import a class already created but not attached to a package to the receiver. It will import the class and its methods.
-
-	Handle also *- convention. Methods defined in *category are not added to the package.
-	
-	If the class had an extension to us, then all methods in that extension are moved to 'as yet unclassified' and the extension protocol is deleted"
-
-	"Question: should we check that for each extension, there is a real package behind or not?"
-
-	self removeAllMethodsFromClass: aClass.
-	
-	(self ensureTag: aTag) addClass: aClass instanceSide.
-
-	{ aClass . aClass classSide } do: [ :class |
-		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
-
-		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ]
 ]
 
 { #category : 'private' }
@@ -546,16 +527,32 @@ RPackage >> methodsForClass: aClass [
 { #category : 'private' }
 RPackage >> moveClass: aClass toTag: aTag [
 
-	| oldPackage tag |
-	tag := self ensureTag: aTag.
-	aClass packageTag = tag ifTrue: [ ^ self ].
+	| oldPackage newTag oldTag |
+	newTag := self ensureTag: aTag.
+	oldTag := aClass packageTag.
+	oldTag = newTag ifTrue: [ ^ self ].
 
 	oldPackage := aClass package.
 
-	oldPackage removeClass: aClass.
-	self importClass: aClass inTag: tag.
+	"It is possible that we are just updating the tag and not the package.
+	If we update the package we should remove the class from the old one and update the methods"
+	oldPackage = self ifTrue: [ oldTag removeClass: aClass ] ifFalse: [ oldPackage removeClass: aClass ].
 
-	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
+	newTag addClass: aClass instanceSide.
+	
+	oldPackage = self ifFalse: [
+		"In case I contain extension methods."
+		self removeAllMethodsFromClass: aClass.
+		
+		{ aClass. aClass classSide } do: [ :class |
+			(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
+
+			class protocols
+				reject: [ :protocol | protocol isExtensionProtocol ]
+				thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ] ].
+
+	"If the tag is undefined, this means we are adding the class. In that case we do not want to announce a recategorization since there is already a ClassAddition announcement raised."
+	oldTag isUndefined ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
 { #category : 'accessing' }

@@ -83,13 +83,11 @@ RBSplitClassTransformation >> abstractVariableReferences [
 { #category : 'private' }
 RBSplitClassTransformation >> addClass [
 
-	transformations add:
-		(RBInsertNewClassTransformation
-			model: self model
-			addClass: newClassName
-			superclass: #Object
-			subclasses: #()
-			category: class category)
+	transformations add: ((RBInsertNewClassTransformation model: self model className: newClassName)
+			 superclass: #Object;
+			 packageName: class packageName;
+			 tagName: class tagName;
+			 yourself)
 ]
 
 { #category : 'private' }

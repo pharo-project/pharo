@@ -41,7 +41,14 @@ ClassAnnouncement >> classAffected [
 
 { #category : 'accessing' }
 ClassAnnouncement >> classTagAffected [
-	^self packageAffected toTagName: self classAffected category
+
+	^ self classAffected packageTag
+]
+
+{ #category : 'accessing' }
+ClassAnnouncement >> classTagsAffected [
+
+	^ { self classTagAffected }
 ]
 
 { #category : 'accessing' }

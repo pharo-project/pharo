@@ -101,6 +101,7 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 			          slots: { #instVar };
 			          sharedVariables: { #ClassVar };
 			          sharedPools: 'PoolDict';
+			          tag: self class packageTag name;
 			          package: self class package name ].
 	self assert: change superclassName equals: self class superclass name.
 	self assert: change changeClassName equals: self class name.
@@ -112,7 +113,8 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 	self assert: change classVariableNames first equals: 'ClassVar'.
 	self assert: change sharedPoolNames size equals: 1.
 	self assert: change sharedPoolNames first equals: 'PoolDict'.
-	self assert: change category equals: self class category.
+	self assert: change package equals: self class package name.
+	self assert: change tag equals: self class packageTag name.
 	self universalTestFor: change
 ]
 
@@ -135,7 +137,8 @@ RBRefactoringChangeTest >> testAddClassPattern [
 			self assert: change classVariableNames equals: class classVarNames asArray.
 			self assert: change classInstanceVariableNames equals: class class instVarNames.
 			self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
-			self assert: change category equals: class category.
+			self assert: change package equals: class package name.
+			self assert: change tag equals: class packageTag name.
 			self universalTestFor: change ] ]
 ]
 
@@ -183,7 +186,10 @@ RBRefactoringChangeTest >> testAddTraitPattern [
 		| change |
 		change := changes defineClass: [ :aBuilder | aBuilder fillFor: trait ].
 		self assert: change changeClassName equals: trait name.
-		self assert: change category equals: trait category.
+		self assert: change package equals: trait package name.
+		self assert: change tag equals: (trait packageTag isRoot
+				 ifTrue: [ nil ]
+				 ifFalse: [ trait packageTag name ]).
 		self universalTestFor: change ]
 ]
 

@@ -25,54 +25,13 @@ Class {
 	#instVars : [
 		'superclass',
 		'subclasses',
-		'category'
+		'packageName',
+		'tagName'
 	],
 	#category : 'Refactoring2-Transformations-Model-Unused',
 	#package : 'Refactoring2-Transformations',
 	#tag : 'Model-Unused'
 }
-
-{ #category : 'instance creation' }
-RBInsertNewClassTransformation class >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-
-	^ self new
-		addClass: aName
-		superclass: aClass
-		subclasses: aCollection
-		category: aSymbol;
-		yourself
-]
-
-{ #category : 'instance creation' }
-RBInsertNewClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
-
-	^ self new
-		model: aRBSmalltalk;
-		addClass: aName
-			superclass: aClass
-			subclasses: aCollection
-			category: aSymbol;
-		yourself
-]
-
-{ #category : 'api' }
-RBInsertNewClassTransformation >> addClass: aName superclass: aClass category: aSymbol [
-
-	self
-		addClass: aName
-		superclass: aClass asSymbol
-		subclasses: (OrderedCollection new)
-		category: aSymbol
-]
-
-{ #category : 'api' }
-RBInsertNewClassTransformation >> addClass: aName superclass: superclassName subclasses: aCollection category: aSymbol [
-
-	self className: aName.
-	superclass := superclassName asSymbol.
-	subclasses := aCollection.
-	category := aSymbol asSymbol
-]
 
 { #category : 'preconditions' }
 RBInsertNewClassTransformation >> applicabilityPreconditions [
@@ -80,22 +39,19 @@ RBInsertNewClassTransformation >> applicabilityPreconditions [
 	Each subclass should be immediate subclass of superclass."
 
 	| cond |
-	cond := ((RBCondition isMetaclass:
-		          (self model classObjectFor: superclass)) errorMacro:
-		         'Superclass must not be a metaclass') not.
+	cond := ((RBCondition isMetaclass: (self model classObjectFor: superclass)) errorMacro: 'Superclass must not be a metaclass') not.
 	cond := subclasses inject: cond into: [ :sub :each |
-		        sub
-		        &
-			        ((RBCondition isMetaclass:
-				          (self model classObjectFor: each)) errorMacro:
-				         'Subclass must <1?not :>be a metaclass') not
-		        & (RBCondition
-				         isImmediateSubclass: (self model classObjectFor: each)
-				         of: (self model classObjectFor: superclass)) ].
-	^ cond & self isValidClassName & self isNotGlobal
-	  & (RBCondition isSymbol: category)
-	  & ((RBCondition withBlock: [ category isNotEmpty ]) errorMacro:
-			   'Invalid category name')
+		        sub & ((RBCondition isMetaclass: (self model classObjectFor: each)) errorMacro: 'Subclass must <1?not :>be a metaclass') not
+		        & (RBCondition isImmediateSubclass: (self model classObjectFor: each) of: (self model classObjectFor: superclass)) ].
+	^ cond & self isValidClassName & self isNotGlobal & (RBCondition isSymbol: packageName)
+	  & ((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro: 'Invalid package name')
+]
+
+{ #category : 'initialization' }
+RBInsertNewClassTransformation >> initialize [
+
+	super initialize.
+	subclasses := #(  )
 ]
 
 { #category : 'preconditions' }
@@ -110,6 +66,18 @@ RBInsertNewClassTransformation >> isValidClassName [
 	^ RBCondition isValidClassName: className
 ]
 
+{ #category : 'accessing' }
+RBInsertNewClassTransformation >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassTransformation >> packageName: anObject [
+
+	packageName := anObject
+]
+
 { #category : 'executing' }
 RBInsertNewClassTransformation >> privateTransform [
 
@@ -118,23 +86,50 @@ RBInsertNewClassTransformation >> privateTransform [
 			aBuilder
 				superclassName: (self model classObjectFor: superclass) name;
 				name: className;
-				package: category ];
+				package: packageName;
+				tag: tagName ];
 		reparentClasses: (subclasses collect: [ :subclass | self model classObjectFor: subclass ]) to: (self model classNamed: className asSymbol)
 ]
 
 { #category : 'printing' }
 RBInsertNewClassTransformation >> storeOn: aStream [
 
-	aStream nextPut: $(.
+	aStream nextPutAll: '(('.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' addClass: #';
+		nextPutAll: ' className: #';
 		nextPutAll: className;
-		nextPutAll: ' superclass: '.
+		nextPutAll: ') superclass: '.
 	superclass storeOn: aStream.
-	aStream nextPutAll: ' subclasses: '.
+	aStream nextPutAll: '; subclasses: '.
 	subclasses asArray storeOn: aStream.
-	aStream nextPutAll: ' category: '.
-	category storeOn: aStream.
+	aStream nextPutAll: '; packageName: '.
+	packageName storeOn: aStream.
+	aStream nextPutAll: '; tagName: '.
+	tagName storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : 'api' }
+RBInsertNewClassTransformation >> subclasses: aCollection [
+
+	subclasses := aCollection
+]
+
+{ #category : 'api' }
+RBInsertNewClassTransformation >> superclass: superclassName [
+
+	superclass := superclassName asSymbol
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassTransformation >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassTransformation >> tagName: anObject [
+
+	tagName := anObject
 ]

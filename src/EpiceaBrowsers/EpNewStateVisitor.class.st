@@ -10,12 +10,6 @@ Class {
 }
 
 { #category : 'visitor' }
-EpNewStateVisitor >> visitBehaviorCategoryChange: aRecategorizationChange [
-
-	^ aRecategorizationChange newCategory
-]
-
-{ #category : 'visitor' }
 EpNewStateVisitor >> visitBehaviorCommentChange: aChange [
 
 	^ aChange newComment asString
@@ -25,6 +19,12 @@ EpNewStateVisitor >> visitBehaviorCommentChange: aChange [
 EpNewStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 
 	^ aClassRenameChange newName
+]
+
+{ #category : 'visitor' }
+EpNewStateVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
+
+	^ self printTag: aBehaviorRepackagedChange newTagName package: aBehaviorRepackagedChange newPackageName
 ]
 
 { #category : 'visitor' }
