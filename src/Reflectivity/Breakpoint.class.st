@@ -323,10 +323,7 @@ Breakpoint >> count: anInteger [
 { #category : 'api' }
 Breakpoint >> createCondition [
 
-	self condition: self requestConditionBlock .
-
-	"condition := aCondition.
-	self link: self breakLinkConditional"
+	self condition: self requestConditionBlock
 ]
 
 { #category : 'api' }
@@ -494,9 +491,6 @@ Breakpoint >> removeFromBreakpointGroups [
 	"just in case the breakpoint is not removed correctly this will remove the reference to the group"
  	group := nil.
 
-	"old code needed when groups are not using weak sets"
-	"self group removeBreakpoint: self.
-	BreakpointGroup allBreakpointsGroup removeBreakpoint: self."
 ]
 
 { #category : 'removing' }
