@@ -139,7 +139,7 @@ FluidClassBuilderTest >> testBuilderWithPackage [
 FluidClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #x . #y }.
-	self assert: builder slotsToBuild equals: { #x => InstanceVariableSlot. #y => InstanceVariableSlot }
+	self assert: builder slots equals: { #x => InstanceVariableSlot. #y => InstanceVariableSlot }
 ]
 
 { #category : 'tests - gathering' }
@@ -178,12 +178,12 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
-	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
+	self assert: clasBuilder slots equals: instBuilder slots.
 	self assert: clasBuilder tag equals: instBuilder tag.
 	self assert: clasBuilder traitComposition name equals: TViewModelMock name.
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 
-	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
+	self assert: clasBuilder classSlots equals: instBuilder classSlots.
 	self assert: clasBuilder classTraitComposition equals: instBuilder classTraitComposition
 ]
 
@@ -206,12 +206,12 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
-	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
+	self assert: clasBuilder slots equals: instBuilder slots.
 	self assert: clasBuilder tag equals: instBuilder tag.
 	self assert: clasBuilder traitComposition equals: instBuilder traitComposition.
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 
-	self assert: clasBuilder classSlotsToBuild equals: instBuilder classSlotsToBuild.
+	self assert: clasBuilder classSlots equals: instBuilder classSlots.
 	self assert: clasBuilder classTraitComposition equals: instBuilder classTraitComposition
 ]
 
@@ -219,7 +219,7 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 FluidClassBuilderTest >> testClassSlots [
 
 	builder classSlots: {#string . #runs}.
-	self assert: builder classSlotsToBuild equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
+	self assert: builder classSlots equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
 { #category : 'tests - class creation' }

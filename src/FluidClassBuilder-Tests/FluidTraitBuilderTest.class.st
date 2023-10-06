@@ -44,7 +44,7 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 FluidTraitBuilderTest >> testClassSlots [
 
 	builder classSlots: {#string . #runs}.
-	self assert: builder classSlotsToBuild equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
+	self assert: builder classSlots equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
 { #category : 'tests - class creation' }

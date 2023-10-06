@@ -23,7 +23,7 @@ FluidClassSideBuilder >> slots: anArray [
 	"Pay attention on the class side we do not have to have classSlots: but slots:"
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	classSlotsToBuild := anArray collect: [ :each | each asSlot ]
+	classSlots := anArray collect: [ :each | each asSlot ]
 ]
 
 { #category : 'API' }

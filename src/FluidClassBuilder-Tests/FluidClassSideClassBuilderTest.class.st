@@ -39,8 +39,8 @@ FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 	builder slots: { #metaX . #metaY }.
 	"the builder is class side builder so we are setting the class level"
 
-	self assert: builder classSlotsToBuild equals: {#metaX => InstanceVariableSlot. #metaY => InstanceVariableSlot}.
-	self assert: builder slotsToBuild equals: #()
+	self assert: builder classSlots equals: {#metaX => InstanceVariableSlot. #metaY => InstanceVariableSlot}.
+	self assert: builder slots equals: #()
 ]
 
 { #category : 'tests' }
