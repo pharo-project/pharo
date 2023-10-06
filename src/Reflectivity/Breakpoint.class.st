@@ -317,7 +317,7 @@ Breakpoint >> count [
 { #category : 'accessing' }
 Breakpoint >> count: anInteger [
 
-	^count := anInteger
+	count := anInteger
 ]
 
 { #category : 'api' }
