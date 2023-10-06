@@ -85,7 +85,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-UI'.
 		spec package: 'Refactoring-Environment'.
-		spec package: 'Monticello-OldDataStreamCompatibility'.
+		spec package: 'Monticello-BackwardCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		
 		self specRefactoring: spec.
