@@ -68,15 +68,16 @@ FluidClassBuilderTest >> testBuildSimplePoint2 [
 
 	| clas |
 	builder := Object << #Point2.
-	builder slots: { #x . #y }.
+	builder slots: { #x. #y }.
 	builder package: self packageNameForTest.
 	clas := builder build.
 
 	self assert: clas superclass equals: Object.
 	self assert: clas name equals: #Point2.
 	self assert: clas slots size equals: 2.
-	self flag: #askPablo.
-	"self assert: clas package packageName equals: self packageNameForTest"
+
+	"for now, the class will only know the package if it is installed"
+	self assert: clas package name equals: #_UnpackagedPackage
 ]
 
 { #category : 'tests - gathering' }
@@ -268,8 +269,6 @@ FluidClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 	self assert: shiftClassBuilder superclass equals: Object.
 	self assert: shiftClassBuilder name equals: #MyClass.
 	self assert: shiftClassBuilder layoutDefinition slots isEmpty.
-	"we should add slots to ShiftClassBuilder"
-	self flag: #Pablo.
 	self assert: shiftClassBuilder traitComposition isEmpty.
 	self assert: shiftClassBuilder layoutDefinition sharedVariables isEmpty.
 	self assert: shiftClassBuilder layoutDefinition sharedPools isEmpty
@@ -415,9 +414,7 @@ FluidClassBuilderTest >> testFillShiftClassBuilder [
 	self assert: shift name equals: #Point2.
 	self assert: shift slots size equals: 2.
 	self assert: shift sharedPools equals: {ChronologyConstants}.
-	self assert: shift category equals: self packageNameForTest, '-Mafia'.
-	self flag: #askPablo.
-	"self assert: clas package packageName equals: self packageNameForTest"
+	self assert: shift category equals: self packageNameForTest, '-Mafia'
 ]
 
 { #category : 'tests - mandatory' }
