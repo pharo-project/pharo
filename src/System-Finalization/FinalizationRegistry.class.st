@@ -179,6 +179,12 @@ FinalizationRegistry >> protected: aBlock [
 ]
 
 { #category : #adding }
+FinalizationRegistry >> remove: aKey [
+
+	^ self remove: aKey ifAbsent: [ NotFound signalFor: aKey ]
+]
+
+{ #category : #adding }
 FinalizationRegistry >> remove: aKey ifAbsent: aBlock [
 	| ephemeron |
 	ephemeron := self ephemeronAtKey: aKey.
