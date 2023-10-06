@@ -2,15 +2,14 @@
 This class contains tests for `FluidClassSideTraitBuilder`
 "
 Class {
-	#name : 'FluidClassSideTraitBuilderTest',
-	#superclass : 'FluidClassBuilderAbstractTest',
-	#category : 'FluidClassBuilder-Tests-Base',
-	#package : 'FluidClassBuilder-Tests',
-	#tag : 'Base'
+	#name : 'ShiftClassSideTraitBuilderTest',
+	#superclass : 'ShiftClassBuilderAbstractTest',
+	#category : 'Shift-ClassBuilder-Tests',
+	#package : 'Shift-ClassBuilder-Tests'
 }
 
 { #category : 'running' }
-FluidClassSideTraitBuilderTest >> setUp [
+ShiftClassSideTraitBuilderTest >> setUp [
 
 	super setUp.
 	builder := ShiftClassSideBuilder new
@@ -19,7 +18,7 @@ FluidClassSideTraitBuilderTest >> setUp [
 ]
 
 { #category : 'initialization' }
-FluidClassSideTraitBuilderTest >> testSlots [
+ShiftClassSideTraitBuilderTest >> testSlots [
 
 	| trait |
 	builder := (Trait << TViewModelMock classTrait)

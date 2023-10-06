@@ -2,15 +2,14 @@
 This class contains tests for `FluidClassSideClassBuilder`
 "
 Class {
-	#name : 'FluidClassSideClassBuilderTest',
-	#superclass : 'FluidClassBuilderAbstractTest',
-	#category : 'FluidClassBuilder-Tests-Base',
-	#package : 'FluidClassBuilder-Tests',
-	#tag : 'Base'
+	#name : 'ShiftClassSideClassBuilderTest',
+	#superclass : 'ShiftClassBuilderAbstractTest',
+	#category : 'Shift-ClassBuilder-Tests',
+	#package : 'Shift-ClassBuilder-Tests'
 }
 
 { #category : 'running' }
-FluidClassSideClassBuilderTest >> setUp [
+ShiftClassSideClassBuilderTest >> setUp [
 
 	super setUp.
 	"as we can see the superclass and name are the ones of the class (not the metaclass)"
@@ -21,20 +20,20 @@ FluidClassSideClassBuilderTest >> setUp [
 ]
 
 { #category : 'tests' }
-FluidClassSideClassBuilderTest >> testBuilderClassName [
+ShiftClassSideClassBuilderTest >> testBuilderClassName [
 	"Yes a class side builder expects the instance name."
 
 	self assert: builder name equals: #'Point33'
 ]
 
 { #category : 'tests' }
-FluidClassSideClassBuilderTest >> testBuilderSuperclass [
+ShiftClassSideClassBuilderTest >> testBuilderSuperclass [
 
 	self assert: builder superclass equals: Object
 ]
 
 { #category : 'tests' }
-FluidClassSideClassBuilderTest >> testBuilderWithSlots [
+ShiftClassSideClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #metaX . #metaY }.
 	"the builder is class side builder so we are setting the class level"
@@ -44,7 +43,7 @@ FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 ]
 
 { #category : 'tests' }
-FluidClassSideClassBuilderTest >> testBuilderWithTraits [
+ShiftClassSideClassBuilderTest >> testBuilderWithTraits [
 
 	builder traits: { TViewModelMock classTrait }.
 	"the builder is class side builder so we are setting the class level"
