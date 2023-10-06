@@ -9,7 +9,7 @@ Metaclass >> << aMetaclass [
 
 	^ FluidClassSideBuilder new
 		  superclass: self soleInstance;
-		  nameToBuild: aMetaclass soleInstance name;
+		  name: aMetaclass soleInstance name;
 		  fillInstanceSideFromClass: aMetaclass soleInstance;
 		  yourself
 ]

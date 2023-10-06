@@ -35,7 +35,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'shiftClassBuilder',
-		'nameToBuild',
 		'package',
 		'isTrait',
 		'layout',
@@ -46,7 +45,8 @@ Class {
 		'classTraitComposition',
 		'classSlots',
 		'slots',
-		'superclass'
+		'superclass',
+		'name'
 	],
 	#category : 'FluidClassBuilder-Base',
 	#package : 'FluidClassBuilder',
@@ -101,7 +101,7 @@ FluidBuilder >> classTraits: aCollection [
 FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 
 	| oldClass |
-	oldClass := anEnvironment at: nameToBuild ifAbsent: [ ^ self ].
+	oldClass := anEnvironment at: name ifAbsent: [ ^ self ].
 
 	classSlots := oldClass class slots.
 	classTraitComposition := oldClass class traitComposition
@@ -129,7 +129,7 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 FluidBuilder >> fillShiftClassBuilder [
 
 	shiftClassBuilder := ShiftClassBuilder new
-		                     name: nameToBuild;
+		                     name: name;
 		                     slots: slots;
 		                     traitComposition: traitComposition;
 		                     package: package;
@@ -149,7 +149,7 @@ FluidBuilder >> fillShiftClassBuilder [
 				superclass: superclass;
 				sharedVariables: sharedVariables;
 				sharedPools: sharedPools;
-				layoutClass: layout ].
+				layout: layout ].
 
 	^ shiftClassBuilder
 ]
@@ -192,21 +192,21 @@ FluidBuilder >> layout: aClass [
 ]
 
 { #category : 'accessing' }
-FluidBuilder >> layoutToBuild [
+FluidBuilder >> layoutClass [
 
 	^ layout
 ]
 
 { #category : 'accessing - mandatory' }
-FluidBuilder >> nameToBuild [
+FluidBuilder >> name [
 	"mandatory"
 
-	^ nameToBuild
+	^ name
 ]
 
 { #category : 'accessing - mandatory' }
-FluidBuilder >> nameToBuild: aSymbol [
-	nameToBuild := aSymbol
+FluidBuilder >> name: aSymbol [
+	name := aSymbol
 ]
 
 { #category : 'accessing - mandatory' }

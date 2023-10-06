@@ -382,6 +382,13 @@ ShiftClassBuilder >> isInRemake [
 ]
 
 { #category : 'accessing' }
+ShiftClassBuilder >> layout: aLayoutClass [
+	"Added while merging FluidClassBuilder API and ShiftClassBuilder. Maybe we should deprecate #layoutClass:"
+
+	^ self layoutClass: aLayoutClass
+]
+
+{ #category : 'accessing' }
 ShiftClassBuilder >> layoutClass: aLayoutClass [
 	self layoutDefinition layoutClass: aLayoutClass
 ]

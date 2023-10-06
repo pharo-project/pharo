@@ -7,7 +7,7 @@ This way we can manipulate and test class definition without being forced to get
 
 	^ FluidBuilder new
 		  superclass: self;
-		  nameToBuild: aString;
+		  name: aString;
 		  fillClassSideFromEnvironment: self environment;
 		  yourself
 ]

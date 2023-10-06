@@ -7,13 +7,13 @@ Trait class >> << aSymbolOrAClassSideTrait [
 	aSymbolOrAClassSideTrait isSymbol ifFalse: [
 		^ FluidClassSideBuilder new
 			  beTrait;
-			  nameToBuild: aSymbolOrAClassSideTrait soleInstance name;
+			  name: aSymbolOrAClassSideTrait soleInstance name;
 			  fillInstanceSideFromClass: aSymbolOrAClassSideTrait soleInstance;
 			  yourself ].
 
 	^ FluidBuilder new
 		  beTrait;
-		  nameToBuild: aSymbolOrAClassSideTrait;
+		  name: aSymbolOrAClassSideTrait;
 		  fillClassSideFromEnvironment: self environment;
 		  yourself
 ]

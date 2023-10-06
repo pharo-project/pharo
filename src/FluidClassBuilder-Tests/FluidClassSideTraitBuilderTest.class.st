@@ -16,7 +16,7 @@ FluidClassSideTraitBuilderTest >> setUp [
 	"as we can see the superclass and name are the ones of the class (not the metaclass)"
 	builder := FluidClassSideBuilder new
 		           beTrait;
-		           nameToBuild: TViewModelMock
+		           name: TViewModelMock
 ]
 
 { #category : 'initialization' }

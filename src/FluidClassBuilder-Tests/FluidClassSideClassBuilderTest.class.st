@@ -16,7 +16,7 @@ FluidClassSideClassBuilderTest >> setUp [
 	"as we can see the superclass and name are the ones of the class (not the metaclass)"
 	builder := FluidClassSideBuilder new
 		           superclass: Object;
-		           nameToBuild: #Point33;
+		           name: #Point33;
 		           package: 'FakedPackage'
 ]
 
@@ -24,7 +24,7 @@ FluidClassSideClassBuilderTest >> setUp [
 FluidClassSideClassBuilderTest >> testBuilderClassName [
 	"Yes a class side builder expects the instance name."
 
-	self assert: builder nameToBuild equals: #'Point33'
+	self assert: builder name equals: #'Point33'
 ]
 
 { #category : 'tests' }

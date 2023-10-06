@@ -15,7 +15,7 @@ FluidClassBuilderTest >> setUp [
 	super setUp.
 	builder := FluidBuilder new
 		           superclass: Object;
-		           nameToBuild: #Point33;
+		           name: #Point33;
 		           package: 'FakedPackage'
 ]
 
@@ -60,7 +60,7 @@ FluidClassBuilderTest >> testBuildLayout [
 		layout: VariableLayout;
 		package: 'Collections-Sequenceable'.
 
-	self assert: builder layoutToBuild equals: VariableLayout
+	self assert: builder layoutClass equals: VariableLayout
 ]
 
 { #category : 'tests - classBuilder generation' }
@@ -99,7 +99,7 @@ FluidClassBuilderTest >> testBuilderSharedVariables [
 		package: 'Collections-Strings'.
 
 	self assert: builder sharedVariables equals: { #NonAsciiMap }.
-	self assert: builder layoutToBuild equals: ByteLayout
+	self assert: builder layoutClass equals: ByteLayout
 ]
 
 { #category : 'tests - gathering' }
@@ -174,14 +174,14 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	self assert: clasBuilder package equals: instBuilder package.
 	self assert: clasBuilder superclass equals: instBuilder superclass.
-	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
+	self assert: clasBuilder layoutClass equals: instBuilder layoutClass.
 	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
 	self assert: clasBuilder slots equals: instBuilder slots.
 	self assert: clasBuilder tag equals: instBuilder tag.
 	self assert: clasBuilder traitComposition name equals: TViewModelMock name.
-	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
+	self assert: clasBuilder name equals: instBuilder name.
 
 	self assert: clasBuilder classSlots equals: instBuilder classSlots.
 	self assert: clasBuilder classTraitComposition equals: instBuilder classTraitComposition
@@ -202,14 +202,14 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 
 	self assert: clasBuilder package equals: instBuilder package.
 	self assert: clasBuilder superclass equals: instBuilder superclass.
-	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
+	self assert: clasBuilder layoutClass equals: instBuilder layoutClass.
 	self assert: clasBuilder sharedVariables equals: instBuilder sharedVariables.
 	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
 	self assert: clasBuilder slots equals: instBuilder slots.
 	self assert: clasBuilder tag equals: instBuilder tag.
 	self assert: clasBuilder traitComposition equals: instBuilder traitComposition.
-	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
+	self assert: clasBuilder name equals: instBuilder name.
 
 	self assert: clasBuilder classSlots equals: instBuilder classSlots.
 	self assert: clasBuilder classTraitComposition equals: instBuilder classTraitComposition
@@ -235,7 +235,7 @@ FluidClassBuilderTest >> testCreateBuilder [
 	builder := Object << #Point.
 
 	self assert: builder superclass equals: Object.
-	self assert: builder nameToBuild equals: #Point
+	self assert: builder name equals: #Point
 ]
 
 { #category : 'tests - mandatory' }
@@ -244,7 +244,7 @@ FluidClassBuilderTest >> testCreateBuilderWithNil [
 	builder := nil << #NewProtoObject.
 
 	self assert: builder superclass isNil.
-	self assert: builder nameToBuild equals: #NewProtoObject
+	self assert: builder name equals: #NewProtoObject
 ]
 
 { #category : 'tests - mandatory' }
