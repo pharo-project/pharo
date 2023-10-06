@@ -6,13 +6,6 @@ Class {
 	#tag : 'SingleParametrized'
 }
 
-{ #category : 'tests' }
-RBChildrenToSiblingsParametrizedTest class >> testParameters [
-	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBChildrenToSiblingsRefactoring };
-		yourself
-]
-
 { #category : 'accessing' }
 RBChildrenToSiblingsParametrizedTest >> constructor [
 	^ #name:class:subclasses:
@@ -22,6 +15,7 @@ RBChildrenToSiblingsParametrizedTest >> constructor [
 RBChildrenToSiblingsParametrizedTest >> setUp [
 
 	super setUp.
+	rbClass := RBChildrenToSiblingsRefactoring.
 
 	(model := RBNamespace onEnvironment: ((RBClassEnvironment onEnvironment: RBBrowserEnvironment new) classes:
 			           (#( #ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass ) inject: OrderedCollection new into: [ :sum :each |

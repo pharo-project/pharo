@@ -56,12 +56,6 @@ RBAddClassChange >> builder: aClassBuilder [
 ]
 
 { #category : 'accessing' }
-RBAddClassChange >> category [
-
-	^ builder category
-]
-
-{ #category : 'accessing' }
 RBAddClassChange >> classInstanceVariableNames [
 
 	^ builder classSlots collect: [ :slot | slot name ]
@@ -117,6 +111,12 @@ RBAddClassChange >> nameToDisplay [
 ]
 
 { #category : 'accessing' }
+RBAddClassChange >> package [
+
+	^ builder package
+]
+
+{ #category : 'accessing' }
 RBAddClassChange >> sharedPoolNames [
 
 	^ builder ifNotNil: [ builder sharedPools ]
@@ -126,6 +126,12 @@ RBAddClassChange >> sharedPoolNames [
 RBAddClassChange >> superclassName [
 
 	^ builder superclassName
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> tag [
+
+	^ builder tag
 ]
 
 { #category : 'accessing' }
