@@ -260,7 +260,7 @@ BehaviorTest >> testThoroughWhichMethodsReferTo [
 	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
 	"and we are false for non existing symbols"
 	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
-	"we can search for Literal Variable references, but it is faster to use the non-thourough verson"
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
 	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
 ]
 
@@ -290,7 +290,7 @@ BehaviorTest >> testThoroughWhichSelectorsReferTo [
 	self assert: (self class thoroughWhichSelectorsReferTo: array first) notEmpty.
 	"and we are false for non existing symbols"
 	self assert: (self class thoroughWhichSelectorsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
-	"we can search for Literal Variable references, but it is faster to use the non-thourough verson"
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
 	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
 ]
 
