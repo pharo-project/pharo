@@ -290,15 +290,6 @@ FluidBuilder >> tag: aString [
 	tag := aString
 ]
 
-{ #category : 'API' }
-FluidBuilder >> trait: aTraitComposition [
-
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg'
-						-> '`@receiver traits: `@arg'.
-
-	^ self traits: aTraitComposition
-]
-
 { #category : 'accessing' }
 FluidBuilder >> traitComposition [
 
@@ -311,13 +302,4 @@ FluidBuilder >> traits: anArray [
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	traitComposition := anArray asTraitComposition.
 	classTraitComposition := traitComposition classComposition
-]
-
-{ #category : 'deprecated' }
-FluidBuilder >> uses: aTraitComposition [
-
-	self deprecated:  'Please use #traits: instead' transformWith:  '`@receiver trait: `@arg'
-						-> '`@receiver traits: `@arg'.
-
-	^ self traits: aTraitComposition
 ]

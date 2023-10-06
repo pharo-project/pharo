@@ -23,7 +23,7 @@ FluidClassSideBuilder >> slots: anArray [
 	"Pay attention on the class side we do not have to have classSlots: but slots:"
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	classSlots := anArray collect: [ :each | each asSlot ]
+	self classSlots: anArray
 ]
 
 { #category : 'API' }
@@ -31,5 +31,5 @@ FluidClassSideBuilder >> traits: aCollection [
 	"Pay attention that on class side we want to write traits: and not classTraits:"
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	classTraitComposition := aCollection asTraitComposition
+	self classTraits: aCollection
 ]

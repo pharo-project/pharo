@@ -234,7 +234,7 @@ ShiftClassBuilder >> createClass [
 	self builderEnhancer
 		configureClass: newClass
 		superclass: self superclass
-		withLayoutType: self layoutDefinition layoutClass
+		withLayoutType: self layoutClass
 		slots: self layoutDefinition slots.
 
 	newClass environment: self installingEnvironment.
@@ -386,6 +386,12 @@ ShiftClassBuilder >> layout: aLayoutClass [
 	"Added while merging FluidClassBuilder API and ShiftClassBuilder. Maybe we should deprecate #layoutClass:"
 
 	^ self layoutClass: aLayoutClass
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> layoutClass [
+
+	^ self layoutDefinition layoutClass
 ]
 
 { #category : 'accessing' }

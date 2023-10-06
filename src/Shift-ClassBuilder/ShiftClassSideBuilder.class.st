@@ -9,3 +9,19 @@ Class {
 	#category : 'Shift-ClassBuilder',
 	#package : 'Shift-ClassBuilder'
 }
+
+{ #category : 'accessing' }
+ShiftClassSideBuilder >> slots: anArray [
+	"Pay attention on the class side we do not have to have classSlots: but slots:"
+
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
+	self classSlots: anArray
+]
+
+{ #category : 'accessing' }
+ShiftClassSideBuilder >> traits: aCollection [
+	"Pay attention that on class side we want to write traits: and not classTraits:"
+
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
+	self classTraits: aCollection
+]
