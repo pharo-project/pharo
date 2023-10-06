@@ -14,7 +14,7 @@ FluidClassSideClassBuilderTest >> setUp [
 
 	super setUp.
 	"as we can see the superclass and name are the ones of the class (not the metaclass)"
-	builder := FluidClassSideClassBuilder new
+	builder := FluidClassSideBuilder new
 		           superclassToBuild: Object;
 		           nameToBuild: #Point33;
 		           package: 'FakedPackage'

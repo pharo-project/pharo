@@ -13,7 +13,7 @@ Class {
 FluidClassBuilderTest >> setUp [
 
 	super setUp.
-	builder := FluidClassBuilder new
+	builder := FluidBuilder new
 		           superclassToBuild: Object;
 		           nameToBuild: #Point33;
 		           package: 'FakedPackage'

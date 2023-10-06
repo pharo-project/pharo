@@ -7,7 +7,7 @@ Metaclass >> << aMetaclass [
 
 	self assert: self soleInstance = aMetaclass soleInstance superclass.
 
-	^ FluidClassSideClassBuilder new
+	^ FluidClassSideBuilder new
 		  superclassToBuild: self soleInstance;
 		  nameToBuild: aMetaclass soleInstance name;
 		  fillInstanceSideFromClass: aMetaclass soleInstance;

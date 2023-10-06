@@ -16,5 +16,6 @@ ManifestFluidClassBuilder class >> ruleLiteralArrayContainsSuspiciousTrueFalseOr
 
 { #category : 'code-critics' }
 ManifestFluidClassBuilder class >> ruleUtilityMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#FluidClassSideTraitBuilder #slots: #false)) #'2022-08-31T22:05:04.078571+02:00') #(#(#RGMethodDefinition #(#FluidClassSideClassBuilder #slots: #false)) #'2022-08-31T22:05:15.962103+02:00') #(#(#RGMethodDefinition #(#UndefinedObject #'<<' #false)) #'2022-08-31T22:14:53.135206+02:00') #(#(#RGMethodDefinition #(#FluidClassSideTraitBuilder #traits: #false)) #'2022-08-31T22:18:41.545354+02:00') #(#(#RGMethodDefinition #(#FluidClassSideClassBuilder #traits: #false)) #'2022-08-31T22:18:47.62601+02:00') )
+
+	^ #( #( #( #RGMethodDefinition #( #UndefinedObject #'<<' #false ) ) #'2022-08-31T22:14:53.135206+02:00' ) )
 ]

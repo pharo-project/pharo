@@ -13,7 +13,9 @@ Class {
 FluidTraitBuilderTest >> setUp [
 
 	super setUp.
-	builder := FluidTraitBuilder new
+	builder := FluidBuilder new
+		           beTrait;
+		           yourself
 ]
 
 { #category : 'running' }

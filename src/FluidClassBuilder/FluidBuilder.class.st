@@ -41,7 +41,12 @@ Class {
 		'nameToBuild',
 		'classSlotsToBuild',
 		'classTraitsToBuild',
-		'package'
+		'package',
+		'isTrait',
+		'superclassToBuild',
+		'layout',
+		'sharedPools',
+		'sharedVariables'
 	],
 	#category : 'FluidClassBuilder-Base',
 	#package : 'FluidClassBuilder',
@@ -52,6 +57,12 @@ Class {
 FluidBuilder class >> isAbstract [
 
 	^ self == FluidBuilder
+]
+
+{ #category : 'API' }
+FluidBuilder >> beTrait [
+
+	isTrait := true
 ]
 
 { #category : 'building' }
@@ -104,7 +115,14 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 	uses := aClass traitComposition.
 	self package: aClass package name.
 
-	aClass packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ self tag: tag name ] ]
+	aClass packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ self tag: tag name ] ].
+
+	self superclass: aClass superclass.
+
+	self layout: aClass classLayout class.
+
+	self sharedVariables: (aClass classVariables collect: [ :e | e key ]).
+	self sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray
 ]
 
 { #category : 'building' }
@@ -118,7 +136,22 @@ FluidBuilder >> fillShiftClassBuilder [
 		                     tag: tagToBuild;
 		                     classSlots: classSlotsToBuild;
 		                     classTraitComposition: classTraitsToBuild;
-		                     yourself
+		                     yourself.
+
+	isTrait
+		ifTrue: [
+			shiftClassBuilder
+				beTrait;
+				sharedVariables: #(  );
+				sharedPools: '' ]
+		ifFalse: [
+			shiftClassBuilder
+				superclass: superclassToBuild;
+				sharedVariables: sharedVariables;
+				sharedPoolsCollectionOfSymbols: sharedPools;
+				layoutClass: layout ].
+
+	^ shiftClassBuilder
 ]
 
 { #category : 'building' }
@@ -132,13 +165,17 @@ FluidBuilder >> fluidInstall [
 FluidBuilder >> initialize [
 
 	super initialize.
-	slotsToBuild := #().
-	classSlotsToBuild := #().
+	slotsToBuild := #(  ).
+	classSlotsToBuild := #(  ).
 
 	uses := TaEmptyComposition new.
 	classTraitsToBuild := uses classComposition.
 
-"	#packageName . #tagToBuild"
+	isTrait := false.
+
+	sharedVariables := #(  ).
+	sharedPools := #(  ).
+	layout := FixedLayout
 ]
 
 { #category : 'building' }
@@ -146,6 +183,18 @@ FluidBuilder >> install [
 	"Install the class in the system environment"
 
 	^ ShiftClassInstaller new makeWithBuilder: self shiftClassBuilder
+]
+
+{ #category : 'API' }
+FluidBuilder >> layout: aClass [
+
+	layout := aClass
+]
+
+{ #category : 'accessing' }
+FluidBuilder >> layoutToBuild [
+
+	^ layout
 ]
 
 { #category : 'accessing - mandatory' }
@@ -173,6 +222,30 @@ FluidBuilder >> package: aString [
 	package := aString
 ]
 
+{ #category : 'API' }
+FluidBuilder >> sharedPools: aString [
+
+	sharedPools := aString
+]
+
+{ #category : 'accessing' }
+FluidBuilder >> sharedPoolsToBuild [
+
+	^ sharedPools
+]
+
+{ #category : 'API' }
+FluidBuilder >> sharedVariables: aCollection [
+
+	sharedVariables := aCollection
+]
+
+{ #category : 'accessing' }
+FluidBuilder >> sharedVariablesToBuild [
+
+	^ sharedVariables
+]
+
 { #category : 'building' }
 FluidBuilder >> shiftClassBuilder [
 
@@ -190,6 +263,24 @@ FluidBuilder >> slots: anArray [
 FluidBuilder >> slotsToBuild [
 
 	^ slotsToBuild
+]
+
+{ #category : 'accessing - mandatory' }
+FluidBuilder >> superclass: aClass [
+
+	superclassToBuild := aClass
+]
+
+{ #category : 'accessing - mandatory' }
+FluidBuilder >> superclassToBuild [
+
+	^ superclassToBuild
+]
+
+{ #category : 'accessing - mandatory' }
+FluidBuilder >> superclassToBuild: aClass [
+
+	superclassToBuild := aClass
 ]
 
 { #category : 'accessing' }

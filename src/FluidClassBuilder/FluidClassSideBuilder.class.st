@@ -11,15 +11,15 @@ We want to make sure that we are not forced to use classSlots: and classTraits:
 because users will be confused. 
 "
 Class {
-	#name : 'FluidClassSideClassBuilder',
-	#superclass : 'FluidClassBuilder',
+	#name : 'FluidClassSideBuilder',
+	#superclass : 'FluidBuilder',
 	#category : 'FluidClassBuilder-Base',
 	#package : 'FluidClassBuilder',
 	#tag : 'Base'
 }
 
 { #category : 'API' }
-FluidClassSideClassBuilder >> slots: anArray [
+FluidClassSideBuilder >> slots: anArray [
 	"Pay attention on the class side we do not have to have classSlots: but slots:"
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
@@ -27,7 +27,7 @@ FluidClassSideClassBuilder >> slots: anArray [
 ]
 
 { #category : 'API' }
-FluidClassSideClassBuilder >> traits: aCollection [
+FluidClassSideBuilder >> traits: aCollection [
 	"Pay attention that on class side we want to write traits: and not classTraits:"
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
