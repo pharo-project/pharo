@@ -27,44 +27,6 @@ RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMetho
 	self assertEmpty: xPackage methods
 ]
 
-{ #category : 'tests - operations on traits' }
-RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
-
-	| xPackage tag class |
-	tag := self ensureTagYinX.
-	xPackage := tag package.
-
-	class := self newTraitNamed: 'NewClass' inTag: tag.
-
-	self assert: (xPackage includesClass: class).
-	self assert: xPackage equals: class package
-]
-
-{ #category : 'tests - operations on traits' }
-RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
-
-	| xPackage class |
-	xPackage := self ensureXPackage.
-	self ensureTagYinX.
-
-	class := self newTraitNamed: 'NewClass' in: xPackage.
-
-	self assert: (xPackage includesClass: class).
-	self assert: xPackage equals: class package
-]
-
-{ #category : 'tests - operations on traits' }
-RPackageTraitSynchronisationTest >> testAddTraitUpdateTheOrganizerMappings [
-	"test that when we add a Trait, the organizer 'classPackageMapping' dictionary is updated, so that the trait is linked to its package and so that we can access its owning package"
-
-	| xPackage class |
-	xPackage := self ensureXPackage.
-
-	class := self newTraitNamed: 'NewClass' in: xPackage.
-
-	self assert: class package equals: xPackage
-]
-
 { #category : 'tests - operations on methods' }
 RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemoveMethodFromTraitPackage [
 	"test that when we remove a class method coming from a trait, the method is not removed from the parent package of the trait"

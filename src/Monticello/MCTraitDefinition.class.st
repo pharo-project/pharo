@@ -89,6 +89,11 @@ MCTraitDefinition >> hash [
 	^ (name hash bitXor: traitComposition hash) bitXor: self category hash
 ]
 
+{ #category : 'testing' }
+MCTraitDefinition >> isTraitDefinition [
+	^ true
+]
+
 { #category : 'printing' }
 MCTraitDefinition >> printClassDefinitionOn: stream [
 
