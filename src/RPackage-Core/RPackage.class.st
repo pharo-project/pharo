@@ -526,24 +526,23 @@ RPackage >> methodsForClass: aClass [
 { #category : 'private' }
 RPackage >> moveClass: aClass toTag: aTag [
 
-	| oldPackage tag |
-	tag := self ensureTag: aTag.
-	aClass packageTag = tag ifTrue: [ ^ self ].
+	| newTag oldTag |
+	newTag := self ensureTag: aTag.
+	oldTag := aClass packageTag.
+	oldTag = newTag ifTrue: [ ^ self ].
 
-	oldPackage := aClass package.
+	aClass package removeClass: aClass.
 
-	oldPackage removeClass: aClass.
-	
 	self removeAllMethodsFromClass: aClass.
 	
-	tag addClass: aClass instanceSide.
+	newTag addClass: aClass instanceSide.
 
 	{ aClass . aClass classSide } do: [ :class |
 		(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
 
 		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
 
-	SystemAnnouncer uniqueInstance classRepackaged: aClass from: oldPackage to: self
+	SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag)
 ]
 
 { #category : 'accessing' }

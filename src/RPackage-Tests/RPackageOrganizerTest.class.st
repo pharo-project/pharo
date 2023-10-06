@@ -225,6 +225,21 @@ RPackageOrganizerTest >> testPackageNamedWithoutMatchingPackage [
 ]
 
 { #category : 'tests' }
+RPackageOrganizerTest >> testPackageOf [
+
+	| xPackage yPackage class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: #NewClass in: xPackage.
+
+	self assert: (self organizer packageOf: class) identicalTo: xPackage.
+
+	yPackage := self ensureYPackage.
+	yPackage addClass: class.
+
+	self assert: (self organizer packageOf: class) identicalTo: yPackage
+]
+
+{ #category : 'tests' }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	self ensurePackage: 'P1'.
@@ -298,6 +313,17 @@ RPackageOrganizerTest >> testRegistrationExtendingPackages [
 	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
 	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
 	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testRemoveClassUsingEnvironment [
+
+	| xPackage class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: #NewClass in: xPackage.
+
+	self organizer environment removeClassNamed: #NewClass.
+	self assert: (self organizer packageOf: class) isUndefined
 ]
 
 { #category : 'tests' }
