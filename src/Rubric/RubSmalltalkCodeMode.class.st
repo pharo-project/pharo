@@ -168,7 +168,7 @@ RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
 	tree := self parseSource: source.
-	tree checkFaulty: [ :msg :pos | ^self ].
+	tree checkFaulty: [ :msg :pos | ^self editor notify: msg at: pos + 1 in: source].
 	formatted := tree formattedCodeIn: classOrMetaclass.
 	formatted = source
 		ifTrue: [ ^ self ].
