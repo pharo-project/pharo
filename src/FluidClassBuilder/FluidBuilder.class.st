@@ -111,8 +111,8 @@ FluidBuilder >> fillClassSideFromEnvironment: anEnvironment [
 FluidBuilder >> fillInstanceSideFromClass: aClass [
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	slots := aClass slots.
-	traitComposition := aClass traitComposition.
+	self privateSlots: aClass slots.
+	self privateTraitComposition: aClass traitComposition.
 	self package: aClass package name.
 
 	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
@@ -222,6 +222,18 @@ FluidBuilder >> package: aString [
 	package := aString
 ]
 
+{ #category : 'API' }
+FluidBuilder >> privateSlots: anArray [
+
+	slots := anArray collect: [ :each | each asSlot ]
+]
+
+{ #category : 'API' }
+FluidBuilder >> privateTraitComposition: anArray [
+
+	traitComposition := anArray asTraitComposition
+]
+
 { #category : 'accessing' }
 FluidBuilder >> sharedPools [
 
@@ -262,7 +274,7 @@ FluidBuilder >> slots [
 FluidBuilder >> slots: anArray [
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	slots := anArray collect: [ :each | each asSlot ]
+	self privateSlots: anArray
 ]
 
 { #category : 'accessing - mandatory' }

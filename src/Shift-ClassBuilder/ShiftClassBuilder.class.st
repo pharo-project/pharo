@@ -486,6 +486,11 @@ ShiftClassBuilder >> package: aString [
 	package := aString
 ]
 
+{ #category : 'private' }
+ShiftClassBuilder >> privateSlots: aCollection [
+	self layoutDefinition slots: aCollection
+]
+
 { #category : 'changes' }
 ShiftClassBuilder >> propagateChangesTo: anotherBuilder [
 	changes do: [ :e | e propagateToSubclasses: anotherBuilder ]
@@ -542,7 +547,8 @@ ShiftClassBuilder >> slots [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> slots: aCollection [
-	self layoutDefinition slots: aCollection
+
+	self privateSlots: aCollection
 ]
 
 { #category : 'accessing' }
@@ -605,7 +611,7 @@ ShiftClassBuilder >> useStrictSuperclass [
 	self superclassResolver: ClassResolverStrictResolve new
 ]
 
-{ #category : 'private - validating' }
+{ #category : 'private' }
 ShiftClassBuilder >> validateClassName [
 	name ifNil: [ ^self ].
 
@@ -622,7 +628,7 @@ ShiftClassBuilder >> validateClassName [
 	DangerousClassNotifier check: name
 ]
 
-{ #category : 'private - validating' }
+{ #category : 'private' }
 ShiftClassBuilder >> validateSuperclass [
 	self superclass ifNil: [ ^self ].
 	oldClass ifNil: [ ^ self ].
