@@ -76,13 +76,7 @@ ClassDescription >> packageTag [
 { #category : '*RPackage-Core' }
 ClassDescription >> packageTag: aTag [
 
-<<<<<<< HEAD
 	(self package ensureTag: aTag) addClass: self
-=======
-	(aTag isString
-		 ifTrue: [ self package ensureTag: aTag ]
-		 ifFalse: [ aTag ]) addClass: self
->>>>>>> Pharo12
 ]
 
 { #category : '*RPackage-Core' }
