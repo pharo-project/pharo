@@ -34,22 +34,6 @@ EpApplyTest >> testBehaviorNameChange [
 ]
 
 { #category : 'tests' }
-EpApplyTest >> testClassAdditionWithCategoryChanged [
-
-	| aClass aCategory anotherCategory |
-	aClass := classFactory newClass.
-	self setHeadAsInputEntry.
-
-	aCategory := aClass category.
-	anotherCategory := aCategory, '2'.
-	aClass category: anotherCategory.
-
-	self assert: aClass category equals: anotherCategory.
-	self applyInputEntry.
-	self assert: aClass category equals: aCategory
-]
-
-{ #category : 'tests' }
 EpApplyTest >> testClassAdditionWithClassRemoved [
 
 	| aClass className |
@@ -105,6 +89,27 @@ EpApplyTest >> testClassAdditionWithMetaclassInstanceVariablesChanged [
 	self assert: aClass classSide instVarNames equals: #(x).
 	self applyInputEntry.
 	self assert: aClass classSide instVarNames equals: #()
+]
+
+{ #category : 'tests' }
+EpApplyTest >> testClassAdditionWithPackageChanged [
+
+	| aClass package tag newPackage newTag |
+	aClass := classFactory newClass.
+	self setHeadAsInputEntry.
+
+	package := aClass package name.
+	tag := aClass packageTag name.
+	newPackage := package , '2'.
+	newTag := tag , '2'.
+
+	aClass package: newPackage tag: newTag.
+
+	self assert: aClass package name equals: newPackage.
+	self assert: aClass packageTag name equals: newTag.
+	self applyInputEntry.
+	self assert: aClass package name equals: package.
+	self assert: aClass packageTag name equals: tag
 ]
 
 { #category : 'tests' }
@@ -328,7 +333,7 @@ EpApplyTest >> testPackageRenameWithExtension [
 { #category : 'tests' }
 EpApplyTest >> testPackageTagAdditionWithPackageTagRemoval [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 
@@ -341,10 +346,10 @@ EpApplyTest >> testPackageTagAdditionWithPackageTagRemoval [
 { #category : 'tests' }
 EpApplyTest >> testPackageTagRemovalWithPackageTagAddition [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
 	self setHeadAsInputEntry.
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	self assert: inputEntry content class equals: EpPackageTagRemoval.
 	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
@@ -355,7 +360,7 @@ EpApplyTest >> testPackageTagRemovalWithPackageTagAddition [
 { #category : 'tests' }
 EpApplyTest >> testPackageTagRename [
 
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
@@ -374,7 +379,7 @@ EpApplyTest >> testPackageTagRenameWithClass [
 	"Let's rename a package with a class and see if the class has the right package after."
 
 	| aClass |
-	self packageOrganizer ensureTagNamed: classFactory defaultTagPostfix inPackageNamed: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
 
 	aClass := classFactory make: [ :aBuilder | aBuilder tag: classFactory defaultTagPostfix ].
 

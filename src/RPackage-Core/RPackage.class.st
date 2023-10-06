@@ -277,6 +277,7 @@ RPackage >> ensureProperties [
 RPackage >> ensureTag: aTag [
 
 	| tagName newTag |
+	aTag ifNil: [ ^ self rootTag ].
 	tagName := aTag isString
 		           ifTrue: [ aTag ]
 		           ifFalse: [ aTag name ].
@@ -550,7 +551,8 @@ RPackage >> moveClass: aClass toTag: aTag [
 				reject: [ :protocol | protocol isExtensionProtocol ]
 				thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ] ].
 
-	SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag)
+	"If the tag is undefined, this means we are adding the class. In that case we do not want to announce a recategorization since there is already a ClassAddition announcement raised."
+	oldTag isUndefined ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
 { #category : 'accessing' }

@@ -49,6 +49,12 @@ ClassDescription >> package: aPackage [
 ]
 
 { #category : '*RPackage-Core' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+]
+
+{ #category : '*RPackage-Core' }
 ClassDescription >> packageFromOrganizer: anOrganizer [
 	"returns the package that defines this class"
 	^ anOrganizer packageOf: self

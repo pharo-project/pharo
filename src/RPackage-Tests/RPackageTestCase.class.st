@@ -32,7 +32,7 @@ RPackageTestCase >> ensurePackage: aName [
 { #category : 'utilities' }
 RPackageTestCase >> ensureTagYinX [
 
-	^ self organizer ensureTagNamed: #YYYY inPackageNamed: #XXXXX
+	^ self organizer ensureTag: #YYYY inPackage: #XXXXX
 ]
 
 { #category : 'utilities' }

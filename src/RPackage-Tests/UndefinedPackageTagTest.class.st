@@ -22,7 +22,7 @@ UndefinedPackageTagTest >> testIsUndefined [
 
 	self assert: self undefinedTag isUndefined.
 
-	self deny: (self organizer ensureTagNamed: #Tag inPackageNamed: #Package1) isUndefined
+	self deny: (self organizer ensureTag: #Tag inPackage: #Package1) isUndefined
 ]
 
 { #category : 'tests' }
