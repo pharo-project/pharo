@@ -542,7 +542,8 @@ RPackage >> moveClass: aClass toTag: aTag [
 
 		class protocols reject: [ :protocol | protocol isExtensionProtocol ] thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ].
 
-	SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag)
+	"If the tag is undefined, this means we are adding the class. In that case we do not want to announce a recategorization since there is already a ClassAddition announcement raised."
+	oldTag isUndefined ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
 { #category : 'accessing' }
