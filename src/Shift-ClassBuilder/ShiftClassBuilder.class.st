@@ -507,13 +507,12 @@ ShiftClassBuilder >> sharedPools [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> sharedPools: aString [
-	self layoutDefinition sharedPools: ((aString substrings: ' ') collect: [:e | e asSymbol])
-]
+ShiftClassBuilder >> sharedPools: anObject [
+	"The paramter can be either a collection of symbols or a string that should be converted into a collection of symbols."
 
-{ #category : 'accessing' }
-ShiftClassBuilder >> sharedPoolsCollectionOfSymbols: aCol [
-	self layoutDefinition sharedPools: aCol
+	self layoutDefinition sharedPools: (anObject isString
+			 ifTrue: [ (anObject substrings: ' ') collect: [ :e | e asSymbol ] ]
+			 ifFalse: [ anObject ])
 ]
 
 { #category : 'accessing' }

@@ -36,7 +36,6 @@ Class {
 	#instVars : [
 		'shiftClassBuilder',
 		'slotsToBuild',
-		'tagToBuild',
 		'uses',
 		'nameToBuild',
 		'classSlotsToBuild',
@@ -46,7 +45,8 @@ Class {
 		'superclassToBuild',
 		'layout',
 		'sharedPools',
-		'sharedVariables'
+		'sharedVariables',
+		'tag'
 	],
 	#category : 'FluidClassBuilder-Base',
 	#package : 'FluidClassBuilder',
@@ -115,7 +115,7 @@ FluidBuilder >> fillInstanceSideFromClass: aClass [
 	uses := aClass traitComposition.
 	self package: aClass package name.
 
-	aClass packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ self tag: tag name ] ].
+	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
 
 	self superclass: aClass superclass.
 
@@ -133,7 +133,7 @@ FluidBuilder >> fillShiftClassBuilder [
 		                     slots: slotsToBuild;
 		                     traitComposition: uses;
 		                     package: package;
-		                     tag: tagToBuild;
+		                     tag: self tag;
 		                     classSlots: classSlotsToBuild;
 		                     classTraitComposition: classTraitsToBuild;
 		                     yourself.
@@ -148,7 +148,7 @@ FluidBuilder >> fillShiftClassBuilder [
 			shiftClassBuilder
 				superclass: superclassToBuild;
 				sharedVariables: sharedVariables;
-				sharedPoolsCollectionOfSymbols: sharedPools;
+				sharedPools: sharedPools;
 				layoutClass: layout ].
 
 	^ shiftClassBuilder
@@ -222,16 +222,16 @@ FluidBuilder >> package: aString [
 	package := aString
 ]
 
+{ #category : 'accessing' }
+FluidBuilder >> sharedPools [
+
+	^ sharedPools
+]
+
 { #category : 'API' }
 FluidBuilder >> sharedPools: aString [
 
 	sharedPools := aString
-]
-
-{ #category : 'accessing' }
-FluidBuilder >> sharedPoolsToBuild [
-
-	^ sharedPools
 ]
 
 { #category : 'API' }
@@ -286,20 +286,14 @@ FluidBuilder >> superclassToBuild: aClass [
 { #category : 'accessing' }
 FluidBuilder >> tag [
 
-	^ tagToBuild
+	^ tag
 ]
 
 { #category : 'API' }
 FluidBuilder >> tag: aString [
 
 	<reflection: 'Class structural modification - Fluid Builder class creation'>
-	tagToBuild := aString
-]
-
-{ #category : 'accessing' }
-FluidBuilder >> tagToBuild [
-
-	^ tagToBuild
+	tag := aString
 ]
 
 { #category : 'API' }

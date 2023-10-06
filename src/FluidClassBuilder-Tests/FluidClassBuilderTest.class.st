@@ -87,7 +87,7 @@ FluidClassBuilderTest >> testBuilderSharedPools [
 		sharedPools: 'TextConstants';
 		package: 'Text-Core'.
 
-	self assert: builder sharedPoolsToBuild equals: 'TextConstants'
+	self assert: builder sharedPools equals: 'TextConstants'
 ]
 
 { #category : 'tests - gathering' }
@@ -149,7 +149,7 @@ FluidClassBuilderTest >> testBuilderWithTag [
 
 	builder tag: 'Foo'.
 
-	self assert: builder tagToBuild equals: 'Foo'
+	self assert: builder tag equals: 'Foo'
 ]
 
 { #category : 'tests - class creation' }
@@ -178,10 +178,10 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSide [
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
 	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
-	self assert: clasBuilder sharedPoolsToBuild equals: instBuilder sharedPoolsToBuild.
+	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
 	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
-	self assert: clasBuilder tagToBuild equals: instBuilder tagToBuild.
+	self assert: clasBuilder tag equals: instBuilder tag.
 	self assert: clasBuilder traitsToBuild name equals: TViewModelMock name.
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 
@@ -206,10 +206,10 @@ FluidClassBuilderTest >> testChevronIsWorkingOnClassSideOnEmpty [
 	self assert: clasBuilder superclassToBuild equals: instBuilder superclassToBuild.
 	self assert: clasBuilder layoutToBuild equals: instBuilder layoutToBuild.
 	self assert: clasBuilder sharedVariablesToBuild equals: instBuilder sharedVariablesToBuild.
-	self assert: clasBuilder sharedPoolsToBuild equals: instBuilder sharedPoolsToBuild.
+	self assert: clasBuilder sharedPools equals: instBuilder sharedPools.
 
 	self assert: clasBuilder slotsToBuild equals: instBuilder slotsToBuild.
-	self assert: clasBuilder tagToBuild equals: instBuilder tagToBuild.
+	self assert: clasBuilder tag equals: instBuilder tag.
 	self assert: clasBuilder traitsToBuild equals: instBuilder traitsToBuild.
 	self assert: clasBuilder nameToBuild equals: instBuilder nameToBuild.
 
