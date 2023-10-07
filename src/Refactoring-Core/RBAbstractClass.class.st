@@ -257,10 +257,12 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 
 { #category : 'testing' }
 RBAbstractClass >> definesClassVariable: aSymbol [
-	self realClass isTrait ifTrue: [^false].
-	(self directlyDefinesClassVariable: aSymbol) ifTrue: [^true].
-	^self superclass notNil
-		and: [self superclass definesClassVariable: aSymbol]
+	"Returns whether the class or its superclasses define a shared variable named: aSymbol"
+
+	self realClass isTrait ifTrue: [ ^ false ].
+	(self directlyDefinesClassVariable: aSymbol) ifTrue: [ ^ true ].
+	^ self superclass notNil
+		and: [ self superclass definesClassVariable: aSymbol ]
 ]
 
 { #category : 'testing' }
