@@ -1,5 +1,8 @@
+"
+I'm an interaction class in charge of stirring the application or not of removing shared variables.
+"
 Class {
-	#name : 'RBRemoveSharedVariablesDriver2',
+	#name : 'RBRemoveSharedVariablesDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
@@ -11,13 +14,13 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver2 >> applyChanges [
+RBRemoveSharedVariablesDriver >> applyChanges [
 
 	self openPreviewWithChanges: refactoring privateTransform
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver2 >> browseSharedVariableReferences [
+RBRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 
 	StMessageBrowserPresenter
 		browse: refactoring violators
@@ -25,18 +28,18 @@ RBRemoveSharedVariablesDriver2 >> browseSharedVariableReferences [
 ]
 
 { #category : 'resources' }
-RBRemoveSharedVariablesDriver2 >> configureRefactoring [
+RBRemoveSharedVariablesDriver >> configureRefactoring [
 
 	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
 							refactorings: (variables collect: [:each | 
-									RBRemoveSharedVariableRefactoring2 model: model remove: each from: class]);
+									RBRemoveSharedVariableRefactoring model: model remove: each from: class]);
 								yourself.
 	refactoring prepareForInteractiveMode
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver2 >> handleBreakingChanges [
+RBRemoveSharedVariablesDriver >> handleBreakingChanges [
 
 	| select items |
 	items := OrderedCollection new.
@@ -55,7 +58,7 @@ RBRemoveSharedVariablesDriver2 >> handleBreakingChanges [
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver2 >> runRefactoring [
+RBRemoveSharedVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
@@ -68,7 +71,7 @@ RBRemoveSharedVariablesDriver2 >> runRefactoring [
 ]
 
 { #category : 'initialization' }
-RBRemoveSharedVariablesDriver2 >> scopes: refactoringScopes variables: aCollection for: aClass [
+RBRemoveSharedVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.

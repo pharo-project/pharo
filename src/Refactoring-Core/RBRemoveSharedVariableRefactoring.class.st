@@ -34,7 +34,7 @@ RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 	
 	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
 		(RBSharedVariableHasReferences new 
-			hierarchyOf: class referencesInstanceVariable: variableName) not ]
+			hierarchyOf: class referencesSharedVariable: variableName) not ]
 	
 ]
 
