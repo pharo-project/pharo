@@ -355,7 +355,15 @@ Process >> isActiveProcess [
 	^ self == Processor activeProcess
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
+Process >> isBlocked [
+	"Answer true if blocked on a condition variable.
+	A process is blocked if it is waiting on some list
+	(e.g. a Semaphore), other than the runnable process lists."
+	myList ifNotNil: [ :list | ^list class ~~ ProcessList ].
+	^false
+]
+
 Process >> isSuspended [
 	"Answer true if I was never scheduled yet (new process, never been sent #resume) or paused (was sent #suspend)"
 	self isActiveProcess ifTrue: [ ^false ].

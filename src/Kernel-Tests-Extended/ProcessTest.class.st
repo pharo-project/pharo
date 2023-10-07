@@ -47,7 +47,36 @@ ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
 	self assert: processFromProcessor identicalTo: effectiveProcess
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
+ProcessTest >> testBlockedProcessState [
+
+	| semaphore mutex p |
+	semaphore := Semaphore new.
+	self deny: Processor activeProcess isBlocked.
+	self deny: ([Processor activeProcess suspend] forkAt: Processor activePriority + 1) isBlocked.
+	self deny: ([Processor activeProcess terminate] forkAt: Processor activePriority + 1) isBlocked.
+	self deny: ([semaphore wait] forkAt: Processor activePriority) isBlocked.
+	self deny: (([semaphore wait] forkAt: Processor activePriority) suspend; yourself) isBlocked.
+	self deny: (([semaphore wait] forkAt: Processor activePriority) suspend; resume) isBlocked.
+	self deny: ([semaphore wait] forkAt: Processor activePriority) terminate isBlocked.
+	self assert: ([semaphore wait] forkAt: Processor activePriority + 1) isBlocked.
+	self assert: ([semaphore wait] forkAt: Processor activePriority + 1) suspendingList == semaphore.
+	self deny: (([semaphore wait] forkAt: Processor activePriority + 1) suspend; yourself) isBlocked.
+	self deny: (([semaphore wait] forkAt: Processor activePriority + 1) suspend; resume) isBlocked.
+	self deny: ([semaphore wait] forkAt: Processor activePriority + 1) terminate isBlocked.
+
+	mutex := Mutex new.
+	[mutex critical: [semaphore wait]] forkAt: Processor activePriority + 1.
+	p := [mutex critical: []] forkAt: Processor activePriority + 1.
+	self assert: p isBlocked.
+	self assert: p suspendingList == (mutex instVarNamed: #semaphore).
+	
+	"tear down"
+	[semaphore isEmpty] whileFalse: [semaphore signal]
+
+]
+
+{ #category : #tests }
 ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	"test whether #priority: preempts active process to allow higher priority processes run;
 	#priority behavior reflects the processPreemptionYields setting - for false the active

@@ -630,11 +630,11 @@ MorphicUIManager >> showWaitCursorWhile: aBlock [
 { #category : 'ui process' }
 MorphicUIManager >> spawnNewProcess [
 
-	UIProcess := [ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess priority:
-		             Processor userSchedulingPriority.
-	UIProcess
-		name: 'Morphic UI Process';
-		resume
+	UIProcess := [
+		MorphicRenderLoop new doOneCycleWhile: [ self uiProcess isActiveProcess ]
+	] newProcess priority: Processor userSchedulingPriority.
+	UIProcess name: 'Morphic UI Process'.
+	UIProcess resume
 ]
 
 { #category : 'ui requests' }

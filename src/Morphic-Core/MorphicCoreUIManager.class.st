@@ -67,7 +67,7 @@ MorphicCoreUIManager >> resumeUIProcess: aProcess [
 MorphicCoreUIManager >> spawnNewProcess [
 
   UIProcess := [
-	MorphicRenderLoop new doOneCycleWhile: [ true ]
+	MorphicRenderLoop new doOneCycleWhile: [ self uiProcess isActiveProcess ]
   ] newProcess priority: Processor userSchedulingPriority.
   UIProcess name: 'Morphic UI Process'.
   UIProcess resume
