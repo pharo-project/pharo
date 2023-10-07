@@ -2,12 +2,14 @@
 SUnit test case for import of chunk format
 "
 Class {
-	#name : #ChunkImportTestCase,
-	#superclass : #TestCase,
-	#category : #'CodeImport-Tests-Chunks'
+	#name : 'ChunkImportTestCase',
+	#superclass : 'TestCase',
+	#category : 'CodeImport-Tests-Chunks',
+	#package : 'CodeImport-Tests',
+	#tag : 'Chunks'
 }
 
-{ #category : #auxiliar }
+{ #category : 'auxiliar' }
 ChunkImportTestCase >> importAClass [
 
 	^CodeImporter evaluateString: 'Object subclass: #CodeImportTestCaseTestClass
@@ -17,7 +19,7 @@ ChunkImportTestCase >> importAClass [
 			category: ''CodeImport-Tests-Garbage''!'
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testExportAMethodWithLangTag [
 	|  stream chunkWriteStream |
 	stream := String new writeStream.
@@ -121,7 +123,7 @@ ChunkImportTestCase >> testExportAMethodWithLangTag [
 		yourself!'
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClass [
 	| class |
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
@@ -135,13 +137,15 @@ ChunkImportTestCase >> testImportAClass [
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClassCategory [
+
 	| class classOrganizationString chunk |
 	classOrganizationString := '(#testing testImportAMethod testImportAClass)
 (#auxiliar importAClass)'.
 	chunk := '!{1} reorganize!'.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		[
 		class := self importAClass.
 
 		"we write the methods we will categorize"
@@ -149,15 +153,13 @@ ChunkImportTestCase >> testImportAClassCategory [
 		class compileSilently: 'testImportAMethod'.
 		class compileSilently: 'importAClass'.
 
-		CodeImporter evaluateString: (chunk format: { class name asString }), classOrganizationString.
+		CodeImporter evaluateString: (chunk format: { class name asString }) , classOrganizationString.
 		"we do not care about the order of the output just that all the elements are present"
-		self
-			assertCollection: (classOrganizationString trimBoth findTokens: String cr, ' ()') sorted
-			equals: (class organization stringForFileOut findTokens: String cr, ' ()') sorted.
-	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+		self assert: (((String streamContents: [ :s | class fileOutProtocolsOn: s ]) findTokens: String cr , ' ()') includesAll:
+				 (classOrganizationString trimBoth findTokens: String cr , ' ()')) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClassComment [
 	| class comment |
 	comment := 'I''m a nice comment, treat me well :).'.
@@ -168,7 +170,7 @@ ChunkImportTestCase >> testImportAClassComment [
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
 	| class comment commentToWrite |
 	comment := 'I''m a nice comment!, treat me well :).'.
@@ -180,7 +182,7 @@ ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethod [
 	| class |
 	SystemAnnouncer uniqueInstance
@@ -195,7 +197,7 @@ ChunkImportTestCase >> testImportAMethod [
 				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethodWithLangTag [
 	| class |
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
@@ -254,7 +256,7 @@ ChunkImportTestCase >> testImportAMethodWithLangTag [
 				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethodWithNoTimestamp [
 	| class |
 	SystemAnnouncer uniqueInstance
@@ -269,27 +271,29 @@ ChunkImportTestCase >> testImportAMethodWithNoTimestamp [
 				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethodWithSpacesInItsCategory [
+
 	| class |
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [
-			[
-			class := self importAClass.
-			CodeImporter
-				evaluateString:
-					('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
-	^true' format: {(class name asString)}).
-			self assert: (class >> #someMethod) category equals: 'some protocol' ]
-				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		[
+		class := self importAClass.
+		CodeImporter evaluateString:
+			('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	^true' format: { class name asString }).
+	
+		self
+			assert: (class >> #someMethod) protocolName
+			equals: 'some protocol' ] ensure: [
+			class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-methods' }
+{ #category : 'importing-methods' }
 ChunkImportTestCase >> testImportFromReadStream [
 	self assert: 4 equals: (CodeImporter evaluateReadStream: '2+2!' readStream)
 ]
 
-{ #category : #'importing-methods' }
+{ #category : 'importing-methods' }
 ChunkImportTestCase >> testImportString [
 	self assert: 4 equals: (CodeImporter evaluateString: '2+2!')
 ]

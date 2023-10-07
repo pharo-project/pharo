@@ -1,6 +1,6 @@
-Extension { #name : #Metaclass }
+Extension { #name : 'Metaclass' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 Metaclass >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ RGMetaclass named: self name parent: anRGEnvironment

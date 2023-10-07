@@ -2,31 +2,34 @@
 SUnit tests for Process termination
 "
 Class {
-	#name : #ProcessTerminateBugTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Processes'
+	#name : 'ProcessTerminateBugTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testSchedulerTermination [
+
 	| process sema gotHere sema2 |
 	gotHere := false.
 	sema := Semaphore new.
 	sema2 := Semaphore new.
 	process := [
-		sema signal.
-		sema2 wait.
-		"will be suspended here"
-		gotHere := true. "e.g., we must *never* get here" ] forkAt: Processor activeProcess priority.
+	           sema signal.
+	           sema2 wait.
+	           "will be suspended here"
+	           gotHere := true "e.g., we must *never* get here" ] forkAt: Processor activeProcess priority.
 	sema wait. "until process gets scheduled"
- 	process terminate.
+	process terminate.
 	sema2 signal.
 	Processor yield. "will give process a chance to continue and
 horribly screw up"
-	self assert: gotHere not
+	self deny: gotHere
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB1 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway 	through their execution should be completed."
@@ -55,7 +58,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB1 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB2 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway 	through their execution should be completed."
@@ -85,7 +88,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB2 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR1 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway through their execution should be completed."
@@ -113,7 +116,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR1 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR2 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway 	through their execution should be completed."
@@ -142,7 +145,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR2 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS1 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway through their execution should be completed."
@@ -169,7 +172,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS1 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS2 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway through their execution should be completed."
@@ -283,7 +286,7 @@ ProcessTerminateBugTest >> testTerminationDuringUnwind [
 	self assert: unwindFinished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testUnwindFromActiveProcess [
 	| sema |
 	sema := Semaphore forMutualExclusion.
@@ -295,7 +298,7 @@ ProcessTerminateBugTest >> testUnwindFromActiveProcess [
 	self assert: sema isSignaled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testUnwindFromForeignProcess [
 
 	| sema process |

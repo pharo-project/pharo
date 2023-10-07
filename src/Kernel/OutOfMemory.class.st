@@ -3,12 +3,14 @@ OutOfMemory is signaled when an allocation fails due to not having enough memory
 Originally suggested by A. Raab.
 "
 Class {
-	#name : #OutOfMemory,
-	#superclass : #Error,
-	#category : #'Kernel-Exceptions'
+	#name : 'OutOfMemory',
+	#superclass : 'Error',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OutOfMemory >> isResumable [
 
 	^ true

@@ -1,19 +1,20 @@
 Class {
-	#name : #CmCommandTest,
-	#superclass : #TestCase,
+	#name : 'CmCommandTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'command'
 	],
-	#category : #'Commander2-Tests'
+	#category : 'Commander2-Tests',
+	#package : 'Commander2-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CmCommandTest >> setUp [
 	super setUp.
 	command := CmFakeCommand new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmCommandTest >> testCanBeExecuted [
 	command context: 0. "Need to set context before because the command expects it."
 	self deny: command canBeExecuted.
@@ -22,7 +23,7 @@ CmCommandTest >> testCanBeExecuted [
 	self assert: command canBeExecuted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmCommandTest >> testContext [
 	self assert: command context isNil.
 
@@ -35,26 +36,26 @@ CmCommandTest >> testContext [
 	self assert: command context equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmCommandTest >> testDescription [
 	self assert: command description equals: 'I am a fake command for testing purposes.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmCommandTest >> testDynamicDescription [
 	command context: 42.
 
 	self assert: command dynamicDescription equals: command description , ' 42'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmCommandTest >> testDynamicName [
 	command context: 42.
 
 	self assert: command dynamicName equals: command name , ' 42'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmCommandTest >> testHasContext [
 	self deny: command hasContext.
 
@@ -67,7 +68,7 @@ CmCommandTest >> testHasContext [
 	self assert: command hasContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmCommandTest >> testName [
 	self assert: command name equals: 'Fake command'
 ]

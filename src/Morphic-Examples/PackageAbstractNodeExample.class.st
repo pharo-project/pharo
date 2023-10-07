@@ -2,39 +2,36 @@
 Example for abstract package nodes
 "
 Class {
-	#name : #PackageAbstractNodeExample,
-	#superclass : #MorphTreeNodeModel,
+	#name : 'PackageAbstractNodeExample',
+	#superclass : 'MorphTreeNodeModel',
 	#instVars : [
 		'contents'
 	],
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> browseItem [
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PackageAbstractNodeExample >> contents [
 	^ contents ifNil: [contents := super contents]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> doubleClick [
 	self browseItem
 ]
 
-{ #category : #accessing }
-PackageAbstractNodeExample >> exploreItem [
-	self inspect
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> inspectItem [
 	self inspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
@@ -42,12 +39,10 @@ PackageAbstractNodeExample >> keyStroke: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Expand all'
@@ -60,9 +55,5 @@ PackageAbstractNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem
+		selector: #inspectItem
 ]

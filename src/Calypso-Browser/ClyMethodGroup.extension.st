@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodGroup }
+Extension { #name : 'ClyMethodGroup' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 ClyMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	super decorateTableCell: anItemCellMorph of: groupItem.
 

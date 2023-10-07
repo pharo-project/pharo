@@ -1,6 +1,6 @@
-Extension { #name : #UndefinedObject }
+Extension { #name : 'UndefinedObject' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 UndefinedObject >> tfPointerAddress [
 
 	^ ExternalAddress null

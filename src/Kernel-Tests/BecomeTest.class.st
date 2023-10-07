@@ -1,10 +1,12 @@
 Class {
-	#name : #BecomeTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'BecomeTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecome [
 	"Test the two way become. Note. we cannot use string literals for this test"
 	| a b c d |
@@ -23,7 +25,7 @@ BecomeTest >> testBecome [
 		assert: d equals: 'ab'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecomeForward [
 	"Test the forward become."
 	| a b c d |
@@ -42,7 +44,7 @@ BecomeTest >> testBecomeForward [
 		assert: d equals: 'cd'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecomeForwardCopyIdentityHash [
 	"Check that
 		1. the argument to becomeForward: IS modified to have the sender's identity hash.
@@ -61,7 +63,7 @@ BecomeTest >> testBecomeForwardCopyIdentityHash [
 		assert: b identityHash equals: identityHashOfA
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecomeForwardDontCopyIdentityHash [
 	"Check that
 		1. the argument to becomeForward: is NOT modified to have the receiver's identity hash.
@@ -80,7 +82,7 @@ BecomeTest >> testBecomeForwardDontCopyIdentityHash [
 		assert: b identityHash equals: identityHashOfB
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecomeForwardHash [
 
 	| a b c hb |
@@ -98,7 +100,7 @@ BecomeTest >> testBecomeForwardHash [
 		assert: c hash equals: hb
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecomeForwardIdentityHash [
 	"Check that
 		1. the argument to becomeForward: is modified to have the receiver's identity hash.
@@ -117,7 +119,7 @@ BecomeTest >> testBecomeForwardIdentityHash [
 		assert: b identityHash equals: ha
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecomeHash [
 
 	| a b c d ha hb |
@@ -138,7 +140,7 @@ BecomeTest >> testBecomeHash [
 		assert: d hash equals: ha
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BecomeTest >> testBecomeIdentityHash [
 	"Note. The identity hash of both objects seems to change after the become:"
 

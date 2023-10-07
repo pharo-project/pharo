@@ -1,1 +1,1 @@
-Package { #name : #ProfilerUI }
+Package { #name : 'ProfilerUI' }

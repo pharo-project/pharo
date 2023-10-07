@@ -28,8 +28,8 @@ specialWidth
 
 "
 Class {
-	#name : #CharacterBlockScanner,
-	#superclass : #CharacterScanner,
+	#name : 'CharacterBlockScanner',
+	#superclass : 'CharacterScanner',
 	#instVars : [
 		'characterPoint',
 		'characterIndex',
@@ -37,10 +37,12 @@ Class {
 		'specialWidth',
 		'lastCharacterWidth'
 	],
-	#category : #'Text-Scanning-Base'
+	#category : 'Text-Scanning-Base',
+	#package : 'Text-Scanning',
+	#tag : 'Base'
 }
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textLine [
 	"This method is the Morphic characterBlock finder.  It combines
 	MVC's characterBlockAtPoint:, -ForIndex:, and buildCharacterBlockIn:"
@@ -89,7 +91,7 @@ CharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textLine
 				extent: lastCharacterWidth @ line lineHeight) textLine: line ]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterBlockScanner >> cr [
 	"Answer a CharacterBlock that specifies the current location of the mouse
 	relative to a carriage return stop condition that has just been
@@ -114,7 +116,7 @@ CharacterBlockScanner >> cr [
 		^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterBlockScanner >> crossedX [
 	"Text display has wrapping. The scanner just found a character past the x
 	location of the cursor. We know that the cursor is pointing at a character
@@ -135,7 +137,7 @@ CharacterBlockScanner >> crossedX [
 	^ true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterBlockScanner >> endOfRun [
 	"Before arriving at the cursor location, the selection has encountered an
 	end of run. Answer false if the selection continues, true otherwise. Set
@@ -195,7 +197,7 @@ CharacterBlockScanner >> endOfRun [
 	^true
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterBlockScanner >> indentationLevel: anInteger [
 	super indentationLevel: anInteger.
 	nextLeftMargin := leftMargin.
@@ -205,7 +207,7 @@ CharacterBlockScanner >> indentationLevel: anInteger [
 					rightMargin: rightMargin]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterBlockScanner >> paddedSpace [
 	"When the line is justified, the spaces will not be the same as the font's
 	space character. A padding of extra space must be considered in trying
@@ -225,7 +227,7 @@ CharacterBlockScanner >> paddedSpace [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterBlockScanner >> placeEmbeddedObject: anchoredMorph [
 	"Workaround: The following should really use #textAnchorType"
 	| w |
@@ -237,7 +239,7 @@ CharacterBlockScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterBlockScanner >> retrieveLastCharacterWidth [
 	| lastCharacter |
 	lastIndex > text size ifTrue: [^lastCharacterWidth := 0].
@@ -249,13 +251,19 @@ CharacterBlockScanner >> retrieveLastCharacterWidth [
 	^lastCharacterWidth
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'accessing' }
+CharacterBlockScanner >> scale [
+
+	^ 1
+]
+
+{ #category : 'stop conditions' }
 CharacterBlockScanner >> setFont [
 	specialWidth := nil.
 	super setFont
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterBlockScanner >> tab [
 	| nextDestX |
 	nextDestX := self plainTab.

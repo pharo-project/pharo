@@ -5,19 +5,21 @@ I am annotated by decoration strategy in context of selected method.
 So my subclasses should just implement decoration logic
 "
 Class {
-	#name : #ClyMethodTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyMethodTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyMethodTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 
 	^ClyTableDecorationStrategyAnnotation for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodTableDecorator class >> isAbstract [
 	^self = ClyMethodTableDecorator
 ]

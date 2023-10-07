@@ -4,12 +4,14 @@ I represent the declaration of a class organization in a file.  My contents is t
 Sending me the message #import makes me install the class organization I carry into the class.
 "
 Class {
-	#name : #ClassOrganizationChunk,
-	#superclass : #BehaviorOwnedChunk,
-	#category : #'CodeImport-Chunks'
+	#name : 'ClassOrganizationChunk',
+	#superclass : 'BehaviorOwnedChunk',
+	#category : 'CodeImport-Chunks',
+	#package : 'CodeImport',
+	#tag : 'Chunks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassOrganizationChunk class >> contents: someContents behaviorName: behaviorName isMeta: aBoolean [
 	^self new
 		contents: someContents;
@@ -18,7 +20,7 @@ ClassOrganizationChunk class >> contents: someContents behaviorName: behaviorNam
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassOrganizationChunk class >> contents: someContents organizer: aClassOrganizer [
 	^self new
 			contents: someContents;
@@ -26,27 +28,36 @@ ClassOrganizationChunk class >> contents: someContents organizer: aClassOrganize
 			yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ClassOrganizationChunk >> accept: aVisitor [
 
 	^ aVisitor visitClassOrganizationChunk: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassOrganizationChunk >> description [
 
 	^ 'Organization (', behaviorName, ')'
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 ClassOrganizationChunk >> importFor: aRequestor logSource: logSource [
-	(self existsBehavior)
-		ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString } ) ].
 
-	self targetClass organization changeFromString: contents
+	| targetClass protocolSpecs |
+	self existsBehavior ifFalse: [ self error: ('Cannot change organization of unexistent behavior {1}' format: { behaviorName asString }) ].
+
+	targetClass := self targetClass.
+	protocolSpecs := contents parseLiterals.
+
+	targetClass resetProtocols.
+
+	"If nothing was scanned and I had no elements before, then default me"
+	(protocolSpecs isEmpty and: [ targetClass protocols isEmpty ]) ifTrue: [ ^ self ].
+
+	protocolSpecs do: [ :spec | (targetClass addProtocol: (Protocol named: spec first)) methodSelectors: spec allButFirst asSet ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassOrganizationChunk >> isClassOrganizationDeclaration [
 
 	^ true

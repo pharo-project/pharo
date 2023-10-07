@@ -70,17 +70,19 @@ In past Halt was a normal exception (not a kind of UnhandledException) and it wa
 But it such design did not allow to debug the unhandled logic itself. For example halt in UnhandledError>>#defaultAction leaded to infinite recursion
 "
 Class {
-	#name : #Halt,
-	#superclass : #UnhandledException,
-	#category : #'Kernel-Exceptions'
+	#name : 'Halt',
+	#superclass : 'UnhandledException',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Halt class >> captureIfSignalledWhenStepping [
 	^self == Halt
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> fromCount: anInteger [
 	"Always halt after a count has been reached"
 
@@ -89,7 +91,7 @@ Halt class >> fromCount: anInteger [
 		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) >= anInteger ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Halt class >> haltIfBlock: aBlock withCallingObjectFrom: haltSenderContext [
 
 	(aBlock cull: haltSenderContext receiver)
@@ -97,7 +99,7 @@ Halt class >> haltIfBlock: aBlock withCallingObjectFrom: haltSenderContext [
 		ifFalse: [^ self]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Halt class >> haltIfCallChain: haltSenderContext contains: aSelector [
 	| cntxt |
 	cntxt := haltSenderContext.
@@ -106,7 +108,7 @@ Halt class >> haltIfCallChain: haltSenderContext contains: aSelector [
 		cntxt := cntxt sender ]
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> if: condition [
 	<debuggerCompleteToSender>
 	"This is the typical message to use for inserting breakpoints during
@@ -125,34 +127,34 @@ Halt class >> if: condition [
 	]
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> ifNotTest [
 	<debuggerCompleteToSender>
 	"Halt if execution was not started by a test"
 	CurrentExecutionEnvironment value isTest ifFalse: [self signalIn: thisContext home sender ]
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> ifTest [
 	<debuggerCompleteToSender>
 	"Halt if execution was started by a test"
 	CurrentExecutionEnvironment value isTest ifTrue: [self signalIn: thisContext home sender ]
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> now [
 	<debuggerCompleteToSender>
 	self signal
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> now: aString [
 	"set a breakpoint with some explanation"
 	<debuggerCompleteToSender>
 	self signal: aString
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> onCount: anInteger [
 	"Halts once when a count is reached"
 
@@ -161,7 +163,7 @@ Halt class >> onCount: anInteger [
 		onCountWithBehavior: [ :node | (node propertyAt: #haltCount) = anInteger ]
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> onCountWithBehavior: behaviorBlock [
 	"Halt on the anInteger-th time through, as defined in the behavior block passed as parameter.
 	First parameter of the behaviorBlock is the AST node corresponding to the halt call."
@@ -179,7 +181,7 @@ Halt class >> onCountWithBehavior: behaviorBlock [
 		ifTrue: [ ^ self signal ]
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Halt class >> once [
 	"Stop once and only once the execution of the method containing the expression Halt once. If you need to get it stops another time after the first stop, use Halt resetOnce."
 
@@ -206,12 +208,12 @@ Halt class >> once [
 	]
 ]
 
-{ #category : #'once-reset' }
+{ #category : 'once-reset' }
 Halt class >> resetHaltOnCount [
 	 #haltOnCount: senders do: [ :method | method ast removeProperty: #haltCount ifAbsent: [  ] ]
 ]
 
-{ #category : #'once-reset' }
+{ #category : 'once-reset' }
 Halt class >> resetOnce [
 	"Once stops an expression once and only once. Halt resetOnce will rearm and make sure that the execution of a method containing Halt once will stop another time."
 	 (#haltOnce senders, #inspectOnce senders) do: [ :method |
@@ -219,7 +221,7 @@ Halt class >> resetOnce [
 			sendNode removeProperty: #Once ifAbsent: [  ]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Halt >> completeProcess: aProcess with: aContext [
 	^ aContext methodNode
 		pragmaNamed: #debuggerCompleteToSender
@@ -227,7 +229,7 @@ Halt >> completeProcess: aProcess with: aContext [
 		ifAbsent: [ super completeProcess: aProcess with: aContext ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Halt >> exception [
 	"In the context management, it might happen that we get an Halt instead of an UnhandledError. The context will ask the exception. In case we have an halt, we should return self."
 

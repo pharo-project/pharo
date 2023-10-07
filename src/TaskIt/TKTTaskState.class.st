@@ -2,30 +2,32 @@
 I represent the state of a scheduled task. A task can be either be ready to be run,  cancelled, running or finished.
 "
 Class {
-	#name : #TKTTaskState,
-	#superclass : #Object,
-	#category : #'TaskIt-Kernel'
+	#name : 'TKTTaskState',
+	#superclass : 'Object',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #cancelling }
+{ #category : 'cancelling' }
 TKTTaskState >> cancelTaskExecution: aTaskExecution reason: aReason [
 
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTTaskState >> isFinished [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTTaskState >> isRunning [
 
 	^ false
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TKTTaskState >> performTaskExecution: aTaskExecution [
 
 	self subclassResponsibility

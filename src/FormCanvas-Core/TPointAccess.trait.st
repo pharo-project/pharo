@@ -3,17 +3,19 @@ Contains methods for accessing points stored in variable word classes.
 Initially used by PointArray & ShortPointArray
 "
 Trait {
-	#name : #TPointAccess,
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#name : 'TPointAccess',
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TPointAccess >> at: index [
 
 	^(super at: index * 2 - 1) @ (super at: index * 2)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TPointAccess >> at: index put: aPoint [
 
 	super at: index * 2 - 1 put: aPoint x asInteger.
@@ -21,7 +23,7 @@ TPointAccess >> at: index put: aPoint [
 	^aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TPointAccess >> bounds [
 	| min max |
 	min := max := self at: 1.
@@ -31,7 +33,7 @@ TPointAccess >> bounds [
 	^min corner: max
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TPointAccess >> defaultElement [
 
 	"Return the default element of the receiver"

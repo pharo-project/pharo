@@ -6,26 +6,28 @@ MCVersionReader could be a subclass of me for reading sources containing additio
 I'm useless and can be safely removed. I'm only referenced in MCMczReader>>extractDefinitionsFrom: and it can be replaced by MCReader.
 "
 Class {
-	#name : #MCSnapshotReader,
-	#superclass : #MCReader,
+	#name : 'MCSnapshotReader',
+	#superclass : 'MCReader',
 	#instVars : [
 		'definitions'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotReader class >> snapshotFromStream: aStream [
 	^ (self on: aStream) snapshot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotReader >> definitions [
 	definitions ifNil: [self loadDefinitions].
 	^ definitions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotReader >> snapshot [
 	^ MCSnapshot fromDefinitions: self definitions
 ]

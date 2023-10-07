@@ -7,46 +7,48 @@ Internal Representation and Key Implementation Points.
 	targetClass:		<Class>
 "
 Class {
-	#name : #SycMoveMethodsToClassCommand,
-	#superclass : #SycMethodCommand,
+	#name : 'SycMoveMethodsToClassCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMoveMethodsToClassCommand class >> methods: methods class: targetClass [
 	^(self for: methods)
 		targetClass: targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToClassCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToClassCommand >> defaultMenuItemName [
 	^'Move to another class'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToClassCommand >> execute [
+
 	methods
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
 		thenDo: [ :each | each execute ].
-	methods do: [ :each | each origin organization removeEmptyCategories ]
+	methods do: [ :each | each origin removeEmptyProtocols ]
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 SycMoveMethodsToClassCommand >> prepareExecutionInDropContext: aToolContext [
 	super prepareExecutionInDropContext: aToolContext.
 	targetClass := aToolContext lastSelectedClass.
 	targetClass := aToolContext currentMetaLevelOf: targetClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
@@ -54,12 +56,12 @@ SycMoveMethodsToClassCommand >> prepareFullExecutionInContext: aToolContext [
 	targetClass := aToolContext currentMetaLevelOf: targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToClassCommand >> targetClass [
 	^ targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToClassCommand >> targetClass: anObject [
 	targetClass := anObject
 ]

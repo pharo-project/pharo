@@ -1,10 +1,12 @@
 Class {
-	#name : #RBSplitClassParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBSplitClassParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBSplitClassRefactoring };
@@ -12,36 +14,47 @@ RBSplitClassParametrizedTest class >> testParameters [
 		"yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSplitClassParametrizedTest >> constructor [
 	^ #class:instanceVariables:newClassName:referenceVariableName:
 ]
 
-{ #category : #'failure tests' }
-RBSplitClassParametrizedTest >> testInvalidInstanceVariableName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBBasicLintRuleTestData . #(#inexistentVar #classBlock) . #Object . #blocks })
+{ #category : 'failure tests' }
+RBSplitClassParametrizedTest >> testFailureInvalidInstanceVariableName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBBasicLintRuleTestData.
+				 #( #inexistentVar #classBlock ).
+				 #Object.
+				 #blocks })
 ]
 
-{ #category : #'failure tests' }
-RBSplitClassParametrizedTest >> testInvalidNewClassName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBBasicLintRuleTestData . #(#methodBlock #classBlock) . #Object . #blocks })
+{ #category : 'failure tests' }
+RBSplitClassParametrizedTest >> testFailureInvalidNewClassName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBBasicLintRuleTestData.
+				 #( #methodBlock #classBlock ).
+				 #Object.
+				 #blocks })
 ]
 
-{ #category : #'failure tests' }
-RBSplitClassParametrizedTest >> testInvalidReferenceVariableName [
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBLintRuleTestData . #(#name #foo1) . #ClassA . #result }).
-	self shouldFail:
-		(self createRefactoringWithArguments:
-			{ #RBLintRuleTestData . #(#name #foo1) . #ClassA . #temp })
+{ #category : 'failure tests' }
+RBSplitClassParametrizedTest >> testFailureInvalidReferenceVariableName [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBLintRuleTestData.
+				 #( #name #foo1 ).
+				 #ClassA.
+				 #result }).
+	self shouldFail: (self createRefactoringWithArguments: {
+				 #RBLintRuleTestData.
+				 #( #name #foo1 ).
+				 #ClassA.
+				 #temp })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSplitClassParametrizedTest >> testSplitClass [
 	|ref aModel|
 	ref := self createRefactoringWithArguments:

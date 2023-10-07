@@ -24,15 +24,17 @@ RBLintRuleTestData >> foo1: anObject
 ```
 "
 Class {
-	#name : #RBAddVariableAccessorWithLazyInitializationTransformation,
-	#superclass : #RBAddVariableAccessorTransformation,
+	#name : 'RBAddVariableAccessorWithLazyInitializationTransformation',
+	#superclass : 'RBAddVariableAccessorTransformation',
 	#instVars : [
 		'defaultValue'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddVariableAccessorWithLazyInitializationTransformation class >> model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
 
 	^(self model: aRBSmalltalk variable: aVarName class: aClass classVariable: aBoolean)
@@ -40,7 +42,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> model: aRBSma
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVarName class: aClass classVariable: aBoolean defaultValue: aString [
 
 	^(self variable: aVarName class: aClass classVariable: aBoolean)
@@ -48,7 +50,16 @@ RBAddVariableAccessorWithLazyInitializationTransformation class >> variable: aVa
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
+RBAddVariableAccessorWithLazyInitializationTransformation >> applicabilityPreconditions [ 
+
+	^ super applicabilityPreconditions &
+	(RBCondition withBlock: [
+		self verifyInitializationExpressionOf: self defaultValue.
+		true ])
+]
+
+{ #category : 'preconditions' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -65,7 +76,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableRefere
 	searcher executeTree: aParseTree
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> createGetterAccessor [
 
 	(self definingClass getterMethodFor: variableName)
@@ -73,50 +84,44 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> createGetterAccesso
 		ifNotNil: [ :symbol | self defineGetterCalled: symbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defaultValue [
 	^ defaultValue ifNil: [ defaultValue := 'nil' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defaultValue: aString [
 	defaultValue := aString
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterCalled: aSymbol [
 
 	| selector |
 	selector := aSymbol.
-	self definingClass
-		compile:  ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
+	(RBAddMethodTransformation
+		model: self model
+		sourceCode: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
 			expandMacrosWith: selector
 			with: variableName
 			with: self defaultValue)
-		classified: #(#accessing).
+		in: self definingClass
+		withProtocol: 'accessing') generateChanges.
 	^ selector
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterMethod [
 
 	^ self defineGetterCalled: self getterMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 	^ self safeMethodNameFor: self definingClass basedOn: variableName asString
 ]
 
-{ #category : #preconditions }
-RBAddVariableAccessorWithLazyInitializationTransformation >> preconditions [
-	^ super preconditions &
-	(RBCondition withBlock: [
-		self verifyInitializationExpressionOf: self defaultValue.
-		true ])
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -132,13 +137,13 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> verifyInitializationExpressionOf: initializer [
 	| tree |
 	tree := self parserClass
 		parseExpression: initializer
-		onError: [ :msg :index | self refactoringFailure: 'Illegal initialization code because:.', msg ].
+		onError: [ :msg :index | self refactoringError: 'Illegal initialization code because:.', msg ].
 	tree isValue
-		ifFalse: [ self refactoringFailure: 'The initialization code cannot be a return node or a list of statements' ].
+		ifFalse: [ self refactoringError: 'The initialization code cannot be a return node or a list of statements' ].
 	self checkVariableReferencesIn: tree
 ]

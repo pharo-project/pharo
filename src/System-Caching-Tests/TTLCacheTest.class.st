@@ -1,20 +1,21 @@
 Class {
-	#name : #TTLCacheTest,
-	#superclass : #LRUCacheTest,
-	#category : #'System-Caching-Tests'
+	#name : 'TTLCacheTest',
+	#superclass : 'LRUCacheTest',
+	#category : 'System-Caching-Tests',
+	#package : 'System-Caching-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTLCacheTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TTLCacheTest >> newCache [
 	^ TTLCache new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTLCacheTest >> testExpiring [
 	| cache didComputeValue |
 	cache := self newCache.
@@ -33,7 +34,7 @@ TTLCacheTest >> testExpiring [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTLCacheTest >> testRemoveStaleValues [
 	| cache keys |
 	cache := self newCache.

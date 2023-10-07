@@ -1,15 +1,17 @@
 Class {
-	#name : #MCDataStreamTest,
-	#superclass : #TestCase,
-	#category : #'Monticello-Tests-IO'
+	#name : 'MCDataStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Monticello-Tests-IO',
+	#package : 'Monticello-Tests',
+	#tag : 'IO'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDataStreamTest >> testFileName [
 	^ self class name,'_', testSelector , '_test'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDataStreamTest >> testFileNamed [
 	| testString fileName |
 	"Given"
@@ -22,7 +24,7 @@ MCDataStreamTest >> testFileNamed [
 		ensure: [ (FileSystem disk workingDirectory / fileName) ensureDelete ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDataStreamTest >> testReadOnlyFileNamed [
 	| testString fileName file |
 	"Given"

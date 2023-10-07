@@ -41,20 +41,22 @@ Then inspect the slot:
 (A slotNamed: #iv) inspect
 "
 Class {
-	#name : #ExampleSlotWithState,
-	#superclass : #Slot,
+	#name : 'ExampleSlotWithState',
+	#superclass : 'Slot',
 	#instVars : [
 		'value'
 	],
-	#category : #'Slot-Examples-Base'
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ExampleSlotWithState >> read: anObject [
 	^ value
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ExampleSlotWithState >> write: aValue to: anObject [
 	^value := aValue
 ]

@@ -2,26 +2,28 @@
 The Monticello patch browser
 "
 Class {
-	#name : #MCPatchBrowser,
-	#superclass : #MCCodeTool,
+	#name : 'MCPatchBrowser',
+	#superclass : 'MCCodeTool',
 	#instVars : [
 		'selection'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCPatchBrowser class >> forPatch: aPatch [
 	^ self new patch: aPatch
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCPatchBrowser >> buttonSpecs [
 	^ #((Invert invert 'Show the reverse set of changes')
 		 (Export export 'Export the changes as a change set'))
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCPatchBrowser >> changeSetNameForInstall [
 	"Answer the name of the change set into which my selection will be installed.
 	Derive this from my label.
@@ -36,12 +38,12 @@ MCPatchBrowser >> changeSetNameForInstall [
 	^'{1}-to-{2}' format: tokens 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCPatchBrowser >> defaultLabel [
 	^ 'Patch Browser'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCPatchBrowser >> installSelection [
 	| loader |
 	selection ifNotNil:
@@ -50,28 +52,28 @@ MCPatchBrowser >> installSelection [
 		loader loadWithName: self changeSetNameForInstall ]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCPatchBrowser >> invert [
 	items := items collect: [:ea | ea inverse].
 	self changed: #list; changed: #text; changed: #selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchBrowser >> items [
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchBrowser >> list [
 	^ self items collect: [:ea | ea summary]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatchBrowser >> patch: aPatch [
 	items := aPatch operations asSortedCollection
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCPatchBrowser >> revertSelection [
 	| loader |
 	selection ifNotNil:
@@ -80,7 +82,7 @@ MCPatchBrowser >> revertSelection [
 		loader loadWithName: self changeSetNameForInstall ]
 ]
 
-{ #category : #subclassresponsibility }
+{ #category : 'subclassresponsibility' }
 MCPatchBrowser >> selectedClass [
 	| definition |
 	selection ifNil: [ ^ nil ].
@@ -90,7 +92,7 @@ MCPatchBrowser >> selectedClass [
 	^ Smalltalk globals at: definition className ifAbsent: [  ]
 ]
 
-{ #category : #subclassresponsibility }
+{ #category : 'subclassresponsibility' }
 MCPatchBrowser >> selectedClassOrMetaClass [
 	| definition |
 	selection ifNil: [ ^nil ].
@@ -99,7 +101,7 @@ MCPatchBrowser >> selectedClassOrMetaClass [
 	^definition actualClass
 ]
 
-{ #category : #subclassresponsibility }
+{ #category : 'subclassresponsibility' }
 MCPatchBrowser >> selectedMessageCategoryName [
 	| definition |
 	selection ifNil: [ ^nil ].
@@ -108,7 +110,7 @@ MCPatchBrowser >> selectedMessageCategoryName [
 	^definition category
 ]
 
-{ #category : #subclassresponsibility }
+{ #category : 'subclassresponsibility' }
 MCPatchBrowser >> selectedMessageName [
 	| definition |
 	selection ifNil: [ ^nil ].
@@ -117,30 +119,30 @@ MCPatchBrowser >> selectedMessageName [
 	^definition  selector
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCPatchBrowser >> selection [
 	^ selection 
 		ifNil: [0]
 		ifNotNil: [self items indexOf: selection]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCPatchBrowser >> selection: aNumber [
 	selection := aNumber = 0 ifFalse: [self items at: aNumber].
 	self changed: #selection; changed: #text.
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCPatchBrowser >> text [
 	^ selection ifNil: [''] ifNotNil: [selection source]
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCPatchBrowser >> text: aTextOrString [
 	self changed: #text
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCPatchBrowser >> widgetSpecs [
 	 ^#(
 		((listMorph:selection:menu:keystroke: list selection methodListMenu: methodListKey:from:) (0 0 1 0.4) (0 0 0 0))

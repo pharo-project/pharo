@@ -1,6 +1,6 @@
-Extension { #name : #TClass }
+Extension { #name : 'TClass' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 TClass >> fuelAccept: aGeneralMapper [
 	^self explicitRequirement.
 ]

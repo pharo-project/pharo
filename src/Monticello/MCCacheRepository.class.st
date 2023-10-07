@@ -4,8 +4,8 @@ I am a special monticello directory-based repository that is used for the global
 Most other repositories will first query the default cache repository for existing files before handling the request by themselves. For instance an http repository will first check if the file is in the caceh before doing a ""slow"" download.
 "
 Class {
-	#name : #MCCacheRepository,
-	#superclass : #MCDirectoryRepository,
+	#name : 'MCCacheRepository',
+	#superclass : 'MCDirectoryRepository',
 	#instVars : [
 		'packageCaches',
 		'seenFiles',
@@ -14,30 +14,32 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #'Monticello-Repositories'
+	#category : 'Monticello-Repositories',
+	#package : 'Monticello',
+	#tag : 'Repositories'
 }
 
-{ #category : #'accessing settings' }
+{ #category : 'accessing settings' }
 MCCacheRepository class >> cacheDirectory [
 	^self uniqueInstance directory asAbsolute
 	
 ]
 
-{ #category : #'accessing settings' }
+{ #category : 'accessing settings' }
 MCCacheRepository class >> cacheDirectory: directory [
 	"directory - can be an absolutePathString (to interface with the settings framework), or aFileReference"
  
 	default := self new directory: directory asFileReference.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCCacheRepository class >> default [
 	"This should be deleted as soon as Metacello is fixed"
 	self flag: #toBeDeleted.			
 	^ self uniqueInstance 
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MCCacheRepository class >> defaultDirectory [
 	| directories |
 	directories := {
@@ -51,39 +53,39 @@ MCCacheRepository class >> defaultDirectory [
 	Error signal: 'Can''t create a package-cache'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCCacheRepository class >> description [
 	^ nil
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCCacheRepository class >> disableCacheDuring: aBlock [
 	self uniqueInstance disableCacheDuring: aBlock
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCCacheRepository class >> initialize [
 	self resetIfInvalid
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCCacheRepository class >> reset [
 
 	default := nil.
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCCacheRepository class >> resetIfInvalid [
 	default notNil and: [ default directory ifAbsent: [ default := nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCCacheRepository class >> uniqueInstance [
 	self resetIfInvalid.
 	^ default ifNil: [default := self new directory: self defaultDirectory]
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCCacheRepository >> basicStoreVersion: aVersion [
 	"we store a version if it is cacheable and we don't have the file already"
 	
@@ -92,46 +94,46 @@ MCCacheRepository >> basicStoreVersion: aVersion [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCCacheRepository >> cacheForPackage: aPackage [
 	packageCaches ifNil: [packageCaches := Dictionary new].
 	^ packageCaches at: aPackage ifAbsentPut: [MCPackageCache new]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCCacheRepository >> disable [
 	cacheEnabled := false.
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCCacheRepository >> disableCacheDuring: aBlock [
 	self disable.
 	aBlock ensure: [ self enable ].
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCCacheRepository >> enable [
 	cacheEnabled := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCCacheRepository >> initialize [
 	cacheEnabled := true.
 	super initialize.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCCacheRepository >> loadVersionFromFileNamed: aString [
 	
 	^ self versionReaderForFileNamed: aString do: [:r | r version]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCCacheRepository >> newFileNames [ 
 	^ self allFileNames difference: self seenFileNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCCacheRepository >> rescan [
 	self newFileNames do:
 		[:ea |
@@ -144,25 +146,35 @@ MCCacheRepository >> rescan [
 		displayingProgress: 'Scanning cache...'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCCacheRepository >> seenFileNames [
 	^ seenFiles ifNil: [seenFiles := OrderedCollection new]
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCCacheRepository >> storeVersion: aVersion [
 	cacheEnabled == true ifFalse: [ ^ self ].
 	^ super storeVersion: aVersion.
 ]
 
-{ #category : #accessing }
+{ #category : 'utilities' }
+MCCacheRepository >> useDirectory: aFolder during: aBlock [
+
+	| oldDirectory |
+	oldDirectory := self directory.
+	[
+	self directory: aFolder.
+	aBlock value ] ensure: [ self directory: oldDirectory ]
+]
+
+{ #category : 'accessing' }
 MCCacheRepository >> versionInfoForFileNamed: aString [
 	^ self infoCache 
 		at: aString 
 		ifAbsentPut: [ self versionReaderForFileNamed: aString do: [:r | r info]]
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCCacheRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	(self allFileNamesForVersionNamed: aVersionInfo name) do: [:fileName | | version |
 			version := self versionFromFileNamed: fileName.

@@ -1,14 +1,21 @@
 Class {
-	#name : #T2CommonClassDefinitionPrinterTest,
-	#superclass : #T2AbstractTest,
+	#name : 'T2CommonClassDefinitionPrinterTest',
+	#superclass : 'T2AbstractTest',
 	#instVars : [
 		'slotuse',
 		'emptySlots'
 	],
-	#category : #'TraitsV2-Tests'
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #running }
+{ #category : 'helpers' }
+T2CommonClassDefinitionPrinterTest >> packageTagOfMOP [
+
+	^ '''TraitsV2-Tests-MOP'''
+]
+
+{ #category : 'running' }
 T2CommonClassDefinitionPrinterTest >> setUp [
 	super setUp.
 	slotuse := ClassDefinitionPrinter showFluidClassDefinition.
@@ -16,7 +23,7 @@ T2CommonClassDefinitionPrinterTest >> setUp [
 	ClassDefinitionPrinter displayEmptySlots: false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 T2CommonClassDefinitionPrinterTest >> tearDown [
 
 	ClassDefinitionPrinter displayEmptySlots: emptySlots.

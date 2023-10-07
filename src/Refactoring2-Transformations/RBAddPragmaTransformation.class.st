@@ -16,15 +16,17 @@ Preconditions:
 - the method does not have a pragma with the same selector. 
 "
 Class {
-	#name : #RBAddPragmaTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBAddPragmaTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'pragma'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddPragmaTransformation class >> model: aRBModel pragma: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -35,7 +37,7 @@ RBAddPragmaTransformation class >> model: aRBModel pragma: aString inMethod: aSe
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -45,7 +47,35 @@ RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'preconditions' }
+RBAddPragmaTransformation >> applicabilityPreconditions [
+
+	^ self classExist & (RBCondition
+		   withBlock: [ self definingClass canUnderstand: selector ]
+		   errorString:
+		   ('Method named <1s> does not exist' expandMacrosWith: selector))
+	  & (RBCondition
+			   withBlock: [
+				   | pragmaNode |
+				   pragmaNode := self parserClass parsePragma: pragma.
+				   self definingMethod pragmas noneSatisfy: [ :e |
+					   e selector = pragmaNode selector ] ]
+			   errorString:
+				   ('Method named <1s> already has a pragma named <2s>'
+					    expandMacrosWith: selector
+					    with: (self parserClass parsePragma: pragma) selector))
+]
+
+{ #category : 'preconditions' }
+RBAddPragmaTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
+{ #category : 'api' }
 RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -53,28 +83,7 @@ RBAddPragmaTransformation >> pragma: aString inMethod: aSelector inClass: aClass
 	pragma := aString
 ]
 
-{ #category : #preconditions }
-RBAddPragmaTransformation >> preconditions [
-	^ (RBCondition
-		withBlock: [ self definingClass isNotNil ]
-		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		&
-			(RBCondition
-				withBlock: [ self definingClass canUnderstand: selector ]
-				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		&
-			(RBCondition
-				withBlock: [ | pragmaNode |
-					pragmaNode := self parserClass parsePragma: pragma.
-					self definingMethod pragmas
-						noneSatisfy: [ :e | e selector = pragmaNode selector ] ]
-				errorString:
-					('Method named <1s> already has a pragma named <2s>'
-						expandMacrosWith: selector
-						with: (self parserClass parsePragma: pragma) selector))
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBAddPragmaTransformation >> privateTransform [
 	"the transformation is straighforward: just add the node at the last position of the method.
 	 #todo the case in which the context is a block"
@@ -86,7 +95,7 @@ RBAddPragmaTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddPragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -2,12 +2,14 @@
 SUnit tests for SpaceTally
 "
 Class {
-	#name : #SpaceTallyTest,
-	#superclass : #TestCase,
-	#category : #'Tool-Profilers-Tests-Space'
+	#name : 'SpaceTallyTest',
+	#superclass : 'TestCase',
+	#category : 'Tool-Profilers-Tests-Space',
+	#package : 'Tool-Profilers-Tests',
+	#tag : 'Space'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceTallyTest >> test2Classes [
 	| result |
 	result := (SpaceTally new
@@ -23,7 +25,7 @@ SpaceTallyTest >> test2Classes [
 				+ result anyOne spaceForInstances > 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceTallyTest >> testPrintOnStream [
 	| contents |
 	contents := String
@@ -31,7 +33,7 @@ SpaceTallyTest >> testPrintOnStream [
 	self assert: contents isString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SpaceTallyTest >> testSystemWide [
 	self
 		assert:

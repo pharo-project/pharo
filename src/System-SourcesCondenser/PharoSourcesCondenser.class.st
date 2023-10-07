@@ -4,12 +4,13 @@ I move the source code from all methods to a new .sources file where I keep only
 Additionally I will empty the current .changes file.
 "
 Class {
-	#name : #PharoSourcesCondenser,
-	#superclass : #PharoChangesCondenser,
-	#category : #'System-SourcesCondenser'
+	#name : 'PharoSourcesCondenser',
+	#superclass : 'PharoChangesCondenser',
+	#category : 'System-SourcesCondenser',
+	#package : 'System-SourcesCondenser'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 PharoSourcesCondenser class >> condenseNewSources [
 	| fileName condenser arch |
 
@@ -22,19 +23,19 @@ PharoSourcesCondenser class >> condenseNewSources [
 	condenser condense
 ]
 
-{ #category : #'private - 3 installing' }
+{ #category : 'private - 3 installing' }
 PharoSourcesCondenser >> backupOldChanges [
 	super backupOldChanges.
 	self installFreshChangesFile
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoSourcesCondenser >> fileIndex [
 	"We are working on the .sources file which has index = 1"
 	^ 1
 ]
 
-{ #category : #'private - 3 installing' }
+{ #category : 'private - 3 installing' }
 PharoSourcesCondenser >> installFreshChangesFile [
 	| changesFile |
 
@@ -47,7 +48,7 @@ PharoSourcesCondenser >> installFreshChangesFile [
 		 "Nothing, just create the file" ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoSourcesCondenser >> newSourceNamed: aString [
 	"Create a new version of the .sources file by copying the existing file to a new location"
 	| originalSourcesFile newSourcesFile |
@@ -62,23 +63,23 @@ PharoSourcesCondenser >> newSourceNamed: aString [
 	Smalltalk openSourceFiles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoSourcesCondenser >> originalFile [
 	^ Smalltalk sourcesFile asFileReference
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 PharoSourcesCondenser >> shouldCondenseMethod: aCompiledMethod [
 	"The sources condenser moves ALL method sources to a new file"
 	^ aCompiledMethod hasSourcePointer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoSourcesCondenser >> temporaryFile [
 	^ 'new.sources' asFileReference nextVersion
 ]
 
-{ #category : #'private - 3 installing' }
+{ #category : 'private - 3 installing' }
 PharoSourcesCondenser >> updateQuitPosition [
 
 	"We use an empty .changes file, hence the last quit position is 0"
@@ -86,13 +87,12 @@ PharoSourcesCondenser >> updateQuitPosition [
 	Smalltalk lastQuitLogPosition: 0
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 PharoSourcesCondenser >> writeClassComment: aClass [
 
-	| organizer commentRemoteString stamp |
+	| commentRemoteString stamp |
 
-	organizer := aClass organization.
-	commentRemoteString := self commentRemoteStringFor: organizer.
+	commentRemoteString := self commentRemoteStringFor: aClass.
 
 	commentRemoteString ifNil: [ ^ self ].
 
@@ -101,9 +101,9 @@ PharoSourcesCondenser >> writeClassComment: aClass [
 			strm
 				nextPutAll: aClass name;
 				nextPutAll: ' commentStamp: '.
-			stamp := organizer commentStamp ifNil: [ '<historical>' ].
+			stamp := aClass commentStamp ifNil: [ '<historical>' ].
 			stamp storeOn: strm
 			].
 
-	self writeRemoteString: organizer classComment for: aClass
+	self writeRemoteString: aClass comment for: aClass
 ]

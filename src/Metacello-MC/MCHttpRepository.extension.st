@@ -1,6 +1,6 @@
-Extension { #name : #MCHttpRepository }
+Extension { #name : 'MCHttpRepository' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCHttpRepository >> asRepositorySpecFor: aMetacelloMCProject [
 
 	^(aMetacelloMCProject repositorySpec)
@@ -9,12 +9,12 @@ MCHttpRepository >> asRepositorySpecFor: aMetacelloMCProject [
 		yourself
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCHttpRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	^ aPlatform createHttpRepository: aRepositorySpec
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCHttpRepository class >> isAvailableFor: type [
 	^ self = MCHttpRepository and: [ type = 'http' ]
 ]

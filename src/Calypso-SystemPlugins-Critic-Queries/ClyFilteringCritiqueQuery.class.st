@@ -11,22 +11,23 @@ Internal Representation and Key Implementation Points.
 	baseCritiqueQuery:		<ClyCritiqueQuery>
 "
 Class {
-	#name : #ClyFilteringCritiqueQuery,
-	#superclass : #ClyCritiqueQuery,
+	#name : 'ClyFilteringCritiqueQuery',
+	#superclass : 'ClyCritiqueQuery',
 	#instVars : [
 		'baseCritiqueQuery'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyFilteringCritiqueQuery class >> filter: aCritiqueQuery from: aScope [
 
 	^(self from: aScope)
 		baseCritiqueQuery: aCritiqueQuery
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyFilteringCritiqueQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -36,17 +37,17 @@ ClyFilteringCritiqueQuery >> = anObject [
 	^baseCritiqueQuery = anObject baseCritiqueQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFilteringCritiqueQuery >> baseCritiqueQuery [
 	^ baseCritiqueQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFilteringCritiqueQuery >> baseCritiqueQuery: aCritiqueQuery [
 	baseCritiqueQuery := scope adoptQuery: aCritiqueQuery
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFilteringCritiqueQuery >> buildResult: aQueryResult [
 
 	| allCritiques filtered |
@@ -57,7 +58,7 @@ ClyFilteringCritiqueQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: filtered
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFilteringCritiqueQuery >> checkEmptyResult [
 
 	| allCritiques |
@@ -67,27 +68,27 @@ ClyFilteringCritiqueQuery >> checkEmptyResult [
 		anySatisfy: [:each | self selectsCritique: each]) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyFilteringCritiqueQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: baseCritiqueQuery hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFilteringCritiqueQuery >> initialize [
 	super initialize.
 
 	baseCritiqueQuery := ClyAllBasisCritiqueQuery new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFilteringCritiqueQuery >> scope: aScope [
 	super scope: aScope.
 	baseCritiqueQuery scope: aScope
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFilteringCritiqueQuery >> selectsCritique: aCritique [
 	self subclassResponsibility
 ]

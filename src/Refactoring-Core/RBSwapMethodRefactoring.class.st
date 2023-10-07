@@ -4,16 +4,18 @@ Move a method from the class to the instance side, or vice versa. Normally this 
 Only instance methods with no instance variable access or class methods with no class instance variable access can be moved.
 "
 Class {
-	#name : #RBSwapMethodRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBSwapMethodRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'target',
 		'selector'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -21,13 +23,13 @@ RBSwapMethodRefactoring class >> model: aRBSmalltalk swapMethod: aSelector in: a
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBSwapMethodRefactoring class >> swapMethod: aSelector in: aClass [
 	^ self new
 		swapMethod: aSelector in: aClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBSwapMethodRefactoring >> checkInstVars [
 	class instanceVariableNames do: [ :each |
 		(target instanceVariableNames includes: each) ifFalse: [
@@ -36,24 +38,32 @@ RBSwapMethodRefactoring >> checkInstVars [
 					refactoringError: ('<1p> refers to <2s>, which is not defined in <3p>' expandMacrosWith: selector with: each with: target) ] ] ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBSwapMethodRefactoring >> preconditions [
 	^ (RBCondition definesSelector: selector in: class)
 		& (RBCondition definesSelector: selector in: target) not
 		& (RBCondition withBlock: [ self checkInstVars. true ])
 ]
 
-{ #category : #initialization }
+{ #category : 'transforming' }
+RBSwapMethodRefactoring >> privateTransform [
+
+	self generateChangesFor:
+		(RBAddMethodTransformation
+			sourceCode: (class sourceCodeFor: selector)
+			in: target
+			withProtocol: (class protocolsFor: selector)).
+	self generateChangesFor:
+		(RBRemoveMethodTransformation
+			selector: selector
+			from: class)
+]
+
+{ #category : 'initialization' }
 RBSwapMethodRefactoring >> swapMethod: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	target := self classObjectFor: (class isMeta
 			ifTrue: [ class instanceSide ]
 			ifFalse: [ class classSide ]).
 	selector := aSelector
-]
-
-{ #category : #transforming }
-RBSwapMethodRefactoring >> transform [
-	target compile: (class sourceCodeFor: selector) classified: (class protocolsFor: selector).
-	class removeMethod: selector
 ]

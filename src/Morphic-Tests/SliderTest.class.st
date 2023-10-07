@@ -1,14 +1,16 @@
 Class {
-	#name : #SliderTest,
-	#superclass : #TestCase,
+	#name : 'SliderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aSlider',
 		'window'
 	],
-	#category : #'Morphic-Tests-Widgets'
+	#category : 'Morphic-Tests-Widgets',
+	#package : 'Morphic-Tests',
+	#tag : 'Widgets'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SliderTest >> assertSameValueAfter: aBlock [
 	"I get the value on the slider, execute a block and then assert the value of the slider remains the same"
 
@@ -18,7 +20,7 @@ SliderTest >> assertSameValueAfter: aBlock [
 	self assert: aSlider value equals: oldValue
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SliderTest >> createSlider [
 
 	^ SliderMorph new
@@ -26,7 +28,7 @@ SliderTest >> createSlider [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SliderTest >> setUp [
 
 	super setUp.
@@ -34,14 +36,14 @@ SliderTest >> setUp [
 	window := aSlider openInWindow
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SliderTest >> tearDown [
 
 	window close.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testDraggingModifiesValue [
 
 	aSlider simulateSliderMouseDown.
@@ -52,7 +54,7 @@ SliderTest >> testDraggingModifiesValue [
 	self assert: aSlider value equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testDraggingSeveralTimesModifiesValueSeveralTimes [
 
 	aSlider simulateSliderMouseDown.
@@ -66,7 +68,7 @@ SliderTest >> testDraggingSeveralTimesModifiesValueSeveralTimes [
 	self assert: aSlider value equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testMouseMoveWithoutDraggingDoesNotModifyValue [
 
 	self assertSameValueAfter: [
@@ -75,7 +77,7 @@ SliderTest >> testMouseMoveWithoutDraggingDoesNotModifyValue [
 			to: aSlider bounds corner ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testMouseMoveWithoutDraggingDoesNotStartDrag [
 
 	aSlider
@@ -86,32 +88,32 @@ SliderTest >> testMouseMoveWithoutDraggingDoesNotStartDrag [
 	self deny: aSlider dragging
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testNewSliderIsNotDragging [
 
 	self deny: aSlider dragging
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testNewSliderValueIsZero [
 
 	self assert: aSlider value equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testSliderMouseDownDoesNotModifyValue [
 
 	self assertSameValueAfter: [ aSlider simulateSliderMouseDown ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testSliderMouseDownMakesItDrag [
 
 	aSlider simulateSliderMouseDown.
 	self assert: aSlider dragging
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SliderTest >> testSliderMouseUpReleaseDrag [
 
 	self assertSameValueAfter: [

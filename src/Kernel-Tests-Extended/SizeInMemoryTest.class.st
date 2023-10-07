@@ -2,25 +2,28 @@
 SUnit tests for the size of objects in memory
 "
 Class {
-	#name : #SizeInMemoryTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Extended-Objects'
+	#name : 'SizeInMemoryTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Extended-Objects',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Objects'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SizeInMemoryTest >> align64Bits: size [
-	size % 8 = 0
-		ifTrue: [ ^ size ]
-		ifFalse:[ ^ size + 8 - (size % 8) ]
+
+	^ size % 8 = 0
+		  ifTrue: [ size ]
+		  ifFalse: [ size + 8 - (size % 8) ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SizeInMemoryTest >> headerSize [
 	" The header is 64 bits"
 	^ 8
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SizeInMemoryTest >> paddedByteStringSize: numberOfChars [
 	"64 bits for the header"
 	| originalSize  |
@@ -29,7 +32,7 @@ SizeInMemoryTest >> paddedByteStringSize: numberOfChars [
 	^ self align64Bits: originalSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SizeInMemoryTest >> testSizeInMemoryCompactClasses [
 	self skip.
 	"One word for the header + one word per instance variable"
@@ -39,7 +42,7 @@ SizeInMemoryTest >> testSizeInMemoryCompactClasses [
 	self assert: Rectangle new sizeInMemory equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SizeInMemoryTest >> testSizeInMemoryLargeInstances [
 	"64 bits for the object header + a world per instance variable"
 
@@ -49,7 +52,7 @@ SizeInMemoryTest >> testSizeInMemoryLargeInstances [
 			equals: (self align64Bits: self headerSize + (Smalltalk allClasses asArray size * Smalltalk wordSize) + self headerSize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SizeInMemoryTest >> testSizeInMemoryNormalClasses [
 	"Two word for the header + one word per instance variable"
 
@@ -59,7 +62,7 @@ SizeInMemoryTest >> testSizeInMemoryNormalClasses [
 	self assert: TestCase new sizeInMemory equals: (self align64Bits: 2 * Smalltalk wordSize + self headerSize)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SizeInMemoryTest >> testSizeInMemoryOfByteObjects [
 	"Byte objects should be padded to words"
 	self assert: 'a' sizeInMemory equals: (self paddedByteStringSize: 1).
@@ -69,7 +72,7 @@ SizeInMemoryTest >> testSizeInMemoryOfByteObjects [
 	self assert: 'abcdefghi' sizeInMemory equals: (self paddedByteStringSize: 9)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SizeInMemoryTest >> testSizeInMemoryOfCharacters [
 	self assert: 0 asCharacter sizeInMemory isZero.
 	self assert: 255 asCharacter sizeInMemory isZero.
@@ -77,7 +80,7 @@ SizeInMemoryTest >> testSizeInMemoryOfCharacters [
 	self assert: 16r10FFFF asCharacter sizeInMemory isZero
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SizeInMemoryTest >> testSizeInMemorySmallIntegers [
 	self assert: SmallInteger minVal sizeInMemory isZero.
 	self assert: 0 sizeInMemory isZero.

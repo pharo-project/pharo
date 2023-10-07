@@ -4,15 +4,17 @@ I mainly give access to methds in the package.
 I am required because packages and methods are not polymorphic.
 "
 Class {
-	#name : #CoBenchmarkPackage,
-	#superclass : #Object,
+	#name : 'CoBenchmarkPackage',
+	#superclass : 'Object',
 	#instVars : [
 		'package'
 	],
-	#category : #'HeuristicCompletion-Model-Benchmarks'
+	#category : 'HeuristicCompletion-Model-Benchmarks',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Benchmarks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoBenchmarkPackage class >> on: aRPackage [
 
 	^ self new
@@ -20,22 +22,19 @@ CoBenchmarkPackage class >> on: aRPackage [
 		yourself
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoBenchmarkPackage >> methodsDo: aBlockClosure [
 
-	package definedClassesDo: [ :each | | class |
-		class := self class environment at: each.
-		class isTrait ifFalse: [
-			(package definedMethodsForClass: class) do: aBlockClosure] ]
+	package definedClasses do: [ :class | class isTrait ifFalse: [ (package definedMethodsForClass: class) do: aBlockClosure ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkPackage >> package: aRPackage [
 
 	package := aRPackage
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CoBenchmarkPackage >> printOn: aStream [
 
 	aStream print: package name

@@ -2,25 +2,27 @@
 This TestSuite evaluates the correct implementation of the callback parameter extraction.
 "
 Class {
-	#name : #FFICallbackParametersTest,
-	#superclass : #TestCase,
+	#name : 'FFICallbackParametersTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'callback'
 	],
 	#pools : [
 		'FFITestEnumeration'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 FFICallbackParametersTest >> callCallback: aFFICallback withArgs: aCollection [
 
 	self assert: aCollection isArray.
 	^ aFFICallback invokeAsFunctionWithArguments: aCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testCharacterParameters [
 
 	| params |
@@ -41,7 +43,7 @@ FFICallbackParametersTest >> testCharacterParameters [
 	self assert: (self callCallback: callback withArgs: params) equals: $z asInteger
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testFloatParameters [
 
 	callback := FFICallback
@@ -59,7 +61,7 @@ FFICallbackParametersTest >> testFloatParameters [
 	self assert: (self callCallback: callback withArgs: {1.0. 2.0. 3.0. 4.0. 5.0. 6.0}) equals: 7.0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testIdentityStruct [
 
 	| param result |
@@ -101,7 +103,7 @@ FFICallbackParametersTest >> testIdentityStruct [
 	self assert: result z equals: 8.0.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testIntegerParameters [
 
 	callback := FFICallback
@@ -119,7 +121,7 @@ FFICallbackParametersTest >> testIntegerParameters [
 	self assert: (self callCallback: callback withArgs: #(1 2 3 4 5 6)) equals: 7
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testIntegerPointerParameters [
 
 	| params |
@@ -145,7 +147,7 @@ FFICallbackParametersTest >> testIntegerPointerParameters [
 	self callCallback: callback withArgs: params
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testMixingParameters [
 
 	callback := FFICallback
@@ -163,7 +165,7 @@ FFICallbackParametersTest >> testMixingParameters [
 	self callCallback: callback withArgs: {1. 2.0. $c. 4. 5.0. 6. $g}
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testPassing2DoubleStructureInTheStack [
 
 	| param |
@@ -185,7 +187,7 @@ FFICallbackParametersTest >> testPassing2DoubleStructureInTheStack [
 	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testPassing2Int64StructureInTheStack [
 
 	| param |
@@ -207,7 +209,7 @@ FFICallbackParametersTest >> testPassing2Int64StructureInTheStack [
 	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testPassing4DoubleStructureInTheStack [
 
 	| param |
@@ -238,7 +240,7 @@ FFICallbackParametersTest >> testPassing4DoubleStructureInTheStack [
 	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testPassing4Int64StructureInTheStack [
 
 	| param |
@@ -264,7 +266,7 @@ FFICallbackParametersTest >> testPassing4Int64StructureInTheStack [
 	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testPassing4IntStructureInTheStack [
 
 	| param |
@@ -290,7 +292,7 @@ FFICallbackParametersTest >> testPassing4IntStructureInTheStack [
 	self assert: (self callCallback: callback withArgs: { param }) equals: 99
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackParametersTest >> testPassingStructureInTheStack [
 
 	| param |

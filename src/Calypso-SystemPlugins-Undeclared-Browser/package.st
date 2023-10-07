@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Undeclared-Browser' }
+Package { #name : 'Calypso-SystemPlugins-Undeclared-Browser' }

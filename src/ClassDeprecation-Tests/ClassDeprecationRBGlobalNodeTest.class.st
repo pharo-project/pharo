@@ -6,23 +6,24 @@ I am a copy of class ClassDeprecationMetaLinkTest. This comment is copied from t
 This class contains tests
 "
 Class {
-	#name : #ClassDeprecationRBGlobalNodeTest,
-	#superclass : #ClassDeprecationTest,
-	#category : #'ClassDeprecation-Tests'
+	#name : 'ClassDeprecationRBGlobalNodeTest',
+	#superclass : 'ClassDeprecationTest',
+	#category : 'ClassDeprecation-Tests',
+	#package : 'ClassDeprecation-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassDeprecationRBGlobalNodeTest >> globalNodes [
 	^ self globalNodes: referencingClass >> #references
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationRBGlobalNodeTest >> setUp [
 	super setUp.
 	referencingClass compile: referencingOriginalSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationRBGlobalNodeTest >> testDeprecationTransform [
 	| globalNode result |
 	self
@@ -48,7 +49,7 @@ ClassDeprecationRBGlobalNodeTest >> testDeprecationTransform [
 	self assert: result binding value equals: replacementClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationRBGlobalNodeTest >> testDeprecationTransformMetaLink [
 	| globalNodes |
 	globalNodes := self globalNodes.
@@ -76,7 +77,7 @@ ClassDeprecationRBGlobalNodeTest >> testDeprecationTransformMetaLink [
 		raise: NotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationRBGlobalNodeTest >> testHasDeprecationTransformMetaLink [
 	| globalNodes |
 	globalNodes := self globalNodes.
@@ -90,7 +91,7 @@ ClassDeprecationRBGlobalNodeTest >> testHasDeprecationTransformMetaLink [
 	self deny: globalNodes third hasDeprecationTransformMetaLink
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationRBGlobalNodeTest >> testInstallDeprecationTransformMetaLink [
 	| globalNode |
 	globalNode := self globalNodes first.
@@ -105,7 +106,7 @@ ClassDeprecationRBGlobalNodeTest >> testInstallDeprecationTransformMetaLink [
 		assert: (globalNode links first isKindOf: ClassDeprecationMetaLink)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationRBGlobalNodeTest >> testIsDeprecatedTransformable [
 	| globalNodes |
 	globalNodes := self globalNodes.
@@ -114,14 +115,14 @@ ClassDeprecationRBGlobalNodeTest >> testIsDeprecatedTransformable [
 	self deny: globalNodes third isDeprecatedTransformable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationRBGlobalNodeTest >> testSetUp [
 	| globalNodes |
 	globalNodes := self globalNodes.
 	self assert: globalNodes size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationRBGlobalNodeTest >> testUninstallDeprecationTransformMetaLink [
 	| globalNode |
 	globalNode := self globalNodes first.

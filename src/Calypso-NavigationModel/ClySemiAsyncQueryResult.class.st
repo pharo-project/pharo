@@ -13,20 +13,22 @@ To force semi async query execution you need convert given query using:
 It returns ClyAsyncQuery instance with #asyncResult variable which points to me
 "
 Class {
-	#name : #ClySemiAsyncQueryResult,
-	#superclass : #ClyAsyncQueryResult,
+	#name : 'ClySemiAsyncQueryResult',
+	#superclass : 'ClyAsyncQueryResult',
 	#instVars : [
 		'asyncModeIsActive'
 	],
-	#category : #'Calypso-NavigationModel-Result'
+	#category : 'Calypso-NavigationModel-Result',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Result'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClySemiAsyncQueryResult >> buildIsDone [
 	asyncModeIsActive ifTrue: [ super buildIsDone ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClySemiAsyncQueryResult >> runBuildProcess [
 	"Idea is to look like sync query when it is fast enough.
 	I wait half second maximum until background query will be done.

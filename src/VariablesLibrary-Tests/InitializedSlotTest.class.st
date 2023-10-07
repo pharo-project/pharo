@@ -1,10 +1,12 @@
 Class {
-	#name : #InitializedSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'InitializedSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 InitializedSlotTest >> testBlockWithNonSharedDefault [
  	"If we use a block the resulting default value should not be shared among instances"
 
@@ -31,7 +33,7 @@ InitializedSlotTest >> testBlockWithNonSharedDefault [
  	self assert: (slot read: objectB) size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InitializedSlotTest >> testLazyClassVariableReflectiveBlockParameter [
 	| classVar |
 	classVar := #ClassVar => LazyClassVariable default: [:class | class].
@@ -40,7 +42,7 @@ InitializedSlotTest >> testLazyClassVariableReflectiveBlockParameter [
 	self assert: classVar read equals: aClass
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 InitializedSlotTest >> testPrintOn [
 
  	| slot |
@@ -59,9 +61,10 @@ InitializedSlotTest >> testPrintOn [
 	self should: [#slot1 => InitializedSlot default: OrderedCollection new] raise: Error
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 InitializedSlotTest >> testReadWriteCompiled [
 	| slot object|
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	slot := #slot1 => InitializedSlot default: 5.
 	aClass := self make: [ :builder | builder slots: {slot}].
 	self assert: (aClass hasSlotNamed: #slot1).
@@ -74,7 +77,7 @@ InitializedSlotTest >> testReadWriteCompiled [
 	self assert: (object slot1) equals: 10
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 InitializedSlotTest >> testReflectiveReadWrite [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: 5.
@@ -88,7 +91,7 @@ InitializedSlotTest >> testReflectiveReadWrite [
 	self assert: (slot read: object) equals: 10
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 InitializedSlotTest >> testReflectiveReadWriteBlock [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: [4+1].

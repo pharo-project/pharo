@@ -14,31 +14,33 @@ Internal Representation and Key Implementation Points.
 	packageManagers:		<Collection of<ClyPackageManager>>
 "
 Class {
-	#name : #ClyProjectManagerRegistry,
-	#superclass : #Object,
+	#name : 'ClyProjectManagerRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'projectManagers'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyProjectManagerRegistry >> initialize [
 	super initialize.
 	projectManagers := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyProjectManagerRegistry >> projectManagers [
 	^ projectManagers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyProjectManagerRegistry >> projectManagers: anObject [
 	projectManagers := anObject
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyProjectManagerRegistry >> projectQueryFor: aScope [
 
 	projectManagers isEmpty ifTrue: [ ^ ClyUnknownQuery instance ].
@@ -46,12 +48,12 @@ ClyProjectManagerRegistry >> projectQueryFor: aScope [
 		reduce: [ :a :b | a , b ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyProjectManagerRegistry >> projects [
 	^projectManagers flatCollect: [ :each | each projects ]
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 ClyProjectManagerRegistry >> registerProjectManager: aPackageManager [
 	projectManagers removeAllSuchThat: [ :each | each class = aPackageManager class ].
 	projectManagers add: aPackageManager

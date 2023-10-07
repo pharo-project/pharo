@@ -1,19 +1,20 @@
 Class {
-	#name : #SUnitSuiteBuilderTest,
-	#superclass : #TestCase,
+	#name : 'SUnitSuiteBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'visitor'
 	],
-	#category : #'SUnit-Visitor-Tests'
+	#category : 'SUnit-Visitor-Tests',
+	#package : 'SUnit-Visitor-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SUnitSuiteBuilderTest >> setUp [
 	super setUp.
 	visitor := SUnitSuiteBuilder new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitSuiteBuilderTest >> testVisitingCaseReturnsSameCase [
 	| result |
 	result := visitor visit: self.
@@ -21,7 +22,7 @@ SUnitSuiteBuilderTest >> testVisitingCaseReturnsSameCase [
 	self assert: result equals: self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitSuiteBuilderTest >> testVisitingClassReturnsSuiteWithSameTestsSelectors [
 
 	| result |
@@ -31,7 +32,7 @@ SUnitSuiteBuilderTest >> testVisitingClassReturnsSuiteWithSameTestsSelectors [
 		hasSameElements: self class testSelectors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitSuiteBuilderTest >> testVisitingPackageReturnsSuiteOfSuites [
 	| result testClasses |
 	result := visitor visit: self class package.
@@ -47,7 +48,7 @@ SUnitSuiteBuilderTest >> testVisitingPackageReturnsSuiteOfSuites [
 		hasSameElements: (testClasses flatCollect: [:each | each testSelectors])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SUnitSuiteBuilderTest >> testVisitingSuiteReturnsSameSuite [
 	| suite result |
 	suite := self class suite.

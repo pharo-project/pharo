@@ -5,78 +5,27 @@ Several subscriptions by the same object is possible.
 I know how to make myself weak or strong, only use this capability if it can't be determined at subscribe time though, as it uses become: (for thread-safety), which is quite slow.
 "
 Class {
-	#name : #AnnouncementSubscription,
-	#superclass : #Object,
+	#name : 'AnnouncementSubscription',
+	#superclass : 'AbstractAnnouncementSubscription',
 	#instVars : [
-		'announcer',
-		'announcementClass',
-		'subscriber',
-		'action'
+		'subscriber'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : 'Announcements-Core-Subscription',
+	#package : 'Announcements-Core',
+	#tag : 'Subscription'
 }
 
-{ #category : #accessing }
-AnnouncementSubscription >> action [
-
-	^ action
-]
-
-{ #category : #accessing }
-AnnouncementSubscription >> action: anObject [
-
-	action := anObject
-]
-
-{ #category : #accessing }
-AnnouncementSubscription >> announcementClass [
-
-	^ announcementClass
-]
-
-{ #category : #accessing }
-AnnouncementSubscription >> announcementClass: anObject [
-
-	announcementClass := anObject
-]
-
-{ #category : #accessing }
-AnnouncementSubscription >> announcer [
-
-	^ announcer
-]
-
-{ #category : #accessing }
-AnnouncementSubscription >> announcer: anAnnouncer [
-	announcer := anAnnouncer
-]
-
-{ #category : #announcing }
-AnnouncementSubscription >> deliver: anAnnouncement [
-	" deliver an announcement to receiver. In case of failure, it will be handled in separate process"
-
-	^ (self handlesAnnouncement: anAnnouncement ) ifTrue: [
-		[action cull: anAnnouncement cull: announcer]
-			on: UnhandledError fork: [:ex | ex pass ]]
-]
-
-{ #category : #testing }
-AnnouncementSubscription >> handlesAnnouncement: anAnnouncement [
-
-	^ announcementClass handlesAnnouncement: anAnnouncement
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 AnnouncementSubscription >> makeStrong [
-	" i am already strong. Do nothing "
+	"I am already strong. Do nothing "
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AnnouncementSubscription >> makeWeak [
 
 	action isBlock ifTrue: [
 		self error: 'Not currently available due to missing ephemerons support'
-		].
+	].
 
 	^ announcer replace: self with:
 		(WeakAnnouncementSubscription new
@@ -86,19 +35,14 @@ AnnouncementSubscription >> makeWeak [
 			announcementClass: announcementClass)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementSubscription >> subscriber [
+
 	^ subscriber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementSubscription >> subscriber: aSubscriber [
-	subscriber := aSubscriber
-]
 
-{ #category : #accessing }
-AnnouncementSubscription >> valuable: aValuable [
-	"Used when subscriber should be extracted from valuable object"
-	self action:  aValuable.
-	self subscriber: aValuable receiver
+	subscriber := aSubscriber
 ]

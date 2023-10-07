@@ -4,17 +4,19 @@ I provide a convenient API to create instances of HiRuler. The user sets a list 
 A class side method eases the creation in ony one message send.
 "
 Class {
-	#name : #HiRulerBuilder,
-	#superclass : #Object,
+	#name : 'HiRulerBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'values',
 		'linksBlock',
 		'ruler'
 	],
-	#category : #'Hiedra-Model'
+	#category : 'Hiedra-Model',
+	#package : 'Hiedra',
+	#tag : 'Model'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 HiRulerBuilder class >> newRulerValues: aCollection linksBlock: aBlockClosure [
 	^ self new
 		values: aCollection;
@@ -23,7 +25,7 @@ HiRulerBuilder class >> newRulerValues: aCollection linksBlock: aBlockClosure [
 		ruler
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 HiRulerBuilder >> build [
 
 	ruler := HiRuler withValues: values.
@@ -37,7 +39,7 @@ HiRulerBuilder >> build [
 		]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HiRulerBuilder >> buildLinksStartingAt: aValue [
 	"This method traverses the values using the linkBlock."
 
@@ -63,7 +65,7 @@ HiRulerBuilder >> buildLinksStartingAt: aValue [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiRulerBuilder >> initialize [
 
 	super initialize.
@@ -71,23 +73,23 @@ HiRulerBuilder >> initialize [
 	values := #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRulerBuilder >> linksBlock [
 	^ linksBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRulerBuilder >> linksBlock: aBlockClosure [
 
 	linksBlock := aBlockClosure
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 HiRulerBuilder >> ruler [
 	^ ruler
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HiRulerBuilder >> stackLinksFrom: aValue in: pending [
 
 	| linkedValues |
@@ -95,12 +97,12 @@ HiRulerBuilder >> stackLinksFrom: aValue in: pending [
 	linkedValues reverseDo: [:each | pending push: (aValue -> each) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRulerBuilder >> values [
 	^ values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiRulerBuilder >> values: aCollection [
 	values := aCollection
 ]

@@ -5,12 +5,14 @@ FTExamples example1.
 FTExamples example2.
 "
 Class {
-	#name : #FTExampleDataSource,
-	#superclass : #FTSimpleDataSource,
-	#category : #'Morphic-Widgets-FastTable-Examples'
+	#name : 'FTExampleDataSource',
+	#superclass : 'FTSimpleDataSource',
+	#category : 'Morphic-Widgets-FastTable-Examples',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleDataSource >> cellColumn: column row: rowIndex [
 	^ FTCellMorph new
 		color: (self colorFor: rowIndex);
@@ -20,13 +22,13 @@ FTExampleDataSource >> cellColumn: column row: rowIndex [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTExampleDataSource >> colorFor: index [
 	index odd ifTrue: [ ^ Smalltalk ui theme lightBackgroundColor ].
 	^ Smalltalk ui theme backgroundColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTExampleDataSource >> iconFor: index [
 	| class |
 	class := self elementAt: index.
@@ -40,8 +42,8 @@ FTExampleDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
+	class hasComment 
+		ifFalse: [ ^ self iconNamed: #uncommentedClass].
 	((class
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
@@ -52,7 +54,5 @@ FTExampleDataSource >> iconFor: index [
 			class hasErrorTest
 				ifTrue: [ ^ self iconNamed: #testRed ].
 			^ self iconNamed: #testNotRun ].
-	class organization classComment
-		ifEmpty: [ ^ self iconNamed: #uncommentedClass ].
 	^ self iconNamed: class systemIconName
 ]

@@ -2,26 +2,28 @@
 I am raised when a morph property changed, and should be propagated to dependents
 "
 Class {
-	#name : #MorphChanged,
-	#superclass : #MorphAnnouncement,
+	#name : 'MorphChanged',
+	#superclass : 'MorphAnnouncement',
 	#instVars : [
 		'selector'
 	],
-	#category : #'Morphic-Core-Announcements'
+	#category : 'Morphic-Core-Announcements',
+	#package : 'Morphic-Core',
+	#tag : 'Announcements'
 }
 
-{ #category : #delivering }
+{ #category : 'delivering' }
 MorphChanged >> deliverTo: aHandler [
 
 	^ aHandler update: selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphChanged >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphChanged >> selector: anObject [
 	selector := anObject
 ]

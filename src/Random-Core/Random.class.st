@@ -1,5 +1,5 @@
 "
-This Random Number Generator graciously contributed by David N. Smith.  It is an adaptation of the Park-Miller RNG [1] which uses Floats to avoid the need for LargeInteger arithmetic.
+This Random Number Generator is an implementation of a Permuted Congruential Generator (https://www.pcg-random.org/index.html)
 
 If you just want a quick random integer, use:
 		10 atRandom
@@ -16,25 +16,52 @@ Then use it every time you need another number between 0.0 and 1.0 (excluding)
 		myGenerator next
 You can also generate a positive integer
 		myGenerator nextInteger: 10
-		
-[1] 'Random Number Generators:  Good Ones Are Hard to Find' 
-by Stephen K. Park and Keith W. Miller 
-(Comm. Asso. Comp. Mach., 31(10):1192--1201, 1988). http://www.firstpr.com.au/dsp/rand31/p1192-park.pdf
+
+
+The implementation used here is the minimal implementation:
+
+```c
+// *Really* minimal PCG32 code / (c) 2014 M.E. O'Neill / pcg-random.org
+// Licensed under Apache License 2.0 (NO WARRANTY, etc. see website)
+
+typedef struct { uint64_t state;  uint64_t inc; } pcg32_random_t;
+
+uint32_t pcg32_random_r(pcg32_random_t* rng)
+{
+    uint64_t oldstate = rng->state;
+    // Advance internal state
+    rng->state = oldstate * 6364136223846793005ULL + (rng->inc|1);
+    // Calculate output function (XSH RR), uses old state for max ILP
+    uint32_t xorshifted = ((oldstate >> 18u) ^ oldstate) >> 27u;
+    uint32_t rot = oldstate >> 59u;
+    return (xorshifted >> rot) | (xorshifted << ((-rot) & 31));
+}
+```
+
+@TechReport{oneill:pcg2014,
+title = ""PCG: A Family of Simple Fast Space-Efficient Statistically Good Algorithms for Random Number Generation"",
+author = ""Melissa E. O'Neill"",
+institution = ""Harvey Mudd College"",
+address = ""Claremont, CA"",
+number = ""HMC-CS-2014-0905"",
+year = ""2014"",
+month = Sep,
+xurl = ""https://www.cs.hmc.edu/tr/hmc-cs-2014-0905.pdf"",
+}
 "
 Class {
-	#name : #Random,
-	#superclass : #Object,
+	#name : 'Random',
+	#superclass : 'Object',
 	#instVars : [
-		'seed',
-		'a',
-		'm',
-		'q',
-		'r'
+		'state',
+		'seed'
 	],
-	#category : #'Random-Core-Base'
+	#category : 'Random-Core-Base',
+	#package : 'Random-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Random class >> bucketTest: randy [
 	"Execute this:   Random bucketTest: Random new"
 
@@ -73,84 +100,95 @@ more; go get coffee.
 						stream space ] ])
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'private' }
+Random class >> primitiveRandomNumber: stateArray [
+	"Answer a random Float in the interval [0 to 1)."
+
+	<primitive: 231>
+	| count returnValue |
+	returnValue := stateArray at: 1.
+
+	count := returnValue >> 59.
+
+	stateArray
+		at: 1
+		put:
+			(returnValue * 6364136223846793005 + 1442695040888963407 bitAnd:
+				 16rFFFFFFFFFFFFFFFF).
+
+	returnValue := returnValue >> 18 bitXor: returnValue.
+
+	returnValue := returnValue >> 27 bitAnd: 16rFFFFFFFF.
+	^ (returnValue >> count bitOr:
+		   returnValue << (count negated bitAnd: 31)) bitAnd: 16r7FFFFFFF
+]
+
+{ #category : 'instance creation' }
 Random class >> seed: anInteger [
 	^self new seed: anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> initialize [
+	state := DoubleWordArray new: 1.
 	self useClockBasedSeed.
-	a := 16r000041A7 asFloat.    " magic constant =      16807 = 7^5"
-	m := 16r7FFFFFFF asFloat.    " magic constant = 2147483647 = 2^31 - 1"
-	q := (m quo: a) asFloat.
-	r  := (m \\ a) asFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+Random >> maxValue [
+	^16r7FFFFFFF
+]
+
+{ #category : 'accessing' }
 Random >> next [
 	"Answer a random Float in the interval [0 to 1)."
 
-	^ self privateNextValue
+	^ (self privateNextValue / (self maxValue + 1) ) asFloat 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> next: anInteger [
 	^ self next: anInteger into: (Array new: anInteger)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> next: anInteger into: anArray [
-	1 to: anInteger do: [:index | anArray at: index put: self privateNextValue].
+	1 to: anInteger do: [:index | anArray at: index put: self next].
 	^ anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> nextBetween: lowerBound and: higherBound [
 	"Answer a random float number from the range [lowerBound, higherBound)"
 	^ lowerBound + (self next * (higherBound - lowerBound))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> nextInteger: anInteger [
 	"Answer a random integer in the interval [1, anInteger].
 	Handle large numbers too (for cryptography)."
 
-	anInteger strictlyPositive ifFalse: [ self error: 'Range must be positive' ].
-	anInteger asFloat isInfinite "are we outside the range of float? - use fraction"
-		ifTrue: [^(self privateNextValue asFraction * anInteger) truncated + 1].
-	^ (self privateNextValue * anInteger) truncated + 1
+	anInteger strictlyPositive ifFalse: [
+		self error: 'Range must be positive' ].
+
+	^ (self privateNextValue / (self maxValue + 1) * anInteger) truncated
+	  + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Random >> nextIntegerBetween: lowerBound and: higherBound [
 	"Answer a random integer number from the inclusive range [lowerBound, higherBound]"
 	^ lowerBound + (self nextInteger: (higherBound - lowerBound + 1)) - 1
 ]
 
-{ #category : #private }
-Random >> privateNextSeed [
-	"This method generates random instances of Integer 	in the interval
-	0 to 16r7FFFFFFF. This method does NOT update the seed; repeated sends
-	answer the same value. The algorithm is described in detail in [1]"
-
-	| lo hi aLoRHi |
-	hi := (seed quo: q) asFloat.
-	lo := seed - (hi * q).  " = seed rem: q"
-	aLoRHi := (a * lo) - (r * hi).
-	^(aLoRHi > 0.0)
-		ifTrue:  [aLoRHi]
-		ifFalse: [aLoRHi + m]
-]
-
-{ #category : #private }
+{ #category : 'private' }
 Random >> privateNextValue [
 	"Answer a random Float in the interval [0 to 1)."
 
-	^ (seed := self privateNextSeed) / m
+	^ self class primitiveRandomNumber: state
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Random >> seed [
 	"Since [1] says...
 	    'After initialization the ideal solution is to hide seed from the user'
@@ -158,27 +196,37 @@ Random >> seed [
 	^ seed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> seed: aNumber [
 	"Refer #privateNextSeed and [1], seed should be positive and less than m"
-	| newSeed |
-	newSeed := aNumber.
-	[ newSeed > 0 ] whileFalse:
-		[ newSeed := newSeed + m ].
-	[ newSeed < m ] whileFalse:
-		[ newSeed := newSeed - m ].
-	seed := newSeed
+	seed := aNumber.
+	self setStateFromSeed.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
+Random >> setStateFromSeed [
+
+	state at: 1 put: seed + 1442695040888963407.
+	self class primitiveRandomNumber: state
+]
+
+{ #category : 'accessing' }
+Random >> state [
+
+	^ state
+]
+
+{ #category : 'initialization' }
 Random >> useClockBasedSeed [
 	"Set a reasonable Park-Miller starting seed [1] based on the ms clock."
 
-	[ seed := (Time millisecondClockValue bitAnd: 16r3FFFFFFF) bitXor: self hash.
-	seed = 0 ] whileTrue: [ "Try again if ever get a seed = 0" ]
+	[ seed := (Time millisecondClockValue bitAnd: 16rFFFFFFFFFFFFFFFF) bitXor: self hash.
+	seed = 0 ] whileTrue: [ "Try again if ever get a seed = 0" ].
+
+	self setStateFromSeed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Random >> useUnixRandomGeneratorSeed [
 	"Try to seed the receiver using random bytes from a Unix OS' /dev/random.
 	Return true if we succeeded, false otherwise.
@@ -187,6 +235,7 @@ Random >> useUnixRandomGeneratorSeed [
 	^ [ (File named: '/dev/random') readStreamDo: [ :in |
 			[ seed := (in next: 4) asInteger.
 			seed isZero ] whileTrue. "Try again if we ever get a zero value"
+			self setStateFromSeed.
 			true ] ]
 		on: Error
 		do: [ false ]

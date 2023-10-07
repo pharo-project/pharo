@@ -1,6 +1,6 @@
-Extension { #name : #RBRenameMethodRefactoring }
+Extension { #name : 'RBRenameMethodRefactoring' }
 
-{ #category : #'*Epicea-Refactorings' }
+{ #category : '*Epicea-Refactorings' }
 RBRenameMethodRefactoring >> asEpiceaEvent [
 	^ EpRenameMethodRefactoring
 		renameMethod: oldSelector
@@ -8,7 +8,7 @@ RBRenameMethodRefactoring >> asEpiceaEvent [
 		to: newSelector
 ]
 
-{ #category : #'*Epicea-Refactorings' }
+{ #category : '*Epicea-Refactorings' }
 RBRenameMethodRefactoring >> propagateTransformation [
-	self renameMessageSends
+	self replaceMessageSends
 ]

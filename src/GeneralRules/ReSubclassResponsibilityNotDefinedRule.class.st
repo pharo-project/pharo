@@ -2,56 +2,58 @@
 This rule checks if all subclassResponsibility methods are defined in all leaf classes. if such a method is not overridden, a subclassResponsibility message can be occur when this method is called.
 "
 Class {
-	#name : #ReSubclassResponsibilityNotDefinedRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReSubclassResponsibilityNotDefinedRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReSubclassResponsibilityNotDefinedRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'SubclassResponsibilityNotDefinedRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReSubclassResponsibilityNotDefinedRule >> check: aClass forCritiquesDo: aCriticBlock [
 
-	(aClass whichSelectorsReferTo: #subclassResponsibility) do:
-		[ :selector |
+	(aClass whichMethodsReferTo: #subclassResponsibility) do:
+		[ :method |
 		(aClass subclasses do: [ :class |
 				(class subclasses isEmpty and:
-				[ (class whichClassIncludesSelector: selector) == aClass ]) ifTrue: [
+				[ (class whichClassIncludesSelector: method selector) == aClass ]) ifTrue: [
 					aCriticBlock cull: (ReMissingMethodCritique
 						for: aClass
 						by: self
 						class: class
-						selector: selector)
+						selector: method selector)
 						beShouldBeImplemented;
 						yourself ] ]) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule >> group [
 	^ 'Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule >> name [
 	^ '#subclassResponsibility not defined'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule >> rationale [
 	^ 'Checks that all methods which send #subclassResponsibility, which indicates that they are abstract, are defined in all leaf classes.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule >> severity [
 	^ #error
 ]

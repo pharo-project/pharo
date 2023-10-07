@@ -3,18 +3,20 @@ Replaces isNotNil ifTrue , isNotNil ifFalse and isNotNil ifTrue:ifFalse by ifNot
 Works also with notNil.
 "
 Class {
-	#name : #ReIsNotNilAndConditionalRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReIsNotNilAndConditionalRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReIsNotNilAndConditionalRule >> group [
 
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReIsNotNilAndConditionalRule >> initialize [
 
 	super initialize.
@@ -34,13 +36,13 @@ ReIsNotNilAndConditionalRule >> initialize [
 			with: '``@receiver ifNotNil: ``@nilBlock ifNil: ``@notNilBlock'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReIsNotNilAndConditionalRule >> name [
 
 	^ 'Sends isNotNil / notNil and a conditional check instead of using #ifNil: #ifNotNil: or #ifNil:ifNotNil:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReIsNotNilAndConditionalRule >> rationale [
 
 	^ 'Using specific conditional methods leads to shorter code and helps in avoiding unneeded temporary variables.<n><n>Replaces<n><t>isNotNil ifTrue: ~~> ifNotNil:<n><t>isNotNil ifFalse: ~~> ifNil:<n><t>isNotNil ifTrue:ifFalse ~~> ifNotNil:ifNil:'

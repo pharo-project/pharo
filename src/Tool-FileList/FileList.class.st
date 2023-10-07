@@ -4,8 +4,8 @@ A FileList is a tool to deal with files.
 FileList open				""open FileList""
 "
 Class {
-	#name : #FileList,
-	#superclass : #Model,
+	#name : 'FileList',
+	#superclass : 'Model',
 	#instVars : [
 		'reference',
 		'volumeList',
@@ -29,17 +29,18 @@ Class {
 	#classInstVars : [
 		'searchList'
 	],
-	#category : #'Tool-FileList'
+	#category : 'Tool-FileList',
+	#package : 'Tool-FileList'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileList class >> addFullPanesTo: window from: aCollection [
 
 	aCollection do: [ :each |
 		window addMorph: each first fullFrame: each second ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 FileList class >> contentMenu: aBuilder [
 	<contextMenu>
 	<fileListContentMenu>
@@ -108,21 +109,21 @@ FileList class >> contentMenu: aBuilder [
 		withSeparatorAfter
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileList class >> itemsForDirectory: aFileDirectory [
 	"Answer a list of services appropriate when no file is selected."
 
 	^ FileServices itemsForDirectory: aFileDirectory
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileList class >> itemsForFile: file [
 	"Answer a list of services appropriate for a file of the given full name"
 
 	^ FileServices itemsForFile: file fullName
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 FileList class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'File Browser')
@@ -133,7 +134,7 @@ FileList class >> menuCommandOn: aBuilder [
 		icon: (aBuilder iconNamed: self taskbarIconName)
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList class >> morphicViewOnDirectory: aFileDirectory [
 
 	^ self
@@ -142,7 +143,7 @@ FileList class >> morphicViewOnDirectory: aFileDirectory [
 		fileList: (self new directory: aFileDirectory)
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList class >> morphicViewOnFile: aFile contents: contents fileList: aFileList [
 	| window fileListBottom midLine fileListTopOffset buttonPane fileContentsView |
  	window := (SystemWindow labelled: aFile fullName) model: aFileList.
@@ -170,19 +171,19 @@ FileList class >> morphicViewOnFile: aFile contents: contents fileList: aFileLis
 	^ window
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileList class >> newOnDirectory: aFileReference [
 
 	^ self newOnDirectory: aFileReference baseLabel: ''
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileList class >> newOnDirectory: aFileReference baseLabel: aTitle [
 
 	^ self newOnDirectory: aFileReference baseLabel: aTitle contents: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileList class >> newOnDirectory: aFileReference baseLabel: aTitle contents: someContents [
 
 	^ self new
@@ -192,20 +193,20 @@ FileList class >> newOnDirectory: aFileReference baseLabel: aTitle contents: som
 			yourself
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList class >> open [
 	"Open a view of an instance of me on the default directory."
 	"FileList open openInWorld"
 	^ self new morphicView openInWorld
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList class >> openEditorOn: aFileStream editString: editString [
 	"Open an editor on the given FileStream."
 	^ (self openMorphOn: aFileStream editString: editString) openInWorld
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList class >> openMorphOn: aFileStream editString: editString [
 	"Open a morphic view of a FileList on the given file."
 	^ (self new setFileStream: aFileStream)
@@ -213,12 +214,12 @@ FileList class >> openMorphOn: aFileStream editString: editString [
 		morphicViewOnFile: aFileStream fullName asFileReference
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList class >> openOn: aFileReference [
 	^self openOn: aFileReference titled: ''
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList class >> openOn: aFileReference titled: aTitle [
 
 	| listView |
@@ -227,18 +228,18 @@ FileList class >> openOn: aFileReference titled: aTitle [
 	^ listView
 ]
 
-{ #category : #'tools registry' }
+{ #category : 'tools registry' }
 FileList class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #fileList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList class >> searchList [
 	^ searchList ifNil: [ searchList := OrderedCollection new ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileList class >> suffixOf: aName [
 	"Answer the file extension of the given file"
 	^ aName
@@ -246,14 +247,14 @@ FileList class >> suffixOf: aName [
 		ifNotNil: [ aName asFileReference extension asLowercase]
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 FileList class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallOpen
 ]
 
-{ #category : #'drag\'n\'drop' }
+{ #category : 'drag\'n\'drop' }
 FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 	| oldEntry destDirectory newEntry response |
 	destDirectory := self dropDestinationDirectory: dest event: evt.
@@ -290,14 +291,14 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 	^true
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileList >> addFullPanesTo: window from: aCollection [
 
 	aCollection do: [ :each |
 		window addMorph: each first fullFrame: each second ]
 ]
 
-{ #category : #'file menu action' }
+{ #category : 'file menu action' }
 FileList >> addNew: aString byEvaluating: aBlock [
 	"A parameterization of earlier versions of #addNewDirectory and
 	#addNewFile.  Fixes the bug in each that pushing the cancel button
@@ -321,7 +322,7 @@ FileList >> addNew: aString byEvaluating: aBlock [
 	self fileListIndex: index.]
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> addNewDirectory [
 	self
 		addNew: 'Directory'
@@ -329,14 +330,14 @@ FileList >> addNewDirectory [
 			(self directory / newName ) ensureCreateDirectory ]
 ]
 
-{ #category : #'file menu action' }
+{ #category : 'file menu action' }
 FileList >> addNewFile [
 	self
 		addNew: 'File'
 		byEvaluating: [:newName | (self directory / newName) ensureCreateFile ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> addPath: aString [
 	"Add the given string to the list of recently visited directories."
 
@@ -349,13 +350,13 @@ FileList >> addPath: aString [
 	full := full, aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> baseLabel: aString [
 
 	baseLabel := aString
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> basicDeleteDirectory [
 	"Remove the currently selected directory"
 	reference entries isEmpty
@@ -370,39 +371,39 @@ FileList >> basicDeleteDirectory [
 	self directory: reference parent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> buttonSelectorsToSuppress [
 	"Answer a list of action selectors whose corresponding services we would prefer *not* to have appear in the filelist's button pane; this can be hand-jimmied to suit personal taste."
 
 	^ #(removeLineFeeds: addFileToNewZip: compressFile:)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> cancelHit [
 
 	modalView delete
 ]
 
-{ #category : #'volume list and pattern' }
+{ #category : 'volume list and pattern' }
 FileList >> changeDirectoryTo: aFileDirectory [
 	"Change directory as requested."
 	self directory: aFileDirectory.
 	self updateDirectory
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FileList >> changedContents [
 
 	self sourceTextModel setText: self contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> configuredServices [
 
 	^ configuredServices
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> confirmOverwriteOrCreateNewFileOrAbort [
 	| choice  chooseList |
 	chooseList := {'overwrite that file' translated.
@@ -414,7 +415,7 @@ FileList >> confirmOverwriteOrCreateNewFileOrAbort [
 	^ choice
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> contents [
 	"Answer the contents of the file, reading it first if needed."
 	"Possible brevityState values:
@@ -438,20 +439,20 @@ FileList >> contents [
 	self error: 'unknown state ' , brevityState printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> contents: someContents [
 
 	contents := someContents
 ]
 
-{ #category : #'menu messages' }
+{ #category : 'menu messages' }
 FileList >> copyName [
 
 	listIndex = 0 ifTrue: [^ self].
 	Clipboard clipboardText: self fullName asText
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> defaultContents [
 
 	contents := list
@@ -476,14 +477,14 @@ FileList >> defaultContents [
 	^ contents
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> deleteDirectory [
 	self basicDeleteDirectory.
 	self updateFileList.
 	self updateDirectory
 ]
 
-{ #category : #'file menu action' }
+{ #category : 'file menu action' }
 FileList >> deleteFile [
 	"Delete the currently selected file"
 	listIndex = 0 ifTrue: [^ self].
@@ -499,7 +500,7 @@ FileList >> deleteFile [
 	self get
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> directoriesFor: directory [
 	"item may be file directory or server directory"
 	| entries |
@@ -508,7 +509,7 @@ FileList >> directoriesFor: directory [
 	^entries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> directory [
 
 	^ reference isFile
@@ -516,38 +517,38 @@ FileList >> directory [
 		ifFalse: [ reference ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> directory: dir [
 	^ self reference: dir
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> doItContext [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> doItReceiver [
 	^ nil
 ]
 
-{ #category : #'drag\'n\'drop' }
+{ #category : 'drag\'n\'drop' }
 FileList >> dragPassengerFor: item inMorph: dragSource [
 	^ item contents copy
 ]
 
-{ #category : #'drag\'n\'drop' }
+{ #category : 'drag\'n\'drop' }
 FileList >> dragTransferTypeForMorph: aMorph [
 	^#file
 ]
 
-{ #category : #'drag\'n\'drop' }
+{ #category : 'drag\'n\'drop' }
 FileList >> dropDestinationDirectory: dest event: evt [
 	"Answer a FileDirectory representing the drop destination in the directory hierarchy morph dest"
 	^ (dest itemFromPoint: evt position) withoutListWrapper
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> dynamicButtonServices [
 	"Answer services for buttons that may come and go in the button pane, depending on selection"
 
@@ -560,7 +561,7 @@ FileList >> dynamicButtonServices [
 					[:svc | toReject includes: svc selector]]
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> fileContentsMenu: aMenu shifted: shifted [
 	"Construct aMenu to have items appropriate for the file browser's code pane, given the shift state provided"
 
@@ -586,27 +587,27 @@ FileList >> fileContentsMenu: aMenu shifted: shifted [
 	^ aMenu
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> fileEncoding: aByteSymbol [
 	fileEncoding := aByteSymbol.
 	brevityState := #needToGetBrief.
 	self changedContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> fileList [
 	"Answer the list of files in the current volume."
 
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> fileListIndex [
 	"Answer the index of the currently selected file."
 	^ listIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> fileListIndex: anInteger [
 	"Select the file name having the given index, and display its contents."
 
@@ -630,14 +631,14 @@ FileList >> fileListIndex: anInteger [
 	self updateButtonRow
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> fileListMenu: aMenu [
 	^ reference
 		ifNil: [ self noFileSelectedMenu: aMenu ]
 		ifNotNil: [ self fileSelectedMenu: aMenu ]
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> fileSelectedMenu: aMenu [
 	| n1 n2 n3 services |
 	services := OrderedCollection withAll: (self itemsForFile: reference).
@@ -654,14 +655,14 @@ FileList >> fileSelectedMenu: aMenu [
 		extraLines: (Array with: n1 with: n2 with: n3)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> fileSystem [
 	^ reference
 		ifNil: [ FileSystem disk ]
 		ifNotNil: [ reference fileSystem ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> filesMatching: aPattern [
 	"Answer a list of directory entries which match the patternString.
 	The patternString may consist of multiple patterns separated by ';'.
@@ -675,7 +676,7 @@ FileList >> filesMatching: aPattern [
 	^ files select: [:entry | (aRegex search: entry basename)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> findFileListIndex: aMorphTreeSelectionChanged [
 	| node selectedPath |
 
@@ -685,7 +686,7 @@ FileList >> findFileListIndex: aMorphTreeSelectionChanged [
 	self fileListIndex: (self fileList indexOf: node item)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> folderSelectButtonRow [
 	"Answer the button row used for folder selection"
 
@@ -698,13 +699,13 @@ FileList >> folderSelectButtonRow [
 	^ aRow
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> fullName [
 	"Answer the full name for the currently selected file; answer nil if no file is selected."
 	^ reference fullName
 ]
 
-{ #category : #'file menu action' }
+{ #category : 'file menu action' }
 FileList >> get [
 	"Get contents of file again, it may have changed. Do this by making the cancel string be the contents, and doing a cancel."
 
@@ -719,7 +720,7 @@ FileList >> get [
 			 ]
 ]
 
-{ #category : #'file menu action' }
+{ #category : 'file menu action' }
 FileList >> getEncodedText [
 
 	Cursor read showWhile: [
@@ -727,13 +728,13 @@ FileList >> getEncodedText [
 		self changed: #contents]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> getEncoding [
 	^ fileEncoding
 		ifNil: [ 'utf-8' ]
 ]
 
-{ #category : #'file menu action' }
+{ #category : 'file menu action' }
 FileList >> getHex [
 	"Get contents of file again, and display in Hex. Do this by making the cancel string be the contents, and doing a cancel."
 
@@ -742,12 +743,12 @@ FileList >> getHex [
 		self changedContents]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> getListIndex [
 	^ list indexOf: reference ifAbsent: [ 0 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> getSelectedFolder [
 	"Answer the selected folder or nil if dialog was canceled"
 
@@ -755,12 +756,12 @@ FileList >> getSelectedFolder [
 	^ self directory
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> grid [
 	^ grid ifNil: [ grid := self morphicGrid ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> initialDirectoryList [
 
 	| dirList |
@@ -776,7 +777,7 @@ FileList >> initialDirectoryList [
 	^dirList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> initialize [
 
 	super initialize.
@@ -788,19 +789,19 @@ FileList >> initialize [
 	self directory: FileSystem workingDirectory
 ]
 
-{ #category : #'drag\'n\'drop' }
+{ #category : 'drag\'n\'drop' }
 FileList >> isDirectoryList: aMorph [
 	^aMorph isKindOf: SimpleHierarchicalListMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> isFileSelected [
 	"return if a file is currently selected"
 
 	^ reference notNil and: [ reference isFile ]
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> itemsForAnyFile [
 	"Answer a list of universal services that could apply to any file"
 
@@ -814,7 +815,7 @@ FileList >> itemsForAnyFile [
 	^ services
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> itemsForDirectory: dir [
 	| services |
 	services := OrderedCollection new.
@@ -828,13 +829,13 @@ FileList >> itemsForDirectory: dir [
 	^ services
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> itemsForFile: file [
 	"Answer a list of services appropriate for a file"
 	^ (self class itemsForFile: file)
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> itemsForNoFile [
 
 	| services |
@@ -843,18 +844,18 @@ FileList >> itemsForNoFile [
 	^ services
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> knownEncodingIdentifiers [
 	^ ZnCharacterEncoder knownEncodingIdentifiers sort
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> labelString [
 	reference ifNil: [ ^ '[]' ].
 	^ baseLabel, reference basename contractTo: 50
 ]
 
-{ #category : #'volume list and pattern' }
+{ #category : 'volume list and pattern' }
 FileList >> listForPattern: aPattern [
 	"Make the list be those file names which match the pattern."
 
@@ -864,19 +865,19 @@ FileList >> listForPattern: aPattern [
 	^ newList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> modalView: aSystemWindowOrSuch [
 
 	modalView := aSystemWindowOrSuch
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> morphicDirectoryTreePane [
 
 	^self morphicDirectoryTreePaneFiltered: #initialDirectoryList
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> morphicDirectoryTreePaneFiltered: aSymbol [
 	^(SimpleHierarchicalListMorph
 		on: self
@@ -890,7 +891,7 @@ FileList >> morphicDirectoryTreePaneFiltered: aSymbol [
 			yourself
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> morphicFileContentsPane [
 	| scrolledText |
 	scrolledText := self sourceTextModel newScrolledText
@@ -903,12 +904,12 @@ FileList >> morphicFileContentsPane [
 	^ scrolledText
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> morphicFileListPane [
 	^ grid ifNil: [ grid := self morphicGrid ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> morphicGrid [
 	grid := FileListGrid new
 		parent: self.
@@ -918,7 +919,7 @@ FileList >> morphicGrid [
 	^ grid treeMorph
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> morphicPatternPane [
 	"Remove the vertical scrollbar since the minHeight would otherwise
 	be too large to fit the layout frame. Added here for Pharo since
@@ -934,13 +935,13 @@ FileList >> morphicPatternPane [
 		yourself
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList >> morphicView [
 
 	^ self morphicViewOnDirectory: self directory
 ]
 
-{ #category : #'modal dialogs' }
+{ #category : 'modal dialogs' }
 FileList >> morphicViewFolderSelector: aDir [
 	"Answer a tool that allows the user to select a folder"
 	|  window buttonRow fileListTopOffset |
@@ -963,13 +964,13 @@ FileList >> morphicViewFolderSelector: aDir [
 	^ window
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList >> morphicViewOnDirectory: aFileDirectory [
 
 	^ self morphicViewOnDirectory: aFileDirectory baseLabel: ''
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList >> morphicViewOnDirectory: aFileDirectory baseLabel: aString [
 
 	^ self
@@ -977,7 +978,7 @@ FileList >> morphicViewOnDirectory: aFileDirectory baseLabel: aString [
 		morphicViewOnFile: aFileDirectory
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList >> morphicViewOnFile: aFile [
 	| window fileListBottom midLine fileListTopOffset buttonPane fileContentsView |
 	window := (SystemWindow labelled: self labelString) model: self.
@@ -1004,7 +1005,7 @@ FileList >> morphicViewOnFile: aFile [
 	^ window
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> noFileSelectedMenu: aMenu [
 
 	^ aMenu
@@ -1013,7 +1014,7 @@ FileList >> noFileSelectedMenu: aMenu [
 		extraLines: #()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> okHit [
 	ok := true.
 	self directory
@@ -1021,25 +1022,25 @@ FileList >> okHit [
 		ifNotNil: [modalView delete]
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> okayAndCancelServices [
 	"Answer ok and cancel services"
 
 	^ {self serviceOkay. self serviceCancel}
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> openImageInWindow [
-	"Handle five file formats: GIF, JPG, PNG, Form stoteOn: (run coded), and
-	BMP. Fail if file format is not recognized."
-	| image |
-	self reference streamWritable: false do: [ :stream|
-		image := Form fromBinaryStream: stream].
+	"Handle five file formats: GIF, JPG, PNG, Form stoteOn: (run coded), and BMP. 
+	Fail if file format is not recognized."
 
-	(ImageMorph withForm: image) openInWorld
+	| image |
+	image := self reference binaryReadStreamDo: [ :stream |
+		         Form fromBinaryStream: stream ].
+	(ImageMorph withForm: image) openInWindow
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> optionalButtonRow [
 	"Answer the button row associated with a file list"
 
@@ -1053,22 +1054,22 @@ FileList >> optionalButtonRow [
 	^ aRow
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> optionalButtonSpecs [
 	^ optionalButtonSpecs
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> optionalButtonSpecs: aSpecArray [
 	optionalButtonSpecs := aSpecArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> pattern [
 	^ pattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> pattern: aStringOrNil [
 	pattern := aStringOrNil
 		ifNotNil: [ :aString |
@@ -1078,7 +1079,7 @@ FileList >> pattern: aStringOrNil [
 	self updateFileList
 ]
 
-{ #category : #'menu messages' }
+{ #category : 'menu messages' }
 FileList >> perform: selector orSendTo: otherTarget [
 	"Selector was just chosen from a menu by a user.
 	If it's one of the three sort-by items, handle it specially.
@@ -1090,7 +1091,7 @@ FileList >> perform: selector orSendTo: otherTarget [
 				ifFalse: [super perform: selector orSendTo: otherTarget]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> postOpen [
 
 	reference ifNotNil: [
@@ -1098,7 +1099,7 @@ FileList >> postOpen [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> put: aText [
 	"Private - put the supplied text onto the file"
 
@@ -1124,7 +1125,7 @@ meaningfully be saved at present.' translated format:{type translated}).
 	^ false  "failed"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> readContentsBrief: brevityFlag [
 	"Read the contents of the receiver's selected file, unless it is too long, in which case show just the first 5000 characters. Don't create a file if it doesn't already exist."
 	| fileSize first5000 |
@@ -1145,68 +1146,59 @@ FileList >> readContentsBrief: brevityFlag [
 	^ contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> readContentsHex: brevity [
+	"Retrieve the contents from the external file unless it is too long.
+	Don't create a file here.  Check if exists."
 
-	"retrieve the contents from the external file unless it is too long.
-	  Don't create a file here.  Check if exists."
-
-	| size data hexData s |
-
-	self reference
-		streamWritable: false
-		do: [ :f |
-			f ifNil: [ ^ 'For some reason, this file cannot be read' translated ].
-			f binary.
-			( size := f size ) > 5000 & brevity
-				ifTrue: [ data := f next: 10000.
-					f close.
-					brevityState := #briefHex
-					]
-				ifFalse: [ data := f contentsOfEntireFile.
-					brevityState := #fullHex
-					].
-
-			s := ( String new: data size * 4 ) writeStream.
-			0 to: data size - 1 by: 16 do: [ :loc |
-				s
-					nextPutAll: loc printStringHex;
-					space;
-					nextPut: $(;
-					print: loc;
-					nextPut: $);
-					space;
-					tab.
-				loc + 1 to: ( loc + 16 min: data size ) do: [ :i |
-					s
-						nextPutAll: ( data at: i ) printStringHex;
-						space
-					].
-				s cr
-				].
-			hexData := s contents
-			].
-
+	| size data hexData stream |
+	size := 0.
+	hexData := self reference binaryReadStreamDo: [ :f |
+		           f ifNil: [
+			           ^ 'For some reason, this file cannot be read' translated ].
+		           data := (size := f size) > 5000 & brevity
+			                   ifTrue: [
+				                   brevityState := #briefHex.
+				                   f next: 10000 ]
+			                   ifFalse: [
+				                   brevityState := #fullHex.
+				                   f upToEnd ].
+		           stream := (String new: data size * 4) writeStream.
+		           0 to: data size - 1 by: 16 do: [ :loc |
+			           stream
+				           nextPutAll: loc printStringHex;
+				           space;
+				           nextPut: $(;
+				           print: loc;
+				           nextPut: $);
+				           space;
+				           tab.
+			           loc + 1 to: (loc + 16 min: data size) do: [ :i |
+				           stream
+					           nextPutAll: (data at: i) printStringHex;
+					           space ].
+			           stream cr ].
+		           stream contents ].
 	^ contents := size > 5000 & brevity
-		ifTrue: [ '{1}
+		              ifTrue: [
+			              '{1}
 ------------------------------------------
-... end of the first 5000 characters.' translated format: {hexData}
-			]
-		ifFalse: [ hexData ]
+... end of the first 5000 characters.' translated format: { hexData } ]
+		              ifFalse: [ hexData ]
 ]
 
-{ #category : #'file list' }
+{ #category : 'file list' }
 FileList >> readStream [
 	"Answer a read-only stream on the selected file. For the various stream-reading services."
 	^ self reference readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> reference [
 	^ reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileList >> reference: dir [
 	| tmpReference |
 	"Set the path of the volume to be displayed."
@@ -1229,7 +1221,7 @@ FileList >> reference: dir [
 	self updateFileList
 ]
 
-{ #category : #'file menu action' }
+{ #category : 'file menu action' }
 FileList >> renameFile [
 	"Rename the currently selected file"
 	| newName response |
@@ -1249,7 +1241,7 @@ FileList >> renameFile [
 	self changed: #fileListIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> requestNewFileNameAndSave [
 	| newName |
 	newName := UIManager default request: 'Enter a new file name' initialAnswer: reference fullName.
@@ -1260,7 +1252,7 @@ FileList >> requestNewFileNameAndSave [
 	self updateFileList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> selectEncoding [
 	"self new selectEncoding"
 
@@ -1275,12 +1267,12 @@ FileList >> selectEncoding [
 	(ui chooseFromOwner: self currentWorld) ifNotNil: [ :encoding | self fileEncoding: encoding ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> selectedDirectory [
 	^ self directory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> selectedDirectory: aFileDirectoryWrapper [
 	| file |
 
@@ -1300,7 +1292,7 @@ FileList >> selectedDirectory: aFileDirectoryWrapper [
 	self changedContents
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceAddNewDirectory [
 	"Answer a service entry characterizing the 'add new directory' command"
 
@@ -1311,7 +1303,7 @@ FileList >> serviceAddNewDirectory [
 		description: 'Adds a new, empty directory (folder)'
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceAddNewFile [
 	"Answer a service entry characterizing the 'add new file' command"
 
@@ -1323,7 +1315,7 @@ FileList >> serviceAddNewFile [
 		usingLineAfter: false
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceCancel [
 	"Answer a service for hitting the cancel button"
 
@@ -1334,7 +1326,7 @@ FileList >> serviceCancel [
 		buttonLabel: 'Cancel'
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceCopyName [
 
 	^ (SimpleServiceEntry
@@ -1344,7 +1336,7 @@ FileList >> serviceCopyName [
 		description: 'Copy name to clipboard' )
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceDeleteFile [
 
 	^ (SimpleServiceEntry
@@ -1354,7 +1346,7 @@ FileList >> serviceDeleteFile [
 		description: 'Delete the seleted item'
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceGet [
 	"Answer a service for getting the entire file"
 
@@ -1365,7 +1357,7 @@ FileList >> serviceGet [
 			description: 'If the file has only been partially read in, because it is very large, read the entire file in at this time.')
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceGetEncodedText [
 
 	^  (SimpleServiceEntry
@@ -1375,7 +1367,7 @@ FileList >> serviceGetEncodedText [
 			description: 'View as encoded text')
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceGetHex [
 
 	^  (SimpleServiceEntry
@@ -1385,7 +1377,7 @@ FileList >> serviceGetHex [
 			description: 'View as hex')
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceOkay [
 	"Answer a service for hitting the okay button"
 
@@ -1397,7 +1389,7 @@ FileList >> serviceOkay [
 		buttonLabel: 'Ok'
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceRenameFile [
 
 	^ (SimpleServiceEntry
@@ -1407,7 +1399,7 @@ FileList >> serviceRenameFile [
 		description: 'Rename file')
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceViewContents [
 	"Answer a service for viewing the contents of a file in a workspace"
 
@@ -1418,7 +1410,7 @@ FileList >> serviceViewContents [
 		description: 'Open a text window whose contents are set to the contents of this file'
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> serviceViewContentsInWorkspace [
 	"Answer a service for viewing the contents of a file in a workspace"
 
@@ -1429,14 +1421,14 @@ FileList >> serviceViewContentsInWorkspace [
 		description: 'Open a new Workspace whose contents are set to the contents of this file'
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> servicesForFolderSelector [
 	"Answer the ok and cancel servies for the folder selector"
 
 	^ self okayAndCancelServices
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> setFileStream: aStream [
 	"Used to initialize a spawned file editor.  Sets directory too."
 	self directory: aStream name asFileReference.
@@ -1449,7 +1441,7 @@ FileList >> setFileStream: aStream [
 	self changed: #selectedDirectory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> setSelectedDirectoryTo: aFileDirectoryWrapper [
 	self directory: aFileDirectoryWrapper withoutListWrapper.
 	brevityState := #FileList.
@@ -1459,30 +1451,30 @@ FileList >> setSelectedDirectoryTo: aFileDirectoryWrapper [
 	self changed: #selectedDirectory
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> setSortSelector: aByteSymbol [
 	self sortBlock: (self perform: aByteSymbol)
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 FileList >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> sortBlock [
 	"Answer block to decide what order to display the directory entries."
 
 	^ sortBlock ifNil: [ sortBlock := self sortBlockBasename ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> sortBlock: aBlockClosure [
 	sortBlock := aBlockClosure.
 	self updateFileList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> sortBlockBasename [
 	"Answer block to decide what order to display the directory entries."
 
@@ -1494,7 +1486,7 @@ FileList >> sortBlockBasename [
 					xIsDir ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> sortBlockFilesize [
 	"Answer block to decide what order to display the directory entries."
 
@@ -1506,7 +1498,7 @@ FileList >> sortBlockFilesize [
 					xIsDir ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> sortBlockPermissions [
 	"Answer block to decide what order to display the directory entries."
 
@@ -1518,7 +1510,7 @@ FileList >> sortBlockPermissions [
 					xIsDir ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> sortBlockTimestamp [
 	"Answer block to decide what order to display the directory entries."
 
@@ -1530,54 +1522,54 @@ FileList >> sortBlockTimestamp [
 					xIsDir ]]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 FileList >> sourceTextModel [
 	^ sourceTextModel
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> streamFirst5000BytesFrom: aBinaryReadStream [
 	^ [ self streamFirst5000BytesWithEncodingFrom: aBinaryReadStream ]
 		on: Error
 		do: [ :ex |(aBinaryReadStream next: 5000) asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> streamFirst5000BytesWithEncodingFrom: aBinaryReadStream [
 	^ (ZnCharacterReadStream on: aBinaryReadStream encoding: self getEncoding) next: 5000
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> streamFullContentsFrom: aBinaryReadStream [
 	^ [ self streamFullContentsWithEncodingFrom: aBinaryReadStream ]
 		on: Error
 		do: [ :ex | aBinaryReadStream contents asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> streamFullContentsWithEncodingFrom: aBinaryReadStream [
 	^ (ZnCharacterReadStream on: aBinaryReadStream encoding: self getEncoding) upToEnd
 ]
 
-{ #category : #'file list menu' }
+{ #category : 'file list menu' }
 FileList >> suffixOfSelectedFile [
 	"Answer the file extension of the receiver's selected file"
 	^ self class suffixOf: self fullName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> truncatedAndOverwriteFilecontents [
 	self put: self sourceTextModel getText asString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> universalButtonServices [
 	"Answer the services to be reflected in the receiver's buttons"
 
 	^ self optionalButtonSpecs
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FileList >> update: aParameter [
 	"Receive a change notice from an object of whom the receiver is a dependent"
 
@@ -1585,7 +1577,7 @@ FileList >> update: aParameter [
 	super update: aParameter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> updateButtonRow [
 	"Dynamically update the contents of the button row, if any."
 
@@ -1601,7 +1593,7 @@ FileList >> updateButtonRow [
 					service addDependent: self ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileList >> updateDirectory [
 	"directory has been changed externally, by calling directory:.
 	Now change the view to reflect the change."
@@ -1610,7 +1602,7 @@ FileList >> updateDirectory [
 	self postOpen
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> updateFileContents [
 	| choice |
 	choice := self confirmOverwriteOrCreateNewFileOrAbort.
@@ -1619,7 +1611,7 @@ FileList >> updateFileContents [
 	choice = 2 ifTrue:[ self requestNewFileNameAndSave]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileList >> updateFileList [
 	"Update my files list with file names in the current directory
 	that match the pattern.
@@ -1636,7 +1628,7 @@ FileList >> updateFileList [
 	self updateButtonRow
 ]
 
-{ #category : #'volume list and pattern' }
+{ #category : 'volume list and pattern' }
 FileList >> veryDeepFixupWith: deepCopier [
 	super veryDeepFixupWith: deepCopier.
 	volumeListIndex := 1.
@@ -1644,39 +1636,41 @@ FileList >> veryDeepFixupWith: deepCopier [
 	self updateFileList
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> viewContents [
 	"View the contents of my selected file in a new text window"
 
 	| aString |
-	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
-	UIManager default edit: aString label: 'Contents from ' , self reference basename
+	aString := self reference readStreamDo: [ :stream | stream upToEnd ].
+	UIManager default
+		edit: aString
+		label: 'Contents from ' , self reference basename
 ]
 
-{ #category : #'own services' }
+{ #category : 'own services' }
 FileList >> viewContentsInWorkspace [
 	"View the contents of my selected file in a new workspace"
 
 	| aString |
-	self reference streamWritable: false do: [ :stream | aString := stream upToEnd ].
+	aString := self reference readStreamDo: [ :stream | stream upToEnd ].
 	Smalltalk tools workspace openContents: aString
 ]
 
-{ #category : #'volume list and pattern' }
+{ #category : 'volume list and pattern' }
 FileList >> volumeList [
 	"Answer the current list of volumes."
 
 	^ volumeList
 ]
 
-{ #category : #'volume list and pattern' }
+{ #category : 'volume list and pattern' }
 FileList >> volumeListIndex [
 	"Answer the index of the currently selected volume."
 
 	^ volumeListIndex
 ]
 
-{ #category : #'volume list and pattern' }
+{ #category : 'volume list and pattern' }
 FileList >> volumeListIndex: index [
 	"Select the volume name having the given index."
 
@@ -1697,7 +1691,7 @@ FileList >> volumeListIndex: index [
 	self updateButtonRow
 ]
 
-{ #category : #'volume menu' }
+{ #category : 'volume menu' }
 FileList >> volumeMenu: aMenu [
 	aMenu
 		add: 'Delete directory...' translated
@@ -1710,7 +1704,7 @@ FileList >> volumeMenu: aMenu [
 	^aMenu
 ]
 
-{ #category : #'drag\'n\'drop' }
+{ #category : 'drag\'n\'drop' }
 FileList >> wantsDroppedMorph: aTransferMorph event: evt inMorph: dest [
 	| retval |
 	retval := (aTransferMorph isTransferable)
@@ -1719,7 +1713,7 @@ FileList >> wantsDroppedMorph: aTransferMorph event: evt inMorph: dest [
 	^retval
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FileList >> whenTextAccepted: anAnnouncement [
 	self updateFileContents
 ]

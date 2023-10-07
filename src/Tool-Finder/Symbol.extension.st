@@ -1,7 +1,7 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*Tool-Finder' }
+{ #category : '*Tool-Finder' }
 Symbol class >> forbiddenSelectorsForMethodFinder [
 
-	^ #(string: privateAt:put:)
+	^ super forbiddenSelectorsForMethodFinder , #( string: #privateAt:put: )
 ]

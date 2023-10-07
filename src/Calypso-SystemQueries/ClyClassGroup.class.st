@@ -36,58 +36,60 @@ Internal Representation and Key Implementation Points.
 	subgroupsQuery:		<ClyQuery>
 "
 Class {
-	#name : #ClyClassGroup,
-	#superclass : #ClyItemGroup,
+	#name : 'ClyClassGroup',
+	#superclass : 'ClyItemGroup',
 	#instVars : [
 		'classQuery',
 		'subgroupsQuery'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyClassGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	^ anEnvironmentPlugin
 		decorateBrowserItem: aBrowserItem
 		ofClassGroup: aBrowserItem actualObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassGroup class >> isBasedOnClassTag [
 	^false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassGroup class >> named: aString on: aClassQuery [
 	^(self named: aString)
 		classQuery: aClassQuery
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassGroup class >> named: aString on: aClassQuery  withSubgroupsFrom: subgroupsQuery [
 	^(self named: aString on: aClassQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassGroup class >> named: aString priority: aNumber on: aClassQuery [
 	^(self named: aString priority: aNumber)
 		classQuery: aClassQuery
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassGroup class >> named: aString priority: aNumber on: aClassQuery withSubgroupsFrom: subgroupsQuery [
 	^(self named: aString priority: aNumber on: aClassQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassGroup class >> prepareClassQueriesFrom: classGroups in: aNavigationEnvironment [
 
 	^ classGroups collect: [ :each | each classQuery ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassGroup >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -96,27 +98,27 @@ ClyClassGroup >> = anObject [
 	^ classQuery = anObject classQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassGroup >> classQuery [
 	^ classQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassGroup >> classQuery: anObject [
 	classQuery := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassGroup >> classes [
 	^classQuery execute items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassGroup >> classesSize [
 	^classQuery execute size
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassGroup >> decorateOwnBrowserItem: myItem [
 	super decorateOwnBrowserItem: myItem.
 
@@ -124,31 +126,31 @@ ClyClassGroup >> decorateOwnBrowserItem: myItem [
 	subgroupsQuery decorateItemGroup: myItem
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassGroup >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ classQuery hash
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyClassGroup >> importClass: aClass [
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyClassGroup >> importClasses: classesCollection [
 
 	classesCollection do: [ :each | self importClass: each ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassGroup >> initialize [
 	super initialize.
 
 	subgroupsQuery := ClyUnknownQuery instance
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassGroup >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -156,17 +158,17 @@ ClyClassGroup >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyClassGroup >> removeWithClasses [
 	self classes do: [ :each | each removeFromSystem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassGroup >> subgroupsQuery [
 	^ subgroupsQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassGroup >> subgroupsQuery: anObject [
 	subgroupsQuery := anObject
 ]

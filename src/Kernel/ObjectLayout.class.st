@@ -2,27 +2,29 @@
 I am the superclass of standard layouts for Objects.
 "
 Class {
-	#name : #ObjectLayout,
-	#superclass : #AbstractLayout,
-	#category : #'Kernel-Layout'
+	#name : 'ObjectLayout',
+	#superclass : 'AbstractLayout',
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #description }
+{ #category : 'description' }
 ObjectLayout class >> allSubclassDefiningSymbols [
 	^self allSubclasses collect: [ :class | class subclassDefiningSymbol ] as: Set
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ObjectLayout class >> extending: superLayout scope: aScope host: aClass [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectLayout class >> isAbstract [
 	^self == ObjectLayout
 ]
 
-{ #category : #monticello }
+{ #category : 'monticello' }
 ObjectLayout class >> layoutForSubclassDefiningSymbol: aSymbol [
 	"used to get the layout for a subclass definition symbol"
 	^self allSubclasses
@@ -30,7 +32,7 @@ ObjectLayout class >> layoutForSubclassDefiningSymbol: aSymbol [
 		ifNone: [ FixedLayout ]
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 ObjectLayout class >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
@@ -40,14 +42,14 @@ ObjectLayout class >> subclassDefiningSymbol [
 	^#subclass:
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extend [
 	"Answer a default extension of me."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extend: aScope [
 	IncompatibleLayoutConflict new
 		layout: self;
@@ -55,7 +57,7 @@ ObjectLayout >> extend: aScope [
 		signal
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extendByte [
 	self hasFields ifTrue: [
 		IncompatibleLayoutConflict new
@@ -65,7 +67,7 @@ ObjectLayout >> extendByte [
 	^ ByteLayout new
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extendCompiledMethod [
 	self hasFields ifTrue: [
 		IncompatibleLayoutConflict new
@@ -75,7 +77,7 @@ ObjectLayout >> extendCompiledMethod [
 	^ CompiledMethodLayout new
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extendDoubleByte [
 	self hasFields ifTrue: [
 		IncompatibleLayoutConflict new
@@ -85,7 +87,7 @@ ObjectLayout >> extendDoubleByte [
 	^ DoubleByteLayout new
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extendDoubleWord [
 	self hasFields ifTrue: [
 		IncompatibleLayoutConflict new
@@ -95,7 +97,7 @@ ObjectLayout >> extendDoubleWord [
 	^ DoubleWordLayout new
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extendSmallInteger [
 	self hasFields ifTrue: [
 		IncompatibleLayoutConflict new
@@ -105,7 +107,7 @@ ObjectLayout >> extendSmallInteger [
 	^ ImmediateLayout new
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extendVariable: aScope [
 	IncompatibleLayoutConflict new
 		layout: self;
@@ -113,7 +115,7 @@ ObjectLayout >> extendVariable: aScope [
 		signal
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 ObjectLayout >> extendWord [
 	self hasFields ifTrue: [
 		IncompatibleLayoutConflict new
@@ -123,7 +125,7 @@ ObjectLayout >> extendWord [
 	^ WordLayout new
 ]
 
-{ #category : #format }
+{ #category : 'format' }
 ObjectLayout >> format [
 	"Answer an Integer that encodes this layout in the way that VM expects it."
 
@@ -134,24 +136,24 @@ ObjectLayout >> format [
 	^ format
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObjectLayout >> initializeInstance: anInstance [
 	"do nothing by default, overriden by PointerLayout"
 ]
 
-{ #category : #format }
+{ #category : 'format' }
 ObjectLayout >> instanceSpecification [
 	self subclassResponsibility
 ]
 
-{ #category : #'testing - class hierarchy' }
+{ #category : 'testing - class hierarchy' }
 ObjectLayout >> kindOfSubclass [
 	"Answer a String that is the keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	^' ',self class subclassDefiningSymbol, ' '
 ]
 
-{ #category : #'testing - class hierarchy' }
+{ #category : 'testing - class hierarchy' }
 ObjectLayout >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything

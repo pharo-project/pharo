@@ -2,12 +2,13 @@
 ZnUrlShortenerDelegateTest is a functional test for ZnUrlShortenerDelegate
 "
 Class {
-	#name : #ZnUrlShortnerDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnUrlShortnerDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnUrlShortnerDelegateTest >> testCreate [
 	| url |
 	url := ('https://pharo.org/tst-' , 9999 atRandom asString) asUrl.
@@ -22,7 +23,7 @@ ZnUrlShortnerDelegateTest >> testCreate [
 		client close ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnUrlShortnerDelegateTest >> testDatabase [
 	| url key |
 	url := 'https://pharo.org' asUrl.
@@ -32,7 +33,7 @@ ZnUrlShortnerDelegateTest >> testDatabase [
 		equals: url.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnUrlShortnerDelegateTest >> testRedirect [
 	| url key |
 	url := 'https://pharo.org' asUrl.
@@ -46,7 +47,7 @@ ZnUrlShortnerDelegateTest >> testRedirect [
 		client close ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ZnUrlShortnerDelegateTest >> withServerDo: block [
 	ZnServer withOSAssignedPortDo: [ :server |
 		server delegate: ZnUrlShortenerDelegate new.

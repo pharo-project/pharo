@@ -99,13 +99,11 @@ destX lastIndex xTable map destY
 
 "
 Class {
-	#name : #CharacterScanner,
-	#superclass : #Object,
+	#name : 'CharacterScanner',
+	#superclass : 'Object',
 	#instVars : [
 		'destX',
 		'lastIndex',
-		'xTable',
-		'map',
 		'destY',
 		'stopConditions',
 		'text',
@@ -133,10 +131,11 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Text-Scanning'
+	#category : 'Text-Scanning',
+	#package : 'Text-Scanning'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 CharacterScanner class >> initialize [
 "
 	CharacterScanner initialize
@@ -167,28 +166,28 @@ CharacterScanner class >> initialize [
 		yourself
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterScanner >> addEmphasis: code [
 	"Set the bold-ital-under-strike emphasis."
 	emphasisCode := emphasisCode bitOr: code
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterScanner >> addKern: kernDelta [
 	"Set the current kern amount."
 	kern := kern + kernDelta
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> advanceIfFirstCharOfLine [
 	lastIndex = line first
 		ifTrue:
-			[destX := destX + pendingKernX + (font widthOf: (text at: line first)).
+			[destX := destX + pendingKernX + ((font widthOf: (text at: line first)) * self scale).
 			lastIndex := lastIndex + 1.
 			pendingKernX := 0]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CharacterScanner >> basicScanByteCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
 "this is a scanning method for
 single byte characters in a ByteString
@@ -204,24 +203,24 @@ a font that does not do character-pair kerning"
 			(stopConditions at: ascii)
 				ifNotNil: [^ stopConditions at: ascii].
 			"bump nextDestX by the width of the current character"
-			nextDestX := destX + (font widthOf: char).
+			nextDestX := destX + ((font widthOf: char) * self scale).
 			"if the next x is past the right edge, return crossedX"
 			nextDestX > rightX
 				ifTrue: [^#crossedX].
 			"update destX and incorporate thr kernDelta"
-			destX := nextDestX + kern.
+			destX := nextDestX + (kern * self scale).
 			lastIndex := lastIndex + 1].
 	^self handleEndOfRunAt: stopIndex
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterScanner >> columnBreak [
 
 	pendingKernX := 0.
 	^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterScanner >> embeddedObject [
 	pendingKernX := 0.
 	text attributesAt: lastIndex do:[:attr|
@@ -233,7 +232,7 @@ CharacterScanner >> embeddedObject [
 	^false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CharacterScanner >> handleEndOfRunAt: stopIndex [
 	" make sure the lastIndex is set to stopIndex and then return the stopCondition for endOfRun; important for  a couple of outside users"
 
@@ -241,30 +240,30 @@ CharacterScanner >> handleEndOfRunAt: stopIndex [
 	^#endOfRun
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> handleIndentation [
 	self indentationLevel timesRepeat: [
 		destX := self plainTab]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> indentationLevel [
 	"return the number of tabs that are currently being placed at the beginning of each line"
 	^indentationLevel ifNil:[0]
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterScanner >> indentationLevel: anInteger [
 	"set the number of tabs to put at the beginning of each line"
 	indentationLevel := anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CharacterScanner >> initialize [
 	destX := destY := leftMargin := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> leadingTab [
 	"return true if only tabs lie to the left"
 	line first to: lastIndex do:
@@ -272,41 +271,34 @@ CharacterScanner >> leadingTab [
 	^ true
 ]
 
-{ #category : #scanning }
-CharacterScanner >> measureString: aString inFont: aFont from: startIndex to: stopIndex [
-	"Measure aString width in given font aFont.
-	The string shall not include line breaking, tab or other control character."
-	destX := destY := lastIndex := 0.
-	pendingKernX := 0.
-	font := aFont.
-	kern := 0 - font baseKern.
-	spaceWidth := font widthOf: Space.
-	stopConditions := MeasuringStopConditions.
-	self scanCharactersFrom: startIndex to: stopIndex in: aString rightX: 999999.
-	^destX
-]
-
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> placeEmbeddedObject: anchoredMorph [
 	"Place the anchoredMorph or return false if it cannot be placed"
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> plainTab [
 	"This is the basic method of adjusting destX for a tab.
 	Answer the next destX"
 	pendingKernX := 0.
 	^(alignment = Justified and: [self leadingTab not])
 		ifTrue:		"embedded tabs in justified text are weird"
-			[destX + (textStyle tabWidth - (line justifiedTabDeltaFor: spaceCount)) max: destX]
+			[destX + ((textStyle tabWidth * self scale) - ((line justifiedTabDeltaFor: spaceCount) * self scale)) max: destX]
 		ifFalse:
 			[textStyle nextTabXFrom: destX
 				leftMargin: leftMargin
-				rightMargin: rightMargin]
+				rightMargin: rightMargin
+				scale: self scale]
 ]
 
-{ #category : #scanning }
+{ #category : 'accessing' }
+CharacterScanner >> scale [
+
+	self subclassResponsibility
+]
+
+{ #category : 'scanning' }
 CharacterScanner >> scanByteCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
 "this is a scanning method for
 single byte characters in a ByteString
@@ -315,17 +307,12 @@ a font that does not do character-pair kerning"
 	^ self basicScanByteCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
 	^sourceString scanCharactersFrom: startIndex to: stopIndex with: self rightX: rightX font: font
 ]
 
-{ #category : #scanning }
-CharacterScanner >> scanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX stopConditions: stops kern: kernDelta [
-	^sourceString scanCharactersFrom: startIndex to: stopIndex with: self rightX: rightX font: font
-]
-
-{ #category : #scanning }
+{ #category : 'scanning' }
 CharacterScanner >> scanKernableByteCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
 "this is a scanning method for
 single byte characters in a ByteString
@@ -358,22 +345,22 @@ a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:i
 				into: widthAndKernedWidth.
 			"bump nextDestX by the width of the current character"
 			nextDestX := floatDestX
-						+ (widthAndKernedWidth at: 1).
+						+ ((widthAndKernedWidth at: 1) * self scale).
 			"if the next x is past the right edge, return crossedX"
 			nextDestX > rightX
 				ifTrue: [^ #crossedX].
 			"bump floatDestX by the *kerned* width of the current
 			character, which is where the *next* char will go"
-			floatDestX := floatDestX + kern
-						+ (widthAndKernedWidth at: 2).
+			floatDestX := floatDestX + (kern * self scale)
+						+ ((widthAndKernedWidth at: 2) * self scale).
 			"if we are at the end of this run we keep track of the
 			character-kern-delta for possible later use and then rather
 			insanely remove that character-kern-delta from floatDestX,
 			making it equivalent to (old floatDestX) + kernDelta +
 			width-of-character - no idea why"
 			atEndOfRun
-				ifTrue: [pendingKernX := (widthAndKernedWidth at: 2)
-								- (widthAndKernedWidth at: 1).
+				ifTrue: [pendingKernX := ((widthAndKernedWidth at: 2) * self scale)
+								- ((widthAndKernedWidth at: 1) * self scale).
 					floatDestX := floatDestX - pendingKernX].
 			"save the next x for next time around the loop"
 			destX := floatDestX.
@@ -381,7 +368,7 @@ a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:i
 	^self handleEndOfRunAt: stopIndex
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CharacterScanner >> scanKernableMultibyteCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
 "this is a scanning method for
 multibyte characters in a WideString
@@ -411,12 +398,12 @@ a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:i
 			widthAndKernedWidthOfLeft: char
 			right: nextChar
 			into: widthAndKernedWidth.
-		nextDestX := floatDestX + (widthAndKernedWidth at: 1).
+		nextDestX := floatDestX + ((widthAndKernedWidth at: 1) * self scale).
 		nextDestX > rightX ifTrue: [^#crossedX].
-		floatDestX := floatDestX + kern + (widthAndKernedWidth at: 2).
+		floatDestX := floatDestX + (kern * self scale) + ((widthAndKernedWidth at: 2) * self scale).
 		atEndOfRun
 			ifTrue:[
-				pendingKernX := (widthAndKernedWidth at: 2) - (widthAndKernedWidth at: 1).
+				pendingKernX := ((widthAndKernedWidth at: 2) * self scale) - ((widthAndKernedWidth at: 1) * self scale).
 				floatDestX := floatDestX - pendingKernX].
 		destX := floatDestX .
 		lastIndex := lastIndex + 1.
@@ -424,7 +411,7 @@ a font that does do character-pair kerning via widthAndKernedWidthOfLeft:right:i
 	^self handleEndOfRunAt: stopIndex
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CharacterScanner >> scanMultibyteCharactersFrom: startIndex to: stopIndex in: sourceString rightX: rightX [
 "this is a scanning method for
 multibyte characters in a WideString
@@ -437,29 +424,27 @@ a font that does not do character-pair kerning"
 		(ascii < 256 and: [(stopConditions at: ascii + 1) ~~ nil])
 			ifTrue: [^ stopConditions at: ascii + 1].
 		"bump nextDestX by the width of the current character"
-		nextDestX := destX + (font widthOf: char).
+		nextDestX := destX + ((font widthOf: char) * self scale).
 		nextDestX > rightX ifTrue: [^#crossedX].
-		destX := nextDestX + kern .
+		destX := nextDestX + (kern * self scale).
 		lastIndex := lastIndex + 1.
 	].
 	^self handleEndOfRunAt: stopIndex
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterScanner >> setActualFont: aFont [
 	"Set the basal font to an isolated font reference."
 
-	xTable := aFont xTable.
-	map := aFont characterToGlyphMap.
 	font := aFont
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterScanner >> setAlignment: style [
 	alignment := style
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> setFont [
 	| priorFont |
 	"Set the font and other emphasis."
@@ -482,9 +467,9 @@ CharacterScanner >> setFont [
 					We still want kerning between chars of the same
 					font, but of different color. So add any pending kern to destX"
 					destX := destX + (pendingKernX ifNil:[0])].
-			destX := destX + priorFont descentKern].
+			destX := destX + (priorFont descentKern * self scale)].
 	pendingKernX := 0. "clear any pending kern so there is no danger of it being added twice"
-	destX := destX - font descentKern.
+	destX := destX - (font descentKern * self scale).
 	"NOTE: next statement should be removed when clipping works"
 	leftMargin ifNotNil: [destX := destX max: leftMargin].
 	kern := kern - font baseKern.
@@ -493,14 +478,14 @@ CharacterScanner >> setFont [
 	spaceWidth := font widthOf: Space
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterScanner >> setFont: fontNumber [
 	"Set the font by number from the textStyle."
 
 	self setActualFont: (textStyle fontAt: fontNumber)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
 
@@ -510,13 +495,13 @@ CharacterScanner >> setStopConditions [
 		ifFalse: [DefaultStopConditions]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterScanner >> text: t textStyle: ts [
 	text := t.
 	textStyle := ts
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 CharacterScanner >> textColor: ignored [
 	"Overridden in DisplayScanner"
 ]

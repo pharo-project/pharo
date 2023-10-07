@@ -1,17 +1,19 @@
 Class {
-	#name : #ErrorWasInUIProcessTest,
-	#superclass : #DebuggerTest,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'ErrorWasInUIProcessTest',
+	#superclass : 'DebuggerTest',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ErrorWasInUIProcessTest >> testErrorWasInUIProcessIsFalseWhenDebugSessionWasCreatedByANewProcess [
 	"Test that errorWasInUIProcess is false if the DebugSession was created by a new process"
 	self settingUpSessionAndProcessAndContextForBlock: [ 1+1].
 	self assert: (session errorWasInUIProcess not)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ErrorWasInUIProcessTest >> testErrorWasInUIProcessIsTrueWhenDebugSessionWasCreatedByTheUIProcess [
 	"Test that errorWasInUIProcess is true when the DebugSession was created by the UI process"
 

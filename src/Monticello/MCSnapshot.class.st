@@ -4,26 +4,28 @@ MCSnapshot represents a list of entities compared to a given base entities.
 It holds a list of definitions (instances of MCDefinition subclasses). It can install these entities or update a package.
 "
 Class {
-	#name : #MCSnapshot,
-	#superclass : #Object,
+	#name : 'MCSnapshot',
+	#superclass : 'Object',
 	#instVars : [
 		'definitions',
 		'classDefinitionCache'
 	],
-	#category : #'Monticello-Base'
+	#category : 'Monticello-Base',
+	#package : 'Monticello',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCSnapshot class >> empty [
 	^ self fromDefinitions: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCSnapshot class >> fromDefinitions: aCollection [
 	^ self new initializeWithDefinitions: aCollection
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCSnapshot >> = other [
 	self == other
 		ifTrue: [ ^ true ].
@@ -32,23 +34,23 @@ MCSnapshot >> = other [
 	^ definitions asArray = other definitions asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshot >> classDefinitionNamed: aName ifAbsent: aBlock [
 
 	^ classDefinitionCache at: aName ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshot >> definitions [
 	^ definitions
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCSnapshot >> hash [
 	^ definitions asArray hash
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 MCSnapshot >> initializeWithDefinitions: aCollection [
 	
 	definitions := aCollection.
@@ -60,17 +62,17 @@ MCSnapshot >> initializeWithDefinitions: aCollection [
 				put: e ] ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCSnapshot >> install [
 	MCPackageLoader installSnapshot: self
 ]
 
-{ #category : #patching }
+{ #category : 'patching' }
 MCSnapshot >> patchRelativeToBase: aSnapshot [
 	^ MCPatch fromBase: aSnapshot target: self
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCSnapshot >> updatePackage: aPackage [
 	MCPackageLoader updatePackage: aPackage withSnapshot: self
 ]

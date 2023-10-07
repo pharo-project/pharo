@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 BlockClosure >> asText [
 
 	^ self asString asText

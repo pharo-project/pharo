@@ -17,21 +17,23 @@ Internal Representation and Key Implementation Points.
 	subtreeSize:		<Integer>
 "
 Class {
-	#name : #ClyItemLocalHierarchyProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyItemLocalHierarchyProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'subtreeSize'
 	],
-	#category : #'Calypso-NavigationModel-Property'
+	#category : 'Calypso-NavigationModel-Property',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Property'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemLocalHierarchyProperty class >> size: subtreeSize [
 	^self new
 		subtreeSize: subtreeSize
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyItemLocalHierarchyProperty >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -40,12 +42,12 @@ ClyItemLocalHierarchyProperty >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemLocalHierarchyProperty >> subtreeSize [
 	^ subtreeSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemLocalHierarchyProperty >> subtreeSize: anObject [
 	subtreeSize := anObject
 ]

@@ -2,18 +2,20 @@
 I am an internal class used by the  decompiler to recreat variable information
 "
 Class {
-	#name : #IRBytecodeScope,
-	#superclass : #Object,
+	#name : 'IRBytecodeScope',
+	#superclass : 'Object',
 	#instVars : [
 		'temps',
 		'numArgs',
 		'ownTempVectors',
 		'copiedValues'
 	],
-	#category : #'OpalCompiler-Core-Bytecode'
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> args [
 	| args |
 	args := Array new: numArgs.
@@ -21,56 +23,56 @@ IRBytecodeScope >> args [
 	^ args
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> copiedValues [
 	^ copiedValues
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> copiedValues: someCopiedValues [
 	copiedValues := someCopiedValues
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRBytecodeScope >> initialize [
 	temps := 0.
 	ownTempVectors := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> newTempVector: aTempVector at: offset [
 	ownTempVectors add: aTempVector.
 	self tempAt: offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> numArgs [
 	^ numArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> numArgs: anInteger [
 	numArgs := anInteger.
 	temps := temps max: numArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> ownTempVectors [
 	^ ownTempVectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> tempAt: zeroBasedIndex [
 	temps := temps max: zeroBasedIndex + 1.
 	^ self -> zeroBasedIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> tempAt: remoteIndex inRemote: remoteArray [
 	^ remoteIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRBytecodeScope >> temps [
 	| result tempOffset numTemps |
 	tempOffset := copiedValues size + numArgs.

@@ -9,8 +9,8 @@ I provide methods to access and query the statistics.
 I have a singleton instance for convenience.
 "
 Class {
-	#name : #CoStatistics,
-	#superclass : #Object,
+	#name : 'CoStatistics',
+	#superclass : 'Object',
 	#instVars : [
 		'acceptedEntries',
 		'cancelledCompletions'
@@ -18,29 +18,31 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'HeuristicCompletion-Model-Statistics'
+	#category : 'HeuristicCompletion-Model-Statistics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Statistics'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 CoStatistics class >> reset [
 
 	UniqueInstance := nil
 ]
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 CoStatistics class >> uniqueInstance [
 
 	^ UniqueInstance ifNil: [
 		UniqueInstance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> acceptedEntries [
 
 	^ acceptedEntries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> averageTypedCharacters [
 
 	| count total |
@@ -56,7 +58,7 @@ CoStatistics >> averageTypedCharacters [
 		ifFalse: [ total / count ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> averageTypedCharactersAt: anIndex [
 
 	| count total entries |
@@ -69,27 +71,27 @@ CoStatistics >> averageTypedCharactersAt: anIndex [
 		ifFalse: [ total / count ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> entriesAtIndex: anInteger [
 
 	^ acceptedEntries at: anInteger ifAbsentPut: [ CoEntryAcceptedEvent new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> entriesGeneratedBy: aSource [
 
 	^ acceptedEntries sum: [ :entries |
 		entries count: [ :entry | entry source = aSource ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CoStatistics >> groupBy: aBlockClosure [
 
 	^ acceptedEntries gather: [ :entriesByIndex |
 		entriesByIndex select: aBlockClosure ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoStatistics >> initialize [
 
 	super initialize.
@@ -97,7 +99,7 @@ CoStatistics >> initialize [
 	cancelledCompletions := OrderedCollection new
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 CoStatistics >> logAcceptEvent: anEntry [
 
 	| entries |
@@ -105,7 +107,7 @@ CoStatistics >> logAcceptEvent: anEntry [
 	entries add: anEntry
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 CoStatistics >> logCancelCompletionFromTypedToken: typedToken inClass: aClassName withDynamicExtent: isDynamicExtent [
 
 	self logCancelEvent: (CoCompletionCancelledEvent new
@@ -115,25 +117,25 @@ CoStatistics >> logCancelCompletionFromTypedToken: typedToken inClass: aClassNam
 		yourself)
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 CoStatistics >> logCancelEvent: aCancelEntry [
 
 	cancelledCompletions add: aCancelEntry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> numberOfCancels [
 
 	^ cancelledCompletions size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> numberOfCancelsByClass: aClassName [
 
 	^ cancelledCompletions count: [ :e | e contextClassName = aClassName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatistics >> numberOfCancelsByClassCompletions: cancelledCompletionsInClass [
 
 	^ cancelledCompletionsInClass sum: [ :e |

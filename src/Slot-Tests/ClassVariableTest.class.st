@@ -2,18 +2,20 @@
 Tests for ClassVariable
 "
 Class {
-	#name : #ClassVariableTest,
-	#superclass : #TestCase,
+	#name : 'ClassVariableTest',
+	#superclass : 'TestCase',
 	#classVars : [
 		'TestVariable'
 	],
 	#pools : [
 		'TestSharedPool'
 	],
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testIsReadInMethod [
 
 	DefaultTimeLimit printString. "reading class variable".
@@ -21,7 +23,7 @@ ClassVariableTest >> testIsReadInMethod [
 	self assert: ((TestCase classVariableNamed: #DefaultTimeLimit) isReadIn: self class >> testSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassVariableTest >> testIsReferenced [
 	self assert: (SmalltalkImage classVariableNamed: #CompilerClass) isReferenced.
 	TestVariable.
@@ -32,14 +34,14 @@ ClassVariableTest >> testIsReferenced [
 	self assert: (TestSharedPool classVariableNamed: #ReferencedInTest) isReferenced
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassVariableTest >> testIsShadowing [
 	| variable |
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
 	self deny: variable isShadowing
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testIsWrittenInMethod [
 
 	DefaultTimeLimit := DefaultTimeLimit. "writing class variable".
@@ -47,13 +49,13 @@ ClassVariableTest >> testIsWrittenInMethod [
 	self assert: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testNotReadInMethod [
 
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isReadIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 
 	DefaultTimeLimit printString. "reading class variable".
@@ -61,7 +63,7 @@ ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassVariableTest >> testPossiblyUsingClasses [
 	| variable |
 
@@ -89,7 +91,7 @@ ClassVariableTest >> testPossiblyUsingClasses [
 	self assert: (variable possiblyUsingClasses includes: CompositionScanner class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassVariableTest >> testPrintOn [
 	| variable |
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
@@ -98,7 +100,7 @@ ClassVariableTest >> testPrintOn [
 	self assert: variable printString equals: '#CompilerClass => ClassVariable'
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testPropertyAtPut [
 
 	| testValue classVariable |
@@ -121,7 +123,7 @@ ClassVariableTest >> testPropertyAtPut [
 	self assert: classVariable properties isNil
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testReadingFromContext [
 
 	| classVariable |
@@ -133,7 +135,7 @@ ClassVariableTest >> testReadingFromContext [
 		equals: #testValue
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testRemoveProperty [
 	| classVariable |
 	classVariable := self class classVariableNamed: #TestVariable.
@@ -146,7 +148,7 @@ ClassVariableTest >> testRemoveProperty [
 	self assert: classVariable properties isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassVariableTest >> testScope [
 	| variable |
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
@@ -154,7 +156,7 @@ ClassVariableTest >> testScope [
 	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassVariableTest >> testUsingMethods [
 	| variable |
 	"The semantics of where to search is tested as part of #testPossiblyUsingClasses"
@@ -168,7 +170,7 @@ ClassVariableTest >> testUsingMethods [
 	self assert: (variable usingMethods includes: TextStyle>>#newFontArray:)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 ClassVariableTest >> testWritingToContext [
 
 	| classVariable |
@@ -178,7 +180,7 @@ ClassVariableTest >> testWritingToContext [
 	self assert: TestVariable equals: #testValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassVariableTest >> testisPoolVariable [
 	| variable |
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.

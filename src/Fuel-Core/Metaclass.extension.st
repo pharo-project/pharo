@@ -1,6 +1,6 @@
-Extension { #name : #Metaclass }
+Extension { #name : 'Metaclass' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Metaclass >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitMetaclass: self

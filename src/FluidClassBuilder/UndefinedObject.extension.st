@@ -1,6 +1,6 @@
-Extension { #name : #UndefinedObject }
+Extension { #name : 'UndefinedObject' }
 
-{ #category : #'*FluidClassBuilder' }
+{ #category : '*FluidClassBuilder' }
 UndefinedObject >> << aString [
 
 	^ FluidClassBuilder new

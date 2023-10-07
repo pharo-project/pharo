@@ -1,10 +1,11 @@
 Class {
-	#name : #CharacterKeyCombinationTest,
-	#superclass : #TestCase,
-	#category : #'Keymapping-Tests'
+	#name : 'CharacterKeyCombinationTest',
+	#superclass : 'TestCase',
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterKeyCombinationTest >> testLowercaseKeyCombination [
 	| combination |
 	combination := $a asKeyCombination.
@@ -12,7 +13,7 @@ CharacterKeyCombinationTest >> testLowercaseKeyCombination [
 	self assert: combination modifier equals: KMNoModifier new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterKeyCombinationTest >> testUppercaseKeyCombination [
 	| combination |
 	combination := $A asKeyCombination.

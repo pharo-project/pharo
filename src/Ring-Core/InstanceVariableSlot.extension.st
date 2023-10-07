@@ -1,6 +1,6 @@
-Extension { #name : #InstanceVariableSlot }
+Extension { #name : 'InstanceVariableSlot' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 InstanceVariableSlot >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ self class == InstanceVariableSlot

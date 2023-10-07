@@ -1,18 +1,19 @@
 Class {
-	#name : #RGReadOnlyImageBackendTest,
-	#superclass : #RGBackendTest,
+	#name : 'RGReadOnlyImageBackendTest',
+	#superclass : 'RGBackendTest',
 	#traits : 'TRGReadOnlyTest',
 	#classTraits : 'TRGReadOnlyTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> backendClass [
 
 	^ RGReadOnlyImageBackend
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGReadOnlyImageBackendTest >> newEnvironment [
 
 	| env |
@@ -23,7 +24,7 @@ RGReadOnlyImageBackendTest >> newEnvironment [
 	^ env
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testBehavior [
 	| env1 point point2 object method |
 	env1 := RGEnvironment new.
@@ -43,7 +44,7 @@ RGReadOnlyImageBackendTest >> testBehavior [
 	self assert: point ask localMethods size equals: Point localMethods size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testBehaviorLocalMethods [
 
 	| env1 point selectors |
@@ -61,7 +62,7 @@ RGReadOnlyImageBackendTest >> testBehaviorLocalMethods [
 	self assert: selectors asSortedCollection equals: Point localSelectors asSortedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testClassComment [
 
 	| env comment |
@@ -77,7 +78,7 @@ RGReadOnlyImageBackendTest >> testClassComment [
 	comment time <= DateAndTime now
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testClassTrait [
 
 	| env classTrait |
@@ -92,14 +93,14 @@ RGReadOnlyImageBackendTest >> testClassTrait [
 	self assert: classTrait baseTrait name equals: 'RGTestTrait'.
 	self assert: classTrait category equals: 'Ring-Tests-Core'.
 	self assert: classTrait superclass name equals: #Trait.
-	self assert: classTrait comment content equals: RGTestTrait organization comment.
+	self assert: classTrait comment content equals: RGTestTrait comment.
 	self assert: classTrait localMethods size equals: RGTestTrait classTrait localMethods size.
-	self assert: classTrait protocols asSortedCollection equals: RGTestTrait classTrait protocols asSortedCollection.
+	self assert: classTrait protocols asSortedCollection equals: RGTestTrait classTrait protocolNames asSortedCollection.
 	self assert: classTrait metaclass name equals: #MetaclassForTraits.
 	self assert: classTrait package name equals: 'Ring-Tests-Core'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testClassVariable [
 	| env classVariable |
 	env := RGEnvironment new.
@@ -111,7 +112,7 @@ RGReadOnlyImageBackendTest >> testClassVariable [
 	self assert: classVariable parent name equals: #UIManager
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGReadOnlyImageBackendTest >> testDefaultEnvironmentContent [
 
 	| env |
@@ -122,7 +123,7 @@ RGReadOnlyImageBackendTest >> testDefaultEnvironmentContent [
 	self testDefaultContentFor: env
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testDefinitionsIdentity [
 	| env1 |
 	env1 := RGEnvironment new.
@@ -133,7 +134,7 @@ RGReadOnlyImageBackendTest >> testDefinitionsIdentity [
 	self assert: (Object >> #isRGObject asRingMinimalDefinitionIn: env1) parent identicalTo: (Object >> #isRGObject asRingMinimalDefinitionIn: env1) parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testEmptyLayout [
 
 	| env |
@@ -144,7 +145,7 @@ RGReadOnlyImageBackendTest >> testEmptyLayout [
 	self should: [EmptyLayout instance asRingMinimalDefinitionIn: env] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testGlobalVariable [
 	| env real globalVariable |
 	env := RGEnvironment new.
@@ -156,7 +157,7 @@ RGReadOnlyImageBackendTest >> testGlobalVariable [
 	self assert: globalVariable name equals: #Smalltalk
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testLayouts [
 
 	| env layout |
@@ -201,7 +202,7 @@ RGReadOnlyImageBackendTest >> testLayouts [
 	self assert: layout isWeakLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testMethod [
 	| env method |
 	env := RGEnvironment new.
@@ -209,7 +210,6 @@ RGReadOnlyImageBackendTest >> testMethod [
 
 	method := Point >> #x asRingMinimalDefinitionIn: env.
 
-	self assert: method author notEmpty.
 	self assert: (method time <= DateAndTime now).
 	self assert: method selector equals: #x.
 	self assert: (method package isRGObject and: [ method package isPackage ]).
@@ -219,8 +219,9 @@ RGReadOnlyImageBackendTest >> testMethod [
 	self assert: method ast equals: (Point >> #x) ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testProtocols [
+
 	| env1 point method method2 protocol protocol2 |
 	env1 := RGEnvironment new.
 	env1 backend: (RGReadOnlyImageBackend for: env1).
@@ -239,10 +240,14 @@ RGReadOnlyImageBackendTest >> testProtocols [
 	self assert: protocol isSymbol.
 	self assert: protocol equals: 'accessing'.
 
-	self should: [ (Protocol name: 'aProtocol') asRingMinimalDefinitionIn: RGEnvironment new ] raise: Error
+	self
+		should: [
+			(Protocol named: 'aProtocol') asRingMinimalDefinitionIn:
+				RGEnvironment new ]
+		raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testSlots [
 
 	| env slot |
@@ -258,7 +263,7 @@ RGReadOnlyImageBackendTest >> testSlots [
 	self assert: slot parent parent name equals: #Point
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testTrait [
 	| env trait |
 	env := RGEnvironment new.
@@ -271,15 +276,15 @@ RGReadOnlyImageBackendTest >> testTrait [
 	self assert: trait classTrait name equals: 'RGTestTrait classTrait'.
 	self assert: trait category equals: 'Ring-Tests-Core'.
 	self assert: trait superclass identicalTo: trait.	"cycle, nil in reality"
-	self assert: trait comment content equals: RGTestTrait organization comment.
+	self assert: trait comment content equals: RGTestTrait comment.
 	self assert: trait localMethods size equals: RGTestTrait localMethods size.
-	self assert: trait protocols asSortedCollection equals: RGTestTrait protocols asSortedCollection.
+	self assert: trait protocols asSortedCollection equals: RGTestTrait protocolNames asSortedCollection.
 	self assert: trait metaclass name equals: 'RGTestTrait classTrait'.
 	self assert: trait metaclass superclass name equals: 'Trait'.
 	self assert: trait package name equals: 'Ring-Tests-Core'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testTraitAlias [
 	| env traitAlias |
 	env := RGEnvironment new.
@@ -293,7 +298,7 @@ RGReadOnlyImageBackendTest >> testTraitAlias [
 	self assert: traitAlias aliases first value identicalTo: #c2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testTraitComposition [
 
 	| env traitComposition |
@@ -311,7 +316,7 @@ RGReadOnlyImageBackendTest >> testTraitComposition [
 	self assert: traitComposition parent traitComposition equals: traitComposition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testTraitExclusions [
 
 	| env traitExclusion |
@@ -326,7 +331,7 @@ RGReadOnlyImageBackendTest >> testTraitExclusions [
 	self assert: traitExclusion exclusions first equals: #c
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGReadOnlyImageBackendTest >> testUnknownSlots [
 
 	| env slot |

@@ -5,8 +5,8 @@ I am responsible for keeping track of `selectedChanges` (which changes to apply)
 
 "
 Class {
-	#name : #StRefactoringPreviewPresenter,
-	#superclass : #SpPresenter,
+	#name : 'StRefactoringPreviewPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'changes',
 		'changesInScope',
@@ -18,31 +18,44 @@ Class {
 		'scopeLabel',
 		'scopeDropList',
 		'buttonOk',
-		'buttonCancel'
+		'buttonCancel',
+		'compositeChange',
+		'refactoring'
 	],
-	#category : #'Refactoring-UI'
+	#category : 'Refactoring-UI-UI',
+	#package : 'Refactoring-UI',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
-StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes [
+{ #category : 'instance creation' }
+StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: scopes [
 
 	^ self new
-		  changesFrom: aCompositeRefactoring inEnvironment: aRBNamespace scopes: scopes;
+		  changesFrom: aCompositeRefactoring scopes: scopes;
 		  yourself
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StRefactoringPreviewPresenter class >> title [
 	^ 'Refactoring changes'
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StRefactoringPreviewPresenter >> accept [
-
+	
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		UIManager default inform: 'No changes to apply.'.
+		"UIManager default inform: 'No changes to apply.'."
+		self application newInform 
+				title: 'No changes to apply.';
+				acceptLabel: 'Close this!';
+				openDialog.
+		
 		self closeWindow ].
 	[
+	"the following behavior should not be kept in the UI. 
+	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
+	May be this should be in the refactoring."
+	
 	selectedChanges do: [ :change |
 			RBRefactoryChangeManager instance
 				performChange: change;
@@ -52,7 +65,7 @@ StRefactoringPreviewPresenter >> accept [
 	self closeWindow
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 
 	^ diffPresenter
@@ -60,9 +73,12 @@ StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 		  rightText: aChange textToDisplay
 ]
 
-{ #category : #initialization }
-StRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: anEnvironment scopes: aCollection [
+{ #category : 'initialization' }
+StRefactoringPreviewPresenter >> changesFrom: aCompositeChange scopes: aCollection [
 
+	compositeChange := aCompositeChange.
+	"we keep the composite because we want to use it for performing changes later on."
+	
 	changes := aCompositeChange whatToDisplayIn: self.
 	scopes := aCollection.
 	self updateScopeList.
@@ -70,13 +86,13 @@ StRefactoringPreviewPresenter >> changesFrom: aCompositeChange inEnvironment: an
 	self updateTablePresenter
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StRefactoringPreviewPresenter >> closeWindow [
 
 	self window close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StRefactoringPreviewPresenter >> columns [
 
 	^ { (SpCompositeTableColumn new
@@ -89,48 +105,52 @@ StRefactoringPreviewPresenter >> columns [
 		   yourself) }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StRefactoringPreviewPresenter >> connectPresenters [
 
 	table whenSelectionChangedDo: [ :selection |
 		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
 
-	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges ].
+	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges; updateTablePresenter ].
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 StRefactoringPreviewPresenter >> defaultLayout [
-
-	| scopesLayout actionsLayout |
+	| scopesLayout |
+	
 	scopesLayout := SpBoxLayout newLeftToRight
-		                add: scopeLabel
-		                withConstraints:
-			                [ :constraints | constraints width: 60 ] yourself;
-		                add: scopeDropList;
-		                yourself.
-	actionsLayout := SpBoxLayout newLeftToRight
-		                 spacing: 5;
-		                 addLast: buttonOk expand: false fill: true;
-		                 addLast: buttonCancel expand: false fill: true;
-		                 yourself.
-
+		vAlignCenter;
+		spacing: 5;
+		add: scopeLabel expand: false;
+		add: scopeDropList;
+		yourself.
+	
 	^ SpBoxLayout newTopToBottom
-		  add: (SpBoxLayout newTopToBottom
-				   add: scopesLayout
-				   withConstraints:
-					   [ :constraints | constraints height: 30 ] yourself;
-				   add: table;
-				   add: diffPresenter;
-				   yourself);
-		  add: actionsLayout expand: false;
-		  yourself
+		spacing: 5;
+		add: scopesLayout expand: false;
+		add: table;
+		add: diffPresenter;
+		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
+StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+	"Used to initialize the model in the case of the use into a dialog window.
+	 Override this to set buttons other than the default (Ok, Cancel)."
+	
+	aDialogWindowPresenter
+		addButton: 'Ok' do: [ :presenter | 
+			self accept.
+			presenter close ];
+		addButton: 'Cancel' do: [ :presenter | 
+			presenter close ]	
+]
+
+{ #category : 'initialization' }
 StRefactoringPreviewPresenter >> initializePresenters [
 
 	diffPresenter := self newDiff.
@@ -157,7 +177,7 @@ StRefactoringPreviewPresenter >> initializePresenters [
 		add: buttonCancel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
@@ -165,13 +185,18 @@ StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 		initialExtent: 700 @ 500
 ]
 
-{ #category : #update }
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter >> refactoring: aRBRemoveMethodDriver [ 
+	refactoring := aRBRemoveMethodDriver
+]
+
+{ #category : 'update' }
 StRefactoringPreviewPresenter >> updateActiveScope [
 
 	activeScope := scopeDropList selectedItem asRBEnvironment
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 StRefactoringPreviewPresenter >> updateChanges [
 
 	changesInScope := changes select: [ :change |
@@ -179,13 +204,13 @@ StRefactoringPreviewPresenter >> updateChanges [
 	selectedChanges := OrderedCollection withAll: changesInScope
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 StRefactoringPreviewPresenter >> updateScopeList [
 
 	scopeDropList items: scopes
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 StRefactoringPreviewPresenter >> updateTablePresenter [
 
 	table items: changesInScope.

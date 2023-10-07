@@ -2,66 +2,70 @@
 A copied variable is an arg or temp var that is copied into a block that later reads this variable
 "
 Class {
-	#name : #CopiedLocalVariable,
-	#superclass : #LocalVariable,
+	#name : 'CopiedLocalVariable',
+	#superclass : 'LocalVariable',
 	#instVars : [
 		'originalVar'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CopiedLocalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ originalVar acceptVisitor: aProgramNodeVisitor node: aNode
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 CopiedLocalVariable >> definingNode [
-	^originalVar definingNode
+	^ scope node temporaries
+		detect: [ :each | each variable == self ]
+		ifNone: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CopiedLocalVariable >> index: anIndex [
 	self scope == originalVar scope ifTrue: [ originalVar index: anIndex ].
 	super index: anIndex
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CopiedLocalVariable >> isArgumentVariable [
 	^originalVar isArgumentVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CopiedLocalVariable >> isCopying [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CopiedLocalVariable >> isTempVariable [
 	^ originalVar isTempVariable
 ]
 
-{ #category : #'read/write usage' }
+{ #category : 'read/write usage' }
 CopiedLocalVariable >> isUninitialized [
 	^originalVar isUninitialized
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CopiedLocalVariable >> isWritable [
 	^originalVar isWritable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CopiedLocalVariable >> originalVar [
 	^ originalVar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CopiedLocalVariable >> originalVar: anObject [
 	originalVar := anObject
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 CopiedLocalVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 	self isWritable ifFalse: [ 	^self error: 'Arguments are read only' ].
 	"we need to change this var, all the other copies, and the orginal"

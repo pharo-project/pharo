@@ -1,10 +1,11 @@
 Class {
-	#name : #CmdCommandExampleInRootMenu,
-	#superclass : #CmdRootOfCommandExamples,
-	#category : #'Commander-Core-Tests'
+	#name : 'CmdCommandExampleInRootMenu',
+	#superclass : 'CmdRootOfCommandExamples',
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandExampleInRootMenu class >> rootMenuActivationExample [
 	<classAnnotation>
 

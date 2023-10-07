@@ -7,12 +7,14 @@ Main public API is
 	- parse: aString
 "
 Class {
-	#name : #CDClassDefinitionParser,
-	#superclass : #CDAbstractClassDefinitionParser,
-	#category : #'ClassParser-Parser'
+	#name : 'CDClassDefinitionParser',
+	#superclass : 'CDAbstractClassDefinitionParser',
+	#category : 'ClassParser-Parser',
+	#package : 'ClassParser',
+	#tag : 'Parser'
 }
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
 	| layoutClass |
 	self handleClassName: aNode.
@@ -20,13 +22,13 @@ CDClassDefinitionParser >> handleClassName: aNode withType: aSymbol [
 
 	"if we get back CompiledMethodLayout or ByteLayout, we need to check the class name"
 	(layoutClass = CompiledMethodLayout or: [ layoutClass = ByteLayout ]) ifTrue: [
-		layoutClass := (classDefinition className = 'CompiledMethod')
+		layoutClass :=  (#('CompiledMethod' 'CompiledBlock' 'CompiledCode') includes: classDefinition className)
 					ifTrue:  [  CompiledMethodLayout ]
 					ifFalse: [  ByteLayout ]].
 	classDefinition layoutClass: (layoutClass)
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	| shareds sharedPoolNodes sharedPoolString |
 	sharedPoolString := aNode value.
@@ -43,7 +45,7 @@ CDClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	classDefinition sharedPools: sharedPoolNodes
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 	| aSuperclassName superclassNode |
 	aSuperclassName := (aSuperclassNode isLiteralNode
@@ -57,7 +59,7 @@ CDClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 		astNode: superclassNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDClassDefinitionParser >> handleTraitDefinitionFromNode: aNode [
 
 	| traitComposition |
@@ -65,13 +67,18 @@ CDClassDefinitionParser >> handleTraitDefinitionFromNode: aNode [
 	classDefinition traitDefinition: traitComposition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassDefinitionParser >> isInstanceSideDefinition: aRBMessageNode [
 	"Based on the Point or Point class structure, returns whether the definition is a class or instance side definition."
-	^ aRBMessageNode receiver isMessage not
+	^ (aRBMessageNode isSequence 
+		"when defining a subclass of nil, we have two sends"
+		and: [aRBMessageNode statements size = 2
+		and: [aRBMessageNode statements second isMessage
+		and: [aRBMessageNode statements second selector == #superclass: ]]]) or: [
+	aRBMessageNode receiver isMessage not]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDClassDefinitionParser >> parseRootNode: expressionTree [
 	self setAdequateClassDefinitionFrom: expressionTree.
 	classDefinition originalNode: expressionTree.
@@ -79,7 +86,7 @@ CDClassDefinitionParser >> parseRootNode: expressionTree [
 	^ classDefinition
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 
 	"We could do this with reflection, or with a dictionary and closures.
@@ -106,7 +113,7 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		signal
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 	"set a class or metaclass class definition as class definition object."
 	(self isInstanceSideDefinition: expressionTree)
@@ -114,7 +121,7 @@ CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 		ifFalse: [ self beMetaclassDefinition ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 
 	(self isInstanceSideDefinition: aRBMessageNode)
@@ -125,4 +132,14 @@ CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 		with: aRBMessageNode arguments
 		do: [ :selectorPart :argument |
 			self parseSelectorPart: selectorPart withArgument: argument ]
+]
+
+{ #category : 'visiting' }
+CDClassDefinitionParser >> visitSequenceNode: aRBSequenceNode [
+	"we end up here when parsing the definition of a class with nil superclass, e.g., ProtoObject"
+	self visitMessageNode: aRBSequenceNode statements first.
+	classDefinition superclassName: 'nil'.
+	classDefinition superclassNameNode
+		originalNode: aRBSequenceNode statements second arguments first;
+		className: 'nil'
 ]

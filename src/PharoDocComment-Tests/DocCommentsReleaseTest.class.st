@@ -4,12 +4,14 @@ This test class builds a test suite from all the doc comments in the system.
 See #buildSuite on the class side.
 "
 Class {
-	#name : #DocCommentsReleaseTest,
-	#superclass : #TestCase,
-	#category : #'PharoDocComment-Tests-Base'
+	#name : 'DocCommentsReleaseTest',
+	#superclass : 'TestCase',
+	#category : 'PharoDocComment-Tests-Base',
+	#package : 'PharoDocComment-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 DocCommentsReleaseTest class >> buildSuite [
 	| suite methods |
 	suite := TestSuite named: 'Test Generated From Comments'.

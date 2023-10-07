@@ -5,50 +5,51 @@ Example:
 (RBBrowserEnvironment new) forPragmas:{ #primitive:}.
 "
 Class {
-	#name : #RBPragmaEnvironment,
-	#superclass : #RBBrowserEnvironmentWrapper,
+	#name : 'RBPragmaEnvironment',
+	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
 		'keywords',
 		'condition'
 	],
-	#category : #'Refactoring-Environment'
+	#category : 'Refactoring-Environment',
+	#package : 'Refactoring-Environment'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RBPragmaEnvironment class >> defaultName [
 	^ 'Pragmas'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPragmaEnvironment class >> keywords: aKeywordCollection [
 	^ self
 		onEnvironment: self default
 		keywords: aKeywordCollection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBPragmaEnvironment class >> onEnvironment: anEnvironment keywords: aKeywordCollection [
 	^ (self onEnvironment: anEnvironment)
 		keywords: aKeywordCollection;
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBPragmaEnvironment >> addKeyword: aSymbol [
 	keywords add: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPragmaEnvironment >> basisObjects [
 	^ keywords
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPragmaEnvironment >> condition: aBlock [
 	condition := aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBPragmaEnvironment >> defaultLabel [
 	| stream |
 	stream := String new writeStream.
@@ -56,27 +57,22 @@ RBPragmaEnvironment >> defaultLabel [
 	^ stream contents
 ]
 
-{ #category : #testing }
-RBPragmaEnvironment >> includesCategory: aCategory [
-	^ (environment includesCategory: aCategory) and: [ (self classNamesFor: aCategory) notEmpty ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 RBPragmaEnvironment >> includesClass: aClass [
 	^ (environment includesClass: aClass) and: [ aClass selectors anySatisfy: [ :each | self includesSelector: each in: aClass ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBPragmaEnvironment >> includesPragma: aPragma [
 	^ (keywords includes: aPragma selector) and: [ condition value: aPragma ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBPragmaEnvironment >> includesProtocol: aProtocol in: aClass [
 	^ (environment includesProtocol: aProtocol in: aClass) and: [ (self selectorsFor: aProtocol in: aClass) notEmpty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBPragmaEnvironment >> includesSelector: aSelector in: aClass [
 	(environment includesSelector: aSelector in: aClass)
 		ifFalse: [ ^ false ].
@@ -84,30 +80,25 @@ RBPragmaEnvironment >> includesSelector: aSelector in: aClass [
 		anySatisfy: [ :each | self includesPragma: each ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPragmaEnvironment >> initialize [
 	super initialize.
 	keywords := IdentitySet new.
 	condition := [ :pragma | true ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPragmaEnvironment >> keywords: aCollection [
 	keywords addAll: aCollection
 ]
 
-{ #category : #testing }
-RBPragmaEnvironment >> packages [
-	^ (self methods collect: [:each | each package]) asSet
-]
-
-{ #category : #copying }
+{ #category : 'copying' }
 RBPragmaEnvironment >> postCopy [
 	super postCopy.
 	keywords := keywords copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBPragmaEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

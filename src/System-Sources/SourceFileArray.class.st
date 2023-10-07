@@ -9,42 +9,44 @@ The use of bit 25 of the source pointer for file references permits backward com
 
 "
 Class {
-	#name : #SourceFileArray,
-	#superclass : #Object,
+	#name : 'SourceFileArray',
+	#superclass : 'Object',
 	#instVars : [
 		'files',
 		'readOnlyQueue',
 		'flushChanges'
 	],
-	#category : #'System-Sources-Sources'
+	#category : 'System-Sources-Sources',
+	#package : 'System-Sources',
+	#tag : 'Sources'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SourceFileArray class >> initialize [
 
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 SourceFileArray class >> startUp: resuming [
 
 	resuming ifTrue: [ Smalltalk openSourceFiles ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileArray >> changesFileStream [
 	"Answer the master .changes FileStream, with writing permissions."
 
 	^ files at: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileArray >> changesFileStream: aStream [
 
 	^ files at: 2 put: aStream
 ]
 
-{ #category : #'public - string writing' }
+{ #category : 'public - string writing' }
 SourceFileArray >> changesWriteStreamDo: aBlock [
 
 	| changesFile |
@@ -57,7 +59,7 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 	^ aBlock value: changesFile
 ]
 
-{ #category : #'public - file system operations' }
+{ #category : 'public - file system operations' }
 SourceFileArray >> close [
 
 	| oldFiles |
@@ -67,7 +69,7 @@ SourceFileArray >> close [
 	self emptyReadStreamsQueue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileArray >> closeFileArray: anArray [
 
 	anArray
@@ -77,18 +79,18 @@ SourceFileArray >> closeFileArray: anArray [
 	^ anArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileArray >> commentDataPointers [
 	"Retrieves the combination key to look for comments in the source file"
 	^'commentStamp:' -> #commentStamp:
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> commentTimeStampAt: sourcePointer [
 	^self timeStampAt: sourcePointer for: self commentDataPointers
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileArray >> createReadOnlyFiles [
 	| readOnly |
 	readOnly := {
@@ -98,7 +100,7 @@ SourceFileArray >> createReadOnlyFiles [
 	^readOnly
 ]
 
-{ #category : #'public - string writing' }
+{ #category : 'public - string writing' }
 SourceFileArray >> deferFlushDuring: aBlock [
 
 	"defer flushing the filestream until a block has been executed"
@@ -112,7 +114,7 @@ SourceFileArray >> deferFlushDuring: aBlock [
 		self flushChangesFile ]
 ]
 
-{ #category : #'public - file system operations' }
+{ #category : 'public - file system operations' }
 SourceFileArray >> emptyReadStreamsQueue [
 
 	| oldQueue |
@@ -121,7 +123,7 @@ SourceFileArray >> emptyReadStreamsQueue [
 	oldQueue flushAllSuchThat: [ :each | self closeFileArray: each. true]
 ]
 
-{ #category : #'public - file system operations' }
+{ #category : 'public - file system operations' }
 SourceFileArray >> ensureOpen [
 	"Ensure that the source and changes files are opened.
 	Close them before re-opening them."
@@ -143,40 +145,32 @@ SourceFileArray >> ensureOpen [
 	readOnlyQueue := SharedQueue new
 ]
 
-{ #category : #'private - accessing file streams' }
+{ #category : 'private - accessing file streams' }
 SourceFileArray >> fileAt: index [
 	^ files at: index
 ]
 
-{ #category : #'private - accessing file streams' }
+{ #category : 'private - accessing file streams' }
 SourceFileArray >> fileAt: index ifAbsent: aBlock [
 	^ files at: index ifAbsent: aBlock
 ]
 
-{ #category : #'private - sourcepointer conversion' }
+{ #category : 'private - sourcepointer conversion' }
 SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 	"Return the index of the source file which contains the source chunk addressed by anInteger"
+	"1 is sources file, 2 is changes file"
 
-	^ (anInteger bitAnd: 16r1000000) ~= 0
-		ifTrue: [ 1	"sources file" ]
-		ifFalse: [ anInteger >= 16r1000000
-				ifTrue: [ 2	"changes file" ]
-				ifFalse: [ 0	"compatibility with StandardSourceFileArray" ] ]
+	^ (anInteger bitAnd: 1) + 1
 ]
 
-{ #category : #'private - sourcepointer conversion' }
+{ #category : 'private - sourcepointer conversion' }
 SourceFileArray >> filePositionFromSourcePointer: anInteger [
-	"Return the position of the source chunk addressed by anInteger"
+	"Return the position of the source chunk addressed by anInteger, just shift by one"
 
-	| hi lo |
-	hi := anInteger // 33554432.
-	lo := anInteger \\ 16777216.
-	^ ((anInteger bitAnd: 16777216) ~= 0 or: [ anInteger < 16777216	"compatibility with StandardSourceFileArray" ])
-		ifTrue: [ hi * 16777216 + lo	"sources file" ]
-		ifFalse: [ (hi - 1) * 16777216 + lo	"changes file" ]
+	^ anInteger >> 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 
 	(aQueue == readOnlyQueue and: [ aQueue size < self readOnlyQueueLimit ])
@@ -184,14 +178,14 @@ SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 		ifFalse: [ self closeFileArray: aReadOnlyFileArray ]
 ]
 
-{ #category : #'public - file system operations' }
+{ #category : 'public - file system operations' }
 SourceFileArray >> flushChangesFile [
 
 	flushChanges ifFalse: [ ^ self ].
 	self changesFileStream ifNotNil: [:stream | stream flush]
 ]
 
-{ #category : #'public - file system operations' }
+{ #category : 'public - file system operations' }
 SourceFileArray >> forceChangesToDisk [
 	"Ensure that the changes file has been fully written to disk by closing and re-opening it. This makes the system more robust in the face of a power failure or hard-reboot."
 
@@ -204,12 +198,12 @@ SourceFileArray >> forceChangesToDisk [
 	changesFile setToEnd
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> getPreambleFrom: aSourceFileStream at: position [
 	^ aSourceFileStream getPreambleAt: position
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SourceFileArray >> initialize [
 
 	files := Array new: 2.
@@ -218,14 +212,14 @@ SourceFileArray >> initialize [
 	flushChanges := true
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> protocolAt: sourcePointer [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available"
 
 	^ self protocolAt: sourcePointer for: self sourceDataPointers
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> protocolAt: sourcePointer for: sourceDataPointers [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available."
 
@@ -245,7 +239,7 @@ SourceFileArray >> protocolAt: sourcePointer for: sourceDataPointers [
 	^ protocol
 ]
 
-{ #category : #'private - copying' }
+{ #category : 'private - copying' }
 SourceFileArray >> readOnlyCopy [
 	"Answer a read only copy of self. The caller is responsible of closing it."
 
@@ -255,7 +249,7 @@ SourceFileArray >> readOnlyCopy [
 		yourself
 ]
 
-{ #category : #'private - copying' }
+{ #category : 'private - copying' }
 SourceFileArray >> readOnlyDo: aBlock [
 	"Value a block with a read only copy of self."
 
@@ -265,7 +259,7 @@ SourceFileArray >> readOnlyDo: aBlock [
 	^ [ aBlock value: copy ] ensure: [ copy close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileArray >> readOnlyQueueLimit [
 
 	"maximum number of read only file arrays to be held by the readOnlyQueue(SharedQueue)"
@@ -273,7 +267,7 @@ SourceFileArray >> readOnlyQueueLimit [
 	^ 7
 ]
 
-{ #category : #'private - accessing file streams' }
+{ #category : 'private - accessing file streams' }
 SourceFileArray >> readStreamAt: sourcePointer ifPresent: presentBlock ifAbsent: absentBlock [
 
 	| index position |
@@ -292,7 +286,7 @@ SourceFileArray >> readStreamAt: sourcePointer ifPresent: presentBlock ifAbsent:
 		ifAbsent: absentBlock
 ]
 
-{ #category : #'private - accessing file streams' }
+{ #category : 'private - accessing file streams' }
 SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: presentBlock ifAbsent: absentBlock [
 
    | queue stream rofa result file |
@@ -335,7 +329,7 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
     ^ result
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> remoteStringAt: sourcePointer [
 
 	| filePosition fileIndex |
@@ -345,7 +339,7 @@ SourceFileArray >> remoteStringAt: sourcePointer [
 	^ RemoteString newFileNumber: fileIndex position: filePosition
 ]
 
-{ #category : #'public - string writing' }
+{ #category : 'public - string writing' }
 SourceFileArray >> remoteStringForNewString: aString [
 
 	^ RemoteString new
@@ -354,7 +348,7 @@ SourceFileArray >> remoteStringForNewString: aString [
 		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SourceFileArray >> reportString [
 
 	^ String streamContents: [ :aStream |
@@ -363,17 +357,17 @@ SourceFileArray >> reportString [
 				aStream nextPutAll: each printString; cr ] ] ]
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> sourceCodeAt: sourcePointer [
 	"Retrieves the source code for the pointer received as argument"
 
 	^ self
 		readStreamAt: sourcePointer
 		ifPresent: [ :stream | (ChunkReadStream on: stream) next ]
-		ifAbsent: [ '' ]
+		ifAbsent: [ nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileArray >> sourceDataPointers [
 	"Retrieves the combination key to look for information of the receiver in the source file"
 
@@ -382,20 +376,19 @@ SourceFileArray >> sourceDataPointers [
 	^ 'methodsFor:' -> #stamp:
 ]
 
-{ #category : #'private - sourcepointer conversion' }
+{ #category : 'private - sourcepointer conversion' }
 SourceFileArray >> sourcePointerFromFileIndex: index andPosition: position [
 	"Return a sourcePointer encoding the given file index and position"
 
-	| hi lo |
 	(index = 1 or: [index = 2])
 		ifFalse: [self error: 'invalid source file index'].
 	position < 0 ifTrue: [self error: 'invalid source code pointer'].
-	hi := position // 16r1000000 *2 + index.
-	lo := position \\ 16r1000000.
-	^ hi * 16r1000000 + lo
+	
+	"we shift the position by one and set the last bit for .changes"
+	^ (position << 1) bitOr: index - 1
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> sourcedDataAt: sourcePointer [
 
 	^ self
@@ -407,27 +400,27 @@ SourceFileArray >> sourcedDataAt: sourcePointer [
 		ifAbsent: [ '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileArray >> sourcesFileStream [
 	"Answer the master .sources FileStream, with writing permissions."
 
 	^ files at: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileArray >> sourcesFileStream: aStream [
 
 	^ files at: 1 put: aStream
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> timeStampAt: sourcePointer [
 	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 
 	^ self timeStampAt: sourcePointer for: self sourceDataPointers
 ]
 
-{ #category : #'public - string reading' }
+{ #category : 'public - string reading' }
 SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 
@@ -446,7 +439,7 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	^ stamp
 ]
 
-{ #category : #'public - string writing' }
+{ #category : 'public - string writing' }
 SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlock onFail: failBlock [
 
 	| file position |

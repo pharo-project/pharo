@@ -14,34 +14,52 @@ be exected.
 NOTE: This rule detects *many* false positives.
 "
 Class {
-	#name : #ReTempsReadBeforeWrittenRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReTempsReadBeforeWrittenRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReTempsReadBeforeWrittenRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'TempsReadBeforeWrittenRule'
 ]
 
-{ #category : #running }
-ReTempsReadBeforeWrittenRule >> basicCheck: aMethod [
-	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: aMethod ast) isNotEmpty
+{ #category : 'running' }
+ReTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
+
+	(self findReadsBeforeWrittenTemporariesIn: aMethod) ifNotEmpty: [
+		:temps |
+		aCriticBlock cull: ((self critiqueFor: aMethod)
+				 tinyHint: (String streamContents: [ :stream |
+							  temps
+								  do: [ :temporary | stream nextPutAll: temporary ]
+								  separatedBy: [ stream nextPutAll: ', ' ] ]);
+				 yourself) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'running' }
+ReTempsReadBeforeWrittenRule >> findReadsBeforeWrittenTemporariesIn: aMethod [
+
+	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn:
+		   aMethod ast) array select: #isNotNil
+]
+
+{ #category : 'accessing' }
 ReTempsReadBeforeWrittenRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTempsReadBeforeWrittenRule >> name [
+
 	^ 'Temporaries may be read before written'
 ]

@@ -1,1 +1,1 @@
-Package { #name : #'System-OSEnvironments-Tests' }
+Package { #name : 'System-OSEnvironments-Tests' }

@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfDependencyAnalyzer }
+Package { #name : 'BaselineOfDependencyAnalyzer' }

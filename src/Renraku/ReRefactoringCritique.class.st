@@ -2,44 +2,46 @@
 A critique which has a refactoring needed to solve the issue
 "
 Class {
-	#name : #ReRefactoringCritique,
-	#superclass : #ReAbstractCritique,
+	#name : 'ReRefactoringCritique',
+	#superclass : 'ReAbstractCritique',
 	#instVars : [
 		'refactoring',
 		'alreadyExecuted'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRefactoringCritique >> change [
 	"return changes provided by the refactoring"
 
 	alreadyExecuted ifFalse: [
-		refactoring primitiveExecute.
+		refactoring generateChanges.
 		alreadyExecuted := true ].
 
 	^ refactoring changes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReRefactoringCritique >> initialize [
 
 	alreadyExecuted := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReRefactoringCritique >> providesChange [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRefactoringCritique >> refactoring [
 	^ refactoring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRefactoringCritique >> refactoring: anObject [
 	refactoring := anObject
 ]

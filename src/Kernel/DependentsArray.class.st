@@ -8,18 +8,20 @@ This is because #size and #at: both require scanning for nils.
 For this reason, DependentsArray though sequenceable, is not a subclass of SequenceableCollection.
 "
 Class {
-	#name : #DependentsArray,
-	#superclass : #Collection,
-	#type : #weak,
-	#category : #'Kernel-Models'
+	#name : 'DependentsArray',
+	#superclass : 'Collection',
+	#type : 'weak',
+	#category : 'Kernel-Models',
+	#package : 'Kernel',
+	#tag : 'Models'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DependentsArray class >> with: anObject [
 	^(self basicNew: 1) basicAt: 1 put: anObject; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DependentsArray class >> with: firstObject with: secondObject [
 	^(self basicNew: 2)
 		basicAt: 1 put: firstObject;
@@ -27,7 +29,7 @@ DependentsArray class >> with: firstObject with: secondObject [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DependentsArray class >> with: firstObject with: secondObject with: thirdObject [
 	^(self basicNew: 3)
 		basicAt: 1 put: firstObject;
@@ -36,7 +38,7 @@ DependentsArray class >> with: firstObject with: secondObject with: thirdObject 
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DependentsArray class >> with: firstObject with: secondObject with: thirdObject with: fourthObject [
 	^(self basicNew: 4)
 		basicAt: 1 put: firstObject;
@@ -46,7 +48,7 @@ DependentsArray class >> with: firstObject with: secondObject with: thirdObject 
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DependentsArray class >> with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject [
 	^(self basicNew: 5)
 		basicAt: 1 put: firstObject;
@@ -57,7 +59,7 @@ DependentsArray class >> with: firstObject with: secondObject with: thirdObject 
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DependentsArray class >> with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject with: sixthObject [
 	^(self basicNew: 6)
 		basicAt: 1 put: firstObject;
@@ -69,7 +71,7 @@ DependentsArray class >> with: firstObject with: secondObject with: thirdObject 
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DependentsArray class >> withAll: aCollection [
 	| newInstance |
 	newInstance := self basicNew: aCollection size.
@@ -78,7 +80,7 @@ DependentsArray class >> withAll: aCollection [
 	^newInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DependentsArray >> at: anIndex [
 	| basicSize counter dep |
 	anIndex > 0 ifTrue: [
@@ -91,7 +93,7 @@ DependentsArray >> at: anIndex [
 	self error: 'access with an index out of bounds'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DependentsArray >> at: anIndex put: anObject [
 	| basicSize counter |
 	anIndex > 0 ifTrue: [
@@ -104,7 +106,7 @@ DependentsArray >> at: anIndex put: anObject [
 	self error: 'access with an index out of bounds'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DependentsArray >> basicReplaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
@@ -112,7 +114,7 @@ DependentsArray >> basicReplaceFrom: start to: stop with: replacement startingAt
 		self basicAt: i put: (replacement basicAt: repStart - start + i)]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DependentsArray >> collect: aBlock [
 	"Refer to the comment in Collection|select:."
 	| basicSize newSelf size dep selection |
@@ -126,7 +128,7 @@ DependentsArray >> collect: aBlock [
 	^selection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DependentsArray >> copyWith: newElement [
 	"Re-implemented to not copy any niled out dependents."
 	| copy i |
@@ -137,7 +139,7 @@ DependentsArray >> copyWith: newElement [
 	^copy
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DependentsArray >> do: aBlock [
 	"Evaluate a Block on non nil elements of the receiver"
 	| dep |
@@ -145,19 +147,19 @@ DependentsArray >> do: aBlock [
 		(dep := self basicAt: i) ifNotNil:[aBlock value: dep]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DependentsArray >> first [
 	self do: [:dep | ^dep].
 	self error: 'this collection is empty'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DependentsArray >> last [
 	self reverseDo: [:dep | ^dep].
 	self error: 'this collection is empty'
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DependentsArray >> reverseDo: aBlock [
 	"Refer to the comment in Collection|do:."
 	| dep |
@@ -165,7 +167,7 @@ DependentsArray >> reverseDo: aBlock [
 		(dep := self basicAt: i) ifNotNil: [aBlock value: dep]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DependentsArray >> select: aBlock [
 	"Refer to the comment in Collection|select:."
 	| basicSize newSelf size selection |
@@ -181,7 +183,7 @@ DependentsArray >> select: aBlock [
 	^selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DependentsArray >> size [
 	"count each non nil elements in self.
 	Note: count: will use do: which will already have filtered out nil elements"
@@ -189,7 +191,7 @@ DependentsArray >> size [
 	^self count: [:each | true]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DependentsArray >> writeStream [
 	^ WriteStream on: self
 ]

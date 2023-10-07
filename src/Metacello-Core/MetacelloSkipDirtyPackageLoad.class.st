@@ -1,32 +1,34 @@
 Class {
-	#name : #MetacelloSkipDirtyPackageLoad,
-	#superclass : #Notification,
+	#name : 'MetacelloSkipDirtyPackageLoad',
+	#superclass : 'Notification',
 	#instVars : [
 		'packageSpec'
 	],
-	#category : #'Metacello-Core-Exceptions-Notifications'
+	#category : 'Metacello-Core-Exceptions-Notifications',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Notifications'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 MetacelloSkipDirtyPackageLoad class >> signal: aMetacelloPackageSpec [
 
 	^(self new packageSpec: aMetacelloPackageSpec) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSkipDirtyPackageLoad >> defaultAction [
 	"Default action is to skip the load of a dirty package"
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSkipDirtyPackageLoad >> packageSpec [
 
 	^packageSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSkipDirtyPackageLoad >> packageSpec: aMetacelloPackageSpec [
 
 	packageSpec := aMetacelloPackageSpec

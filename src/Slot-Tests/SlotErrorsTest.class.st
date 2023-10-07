@@ -1,10 +1,12 @@
 Class {
-	#name : #SlotErrorsTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-ClassBuilder'
+	#name : 'SlotErrorsTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SlotErrorsTest >> assertInvalidClassName: aName [
 
 	self should: [
@@ -19,7 +21,7 @@ SlotErrorsTest >> assertInvalidClassName: aName [
 		raise: InvalidGlobalName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testCannotBeRecompiled [
 	| superclass |
 	<expectedFailure>
@@ -43,25 +45,25 @@ SlotErrorsTest >> testCannotBeRecompiled [
 		description: 'Old class builder raises: X cannot be recompiled'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testClassNameMustBeCapitalized [
 
 	self assertInvalidClassName: #aNotCapitalizedClassName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testClassNameMustBeSymbol [
 
 	self assertInvalidClassName: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testClassNameWithInvalidCharacter [
 
 	self assertInvalidClassName: #'Invalid-ClassName'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testClassSlotDuplicationConflict [
 
 	aClass := self make: [ :builder |
@@ -76,17 +78,7 @@ SlotErrorsTest >> testClassSlotDuplicationConflict [
 		raise: DuplicatedSlotName
 ]
 
-{ #category : #tests }
-SlotErrorsTest >> testClassSlotWithReservedName [
-
-	#(#self #super #thisContext #true #false #nil) do: [:reservedName |
-		self should: [
-			self make: [ :builder |
-				builder classSlots: { reservedName } ] ]
-			raise: InvalidSlotName ]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testDangerousClassesConditions [
 
 	| specialObjectsArrayItem |
@@ -97,7 +89,7 @@ SlotErrorsTest >> testDangerousClassesConditions [
 	self assert: (DangerousClassNotifier shouldNotBeRedefined: specialObjectsArrayItem)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testDangerousClassesEnabling [
 
 	| savedExistingSystemSetting myExpectedError |
@@ -129,7 +121,7 @@ SlotErrorsTest >> testDangerousClassesEnabling [
 	self assert: DangerousClassNotifier enabled equals: savedExistingSystemSetting
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testDirectCircularHierarchyError [
 	"Tests an error is raised when trying to create a hierarchy A<-A"
 
@@ -147,7 +139,7 @@ SlotErrorsTest >> testDirectCircularHierarchyError [
 		raise: CircularHierarchyError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testIndirectCircularHierarchyError [
 	"Tests an error is raised when trying to create a hierarchy A<-B<-A"
 
@@ -170,7 +162,7 @@ SlotErrorsTest >> testIndirectCircularHierarchyError [
 		raise: CircularHierarchyError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testSlotDuplicationConflict [
 
 	aClass := self make: [ :builder |
@@ -185,17 +177,7 @@ SlotErrorsTest >> testSlotDuplicationConflict [
 		raise: DuplicatedSlotName
 ]
 
-{ #category : #tests }
-SlotErrorsTest >> testSlotWithReservedName [
-
-	#(#self #super #thisContext #true #false #nil) do: [:reservedName |
-		self should: [
-			self make: [ :builder |
-				builder slots: { reservedName } ] ]
-			raise: InvalidSlotName ]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testUndeclareSlot [
 	| slot instance |
 
@@ -215,7 +197,7 @@ SlotErrorsTest >> testUndeclareSlot [
 	self assert: (slot read: instance) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 	| slot instance mySlot |
 
@@ -238,7 +220,7 @@ SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 		aClassBuilder
 			name: self anotherClassName;
 			superclass: PropertySlot;
-			package: self aCategory ].
+			package: self slotTestPackageName ].
 
 	self assert: (slot read: instance) equals: nil.
 
@@ -251,7 +233,7 @@ SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 	self assert: (mySlot read: instance) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotErrorsTest >> testValidateClassName [
 
 	Smalltalk classInstaller

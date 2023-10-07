@@ -2,25 +2,26 @@
 A RottenTestsFinderTest is a test class for testing the behavior of RottenTestsFinder
 "
 Class {
-	#name : #RottenTestsFinderTest,
-	#superclass : #TestCase,
-	#category : #'RottenTestsFinder-Tests'
+	#name : 'RottenTestsFinderTest',
+	#superclass : 'TestCase',
+	#category : 'RottenTestsFinder-Tests',
+	#package : 'RottenTestsFinder-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RottenTestsFinderTest >> setUp [
 	"See RTFFakeTestSuperClass comment for more information."
 	super setUp.
 	RTFFakeTestSuperClass superclass: TestCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RottenTestsFinderTest >> tearDown [
 	RTFFakeTestSuperClass superclass: Object.
 	super tearDown
 ]
 
-{ #category : #'tests-analyzing' }
+{ #category : 'tests-analyzing' }
 RottenTestsFinderTest >> testAnalyze [
 	| rottenTestsFound |
 	rottenTestsFound := RottenTestsFinder analyze: RTFFakeTestClass suite.

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBRenamePackageParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBRenamePackageParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenamePackageParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBRenamePackageRefactoring };
@@ -12,24 +14,25 @@ RBRenamePackageParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenamePackageParametrizedTest >> constructor [
 	^ #rename:to:
 ]
 
-{ #category : #'failure tests' }
-RBRenamePackageParametrizedTest >> testBadName [
+{ #category : 'failure tests' }
+RBRenamePackageParametrizedTest >> testFailureBadName [
 	self shouldFail: (self createRefactoringWithArguments:
 		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Core' })
 ]
 
-{ #category : #'failure tests' }
-RBRenamePackageParametrizedTest >> testExistingPackage [
+{ #category : 'failure tests' }
+RBRenamePackageParametrizedTest >> testFailureExistingPackage [
+
 	self shouldFail: (self createRefactoringWithArguments:
-		{ #'Refactoring-Tests-Core' . #'Refactoring-Tests-Changes' })
+			 { #'Refactoring-Tests-Core'. #'Refactoring-Tests-Changes' })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRenamePackageParametrizedTest >> testRenamePackage [
 	| refactoring aModel |
 

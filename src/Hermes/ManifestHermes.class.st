@@ -12,12 +12,14 @@ To Load code check: HEInstaller and HermesCommandLineHandler.
 To Export code check the comments in the Hermes-Exporter package.
 "
 Class {
-	#name : #ManifestHermes,
-	#superclass : #PackageManifest,
-	#category : #'Hermes-Manifest'
+	#name : 'ManifestHermes',
+	#superclass : 'PackageManifest',
+	#category : 'Hermes-Manifest',
+	#package : 'Hermes',
+	#tag : 'Manifest'
 }
 
-{ #category : #'meta-data - dependency analyser' }
+{ #category : 'meta-data - dependency analyser' }
 ManifestHermes class >> manuallyResolvedDependencies [
 	^ #(#'RPackage-Core' #Files #'Collections-Abstract')
 ]

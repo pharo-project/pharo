@@ -2,82 +2,91 @@
 I'm a test utility class that tries to mock a requestor API and just log callbacks
 "
 Class {
-	#name : #OCMockRequestor,
-	#superclass : #Object,
+	#name : 'OCMockRequestor',
+	#superclass : 'Object',
 	#instVars : [
 		'notifyList',
 		'interactive',
-		'isScripting'
+		'isScripting',
+		'text'
 	],
-	#category : #'OpalCompiler-Tests-Misc'
+	#category : 'OpalCompiler-Tests-Misc',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Misc'
 }
 
-{ #category : #binding }
+{ #category : 'binding' }
 OCMockRequestor >> bindingOf: aSymbol [
 
 	^ nil
 ]
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 OCMockRequestor >> correctFrom: anInteger to: anInteger2 with: aString [
 
-	self error: 'I do not want to mock this one'
+	text := (text first: anInteger - 1) , aString , (text copyFrom: anInteger2 + 1 to: text size)
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 OCMockRequestor >> hasBindingOf: aSymbol [
 
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCMockRequestor >> initialize [
 
 	notifyList := OrderedCollection new.
 	interactive := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCMockRequestor >> interactive [
 	^ interactive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCMockRequestor >> interactive: anObject [
 
 	interactive := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCMockRequestor >> isScripting [
 	^ isScripting
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCMockRequestor >> isScripting: aBoolean [
 
 	isScripting := aBoolean
 ]
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 OCMockRequestor >> notify: aString at: anInteger in: aString3 [
 
 	notifyList add: { aString. anInteger. aString3 }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCMockRequestor >> notifyList [
 
 	^ notifyList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCMockRequestor >> text [
 
-	^ 'I do not really care'
+	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+OCMockRequestor >> text: aString [
+
+	text := aString
+]
+
+{ #category : 'accessing' }
 OCMockRequestor >> textMorph [
 
 	self error: 'Seriously, a Morph?'

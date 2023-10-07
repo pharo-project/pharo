@@ -1,10 +1,12 @@
 Class {
-	#name : #IRPrinterTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-IR'
+	#name : 'IRPrinterTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-IR',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'IR'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testDup [
 	| ir |
 	ir := IRBuilderTest new testDup.
@@ -20,7 +22,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testInstVar [
 	| ir |
 	ir := IRBuilderTest new testInstVar.
@@ -36,7 +38,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testJumpAheadTo [
 	| ir |
 	ir := IRBuilderTest new testJumpAheadTo.
@@ -55,7 +57,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testJumpAheadToIf [
 	| ir |
 	ir := IRBuilderTest new testJumpAheadToIf.
@@ -76,7 +78,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testJumpBackTo [
 	| ir |
 	ir := IRBuilderTest new testJumpBackTo.
@@ -101,7 +103,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testLiteralArray [
 	| ir |
 	ir := IRBuilderTest new testLiteralArray.
@@ -114,7 +116,7 @@ returnLiteral: #(#test 4 #you)
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testLiteralVariableClass [
 	| ir |
 	ir := IRBuilderTest new testLiteralVariableClass.
@@ -128,7 +130,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testPopTop [
 	| ir |
 	ir := IRBuilderTest new testPopTop.
@@ -137,14 +139,11 @@ IRPrinterTest >> testPopTop [
 		equals:
 			'
 label: 1
-pushReceiver
-pushLiteral: false
-popTop
-returnTop
+returnReceiver
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testPushConsArray [
 	| ir |
 	ir := IRBuilderTest new testPushConsArray.
@@ -159,7 +158,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testPushNewArray [
 	| ir |
 	ir := IRBuilderTest new testPushNewArray.
@@ -173,7 +172,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testPushSelf [
 	| ir |
 	ir := IRBuilderTest new testPushSelf.
@@ -188,7 +187,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testPushTempArgument [
 	| ir |
 	ir := IRBuilderTest new testPushTempArgument.
@@ -204,7 +203,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testPushTempTemp [
 	| ir |
 	ir := IRBuilderTest new testPushTempTemp.
@@ -218,7 +217,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testPushThisContext [
 	| ir |
 	ir := IRBuilderTest new testPushThisContext.
@@ -233,7 +232,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testReturnTop [
 	| ir |
 	ir := IRBuilderTest new testReturnTop.
@@ -246,7 +245,7 @@ returnLiteral: false
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testSendSuper [
 	| ir |
 	ir := IRBuilderTest new testSendSuper.
@@ -261,7 +260,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testStoreIntoVariable [
 	| ir |
 	ir := IRBuilderTest new testStoreIntoVariable.
@@ -276,7 +275,7 @@ returnTop
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IRPrinterTest >> testStoreTemp [
 	| ir |
 	ir := IRBuilderTest new testStoreTemp.

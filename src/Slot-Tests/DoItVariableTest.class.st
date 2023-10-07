@@ -1,13 +1,15 @@
 Class {
-	#name : #DoItVariableTest,
-	#superclass : #TestCase,
+	#name : 'DoItVariableTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'instVarForTest'
 	],
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DoItVariableTest >> readVarInDifferentContext: aVar [
 	| temp |
 	self assert: aVar name equals: #temp.
@@ -16,7 +18,7 @@ DoItVariableTest >> readVarInDifferentContext: aVar [
 	^aVar readInContext: thisContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testConvertingToDoItVariable [
 
 	| temp var |
@@ -26,7 +28,7 @@ DoItVariableTest >> testConvertingToDoItVariable [
 	self assert: (var asDoItVariableFrom: #anyContext) identicalTo: var
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testCreationFromAnotherVariable [
 	| temp var targetTemp |
 	temp := 100.
@@ -38,21 +40,20 @@ DoItVariableTest >> testCreationFromAnotherVariable [
 	self assert: var actualVariable identicalTo: targetTemp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testDoItCompilation [
 	| temp var doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	doIt := thisContext class compiler
+	doIt := thisContext compiler
 		source: 'temp + 2';
-		context: thisContext;
-		noPattern: true;
+		isScripting: true;
 		bindings: { var };
 		compile.
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testFromInstVarVariable [
 
 	| var |
@@ -66,7 +67,7 @@ DoItVariableTest >> testFromInstVarVariable [
 	self assert: instVarForTest equals: 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testFromTempVariable [
 
 	| temp var |
@@ -80,21 +81,19 @@ DoItVariableTest >> testFromTempVariable [
 	self assert: temp equals: 200
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testReadCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp + 2 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generateMethod.
 
 	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testReadInGivenContextShouldIgnoreIt [
 	| temp var actual |
 	temp := 100.
@@ -104,7 +103,7 @@ DoItVariableTest >> testReadInGivenContextShouldIgnoreIt [
 	self assert: actual equals: 100
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testUsingMethods [
 
 	| temp var |
@@ -114,22 +113,20 @@ DoItVariableTest >> testUsingMethods [
 	self assert: var usingMethods equals: { thisContext method }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testWriteCompilation [
 	| temp var ast doIt |
 	temp := 100.
 	var := DoItVariable named: #temp fromContext: thisContext.
-	[ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis]
-		on: OCUndeclaredVariableWarning
-		do: [ :ex |  ex resume: ex declareUndefined].
+	ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
-	doIt := ast generateWithSource.
+	doIt := ast generateMethod.
 	doIt valueWithReceiver: self arguments: #().
 
 	self assert: temp equals: 500
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoItVariableTest >> testWriteInGivenContextShouldIgnoreIt [
 	| temp var |
 	temp := 100.
@@ -139,7 +136,7 @@ DoItVariableTest >> testWriteInGivenContextShouldIgnoreIt [
 	self assert: temp equals: 200
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 DoItVariableTest >> writeVarInDifferentContext: aVar value: aValue [
 	| temp |
 	self assert: aVar name equals: #temp.

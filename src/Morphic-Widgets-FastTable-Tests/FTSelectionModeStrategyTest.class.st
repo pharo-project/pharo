@@ -2,31 +2,33 @@
 A FTSelectionModeStrategyTest is a test class for testing the behavior of FTSelectionModeStrategy
 "
 Class {
-	#name : #FTSelectionModeStrategyTest,
-	#superclass : #TestCase,
+	#name : 'FTSelectionModeStrategyTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'table',
 		'strategy'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tests-Selection'
+	#category : 'Morphic-Widgets-FastTable-Tests-Selection',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Selection'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTSelectionModeStrategyTest class >> isAbstract [
 	^ self = FTSelectionModeStrategyTest
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTSelectionModeStrategyTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FTSelectionModeStrategyTest >> setStrategy [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FTSelectionModeStrategyTest >> setUp [
 	super setUp.
 	table := FTTableMorph new
@@ -39,77 +41,77 @@ FTSelectionModeStrategyTest >> setUp [
 	strategy := table selectionModeStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testIndexFromPosition [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testIndexesToSelectInMultipleSelectionFromTo [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testIsAboveRow [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testIsAfterColumn [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testIsBeforeColumn [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testIsBellowRow [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testRowIndexFrom [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectAll [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectFirst [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectLast [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectableIndexAbove [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectableIndexAfter [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectableIndexBefore [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectableIndexBellow [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSelectionModeStrategyTest >> testSelectedRowIndex [
 	self subclassResponsibility
 ]

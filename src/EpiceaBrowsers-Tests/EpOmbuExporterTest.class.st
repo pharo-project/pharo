@@ -1,6 +1,6 @@
 Class {
-	#name : #EpOmbuExporterTest,
-	#superclass : #TestCase,
+	#name : 'EpOmbuExporterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'outputLog',
 		'inputLog1',
@@ -9,10 +9,18 @@ Class {
 		'logBuilder1',
 		'logBuilder2'
 	],
-	#category : #'EpiceaBrowsers-Tests-Exporter'
+	#category : 'EpiceaBrowsers-Tests-Exporter',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Exporter'
 }
 
-{ #category : #running }
+{ #category : 'asserting' }
+EpOmbuExporterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
+{ #category : 'running' }
 EpOmbuExporterTest >> setUp [
 
 	super setUp.
@@ -29,7 +37,7 @@ EpOmbuExporterTest >> setUp [
 		newWithStore: (OmFileStore named: 'exported' inDirectory: outputDirectory)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpOmbuExporterTest >> tearDown [
 
 	logBuilder1 cleanUp.
@@ -37,7 +45,7 @@ EpOmbuExporterTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpOmbuExporterTest >> testBasicExport [
 
 	| selection outputResult |
@@ -55,7 +63,7 @@ EpOmbuExporterTest >> testBasicExport [
 		equals: (selection collect: [ :each | each content ]) asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpOmbuExporterTest >> testCommentExportWithDependencyFix [
 	| selection oldComment newComment |
 	oldComment := nil.
@@ -76,7 +84,7 @@ EpOmbuExporterTest >> testCommentExportWithDependencyFix [
 	self deny: oldComment content entryReferences equals: newComment content entryReferences
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpOmbuExporterTest >> testRoundtrip [
 
 	| outputLogReopened |

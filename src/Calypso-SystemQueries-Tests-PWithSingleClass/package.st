@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemQueries-Tests-PWithSingleClass' }
+Package { #name : 'Calypso-SystemQueries-Tests-PWithSingleClass' }

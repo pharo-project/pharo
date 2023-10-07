@@ -2,77 +2,79 @@
 A MCVariableDefinition represents a variable.
 "
 Class {
-	#name : #MCVariableDefinition,
-	#superclass : #Object,
+	#name : 'MCVariableDefinition',
+	#superclass : 'Object',
 	#instVars : [
 		'name'
 	],
-	#category : #'Monticello-Modeling'
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCVariableDefinition class >> name: aString [
 	^ self new name: aString
 	
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVariableDefinition >> = other [
 	^ (self species = other species)
 		and: [self name = other name]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVariableDefinition >> hash [
 	^ name hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVariableDefinition >> isClassInstanceVariable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVariableDefinition >> isClassInstanceVariableDefinition [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVariableDefinition >> isClassVariable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVariableDefinition >> isInstanceVariable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVariableDefinition >> isInstanceVariableDefinition [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVariableDefinition >> isOrderDependend [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVariableDefinition >> isPoolImport [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVariableDefinition >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVariableDefinition >> name: aString [
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCVariableDefinition >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(; nextPutAll: self name; nextPut: $)

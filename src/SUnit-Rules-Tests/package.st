@@ -1,1 +1,1 @@
-Package { #name : #'SUnit-Rules-Tests' }
+Package { #name : 'SUnit-Rules-Tests' }

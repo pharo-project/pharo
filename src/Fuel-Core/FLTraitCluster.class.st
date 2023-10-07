@@ -2,33 +2,37 @@
 I am a cluster for storing traits in full detail.
 "
 Class {
-	#name : #FLTraitCluster,
-	#superclass : #FLBehaviorCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLTraitCluster',
+	#superclass : 'FLBehaviorCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLTraitCluster class >> clusterBucketIn: aClusterization [
 
 	^aClusterization metalevelInstanceSideBucket
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLTraitCluster >> materializeInstanceWith: aDecoder [
 	| traitClass |
 	traitClass := aDecoder nextEncodedReference.
 	^ traitClass new
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
-	| category name environment format layout instanceVariableNames |
+	| category name environment format layout instanceVariableNames comment stamp |
 	category := aDecoder nextEncodedReference.
 	name := aDecoder nextEncodedReference.
 	environment := aDecoder nextEncodedReference.
 	format := aDecoder nextEncodedReference.
 	layout := self materializeLayoutWith: aDecoder.
 	instanceVariableNames := aDecoder nextEncodedString substrings: ' '.
+	comment := aDecoder nextEncodedString.
+	stamp := aDecoder nextEncodedString.
 	
 	aTrait 
 		initialize;
@@ -36,16 +40,20 @@ FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
 		but the superclass of traits is nil"
 		superclass: nil;
 		setName: name;
-		basicCategory: (category ifNil: [ RPackage defaultPackageName ]) asSymbol;
+		basicCategory: (category ifNil: [ UndefinedPackage undefinedPackageName ]) asSymbol;
 		environment: environment.
 	self
 		installLayout: layout
 		withFormat: format
 		variableNames: instanceVariableNames
-		into: aTrait
+		into: aTrait.
+		
+	aTrait
+		comment: comment
+		stamp: stamp
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLTraitCluster >> referencesOf: aTrait do: aBlock [
 	super referencesOf: aTrait do: aBlock.
 
@@ -55,17 +63,15 @@ FLTraitCluster >> referencesOf: aTrait do: aBlock [
 		value: aTrait category;
 		value: aTrait name;
 		value: aTrait format;
-		value: (FLPlatform current hasStatefulTraits
-			ifTrue: [ aTrait classLayout class ]
-			ifFalse: [ nil ])
+		value: aTrait classLayout class
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLTraitCluster >> serializeInstance: aTrait with: anEncoder [
 	anEncoder encodeReferenceTo: aTrait classSide
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLTraitCluster >> serializePostInstance: aTrait with: anEncoder [
 		"Do not use #basicCategory because since it may be lazily computed it may happen that it is still in nil. "
 	anEncoder
@@ -73,11 +79,11 @@ FLTraitCluster >> serializePostInstance: aTrait with: anEncoder [
 		encodeReferenceTo: aTrait name;
 		encodeReferenceTo: aTrait basicEnvironment;
 		encodeReferenceTo: aTrait format.
-	FLPlatform current hasStatefulTraits
-		ifTrue: [
-			self
-				serializeLayout: aTrait classLayout
-				with: anEncoder ]
-		ifFalse: [ anEncoder encodeReferenceTo: nil ].
-	anEncoder encodeString: aTrait instanceVariablesString
+	self
+		serializeLayout: aTrait classLayout
+		with: anEncoder.
+	anEncoder
+		encodeString: aTrait instanceVariablesString;
+		encodeString: aTrait comment;
+		encodeString: aTrait commentStamp
 ]

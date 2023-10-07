@@ -1,6 +1,6 @@
-Extension { #name : #SVColorSelectorMorph }
+Extension { #name : 'SVColorSelectorMorph' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 SVColorSelectorMorph >> borderWidth: anInteger [
 	"Update the gradients after setting."
 

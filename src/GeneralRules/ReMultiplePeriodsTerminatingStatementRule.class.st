@@ -2,23 +2,25 @@
 A rule to check for multiple periods terminating the same statement, which is unnecessary, probably unintentional, and can cause problems when porting to other platforms like GemStone.
 "
 Class {
-	#name : #ReMultiplePeriodsTerminatingStatementRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReMultiplePeriodsTerminatingStatementRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReMultiplePeriodsTerminatingStatementRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMultiplePeriodsTerminatingStatementRule class >> uniqueIdentifierName [
 
 	^ 'MultiplePeriodsTerminatingStatementRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReMultiplePeriodsTerminatingStatementRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	aMethod ast
@@ -29,17 +31,17 @@ ReMultiplePeriodsTerminatingStatementRule >> check: aMethod forCritiquesDo: aCri
 					self periodPairs: node critiqueBlock: aCriticBlock in: aMethod ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMultiplePeriodsTerminatingStatementRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMultiplePeriodsTerminatingStatementRule >> name [
 	^ 'Multiple periods terminating the same statement'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReMultiplePeriodsTerminatingStatementRule >> periodPairs: node critiqueBlock: aCriticBlock in: aMethod [
 	| periods |
 	periods := node periods.

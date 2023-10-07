@@ -7,8 +7,8 @@ In most cases, you should communicate with me using my query interface. You will
 
 "
 Class {
-	#name : #RGEnvironment,
-	#superclass : #RGObject,
+	#name : 'RGEnvironment',
+	#superclass : 'RGObject',
 	#instVars : [
 		'announcer',
 		'behaviors',
@@ -18,10 +18,12 @@ Class {
 		'queryInterface',
 		'version'
 	],
-	#category : #'Ring-Core-Environment'
+	#category : 'Ring-Core-Environment',
+	#package : 'Ring-Core',
+	#tag : 'Environment'
 }
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> addBehavior: anRGBehavior [
 
 	self backend forEnvironment
@@ -40,58 +42,56 @@ RGEnvironment >> addBehavior: anRGBehavior [
 		ifTrue: [ self queryInterface behaviorsDictionary at: anRGBehavior name asSymbol put: anRGBehavior ]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> addGlobalVariable: anRGGlobalVariable [
 
 	self backend forBehavior addGlobalVariable: anRGGlobalVariable to: self
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> addPackage: anRGPackage [
 
 	self backend forPackage addPackage: anRGPackage to: self.
 
-	self announce: (RPackageRegistered to: anRGPackage)
+	self announce: (PackageAdded to: anRGPackage)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> announcer [
 
 	^ announcer ifNil: [ announcer := RGEnvironmentAnnouncer new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> ask [
 
 	^ queryInterface ifNil: [ queryInterface := RGEnvironmentQueryInterface for: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> backend [
 
 	^ backend ifNil: [ backend := RGEnvironmentBackend for: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> backend: anRGEnvironmentBackend [
 
 	^ backend := anRGEnvironmentBackend
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> behaviorsDo: aBlock [
 
 	self backend forEnvironment behaviorsFor: self do: aBlock
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 RGEnvironment >> bindingOf: aSymbol [
 
 	| behavior result |
 
-	(ReservedVariable nameIsReserved: aSymbol)
-		ifTrue: [ ^ ReservedVariable lookupDictionary at: aSymbol ].
-
+	PseudoVariable lookupDictionary at: aSymbol ifPresent: [ :val | ^ val ].
 	self globalVariablesBindings at: aSymbol ifPresent: [ :val | ^ val ].
 
 	self ask globalVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found |
@@ -104,20 +104,20 @@ RGEnvironment >> bindingOf: aSymbol [
 	^ result
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 RGEnvironment >> child: aChildDefinition renamedFrom: oldName to: newName [
 
 	self queryInterface behaviorsDictionary removeKey: oldName ifAbsent: [].
 	self queryInterface behaviorsDictionary at: newName asSymbol put: aChildDefinition
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> clean [
 
 	self cleanWithMetaclassNamed: #Metaclass
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> cleanBehaviors [
 
 	| oldBehaviors |
@@ -132,19 +132,19 @@ RGEnvironment >> cleanBehaviors [
 	self queryInterface resetBehaviorsDictionary
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> cleanGlobalVariables [
 
 	self backend forBehavior cleanGlobalVariablesFor: self
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> cleanPackages [
 
 	self backend forEnvironment cleanPackagesFor: self
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> cleanSuperclassesOfMetaclasses [
 
 	"fix suprclasses of metaclasses do not pointing to metaclasses of superclasses"
@@ -156,7 +156,7 @@ RGEnvironment >> cleanSuperclassesOfMetaclasses [
 					each superclass: each baseClass superclass metaclass] ] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> cleanUnusedUnreferencedBehaviors [
 
 	"remove behaviors that are not linked in the graph of the named behaviors"
@@ -183,7 +183,7 @@ RGEnvironment >> cleanUnusedUnreferencedBehaviors [
 	^ unreferenced
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> cleanUnusedUnreferencedPackages [
 
 	"remove packages that are not not used"
@@ -201,7 +201,7 @@ RGEnvironment >> cleanUnusedUnreferencedPackages [
 	^ unreferenced
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> cleanWithMetaclassNamed: aProposedName [
 
 	self unifyMetaclass: aProposedName.
@@ -213,7 +213,7 @@ RGEnvironment >> cleanWithMetaclassNamed: aProposedName [
 	self cleanUnusedUnreferencedPackages
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> compileANewClassFrom: aString notifying: aMorph startingFrom: aClass [
 	| importer |
 
@@ -224,7 +224,7 @@ RGEnvironment >> compileANewClassFrom: aString notifying: aMorph startingFrom: a
 	^ aClass
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RGEnvironment >> createDefaultEnvironment [
 
 	| protoobject protoobjectClass object objectClass class classClass classDescription classDescriptionClass behavior behaviorClass metaclass metaclassClass kernelPackage |
@@ -291,37 +291,37 @@ RGEnvironment >> createDefaultEnvironment [
 	metaclassClass pvtMetaclass: metaclass
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGEnvironment >> defaultBehaviors [
 
 	^ IdentitySet new
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGEnvironment >> defaultGlobalVariables [
 
 	^ IdentitySet new
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGEnvironment >> defaultPackages [
 
 	^ IdentitySet new
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGEnvironment >> defaultVersion [
 
 	^ 6
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> definitionFor: anObject [
 
 	^ self backend definitionFor: anObject
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensureClassNamed: aSymbol [
 
 	self assert: (aSymbol endsWith: ' classTrait') not.
@@ -350,7 +350,7 @@ RGEnvironment >> ensureClassNamed: aSymbol [
 			newBehavior ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensureClassTrait [
 
 	| aClassTrait |
@@ -369,7 +369,7 @@ RGEnvironment >> ensureClassTrait [
 	^ aClassTrait
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensureMetaclass [
 
 	| aMetaclass |
@@ -388,7 +388,7 @@ RGEnvironment >> ensureMetaclass [
 	^ aMetaclass
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensureMetaclass: aProposedName [
 
 	| aMetaclass |
@@ -407,7 +407,7 @@ RGEnvironment >> ensureMetaclass: aProposedName [
 	^ aMetaclass
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 
 	| found newTrait newMetaclassTrait similarMetaclass similarMetaclassName siblingName sibling originalMetaclass  |
@@ -481,7 +481,7 @@ RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 			found ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensurePackageNamed: aSymbol [
 
 	^ self ask packages
@@ -492,7 +492,7 @@ RGEnvironment >> ensurePackageNamed: aSymbol [
 				newPackage ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensureTrait [
 
 	| aTrait |
@@ -511,7 +511,7 @@ RGEnvironment >> ensureTrait [
 	^ aTrait
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> ensureTraitNamed: aSymbol [
 
 	| found siblingName sibling |
@@ -552,7 +552,7 @@ RGEnvironment >> ensureTraitNamed: aSymbol [
 			found ]
 ]
 
-{ #category : #unpackaged }
+{ #category : 'unpackaged' }
 RGEnvironment >> ensureUnpackagedPackage [
 
 	^ self unpackagedPackageOrNil
@@ -564,31 +564,31 @@ RGEnvironment >> ensureUnpackagedPackage [
 			^ newPackage ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> environment [
 
 	^ self
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> fixProtoObjectClassSuperclass [
 
 	(self ask classNamed: #'ProtoObject class') superclass: (self ask classNamed: #Class)
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 RGEnvironment >> globalVariablesBindings [
 
 	^ self propertyNamed: #globalVariablesBindings ifAbsentPut: [ IdentityDictionary new.]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> globalVariablesDo: aBlock [
 
 	self backend forBehavior globalVariablesFor: self do: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGEnvironment >> hasTraits [
 
 	self behaviorsDo: [ :each |
@@ -597,7 +597,7 @@ RGEnvironment >> hasTraits [
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGEnvironment >> initialize [
 
 	super initialize.
@@ -609,7 +609,7 @@ RGEnvironment >> initialize [
 	version := self defaultVersion
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGEnvironment >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -621,13 +621,13 @@ RGEnvironment >> initializeUnresolved [
 	version := self defaultVersion
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGEnvironment >> isEnvironment [
 
 	^ true
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGEnvironment >> makeResolved [
 
 	super makeResolved.
@@ -637,19 +637,19 @@ RGEnvironment >> makeResolved [
 	globalVariables := self ask globalVariables markAsRingResolved
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> package [
 
 	^ nil
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> packagesDo: aBlock [
 
 	self backend  packagesFor: self do: aBlock
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtAddBehavior: anRGBehavior [
 
 	self environment verifyOwnership: anRGBehavior.
@@ -663,7 +663,7 @@ RGEnvironment >> pvtAddBehavior: anRGBehavior [
 			self announcer behaviorAdded: anRGBehavior]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGEnvironment >> pvtAddGlobalVariable: anRGGlobalVariable [
 
 	self environment verifyOwnership: anRGGlobalVariable.
@@ -674,7 +674,7 @@ RGEnvironment >> pvtAddGlobalVariable: anRGGlobalVariable [
 	globalVariables add: anRGGlobalVariable
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtAddPackage: anRGPackage [
 
 	self environment verifyOwnership: anRGPackage.
@@ -685,13 +685,13 @@ RGEnvironment >> pvtAddPackage: anRGPackage [
 	packages add: anRGPackage
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtBehaviorsDo: aBlock [
 
 	^ behaviors value do: aBlock
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtCleanBehaviors [
 
 	behaviors := self defaultBehaviors.
@@ -699,13 +699,13 @@ RGEnvironment >> pvtCleanBehaviors [
 	"TODO:Announce if not empty"
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGEnvironment >> pvtCleanGlobalVariables [
 
 	globalVariables := self defaultGlobalVariables
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtCleanPackages [
 
 	packages := self defaultPackages.
@@ -713,19 +713,19 @@ RGEnvironment >> pvtCleanPackages [
 	"TODO:Announce if not empty"
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGEnvironment >> pvtGlobalVariablesDo: aBlock [
 
 	globalVariables value do: aBlock
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtPackagesDo: aBlock [
 
 	^ packages value do: aBlock
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtRemoveBehavior: anRGBehavior [
 
 	self verifyOwnership: anRGBehavior.
@@ -735,7 +735,7 @@ RGEnvironment >> pvtRemoveBehavior: anRGBehavior [
 	"TODO:Announce"
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGEnvironment >> pvtRemoveGlobalVariable: anRGGlobalVariable [
 
 	self environment verifyOwnership: anRGGlobalVariable.
@@ -743,7 +743,7 @@ RGEnvironment >> pvtRemoveGlobalVariable: anRGGlobalVariable [
 	globalVariables remove: anRGGlobalVariable
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtRemovePackage: anRGPackage [
 
 	self verifyOwnership: anRGPackage.
@@ -753,7 +753,7 @@ RGEnvironment >> pvtRemovePackage: anRGPackage [
 	"TODO:Announce"
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGEnvironment >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -763,13 +763,13 @@ RGEnvironment >> pvtResolvableProperties [
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> queryInterface [
 
 	^ self ask
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> removeBehavior: anRGBehavior [
 
 	self backend forEnvironment removeBehavior: anRGBehavior from: self.
@@ -788,21 +788,21 @@ RGEnvironment >> removeBehavior: anRGBehavior [
 		self queryInterface behaviorsDictionary removeKey: anRGBehavior name ifAbsent: []]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> removeGlobalVariable: anRGGlobalVariable [
 
 	self backend forBehavior removeGlobalVariable: anRGGlobalVariable from: self
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGEnvironment >> removePackage: anRGPackage [
 
 	self backend forPackage removePackage: anRGPackage from: self.
 
-	self announce: (RPackageUnregistered to: anRGPackage)
+	self announce: (PackageRemoved to: anRGPackage)
 ]
 
-{ #category : #unpackaged }
+{ #category : 'unpackaged' }
 RGEnvironment >> removeUnusedPackages [
 
 	"remove all packages that are not used in the system. It cannot be done automatically
@@ -823,7 +823,7 @@ RGEnvironment >> removeUnusedPackages [
 			ifFalse: [ self removePackage: each ] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> unifyClassTrait [
 
 	"set all metaclasses of classTraits to the same object (ClassTrait) "
@@ -837,7 +837,7 @@ RGEnvironment >> unifyClassTrait [
 			ifTrue: [ each metaclass: aTrait]]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> unifyMetaclass [
 
 	"set all metaclasses of metaclasses to the same object (Metaclass) "
@@ -851,7 +851,7 @@ RGEnvironment >> unifyMetaclass [
 			ifTrue: [ each metaclass: aMetaclass] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> unifyMetaclass: aProposedName [
 
 	"set all metaclasses of metaclasses to the same object (Metaclass) "
@@ -865,7 +865,7 @@ RGEnvironment >> unifyMetaclass: aProposedName [
 			ifTrue: [ each metaclass: aMetaclass] ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RGEnvironment >> unifyTrait [
 
 	"set all metaclasses of metaclasses to the same object (Metaclass) "
@@ -881,7 +881,7 @@ RGEnvironment >> unifyTrait [
 	(self ask behaviors select: [ :each | each isRingResolved not and: [(each propertyNamed: #role) = #trait] ]) do: [:each | self removeBehavior: each  ]
 ]
 
-{ #category : #unpackaged }
+{ #category : 'unpackaged' }
 RGEnvironment >> unpackagedPackage [
 
 	| aProtocol |
@@ -891,13 +891,13 @@ RGEnvironment >> unpackagedPackage [
 	^ aProtocol
 ]
 
-{ #category : #unpackaged }
+{ #category : 'unpackaged' }
 RGEnvironment >> unpackagedPackageName [
 
 	^ '_UnpackagedPackage' asSymbol
 ]
 
-{ #category : #unpackaged }
+{ #category : 'unpackaged' }
 RGEnvironment >> unpackagedPackageOrNil [
 
 	self packagesDo: [ :each |
@@ -906,7 +906,7 @@ RGEnvironment >> unpackagedPackageOrNil [
 	^ nil
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RGEnvironment >> verifyOwnership: anRGObject [
 
 	"ignore unresolved values. TODO: check default values ownership?"
@@ -916,12 +916,12 @@ RGEnvironment >> verifyOwnership: anRGObject [
 		ifFalse: [ RGWrongEnvironment signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> version [
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironment >> version: anObject [
 	version := anObject
 ]

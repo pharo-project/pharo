@@ -1,42 +1,50 @@
 Class {
-	#name : #RBInlineParameterParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBInlineParameterParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineParameterParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInlineParameterRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInlineParameterParametrizedTest >> constructor [
 	^ #inlineParameter:in:selector:
 ]
 
-{ #category : #'failure tests' }
-RBInlineParameterParametrizedTest >> testInlineArgsWhitoutSameLiteral [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'Bar:') asSymbol })
+{ #category : 'failure tests' }
+RBInlineParameterParametrizedTest >> testFailureInlineArgsWhitoutSameLiteral [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'aSymbol'.
+				 RBClassDataForRefactoringTest.
+				 ('inline' , 'Bar:') asSymbol })
 ]
 
-{ #category : #'failure tests' }
-RBInlineParameterParametrizedTest >> testInlineBlockFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'aBlock' . RBRefactoryTestDataApp . ('inline' , 'Foo:') asSymbol })
+{ #category : 'failure tests' }
+RBInlineParameterParametrizedTest >> testFailureInlineBlockFailure [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'aBlock'.
+				 RBClassDataForRefactoringTest.
+				 ('inline' , 'Foo:') asSymbol })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineParameterParametrizedTest >> testInlineLiteralArray [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ 'aSymbol' . RBRefactoryTestDataApp . ('inline' , 'ParameterMethod:') asSymbol }.
+		{ 'aSymbol' . RBClassDataForRefactoringTest . ('inline' , 'ParameterMethod:') asSymbol }.
 
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 
-	class := refactoring model classNamed: #RBRefactoryTestDataApp.
+	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	self assert: (class parseTreeForSelector: #inlineParameterMethod) equals: (self parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
 	self assert: (class parseTreeForSelector: #sendInlineParameterMethod) equals: (self parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
 	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)

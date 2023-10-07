@@ -1,1 +1,1 @@
-Package { #name : #ScriptingExtensions }
+Package { #name : 'ScriptingExtensions' }

@@ -2,12 +2,14 @@
 SUnit tests for Ring metaclass definitions
 "
 Class {
-	#name : #RGMetaclassDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGMetaclassDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetaclassDefinitionTest >> testAsMetaclassDefinition [
 	| rgClass class |
 	class := Class class.

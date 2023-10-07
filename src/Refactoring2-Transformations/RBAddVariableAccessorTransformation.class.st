@@ -14,56 +14,19 @@ Preconditions:
 - the variable with which the accessors will be created shall exist. The parameter isClassVariable indicates whether to look in the instance or class variables.
 "
 Class {
-	#name : #RBAddVariableAccessorTransformation,
-	#superclass : #RBVariableTransformation,
+	#name : 'RBAddVariableAccessorTransformation',
+	#superclass : 'RBVariableTransformation',
 	#instVars : [
 		'getterMethod',
 		'setterMethod'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #private }
-RBAddVariableAccessorTransformation >> createGetterAccessor [
-
-	(self definingClass getterMethodFor: variableName) ifNil: [ self defineGetterMethod ]
-]
-
-{ #category : #private }
-RBAddVariableAccessorTransformation >> createSetterAccessor [
-
-	(self definingClass setterMethodFor: variableName) ifNil: [ self defineSetterMethod ]
-]
-
-{ #category : #private }
-RBAddVariableAccessorTransformation >> defineGetterMethod [
-
-	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
-	self definingClass
-		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
-		classified: #(#accessing).
-	^ getterMethod
-]
-
-{ #category : #private }
-RBAddVariableAccessorTransformation >> defineSetterMethod [
-
-	|  sourceCode |
-	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
-	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
-	self definingClass
-		compile: (sourceCode expandMacrosWith: setterMethod with: variableName)
-		classified: #accessing.
-	^setterMethod
-]
-
-{ #category : #private }
-RBAddVariableAccessorTransformation >> getterMethod [
-	^ getterMethod
-]
-
-{ #category : #preconditions }
-RBAddVariableAccessorTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBAddVariableAccessorTransformation >> applicabilityPreconditions [ 
 
 	class := self model classObjectFor: className.
 
@@ -72,7 +35,63 @@ RBAddVariableAccessorTransformation >> preconditions [
 		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
 ]
 
-{ #category : #executing }
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> createGetterAccessor [
+
+	(self definingClass getterMethodFor: variableName) ifNil: [ self defineGetterMethod ]
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> createSetterAccessor [
+
+	(self definingClass setterMethodFor: variableName)
+		ifNil: [ self defineSetterMethod ]
+		ifNotNil: [ setterMethod := self definingClass setterMethodFor: variableName ]
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> defineGetterMethod [
+
+	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
+	(RBAddMethodTransformation
+		model: self model 
+		sourceCode: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
+		in: self definingClass
+		withProtocol: 'accessing') generateChanges.
+
+	^ getterMethod
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> defineSetterMethod [
+
+	|  sourceCode |
+	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
+	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
+	(RBAddMethodTransformation
+		model: self model
+		sourceCode: (sourceCode expandMacrosWith: setterMethod with: variableName)
+		in: self definingClass 
+		withProtocol: 'accessing') generateChanges.
+	^ setterMethod
+]
+
+{ #category : 'accessing' }
+RBAddVariableAccessorTransformation >> definingClass [
+	"Usually a shared variable is defined on the instance side and instance 
+	variables on both instance and class side."
+	
+	^ isClassVariable
+		ifTrue: [ super definingClass classSide ]
+		ifFalse: [ super definingClass ]
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> getterMethod [
+	^ getterMethod
+]
+
+{ #category : 'executing' }
 RBAddVariableAccessorTransformation >> privateTransform [
 
 	self
@@ -80,7 +99,7 @@ RBAddVariableAccessorTransformation >> privateTransform [
 		createSetterAccessor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
@@ -99,7 +118,7 @@ RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aStrin
 	^newString asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddVariableAccessorTransformation >> setterMethod [
 	^ setterMethod
 ]

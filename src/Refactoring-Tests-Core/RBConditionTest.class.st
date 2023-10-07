@@ -1,10 +1,35 @@
 Class {
-	#name : #RBConditionTest,
-	#superclass : #TestCase,
-	#category : #'Refactoring-Tests-Core-Base'
+	#name : 'RBConditionTest',
+	#superclass : 'TestCase',
+	#instVars : [
+		'rbNamespace',
+		'objectClass',
+		'messageNodeClass',
+		'newClass'
+	],
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'running' }
+RBConditionTest >> setUp [
+
+	super setUp.
+	rbNamespace := RBClassModelFactory rbNamespace new.
+	objectClass := rbNamespace classNamed: #Object.
+	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
+	rbNamespace defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #SomeClassName;
+			slots: { #instanceVariable1. #instanceVariable2 };
+			sharedVariables: { #ClassVariable1 };
+			sharedPools: 'TextConstants';
+			package: #'Refactory-Testing' ].
+	newClass := rbNamespace classNamed: #SomeClassName
+]
+
+{ #category : 'tests' }
 RBConditionTest >> testCheckFailEarlyAndDoesNotCoverEveryConditions [
 
 	| falseCase trueCase composition |
@@ -21,7 +46,7 @@ RBConditionTest >> testCheckFailEarlyAndDoesNotCoverEveryConditions [
 		equals: 'The false case'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckInvalidMethodName [
 	"Usually used to validate input."
 
@@ -40,7 +65,7 @@ RBConditionTest >> testCheckInvalidMethodName [
 	self deny: (RBCondition checkMethodName: 'foo:agr')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckThatAndIsWorking [
 
 	| falseCase trueCase composition |
@@ -54,7 +79,7 @@ RBConditionTest >> testCheckThatAndIsWorking [
 	self deny: composition check
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReported [
 
 	| falseCase trueCase composition |
@@ -69,7 +94,7 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReported [
 	self assert: composition errorString equals: 'The false case'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReportedTrueCaseFirst [
 
 	| falseCase trueCase composition |
@@ -86,11 +111,130 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReportedTrueCaseFirst
 		equals: 'The false case'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBConditionTest >> testCheckValidMethodName [
 	"Usually used to validate input."
 	self assert: (RBCondition checkMethodName: 'foo').
 	self assert: (RBCondition checkMethodName: #foo).
 
 	self assert: (RBCondition checkMethodName: #+)
+]
+
+{ #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesInstanceVariable [
+
+	| testClass |
+	testClass := rbNamespace classNamed: self class name.
+	self assert: (testClass withAllSuperclasses includes: objectClass).
+	self assert: (RBCondition
+			 hierarchyOf: testClass
+			 referencesInstanceVariable: #objectClass) check
+]
+
+{ #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesInstanceVariable2 [
+
+	| testClass |
+	testClass := rbNamespace classNamed: self class name.
+	
+	self assert: (testClass withAllSuperclasses includes: objectClass).
+	"the class itself refers to its own objectClass instance variable"
+	self assert: (RBInstanceVariableHasReferences new
+			 				hierarchyOf: testClass
+			 				referencesInstanceVariable: #objectClass) check
+]
+
+{ #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
+
+	| textConstantClass |
+	textConstantClass := rbNamespace classNamed: #TextConstants.
+	"only the class side is accessing the shared variable. But the query should 
+	check both sides."
+
+	self assert: (RBCondition
+			 hierarchyOf: textConstantClass
+			 referencesSharedVariable: #Basal) check.
+
+	self assert: (RBCondition
+			 hierarchyOf: textConstantClass classSide
+			 referencesSharedVariable: #Basal) check
+]
+
+{ #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesSharedVariableNotAccessing [
+
+	| testClass |
+	testClass := rbNamespace classNamed: self class name.
+
+	self deny: (RBCondition
+			 hierarchyOf: newClass
+			 referencesSharedVariable: #ClassVariable1) check
+]
+
+{ #category : 'tests' }
+RBConditionTest >> testInvalidArgumentsForSelector [
+
+	| aModel aClass |
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
+	aClass := aModel classNamed: #FOOBAR.
+	aClass compile: 'eiffel: tower ^ self ' classified: 'dummy'.
+
+	self assert: (RBCondition invalidArgumentNamesForSelector: #eiffel: in: aModel) asArray equals: #( #asdf #tower )
+]
+
+{ #category : 'tests' }
+RBConditionTest >> testIsClassDefinedInModel [
+
+	| aModel aClass |
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
+	aClass := aModel classNamed: #FOOBAR.
+	self assert: (RBCondition isClass: aClass definedIn: aModel) check
+]
+
+{ #category : 'tests' }
+RBConditionTest >> testIsClassNamedDefinedIn [
+
+	| aModel |
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
+	self assert: (RBCondition isClassNamed: #FOOBAR definedIn: aModel) check
+]
+
+{ #category : 'tests' }
+RBConditionTest >> testIsClassNamedDefinedInNot [
+
+	| aModel |
+	aModel := RBNamespace new.
+	aModel defineClass: [ :aBuilder |
+		aBuilder
+			superclass: Object;
+			name: #FOOBAR;
+			slots: { #asdf };
+			package: #'Refactory-Test data' ].
+	self deny: (RBCondition isClassNamed: #FOOBAR2 definedIn: aModel) check
+]
+
+{ #category : 'tests' }
+RBConditionTest >> testTrue [
+	
+	self assert: RBCondition true check.
+	self deny: RBCondition true not check.
 ]

@@ -2,7 +2,8 @@
 I mark methods which send #flag: message
 "
 Class {
-	#name : #ClyMethodFlag,
-	#superclass : #ClySimpleTag,
-	#category : #'Calypso-SystemPlugins-Flags-Queries'
+	#name : 'ClyMethodFlag',
+	#superclass : 'ClySimpleTag',
+	#category : 'Calypso-SystemPlugins-Flags-Queries',
+	#package : 'Calypso-SystemPlugins-Flags-Queries'
 }

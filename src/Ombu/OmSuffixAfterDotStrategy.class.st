@@ -4,18 +4,20 @@ I generate a name by attaching a suffix after last dot in the name received as a
 My subclasses implement the concrete ways to do it.
 "
 Class {
-	#name : #OmSuffixAfterDotStrategy,
-	#superclass : #OmSessionStoreNamingStrategy,
-	#category : #'Ombu-Strategies'
+	#name : 'OmSuffixAfterDotStrategy',
+	#superclass : 'OmSessionStoreNamingStrategy',
+	#category : 'Ombu-Strategies',
+	#package : 'Ombu',
+	#tag : 'Strategies'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSuffixAfterDotStrategy >> nextSuffix [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSuffixAfterDotStrategy >> nextTo: aName in: aDirectory [
 
 	^ String streamContents: [ :stream |

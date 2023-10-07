@@ -1,14 +1,16 @@
 Class {
-	#name : #MCVersionTest,
-	#superclass : #MCTestCase,
+	#name : 'MCVersionTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'version',
 		'visited'
 	],
-	#category : #'Monticello-Tests-Base'
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCVersionTest >> assert: aSelector orders: sexpr as: array [
 	| expected |
 	expected := OrderedCollection new.
@@ -17,7 +19,7 @@ MCVersionTest >> assert: aSelector orders: sexpr as: array [
 	self assert: expected asArray equals: array
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCVersionTest >> assert: aSelector orders: sexpr as: expected unresolved: unresolved [
 	| missing |
 	missing := OrderedCollection new.
@@ -27,18 +29,18 @@ MCVersionTest >> assert: aSelector orders: sexpr as: expected unresolved: unreso
 	self assert: missing asArray equals: unresolved
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCVersionTest >> dependencyFromTree: sexpr [
 	^ MCMockDependency fromTree: sexpr
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCVersionTest >> setUp [
 	super setUp.
 	visited := OrderedCollection new.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testAllAvailablePostOrder [
 	self 
 		assert: #allAvailableDependenciesDo: 
@@ -46,7 +48,7 @@ MCVersionTest >> testAllAvailablePostOrder [
 		as: #(d e b c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testAllMissing [
 	self 
 		assert: #allDependenciesDo: 
@@ -54,7 +56,7 @@ MCVersionTest >> testAllMissing [
 		as: #(d e b)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testAllUnresolved [
 	self 
 		assert: #allDependenciesDo:ifUnresolved: 
@@ -63,7 +65,7 @@ MCVersionTest >> testAllUnresolved [
 		unresolved: #(c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testDependencyOrder [
 	self 
 		assert: #allDependenciesDo: 
@@ -71,7 +73,7 @@ MCVersionTest >> testDependencyOrder [
 		as: #(b c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testPostOrder [
 	self 
 		assert: #allDependenciesDo: 
@@ -79,7 +81,7 @@ MCVersionTest >> testPostOrder [
 		as: #(d e b c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testWithAll [
 	self 
 		assert: #withAllDependenciesDo: 
@@ -87,7 +89,7 @@ MCVersionTest >> testWithAll [
 		as: #(d e b c a)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testWithAllMissing [
 	self 
 		assert: #withAllDependenciesDo: 
@@ -95,7 +97,7 @@ MCVersionTest >> testWithAllMissing [
 		as: #(d e b a)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCVersionTest >> testWithAllUnresolved [
 	self 
 		assert: #withAllDependenciesDo:ifUnresolved: 
@@ -104,7 +106,7 @@ MCVersionTest >> testWithAllUnresolved [
 		unresolved: #(c)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCVersionTest >> versionFromTree: sexpr [
 	^ (self dependencyFromTree: sexpr) resolve
 ]

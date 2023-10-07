@@ -2,9 +2,11 @@
 A ProcessTest holds test cases for generic Process-related behaviour.
 "
 Class {
-	#name : #ProcessTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Extended-Processes'
+	#name : 'ProcessTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Extended-Processes',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Processes'
 }
 
 { #category : #running }
@@ -14,7 +16,7 @@ ProcessTest >> setUp [
 	self executionProcessMonitor disable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testActiveProcessFromProcesor [
 
 	| processFromProcessor activeProcess |
@@ -23,7 +25,7 @@ ProcessTest >> testActiveProcessFromProcesor [
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
 
 	| processFromProcessor activeProcess effectiveProcess |
@@ -37,7 +39,7 @@ ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
 	self assert: processFromProcessor identicalTo: effectiveProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	"test whether #priority: preempts active process to allow higher priority processes run;
 	#priority behavior reflects the processPreemptionYields setting - for false the active
@@ -56,7 +58,7 @@ ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	self assert: val equals: Smalltalk vm processPreemptionYields
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingPriorityYieldsCurrentProcess [
 
 	| val highPriority |
@@ -73,7 +75,7 @@ ProcessTest >> testChangingPriorityYieldsCurrentProcess [
 	self assert: val equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testFork [
 
 	| hasBlockRun block return checkAssert |
@@ -93,7 +95,7 @@ ProcessTest >> testFork [
 	self assert: hasBlockRun
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testForkAtHigherPriority [
 	| hasBlockRun |
 	hasBlockRun := false.
@@ -103,7 +105,7 @@ ProcessTest >> testForkAtHigherPriority [
 	self assert: hasBlockRun
 ]
 
-{ #category : #'tests - exception handlers' }
+{ #category : 'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerFromProcessItself [
 	| error interceptedError process interrupted |
 	DefaultExecutionEnvironment beActive.
@@ -121,7 +123,7 @@ ProcessTest >> testInjectingExceptionHandlerFromProcessItself [
 	self assert: interrupted
 ]
 
-{ #category : #'tests - exception handlers' }
+{ #category : 'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerIntoNotRunningProcess [
 	| error interceptedError process interrupted |
 	DefaultExecutionEnvironment beActive.
@@ -139,7 +141,7 @@ ProcessTest >> testInjectingExceptionHandlerIntoNotRunningProcess [
 	self assert: interrupted
 ]
 
-{ #category : #'tests - exception handlers' }
+{ #category : 'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerIntoProcessWithArg [
 	| error interceptedError process interrupted processArg |
 	DefaultExecutionEnvironment beActive.
@@ -160,7 +162,7 @@ ProcessTest >> testInjectingExceptionHandlerIntoProcessWithArg [
 	self assert: processArg equals: #arg
 ]
 
-{ #category : #'tests - exception handlers' }
+{ #category : 'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerIntoRunningProcess [
 	| error interceptedError process sema started interrupted |
 	DefaultExecutionEnvironment beActive.
@@ -186,7 +188,7 @@ ProcessTest >> testInjectingExceptionHandlerIntoRunningProcess [
 	self assert: interrupted
 ]
 
-{ #category : #'tests - exception handlers' }
+{ #category : 'tests - exception handlers' }
 ProcessTest >> testInjectingMultipleExceptionHandlersIntoNotRunningProcess [
 
 	| error process lastHandler firstHandler |
@@ -214,7 +216,7 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoNotRunningProcess [
 	self assert: lastHandler
 ]
 
-{ #category : #'tests - exception handlers' }
+{ #category : 'tests - exception handlers' }
 ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 
 	| error process lastHandler firstHandler sema started |
@@ -246,7 +248,7 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 	self assert: lastHandler
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsNotSuspendedWhenItIsActiveProcess [
 
 	| semaphore suspended |
@@ -256,7 +258,7 @@ ProcessTest >> testIsNotSuspendedWhenItIsActiveProcess [
 	self deny: suspended
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsNotSuspendedWhenItIsRunningButNotActiveProcess [
 
 	| semaphore process |
@@ -267,7 +269,7 @@ ProcessTest >> testIsNotSuspendedWhenItIsRunningButNotActiveProcess [
 	self deny: process isSuspended
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsNotSuspendedWhenItIsTerminated [
 
 	| semaphore process |
@@ -278,7 +280,7 @@ ProcessTest >> testIsNotSuspendedWhenItIsTerminated [
 	self deny: process isSuspended
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsNotTerminatedWhenItIsInsideLastTerminationMethod [
 
 	| process processBody |
@@ -302,7 +304,7 @@ ProcessTest >> testIsNotTerminatedWhenItIsInsideLastTerminationMethod [
 	self deny: process isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsNotTerminatedWhenItIsJustStartedByEnteringMainBlock [
 
 	| process processBody |
@@ -318,7 +320,7 @@ ProcessTest >> testIsNotTerminatedWhenItIsJustStartedByEnteringMainBlock [
 	self deny: process isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsNotTerminatedWhenItIsNotStarted [
 
 	| process |
@@ -327,12 +329,12 @@ ProcessTest >> testIsNotTerminatedWhenItIsNotStarted [
 	self deny: process isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsSelfEvaluating [
 	self assert: Processor printString equals: 'Processor'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsSuspendedWhenItIsNotStartedYet [
 
 	| process |
@@ -340,7 +342,7 @@ ProcessTest >> testIsSuspendedWhenItIsNotStartedYet [
 	self assert: process isSuspended
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsTerminatedAfterManualTermination [
 
 	| process |
@@ -351,7 +353,7 @@ ProcessTest >> testIsTerminatedAfterManualTermination [
 	self assert: process isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testIsTerminatedAfterSelfTermination [
 
 	| process |
@@ -360,7 +362,7 @@ ProcessTest >> testIsTerminatedAfterSelfTermination [
 	self assert: process isTerminated
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testIsTerminatingForcedTermination [
 	| process unwound started terminator unwindChecks terminationSemaphore |
 	unwound := false.
@@ -414,7 +416,7 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	self assert: terminator identicalTo: process
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testIsTerminatingForcedTerminationWithoutRunning [
 	| process unwound started terminator |
 	unwound := false.
@@ -450,7 +452,7 @@ ProcessTest >> testIsTerminatingForcedTerminationWithoutRunning [
 	self deny: terminator identicalTo: process
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testIsTerminatingNormalTermination [
 	| sem process unwound started terminator |
 	sem := Semaphore new.
@@ -479,7 +481,7 @@ ProcessTest >> testIsTerminatingNormalTermination [
 	self assert: terminator identicalTo: process
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ProcessTest >> testNewProcess [
 
 	| hasBlockRun block return |
@@ -497,7 +499,7 @@ ProcessTest >> testNewProcess [
 	self assert: return isSuspended
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ProcessTest >> testNewProcessWith [
 
 	| hasBlockRun block process passedArguments receivedArgument1 receivedArgument2 |
@@ -524,7 +526,7 @@ ProcessTest >> testNewProcessWith [
 	self assert: { receivedArgument1. receivedArgument2 } equals: passedArguments
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testNormalProcessCompletionWithLeftEffectiveProcess [
 
 	| effectiveProcess activeProcess |
@@ -539,7 +541,7 @@ ProcessTest >> testNormalProcessCompletionWithLeftEffectiveProcess [
 	effectiveProcess terminate
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 
 	| effectiveProcess activeProcess |
@@ -580,7 +582,7 @@ ProcessTest >> testRealActiveProcessFromProcesor [
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testRealActiveProcessFromProcesorShouldIgnoreInstalledEffectiveProcess [
 
 	| processFromProcessor activeProcess effectiveProcess |
@@ -594,7 +596,7 @@ ProcessTest >> testRealActiveProcessFromProcesorShouldIgnoreInstalledEffectivePr
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testSchedulingHigherPriorityServedFirst [
     "The first process to run will pass straight through the gate
     while the other waits for the assert to whichRan."
@@ -617,7 +619,7 @@ ProcessTest >> testSchedulingHigherPriorityServedFirst [
 	self assert: whichRan=11 description: 'First scheduled but lower priority should run after'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testSchedulingSamePriorityFirstComeFirstServed [
     "The first process to run will pass straight through the gate
     while the other waits for the assert to whichRan."
@@ -639,7 +641,7 @@ ProcessTest >> testSchedulingSamePriorityFirstComeFirstServed [
 	self assert: whichRan=2 description: 'Second scheduled process should run after'
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testTerminateActive [
 
 	| lastStatementEvaluated block1HasRun block2HasRun p1 p2 |
@@ -662,7 +664,7 @@ ProcessTest >> testTerminateActive [
 	self deny: lastStatementEvaluated
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ProcessTest >> testTerminateAnswersSelf [
 
 	| process |
@@ -724,7 +726,7 @@ ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 "
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testTerminationShouldProceedEnsureBlocks [
 
 	| ensureCalled process semaphore |
@@ -739,7 +741,7 @@ ProcessTest >> testTerminationShouldProceedEnsureBlocks [
 	self assert: ensureCalled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testYield [
 
 	| lowerHasRun lowerPriority same1HasRun same2HasRun |
@@ -757,7 +759,7 @@ ProcessTest >> testYield [
 	self deny: lowerHasRun
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ProcessTest >> waitForProcessTermination: aProcess [
 	aProcess priority: Processor activePriority + 1.
 	[ aProcess isTerminated ] whileFalse: [ Processor yield ]

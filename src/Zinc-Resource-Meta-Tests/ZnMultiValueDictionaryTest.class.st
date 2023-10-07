@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnMultiValueDictionaryTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Resource-Meta-Tests'
+	#name : 'ZnMultiValueDictionaryTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Resource-Meta-Tests',
+	#package : 'Zinc-Resource-Meta-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMultiValueDictionaryTest >> testDynamicLimit [
 	ZnMaximumNumberOfDictionaryEntries
 		value: 10
@@ -18,7 +19,7 @@ ZnMultiValueDictionaryTest >> testDynamicLimit [
 				raise: ZnTooManyDictionaryEntries ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMultiValueDictionaryTest >> testMultiValues [
 	| dictionary values keys |
 	dictionary := ZnMultiValueDictionary new.
@@ -37,7 +38,7 @@ ZnMultiValueDictionaryTest >> testMultiValues [
 	self assert: keys equals: (OrderedCollection with: 'foo' with: 'foo')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnMultiValueDictionaryTest >> testOrder [
 	| keys dictionary index |
 	keys := #(z a y b x c m n).
@@ -49,7 +50,7 @@ ZnMultiValueDictionaryTest >> testOrder [
 		index := index + 1 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMultiValueDictionaryTest >> testTooManyEntries [
 	| dictionary |
 	dictionary := ZnMultiValueDictionary new.

@@ -8,25 +8,27 @@ Internal Representation and Key Implementation Points.
 	methodGroup:		<ClyMethodGroup>
 "
 Class {
-	#name : #ClyMoveMethodsToGroupCommand,
-	#superclass : #SycMethodCommand,
+	#name : 'ClyMoveMethodsToGroupCommand',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'methodGroup',
 		'targetClass'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Methods'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Methods',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Methods'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
 	^CmdDragAndDropActivation
 		for: ClyMethod asCalypsoItemContext
-		toDropIn: ClyTaggedMethodGroup asCalypsoItemContext
+		toDropIn: ClyMethodsInProtocolGroup asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 	<classAnnotation>
 
@@ -35,7 +37,7 @@ ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 		toDropIn: ClyAllMethodGroup asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 	<classAnnotation>
 
@@ -44,12 +46,12 @@ ClyMoveMethodsToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 		toDropIn: ClyExternalPackageMethodGroup asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodsToGroupCommand >> defaultMenuItemName [
 	^'Move to method group'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveMethodsToGroupCommand >> execute [
 
 	| methodsOfAnotherClass |
@@ -60,17 +62,17 @@ ClyMoveMethodsToGroupCommand >> execute [
 	methodGroup importMethods: methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodsToGroupCommand >> methodGroup [
 	^ methodGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodsToGroupCommand >> methodGroup: anObject [
 	methodGroup := anObject
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 ClyMoveMethodsToGroupCommand >> prepareExecutionInDropContext: aToolContext [
 	| selectedClasses |
 	super prepareExecutionInDropContext: aToolContext.
@@ -83,12 +85,12 @@ ClyMoveMethodsToGroupCommand >> prepareExecutionInDropContext: aToolContext [
 		ifFalse: [ selectedClasses last ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodsToGroupCommand >> targetClass [
 	^ targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodsToGroupCommand >> targetClass: anObject [
 	targetClass := anObject
 ]

@@ -1,15 +1,16 @@
 Class {
-	#name : #CompletionContextTest,
-	#superclass : #TestCase,
-	#category : #'NECompletion-Tests'
+	#name : 'CompletionContextTest',
+	#superclass : 'TestCase',
+	#category : 'NECompletion-Tests',
+	#package : 'NECompletion-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompletionContextTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionContextTest >> createContextFor: aString at: anInteger [
 	^ CompletionContext
 		engine: CompletionEngine new
@@ -18,7 +19,7 @@ CompletionContextTest >> createContextFor: aString at: anInteger [
 		position: anInteger
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompletionContextTest >> testReceiverArgument [
 	| text context |
 	text := 'testIt: aRectangle
@@ -37,7 +38,7 @@ CompletionContextTest >> testReceiverArgument [
 	self assert: context title equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompletionContextTest >> testReceiverClassVar [
 	| text context |
 	text := 'testIt
@@ -48,7 +49,7 @@ CompletionContextTest >> testReceiverClassVar [
 	self assert: context title equals: 'ClassAnnotation class'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompletionContextTest >> testReceiverConstant [
 	| text context |
 	text := 'testIt
@@ -99,7 +100,7 @@ CompletionContextTest >> testReceiverConstant [
 	self assert: ((context entries collect: [:each | each contents]) includes: #asFraction)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompletionContextTest >> testReceiverGlobal [
 	| text context |
 	text := 'testIt
@@ -108,7 +109,7 @@ CompletionContextTest >> testReceiverGlobal [
 	self assert: context title equals: 'Dictionary class'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompletionContextTest >> testReceiverGlobalVarNew [
 	| text context |
 	text := 'testIt
@@ -117,7 +118,7 @@ CompletionContextTest >> testReceiverGlobalVarNew [
 	self assert: ((context entries collect: [:each | each contents]) includes: #flatCollect:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompletionContextTest >> testReceiverTemp [
 	| text context |
 	text := 'testIt
@@ -140,7 +141,7 @@ CompletionContextTest >> testReceiverTemp [
 	self assert: context title equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompletionContextTest >> testTempVariable [
 	| text context |
 	text := 'testIt: aRectangle

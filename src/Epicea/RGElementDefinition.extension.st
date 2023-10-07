@@ -1,6 +1,6 @@
-Extension { #name : #RGElementDefinition }
+Extension { #name : 'RGElementDefinition' }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : '*Epicea-Ring' }
 RGElementDefinition >> asEpiceaRingDefinition [
 
 	^ self shallowCopy
@@ -8,7 +8,7 @@ RGElementDefinition >> asEpiceaRingDefinition [
 		yourself
 ]
 
-{ #category : #'*Epicea-Ring' }
+{ #category : '*Epicea-Ring' }
 RGElementDefinition >> epiceaCleanUp [
 
 	parent := nil

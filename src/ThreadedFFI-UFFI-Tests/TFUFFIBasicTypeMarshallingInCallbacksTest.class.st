@@ -1,16 +1,17 @@
 Class {
-	#name : #TFUFFIBasicTypeMarshallingInCallbacksTest,
-	#superclass : #TFUFFIMarshallingInCallbacksTest,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIBasicTypeMarshallingInCallbacksTest',
+	#superclass : 'TFUFFIMarshallingInCallbacksTest',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testChar [
 
 	self assertCharType: 'char'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testDouble [
 
 	| received |
@@ -18,7 +19,7 @@ TFUFFIBasicTypeMarshallingInCallbacksTest >> testDouble [
 	self assert: received equals: 2.7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testFloat [
 
 	| received |
@@ -26,7 +27,7 @@ TFUFFIBasicTypeMarshallingInCallbacksTest >> testFloat [
 	self assert: (received between: 2.6999 and: 2.7001)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testPointer [
 
 	| bytes received |
@@ -37,85 +38,85 @@ TFUFFIBasicTypeMarshallingInCallbacksTest >> testPointer [
 	] ensure: [ bytes free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testSignedInt [
 
 	self assertSignedIntType: 'int'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testSignedInt16 [
 
 	self assertSignedIntType: 'int16'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testSignedInt32 [
 
 	self assertSignedIntType: 'int32'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testSignedInt64 [
 
 	self assertSignedIntType: 'int64'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testSignedInt8 [
 
 	self assertSignedIntType: 'int8'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testSignedLong [
 
 	self assertSignedIntType: 'long'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testSignedShort [
 
 	self assertSignedIntType: 'short'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testUnsignedInt [
 
 	self assertUnsignedIntType: 'uint'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testUnsignedInt16 [
 
 	self assertUnsignedIntType: 'uint16'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testUnsignedInt32 [
 
 	self assertUnsignedIntType: 'uint32'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testUnsignedInt64 [
 
 	self assertUnsignedIntType: 'uint64'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testUnsignedInt8 [
 
 	self assertUnsignedIntType: 'uint8'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testUnsignedLong [
 
 	self assertUnsignedIntType: 'ulong'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIBasicTypeMarshallingInCallbacksTest >> testUnsignedShort [
 
 	self assertUnsignedIntType: 'ushort'

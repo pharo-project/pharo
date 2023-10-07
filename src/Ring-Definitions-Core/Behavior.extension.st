@@ -1,13 +1,7 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Behavior >> methodNamed: aSelector [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict at: aSelector
-]
-
-{ #category : #'*Ring-Definitions-Core' }
-Behavior >> protocols [
-
-	^ self organization categories copy
 ]

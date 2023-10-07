@@ -2,23 +2,24 @@
 I am an abstract test case for Ombu stores. My subclasses implement a hook to answer new concrete stores.
 "
 Class {
-	#name : #OmStoreTest,
-	#superclass : #TestCase,
+	#name : 'OmStoreTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'store',
 		'anEntry',
 		'aReference',
 		'otherStore'
 	],
-	#category : #'Ombu-Tests'
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OmStoreTest class >> isAbstract [
 	^ self name = #OmStoreTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmStoreTest >> beforeAndAfterFlushStore: aBlock [
 
 	aBlock value.
@@ -26,13 +27,13 @@ OmStoreTest >> beforeAndAfterFlushStore: aBlock [
 	aBlock value
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmStoreTest >> directoryForTests [
 
 	^ FileLocator temp asFileReference / 'ombu-tests'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmStoreTest >> setUp [
 	super setUp.
 
@@ -40,17 +41,17 @@ OmStoreTest >> setUp [
 	otherStore := self setUpOtherStore
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmStoreTest >> setUpOtherStore [
 	^ self setUpStore
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmStoreTest >> setUpStore [
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmStoreTest >> tearDown [
 
 	store flush.
@@ -58,12 +59,12 @@ OmStoreTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testEntries [
 	self assertEmpty: store entries
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testEntriesCount [
 	self assert: store entriesCount equals: 0.
 
@@ -74,7 +75,7 @@ OmStoreTest >> testEntriesCount [
 		self assert: store entriesCount equals: 2 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testEntriesDo [
 	1 to: 7 do: [ :each | store newEntry: (OmEntry content: each) ].
 
@@ -86,7 +87,7 @@ OmStoreTest >> testEntriesDo [
 		self assert: contents equals: (1 to: 7) asArray ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testEntryForAbsentEntry [
 	| isPresent isAbsent |
 	anEntry := OmEntry content: 42.
@@ -106,7 +107,7 @@ OmStoreTest >> testEntryForAbsentEntry [
 		self assert: isAbsent ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testEntryForNullReference [
 	| isPresent isAbsent |
 
@@ -123,7 +124,7 @@ OmStoreTest >> testEntryForNullReference [
 		self assert: isAbsent ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testEntryForPresentEntry [
 	| isPresent isAbsent |
 	anEntry := OmEntry content: 42.
@@ -143,7 +144,7 @@ OmStoreTest >> testEntryForPresentEntry [
 		self deny: isAbsent ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testEntryReferences [
 	| entryReferences entries |
 
@@ -163,7 +164,7 @@ OmStoreTest >> testEntryReferences [
 	self assert: entryReferences size equals: 7. "To be sure it tests something"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testFirstEntryIfAbsent [
 
 	| absent |
@@ -180,7 +181,7 @@ OmStoreTest >> testFirstEntryIfAbsent [
 			equals: store entries first ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testHeadReference [
 	1 to: 7 do: [ :each | store newEntry: (OmEntry content: each) ].
 
@@ -192,13 +193,13 @@ OmStoreTest >> testHeadReference [
 			equals: (store referenceTo: lastEntry) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testHeadReferenceForEmptyStore [
 
 	self assert: store headReference equals: OmNullReference uniqueInstance
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testMultipleEntries [
 	1 to: 7 do: [ :each | store newEntry: (OmEntry content: each) ].
 
@@ -208,7 +209,7 @@ OmStoreTest >> testMultipleEntries [
 			equals: (1 to: 7) asSet ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testNewEntry [
 	anEntry := OmEntry content: 42.
 
@@ -220,7 +221,7 @@ OmStoreTest >> testNewEntry [
 			equals: #(42) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testReferenceTo [
 	anEntry := OmEntry content: 42.
 
@@ -233,14 +234,14 @@ OmStoreTest >> testReferenceTo [
 		self deny: aReference isNull ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testRefreshEmpty [
 	store refresh.
 
 	self assertEmpty: store entries
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testRefreshNotEmpty [
 	anEntry := OmEntry content: 42.
 
@@ -253,7 +254,7 @@ OmStoreTest >> testRefreshNotEmpty [
 		equals: #(42)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmStoreTest >> testWritingFileReference [
 
 	anEntry := OmEntry content: 42.

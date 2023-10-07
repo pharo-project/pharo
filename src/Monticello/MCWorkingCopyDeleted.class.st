@@ -2,16 +2,18 @@
 A MCWorkingCopyDeleted class is an announcement raised when a MCWorkingCopy is removed
 "
 Class {
-	#name : #MCWorkingCopyDeleted,
-	#superclass : #Announcement,
+	#name : 'MCWorkingCopyDeleted',
+	#superclass : 'Announcement',
 	#instVars : [
 		'package',
 		'workingCopy'
 	],
-	#category : #'Monticello-Announcements'
+	#category : 'Monticello-Announcements',
+	#package : 'Monticello',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCWorkingCopyDeleted class >> workingCopy: workingCopy [
 
 	^ self new
@@ -19,7 +21,7 @@ MCWorkingCopyDeleted class >> workingCopy: workingCopy [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCWorkingCopyDeleted class >> workingCopy: aWC package: package [
 
 	^ self new
@@ -28,22 +30,22 @@ MCWorkingCopyDeleted class >> workingCopy: aWC package: package [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyDeleted >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyDeleted >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyDeleted >> workingCopy [
 	^ workingCopy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyDeleted >> workingCopy: anObject [
 	workingCopy := anObject
 ]

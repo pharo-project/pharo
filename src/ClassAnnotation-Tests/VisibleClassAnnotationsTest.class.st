@@ -1,10 +1,12 @@
 Class {
-	#name : #VisibleClassAnnotationsTest,
-	#superclass : #ClassAnnotationTestCase,
-	#category : #'ClassAnnotation-Tests-Base'
+	#name : 'VisibleClassAnnotationsTest',
+	#superclass : 'ClassAnnotationTestCase',
+	#category : 'ClassAnnotation-Tests-Base',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenClassAndUser [
 
 	| annotationUser actual expected |
@@ -18,7 +20,7 @@ VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenClassAndUser [
 	self assert: actual asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 
 	| annotationUser actual expected |
@@ -31,7 +33,7 @@ VisibleClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 	self assert: actual asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VisibleClassAnnotationsTest >> testIncludeInstancesDeclaredForSuperclassOfGivenUser [
 
 	| annotations annotationUser declaredContext |
@@ -43,7 +45,7 @@ VisibleClassAnnotationsTest >> testIncludeInstancesDeclaredForSuperclassOfGivenU
 	self assert: declaredContext equals: BaseAnnotationUserExample
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VisibleClassAnnotationsTest >> testIncludeOnlyInstancesCreatedForGivenUser [
 
 	| annotations annotationUser declaredContexts |
@@ -55,7 +57,7 @@ VisibleClassAnnotationsTest >> testIncludeOnlyInstancesCreatedForGivenUser [
 	self assert: declaredContexts asSet equals: {AnnotationUserExample} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VisibleClassAnnotationsTest >> testNotIncludeInstancesWithoutContext [
 
 	| annotations annotationUser |
@@ -65,7 +67,7 @@ VisibleClassAnnotationsTest >> testNotIncludeInstancesWithoutContext [
 	self assert: annotations isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 VisibleClassAnnotationsTest >> testWhenThereIsNoOne [
 
 	| annotations annotationUser |

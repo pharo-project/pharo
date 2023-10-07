@@ -2,15 +2,14 @@
 This class contains tests for `FluidClassSideTraitBuilder`
 "
 Class {
-	#name : #FluidClassSideTraitBuilderTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'builder'
-	],
-	#category : #'FluidClassBuilder-Tests-Base'
+	#name : 'FluidClassSideTraitBuilderTest',
+	#superclass : 'FluidClassBuilderAbstractTest',
+	#category : 'FluidClassBuilder-Tests-Base',
+	#package : 'FluidClassBuilder-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FluidClassSideTraitBuilderTest >> setUp [
 
 	super setUp.
@@ -19,13 +18,13 @@ FluidClassSideTraitBuilderTest >> setUp [
 		           nameToBuild: TViewModelMock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FluidClassSideTraitBuilderTest >> testSlots [
 
 	| trait |
-	builder := Trait << TViewModelMock classTrait
-					slots: { #x . #y };
-					package: 'FakedCore'.
+	builder := (Trait << TViewModelMock classTrait)
+		           slots: { #x. #y };
+		           package: self packageNameForTest.
 	trait := builder build.
 
 	self assert: trait name equals: #TViewModelMock.

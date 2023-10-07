@@ -1,12 +1,15 @@
 Class {
-	#name : #HistorySlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'HistorySlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddOneElement [
 	| slot instance |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => HistorySlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -17,9 +20,10 @@ HistorySlotTest >> testAddOneElement [
 	self assert: instance slot1 equals: 25
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddOneElementAndModifyClass [
 	| slot instance |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => HistorySlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -32,9 +36,10 @@ HistorySlotTest >> testAddOneElementAndModifyClass [
 	self assert: instance slot1 equals: 25
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddTwoElements [
 	| slot instance |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => HistorySlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -46,9 +51,10 @@ HistorySlotTest >> testAddTwoElements [
 	self assert: instance slot1 equals: 35
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testAddTwoElementsHistoryRead [
 	| slot instance |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => HistorySlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -61,9 +67,10 @@ HistorySlotTest >> testAddTwoElementsHistoryRead [
 	self assert: (slot readHistory: instance) asArray equals: #(nil 25 35)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testHistoryGreaterThanThree [
 	| slot instance |
+	<ignoreNotImplementedSelectors: #(slot1:)>
 	slot := #slot1 => HistorySlot size: 3.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -79,10 +86,11 @@ HistorySlotTest >> testHistoryGreaterThanThree [
 	self assert: (slot readHistory: instance) size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testIsFirstElementNil [
 
 	| slot instance |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => HistorySlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -93,11 +101,12 @@ HistorySlotTest >> testIsFirstElementNil [
   	self assert: (instance slot1) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistorySlotTest >> testModifyIvarToHistory [
 	"test if we can transform a standard ivar to a history slot when instances are present"
 
 	| slot instance |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 =>InstanceVariableSlot .
 	aClass := self make: [ :builder | builder slots: {slot} ].
 

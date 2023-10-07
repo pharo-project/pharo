@@ -7,72 +7,73 @@ Internal Representation and Key Implementation Points.
 	argumentName:		<String>
 "
 Class {
-	#name : #SycRemoveMessageArgumentCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
+	#name : 'SycRemoveMessageArgumentCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'argumentName',
 		'methodName'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
 		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SycRemoveMessageArgumentCommand >> abort [
 	CmdCommandAborted signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> argumentName [
 	^ argumentName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> argumentName: anObject [
 	argumentName := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SycRemoveMessageArgumentCommand >> computeArgumentName [
 
 	^ (originalMessage argumentNames reject: [ :arg |
 		   (self methodName arguments indexOf: arg) > 0 ]) first
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMessageArgumentCommand >> createRefactoring [
-
+	
 	^(RBRemoveParameterRefactoring
 		model: model
 		removeParameter: argumentName
-		in: (SycMessageOriginHack of: originalMessage) "look at SycMessageOriginHack comment"
+		in: refactoredClass
 		selector: originalMessage selector)
 		newSelector: self resultMessageSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> defaultMenuIconName [
 	^#remove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> defaultMenuItemName [
 	^'Remove argument'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SycRemoveMessageArgumentCommand >> informArgumentError [
 	self inform:
 				'Argument ' , self argumentName , ' not found in method '''
 				, originalMessage selector , ''''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMessageArgumentCommand >> methodName [
 
 	^ methodName ifNil: [
@@ -81,7 +82,7 @@ SycRemoveMessageArgumentCommand >> methodName [
 			                arguments: originalMessage argumentNames ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| dialog |
@@ -93,11 +94,17 @@ SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 
 	(originalMessage argumentNames includes: argumentName)
 		ifTrue: [ ^ self ].
+	
 	self informArgumentError.
 	self abort
 ]
 
-{ #category : #execution }
+{ #category : 'accessing' }
+SycRemoveMessageArgumentCommand >> refactoredClass: aClass [ 
+	refactoredClass := aClass
+]
+
+{ #category : 'execution' }
 SycRemoveMessageArgumentCommand >> resultMessageSelector [
 	^ self methodName selector
 ]

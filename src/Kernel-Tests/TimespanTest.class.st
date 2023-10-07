@@ -2,8 +2,8 @@
 SUnit tests for Timespan class
 "
 Class {
-	#name : #TimespanTest,
-	#superclass : #ClassTestCase,
+	#name : 'TimespanTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'timespan',
 		'aTimespan',
@@ -17,16 +17,18 @@ Class {
 		'jan08',
 		'localTimeZoneToRestore'
 	],
-	#category : #'Kernel-Tests-Chronology'
+	#category : 'Kernel-Tests-Chronology',
+	#package : 'Kernel-Tests',
+	#tag : 'Chronology'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 TimespanTest >> classToBeTested [
 
 	^ Timespan
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TimespanTest >> setUp [
 	super setUp.
 	localTimeZoneToRestore := DateAndTime localTimeZone.
@@ -48,14 +50,14 @@ TimespanTest >> setUp [
 	aDisjointTimespan := Timespan starting: jan08 duration: aWeek
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TimespanTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
 	timespan := nil.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAccessing [
 	self
 		assert: timespan start
@@ -73,7 +75,7 @@ TimespanTest >> testAccessing [
 		assert: timespan monthAbbreviation equals: 'Mar'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testArithmetic [
 	| ts1 ts2 d |
 
@@ -110,47 +112,47 @@ TimespanTest >> testArithmetic [
 				seconds: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAsDate [
 	self assert: aTimespan asDate equals: jan01 asDate
 	"MessageNotUnderstood: Date class>>starting:"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAsDateAndTime [
 	self assert: aTimespan asDateAndTime equals: jan01
 	"MessageNotUnderstood: Date class>>starting:"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAsDuration [
 	self assert: aTimespan asDuration equals: aWeek
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAsMonth [
 	self assert: aTimespan asMonth equals: jan01 asMonth
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAsTime [
 	self assert: aTimespan asTime equals: jan01 asTime
 	"MessageNotUnderstood: Time class>>seconds:nanoSeconds:"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAsWeek [
 	self assert: aTimespan asWeek equals: jan01 asWeek
 	"DateAndTime new asWeek
 	MessageNotUnderstood: Week class>>starting:"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testAsYear [
 	self assert: aTimespan asYear equals: jan01 asYear
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testClockPrecisionDuration [
 	| ts |
 
@@ -158,53 +160,53 @@ TimespanTest >> testClockPrecisionDuration [
 	self assert: ts start equals: ts end
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testCurrent [
 	self assert: (Timespan starting: DateAndTime current) <= Timespan current.
 	self assert: Timespan current <= (Timespan starting: DateAndTime current)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDay [
 	self assert: aTimespan day equals: jan01 day
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDayOfMonth [
 	self assert: aTimespan dayOfMonth equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDayOfWeek [
 	self assert: aTimespan dayOfWeek equals: 7.
 	self assert: aTimespan dayOfWeekName equals: 'Saturday'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDayOfYear [
 	self assert: aTimespan dayOfYear equals: 1
 	"MessageNotUnderstood: UndefinedObject>>year:, Undefined object is Year class"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDaysInMonth [
 	self assert: aTimespan daysInMonth equals: 31
 	"MessageNotUnderstood: Month class>>starting:"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDaysInYear [
 	self assert: aTimespan daysInYear equals: 365
 	"MessageNotUnderstood: UndefinedObject>>starting:  UndefinedObject is Year class"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDaysLeftInYear [
 	self assert: aTimespan daysLeftInYear equals: 364
 	"MessageNotUnderstood: UndefinedObject>>starting:  UndefinedObject is Year class"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDoWith [
 	| count |
 
@@ -213,7 +215,7 @@ TimespanTest >> testDoWith [
 	self assert: count equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDoWithWhen [
 	| count |
 
@@ -225,14 +227,14 @@ TimespanTest >> testDoWithWhen [
 	self assert: count equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testDuration [
 	self assert: aTimespan duration equals: aWeek.
 	aTimespan duration: aDay.
 	self assert: aTimespan duration equals: aDay
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testEnd [
 	self assert: aTimespan end + (Duration nanoSeconds: 1) equals: aDisjointTimespan start.
 	self
@@ -249,7 +251,7 @@ TimespanTest >> testEnd [
 				offset: 0 hours)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testEveryDo [
 	| count duration |
 
@@ -259,25 +261,25 @@ TimespanTest >> testEveryDo [
 	self assert: count equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testFirstDayOfMonth [
 	self assert: aTimespan firstDayOfMonth equals: 1.
 	self assert: aDisjointTimespan firstDayOfMonth equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIncludes [
 	self assert: (aTimespan includes: jan01).
 	self deny: (aTimespan includes: jan08)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIncludesAll [
 	self assert: (aTimespan includesAll: (Bag with: jan01)).
 	self deny: (aTimespan includesAll: (Bag with: jan01 with: jan08))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIncludesAny [
 	self deny: (aTimespan includesAnyOf: (Bag with: dec31)).
 	self assert: (aTimespan includesAnyOf: (Bag with: jan01 with: jan08))
@@ -289,7 +291,7 @@ Shouldn't this return false if none are included?
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testInclusion [
 	| t1 t2 t3 t4 |
 	t1 := timespan start.
@@ -310,19 +312,19 @@ TimespanTest >> testInclusion [
 	self deny: (timespan includesAny: { t4 })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIntersectionWithDisjoint [
 	self assert: (aTimespan intersection: aDisjointTimespan) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIntersectionWithIncluded [
 	self
 		assert: (aTimespan intersection: anIncludedTimespan)
 		equals: anIncludedTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIntersectionWithOverlapping [
 	self
 		assert: (aTimespan intersection: anOverlappingTimespan)
@@ -334,7 +336,7 @@ TimespanTest >> testIntersectionWithOverlapping [
 						days: 6))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIntersectionWithSelf [
 	self
 		assert: (aTimespan intersection: aTimespan)
@@ -342,32 +344,32 @@ TimespanTest >> testIntersectionWithSelf [
 	self deny: (aTimespan intersection: anIncludedTimespan) equals: aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIntersectionWithSeparate [
 	self assert: (aTimespan intersection: aDisjointTimespan) isNil.
 	self deny: (aTimespan intersection: anOverlappingTimespan) isNil.
 	self assert: (aTimespan intersection: anIncludedTimespan) equals: anIncludedTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testIsLeapYear [
 	"self assert: anOverlappingTimespan isLeapYear."
 	"not sure why this fails"
 	self deny: aTimespan isLeapYear
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testJulianDayNumber [
 	self assert: aTimespan julianDayNumber equals: jan01 julianDayNumber
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testLessThan [
 	self assert: aTimespan  < aDisjointTimespan.
 	self deny: anIncludedTimespan < aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testMinusADateAndTime [
 	"It appears that subtracting a date from a Timespan gives you a duration = to the difference between the start of the timespan and the date "
 
@@ -375,7 +377,7 @@ TimespanTest >> testMinusADateAndTime [
 	self assert: aDisjointTimespan - jan01 equals: aWeek
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testMinusADuration [
 	"It appears that subtracting a duration from a Timespan gives you a Timespan shifted by the duration"
 
@@ -383,53 +385,53 @@ TimespanTest >> testMinusADuration [
 	self assert: aDisjointTimespan - aWeek equals: aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testMonth [
 	self assert: aTimespan month equals: 1.
 	self assert: aTimespan monthName equals: 'January'.
 	self assert: aTimespan monthIndex equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testNew [
 	self assert: Timespan new equals: (Timespan starting: '01-01-1901' asDate)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testNext [
 	self assert: aTimespan next equals: aDisjointTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testPlus [
 	self assert: aTimespan + aWeek equals: aDisjointTimespan.
 	self assert: anOverlappingTimespan + aDay equals: aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testPrevious [
 	self assert: aTimespan equals: aDisjointTimespan previous.
 	self assert: aTimespan next previous equals: aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testPrintOn [
 	self assert: (String streamContents: [ :str | aTimespan printOn: str ]) equals: 'a Timespan(2005-01-01T00:00:00+00:00D7:00:00:00)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testStart [
 	self assert: aTimespan start equals: jan01.
 	aTimespan start: jan08.
 	self assert: aTimespan start equals: jan08
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testStartingEnding [
 	self assert: aTimespan equals: (Timespan starting: jan01 ending: jan08)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testSubclassArithmetic [
 
 	| timespans |
@@ -451,12 +453,12 @@ TimespanTest >> testSubclassArithmetic [
 	self assert: (timespans second intersection: timespans fourth) equals: timespans fourth
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testTo [
 	self assert: (anIncludedTimespan to: jan08) equals: aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testUnion [
 	| union |
 
@@ -467,34 +469,39 @@ TimespanTest >> testUnion [
 		assert: union duration equals: timespan duration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testUnionWithDisjoint [
 	self assert: (aTimespan union: aDisjointTimespan) equals: (Timespan starting: jan01 duration: 14 days)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testUnionWithIncluded [
 	self assert: (aTimespan union: anIncludedTimespan) equals: aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testUnionWithOverlapping [
 	self assert: (aTimespan union: anOverlappingTimespan) equals: (Timespan starting: dec31 duration: 8 days)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testUnionWithSelf [
 	self assert: (aTimespan union: aTimespan) equals: aTimespan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testUnionWithSeparate [
 	self
 		assert: (anOverlappingTimespan union: aDisjointTimespan)
 		equals: (Timespan starting: anOverlappingTimespan start ending: aDisjointTimespan end + DateAndTime clockPrecision)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+TimespanTest >> testWorkDates [
+	self assert: aTimespan workDates size equals: 5
+]
+
+{ #category : 'tests' }
 TimespanTest >> testWorkDatesDo [
 	| count |
 
@@ -503,12 +510,12 @@ TimespanTest >> testWorkDatesDo [
 	self assert: count equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testYear [
 	self assert: aTimespan year equals: 2005
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanTest >> testZeroDuration [
 	| ts |
 

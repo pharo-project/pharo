@@ -2,29 +2,30 @@
 A SycRemoveClassStrategyTest is a test class for testing the behavior of SycRemoveClassStrategy
 "
 Class {
-	#name : #SycRemoveClassStrategyTest,
-	#superclass : #TestCase,
+	#name : 'SycRemoveClassStrategyTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'factory'
 	],
-	#category : #'SystemCommands-ClassCommands-Tests'
+	#category : 'SystemCommands-ClassCommands-Tests',
+	#package : 'SystemCommands-ClassCommands-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SycRemoveClassStrategyTest >> setUp [
 	super setUp.
 
 	factory := ClassFactoryForTestCase new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SycRemoveClassStrategyTest >> tearDown [
 
 	factory cleanUp.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRemoveClassStrategyTest >> testCreateStrategiesForParentClass [
 
 	| browser strategies |
@@ -43,7 +44,7 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForParentClass [
 		equals: SycNotRemoveClassStrategy new userRequestString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRemoveClassStrategyTest >> testCreateStrategiesForReferencedClass [
 
 	| browser strategies |
@@ -62,7 +63,7 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForReferencedClass [
 		equals: SycNotRemoveClassStrategy new userRequestString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRemoveClassStrategyTest >> testCreateStrategiesForRemovableClass [
 
 	| browser class strategies |
@@ -77,19 +78,14 @@ SycRemoveClassStrategyTest >> testCreateStrategiesForRemovableClass [
 		equals: SycSilentlyRemoveClassStrategy new userRequestString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRemoveClassStrategyTest >> testCreateStrategiesForUsedTrait [
 
 	| browser strategies |
 	browser := ClyFullBrowserMorph onDefaultEnvironment.
-	strategies := SycRemoveClassStrategy
-		              createForBrowser: browser
-		              classes: { TRBProgramNodeVisitor }.
+	strategies := SycRemoveClassStrategy createForBrowser: browser classes: { TRefactoringCommandSupport }.
 	self
 		assert: strategies size > 2;
-		assert: (strategies anySatisfy: [ :each |
-					 each userRequestString
-					 = ClyNotRemoveAndShowUsersClassStrategy new userRequestString ]);
-		assert: strategies last userRequestString
-		equals: SycNotRemoveClassStrategy new userRequestString
+		assert: (strategies anySatisfy: [ :each | each userRequestString = ClyNotRemoveAndShowUsersClassStrategy new userRequestString ]);
+		assert: strategies last userRequestString equals: SycNotRemoveClassStrategy new userRequestString
 ]

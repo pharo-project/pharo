@@ -1,53 +1,60 @@
 Class {
-	#name : #ClyMessageSendersQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyMessageSendersQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageSendersQueryTest class >> classSideSender1OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageSendersQueryTest class >> classSideSender2OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMessageSendersQueryTest >> createQuery [
 	^ ClyMessageSendersQuery
 		of: self referencedSelector
 		from: (ClyClassScope of: Object in: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMessageSendersQueryTest >> referencedSelector [
 	"String is used here to not make this method sender of it"
 	^'clyReferencedMessage1' asSymbol
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageSendersQueryTest >> sender1OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageSendersQueryTest >> sender2OfMessage1 [
+	<ignoreNotImplementedSelectors: #(clyReferencedMessage1)>
 	self clyReferencedMessage1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageSendersQueryTest >> senderOfIfTrue [
 	^2*2 = 4 ifTrue: [100]
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageSendersQueryTest >> senderOfMessage2 [
+	<ignoreNotImplementedSelectors: #(message2)>
 	self message2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageSendersQueryTest >> testCheckIfEmpty [
 	query scope:	(ClyMethodScope of: (self class >> #sender1OfMessage1) in: environment).
 	self deny: query checkEmptyResult.
@@ -56,7 +63,7 @@ ClyMessageSendersQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageSendersQueryTest >> testComparison [
 	self assert: (ClyMessageSendersQuery of: #message1) equals: (ClyMessageSendersQuery of: #message1).
 
@@ -65,7 +72,7 @@ ClyMessageSendersQueryTest >> testComparison [
 	self deny: (ClyMessageSendersQuery of: #message1) equals: (ClyMessageSendersQuery of: #message2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageSendersQueryTest >> testDetectingSpecialSelectorLikeIfTrue [
 	query := ClyMessageSendersQuery of: #ifTrue:.
 
@@ -75,7 +82,7 @@ ClyMessageSendersQueryTest >> testDetectingSpecialSelectorLikeIfTrue [
 	self assert: resultItems first identicalTo: self class >> #senderOfIfTrue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageSendersQueryTest >> testFromLocalClassScope [
 
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
@@ -84,7 +91,7 @@ ClyMessageSendersQueryTest >> testFromLocalClassScope [
 		sender1OfMessage1 sender2OfMessage1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageSendersQueryTest >> testFromMethodScope [
 	self queryFromScope: ClyMethodScope ofAll: {(self class >> #sender1OfMessage1) . (self class >> #senderOfMessage2)}.
 
@@ -92,7 +99,7 @@ ClyMessageSendersQueryTest >> testFromMethodScope [
 	self assert: resultItems first identicalTo: self class >> #sender1OfMessage1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageSendersQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
@@ -102,7 +109,7 @@ ClyMessageSendersQueryTest >> testFromPackageScope [
 		superclassSenderOfMessage1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageSendersQueryTest >> testFromSystemScope [
 
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.

@@ -5,29 +5,30 @@ Also I open inspector on instance variable of class side because they also have 
 For instance side instance variable I inspect slot definition instance.
 "
 Class {
-	#name : #SycInspectVariableCommand,
-	#superclass : #SycVariableCommand,
-	#category : #'SystemCommands-VariableCommands'
+	#name : 'SycInspectVariableCommand',
+	#superclass : 'SycVariableCommand',
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycInspectVariableCommand class >> canBeExecutedInContext: aToolContext [
 	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
 
 	^aToolContext lastSelectedVariable isLive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycInspectVariableCommand >> defaultMenuIconName [
 	^#glamorousInspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycInspectVariableCommand >> defaultMenuItemName [
 	^'Inspect'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycInspectVariableCommand >> execute [
 
 	variables last openInspector

@@ -2,19 +2,38 @@
 I'm a transformation whose focus is class.  
 "
 Class {
-	#name : #RBClassTransformation,
-	#superclass : #RBTransformation,
+	#name : 'RBClassTransformation',
+	#superclass : 'RBTransformation',
 	#instVars : [
 		'className',
 		'class',
 		'environment'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
-RBClassTransformation >> className [
+{ #category : 'accessing' }
+RBClassTransformation class >> className: aString [
 
+	^ self new
+		  className: aString;
+		  yourself
+]
+
+{ #category : 'accessing' }
+RBClassTransformation class >> model: aRBNamespace className: aString [
+
+	^ self new
+		  model: aRBNamespace;
+		  className: aString;
+		  yourself
+]
+
+{ #category : 'accessing' }
+RBClassTransformation >> className [
+	self flag: #popUp.
 	^ className ifNil: [
 		self uiManager
 			chooseOrRequestFrom: (self environment allClasses collect: [:each | each name])
@@ -22,31 +41,29 @@ RBClassTransformation >> className [
 					 '. Please select a class to resume this transformation.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> className: anObject [
 
 	className := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> definingClass [
 
-	^ class ifNil: [
-		class := self model
-					classObjectFor: self className ]
+	^ class ifNil: [ class := self model classObjectFor: self className ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBClassTransformation >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBClassTransformation >> initialize [
 	super initialize.
 	environment := Smalltalk globals

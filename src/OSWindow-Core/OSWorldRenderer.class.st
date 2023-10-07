@@ -2,8 +2,8 @@
 I know how to render the world in an OSWindow
 "
 Class {
-	#name : #OSWorldRenderer,
-	#superclass : #AbstractWorldRenderer,
+	#name : 'OSWorldRenderer',
+	#superclass : 'AbstractWorldRenderer',
 	#instVars : [
 		'driver',
 		'osWindow',
@@ -11,28 +11,30 @@ Class {
 		'windowCloseAction',
 		'previousFrameRenderingTime'
 	],
-	#category : #'OSWindow-Core-Morphic'
+	#category : 'OSWindow-Core-Morphic',
+	#package : 'OSWindow-Core',
+	#tag : 'Morphic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer class >> defaultExtent [
 
 	^ 976@665
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer class >> isApplicableFor: aWorld [
 
 	^ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer class >> priority [
 
 	^ 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
 	osWindow ifNotNil: [
@@ -42,12 +44,12 @@ OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 			andScale: world worldState worldRenderer screenScaleFactor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> actualScreenSize [
 	^ (self windowExtent / self screenScaleFactor) ceiling max: 1@1
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWorldRenderer >> checkForNewScreenSize [
 	| windowRenderer |
 
@@ -68,23 +70,23 @@ OSWorldRenderer >> checkForNewScreenSize [
 	world restoreMorphicDisplay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> clipboardText [
 	^ osWindow clipboardText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> clipboardText: aString [
 	osWindow clipboardText: aString asString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
 
 	^ (aPosition / self screenScaleFactor) rounded
 ]
 
-{ #category : #screenshot }
+{ #category : 'screenshot' }
 OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
 
 	aForm
@@ -98,41 +100,58 @@ OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
 	^ aForm
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWorldRenderer >> deactivate [
 
 	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
 	display := nil
 ]
 
-{ #category : #operations }
+{ #category : 'accessing' }
+OSWorldRenderer >> defaultWindowIcon [
+
+	^ self iconNamed: #pharoBig
+]
+
+{ #category : 'accessing' }
+OSWorldRenderer >> defaultWindowTitle [
+
+	^ Smalltalk image imageFile fullName
+]
+
+{ #category : 'operations' }
 OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
 	self osWindowRenderer ifNotNil: [:renderer | renderer deferUpdatesWhile: aBlock ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWorldRenderer >> doActivate [
-	| attributes initialExtent |
 
-	initialExtent := world worldState realWindowExtent ifNil: [ self class defaultExtent ].
+	| attributes initialExtent |
+	initialExtent := world worldState realWindowExtent ifNil: [
+		                 self class defaultExtent ].
 
 	attributes := OSWindowAttributes new.
 	attributes
 		extent: initialExtent;
-		title: Smalltalk image imageFile fullName;
-		windowCentered:true;
-		icon: (self iconNamed: #pharoBig).
+		title: self defaultWindowTitle;
+		windowCentered: true;
+		icon: self defaultWindowIcon.
 
 	display := Form extent: initialExtent depth: 32.
 	world extent: initialExtent.
 
 	driver := self pickMostSuitableWindowDriver.
 	attributes preferableDriver: driver.
-	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
+	osWindow := OSWindow
+		            createWithAttributes: attributes
+		            eventHandler: (OSWindowMorphicEventHandler for: world).
 
 	driver afterMainPharoWindowCreated: osWindow.
-	driver afterSetWindowTitle: Smalltalk image imageFile fullName onWindow: osWindow.
+	driver
+		afterSetWindowTitle: self defaultWindowTitle
+		onWindow: osWindow.
 	driver startUp: true.
 
 	world worldState doFullRepaint.
@@ -145,7 +164,7 @@ OSWorldRenderer >> doActivate [
 	osWindow focus
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 OSWorldRenderer >> drawDuring: aBlock [
 	osWindow ifNil: [ ^ self ].
 	self isProfilingRenderingTime ifTrue: [ ^ self drawWhileProfilingRenderingTimeDuring: aBlock ].
@@ -154,7 +173,7 @@ OSWorldRenderer >> drawDuring: aBlock [
 	]
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 	| measurements |
 	previousFrameRenderingTime := [
@@ -189,38 +208,43 @@ OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
 	self logRenderingTimeMeasurements: measurements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> driver [
 
 	^ driver
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 OSWorldRenderer >> fullscreenMode: aValue [
 
 	osWindow fullscreen: aValue.
 	self checkForNewScreenSize
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWorldRenderer >> handleOSWindowCloseEvent: event [
 	windowCloseAction value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> icon: aForm [
 
 	osWindow icon: aForm
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWorldRenderer >> initialize [
 
 	super initialize.
 	windowCloseAction := [ self currentWorld defer: [ WorldState quitSession ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+OSWorldRenderer >> osWindow [
+	^ osWindow
+]
+
+{ #category : 'accessing' }
 OSWorldRenderer >> osWindowRenderer [
 
 	osWindow ifNil: [ ^ nil ].
@@ -229,32 +253,32 @@ OSWorldRenderer >> osWindowRenderer [
 		  osWindow renderer ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWorldRenderer >> pickMostSuitableWindowDriver [
 
 	driver := OSWindowDriver current.
 	^ driver
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWorldRenderer >> requestStopTextEditing [
 
 	osWindow stopTextInput
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWorldRenderer >> requestTextEditingAt: aRectangle [
 
 	osWindow startTextInputAtRectangle: aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> screenScaleFactor [
 
 	^ world scaleFactor * self windowScaleFactor
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSWorldRenderer >> shutDown: quitting [
 
 	super shutDown: quitting.
@@ -262,7 +286,7 @@ OSWorldRenderer >> shutDown: quitting [
 		driver shutDown: quitting ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSWorldRenderer >> startUp: resuming [
 
 	super startUp: resuming.
@@ -270,20 +294,20 @@ OSWorldRenderer >> startUp: resuming [
 		driver startUp: resuming ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 OSWorldRenderer >> updateDamage: allDamage [
 
 	"quickly copy altered rects of canvas to Display:"
 	self osWindowRenderer updateAreas: allDamage immediate: false
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWorldRenderer >> updateToNewResolution [
 
 	self window updateToNewResolution
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 OSWorldRenderer >> updateWindowTitle [
 
 	osWindow title: Smalltalk imageFile fullName.
@@ -292,40 +316,40 @@ OSWorldRenderer >> updateWindowTitle [
 		onWindow: osWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> window [
 
 	^ osWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> windowCloseAction [
 	^ windowCloseAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> windowCloseAction: anObject [
 	windowCloseAction := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> windowExtent [
 
 	^ osWindow ifNil: [ 240@120 ] ifNotNil: [ osWindow extent ]
 ]
 
-{ #category : #'scale factor' }
+{ #category : 'scale factor' }
 OSWorldRenderer >> windowScaleFactor [
 	^ osWindow ifNil: [ 1 ] ifNotNil: [ osWindow screenScaleFactor max: 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> windowTitle: aString [
 
 	osWindow title: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWorldRenderer >> world: aWorld [
 
 	world := aWorld

@@ -7,6 +7,8 @@
 set -x
 set -e
 
+echo $(date -u) "Bootstrap: Beginning to download resources required for bootstrap process"
+
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 . ${SCRIPTS}/envvars.sh
@@ -37,6 +39,17 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
   cd -
 	echo "Target VM: $(${VM} --version)"
 fi
+
+if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
+
+	rm -rf "${BOOTSTRAP_DOWNLOADS}/vmBootstrap"
+	mkdir ${BOOTSTRAP_DOWNLOADS}/vmBootstrap
+	cd ${BOOTSTRAP_DOWNLOADS}/vmBootstrap
+
+	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 100 vm $BOOTSTRAP_ARCH
+	cd -
+	echo "Bootstrap VM: $(${VM_BOOTSTRAP} --version)"
+fi 
 
 if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
 	download_to https://github.com/guillep/PharoBootstrap/releases/download/v1.7.8/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip

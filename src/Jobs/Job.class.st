@@ -10,8 +10,8 @@ A Job is a task to run and potentially notified to the user.
 		] ]  asJob run
 "
 Class {
-	#name : #Job,
-	#superclass : #Object,
+	#name : 'Job',
+	#superclass : 'Object',
 	#instVars : [
 		'block',
 		'currentValue',
@@ -27,10 +27,12 @@ Class {
 	#classInstVars : [
 		'jobAnnouncer'
 	],
-	#category : #'Jobs-Base'
+	#category : 'Jobs-Base',
+	#package : 'Jobs',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Job class >> block: aBlock [
 
 	^(self new)
@@ -38,7 +40,7 @@ Job class >> block: aBlock [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Job class >> block: aBlock owner: anObject [
 
 	^(self new)
@@ -47,14 +49,14 @@ Job class >> block: aBlock owner: anObject [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job class >> current [
 	"Answer the current job or nil if none."
 
 	^ CurrentJob value
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 Job class >> exampleCurrentValue [
 
 	[ :job| 
@@ -67,7 +69,7 @@ Job class >> exampleCurrentValue [
 	] asJob run
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 Job class >> exampleDebug [
 	"Job exampleDebug"
 	| aJob |
@@ -90,7 +92,7 @@ Job class >> exampleDebug [
 	aJob debug
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 Job class >> exampleProgress [
 
 	[:job | job title: 'Let us get started'.
@@ -102,7 +104,7 @@ Job class >> exampleProgress [
 			] ]  asJob run
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Job class >> jobAnnouncer [
 	"Answers the announcer for job announcements"
 	
@@ -110,14 +112,14 @@ Job class >> jobAnnouncer [
 			ifNil: [ jobAnnouncer := Announcer new ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Job >> addChild: aJob [
 
 	children add: aJob.
 	aJob parent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> announce: anAnnouncementClass [
 
 	| announcement |
@@ -125,38 +127,38 @@ Job >> announce: anAnnouncementClass [
 	self announcer announce: announcement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> announceChange [
 
 	isRunning ifFalse: [ ^ self ].
 	self announce: JobChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> announcer [
 
 	^ self class jobAnnouncer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> block [
 	
 	^ block
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Job >> block: aBlock [
 	
 	block := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> children [
 
 	^ children copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Job >> cleanupAfterRunning [
 
 	isRunning := false.
@@ -165,49 +167,49 @@ Job >> cleanupAfterRunning [
 	parent ifNotNil: [ :job | job removeChild: self ]
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> current [
 
 	^ self currentValue
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> current: aNumber [
 
 	self currentValue: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> currentValue [
 	
 	^ currentValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> currentValue: aNumber [
 	
 	currentValue := aNumber.
 	self announceChange
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 Job >> debug [
 	^ process debug
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> decrement [
 
 	self currentValue: self currentValue - 1
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> increment [
 
 	self currentValue: self currentValue + 1.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Job >> initialize [
 
 	super initialize.
@@ -219,24 +221,24 @@ Job >> initialize [
 	children := OrderedCollection new.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Job >> isRunning [
 	^ isRunning
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> label [
 
 	^ self title
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> label: aString [ 
 
 	self title: aString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> lookup: lookupBlock ifNone: noneBlock [
 	"Detect a job that satisfies the lookupBlock, or value noneBlock if none satisfies. 
 	The lookup starts at myself, following recursevely through my parent."
@@ -248,18 +250,18 @@ Job >> lookup: lookupBlock ifNone: noneBlock [
 		ifNotNil: [ parent lookup: lookupBlock ifNone: noneBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> max [
 	
 	^ max
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> max: aNumber [
 	self migrateProgressWhileUpdatingBounds: [ max := aNumber ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> migrateProgressWhileUpdatingBounds: aBlockChangingBounds [
 	"Keep the progress value consistent while we change min / max"
 	| progress |
@@ -268,41 +270,41 @@ Job >> migrateProgressWhileUpdatingBounds: aBlockChangingBounds [
 	self progress: progress.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> min [
 	
 	^ min
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> min: aNumber [
 	self migrateProgressWhileUpdatingBounds: [ min := aNumber ].
 	self announceChange.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> owner [
 	^ owner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> owner: anObject [ 
 	owner := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Job >> parent [
 
 	^ parent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Job >> parent: aJob [ 
 
 	parent := aJob.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Job >> prepareForRunning [
 
 	isRunning := true.
@@ -311,13 +313,13 @@ Job >> prepareForRunning [
 	self announce: JobStart.
 ]
 
-{ #category : #progress }
+{ #category : 'progress' }
 Job >> progress [
 	"Avoid negative progress and divideByZero."
 	^ min >= max ifTrue: [ 1 ] ifFalse: [ (currentValue - min) / (max - min) ]
 ]
 
-{ #category : #progress }
+{ #category : 'progress' }
 Job >> progress: aNormalizedFloat [
 	"Set the progress: 0.0 - 1.0"
 
@@ -325,13 +327,13 @@ Job >> progress: aNormalizedFloat [
 	self announceChange.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Job >> removeChild: aJob [ 
 
 	children remove: aJob.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 Job >> run [
 
 	[ self prepareForRunning.
@@ -339,26 +341,26 @@ Job >> run [
 			ensure: [ self cleanupAfterRunning ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> title [
 	
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Job >> title: anObject [
 	
 	title := anObject.
 	self announceChange.
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> value [
 
 	^ self currentValue.
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Job >> value: aNumber [
 
 	self currentValue: aNumber.

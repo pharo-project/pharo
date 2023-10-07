@@ -1,13 +1,14 @@
 Class {
-	#name : #SycAbstractVariableCommand,
-	#superclass : #SycRefactorVariableCommand,
+	#name : 'SycAbstractVariableCommand',
+	#superclass : 'SycRefactorVariableCommand',
 	#instVars : [
 		'selectedClass'
 	],
-	#category : #'SystemCommands-VariableCommands'
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAbstractVariableCommand >> asRefactorings [
 
 	^self
@@ -16,21 +17,21 @@ SycAbstractVariableCommand >> asRefactorings [
 			refactoring variable: var name class: selectedClass name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAbstractVariableCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAbstractVariableCommand >> defaultMenuItemName [
 
 	^'Abstract accessors'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAbstractVariableCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	selectedClass := aToolContext selectedClassSide.
+	selectedClass := aToolContext selectedVariables first definingClass.
 	variables := aToolContext selectedVariables
 ]

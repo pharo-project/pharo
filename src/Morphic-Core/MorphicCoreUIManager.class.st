@@ -2,15 +2,17 @@
 This is a very simplified version of MorphicUIManager for Moprhic subset that contains ony Morphic-Core package and has only support of the most basic morphs.
 "
 Class {
-	#name : #MorphicCoreUIManager,
-	#superclass : #DummyUIManager,
+	#name : 'MorphicCoreUIManager',
+	#superclass : 'DummyUIManager',
 	#classVars : [
 		'UIProcess'
 	],
-	#category : #'Morphic-Core-Support'
+	#category : 'Morphic-Core-Support',
+	#package : 'Morphic-Core',
+	#tag : 'Support'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 MorphicCoreUIManager class >> restartMethods [
    UIProcess ifNotNil: [
 	| process |
@@ -19,14 +21,14 @@ MorphicCoreUIManager class >> restartMethods [
 	process terminate. ]
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicCoreUIManager >> currentWorld [
 
 	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
 	^ World
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicCoreUIManager >> newDisplayDepthNoRestore: pixelSize [
 
   "Change depths.  Check if there is enough space!  , di"
@@ -45,7 +47,7 @@ MorphicCoreUIManager >> newDisplayDepthNoRestore: pixelSize [
   DisplayScreen startUp
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
 
   aBlock value.
@@ -53,7 +55,7 @@ MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
   self currentWorld fullRepaintNeeded
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicCoreUIManager >> resumeUIProcess: aProcess [
   "Adopt aProcess as the project process -- probably because of proceeding from a debugger"
 
@@ -61,7 +63,7 @@ MorphicCoreUIManager >> resumeUIProcess: aProcess [
   UIProcess resume
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicCoreUIManager >> spawnNewProcess [
 
   UIProcess := [
@@ -71,13 +73,13 @@ MorphicCoreUIManager >> spawnNewProcess [
   UIProcess resume
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicCoreUIManager >> terminateUIProcess [
   UIProcess suspend; terminate.
   UIProcess := nil "?"
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicCoreUIManager >> uiProcess [
   " Answer the currently active UI process for morphic world.
   Client should check explicitly if #uiProcess answers nil or not (see other implementations)"

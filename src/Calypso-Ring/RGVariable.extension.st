@@ -1,12 +1,12 @@
-Extension { #name : #RGVariable }
+Extension { #name : 'RGVariable' }
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGVariable >> isReadIn: aCompiledCode [
 "TODO"
 	^aCompiledCode readsSlot: self
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGVariable >> isWrittenIn: aCompiledCode [
 
 "TODO"

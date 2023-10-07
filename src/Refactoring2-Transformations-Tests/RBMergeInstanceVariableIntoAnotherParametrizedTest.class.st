@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMergeInstanceVariableIntoAnotherParametrizedTest,
-	#superclass : #RBWithDifferentConstructorsParametrizedTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBMergeInstanceVariableIntoAnotherParametrizedTest',
+	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMergeInstanceVariableIntoAnother .
@@ -14,19 +16,25 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #'failure tests' }
-RBMergeInstanceVariableIntoAnotherParametrizedTest >> testEqualsVariables [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'classBlock' . 'classBlock' . RBBasicLintRuleTestData })
+{ #category : 'failure tests' }
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureEqualsVariables [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'classBlock'.
+				 'classBlock'.
+				 RBBasicLintRuleTestData })
 ]
 
-{ #category : #'failure tests' }
-RBMergeInstanceVariableIntoAnotherParametrizedTest >> testNonExistingVariable [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ 'classBlock' . 'anInstVar1' . RBBasicLintRuleTestData })
+{ #category : 'failure tests' }
+RBMergeInstanceVariableIntoAnotherParametrizedTest >> testFailureNonExistingVariable [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 'classBlock'.
+				 'anInstVar1'.
+				 RBBasicLintRuleTestData })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoAnother [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
@@ -38,7 +46,7 @@ RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoAno
 	self assert: (class whichSelectorsReferToInstanceVariable: 'classBlock') isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMergeInstanceVariableIntoAnotherParametrizedTest >> testReplaceVariableIntoSupeclassVariable [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:

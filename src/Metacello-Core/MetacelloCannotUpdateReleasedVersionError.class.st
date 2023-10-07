@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloCannotUpdateReleasedVersionError,
-	#superclass : #Error,
-	#category : #'Metacello-Core-Exceptions-Errors'
+	#name : 'MetacelloCannotUpdateReleasedVersionError',
+	#superclass : 'Error',
+	#category : 'Metacello-Core-Exceptions-Errors',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Errors'
 }
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 MetacelloCannotUpdateReleasedVersionError >> isResumable [
 	"Determine whether an exception is resumable."
 
