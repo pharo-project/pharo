@@ -13,6 +13,12 @@ MySubAccessingSuperclassState class >> accessingFromClassSideAndSubclass [
 ]
 
 { #category : 'accessing' }
+MySubAccessingSuperclassState class >> sharedOnlyInClassSideSubclass [
+
+	^ SharedOnlyInClassSideSubclass
+]
+
+{ #category : 'accessing' }
 MySubAccessingSuperclassState >> accessing [
 
 	^ instVarName1  

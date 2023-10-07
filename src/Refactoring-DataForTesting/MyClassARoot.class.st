@@ -7,7 +7,8 @@ Class {
 	],
 	#classVars : [
 		'Shared1',
-		'Shared2'
+		'Shared2',
+		'SharedOnlyInClassSideSubclass'
 	],
 	#category : 'Refactoring-DataForTesting-StaticModel',
 	#package : 'Refactoring-DataForTesting',

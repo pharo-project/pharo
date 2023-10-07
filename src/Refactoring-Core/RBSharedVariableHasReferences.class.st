@@ -16,7 +16,13 @@ RBSharedVariableHasReferences >> check [
 	
 	aClass withAllSubclasses do: [ :each |
 			| res |
-			res := (each whichSelectorsReferToClassVariable: sharedVariable).
+			res := (each whichMethodsReferToSharedVariable: sharedVariable).
+			res isNotEmpty
+				ifTrue: [ violators addAll: res ].
+			].
+	aClass withAllSubclasses do: [ :each |
+			| res |
+			res := (each classSide whichMethodsReferToSharedVariable: sharedVariable).
 			res isNotEmpty
 				ifTrue: [ violators addAll: res ].
 			].
@@ -30,8 +36,9 @@ RBSharedVariableHasReferences >> errorString [
 ]
 
 { #category : 'instance creation' }
-RBSharedVariableHasReferences >> hierarchyOf: aRBClass referencesSharedVariable: variableName [ 
-	aClass := aRBClass.
+RBSharedVariableHasReferences >> hierarchyOf: aRBClass referencesSharedVariable: variableName [
+
+	aClass := aRBClass instanceSide.
 	sharedVariable := variableName 
 ]
 
