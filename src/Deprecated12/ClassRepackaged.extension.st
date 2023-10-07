@@ -3,8 +3,8 @@ Extension { #name : 'ClassRepackaged' }
 { #category : '*Deprecated12' }
 ClassRepackaged >> classRecategorized [
 
-	self deprecated: 'Use #classRepackaged instead.' transformWith: '`@rcv classRecategorized' -> '`@rcv classRecategorized'.
-	^ self classRecategorized
+	self deprecated: 'Use #classRepackaged instead.' transformWith: '`@rcv classRecategorized' -> '`@rcv classRepackaged'.
+	^ self classRepackaged
 ]
 
 { #category : '*Deprecated12' }
