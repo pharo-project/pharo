@@ -7,6 +7,12 @@ Class {
 }
 
 { #category : 'accessing' }
+MySubAccessingSuperclassState class >> accessingFromClassSideAndSubclass [
+
+	^ Shared2
+]
+
+{ #category : 'accessing' }
 MySubAccessingSuperclassState >> accessing [
 
 	^ instVarName1  

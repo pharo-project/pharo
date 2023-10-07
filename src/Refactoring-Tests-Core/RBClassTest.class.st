@@ -215,6 +215,42 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
 		equals: nil
 ]
 
+{ #category : 'tests - definition' }
+RBClassTest >> testWhichMethodsReferToClassVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	
+	self assert: (root whichMethodsReferToSharedVariable:  #Shared1) isNotEmpty.
+	self assert: (sub whichMethodsReferToSharedVariable: #Shared1) isNotEmpty.
+	
+	self assert: (root classSide whichMethodsReferToSharedVariable: #Shared1) isNotEmpty.
+	self assert: (sub classSide whichMethodsReferToSharedVariable: #Shared1) isEmpty.
+	self assert: (sub classSide whichMethodsReferToSharedVariable: #Shared2) isNotEmpty.
+	
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testWhichSelectorsReferToClassVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	
+	self assert: (root whichSelectorsReferToSharedVariable:  #Shared1) isNotEmpty.
+	self assert: (sub whichSelectorsReferToSharedVariable: #Shared1) isNotEmpty.
+	
+	self assert: (root classSide whichSelectorsReferToSharedVariable: #Shared1) isNotEmpty.
+	self assert: (sub classSide whichSelectorsReferToSharedVariable: #Shared1) isEmpty.
+	self assert: (sub classSide whichSelectorsReferToSharedVariable: #Shared2) isNotEmpty.
+	
+]
+
 { #category : 'tests - defining methods' }
 RBClassTest >> testWhoDefinesMethodDefinedInTheClass [
 

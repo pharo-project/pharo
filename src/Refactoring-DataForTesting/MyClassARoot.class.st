@@ -15,6 +15,12 @@ Class {
 }
 
 { #category : 'accessing' }
+MyClassARoot class >> accessingFromClassSide [
+
+	^ Shared1
+]
+
+{ #category : 'accessing' }
 MyClassARoot >> accessing [
 
 	^ instVarName1 

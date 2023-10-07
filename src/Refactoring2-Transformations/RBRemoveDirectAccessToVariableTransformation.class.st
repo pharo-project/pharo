@@ -33,7 +33,6 @@ Class {
 RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [ 
 
 	class := self model classObjectFor: className.
-
 	^ (isClassVariable
 			ifTrue: [ (RBCondition isMetaclass: class) not
 					& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
