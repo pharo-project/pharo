@@ -223,13 +223,16 @@ Pragma >> hash [
 Pragma >> key [
 	"Answer the keyword of the pragma (the selector of its message pattern).
 	 This accessor provides polymorphism with Associations used for properties."
-	^self selector
+	
+	^ self selector
 ]
 
 { #category : 'compatibility' }
 Pragma >> keyword [
-	"Compatibility, Pragma until Pharo9 did not implement #selector, but #keyword"
-	^self selector
+	"Compatibility, Pragma until Pharo9 did not implement #selector, but #keyword. Do not use it."
+	<backwardCompatible>
+	
+	^ self selector
 ]
 
 { #category : 'accessing' }
