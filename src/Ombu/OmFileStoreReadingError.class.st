@@ -2,12 +2,14 @@
 I am a notification raised when a OmFileStore has a problem reading an entry from its file.
 "
 Class {
-	#name : #OmFileStoreReadingError,
-	#superclass : #Error,
-	#category : #'Ombu-Errors'
+	#name : 'OmFileStoreReadingError',
+	#superclass : 'Error',
+	#category : 'Ombu-Errors',
+	#package : 'Ombu',
+	#tag : 'Errors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmFileStoreReadingError class >> readingError: sourceError on: aFileReference position: aFilePosition [
 
 	^ self new messageText: 'Reading entry from ', aFileReference asString, '@', aFilePosition asString, ': ', sourceError messageText

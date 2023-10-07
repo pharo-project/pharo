@@ -1,26 +1,28 @@
 Class {
-	#name : #DADependencyCheckerTest,
-	#superclass : #TestCase,
+	#name : 'DADependencyCheckerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'checker'
 	],
-	#category : #'Tool-DependencyAnalyser-Tests-Core'
+	#category : 'Tool-DependencyAnalyser-Tests-Core',
+	#package : 'Tool-DependencyAnalyser-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DADependencyCheckerTest >> setUp [
 	super setUp.
 	checker := DADependencyChecker new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DADependencyCheckerTest >> testShouldGetDirectDependencies [
 	self
 		assert: (checker dependenciesOf: 'Tool-DependencyAnalyser-Tests-Data')
 		equals: #(#Kernel #'Kernel-BytecodeEncoders')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DADependencyCheckerTest >> testShouldGetUnresolvedDependencies [
 
 	| result |

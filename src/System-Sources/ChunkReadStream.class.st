@@ -6,15 +6,17 @@ I am a read stream that reads and returns chunks of code. That is, pieces of tex
 symbols
 "
 Class {
-	#name : #ChunkReadStream,
-	#superclass : #DecoratorStream,
+	#name : 'ChunkReadStream',
+	#superclass : 'DecoratorStream',
 	#instVars : [
 		'nextChar'
 	],
-	#category : #'System-Sources-Utilities'
+	#category : 'System-Sources-Utilities',
+	#package : 'System-Sources',
+	#tag : 'Utilities'
 }
 
-{ #category : #decorated }
+{ #category : 'decorated' }
 ChunkReadStream >> basicNext [
 
 	nextChar = self terminatorMark
@@ -22,7 +24,7 @@ ChunkReadStream >> basicNext [
 	^ nextChar
 ]
 
-{ #category : #decorated }
+{ #category : 'decorated' }
 ChunkReadStream >> basicNextChunk [
 	"Answer the contents of the receiver, up to the next terminator character. Doubled terminators indicate an embedded terminator character."
 
@@ -40,7 +42,7 @@ ChunkReadStream >> basicNextChunk [
 	^ out contents
 ]
 
-{ #category : #decorated }
+{ #category : 'decorated' }
 ChunkReadStream >> decodeString: string andRuns: runsRaw [
 	| strm runLength runValues newString index |
 	strm := ReadStream on: runsRaw from: 1 to: runsRaw size.
@@ -65,7 +67,7 @@ ChunkReadStream >> decodeString: string andRuns: runsRaw [
 	^ newString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChunkReadStream >> isNextChunkMetaData [
 	| isMetaData |
 	isMetaData := decoratedStream peek = $!.
@@ -73,19 +75,19 @@ ChunkReadStream >> isNextChunkMetaData [
 	^ isMetaData
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChunkReadStream >> isNextStyleChunk [
 	"Style chunks are between $] and $["
 	^ decoratedStream peek == $]
 ]
 
-{ #category : #decorated }
+{ #category : 'decorated' }
 ChunkReadStream >> next [
 
     ^ self parseLangTagFor: self basicNextChunk
 ]
 
-{ #category : #decorated }
+{ #category : 'decorated' }
 ChunkReadStream >> parseLangTagFor: aString [
 
 	| string peek runsRaw foundTag |
@@ -104,32 +106,32 @@ ChunkReadStream >> parseLangTagFor: aString [
 	^ string
 ]
 
-{ #category : #decorated }
+{ #category : 'decorated' }
 ChunkReadStream >> position [
 
 	^ decoratedStream position - (nextChar ifNil: [0] ifNotNil: [1])
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ChunkReadStream >> readUpToEndOfStyleChunk [
 	"Style chunks are between $] and $["
 	^decoratedStream upTo: $[
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChunkReadStream >> reset [
 	nextChar := nil.
 	decoratedStream reset
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ChunkReadStream >> skipSeparators [
 
 	[self atEnd not and: [ self peek isSeparator ]]
 		whileTrue: [ decoratedStream next ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ChunkReadStream >> terminatorMark [
 	^$!
 ]

@@ -14,8 +14,8 @@ http://mitglied.lycos.de/buran/knowhow/codes/locales/
 
 "
 Class {
-	#name : #Locale,
-	#superclass : #Object,
+	#name : 'Locale',
+	#superclass : 'Object',
 	#instVars : [
 		'id'
 	],
@@ -29,26 +29,28 @@ Class {
 	#classInstVars : [
 		'localeAnnouncer'
 	],
-	#category : #'System-Localization-Locales'
+	#category : 'System-Localization-Locales',
+	#package : 'System-Localization',
+	#tag : 'Locales'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 Locale class >> activated [
 	^ Activated ifNil: [Activated := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Locale class >> activated: aBoolean [
 	Activated := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> current [
 
 	^ Current ifNil: [ Current := self determineCurrentLocale ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> currentPlatform: locale during: aBlock [
 	"Alter current locale during a block"
 	| savedLocale |
@@ -58,7 +60,7 @@ Locale class >> currentPlatform: locale during: aBlock [
 		ensure: [self switchTo: savedLocale]
 ]
 
-{ #category : #'platform specific' }
+{ #category : 'platform specific' }
 Locale class >> defaultEncodingName: languageSymbol [
 	| encodings platformName osVersion |
 	platformName := Smalltalk os platformName.
@@ -71,7 +73,7 @@ Locale class >> defaultEncodingName: languageSymbol [
 	^encodings at: #default
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Locale class >> defaultLocales [
 
 	"return IDs of default locales"
@@ -79,7 +81,7 @@ Locale class >> defaultLocales [
 	^ #(de en ja 'ja-kids' nl no sv)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Locale class >> determineCurrentLocale [
 	"For now just return the default locale.
 	A smarter way would be to determine the current platforms default locale."
@@ -88,7 +90,7 @@ Locale class >> determineCurrentLocale [
 	^self new determineLocale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Locale class >> initKnownLocales [
 	| locales |
 	locales := Dictionary new.
@@ -99,14 +101,14 @@ Locale class >> initKnownLocales [
 	^locales
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Locale class >> initialize [
 
 	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Locale class >> initializePlatformEncodings [
 	"Locale initializePlatformEncodings"
 
@@ -136,51 +138,51 @@ Locale class >> initializePlatformEncodings [
 		at: 'Win32 CE' put: 'utf-8'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> isoLanguage: isoLanguage [
 	^self isoLanguage: isoLanguage isoCountry: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> isoLanguage: isoLanguage isoCountry: isoCountry [
 	^self localeID: (LocaleID  isoLanguage: isoLanguage isoCountry: isoCountry)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Locale class >> knownLocales [
 	"KnownLocales := nil"
 	^KnownLocales ifNil: [KnownLocales := self initKnownLocales]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> languageSymbol: languageSymbol [
 	"Locale languageSymbol: #Deutsch"
 
 	^self isoLanguage: (LanguageSymbols at: languageSymbol)
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Locale class >> localTimeZone [
 	^ LocalTimeZone new
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Locale class >> localeAnnouncer [
 	^localeAnnouncer ifNil: [ localeAnnouncer := Announcer new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> localeID: id [
 	^self knownLocales at: id ifAbsentPut: [Locale new localeID: id]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> platformEncodings [
 	PlatformEncodings isEmptyOrNil ifTrue: [ self initializePlatformEncodings ].
 	^PlatformEncodings
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Locale class >> startUp: resuming [
 	| newID |
 	resuming ifFalse: [^self].
@@ -192,7 +194,7 @@ Locale class >> startUp: resuming [
 				ifTrue: [self switchToID: newID]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> stringForLanguageNameIs: localeID [
 	"Answer a string for a menu determining whether the given
 	symbol is the project's natural language"
@@ -202,7 +204,7 @@ Locale class >> stringForLanguageNameIs: localeID [
 		, localeID displayLanguage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> switchTo: locale [
 
 	| announcement |
@@ -212,19 +214,19 @@ Locale class >> switchTo: locale [
 	self localeAnnouncer announce: announcement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale class >> switchToID: localeID [
 	"Locale switchToID: (LocaleID isoLanguage: 'de') "
 
 	self switchTo: (Locale localeID: localeID)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale >> determineLocale [
 	self localeID: self determineLocaleID
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale >> determineLocaleID [
 	"Locale current determineLocaleID"
 	| langCode isoLang countryCode isoCountry |
@@ -239,7 +241,7 @@ Locale >> determineLocaleID [
 	^LocaleID isoLanguage: isoLang isoCountry: isoCountry
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Locale >> fetchISO2Language [
 	"Locale current fetchISO2Language"
 
@@ -252,17 +254,17 @@ Locale >> fetchISO2Language [
 	^ isoLang ifNotNil: [ isoLang iso2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale >> isoCountry [
 	^self localeID isoCountry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale >> isoLanguage [
 	^self localeID isoLanguage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale >> isoLocale [
 	"<language>-<country>"
 	^self isoCountry
@@ -270,66 +272,66 @@ Locale >> isoLocale [
 		ifNotNil: [self isoLanguage , '-' , self isoCountry]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale >> localeID [
 	^id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Locale >> localeID: anID [
 	id := anID
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primCountry [
 	"Returns string with country tag according to ISO 639"
 	<primitive: 'primitiveCountry' module: 'LocalePlugin'>
 	^'FR'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primCurrencyNotation [
 	"Returns boolean if symbol is pre- (true) or post-fix (false)"
 	<primitive: 'primitiveCurrencyNotation' module: 'LocalePlugin'>
 	^true
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primCurrencySymbol [
 	"Returns string with currency symbol"
 	<primitive: 'primitiveCurrencySymbol' module:'LocalePlugin'>
 	^'$'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primDST [
 	"Returns boolean if DST  (daylight saving time) is active or not"
 	<primitive:'primitiveDaylightSavings' module: 'LocalePlugin'>
 	^false
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primDecimalSymbol [
 	"Returns string with e.g. '.' or ','"
 	<primitive:'primitiveDecimalSymbol' module: 'LocalePlugin'>
 	^'.'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primDigitGrouping [
 	"Returns string with e.g. '.' or ',' (thousands etc)"
 	<primitive:'primitiveDigitGroupingSymbol' module: 'LocalePlugin'>
 	^','
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primLanguage [
 	"returns string with language tag according to ISO 639"
 	<primitive:'primitiveLanguage' module: 'LocalePlugin'>
 	^'en'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primLongDateFormat [
 	"Returns the long date format
 	d day, m month, y year,
@@ -340,14 +342,14 @@ Locale >> primLongDateFormat [
 	^'dddd, mmmm d, yyyy'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primMeasurement [
 	"Returns boolean denoting metric(true) or imperial(false)."
 	<primitive:'primitiveMeasurementMetric' module: 'LocalePlugin'>
 	^true
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primShortDateFormat [
 	"Returns the short date format
 	d day, m month, y year,
@@ -358,7 +360,7 @@ Locale >> primShortDateFormat [
 	^'m/d/yy'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primTimeFormat [
 	"Returns string time format
 	Format is made up of
@@ -368,7 +370,7 @@ Locale >> primTimeFormat [
 	^'h:mmx'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primTimezone [
 	"The offset from UTC in minutes, with positive offsets being towards the east.
 	(San Francisco is in UTC -07*60 and Paris is in UTC +02*60 (daylight savings is not in effect)."
@@ -376,7 +378,7 @@ Locale >> primTimezone [
 	^0
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Locale >> primVMOffsetToUTC [
 	"Returns the offset in minutes between the VM and UTC.
 	If the VM does not support UTC times, this is 0.
@@ -385,7 +387,7 @@ Locale >> primVMOffsetToUTC [
 	^0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Locale >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll:  '(' ; print: id ; nextPutAll:  ')'

@@ -14,12 +14,13 @@ My more important protocols are:
 For more information, look at my subclasses.
 "
 Class {
-	#name : #KMKeyCombination,
-	#superclass : #Object,
-	#category : #'Keymapping-KeyCombinations'
+	#name : 'KMKeyCombination',
+	#superclass : 'Object',
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMKeyCombination class >> fromKeyboardEvent: evt [
 	| modifier control command shift alt |
 	control := evt controlKeyPressed.
@@ -40,71 +41,71 @@ KMKeyCombination class >> fromKeyboardEvent: evt [
 	^ modifier + evt key asKeyCombination
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMKeyCombination class >> isAbstract [
 
 	^ self == KMKeyCombination
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombination >> , aShortcut [
 	^ KMKeyCombinationSequence first: self next: aShortcut asKeyCombination
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMKeyCombination >> = aShortcut [
 	^ aShortcut isKindOf: self species
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombination >> acceptVisitor: aKMShortcutPrinter [
 
 	^ aKMShortcutPrinter visitSingleShortcut: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 KMKeyCombination >> asKeyCombination [
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 KMKeyCombination >> asShortcut [
 	^ self asKeyCombination
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMKeyCombination >> combinationsDo: aBlock [
 	aBlock value: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMKeyCombination >> hash [
 	^ self species hash
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombination >> includes: aShortcut [
 	^self = aShortcut
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombination >> mac [
 	^KMPlatformSpecificKeyCombination with: self onPlatform: #MacOSX
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombination >> matches: anEventBuffer [
 
 	^ anEventBuffer size = 1 and:
 		[self matchesCompletely: anEventBuffer first]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombination >> matchesCompletely: aKeyboardEvent [
 	^ self = aKeyboardEvent asKeyCombination
 ]
 
-{ #category : #'keymap building' }
+{ #category : 'keymap building' }
 KMKeyCombination >> named: keymapName do: anActionBlock [
 	^ KMKeymap
 		named: keymapName
@@ -112,7 +113,7 @@ KMKeyCombination >> named: keymapName do: anActionBlock [
 		action: anActionBlock
 ]
 
-{ #category : #'keymap building' }
+{ #category : 'keymap building' }
 KMKeyCombination >> named: keymapName do: anActionBlock withDescription: aDescription [
 	^ KMKeymap
 		named: keymapName
@@ -121,36 +122,36 @@ KMKeyCombination >> named: keymapName do: anActionBlock withDescription: aDescri
 		description: aDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeyCombination >> platform [
 	^#all
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMKeyCombination >> platformCharacter [
 
 	^ ''
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMKeyCombination >> platformModifier [
 
 	^ nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombination >> prettyPrintOn: aStream [
 
 	aStream << self shortcut modifier symbol.
 	self shortcut character name printOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombination >> printOsRepresentation [
 	^String streamContents: [ : stream | self printOsRepresentationOn: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombination >> printOsRepresentationOn: aStream [
 	self shortcut modifier ifNotNil: [: modifier |
 		modifier printOsRepresentationOn: aStream.
@@ -158,27 +159,27 @@ KMKeyCombination >> printOsRepresentationOn: aStream [
 	self shortcut character printOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeyCombination >> shortcut [
 	^self
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombination >> unix [
 	^KMPlatformSpecificKeyCombination with: self onPlatform: #Unix
 ]
 
-{ #category : #'keymap building' }
+{ #category : 'keymap building' }
 KMKeyCombination >> value: aBuilder [
 	^ self
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombination >> win [
 	^KMPlatformSpecificKeyCombination with: self onPlatform: #Windows
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombination >> | aShortcut [
 	^KMKeyCombinationChoice withShortcuts: { self . aShortcut }
 ]

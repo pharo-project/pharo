@@ -1,10 +1,11 @@
 Class {
-	#name : #EFLiteralArrayExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFLiteralArrayExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFLiteralArrayExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -15,7 +16,7 @@ EFLiteralArrayExpressionTest >> basicConfiguration [
 		maxLineLength: 70
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFLiteralArrayExpressionTest >> oneSpaceConfiguration [
 
 	^ self contextClass basicNew
@@ -26,7 +27,7 @@ EFLiteralArrayExpressionTest >> oneSpaceConfiguration [
 		maxLineLength: 70
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testBigArray [
 	| source |
 	configurationSelector := #oneSpaceConfiguration.
@@ -43,7 +44,7 @@ EFLiteralArrayExpressionTest >> testBigArray [
       #expr49 ) )'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testBigArrayWithExtraSpaces [
 	| source |
 	configurationSelector := #oneSpaceConfiguration.
@@ -60,7 +61,7 @@ EFLiteralArrayExpressionTest >> testBigArrayWithExtraSpaces [
       #expr49 ) )'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testByteArrayParenthesis [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -68,7 +69,7 @@ EFLiteralArrayExpressionTest >> testByteArrayParenthesis [
 	self assert: source equals: '#[1 2 3]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testNoExtraSpaceArroundParenthesis [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -76,7 +77,7 @@ EFLiteralArrayExpressionTest >> testNoExtraSpaceArroundParenthesis [
 	self assert: source equals: '#(1 2 3)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testNoExtraSpaceArroundParenthesis2 [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -84,7 +85,7 @@ EFLiteralArrayExpressionTest >> testNoExtraSpaceArroundParenthesis2 [
 	self assert: source equals: '#[1 2 3]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testNoExtraSpaceBetweenValue [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -92,7 +93,7 @@ EFLiteralArrayExpressionTest >> testNoExtraSpaceBetweenValue [
 	self assert: source equals: '#(1 2 3)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testNoExtraSpaceBetweenValue2 [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -100,7 +101,7 @@ EFLiteralArrayExpressionTest >> testNoExtraSpaceBetweenValue2 [
 	self assert: source equals: '#[1 2 3]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testOneSpaceInsideArray [
 	| source |
 	configurationSelector := #oneSpaceConfiguration.
@@ -108,7 +109,7 @@ EFLiteralArrayExpressionTest >> testOneSpaceInsideArray [
 	self assert: source equals: '#( 1 2 3 )'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralArrayExpressionTest >> testTwoSpacesInsideArray [
 	| source |
 	configurationSelector := #twoSpacesConfiguration.
@@ -116,7 +117,7 @@ EFLiteralArrayExpressionTest >> testTwoSpacesInsideArray [
 	self assert: source equals: '#(  1 2 3  )'
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFLiteralArrayExpressionTest >> twoSpacesConfiguration [
 
 	^ self contextClass basicNew

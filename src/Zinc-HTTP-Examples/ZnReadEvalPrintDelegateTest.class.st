@@ -2,17 +2,18 @@
 Unit test for ZnReadEvalPrintDelegate
 "
 Class {
-	#name : #ZnReadEvalPrintDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnReadEvalPrintDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnReadEvalPrintDelegateTest >> port [
 	^ 1700 + 32 atRandom
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnReadEvalPrintDelegateTest >> testReadEvalPrint [
 	self withServerDo: [ :server | | x y result |
 		server delegate: ZnReadEvalPrintDelegate new.
@@ -26,7 +27,7 @@ ZnReadEvalPrintDelegateTest >> testReadEvalPrint [
 		self assert: result asInteger equals: x + y ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnReadEvalPrintDelegateTest >> withServerDo: block [
 	ZnServer withOSAssignedPortDo: block
 ]

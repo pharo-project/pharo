@@ -1,14 +1,15 @@
 Class {
-	#name : #RBSearchTest,
-	#superclass : #TestCase,
+	#name : 'RBSearchTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'classSearches',
 		'currentSelector'
 	],
-	#category : #'Refactoring-Tests-Core-Base'
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildArgumentSearch [
 	self
 		createArgumentSearchWith: 'aSmalllintContext'
@@ -16,7 +17,7 @@ RBSearchTest >> buildArgumentSearch [
 		inClass: RBBasicLintRuleTestData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildMessageSearch [
 	self
 		createSearchWith: '``@receiver -> ``@arg'
@@ -24,7 +25,7 @@ RBSearchTest >> buildMessageSearch [
 		inClass: RBTransformationRuleTestData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildMethodArgumentSearch [
 	"Two argument methods"
 	self
@@ -37,7 +38,7 @@ RBSearchTest >> buildMethodArgumentSearch [
 		inClass: RBBasicLintRuleTestData class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildMethodSearch [
 	"Simple forwarders"
 	self
@@ -46,7 +47,7 @@ RBSearchTest >> buildMethodSearch [
 		inClass: RBTransformationRuleTestData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildMethodTitleSearch [
 	self
 		createMethodSearchWith: 'initialize | `@temps | `@.Stmts'
@@ -54,7 +55,7 @@ RBSearchTest >> buildMethodTitleSearch [
 		inClass: RBBasicLintRuleTestData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildSimpleLiteralSearch [
 	| search |
 	search := self parseTreeSearcher.
@@ -75,7 +76,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 		ifAbsentPut: [ Set new ]) add: search
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildSimpleVariableSearch [
 	self
 		createSearchWith: 'result'
@@ -96,7 +97,7 @@ RBSearchTest >> buildSimpleVariableSearch [
 		inClass: RBBasicLintRuleTestData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> buildStatementSearch [
 	"Two or more statements"
 	self
@@ -110,7 +111,7 @@ RBSearchTest >> buildStatementSearch [
 		inClass: RBTransformationRuleTestData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> createArgumentSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
 	search := self parseTreeSearcher.
@@ -124,7 +125,7 @@ RBSearchTest >> createArgumentSearchWith: aCodeString selectors: selectorCollect
 	(classSearches at: aClass ifAbsentPut: [ Set new ]) add: search
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> createMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
 	search := self parseTreeSearcher.
@@ -138,7 +139,7 @@ RBSearchTest >> createMethodSearchWith: aCodeString selectors: selectorCollectio
 	(classSearches at: aClass ifAbsentPut: [ Set new ]) add: search
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> createSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
 	search := self parseTreeSearcher.
@@ -152,17 +153,17 @@ RBSearchTest >> createSearchWith: aCodeString selectors: selectorCollection inCl
 	(classSearches at: aClass ifAbsentPut: [ Set new ]) add: search
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> currentSelector [
 	^ currentSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSearchTest >> parseTreeSearcher [
 	^ RBParseTreeSearcher new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBSearchTest >> setUp [
 	super setUp.
 	classSearches := Dictionary new.
@@ -177,7 +178,7 @@ RBSearchTest >> setUp [
 		buildMethodArgumentSearch
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBSearchTest >> testAllSearches [
 	classSearches
 		keysAndValuesDo: [ :class :searches |

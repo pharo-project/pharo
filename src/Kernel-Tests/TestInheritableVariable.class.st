@@ -3,32 +3,34 @@ I am example of inheritable process specific variable.
 I implement isInheritable on class side to return true when I enabled (I become enable only in tests because existance of inheritable variables effect process instantiation performance)
 "
 Class {
-	#name : #TestInheritableVariable,
-	#superclass : #ProcessLocalVariable,
+	#name : 'TestInheritableVariable',
+	#superclass : 'ProcessLocalVariable',
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #'Kernel-Tests-Processes'
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestInheritableVariable class >> disable [
 	enabled := false.
 	Process updateInheritableKeys
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestInheritableVariable class >> enable [
 	enabled := true.
 	Process updateInheritableKeys
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestInheritableVariable class >> enabled [
 	^enabled ifNil: [ enabled := false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestInheritableVariable class >> isInheritable [
 	^self enabled
 ]

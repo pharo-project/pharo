@@ -2,20 +2,22 @@
 Tests for FFIExternalValueHolder
 "
 Class {
-	#name : #FFIExternalValueHolderTest,
-	#superclass : #TestCase,
+	#name : 'FFIExternalValueHolderTest',
+	#superclass : 'TestCase',
 	#classVars : [
 		'TIME_T_PTR'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 FFIExternalValueHolderTest >> getTime: t [
      ^self ffiCall: #(long time(TIME_T_PTR t)) module: LibC
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalValueHolderTest >> testCall [
 	| object time |
 
@@ -26,7 +28,7 @@ FFIExternalValueHolderTest >> testCall [
 	self assert: time equals: object value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalValueHolderTest >> testCreateValueHolder [
 	| valueHolderClass object |
 

@@ -2,32 +2,45 @@
 SUnit tests for random generator
 "
 Class {
-	#name : #RandomTest,
-	#superclass : #ClassTestCase,
+	#name : 'RandomTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'gen'
 	],
-	#category : #'Random-Tests'
+	#category : 'Random-Tests',
+	#package : 'Random-Tests'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 RandomTest >> classToBeTested [
 
 	^ Random
 ]
 
-{ #category : #running }
+{ #category : 'tests' }
+RandomTest >> generateNewSequenceOfSize: aNumber withGenerator: aRandom [
+
+	| results |
+	results := OrderedCollection new.
+
+	1 to: aNumber do: [ :_ |
+	results add: (aRandom nextIntegerBetween: 0 and: 16r7FFFFFFF) ].
+
+	^ results asArray
+]
+
+{ #category : 'running' }
 RandomTest >> setUp [
 	super setUp.
 	gen := Random seed: 112629
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testDistribution [
 	| results occurrences generator |
 	1 to: 100 do: [ :i |
 		results := Bag new.
-		generator := Random new seed: 1234567+i.
+		generator := Random new seed: 12345678+i.
 		2000 timesRepeat: [ results add: (100 atRandom: generator) ].
 		occurrences := Array new: 100 streamContents: [ :out |
 			results doWithOccurrences: [ :element :occurrence |
@@ -38,19 +51,7 @@ RandomTest >> testDistribution [
 		self assert: occurrences stdev < 10]
 ]
 
-{ #category : #tests }
-RandomTest >> testIfCompletelyBroken [
-	"If the results are not these values (accounting for precision of printing)
-	then something is horribly wrong"
-
-	gen seed: 2345678901.
-	self
-		assert: ((1 to: 10) collect: [ :i | gen next round: 15 ])
-		equals:
-			#(0.149243269650845 0.331633021743797 0.756196448000239 0.393701540023881 0.941783181364547 0.549929193942775 0.659962596213428 0.991354559078512 0.696074432551895 0.922987899707159)
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNext [
 
 	10000 timesRepeat: [
@@ -61,7 +62,7 @@ RandomTest >> testNext [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextBetweenAnd [
 
 	10000 timesRepeat: [
@@ -71,7 +72,7 @@ RandomTest >> testNextBetweenAnd [
 		self assert: (next < 5) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextInteger [
 	| int |
 	int := gen nextInteger: 256.
@@ -79,7 +80,7 @@ RandomTest >> testNextInteger [
 	self assert: (int between: 1 and: 256)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextIntegerBetweenAnd [
 
 	10000 timesRepeat: [
@@ -89,7 +90,7 @@ RandomTest >> testNextIntegerBetweenAnd [
 		self assert: (next between: -3 and: 5) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextInto [
 	| array |
 	array := Array new: 8.
@@ -97,7 +98,88 @@ RandomTest >> testNextInto [
 	self assert: (array allSatisfy: [ :each | each isFloat and: [ each >= 0 and: [ each < 1 ] ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+RandomTest >> testPrimitiveRandomGeneration1 [
+
+	self
+		assert:
+		(self generateNewSequenceOfSize: 100 withGenerator: (gen seed: 42))
+		equals:
+			#( 1123384278 1795671209 1924641435 1143034755 1974427309
+			   1757328946 1271345452 1441777623 2062288904 2131966645
+			   898244057 1731076225 106581468 2027215766 1693907025 251273835
+			   872213210 736288324 449296931 1097054660 1174969416 1493913367
+			   727525072 1895983019 2045651843 601924129 790240170 274078875
+			   85460756 661429448 1551229168 1346782475 331806902 2001698278
+			   1653883637 969082088 58484890 877451631 106813142 879896758
+			   1465586082 23970619 222390255 1872327836 132911854 169678554
+			   685616442 1905681248 1101299353 543443413 10498198 1567420440
+			   8429346 246076037 463063522 1131711124 352105423 1100034716
+			   1647334895 972870151 1415116872 419609241 810313841 1259894043
+			   1073135744 969363312 1568528795 664453680 1680803242 460188684
+			   1401049631 1589666895 324952468 2133811574 2125455444 1469931429
+			   387789563 881643062 1751561152 16000064 56618491 1697760127
+			   1756201022 566280575 1702381265 413278598 514120285 2138146072
+			   1826857778 878121720 1338240606 1068671382 403284681 815313315
+			   391109809 395500445 774308967 509549754 1714383213 1069569682 )
+]
+
+{ #category : 'tests' }
+RandomTest >> testPrimitiveRandomGeneration2 [
+
+	self
+		assert: (self
+				 generateNewSequenceOfSize: 100
+				 withGenerator: (gen seed: 4112000))
+		equals:
+			#( 911034467 623064739 2069461119 1776170644 2133203577 1730457956
+			   324747982 363675164 1904345172 1621255112 1297556496 23505356
+			   1355834468 160610595 1617487803 1039549212 1846883319 2010354200
+			   476369801 171757954 989848022 1603079100 1314026991 1454207784
+			   2078473025 227444708 504950213 1345591439 600653439 449189537
+			   324817986 914192558 1239256601 395373279 501565559 256583195
+			   715973605 1269777629 314601761 1690741703 155672304 2037828346
+			   1973102905 1150196189 546648478 1888933509 521133230 1757563876
+			   1339955536 431524952 704934916 1711974879 70559250 1982829667
+			   1110020946 1707037755 1973351774 1942247750 1217323071
+			   1125713023 1148575093 364025800 2112712187 1191251157 1293701689
+			   1325582175 848888591 1835433750 198980106 1331838368 602369642
+			   1749496722 1726468786 1537953647 395924263 190370818 949685575
+			   1337449940 918067889 2043992072 374792107 865520841 798576892
+			   554778780 755314185 616251642 1095303820 1762283268 207097256
+			   1698265582 657252139 1166599601 1256604542 1336871508 98506035
+			   1267254030 2056734050 1359495350 1088203006 1024528242 )
+]
+
+{ #category : 'tests' }
+RandomTest >> testPrimitiveRandomGeneration3 [
+
+	self
+		assert:
+		(self
+			 generateNewSequenceOfSize: 100
+			 withGenerator: (gen seed: 123456))
+		equals:
+			#( 566038743 1171143710 196292920 1669880209 1144641032 1992765256
+			   659093549 14218717 2061950801 1678079829 1578110325 1879404830
+			   1933870707 434085891 341950436 625432323 1134678563 859685437
+			   1236225730 315560151 852048096 1922244605 925650437 504664098
+			   1260282598 465193379 245828783 279261993 1902667837 5944093
+			   2136271957 1094758864 329209476 105592850 1897929857 1913195112
+			   821050896 643503696 776471402 1415619124 700430832 355145952
+			   1353942448 1074383166 2140513849 159165778 932788109 673910915
+			   1417469399 258047532 939982909 2086845843 1112252639 1003572104
+			   1719096493 2029507176 685431625 1070730662 833670055 2041486110
+			   968545889 1011430722 1287709220 885237954 1257267839 2003737035
+			   935102566 1481687452 1302662897 1254412380 1759700629 1564192767
+			   661511340 227189186 302694750 1035479791 876735686 1001817412
+			   1647194895 440089346 331642580 1825295173 617063505 10834473
+			   863891414 1393364432 1164413488 1487711579 717709665 981313536
+			   1334721008 1303947308 627686644 2053289872 878240920 891827854
+			   498333902 399158151 832415416 1705443437 )
+]
+
+{ #category : 'tests' }
 RandomTest >> testUnixRandomGeneratorSeed [
 	"the test is very slow on the CI (>2 minutes)"
 	self skipOnPharoCITestingEnvironment.

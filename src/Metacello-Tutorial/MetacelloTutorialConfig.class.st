@@ -1,13 +1,14 @@
 Class {
-	#name : #MetacelloTutorialConfig,
-	#superclass : #Object,
+	#name : 'MetacelloTutorialConfig',
+	#superclass : 'Object',
 	#instVars : [
 		'project'
 	],
-	#category : #'Metacello-Tutorial'
+	#category : 'Metacello-Tutorial',
+	#package : 'Metacello-Tutorial'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloTutorialConfig class >> bootstrapPackage: aString from: aPath [ 
 	| repository version |
 	repository := MCHttpRepository
@@ -22,7 +23,7 @@ MetacelloTutorialConfig class >> bootstrapPackage: aString from: aPath [
 			version workingCopy repositoryGroup addRepository: repository]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloTutorialConfig class >> ensureMetacello [
 	"Bootstrap Gofer (if necessary), bootstrap ConfigurationOfMetacello (using old Gofer API), then load the latest 
 	version of Metacello itself."
@@ -53,20 +54,20 @@ MetacelloTutorialConfig class >> ensureMetacello [
 			(env at: #ConfigurationOfMetacello) perform: #load ]
 ]
 
-{ #category : #'metacello tool support' }
+{ #category : 'metacello tool support' }
 MetacelloTutorialConfig class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
 	
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloTutorialConfig class >> project [
 
 	^self new project
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloTutorialConfig >> baseline07: spec [ 
 	<version: '0.7-baseline'>
 	
@@ -80,7 +81,7 @@ MetacelloTutorialConfig >> baseline07: spec [
 			package: 'Example-AddOn' with: [ spec requires: 'Example-Core' ] ].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloTutorialConfig >> baseline10: spec [ 
 	<version: '1.0-baseline'>
 	
@@ -99,7 +100,7 @@ MetacelloTutorialConfig >> baseline10: spec [
 			group: 'Tests' with: #('Example-Tests' 'Example-AddOnTests' ) ].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloTutorialConfig >> baseline13: spec [ 
 	<version: '1.3-baseline'>
 	
@@ -126,7 +127,7 @@ MetacelloTutorialConfig >> baseline13: spec [
 		spec package: 'Example-Platform' with: 'Example-Platform.squeak'.].
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson01 [
 " [ see metod: #version01: ]
 Version 0.1 represents the simplest version specification possible. 
@@ -173,7 +174,7 @@ Metacello runs (#pharo, #squeak, #gemstone and #squeakCommon).
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson02 [
 "  [ see method: #version02: ]
 For version 0.2, we've simply updated the package version to 'Example-Core-anon.9', which 
@@ -184,7 +185,7 @@ can be confirmed by printing the following expression:
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson03 [
 "   [ see method: #version03: ]
 For version 0.3, we've updated the package version to 'Example-Core-anon.10' and added an additional 
@@ -198,7 +199,7 @@ each package is redundant.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson04 [
 "   [ see method: #version04: ]
 The specification for version 0.4 is basically the same as version 0.3. Instead of listing a 
@@ -212,7 +213,7 @@ Compare the printStrings for the specs for each version:
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson05 [
 "   [ see method: #version05: ]
 For version 0.5 we've added an additional package to the mix: 'Example-AddOn':
@@ -247,7 +248,7 @@ dependencies.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson06 [
 "   [ see method: #version06: ]
 In version 0.6 we've added dependency information in the form of the #requires: directive.
@@ -266,7 +267,7 @@ version to version while the structural information will remain relatively stati
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson07 [
 "   [ see method: #baseline07: and #version07: ]
 For version 0.7, we are ceating a baseline version specification which is expected to be used
@@ -308,7 +309,7 @@ Of course when a number of developers are working on a project it may be useful 
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson08 [
 "   [ see method: #version08: ]
 In version 0.8 we've simply updated the package versions, which can be seen by comparing the 
@@ -320,7 +321,7 @@ results of loading version 0.7 and 0.8:
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson10 [
 "   [ see method: #baseline10: #version10: ]
 In #baseline10: we've added two things: the 'Example-AddOnTests' package and a specification for 
@@ -355,7 +356,7 @@ follows:
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson11 [
 "   [ see method: #version11: ]
 In version 0.11 we've defined a couple of attributes that are expected to be used all of the time
@@ -370,7 +371,7 @@ The following lessons cover each of these attributes in more detail.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson11Author [
 "  [ see method: #version11: ]
 The author of a version can be defined:
@@ -383,7 +384,7 @@ author as defined in the image.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson11Blessing [
 "   [ see method: #version11: ]
 A version can be tagged with a blessing like #alpha, #beta, #release, #development or any 
@@ -432,7 +433,7 @@ the previous expression should load the absolute bleeding edge of the project.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson11Descripton [
 "  [ see method: #version11: ]
 A description can be defined for a version:
@@ -442,7 +443,7 @@ A description can be defined for a version:
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson11Timestamp [
 "  [ see method: #version11: ]
 The timestamp of a version can be defined:
@@ -456,7 +457,7 @@ The timestamp is a String
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson12DoIts [
 "  [ see methods: #version12: #preloadForCore #postloadForCore:package: ]
 Occassionally, you find that you need to perform an expression either before a package is loaded, or
@@ -475,7 +476,7 @@ loaded packageSpec is the second optional argument.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson13 [
 "  [ see methods: #baseline13: #version13: ]
 For version 1.3 we are adding a platform specific package 'Example-Platform'. 'Example-Platform'
@@ -515,27 +516,27 @@ _before_ any packages that require the parent package.
 "
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloTutorialConfig >> lesson14 [
 "
 STILL UNDER CONSTRUCTION: Open your browsers on the class MetacelloProjectRefTutorial to continue the tutorial.
 "
 ]
 
-{ #category : #doits }
+{ #category : 'doits' }
 MetacelloTutorialConfig >> postloadForCore: loader package: packageSpec [
 
 	MetacelloNotification signal: ('#postloadForCore executed, Loader: ', loader printString, 
 			' spec: ', packageSpec printString).
 ]
 
-{ #category : #doits }
+{ #category : 'doits' }
 MetacelloTutorialConfig >> preloadForCore [
 
 	MetacelloNotification signal: '#preloadForCore executed'.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloTutorialConfig >> project [
 	"NOTE: The MetacelloNullRecordingMCSpecLoader is being used to prevent packages
 		from being loaded, see MetacelloConfigTemplate>>project for an example #project
@@ -551,7 +552,7 @@ MetacelloTutorialConfig >> project [
 		project ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version01: spec [ 
 	<version: '0.1'>
 	
@@ -563,7 +564,7 @@ MetacelloTutorialConfig >> version01: spec [
 					repository: 'http://www.example.com/Example' ] ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version02: spec [ 
 	<version: '0.2'>
 	
@@ -575,7 +576,7 @@ MetacelloTutorialConfig >> version02: spec [
 					repository: 'http://www.example.com/Example' ] ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version03: spec [ 
 	<version: '0.3'>
 	
@@ -591,7 +592,7 @@ MetacelloTutorialConfig >> version03: spec [
 					repository: 'http://www.example.com/Example' ]].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version04: spec [ 
 	<version: '0.4'>
 	
@@ -602,7 +603,7 @@ MetacelloTutorialConfig >> version04: spec [
 			package: 'Example-Tests' with: 'Example-Tests-anon.3' ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version05: spec [ 
 	<version: '0.5'>
 	
@@ -614,7 +615,7 @@ MetacelloTutorialConfig >> version05: spec [
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1' ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version06: spec [ 
 	<version: '0.6'>
 	
@@ -632,7 +633,7 @@ MetacelloTutorialConfig >> version06: spec [
 					requires: 'Example-Core' ]].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version07: spec [ 
 	<version: '0.7' imports: #('0.7-baseline')>
 	
@@ -643,7 +644,7 @@ MetacelloTutorialConfig >> version07: spec [
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.1' ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version08: spec [ 
 	<version: '0.8' imports: #('0.7-baseline')>
 	
@@ -654,7 +655,7 @@ MetacelloTutorialConfig >> version08: spec [
 			package: 'Example-AddOn' with: 'Example-AddOn-anon.2' ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version10: spec [ 
 	<version: '1.0' imports: #('1.0-baseline')>
 	
@@ -666,7 +667,7 @@ MetacelloTutorialConfig >> version10: spec [
 			package: 'Example-AddOnTests' with: 'Example-AddOnTests-anon.1' ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version11: spec [ 
 	<version: '1.1' imports: #('1.0-baseline')>
 	
@@ -682,7 +683,7 @@ MetacelloTutorialConfig >> version11: spec [
 			package: 'Example-AddOnTests' with: 'Example-AddOnTests-anon.1' ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version12: spec [ 
 	<version: '1.2' imports: #('1.0-baseline')>
 	
@@ -702,7 +703,7 @@ MetacelloTutorialConfig >> version12: spec [
 			package: 'Example-AddOnTests' with: 'Example-AddOnTests-anon.1' ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloTutorialConfig >> version13: spec [ 
 	<version: '1.3' imports: #('1.3-baseline')>
 	

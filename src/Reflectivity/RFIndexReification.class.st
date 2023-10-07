@@ -2,27 +2,29 @@
 I reify the offset of instance variables
 "
 Class {
-	#name : #RFIndexReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFIndexReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFIndexReification class >> entities [
 	^{RBVariableNode. RBAssignmentNode}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFIndexReification class >> key [
 	^#index
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFIndexReification >> genForRBAssignmentNode [
 	^entity variable binding index asLiteralNode
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFIndexReification >> genForRBVariableNode [
 	^entity binding index asLiteralNode
 ]

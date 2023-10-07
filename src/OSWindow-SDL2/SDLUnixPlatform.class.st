@@ -3,20 +3,22 @@ I execute specific operations on SDL for Linux 64 (Unix term is used to keep OSP
 
 "
 Class {
-	#name : #SDLUnixPlatform,
-	#superclass : #SDLAbstractPlatform,
-	#category : #'OSWindow-SDL2-Bindings'
+	#name : 'SDLUnixPlatform',
+	#superclass : 'SDLAbstractPlatform',
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLUnixPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLUnixPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDLUnixPlatform >> initPlatformSpecific [
 
 	SDL2 setHint: SDL_HINT_RENDER_SCALE_QUALITY value: '1'.

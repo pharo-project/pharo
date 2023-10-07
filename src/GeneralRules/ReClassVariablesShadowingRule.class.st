@@ -2,18 +2,20 @@
 This rule checks if a instance or class variable shadows a global
 "
 Class {
-	#name : #ReClassVariablesShadowingRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReClassVariablesShadowingRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #'testing-interest' }
+{ #category : 'testing-interest' }
 ReClassVariablesShadowingRule class >> checksClass [
 
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassVariablesShadowingRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 	aClass definedVariables
@@ -21,12 +23,12 @@ ReClassVariablesShadowingRule >> check: aClass forCritiquesDo: aCriticBlock [
 		thenDo: [ :variable | aCriticBlock cull: (self critiqueFor: aClass about: variable name) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassVariablesShadowingRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassVariablesShadowingRule >> name [
 	^ 'Variable shadows a global variable'
 ]

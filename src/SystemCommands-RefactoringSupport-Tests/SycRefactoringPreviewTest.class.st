@@ -2,15 +2,16 @@
 A SycRefactoringPreview2Test is a test class for testing the behavior of SycRefactoringPreview2
 "
 Class {
-	#name : #SycRefactoringPreviewTest,
-	#superclass : #TestCase,
+	#name : 'SycRefactoringPreviewTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'sycRefactoringPreview'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Tests'
+	#category : 'SystemCommands-RefactoringSupport-Tests',
+	#package : 'SystemCommands-RefactoringSupport-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SycRefactoringPreviewTest >> fillTableWith3MockItem [
 	sycRefactoringPreview table
 		items:
@@ -19,7 +20,7 @@ SycRefactoringPreviewTest >> fillTableWith3MockItem [
 			MockTreeTableItem new}
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SycRefactoringPreviewTest >> initializeForInitializeTest [
 	| scopeClass scopePackage |
 	scopePackage := SycMockScope content: {'welsh' . 'banane' . 'paix dieu'}.
@@ -27,7 +28,7 @@ SycRefactoringPreviewTest >> initializeForInitializeTest [
 	sycRefactoringPreview := MockSycRefactoringPreviewPresenter for: SycRefactoringPreviewMockCommand new scopes: {scopePackage . scopeClass}
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SycRefactoringPreviewTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 
@@ -35,7 +36,7 @@ SycRefactoringPreviewTest >> setUp [
 	sycRefactoringPreview := MockSycRefactoringPreviewPresenter new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringPreviewTest >> testDoubleClickAnTableItemShouldChangeTheValueAssociateToKey [
 	| mock2 |
 	mock2 := MockTreeTableItem new title: 'mockTable2'.
@@ -50,20 +51,20 @@ SycRefactoringPreviewTest >> testDoubleClickAnTableItemShouldChangeTheValueAssoc
 	self deny: (sycRefactoringPreview selectedRefactorings at: mock2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringPreviewTest >> testDropListChangeShouldChangeTableItems [
 	self initializeForInitializeTest.
 	sycRefactoringPreview scopeDropList selectIndex: 2.
 	self assertCollection: (sycRefactoringPreview table items collect: #changeClass) hasSameElements: {'banane' . 'Tournai Triple'}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringPreviewTest >> testFirstItemIsSelected [
 	self initializeForInitializeTest.
 	self assert: sycRefactoringPreview table selection selectedIndex equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringPreviewTest >> testInitializationAllCheckBoxDictionarySetTrue [
 	self initializeForInitializeTest.
 	self assert: sycRefactoringPreview selectedRefactorings size equals: 3.
@@ -73,7 +74,7 @@ SycRefactoringPreviewTest >> testInitializationAllCheckBoxDictionarySetTrue [
 				allSatisfy: [ :key | key ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringPreviewTest >> testPickedChanges [
 	self fillTableWith3MockItem.
 	sycRefactoringPreview selectectAllCheckBox.

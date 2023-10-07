@@ -4,17 +4,19 @@ Check the examples to see how to use me.
 
 "
 Class {
-	#name : #ParametrizedTestMatrix,
-	#superclass : #Object,
+	#name : 'ParametrizedTestMatrix',
+	#superclass : 'Object',
 	#instVars : [
 		'selector',
 		'options',
 		'cases'
 	],
-	#category : #'ParametrizedTests-Core'
+	#category : 'ParametrizedTests-Core',
+	#package : 'ParametrizedTests',
+	#tag : 'Core'
 }
 
-{ #category : #combination }
+{ #category : 'combination' }
 ParametrizedTestMatrix >> * aParametrizedTestMatrix [
 
 	| newMatrix |
@@ -25,13 +27,13 @@ ParametrizedTestMatrix >> * aParametrizedTestMatrix [
 	^ newMatrix
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ParametrizedTestMatrix >> = aMatrix [
 
 	^ self expandMatrix = aMatrix expandMatrix
 ]
 
-{ #category : #cases }
+{ #category : 'cases' }
 ParametrizedTestMatrix >> addCase: aCollection [
 	"Declare a specific configuration of parameters. See forSelector:addOptions: for matrix combinations."
 
@@ -42,13 +44,13 @@ ParametrizedTestMatrix >> addCase: aCollection [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ParametrizedTestMatrix >> asTestMatrix [
 
 	^ self
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 ParametrizedTestMatrix >> combinationsOf: aCollection [
 
 	| first expandedParameters inner |
@@ -63,7 +65,7 @@ ParametrizedTestMatrix >> combinationsOf: aCollection [
 	^ expandedParameters flatCollect: [ :aParameter | inner collect:[:aCase | {aParameter} , aCase ] ]
 ]
 
-{ #category : #expanding }
+{ #category : 'expanding' }
 ParametrizedTestMatrix >> expandMatrix [
 	| combinations |
 	combinations := self combinationsOf: self options.
@@ -72,7 +74,7 @@ ParametrizedTestMatrix >> expandMatrix [
 	^ combinations flatCollect: [ :aCase | cases collect: [ :each | aCase , each ] ]
 ]
 
-{ #category : #addingOptions }
+{ #category : 'addingOptions' }
 ParametrizedTestMatrix >> forSelector: aSelector addOptions: someOptions [
 	"Declare all possible values for a given parameter expressed via a message send aSelector."
 
@@ -84,52 +86,52 @@ ParametrizedTestMatrix >> forSelector: aSelector addOptions: someOptions [
 				yourself)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ParametrizedTestMatrix >> hash [
 
 	^ self expandMatrix hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ParametrizedTestMatrix >> initialize [
 	super initialize.
 	options := OrderedCollection new.
 	cases := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ParametrizedTestMatrix >> isEmpty [
 
 	^ options isEmpty and: [ cases isEmpty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ParametrizedTestMatrix >> isNotEmpty [
 
 	^ self isEmpty not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestMatrix >> options [
 	^ options
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestMatrix >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestMatrix >> selector: aString [
 	selector := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestMatrix >> selectors [
 	^ self options collect: [ :option | option selector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestMatrix >> values: aCollection [
 	options := aCollection collect:[ :aValue |
 		ParametrizedTestExpandedParameter new

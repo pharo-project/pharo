@@ -1,6 +1,6 @@
-Extension { #name : #WordArray }
+Extension { #name : 'WordArray' }
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 WordArray >> * other [
 	| result |
 	other isNumber
@@ -17,7 +17,7 @@ WordArray >> * other [
 	^ super * other
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 WordArray >> + other [
 	| result |
 	other isNumber
@@ -34,7 +34,7 @@ WordArray >> + other [
 	^ super + other
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 WordArray >> - other [
 	| result |
 	other isNumber
@@ -51,7 +51,7 @@ WordArray >> - other [
 	^ super - other
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 WordArray >> / other [
 	| result |
 	other isNumber

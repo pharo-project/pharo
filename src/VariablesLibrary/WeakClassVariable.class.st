@@ -10,12 +10,14 @@ Reading into the variable reads the only field in the array.
 weakArray at: 1
 "
 Class {
-	#name : #WeakClassVariable,
-	#superclass : #ClassVariable,
-	#category : #'VariablesLibrary-ClassVariables'
+	#name : 'WeakClassVariable',
+	#superclass : 'ClassVariable',
+	#category : 'VariablesLibrary-ClassVariables',
+	#package : 'VariablesLibrary',
+	#tag : 'ClassVariables'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 WeakClassVariable >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varname at: 1 put: <stackTop>'"
 	| temp |
@@ -32,7 +34,7 @@ WeakClassVariable >> emitStore: aMethodBuilder [
 	aMethodBuilder send: #at:put:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 WeakClassVariable >> emitValue: aMethodBuilder [
 	"Push the weak array at: 1 on the stack"
 	aMethodBuilder pushLiteralVariable: self.
@@ -40,19 +42,19 @@ WeakClassVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder send: #at:
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WeakClassVariable >> installingIn: aClass [
 	"when the var gets installed, initialize it"
 	super write: (WeakArray new: 1)
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 WeakClassVariable >> read [
 
 	^ super read at: 1
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 WeakClassVariable >> write: aValue [
 
 	^super read at: 1 put: aValue

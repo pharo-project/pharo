@@ -1,10 +1,12 @@
 Class {
-	#name : #OCNewCompilerWithChangesFunctionalTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Misc'
+	#name : 'OCNewCompilerWithChangesFunctionalTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Misc',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Misc'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCNewCompilerWithChangesFunctionalTest >> testPragma [
 	| aCompiledMethod bytecode |
 	aCompiledMethod := OpalCompiler new

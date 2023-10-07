@@ -2,21 +2,23 @@
 SUnit tests for null streams
 "
 Class {
-	#name : #NullStreamTest,
-	#superclass : #ClassTestCase,
+	#name : 'NullStreamTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Collections-Streams-Tests-Base'
+	#category : 'Collections-Streams-Tests-Base',
+	#package : 'Collections-Streams-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 NullStreamTest >> setUp [
 	super setUp.
 	stream := NullStream new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NullStreamTest >> testCounting [
 	| expectedPosition |
 	expectedPosition := 0.
@@ -51,7 +53,7 @@ NullStreamTest >> testCounting [
 	self assert: stream position equals: expectedPosition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NullStreamTest >> testNextPutAllEmpty [
 	self assert: stream position equals: 0.
 	self assert: stream peekLast equals: nil.
@@ -60,7 +62,7 @@ NullStreamTest >> testNextPutAllEmpty [
 	self assert: stream peekLast equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NullStreamTest >> testPeekLast [
 	self assert: stream peekLast equals: nil.
 	stream nextPut: $a.

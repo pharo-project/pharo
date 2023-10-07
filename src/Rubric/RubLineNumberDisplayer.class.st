@@ -2,17 +2,19 @@
 I am the displayer of line numbers in the text area
 "
 Class {
-	#name : #RubLineNumberDisplayer,
-	#superclass : #RubScrolledTextSideRuler,
-	#category : #'Rubric-Editing-Widgets'
+	#name : 'RubLineNumberDisplayer',
+	#superclass : 'RubScrolledTextSideRuler',
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubLineNumberDisplayer class >> key [
 	^ #lineNumbers
 ]
 
-{ #category : #'menu declaration' }
+{ #category : 'menu declaration' }
 RubLineNumberDisplayer class >> menuOn: aBuilder [
 	"Specify the menu used when writing text. Try it with:
 	(PragmaMenuBuilder
@@ -27,18 +29,18 @@ RubLineNumberDisplayer class >> menuOn: aBuilder [
 		iconName: #smallFind
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> backgroundColor [
 	^ self paragraphProvider lineNumbersBackgroundColor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubLineNumberDisplayer >> computedWidthFrom: aRectangle [
 	^ (((self fontToUse widthOfString: self paragraph numberOfPhysicalLines asString) + self horizontalGapBefore
 		+ self horizontalGapAfter + self verticalSeparatorWidth) max: self minimumWidth) truncated
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubLineNumberDisplayer >> drawOn: aCanvas [
 	| prev right font lines visibleRectangle tcolor left |
 	super drawOn: aCanvas.
@@ -86,7 +88,7 @@ RubLineNumberDisplayer >> drawOn: aCanvas [
 						prev := line lineNumber ] ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubLineNumberDisplayer >> drawOnAthensCanvas: aCanvas [
 	| prev right font lines visibleRectangle tcolor left |
 	super drawOnAthensCanvas: aCanvas.
@@ -134,56 +136,56 @@ RubLineNumberDisplayer >> drawOnAthensCanvas: aCanvas [
 						prev := line lineNumber ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> fontToUse [
 	^ RubAbstractTextArea lineNumbersFont
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 RubLineNumberDisplayer >> getMenu: shiftState [
 	"Answer the menu to be presented when the yellow button is pressed while the shift key is down"
 
 	^ nil "self menu"
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubLineNumberDisplayer >> handlesMouseDown: evt [
 	^ true
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubLineNumberDisplayer >> horizontalGapAfter [
 	^ 3
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubLineNumberDisplayer >> horizontalGapBefore [
 	^ 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> level [
 	^ 2
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 RubLineNumberDisplayer >> menu [
 	"Answer the menu to be presented when the yellow button is pressed while the shift key is down"
 
 	^ (PragmaMenuBuilder pragmaKeyword: self menuKeyword  model: self) menu
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 RubLineNumberDisplayer >> menuKeyword [
 	^ #RubLineNumberMenu
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubLineNumberDisplayer >> minimumWidth [
 	^ (self fontToUse widthOfString: 'MM') + self horizontalGapAfter + self horizontalGapBefore + self  verticalSeparatorWidth
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubLineNumberDisplayer >> mouseDown: anEvent [
 	| lineIndex line |
 	(anEvent yellowButtonPressed and: [ anEvent commandKeyPressed not ]) "First check for option (menu) click"
@@ -195,7 +197,7 @@ RubLineNumberDisplayer >> mouseDown: anEvent [
 	self textArea mouseDown: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubLineNumberDisplayer >> mouseMove: anEvent [
 	| lineIndex line |
 	lineIndex := self lineIndexForPoint: anEvent position.
@@ -204,7 +206,7 @@ RubLineNumberDisplayer >> mouseMove: anEvent [
 	self textArea mouseMove: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubLineNumberDisplayer >> mouseUp: anEvent [
 	| lineIndex line |
 	lineIndex := self lineIndexForPoint: anEvent position.
@@ -213,17 +215,17 @@ RubLineNumberDisplayer >> mouseUp: anEvent [
 	self textArea mouseUp: anEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> selectionColorToUse [
 	^ self primarySelectionColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> textColor [
 	^ self textArea lineNumbersTextColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> verticalSeparatorBounds [
 	| bnds  |
 	bnds := self bounds.
@@ -232,17 +234,17 @@ RubLineNumberDisplayer >> verticalSeparatorBounds [
 		ifFalse: [ (bnds topLeft corner: bnds bottomLeft + (self verticalSeparatorWidth @ 0)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> verticalSeparatorColor [
 	^ (self textArea backgroundColor contrastingBlackAndWhiteColor ) alpha: 0.3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLineNumberDisplayer >> verticalSeparatorWidth [
 	^ 1
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubLineNumberDisplayer >> yellowButtonActivity: shiftKeyState [
 	"Invoke the text-editing menu.
 	Check if required first!"

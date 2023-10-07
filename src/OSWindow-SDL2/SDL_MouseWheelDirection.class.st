@@ -14,28 +14,30 @@ typedef enum
 
 "
 Class {
-	#name : #'SDL_MouseWheelDirection',
-	#superclass : #FFIEnumeration,
+	#name : 'SDL_MouseWheelDirection',
+	#superclass : 'FFIEnumeration',
 	#classVars : [
 		'SDL_MOUSEWHEEL_FLIPPED',
 		'SDL_MOUSEWHEEL_NORMAL'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'accessing enum' }
+{ #category : 'accessing enum' }
 SDL_MouseWheelDirection class >> SDL_MOUSEWHEEL_FLIPPED [
 	"This method was automatically generated"
 	^ SDL_MOUSEWHEEL_FLIPPED
 ]
 
-{ #category : #'accessing enum' }
+{ #category : 'accessing enum' }
 SDL_MouseWheelDirection class >> SDL_MOUSEWHEEL_NORMAL [
 	"This method was automatically generated"
 	^ SDL_MOUSEWHEEL_NORMAL
 ]
 
-{ #category : #'enum declaration' }
+{ #category : 'enum declaration' }
 SDL_MouseWheelDirection class >> enumDecl [
 	"
 	self rebuildEnumAccessors
@@ -47,7 +49,7 @@ SDL_MouseWheelDirection class >> enumDecl [
 	)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL_MouseWheelDirection class >> initialize [
 
 	self initializeEnumeration.

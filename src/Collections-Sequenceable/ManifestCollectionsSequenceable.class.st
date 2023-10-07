@@ -2,22 +2,24 @@
 Sequenceable collections: arrays, intervals, ordered collections and dictionaries, etc.
 "
 Class {
-	#name : #ManifestCollectionsSequenceable,
-	#superclass : #PackageManifest,
-	#category : #'Collections-Sequenceable-Manifest'
+	#name : 'ManifestCollectionsSequenceable',
+	#superclass : 'PackageManifest',
+	#category : 'Collections-Sequenceable-Manifest',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Manifest'
 }
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsSequenceable class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Streams' #'Collections-Unordered' #Kernel #'Collections-Abstract')
 ]
 
-{ #category : #'meta-data - dependency analyser' }
+{ #category : 'meta-data - dependency analyser' }
 ManifestCollectionsSequenceable class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Support' #'System-Support')
 ]
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsSequenceable class >> packageName [
 	^ #'Collections-Sequenceable'
 ]

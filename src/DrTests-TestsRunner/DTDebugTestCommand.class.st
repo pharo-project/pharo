@@ -2,22 +2,24 @@
 I am the command allowing one to debug a failing test.
 "
 Class {
-	#name : #DTDebugTestCommand,
-	#superclass : #DTLeafResultCommand,
-	#category : #'DrTests-TestsRunner-Commands'
+	#name : 'DTDebugTestCommand',
+	#superclass : 'DTLeafResultCommand',
+	#category : 'DrTests-TestsRunner-Commands',
+	#package : 'DrTests-TestsRunner',
+	#tag : 'Commands'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 DTDebugTestCommand >> canBeRun [
 	^ super canBeRun and: [ self resultSelected type isPass not ]
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 DTDebugTestCommand >> execute [
 	self resultSelected content debug
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDebugTestCommand >> initialize [
 
 	super initialize.

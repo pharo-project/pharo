@@ -2,27 +2,29 @@
 ZnServerConnectionClosedEvent signals that the server closed a client connection to address. 
 "
 Class {
-	#name : #ZnServerConnectionClosedEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnServerConnectionClosedEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'address'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerConnectionClosedEvent >> address [
 	^ address
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerConnectionClosedEvent >> address: anObject [
 	address := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerConnectionClosedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Server Connection Closed '.
+	stream << 'Server Connection Closed '.
 	address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ]
 ]

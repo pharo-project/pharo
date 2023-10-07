@@ -2,33 +2,34 @@
 A SettingsStonReaderTest is a test class for testing the behavior of SettingsStonReader
 "
 Class {
-	#name : #SettingsStonReaderTest,
-	#superclass : #TestCase,
+	#name : 'SettingsStonReaderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'reader'
 	],
-	#category : #'System-Settings-Tests'
+	#category : 'System-Settings-Tests',
+	#package : 'System-Settings-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SettingsStonReaderTest >> setUp [
 	super setUp.
 	reader := SettingsStonReader new.
 	reader stream: (ReadStream on: String new)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonReaderTest >> testBasic [
 	"Checking that no error occur"
 	SettingsStonReader new load
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonReaderTest >> testEmptyStream [
 	self assertEmpty: reader stream contents
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonReaderTest >> testLoad [
 	reader stream: MockSettings oneStoredSettingSTONString readStream.
 	reader load.
@@ -37,7 +38,7 @@ SettingsStonReaderTest >> testLoad [
 	self assert: reader storedSettings first realValue equals: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonReaderTest >> testLoadNotExistingClassNameForRealValue [
 	reader stream: MockSettings notExistingClassStoredSettingSTONString readStream.
 	reader load.
@@ -47,7 +48,7 @@ SettingsStonReaderTest >> testLoadNotExistingClassNameForRealValue [
 	reader storedSettings first updateSettingNode: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonReaderTest >> testLoadTwoObjects [
 	reader stream: MockSettings twoStoredSettingsSTONString readStream.
 	reader load.
@@ -57,7 +58,7 @@ SettingsStonReaderTest >> testLoadTwoObjects [
 	self assert: reader storedSettings second realValue equals: 55
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonReaderTest >> testNonExistingStoredSettingVariable [
 	<expectedFailure>
 	reader stream: MockSettings changedClassStoredSettingVariable readStream.
@@ -65,7 +66,7 @@ SettingsStonReaderTest >> testNonExistingStoredSettingVariable [
 	self assert: SettingsStonReader new storedSettings isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonReaderTest >> testStoredSettingsIsNil [
 	self assert: SettingsStonReader new storedSettings isNil
 ]

@@ -2,25 +2,26 @@
 I represent a month.
 "
 Class {
-	#name : #Month,
-	#superclass : #Timespan,
+	#name : 'Month',
+	#superclass : 'Timespan',
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> april [
     ^ self month: 4
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> august [
     ^ self month: 8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Month class >> daysInMonth: indexOrName forYear: yearInteger [
 
 	| index |
@@ -33,49 +34,49 @@ Month class >> daysInMonth: indexOrName forYear: yearInteger [
 						ifTrue: [1] ifFalse: [0])
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> december [
     ^ self month: 12
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> february [
     ^ self month: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Month class >> indexOfMonth: aMonthName [
 	1 to: 12 do: [ :i |
 		((MonthNames at: i) beginsWith:  aMonthName caseSensitive: false) ifTrue: [^i] ].
  	self error: aMonthName , ' is not a recognized month name'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> january [
     ^ self month: 1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> july [
     ^ self month: 7
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> june [
     ^ self month: 6
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> march [
     ^ self month: 3
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> may [
     ^ self month: 5
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> month: month [
 	"Create a Month in the current year for the given <month>.
 	<month> may be a number or a String with the name of the month."
@@ -85,28 +86,28 @@ Month class >> month: month [
 		month: month
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> month: month year: year [
 	^ self year: year month: month
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Month class >> nameOfMonth: anIndex [
 
 	^ MonthNames at: anIndex
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> november [
     ^ self month: 11
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> october [
     ^ self month: 10
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> readFrom: aStream [
 
 	| m y c |
@@ -124,12 +125,12 @@ Month class >> readFrom: aStream [
 "Month readFrom: 'July 1998' readStream"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> september [
     ^ self month: 9
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> starting: aDateAndTime duration: aDuration [
 	"Override - a each month has a defined duration"
 	| start adjusted days |
@@ -147,7 +148,7 @@ Month class >> starting: aDateAndTime duration: aDuration [
 		duration: (Duration days: days)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Month class >> year: year month: month [
 	"Create a Month for the given <year> and <month>.
 	<month> may be a number or a String with the
@@ -156,43 +157,43 @@ Month class >> year: year month: month [
 	^ self starting: (DateAndTime year: year month: month day: 1)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Month >> asMonth [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Month >> daysInMonth [
 
 	^ self duration days
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Month >> index [
 
 	^ self monthIndex
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Month >> name [
 
 	^ self monthName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Month >> previous [
 
 	^ self class starting: (self start - 1)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Month >> printOn: aStream [
 
 	aStream nextPutAll: self monthName; space; print: self year
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Month >> species [
 
 	^Timespan

@@ -3,25 +3,27 @@ I am emitted when a window content pane is scrolled.
 I provide the scroll step value.
 "
 Class {
-	#name : #WindowScrolling,
-	#superclass : #WindowAnnouncement,
+	#name : 'WindowScrolling',
+	#superclass : 'WindowAnnouncement',
 	#instVars : [
 		'step'
 	],
-	#category : #'Morphic-Widgets-Windows-Announcements'
+	#category : 'Morphic-Widgets-Windows-Announcements',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Announcements'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowScrolling >> isScrolled [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowScrolling >> step [
 	^ step
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowScrolling >> step: anObject [
 	step := anObject
 ]

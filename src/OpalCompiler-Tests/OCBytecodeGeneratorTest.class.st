@@ -1,20 +1,25 @@
 Class {
-	#name : #OCBytecodeGeneratorTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Bytecode'
+	#name : 'OCBytecodeGeneratorTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Bytecode',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Bytecode'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCBytecodeGeneratorTest class >> packageNamesUnderTest [
 	^ #('OpalCompiler')
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 OCBytecodeGeneratorTest >> bytecodeGenerator [
-	^ IRBytecodeGenerator newWithEncoderClass: EncoderForSistaV1
+
+	^ (IRBytecodeGenerator newWithEncoderClass: EncoderForSistaV1)
+		  compilationContext: CompilationContext new;
+		  yourself
 ]
 
-{ #category : #'tests - execution' }
+{ #category : 'tests - execution' }
 OCBytecodeGeneratorTest >> testExample [
 	| cm |
 	cm := self bytecodeGenerator
@@ -39,7 +44,7 @@ OCBytecodeGeneratorTest >> testExample [
 	^ cm
 ]
 
-{ #category : #'tests - execution' }
+{ #category : 'tests - execution' }
 OCBytecodeGeneratorTest >> testExample2 [
 	| cm |
 	cm := self bytecodeGenerator
@@ -62,7 +67,7 @@ OCBytecodeGeneratorTest >> testExample2 [
 	^ cm
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 OCBytecodeGeneratorTest >> testMethod: cm against: string [
 	| symbolic |
 	self assert: cm isCompiledMethod.

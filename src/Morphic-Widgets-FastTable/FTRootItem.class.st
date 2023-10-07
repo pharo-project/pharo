@@ -14,60 +14,62 @@ Example
 FTRootItem data: Object allSubclasses from: aDataSource
 "
 Class {
-	#name : #FTRootItem,
-	#superclass : #FTTreeItem,
-	#category : #'Morphic-Widgets-FastTable-Tree'
+	#name : 'FTRootItem',
+	#superclass : 'FTTreeItem',
+	#category : 'Morphic-Widgets-FastTable-Tree',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Tree'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRootItem >> children [
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRootItem >> children: aCollectionOfItem [
 	children := aCollectionOfItem
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTRootItem >> collapseAll [
 	children do: #collapseAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRootItem >> data: aCollection [
 	self children: (aCollection collect: [ :object | FTBasicItem data: object from: dataSource ]) asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRootItem >> dataSource: anObject [
 	dataSource := anObject.
 	children ifNotNil: [ children do: [ :item | item dataSource: anObject ] ]
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTRootItem >> expandAll [
 	children do: #expandAll
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTRootItem >> expandAllTo: aDepth [
 	children do: [ :each | each expandAllTo: aDepth ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRootItem >> isExpanded [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRootItem >> recentlyChanged [
 	"Cannot collapse root item."
 
 	^ false
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTRootItem >> updateData [
 	self children do: #updateData
 ]

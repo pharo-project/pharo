@@ -2,18 +2,20 @@
 FreeType font family
 "
 Class {
-	#name : #FreeTypeFontFamily,
-	#superclass : #AbstractFontFamily,
-	#category : #'FreeType-FontManager'
+	#name : 'FreeTypeFontFamily',
+	#superclass : 'AbstractFontFamily',
+	#category : 'FreeType-FontManager',
+	#package : 'FreeType',
+	#tag : 'FontManager'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamily >> addMember: aFreeTypeFontFamilyMember [
 	aFreeTypeFontFamilyMember family: self.
 	members add: aFreeTypeFontFamilyMember
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamily >> addMembersFromFileInfos: aCollectionOfFreeTypeFileInfo [
 
 
@@ -23,7 +25,7 @@ FreeTypeFontFamily >> addMembersFromFileInfos: aCollectionOfFreeTypeFileInfo [
 			ifNil:[self addMember: member]]
 ]
 
-{ #category : #'simulated members' }
+{ #category : 'simulated members' }
 FreeTypeFontFamily >> addSimulatedMembers [
 	| membersBySlantAndStretch membersByWeightAndStretch |
 	membersBySlantAndStretch := Dictionary new.
@@ -62,18 +64,18 @@ FreeTypeFontFamily >> addSimulatedMembers [
 					ifFalse:[	members add: regular asSimulatedOblique]]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FreeTypeFontFamily >> initialize [
 	super initialize.
 	members := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamily >> memberWithStyleName: aString [
 	^members detect:[:each | each styleName = aString] ifNone:[]
 ]
 
-{ #category : #'simulated members' }
+{ #category : 'simulated members' }
 FreeTypeFontFamily >> rebuildSimulatedMembers [
 	"FOR TESTING ONLY"
 

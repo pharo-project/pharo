@@ -11,24 +11,25 @@ I can wrap both binary or character streams and act accordingly.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnBufferedWriteStream,
-	#superclass : #Object,
+	#name : 'ZnBufferedWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'buffer',
 		'position'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnBufferedWriteStream class >> on: writeStream [
 	^ self basicNew
 		on: writeStream;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnBufferedWriteStream class >> on: writeStream do: block [
 	"Execute block with as argument a ZnBufferedWriteStream on writeStream,
 	making sure #flush is called at the end. Return the value of block."
@@ -40,68 +41,68 @@ ZnBufferedWriteStream class >> on: writeStream do: block [
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedWriteStream >> buffer [
 
 	buffer ifNil: [ self sizeBuffer: self defaultBufferSize ].
 	^ buffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> bufferFreeSize [
 	^ self bufferSize - position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> bufferSize [
 
 	^ buffer ifNil: [ self defaultBufferSize ] ifNotNil: [ buffer size ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBufferedWriteStream >> close [
 	self flushBuffer.
 	stream close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedWriteStream >> closed [
 	^ stream closed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> cr [
 	self nextPut: Character cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> crlf [
 	self cr; lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 16
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedWriteStream >> discardBuffer [
 
 	position := 0
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBufferedWriteStream >> finish [
 	self flushBuffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> flush [
 	self flushBuffer.
 	stream flush
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedWriteStream >> flushBuffer [
 	position = 0 ifTrue: [ ^ self ].
 	position = self bufferSize
@@ -114,45 +115,45 @@ ZnBufferedWriteStream >> flushBuffer [
 	position := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedWriteStream >> flushBufferIfFull [
 	position = self bufferSize
 		ifTrue: [ self flushBuffer ]
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> int16: integer [
 	^ self nextIntegerOfSize: 2 signed: true bigEndian: true put: integer
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> int32: integer [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true put: integer
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> int8: integer [
 	^ self nextIntegerOfSize: 1 signed: true bigEndian: true put: integer
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedWriteStream >> isBinary [
 
 	^ stream isBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedWriteStream >> isStream [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> lf [
 	self nextPut: Character lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> next: count putAll: collection [
 	"Write count elements from collection"
 
@@ -162,7 +163,7 @@ ZnBufferedWriteStream >> next: count putAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> next: count putAll: collection startingAt: offset [
 	"Write count elements from collection starting at offset."
 
@@ -178,12 +179,12 @@ ZnBufferedWriteStream >> next: count putAll: collection startingAt: offset [
 				ifFalse: [ self next: count putAll: collection startingAt: offset ] ]
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> nextInt32Put: integer [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true put: integer
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian put: value [
 	"Assuming the receiver is a stream of bytes, write value as the next integer of size numberOfBytes.
 	If bigEndian is true, use network byte order, most significant byte first,
@@ -207,24 +208,24 @@ ZnBufferedWriteStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndi
 	^ value
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> nextLittleEndianNumber: numberOfBytes put: integer [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false put: integer
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> nextNumber: numberOfBytes put: integer [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: true put: integer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> nextPut: object [
 	self flushBufferIfFull.
 	position := position + 1.
 	self buffer at: position put: object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> nextPutAll: collection [
 	"Write a collection"
 
@@ -234,88 +235,88 @@ ZnBufferedWriteStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> nextWordPut: integer [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true put: integer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBufferedWriteStream >> on: writeStream [
 	stream := writeStream.
 	position := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> position [
 
 	^ stream position + position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> position: anInteger [
 	self flush.
 	stream position: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> print: object [
 	object printOn: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnBufferedWriteStream >> printOn: aStream [
 	aStream
 		nextPutAll: 'a ';
 		nextPutAll: self class name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> setToEnd [
 
 	self flush.
 	stream setToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> sizeBuffer: size [
 	buffer := (stream isBinary ifTrue: [ ByteArray ] ifFalse: [ String ]) new: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> space [
 	self nextPut: Character space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> tab [
 	self nextPut: Character tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> truncate [
 
 	self flushBuffer.
 	stream truncate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> truncate: anInteger [
 
 	self flushBuffer.
 	stream truncate: anInteger
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> uint16: integer [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true put: integer
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> uint32: integer [
 	^ self nextIntegerOfSize: 4 signed: false bigEndian: true put: integer
 ]
 
-{ #category : #'accessing - bytes' }
+{ #category : 'accessing - bytes' }
 ZnBufferedWriteStream >> uint8: integer [
 	^ self nextIntegerOfSize: 1 signed: false bigEndian: true put: integer
 ]

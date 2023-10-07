@@ -1,6 +1,6 @@
-Extension { #name : #RGCommentDefinition }
+Extension { #name : 'RGCommentDefinition' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 RGCommentDefinition >> asStringOrText [
 	| text |
 	self realClass ifNil: [ ^ self fullName ].

@@ -2,17 +2,19 @@
 A FTDescendingSortingStateTest is a test class for testing the behavior of FTDescendingSortingState
 "
 Class {
-	#name : #FTDescendingSortingStateTest,
-	#superclass : #FTAbstractSortingStateTest,
-	#category : #'Morphic-Widgets-FastTable-Tests-Sorting'
+	#name : 'FTDescendingSortingStateTest',
+	#superclass : 'FTAbstractSortingStateTest',
+	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Sorting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTDescendingSortingStateTest >> actualClass [
 	^ FTDescendingSortingState
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTDescendingSortingStateTest >> testExecuteSortingOn [
 	| dataSource |
 	dataSource := self dataSourceForTesting.

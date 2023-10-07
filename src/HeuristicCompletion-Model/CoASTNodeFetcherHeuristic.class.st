@@ -9,27 +9,29 @@ My subclasses should redefine:
  - #buildFetcherFor:inContext: returning the effective heuristic built
 "
 Class {
-	#name : #CoASTNodeFetcherHeuristic,
-	#superclass : #Object,
+	#name : 'CoASTNodeFetcherHeuristic',
+	#superclass : 'Object',
 	#instVars : [
 		'next'
 	],
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoASTNodeFetcherHeuristic >> appliesForNode: aRBMessageNode inContext: aContext [
 
 	^ false
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoASTNodeFetcherHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
 
 	^ CoEmptyFetcher new
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoASTNodeFetcherHeuristic >> fetcherFor: aRBMessageNode inContext: aContext [
 
 	| nextFetcher |
@@ -41,19 +43,19 @@ CoASTNodeFetcherHeuristic >> fetcherFor: aRBMessageNode inContext: aContext [
 		ifFalse: [ nextFetcher ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoASTNodeFetcherHeuristic >> initialize [
 	super initialize.
 	next := CoNullFetcherHeuristic new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoASTNodeFetcherHeuristic >> isStatisticsHeuristicWrapper [
 
 	^ false
 ]
 
-{ #category : #'fetcher-creation' }
+{ #category : 'fetcher-creation' }
 CoASTNodeFetcherHeuristic >> newMessageInHierarchyFetcherForClass: aClass inASTNode: astNode [
 
 	^ CoClassImplementedMessagesFetcher new
@@ -62,12 +64,12 @@ CoASTNodeFetcherHeuristic >> newMessageInHierarchyFetcherForClass: aClass inASTN
 		forHierarchy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTNodeFetcherHeuristic >> next [
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTNodeFetcherHeuristic >> next: nextHeuristic [
 	next := nextHeuristic
 ]

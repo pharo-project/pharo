@@ -3,17 +3,19 @@ A class to do Tarjan Algorithm on a PDPackageRelation, in order to detect strong
 Give a package dependency graph (PDPackageRelationGraph)  in entry of the message run to run the Tarjan algorithm and retrieve all the strongly connected components graph.
 "
 Class {
-	#name : #DATarjanAlgorithm,
-	#superclass : #Object,
+	#name : 'DATarjanAlgorithm',
+	#superclass : 'Object',
 	#instVars : [
 		'runningIndex',
 		'stack',
 		'stronglyConnectedComponents'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DATarjanAlgorithm >> initialize [
 	super initialize.
 	stronglyConnectedComponents := OrderedCollection new.
@@ -21,12 +23,12 @@ DATarjanAlgorithm >> initialize [
 	runningIndex := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DATarjanAlgorithm >> isRootNode: aPDPackage [
 	^ aPDPackage tarjanLowLink = aPDPackage tarjanIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DATarjanAlgorithm >> popStackAndUpdateCurrentSCC: aRelation until: aPDPackage [
 	| currentNode |
 	[ currentNode := stack pop.
@@ -37,13 +39,13 @@ DATarjanAlgorithm >> popStackAndUpdateCurrentSCC: aRelation until: aPDPackage [
 	stronglyConnectedComponents add: aRelation
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DATarjanAlgorithm >> push: aPDPackage [
 	stack push: aPDPackage.
 	aPDPackage inStack: true. "use a flag to avoid stack access"
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DATarjanAlgorithm >> run: aPDPackageRelation [
 	aPDPackageRelation packages
 		do: [ :package |
@@ -52,17 +54,17 @@ DATarjanAlgorithm >> run: aPDPackageRelation [
 		displayingProgress: 'Finding SCCs'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DATarjanAlgorithm >> startNewSCC [
 	^ DAPackageRelationGraph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DATarjanAlgorithm >> stronglyConnectedComponents [
 	^ stronglyConnectedComponents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DATarjanAlgorithm >> traverse: aPDPackage [
 	| aRelation |
 	aPDPackage tarjanIndex: runningIndex.
@@ -76,7 +78,7 @@ DATarjanAlgorithm >> traverse: aPDPackage [
 			self popStackAndUpdateCurrentSCC: aRelation until: aPDPackage ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DATarjanAlgorithm >> traverseChildrenOf: aPDPackage [
 	aPDPackage dependencies
 		do: [ :dependency |

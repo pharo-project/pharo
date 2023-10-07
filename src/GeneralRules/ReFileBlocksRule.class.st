@@ -18,24 +18,26 @@ This code can be changed to
     ] ensure: [ inputStream close ].
 "
 Class {
-	#name : #ReFileBlocksRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReFileBlocksRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReFileBlocksRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'FileBlocksRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReFileBlocksRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReFileBlocksRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -51,12 +53,12 @@ ReFileBlocksRule >> initialize [
 							[`var `@messages: `@args]' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReFileBlocksRule >> name [
 	^ 'Assignment inside unwind blocks should be outside.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReFileBlocksRule >> rationale [
 	^ 'Checks assignment to a variable that is the first statement inside the value block that is also used in the unwind block.'
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*OSWindow-Core' }
+{ #category : '*OSWindow-Core' }
 String >> asUTF8Bytes [
 	^ ZnUTF8Encoder new encodeString: self
 ]

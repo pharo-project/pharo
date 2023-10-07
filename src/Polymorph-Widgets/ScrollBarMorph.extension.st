@@ -1,6 +1,6 @@
-Extension { #name : #ScrollBarMorph }
+Extension { #name : 'ScrollBarMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollBarMorph class >> imageColorFor: aScrollbar [
 	"Return the (button) image colour for the given scrollbar."
 

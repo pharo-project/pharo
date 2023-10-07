@@ -2,31 +2,33 @@
 Notify about a change selection request
 "
 Class {
-	#name : #MCChangeSelectionRequest,
-	#superclass : #Notification,
+	#name : 'MCChangeSelectionRequest',
+	#superclass : 'Notification',
 	#instVars : [
 		'patch',
 		'label'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCChangeSelectionRequest >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCChangeSelectionRequest >> label: aString [
 	label := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCChangeSelectionRequest >> patch [
 	^ patch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCChangeSelectionRequest >> patch: aPatch [
 	patch := aPatch
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RGMethodDefinitionTest }
+Extension { #name : 'RGMethodDefinitionTest' }
 
-{ #category : #'*Manifest-Tests' }
+{ #category : '*Manifest-Tests' }
 RGMethodDefinitionTest >> testArrayStringForManifest [
 	| method |
 	method := thisContext method.
@@ -10,7 +10,7 @@ RGMethodDefinitionTest >> testArrayStringForManifest [
 		equals: { #RGMethodDefinition . { self class name asSymbol . method selector . #false } }
 ]
 
-{ #category : #'*Manifest-Tests' }
+{ #category : '*Manifest-Tests' }
 RGMethodDefinitionTest >> testManifestReadOn [
 	| method |
 	method := thisContext method.
@@ -23,7 +23,7 @@ RGMethodDefinitionTest >> testManifestReadOn [
 		equals: method asRingDefinition
 ]
 
-{ #category : #'*Manifest-Tests' }
+{ #category : '*Manifest-Tests' }
 RGMethodDefinitionTest >> testReadFrom [
 	| st rg |
 	rg := (Point >> #x) asRingDefinition.
@@ -34,12 +34,12 @@ RGMethodDefinitionTest >> testReadFrom [
 	self assert: (Object readFrom: st) equals: rg
 ]
 
-{ #category : #'*Manifest-Tests' }
+{ #category : '*Manifest-Tests' }
 RGMethodDefinitionTest >> testStoreOn [
 	| st |
 	st := String
 		streamContents: [ :s |
 			(Point >> #x) asRingDefinition storeOn: s.
 			s contents ].
-	self assert: st equals: '(RGMethodDefinition className: ''Point'' selector: #x isMetaSide: false)'
+	self assert: st equals: '(RGMethodDefinition className: ''Point'' selector: #x isMeta: false)'
 ]

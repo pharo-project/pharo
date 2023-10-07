@@ -22,8 +22,8 @@ The nanosecond attribute is often zero but it defined for full ISO compliance an
 
 "
 Class {
-	#name : #DateAndTime,
-	#superclass : #Magnitude,
+	#name : 'DateAndTime',
+	#superclass : 'Magnitude',
 	#instVars : [
 		'seconds',
 		'offset',
@@ -37,10 +37,12 @@ Class {
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #'Kernel-Chronology'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 DateAndTime class >> basicYear: year month: month day: day hour: hour minute: minute second: second nanoSecond: nanoCount offset: utcOffset [
 	"Return a DateAndTime with the values in the given TimeZone (UTCOffset)"
 
@@ -68,56 +70,56 @@ DateAndTime class >> basicYear: year month: month day: day hour: hour minute: mi
 		yourself
 ]
 
-{ #category : #'clock provider' }
+{ #category : 'clock provider' }
 DateAndTime class >> clock [
 	 "the provider of real time seconds/milliseconds."
 
 	^ ClockProvider
 ]
 
-{ #category : #'system queries' }
+{ #category : 'system queries' }
 DateAndTime class >> clockPrecision [
 	"One nanosecond precision"
 
 	^ Duration seconds: 0 nanoSeconds: 1
 ]
 
-{ #category : #'instance creation queries' }
+{ #category : 'instance creation queries' }
 DateAndTime class >> current [
 
 	^ self now
 ]
 
-{ #category : #'instance creation queries' }
+{ #category : 'instance creation queries' }
 DateAndTime class >> epoch [
   "Answer a DateAndTime representing the epoch: 1 January 1901"
 
   ^ (self julianDayNumber: SqueakEpoch) offset: 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DateAndTime class >> fromInternalTime: anInteger [
 	"Answer an instance of the receiver with the time represented by anInteger. Pharo internal time is an integer representing time in the local timezone with an epoch of 1 Jan. 1901"
 
 	^(self fromSeconds: anInteger offset: 0) translateTo: self localOffset
 ]
 
-{ #category : #input }
+{ #category : 'input' }
 DateAndTime class >> fromString: aString [
 	^ self readFrom: aString readStream
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DateAndTime class >> fromUnixTime: anInteger [
 	^ self fromSeconds: anInteger + 2177452800 "unix epoch constant"
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DateAndTime class >> initialize [
 	ClockProvider := Time
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DateAndTime class >> julianDayNumber: aJulianDayNumber [
 
 	^ self basicNew
@@ -125,7 +127,7 @@ DateAndTime class >> julianDayNumber: aJulianDayNumber [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DateAndTime class >> julianDayNumber: aJulianDayNumber offset: aTimeZoneOffset [
 	"Return a DateAndTime at midnight local time at the given julian day"
 	| ticks |
@@ -138,21 +140,21 @@ DateAndTime class >> julianDayNumber: aJulianDayNumber offset: aTimeZoneOffset [
 		yourself
 ]
 
-{ #category : #'system queries' }
+{ #category : 'system queries' }
 DateAndTime class >> localOffset [
 	"Answer the duration we are offset from UTC"
 
 	^ self localTimeZone offset
 ]
 
-{ #category : #'time zones' }
+{ #category : 'time zones' }
 DateAndTime class >> localTimeZone [
 	"Answer the local time zone"
 
 	^ LocalTimeZoneCache ifNil: [ LocalTimeZoneCache := TimeZone default ]
 ]
 
-{ #category : #'time zones' }
+{ #category : 'time zones' }
 DateAndTime class >> localTimeZone: aTimeZone [
 	"Set the local time zone"
 
@@ -164,26 +166,26 @@ DateAndTime class >> localTimeZone: aTimeZone [
 	LocalTimeZoneCache := aTimeZone
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DateAndTime class >> midnight [
 
 	^ self now midnight
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 DateAndTime class >> millisecondClockValue [
 
 	^ self clock millisecondClockValue
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DateAndTime class >> new [
 	"Answer a DateAndTime representing the epoch: 1 January 1901"
 
 	^ self epoch offset: self localOffset
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DateAndTime class >> now [
 	"Answer the current date and time expressed in local time.
 	[ 10000 timesRepeat: [ self now. ] ] timeToRun / 10000.0 . "
@@ -197,7 +199,7 @@ DateAndTime class >> now [
 		offset: self localOffset
 ]
 
-{ #category : #'instance creation queries' }
+{ #category : 'instance creation queries' }
 DateAndTime class >> unixEpoch [
 	"Answer a DateAndTime representing the Unix epoch (1 January 1970, midnight UTC)"
 	^ self basicNew
@@ -205,7 +207,7 @@ DateAndTime class >> unixEpoch [
 		yourself
 ]
 
-{ #category : #'clock provider' }
+{ #category : 'clock provider' }
 DateAndTime class >> year: aYearInteger month: aMonthNumber [
     "Return a date starting the first day of the month"
 
@@ -217,7 +219,7 @@ DateAndTime class >> year: aYearInteger month: aMonthNumber [
         minute: 0
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 DateAndTime >> + operand [
 	"operand conforms to protocol Duration"
 
@@ -231,7 +233,7 @@ DateAndTime >> + operand [
 		yourself
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 DateAndTime >> - operand [
 	"operand conforms to protocol DateAndTime or protocol Duration"
 
@@ -246,7 +248,7 @@ DateAndTime >> - operand [
 		ifFalse: [ self + operand negated ]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 DateAndTime >> < comparand [
 	"comparand conforms to protocol DateAndTime,
 	or can be converted into something that conforms."
@@ -261,46 +263,46 @@ DateAndTime >> < comparand [
 		ifFalse: [ julianDayNumber < other julianDayNumberUTC ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DateAndTime >> = other [
 	self == other ifTrue: [ ^ true ].
 	(self species = other species) ifFalse: [ ^ false ].
 	^ self hasEqualTicks: other
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DateAndTime >> asDate [
     "Convert the receiver in a date object."
     "(DateAndTime fromString: ' 2019-08-17T13:33:00+02:00') asDate printString >>> (Date newDay: 17 month: 8 year: 2019) printString"
     ^ Date starting: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DateAndTime >> asDateAndTime [
 
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DateAndTime >> asDuration [
 	"Answer the duration since midnight."
 
 	^ Duration seconds: self secondsSinceMidnightLocalTime nanoSeconds: nanos
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DateAndTime >> asTime [
 
 	^ Time seconds: self secondsSinceMidnightLocalTime nanoSeconds: nanos
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DateAndTime >> asTimeUTC [
 
 	^ Time seconds: self secondsSinceMidnightUTC nanoSeconds: nanos
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DateAndTime >> asUTC [
 
 	^ offset isZero
@@ -308,13 +310,13 @@ DateAndTime >> asUTC [
 		ifFalse: [ self offset: 0 ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DateAndTime >> asUnixTime [
 	"answer number of seconds since unix epoch (midnight Jan 1, 1970, UTC)"
 	^((self offset: Duration zero) - self class unixEpoch) asSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> dayMonthYearDo: aBlock [
 	"Return the value of executing block with the Gregorian Calender day, month and year as arguments,
 	as computed from my Julian Day Number, julianDayNumber.
@@ -345,7 +347,7 @@ DateAndTime >> dayMonthYearDo: aBlock [
 		value: fullYear
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DateAndTime >> hasEqualTicks: aDateAndTime [
 
 	^ (self julianDayNumberUTC = aDateAndTime julianDayNumberUTC)
@@ -353,37 +355,37 @@ DateAndTime >> hasEqualTicks: aDateAndTime [
 			and: [ nanos = aDateAndTime nanoSecond ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DateAndTime >> hash [
 	^ (julianDayNumber hashMultiply bitXor: seconds) bitXor: nanos
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> julianDayNumber [
 
 	^ julianDayNumber + self julianDayOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> julianDayNumberUTC [
 
 	^ julianDayNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> julianDayOffset [
 	"Return the offset in julian days possibly introduced by the timezone offset"
 
 	^ ((seconds + self offset asSeconds) / SecondsInDay) floor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> localSeconds [
 	" Return the seconds since the epoch in local time."
 	^ seconds + self offset asSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> midnight [
 	"Answer a DateAndTime starting at midnight (towards the end of the day) local time"
 
@@ -399,7 +401,7 @@ DateAndTime >> midnight [
 				offset: offset ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> minute [
 	"Answer a number that represents the number of complete minutes in the receiver' time part,
 	after the number of complete hours has been removed."
@@ -408,13 +410,13 @@ DateAndTime >> minute [
  	^ self localSeconds // SecondsInMinute \\ 60
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> nanoSecond [
 
 	^ nanos
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DateAndTime >> normalizeSecondsAndNanos [
 	(NanosInSecond <= nanos or: [ nanos < 0 ])
 		ifTrue: [
@@ -426,13 +428,13 @@ DateAndTime >> normalizeSecondsAndNanos [
 			seconds := seconds \\ SecondsInDay]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> offset [
 
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> offset: anOffset [
 	"Answer a <DateAndTime> equivalent to the receiver but with its local time
 	being offset from UTC by offset.
@@ -443,7 +445,7 @@ DateAndTime >> offset: anOffset [
 		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DateAndTime >> printOn: aStream [
 	"Print as per ISO 8601 sections 5.3.3 and 5.4.1.
 	Prints either:
@@ -452,13 +454,13 @@ DateAndTime >> printOn: aStream [
 	^self printOn: aStream withLeadingSpace: false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DateAndTime >> printOn: aStream withLeadingSpace: printLeadingSpaceToo [
 
 	BasicDatePrinter default printDateAndTime: self withLeadingSpace: printLeadingSpaceToo on: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DateAndTime >> second [
 	"Answer a number that represents the number of complete seconds in the receiver's time part,
 	after the number of complete minutes has been removed."
@@ -467,7 +469,7 @@ DateAndTime >> second [
  	^ self localSeconds \\ 60
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DateAndTime >> setJdn: julDays seconds: secs nano: nanoSecs offset: anOffset [
 	julianDayNumber := julDays.
 	seconds := secs.
@@ -476,14 +478,14 @@ DateAndTime >> setJdn: julDays seconds: secs nano: nanoSecs offset: anOffset [
 	self normalizeSecondsAndNanos
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DateAndTime >> ticks [
 	"Private - answer an array with our instance variables. Assumed to be UTC "
 
 	^ Array with: julianDayNumber with: seconds with: nanos
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DateAndTime >> ticks: ticks offset: utcOffset [
 	"ticks is {julianDayNumber. secondCount. nanoSeconds}"
 

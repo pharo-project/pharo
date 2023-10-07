@@ -4,12 +4,13 @@ Stub class to do not compute dependencies of the given package butrather give pr
 #dependenciesOf will return  packages already in the bootsrap layer.
 "
 Class {
-	#name : #PharoBootstrapAnalyzerStubWithNoNewDependency,
-	#superclass : #Object,
-	#category : #'Kernel-Tests-Rules'
+	#name : 'PharoBootstrapAnalyzerStubWithNoNewDependency',
+	#superclass : 'Object',
+	#category : 'Kernel-Tests-Rules',
+	#package : 'Kernel-Tests-Rules'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoBootstrapAnalyzerStubWithNoNewDependency >> dependenciesOf: aPackageName [
 	^ #('Collections-Strings' Kernel 'AST-Core')
 ]

@@ -2,12 +2,14 @@
 SUnit tests for class WindowsStore
 "
 Class {
-	#name : #WindowsStoreTest,
-	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Disk-Base'
+	#name : 'WindowsStoreTest',
+	#superclass : 'TestCase',
+	#category : 'FileSystem-Tests-Disk-Base',
+	#package : 'FileSystem-Tests-Disk',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testAbsoluteFullName [
 	| filesystem |
 	filesystem := FileSystem store: WindowsStore new.
@@ -20,14 +22,14 @@ WindowsStoreTest >> testAbsoluteFullName [
 		do: [ :pathString | self assert: (filesystem referenceTo: pathString) fullName equals: pathString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testAbsolutePath [
 
 	#('c:\' 'C:\temp' 'A:\temp\test' '\test\bar' '\') do: [:each |
 		self assert: (WindowsStore current pathFromString: each) isAbsolute ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testNetworkPathFullName [
 	| filesystem |
 	filesystem := FileSystem store: WindowsStore new.
@@ -40,20 +42,21 @@ WindowsStoreTest >> testNetworkPathFullName [
 		do: [ :pathString | self assert: (filesystem referenceTo: pathString) fullName equals: pathString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testNetworkPathIsAbsolute [
 
 		#( '\\MachineName.x.y.z\directory\file' '\\MachineName.x.y.z\directory' '\\MachineName.x.y.z' )  do: [:each |
 		self assert: (WindowsStore new pathFromString: each) isAbsolute ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testPrintString [
 	| filesystem |
 	filesystem := FileSystem store: WindowsStore new.
 
 	"path"
 	self assert: (filesystem referenceTo: 'a/b') printString equals: 'File @ a\b'.
+	self assert: (filesystem referenceTo: '/a/b') printString equals: 'File @ \a\b'.
 	self assert: (filesystem referenceTo: '\test.txt') printString equals: 'File @ \test.txt'.
 
 	"root"
@@ -68,7 +71,7 @@ WindowsStoreTest >> testPrintString [
 	self assert: (filesystem referenceTo: '.\') printString equals: 'File @ .'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testRelativeFullName [
 
 	"FIleSystem currently does not support MS Windows concept of each drive having its own working directory.
@@ -81,7 +84,7 @@ WindowsStoreTest >> testRelativeFullName [
 	self assert: (filesystem referenceTo: 'C:tmp') fullName equals: (filesystem referenceTo: 'tmp') fullName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testRelativePath [
 
 	#('a' 'bin\foo' 'temp\test' 'C:temp\test') do: [:each |

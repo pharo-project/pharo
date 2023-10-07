@@ -2,22 +2,24 @@
 I am a command that opens a new browser on the test class corresponding to the selected class.
 "
 Class {
-	#name : #ClyBrowseCoveringTestCaseCommand,
-	#superclass : #ClyBrowserCommand,
+	#name : 'ClyBrowseCoveringTestCaseCommand',
+	#superclass : 'ClyBrowserCommand',
 	#instVars : [
 		'selectedClassItem'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowseCoveringTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
 
 	^ aBrowserContext lastSelectedItem hasProperty: ClyTestedClassProperty
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyBrowseCoveringTestCaseCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation
@@ -25,12 +27,12 @@ ClyBrowseCoveringTestCaseCommand class >> fullBrowserMenuActivation [
 		for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseCoveringTestCaseCommand >> defaultMenuItemName [
 	^ 'Browse test class'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBrowseCoveringTestCaseCommand >> execute [
 	| testCase |
 	testCase := (selectedClassItem getProperty: ClyTestedClassProperty) coveringTestCase.
@@ -39,7 +41,7 @@ ClyBrowseCoveringTestCaseCommand >> execute [
 		b selectClass: testCase]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBrowseCoveringTestCaseCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

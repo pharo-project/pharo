@@ -2,16 +2,18 @@
 I represent the modification of a class.
 "
 Class {
-	#name : #EpClassModification,
-	#superclass : #EpClassChange,
+	#name : 'EpClassModification',
+	#superclass : 'EpClassChange',
 	#instVars : [
 		'oldClass',
 		'newClass'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpClassModification class >> oldClass: anOldClass newClass: aNewClass [
 
 	^ self basicNew
@@ -20,36 +22,36 @@ EpClassModification class >> oldClass: anOldClass newClass: aNewClass [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpClassModification >> accept: aVisitor [
 
 	^ aVisitor visitClassModification: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassModification >> behaviorAffected [
 	^ newClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassModification >> behaviorAffectedName [
 	^ newClass name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpClassModification >> hasChanges [
 	^ oldClass definitionSource ~= newClass definitionSource or: [
 		oldClass classSide definitionSource ~= newClass classSide definitionSource ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpClassModification >> hasMetaclassChanges [
 	"FIX should compare metaclasses as a whole"
 
 	^ oldClass classSide instVarNames ~= newClass classSide instVarNames
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpClassModification >> hasNonMetaclassChanges [
 
 	^ oldClass classVarNames ~= newClass classVarNames
@@ -58,7 +60,7 @@ EpClassModification >> hasNonMetaclassChanges [
 						or: [ oldClass superclassName ~= newClass superclassName ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpClassModification >> initializeOldClass: anOldClass newClass: aNewClass [
 
 	self initialize.
@@ -66,13 +68,13 @@ EpClassModification >> initializeOldClass: anOldClass newClass: aNewClass [
 	newClass := aNewClass asEpiceaRingDefinition instanceSide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassModification >> newClass [
 
 	^ newClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassModification >> oldClass [
 
 	^ oldClass

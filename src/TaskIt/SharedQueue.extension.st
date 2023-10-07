@@ -1,6 +1,6 @@
-Extension { #name : #SharedQueue }
+Extension { #name : 'SharedQueue' }
 
-{ #category : #'*TaskIt' }
+{ #category : '*TaskIt' }
 SharedQueue >> fixedSize: aSize nextPut: anObject [
 	monitor
 		critical:

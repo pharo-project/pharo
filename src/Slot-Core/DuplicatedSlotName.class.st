@@ -2,47 +2,49 @@
 I am signaled when trying to build a class with a duplicated slot.
 "
 Class {
-	#name : #DuplicatedSlotName,
-	#superclass : #ClassBuilderError,
+	#name : 'DuplicatedSlotName',
+	#superclass : 'ClassBuilderError',
 	#instVars : [
 		'newSlot',
 		'oldSlot',
 		'host'
 	],
-	#category : #'Slot-Core-Exception'
+	#category : 'Slot-Core-Exception',
+	#package : 'Slot-Core',
+	#tag : 'Exception'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedSlotName >> host [
 	^ host
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedSlotName >> host: anObject [
 	host := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedSlotName >> messageText [
 	^ 'Slot #''', oldSlot name, ''' appeared twice in ', host name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedSlotName >> newSlot [
 	^ newSlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedSlotName >> newSlot: anObject [
 	newSlot := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedSlotName >> oldSlot [
 	^ oldSlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedSlotName >> oldSlot: anObject [
 	oldSlot := anObject
 ]

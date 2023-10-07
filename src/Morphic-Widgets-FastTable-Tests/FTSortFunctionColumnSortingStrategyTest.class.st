@@ -2,29 +2,31 @@
 A FTSortFunctionColumnSortingStrategyTest is a test class for testing the behavior of FTSortFunctionColumnSortingStrategy
 "
 Class {
-	#name : #FTSortFunctionColumnSortingStrategyTest,
-	#superclass : #FTAbstractColumnSortingStrategyTest,
-	#category : #'Morphic-Widgets-FastTable-Tests-Sorting'
+	#name : 'FTSortFunctionColumnSortingStrategyTest',
+	#superclass : 'FTAbstractColumnSortingStrategyTest',
+	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Sorting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSortFunctionColumnSortingStrategyTest >> actualClass [
 	^ FTSortFunctionColumnSortingStrategy
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FTSortFunctionColumnSortingStrategyTest >> complexDataSourceForTesting [
 	^ FTTableMorph new
 		dataSource: (FTSimpleDataSource elements: self complexElementsForTestDataSource);
 		dataSource
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FTSortFunctionColumnSortingStrategyTest >> complexElementsForTestDataSource [
 	^ #(3 80 29 10 20 28 70)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSortFunctionColumnSortingStrategyTest >> testReset [
 	| dataSource |
 	dataSource := self dataSourceForTesting.
@@ -37,7 +39,7 @@ FTSortFunctionColumnSortingStrategyTest >> testReset [
 	self assert: dataSource elements equals: #(1 2 3 4 5 6 7 8 9 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSortFunctionColumnSortingStrategyTest >> testSortDataSource [
 	| dataSource |
 	dataSource := self dataSourceForTesting.
@@ -51,7 +53,7 @@ FTSortFunctionColumnSortingStrategyTest >> testSortDataSource [
 	self assert: dataSource elements equals: self elementsForTestDataSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSortFunctionColumnSortingStrategyTest >> testSortDataSourceWithChainedSortFunction [
 	| dataSource |
 	dataSource := self complexDataSourceForTesting.
@@ -65,7 +67,7 @@ FTSortFunctionColumnSortingStrategyTest >> testSortDataSourceWithChainedSortFunc
 	self assert: dataSource elements equals: self complexElementsForTestDataSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTSortFunctionColumnSortingStrategyTest >> testSortFunction [
 	| dataSource |
 	dataSource := self dataSourceForTesting.

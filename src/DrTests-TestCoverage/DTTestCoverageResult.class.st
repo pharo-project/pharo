@@ -5,51 +5,76 @@ I build a tree with information:
 I am used in DrTestsUI to show the results in a orderly manner.
 "
 Class {
-	#name : #DTTestCoverageResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTTestCoverageResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'methodList',
-		'percent'
+		'percent',
+		'partiallyCoveredMethods'
 	],
-	#category : #'DrTests-TestCoverage'
+	#category : 'DrTests-TestCoverage',
+	#package : 'DrTests-TestCoverage'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> buildTreeForUI [
 	<dtTestCoverageResultTreeNamed: 'List of uncovered methods' order: 1>
 	^ DTTreeNode new
-		subResults:
-			{(DTTreeNode new
-				name: (percent * 100 printShowingDecimalPlaces: 2) , ' % Code Coverage';
-				subResults: {};
-				yourself).
-			(DTTreeNode new
-				name: 'Uncovered methods';
-				subResults: (self methodList collect: [:each | each asResultForDrTest]);
-				yourself)}
+		subResults: (self methodList 
+		ifNotNil: [
+        {(DTTreeNode new
+            name: (percent * 100 printShowingDecimalPlaces: 2) , ' % Code Coverage';
+            subResults: {};
+            yourself).
+        (DTTreeNode new
+            name: 'Uncovered methods';
+            subResults: (self methodList collect: [:each | each asResultForDrTest]);
+            yourself).
+         (DTTreeNode new
+            name: 'Partially covered methods';
+            subResults: (self partiallyCoveredMethods collect: [:each | each asResultForDrTest]);
+            yourself)}
+    	]ifNil: [
+       	 {(DTTreeNode new
+        	    name: 'no package has been selected';
+      	 	    subResults: {};
+             yourself)}
+    	])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> methodList [
 	^methodList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> methodList: aCollectionOfMethods [
 	methodList := aCollectionOfMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+DTTestCoverageResult >> partiallyCoveredMethods [
+
+	^ partiallyCoveredMethods
+]
+
+{ #category : 'accessing' }
+DTTestCoverageResult >> partiallyCoveredMethods: aCollectionOfMethods [
+
+	partiallyCoveredMethods := aCollectionOfMethods
+]
+
+{ #category : 'accessing' }
 DTTestCoverageResult >> percent [
 	^ percent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> percent: anObject [
 	percent := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestCoverageResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 

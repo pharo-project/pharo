@@ -2,53 +2,55 @@
 Animation settings
 "
 Class {
-	#name : #AnimationSettings,
-	#superclass : #Model,
+	#name : 'AnimationSettings',
+	#superclass : 'Model',
 	#instVars : [
 		'useAnimation',
 		'animateClosing',
 		'delay',
 		'numberOfSteps'
 	],
-	#category : #'Polymorph-Widgets-Themes'
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> animateClosing [
 	^ animateClosing ifNil: [animateClosing := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> animateClosing: aBoolean [
 	animateClosing := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> delay [
 	^ delay ifNil: [delay := 8]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> delay: anInteger [
 	delay := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> numberOfSteps [
 	^ numberOfSteps ifNil: [numberOfSteps := 20]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> numberOfSteps: anInteger [
 	numberOfSteps := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> useAnimation [
 	^ useAnimation ifNil: [ useAnimation := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimationSettings >> useAnimation: aBoolean [
 	useAnimation := aBoolean
 ]

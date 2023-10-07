@@ -1,6 +1,6 @@
-Extension { #name : #MCOrganizationDefinition }
+Extension { #name : 'MCOrganizationDefinition' }
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCOrganizationDefinition >> asRingDefinition [
 
 	^RGOrganization new

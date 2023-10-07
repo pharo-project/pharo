@@ -2,23 +2,25 @@
 In addition to storing a metaclass, I also know how to serialize and materialize the additional state of TraitedMetaclass.
 "
 Class {
-	#name : #FLTraitedMetaclassCluster,
-	#superclass : #FLMetaclassCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLTraitedMetaclassCluster',
+	#superclass : 'FLMetaclassCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FLTraitedMetaclassCluster >> instanceVariablesStringFor: aClass [
 	^ ' ' join: (aClass classLayout visibleSlots collect: [ :slot |
 		slot name ])
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLTraitedMetaclassCluster >> materializeInstanceWith: aDecoder [
 	^ TraitedMetaclass new
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLTraitedMetaclassCluster >> materializeReferencesOf: aMetaclass with: aDecoder [
 	super
 		materializeReferencesOf: aMetaclass
@@ -31,7 +33,7 @@ FLTraitedMetaclassCluster >> materializeReferencesOf: aMetaclass with: aDecoder 
 		fuelSetTraitComposition: aDecoder nextEncodedReference
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLTraitedMetaclassCluster >> referencesOf: aMetaclass do: aBlock [
 	super
 		referencesOf: aMetaclass
@@ -44,7 +46,7 @@ FLTraitedMetaclassCluster >> referencesOf: aMetaclass do: aBlock [
 		value: aMetaclass traitComposition
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLTraitedMetaclassCluster >> serializeReferencesOf: aMetaclass with: anEncoder [
 	super
 		serializeReferencesOf: aMetaclass

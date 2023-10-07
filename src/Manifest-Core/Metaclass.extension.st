@@ -1,6 +1,6 @@
-Extension { #name : #Metaclass }
+Extension { #name : 'Metaclass' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 Metaclass >> criticTheNonMetaclassClass [
 
 	^self instanceSide

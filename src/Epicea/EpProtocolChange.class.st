@@ -2,16 +2,18 @@
 I represent a change in the protocols of a class.
 "
 Class {
-	#name : #EpProtocolChange,
-	#superclass : #EpBehaviorChange,
+	#name : 'EpProtocolChange',
+	#superclass : 'EpBehaviorChange',
 	#instVars : [
 		'behavior',
 		'protocol'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpProtocolChange class >> behavior: aBehavior protocol: aProtocol [
 	^ self basicNew
 		initializeWithBehavior: aBehavior
@@ -19,18 +21,24 @@ EpProtocolChange class >> behavior: aBehavior protocol: aProtocol [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'testing' }
+EpProtocolChange class >> isAbstract [
+
+	^ self == EpProtocolChange
+]
+
+{ #category : 'accessing' }
 EpProtocolChange >> behaviorAffected [
 	^ behavior
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpProtocolChange >> behaviorAffectedName [
 
 	^ behavior name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpProtocolChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpProtocolChange and: [
@@ -38,20 +46,20 @@ EpProtocolChange >> doesOverride: aCodeChange [
 		aCodeChange protocol = self protocol ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 EpProtocolChange >> initializeWithBehavior: aBehavior protocol: aProtocol [
 	self initialize.
 	behavior := aBehavior asEpiceaRingDefinition.
 	protocol := aProtocol asSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpProtocolChange >> isEpProtocolChange [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpProtocolChange >> protocol [
 	^ protocol
 ]

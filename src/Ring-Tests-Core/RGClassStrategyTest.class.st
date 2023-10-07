@@ -1,10 +1,11 @@
 Class {
-	#name : #RGClassStrategyTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGClassStrategyTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testCategory [
 	| aClass |
 	aClass := RGClass named: #SomeClass.
@@ -12,7 +13,7 @@ RGClassStrategyTest >> testCategory [
 	self assert: aClass category equals: 'SomeCategory'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testComment [
 	| aClass aComment |
 	aClass := RGClass named: #SomeClass.
@@ -22,7 +23,7 @@ RGClassStrategyTest >> testComment [
 	self assert: aClass comment identicalTo: aComment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testCopying [
 	| env class classVariable1 classVariable2 copy |
 	class := RGClass unnamed.
@@ -52,7 +53,7 @@ RGClassStrategyTest >> testCopying [
 	self assert: class behaviorStrategy classVariables size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testDefinition [
 
 	| aClass |
@@ -63,7 +64,7 @@ RGClassStrategyTest >> testDefinition [
 	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testDefinitionWithSlots [
 
 	| aClass slot expression |
@@ -79,7 +80,7 @@ RGClassStrategyTest >> testDefinitionWithSlots [
 	self assert: (aClass definition includesSubstring: ('#iVar => ', expression))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testIncompatibleBehavior [
 
 	| anRGBehavior |
@@ -94,7 +95,7 @@ RGClassStrategyTest >> testIncompatibleBehavior [
 		anRGBehavior baseTrait: (anRGBehavior environment ensureTraitNamed: #SomeTrait) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testKind [
 
 	| strategy |
@@ -106,7 +107,7 @@ RGClassStrategyTest >> testKind [
 	self deny: strategy isMetaclassTraitStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testPackage [
 	| aClass aPackage |
 	aClass := RGClass named: #SomeClass.
@@ -116,7 +117,7 @@ RGClassStrategyTest >> testPackage [
 	self assert: aClass package identicalTo: aPackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testResolvingConsistency [
 
 	| anObject |
@@ -124,7 +125,7 @@ RGClassStrategyTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassStrategyTest >> testStoreString [
 
 	| anRGBehavior |

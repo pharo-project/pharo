@@ -6,22 +6,24 @@ So I see all objects which are defined by given packages:
 - methods
 "
 Class {
-	#name : #ClyPackageScope,
-	#superclass : #ClyTypedScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyPackageScope',
+	#superclass : 'ClyTypedScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageScope class >> defaultName [
 	^'packages'
 ]
 
-{ #category : #'refactoring support' }
+{ #category : 'refactoring support' }
 ClyPackageScope >> asRBEnvironment [
 	^RBPackageEnvironment packages: basisObjects
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> classGroupProvidersDo: aBlock [
 
 	| providers |
@@ -30,7 +32,7 @@ ClyPackageScope >> classGroupProvidersDo: aBlock [
 		providers do: aBlock]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> classGroupsDo: aBlock [
 
 	self classGroupProvidersDo: [ :groupProvider |
@@ -38,13 +40,13 @@ ClyPackageScope >> classGroupsDo: aBlock [
 			aBlock value: group] ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> classesDo: aBlock [
 	self packagesDo: [ :package |
 		package definedClasses do: aBlock]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyPackageScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
 
 	| providers |
@@ -57,7 +59,7 @@ ClyPackageScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
 	^false
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> methodsDo: aBlock [
 	self classesDo: [:class |
 		class localMethods do: aBlock.
@@ -67,12 +69,12 @@ ClyPackageScope >> methodsDo: aBlock [
 		package extensionMethods do: aBlock ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> packagesDo: aBlock [
 	basisObjects do: aBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyPackageScope >> printBasisObject: aPackage on: aStream [
 
 	^aStream nextPutAll: aPackage name

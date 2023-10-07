@@ -11,25 +11,26 @@ ZnServer default delegate: ((ZnMonticelloServerDelegate new)
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnMonticelloServerDelegate,
-	#superclass : #Object,
+	#name : 'ZnMonticelloServerDelegate',
+	#superclass : 'Object',
 	#instVars : [
 		'directory'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMonticelloServerDelegate >> directory [
 	^ directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMonticelloServerDelegate >> directory: object [
 	directory := object asFileReference
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMonticelloServerDelegate >> handleGetMczEntry: request [
 	| name file stream entity |
 	name := request uri firstPathSegment.
@@ -44,12 +45,12 @@ ZnMonticelloServerDelegate >> handleGetMczEntry: request [
 		ifFalse: [ ZnResponse notFound: request uri ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMonticelloServerDelegate >> handleListMczEntries: request [
 	^ ZnResponse ok: (ZnEntity html: self repositoryListing)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMonticelloServerDelegate >> handlePutMczEntry: request [
 	| name file |
 	name := request uri firstPathSegment.
@@ -63,7 +64,7 @@ ZnMonticelloServerDelegate >> handlePutMczEntry: request [
 		ifFalse: [ ZnResponse badRequest: request ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnMonticelloServerDelegate >> handleRequest: request [
 	(request method = #GET)
 		ifTrue: [
@@ -75,7 +76,7 @@ ZnMonticelloServerDelegate >> handleRequest: request [
 		ifFalse: [ ZnResponse badRequest: request ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMonticelloServerDelegate >> isValidMczName: string [
 	^ string isString
 		and: [ string isEmpty not
@@ -83,13 +84,13 @@ ZnMonticelloServerDelegate >> isValidMczName: string [
 				and: [ (string includes: $/) not ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMonticelloServerDelegate >> mczEntries [
 	^ (self directory fileNames select: [ :each | each endsWith: '.mcz' ])
 		asSortedCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMonticelloServerDelegate >> repositoryListing [
 	^ ZnHtmlOutputStream streamContents: [ :html |
 		html page: 'Monticello Repository' do: [
@@ -102,7 +103,7 @@ ZnMonticelloServerDelegate >> repositoryListing [
 							with: each ] ] ] ] ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnMonticelloServerDelegate >> value: request [
 	"I implement the generic #value: message as equivalent to #handleRequest:"
 

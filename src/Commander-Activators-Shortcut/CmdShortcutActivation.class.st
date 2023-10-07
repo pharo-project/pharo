@@ -24,22 +24,23 @@ Internal Representation and Key Implementation Points.
 	keyCombination:		<KKKeyCombination>
 "
 Class {
-	#name : #CmdShortcutActivation,
-	#superclass : #CmdCommandActivationStrategy,
+	#name : 'CmdShortcutActivation',
+	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
 		'keyCombination'
 	],
-	#category : #'Commander-Activators-Shortcut'
+	#category : 'Commander-Activators-Shortcut',
+	#package : 'Commander-Activators-Shortcut'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 CmdShortcutActivation class >> buildSettingsFor: activations on: aBuilder [
 	| sorted |
 	sorted := activations sorted: [ :a :b | a commandClass name <= b commandClass name ].
 	sorted do: [ :each |	each buildSettingNodeOn: aBuilder]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CmdShortcutActivation class >> buildSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #shortcuts)
@@ -53,27 +54,27 @@ CmdShortcutActivation class >> buildSettingsOn: aBuilder [
 		]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 	^(self for: anAnnotationUser)
 		keyCombination: aKeyCombination
 ]
 
-{ #category : #'well known shortcuts' }
+{ #category : 'well known shortcuts' }
 CmdShortcutActivation class >> removalFor: anAnnotationUser [
 	<classAnnotationDependency>
 
 	^self by: $x meta for: anAnnotationUser
 ]
 
-{ #category : #'well known shortcuts' }
+{ #category : 'well known shortcuts' }
 CmdShortcutActivation class >> renamingFor: anAnnotationUser [
 	<classAnnotationDependency>
 
 	^self by: $r meta for: anAnnotationUser
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CmdShortcutActivation class >> settingInputWidgetForNode: aShortcutSetting [
 	| catcherMorph theme |
 	theme := UITheme builder.
@@ -81,7 +82,7 @@ CmdShortcutActivation class >> settingInputWidgetForNode: aShortcutSetting [
 	^ theme newRow: {catcherMorph}
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CmdShortcutActivation >> buildSettingNodeOn: aBuilder [
 	| nodeBuilder |
 	nodeBuilder := aBuilder
@@ -90,17 +91,17 @@ CmdShortcutActivation >> buildSettingNodeOn: aBuilder [
 	^nodeBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutActivation >> keyCombination [
 	^ keyCombination
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutActivation >> keyCombination: anObject [
 	keyCombination := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CmdShortcutActivation >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -108,7 +109,7 @@ CmdShortcutActivation >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdShortcutActivation >> tryExecuteCommandInContext: aToolContext byEvents: anEventBuffer [
 
 	| activator |

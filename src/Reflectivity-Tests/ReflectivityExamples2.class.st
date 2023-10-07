@@ -2,8 +2,8 @@
 Examples for RF per object.
 "
 Class {
-	#name : #ReflectivityExamples2,
-	#superclass : #Object,
+	#name : 'ReflectivityExamples2',
+	#superclass : 'Object',
 	#instVars : [
 		'instVar',
 		'instVar2'
@@ -11,22 +11,24 @@ Class {
 	#classVars : [
 		'classVar'
 	],
-	#category : #'Reflectivity-Tests-Data'
+	#category : 'Reflectivity-Tests-Data',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Data'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> exampleMethod [
 	^ 2 + 3
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> exampleMethod2 [
 	^ (WriteStream on: String new)
 		nextPutAll: 'hello world';
 		contents
 ]
 
-{ #category : #generation }
+{ #category : 'generation' }
 ReflectivityExamples2 >> generateNewMethodWithInstVarAccess [
 	self class
 		compile:
@@ -37,37 +39,37 @@ ReflectivityExamples2 >> generateNewMethodWithInstVarAccess [
 		classified: 'example'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectivityExamples2 >> instVar2: anObject [
 
 	instVar2 := anObject
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> methodWithClassVarAccess [
 	classVar := 5.
 	classVar := 6.
 	classVar > 5 ifTrue:[^ classVar raisedTo: 2]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> methodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> methodWithOverrides [
 	^'top'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> methodWithOverrides: str1 with: str2 [
 	^str1, str2
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> methodWithTempVarAccess [
 	|temp|
 	temp := 5.
@@ -75,30 +77,30 @@ ReflectivityExamples2 >> methodWithTempVarAccess [
 	temp > 5 ifTrue:[^ temp raisedTo: 2]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 	self class compile:'modifiedMethodWithInstVarAccess
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 ReflectivityExamples2 >> newMethodWithInstVarAccess [
 	instVar := 5.
 	instVar := 6.
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ReflectivityExamples2 >> removeModifiedMethodWithInstVarAccess [
 	self class removeSelector: #modifiedMethodWithInstVarAccess
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ReflectivityExamples2 >> removeNewMethodWithInstVarAccess [
 	self class removeSelector: #newMethodWithInstVarAccess
 ]
 
-{ #category : #generation }
+{ #category : 'generation' }
 ReflectivityExamples2 >> resetModifiedMethodWithInstVarAccess [
 	self class
 		compile:

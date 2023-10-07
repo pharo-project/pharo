@@ -1,10 +1,12 @@
 Class {
-	#name : #CoHierarchyImplementedSelectorsFetcherTest,
-	#superclass : #CoImplementedSelectorsFetcherTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoHierarchyImplementedSelectorsFetcherTest',
+	#superclass : 'CoImplementedSelectorsFetcherTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoHierarchyImplementedSelectorsFetcherTest >> setUp [
 
 	super setUp.

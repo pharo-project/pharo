@@ -1,6 +1,6 @@
 Class {
-	#name : #EDTest,
-	#superclass : #TestCase,
+	#name : 'EDTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'ed',
 		'session',
@@ -8,15 +8,16 @@ Class {
 		'mockDisplayAPI',
 		'currentDebuggingAPI'
 	],
-	#category : #'EmergencyDebugger-Tests'
+	#category : 'EmergencyDebugger-Tests',
+	#package : 'EmergencyDebugger-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 EDTest class >> isAbstract [
 	^self == EDTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EDTest >> configureDebugSession [
 
 	"Configure a debug session and moves it to the following stack:
@@ -92,7 +93,7 @@ EDTest >> configureDebugSession [
 	session stepInto
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EDTest >> newEd [
 	ed := EDEmergencyDebugger new.
 	ed repl: EDMockREPLInterface new.
@@ -101,7 +102,7 @@ EDTest >> newEd [
 	ed debug: session
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDTest >> prepareMethodVersionTest [
 	| context process |
 	EDMockObjectForTests compile: self sampleMethodSourceCodeVersion1.
@@ -123,17 +124,17 @@ EDTest >> prepareMethodVersionTest [
 	self newEd
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDTest >> sampleMethodSourceCodeVersion1 [
 	^ 'mWithVersion |i| i := 0. ^i + 1'
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDTest >> sampleMethodSourceCodeVersion2 [
 	^ 'mWithVersion |i| i := 0. ^i + 2'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EDTest >> setUp [
 	|context process|
 	super setUp.
@@ -152,7 +153,7 @@ EDTest >> setUp [
 	self newEd
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EDTest >> tearDown [
 	EDEmergencyDebugger debugAPI: currentDebuggingAPI.
 	session terminate.

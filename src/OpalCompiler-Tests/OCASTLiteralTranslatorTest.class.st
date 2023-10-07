@@ -1,14 +1,16 @@
 Class {
-	#name : #OCASTLiteralTranslatorTest,
-	#superclass : #OCASTTranslatorTest,
+	#name : 'OCASTLiteralTranslatorTest',
+	#superclass : 'OCASTTranslatorTest',
 	#instVars : [
 		'literalExample',
 		'expectedLiteralValue'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTLiteralTranslatorTest class >> testParameters [
 
 	^ super testParameters * {
@@ -26,27 +28,27 @@ OCASTLiteralTranslatorTest class >> testParameters [
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTLiteralTranslatorTest >> expectedLiteralValue [
 	^ expectedLiteralValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTLiteralTranslatorTest >> expectedLiteralValue: anObject [
 	expectedLiteralValue := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTLiteralTranslatorTest >> literalExample [
 	^ literalExample
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTLiteralTranslatorTest >> literalExample: anObject [
 	literalExample := anObject
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTLiteralTranslatorTest >> testLiteralIsInLiteralFrame [
 
 	| array |
@@ -55,14 +57,14 @@ OCASTLiteralTranslatorTest >> testLiteralIsInLiteralFrame [
 	self assert: (method literals identityIncludes: array)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTLiteralTranslatorTest >> testLiteralReturnsAlwaysSameLiteral [
 	self compileExample: literalExample.
 
 	self assert: (self executeMethodOnInstance: method) identicalTo: (self executeMethodOnInstance: method)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTLiteralTranslatorTest >> testLiteralReturnsLiteral [
 
 	self assert: (self testExample: literalExample) equals: expectedLiteralValue

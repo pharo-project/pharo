@@ -1,6 +1,6 @@
-Extension { #name : #DAMessageSendDependency }
+Extension { #name : 'DAMessageSendDependency' }
 
-{ #category : #'*Tool-DependencyAnalyser-UI' }
+{ #category : '*Tool-DependencyAnalyser-UI' }
 DAMessageSendDependency >> nodeClass [
 	^ DAMissingMethodNode
 ]

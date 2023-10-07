@@ -3,12 +3,13 @@ I am BaselineOfSton, I load STON (Smalltalk Object Notation).
 I am a BaselineOf.
 "
 Class {
-	#name : #BaselineOfSton,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSton
+	#name : 'BaselineOfSton',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSton',
+	#package : 'BaselineOfSton'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfSton >> baseline: spec [
 	<baseline>
 	spec

@@ -1,6 +1,6 @@
-Extension { #name : #FileSystemStore }
+Extension { #name : 'FileSystemStore' }
 
-{ #category : #'*FileSystem-Memory' }
+{ #category : '*FileSystem-Memory' }
 FileSystemStore >> isMemoryFileSystem [
 	^ false
 ]

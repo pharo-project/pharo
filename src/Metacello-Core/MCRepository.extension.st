@@ -1,11 +1,11 @@
-Extension { #name : #MCRepository }
+Extension { #name : 'MCRepository' }
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
 	self subclassResponsibility
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository class >> findFiletreeAlternateFormat: aRepositorySpec ifFound: aBlock [
 	| repositoryClass |
 	repositoryClass := self allSubclasses detect: [ :each | each isFiletreeAlternateFormat: aRepositorySpec ] ifNone: [ nil ].
@@ -13,22 +13,22 @@ MCRepository class >> findFiletreeAlternateFormat: aRepositorySpec ifFound: aBlo
 	^ repositoryClass ifNotNil: [ aBlock cull: repositoryClass ]
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository >> flushForScriptGet [
     "noop"
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository class >> isAvailableFor: type [
 	^ false
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository class >> isFiletreeAlternateFormat: aRepositorySpec [
 	^ false
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository class >> newRepositoryFromSpec: aRepositorySpec on: aPlatform [
 
 	^ self allSubclasses
@@ -40,21 +40,21 @@ MCRepository class >> newRepositoryFromSpec: aRepositorySpec on: aPlatform [
 		ifNone: [ self error: 'Unknown repository type: ' , aRepositorySpec description ]
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository >> repositoryBranchName [
   "extract a branch name from the repository ... if possible"
 
   ^ ''
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository >> repositoryDescription [
   "return a description that includes a repositoryVersionString and repositoryBranchName if present"
 
   ^ self description
 ]
 
-{ #category : #'*Metacello-Core' }
+{ #category : '*Metacello-Core' }
 MCRepository >> repositoryVersionString [
   "extract a version string from the repository ... if possible"
 

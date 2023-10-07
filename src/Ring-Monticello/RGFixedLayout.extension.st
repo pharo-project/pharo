@@ -1,6 +1,6 @@
-Extension { #name : #RGFixedLayout }
+Extension { #name : 'RGFixedLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGFixedLayout >> mcType [
 
 	^ #normal

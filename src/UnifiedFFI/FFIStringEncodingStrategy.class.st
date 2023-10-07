@@ -3,15 +3,17 @@ I am a string encoding strategy that explicitly encodes a string into bytes befo
 I know how to emit the necessary IR code to push a string argument and encode it.
 "
 Class {
-	#name : #FFIStringEncodingStrategy,
-	#superclass : #Object,
+	#name : 'FFIStringEncodingStrategy',
+	#superclass : 'Object',
 	#instVars : [
 		'encoding'
 	],
-	#category : #'UnifiedFFI-Strings'
+	#category : 'UnifiedFFI-Strings',
+	#package : 'UnifiedFFI',
+	#tag : 'Strings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIStringEncodingStrategy class >> forEncoding: aString [
 
 	^ self new
@@ -19,7 +21,7 @@ FFIStringEncodingStrategy class >> forEncoding: aString [
 		yourself
 ]
 
-{ #category : #emitting }
+{ #category : 'emitting' }
 FFIStringEncodingStrategy >> emitIRForFunctionArgument: aFFICharacterType inIRBuilder: anIRBuilder context: aContext [
 
 	aFFICharacterType loader emitArgument: anIRBuilder context: aContext.
@@ -27,7 +29,7 @@ FFIStringEncodingStrategy >> emitIRForFunctionArgument: aFFICharacterType inIRBu
 	anIRBuilder send: #nullTerminatedEncodeWith:
 ]
 
-{ #category : #emitting }
+{ #category : 'emitting' }
 FFIStringEncodingStrategy >> emitIRForFunctionReturn: aFFICharacterType inIRBuilder: anIRBuilder context: aContext [
 
 	"The top of the stack should contain a ByteString with the bytes of the returned char*.
@@ -39,12 +41,12 @@ FFIStringEncodingStrategy >> emitIRForFunctionReturn: aFFICharacterType inIRBuil
 	^ anIRBuilder returnTop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIStringEncodingStrategy >> encoding [
 	^ encoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIStringEncodingStrategy >> encoding: aString [
 	encoding := aString
 ]

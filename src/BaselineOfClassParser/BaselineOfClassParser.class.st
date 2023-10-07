@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfClassParser,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfClassParser
+	#name : 'BaselineOfClassParser',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfClassParser',
+	#package : 'BaselineOfClassParser'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfClassParser >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

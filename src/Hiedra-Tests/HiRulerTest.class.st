@@ -2,12 +2,14 @@
 A HiRulerTest is a test class for testing the behavior of HiRuler
 "
 Class {
-	#name : #HiRulerTest,
-	#superclass : #TestCase,
-	#category : #'Hiedra-Tests-Model'
+	#name : 'HiRulerTest',
+	#superclass : 'TestCase',
+	#category : 'Hiedra-Tests-Model',
+	#package : 'Hiedra-Tests',
+	#tag : 'Model'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerTest >> testEmpty [
 	| ruler |
 	ruler := HiRuler withValues: #().
@@ -19,7 +21,7 @@ HiRulerTest >> testEmpty [
 	self assert: ruler numberOfRows equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerTest >> testTwoMergedForks [
 	"
 	c

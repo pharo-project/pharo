@@ -4,48 +4,50 @@ I'm an abstract superclass for Job announcements.
 My subclasses are announced in Job jobAnnouncer.
 "
 Class {
-	#name : #JobAnnouncement,
-	#superclass : #Announcement,
+	#name : 'JobAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'job'
 	],
-	#category : #'Jobs-Announcements'
+	#category : 'Jobs-Announcements',
+	#package : 'Jobs',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 JobAnnouncement class >> on: aJob [ 
 
 	^ self new job: aJob
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobAnnouncement >> job [
 	
 	^ job
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobAnnouncement >> job: anObject [
 	
 	job := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobAnnouncement >> max [
 	^ job max
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobAnnouncement >> min [
 	^ job min
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobAnnouncement >> progress [
 	^ job progress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobAnnouncement >> title [
 	^ job title
 ]

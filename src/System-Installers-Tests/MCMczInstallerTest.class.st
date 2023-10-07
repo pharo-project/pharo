@@ -1,32 +1,33 @@
 Class {
-	#name : #MCMczInstallerTest,
-	#superclass : #MCTestCase,
+	#name : 'MCMczInstallerTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'expected',
 		'diff'
 	],
-	#category : #'System-Installers-Tests'
+	#category : 'System-Installers-Tests',
+	#package : 'System-Installers-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMczInstallerTest class >> isAbstract [
 	^ (Smalltalk hasClassNamed: #MczInstaller) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczInstallerTest class >> suite [
 	^ (Smalltalk hasClassNamed: #MczInstaller)
 		ifTrue: [ super suite ]
 		ifFalse: [ self classForTestSuite new name: self name asString ]
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 MCMczInstallerTest >> assertDict: dict matchesInfo: info [
 	#(name id message date time author) do: [ :sel | (info perform: sel) ifNotNil: [ :i | dict at: sel ifPresent: [ :d | self assert: i equals: d ] ] ].
 	info ancestors with: (dict at: #ancestors) do: [ :i :d | self assertDict: d matchesInfo: i ]
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 MCMczInstallerTest >> assertNoChange [
 	| actual |
 	actual := MCSnapshotResource takeSnapshot.
@@ -34,7 +35,7 @@ MCMczInstallerTest >> assertNoChange [
 	self assertEmpty: diff
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 MCMczInstallerTest >> assertVersionInfoPresent [
 	| dict info |
 	dict := MczInstaller versionInfo at: self mockPackage name.
@@ -42,38 +43,38 @@ MCMczInstallerTest >> assertVersionInfoPresent [
 	self assertDict: dict matchesInfo: info
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCMczInstallerTest >> deleteFile [
 	self fileName asFileReference ensureDelete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczInstallerTest >> fileName [
 	^ 'InstallerTest.mcz'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczInstallerTest >> fileStream [
 	^ self fileName asFileReference
 		ensureDelete;
 		binaryWriteStream
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCMczInstallerTest >> setUp [
 	super setUp.
 	expected := self mockVersion.
 	self change: #one toReturn: 2
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCMczInstallerTest >> tearDown [
 	expected snapshot updatePackage: self mockPackage.
 	self deleteFile.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMczInstallerTest >> testInstallFromFile [
 	| stream |
 	stream := self fileStream.
@@ -84,7 +85,7 @@ MCMczInstallerTest >> testInstallFromFile [
 	self assertNoChange
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMczInstallerTest >> testInstallFromStream [
 
 	| array |

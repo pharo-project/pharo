@@ -2,23 +2,24 @@
 Standard dialog for selecting a colour by HSVA colour selector, picking from the screen or editing of values.
 "
 Class {
-	#name : #ColorSelectorDialogWindow,
-	#superclass : #DialogWindowMorph,
+	#name : 'ColorSelectorDialogWindow',
+	#superclass : 'DialogWindowMorph',
 	#instVars : [
 		'selectedColor',
 		'hsvaMorph'
 	],
-	#category : #'Morphic-Widgets-ColorPicker'
+	#category : 'Morphic-Widgets-ColorPicker',
+	#package : 'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> alpha [
 	"Answer the alpha value of the selected color."
 
 	^(self selectedColor alpha * 255) asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> alpha: anInteger [
 	"Set the alpha value of the selected color."
 
@@ -27,7 +28,7 @@ ColorSelectorDialogWindow >> alpha: anInteger [
 	self selectedColor: (c alpha: anInteger / 255)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> basicSelectedColor: anObject [
 	"Set the value of selectedColor"
 
@@ -46,14 +47,14 @@ ColorSelectorDialogWindow >> basicSelectedColor: anObject [
 	self announcer announce: (ColorChanged to: selectedColor)
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ColorSelectorDialogWindow >> blue [
 	"Answer the blue value of the selected color."
 
 	^(self selectedColor blue * 255) asInteger
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 ColorSelectorDialogWindow >> blue: anInteger [
 	"Set the blue value of the selected color."
 
@@ -62,14 +63,14 @@ ColorSelectorDialogWindow >> blue: anInteger [
 	self selectedColor: ((Color r: c red * 255 g: c green * 255 b: anInteger range: 255) alpha: c alpha)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> brightness [
 	"Answer the brightness value of the selected color."
 
 	^(self selectedColor brightness * 255) asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> brightness: anInteger [
 	"Set the brightness value of the selected color."
 
@@ -78,28 +79,28 @@ ColorSelectorDialogWindow >> brightness: anInteger [
 	self selectedColor: ((Color h: c hue s: c saturation v: anInteger / 255) alpha: c alpha)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> colorSelected: aColor [
 	"A color has been selected.."
 
 	self basicSelectedColor: aColor
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ColorSelectorDialogWindow >> defaultLabel [
 	"Answer the default label for the receiver."
 
 	^'Color Selector' translated
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ColorSelectorDialogWindow >> green [
 	"Answer the green value of the selected color."
 
 	^(self selectedColor green * 255) asInteger
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 ColorSelectorDialogWindow >> green: anInteger [
 	"Set the green value of the selected color."
 
@@ -108,28 +109,28 @@ ColorSelectorDialogWindow >> green: anInteger [
 	self selectedColor: ((Color r: c red * 255 g: anInteger b: c blue * 255 range: 255) alpha: c alpha)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> hsvaMorph [
 	"Answer the value of hsvaMorph"
 
 	^ hsvaMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> hsvaMorph: anObject [
 	"Set the value of hsvaMorph"
 
 	hsvaMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> hue [
 	"Answer the hue value of the selected color."
 
 	^(self selectedColor hue / 359 * 255) asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> hue: anInteger [
 	"Set the hue value of the selected color."
 
@@ -138,7 +139,7 @@ ColorSelectorDialogWindow >> hue: anInteger [
 	self selectedColor: ((Color h: (anInteger / 255 * 359) rounded s: c saturation v: c brightness) alpha: c alpha)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ColorSelectorDialogWindow >> initialize [
 	"Initialize the receiver."
 
@@ -148,7 +149,7 @@ ColorSelectorDialogWindow >> initialize [
 	self selectedColor: self selectedColor
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ColorSelectorDialogWindow >> newColorComponentFieldMorph: aspect [
 	"Answer a text entry for the specified aspect of the color."
 
@@ -162,7 +163,7 @@ ColorSelectorDialogWindow >> newColorComponentFieldMorph: aspect [
 		minWidth: 40
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ColorSelectorDialogWindow >> newColorPickerButtonMorph [
 	"Answer a button to enable picking of colour."
 
@@ -178,7 +179,7 @@ ColorSelectorDialogWindow >> newColorPickerButtonMorph [
 		help: 'Pick a color from the screen' translated
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ColorSelectorDialogWindow >> newColorPresenterMorph [
 	"Answer a color presenter."
 
@@ -188,7 +189,7 @@ ColorSelectorDialogWindow >> newColorPresenterMorph [
 		help: 'Shows the selected color' translated
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ColorSelectorDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
@@ -214,7 +215,7 @@ ColorSelectorDialogWindow >> newContentMorph [
 			hResizing: #shrinkWrap}
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ColorSelectorDialogWindow >> newHSVAColorSelectorMorph [
 	"Answer a hsva color selector."
 
@@ -223,7 +224,7 @@ ColorSelectorDialogWindow >> newHSVAColorSelectorMorph [
 		when: #selectedColor send: #colorSelected: to: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ColorSelectorDialogWindow >> pickColor [
 	"Pick a colour from the screen."
 
@@ -252,14 +253,14 @@ ColorSelectorDialogWindow >> pickColor [
 	h showTemporaryCursor: nil
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ColorSelectorDialogWindow >> red [
 	"Answer the red value of the selected color."
 
 	^(self selectedColor red * 255) asInteger
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 ColorSelectorDialogWindow >> red: anInteger [
 	"Set the red value of the selected color."
 
@@ -268,14 +269,14 @@ ColorSelectorDialogWindow >> red: anInteger [
 	self selectedColor: ((Color r: anInteger g: c green * 255 b: c blue * 255 range: 255) alpha: c alpha)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> saturation [
 	"Answer the saturation value of the selected color."
 
 	^(self selectedColor saturation * 255) asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> saturation: anInteger [
 	"Set the saturation value of the selected color."
 
@@ -284,14 +285,14 @@ ColorSelectorDialogWindow >> saturation: anInteger [
 	self selectedColor: ((Color h: c hue s: anInteger / 255 v: c brightness) alpha: c alpha)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> selectedColor [
 	"Answer the value of selectedColor"
 
 	^ selectedColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorSelectorDialogWindow >> selectedColor: aColor [
 	"Set the value of selectedColor. Update the color selectors."
 

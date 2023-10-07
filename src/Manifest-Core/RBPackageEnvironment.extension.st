@@ -1,6 +1,6 @@
-Extension { #name : #RBPackageEnvironment }
+Extension { #name : 'RBPackageEnvironment' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBPackageEnvironment >> smallLintCritics [
 	^ self packages
 ]

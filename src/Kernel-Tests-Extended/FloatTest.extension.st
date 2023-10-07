@@ -1,6 +1,6 @@
-Extension { #name : #FloatTest }
+Extension { #name : 'FloatTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> test32bitConversion [
 	"Except for NaN, we can convert a 32bits float to a 64bits float exactly.
 	Thus we can convert the 64bits float to the original 32bits float pattern."
@@ -21,7 +21,7 @@ FloatTest >> test32bitConversion [
 	  do: [:originalWord | self assert: (Float fromIEEE32Bit: originalWord) asIEEE32BitWord equals: originalWord ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> test32bitGradualUnderflow [
 	"method asIEEE32BitWord did not respect IEEE gradual underflow"
 
@@ -61,7 +61,7 @@ FloatTest >> test32bitGradualUnderflow [
 	self assert: expected equals: conv
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> test32bitRoundingMode [
 	"method asIEEE32BitWord did not respect IEEE default rounding mode"
 
@@ -97,7 +97,7 @@ FloatTest >> test32bitRoundingMode [
 	self assert: expected equals: conv
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testArcTan [
 
 	self assert: ((100 arcTan: 100) closeTo: Float pi / 4).
@@ -118,7 +118,7 @@ FloatTest >> testArcTan [
 	self assert: ((Float negativeZero arcTan: Float negativeZero) closeTo: Float pi negated)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testBinaryLiteralString [
 
 	self assert: 0.0 binaryLiteralString equals: '0.0'.
@@ -278,7 +278,7 @@ FloatTest >> testBinaryLiteralString [
 		equals: 'Float nan'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testCharacterization [
 	"Test the largest finite representable floating point value"
 
@@ -350,7 +350,7 @@ FloatTest >> testCharacterization [
 	self assert: Float infinity negated hex equals: 'FFF0000000000000'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testComparison [
 	"test equality when Float conversion loose bits"
 
@@ -397,7 +397,7 @@ FloatTest >> testComparison [
 		((Set new: 4) add: 3; add: 3.0; size)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testDegreeCos [
 
 	45.0 degreeCos. "Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
@@ -414,7 +414,7 @@ FloatTest >> testDegreeCos [
 		self assert: (k * 360) degreeCos - 1 equals: 0 ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testDegreeCosForExceptionalValues [
 
 	self assert: Float nan degreeCos isNaN.
@@ -422,7 +422,7 @@ FloatTest >> testDegreeCosForExceptionalValues [
 	self assert: Float infinity negated degreeCos isNaN
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testDegreeSin [
 
 	45.0 degreeSin. "Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
@@ -439,7 +439,7 @@ FloatTest >> testDegreeSin [
 		self assert: (k * 360) degreeSin equals: 0 ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testDegreeSinForExceptionalValues [
 
 	self assert: Float nan degreeSin isNaN.
@@ -447,7 +447,7 @@ FloatTest >> testDegreeSinForExceptionalValues [
 	self assert: Float infinity negated degreeSin isNaN
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testFloatPrinting [
 	"This test shows that floats are printed exactly. The idea is too make sure that users understand that "
 
@@ -457,7 +457,7 @@ FloatTest >> testFloatPrinting [
   	self assert: 240 degreesToRadians cos abs equals: 0.5000000000000004
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testFloatRounded [
 	"5000000000000001 asFloat has an exact representation (no round off error).
 	It should round to nearest integer without loosing bits.
@@ -485,7 +485,7 @@ FloatTest >> testFloatRounded [
 		self assert: x negated rounded equals: x negated asTrueFraction rounded ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testFloorLog2 [
 	"Float internal representation of Float being in base 2, we expect (aFloat floorLog: 2) to be exact."
 
@@ -502,7 +502,7 @@ FloatTest >> testFloorLog2 [
 			equals: exp - 1 ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testFractionAsFloat [
 	"use a random test"
 
@@ -522,7 +522,7 @@ FloatTest >> testFractionAsFloat [
 			self assert: err <= (1/2)]]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testFractionAsFloat2 [
 	"test rounding to nearest even"
 
@@ -534,7 +534,7 @@ FloatTest >> testFractionAsFloat2 [
 	self assert: ((1<<52)+1+(3/4)) asFloat asTrueFraction equals: ((1<<52)+2)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testHugeIntegerCloseTo [
 	"This is a test for bug http://bugs.squeak.org/view.php?id=7368"
 
@@ -543,7 +543,7 @@ FloatTest >> testHugeIntegerCloseTo [
 	self assert: (Float infinity closeTo: 200 factorial) equals: (200 factorial closeTo: Float infinity)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testInfinityCloseTo [
 	"This is a test for bug http://bugs.squeak.org/view.php?id=6729"
 
@@ -551,7 +551,7 @@ FloatTest >> testInfinityCloseTo [
 	self deny: (Float infinity negated closeTo: Float infinity)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testNaN5 [
 
 	self assert: ((Float nan asIEEE32BitWord printPaddedWith: $0 to: 32 base: 2) copyFrom: 2 to: 9)
@@ -560,7 +560,7 @@ FloatTest >> testNaN5 [
 		(Integer readFrom: '01111111110000000000000000000000' readStream base: 2)) isNaN
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 FloatTest >> testRounding [
 
 	self assert: (10.1234 round: 2) equals: 10.12.

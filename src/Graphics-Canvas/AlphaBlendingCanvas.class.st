@@ -2,25 +2,27 @@
 see ColorMappingCanvas comment.
 "
 Class {
-	#name : #AlphaBlendingCanvas,
-	#superclass : #ColorMappingCanvas,
+	#name : 'AlphaBlendingCanvas',
+	#superclass : 'ColorMappingCanvas',
 	#instVars : [
 		'alpha'
 	],
-	#category : #'Graphics-Canvas-Canvases'
+	#category : 'Graphics-Canvas-Canvases',
+	#package : 'Graphics-Canvas',
+	#tag : 'Canvases'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaBlendingCanvas >> alpha [
 	^alpha
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaBlendingCanvas >> alpha: newAlpha [
 	alpha := newAlpha
 ]
 
-{ #category : #'drawing - images' }
+{ #category : 'drawing - images' }
 AlphaBlendingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the given form. For the 'paint' combination rule use stenciling otherwise simply fill the source rectangle.
 	Do a blendAlpha if the rule is blend to cope with translucent images being drawn (via translucentImage:...)."
@@ -51,7 +53,7 @@ AlphaBlendingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AlphaBlendingCanvas >> mapColor: aColor [
 	aColor isColor ifFalse:[^aColor]. "Should not happen but who knows..."
 	aColor isTransparent ifTrue:[^aColor].
@@ -59,7 +61,7 @@ AlphaBlendingCanvas >> mapColor: aColor [
 	^aColor alpha: (aColor alpha * alpha)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlphaBlendingCanvas >> on: aCanvas [
 	myCanvas := aCanvas.
 	alpha := 1.0

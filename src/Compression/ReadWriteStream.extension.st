@@ -1,6 +1,6 @@
-Extension { #name : #ReadWriteStream }
+Extension { #name : 'ReadWriteStream' }
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 ReadWriteStream >> isZipArchive [
 	"Determine if this appears to be a valid Zip archive"
 	| sig |

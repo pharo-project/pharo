@@ -2,48 +2,50 @@
 Instruction ""send: selector"" or ""send: selector toSuperOf: behavior""
 "
 Class {
-	#name : #IRSend,
-	#superclass : #IRInstruction,
+	#name : 'IRSend',
+	#superclass : 'IRInstruction',
 	#instVars : [
 		'selector',
 		'superOf'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRSend >> accept: aVisitor [
 	^ aVisitor visitSend: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRSend >> isSend [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRSend >> isSuperSend [
     ^superOf notNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSend >> selector [
 	^selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSend >> selector: symbol [
 
 	selector := symbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSend >> superOf [
 
 	^ superOf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSend >> superOf: behavior [
 
 	superOf := behavior

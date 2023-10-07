@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloMethodSpec,
-	#superclass : #Object,
+	#name : 'MetacelloMethodSpec',
+	#superclass : 'Object',
 	#instVars : [
 		'project',
 		'selector',
@@ -8,20 +8,22 @@ Class {
 		'versionString',
 		'methodSections'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> category [
 	^ category
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> category: anObject [
 	category := anObject
 ]
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloMethodSpec >> compileMethod [
 
 	(project configuration class
@@ -30,50 +32,50 @@ MetacelloMethodSpec >> compileMethod [
 		ifTrue: [ self error: 'Error compiling the method' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> methodSections [
 
 	methodSections == nil ifTrue: [ methodSections := OrderedCollection new ].
 	^ methodSections
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> methodSections: anObject [
 	methodSections := anObject
 ]
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloMethodSpec >> methodSource [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> project [
 	^ project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> project: anObject [
 	project := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> selector: anObject [
 	selector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> versionString [
 	^ versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSpec >> versionString: aStringOrSymbol [
 	versionString := aStringOrSymbol
 ]

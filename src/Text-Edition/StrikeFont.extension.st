@@ -1,18 +1,18 @@
-Extension { #name : #StrikeFont }
+Extension { #name : 'StrikeFont' }
 
-{ #category : #'*Text-Edition' }
+{ #category : '*Text-Edition' }
 StrikeFont class >> fromUser [
 	"StrikeFont fromUser"
 	^self fromUser: TextStyle defaultFont
 ]
 
-{ #category : #'*Text-Edition' }
+{ #category : '*Text-Edition' }
 StrikeFont class >> fromUser: priorFont [
 
 	^ UIManager default fontFromUser: priorFont
 ]
 
-{ #category : #'*Text-Edition' }
+{ #category : '*Text-Edition' }
 StrikeFont class >> fromUser: priorFont allowKeyboard: aBoolean [
 	"Present a menu of available fonts, and if one is chosen, return it. Otherwise return nil."
 	"StrikeFont fromUser"

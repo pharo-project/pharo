@@ -1,10 +1,11 @@
 Class {
-	#name : #CmdCommandExampleInDeepMenuGroup,
-	#superclass : #CmdRootOfCommandExamples,
-	#category : #'Commander-Core-Tests'
+	#name : 'CmdCommandExampleInDeepMenuGroup',
+	#superclass : 'CmdRootOfCommandExamples',
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandExampleInDeepMenuGroup class >> menuActivationExample [
 	<classAnnotation>
 

@@ -1,10 +1,11 @@
 Class {
-	#name : #CDWeakClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDWeakClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDWeakClassParserTest >> classDefinitionString [
 
 	^ '{superclassName} weakSubclass: #{classname}
@@ -20,7 +21,7 @@ CDWeakClassParserTest >> classDefinitionString [
 				'classvar2' -> self secondClassVariableName. } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDWeakClassParserTest >> testWeakClassIsWeak [
 
 	self assert: classDefinition layoutClass equals: WeakLayout

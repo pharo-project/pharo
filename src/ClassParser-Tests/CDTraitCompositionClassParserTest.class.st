@@ -1,15 +1,16 @@
 Class {
-	#name : #CDTraitCompositionClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDTraitCompositionClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDTraitCompositionClassParserTest class >> isAbstract [
 	^ self == CDTraitCompositionClassParserTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> classDefinitionString [
 
 ^ '{superclassName} subclass: #{classname}
@@ -27,7 +28,7 @@ CDTraitCompositionClassParserTest >> classDefinitionString [
 				'traitDefinition' -> self traitDefinition } asDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDTraitCompositionClassParserTest >> testBestNodeForTraitCompositionSelectionShouldBeTraitComposition [
 
 	| selectedNode start selection |
@@ -38,19 +39,19 @@ CDTraitCompositionClassParserTest >> testBestNodeForTraitCompositionSelectionSho
 	self assert: selectedNode isTraitComposition
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> traitCompositionNode [
 
 	^ self nodeFor: self traitDefinition
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> traitDefinition [
 
 	self subclassResponsibility
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> traitDefinitionIndex [
 
 	^ self classDefinitionString findString: self traitDefinition

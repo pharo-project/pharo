@@ -1,6 +1,6 @@
-Extension { #name : #WordLayout }
+Extension { #name : 'WordLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 WordLayout class >> mcTypeSymbol [ 
 	^ #words
 ]

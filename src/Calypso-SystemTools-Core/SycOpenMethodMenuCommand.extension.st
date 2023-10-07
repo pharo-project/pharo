@@ -1,13 +1,13 @@
-Extension { #name : #SycOpenMethodMenuCommand }
+Extension { #name : 'SycOpenMethodMenuCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycOpenMethodMenuCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 10100 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycOpenMethodMenuCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 

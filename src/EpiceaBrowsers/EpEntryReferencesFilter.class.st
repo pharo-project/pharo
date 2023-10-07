@@ -2,29 +2,31 @@
 This filter rejects an arbitrary collection of log entries.
 "
 Class {
-	#name : #EpEntryReferencesFilter,
-	#superclass : #EpFilter,
+	#name : 'EpEntryReferencesFilter',
+	#superclass : 'EpFilter',
 	#instVars : [
 		'theLog',
 		'rejectedEntryReferences'
 	],
-	#category : #'EpiceaBrowsers-Filters'
+	#category : 'EpiceaBrowsers-Filters',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Filters'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryReferencesFilter class >> title [
 
 	^ 'Hide selected entries'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpEntryReferencesFilter >> = other [
 
 	^ self class = other class and: [
 		self rejectedEntryReferences = other rejectedEntryReferences ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpEntryReferencesFilter >> accepts: anOmEntry [
 
 	| reference |
@@ -33,33 +35,33 @@ EpEntryReferencesFilter >> accepts: anOmEntry [
 	^ (rejectedEntryReferences includes: reference) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpEntryReferencesFilter >> hash [
 
 	^ self class hash bitXor: self rejectedEntryReferences hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryReferencesFilter >> rejectedEntryReferences [
 	^ rejectedEntryReferences
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryReferencesFilter >> rejectedEntryReferences: anObject [
 	rejectedEntryReferences := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryReferencesFilter >> theLog [
 	^ theLog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryReferencesFilter >> theLog: anObject [
 	theLog := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryReferencesFilter >> title [
 
 	^ self class title

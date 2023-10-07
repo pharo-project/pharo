@@ -5,12 +5,14 @@ If a class X is available in the environment, I return a fetcher for X's instanc
 See my superclass for details.
 "
 Class {
-	#name : #CoVariableWithTypeNameMessageHeuristic,
-	#superclass : #CoVariableMessageHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoVariableWithTypeNameMessageHeuristic',
+	#superclass : 'CoVariableMessageHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoVariableWithTypeNameMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: completionContext [
 
 	"Heuristic: variables with type information.
@@ -32,7 +34,7 @@ CoVariableWithTypeNameMessageHeuristic >> buildFetcherFor: aRBMessageNode inCont
 	^ CoEmptyFetcher new
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoVariableWithTypeNameMessageHeuristic >> newFetcherForMaybeGlobalInstance: aGlobal inASTNode: astNode [
 	"Fetcher for messages to instance variables containing type information.
 	For example: aCollection could autocomplete collection messages."

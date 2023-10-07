@@ -2,29 +2,35 @@
 MetacelloPharoPlatform contains all Pharo specific code to load Metacello.
 "
 Class {
-	#name : #MetacelloPharoCommonPlatform,
-	#superclass : #MetacelloPlatform,
-	#category : #'Metacello-PharoCommonPlatform'
+	#name : 'MetacelloPharoCommonPlatform',
+	#superclass : 'MetacelloPlatform',
+	#category : 'Metacello-PharoCommonPlatform',
+	#package : 'Metacello-PharoCommonPlatform'
 }
 
-{ #category : #utilities }
+{ #category : 'class initialization' }
+MetacelloPharoCommonPlatform class >> initialize [
+  self select
+]
+
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> authorName [
 	^ Author fullName
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> authorName: aString [
 
 	Author fullName: aString
 ]
 
-{ #category : #'github support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
 	
 	anArchive close
 ]
 
-{ #category : #notification }
+{ #category : 'notification' }
 MetacelloPharoCommonPlatform >> collection: aCollection do: aBlock displaying: aString [
 
 	self bypassProgressBars ifTrue: [ ^super collection: aCollection do: aBlock displaying: aString ].
@@ -33,32 +39,33 @@ MetacelloPharoCommonPlatform >> collection: aCollection do: aBlock displaying: a
 		displayingProgress: aString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> compiler [
-	^ Smalltalk compilerClass
+	^ self class compiler
 ]
 
-{ #category : #reflection }
+{ #category : 'reflection' }
 MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName [
+
 	| copysName class newDefinition |
 	copysName := newName asSymbol.
-	copysName = oldClass name
-		ifTrue: [ ^ oldClass ].
-	(Smalltalk globals includesKey: copysName)
-		ifTrue: [ ^ self error: copysName , ' already exists' ].
+	copysName = oldClass name ifTrue: [ ^ oldClass ].
+	(Smalltalk globals includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
 	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
 	newDefinition := newDefinition
-		copyReplaceAll: 'category: ' , (SystemOrganization categoryOfElement: oldClass name) asString printString
-		with: 'category: ' , newCategoryName printString.
-	class := self compiler logged: true; evaluate: newDefinition.
+		                 copyReplaceAll: 'category: ' , oldClass category asString printString
+		                 with: 'category: ' , newCategoryName printString.
+	class := self compiler
+		         logged: true;
+		         evaluate: newDefinition.
 	class class instanceVariableNames: oldClass class instanceVariablesString.
-	class copyAllCategoriesFrom: oldClass.
-	class class copyAllCategoriesFrom: oldClass class.
+	class copyAllMethodsFrom: oldClass.
+	class class copyAllMethodsFrom: oldClass class.
 	class category: newCategoryName.
 	^ class
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPharoCommonPlatform >> createFiletreeRepository: aRepositorySpec [
 	MCRepository 
 		findFiletreeAlternateFormat: aRepositorySpec
@@ -68,7 +75,7 @@ MetacelloPharoCommonPlatform >> createFiletreeRepository: aRepositorySpec [
 	^ super createFiletreeRepository: aRepositorySpec
 ]
 
-{ #category : #'repository creation' }
+{ #category : 'repository creation' }
 MetacelloPharoCommonPlatform >> createFtpRepository: aRepositorySpec [
  	| description headerSize index host directory |
 	
@@ -85,7 +92,14 @@ MetacelloPharoCommonPlatform >> createFtpRepository: aRepositorySpec [
 		password: aRepositorySpec password
 ]
 
-{ #category : #attributes }
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> defaultDirectory [
+	"Get the image default directory"
+	
+	^FileLocator imageDirectory asFileReference
+]
+
+{ #category : 'attributes' }
 MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	| attributes versionString |
 	((Smalltalk respondsTo: #image) and: [ Smalltalk image respondsTo: #metacelloPlatformAttributes ])
@@ -113,12 +127,23 @@ MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	^ attributes
 ]
 
-{ #category : #'file system' }
-MetacelloPharoCommonPlatform >> deleteFileNamed: filePath [
-	filePath asFileReference ensureDelete
+{ #category : 'scripting' }
+MetacelloPharoCommonPlatform >> defaultRepositoryDescription [
+  ^ 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main'
 ]
 
-{ #category : #notification }
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> deleteFileNamed: filePath [
+	filePath asFileReference delete
+]
+
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
+	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
+	^ anotherDirectoryPath resolveString: adirectoryPath
+]
+
+{ #category : 'notification' }
 MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
 
     self bypassProgressBars ifTrue: [ ^ super do: aBlock displaying: aString ].
@@ -131,136 +156,119 @@ MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
             bar value: 2 ]
 ]
 
-{ #category : #'git-based http repo support' }
-MetacelloPharoCommonPlatform >> downloadBasicFile: url to: outputFileName username: username pass: pass [
-	"download from <url> into <outputFileName>"
-
-	| out err proc errorFileName args |
-	"Make a unique name for the error log and ensure that we can write the files"
-	errorFileName := self downloadErrorFileNameFor: outputFileName.
-	out := (outputFileName asFileReference)
-		ensureDelete;
-		writeStream.
-	err := (errorFileName asFileReference)
-		ensureDelete;
-		writeStream.
-	args := username
-		ifNotNil: [ {'-u' . (username , ':' , pass) . '-L' . url} ]
-		ifNil: [ {'-L' . url} ].
-	proc := (self class environment at: #OSProcess) thisOSProcess
-		forkJob: '/usr/bin/curl'
-		arguments: args
-		environment: nil
-		descriptors: (Array with: nil with: out with: err).
-	proc ifNil: [ (self class environment at: #OSProcess) noAccessorAvailable ].
-	[ proc isRunning ] whileTrue: [ (Delay forMilliseconds: 100) wait ].
-	out close.
-	err close.
-	^ errorFileName
-]
-
-{ #category : #'github/bitbucket support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> downloadJSON: url username: username pass: pass [
-	"return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
+  "return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
 
-	| jsonFileName jsonFile errorFileName |
-	jsonFileName := self
-		tempFileFor: 'tags-' , self processPID
-		suffix: 'json'.
-	errorFileName := self
-		downloadBasicFile: url
-		to: jsonFileName
-		username: username
-		pass: pass.
-	[ jsonFile := self fileHandleOn: jsonFileName.
-	jsonFile containingDirectory
-		readOnlyFileNamed: jsonFile localName
-		do: [ :fileStream | 
-			| result |
-			result := (Smalltalk at: #MCFileTreeJsonParser)
-				parseStream: fileStream self
-				deleteFileNamed: errorFileName.
-			^ result ] ]
-		on: Error
-		do: [ :ex | 
-			self
-				error:
-					'Error during download (' , ex description , ') please check the file '
-						, errorFileName printString , ' for error message.' ]
+  | client json |
+  client := ZnClient new
+    url: url;
+    yourself.
+  username ifNotNil: [ client username: username password: pass ].
+  client get.
+  json := client contents.
+  ^ STON fromString: json
 ]
 
-{ #category : #'github support' }
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> downloadZipArchive: url to: outputFileName [
 	"download zip archive from <url> into <outputFileName>"
 
-	| archive zipfile errorFileName |
-	errorFileName := self
-		downloadBasicFile: url
-		to: outputFileName
-		username: nil
-		pass: nil.
-	archive := ZipArchive new.
-	zipfile := self fileHandleOn: outputFileName.
-	zipfile containingDirectory
-		readOnlyFileNamed: zipfile localName
-		do: [ :fileStream | 
-			[ archive readFrom: fileStream ]
-				on: Error
-				do: [ :ex | 
-					self
-						error:
-							'Error during download (' , ex description , ') please check the file '
-								, errorFileName printString , ' for error message.' ] ].
-	self deleteFileNamed: errorFileName.
-	^ archive
+	outputFileName asFileReference ensureDelete.
+	[ :bar | 
+	bar title: 'Download: ' , url asString , ' to ' , outputFileName.
+	[ ZnClient new
+		url: url;
+		signalProgress: true;
+		downloadTo: outputFileName ]
+		on: HTTPProgress
+		do: [ :progress | 
+			progress isEmpty
+				ifFalse: [ bar current: progress percentage ].
+			progress resume ] ] asJob run.
+	^ ZipArchive new readFrom: outputFileName asFileReference
 ]
 
-{ #category : #'github support' }
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> ensureDirectoryExists: aDirectoryHandle [
+	"Ensure the directory exists."
+
+	^ aDirectoryHandle ensureCreateDirectory ; yourself
+]
+
+{ #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
     "unzip <zipFile> into <directory>"
-
-    | out err proc errorMessage errorFileName |
-    errorFileName := self downloadErrorFileNameFor: zipFile.
-    out := ('/tmp/zip.out'asFileReference)
-		ensureDelete;
-		writeStream.
-    err := (errorFileName asFileReference)
-		ensureDelete;
-		writeStream.
-    errorMessage := ''.
-    [ 
-    proc := (self class environment at: #OSProcess) thisOSProcess
-        forkJob: '/usr/bin/unzip'
-        arguments:
-            {'-u'.
-            zipFile.
-            '-d'.
-            directory}
-        environment: nil
-        descriptors: (Array with: nil with: out with: err).
-    proc ifNil: [ self noAccessorAvailable ].
-    [ proc isRunning ] whileTrue: [ (Delay forMilliseconds: 100) wait ] ]
-        ensure: [ 
-            out close.
-            err close ].
-    errorFileName asFileReference
-        binaryReadStreamDo: [ :fileStream | 
-            (errorMessage := fileStream upToEnd) notEmpty
-                ifTrue: [ self error: 'unzip failure: ' , errorMessage printString ]
-                ifFalse: [
-                    (self fileHandleOn: '/tmp')
-                        deleteFileNamed: zipFile;
-                        deleteFileNamed: errorFileName ] ]
+	ZipArchive new 
+		readFrom:  zipFile;
+		extractAllTo: directory asFileReference.
+	zipFile asFileReference delete.
 ]
 
-{ #category : #'repository creation' }
-MetacelloPharoCommonPlatform >> extractTypeFromDescription: description [
-
-	(description beginsWith: 'ftp://') ifTrue: [ ^'ftp' ].
-	^super extractTypeFromDescription: description
+{ #category : 'github/bitbucket support' }
+MetacelloPharoCommonPlatform >> fileDirectoryClass [
+	^FileSystem
 ]
 
-{ #category : #utilities }
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> fileHandleOn: aPath [
+	"Get an handle on a file."
+
+	^ aPath asFileReference
+]
+
+{ #category : 'monticello' }
+MetacelloPharoCommonPlatform >> newVersionForWorkingCopy: aWorkingCopy [
+	^aWorkingCopy newVersionIn: aWorkingCopy repositoryGroup
+]
+
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> parentDirectoryOf: aFileHandler [
+	"Get the parent directory of this file."
+	
+	^ aFileHandler parent
+]
+
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> recursiveDelete: aDirectory [
+	"delete this directory and all children of it"
+
+	^  aDirectory deleteAll
+]
+
+{ #category : 'repository creation' }
+MetacelloPharoCommonPlatform >> registerPackageNamed: packageName [
+  "PackageInfo deprecated in Pharo3.0"
+
+  ^RPackageSet named: packageName
+]
+
+{ #category : 'system' }
+MetacelloPharoCommonPlatform >> selectorForPragma: aPragma [
+	^ aPragma methodSelector
+]
+
+{ #category : 'utilities' }
+MetacelloPharoCommonPlatform >> string: aString includesSubstring: aSubstring [
+	"abstract String>>includesSubstring: to have the same message on all supported platforms."
+
+	^aString includesSubstring: aSubstring
+]
+
+{ #category : 'system' }
+MetacelloPharoCommonPlatform >> suspendSystemUpdateEventsDuring: aBlock [
+	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
+	SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
+]
+
+{ #category : 'file system' }
+MetacelloPharoCommonPlatform >> tempFileFor: aName suffix: aSuffixString [
+	^ (FileLocator temp asFileReference
+		/ (FileReference newTempFilePrefix: aName suffix: aSuffixString) basename)
+		fullName
+]
+
+{ #category : 'utilities' }
 MetacelloPharoCommonPlatform >> timestamp [
 
 	^Date today mmddyyyy, ' ',

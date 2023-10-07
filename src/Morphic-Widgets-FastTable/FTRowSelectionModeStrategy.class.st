@@ -12,112 +12,114 @@ Examples
 	FTRowSelectionModeStrategy table: aFTTableMorph
 "
 Class {
-	#name : #FTRowSelectionModeStrategy,
-	#superclass : #FTSelectionModeStrategy,
-	#category : #'Morphic-Widgets-FastTable-Selection'
+	#name : 'FTRowSelectionModeStrategy',
+	#superclass : 'FTSelectionModeStrategy',
+	#category : 'Morphic-Widgets-FastTable-Selection',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Selection'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTRowSelectionModeStrategy >> allowsRowSelection [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> indexForRow: aRowIndex [
 	^ aRowIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> indexFromPosition: aTuple [
 	^ aTuple first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> indexesToSelectInMultipleSelectionFrom: firstIndex to: endIndex [
 	| step |
 	step := firstIndex <= endIndex ifTrue: [ 1 ] ifFalse: [ -1 ].
 	^ firstIndex to: endIndex by: step
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTRowSelectionModeStrategy >> is: anIndex aboveRow: aRowIndex [
 	^ anIndex < aRowIndex
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTRowSelectionModeStrategy >> is: anIndex afterColumn: aColumnIndex [
 	"A row cannot be before or after a column."
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTRowSelectionModeStrategy >> is: anIndex beforeColumn: aColumn [
 	"A row cannot be before or after a column."
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTRowSelectionModeStrategy >> is: anIndex bellowRow: aRowIndex [
 	^ anIndex > aRowIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> nullIndex [
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> rowIndexFrom: anIndex [
 	^ anIndex
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 FTRowSelectionModeStrategy >> selectAll [
 	self table selectIndexes: (1 to: self table numberOfRows) asArray
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 FTRowSelectionModeStrategy >> selectFirst [
 	self table selectIndex: 1
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 FTRowSelectionModeStrategy >> selectLast [
 	self table selectIndex: self table numberOfRows
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> selectableIndexAbove: anIndex [
 	^ anIndex - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> selectableIndexAfter: anIndex [
 	"Because rows cannot have something at the right or left."
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> selectableIndexBefore: anIndex [
 	"Because rows cannot have something at the right or left."
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> selectableIndexBellow: anIndex [
 	^ anIndex + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTRowSelectionModeStrategy >> selectableIndexContainingPoint: aPoint [
 	^ self tableContainer rowIndexContainingPoint: aPoint
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FTRowSelectionModeStrategy >> selectablesToHighlightFromRow: aFTRow at: aRowIndex withHighlightedIndexes: highligtedIndexes andPrimaryIndex: primarySelectionIndex [
 	| selectablesToColorMap |
 	selectablesToColorMap := Dictionary new.

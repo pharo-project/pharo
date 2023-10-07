@@ -2,18 +2,20 @@
 I'm reporting dependencies of packages previously analysed byt the dependnecy checker.
 "
 Class {
-	#name : #DADependencyReport,
-	#superclass : #Object,
+	#name : 'DADependencyReport',
+	#superclass : 'Object',
 	#instVars : [
 		'dependencies',
 		'warnings',
 		'imageVersion',
 		'analysisRunString'
 	],
-	#category : #'Tool-DependencyAnalyser-Report'
+	#category : 'Tool-DependencyAnalyser-Report',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Report'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 DADependencyReport class >> example [
 	<sampleInstance>
 	^ self new
@@ -25,19 +27,19 @@ DADependencyReport class >> example [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DADependencyReport >> add: aPackageName dependencies: aListOfPackages [
 	dependencies
 		at: aPackageName
 		put: aListOfPackages
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DADependencyReport >> addWarning: aWarning [
 	warnings add: aWarning
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> allPackages [
 	^ Set new
 		addAll: dependencies keys;
@@ -45,17 +47,17 @@ DADependencyReport >> allPackages [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> analysisRunString [
 	^ analysisRunString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> analysisRunString: aString [
 	analysisRunString := aString
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 DADependencyReport >> dependenciesAndKnownDependantsDo: aBlockClosure [
 	dependencies keysAndValuesDo: [ :pkgName :deps |
 		aBlockClosure
@@ -64,48 +66,48 @@ DADependencyReport >> dependenciesAndKnownDependantsDo: aBlockClosure [
 			value: (self knownDependantsOf: pkgName) ]
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 DADependencyReport >> dependenciesDo: aBlockClosure [
 	dependencies keysAndValuesDo: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> dependenciesOf: aPackageName [
 	^ dependencies at: aPackageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> dependenciesOf: aPackageName ifAbsentPut: aBlock [
 	^ dependencies
 		at: aPackageName
 		put: aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> imageVersion [
 	^ imageVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> imageVersion: aSystemVersion [
 	imageVersion := aSystemVersion
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DADependencyReport >> initialize [
 	super initialize.
 	dependencies := Dictionary new.
 	warnings := Set new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> knownDependantsOf: aPackageName [
 	^ dependencies associations
 		select: [ :association | association value includes: aPackageName ]
 		thenCollect: #key
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DADependencyReport >> newReportScopedOn: aPackageName withoutDependencies: aListOfPackageNameToIgnore [
 	"Generates a new dependency report discarding
 	- all packages that are not present in aPackageName transitive dependencies
@@ -128,12 +130,12 @@ DADependencyReport >> newReportScopedOn: aPackageName withoutDependencies: aList
 	^ report
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> transitiveDependenciesOf: aPackageName [
 	^ self transitiveDependenciesOf: aPackageName visited: Set new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyReport >> transitiveDependenciesOf: aPackageName visited: alreadyVisitedPackages [
 	| deps |
 	deps := Set new.
@@ -146,7 +148,7 @@ DADependencyReport >> transitiveDependenciesOf: aPackageName visited: alreadyVis
 	^ deps
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> transitiveDependenciesOf: aPackageName withoutDependenciesOf: aListOfPackageNames [
 	"Do not add noise to the analysis by adding transitive dependencies of dependencies we want to remove."
 	^ self
@@ -154,7 +156,7 @@ DADependencyReport >> transitiveDependenciesOf: aPackageName withoutDependencies
 		visited: (aListOfPackageNames collect: #asSymbol as: Set)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyReport >> warnings [
 	^ warnings
 ]

@@ -9,33 +9,35 @@ All methods must hold the monitor while they run.
 
 "
 Class {
-	#name : #SharedQueue,
-	#superclass : #Stream,
+	#name : 'SharedQueue',
+	#superclass : 'Stream',
 	#instVars : [
 		'monitor',
 		'items'
 	],
-	#category : #'Collections-Sequenceable-Base'
+	#category : 'Collections-Sequenceable-Base',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SharedQueue class >> new [
 	^self basicNew initialize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SharedQueue >> atEnd [
 	^ self isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> contents [
 	" To be compliant with stream API but is really needed? "
 	^ monitor critical:
 		[ items copy ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> findFirst: aBlock [
 	"Answer the next object that satisfies aBlock, skipping any intermediate objects.
 	If no such object has been queued, answer <nil> and leave me intact."
@@ -49,46 +51,46 @@ SharedQueue >> findFirst: aBlock [
 			items removeAt: index ] ]
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 SharedQueue >> flush [
 	"Remove from the queue all objects"
 	monitor critical: [
 		items := items removeAll]
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 SharedQueue >> flushAllSuchThat: aBlock [
 	"Remove from the queue all objects that satisfy aBlock."
 	monitor critical: [
 		items := items reject: aBlock]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SharedQueue >> initialize [
 	super initialize.
 	monitor := Monitor new.
 	items := OrderedCollection new
 ]
 
-{ #category : #size }
+{ #category : 'size' }
 SharedQueue >> isEmpty [
 	^monitor critical: [ items isEmpty ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> next [
 	^monitor critical: [
 		monitor waitWhile: [ items isEmpty ].
 		items removeFirst ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> nextOrNil [
 	^monitor critical: [
 		items isEmpty ifTrue: [ nil ] ifFalse: [ items removeFirst ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> nextOrNilSuchThat: aBlock [
 	"Answer the next object that satisfies aBlock, skipping any intermediate objects.
 	If no object has been sent, answer <nil> and leave me intact.
@@ -103,7 +105,7 @@ SharedQueue >> nextOrNilSuchThat: aBlock [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> nextPut: anObject [
 	monitor critical: [
 		items addLast: anObject.
@@ -111,7 +113,7 @@ SharedQueue >> nextPut: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> peek [
 	"Answer the object that was sent through the receiver first and has not
 	yet been received by anyone but do not remove it from the receiver. If
@@ -120,7 +122,7 @@ SharedQueue >> peek [
 		items isEmpty ifTrue: [ nil ] ifFalse: [ items first ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SharedQueue >> postCopy [
 	super postCopy.
 	monitor critical:
@@ -128,7 +130,7 @@ SharedQueue >> postCopy [
 		monitor := Monitor new]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SharedQueue >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
@@ -137,13 +139,13 @@ SharedQueue >> printOn: aStream [
 	 	nextPutAll: ' items'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> removeAll [
        monitor critical: [
 		items removeAll ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedQueue >> size [
 	^monitor critical: [ items size ]
 ]

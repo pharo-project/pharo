@@ -1,10 +1,12 @@
 Class {
-	#name : #ObjectsAsMethodsTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Methods'
+	#name : 'ObjectsAsMethodsTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ObjectsAsMethodsTest >> setUp [
 	super setUp.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
@@ -13,7 +15,7 @@ ObjectsAsMethodsTest >> setUp [
 		self class addSelector: #foo withMethod: AbstractObjectsAsMethod new ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ObjectsAsMethodsTest >> tearDown [
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self class removeSelector: #add:with:.
@@ -22,18 +24,18 @@ ObjectsAsMethodsTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectsAsMethodsTest >> testAddNumbers [
 	self assert: (self add: 3 with: 4) equals: 7.
 	self assert: (self perform: #add:with: withArguments: #(3 4)) equals: 7
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectsAsMethodsTest >> testAnswer42 [
 	self assert: self answer42 equals: 42
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectsAsMethodsTest >> testDNU [
 
 	self should: [self foo] raise: MessageNotUnderstood

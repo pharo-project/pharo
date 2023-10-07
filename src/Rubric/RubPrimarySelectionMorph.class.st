@@ -2,35 +2,37 @@
 I represent the morph which shows the current selection 
 "
 Class {
-	#name : #RubPrimarySelectionMorph,
-	#superclass : #RubPlainSegmentMorph,
-	#category : #'Rubric-Editing-Core'
+	#name : 'RubPrimarySelectionMorph',
+	#superclass : 'RubPlainSegmentMorph',
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubPrimarySelectionMorph >> defaultBorderColor [
 	^ Color orange
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubPrimarySelectionMorph >> defaultColor [
 	^ self theme selectionColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubPrimarySelectionMorph >> initialize [
 	super initialize.
 	self beExtendable
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 RubPrimarySelectionMorph >> readWriteView [
 	| view |
 	view  := super readWriteView.
 	^ view
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubPrimarySelectionMorph >> registerTextArea [
 	super registerTextArea.
 
@@ -40,24 +42,24 @@ RubPrimarySelectionMorph >> registerTextArea [
 	when:  MorphLostFocus send: #whenTextAreaLostFocus: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPrimarySelectionMorph >> selectionColor [
 	^ self textArea hasFocus
 		ifTrue: [ self theme selectionColor ]
 		ifFalse: [ self theme lessConspicuousColorFrom: (self theme unfocusedSelectionColor) ]
 ]
 
-{ #category : #'protocol - events' }
+{ #category : 'protocol - events' }
 RubPrimarySelectionMorph >> whenTextAreaGotFocus: anAnnouncement [
 	self color: self selectionColor
 ]
 
-{ #category : #'protocol - events' }
+{ #category : 'protocol - events' }
 RubPrimarySelectionMorph >> whenTextAreaLostFocus: anAnnouncement [
 	self color: self selectionColor
 ]
 
-{ #category : #'protocol - events' }
+{ #category : 'protocol - events' }
 RubPrimarySelectionMorph >> whenTextAreaSelectionChanged: anAnnouncement [
 	firstIndex := self textArea markIndex min: self textArea pointIndex.
 	lastIndex := self textArea pointIndex max: self textArea markIndex.

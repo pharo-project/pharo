@@ -1,6 +1,6 @@
-Extension { #name : #UIManager }
+Extension { #name : 'UIManager' }
 
-{ #category : #'*Jobs' }
+{ #category : '*Jobs' }
 UIManager >> displayProgress: titleString from: minVal to: maxVal during: workBlock [
 	"SystemProgressMorph show: titleString from: minVal to:  during: "
 

@@ -2,17 +2,19 @@
 I am a directed link that connects an origin node with a target node in a Hiedra ruler.
 "
 Class {
-	#name : #HiLink,
-	#superclass : #Object,
+	#name : 'HiLink',
+	#superclass : 'Object',
 	#instVars : [
 		'origin',
 		'target',
 		'intermediatePoints'
 	],
-	#category : #'Hiedra-Model'
+	#category : 'Hiedra-Model',
+	#package : 'Hiedra',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HiLink class >> origin: aNode target: anotherNode intermediatePoints: aListOfPoints [
 
 	^ self basicNew
@@ -20,12 +22,12 @@ HiLink class >> origin: aNode target: anotherNode intermediatePoints: aListOfPoi
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HiLink >> doesContinue: anotherLink [
 	^ anotherLink target = origin
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiLink >> initializeWithOrigin: aNode target: anotherNode intermediatePoints: aCollectionOfPoints [
 
 	self initialize.
@@ -35,24 +37,24 @@ HiLink >> initializeWithOrigin: aNode target: anotherNode intermediatePoints: aC
 	intermediatePoints := aCollectionOfPoints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiLink >> intermediatePoints [
 	^ intermediatePoints
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HiLink >> isDescending [
 	"Answer whether the origin of this link is over the target."
 
 	^ origin rulerPoint y < target rulerPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiLink >> origin [
 	^ origin
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HiLink >> printOn: aStream [
 
 	super printOn: aStream.
@@ -65,7 +67,7 @@ HiLink >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiLink >> target [
 	^ target
 ]

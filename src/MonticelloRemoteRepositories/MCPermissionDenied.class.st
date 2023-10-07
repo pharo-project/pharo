@@ -2,27 +2,28 @@
 I am signalled when a repositroy cannot save or access a version.
 "
 Class {
-	#name : #MCPermissionDenied,
-	#superclass : #Error,
+	#name : 'MCPermissionDenied',
+	#superclass : 'Error',
 	#instVars : [
 		'repository'
 	],
-	#category : #MonticelloRemoteRepositories
+	#category : 'MonticelloRemoteRepositories',
+	#package : 'MonticelloRemoteRepositories'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 MCPermissionDenied class >> signalFor: aRepository [
 	^ self new
 		repository: aRepository;
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPermissionDenied >> repository [
 	^ repository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPermissionDenied >> repository: anObject [
 	repository := anObject
 ]

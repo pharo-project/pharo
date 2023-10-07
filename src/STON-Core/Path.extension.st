@@ -1,6 +1,6 @@
-Extension { #name : #Path }
+Extension { #name : 'Path' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Path class >> fromSton: stonReader [
 	| elements |
 	elements := Array streamContents: [ :out |
@@ -8,7 +8,7 @@ Path class >> fromSton: stonReader [
 	^ self withAll: elements
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Path >> stonOn: stonWriter [
 	stonWriter
 		writeObject: self

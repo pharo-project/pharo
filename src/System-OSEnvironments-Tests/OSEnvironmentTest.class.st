@@ -2,22 +2,36 @@
 This tests the OSEnvironment. The tests assume that there is at least 1 environment variable given.
 "
 Class {
-	#name : #OSEnvironmentTest,
-	#superclass : #TestCase,
-	#category : #'System-OSEnvironments-Tests'
+	#name : 'OSEnvironmentTest',
+	#superclass : 'TestCase',
+	#category : 'System-OSEnvironments-Tests',
+	#package : 'System-OSEnvironments-Tests'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
+OSEnvironmentTest >> envNameForTest [
+
+	^ 'PHAROTEST'
+]
+
+{ #category : 'helper' }
 OSEnvironmentTest >> instance [
 	^ Smalltalk os environment
 ]
 
-{ #category : #tests }
+{ #category : 'running' }
+OSEnvironmentTest >> tearDown [
+
+	self instance removeKey: self envNameForTest.
+	super tearDown
+]
+
+{ #category : 'tests' }
 OSEnvironmentTest >> testAsDictionary [
 	self assert: self instance asDictionary isDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSEnvironmentTest >> testAssociations [
 	| associations |
 	associations := self instance associations.
@@ -26,7 +40,7 @@ OSEnvironmentTest >> testAssociations [
 	self assert: associations anyOne value isString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSEnvironmentTest >> testAtPut [
 	| key value env |
 
@@ -41,7 +55,7 @@ OSEnvironmentTest >> testAtPut [
 	self deny: (env includesKey: key)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSEnvironmentTest >> testEnvironmentFor [
 
 	| compareDictionary |
@@ -64,7 +78,7 @@ OSEnvironmentTest >> testEnvironmentFor [
 			equals: envClassName ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSEnvironmentTest >> testKeys [
 	| env keys |
 	env := self instance.
@@ -75,7 +89,41 @@ OSEnvironmentTest >> testKeys [
 	self assert: (env includesKey: keys anyOne)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+OSEnvironmentTest >> testSettingEnvValueDuringChangesValueInDuringBlock [
+
+	| envName expected |
+	envName := self envNameForTest.
+	self instance setEnv: envName value: 'Before'.
+	expected := 'After'.
+	self instance setEnv: envName value: expected during: [
+		| actual |
+		actual := self instance at: envName.
+		self assert: actual equals: expected ]
+]
+
+{ #category : 'tests' }
+OSEnvironmentTest >> testSettingEnvValueDuringRevertsValueAfterDuringBlock [
+
+	| actual envName expected |
+	envName := self envNameForTest.
+	self instance setEnv: envName value: 'Before'.
+	expected := 'After'.
+	self instance setEnv: envName value: expected during: [  ].
+	actual := self instance at: envName.
+	self assert: actual equals: expected
+]
+
+{ #category : 'tests' }
+OSEnvironmentTest >> testSettingNewEnvValueDuringRemovesItAfterDuringBlock [
+
+	| envName |
+	envName := self envNameForTest.
+	self instance setEnv: envName value: 'During' during: [  ].
+	self deny: (self instance includesKey: envName)
+]
+
+{ #category : 'tests' }
 OSEnvironmentTest >> testValues [
 	| env values |
 	env := self instance.

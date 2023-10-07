@@ -1,6 +1,6 @@
-Extension { #name : #RGPackage }
+Extension { #name : 'RGPackage' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGPackage >> asMCSnapshot [
 
 	| definitions |

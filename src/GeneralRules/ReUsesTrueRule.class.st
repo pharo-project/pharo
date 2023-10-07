@@ -4,24 +4,26 @@ Checks for uses of the classes True and False instead of the objects true and fa
 true is the object true, while True is the class whose true is the sole instance.
 "
 Class {
-	#name : #ReUsesTrueRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReUsesTrueRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReUsesTrueRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUsesTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UsesTrueRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemUsages |
 	problemUsages := aMethod ast variableNodes select: [ :aNode |
@@ -30,17 +32,17 @@ ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: ref hint: ref name asString)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUsesTrueRule >> group [
 	^ 'Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUsesTrueRule >> name [
 	^ 'Uses True/False instead of true/false'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUsesTrueRule >> severity [
 	^ #error
 ]

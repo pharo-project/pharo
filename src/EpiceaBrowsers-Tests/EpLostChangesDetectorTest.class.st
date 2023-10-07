@@ -2,15 +2,17 @@
 An EpLostChangesDetectorTest is a test class for testing the behavior of EpLostChangesDetector
 "
 Class {
-	#name : #EpLostChangesDetectorTest,
-	#superclass : #EpEnabledIntegrationTest,
+	#name : 'EpLostChangesDetectorTest',
+	#superclass : 'EpEnabledIntegrationTest',
 	#instVars : [
 		'detector'
 	],
-	#category : #'EpiceaBrowsers-Tests-Integration'
+	#category : 'EpiceaBrowsers-Tests-Integration',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectInEmptyLog [
 	detector := EpLostChangesDetector newWithLog: monitor log.
 	self deny: detector hasLostChanges.
@@ -19,20 +21,20 @@ EpLostChangesDetectorTest >> testDetectInEmptyLog [
 	self assertEmpty: monitor log entries	"Just to be sure of the assumed precondition"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectNoChange [
+
 	classFactory newClass.
 	monitor log store flush.
 	detector := EpLostChangesDetector newWithLog: monitor log.
 	self deny: detector hasLostChanges.
 	self assertEmpty: detector lostChanges.
 
-	"Category addition and registration are two separate events"
-	"Just to be sure of the assumed precondition: category and only one class created"	
+	"Just to be sure of the assumed precondition: package, package tag and only one class created"
 	self assert: monitor log entriesCount equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectNoChangeBecauseLogFileWasDeleted [
 
 	| logWithALostChange |
@@ -50,7 +52,7 @@ EpLostChangesDetectorTest >> testDetectNoChangeBecauseLogFileWasDeleted [
 	self assertEmpty: detector lostChanges
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 
 	| logWithALostChange |
@@ -70,7 +72,7 @@ EpLostChangesDetectorTest >> testDetectOneChangeDetectedAndOneIgnored [
 	self assert: monitor log entriesCount > 1. "Just to ensure assumptions of this test"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectThreeChanges [
 
 	| logWithLostChanges numberOfLostChanges expectedLostClassNames detectedLostChanges detectedLostClassChanges |
@@ -86,9 +88,9 @@ EpLostChangesDetectorTest >> testDetectThreeChanges [
 
 	detectedLostChanges := detector lostChanges.
 	self
-		assert: (detectedLostChanges anySatisfy: [ : omEntry | omEntry content isEpCategoryChange ])
-		description: 'It test that the class additions include a category registration'.
-	detectedLostClassChanges := detectedLostChanges reject: [ : omEntry | omEntry content isEpCategoryChange ].
+		assert: (detectedLostChanges anySatisfy: [ : omEntry | omEntry content isEpPackageTagChange ])
+		description: 'It test that the class additions include a tag registration'.
+	detectedLostClassChanges := detectedLostChanges reject: [ : omEntry | omEntry content isEpPackageTagChange ].
 	detectedLostClassChanges do: [ :each | self assert: each content isEpClassChange ].
 
 	self assert: detectedLostClassChanges size equals: numberOfLostChanges.

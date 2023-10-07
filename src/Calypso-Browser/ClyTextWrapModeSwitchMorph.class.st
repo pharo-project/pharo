@@ -7,15 +7,17 @@ Internal Representation and Key Implementation Points.
 	wrapModeLabel:		<StringMorph>
 "
 Class {
-	#name : #ClyTextWrapModeSwitchMorph,
-	#superclass : #ClyTextMorphToolMorph,
+	#name : 'ClyTextWrapModeSwitchMorph',
+	#superclass : 'ClyTextMorphToolMorph',
 	#instVars : [
 		'wrapModeLabel'
 	],
-	#category : #'Calypso-Browser-TextEditors'
+	#category : 'Calypso-Browser-TextEditors',
+	#package : 'Calypso-Browser',
+	#tag : 'TextEditors'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTextWrapModeSwitchMorph >> attachToTextMorph [
 	super attachToTextMorph.
 
@@ -27,7 +29,7 @@ ClyTextWrapModeSwitchMorph >> attachToTextMorph [
 	self addMorph: wrapModeLabel
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTextWrapModeSwitchMorph >> toggle [
 	textMorph wrapped
 		ifTrue: [ textMorph beNotWrapped  ]
@@ -35,7 +37,7 @@ ClyTextWrapModeSwitchMorph >> toggle [
 	self updateLabel
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyTextWrapModeSwitchMorph >> updateLabel [
 
 	| newValue |

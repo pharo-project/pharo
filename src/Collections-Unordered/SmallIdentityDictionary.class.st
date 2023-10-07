@@ -3,17 +3,19 @@ I'm a SmallDictionary (this means faster than default one when dealing with limi
 but I check my key based on identity.
 "
 Class {
-	#name : #SmallIdentityDictionary,
-	#superclass : #SmallDictionary,
-	#category : #'Collections-Unordered-Dictionaries'
+	#name : 'SmallIdentityDictionary',
+	#superclass : 'SmallDictionary',
+	#category : 'Collections-Unordered-Dictionaries',
+	#package : 'Collections-Unordered',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SmallIdentityDictionary >> findIndexForKey: aKey [
 	^ keys identityIndexOf: aKey
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SmallIdentityDictionary >> setClass [
 	^ IdentitySet
 ]

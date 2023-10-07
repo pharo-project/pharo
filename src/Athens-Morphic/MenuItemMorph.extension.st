@@ -1,6 +1,6 @@
-Extension { #name : #MenuItemMorph }
+Extension { #name : 'MenuItemMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MenuItemMorph >> drawBackgroundOnAthensCanvas: anAthensCanvas [
 	(isSelected and: [ isEnabled ])
 		ifFalse: [ ^ self ].
@@ -8,7 +8,7 @@ MenuItemMorph >> drawBackgroundOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas drawShape: (0 @ 0 extent: self extent)
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MenuItemMorph >> drawIconAndLabelOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas pathTransform
 		restoreAfter: [
@@ -16,7 +16,7 @@ MenuItemMorph >> drawIconAndLabelOnAthensCanvas: anAthensCanvas [
 			self drawLabelOnAthensCanvas: anAthensCanvas ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MenuItemMorph >> drawIconOnAthensCanvas: anAthensCanvas [
 	self hasIcon
 		ifFalse: [ ^ self ].
@@ -25,7 +25,7 @@ MenuItemMorph >> drawIconOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas pathTransform translateX: self iconForm width + 2 Y: 0
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MenuItemMorph >> drawLabelOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas pathTransform translateX: 0 Y: self fontToUse getPreciseAscent.
 			anAthensCanvas
@@ -34,7 +34,7 @@ MenuItemMorph >> drawLabelOnAthensCanvas: anAthensCanvas [
 				drawString: contents
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MenuItemMorph >> drawOnAthensCanvas: anAthensCanvas [
 	| bnd |
 	bnd := self bounds topLeft + self layoutInset.
@@ -46,7 +46,7 @@ MenuItemMorph >> drawOnAthensCanvas: anAthensCanvas [
 			self drawSubMenuMarkerOnAthensCanvas: anAthensCanvas ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MenuItemMorph >> drawSubMenuMarkerOnAthensCanvas: anAthensCanvas [
 	self hasSubMenu
 		ifFalse: [ ^ self ].

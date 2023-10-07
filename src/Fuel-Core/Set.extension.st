@@ -1,6 +1,6 @@
-Extension { #name : #Set }
+Extension { #name : 'Set' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Set >> addIfNotPresent: anObject ifPresentDo: aBlock [
 	"Include anObject as one of the receiver's elements and then value aBlock, but only if there
 	is no such element already. Anwser anObject."
@@ -23,7 +23,7 @@ Set >> addIfNotPresent: anObject ifPresentDo: aBlock [
 	^ anObject"
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Set >> fuelAccept: aGeneralMapper [
 	"Since we have subclasses of Set that behave differently, we cannot use the visitSimpleCollection: for all of them."
 	^ ((self class == Set) or: [ self class == IdentitySet ] ) 
@@ -31,7 +31,7 @@ Set >> fuelAccept: aGeneralMapper [
 		ifFalse: [ super fuelAccept: aGeneralMapper ]
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Set >> fuelAfterMaterialization [
 
 	"Since for Set and IdentitySet we are recreating the collection with #add: (see FLSimpleCollectionCluster) we do not need to rehash"

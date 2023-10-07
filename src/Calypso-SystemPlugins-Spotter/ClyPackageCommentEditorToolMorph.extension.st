@@ -1,6 +1,6 @@
-Extension { #name : #ClyPackageCommentEditorToolMorph }
+Extension { #name : 'ClyPackageCommentEditorToolMorph' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyPackageCommentEditorToolMorph >> simpleNameForSpotterMenu [
 	^'Comment editor: ', editingPackage name
 ]

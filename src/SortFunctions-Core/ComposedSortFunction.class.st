@@ -7,41 +7,42 @@ Instances variables:
 	baseSortFunction		<SortFunction>	the wrapped sort function
 "
 Class {
-	#name : #ComposedSortFunction,
-	#superclass : #SortFunction,
+	#name : 'ComposedSortFunction',
+	#superclass : 'SortFunction',
 	#instVars : [
 		'baseSortFunction'
 	],
-	#category : #'SortFunctions-Core'
+	#category : 'SortFunctions-Core',
+	#package : 'SortFunctions-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ComposedSortFunction class >> on: aSortFunction [
 	^self new baseSortFunction: aSortFunction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ComposedSortFunction >> = aSortFunction [
 	self == aSortFunction ifTrue: [ ^true ].
 	^self class = aSortFunction class and: [ baseSortFunction = aSortFunction baseSortFunction ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ComposedSortFunction >> baseSortFunction [
 	^baseSortFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ComposedSortFunction >> baseSortFunction: aSortFunction [
 	baseSortFunction := aSortFunction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ComposedSortFunction >> hash [
 	^baseSortFunction hash hashMultiply
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ComposedSortFunction >> initialize [
 	super initialize.
 	baseSortFunction := self class default

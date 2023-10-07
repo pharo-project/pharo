@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyInterestingSuperclassScopeTest,
-	#superclass : #ClyClassHierarchyScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyInterestingSuperclassScopeTest',
+	#superclass : 'ClyClassHierarchyScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyInterestingSuperclassScopeTest >> scopeClass [
 	^ClyInterestingSuperclassScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationOverClassShouldStopAtObject [
 	scope := ClyInterestingSuperclassScope of: Class.
 
@@ -18,7 +20,7 @@ ClyInterestingSuperclassScopeTest >> testClassEnumerationOverClassShouldStopAtOb
 	self assert: result asSet equals: {ClassDescription. Behavior} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenClassSideIsLocalScope [
 
 	scope := ClyInterestingSuperclassScope
@@ -29,7 +31,7 @@ ClyInterestingSuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenC
 	self assert: result asSet equals: {ClyClass1FromP1Mock class} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenInstanceSideIsLocalScope [
 
 	scope := ClyInterestingSuperclassScope
@@ -40,7 +42,7 @@ ClyInterestingSuperclassScopeTest >> testClassEnumerationOverMetaclassBasisWhenI
 	self assert: result asSet equals: {ClyClass1FromP1Mock } asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationShouldStopAtObject [
 	scope := ClyInterestingSuperclassScope of: ClySubclassN1OfClass1FromP1Mock.
 
@@ -49,7 +51,7 @@ ClyInterestingSuperclassScopeTest >> testClassEnumerationShouldStopAtObject [
 	self assert: result asArray equals: {ClyClass1FromP1Mock}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInterestingSuperclassScopeTest >> testClassEnumerationWhenObjectIsFirstSuperclass [
 	scope := ClyInterestingSuperclassScope of: ClyClass1FromP1Mock.
 

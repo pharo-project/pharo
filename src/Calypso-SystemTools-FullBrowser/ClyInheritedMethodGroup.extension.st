@@ -1,6 +1,6 @@
-Extension { #name : #ClyInheritedMethodGroup }
+Extension { #name : 'ClyInheritedMethodGroup' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyInheritedMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	super decorateTableCell: anItemCellMorph of: groupItem.
 	anItemCellMorph setBalloonText: self tooltipText.
@@ -9,7 +9,7 @@ ClyInheritedMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 		each decorateMethodGroupTableCell: anItemCellMorph of: groupItem ]
 ]
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyInheritedMethodGroup >> tooltipText [
 
 	^'Expand me to toggle method visibility of concrete class.

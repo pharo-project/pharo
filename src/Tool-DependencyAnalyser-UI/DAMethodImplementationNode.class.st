@@ -2,12 +2,14 @@
 I'm a tree node representing a method implementation
 "
 Class {
-	#name : #DAMethodImplementationNode,
-	#superclass : #DAMethodDependencyNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAMethodImplementationNode',
+	#superclass : 'DAMethodDependencyNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #'building-menu' }
+{ #category : 'building-menu' }
 DAMethodImplementationNode >> addMenuEntriesOn: aMenuGroup [
 	| method |
 	method := self content.
@@ -21,12 +23,12 @@ DAMethodImplementationNode >> addMenuEntriesOn: aMenuGroup [
 					"TODO: run the analysis again" ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAMethodImplementationNode >> icon [
 	^ self iconNamed: #package
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DAMethodImplementationNode >> label [
 	^ String streamContents: [ :stream |
 		stream

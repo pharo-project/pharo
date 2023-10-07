@@ -1,19 +1,21 @@
 Class {
-	#name : #MCMergingTest,
-	#superclass : #MCTestCase,
+	#name : 'MCMergingTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'conflicts'
 	],
-	#category : #'Monticello-Tests-Base'
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCMergingTest >> assert: aCollection hasElements: anArray [
 
 	self assert: (aCollection collect: [ :ea | ea token ]) asSet equals: anArray asSet
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCMergingTest >> assertMerge: local with: remote base: ancestor gives: result conflicts: conflictResult [
 	| merger |
 	conflicts := #().
@@ -23,7 +25,7 @@ MCMergingTest >> assertMerge: local with: remote base: ancestor gives: result co
 	self assert: conflicts asSet equals: conflictResult asSet
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 MCMergingTest >> handleConflict: aConflict [	
 	|l r|
 	l := #removed.
@@ -40,14 +42,14 @@ MCMergingTest >> handleConflict: aConflict [
 		
 ]
 
-{ #category : #emulating }
+{ #category : 'emulating' }
 MCMergingTest >> snapshotWithElements: anArray [
 
 	^ MCSnapshot
 		fromDefinitions: (anArray collect: [:t | self mockToken: t])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testAdditiveConflictlessMerge [
 	self
 		assertMerge: #(a1 b1)
@@ -58,7 +60,7 @@ MCMergingTest >> testAdditiveConflictlessMerge [
 				conflicts: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testComplexConflictlessMerge [
 	self 
 		assertMerge: #(a1 b1 d1)
@@ -69,7 +71,7 @@ MCMergingTest >> testComplexConflictlessMerge [
 				conflicts: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testIdenticalModification [
 	self
 		assertMerge: #(a2 b1)
@@ -80,7 +82,7 @@ MCMergingTest >> testIdenticalModification [
 				conflicts: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testLocalModifyRemoteRemove [
 	self assertMerge: #(a2 b1)
 				with: #(b1)
@@ -97,7 +99,7 @@ MCMergingTest >> testLocalModifyRemoteRemove [
 				conflicts: #((removed a1)).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testLocalRemoveRemoteModify [
 	self assertMerge: #(b1)
 				with: #(a1 b1)
@@ -114,7 +116,7 @@ MCMergingTest >> testLocalRemoveRemoteModify [
 				conflicts: #((a2 removed)).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testMultiPackageMerge [
 	| merger |
 	conflicts := #().
@@ -127,7 +129,7 @@ MCMergingTest >> testMultiPackageMerge [
 	self assertEmpty: conflicts
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testMultiPackageMerge2 [
 	| merger |
 	conflicts := #().
@@ -140,7 +142,7 @@ MCMergingTest >> testMultiPackageMerge2 [
 	self assertEmpty: conflicts
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testMultiPackageMerge3 [
 	| merger |
 	conflicts := #().
@@ -153,7 +155,7 @@ MCMergingTest >> testMultiPackageMerge3 [
 	self assertEmpty: conflicts
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testMultipleConflicts [
 	self assertMerge: #(a1 b3 c1)
 				with: #(a1 b2 d1)
@@ -164,7 +166,7 @@ MCMergingTest >> testMultipleConflicts [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testSimultaneousModification [
 	self assertMerge: #(a2)
 				with: #(a3)
@@ -174,7 +176,7 @@ MCMergingTest >> testSimultaneousModification [
 				conflicts: #((a3 a2)).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testSimultaneousRemove [
 	self assertMerge: #(a1)
 				with: #(a1)
@@ -184,7 +186,7 @@ MCMergingTest >> testSimultaneousRemove [
 				conflicts: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCMergingTest >> testSubtractiveConflictlessMerge [
 	self assertMerge: #(a1 b1)
 				with: #()

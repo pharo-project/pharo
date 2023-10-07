@@ -1,32 +1,34 @@
 Class {
-	#name : #ClyVariableReadersQueryTest,
-	#superclass : #ClyVariableReferencesTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyVariableReadersQueryTest',
+	#superclass : 'ClyVariableReferencesTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableReadersQueryTest >> queryClass [
 	^ClyVariableReadersQuery
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReadersQueryTest >> reader1OfVar1 [
 
 	^readVar1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReadersQueryTest >> reader2OfVar1 [
 
 	^readVar1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableReadersQueryTest >> targetVarName [
 	^#readVar1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReadersQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope of: self class >> #reader1OfVar1 in: environment).
 	self deny: query checkEmptyResult.
@@ -35,7 +37,7 @@ ClyVariableReadersQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReadersQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
@@ -44,7 +46,7 @@ ClyVariableReadersQueryTest >> testFromClassScope [
 	self assert: foundSelectors equals: #(reader1OfVar1 reader2OfVar1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReadersQueryTest >> testFromMethodScope [
 	self queryFromScope: ClyMethodScope ofAll: {(self class >> #reader1OfVar1) . (self class >> #writerOfVar1)}.
 
@@ -52,7 +54,7 @@ ClyVariableReadersQueryTest >> testFromMethodScope [
 	self assert: resultItems first identicalTo: self class >> #reader1OfVar1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReadersQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
@@ -61,7 +63,7 @@ ClyVariableReadersQueryTest >> testFromPackageScope [
 	self assert: foundSelectors equals: #(reader1OfVar1 reader2OfVar1 supeclassReaderOfVar1)
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReadersQueryTest >> writerOfVar1 [
 
 	readVar1 := #testValue

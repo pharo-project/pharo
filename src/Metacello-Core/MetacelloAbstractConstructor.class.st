@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloAbstractConstructor,
-	#superclass : #Object,
-	#category : #'Metacello-Core-Constructors'
+	#name : 'MetacelloAbstractConstructor',
+	#superclass : 'Object',
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractConstructor >> configurationClass [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloAbstractConstructor >> extractAllVersionPragmas [
 
 	| aDict |
@@ -20,7 +22,7 @@ MetacelloAbstractConstructor >> extractAllVersionPragmas [
 	^aDict
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloAbstractConstructor >> extractCommonDefaultSymbolicVersionPragmas [
 
 	| aDict |
@@ -29,7 +31,7 @@ MetacelloAbstractConstructor >> extractCommonDefaultSymbolicVersionPragmas [
 	^aDict
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloAbstractConstructor >> extractDefaultSymbolicVersionPragmas [
 
 	| aDict |
@@ -38,7 +40,7 @@ MetacelloAbstractConstructor >> extractDefaultSymbolicVersionPragmas [
 	^aDict
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractConstructor >> extractPragmas: pragmaKeyword for: aClass into: versionDict [
 
 	| versionString  pragmas |
@@ -55,13 +57,13 @@ MetacelloAbstractConstructor >> extractPragmas: pragmaKeyword for: aClass into: 
 			pragmas add: pragma ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractConstructor >> extractPragmas: pragmaKeyword into: versionDict [
 
 	^self extractPragmas: pragmaKeyword for: self configurationClass into: versionDict
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloAbstractConstructor >> extractSymbolicVersionPragmas [
 
 	| aDict |
@@ -70,7 +72,7 @@ MetacelloAbstractConstructor >> extractSymbolicVersionPragmas [
 	^aDict
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloAbstractConstructor >> extractVersionImportPragmas [
 
 	| aDict |
@@ -79,7 +81,7 @@ MetacelloAbstractConstructor >> extractVersionImportPragmas [
 	^aDict
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloAbstractConstructor >> extractVersionPragmas [
 
 	| aDict |

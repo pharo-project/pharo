@@ -1,6 +1,6 @@
-Extension { #name : #RBSwapMethodRefactoring }
+Extension { #name : 'RBSwapMethodRefactoring' }
 
-{ #category : #'*NautilusRefactoring' }
+{ #category : '*NautilusRefactoring' }
 RBSwapMethodRefactoring >> whatToDisplayIn: aBrowser [
 
 	^ (self changes changes

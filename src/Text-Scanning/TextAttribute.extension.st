@@ -1,6 +1,6 @@
-Extension { #name : #TextAttribute }
+Extension { #name : 'TextAttribute' }
 
-{ #category : #'*Text-Scanning' }
+{ #category : '*Text-Scanning' }
 TextAttribute >> emphasizeScanner: scanner [
 	"Subclasses may override to set, eg, font, color, etc"
 ]

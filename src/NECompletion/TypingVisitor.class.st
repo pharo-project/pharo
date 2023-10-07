@@ -2,27 +2,29 @@
 A visitor that does the typing for better completion. No type guessing, just using the information that's already known to the system
 "
 Class {
-	#name : #TypingVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'TypingVisitor',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'typeStack'
 	],
-	#category : #'NECompletion-Model'
+	#category : 'NECompletion-Model',
+	#package : 'NECompletion',
+	#tag : 'Model'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TypingVisitor >> initialize [
 
 	typeStack := Stack new.
 	typeStack push: Dictionary new
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitArrayNode: aLiteralNode [
 	 aLiteralNode propertyAt: #type put: Array
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitAssignmentNode: anAssignmentNode [
 	"if not a temporary variable - return.
 	if no type return.
@@ -36,7 +38,7 @@ TypingVisitor >> visitAssignmentNode: anAssignmentNode [
 	typeStack top at: anAssignmentNode variable name put: variableType
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitBlockNode: aBlockNode [
 	"inside a stack we push a copy of an already existing dictionary (with the state of variables before the block) because in the block we want to know the previous state of variables, and then if inside the block the type of the variable changes we update our copy. after the block exit if the variable type has changed explicitly again, then we take after-block change, otherwise we take the last before-block type and the last inside-block type and if they are the same the type stays the same, otherwise it's updated to their common superclass, because we don't know if the block executes so want suggestions from either"
 	| stackTop |
@@ -53,29 +55,29 @@ TypingVisitor >> visitBlockNode: aBlockNode [
 	aBlockNode propertyAt: #type put: BlockClosure
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitGlobalNode: aGlobalNode [
 	aGlobalNode
 		propertyAt: #type
 		put: aGlobalNode binding read class
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitLiteralArrayNode: aLiteralNode [
 	 aLiteralNode propertyAt: #type put: Array
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitLiteralNode: aLiteralNode [
 	 aLiteralNode propertyAt: #type put: aLiteralNode value class
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitSelfNode: aSelfNode [
 	aSelfNode propertyAt: #type put: aSelfNode methodNode methodClass
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitSuperNode: aSuperNode [
 	| class |
 	class := aSuperNode methodNode methodClass.
@@ -84,7 +86,7 @@ TypingVisitor >> visitSuperNode: aSuperNode [
 	aSuperNode propertyAt: #type put: class superclass
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TypingVisitor >> visitTemporaryNode: aTemporaryNode [
 	(typeStack top includesKey: aTemporaryNode name) ifFalse: [^self ].
 	aTemporaryNode propertyAt: #type put: (typeStack top at: aTemporaryNode name)

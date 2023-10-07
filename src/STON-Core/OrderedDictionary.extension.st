@@ -1,6 +1,6 @@
-Extension { #name : #OrderedDictionary }
+Extension { #name : 'OrderedDictionary' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 OrderedDictionary class >> fromSton: stonReader [
 	"My instances are stored as maps."
 
@@ -11,7 +11,7 @@ OrderedDictionary class >> fromSton: stonReader [
 	^ dictionary
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 OrderedDictionary >> stonOn: stonWriter [
 	"I store my instances as maps. When in JSON mode,
 	encode me directly, without a class tag, keeping the order."

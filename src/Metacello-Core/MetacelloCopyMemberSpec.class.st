@@ -1,36 +1,38 @@
 Class {
-	#name : #MetacelloCopyMemberSpec,
-	#superclass : #MetacelloMemberSpec,
+	#name : 'MetacelloCopyMemberSpec',
+	#superclass : 'MetacelloMemberSpec',
 	#instVars : [
 		'sourceName'
 	],
-	#category : #'Metacello-Core-Members'
+	#category : 'Metacello-Core-Members',
+	#package : 'Metacello-Core',
+	#tag : 'Members'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloCopyMemberSpec >> applyAdd: addBlock copy: copyBlock merge: mergeBlock remove: removeBlock [
     copyBlock value: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloCopyMemberSpec >> applyToList: aListSpec [
 
 	aListSpec copy: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCopyMemberSpec >> methodUpdateSelector [
 
 	^#copy:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCopyMemberSpec >> sourceName [
 
 	^sourceName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCopyMemberSpec >> sourceName: aString [
 
 	sourceName := aString

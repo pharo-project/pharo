@@ -2,15 +2,17 @@
 I am SelectorException, an abstract superclass for exceptions related to a selector.
 "
 Class {
-	#name : #SelectorException,
-	#superclass : #Error,
+	#name : 'SelectorException',
+	#superclass : 'Error',
 	#instVars : [
 		'selector'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 SelectorException class >> signalFor: aSelector [
 	"Create and signal an exception for aSelector in the default receiver."
 
@@ -19,7 +21,7 @@ SelectorException class >> signalFor: aSelector [
 		signal
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 SelectorException class >> signalFor: aSelector in: aReceiver [
 	"Create and signal an exception for aSelector in aReceiver."
 
@@ -29,24 +31,24 @@ SelectorException class >> signalFor: aSelector in: aReceiver [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectorException >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
 
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectorException >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectorException >> selector: aSelector [
 	selector := aSelector
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SelectorException >> standardMessageText [
 	"Generate a standard textual description"
 

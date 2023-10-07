@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Activators-ContextMenu' }
+Package { #name : 'Commander-Activators-ContextMenu' }

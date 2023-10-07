@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfQA }
+Package { #name : 'BaselineOfQA' }

@@ -1,6 +1,6 @@
-Extension { #name : #Process }
+Extension { #name : 'Process' }
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 Process >> stepToSendOrReturn [
 
 	^Processor activeProcess

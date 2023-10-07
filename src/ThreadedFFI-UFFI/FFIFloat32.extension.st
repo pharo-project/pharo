@@ -1,6 +1,6 @@
-Extension { #name : #FFIFloat32 }
+Extension { #name : 'FFIFloat32' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIFloat32 >> tfExternalType [
 
 	^ TFBasicType float

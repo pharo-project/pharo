@@ -149,8 +149,8 @@ One of following flags (as LoadTargetXXX) can be used to further specify the res
 
 "
 Class {
-	#name : #AthensFT2Constants,
-	#superclass : #SharedPool,
+	#name : 'AthensFT2Constants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'LoadCropBitmap',
 		'LoadDefault',
@@ -188,10 +188,12 @@ Class {
 		'StyleFlagBold',
 		'StyleFlagItalic'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 AthensFT2Constants class >> initialize [
 	"FT2Constants initialize"
 

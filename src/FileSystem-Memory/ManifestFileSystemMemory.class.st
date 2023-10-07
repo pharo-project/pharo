@@ -8,7 +8,9 @@ It allow to emulate a file system directly into the memory of the computer. This
 A documentation of this library is available in the Deep Into Pharo book, «Chapter 3: Files with FileSystem».
 "
 Class {
-	#name : #ManifestFileSystemMemory,
-	#superclass : #PackageManifest,
-	#category : #'FileSystem-Memory-Manifest'
+	#name : 'ManifestFileSystemMemory',
+	#superclass : 'PackageManifest',
+	#category : 'FileSystem-Memory-Manifest',
+	#package : 'FileSystem-Memory',
+	#tag : 'Manifest'
 }

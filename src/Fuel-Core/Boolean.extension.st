@@ -1,12 +1,12 @@
-Extension { #name : #Boolean }
+Extension { #name : 'Boolean' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Boolean >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitHookPrimitive: self
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Boolean >> serializeOn: anEncoder [
 	"Do nothing"
 ]

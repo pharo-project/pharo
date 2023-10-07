@@ -2,35 +2,37 @@
 Morph with an inset border by default and theme access.
 "
 Class {
-	#name : #ComposableMorph,
-	#superclass : #ModelMorph,
+	#name : 'ComposableMorph',
+	#superclass : 'ModelMorph',
 	#traits : 'TEasilyThemed',
 	#classTraits : 'TEasilyThemed classTrait',
-	#category : #'Polymorph-Widgets-Base'
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ComposableMorph >> defaultBorderColor [
 	"Answer the default border color/fill style for the receiver"
 
 	^#inset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ComposableMorph >> defaultBorderWidth [
 	"Answer the default border width for the receiver."
 
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ComposableMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
 	^'Composite' translated
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ComposableMorph >> newWindow [
 	"Answer a new window with the receiver as model,
 	except when the receiver is a morph."

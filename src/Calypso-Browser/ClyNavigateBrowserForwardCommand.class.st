@@ -5,32 +5,34 @@ I move browser to the next navigation state which was recorded after go back ope
 By default I can be executed by alt+right shortcut
 "
 Class {
-	#name : #ClyNavigateBrowserForwardCommand,
-	#superclass : #ClyBrowserNavigationCommand,
-	#category : #'Calypso-Browser-NavigationHistory'
+	#name : 'ClyNavigateBrowserForwardCommand',
+	#superclass : 'ClyBrowserNavigationCommand',
+	#category : 'Calypso-Browser-NavigationHistory',
+	#package : 'Calypso-Browser',
+	#tag : 'NavigationHistory'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigateBrowserForwardCommand class >> defaultShortcut [
 	^Character arrowRight alt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigateBrowserForwardCommand >> defaultMenuIconName [
 	^#forward
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigateBrowserForwardCommand >> defaultMenuItemName [
 	^'go forward'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigateBrowserForwardCommand >> description [
 	^'go forward in the navigation history'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyNavigateBrowserForwardCommand >> execute [
 	browser navigateForward
 ]

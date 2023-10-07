@@ -5,18 +5,20 @@ the first time i will be used.
 <Do not use me, because i am really Cairo specific>
 "
 Class {
-	#name : #CairoPNGPaint,
-	#superclass : #AthensAbstractPaint,
+	#name : 'CairoPNGPaint',
+	#superclass : 'AthensAbstractPaint',
 	#instVars : [
 		'fileName'
 	],
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo-Paints'
+	#category : 'Athens-Cairo-Paints',
+	#package : 'Athens-Cairo',
+	#tag : 'Paints'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoPNGPaint class >> fileNamed: aFileName [
 	| image|
 	image := self new.
@@ -24,7 +26,7 @@ CairoPNGPaint class >> fileNamed: aFileName [
 	^ image
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CairoPNGPaint >> asAthensPaintOn: anAthensCanvas [
 
 	| surface |
@@ -42,7 +44,7 @@ CairoPNGPaint >> asAthensPaintOn: anAthensCanvas [
 	^ surface asAthensPaintOn: anAthensCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoPNGPaint >> initializeOnFileNamed: aFileName [
 	fileName := aFileName
 ]

@@ -4,59 +4,61 @@ I represent the creation and the push on stack of a FullBlockClosure.
 
 "
 Class {
-	#name : #IRPushFullClosure,
-	#superclass : #IRInstruction,
+	#name : 'IRPushFullClosure',
+	#superclass : 'IRInstruction',
 	#instVars : [
 		'compiledBlock',
 		'copiedValues',
 		'outerContextNeeded'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPushFullClosure >> accept: aVisitor [
 	^ aVisitor visitPushFullClosure: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushFullClosure >> compiledBlock [
 	^ compiledBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushFullClosure >> compiledBlock: anObject [
 	compiledBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushFullClosure >> copiedValues [
 	^ copiedValues
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushFullClosure >> copiedValues: anObject [
 	copiedValues := anObject
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 IRPushFullClosure >> indexForVarNamed: aName [
 	^ sourceNode ir indexForVarNamed: aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushFullClosure >> outerContextNeeded [
 
 	^ outerContextNeeded ifNil: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushFullClosure >> outerContextNeeded: anObject [
 
 	outerContextNeeded := anObject
 ]
 
-{ #category : #scoping }
+{ #category : 'scoping' }
 IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [
 
 	self copiedValues at: index put: aRemote

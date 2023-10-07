@@ -1,24 +1,26 @@
 Class {
-	#name : #ClassWithPrioritizedAnnotations,
-	#superclass : #Object,
-	#category : #'ClassAnnotation-Tests-Examples-Annotated classes'
+	#name : 'ClassWithPrioritizedAnnotations',
+	#superclass : 'Object',
+	#category : 'ClassAnnotation-Tests-Examples-Annotated classes',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Examples-Annotated classes'
 }
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithPrioritizedAnnotations class >> annotationWithPriority1 [
 	<classAnnotation>
 
 	^ClassAnnotationExampleWithPriority new priority: 10
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithPrioritizedAnnotations class >> annotationWithPriority2 [
 	<classAnnotation>
 
 	^ClassAnnotationExampleWithPriority new priority: 20
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithPrioritizedAnnotations class >> annotationWithPriority3 [
 	<classAnnotation>
 

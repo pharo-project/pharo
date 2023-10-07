@@ -2,24 +2,25 @@
 I am a command to open Calypso browser on all packages from given Iceberg commit
 "
 Class {
-	#name : #ClyBrowseIcebergCommitCommand,
-	#superclass : #IceTipCommand,
-	#category : #'Calypso-SystemPlugins-Monticello-Browser'
+	#name : 'ClyBrowseIcebergCommitCommand',
+	#superclass : 'IceTipCommand',
+	#category : 'Calypso-SystemPlugins-Monticello-Browser',
+	#package : 'Calypso-SystemPlugins-Monticello-Browser'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseIcebergCommitCommand class >> defaultDescription [
 
 	^ 'Browse the version in repository'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseIcebergCommitCommand class >> defaultName [
 
 	^ 'Browse this version in Calypso'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBrowseIcebergCommitCommand >> execute [
 
 	| env snapshot methodHistoryLogEntry |
@@ -34,19 +35,19 @@ ClyBrowseIcebergCommitCommand >> execute [
 	env browseAs: methodHistoryLogEntry commit repository origin url , '[', methodHistoryLogEntry shortId, ']'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseIcebergCommitCommand >> iconName [
 
 	^ #glamorousBrowse
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBrowseIcebergCommitCommand >> methodHistoryLogEntryModel [
 
 	^ self item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseIcebergCommitCommand >> shortcutKey [
 
 	^ $b meta

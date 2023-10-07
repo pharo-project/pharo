@@ -2,33 +2,34 @@
 Abstract reader superclass for FileTree
 "
 Class {
-	#name : #MCFileTreeAbstractReader,
-	#superclass : #MCMczReader,
+	#name : 'MCFileTreeAbstractReader',
+	#superclass : 'MCMczReader',
 	#instVars : [
 		'packageDirectory',
 		'packageProperties'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeAbstractReader class >> monticelloMetaDirName [
     ^ '.'
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCFileTreeAbstractReader class >> on: s fileName: f [
 	^ (self on: s)
 		packageDirectory: f;
 		yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> addClassAndMethodDefinitionsFromDirectory: aDirectory [
     self subclassResponsibility
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> addClassAndMethodDefinitionsFromDirectoryEntries: entries [
 	| timestamp |
 	self noMethodMetaData
@@ -58,12 +59,12 @@ MCFileTreeAbstractReader >> addClassAndMethodDefinitionsFromDirectoryEntries: en
 									definitions add: definition ] ] ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> addDefinitionFromFile: directoryEntry inDirectory: aDirectory [
     (self definitionFromFile: directoryEntry inDirectory: aDirectory) ifNotNil: [ :def | definitions add: def ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeAbstractReader >> basicVersion [
 	^ (MCVersion new)
 		setPackage: self package
@@ -73,7 +74,7 @@ MCFileTreeAbstractReader >> basicVersion [
 		yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> definitionFromFile: directoryEntry inDirectory: aDirectory [
     | defs reader |
     directoryEntry ifNil: [ ^ nil ].
@@ -90,12 +91,12 @@ MCFileTreeAbstractReader >> definitionFromFile: directoryEntry inDirectory: aDir
     ^ defs first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeAbstractReader >> fileUtils [
     ^ MCFileTreeFileUtils current
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileTreeAbstractReader >> hasMonticelloMetadata [
     ^ (self fileUtils
 		filePathExists: 'version'
@@ -114,7 +115,7 @@ MCFileTreeAbstractReader >> hasMonticelloMetadata [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> isLoadableDefinitionFile: entry [
 
 	"Reject hidden files"
@@ -123,7 +124,7 @@ MCFileTreeAbstractReader >> isLoadableDefinitionFile: entry [
 	^ entry name endsWith: '.st'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> loadDefinitions [
     | entries |
     definitions := OrderedCollection new.
@@ -136,7 +137,7 @@ MCFileTreeAbstractReader >> loadDefinitions [
             inDirectory: packageDirectory
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> loadDependencies [
     | dependencyDir directoryPath |
     directoryPath := self monticelloMetaDirName , self fileUtils pathNameDelimiter asString , 'dependencies'.
@@ -155,27 +156,27 @@ MCFileTreeAbstractReader >> loadDependencies [
     dependencies := dependencies asArray
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> loadableDefinitionsFrom: directory [
 	^ directory entries select: [ :entry | self isLoadableDefinitionFile: entry ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeAbstractReader >> monticelloMetaDirName [
     ^ self class monticelloMetaDirName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileTreeAbstractReader >> noMethodMetaData [
     ^ self packageProperties at: 'noMethodMetaData' ifAbsent: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeAbstractReader >> packageDirectory: aDirectoryName [
     packageDirectory := self fileUtils directoryFromPath: aDirectoryName relativeTo: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeAbstractReader >> packageProperties [
     packageProperties
         ifNil: [ 
@@ -208,7 +209,7 @@ MCFileTreeAbstractReader >> packageProperties [
     ^ packageProperties
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeAbstractReader >> parseMember: fileName [
     | directory tokens |
     directory := self fileUtils directoryFromPath: self monticelloMetaDirName relativeTo: packageDirectory.
@@ -216,7 +217,7 @@ MCFileTreeAbstractReader >> parseMember: fileName [
     ^ self associate: tokens
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileTreeAbstractReader >> separateMethodMetaAndSource [
     ^ self packageProperties at: 'separateMethodMetaAndSource' ifAbsent: [ false ]
 ]

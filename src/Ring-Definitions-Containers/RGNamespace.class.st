@@ -2,19 +2,21 @@
 A namespace is a container that in addition to managing classes and methods, it also knows how to treat pools and global variables
 "
 Class {
-	#name : #RGNamespace,
-	#superclass : #RGContainer,
-	#category : #'Ring-Definitions-Containers-Base'
+	#name : 'RGNamespace',
+	#superclass : 'RGContainer',
+	#category : 'Ring-Definitions-Containers-Base',
+	#package : 'Ring-Definitions-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RGNamespace >> addElement: anObject in: aCollection [
 
 	anObject environment: self.
 	super addElement: anObject in: aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RGNamespace >> addGlobalVariable: anORGlobalVariableDefinition [
 	"adds anORGlobalVariableDefinition to the globals dictionary if satisfies it #isGlobalVariable"
 
@@ -22,7 +24,7 @@ RGNamespace >> addGlobalVariable: anORGlobalVariableDefinition [
 	self addElement: anORGlobalVariableDefinition in: self globalVariables
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RGNamespace >> addGlobalVariableNamed: globalVariableName [
 	"creates a RGGlobalVariableDefinition with the given name.
 	It's verified that a pool with that name does not exist"
@@ -31,7 +33,7 @@ RGNamespace >> addGlobalVariableNamed: globalVariableName [
 	self addGlobalVariable: (RGGlobalVariableDefinition named: globalVariableName)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RGNamespace >> addPool: anORPoolDefinition [
 	"adds anORPoolDefinition to the pools dictionary if satisfies it #isPool"
 
@@ -39,7 +41,7 @@ RGNamespace >> addPool: anORPoolDefinition [
 	self addElement: anORPoolDefinition in: self pools
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RGNamespace >> addPoolNamed: poolName [
 	"creates a RGPoolDefinition with the given name.
 	It's verified that a pool with that name does not exist"
@@ -54,50 +56,50 @@ RGNamespace >> addPoolNamed: poolName [
 	self addPool: pool
 ]
 
-{ #category : #'accessing - global variables' }
+{ #category : 'accessing - global variables' }
 RGNamespace >> globalVariableNamed: globalVariableName [
 
 	^self elementNamed: globalVariableName in: self globalVariables
 ]
 
-{ #category : #'accessing - global variables' }
+{ #category : 'accessing - global variables' }
 RGNamespace >> globalVariables [
 	"retrieves global variables"
 
 	^self elementsCategorized: #globalVariables
 ]
 
-{ #category : #'accessing - global variables' }
+{ #category : 'accessing - global variables' }
 RGNamespace >> globalVariables: aCollection [
 
 	self elementsCategorized: #globalVariables with: aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGNamespace >> includesGlobalVariable: anORGlobalVariableDefinition [
 
 	^self globalVariables includes: anORGlobalVariableDefinition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGNamespace >> includesGlobalVariableNamed: globalVariableName [
 
 	^self includesElementNamed: globalVariableName in: self globalVariables
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGNamespace >> includesPool: anORPoolDefinition [
 
 	^self pools includes: anORPoolDefinition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGNamespace >> includesPoolNamed: poolName [
 
 	^self includesElementNamed: poolName in: self pools
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGNamespace >> initialize [
 
 	super initialize.
@@ -105,32 +107,32 @@ RGNamespace >> initialize [
 	self pools: IdentityDictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGNamespace >> isNamespace [
 
 	^true
 ]
 
-{ #category : #'accessing - pools' }
+{ #category : 'accessing - pools' }
 RGNamespace >> poolNamed: poolName [
 
 	^self elementNamed: poolName in: self pools
 ]
 
-{ #category : #'accessing - pools' }
+{ #category : 'accessing - pools' }
 RGNamespace >> pools [
 	"retrieves the shares pools"
 
 	^self elementsCategorized: #pools
 ]
 
-{ #category : #'accessing - pools' }
+{ #category : 'accessing - pools' }
 RGNamespace >> pools: aCollection [
 
 	self elementsCategorized: #pools with: aCollection
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RGNamespace >> removeGlobalVariable: anORGlobalVariableDefinition [
 	"removes anORGlobalVariableDefinition from the globals dictionary if satisfies it #isGlobalVariable"
 
@@ -138,7 +140,7 @@ RGNamespace >> removeGlobalVariable: anORGlobalVariableDefinition [
 	self removeElement: anORGlobalVariableDefinition from: self globalVariables
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RGNamespace >> removePool: anORPoolDefinition [
 	"removes anORPoolDefinition from the pools dictionary if satisfies it #isPool"
 
@@ -146,13 +148,13 @@ RGNamespace >> removePool: anORPoolDefinition [
 	self removeElement: anORPoolDefinition from: self pools
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RGNamespace >> withoutGlobalVariables [
 
 	self removeElementsCategorized: #globalVariables
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RGNamespace >> withoutPools [
 
 	self removeElementsCategorized: #pools

@@ -2,17 +2,18 @@
 ZdcReferenceSocketStreamTests test the reference SocketStream in the image
 "
 Class {
-	#name : #ZdcReferenceSocketStreamTest,
-	#superclass : #ZdcAbstractSocketStreamTest,
-	#category : #'Zodiac-Tests'
+	#name : 'ZdcReferenceSocketStreamTest',
+	#superclass : 'ZdcAbstractSocketStreamTest',
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcReferenceSocketStreamTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcReferenceSocketStreamTest >> openConnectionToHost: host port: port [
 	| stream |
 	stream := super openConnectionToHost: host port: port.
@@ -20,7 +21,7 @@ ZdcReferenceSocketStreamTest >> openConnectionToHost: host port: port [
 	^ stream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcReferenceSocketStreamTest >> openConnectionToHostNamed: host port: port [
 	| stream |
 	stream := super openConnectionToHostNamed: host port: port.
@@ -28,12 +29,12 @@ ZdcReferenceSocketStreamTest >> openConnectionToHostNamed: host port: port [
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcReferenceSocketStreamTest >> socketStreamClass [
 	^ SocketStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcReferenceSocketStreamTest >> socketStreamOn: socket [
 	| stream |
 	stream := super socketStreamOn: socket.

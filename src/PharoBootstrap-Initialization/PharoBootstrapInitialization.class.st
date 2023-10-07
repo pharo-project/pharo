@@ -17,12 +17,14 @@ I initialize the version object of the Image and perform the initial initializat
 Check #initializeCommandLineHandlerAndErrorHandling to see the steps performed.
 "
 Class {
-	#name : #PharoBootstrapInitialization,
-	#superclass : #Object,
-	#category : #'PharoBootstrap-Initialization-Base'
+	#name : 'PharoBootstrapInitialization',
+	#superclass : 'Object',
+	#category : 'PharoBootstrap-Initialization-Base',
+	#package : 'PharoBootstrap-Initialization',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandling [
 	"This method is run before the new bootstrapped image is saved!"
 	ProcessorScheduler initialize.
@@ -57,10 +59,10 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	ExternalSemaphoreTable initialize.
 	Collection initialize.
 	CompiledMethod initialize.
-	Categorizer initialize.
 	Slot initialize.
 	RPackage initialize.
 	Behavior initialize.
+	Class initialize.
 
 	UIManager default: NonInteractiveUIManager new.
 
@@ -75,17 +77,17 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	"FFI"
 	ExternalObject initialize.
 	ExternalType initialize.
-	FFIBackend initialize.
 
 	"Initialize basic command line behaviour"
-	Stdio initialize.
 	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
+
+	SessionManager initializeKernelRegistrations.
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 PharoBootstrapInitialization class >> initializeFileSystem [
 	| env |
 	env := self environment.
@@ -95,7 +97,7 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	(env at: #File) initialize
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: buildNumber commitHash: hash [
 
 	"The image main entry point called by an image builder. The arguments specify the image

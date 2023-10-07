@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfGeneralTests,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfGeneralTests
+	#name : 'BaselineOfGeneralTests',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfGeneralTests',
+	#package : 'BaselineOfGeneralTests'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfGeneralTests >> baseline: spec [
 	<baseline>
 	"Needs to be re-sorted"
@@ -12,14 +13,13 @@ BaselineOfGeneralTests >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			package: 'Debugging-Utils-Tests';
-			package: 'Tests';
 			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';			
 			package: 'RPackage-Tests';
 			package: 'Monticello-Tests';	"required by MonticelloMocks"
 			package: 'System-Installers-Tests' ;
 			package: 'MonticelloMocks';
-			package: 'Fuel-Tests-Core';
+			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
@@ -57,11 +57,11 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-Settings-Tests';
 			package: 'System-Support-Tests';
 			package: 'Text-Diff-Tests';
-			package: 'Text-Edition-Tests';
 			package: 'Tool-ExternalBrowser-Tests';			
 			package: 'Tool-FileList-Tests';
 			package: 'Tool-Finder-Tests';
 			package: 'Tool-Profilers-Tests';
+			package: 'Tool-ImageCleaner-Tests';
 			package: 'Tool-Workspace-Tests';
 			package: 'Tools-CodeNavigation-Tests';
 			package: 'Tools-Tests';

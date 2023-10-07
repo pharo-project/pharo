@@ -2,55 +2,57 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TSetArithmetic,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TSetArithmetic',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSetArithmetic >> anotherElementOrAssociationIn [
 	" return an element (or an association for Dictionary ) present  in 'collection' "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSetArithmetic >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSetArithmetic >> collection [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSetArithmetic >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> containsAll: union of: one andOf: another [
 
 	self assert: (one allSatisfy: [:each | union includes: each]).
 	self assert: (another allSatisfy: [:each | union includes: each])
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSetArithmetic >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> numberOfSimilarElementsInIntersection [
 
 	^ self collection occurrencesOf: self anotherElementOrAssociationIn
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TSetArithmetic >> test0FixtureSetAritmeticTest [
 	self collection.
 	self denyEmpty: self collection.
@@ -63,7 +65,7 @@ TSetArithmetic >> test0FixtureSetAritmeticTest [
 	self collectionClass
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testDifference [
 	"Answer the set theoretic difference of two collections."
 
@@ -75,7 +77,7 @@ TSetArithmetic >> testDifference [
 	self collectionWithoutEqualElements do: [ :each | self assert: (difference includes: each) ]
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testDifferenceWithNonNullIntersection [
 	"Answer the set theoretic difference of two collections.
 	 	#(1 2 3) difference: #(2 4) ->  #(1 3)"
@@ -89,7 +91,7 @@ TSetArithmetic >> testDifferenceWithNonNullIntersection [
 	overlapping do: [ :each | self deny: (res includes: each) ]
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testDifferenceWithSeparateCollection [
 	"Answer the set theoretic difference of two collections."
 
@@ -108,7 +110,7 @@ TSetArithmetic >> testDifferenceWithSeparateCollection [
 	self assert: res equals: separateCol
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionBasic [
 	| inter |
 	inter := self collection intersection: (self collectionClass with: self anotherElementOrAssociationIn).
@@ -116,7 +118,7 @@ TSetArithmetic >> testIntersectionBasic [
 	self assert: (inter includes: self anotherElementOrAssociationIn value)
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionEmpty [
 	| inter |
 	inter := self empty intersection: self empty.
@@ -125,7 +127,7 @@ TSetArithmetic >> testIntersectionEmpty [
 	self assert: inter equals: self empty
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionItself [
 
 	| result |
@@ -135,7 +137,7 @@ TSetArithmetic >> testIntersectionItself [
 		self assert: (result includes: each) ]
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionTwoSimilarElementsInIntersection [
 
 	| inter |
@@ -144,7 +146,7 @@ TSetArithmetic >> testIntersectionTwoSimilarElementsInIntersection [
 	self assert: (inter includes: self anotherElementOrAssociationIn value)
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testUnion [
 
 	| union |
@@ -156,7 +158,7 @@ TSetArithmetic >> testUnion [
 	self containsAll: union of: self collection andOf: self nonEmpty
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 TSetArithmetic >> testUnionOfEmpties [
 	self assertEmpty: (self empty union: self empty)
 ]

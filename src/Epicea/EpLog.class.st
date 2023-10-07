@@ -10,22 +10,24 @@ Examples:
 EpLog freshFromFile: 'path/to/ombu/file.ombu' asFileReference.
 "
 Class {
-	#name : #EpLog,
-	#superclass : #Object,
+	#name : 'EpLog',
+	#superclass : 'Object',
 	#instVars : [
 		'announcer',
 		'commentByEntryReference',
 		'store'
 	],
-	#category : #'Epicea-Log'
+	#category : 'Epicea-Log',
+	#package : 'Epicea',
+	#tag : 'Log'
 }
 
-{ #category : #'tag keys' }
+{ #category : 'tag keys' }
 EpLog class >> authorKey [
 	^ #author
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> freshFromFile: aFileReference [
 
 	^ (self fromFile: aFileReference)
@@ -33,44 +35,44 @@ EpLog class >> freshFromFile: aFileReference [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> fromFile: aFileReference [
 
 	^ self newWithStore: (OmStoreFactory current fromFile: aFileReference)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> new [
 
 	^ self newWithSessionStore
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> newNull [
 
 	^ self newWithStore: OmNullStore new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> newWithEntries: entriesTheOldestFirst [
 	^ self
 		newWithStore: (OmMemoryStore withAllEntries: entriesTheOldestFirst)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> newWithEvents: eventsTheOldestFirst [
 	^ self
 		newWithStore:
 			(OmMemoryStore withAllContents: eventsTheOldestFirst)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> newWithSessionStore [
 
 	^ self newWithStore: OmSessionStore new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLog class >> newWithStore: aStore [
 
 	^ self basicNew
@@ -78,24 +80,24 @@ EpLog class >> newWithStore: aStore [
 		yourself
 ]
 
-{ #category : #'tag keys' }
+{ #category : 'tag keys' }
 EpLog class >> priorReferenceKey [
 
 	^ #prior
 ]
 
-{ #category : #'tag keys' }
+{ #category : 'tag keys' }
 EpLog class >> timeKey [
 	^ #time
 ]
 
-{ #category : #'tag keys' }
+{ #category : 'tag keys' }
 EpLog class >> triggererReferenceKey [
 
 	^ #trigger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> addEntryWith: anEvent tags: blockClosureForCustomTags [
 	"Add an event with the specified tags"
 
@@ -118,19 +120,19 @@ EpLog >> addEntryWith: anEvent tags: blockClosureForCustomTags [
 	^ newEntry
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLog >> announceAdded: anEntry [
 
 	self announcer announce: (EpEntryAdded for: anEntry)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> authorAt: anEntry [
 
 	^ self
@@ -138,7 +140,7 @@ EpLog >> authorAt: anEntry [
 		ifAbsent: [ self error ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> authorAt: anEntry ifAbsent: aBlock [
 
 	^ anEntry tags
@@ -146,7 +148,7 @@ EpLog >> authorAt: anEntry ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLog >> cacheEntry: newEntry [
 	"Update caches with a new entry"
 
@@ -158,7 +160,7 @@ EpLog >> cacheEntry: newEntry [
 		] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> commentAt: anEntry ifAbsent: aBlock [
 	"Answer the String comment corresponding to anEntry, or evaluate aBlock if absent."
 
@@ -167,7 +169,7 @@ EpLog >> commentAt: anEntry ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> commentAt: anEntry ifPresent: aBlock [
 	"Answer the String comment corresponding to anEntry, and evaluate aBlock with it."
 
@@ -176,40 +178,40 @@ EpLog >> commentAt: anEntry ifPresent: aBlock [
 		ifPresent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> entries [
 	"Answer the entries of this log."
 
 	^ store entries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> entriesCount [
 
 	^ store entriesCount
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> entriesDo: aBlockClosure [
 	"Evaluate aBlockClosure on every entry"
 
 	^ store entriesDo: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> entriesForAll: references [
 
 	^ references collect: [ :each | self entryFor: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> entryFor: aReference [
 	"Answer the entry corresponding to aReference"
 
 	^ store entryFor: aReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 	"Answer an entry, evaluating either the first block closure if present or the second if absent."
 
@@ -219,26 +221,26 @@ EpLog >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlo
 		ifAbsent: absentBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> entryReferences [
 
 	^ store entryReferences
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> events [
 
 	^ self entries collect: [:each | each content]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> firstEntryIfAbsent: absentBlock [
 	"Answer the first entry of the log, or evaluate the absentBlock."
 
 	^ store firstEntryIfAbsent: absentBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> from: aReference detect: aBlockReturningBoolean [
 
 	^ self
@@ -247,7 +249,7 @@ EpLog >> from: aReference detect: aBlockReturningBoolean [
 		ifNotFound: [ :ref | KeyNotFound signalFor: aReference ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> from: aReference detect: aBlockReturningBoolean ifNotFound: notFoundBlock [
 
 	self
@@ -258,7 +260,7 @@ EpLog >> from: aReference detect: aBlockReturningBoolean ifNotFound: notFoundBlo
 	^ notFoundBlock cull: aReference
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> fromHeadDetect: aBlockReturningBoolean [
 
 	^ self
@@ -266,7 +268,7 @@ EpLog >> fromHeadDetect: aBlockReturningBoolean [
 		detect: aBlockReturningBoolean
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> fromHeadDetect: aBlockReturningBoolean ifNotFound: notFoundBlock [
 
 	^ self
@@ -275,7 +277,7 @@ EpLog >> fromHeadDetect: aBlockReturningBoolean ifNotFound: notFoundBlock [
 		ifNotFound: notFoundBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpLog >> hasAuthor: anEntry [
 
 	self
@@ -285,7 +287,7 @@ EpLog >> hasAuthor: anEntry [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpLog >> hasTime: anEntry [
 
 	self
@@ -295,20 +297,20 @@ EpLog >> hasTime: anEntry [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> head [
 
 	^ self entryFor: self headReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> headReference [
 	"Answer a OmReference to the head of this log"
 
 	^ store headReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLog >> initializeWith: aStore [
 
 	self initialize.
@@ -316,20 +318,20 @@ EpLog >> initializeWith: aStore [
 	commentByEntryReference := Dictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpLog >> isEmpty [
 
 	self entriesDo: [ :each | ^false ].
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> nullReference [
 
 	^ OmNullReference uniqueInstance
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EpLog >> printOn: aStream [
 
 	super printOn: aStream.
@@ -339,7 +341,7 @@ EpLog >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> priorEntriesFrom: aReference [
 
 	^ Array streamContents: [  :stream |
@@ -347,7 +349,7 @@ EpLog >> priorEntriesFrom: aReference [
 			stream nextPut: anEntry ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> priorEntriesFrom: aReference do: aBlock [
 
 	| nextReference |
@@ -361,7 +363,7 @@ EpLog >> priorEntriesFrom: aReference do: aBlock [
 			ifAbsent: [ ^ self ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> priorEntriesFrom: initialReference upTo: finalReference [
 
 	| result |
@@ -377,49 +379,49 @@ EpLog >> priorEntriesFrom: initialReference upTo: finalReference [
 	^ result
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> priorEntriesFromHead [
 
 	^ self priorEntriesFrom: self headReference
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 EpLog >> priorEntriesFromHeadDo: aBlock [
 
 	self priorEntriesFrom: self headReference do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> priorReferenceAt: anEntry [
 
 	^ anEntry tagAt: self class priorReferenceKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> referenceTo: anEntry [
 
 	^ store referenceTo: anEntry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> referencesToAll: aCollectionOfEntries [
 
 	^ aCollectionOfEntries collect: [ :each | self referenceTo: each ]
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLog >> refresh [
 	store refresh.
 	commentByEntryReference := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> store [
 
 	^ store
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> timeAt: anEntry [
 
 	^ self
@@ -427,7 +429,7 @@ EpLog >> timeAt: anEntry [
 		ifAbsent: [ self error ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> timeAt: anEntry ifAbsent: aBlock [
 
 	^ anEntry tags
@@ -435,7 +437,7 @@ EpLog >> timeAt: anEntry ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLog >> triggererReferenceOf: anEntry ifPresent: presentBlock ifAbsent: absentBlock [
 
 	^ anEntry tags
@@ -444,7 +446,7 @@ EpLog >> triggererReferenceOf: anEntry ifPresent: presentBlock ifAbsent: absentB
 		ifAbsent: absentBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLog >> updateEntriesCache [
 
 	store entriesDo: [ :each | self cacheEntry: each ]

@@ -1,31 +1,33 @@
 Class {
-	#name : #WindowAnnouncementTest,
-	#superclass : #TestCase,
+	#name : 'WindowAnnouncementTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'window'
 	],
-	#category : #'Morphic-Tests-WindowNotification'
+	#category : 'Morphic-Tests-WindowNotification',
+	#package : 'Morphic-Tests',
+	#tag : 'WindowNotification'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 WindowAnnouncementTest >> tearDown [
 	window ifNotNil: [ window delete ].
 	super tearDown
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testCollapsing [
 	| t |
 	window := SystemWindow labelled: 'foo'.
 	t := 0.
 	window openInWorld.
-	window announcer when: WindowCollapsed do: [ :ann | t := t + 1 ].
+	window announcer when: WindowCollapsed do: [ :ann | t := t + 1 ] for: self.
 	self assert: t equals: 0.
 	window collapse.
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testMoving [
 	| t oldBounds event |
 	window := SystemWindow labelled: 'foo'.
@@ -38,7 +40,8 @@ WindowAnnouncementTest >> testMoving [
 		when: WindowMoved
 		do: [ :ann |
 			t := t + 1.
-			event := ann ].
+			event := ann ]
+		for: self.
 
 	self assert: t equals: 0.
 	self assert: event isNil.
@@ -58,7 +61,7 @@ WindowAnnouncementTest >> testMoving [
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testResizing [
 	| t oldBounds newBounds |
 	window := SystemWindow labelled: 'foo'.
@@ -66,20 +69,20 @@ WindowAnnouncementTest >> testResizing [
 	t := 0.
 	window openInWorld.
 	oldBounds := window bounds.
-	window announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	window announcer when: WindowResizing do: [ :ann | t := t + 1 ] for: self.
 	self assert: t equals: 0.
 	window extent: 50 @ 60.
 	newBounds := window bounds.
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testResizingClosing [
 	| coll |
 	window := SystemWindow labelled: 'foo'.
 	coll := OrderedCollection new.
 	window openInWorld.
-	window announcer when: WindowAnnouncement do: [ :ann | coll add: ann ].
+	window announcer when: WindowAnnouncement do: [ :ann | coll add: ann ] for: self.
 	self assertEmpty: coll.
 	window minimizeOrRestore.
 
@@ -97,7 +100,7 @@ WindowAnnouncementTest >> testResizingClosing [
 	window := nil
 ]
 
-{ #category : #'tests - window change' }
+{ #category : 'tests - window change' }
 WindowAnnouncementTest >> testScrolling [
 	"This test tests the scrolling values of a scrollpane. We create a reeeeeally big (enormous) morph, to be sure its size is bigger than the screen and therefore its enclosing window has scrollbars.
 	When screen sizes become bigger, you should increase the value, or fix morphic, what happens first :).
@@ -113,7 +116,7 @@ WindowAnnouncementTest >> testScrolling [
 	window addMorph: pane fullFrame: LayoutFrame identity.
 	t := 0 @ 0.
 	window openInWorld.
-	window announcer when: WindowScrolling do: [ :ann | t := t + ann step ].
+	window announcer when: WindowScrolling do: [ :ann | t := t + ann step ] for: self.
 	pane hScrollBarValue: 10.
 	pane vScrollBarValue: 5.
 
@@ -123,23 +126,23 @@ WindowAnnouncementTest >> testScrolling [
 	window := nil
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowCreation [
 	| t oldBounds newBounds |
 	t := 0.
-	self currentWorld announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	self currentWorld announcer when: WindowResizing do: [ :ann | t := t + 1 ] for: self.
 	window := SystemWindow labelled: 'foo'.
 	window setProperty: #minimumExtent toValue: 1 @ 1.
 	window openInWorld.
 	oldBounds := window bounds.
-	window announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	window announcer when: WindowResizing do: [ :ann | t := t + 1 ] for: self.
 	self assert: t equals: 0.
 	window extent: 50 @ 60.
 	newBounds := window bounds.
 	self assert: t equals: 1
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	| t newWindowCreated |
 	t := 0.
@@ -147,12 +150,14 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 		when: WindowOpened
 		do: [ :ann |
 			t := t + 1.
-			newWindowCreated := ann window ].
+			newWindowCreated := ann window ]
+		for: self.
 	self currentWorld announcer
 		when: WindowClosed
 		do: [ :ann |
 			t := t + 10.
-			newWindowCreated := ann window ].
+			newWindowCreated := ann window ]
+		for: self.
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 
@@ -164,7 +169,7 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	self assert: window identicalTo: newWindowCreated
 ]
 
-{ #category : #'tests - window creation and deletion' }
+{ #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowLabelling [
 	"Test change of label for a window."
 
@@ -174,7 +179,8 @@ WindowAnnouncementTest >> testWindowLabelling [
 		when: WindowLabelled
 		do: [ :ann |
 			win := ann window.
-			labels := labels copyWith: ann label ].
+			labels := labels copyWith: ann label ]
+		for: self.
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 	self assert: win equals: window.

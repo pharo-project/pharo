@@ -2,20 +2,22 @@
 I am raised when a morph is edited
 "
 Class {
-	#name : #RubMorphEdited,
-	#superclass : #RubMorphAnnouncement,
+	#name : 'RubMorphEdited',
+	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
 		'previousContents'
 	],
-	#category : #'Rubric-Editing-Announcements'
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubMorphEdited >> previousContents [
 	^ previousContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubMorphEdited >> previousContents: anObject [
 	previousContents := anObject
 ]

@@ -8,11 +8,13 @@ To get the behavior I define, my users should implement:
 	#isEmpty, #size, #first, and #at: 
 "
 Trait {
-	#name : #TSortable,
-	#category : #'Collections-Abstract-Traits-Base'
+	#name : 'TSortable',
+	#category : 'Collections-Abstract-Traits-Base',
+	#package : 'Collections-Abstract-Traits',
+	#tag : 'Base'
 }
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> isSorted [
 	"Return true if the receiver is sorted by the given criterion.
 	Optimization for isSortedBy: [:a :b | a <= b]."
@@ -28,7 +30,7 @@ TSortable >> isSorted [
 	^ true
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> isSortedBy: aBlock [
 	"Return true if the receiver is sorted by the given criterion."
 
@@ -43,7 +45,7 @@ TSortable >> isSortedBy: aBlock [
 	^ true
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
 	"Private. Merge the sorted ranges [first..middle] and [middle+1..last]
 	of the receiver into the range [first..last] of dst."
@@ -70,7 +72,7 @@ TSortable >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
 		ifFalse: [dst replaceFrom: out + 1 to: last with: self startingAt: i2]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	"Sort the given range of indices using the mergesort algorithm.
 	Mergesort is a worst-case O(N log N) sorting algorithm that usually
@@ -95,7 +97,7 @@ TSortable >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 		by: aBlock
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> mergeSortFrom: first to: last src: src dst: dst by: aBlock [
 	"Private. Split the range to be sorted in half, sort each half, and
 	merge the two half-ranges into dst."
@@ -108,14 +110,14 @@ TSortable >> mergeSortFrom: first to: last src: src dst: dst by: aBlock [
 	src mergeFirst: first middle: middle last: last into: dst by: aBlock
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> sort [
 	"Sort this collection into ascending order using the '<=' operator."
 
 	self sort: [:a :b | a <= b]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> sort: aSortBlock [
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
@@ -126,7 +128,7 @@ TSortable >> sort: aSortBlock [
 		by: aSortBlock
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> sorted [
 	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted in ascending order using the #'<=' operator."
@@ -134,7 +136,7 @@ elements are sorted in ascending order using the #'<=' operator."
 	^self sorted: [ :a :b| a <= b ]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TSortable >> sorted: aSortBlockOrNil [
 	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if

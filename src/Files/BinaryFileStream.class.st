@@ -7,12 +7,14 @@ stream upToEnd
 ""reads the full stream up to the end and returns the contents""
 "
 Class {
-	#name : #BinaryFileStream,
-	#superclass : #AbstractBinaryFileStream,
-	#category : #'Files-Streams'
+	#name : 'BinaryFileStream',
+	#superclass : 'AbstractBinaryFileStream',
+	#category : 'Files-Streams',
+	#package : 'Files',
+	#tag : 'Streams'
 }
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 BinaryFileStream >> close [
 	self closed
 		ifTrue: [ ^ self ].
@@ -21,18 +23,18 @@ BinaryFileStream >> close [
 	handle := nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStream >> closed [
 	^ handle isNil or: [ (File sizeOrNil: handle) isNil ]
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 BinaryFileStream >> finalize [
 
 	^ self close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BinaryFileStream >> peek [
 	"Answer what would be returned if the message next were sent to the receiver. If the receiver is at the end, answer nil.  "
 	| next |
@@ -42,32 +44,32 @@ BinaryFileStream >> peek [
 	^ next
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 BinaryFileStream >> register [
 
 	File register: self
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 BinaryFileStream >> skip: n [
 	"Set the character position to n characters from the current position."
 	self position: self position + n
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 BinaryFileStream >> truncate [
 
 	self truncate: 0
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 BinaryFileStream >> truncate: pos [
 	"Truncate to this position"
 
 	^ File truncate: handle to: pos
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 BinaryFileStream >> unregister [
 
 	File unregister: self

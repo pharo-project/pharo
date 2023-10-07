@@ -9,47 +9,49 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyShowVariableRefCommand,
-	#superclass : #SycVariableCommand,
+	#name : 'ClyShowVariableRefCommand',
+	#superclass : 'SycVariableCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Queries'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Queries'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowVariableRefCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup order: 2000 for: ClyFullBrowserVariableContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowVariableRefCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $n meta for: ClyFullBrowserVariableContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowVariableRefCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowVariableRefCommand >> defaultMenuItemName [
 	^'References'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowVariableRefCommand >> execute [
 
 	browser spawnQueryBrowserOn: (ClyVariableReferencesQuery ofAny: variables)
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowVariableRefCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

@@ -17,35 +17,37 @@ The method defineClass defines a simple class inheriting from Object (or from th
 The idea is that if later the effective class is loaded its definition will override  this one. 
 "
 Class {
-	#name : #MissingClassError,
-	#superclass : #Error,
+	#name : 'MissingClassError',
+	#superclass : 'Error',
 	#instVars : [
 		'resumable',
 		'className',
 		'superclassName'
 	],
-	#category : #'CodeImport-Errors'
+	#category : 'CodeImport-Errors',
+	#package : 'CodeImport',
+	#tag : 'Errors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MissingClassError class >> className: aString [
 
 	^ self new className: aString; yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MissingClassError >> asResumable [
 	"When sent to the receiver, this one turns into a resumable exception allowing for example to define missing class on the fly."
 	resumable := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MissingClassError >> className: aString [
 
 	className := aString
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MissingClassError >> defineClass [
 
 	self class classInstaller make: [ :aBuilder |
@@ -55,20 +57,20 @@ MissingClassError >> defineClass [
 			package: 'Stub-Classes' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MissingClassError >> isResumable [
 	"Determine whether an exception is resumable. By default not but can be resumable using accessors at exception raising time."
 
 	^ resumable ifNil: [ super isResumable ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MissingClassError >> superclassName [
 
 	^ superclassName ifNil: [ superclassName := 'Object' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MissingClassError >> superclassName: aString [
 
 	superclassName := aString

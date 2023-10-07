@@ -2,22 +2,24 @@
 SUnit tests for PlatformResolver
 "
 Class {
-	#name : #PlatformResolverTest,
-	#superclass : #FileSystemResolverTest,
-	#category : #'FileSystem-Tests-Core-Resolver'
+	#name : 'PlatformResolverTest',
+	#superclass : 'FileSystemResolverTest',
+	#category : 'FileSystem-Tests-Core-Resolver',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Resolver'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 PlatformResolverTest >> createResolver [
 	^ PlatformResolver forCurrentPlatform
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PlatformResolverTest >> testCache [
 	self assertOriginResolves: #cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PlatformResolverTest >> testCanAddOrigin [
 	[ resolver class
 		compile:
@@ -28,7 +30,7 @@ PlatformResolverTest >> testCanAddOrigin [
 		ensure: [ resolver class compiledMethodAt: #newOriginForTest ifPresent: [ :m | m removeFromSystem ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PlatformResolverTest >> testHome [
 	| home |
 	home := self assertOriginResolves: #home.

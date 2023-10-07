@@ -2,15 +2,17 @@
 gzip is an integral part of the VM. 
 "
 Class {
-	#name : #GZipReadStream,
-	#superclass : #FastInflateStream,
+	#name : 'GZipReadStream',
+	#superclass : 'FastInflateStream',
 	#pools : [
 		'GZipConstants'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 GZipReadStream class >> fileIn: fullFileName [
 	"FileIn the contents of a gzipped file"
 
@@ -19,7 +21,7 @@ GZipReadStream class >> fileIn: fullFileName [
 		do: [ :aStream | CodeImporter evaluateString: aStream contents asString ]
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 GZipReadStream class >> saveContents: fullFileName [
 	"Save the contents of a gzipped file"
 
@@ -41,7 +43,7 @@ GZipReadStream class >> saveContents: fullFileName [
 	^ newName
 ]
 
-{ #category : #unzipping }
+{ #category : 'unzipping' }
 GZipReadStream class >> unzip: fullFileName [
 	"Unzip the contents of the file specified by the full path name or file reference fullFileName to the current working directory
 	To unzip a .zip go to the class ZipArchive"
@@ -49,7 +51,7 @@ GZipReadStream class >> unzip: fullFileName [
 	^ self unzip: fullFileName to: FileSystem disk workingDirectory
 ]
 
-{ #category : #unzipping }
+{ #category : 'unzipping' }
 GZipReadStream class >> unzip: fullFileName to: pathName [
 	"Unzip the contents of the file specified by the full path name or file reference fullFileName to the location given by pathName.
 	GZipReadStream unzip:'/aPath/zip.gz' to: '/aPath'
@@ -69,7 +71,7 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	^ newName
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 GZipReadStream class >> viewContents: fullFileName [
 	"Open the decompressed contents of the .gz file with the given name."
 
@@ -79,7 +81,7 @@ GZipReadStream class >> viewContents: fullFileName [
 			[ :aGzStream | UIManager default edit: aGzStream upToEnd label: 'Decompressed contents of: ' , file basename ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	"Check the header of the GZIP stream."
 	| method magic flags length |
@@ -111,13 +113,13 @@ GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 		ifTrue:[[(self nextBits: 8) = 0] whileFalse]
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 GZipReadStream >> updateCrc: oldCrc from: start to: stop in: aCollection [
 	"Answer an updated CRC for the range of bytes in aCollection"
 	^ZipWriteStream updateCrc: oldCrc from: start to: stop in: aCollection
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 GZipReadStream >> verifyCrc [
 	| stored |
 	stored := 0.

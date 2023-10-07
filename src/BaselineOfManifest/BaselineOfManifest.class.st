@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfManifest,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfManifest
+	#name : 'BaselineOfManifest',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfManifest',
+	#package : 'BaselineOfManifest'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfManifest >> baseline: spec [
 	<baseline>
 	

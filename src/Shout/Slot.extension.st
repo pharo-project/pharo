@@ -1,6 +1,6 @@
-Extension { #name : #Slot }
+Extension { #name : 'Slot' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 Slot >> styleNameIn: aRBVariableNode [
 
 	^ #instVar

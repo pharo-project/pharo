@@ -17,12 +17,14 @@ The server runs until it receives quit as input. If necessary, use the Process B
 Note: this example deliberately does not use SocketStream to show how to use Socket directly. In practice however, you should use SocketStream.
 "
 Class {
-	#name : #TCPSocketEchoTest,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-Kernel'
+	#name : 'TCPSocketEchoTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TCPSocketEchoTest >> clientSend: message [
 	"Send message to the local TCP echo service and return the result"
 
@@ -35,28 +37,28 @@ TCPSocketEchoTest >> clientSend: message [
 			ensure: [ socket closeAndDestroy ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TCPSocketEchoTest >> localhost [
 	"Return the host address where the TCP echo service runs, the local host address"
 
 	^ NetNameResolver localHostAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TCPSocketEchoTest >> port [
 	"Return the port where the TCP echo service runs"
 
 	^ 6666
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TCPSocketEchoTest >> runServer [
 	"Run and return a local TCP echo server"
 
 	^ self withTCPEchoServer: [ :process | process ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TCPSocketEchoTest >> testEcho [
 	| socket message result |
 	socket := Socket newTCP.
@@ -72,7 +74,7 @@ TCPSocketEchoTest >> testEcho [
 	self clientSend: #quit
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TCPSocketEchoTest >> withTCPEchoServer: block [
 	"Run a local TCP echo server on localhost:port and execute block.
 	Optionally pass the new process to block. When quit is received, stop the server"

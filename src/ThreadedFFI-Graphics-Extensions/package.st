@@ -1,1 +1,1 @@
-Package { #name : #'ThreadedFFI-Graphics-Extensions' }
+Package { #name : 'ThreadedFFI-Graphics-Extensions' }

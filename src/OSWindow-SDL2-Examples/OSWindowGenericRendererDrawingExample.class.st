@@ -5,12 +5,14 @@ To launch the example:
 self new open
 "
 Class {
-	#name : #OSWindowGenericRendererDrawingExample,
-	#superclass : #OSWindowGenericRendererExample,
-	#category : #'OSWindow-SDL2-Examples-Basic'
+	#name : 'OSWindowGenericRendererDrawingExample',
+	#superclass : 'OSWindowGenericRendererExample',
+	#category : 'OSWindow-SDL2-Examples-Basic',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 OSWindowGenericRendererDrawingExample >> redraw [
 	| seconds x y|
 	seconds := Time millisecondClockValue * 0.001.

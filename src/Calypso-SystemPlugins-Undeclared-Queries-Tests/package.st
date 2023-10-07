@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Undeclared-Queries-Tests' }
+Package { #name : 'Calypso-SystemPlugins-Undeclared-Queries-Tests' }

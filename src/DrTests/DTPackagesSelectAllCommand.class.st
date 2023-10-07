@@ -2,18 +2,20 @@
 I select all packages in the package list of DrTests.
 "
 Class {
-	#name : #DTPackagesSelectAllCommand,
-	#superclass : #DTPackagesCommand,
-	#category : #'DrTests-Commands'
+	#name : 'DTPackagesSelectAllCommand',
+	#superclass : 'DTPackagesCommand',
+	#category : 'DrTests-Commands',
+	#package : 'DrTests',
+	#tag : 'Commands'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 DTPackagesSelectAllCommand class >> defaultName [
 
 	^ 'Select all'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 DTPackagesSelectAllCommand >> execute [
 
 	self context selectAllInPackageList

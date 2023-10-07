@@ -3,31 +3,32 @@ I collect the time for every executed test.
 I create a DTTestCaseProfilingData for each test and store all of them in a collection.
 "
 Class {
-	#name : #DTTestsProfilerVisitor,
-	#superclass : #SUnitVisitor,
+	#name : 'DTTestsProfilerVisitor',
+	#superclass : 'SUnitVisitor',
 	#instVars : [
 		'profilingData'
 	],
-	#category : #'DrTests-TestsProfiling'
+	#category : 'DrTests-TestsProfiling',
+	#package : 'DrTests-TestsProfiling'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTTestsProfilerVisitor >> initialize [
 	super initialize.
 	self profilingData: OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsProfilerVisitor >> profilingData [
 	^ profilingData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsProfilerVisitor >> profilingData: anObject [
 	profilingData := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DTTestsProfilerVisitor >> visitTestCase: aTestCase [
 	"Defines the behaviour while visiting a TestCase.
 	 This method must be overriden by concrete subclasses.

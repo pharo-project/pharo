@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnBufferedReadWriteStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnBufferedReadWriteStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testBuffering [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '01234567890123456789' readStream.
@@ -16,7 +17,7 @@ ZnBufferedReadWriteStreamTest >> testBuffering [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	| string |
 	string := String streamContents: [ :stringStream |
@@ -29,7 +30,7 @@ ZnBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	self assert: string equals: '01234567890123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testPeek [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
@@ -43,7 +44,7 @@ ZnBufferedReadWriteStreamTest >> testPeek [
 	self assert: stream next isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testReadInto [
 	| stream buffer count |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
@@ -59,7 +60,7 @@ ZnBufferedReadWriteStreamTest >> testReadInto [
 	self assert: buffer equals: '789123'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testReadIntoLarger [
 	| stream buffer count |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
@@ -70,7 +71,7 @@ ZnBufferedReadWriteStreamTest >> testReadIntoLarger [
 	self assert: buffer equals: '0123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testReadThenWrite [
 	| stream stringStream |
 
@@ -95,7 +96,7 @@ ZnBufferedReadWriteStreamTest >> testReadThenWrite [
 	self assert: stringStream contents equals: '0123ABCD89'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testReadUpTo [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
@@ -105,7 +106,7 @@ ZnBufferedReadWriteStreamTest >> testReadUpTo [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testReadUpToEnd [
 	| stream |
 	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
@@ -115,7 +116,7 @@ ZnBufferedReadWriteStreamTest >> testReadUpToEnd [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 	| stream stringStream |
 
@@ -138,7 +139,7 @@ ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 	self assert: stringStream contents equals: 'ABCD456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testWriting [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |
@@ -148,7 +149,7 @@ ZnBufferedReadWriteStreamTest >> testWriting [
 	self assert: string equals: '0123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadWriteStreamTest >> testWritingOverflow [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |

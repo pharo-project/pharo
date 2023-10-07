@@ -1,6 +1,6 @@
-Extension { #name : #ZnBufferedWriteStream }
+Extension { #name : 'ZnBufferedWriteStream' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ZnBufferedWriteStream >> nextBytesPutAll: aCollection [
 	^ self nextPutAll: aCollection
 ]

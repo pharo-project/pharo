@@ -21,17 +21,19 @@ Example:
 	installer installPackage: readPackage
 "
 Class {
-	#name : #HEInstaller,
-	#superclass : #Object,
+	#name : 'HEInstaller',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'originalUndeclareds',
 		'hasTraits'
 	],
-	#category : #'Hermes-ClassInstaller'
+	#category : 'Hermes-ClassInstaller',
+	#package : 'Hermes',
+	#tag : 'ClassInstaller'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEInstaller >> asClassVariables: aString [
 	| trimmed |
 	trimmed := aString trimBoth.
@@ -42,7 +44,7 @@ HEInstaller >> asClassVariables: aString [
 	^ (trimmed substrings: ' ') collect: [:x | x asSymbol => ClassVariable]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEInstaller >> asSlots: aString [
 	| trimmed |
 	trimmed := aString trimBoth.
@@ -53,7 +55,7 @@ HEInstaller >> asSlots: aString [
 	^ (trimmed splitOn: ' ') collect: [ :e | e asSymbol asSlot ] as: Array
 ]
 
-{ #category : #'creating classes' }
+{ #category : 'creating classes' }
 HEInstaller >> build: aHEClass [
 	| newClass superclass layoutType  |
 
@@ -77,23 +79,23 @@ HEInstaller >> build: aHEClass [
 	^newClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEInstaller >> classNamed: aSymbol [
 	aSymbol ifNil: [ ^ nil ].
 	^ self environment at: aSymbol
 ]
 
-{ #category : #'reporting undeclared' }
+{ #category : 'reporting undeclared' }
 HEInstaller >> createdUndeclared [
 	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary
 ]
 
-{ #category : #'installing package' }
+{ #category : 'installing package' }
 HEInstaller >> doInstallPackage: aHEPackage [
 	| newTraits newClasses |
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
-	RPackageOrganizer default registerPackageNamed: aHEPackage packageName.
+	self packageOrganizer ensurePackage: aHEPackage packageName.
 
 	"2. Install the traits"
 	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
@@ -116,17 +118,17 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	self validateNoNewUndeclared
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEInstaller >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEInstaller >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEInstaller >> existingClass: aHEClass [
 	(environment hasClassNamed: aHEClass className) ifTrue:[
 		self error: (self messageExistingClass: aHEClass)
@@ -134,7 +136,7 @@ HEInstaller >> existingClass: aHEClass [
 	^ nil
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEInstaller >> existingTrait: aHETrait [
 	(environment includesKey: aHETrait traitName) ifTrue:[
 		self error: (self messageExistingTrait: aHETrait)
@@ -143,14 +145,14 @@ HEInstaller >> existingTrait: aHETrait [
 	^nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEInstaller >> initialize [
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
 	hasTraits := Smalltalk globals hasClassNamed: #Trait
 ]
 
-{ #category : #'installing methods' }
+{ #category : 'installing methods' }
 HEInstaller >> installExtensionMethod: extensionMethod [
 	| aClass |
 	aClass := self environment classNamed: extensionMethod className.
@@ -160,7 +162,7 @@ HEInstaller >> installExtensionMethod: extensionMethod [
 	self rebuildMethod: extensionMethod into: aClass
 ]
 
-{ #category : #'installing methods' }
+{ #category : 'installing methods' }
 HEInstaller >> installMethods: exportedClass into: aClass [
 	exportedClass methods do: [ :e | self rebuildMethod: e into: aClass ].
 	exportedClass classSideMethods
@@ -168,32 +170,31 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 			[ :e | self rebuildMethod: e into: aClass classSide ]
 ]
 
-{ #category : #'installing package' }
+{ #category : 'installing package' }
 HEInstaller >> installPackage: aHEPackage [
-	| storedAnnouncements |
 
-	storedAnnouncements := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ].
-	storedAnnouncements do: [ :e | SystemAnnouncer uniqueInstance announce: e ]
+	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ])
+		do: [ :storedAnnouncement | SystemAnnouncer announce: storedAnnouncement ]
 ]
 
-{ #category : #messages }
+{ #category : 'messages' }
 HEInstaller >> messageExistingClass: aHEClass [
 	^ 'The class ' , aHEClass className asString
 		, ' already exists. Should not be overwritten'
 ]
 
-{ #category : #messages }
+{ #category : 'messages' }
 HEInstaller >> messageExistingTrait: aHETrait [
 	^ 'The trait ' , aHETrait traitName asString
 		, ' already exists. Should not be overwritten'
 ]
 
-{ #category : #messages }
+{ #category : 'messages' }
 HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
 ]
 
-{ #category : #'creating classes' }
+{ #category : 'creating classes' }
 HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 
 	hasTraits ifFalse: [ ^ self ].
@@ -202,7 +203,7 @@ HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 	newClass class setTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition)
 ]
 
-{ #category : #'installing methods' }
+{ #category : 'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 	| newMethod literalSpace extendedEnvironment |
 
@@ -213,7 +214,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
+	newMethod := CompiledMethod newMethod: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
@@ -232,12 +233,12 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 		inProtocol: aMethod protocol
 ]
 
-{ #category : #'reporting undeclared' }
+{ #category : 'reporting undeclared' }
 HEInstaller >> reportNewUndeclareds: newUndeclareds [
 	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 	aClass
 		compiledMethodAt: aHEMethod name
@@ -247,7 +248,7 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 		ifAbsent: [ ^ true ]
 ]
 
-{ #category : #'reporting undeclared' }
+{ #category : 'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
 	self reportNewUndeclareds: self createdUndeclared.
 

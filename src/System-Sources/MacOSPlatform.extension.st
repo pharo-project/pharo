@@ -1,6 +1,6 @@
-Extension { #name : #MacOSPlatform }
+Extension { #name : 'MacOSPlatform' }
 
-{ #category : #'*System-Sources' }
+{ #category : '*System-Sources' }
 MacOSPlatform >> potentialLocationsOfSourcesFile [
 	^ {
 		"Take care of .app that have a 'Resources' folder as a sibling of the vm binary"

@@ -2,17 +2,18 @@
 Organises a set of pages sharing the same space and selected through the use of tabs along the top.
 "
 Class {
-	#name : #TabGroupMorph,
-	#superclass : #ModelMorph,
+	#name : 'TabGroupMorph',
+	#superclass : 'ModelMorph',
 	#instVars : [
 		'tabSelectorMorph',
 		'contentMorph',
 		'pageMorphs'
 	],
-	#category : #'Morphic-Widgets-PolyTabs'
+	#category : 'Morphic-Widgets-PolyTabs',
+	#package : 'Morphic-Widgets-PolyTabs'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 TabGroupMorph class >> example [
 	| builder window page1 page2 label1 label2 tabs content okButton cancelButton |
 	builder := self theme builder.
@@ -71,7 +72,7 @@ TabGroupMorph class >> example [
 		action: #delete
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TabGroupMorph >> addPage: aMorph label: aStringOrMorph [
 	"Add a page and its tab."
 
@@ -82,7 +83,7 @@ TabGroupMorph >> addPage: aMorph label: aStringOrMorph [
 	self tabSelectorMorph addTab: aStringOrMorph
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TabGroupMorph >> addPage: aMorph label: aStringOrMorph selected: selectedStringOrMorph [
 	"Add a page and its tab with alternate label when selected."
 
@@ -93,7 +94,7 @@ TabGroupMorph >> addPage: aMorph label: aStringOrMorph selected: selectedStringO
 	self tabSelectorMorph addTab: aStringOrMorph selected: selectedStringOrMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> adoptPaneColor: paneColor [
 	"Pass on to the content morph a little lighter."
 
@@ -102,21 +103,21 @@ TabGroupMorph >> adoptPaneColor: paneColor [
 	self contentMorph borderStyle: (self theme tabPanelBorderStyleFor: self)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> contentMorph [
 	"Answer the value of contentMorph"
 
 	^ contentMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> contentMorph: anObject [
 	"Set the value of contentMorph"
 
 	contentMorph := anObject
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 TabGroupMorph >> cornerStyle: aSymbol [
 	"Pass on to selector and content too."
 
@@ -125,21 +126,21 @@ TabGroupMorph >> cornerStyle: aSymbol [
 	self contentMorph cornerStyle: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> font [
 	"Answer the label font"
 
 	^self tabSelectorMorph font
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> font: aFont [
 	"Set the label font"
 
 	self tabSelectorMorph font: aFont
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabGroupMorph >> fullDrawOn: aCanvas [
 	"Patch up the selected tab visuals if required."
 
@@ -147,7 +148,7 @@ TabGroupMorph >> fullDrawOn: aCanvas [
 	self theme drawTabGroupFinishingFor: self on: aCanvas
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabGroupMorph >> initialize [
 	"Initialize the receiver."
 
@@ -166,7 +167,7 @@ TabGroupMorph >> initialize [
 	self tabSelectorMorph addDependent: self
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> labelsAndPages: assocs [
 	"Replace the tabs and the associated pages."
 
@@ -175,7 +176,7 @@ TabGroupMorph >> labelsAndPages: assocs [
 	assocs do: [:a | self addPage: a value label: a key]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabGroupMorph >> minExtent [
 	"Calculate the min extent of the receiver based on all pages."
 
@@ -187,7 +188,7 @@ TabGroupMorph >> minExtent [
 		max: self tabSelectorMorph minExtent)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 TabGroupMorph >> newContentMorph [
 	"Answer a new content morph"
 
@@ -203,7 +204,7 @@ TabGroupMorph >> newContentMorph [
 	^p
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 TabGroupMorph >> newTabSelectorMorph [
 	"Answer a new tab selector morph"
 
@@ -212,21 +213,21 @@ TabGroupMorph >> newTabSelectorMorph [
 		hResizing: #spaceFill
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> page [
 	"Answer the current page morph if any."
 
 	^self pageMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> page: aMorph [
 	"Select the give page."
 
 	self selectedPageIndex: (self pages indexOf: aMorph)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> pageMorph [
 	"Answer the current page morph if any."
 
@@ -234,35 +235,35 @@ TabGroupMorph >> pageMorph [
 		ifTrue: [self contentMorph submorphs first]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> pageMorphs [
 	"Answer the value of pageMorphs"
 
 	^ pageMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> pageMorphs: anObject [
 	"Set the value of pageMorphs"
 
 	pageMorphs := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> pages [
 	"Answer the pages."
 
 	^self pageMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> paneColorOrNil [
 	"Answer the window's pane color or nil otherwise."
 
 	^super paneColorOrNil ifNotNil: [:c | self theme subgroupColorFrom: c]
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> relabelPage: aMorph with: aStringOrMorph [
 	"Relabel the tab associated with the given page and
 	update tabs."
@@ -271,7 +272,7 @@ TabGroupMorph >> relabelPage: aMorph with: aStringOrMorph [
 		relabelTab: (self tabOfPage: aMorph) with: aStringOrMorph
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TabGroupMorph >> removePage: aMorph [
 	"Remove the given page and its tab."
 
@@ -281,7 +282,7 @@ TabGroupMorph >> removePage: aMorph [
 	self tabSelectorMorph removeTabIndex: index
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> removePageIndex: anInteger [
 	"Remove the page at index anInteger page and its tab."
 
@@ -289,49 +290,49 @@ TabGroupMorph >> removePageIndex: anInteger [
 	self tabSelectorMorph removeTabIndex: anInteger
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> selectedPageIndex [
 	"Answer the selected page index."
 
 	^self tabSelectorMorph selectedIndex
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> selectedPageIndex: index [
 	"Set the selected page index."
 
 	self tabSelectorMorph selectedIndex: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> selectedTab [
 	"Answer the tab of the selected page."
 
  	^self tabSelectorMorph selectedTab
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> tabOfPage: aMorph [
 	"Answer the tab associated with the given page."
 
 	^self tabSelectorMorph tabs at: (self pages indexOf: aMorph)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> tabSelectorMorph [
 	"Answer the value of tabSelectorMorph"
 
 	^ tabSelectorMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabGroupMorph >> tabSelectorMorph: anObject [
 	"Set the value of tabSelectorMorph"
 
 	tabSelectorMorph := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 TabGroupMorph >> update: aSymbol with: anObject [
 	"Handle tab changes."
 
@@ -343,7 +344,7 @@ TabGroupMorph >> update: aSymbol with: anObject [
 				ifFalse: [ self updatePageIndex: self selectedPageIndex ]]
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> updatePageIndex: index [
 	"Change to the given page index."
 
@@ -353,7 +354,7 @@ TabGroupMorph >> updatePageIndex: index [
 	self adoptPaneColor: self paneColor
 ]
 
-{ #category : #page }
+{ #category : 'page' }
 TabGroupMorph >> updatePageIndex: index oldIndex: oldSelectedIndex [
 	self updatePageIndex: index
 ]

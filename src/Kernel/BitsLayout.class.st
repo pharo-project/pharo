@@ -2,30 +2,32 @@
 I am a specialized layout which does not hold slots but only raw data (bytes or words).
 "
 Class {
-	#name : #BitsLayout,
-	#superclass : #ObjectLayout,
-	#category : #'Kernel-Layout'
+	#name : 'BitsLayout',
+	#superclass : 'ObjectLayout',
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitsLayout class >> isAbstract [
 	^self == BitsLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitsLayout >> bytesPerSlot [
 
 	^ 8
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 BitsLayout >> extend [
 	"Answer a default extension of me."
 
 	^ self species new
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 BitsLayout >> extendByte [
 	IncompatibleLayoutConflict new
 		layout: self;
@@ -33,7 +35,7 @@ BitsLayout >> extendByte [
 		signal
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 BitsLayout >> extendDoubleByte [
 	IncompatibleLayoutConflict new
 		layout: self;
@@ -41,7 +43,7 @@ BitsLayout >> extendDoubleByte [
 		signal
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 BitsLayout >> extendDoubleWord [
 	IncompatibleLayoutConflict new
 		layout: self;
@@ -49,7 +51,7 @@ BitsLayout >> extendDoubleWord [
 		signal
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 BitsLayout >> extendWeak: aLayoutClassScope [
 	IncompatibleLayoutConflict new
 		layout: self;
@@ -57,7 +59,7 @@ BitsLayout >> extendWeak: aLayoutClassScope [
 		signal
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 BitsLayout >> extendWord [
 	IncompatibleLayoutConflict new
 		layout: self;
@@ -65,32 +67,32 @@ BitsLayout >> extendWord [
 		signal
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitsLayout >> isBits [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitsLayout >> isBytes [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitsLayout >> isDoubleBytes [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitsLayout >> isDoubleWords [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitsLayout >> isVariable [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BitsLayout >> isWords [
 	^ false
 ]

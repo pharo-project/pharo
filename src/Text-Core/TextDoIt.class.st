@@ -14,34 +14,22 @@ TextMorph new
 
 "
 Class {
-	#name : #TextDoIt,
-	#superclass : #TextAction,
+	#name : 'TextDoIt',
+	#superclass : 'TextAction',
 	#instVars : [
 		'evalString'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextDoIt class >> evalString: str [
 	^ self new evalString: str
 ]
 
-{ #category : #'instance creation' }
-TextDoIt class >> scanFrom: strm [
-	"read a doit in the funny format used by Text styles on files. d10 factorial;;  end with two semicolons"
-
-	| pos end doit |
-	pos := strm position.
-	[strm skipTo: $;. strm peek == $;] whileFalse.
-	end := strm position - 1.
-	strm position: pos.
-	doit := strm next: end-pos.
-	strm skip: 2.  ";;"
-	^ self evalString: doit
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 TextDoIt >> analyze: aString [
 
 	| list |
@@ -50,12 +38,12 @@ TextDoIt >> analyze: aString [
 	^ list at: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextDoIt >> evalString: str [
 	evalString := str
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextDoIt >> info [
 	^ evalString
 ]

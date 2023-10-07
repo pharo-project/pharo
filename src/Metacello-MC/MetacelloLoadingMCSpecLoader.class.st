@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloLoadingMCSpecLoader,
-	#superclass : #MetacelloCommonMCSpecLoader,
-	#category : #'Metacello-MC-Loaders'
+	#name : 'MetacelloLoadingMCSpecLoader',
+	#superclass : 'MetacelloCommonMCSpecLoader',
+	#category : 'Metacello-MC-Loaders',
+	#package : 'Metacello-MC',
+	#tag : 'Loaders'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadingMCSpecLoader >> actionLabel [
 
 	^'Loading '
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec from: repositorySpecs to: repository [
 
 	| gofer |
@@ -19,7 +21,7 @@ MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec from: repositorySpecs to: repo
 	^self copySpec: pkgSpec with: gofer to: repository
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec with: gofer to: aRepository [
 
 	| repository resolvedReference |
@@ -33,12 +35,12 @@ MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec with: gofer to: aRepository [
 	^resolvedReference repository
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloLoadingMCSpecLoader >> doLoad [
 	"NOOP"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadingMCSpecLoader >> fetchingSpecLoader [
 
 	^(MetacelloFetchingMCSpecLoader on: self spec)
@@ -47,7 +49,7 @@ MetacelloLoadingMCSpecLoader >> fetchingSpecLoader [
 		yourself
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> goferCommitBranchPackage: branchName using: repositorySpecs commitMessage: commitMessage [
 	| gofer repoSpecs wc |
 	repoSpecs := self spec repositorySpecs notEmpty
@@ -81,7 +83,7 @@ MetacelloLoadingMCSpecLoader >> goferCommitBranchPackage: branchName using: repo
 	^ true
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> goferCommitPackageUsing: repositorySpecs commitMessage: commitMessage [
 
 	| gofer repoSpecs wc |
@@ -101,7 +103,7 @@ MetacelloLoadingMCSpecLoader >> goferCommitPackageUsing: repositorySpecs commitM
 	^true
 ]
 
-{ #category : #packages }
+{ #category : 'packages' }
 MetacelloLoadingMCSpecLoader >> latestPackage: aString fromRepository: repositorySpecs [
 
 	| gofer |
@@ -113,7 +115,7 @@ MetacelloLoadingMCSpecLoader >> latestPackage: aString fromRepository: repositor
 		do: [:ignored | ^ nil ]) name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
 	MetacelloPlatform current
 		do: [ | loadBlock goferLoad answers resolvedReference repo |
@@ -146,7 +148,7 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 		displaying: 'Loading ' , packageSpec file
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> packagesNeedSavingUsing: repositorySpecs into: aCollection [
 
 	| wc repoSpecs repo |
@@ -165,7 +167,7 @@ MetacelloLoadingMCSpecLoader >> packagesNeedSavingUsing: repositorySpecs into: a
 	aCollection add: self spec -> repo
 ]
 
-{ #category : #doits }
+{ #category : 'doits' }
 MetacelloLoadingMCSpecLoader >> postLoad: packageOrVersionSpec [
 
 	| block |
@@ -173,7 +175,7 @@ MetacelloLoadingMCSpecLoader >> postLoad: packageOrVersionSpec [
 		ifTrue: [ block valueWithPossibleArgs: { self. packageOrVersionSpec. } ]
 ]
 
-{ #category : #doits }
+{ #category : 'doits' }
 MetacelloLoadingMCSpecLoader >> preLoad: packageOrVersionSpec [
 
 	| block |
@@ -181,7 +183,7 @@ MetacelloLoadingMCSpecLoader >> preLoad: packageOrVersionSpec [
 		ifTrue: [ block valueWithPossibleArgs: { self. packageOrVersionSpec. } ]
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec from: repositorySpecs [
 
 	^([self resolveSpec: pkgSpec from: repositorySpecs]
@@ -189,7 +191,7 @@ MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec from: repositorySpecs [
 		do: [:ignored | ^nil ]) repository
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec with: gofer [
 
 	^([self resolveSpec: pkgSpec with: gofer]
@@ -197,7 +199,7 @@ MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec with: gofer [
 		do: [:ignored | ^nil ]) repository
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> resolveSpec: pkgSpec from: repositorySpecs [
 
 	| gofer |
@@ -208,13 +210,13 @@ MetacelloLoadingMCSpecLoader >> resolveSpec: pkgSpec from: repositorySpecs [
 	^self resolveSpec: pkgSpec with: gofer
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> resolveSpec: pkgSpec with: gofer [
 
 	^pkgSpec goferLoaderReference resolveWith: gofer
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> savePackageUsing: repositorySpecs [
 
 	| wc repo repoSpecs newVersion |

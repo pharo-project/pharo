@@ -9,12 +9,13 @@ https://en.wikipedia.org/wiki/Endianness
 https://en.wikipedia.org/wiki/Two%27s_complement
 "
 Class {
-	#name : #ZnBufferedStreamByteTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnBufferedStreamByteTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedStreamByteTest >> integerEncodingSpec [
 	^ #(
 "<hex-bytes> <integer> <u|s> <be|le> unsigned|signed big-endian|little-endian"
@@ -74,7 +75,7 @@ ZnBufferedStreamByteTest >> integerEncodingSpec [
 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedStreamByteTest >> testInt16Aliases [
 	| input writer |
 	writer := [ :block |
@@ -96,7 +97,7 @@ ZnBufferedStreamByteTest >> testInt16Aliases [
 	self assert: (writer value: [ :out | out int16: -1234 ]) equals: input
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedStreamByteTest >> testInt32Aliases [
 	| input writer |
 	writer := [ :block |
@@ -120,7 +121,7 @@ ZnBufferedStreamByteTest >> testInt32Aliases [
 	self assert: (writer value: [ :out | out nextInt32Put: -1234567890 ]) equals: input
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedStreamByteTest >> testInt8 [
 	| bytes readStream |
 	bytes := ByteArray streamContents: [ :out |
@@ -136,7 +137,7 @@ ZnBufferedStreamByteTest >> testInt8 [
 	self assert: readStream int8 equals: -123
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndian [
 	self integerEncodingSpec do: [ :spec |
 		| input integer |
@@ -148,7 +149,7 @@ ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndian [
 		self assert: integer equals: spec second ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedStreamByteTest >> testNextIntegerOfSizeSignedBigEndianPut [
 	self integerEncodingSpec do: [ :spec |
 		| input output |

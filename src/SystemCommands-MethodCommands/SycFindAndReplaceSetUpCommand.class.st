@@ -2,15 +2,16 @@
 I am a command to find and replace setUp method in owner class and its subclasses if apply
 "
 Class {
-	#name : #SycFindAndReplaceSetUpCommand,
-	#superclass : #SycMethodCmCommand,
+	#name : 'SycFindAndReplaceSetUpCommand',
+	#superclass : 'SycMethodCmCommand',
 	#instVars : [
 		'method'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycFindAndReplaceSetUpCommand >> executeRefactoring [
 	| refactoring |
 	refactoring := RBFindAndReplaceSetUpTransformation
@@ -20,23 +21,23 @@ SycFindAndReplaceSetUpCommand >> executeRefactoring [
 	refactoring execute
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycFindAndReplaceSetUpCommand >> isApplicable [
 	^ context lastSelectedMethod selector = #setUp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycFindAndReplaceSetUpCommand >> name [
 	^ 'Find and replace setUp'
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 SycFindAndReplaceSetUpCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	method := context lastSelectedMethod
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycFindAndReplaceSetUpCommand >> searchInTheWholeHierarchy [
 
 	^ method origin subclasses

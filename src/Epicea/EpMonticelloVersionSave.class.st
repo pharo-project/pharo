@@ -2,23 +2,25 @@
 I represent a Monticello ""Save Version"" operation performed in the system.
 "
 Class {
-	#name : #EpMonticelloVersionSave,
-	#superclass : #EpEvent,
+	#name : 'EpMonticelloVersionSave',
+	#superclass : 'EpEvent',
 	#instVars : [
 		'versionName',
 		'repositoryDescription'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpMonticelloVersionSave class >> version: aMCVersion repository: aMCRepository [
 	^ self
 		versionName: aMCVersion info name
 		repositoryDescription: aMCRepository description
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpMonticelloVersionSave class >> versionName: aVersionName repositoryDescription: aRepositoryDescription [
 	^ self basicNew
 		initializeWithVersionName: aVersionName
@@ -26,7 +28,7 @@ EpMonticelloVersionSave class >> versionName: aVersionName repositoryDescription
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpMonticelloVersionSave >> = another [
 
 	^ self class = another class
@@ -34,18 +36,18 @@ EpMonticelloVersionSave >> = another [
 		and: [ self repositoryDescription = another repositoryDescription ] ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMonticelloVersionSave >> accept: aChangeVisitor [
 	^ aChangeVisitor visitMonticelloVersionSave: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMonticelloVersionSave >> affectedPackageName [
 
 	^ self packageName
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpMonticelloVersionSave >> hash [
 
 	^ (self class hash
@@ -53,7 +55,7 @@ EpMonticelloVersionSave >> hash [
 		bitXor: self repositoryDescription hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpMonticelloVersionSave >> initializeWithVersionName: aVersionName repositoryDescription: aRepositoryDescription [
 	self initialize.
 
@@ -61,19 +63,19 @@ EpMonticelloVersionSave >> initializeWithVersionName: aVersionName repositoryDes
 	repositoryDescription := aRepositoryDescription
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpMonticelloVersionSave >> isMonticelloVersionSave [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMonticelloVersionSave >> packageName [
 
 	^ versionName copyUpToLast: $-
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EpMonticelloVersionSave >> printOn: aStream [
 
 	super printOn: aStream.
@@ -86,12 +88,12 @@ EpMonticelloVersionSave >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMonticelloVersionSave >> repositoryDescription [
 	^ repositoryDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMonticelloVersionSave >> versionName [
 	^ versionName
 ]

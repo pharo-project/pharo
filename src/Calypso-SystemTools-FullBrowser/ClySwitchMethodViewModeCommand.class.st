@@ -7,39 +7,41 @@ Subclasses define what kind of method groups whey target. They implement followi
 - methodGroupType
 "
 Class {
-	#name : #ClySwitchMethodViewModeCommand,
-	#superclass : #ClySwitchBrowserModeCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
+	#name : 'ClySwitchMethodViewModeCommand',
+	#superclass : 'ClySwitchBrowserModeCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchMethodViewModeCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchMethodViewModeCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
 
 	^ClyToolbarActivation byItemOf: ClyMethodViewToolbarGroup for: ClyFullBrowserClassContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchMethodViewModeCommand class >> isAbstract [
 	^self = ClySwitchMethodViewModeCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchMethodViewModeCommand >> defaultMenuItemName [
 	^self methodGroupType shortName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchMethodViewModeCommand >> isAppliedToBrowser [
 	^browser methodGroupView showsItemsOfType: self methodGroupType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchMethodViewModeCommand >> methodGroupType [
 	self subclassResponsibility
 ]

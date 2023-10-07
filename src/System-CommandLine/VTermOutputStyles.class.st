@@ -2,8 +2,8 @@
 I am a SharedPool for the style constants used by VTermOutputDriver
 "
 Class {
-	#name : #VTermOutputStyles,
-	#superclass : #SharedPool,
+	#name : 'VTermOutputStyles',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'Blink',
 		'Bold',
@@ -13,10 +13,12 @@ Class {
 		'Standout',
 		'Underline'
 	],
-	#category : #'System-CommandLine-VTerm-Styling'
+	#category : 'System-CommandLine-VTerm-Styling',
+	#package : 'System-CommandLine',
+	#tag : 'VTerm-Styling'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 VTermOutputStyles class >> initialize [
 	ResetStyle := '0m'.
 	Bold := '1m'.

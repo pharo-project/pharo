@@ -2,16 +2,18 @@
 I represent a symbol, there might be a method with this selector
 "
 Class {
-	#name : #NECSymbolEntry,
-	#superclass : #NECEntry,
-	#category : #'NECompletion-Model'
+	#name : 'NECSymbolEntry',
+	#superclass : 'NECEntry',
+	#category : 'NECompletion-Model',
+	#package : 'NECompletion',
+	#tag : 'Model'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NECSymbolEntry >> browse [
 	| class |
 	class := node propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents. ^true].
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: self selector. ^true].
 
 	^ self
 		findMethodAndDo: [ :method |
@@ -25,7 +27,7 @@ NECSymbolEntry >> browse [
 			true ]
 ]
 
-{ #category : #'detail information' }
+{ #category : 'detail information' }
 NECSymbolEntry >> createDescription [
 	"Creates description either from looking up the method in a class,
 	or in the system."
@@ -38,21 +40,21 @@ NECSymbolEntry >> createDescription [
 		ifAbsent: [:selector | self implementorsDescription: selector]
 ]
 
-{ #category : #'detail information' }
+{ #category : 'detail information' }
 NECSymbolEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	| result  implementors |
 
-	implementors := self systemNavigation allImplementorsOf: contents.
+	implementors := self systemNavigation allImplementorsOf: self selector.
 	implementors size == 1
 						ifTrue: [| ref |
 							ref := implementors first.
 							result := ref realClass lookupSelector: ref selector]
-						ifFalse: [^ notfoundBlock value: contents].
+						ifFalse: [^ notfoundBlock value: self selector ].
 
 	^ foundBlock value: result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECSymbolEntry >> implementorsDescription: aSymbol [
 	| implementors output |
 	output := WriteStream on: String new.
@@ -64,7 +66,7 @@ NECSymbolEntry >> implementorsDescription: aSymbol [
 			description: 'This is just symbol.' ].
 	implementors do: [ :each |
 		output
-			nextPutAll: each className printString;
+			nextPutAll: each methodClass printString;
 			cr ].
 	^ NECEntryDescription
 		label: self label
@@ -72,7 +74,7 @@ NECSymbolEntry >> implementorsDescription: aSymbol [
 		description: output contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 	"I return if it's a class or a method, its class name, and the implementation."
 	| styler styledText |
@@ -85,4 +87,10 @@ NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 		label: self label
 		title: aClass printString
 		description: styledText
+]
+
+{ #category : 'accessing' }
+NECSymbolEntry >> selector [
+
+	^ contents
 ]

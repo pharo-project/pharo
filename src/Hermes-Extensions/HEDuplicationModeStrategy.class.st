@@ -5,34 +5,36 @@ Each subclass has a classSide message #keyword that identifies it self.
 I look up the corresponding subclass to use.
 "
 Class {
-	#name : #HEDuplicationModeStrategy,
-	#superclass : #Object,
-	#category : #'Hermes-Extensions-ClassInstaller'
+	#name : 'HEDuplicationModeStrategy',
+	#superclass : 'Object',
+	#category : 'Hermes-Extensions-ClassInstaller',
+	#package : 'Hermes-Extensions',
+	#tag : 'ClassInstaller'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HEDuplicationModeStrategy class >> forOption: keyword [
 	^ (self allSubclasses
 		detect: [ :e | e keyword = keyword ]
 		ifNone: [ self error: 'There is no duplication strategy for ''' , keyword , '''' ]) new
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEDuplicationModeStrategy >> doExistingClass: aClass hermesClass: aHEClass installer: installer [
 	self subclassResponsibility
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEDuplicationModeStrategy >> doExistingTrait: aTrait hermesTrait: aHETrait installer: installer [
 	self subclassResponsibility
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEDuplicationModeStrategy >> doShouldBuildMethod: aHEMethod in: installer installer: aClass original: aMethod [
 	self subclassResponsibility
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEDuplicationModeStrategy >> existingClass: aHEClass on: installer [
 	^ installer environment
 		at: aHEClass className
@@ -44,7 +46,7 @@ HEDuplicationModeStrategy >> existingClass: aHEClass on: installer [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEDuplicationModeStrategy >> existingTrait: aHETrait on: installer [
 	^ installer environment
 		at: aHETrait traitName
@@ -56,7 +58,7 @@ HEDuplicationModeStrategy >> existingTrait: aHETrait on: installer [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #'validating existence' }
+{ #category : 'validating existence' }
 HEDuplicationModeStrategy >> shouldBuildMethod: aHEMethod in: aClass installer: installer [
 	^ aClass
 		compiledMethodAt: aHEMethod name

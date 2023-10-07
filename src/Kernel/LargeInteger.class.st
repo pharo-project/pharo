@@ -2,19 +2,21 @@
 I represent integers of more than 30 bits.  These values are beyond the range of SmallInteger, and are encoded here as an array of 8-bit digits. 
 "
 Class {
-	#name : #LargeInteger,
-	#superclass : #Integer,
-	#type : #bytes,
-	#category : #'Kernel-Numbers'
+	#name : 'LargeInteger',
+	#superclass : 'Integer',
+	#type : 'bytes',
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeInteger class >> isAbstract [
 
 	^ self == LargeInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> * anInteger [
 	"Primitive. Multiply the receiver by the argument and answer with an
 	Integer result. Fail if either the argument or the result is not a
@@ -25,7 +27,7 @@ LargeInteger >> * anInteger [
 	^super * anInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> + anInteger [
 	"Primitive. Add the receiver to the argument and answer with an
 	Integer result. Fail if either the argument or the result is not a
@@ -36,7 +38,7 @@ LargeInteger >> + anInteger [
 	^super + anInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> - anInteger [
 	"Primitive. Subtract the argument from the receiver and answer with an
 	Integer result. Fail if either the argument or the result is not a
@@ -47,7 +49,7 @@ LargeInteger >> - anInteger [
 	^super - anInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> / anInteger [
 	"Primitive. Divide the receiver by the argument and answer with the
 	result if the division is exact. Fail if the result is not a whole integer.
@@ -59,7 +61,7 @@ LargeInteger >> / anInteger [
 	^super / anInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> // anInteger [
 	"Primitive. Divide the receiver by the argument and return the result.
 	Round the result down towards negative infinity to make it a whole
@@ -71,7 +73,7 @@ LargeInteger >> // anInteger [
 	^super // anInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LargeInteger >> < anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is less than the argument. Otherwise answer false. Fail if the
@@ -82,7 +84,7 @@ LargeInteger >> < anInteger [
 	^super < anInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LargeInteger >> <= anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is less than or equal to the argument. Otherwise answer false.
@@ -93,7 +95,7 @@ LargeInteger >> <= anInteger [
 	^super <= anInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LargeInteger >> > anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is greater than the argument. Otherwise answer false. Fail if
@@ -104,7 +106,7 @@ LargeInteger >> > anInteger [
 	^super > anInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LargeInteger >> >= anInteger [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is greater than or equal to the argument. Otherwise answer
@@ -115,7 +117,7 @@ LargeInteger >> >= anInteger [
 	^super >= anInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> \\ aNumber [
 	"Primitive. Take the receiver modulo the argument. The result is the
 	remainder rounded towards negative infinity, of the receiver divided
@@ -139,14 +141,14 @@ LargeInteger >> \\ aNumber [
 	^super \\ aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> \\\ anInteger [
 	"a faster modulo method for use in DSA. Be careful if you try to use this elsewhere"
 
 	^(self digitDiv: anInteger neg: false) second
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LargeInteger >> asFloat [
 	"Answer a Float that best approximates the value of the receiver.
 	This algorithm is optimized to process only the significant digits of a LargeInteger.
@@ -200,7 +202,7 @@ LargeInteger >> asFloat [
 	^result timesTwoPower: shift
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 LargeInteger >> byteAt: index [
 	"Primitive. Answer the value of an indexable field in the receiver.   LargePositiveInteger uses bytes of base two number, and each is a 'digit' base 256.  Fail if the argument (the index) is not an Integer or is out of bounds. Essential.  See Object documentation whatIsAPrimitive."
 
@@ -210,7 +212,7 @@ LargeInteger >> byteAt: index [
 		ifFalse: [^super at: index]
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 LargeInteger >> byteAt: index put: value [
 	"Primitive. Store the second argument (value) in the indexable field of
 	the receiver indicated by index. Fail if the value is negative or is larger
@@ -222,7 +224,7 @@ LargeInteger >> byteAt: index put: value [
 	^super at: index put: value
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 LargeInteger >> bytesCount [
 	"Primitive. Answer the number of indexable fields in the receiver. This
 	value is the same as the largest legal subscript. Essential. See Object
@@ -232,21 +234,21 @@ LargeInteger >> bytesCount [
 	self primitiveFailed
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LargeInteger >> hash [
 	^ self bytesCount <= 8
 		ifTrue: [ self ]
 		ifFalse: [ ByteArray hashBytes: self startingWith: self species hash ]
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 LargeInteger >> hashMultiply [
 	"Truncate to 28 bits and try again"
 
 	^(self bitAnd: 16rFFFFFFF) hashMultiply
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 LargeInteger >> highBitOfMagnitude [
 	"Answer the index of the high order bit of the magnitude of the
 	receiver, or zero if the receiver is zero.
@@ -259,17 +261,17 @@ LargeInteger >> highBitOfMagnitude [
 	^ lastDigit highBitOfPositiveReceiver + (8 * (realLength - 1))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeInteger >> isLarge [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LargeInteger >> mightBeASquare [
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LargeInteger >> printOn: aStream base: b nDigits: n [
 	"Append a representation of this number in base b on aStream using n digits.
 	In order to reduce cost of LargePositiveInteger ops, split the number of digts approximatily in two
@@ -291,7 +293,7 @@ LargeInteger >> printOn: aStream base: b nDigits: n [
 	tail printOn: aStream base: b nDigits: halfPower
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> quo: anInteger [
 	"Primitive. Divide the receiver by the argument and return the result.
 	Round the result down towards zero to make it a whole integer. Fail if
@@ -303,7 +305,7 @@ LargeInteger >> quo: anInteger [
 	^super quo: anInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 LargeInteger >> rem: aNumber [
 	"Remainder defined in terms of quo:. See super rem:.
 	This is defined only to speed up case of large integers."
@@ -318,14 +320,14 @@ LargeInteger >> rem: aNumber [
 	^super rem: aNumber
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 LargeInteger >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	^ super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LargeInteger >> withAtLeastNDigits: desiredLength [
 
 	| new |

@@ -1,6 +1,6 @@
-Extension { #name : #PasteUpMorph }
+Extension { #name : 'PasteUpMorph' }
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 PasteUpMorph >> createTaskbarIfNecessary [
 	"Private - create a new taskbar if not present."
 
@@ -9,7 +9,7 @@ PasteUpMorph >> createTaskbarIfNecessary [
 		self moveCollapsedWindowsToTaskbar]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 PasteUpMorph >> moveCollapsedWindowsToTaskbar [
 	"Move collapsed windows to the taskbar."
 
@@ -17,14 +17,14 @@ PasteUpMorph >> moveCollapsedWindowsToTaskbar [
 		w restore; minimize]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 PasteUpMorph >> removeTaskbar [
 	"Remove the receiver's taskbars."
 
 	self taskbars do: [:each | each removeFromWorld]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 PasteUpMorph >> showWorldTaskbar: aBoolean [
 	"Change the receiver to show the taskbar."
 
@@ -33,7 +33,7 @@ PasteUpMorph >> showWorldTaskbar: aBoolean [
 		ifFalse: [self removeTaskbar]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 PasteUpMorph >> taskList [
 
 	^ self submorphs

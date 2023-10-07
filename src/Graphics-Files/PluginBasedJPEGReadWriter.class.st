@@ -15,18 +15,19 @@ The LIBJPEG license allows it to be used free for any purpose so long as its ori
 
 "
 Class {
-	#name : #PluginBasedJPEGReadWriter,
-	#superclass : #ImageReadWriter,
-	#category : #'Graphics-Files'
+	#name : 'PluginBasedJPEGReadWriter',
+	#superclass : 'ImageReadWriter',
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 PluginBasedJPEGReadWriter class >> primJPEGPluginIsPresent [
 	<primitive: 'primJPEGPluginIsPresent' module: 'JPEGReadWriter2Plugin'>
 	^false
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 PluginBasedJPEGReadWriter class >> putForm: aForm onFileNamed: fileName [
 	"Store (encode) the image of the Form aForm as PNG on a file of with fileName."
 
@@ -37,7 +38,7 @@ PluginBasedJPEGReadWriter class >> putForm: aForm onFileNamed: fileName [
 		onFileNamed: fileName
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 PluginBasedJPEGReadWriter class >> putForm: aForm quality: quality progressiveJPEG: progressiveFlag onFileNamed: fileName [
 	"Store the given Form as a JPEG file of the given name, overwriting any existing file of that name. Quality goes from 0 (low) to 100 (high), where -1 means default. If progressiveFlag is true, encode as a progressive JPEG."
 	| writer |
@@ -50,13 +51,13 @@ PluginBasedJPEGReadWriter class >> putForm: aForm quality: quality progressiveJP
 	writer close
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 PluginBasedJPEGReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
 	^#('jpg' 'jpeg')
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> compress: aForm quality: quality [
 	"Encode the given Form and answer the compressed ByteArray. Quality goes from 0 (low) to 100 (high), where -1 means default."
 	| sourceForm jpegCompressStruct jpegErrorMgr2Struct buffer byteCount |
@@ -81,7 +82,7 @@ PluginBasedJPEGReadWriter >> compress: aForm quality: quality [
 		to: byteCount
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> imageExtent: aByteArray [
 	"Answer the extent of the compressed image encoded in the given ByteArray."
 	| jpegDecompressStruct jpegErrorMgr2Struct w h |
@@ -96,19 +97,19 @@ PluginBasedJPEGReadWriter >> imageExtent: aByteArray [
 	^ w @ h
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PluginBasedJPEGReadWriter >> isPluginPresent [
 	^self primJPEGPluginIsPresent
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> nextImage [
 	"Decode and answer a Form from my stream."
 
 	^ self nextImageSuggestedDepth: Display depth
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> nextImageSuggestedDepth: depth [
 	"Decode and answer a Form of the given depth from my stream. Close the stream if it is a file stream. Possible depths are 16-bit and 32-bit."
 	| bytes width height form jpegDecompressStruct jpegErrorMgr2Struct depthToUse |
@@ -139,14 +140,14 @@ PluginBasedJPEGReadWriter >> nextImageSuggestedDepth: depth [
 	^ form
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> nextPutImage: aForm [
 	"Encode the given Form on my stream with default quality."
 
 	^ self nextPutImage: aForm quality: -1 progressiveJPEG: false
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> nextPutImage: aForm quality: quality progressiveJPEG: progressiveFlag [
 	"Encode the given Form on my stream with the given settings. Quality goes from 0 (low) to 100 (high), where -1 means default. If progressiveFlag is true, encode as a progressive JPEG."
 	| sourceForm jpegCompressStruct jpegErrorMgr2Struct buffer byteCount |
@@ -173,69 +174,69 @@ PluginBasedJPEGReadWriter >> nextPutImage: aForm quality: quality progressiveJPE
 	self close
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primImageHeight: aJPEGCompressStruct [
 
 	<primitive: 'primImageHeight' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primImageWidth: aJPEGCompressStruct [
 
 	<primitive: 'primImageWidth' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primJPEGCompressStructSize [
 
 	<primitive: 'primJPEGCompressStructSize' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primJPEGDecompressStructSize [
 
 	<primitive: 'primJPEGDecompressStructSize' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primJPEGErrorMgr2StructSize [
 
 	<primitive: 'primJPEGErrorMgr2StructSize' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primJPEGPluginIsPresent [
 	<primitive: 'primJPEGPluginIsPresent' module: 'JPEGReadWriter2Plugin'>
 	^false
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primJPEGReadHeader: aJPEGDecompressStruct fromByteArray: source errorMgr: aJPEGErrorMgr2Struct [
 
 	<primitive: 'primJPEGReadHeaderfromByteArrayerrorMgr' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primJPEGReadImage: aJPEGDecompressStruct fromByteArray: source onForm: form doDithering: ditherFlag errorMgr: aJPEGErrorMgr2Struct [
 
 	<primitive: 'primJPEGReadImagefromByteArrayonFormdoDitheringerrorMgr' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 PluginBasedJPEGReadWriter >> primJPEGWriteImage: aJPEGCompressStruct onByteArray: destination form: form quality: quality progressiveJPEG: progressiveFlag errorMgr: aJPEGErrorMgr2Struct [
 
 	<primitive: 'primJPEGWriteImageonByteArrayformqualityprogressiveJPEGerrorMgr' module: 'JPEGReadWriter2Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm [
 	"Uncompress an image from the given ByteArray into the given Form.
 	Fails if the given Form has the wrong dimensions or depth.
@@ -266,7 +267,7 @@ PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm [
 		errorMgr: jpegErrorMgr2Struct
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm doDithering: ditherFlag [
 	"Uncompress an image from the given ByteArray into the given Form.
 	Fails if the given Form has the wrong dimensions or depth.
@@ -297,7 +298,7 @@ PluginBasedJPEGReadWriter >> uncompress: aByteArray into: aForm doDithering: dit
 		errorMgr: jpegErrorMgr2Struct
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PluginBasedJPEGReadWriter >> understandsImageFormat [
 	"Answer true if the image stream format is understood by this decoder."
 	self isPluginPresent ifFalse:[^false]. "cannot read it otherwise"

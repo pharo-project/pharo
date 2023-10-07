@@ -1,20 +1,20 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> adoptPaneColor [
 	"Adopt our pane color."
 
 	self adoptPaneColor: self paneColor
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> boundsWithinCorners [
  	"Changed to be more realistic..."
 
 	^self bounds insetBy: 2
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> drawKeyboardFocusOn: aCanvas [
 	"Draw the keyboard focus indication."
 
@@ -22,7 +22,7 @@ Morph >> drawKeyboardFocusOn: aCanvas [
 		drawOn: aCanvas
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> expandFullBoundsForDropShadow: aRectangle [
 	"Return an expanded rectangle for an eventual drop shadow."
 
@@ -30,14 +30,14 @@ Morph >> expandFullBoundsForDropShadow: aRectangle [
 		quickMerge: aRectangle
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> focusBounds [
 	"Answer the bounds for drawing the focus indication."
 
 	^self bounds
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> focusChanged [
 	"Report that the area occupied by the morph's focus indicator should be redrawn.
 	Optimized for border-only (no fill)."
@@ -51,14 +51,14 @@ Morph >> focusChanged [
 		ifFalse: [self invalidRect: fm bounds]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> focusColor [
 	"Answer the keyboard focus indication color."
 
 	^self borderStyle color contrastingBlackAndWhiteColor
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> focusIndicatorCornerRadius [
 	"Answer the corner radius preferred for the focus indicator
 	for the receiver for themes that support this."
@@ -66,14 +66,14 @@ Morph >> focusIndicatorCornerRadius [
 	^self theme focusIndicatorCornerRadiusFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> focusIndicatorMorph [
 	"Answer the focus indicator morph for the receiver."
 
 	^self theme focusIndicatorMorphFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> hasKeyboardFocus [
 	"Answer whether the receiver has keyboard focus."
 
@@ -81,7 +81,7 @@ Morph >> hasKeyboardFocus [
 		activeHand ifNil: [^false])  keyboardFocus = self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> lastSubmorphRecursive [
 	"Answer recursive last submorph of the receiver."
 
@@ -90,7 +90,7 @@ Morph >> lastSubmorphRecursive [
 		ifFalse: [self]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> layoutInBounds: cellBounds [
 	"Layout specific. Apply the given bounds to the receiver after being layed out in its owner."
 	| box aSymbol |
@@ -115,7 +115,7 @@ Morph >> layoutInBounds: cellBounds [
 	self bounds: box
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> minExtent [
 	"Layout specific. Return the minimum size the receiver can be represented in.
 	Implementation note: When this message is sent from an owner trying to lay out its children it will traverse down the morph tree and recompute the minimal arrangement of the morphs based on which the minimal extent is returned. When a morph with some layout strategy is encountered, the morph will ask its strategy to compute the new arrangement. However, since the final size given to the receiver is unknown at the point of the query, the assumption is made that the current bounds of the receiver are the base on which the layout should be computed. This scheme prevents strange layout changes when for instance, a table is contained in another table. Unless the inner table has been resized manually (which means its bounds are already enlarged) the arrangement of the inner table will not change here. Thus the entire layout computation is basically an iterative process which may have different results depending on the incremental changes applied.
@@ -154,14 +154,14 @@ Morph >> minExtent [
 	^minExtent
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> myDependents [
 	"Improved performance dependents."
 
 	^ (self valueOfProperty: #myDependents) ifNil: [ #() ]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> myDependents: aCollectionOrNil [
 	"Improved performance dependents."
 
@@ -170,7 +170,7 @@ Morph >> myDependents: aCollectionOrNil [
 		ifNotNil: [self setProperty: #myDependents toValue: aCollectionOrNil]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> navigateFocusBackward [
 	"Change the keyboard focus to the previous morph."
 
@@ -178,7 +178,7 @@ Morph >> navigateFocusBackward [
 		m takeKeyboardFocus]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> navigateFocusForward [
 	"Change the keyboard focus to the next morph."
 
@@ -186,7 +186,7 @@ Morph >> navigateFocusForward [
 		m takeKeyboardFocus]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> navigationKey: event [
 	"Check for tab key activity and change focus as appropriate.
 	Check for menu key to do popup."
@@ -202,21 +202,21 @@ Morph >> navigationKey: event [
 	^false
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> optimalExtent [
 	"Answer the submorphBounds extent plus twice our border width."
 
 	^self submorphBounds extent + (self borderWidth * 2)
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> paneColor [
 	"Answer the window's pane color or our color otherwise."
 
 	^self paneColorOrNil ifNil: [self color]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> paneColor: aColor [
 	"Explicitly set the pane color for the reveiver."
 
@@ -224,7 +224,7 @@ Morph >> paneColor: aColor [
 	self adoptPaneColor
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> paneColorOrNil [
 	"Answer the window's pane color or nil otherwise."
 
@@ -232,14 +232,14 @@ Morph >> paneColorOrNil [
 		(self owner ifNil: [^nil]) paneColorOrNil]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> passivate [
 	"Mark the receiver and submorphs as passive (background)."
 
 	self submorphsDo: [:m | m passivate]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> preferredButtonCornerStyle [
 	"Answer the preferred button corner style
 	for submorphs. Answer nil for no preference."
@@ -247,14 +247,14 @@ Morph >> preferredButtonCornerStyle [
 	^nil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> preferredCornerStyle [
 	"Answer the preferred corner style."
 
 	^#square
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> roundedCorners [
 	"Return a list of those corners to round.
 
@@ -277,7 +277,7 @@ Morph >> roundedCorners [
 	^self valueOfProperty: #roundedCorners ifAbsent: [#(1 2 3 4)]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> roundedCorners: anArray [
 	"Set the corners to round."
 
@@ -287,7 +287,7 @@ Morph >> roundedCorners: anArray [
 	self changed
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> showBalloon: msgString hand: aHand [
 	"Pop up a balloon containing the given string,
 	first removing any existing BalloonMorphs in the world."
@@ -299,13 +299,13 @@ Morph >> showBalloon: msgString hand: aHand [
 		popUpFor: self hand: h
 ]
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Morph class >> systemIconName [
 
 	^ #morph
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> tabKey: event [
 	"Check for tab key activity and change focus as appropriate."
 
@@ -318,28 +318,28 @@ Morph >> tabKey: event [
 	^false
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> takeKeyboardFocus [
 	"Make the receiver the keyboard focus for the active hand."
 
 	self activeHand ifNotNil: [ :hand | hand newKeyboardFocus: self ]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^ false
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph class >> theme [
 	"Answer the ui theme that provides controls."
 
 	^ Smalltalk ui theme
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> toggleVisible [
 	"Toggle the visibility of the receiver."
 
@@ -348,7 +348,7 @@ Morph >> toggleVisible [
 		ifFalse: [self show]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> toggleVisibleAndRaise [
 	"Toggle the visibility of the receiver, brining to
 	the front if becoming visible."
@@ -358,7 +358,7 @@ Morph >> toggleVisibleAndRaise [
 		ifFalse: [self comeToFront; show]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> visible: aBoolean [
 	"set the 'visible' attribute of the receiver to aBoolean.
 	Must update owner layout since its full bounds may depend
@@ -371,7 +371,7 @@ Morph >> visible: aBoolean [
 	owner ifNotNil: [owner layoutChanged]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> wantsKeyboardFocus [
 	"Answer whether the receiver would like keyboard focus
 	in the general case (mouse action normally)."
@@ -380,7 +380,7 @@ Morph >> wantsKeyboardFocus [
 		self visible and: [self enabled]]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Morph >> wantsKeyboardFocusNavigation [
 	"Answer whether the receiver would like keyboard focus
 	when navigated to by keyboard."

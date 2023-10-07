@@ -1,6 +1,6 @@
-Extension { #name : #WeakLayout }
+Extension { #name : 'WeakLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 WeakLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

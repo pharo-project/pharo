@@ -1,18 +1,20 @@
 Class {
-	#name : #MetacelloSymbolicVersionSpec,
-	#superclass : #MetacelloMethodSection,
+	#name : 'MetacelloSymbolicVersionSpec',
+	#superclass : 'MetacelloMethodSection',
 	#instVars : [
 		'versionString'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSymbolicVersionSpec >> versionString [
 	^ versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSymbolicVersionSpec >> versionString: anObject [
 	versionString := anObject
 ]

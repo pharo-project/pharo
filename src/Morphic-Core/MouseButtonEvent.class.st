@@ -2,35 +2,49 @@
 A button event from a mouse
 "
 Class {
-	#name : #MouseButtonEvent,
-	#superclass : #MouseEvent,
+	#name : 'MouseButtonEvent',
+	#superclass : 'MouseEvent',
 	#instVars : [
 		'whichButton'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MouseButtonEvent >> asPseudoDoubleClickEvent [
+
+	| pseudoEvent secondEvent |
+	pseudoEvent := MouseButtonPseudoDoubleClickEvent new copyFrom: self.
+	secondEvent := self copy.
+	secondEvent setPosition:
+		(self hand ifNil: [ self position ] ifNotNil: [ :h | h cursorPoint ]).
+	pseudoEvent secondEvent: secondEvent.
+	^ pseudoEvent
+]
+
+{ #category : 'accessing' }
 MouseButtonEvent >> blueButtonChanged [
 	"Answer true if the blue mouse button has changed. This is the third mouse button or cmd+click on the Mac."
 
 	^ whichButton anyMask: self class blueButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MouseButtonEvent >> isSpecialGesture [
 	"This is the gesture to open the Halos"
 	^ self blueButtonPressed or: [self redButtonPressed & self altKeyPressed & self shiftPressed]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MouseButtonEvent >> redButtonChanged [
 	"Answer true if the red mouse button has changed. This is the first mouse button."
 
 	^ whichButton anyMask: self class redButton
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 MouseButtonEvent >> sentTo: anObject [
 	"Dispatch the receiver into anObject"
 	type == #mouseDown ifTrue:[^anObject handleMouseDown: self].
@@ -38,7 +52,7 @@ MouseButtonEvent >> sentTo: anObject [
 	^super sentTo: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MouseButtonEvent >> setType: evtType position: evtPos which: button buttons: evtButtons hand: evtHand stamp: stamp [
 	type := evtType.
 	position := evtPos.
@@ -49,19 +63,19 @@ MouseButtonEvent >> setType: evtType position: evtPos which: button buttons: evt
 	timeStamp := stamp
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MouseButtonEvent >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream space.
 	whichButton storeOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MouseButtonEvent >> whichButton [
 	^whichButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MouseButtonEvent >> yellowButtonChanged [
 	"Answer true if the yellow mouse button has changed. This is the second mouse button or option+click on the Mac."
 

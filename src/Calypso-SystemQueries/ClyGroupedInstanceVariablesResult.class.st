@@ -5,12 +5,14 @@ In addition I add extra method group for class variables if they exist. It shows
 And I add default ClyAllMethodGroup as first item. 
 "
 Class {
-	#name : #ClyGroupedInstanceVariablesResult,
-	#superclass : #ClyGroupedVariablesResult,
-	#category : #'Calypso-SystemQueries-Results'
+	#name : 'ClyGroupedInstanceVariablesResult',
+	#superclass : 'ClyGroupedVariablesResult',
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedInstanceVariablesResult >> addClassVariableGroup [
 
 	| variableQuery methodQuery group |
@@ -26,7 +28,7 @@ ClyGroupedInstanceVariablesResult >> addClassVariableGroup [
 	items add: group asCalypsoBrowserItem
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedInstanceVariablesResult >> addInheritedMethodGroup [
 
 	| group |
@@ -34,7 +36,7 @@ ClyGroupedInstanceVariablesResult >> addInheritedMethodGroup [
 	items add: group asCalypsoBrowserItem
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedInstanceVariablesResult >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
 	self addInheritedMethodGroup.
 

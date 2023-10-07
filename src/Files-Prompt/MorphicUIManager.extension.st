@@ -1,6 +1,6 @@
-Extension { #name : #MorphicUIManager }
+Extension { #name : 'MorphicUIManager' }
 
-{ #category : #'*Files-Prompt' }
+{ #category : '*Files-Prompt' }
 MorphicUIManager >> fileExistsDefaultAction: anException [
 	| file choice |
 

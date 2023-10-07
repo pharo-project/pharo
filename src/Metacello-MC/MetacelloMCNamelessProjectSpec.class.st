@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloMCNamelessProjectSpec,
-	#superclass : #MetacelloMCProjectSpec,
-	#category : #'Metacello-MC-Specs'
+	#name : 'MetacelloMCNamelessProjectSpec',
+	#superclass : 'MetacelloMCProjectSpec',
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCNamelessProjectSpec >> asProjectSpecForVersion: vrsn [
   "I'm a reference spec and my project comes from the project I'm loaded from, not the project I am loading"
 
@@ -19,7 +21,7 @@ MetacelloMCNamelessProjectSpec >> asProjectSpecForVersion: vrsn [
   ^ spec
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloMCNamelessProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
 	self error: 'Should be converting to configuration spec for the registration, so we should not get here'
 ]

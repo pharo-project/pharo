@@ -2,26 +2,27 @@
 Compose text
 "
 Class {
-	#name : #AthensTextComposer,
-	#superclass : #Object,
+	#name : 'AthensTextComposer',
+	#superclass : 'Object',
 	#instVars : [
 		'lines',
 		'text'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensTextComposer class >> scan: aText for: scanner [
 	^ self new scan: aText for: scanner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextComposer >> lines [
 	^ lines
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextComposer >> renderOn: aCanvas [
 
 	| renderer |
@@ -30,7 +31,7 @@ AthensTextComposer >> renderOn: aCanvas [
 	renderer render: text lines: lines on: aCanvas
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 AthensTextComposer >> scan: aText for: scanner [
 	" scan text from starting index,
 	answer the index of first character for potential next line"

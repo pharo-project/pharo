@@ -1,6 +1,6 @@
-Extension { #name : #PasteUpMorph }
+Extension { #name : 'PasteUpMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 PasteUpMorph >> backgroundImage: aForm layout: aSymbol [
 	"Set a background image, replacing the current background morph, if any,
 	with the given layout (see AlphaImageMorph layoutSymbols). "
@@ -13,13 +13,13 @@ PasteUpMorph >> backgroundImage: aForm layout: aSymbol [
 			lock)
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 PasteUpMorph >> navigationKey: aKeyboardEvent [
 
 	^ self taskList handleEvent: aKeyboardEvent
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 PasteUpMorph >> themeChanged [
 	"The theme has changed.
 	Update the desktop wallpaper if appropriate."

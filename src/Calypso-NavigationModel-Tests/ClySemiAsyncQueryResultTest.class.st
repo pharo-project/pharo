@@ -1,20 +1,21 @@
 Class {
-	#name : #ClySemiAsyncQueryResultTest,
-	#superclass : #ClyAsyncQueryResultTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClySemiAsyncQueryResultTest',
+	#superclass : 'ClyAsyncQueryResultTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySemiAsyncQueryResultTest class >> shouldInheritSelectors [
 	^true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClySemiAsyncQueryResultTest >> createQueryResult [
 	^ClySemiAsyncQueryResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySemiAsyncQueryResultTest >> testFastQueryShouldBeSync [
 
 	query passExecution.

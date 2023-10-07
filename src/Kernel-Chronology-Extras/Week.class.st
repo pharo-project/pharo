@@ -2,42 +2,43 @@
 I represent a week.
 "
 Class {
-	#name : #Week,
-	#superclass : #Timespan,
+	#name : 'Week',
+	#superclass : 'Timespan',
 	#classVars : [
 		'StartDay'
 	],
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Week class >> dayNames [
 
 	^ DayNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Week class >> indexOfDay: aSymbol [
 
 	^ DayNames indexOf: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Week class >> nameOfDay: anIndex [
 
 	^ DayNames at: anIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Week class >> startDay [
 
 	^ StartDay ifNil: [ StartDay := DayNames first ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Week class >> startDay: aSymbol [
 
 	(DayNames includes: aSymbol)
@@ -45,7 +46,7 @@ Week class >> startDay: aSymbol [
 		ifFalse: [ self error: aSymbol, ' is not a recognised day name' ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Week class >> starting: aDateAndTime duration: aDuration [
 	"Override - the duration is always one week.
 	 Week will start from the Week class>>startDay"
@@ -60,13 +61,13 @@ Week class >> starting: aDateAndTime duration: aDuration [
 		duration: (Duration weeks: 1)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Week class >> week: weekNumber [
 	"Return a week in this year"
 	^ self year: Year current week: weekNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Week class >> year: aYear week: weekNumber [
 	"Return the ISO week for the given week number and the given year. ISO 8601
 	specifies that weeks start on a Monday, therefore the returned week will start
@@ -77,26 +78,26 @@ Week class >> year: aYear week: weekNumber [
 	^ super starting: aYear asYear firstThursday + (weekNumber * 7 - 10) days duration: 1 week
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Week >> asWeek [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Week >> index [
 
 	^ self asMonth dayOfWeek + self dayOfMonth - 2  // 7 + 1
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Week >> printOn: aStream [
 
 	aStream nextPutAll: 'a Week starting: '.
 	self start printOn: aStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Week >> species [
 
 	^Timespan

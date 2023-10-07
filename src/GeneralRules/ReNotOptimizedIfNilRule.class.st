@@ -8,12 +8,14 @@ See the method RBMessageNode>>#isInlineIfNil for the exact implementation of the
 
 "
 Class {
-	#name : #ReNotOptimizedIfNilRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReNotOptimizedIfNilRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ReNotOptimizedIfNilRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isMessage ifFalse: [  ^ self ].
 	(#(ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil:) includes: aNode selector) ifFalse: [^ self].
@@ -21,12 +23,12 @@ ReNotOptimizedIfNilRule >> check: aNode forCritiquesDo: aBlock [
 		aBlock cull: (self critiqueFor: aNode) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotOptimizedIfNilRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotOptimizedIfNilRule >> name [
 	^ 'ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil: is used in a way that it can not be optimized'
 ]

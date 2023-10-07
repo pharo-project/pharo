@@ -8,43 +8,45 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : #UnixPlatform,
-	#superclass : #OSPlatform,
-	#category : #'System-Platforms-Unix'
+	#name : 'UnixPlatform',
+	#superclass : 'OSPlatform',
+	#category : 'System-Platforms-Unix',
+	#package : 'System-Platforms',
+	#tag : 'Unix'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 UnixPlatform >> accept: aVisitor [
 
 	^ aVisitor visitUnix: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> defaultMaximumPathLength [
 	"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation.
 Unix default PATH_MAX is 4096.  PATH_MAX is needed to avoid buffer overflow. In case PATH_MAX is not sufficient the method  currentWorkingDirectoryWithBufferSize: can be used to give desired buffer size."
 	^4096
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> family [
 	^#Unix
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 UnixPlatform >> getErrorMessage: errnum [
 
 	^ self ffiCall: #(char *strerror(int errnum)) module: #LibC
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnixPlatform >> isLinux [
 	"Some Linux versions return linux, some linux-gnu, ..."
 
 	^self version beginsWith: 'linux'
 ]
 
-{ #category : #'testing - linux' }
+{ #category : 'testing - linux' }
 UnixPlatform >> isLinuxDerivateOf: linuxOperatingSystemID [
 	"Check if the installed OS is a derivate of the given linuxOperatingSystemID.
 	 It returns true if the /etc/os-release file includes an entry ID_LIKE where the given
@@ -56,7 +58,7 @@ UnixPlatform >> isLinuxDerivateOf: linuxOperatingSystemID [
 			anySatisfy: [:each | each asLowercase = linuxOperatingSystemID asLowercase ]
 ]
 
-{ #category : #'testing - linux' }
+{ #category : 'testing - linux' }
 UnixPlatform >> isLinuxDistributionWithID: linuxOperatingSystemID [
 	"Check if the installed OS is a Linux with the given lowercase ID. One can
 	 check for 'ubuntu', 'fedora', 'opensuse', 'rhel', 'centos' and others.
@@ -69,23 +71,23 @@ UnixPlatform >> isLinuxDistributionWithID: linuxOperatingSystemID [
 	^ id asLowercase = linuxOperatingSystemID asLowercase
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnixPlatform >> isUnix [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> keyForValue: aKeyValue [
 	^KeyboardKey valueForUnixPlatform: aKeyValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> lineEnding [
 
 	^ String lf
 ]
 
-{ #category : #'accessing - linux' }
+{ #category : 'accessing - linux' }
 UnixPlatform >> linuxIdentificationParameters [
 	"see https://www.freedesktop.org/software/systemd/man/os-release.html"
 
@@ -100,7 +102,7 @@ UnixPlatform >> linuxIdentificationParameters [
 	^ props
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> menuShortcutString [
 	^ 'ctrl'
 ]

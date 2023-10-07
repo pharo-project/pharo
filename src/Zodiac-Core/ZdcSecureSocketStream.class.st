@@ -11,18 +11,19 @@ Currently, certificate management is ignored.
 
 "
 Class {
-	#name : #ZdcSecureSocketStream,
-	#superclass : #ZdcOptimizedSocketStream,
+	#name : 'ZdcSecureSocketStream',
+	#superclass : 'ZdcOptimizedSocketStream',
 	#instVars : [
 		'sslSession',
 		'in',
 		'out',
 		'connecting'
 	],
-	#category : #'Zodiac-Core'
+	#category : 'Zodiac-Core',
+	#package : 'Zodiac-Core'
 }
 
-{ #category : #ssl }
+{ #category : 'ssl' }
 ZdcSecureSocketStream >> accept [
 	"Do the SSL server handshake."
 
@@ -40,7 +41,7 @@ ZdcSecureSocketStream >> accept [
 	connecting := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSecureSocketStream >> atEnd [
 	"I am atEnd when there is no more data to be read and there never will be.
 	This means that readBuffer must be empty, there must be no more unread data
@@ -57,7 +58,7 @@ ZdcSecureSocketStream >> atEnd [
 	^ self isConnected not
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZdcSecureSocketStream >> close [
 	"Close the stream, flush if necessary.
 	Destory the SSLSession object."
@@ -70,7 +71,7 @@ ZdcSecureSocketStream >> close [
 		in := out := nil ]
 ]
 
-{ #category : #ssl }
+{ #category : 'ssl' }
 ZdcSecureSocketStream >> connect [
 	"Do the SSL client handshake."
 
@@ -87,7 +88,7 @@ ZdcSecureSocketStream >> connect [
 	connecting := false
 ]
 
-{ #category : #'private - in' }
+{ #category : 'private - in' }
 ZdcSecureSocketStream >> fillBytes: bytes startingAt: offset count: count [
 	"Ask to read count elements into bytes starting at offset. Do not wait. Return read count.
 	Overwritten: decrypt and if necessary ask the socket for encrypted data using a super call."
@@ -114,14 +115,14 @@ ZdcSecureSocketStream >> fillBytes: bytes startingAt: offset count: count [
 	^ 0
 ]
 
-{ #category : #'private - in' }
+{ #category : 'private - in' }
 ZdcSecureSocketStream >> fillEncryptedBytes: bytes startingAt: offset count: count [
 	"Read encrypted bytes from the network. Do not wait."
 
 	^ super fillBytes: bytes startingAt: offset count: count
 ]
 
-{ #category : #'private - out' }
+{ #category : 'private - out' }
 ZdcSecureSocketStream >> flushBytes: bytes startingAt: offset count: count [
 	"Ask to write count bytes starting from offset. Wait. Fail if not successful
 	Overwritten: first encrypt the data, then send it to the socket using a super call."
@@ -140,20 +141,20 @@ ZdcSecureSocketStream >> flushBytes: bytes startingAt: offset count: count [
 		currentOffset := currentOffset + chunkCount ]
 ]
 
-{ #category : #'private - out' }
+{ #category : 'private - out' }
 ZdcSecureSocketStream >> flushEncryptedBytes: bytes startingAt: offset count: count [
 	"Write encrypted bytes to the network."
 
 	^ super flushBytes: bytes startingAt: offset count: count
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZdcSecureSocketStream >> initialize [
 	super initialize.
 	connecting := false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZdcSecureSocketStream >> initializeBuffers [
 	"The maximum payload message length of a TLS record is 16Kb,
 	add a margin for the header and trailer."
@@ -164,7 +165,7 @@ ZdcSecureSocketStream >> initializeBuffers [
 	out := ZdcByteArrayManager current byteArrayOfSize: (16 + 1) * 1024 zero: false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSecureSocketStream >> isConnected [
 	"Are we connected at the socket level ?
 	Has the SSL handshake been done successfully ?"
@@ -173,7 +174,7 @@ ZdcSecureSocketStream >> isConnected [
 		and: [ sslSession notNil and: [ connecting or: [ sslSession isConnected ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSecureSocketStream >> isDataAvailable [
 	"Return true when there is data available for reading.
 	This does not block."
@@ -189,7 +190,7 @@ ZdcSecureSocketStream >> isDataAvailable [
 	^ false
 ]
 
-{ #category : #'private - in' }
+{ #category : 'private - in' }
 ZdcSecureSocketStream >> readEncryptedBytes: bytes startingAt: offset count: count [
 	"Read encrypted bytes from the network. Wait if necessary."
 
@@ -203,7 +204,7 @@ ZdcSecureSocketStream >> readEncryptedBytes: bytes startingAt: offset count: cou
 			result ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSocketStream >> resetEncryptedBuffers [
 	"Not necessary, but useful for debugging"
 
@@ -211,7 +212,7 @@ ZdcSecureSocketStream >> resetEncryptedBuffers [
 	out atAllPut: 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSocketStream >> sslException: text code: code [
 	self error:
 		(String streamContents: [ :stream |
@@ -220,7 +221,7 @@ ZdcSecureSocketStream >> sslException: text code: code [
 			stream << ']' ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcSecureSocketStream >> sslSession [
 	"Return the underlying ZdcAbstractSSLSession object
 	that we use for encryption and decryption,
@@ -230,7 +231,7 @@ ZdcSecureSocketStream >> sslSession [
 	^ sslSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcSecureSocketStream >> sslSessionClass [
 	^ ZdcPluginSSLSession
 ]

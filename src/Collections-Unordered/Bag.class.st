@@ -44,30 +44,32 @@ b occurrencesOf: 1  ""3""
 ```
 "
 Class {
-	#name : #Bag,
-	#superclass : #Collection,
+	#name : 'Bag',
+	#superclass : 'Collection',
 	#instVars : [
 		'contents'
 	],
-	#category : #'Collections-Unordered-Bags'
+	#category : 'Collections-Unordered-Bags',
+	#package : 'Collections-Unordered',
+	#tag : 'Bags'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bag class >> contentsClass [
 	^Dictionary
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bag class >> new [
 	^ self new: 4
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bag class >> new: nElements [
 	^ super new setContents: (self contentsClass new: nElements)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bag class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 
@@ -79,7 +81,7 @@ Bag class >> newFrom: aCollection [
 "
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Bag >> = aBag [
 	"Two bags are equal if
 	 (a) they are the same 'kind' of thing.
@@ -94,14 +96,14 @@ Bag >> = aBag [
 	^true
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Bag >> add: newObject [
 	"Include newObject as one of the receiver's elements. Answer newObject."
 
 	^ self add: newObject withOccurrences: 1
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Bag >> add: newObject withOccurrences: anInteger [
 	"Add newObject anInteger times to the receiver. Answer newObject."
 
@@ -109,12 +111,12 @@ Bag >> add: newObject withOccurrences: anInteger [
 	^ newObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bag >> asBag [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bag >> asSet [
 	"Answer a set with the elements of the receiver."
 	"#(1 2 2 3 1 1 1) asBag asSet >>> #(1 2 2 3 1 1 1) asSet"
@@ -122,7 +124,7 @@ Bag >> asSet [
 	^ contents keys asSet
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Bag >> associationsDo: aBlock [
 	"Evaluate aBlock for each of the receiver's elements (key/value
 	associations).  Provided for compatibility with Dictionaries"
@@ -130,7 +132,7 @@ Bag >> associationsDo: aBlock [
 	contents associationsDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bag >> cumulativeCounts [
 	"Answer with a collection of cumulative percents covered by elements so far."
 
@@ -142,7 +144,7 @@ Bag >> cumulativeCounts [
 		[:a | n := n + a key. (n / s roundTo: 0.1) -> a value]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Bag >> do: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 
@@ -153,14 +155,14 @@ Bag >> do: aBlock [
 	contents associationsDo: [:assoc | assoc value timesRepeat: [aBlock value: assoc key]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Bag >> doWithOccurrences: aTwoArgBlock [
     "Iterate over the receiver and apply a two argument block on the element and its occurrences."
 
     contents associationsDo: [:assoc | aTwoArgBlock value: assoc key value: assoc value ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Bag >> includes: anObject [
 	"Answer whether anObject is one of the receiver's elements."
 
@@ -170,14 +172,14 @@ Bag >> includes: anObject [
 	^ contents includesKey: anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Bag >> keysAndValuesDo: aTwoArgBlock [
     "Iterate over the receiver and apply a two argument block on the element and its occurrences."
 
     contents associationsDo: [:assoc | aTwoArgBlock value: assoc key value: assoc value ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Bag >> occurrencesOf: anObject [
 	"Answer how many of the receiver's elements are equal to anObject."
 
@@ -188,13 +190,13 @@ Bag >> occurrencesOf: anObject [
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Bag >> postCopy [
 	super postCopy.
 	contents := contents copy
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Bag >> remove: oldObject ifAbsent: exceptionBlock [
 	"Remove oldObject from the receiver's elements. If several of the
 	elements are equal to oldObject, only one is removed. If no element is
@@ -209,7 +211,7 @@ Bag >> remove: oldObject ifAbsent: exceptionBlock [
 	^ oldObject
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Bag >> removeAll [
 	"Implementation Note: as contents will be overwritten, a shallowCopy of self would be modified.
 	An alternative implementation preserving capacity would be to create a new contents:
@@ -218,7 +220,7 @@ Bag >> removeAll [
 	contents removeAll
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Bag >> removeKey: oldObject ifAbsent: exceptionBlock [
 	"Remove oldObject's entry (e.g., the object and all its occurrences) from the receiver's elements.
 	If no element is equal to oldObject, answer the result of evaluating anExceptionBlock.
@@ -230,12 +232,12 @@ Bag >> removeKey: oldObject ifAbsent: exceptionBlock [
 	^ oldObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Bag >> setContents: aDictionary [
 	contents := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bag >> size [
 	"Answer how many elements the receiver contains."
 
@@ -247,7 +249,7 @@ Bag >> size [
 	^ tally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bag >> sortedCounts [
 	"Answer with a collection of counts with elements, sorted by decreasing
 	count."
@@ -260,7 +262,7 @@ Bag >> sortedCounts [
  		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bag >> sortedElements [
 	"Answer with a collection of elements with counts, sorted by element."
 
@@ -271,7 +273,7 @@ Bag >> sortedElements [
  		yourself
 ]
 
-{ #category : #'math functions' }
+{ #category : 'math functions' }
 Bag >> sum [
 	"Return the sum (+) of the elements held in the receiver."
 	"Faster than the superclass implementation when you hold many instances of the same value (which you probably do, otherwise you wouldn't be using a Bag)."
@@ -288,7 +290,7 @@ Bag >> sum [
 	^ sum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bag >> valuesAndCounts [
 
 	^ contents

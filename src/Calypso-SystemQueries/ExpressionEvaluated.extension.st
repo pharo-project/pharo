@@ -1,6 +1,6 @@
-Extension { #name : #ExpressionEvaluated }
+Extension { #name : 'ExpressionEvaluated' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ExpressionEvaluated >> shouldBeConsideredByCalypsoEnvironment [
 	^false
 ]

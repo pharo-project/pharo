@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescriptionTest }
+Extension { #name : 'ClassDescriptionTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ClassDescriptionTest >> testAllLocalCallsOn [
 
 	self assert: (( Point allLocalCallsOn: #asPoint )  notEmpty).

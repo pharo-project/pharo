@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 CompiledMethod >> asMCMethodDefinition [
    "Creates a MCMethodDefinition from the receiver"
 	| cached |
@@ -19,7 +19,7 @@ CompiledMethod >> asMCMethodDefinition [
 	^ cached
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 CompiledMethod >> basicAsMCMethodDefinition [
 
 	"Creates a MCMethodDefinition from the receiver"
@@ -28,18 +28,18 @@ CompiledMethod >> basicAsMCMethodDefinition [
 		  className: self methodClass instanceSide name
 		  classIsMeta: self isClassSide
 		  selector: self selector
-		  category: self protocol
+		  category: self protocolName
 		  timeStamp: self stamp
 		  source: self sourceCode
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 CompiledMethod >> sameAsMCDefinition: anMCMethodDefinition [
 
 	^ anMCMethodDefinition selector = self selector and: [ 
 		  anMCMethodDefinition className = self className and: [ 
 			  anMCMethodDefinition classIsMeta = self isClassSide 
 				  and: [ 
-					  anMCMethodDefinition category = self protocol and: [ 
+					  anMCMethodDefinition category = self protocolName and: [ 
 						  anMCMethodDefinition source = self sourceCode ] ] ] ]
 ]

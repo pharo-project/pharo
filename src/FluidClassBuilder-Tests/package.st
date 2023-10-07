@@ -1,1 +1,1 @@
-Package { #name : #'FluidClassBuilder-Tests' }
+Package { #name : 'FluidClassBuilder-Tests' }

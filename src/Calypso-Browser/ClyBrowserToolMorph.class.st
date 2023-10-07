@@ -123,8 +123,8 @@ Internal Representation and Key Implementation Points.
 	statusBar:		<ClyStatusBar>
 "
 Class {
-	#name : #ClyBrowserToolMorph,
-	#superclass : #BorderedMorph,
+	#name : 'ClyBrowserToolMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'browser',
 		'context',
@@ -134,10 +134,12 @@ Class {
 		'isManagedByUser',
 		'statusBar'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserToolMorph class >> for: aBrowser inContext: aBrowserContext [
 
 	^self new
@@ -147,12 +149,12 @@ ClyBrowserToolMorph class >> for: aBrowser inContext: aBrowserContext [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph class >> isAbstract [
 	^self = ClyBrowserToolMorph
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	"Subclasses can define extra condition
 	to check that they can be opened in particular browser context instance.
@@ -160,17 +162,17 @@ ClyBrowserToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph class >> tabOrder [
 	^1000
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> activationPriority [
 	^self tabOrder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> activationPriorityInNonActiveContext [
 	"when tool is shown in not active browser context it should be in less priority for activating tabs"
 	^isManagedByUser
@@ -178,18 +180,18 @@ ClyBrowserToolMorph >> activationPriorityInNonActiveContext [
 		ifFalse: [Float negativeInfinity ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> activeColor [
 	^self theme backgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> addDecorator: aBrowserToolDecorator [
 	aBrowserToolDecorator browserTool: self.
 	decorators add: aBrowserToolDecorator
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [
 	| menu |
 
@@ -211,61 +213,62 @@ ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [
 	^ containerTab
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> allowsDifferentActivationPriority [
 	^true
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> applyDecorations [
 	decorators do: [ :each | each decorateTool ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> attachToSystem [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> backgroundColor [
 
 	^ containerTab backgroundColor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> belongsToCurrentBrowserContext [
 	"my subclasses must define condition which means that tool has context which is the same as current browser context.
 	This method is not subclass responsibility to not break browser when new tool class is created"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> belongsToRemovedBrowserContext [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> browser: aBrowser [
+
 	browser := aBrowser
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserToolMorph >> browserContextWasChanged [
 
 	self warnUserAboutChangedContext.
 	self rebuildStatusBar
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> build [
 	self subclassResponsibility
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> buildAndDecorate [
 	self isBuilt ifTrue: [ ^self ] "somehow tab manager can call building process multiple times".
 	self setUpParametersFromModel.
@@ -276,7 +279,7 @@ ClyBrowserToolMorph >> buildAndDecorate [
 	self attachToSystem
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> buildPageAndDecorate [
 
 	self setUpParametersFromModel.
@@ -287,7 +290,7 @@ ClyBrowserToolMorph >> buildPageAndDecorate [
 	self attachToSystem
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> buildStatusBar [
 
 	statusBar := ClyStatusBarMorph new.
@@ -299,34 +302,34 @@ ClyBrowserToolMorph >> buildStatusBar [
 	self fillStatusBar
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> cleanAfterRemove [
 
  	self detachFromSystem.
  	decorators do: [ :each | each toolWasRemoved ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> containerTab [
 	^ containerTab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> containerTab: anObject [
 	containerTab := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> context: aBrowserContext [
 	context := aBrowserContext
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyBrowserToolMorph >> copyForBrowserStateSnapshot [
 
 	^self shallowCopy
@@ -334,7 +337,7 @@ ClyBrowserToolMorph >> copyForBrowserStateSnapshot [
 		yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> createTab [
 	| menu |
 
@@ -351,62 +354,62 @@ ClyBrowserToolMorph >> createTab [
 	^ containerTab
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> decorateContainerTab [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> defaultBorderWidth [
 	^0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> defaultIcon [
 	self defaultIconName ifNil: [ ^nil ].
 
 	^self iconNamed: self defaultIconName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> defaultIconName [
 	^nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> defaultTitle [
 	^context hasSelectedItems
 		ifTrue: [ context lastSelectedItem name]
 		ifFalse: [ self class name]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> deselectTab [
 
 	containerTab removeFromSelection
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> detachFromSystem [
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> fillStatusBar [
 
 	self belongsToCurrentBrowserContext ifFalse: [
 		statusBar addContextItem: (ClyToolContextNavigatorMorph for: self) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> hasUnacceptedEdits [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> initialize [
 	super initialize.
 	decorators := OrderedCollection new.
@@ -419,7 +422,7 @@ ClyBrowserToolMorph >> initialize [
 		vResizing: #spaceFill
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> isBuilt [
 	containerTab ifNil: [ ^ false ].
 	self flag: #TODO. "This patch is to ensure compatibility while working.
@@ -429,7 +432,7 @@ ClyBrowserToolMorph >> isBuilt [
 	^ containerTab morph == self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> isCommandAvailable: aCommand [
 	"A double dispatch mechanism to allow tools to validate commands that can be
 	 executed on it. Subclasses can override me to perform the proper dispatch."
@@ -439,7 +442,7 @@ ClyBrowserToolMorph >> isCommandAvailable: aCommand [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> isExtraSelectionRequested [
 	"It checks that users wants multiple selected tabs.
 	So cmd click on table just adds new selected items and keep existed selected.
@@ -455,22 +458,22 @@ ClyBrowserToolMorph >> isExtraSelectionRequested [
 		and: [lastEvent commandKeyPressed or: [ lastEvent controlKeyPressed ]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> isManagedByUser [
 	^ isManagedByUser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> isManagedByUser: anObject [
 	isManagedByUser := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 	^self class = anotherBrowserTool class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> isTabSelected [
 	| selectedTab |
 
@@ -479,7 +482,7 @@ ClyBrowserToolMorph >> isTabSelected [
 	^ selectedTab = containerTab
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
 	" Tell if the current tool is still valid for the given context. If so, the tool will be reused instead of being rebuilt or discarded.
 	Every subclass should redefine this method to tell when the tool is still valid or not.
@@ -488,19 +491,19 @@ ClyBrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
 	^ false
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> okToClose [
 	self hasUnacceptedEdits ifFalse: [ ^true ].
 
 	^browser confirmDiscardChanges
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyBrowserToolMorph >> printContext [
 	^''
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserToolMorph >> rebuildStatusBar [
 	self isBuilt ifFalse: [ ^self ].
 
@@ -508,13 +511,13 @@ ClyBrowserToolMorph >> rebuildStatusBar [
 	self fillStatusBar
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> removeFromBrowser [
 
 	containerTab owner removePage: containerTab
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> resetStateForSnapshot [
 	owner := nil.
 	submorphs := EmptyArray.
@@ -527,52 +530,52 @@ ClyBrowserToolMorph >> resetStateForSnapshot [
 	decorators := nil
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> restoreBrowserState [
 	context restoreBrowserState
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> selectAsExtraTab [
 	containerTab addToSelection
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> selectAsMainTab [
 
 	containerTab addToSelection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> setUpDefaultIcon [
 
 	containerTab icon: self defaultIcon
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> setUpModelFromContext [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolMorph >> setUpParametersFromModel [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> statusBar [
 	^statusBar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolMorph >> tabOrder [
 	^ self class tabOrder
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserToolMorph >> triggerUpdate [
 	self update
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserToolMorph >> update [
 	self setUpParametersFromModel.
 	self decorateContainerTab.
@@ -580,7 +583,7 @@ ClyBrowserToolMorph >> update [
 	self warnUserAboutChangedContext
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> updateDirtyState [
 
 	self hasUnacceptedEdits == isDirty ifTrue: [ ^ self ].
@@ -589,12 +592,12 @@ ClyBrowserToolMorph >> updateDirtyState [
 	containerTab markDirty: isDirty
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> waitBuildCompletion [
 	containerTab waitReadyMorphFor: 50 milliSeconds
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserToolMorph >> wantsStayInDifferentContext [
 
 	self isBuilt ifFalse: [ ^ false ].
@@ -605,7 +608,7 @@ ClyBrowserToolMorph >> wantsStayInDifferentContext [
 	^ isManagedByUser
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> warnUserAboutChangedContext [
 
 	self belongsToCurrentBrowserContext
@@ -613,19 +616,19 @@ ClyBrowserToolMorph >> warnUserAboutChangedContext [
 		ifFalse: [ self warnUserAboutDifferentContext ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> warnUserAboutDifferentContext [
 
 	containerTab icon: (self iconNamed: #uncommentedClass)
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> warnUserAboutMyContext [
 
 	self setUpDefaultIcon
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolMorph >> whenReadyDo: aBlock [
 
 	aBlock value: self

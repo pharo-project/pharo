@@ -2,12 +2,13 @@
 I know how to detect a change in the collection of slots of the metaclass.
 "
 Class {
-	#name : #ShClassSlotChangeDetector,
-	#superclass : #ShAbstractClassChangeDetector,
-	#category : #'Shift-Changes'
+	#name : 'ShClassSlotChangeDetector',
+	#superclass : 'ShAbstractClassChangeDetector',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShClassSlotChangeDetector >> initialize [
 	super initialize.
 	builderAccessor := [ :e | e layoutDefinition classSlots ].
@@ -15,7 +16,7 @@ ShClassSlotChangeDetector >> initialize [
 	comparer := [ :a :b |  self compareSlotCollection: a with: b ]
 ]
 
-{ #category : #changes }
+{ #category : 'changes' }
 ShClassSlotChangeDetector >> newChanges [
 	^ {(ShMetaclassChanged new
 		builder: builder;

@@ -2,8 +2,8 @@
 I am an internal object used by the ShiftClassBuilder to represent the layout of a class.
 "
 Class {
-	#name : #ShLayoutDefinition,
-	#superclass : #Object,
+	#name : 'ShLayoutDefinition',
+	#superclass : 'Object',
 	#instVars : [
 		'layoutClass',
 		'slots',
@@ -12,32 +12,33 @@ Class {
 		'sharedVariables',
 		'builder'
 	],
-	#category : #'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder',
+	#package : 'Shift-ClassBuilder'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> allSlots [
 	| superclass |
 	superclass := builder superclass.
 	^ (superclass ifNil: [ #() ] ifNotNil: [ superclass allSlots ]) , slots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> builder: anObject [
 	builder := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> classSlots [
 	^ classSlots ifNil: [ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> classSlots: anObject [
 	classSlots := anObject collect: [ :e | e asSlot ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
 	"I only copy the slot if it is not virtual and it is the same in the oldClass.
 	 They are copied as they have the index as instance variable, the index can change in the new class."
@@ -55,7 +56,7 @@ ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
 				ifNone: [ aSlot ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [
 
 	classSlots ifNotNil: [ ^ self ].
@@ -65,7 +66,7 @@ ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [
 		thenCollect: [ :each | each copy index: nil; yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
 	"I copy the slots if they are used in oldClass. As the slots has state (usually the index) they cannot be shared between the old and the new class."
 
@@ -75,7 +76,7 @@ ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
 	classSlots := self copy: self classSlots ifUsedIn: oldClass class
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShLayoutDefinition >> initialize [
 	super initialize.
 
@@ -84,62 +85,62 @@ ShLayoutDefinition >> initialize [
 	sharedVariables := #()
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShLayoutDefinition >> isBits [
 	^ self layoutClass new isBits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> layoutClass [
 	^ layoutClass ifNil: [ builder classNamed: #FixedLayout ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> layoutClass: anObject [
 	layoutClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> sharedPools [
 	^ sharedPools
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> sharedPools: anObject [
 	sharedPools := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ShLayoutDefinition >> sharedPoolsString [
 	^ self sharedPools joinUsing: Character space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> sharedVariables [
 	^ sharedVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> sharedVariables: anObject [
 	sharedVariables := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> sharedVariablesString [
 	^ (sharedVariables collect:[:e | e key]) joinUsing: ' '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> slots [
 	^ slots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShLayoutDefinition >> slots: anObject [
 	slots := anObject collect: [ :e | e asSlot ]
 ]
 
-{ #category : #validating }
+{ #category : 'validating' }
 ShLayoutDefinition >> validate [
 
 	| slotNames classSlotNames |

@@ -6,8 +6,8 @@ One of my instance is used as a default null implementation, storing the copied 
 A real OSWindowClipboard will replace me, but I am still in case something is using the clipboard when there is no real OSWindow.
 "
 Class {
-	#name : #Clipboard,
-	#superclass : #Object,
+	#name : 'Clipboard',
+	#superclass : 'Object',
 	#instVars : [
 		'contents',
 		'recent'
@@ -15,31 +15,33 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'Morphic-Core-Utilities'
+	#category : 'Morphic-Core-Utilities',
+	#package : 'Morphic-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> chooseRecentClipping [  "Clipboard chooseRecentClipping"
 	"Choose by menu from among the recent clippings"
 	^self default chooseRecentClipping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> clipboardText [ "Clipboard clipboardText"
 	^self default clipboardText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> clipboardText: aText [
 	^self default clipboardText: aText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> default [
 	^Default ifNil: [Default := self new]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Clipboard class >> initialize [
 
 	self startUp: true.
@@ -47,19 +49,19 @@ Clipboard class >> initialize [
 		registerSystemClassNamed: self name
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Clipboard class >> shutDown: isImageQuitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Clipboard class >> startUp: isImageStarting [
 	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
 	isImageStarting
 		ifTrue: [Default := nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> chooseRecentClipping [
 
 	"Choose by menu from among the recent clippings"
@@ -75,27 +77,27 @@ Clipboard >> chooseRecentClipping [
 		  values: recent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> clipboardText [
 
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> clipboardText: text [
 
 	self noteRecentClipping: text asText copyWithoutExternalReferences.
 	contents := text asText copyWithoutExternalReferences
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Clipboard >> initialize [
 	super initialize.
 	contents := '' asText.
 	recent := OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Clipboard >> noteRecentClipping: text [
 	"Keep most recent clippings in a queue for pasteRecent (paste... command)"
 	text isEmpty ifTrue: [^ self].

@@ -16,33 +16,35 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyScopeCompoBoxMorph,
-	#superclass : #ClyBrowserToolbarItemMorph,
+	#name : 'ClyScopeCompoBoxMorph',
+	#superclass : 'ClyBrowserToolbarItemMorph',
 	#instVars : [
 		'dropList',
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-UI'
+	#category : 'Calypso-SystemTools-QueryBrowser-UI',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyScopeCompoBoxMorph class >> for: aBrowser [
 	^self new
 		browser: aBrowser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> browser: aMethodBrowser [
 	browser := aMethodBrowser.
 	self build
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyScopeCompoBoxMorph >> build [
 	dropList := self theme
 		newDropListIn: self
@@ -56,29 +58,29 @@ ClyScopeCompoBoxMorph >> build [
 	self addMorph: dropList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> currentScope [
 	^ self scopes detect: [ :each | browser isQueryScopeActive: each]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> currentScope: aScope [
 
 	browser switchScopeTo: aScope.
 	dropList setBalloonText: aScope description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> currentScopeIndex [
 	^self scopes indexOf: self currentScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> currentScopeIndex: index [
 	self currentScope: (self scopes at: index)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyScopeCompoBoxMorph >> initialize [
 	super initialize.
 	self
@@ -87,13 +89,13 @@ ClyScopeCompoBoxMorph >> initialize [
 		width: 200
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> scopeNames [
 
 	^self scopes collect: [ :each | each description capitalized]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScopeCompoBoxMorph >> scopes [
 
 	^browser allNavigationScopes

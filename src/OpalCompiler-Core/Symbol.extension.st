@@ -1,6 +1,6 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Symbol >> asMethodPreamble [
 	self numArgs = 0
 		ifTrue: [ ^ self asString ].

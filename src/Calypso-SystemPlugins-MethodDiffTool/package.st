@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-MethodDiffTool' }
+Package { #name : 'Calypso-SystemPlugins-MethodDiffTool' }

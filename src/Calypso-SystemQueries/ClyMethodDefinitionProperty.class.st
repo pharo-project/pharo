@@ -13,35 +13,35 @@ Internal Representation and Key Implementation Points.
 	isExtension:		<Boolean>
 "
 Class {
-	#name : #ClyMethodDefinitionProperty,
-	#superclass : #ClyItemDefinitionProperty,
+	#name : 'ClyMethodDefinitionProperty',
+	#superclass : 'ClyItemDefinitionProperty',
 	#instVars : [
 		'isExtension',
 		'protocol'
 	],
-	#category : #'Calypso-SystemQueries-Properties'
+	#category : 'Calypso-SystemQueries-Properties',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Properties'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodDefinitionProperty class >> of: aMethod [
-	| methodPackage methodClass methodProtocol |
-	methodPackage := aMethod package.
+
+	| methodPackage methodClass |
 	methodClass := aMethod origin.
-	methodProtocol := aMethod protocol.
+	methodPackage := aMethod package ifNil: [ methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
 
-	methodPackage ifNil: [ methodPackage := methodClass package ]. "it happens when creation new method in trait. It should be fixed in system"
-
-	^ self package: methodPackage class: methodClass protocol: methodProtocol
+	^ self package: methodPackage class: methodClass protocol: aMethod protocolName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodDefinitionProperty class >> package: aPackage class: aClass [
 
 	^(super package: aPackage class: aClass)
 		isExtension: aClass package ~~ aPackage
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodDefinitionProperty class >> package: aPackage class: aClass protocol: aProtocol [
 
 	^(super package: aPackage class: aClass)
@@ -50,28 +50,28 @@ ClyMethodDefinitionProperty class >> package: aPackage class: aClass protocol: a
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodDefinitionProperty >> isExtension [
 	^ isExtension
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodDefinitionProperty >> isExtension: anObject [
 	isExtension := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodDefinitionProperty >> printDefiningProtocol [
 	^ protocol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodDefinitionProperty >> printDefinition [
 
 	^self printDefiningClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodDefinitionProperty >> protocol: anObject [
 	protocol := anObject
 ]

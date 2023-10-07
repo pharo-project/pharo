@@ -5,54 +5,56 @@ To obtain my instance, first one create a valid OSWindow and then use #newFormRe
 Then you can render on form, and form's contents will serve as medium which will be displayed inside a window.
 "
 Class {
-	#name : #OSWindowFormRenderer,
-	#superclass : #OSWindowRenderer,
+	#name : 'OSWindowFormRenderer',
+	#superclass : 'OSWindowRenderer',
 	#instVars : [
 		'form'
 	],
-	#category : #'OSWindow-Core-Renderer'
+	#category : 'OSWindow-Core-Renderer',
+	#package : 'OSWindow-Core',
+	#tag : 'Renderer'
 }
 
-{ #category : #'morphic integration' }
+{ #category : 'morphic integration' }
 OSWindowFormRenderer >> deferUpdatesWhile: aBlock [
 
 	aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowFormRenderer >> drawDuring: aBlock [
 
 	aBlock value: self getCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowFormRenderer >> form [
 
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowFormRenderer >> form: anObject [
 
 	form := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowFormRenderer >> getCanvas [
 	^ form getCanvas
 ]
 
-{ #category : #size }
+{ #category : 'size' }
 OSWindowFormRenderer >> newExtent: newExtent [
 	form setExtent: newExtent depth: form depth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowFormRenderer >> pixelExtent [
 	^ form ifNotNil: [ form extent ] ifNil: [ 1@1 ]
 ]
 
-{ #category : #'morphic integration' }
+{ #category : 'morphic integration' }
 OSWindowFormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 	"Force all the damage rects to the screen."
 	allDamage do: [ :r| self updateRectangle: r ]

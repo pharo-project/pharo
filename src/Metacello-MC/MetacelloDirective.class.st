@@ -1,108 +1,110 @@
 Class {
-	#name : #MetacelloDirective,
-	#superclass : #Object,
+	#name : 'MetacelloDirective',
+	#superclass : 'Object',
 	#instVars : [
 		'spec',
 		'loader'
 	],
-	#category : #'Metacello-MC-Directives'
+	#category : 'Metacello-MC-Directives',
+	#package : 'Metacello-MC',
+	#tag : 'Directives'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference loader: aLoader [
 
 	^MetacelloPackageLoadDirective new
 		spec: aPackageSpec externalReference: externalReference  loader: aLoader
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloDirective class >> loader: aLoader [
 
 	^self new
 		loader: aLoader
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloDirective class >> postLoadSpec: packageOrVersionSpec loader: aLoader [
 
 	^MetacelloPostLoadDirective new
 		spec: packageOrVersionSpec loader: aLoader
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloDirective class >> preLoadSpec: packageOrVersionSpec loader: aLoader [
 
 	^MetacelloPreLoadDirective new
 		spec: packageOrVersionSpec loader: aLoader
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloDirective >> addTo: aLoaderDirective [
 
 	aLoaderDirective add: self
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloDirective >> directivesDo: aBlock [
 
 	aBlock value: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloDirective >> label [
 
 	^self spec label
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloDirective >> loader [
 
 	^loader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloDirective >> loader: aLoader [
 
 	loader := aLoader
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloDirective >> packageDirectivesDo: aBlock [
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloDirective >> packageDo: aBlock [
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloDirective >> postLoadDo: aBlock [
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloDirective >> preLoadDo: aBlock [
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloDirective >> prepostLoadDirectivesDo: aBlock [
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloDirective >> prepostLoadDo: aBlock [
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloDirective >> printOn: aStream [
 
 	self printOn: aStream indent: 0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloDirective >> printOn: aStream indent: indent [
 
 	indent timesRepeat: [ aStream tab ].
@@ -112,40 +114,40 @@ MetacelloDirective >> printOn: aStream indent: indent [
 		nextPutAll: self label.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloDirective >> printString [
 	"Explicit override of superclass implementation. When you are printing a loadDirective it is annoying to have it truncated."
 
 	^String streamContents: [:s | self printOn: s]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloDirective >> spec [
 
 	^spec
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloDirective >> spec: packageOrVersionSpec loader: aLoader [
 
 	spec := packageOrVersionSpec.
 	loader := aLoader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloDirective >> title [
 
 	self subclassResponsibility
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloDirective >> versionDirectivesDepthFirstDo: aBlock [
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloDirective >> versionDirectivesDo: aBlock [
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloDirective >> versionDo: aBlock [
 ]

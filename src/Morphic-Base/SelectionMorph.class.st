@@ -14,8 +14,8 @@ Structure:
 
 "
 Class {
-	#name : #SelectionMorph,
-	#superclass : #BorderedMorph,
+	#name : 'SelectionMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'selectedItems',
 		'slippage',
@@ -25,16 +25,18 @@ Class {
 		'otherSelection',
 		'undoProperties'
 	],
-	#category : #'Morphic-Base-Basic'
+	#category : 'Morphic-Base-Basic',
+	#package : 'Morphic-Base',
+	#tag : 'Basic'
 }
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 SelectionMorph >> aboutToBeGrabbedBy: aHand [
 	slippage := 0@0.
 	^ super aboutToBeGrabbedBy: aHand
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
 	"Add custom menu items to the menu"
 
@@ -65,7 +67,7 @@ SelectionMorph >> addCustomMenuItems: aMenu hand: aHandMorph [
 		]
 ]
 
-{ #category : #'halos and balloon help' }
+{ #category : 'halos and balloon help' }
 SelectionMorph >> addHandlesTo: aHaloMorph box: box [
 	| onlyThese |
 	aHaloMorph haloBox: box.
@@ -76,13 +78,13 @@ SelectionMorph >> addHandlesTo: aHaloMorph box: box [
 	aHaloMorph innerTarget addOptionalHandlesTo: aHaloMorph box: box
 ]
 
-{ #category : #'halos and balloon help' }
+{ #category : 'halos and balloon help' }
 SelectionMorph >> addOptionalHandlesTo: aHalo box: box [
 	aHalo addHandleAt: box leftCenter color: Color blue icon: nil
 		on: #mouseUp send: #addOrRemoveItems: to: self
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> addOrRemoveItems: handOrEvent [
 	"Make a new selection extending the current one."
 
@@ -96,7 +98,7 @@ SelectionMorph >> addOrRemoveItems: handOrEvent [
 					setOtherSelection: self)
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> alignBottomEdges [
 	"Make the bottom coordinate of all my elements be the same"
 
@@ -108,7 +110,7 @@ SelectionMorph >> alignBottomEdges [
 	self changed
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> alignCentersHorizontally [
 	"Make every morph in the selection have the same vertical center as the topmost item."
 
@@ -122,7 +124,7 @@ SelectionMorph >> alignCentersHorizontally [
 	self changed
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> alignCentersVertically [
 	"Make every morph in the selection have the same horizontal center as the topmost item."
 
@@ -136,7 +138,7 @@ SelectionMorph >> alignCentersVertically [
 	self changed
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> alignLeftEdges [
 	"Make the left coordinate of all my elements be the same"
 
@@ -148,7 +150,7 @@ SelectionMorph >> alignLeftEdges [
 	self changed
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> alignRightEdges [
 	"Make the right coordinate of all my elements be the same"
 
@@ -160,7 +162,7 @@ SelectionMorph >> alignRightEdges [
 	self changed
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> alignTopEdges [
 	"Make the top coordinate of all my elements be the same"
 
@@ -172,14 +174,14 @@ SelectionMorph >> alignTopEdges [
 	self changed
 ]
 
-{ #category : #'halos and balloon help' }
+{ #category : 'halos and balloon help' }
 SelectionMorph >> balloonHelpTextForHandle: aHandle [
 	(aHandle eventHandler mouseSelectorsInclude: #addOrRemoveItems:)
 		ifTrue: [^'Add items to, or remove them from, this selection.'].
 	^ super balloonHelpTextForHandle: aHandle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionMorph >> borderColor: aColor [
 
 	| bordered |
@@ -188,7 +190,7 @@ SelectionMorph >> borderColor: aColor [
 	bordered do: [:m | m borderColor: aColor]
 ]
 
-{ #category : #undo }
+{ #category : 'undo' }
 SelectionMorph >> borderColorForItems: colorCollection [
 
 	(selectedItems select: [:m | m isKindOf: BorderedMorph])
@@ -196,7 +198,7 @@ SelectionMorph >> borderColorForItems: colorCollection [
 		do: [:m :c | m borderColor: c]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionMorph >> borderWidth: aWidth [
 
 	| bordered |
@@ -205,7 +207,7 @@ SelectionMorph >> borderWidth: aWidth [
 	bordered do: [:m | m borderWidth: aWidth]
 ]
 
-{ #category : #undo }
+{ #category : 'undo' }
 SelectionMorph >> borderWidthForItems: widthCollection [
 
 	(selectedItems select: [:m | m isKindOf: BorderedMorph])
@@ -213,7 +215,7 @@ SelectionMorph >> borderWidthForItems: widthCollection [
 		do: [:m :c | m borderWidth: c]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SelectionMorph >> bounds: newBounds [
 	"Make sure position: gets called before extent:; Andreas' optimization for growing/shrinking in ChangeSet 3119 screwed up selection of morphs from underlying pasteup."
 
@@ -221,33 +223,33 @@ SelectionMorph >> bounds: newBounds [
 	self position: newBounds topLeft; extent: newBounds extent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SelectionMorph >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ (self defaultColor) twiceDarker alpha: 0.75
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SelectionMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 
 	^ self theme menuSelectionColor alpha: 0.08
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 SelectionMorph >> delete [
 	self setProperty: #deleting toValue: true.
 	super delete
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 SelectionMorph >> dismissViaHalo [
 
 	super dismissViaHalo.
 	selectedItems do: [:m | m dismissViaHalo]
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> distributeHorizontally [
 	"Distribute the empty vertical space in a democratic way."
 	| minLeft maxRight totalWidth currentLeft space |
@@ -275,7 +277,7 @@ SelectionMorph >> distributeHorizontally [
 	self changed
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> distributeVertically [
 	"Distribute the empty vertical space in a democratic way."
 	| minTop maxBottom totalHeight currentTop space |
@@ -301,7 +303,7 @@ SelectionMorph >> distributeVertically [
 	self changed
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> doDup: evt fromHalo: halo handle: dupHandle [
 
 	selectedItems := selectedItems collect: #duplicate.
@@ -318,7 +320,7 @@ SelectionMorph >> doDup: evt fromHalo: halo handle: dupHandle [
 			]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SelectionMorph >> doneExtending [
 
 	otherSelection ifNotNil:
@@ -334,7 +336,7 @@ SelectionMorph >> doneExtending [
 	self addHalo
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SelectionMorph >> drawOn: aCanvas [
 
 	| canvas form1 form2 box |
@@ -355,7 +357,7 @@ SelectionMorph >> drawOn: aCanvas [
 		color: self borderColor
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> duplicate [
 	"Make a duplicate of the receiver and havbe the hand grab it"
 
@@ -365,7 +367,7 @@ SelectionMorph >> duplicate [
 	self activeHand grabMorph: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SelectionMorph >> extendByHand: aHand [
 	"Assumes selection has just been created and added to some pasteUp or world"
 	| startPoint handle |
@@ -392,43 +394,43 @@ SelectionMorph >> extendByHand: aHand [
 	handle startStepping
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SelectionMorph >> extent: newExtent [
 
 	super extent: newExtent.
 	self selectSubmorphsOf: self pasteUpMorph
 ]
 
-{ #category : #viewer }
+{ #category : 'viewer' }
 SelectionMorph >> externalName [
 	^ 'Selected {1} objects' translated format:{self selectedItems size}
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 SelectionMorph >> fillStyle: aColor [
 	undoProperties ifNil: [undoProperties := selectedItems collect: [:m | m fillStyle]].
 	selectedItems do: [:m | m fillStyle: aColor]
 ]
 
-{ #category : #undo }
+{ #category : 'undo' }
 SelectionMorph >> fillStyleForItems: fillStyleCollection [
 
 	selectedItems with: fillStyleCollection do: [:m :c | m fillStyle: c]
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 SelectionMorph >> goBehind [
 	"selection morph stays on top"
 ]
 
-{ #category : #'halos and balloon help' }
+{ #category : 'halos and balloon help' }
 SelectionMorph >> hasHalo: aBool [
 	super hasHalo: aBool.
 	aBool
 		ifFalse: [ (self hasProperty: #deleting) ifFalse: [self delete] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SelectionMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -438,7 +440,7 @@ SelectionMorph >> initialize [
 	slippage := 0@0
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 SelectionMorph >> justDroppedInto: newOwner event: evt [
 
 	selectedItems isEmpty ifTrue:
@@ -453,33 +455,33 @@ SelectionMorph >> justDroppedInto: newOwner event: evt [
 	evt wasHandled: true
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 SelectionMorph >> maybeAddCollapseItemTo: aMenu [
 	"... don't "
 ]
 
-{ #category : #'wiw support' }
+{ #category : 'wiw support' }
 SelectionMorph >> morphicLayerNumber [
 	"helpful for insuring some morphs always appear in front of or
 	behind others. smaller numbers are in front"
 	^ 8
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> organizeIntoColumn [
 	"Place my objects in a column-enforcing container"
 
 	((AlignmentMorph inAColumn: (selectedItems asSortedCollection: [:x :y | x top < y top])) setNameTo: 'Column'; color: Color orange muchLighter; enableDragNDrop: true; yourself) openInHand
 ]
 
-{ #category : #'halo commands' }
+{ #category : 'halo commands' }
 SelectionMorph >> organizeIntoRow [
 	"Place my objects in a row-enforcing container"
 
 	((AlignmentMorph inARow: (selectedItems asSortedCollection: [:x :y | x left < y left])) setNameTo: 'Row'; color: Color orange muchLighter; enableDragNDrop: true; yourself) openInHand
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SelectionMorph >> privateFullMoveBy: delta [
 	| deltaSlipped griddingMorph |
 	selectedItems isEmpty
@@ -492,7 +494,7 @@ SelectionMorph >> privateFullMoveBy: delta [
 	selectedItems do: [ :m | m position: m position + deltaSlipped ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SelectionMorph >> selectSubmorphsOf: aMorph [
 
 	| newItems removals |
@@ -507,13 +509,13 @@ SelectionMorph >> selectSubmorphsOf: aMorph [
 	selectedItems := (newItems copyWithoutAll: removals)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SelectionMorph >> selectedItems [
 
 	^ selectedItems
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SelectionMorph >> setOtherSelection: otherOrNil [
 
 	otherSelection := otherOrNil.
@@ -524,14 +526,14 @@ SelectionMorph >> setOtherSelection: otherOrNil [
 			]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SelectionMorph >> setSelectedItems: items [
 
 	selectedItems := items.
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectionMorph >> wantsToBeTopmost [
 	"Answer if the receiver want to be one of the topmost objects in
 	its owner"

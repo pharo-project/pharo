@@ -1,13 +1,15 @@
 Class {
-	#name : #CoASTSessionResultSetBuilder,
-	#superclass : #CoASTHeuristicsResultSetBuilder,
+	#name : 'CoASTSessionResultSetBuilder',
+	#superclass : 'CoASTHeuristicsResultSetBuilder',
 	#instVars : [
 		'session'
 	],
-	#category : #'HeuristicCompletion-Model-SystemIntegration'
+	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SystemIntegration'
 }
 
-{ #category : #heuristics }
+{ #category : 'heuristics' }
 CoASTSessionResultSetBuilder >> messageHeuristic [
 	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
 		add: (CoSessionMessagesHeuristic new
@@ -17,12 +19,12 @@ CoASTSessionResultSetBuilder >> messageHeuristic [
 		build ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTSessionResultSetBuilder >> session [
 	^ session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTSessionResultSetBuilder >> session: anObject [
 	session := anObject
 ]

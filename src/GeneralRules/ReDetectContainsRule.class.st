@@ -2,24 +2,26 @@
 Checks for bytecodePrimEqual  using the do: method instead of using the contains: or detect: methods.
 "
 Class {
-	#name : #ReDetectContainsRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReDetectContainsRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDetectContainsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DetectContainsRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDetectContainsRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReDetectContainsRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -49,7 +51,7 @@ ReDetectContainsRule >> initialize [
 				`@.Statements2]' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDetectContainsRule >> name [
 	^ 'Uses do: instead of contains: or detect:''s'
 ]

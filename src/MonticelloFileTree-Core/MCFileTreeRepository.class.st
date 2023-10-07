@@ -2,8 +2,8 @@
 A file tree repository
 "
 Class {
-	#name : #MCFileTreeRepository,
-	#superclass : #MCDirectoryRepository,
+	#name : 'MCFileTreeRepository',
+	#superclass : 'MCDirectoryRepository',
 	#instVars : [
 		'readonly',
 		'repositoryProperties'
@@ -12,15 +12,16 @@ Class {
 		'defaultPackageExtension',
 		'defaultPropertyFileExtension'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCFileTreeRepository class >> basicFromUrl: aZnUrl [
 	^ self new directory: (self urlAsFileReference: aZnUrl)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository class >> defaultPackageExtension [
     ".tree, .pkg, .package are the only formats supported at the moment:
 	.tree         - original structure
@@ -35,7 +36,7 @@ MCFileTreeRepository class >> defaultPackageExtension [
     ^ defaultPackageExtension
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository class >> defaultPackageExtension: aString [
     ".tree and .pkg are the only two formats supported at the moment"
 
@@ -46,14 +47,14 @@ MCFileTreeRepository class >> defaultPackageExtension: aString [
     defaultPackageExtension := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository class >> defaultPropertyFileExtension [
   defaultPropertyFileExtension
     ifNil: [ defaultPropertyFileExtension := '.json' ].
   ^ defaultPropertyFileExtension
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository class >> defaultPropertyFileExtension: aString [
   "self defaultPropertyFileExtension:'.ston'"
 
@@ -61,17 +62,17 @@ MCFileTreeRepository class >> defaultPropertyFileExtension: aString [
   defaultPropertyFileExtension := aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCFileTreeRepository class >> description [
     ^ 'filetree://'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeRepository class >> parseName: aString [
     ^ self parseName: aString extension: self defaultPackageExtension
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeRepository class >> parseName: aString extension: extension [
     "picked up from GoferVersionReference>>parseName:"
 
@@ -97,7 +98,7 @@ MCFileTreeRepository class >> parseName: aString extension: extension [
     (packageName , extension)}
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 	"Extracted from ZnUrl since the scheme is restricted.
 	We need to keep host as a segment part."
@@ -116,12 +117,12 @@ MCFileTreeRepository class >> urlAsFileReference: aZnUrl [
 	^ (AbsolutePath withAll: path) asFileReference 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository class >> urlSchemes [
 	^ #(#filetree)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository class >> validatePropertyFileExtension: aString [
   "see Issue #90: https://github.com/dalehenrich/filetree/issues/90"
 
@@ -129,18 +130,18 @@ MCFileTreeRepository class >> validatePropertyFileExtension: aString [
     ifFalse: [ self error: 'Unsupported property file extension: ' , aString printString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> allFileNames [
     ^ (self directory entries select: [ :entry | entry isDirectory and: [ self canReadFileNamed: entry name ] ])
         collect: [ :entry | entry name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> allFileNamesForVersionNamed: aString [
 	^ self filterFileNames: self readableFileNames forVersionNamed: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> asRepositorySpecFor: aMetacelloMCProject [
     ^ aMetacelloMCProject repositorySpec
         description: self description;
@@ -148,7 +149,7 @@ MCFileTreeRepository >> asRepositorySpecFor: aMetacelloMCProject [
         yourself
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCFileTreeRepository >> basicStoreVersion: aVersion [
   self readonly
     ifTrue: [ 
@@ -157,12 +158,12 @@ MCFileTreeRepository >> basicStoreVersion: aVersion [
   MCFileTreeWriter fileOut: aVersion on: self
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 MCFileTreeRepository >> cachedFileNames [
 	^ #()
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileTreeRepository >> canReadFileNamed: aString [
     ^ (aString endsWith: self packageExtension)
         or: [ 
@@ -172,7 +173,7 @@ MCFileTreeRepository >> canReadFileNamed: aString [
                     aString endsWith: '.package' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> defaultRepositoryProperties [
   ^ Dictionary new
     at: 'packageExtension' put: self class defaultPackageExtension;
@@ -180,29 +181,29 @@ MCFileTreeRepository >> defaultRepositoryProperties [
     yourself
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 MCFileTreeRepository >> description [
     ^ self class description , super description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> directory: aDirectory [
   super directory: aDirectory.
   repositoryProperties := nil.	"force properties to be reloaded from new location"
   self repositoryProperties	"NOW"
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCFileTreeRepository >> fileDirectoryOn: directoryPath [
     ^ self fileUtils directoryFromPath: directoryPath relativeTo: self directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> fileUtils [
     ^ MCFileTreeFileUtils current
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeRepository >> flushCache [
   "force properties to be reread ... if the directory exists, otherwise let nature
    take it's course"
@@ -216,7 +217,7 @@ MCFileTreeRepository >> flushCache [
           self repositoryProperties ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> goferVersionFrom: aVersionReference [
     "until we no longer find .tree directories in the wild"
 
@@ -228,7 +229,7 @@ MCFileTreeRepository >> goferVersionFrom: aVersionReference [
     ^ nil
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCFileTreeRepository >> packageDescriptionFromPackageDirectory: packageDirectory [
     | filename info extension |
     filename := self fileUtils current directoryName: packageDirectory.
@@ -253,33 +254,33 @@ MCFileTreeRepository >> packageDescriptionFromPackageDirectory: packageDirectory
             filename} ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCFileTreeRepository >> packageDescriptionsFromReadableFileNames [
     ^ ((self readableFileNames collect: [ :fileName | self fileDirectoryOn: fileName ])
         select: [ :packageDirectory | self fileUtils directoryExists: packageDirectory ])
         collect: [ :packageDirectory | self packageDescriptionFromPackageDirectory: packageDirectory ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeRepository >> packageExtension [
   ^ self repositoryProperties
     at: 'packageExtension'
     ifAbsent: [ self class defaultPackageExtension ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeRepository >> parseName: aString extension: extension [
     ^ self class parseName: aString extension: extension
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeRepository >> propertyFileExtension [
   ^ self repositoryProperties
     at: 'propertyFileExtension'
     ifAbsent: [ self class defaultPropertyFileExtension ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeRepository >> propertyFileExtension: propertyFileExtension [
   self class validatePropertyFileExtension: propertyFileExtension.
   self repositoryProperties
@@ -288,23 +289,23 @@ MCFileTreeRepository >> propertyFileExtension: propertyFileExtension [
   self writeRepositoryProperties
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCFileTreeRepository >> readStreamForFileNamed: aString do: aBlock [
     ^ aBlock value: self directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> readonly [
     readonly ifNil: [ readonly := false ].
     ^ readonly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> readonly: anObject [
 	readonly := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> repositoryProperties [
 
 	repositoryProperties
@@ -325,7 +326,7 @@ MCFileTreeRepository >> repositoryProperties [
 	^ repositoryProperties
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> versionFrom: aVersionReferenceString [
     "until we no longer find .tree directories in the wild"
 
@@ -337,12 +338,12 @@ MCFileTreeRepository >> versionFrom: aVersionReferenceString [
     ^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> versionFromFileNamed: aString [
 	^ self loadVersionFromFileNamed: aString
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCFileTreeRepository >> versionInfoForPackageDirectory: packageDirectory [
     ^ ((MCReader readerClassForFileNamed: (self fileUtils directoryName: packageDirectory))
         on: (self fileUtils parentDirectoryOf: packageDirectory)
@@ -351,26 +352,26 @@ MCFileTreeRepository >> versionInfoForPackageDirectory: packageDirectory [
         info
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> versionInfoFromFileNamed: aString [
 	^ self loadVersionInfoFromFileNamed: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeRepository >> versionNameFromFileName: aString [
 	| description |
 	description := self packageDescriptionFromPackageDirectory: (self fileDirectoryOn: aString).
 	^ description first , '-' , description second , '.' , description third printString
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCFileTreeRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	(self allFileNamesForVersionNamed: aVersionInfo name)
 		ifNotEmpty: [ :aCollection | ^ self versionFromFileNamed: aCollection first ].
 	^ errorBlock value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileTreeRepository >> writeRepositoryProperties [
   self fileUtils
     writeStreamFor: '.filetree'
@@ -401,7 +402,7 @@ MCFileTreeRepository >> writeRepositoryProperties [
 
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCFileTreeRepository >> writeStreamForFileNamed: aString replace: aBoolean do: aBlock [
 	self error: 'we do not open a single stream, but write multiple files'
 ]

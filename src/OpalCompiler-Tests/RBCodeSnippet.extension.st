@@ -1,30 +1,29 @@
-Extension { #name : #RBCodeSnippet }
+Extension { #name : 'RBCodeSnippet' }
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippet >> compile [
 
 	^ [ OpalCompiler new
-		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
-		  noPattern: isMethod not;
+		  permitFaulty: true;
+		  isScripting: isScripting;
 		  compile: self source ]
-	on: SyntaxErrorNotification do: [ :e |
+	on: CodeError do: [ :e |
 		"Compilation should success, because its the *faulty* mode".
 		"If this is expected, then just return nil"
 		self ifSkip: #compile then: [^ nil ].
-		"Otherwise, signal the error bypassing the emergency syntax error UI"
-		e unhandledException.
-		^ nil ]
+		"Otherwise, pass the error"
+		e pass ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippet >> compileOnError: aBlock [
 
 	^ [ OpalCompiler new
-		  noPattern: isMethod not;
-		  compile: self source ] on: SyntaxErrorNotification do: [ :e | aBlock cull: e ]
+		  isScripting: isScripting;
+		  compile: self source ] on: CodeError do: [ :e | aBlock cull: e ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippet >> doSemanticAnalysis [
 
 	"Do the semantic analysis as with the compiler and return the AST of the whole method (possibly a DoIt method)"
@@ -35,15 +34,15 @@ RBCodeSnippet >> doSemanticAnalysis [
 	So just ask the compiler."
 
 	^ OpalCompiler new
-		  options: #( #optionParseErrors #optionSkipSemanticWarnings );
-		  noPattern: isMethod not;
+		  isScripting: isScripting;
 		  parse: self source "Note: `parse:` also does the semantic analysis and return the AST"
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippet >> doSemanticAnalysisOnError: aBlock [
 
 	^ [ OpalCompiler new
-		  noPattern: isMethod not;
-		  parse: self source ] on: SyntaxErrorNotification do: [ :e | aBlock value: e ]
+		  isScripting: isScripting;
+		  permitFaulty: false;
+		  parse: self source ] on: CodeError do: [ :e | aBlock value: e ]
 ]

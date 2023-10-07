@@ -2,12 +2,14 @@
 SUnit tests for global definitions (pools, global variables)
 "
 Class {
-	#name : #RGGlobalDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGGlobalDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGGlobalDefinitionTest >> testEquality [
 	| global1 global2 |
 	global1 := RGGlobalVariableDefinition named: #Transcript.
@@ -18,7 +20,7 @@ RGGlobalDefinitionTest >> testEquality [
 	self deny: global1 equals: global2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGGlobalDefinitionTest >> testGlobalVariableDefinition [
 	| global |
 	global := RGGlobalVariableDefinition named: #Transcript.
@@ -26,7 +28,7 @@ RGGlobalDefinitionTest >> testGlobalVariableDefinition [
 	self assert: global parent equals: Smalltalk globals
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGGlobalDefinitionTest >> testPoolDefinition [
 	| pool newClass |
 	pool := RGClassDefinition createSharedPoolNamed: #TextConstants.

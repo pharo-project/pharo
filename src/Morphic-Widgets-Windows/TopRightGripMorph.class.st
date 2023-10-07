@@ -2,12 +2,14 @@
 I am the handle in the right top of windows used for resizing them.
 "
 Class {
-	#name : #TopRightGripMorph,
-	#superclass : #CornerGripMorph,
-	#category : #'Morphic-Widgets-Windows-Resizing'
+	#name : 'TopRightGripMorph',
+	#superclass : 'CornerGripMorph',
+	#category : 'Morphic-Widgets-Windows-Resizing',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Resizing'
 }
 
-{ #category : #'target resize' }
+{ #category : 'target resize' }
 TopRightGripMorph >> apply: delta [
 	| oldBounds |
 	oldBounds := target bounds.
@@ -15,7 +17,7 @@ TopRightGripMorph >> apply: delta [
 		bounds: (oldBounds origin + (0@delta y) corner: oldBounds corner + (delta x @ 0))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TopRightGripMorph >> containsPoint: aPoint [
 	"Answer true only if on edges."
 
@@ -26,7 +28,7 @@ TopRightGripMorph >> containsPoint: aPoint [
 			containsPoint: aPoint) not]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TopRightGripMorph >> drawOn: aCanvas [
 	"Draw the grip on the given canvas."
 
@@ -71,18 +73,18 @@ TopRightGripMorph >> drawOn: aCanvas [
 		color: self dotColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TopRightGripMorph >> gripLayoutFrame [
 	^ (1 @ 0 corner: 1 @ 0) asLayoutFrame
 			topLeftOffset: self defaultWidth negated @ -27
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TopRightGripMorph >> ptName [
 	^#topRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TopRightGripMorph >> resizeCursor [
 
 	^ Cursor resizeForEdge: #topRight

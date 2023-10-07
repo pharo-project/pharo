@@ -2,16 +2,18 @@
 I represent a reference to an entry into a store.
 "
 Class {
-	#name : #OmReference,
-	#superclass : #OmAbstractReference,
+	#name : 'OmReference',
+	#superclass : 'OmAbstractReference',
 	#instVars : [
 		'localName',
 		'globalName'
 	],
-	#category : #'Ombu-Entries'
+	#category : 'Ombu-Entries',
+	#package : 'Ombu',
+	#tag : 'Entries'
 }
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 OmReference class >> fromSton: stonReader [
 	| array |
 	array := Array new: 2 streamContents: [ :stream |
@@ -29,7 +31,7 @@ OmReference class >> fromSton: stonReader [
 				localName: array second ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmReference class >> globalName: aName localName: anIdentifier [
 
 	^ self new
@@ -38,25 +40,25 @@ OmReference class >> globalName: aName localName: anIdentifier [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OmReference >> = other [
 	^ other species = self species and: [
 		other localName = self localName and: [
 		other globalName = self globalName ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmReference >> globalName [
 
 	^ globalName
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OmReference >> hash [
 	^ (self species hash bitXor: self localName hash) bitXor: self globalName hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmReference >> initializeWithLocalName: aLocalName globalName: aGlobalName [
 
 	self initialize.
@@ -64,13 +66,13 @@ OmReference >> initializeWithLocalName: aLocalName globalName: aGlobalName [
 	globalName := aGlobalName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmReference >> localName [
 
 	^ localName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OmReference >> printOn: aStream [
 
 	super printOn: aStream.
@@ -81,7 +83,7 @@ OmReference >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OmReference >> shortName [
 
 	^ String streamContents: [ :stream |
@@ -91,12 +93,12 @@ OmReference >> shortName [
 			nextPutAll: self localName ]
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 OmReference >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 OmReference >> stonOn: stonWriter [
 
 	stonWriter

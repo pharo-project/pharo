@@ -2,29 +2,31 @@
 I am a command to force full update of all browser views
 "
 Class {
-	#name : #ClyUpdateBrowserCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-Browser-Commands'
+	#name : 'ClyUpdateBrowserCommand',
+	#superclass : 'ClyBrowserCommand',
+	#category : 'Calypso-Browser-Commands',
+	#package : 'Calypso-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #activations }
+{ #category : 'activations' }
 ClyUpdateBrowserCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyBrowserContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUpdateBrowserCommand >> defaultMenuIconName [
 	^#smallUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUpdateBrowserCommand >> defaultMenuItemName [
 	^'Update'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUpdateBrowserCommand >> execute [
 	browser update
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 Class >> deprecationTransformationExpression [
 	"Answers the expression a class reference should be transformed to. Can be any kind of expression, e.g. another class name or a method send."
 
@@ -8,7 +8,7 @@ Class >> deprecationTransformationExpression [
 		pragmaAt: #transformTo:) arguments first
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 Class >> installDeprecationTransformMetaLinks [
 	"Installs the deprecationTransformMetaLinks on all methods referencing it."
 
@@ -16,7 +16,7 @@ Class >> installDeprecationTransformMetaLinks [
 		do: [ :e | e compiledMethod installDeprecationTransformMetaLinks ]
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 Class >> isDeprecatedTransformable [
 	"Answers whether or not it can be transformed with a deprecation transformation. I.e. it has a class-side #isDeprecated method with a #transformTo: pragma."
 
@@ -25,7 +25,7 @@ Class >> isDeprecatedTransformable [
 				hasPragmaNamed: #transformTo:) and: [ self isDeprecated ] ]
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 Class >> uninstallDeprecationTransformMetaLinks [
 	"Uninstalls the deprecationTransformMetaLinks from all methods referencing it."
 

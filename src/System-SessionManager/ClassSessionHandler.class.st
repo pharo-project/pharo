@@ -3,42 +3,44 @@ I handle a Session for a specific class, providing the API the class should impl
 Handlers will be triggered by the SessionManager.
 "
 Class {
-	#name : #ClassSessionHandler,
-	#superclass : #AbstractSessionHandler,
+	#name : 'ClassSessionHandler',
+	#superclass : 'AbstractSessionHandler',
 	#instVars : [
 		'registeredClassName'
 	],
-	#category : #'System-SessionManager-Handlers'
+	#category : 'System-SessionManager-Handlers',
+	#package : 'System-SessionManager',
+	#tag : 'Handlers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassSessionHandler class >> forClassNamed: aClassName [
 	^ self new
 		registeredClassName: aClassName;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassSessionHandler >> handledId [
 	^ registeredClassName
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 ClassSessionHandler >> registeredClass [
 	^ Smalltalk globals at: registeredClassName asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassSessionHandler >> registeredClassName: aClassName [
 	registeredClassName := aClassName
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 ClassSessionHandler >> shutdown: isImageQuitting [
 	self registeredClass shutDown: isImageQuitting
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 ClassSessionHandler >> startup: isImageStarting [
 	self registeredClass startUp: isImageStarting
 ]

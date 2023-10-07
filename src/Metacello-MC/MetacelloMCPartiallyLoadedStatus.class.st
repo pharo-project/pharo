@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloMCPartiallyLoadedStatus,
-	#superclass : #Object,
+	#name : 'MetacelloMCPartiallyLoadedStatus',
+	#superclass : 'Object',
 	#instVars : [
 		'hasNoPackage',
 		'hasNoProject',
@@ -17,120 +17,117 @@ Class {
 		'vrsnStatus',
 		'abort'
 	],
-	#category : #'Metacello-MC-Specs'
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #'instance creation' }
-MetacelloMCPartiallyLoadedStatus class >> new [
-	^ self basicNew initialize
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedPackageIsCurrent [
 	^ aLoadedPackageIsCurrent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedPackageIsCurrent: aBoolean [
 	aLoadedPackageIsCurrent := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedPackageIsExact [
 	^ aLoadedPackageIsExact
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedPackageIsExact: aBoolean [
 	aLoadedPackageIsExact := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedPackageIsNotCurrent [
 	^ aLoadedPackageIsNotCurrent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedPackageIsNotCurrent: aBoolean [
 	aLoadedPackageIsNotCurrent := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedProjectIsCurrent: aBoolean [
 	aLoadedProjectIsCurrent := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedProjectIsExact [
 	^ aLoadedProjectIsExact
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedProjectIsExact: aBoolean [
 	aLoadedProjectIsExact := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedProjectIsNotCurrent [
 	^ aLoadedProjectIsNotCurrent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aLoadedProjectIsNotCurrent: aBoolean [
 	aLoadedProjectIsNotCurrent := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aPackageIsLoaded [
 	^aPackageIsLoaded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aPackageIsLoaded: aBoolean [
 	aPackageIsLoaded := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aPackageNotLoaded [
 	^aPackageNotLoaded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aPackageNotLoaded: aBoolean [
 	aPackageNotLoaded := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aProjectIsLoaded [
 	^aProjectIsLoaded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aProjectIsLoaded: aBoolean [
 	aProjectIsLoaded := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aProjectNotLoaded [
 	^aProjectNotLoaded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> aProjectNotLoaded: aBoolean [
 	aProjectNotLoaded := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> abort [
 	^ abort
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> abort: aBoolean [
 	abort := aBoolean
 ]
 
-{ #category : #evaulation }
+{ #category : 'evaulation' }
 MetacelloMCPartiallyLoadedStatus >> evaluateStatus: validStatusList [
 	^self abort
 		ifTrue: [ false ]
@@ -147,27 +144,27 @@ MetacelloMCPartiallyLoadedStatus >> evaluateStatus: validStatusList [
 					valid ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> hasNoPackage [
 	^ hasNoPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> hasNoPackage: aBoolean [
 	hasNoPackage := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> hasNoProject [
 	^ hasNoProject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> hasNoProject: aBoolean [
 	hasNoProject := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloMCPartiallyLoadedStatus >> initialize [
 	super initialize.
 	hasNoPackage := hasNoProject := true.
@@ -180,7 +177,7 @@ MetacelloMCPartiallyLoadedStatus >> initialize [
 	abort := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCPartiallyLoadedStatus >> isAllLoadedToSpec: matchBlock [
         "all projects and packages are loaded and match specification"
 
@@ -198,7 +195,7 @@ MetacelloMCPartiallyLoadedStatus >> isAllLoadedToSpec: matchBlock [
 				ifTrue: [ matchBlock value: #allLoadedToSpec ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCPartiallyLoadedStatus >> isLoadedMatchConstraints: matchBlock [
 	"all loaded projects and packages match constraints (at least one package loaded)"
 
@@ -221,7 +218,7 @@ MetacelloMCPartiallyLoadedStatus >> isLoadedMatchConstraints: matchBlock [
 								ifTrue: [ matchBlock value: matchStatus ] ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCPartiallyLoadedStatus >> isLoadedToSpec: matchBlock [
 	"all loaded projects and packages match specifications (at least one package loaded)"
 
@@ -244,7 +241,7 @@ MetacelloMCPartiallyLoadedStatus >> isLoadedToSpec: matchBlock [
 								ifTrue: [ matchBlock value: matchStatus ] ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCPartiallyLoadedStatus >> isSomethingLoaded: somethingLoadedBlock [
 	"at least one package loaded"
 
@@ -254,7 +251,7 @@ MetacelloMCPartiallyLoadedStatus >> isSomethingLoaded: somethingLoadedBlock [
 				ifTrue: [ somethingLoadedBlock value: #somethingLoaded ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPartiallyLoadedStatus >> vrsnStatus [
 	^vrsnStatus
 ]

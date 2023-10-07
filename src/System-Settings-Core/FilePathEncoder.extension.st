@@ -1,6 +1,6 @@
-Extension { #name : #FilePathEncoder }
+Extension { #name : 'FilePathEncoder' }
 
-{ #category : #'*System-Settings-Core' }
+{ #category : '*System-Settings-Core' }
 FilePathEncoder class >> settingInputWidgetForNode: aSettingNode [
 	^ aSettingNode  inputWidgetForFileOrDirectoryWithAction: #chooseFilePath
 ]

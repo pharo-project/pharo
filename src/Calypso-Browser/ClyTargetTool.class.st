@@ -3,17 +3,19 @@ I represent a Browser tool that is wanted by the browser according to its contex
 I will be compared to existing tools to know if I need to be instantiated or if there is a tool that matches.
 "
 Class {
-	#name : #ClyTargetTool,
-	#superclass : #Object,
+	#name : 'ClyTargetTool',
+	#superclass : 'Object',
 	#instVars : [
 		'context',
 		'activation',
 		'matchedTool'
 	],
-	#category : #'Calypso-Browser-Tabs'
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTargetTool class >> forActivation: aClyTabActivationStrategyAnnotation context: aClyBrowserContext [
 
 	^ self new
@@ -21,37 +23,37 @@ ClyTargetTool class >> forActivation: aClyTabActivationStrategyAnnotation contex
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTargetTool >> activation [
 
 	^ activation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTargetTool >> context [
 	^ context
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 ClyTargetTool >> createToolFor: browser [
 
 	^ activation createToolFor: browser inContext: context
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTargetTool >> forActivation: aClyTabActivationStrategyAnnotation context: aClyBrowserContext [
 
 	activation := aClyTabActivationStrategyAnnotation.
 	context := aClyBrowserContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTargetTool >> isMatched [
 
 	^ matchedTool isNotNil
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 ClyTargetTool >> match: aListOfClyTool [
 
 	aListOfClyTool
@@ -61,7 +63,7 @@ ClyTargetTool >> match: aListOfClyTool [
 		ifNone: [ "ignore" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTargetTool >> matchedTool [
 
 	^ matchedTool

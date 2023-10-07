@@ -1,6 +1,6 @@
-Extension { #name : #TraitDescription }
+Extension { #name : 'TraitDescription' }
 
-{ #category : #'*RottenTestsFinder' }
+{ #category : '*RottenTestsFinder' }
 TraitDescription >> generateRottenTestFromCompiledMethod: aCompiledMethod testCase: aTestResult [
 	^ RottenTestImplementedInTrait compiledMethod: aCompiledMethod
 ]

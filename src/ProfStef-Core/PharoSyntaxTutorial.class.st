@@ -2,12 +2,13 @@
 The default Pharo tutorial to learn the Pharo syntax
 "
 Class {
-	#name : #PharoSyntaxTutorial,
-	#superclass : #AbstractTutorial,
-	#category : #'ProfStef-Core'
+	#name : 'PharoSyntaxTutorial',
+	#superclass : 'AbstractTutorial',
+	#category : 'ProfStef-Core',
+	#package : 'ProfStef-Core'
 }
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> basicTypesArray [
 	^ Lesson
 title: 'Basic types: Array'
@@ -30,7 +31,7 @@ lesson:
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> basicTypesCharacters [
 	^ Lesson
 title: 'Basic types: Characters'
@@ -54,7 +55,7 @@ Character allByteCharacters.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> basicTypesDynamicArray [
 	^ Lesson
 title: 'Basic types: Dynamic Array'
@@ -68,7 +69,7 @@ lesson:
 { ProfStef } first next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> basicTypesNumbers [
 	^ Lesson
 title: 'Basic types: Numbers'
@@ -101,7 +102,7 @@ Evaluate these ones:"
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> basicTypesString [
 	^ Lesson
 title: 'Basic types: Strings'
@@ -127,7 +128,7 @@ lesson:
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> basicTypesSymbol [
 	^ Lesson
 title: 'Basic types: Symbols'
@@ -149,7 +150,7 @@ There is one and only one Symbol #ProfStef. There may be several ''ProfStef'' St
 (Smalltalk globals at: #ProfStef) next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> blocks [
 	^ Lesson
 title: 'Blocks'
@@ -181,7 +182,7 @@ Here is a block that adds 2 to its argument (its argument is named x):"
 [ProfStef next] value.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> blocksAssignation [
 	^ Lesson
 title: 'Block assignation'
@@ -199,7 +200,7 @@ b value: 12.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> conditionals [
 	^ Lesson
 title: 'Conditionals'
@@ -223,7 +224,7 @@ Transcript open.
 3 = 3 ifTrue: [ProfStef next].'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> debugger [
 	^ Lesson
 title: 'Debugger'
@@ -234,7 +235,7 @@ The following code will open the debugger on the message stack, select PharoSynt
 PharoSyntaxTutorial new divideTwoByZero.'
 ]
 
-{ #category : #interactive }
+{ #category : 'interactive' }
 PharoSyntaxTutorial >> divideTwoByZero [
 	2/0.
 
@@ -247,7 +248,7 @@ PharoSyntaxTutorial >> divideTwoByZero [
 	ProfStef next
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> doingVSPrinting [
 	^ Lesson
 title: 'Doing'
@@ -270,7 +271,7 @@ SmalltalkImage current aboutThisSystem.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> inspecting [
 	^ Lesson
 title: 'Inspecting'
@@ -295,7 +296,7 @@ SystemVersion current.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> instantiation [
 	^ Lesson
 title: 'Instantiation'
@@ -340,7 +341,7 @@ SimpleButtonMorph new
 	openCenteredInWorld.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> iterators [
 	^ Lesson
 title: 'Iterators'
@@ -371,7 +372,7 @@ Here we want to print all the numbers on the Transcript (a console)"
 ProfStef allInstances do: [:aPharoTutorial | aPharoTutorial next].'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> loops [
 	^ Lesson
 title: 'Loops'
@@ -392,7 +393,7 @@ lesson:
 1 to: 1 do: [:i | ProfStef next].'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> mathematicalPrecedence [
 	^ Lesson
 title: 'Mathematical precedence'
@@ -418,7 +419,7 @@ Remember that all messages always follow a simple left-to-right precedence rule,
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxBinary [
 	^ Lesson
 title: 'Message syntax: Binary messages'
@@ -447,7 +448,7 @@ Date today < Date yesterday.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxCascade [
 	^ Lesson
 title: 'Message syntax: Cascade'
@@ -476,7 +477,7 @@ Transcript
 ProfStef'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxCascadeShouldNotBeHere [
 	^ Lesson
 title: 'Lost?'
@@ -488,7 +489,7 @@ Go back and use a cascade!"
 ProfStef previous.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxExecutionOrder [
 	^ Lesson
 title: 'Message syntax: Execution order'
@@ -513,7 +514,7 @@ lesson:
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxExecutionOrderParentheses [
 	^ Lesson
 title: 'Message syntax: Parentheses'
@@ -529,7 +530,7 @@ lesson:
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxKeyword [
 	^ Lesson
 title: 'Message syntax: Keyword messages'
@@ -555,7 +556,7 @@ Color
 ProfStef perform: #next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> messageSyntaxUnary [
 	^ Lesson
 title: 'Message syntax: Unary messages'
@@ -582,7 +583,7 @@ Float pi.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> pharoEnvironment [
 	^ Lesson
 title: 'Pharo environment'
@@ -604,7 +605,7 @@ ProfStef browse.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> printing [
 	^ Lesson
 title: 'Printing'
@@ -629,7 +630,7 @@ SmalltalkImage current datedVersion.
 ProfStef next.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> reflection [
 	^ Lesson
 title: 'Reflection'
@@ -658,7 +659,7 @@ ProfStef class compile:''goToNextLesson
 ProfStef goToNextLesson.'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> reflectionContinued [
 	^ Lesson
 title: 'Reflection continued'
@@ -676,7 +677,7 @@ ProfStef respondsTo: #goToNextLesson.
 ProfStef default executeMethod: (ProfStef lookupSelector:#next).'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> theEnd [
 	^ Lesson
 title: 'Tutorial done!'
@@ -699,7 +700,7 @@ ProfStef goOn: HowToMakeYourOwnTutorial
 "See you soon!"'
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 PharoSyntaxTutorial >> tutorial [
 ^ #(
 welcome
@@ -741,7 +742,7 @@ theEnd
 )
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 PharoSyntaxTutorial >> welcome [
 	^ Lesson
 title: 'Welcome'

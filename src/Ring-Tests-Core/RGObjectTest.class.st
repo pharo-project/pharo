@@ -1,10 +1,11 @@
 Class {
-	#name : #RGObjectTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGObjectTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testFullCopy [
 
 	| def fullCopy |
@@ -17,7 +18,7 @@ RGObjectTest >> testFullCopy [
 	self assert: fullCopy name equals: def name
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testNameAccess [
 	| def |
 	"we cannot test RGObject directly here"
@@ -30,7 +31,7 @@ RGObjectTest >> testNameAccess [
 	self assert: def fullName equals: #NewName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testParent [
 	"test link to parent object"
 
@@ -41,7 +42,7 @@ RGObjectTest >> testParent [
 	self assert: def2 parent identicalTo: def1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testProperties [
 
 	"test all method that access properties of Ring objects"
@@ -77,7 +78,7 @@ RGObjectTest >> testProperties [
 	self assert: def propertyNames isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testResolveability [
 
 	"test if we can resolve standard objects. They should be all resolved"
@@ -88,7 +89,7 @@ RGObjectTest >> testResolveability [
 		self deny: each isRingFullyUnresolved  ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testResolvedNameOrNil [
 
 	"should return nil for unresolved names"
@@ -102,7 +103,7 @@ RGObjectTest >> testResolvedNameOrNil [
 	self assert: def resolvedNameOrNil equals: #SomeName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testTrivialMethods [
 
 	| def |
@@ -112,7 +113,7 @@ RGObjectTest >> testTrivialMethods [
 	self deny: (def unresolvedValue isRingResolved)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testTypes [
 
 	"check all testing methods"
@@ -143,7 +144,7 @@ RGObjectTest >> testTypes [
 	self deny: def isVariable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testUnresolveName [
 
 	"The name of any Ring object should be unresolveable"
@@ -164,7 +165,7 @@ RGObjectTest >> testUnresolveName [
 	self assert: result isRGUnresolvedValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGObjectTest >> testUnresolvedValue [
 
 	| def |

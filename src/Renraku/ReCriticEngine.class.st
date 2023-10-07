@@ -8,39 +8,41 @@ I'm invoked usually as follows:
 I contain some functionality shared between code entities
 "
 Class {
-	#name : #ReCriticEngine,
-	#superclass : #Object,
+	#name : 'ReCriticEngine',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Renraku-Utility'
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ReCriticEngine class >> critiquesOf: anEntity [
 
 	^ self uniqueInstance critiquesOf: anEntity
 ]
 
-{ #category : #banning }
+{ #category : 'banning' }
 ReCriticEngine class >> guidedBy: anEntity ban: aCritique [
 
 	^ self uniqueInstance guidedBy: anEntity ban: aCritique
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCriticEngine class >> nodeCritiquesOf: anEntity [
 
 	^ self uniqueInstance nodeCritiquesOf: anEntity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCriticEngine class >> uniqueInstance [
 
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCriticEngine >> critiquesOf: anEntity [
 	| rules critiques manifest builder |
 
@@ -75,7 +77,7 @@ ReCriticEngine >> critiquesOf: anEntity [
 	^ critiques
 ]
 
-{ #category : #banning }
+{ #category : 'banning' }
 ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 
 	| candidates |
@@ -89,7 +91,7 @@ ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 			ifNotNil: [ :entity | entity ban: aCritique ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCriticEngine >> nodeCritiquesOf: aMethod [
 	"this method exists because we have rules that check
 	ast nodes, but we display their critiques together with

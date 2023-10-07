@@ -3,30 +3,32 @@ I'm a row for a table.
 All my work is to keep cells.
 "
 Class {
-	#name : #FTTableRowMorph,
-	#superclass : #FTSelectableMorph,
-	#category : #'Morphic-Widgets-FastTable-Base'
+	#name : 'FTTableRowMorph',
+	#superclass : 'FTSelectableMorph',
+	#category : 'Morphic-Widgets-FastTable-Base',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTTableRowMorph class >> new [
 	self error: 'Use #table:'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTTableRowMorph class >> table: aTableMorph [
 	^ self basicNew
 		initializeTable: aTableMorph;
 		yourself
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTTableRowMorph >> handlesMouseOver: evt [
 	self table ifNotNil: [ :table | ^ table selectionModeStrategy allowsRowSelection ].
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTTableRowMorph >> initialize [
 	super initialize.
 	self
@@ -34,7 +36,7 @@ FTTableRowMorph >> initialize [
 		layoutPolicy: FTRowLayout new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTTableRowMorph >> initializeTable: tableMorph [
 	self initialize.
 	self

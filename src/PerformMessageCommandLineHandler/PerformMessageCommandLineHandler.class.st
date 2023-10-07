@@ -12,35 +12,36 @@ Examples:
 
 "
 Class {
-	#name : #PerformMessageCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #PerformMessageCommandLineHandler
+	#name : 'PerformMessageCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'PerformMessageCommandLineHandler',
+	#package : 'PerformMessageCommandLineHandler'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PerformMessageCommandLineHandler class >> answerUltimateQuestion [
 
 	Smalltalk exit: 42
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PerformMessageCommandLineHandler class >> commandName [
 	^ 'perform'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PerformMessageCommandLineHandler class >> description [
 	^ 'Perform given message on a specified class or global'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PerformMessageCommandLineHandler class >> printReversed: aString times: aStringWithNumber [
 
 	aStringWithNumber asInteger timesRepeat: [
 		Stdio stdout nextPutAll: aString reversed; lf. ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 PerformMessageCommandLineHandler >> activate [
 	| aClass aMessage arguments messageArguments |
 	self activateHelp

@@ -1,16 +1,18 @@
 Class {
-	#name : #RBExpandReferencedPoolsTransformation,
-	#superclass : #RBTransformation,
+	#name : 'RBExpandReferencedPoolsTransformation',
+	#superclass : 'RBTransformation',
 	#instVars : [
 		'pools',
 		'fromClass',
 		'parseTree',
 		'toClasses'
 	],
-	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
+	#category : 'Refactoring2-Transformations-Model-Migrated-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Migrated-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBExpandReferencedPoolsTransformation class >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	^ self new
 		forMethod: aParseTree
@@ -19,7 +21,7 @@ RBExpandReferencedPoolsTransformation class >> forMethod: aParseTree fromClass: 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBExpandReferencedPoolsTransformation class >> model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	^ self new
 		model: aRBNamespace;
@@ -29,7 +31,7 @@ RBExpandReferencedPoolsTransformation class >> model: aRBNamespace forMethod: aP
 		yourself
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExpandReferencedPoolsTransformation >> computePoolsToMove [
 
 	| poolVariables searcher |
@@ -52,41 +54,37 @@ RBExpandReferencedPoolsTransformation >> computePoolsToMove [
 	searcher executeTree: parseTree
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBExpandReferencedPoolsTransformation >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	fromClass := self model classFor: aClass.
 	parseTree := aParseTree.
 	toClasses := classCollection collect: [:each | self model classFor: each]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBExpandReferencedPoolsTransformation >> hasPoolsToMove [
 	^pools isNotEmpty
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBExpandReferencedPoolsTransformation >> movePool: aSymbol toClass: aClass [
 	| nonMetaClass |
 	nonMetaClass := aClass instanceSide.
-	(nonMetaClass definesPoolDictionary: aSymbol) ifFalse: [ nonMetaClass addPoolDictionary: aSymbol ]
+	(nonMetaClass definesPoolDictionary: aSymbol) 
+		ifFalse: [ nonMetaClass addPoolDictionary: aSymbol ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RBExpandReferencedPoolsTransformation >> movePoolVariables [
 	pools
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
-{ #category : #preconditions }
-RBExpandReferencedPoolsTransformation >> preconditions [
-
-	^ self emptyCondition
-]
-
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExpandReferencedPoolsTransformation >> privateTransform [
 
 	self computePoolsToMove.
+	self flag: #popUp.
 	self hasPoolsToMove
 		ifTrue:
 			[self
@@ -95,7 +93,7 @@ RBExpandReferencedPoolsTransformation >> privateTransform [
 	self movePoolVariables
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBExpandReferencedPoolsTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -111,7 +109,7 @@ RBExpandReferencedPoolsTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBExpandReferencedPoolsTransformation >> whichPoolDefines: varName [
 	| currentClass |
 	currentClass := fromClass.

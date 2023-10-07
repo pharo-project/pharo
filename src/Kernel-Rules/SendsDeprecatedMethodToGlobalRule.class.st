@@ -2,19 +2,20 @@
 Checks for sends of deprecated messages that might be removed in upcoming releases of Pharo.
 "
 Class {
-	#name : #SendsDeprecatedMethodToGlobalRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'Kernel-Rules'
+	#name : 'SendsDeprecatedMethodToGlobalRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'Kernel-Rules',
+	#package : 'Kernel-Rules'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'SendsDeprecatedMethodToGlobalRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 	| value |
 	aNode isMessage ifFalse: [ ^ false ].
@@ -25,17 +26,17 @@ SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 		ifAbsent: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule >> name [
 	^ 'Sends a deprecated message to a known global'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule >> severity [
 	^ #error
 ]

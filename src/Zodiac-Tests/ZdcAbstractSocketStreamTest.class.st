@@ -4,17 +4,18 @@ ZdcAbstractSocketStreamTests holds units tests for socket streams.
 This is an abstract class, subclasses should implement #socketStreamClass 
 "
 Class {
-	#name : #ZdcAbstractSocketStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zodiac-Tests'
+	#name : 'ZdcAbstractSocketStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcAbstractSocketStreamTest class >> isAbstract [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSocketStreamTest >> bytes: size [
 	| count data pattern |
 	count := 0.
@@ -26,31 +27,31 @@ ZdcAbstractSocketStreamTest >> bytes: size [
 	^ data copyFrom: 1 to: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSocketStreamTest >> listenBacklogSize [
 	"Server socket backlog size (number of pending connection waiting to be accepted)"
 
 	^ 32
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> openConnectionToHost: host port: port [
 	^ self socketStreamClass
 		openConnectionToHost: host port: port
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> openConnectionToHostNamed: host port: port [
 	^ self socketStreamClass
 		openConnectionToHostNamed: host port: port
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSocketStreamTest >> port [
 	^ 1701
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> referenceSocketStreamOn: socket [
 	| stream |
 	stream := SocketStream on: socket.
@@ -58,7 +59,7 @@ ZdcAbstractSocketStreamTest >> referenceSocketStreamOn: socket [
 	^ stream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> runClient: block [
 	| semaphore |
 	semaphore := Semaphore new.
@@ -66,7 +67,7 @@ ZdcAbstractSocketStreamTest >> runClient: block [
 	semaphore wait
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> runServer: block [
 	| serverSocket semaphore |
 	serverSocket := self serverSocketOn: self port.
@@ -83,12 +84,12 @@ ZdcAbstractSocketStreamTest >> runServer: block [
 	^ semaphore
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> serverPriority [
 	^ Processor userBackgroundPriority
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> serverSocketOn: port [
 	| socket |
 	(socket := Socket newTCP)
@@ -101,7 +102,7 @@ ZdcAbstractSocketStreamTest >> serverSocketOn: port [
 	^ socket
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> setReferenceSocketStreamOptions: stream [
 	stream
 		binary;
@@ -111,32 +112,32 @@ ZdcAbstractSocketStreamTest >> setReferenceSocketStreamOptions: stream [
 		timeout: self socketStreamTimeout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSocketStreamTest >> socketBufferSize [
 	"Size in bytes for Sockets and SocketStream IO buffers"
 
 	^ 4096
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSocketStreamTest >> socketStreamClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcAbstractSocketStreamTest >> socketStreamOn: socket [
 	^ self socketStreamClass
 		on: socket
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSocketStreamTest >> socketStreamTimeout [
 	"Timeout in seconds for SocketStream IO"
 
 	^ ZnNetworkingUtils socketStreamTimeout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcAbstractSocketStreamTest >> testAddOneEcho [
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket | | clientSocket stream data |
@@ -154,7 +155,7 @@ ZdcAbstractSocketStreamTest >> testAddOneEcho [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientPeek [
 	| dataSent first peek peekForFalse peekForTrue second clientStream semaphore |
 	dataSent := #[ 6 5 4 3 2 1 ].
@@ -180,7 +181,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientPeek [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientRead [
 	| dataSent dataRead clientStream semaphore |
 	dataSent := #[ 6 5 4 3 2 1 ].
@@ -198,7 +199,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientRead [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientRead10k [
 	| dataSent dataRead clientStream semaphore |
 	dataSent := self bytes: 10000.
@@ -216,7 +217,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientRead10k [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientRead10kInPieces1 [
 	| dataSent dataRead clientStream semaphore |
 	dataSent := self bytes: 10000.
@@ -235,7 +236,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientRead10kInPieces1 [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientRead10kInPieces2 [
 	| dataSent dataRead clientStream semaphore |
 	dataSent := self bytes: 10000.
@@ -255,7 +256,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientRead10kInPieces2 [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientSkip [
 	| dataSent dataRead clientStream semaphore |
 	dataSent := #[ 6 5 4 3 2 1 ].
@@ -273,7 +274,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientSkip [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientSkip10k [
 	| dataSent dataRead clientStream semaphore |
 	dataSent := #[ 6 5 4 3 2 1 ].
@@ -292,7 +293,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientSkip10k [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientWrite [
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket :mySemaphore | | clientSocket serverStream |
@@ -310,7 +311,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientWrite [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientWrite10k [
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket :mySemaphore | | clientSocket serverStream |
@@ -328,7 +329,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientWrite10k [
 	semaphore wait
 ]
 
-{ #category : #'tests - plain' }
+{ #category : 'tests - plain' }
 ZdcAbstractSocketStreamTest >> testPlainClientWrite10kInPieces [
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket :mySemaphore | | clientSocket serverStream |
@@ -347,7 +348,7 @@ ZdcAbstractSocketStreamTest >> testPlainClientWrite10kInPieces [
 	semaphore wait
 ]
 
-{ #category : #'tests - reverse echo' }
+{ #category : 'tests - reverse echo' }
 ZdcAbstractSocketStreamTest >> testReverseEcho [
 	| dataSent dataRead clientStream semaphore data |
 	semaphore := self runServer: [ :serverSocket | | clientSocket stream |
@@ -365,7 +366,7 @@ ZdcAbstractSocketStreamTest >> testReverseEcho [
 	semaphore wait
 ]
 
-{ #category : #'tests - reverse echo' }
+{ #category : 'tests - reverse echo' }
 ZdcAbstractSocketStreamTest >> testReverseEcho10kFixed [
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket | | clientSocket stream data |
@@ -383,7 +384,7 @@ ZdcAbstractSocketStreamTest >> testReverseEcho10kFixed [
 	semaphore wait
 ]
 
-{ #category : #'tests - reverse echo' }
+{ #category : 'tests - reverse echo' }
 ZdcAbstractSocketStreamTest >> testReverseEcho10kSearch [
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket | | clientSocket stream data |
@@ -401,7 +402,7 @@ ZdcAbstractSocketStreamTest >> testReverseEcho10kSearch [
 	semaphore wait
 ]
 
-{ #category : #'tests - reverse echo' }
+{ #category : 'tests - reverse echo' }
 ZdcAbstractSocketStreamTest >> testReverseEchoUpToEnd [
 	| dataSent dataRead clientStream semaphore data |
 	semaphore := self runServer: [ :serverSocket :mySemaphore | | clientSocket stream |

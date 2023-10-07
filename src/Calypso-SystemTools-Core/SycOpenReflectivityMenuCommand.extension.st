@@ -1,6 +1,6 @@
-Extension { #name : #SycOpenReflectivityMenuCommand }
+Extension { #name : 'SycOpenReflectivityMenuCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycOpenReflectivityMenuCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

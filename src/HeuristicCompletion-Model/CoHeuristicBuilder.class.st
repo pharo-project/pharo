@@ -17,27 +17,29 @@ CoSelfMessageHeuristic -next-> CoSuperMessageHeuristic -next-> CoInitializeInfer
 I am used also as a hook, that can be redefined in subclasses and build heuristics differently.
 "
 Class {
-	#name : #CoHeuristicBuilder,
-	#superclass : #Object,
+	#name : 'CoHeuristicBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'heuristics'
 	],
-	#category : #'HeuristicCompletion-Model-SystemIntegration'
+	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SystemIntegration'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 CoHeuristicBuilder >> add: anHeuristic [
 
 	heuristics add: anHeuristic
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 CoHeuristicBuilder >> build [
 
 	^ heuristics reduceRight: [ :left :right | left next: right. left ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoHeuristicBuilder >> initialize [
 	super initialize.
 	heuristics := OrderedCollection new

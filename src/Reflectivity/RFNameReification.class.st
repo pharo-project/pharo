@@ -2,37 +2,39 @@
 I reify the name of variables
 "
 Class {
-	#name : #RFNameReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFNameReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFNameReification class >> entities [
 	^{RBVariableNode. RBAssignmentNode. Variable}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFNameReification class >> key [
 	^#name
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFNameReification >> genForInstanceVariableSlot [
 	^entity name asLiteralNode
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFNameReification >> genForLiteralVariable [
 	^entity name asLiteralNode
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFNameReification >> genForRBAssignmentNode [
 	^entity variable name asLiteralNode
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFNameReification >> genForRBVariableNode [
 	^entity name asLiteralNode
 ]

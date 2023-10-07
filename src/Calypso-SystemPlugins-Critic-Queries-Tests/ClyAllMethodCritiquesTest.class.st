@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyAllMethodCritiquesTest,
-	#superclass : #ClyCritiqueQueryTest,
-	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
+	#name : 'ClyAllMethodCritiquesTest',
+	#superclass : 'ClyCritiqueQueryTest',
+	#category : 'Calypso-SystemPlugins-Critic-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAllMethodCritiquesTest >> createQuery [
 
 	^ ClyAllMethodCritiqueQuery from: self scopeWithCritiques
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllMethodCritiquesTest >> testCheckIfEmpty [
 
 	query scope: self scopeWithCritiques .
@@ -20,7 +21,7 @@ ClyAllMethodCritiquesTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllMethodCritiquesTest >> testExecution [
 
 	self executeQuery.

@@ -1,6 +1,6 @@
-Extension { #name : #MenuMorph }
+Extension { #name : 'MenuMorph' }
 
-{ #category : #'*SUnit-Support-UITesting' }
+{ #category : '*SUnit-Support-UITesting' }
 MenuMorph >> choose: aString [
 
 	| item |
@@ -9,7 +9,7 @@ MenuMorph >> choose: aString [
 	item simulateClick
 ]
 
-{ #category : #'*SUnit-Support-UITesting' }
+{ #category : '*SUnit-Support-UITesting' }
 MenuMorph >> itemWithWording: wording [
 	"If any of the receiver's items or submenu items have the given wording (case-blind comparison done), then return it, else return nil."
 

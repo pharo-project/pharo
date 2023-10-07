@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyClassHierarchyScopeTest,
-	#superclass : #ClyAbstractClassScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyClassHierarchyScopeTest',
+	#superclass : 'ClyAbstractClassScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassHierarchyScopeTest class >> isAbstract [
 	^self = ClyClassHierarchyScopeTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassHierarchyScopeTest >> testComparisonWithSimilarScopeButWithDifferentMetaLevelScope [
 	| scope2 |
 	scope := self createSampleScope.
@@ -20,7 +22,7 @@ ClyClassHierarchyScopeTest >> testComparisonWithSimilarScopeButWithDifferentMeta
 	self deny: scope equals: scope2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassHierarchyScopeTest >> testConvertingToInheritedScope [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -35,7 +37,7 @@ ClyClassHierarchyScopeTest >> testConvertingToInheritedScope [
 	self assert: convertedScope name equals: ClyClassScope inheritedScopeName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassHierarchyScopeTest >> testConvertingToInheritingScope [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -50,7 +52,7 @@ ClyClassHierarchyScopeTest >> testConvertingToInheritingScope [
 	self assert: convertedScope name equals: ClyClassScope inheritingScopeName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassHierarchyScopeTest >> testConvertingToNewMetaLevel [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -64,7 +66,7 @@ ClyClassHierarchyScopeTest >> testConvertingToNewMetaLevel [
 	self assert: convertedScope environment equals: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassHierarchyScopeTest >> testConvertingWithNewBasisShouldKeepMetaLevelScope [
 	| convertedScope |
 	scope := self singleScopeSample.
@@ -75,7 +77,7 @@ ClyClassHierarchyScopeTest >> testConvertingWithNewBasisShouldKeepMetaLevelScope
 	self assert: convertedScope localScopeClass equals: ClyInstanceSideScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassHierarchyScopeTest >> testHasDefaultClassLocalScope [
 
 	scope := self createSampleScope.

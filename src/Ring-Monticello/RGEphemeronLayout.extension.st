@@ -1,6 +1,6 @@
-Extension { #name : #RGEphemeronLayout }
+Extension { #name : 'RGEphemeronLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGEphemeronLayout >> mcType [
 
 	^ #ephemeron

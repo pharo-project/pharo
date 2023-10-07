@@ -2,18 +2,20 @@
 I return all methods which are visible from the scope.
 "
 Class {
-	#name : #ClyAllMethodsQuery,
-	#superclass : #ClyMethodQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyAllMethodsQuery',
+	#superclass : 'ClyMethodQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllMethodsQuery >> description [
 
 	^'all methods'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAllMethodsQuery >> selectsMethod: aMethod [
 
 	^true

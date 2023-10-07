@@ -1,6 +1,6 @@
-Extension { #name : #OrderedDictionary }
+Extension { #name : 'OrderedDictionary' }
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 OrderedDictionary >> atRandom: aGenerator [
 	self emptyCheck.
 	^ self at: (self orderedKeys at: (aGenerator nextInteger: self size))

@@ -1,6 +1,6 @@
-Extension { #name : #TabMorph }
+Extension { #name : 'TabMorph' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 TabMorph >> markDirty: aBoolean [
 	| currentLabel |
 

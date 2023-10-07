@@ -2,8 +2,8 @@
 I represent a bar with annotations for the text area, like editing mode, line numbers etc
 "
 Class {
-	#name : #RubAnnotationDisplayer,
-	#superclass : #RubScrolledTextSideRuler,
+	#name : 'RubAnnotationDisplayer',
+	#superclass : 'RubScrolledTextSideRuler',
 	#traits : 'TRubWithWrapPolicy + (TRubWithLineNumber - {#fontToUse})',
 	#classTraits : 'TRubWithWrapPolicy classTrait + TRubWithLineNumber classTrait',
 	#instVars : [
@@ -15,15 +15,17 @@ Class {
 		'columnDisplayMorph',
 		'lineNumbersDisplayMorph'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubAnnotationDisplayer class >> key [
 	^ #annotation
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 RubAnnotationDisplayer class >> tabWidthMenuOn: aBuilder [
 	"Specify the menu used to select the tab width"
 
@@ -32,12 +34,12 @@ RubAnnotationDisplayer class >> tabWidthMenuOn: aBuilder [
 	(6 to: 200 by: 6) do: [ :t | (aBuilder item: t asString asSymbol) action: [ :model | model chosenTabWidth: t ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAnnotationDisplayer >> backgroundColor [
 	^ self paragraphProvider backgroundColor darker
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> changeColumnDisplay [
 	self paragraphProvider columnRuler
 		ifNil: [ self paragraphProvider withColumns ]
@@ -46,66 +48,66 @@ RubAnnotationDisplayer >> changeColumnDisplay [
 	self updateContents
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> chooseEditingMode: anEvent [
 	self modeListMenu invokeAt: anEvent position in: self world.
 	self updateContents
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> chooseTabWidth: anEvent [
 	self tabWidthMenu invokeAt: anEvent position in: self world
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> chosenTabWidth: anInteger [
 	self paragraph tabWidth: anInteger.
 	self updateContents
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> columnDisplayLabel [
 	^ self paragraphProvider columnRuler
 		ifNil: [ '+C' ]
 		ifNotNil: [ 'C' ]
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> columnDisplayLabelMorph [
 	^ StringMorph
 		contents: self columnDisplayLabel
 		font: self fontToUse
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAnnotationDisplayer >> computedHeightFrom: aRectangle [
 	^ row ifNil: [0] ifNotNil: [row height]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAnnotationDisplayer >> editingModeLabel [
 	^ self paragraphProvider editingMode label
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> editingModeLabelMorph [
 	^ StringMorph
 		contents: self editingModeLabel
 		font: self fontToUse
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubAnnotationDisplayer >> initialize [
 	super initialize.
 	self side: #bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAnnotationDisplayer >> level [
 	^ 1
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAnnotationDisplayer >> manageLayoutInBounds: aRectangle [
 	| ret |
 	ret := super manageLayoutInBounds: aRectangle.
@@ -113,14 +115,14 @@ RubAnnotationDisplayer >> manageLayoutInBounds: aRectangle [
 	^ ret
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAnnotationDisplayer >> modeListMenu [
 	"Answer the menu to be presented to select an editing mode"
 
 	^ (PragmaMenuBuilder pragmaKeyword: #RubEditingModeMenu model: self) menu
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self color: self backgroundColor.
@@ -162,13 +164,13 @@ RubAnnotationDisplayer >> noteNewOwner: aMorph [
 	self addMorph: row
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAnnotationDisplayer >> selectionChanged [
 	self updateContents.
 	super selectionChanged
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> spacer: anInteger [
 	^ Morph new
 		borderWidth: 0;
@@ -176,36 +178,36 @@ RubAnnotationDisplayer >> spacer: anInteger [
 		extent: anInteger@3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAnnotationDisplayer >> tabWidth [
 	^ self paragraph tabWidth
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> tabWidthLabel [
 	^ 'Tab width: ', self tabWidth printString
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubAnnotationDisplayer >> tabWidthLabelMorph [
 	^ StringMorph
 		contents: self tabWidthLabel
 		font: self fontToUse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAnnotationDisplayer >> tabWidthMenu [
 	"Answer the menu to be presented to select a tab width"
 
 	^ (PragmaMenuBuilder pragmaKeyword: #RubTabWidthMenu model: self) menu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAnnotationDisplayer >> textColor [
 	^ self textArea lineNumbersTextColor muchDarker
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAnnotationDisplayer >> textOfCharBlock: aCharacterBlock [
 	| t l c |
 	l := aCharacterBlock textLine.
@@ -221,7 +223,7 @@ RubAnnotationDisplayer >> textOfCharBlock: aCharacterBlock [
 	^ t
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAnnotationDisplayer >> updateContents [
 	| t |
 	row ifNil: [ ^self ].

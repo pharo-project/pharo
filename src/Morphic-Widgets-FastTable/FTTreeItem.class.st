@@ -28,16 +28,18 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTTreeItem,
-	#superclass : #Object,
+	#name : 'FTTreeItem',
+	#superclass : 'Object',
 	#instVars : [
 		'dataSource',
 		'children'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tree'
+	#category : 'Morphic-Widgets-FastTable-Tree',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Tree'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTTreeItem class >> data: aData from: aDataSource [
 	^ self new
 		dataSource: aDataSource;
@@ -45,7 +47,7 @@ FTTreeItem class >> data: aData from: aDataSource [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> childAt: anIndex [
 	| tmpIndex |
 	tmpIndex := anIndex.
@@ -60,73 +62,73 @@ FTTreeItem >> childAt: anIndex [
 	self errorSubscriptBounds: anIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> children [
 	self subclassResponsibility
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeItem >> collapseAll [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> data: aData [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> dataSource [
 	^ dataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> dataSource: anObject [
 	dataSource := anObject
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeItem >> expandAll [
 	self subclassResponsibility
 ]
 
-{ #category : #'expanding-collapsing' }
+{ #category : 'expanding-collapsing' }
 FTTreeItem >> expandAllTo: aDepth [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTTreeItem >> hasChildren [
 	^ self children size ~= 0
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeItem >> isExpanded [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> numberOfChildren [
 	^ self children
 		ifEmpty: [ 0 ]
 		ifNotEmpty: [ :children2 | children2 size + (children2 collect: [ :item | item numberOfChildren ]) sum ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> numberOfVisibleChildren [
 	^ (self isExpanded and: [ self children isNotEmpty ])
 		ifTrue: [ self children size + (self children collect: [ :item | item numberOfVisibleChildren ]) sum ]
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> recentlyChanged [
 	"I return true if the item was recently collapsed. I am use to update the selection when we collapse an item."
 
 	self subclassResponsibility
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeItem >> selectedRowsIndexesFrom: anInteger [
 	| index selfSelection |
 	index := anInteger.
@@ -146,14 +148,14 @@ FTTreeItem >> selectedRowsIndexesFrom: anInteger [
 			result ]) , selfSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeItem >> selfOrChildAt: anIndex [
 	^ anIndex = 1
 		ifTrue: [ self ]
 		ifFalse: [ self childAt: anIndex - 1 ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeItem >> updateData [
 	self subclassResponsibility
 ]

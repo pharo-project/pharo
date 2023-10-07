@@ -2,8 +2,8 @@
 A general user input event like for keyboard or mouse
 "
 Class {
-	#name : #UserInputEvent,
-	#superclass : #MorphicEvent,
+	#name : 'UserInputEvent',
+	#superclass : 'MorphicEvent',
 	#instVars : [
 		'type',
 		'buttons',
@@ -17,28 +17,30 @@ Class {
 		'CTRL_KEY_MASK',
 		'SHIFT_KEY_MASK'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UserInputEvent class >> altKeyMask [
 
 	^ ALT_KEY_MASK
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UserInputEvent class >> cmdKeyMask [
 
 	^ 	CMD_KEY_MASK
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UserInputEvent class >> ctrlKeyMask [
 
 	^ CTRL_KEY_MASK
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 UserInputEvent class >> initialize [
 
 	SHIFT_KEY_MASK := 8.
@@ -47,13 +49,13 @@ UserInputEvent class >> initialize [
 	ALT_KEY_MASK := 2r00100000
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UserInputEvent class >> shiftKeyMask [
 
 	^ SHIFT_KEY_MASK
 ]
 
-{ #category : #'modifier state' }
+{ #category : 'modifier state' }
 UserInputEvent >> altKeyPressed [
 	"Answer true if the alt/option key on the keyboard was being held down when this event occurred."
 
@@ -61,14 +63,14 @@ UserInputEvent >> altKeyPressed [
 	^self optionKeyPressed
 ]
 
-{ #category : #'modifier state' }
+{ #category : 'modifier state' }
 UserInputEvent >> anyModifierKeyPressed [
 	"ignore, however, the shift keys 'cause that's not REALLY a command key "
 
 	^ self buttons anyMask: CMD_KEY_MASK | ALT_KEY_MASK | CTRL_KEY_MASK
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UserInputEvent >> buttonString [
 	"Return a string identifying the currently pressed buttons"
 	| string |
@@ -79,19 +81,19 @@ UserInputEvent >> buttonString [
 	^string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> buttons [
 	"Return the a word encoding the mouse and modifier buttons for this event."
 
 	^ buttons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> buttons: anInteger [ 
 	buttons := anInteger
 ]
 
-{ #category : #'modifier state' }
+{ #category : 'modifier state' }
 UserInputEvent >> commandKeyPressed [
 	"Answer true if the command key on the keyboard was being held down when this event occurred."
 
@@ -99,7 +101,7 @@ UserInputEvent >> commandKeyPressed [
 	^ buttons anyMask: CMD_KEY_MASK
 ]
 
-{ #category : #'modifier state' }
+{ #category : 'modifier state' }
 UserInputEvent >> controlKeyPressed [
 	"Answer true if the control key on the keyboard was being held down when this event occurred."
 
@@ -107,24 +109,24 @@ UserInputEvent >> controlKeyPressed [
 	^ buttons anyMask: CTRL_KEY_MASK
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 UserInputEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
 	handler := anEvent handler.
 	wasHandled := anEvent wasHandled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> handler [
 	^handler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> handler: anObject [
 	handler := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UserInputEvent >> modifierString [
 	"Return a string identifying the currently pressed modifiers"
 	| string |
@@ -135,7 +137,7 @@ UserInputEvent >> modifierString [
 	^string
 ]
 
-{ #category : #'modifier state' }
+{ #category : 'modifier state' }
 UserInputEvent >> optionKeyPressed [
 	"Answer true if the alt/option key on the keyboard was being held down when this event occurred."
 
@@ -143,67 +145,67 @@ UserInputEvent >> optionKeyPressed [
 	^ buttons anyMask: ALT_KEY_MASK
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> position [
 	^position
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 UserInputEvent >> resetHandlerFields [
 	"Reset anything that is used to cross-communicate between two eventual handlers during event dispatch"
 	handler := nil.
 	wasHandled := false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UserInputEvent >> setPosition: aPoint [
 	position := aPoint
 ]
 
-{ #category : #'modifier state' }
+{ #category : 'modifier state' }
 UserInputEvent >> shiftPressed [
 	"Answer true if the shift key on the keyboard was being held down when this event occurred."
 
 	^ buttons anyMask: SHIFT_KEY_MASK
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 UserInputEvent >> transformBy: aMorphicTransform [
 	"Transform the receiver into a local coordinate system."
 	position :=  aMorphicTransform globalPointToLocal: position
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 UserInputEvent >> transformedBy: aMorphicTransform [
 	"Return the receiver transformed by the given transform into a local coordinate system."
 	^self shallowCopy transformBy: aMorphicTransform
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 UserInputEvent >> translateBy: delta [
 	"add delta to cursorPoint, and return the new event"
 	position := position + delta
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 UserInputEvent >> translatedBy: delta [
 	"add delta to cursorPoint, and return the new event"
 	^self shallowCopy translateBy: delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> type [
 	"Return a symbol indicating the type this event."
 
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> wasHandled [
 	^wasHandled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UserInputEvent >> wasHandled: aBool [
 	wasHandled := aBool
 ]

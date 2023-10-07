@@ -1,12 +1,12 @@
-Extension { #name : #MCClassDefinition }
+Extension { #name : 'MCClassDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassDefinition >> asRGDefinition [
 
 	^ self ensureRingDefinitionIn: RGEnvironment new
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
@@ -46,7 +46,7 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		def]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackage [
 
 	| def |
@@ -57,7 +57,7 @@ MCClassDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackag
 	^ def
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCClassDefinition >> ring2LayoutType [
 
 	^ (Dictionary newFrom: {

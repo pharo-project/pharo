@@ -2,35 +2,37 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TRemoveForMultiplenessTest,
+	#name : 'TRemoveForMultiplenessTest',
 	#traits : 'TRemoveTest',
 	#classTraits : 'TRemoveTest classTrait',
-	#category : #'Collections-Abstract-Tests-Traits'
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TRemoveForMultiplenessTest >> elementNotIn [
 " return an element not included in nonEmptyWithoutEqualElements"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TRemoveForMultiplenessTest >> elementTwiceIn [
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TRemoveForMultiplenessTest >> empty [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TRemoveForMultiplenessTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TRemoveForMultiplenessTest >> test0FixtureTRemoveTest [
 	| duplicate |
 	self empty.
@@ -45,7 +47,7 @@ TRemoveForMultiplenessTest >> test0FixtureTRemoveTest [
 	self deny: (self nonEmptyWithoutEqualElements includes: self elementNotIn)
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAll [
 	| el aSubCollection collection |
 	collection := self nonEmptyWithoutEqualElements.
@@ -56,7 +58,7 @@ TRemoveForMultiplenessTest >> testRemoveAll [
 	self nonEmptyWithoutEqualElements do: [ :each | self assert: each = el ]
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAllError [
 	| el aSubCollection |
 	el := self elementNotIn.
@@ -64,7 +66,7 @@ TRemoveForMultiplenessTest >> testRemoveAllError [
 	self should: [ self nonEmptyWithoutEqualElements removeAll: aSubCollection ] raise: Error
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAllFoundIn [
 	| el aSubCollection |
 	el := self nonEmptyWithoutEqualElements anyOne.
@@ -74,7 +76,7 @@ TRemoveForMultiplenessTest >> testRemoveAllFoundIn [
 	self nonEmptyWithoutEqualElements do: [ :each | self assert: each = el ]
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAllSuchThat [
 
 	| el aSubCollection |
@@ -85,7 +87,7 @@ TRemoveForMultiplenessTest >> testRemoveAllSuchThat [
 	self nonEmptyWithoutEqualElements do: [ :each | self assert: each = el ]
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementFromEmpty [
 
 	self
@@ -93,7 +95,7 @@ TRemoveForMultiplenessTest >> testRemoveElementFromEmpty [
 		raise: Error
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementReallyRemovesElement [
 
 	| size |
@@ -102,7 +104,7 @@ TRemoveForMultiplenessTest >> testRemoveElementReallyRemovesElement [
 	self assert: size - 1 = self nonEmptyWithoutEqualElements size
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementThatExists [
 
 	| el res |
@@ -111,7 +113,7 @@ TRemoveForMultiplenessTest >> testRemoveElementThatExists [
 	self assert: res == el
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementThatExistsTwice [
 
 	| size |
@@ -125,7 +127,7 @@ TRemoveForMultiplenessTest >> testRemoveElementThatExistsTwice [
 	self assert: size - 2 = self nonEmpty size
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveIfAbsent [
 	| res |
 	res := self nonEmptyWithoutEqualElements remove: self elementNotIn ifAbsent: [ 33 ].

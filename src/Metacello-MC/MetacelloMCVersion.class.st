@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloMCVersion,
-	#superclass : #MetacelloVersion,
+	#name : 'MetacelloMCVersion',
+	#superclass : 'MetacelloVersion',
 	#instVars : [
 		'loaderPolicy'
 	],
-	#category : #'Metacello-MC-Model'
+	#category : 'Metacello-MC-Model',
+	#package : 'Metacello-MC',
+	#tag : 'Model'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including the package and the transitive closure on 
@@ -23,7 +25,7 @@ MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray [
 	^self allPackagesForSpecNamed: aStringOrArray ifAbsent: [ ^#() ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray ifAbsent: aBlock [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including the package and the transitive closure on 
@@ -42,7 +44,7 @@ MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> allPackagesForSpecs: pkgSpecs visited: visited [
 
  
@@ -54,14 +56,14 @@ MetacelloMCVersion >> allPackagesForSpecs: pkgSpecs visited: visited [
 	^ coll values asOrderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersion >> cacheRepository: repository [ 
 	"by default cacheRepository is an MCDictionaryRepository"
 	
 	self loaderPolicy cacheRepository: repository
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> computeVersionStatus [
 	"
 		#allLoadedToSpec - all projects and packages are loaded and match specification
@@ -74,33 +76,27 @@ MetacelloMCVersion >> computeVersionStatus [
 	^ #noStatus
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> currentlyLoadedClassesInVersion [
 
 	^self spec currentlyLoadedClassesInVersion
 ]
 
-{ #category : #querying }
-MetacelloMCVersion >> currentlyLoadedExtensionClassesInVersion [
-
-	^self spec currentlyLoadedExtensionClassesInVersion
-]
-
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> defaultPackageNamesToLoad [
 	"Answer the list of packages and projects to be loaded --> packages already loaded"
 	
 	^ self defaultPackageNamesToLoad: self spec defaultPackageNames
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	
 	^ self packageAndProjectNamesToLoad: defaultList loader: self loader
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> doFetchRequiredFromArray: anArray [
 
 	| oldPolicy oldBypassProgress displayString |
@@ -118,7 +114,7 @@ MetacelloMCVersion >> doFetchRequiredFromArray: anArray [
 				loaderPolicy := oldPolicy ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> doLoadRequiredFromArray: anArray [
 
 	| displayString oldPolicy oldBypassProgress |
@@ -139,7 +135,7 @@ MetacelloMCVersion >> doLoadRequiredFromArray: anArray [
 			loaderPolicy := oldPolicy ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> doRecordRequiredFromArray: anArray [
 
 	| originalLoader oldPolicy displayString oldBypassProgress |
@@ -162,7 +158,7 @@ MetacelloMCVersion >> doRecordRequiredFromArray: anArray [
 					loaderPolicy := oldPolicy ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> executeLoadFromArray: anArray [
 
 	| loader |
@@ -172,19 +168,19 @@ MetacelloMCVersion >> executeLoadFromArray: anArray [
 	^loader load
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMCVersion >> fetch [
 
 	^self doFetchRequiredFromArray: self spec defaultPackageNames
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMCVersion >> fetch: required [
 
 	^required fetchRequiredForMetacelloMCVersion: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> fetchRequiredFromArray: anArray [
 	| originalLoader displayString newLoader |
 	originalLoader := self versionSpec loader.
@@ -200,26 +196,26 @@ MetacelloMCVersion >> fetchRequiredFromArray: anArray [
 		displaying: displayString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersion >> ignoreImage: aBool [ 
 	"by default ignoreImage is false"
 	
 	self loaderPolicy ignoreImage: aBool
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMCVersion >> load [
 
 	^self doLoadRequiredFromArray: self spec defaultPackageNames
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMCVersion >> load: required [
 
 	^required loadRequiredForMetacelloMCVersion: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> loadRequiredFromArray: anArray [
 
 	| displayString |
@@ -229,25 +225,25 @@ MetacelloMCVersion >> loadRequiredFromArray: anArray [
 		displaying: displayString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersion >> loader: aLoader [
 
 	self versionSpec loader: aLoader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersion >> loaderPolicy [
 
 	loaderPolicy == nil ifTrue: [ loaderPolicy := MetacelloLoaderPolicy new ].
 	^ loaderPolicy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersion >> loaderPolicy: anObject [
 	loaderPolicy := anObject
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> packageAndProjectNamesToLoad: defaultList loader: aLoader [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	
@@ -283,7 +279,7 @@ MetacelloMCVersion >> packageAndProjectNamesToLoad: defaultList loader: aLoader 
 	^list
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> packages [
 	"Answers the list of packages associated with this version"
 
@@ -293,7 +289,7 @@ MetacelloMCVersion >> packages [
 	^packages
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> packagesForSpecNamed: aString [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including only the package. #requires: and #includes:
@@ -306,7 +302,7 @@ MetacelloMCVersion >> packagesForSpecNamed: aString [
 	^self packagesForSpecNamed: aString ifAbsent: [ ^#() ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including only the package. #requires: and #includes:
@@ -321,25 +317,25 @@ MetacelloMCVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
 	^pkgSpec resolveToPackagesIn: self spec visited: MetacelloVisitedPackages new
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMCVersion >> record [
 
 	^self doRecordRequiredFromArray: self spec defaultPackageNames
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloMCVersion >> record: required [
 
 	^required recordRequiredForMetacelloMCVersion: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersion >> repositoryOverrides: repositoriesCollection [ 
 
 	self loaderPolicy overrideRepositories: repositoriesCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCVersion >> silently: aBool [ 
 	"by default silently is false"
 	

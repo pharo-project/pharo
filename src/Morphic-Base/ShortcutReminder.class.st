@@ -5,8 +5,8 @@ It is configurable from the settings browser, where one can choose the location 
 
 "
 Class {
-	#name : #ShortcutReminder,
-	#superclass : #Object,
+	#name : 'ShortcutReminder',
+	#superclass : 'Object',
 	#instVars : [
 		'limit',
 		'size',
@@ -19,28 +19,30 @@ Class {
 		'DefaultReminder',
 		'Enabled'
 	],
-	#category : #'Morphic-Base-Menus'
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ShortcutReminder class >> defaultReminder [
 
 	^DefaultReminder ifNil: [ DefaultReminder := self new ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ShortcutReminder class >> enabled [
 
 	^Enabled ifNil: [ Enabled := false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ShortcutReminder class >> enabled: aBoolean [
 
 	Enabled := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ShortcutReminder class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #'Shortcut Reminder')
@@ -53,7 +55,7 @@ ShortcutReminder class >> settingsOn: aBuilder [
 		with: [ self defaultReminder customSettingsOn: aBuilder ]
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 ShortcutReminder class >> showShortcut: aShortcut [
 
 	(aShortcut keyText isNil or: [ self enabled not ]) ifTrue: [ ^self ].
@@ -61,19 +63,19 @@ ShortcutReminder class >> showShortcut: aShortcut [
 	self defaultReminder remind: aShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> backgroundColor [
 
 	^backgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> backgroundColor: aColor [
 
 	backgroundColor := aColor
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 ShortcutReminder >> createKeyTextMorph: aString [
 
 	| font |
@@ -89,7 +91,7 @@ ShortcutReminder >> createKeyTextMorph: aString [
 		yourself
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 ShortcutReminder >> createLabelMorph: aString [
 
 	^aString asStringMorph
@@ -98,7 +100,7 @@ ShortcutReminder >> createLabelMorph: aString [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ShortcutReminder >> createResetCountButtonMorph [
 
 	^SimpleButtonMorph new
@@ -109,7 +111,7 @@ ShortcutReminder >> createResetCountButtonMorph [
 		yourself
 ]
 
-{ #category : #'shortcut creation' }
+{ #category : 'shortcut creation' }
 ShortcutReminder >> createShortcutMorphFor: aMenuItem [
 
 	^FadingMorph new
@@ -119,7 +121,7 @@ ShortcutReminder >> createShortcutMorphFor: aMenuItem [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ShortcutReminder >> customSettingsOn: aBuilder [
 
 	(aBuilder pickOne: #position)
@@ -163,43 +165,43 @@ ShortcutReminder >> customSettingsOn: aBuilder [
 		dialog: [ self createResetCountButtonMorph ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ShortcutReminder >> defaultBackgroundColor [
 
 	^Color gray
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ShortcutReminder >> defaultFontFamiliyName [
 
 	^'Source Sans Pro'
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ShortcutReminder >> defaultLimit [
 
 	^5
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ShortcutReminder >> defaultTextColor [
 
 	^Color black
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 ShortcutReminder >> fixKeyText: aString [
 
 	^ (ToggleMenuItemShortcut owner: nil keyText: aString) text
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 ShortcutReminder >> fontSized: aPointSize [
 
 	^LogicalFont familyName: self defaultFontFamiliyName pointSize: aPointSize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShortcutReminder >> initialize [
 
 	countDict := Dictionary new.
@@ -210,55 +212,55 @@ ShortcutReminder >> initialize [
 	textColor := self defaultTextColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> keyTextFont [
 
 	^self fontSized: self pointSize * 2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> labelFont [
 
 	^self fontSized: self pointSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> large [
 
 	^55
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> limit [
 
 	^limit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> limit: aNumber [
 
 	limit := aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> medium [
 
 	 ^27
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> pointSize [
 
 	^size value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> position [
 
 	^position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> position: aSymbol [
 
 	(self positions includes: aSymbol) ifFalse: [ self error ].
@@ -266,7 +268,7 @@ ShortcutReminder >> position: aSymbol [
 	position := aSymbol
 ]
 
-{ #category : #'shortcut creation' }
+{ #category : 'shortcut creation' }
 ShortcutReminder >> positionShortcut: aMorph [
 
 	| area |
@@ -286,13 +288,13 @@ ShortcutReminder >> positionShortcut: aMorph [
 	position == #bottomRight ifTrue: [ ^aMorph bottomRight: (position value: area) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> positions [
 
 	^#(#topLeft #topRight #center #bottomLeft #bottomRight)
 ]
 
-{ #category : #'shortcut creation' }
+{ #category : 'shortcut creation' }
 ShortcutReminder >> remind: aMenuItem [
 
 	| itemHash |
@@ -306,13 +308,13 @@ ShortcutReminder >> remind: aMenuItem [
 	updateCount: itemHash
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ShortcutReminder >> resetCount [
 
 	countDict := Dictionary new
 ]
 
-{ #category : #'shortcut creation' }
+{ #category : 'shortcut creation' }
 ShortcutReminder >> show: aMenuItem [
 
 	| shortcutMorph |
@@ -324,37 +326,37 @@ ShortcutReminder >> show: aMenuItem [
 	shortcutMorph openInWorld
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> sizes [
 
 	^#(#small #medium #large)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> small [
 
 	^15
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> textColor [
 
 	^textColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> textColor: aColor [
 
 	textColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> textSize [
 
 	^size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortcutReminder >> textSize: aSymbol [
 
 	(self sizes includes: aSymbol) ifFalse: [ self error ].
@@ -362,7 +364,7 @@ ShortcutReminder >> textSize: aSymbol [
 	size := aSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortcutReminder >> updateCount: aHashValue [
 
 	| value |
@@ -372,7 +374,7 @@ ShortcutReminder >> updateCount: aHashValue [
 	countDict at: aHashValue put: value + 1
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ShortcutReminder >> wantsToShow: aHashValue [
 
 	^limit < 0 or: [

@@ -20,15 +20,17 @@ Internal Representation and Key Implementation Points.
 	instVarName:		<aString>	Name of the instance variable we tried to access.
 "
 Class {
-	#name : #InstanceVariableNotFound,
-	#superclass : #Error,
+	#name : 'InstanceVariableNotFound',
+	#superclass : 'Error',
 	#instVars : [
 		'instVarName'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 InstanceVariableNotFound class >> signalFor: aString [
 	"Create and signal a NoInstanceVariableNAmed exception for aString in the default receiver."
 
@@ -37,24 +39,24 @@ InstanceVariableNotFound class >> signalFor: aString [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InstanceVariableNotFound >> instVarName [
 	^ instVarName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InstanceVariableNotFound >> instVarName: anObject [
 	instVarName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InstanceVariableNotFound >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
 
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InstanceVariableNotFound >> standardMessageText [
 	"Generate a standard textual description"
 

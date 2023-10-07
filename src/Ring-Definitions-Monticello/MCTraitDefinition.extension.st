@@ -1,6 +1,6 @@
-Extension { #name : #MCTraitDefinition }
+Extension { #name : 'MCTraitDefinition' }
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCTraitDefinition >> asRingDefinition [
 
 	| ring |
@@ -19,14 +19,14 @@ MCTraitDefinition >> asRingDefinition [
 	^ring
 ]
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCTraitDefinition >> classDefinitionString [
 	"Answer a string describing the class-side definition."
 
 	^String streamContents: [:stream | self printMetaDefinitionOn: stream]
 ]
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCTraitDefinition >> printMetaDefinitionOn: stream [
 
 	stream nextPutAll: self className, ' classTrait'.

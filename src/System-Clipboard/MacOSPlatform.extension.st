@@ -1,6 +1,6 @@
-Extension { #name : #MacOSPlatform }
+Extension { #name : 'MacOSPlatform' }
 
-{ #category : #'*System-Clipboard' }
+{ #category : '*System-Clipboard' }
 MacOSPlatform >> clipboardClass [
 	^MacOSClipboard
 ]

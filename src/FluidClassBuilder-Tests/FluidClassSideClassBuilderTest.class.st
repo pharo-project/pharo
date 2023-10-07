@@ -2,15 +2,14 @@
 This class contains tests for `FluidClassSideClassBuilder`
 "
 Class {
-	#name : #FluidClassSideClassBuilderTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'builder'
-	],
-	#category : #'FluidClassBuilder-Tests-Base'
+	#name : 'FluidClassSideClassBuilderTest',
+	#superclass : 'FluidClassBuilderAbstractTest',
+	#category : 'FluidClassBuilder-Tests-Base',
+	#package : 'FluidClassBuilder-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FluidClassSideClassBuilderTest >> setUp [
 
 	super setUp.
@@ -21,20 +20,20 @@ FluidClassSideClassBuilderTest >> setUp [
 		           package: 'FakedPackage'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FluidClassSideClassBuilderTest >> testBuilderClassName [
 	"Yes a class side builder expects the instance name."
 
 	self assert: builder nameToBuild equals: #'Point33'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FluidClassSideClassBuilderTest >> testBuilderSuperclass [
 
 	self assert: builder superclassToBuild equals: Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 
 	builder slots: { #metaX . #metaY }.
@@ -44,7 +43,7 @@ FluidClassSideClassBuilderTest >> testBuilderWithSlots [
 	self assert: builder slotsToBuild equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FluidClassSideClassBuilderTest >> testBuilderWithTraits [
 
 	builder traits: { TViewModelMock classTrait }.

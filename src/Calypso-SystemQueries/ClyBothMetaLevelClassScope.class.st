@@ -2,12 +2,14 @@
 I represent local scope of classes which merges both instance and class sides
 "
 Class {
-	#name : #ClyBothMetaLevelClassScope,
-	#superclass : #ClyLocalClassScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyBothMetaLevelClassScope',
+	#superclass : 'ClyLocalClassScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyBothMetaLevelClassScope class >> metaLevelForHierarchyOf: aClass [
 	"For hierarchies I work as ClyMetaLevelClassScope.
 	I restrict any hierarchy by instance side relationship.
@@ -17,14 +19,14 @@ ClyBothMetaLevelClassScope class >> metaLevelForHierarchyOf: aClass [
 	^aClass instanceSide
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyBothMetaLevelClassScope class >> metaLevelsOf: aClass do: aBlock [
 
 	aBlock value: aClass instanceSide.
 	aBlock value: aClass classSide
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBothMetaLevelClassScope >> classesDo: aBlock [
 
 	basisObjects do: [ :each |

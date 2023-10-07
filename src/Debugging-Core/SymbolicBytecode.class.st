@@ -6,18 +6,19 @@ I am a relatively heavyweight object, I am created on demand for inspecting byte
 See #symbolicBytecode.
 "
 Class {
-	#name : #SymbolicBytecode,
-	#superclass : #Object,
+	#name : 'SymbolicBytecode',
+	#superclass : 'Object',
 	#instVars : [
 		'description',
 		'method',
 		'offset',
 		'bytes'
 	],
-	#category : #'Debugging-Core'
+	#category : 'Debugging-Core',
+	#package : 'Debugging-Core'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SymbolicBytecode >> = anObject [
 
 	self == anObject
@@ -32,54 +33,54 @@ SymbolicBytecode >> = anObject [
 				self offset = anObject offset ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> bytes [
 	^ bytes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> bytes: anObject [
 	bytes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SymbolicBytecode >> hash [
 
 	^ ((self bytes hash bitXor: self description hash) bitXor: 
 			self method hash) bitXor: self offset hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> method: anObject [
 	method := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> offset [
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolicBytecode >> offset: anObject [
 	offset := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SymbolicBytecode >> printOn: aStream [
 	aStream print: offset; space.
 	aStream nextPut: $<.
@@ -93,12 +94,12 @@ SymbolicBytecode >> printOn: aStream [
 	aStream nextPutAll: description
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 SymbolicBytecode >> sourceInterval [
 	^self sourceNode sourceInterval
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 SymbolicBytecode >> sourceNode [
 	^self method sourceNode sourceNodeForPC: self offset
 ]

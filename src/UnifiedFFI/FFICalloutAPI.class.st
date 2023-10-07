@@ -2,8 +2,8 @@
 I'm a façade to perform ffi nb calls.
 "
 Class {
-	#name : #FFICalloutAPI,
-	#superclass : #Object,
+	#name : 'FFICalloutAPI',
+	#superclass : 'Object',
 	#instVars : [
 		'options',
 		'callingConvention',
@@ -14,26 +14,28 @@ Class {
 	#classVars : [
 		'CalloutAPIClass'
 	],
-	#category : #'UnifiedFFI-Callouts'
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI class >> calloutAPIClass [
 	^ CalloutAPIClass ifNil: [ self defaultCalloutAPIClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI class >> calloutAPIClass: aClass [
 	CalloutAPIClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI class >> defaultCalloutAPIClass [
 
 	^ FFIBackend current calloutAPIClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFICalloutAPI class >> inContext: aContext [
 	"Should not be used. For backwards compatibility only"
 	^ self basicNew
@@ -41,46 +43,46 @@ FFICalloutAPI class >> inContext: aContext [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFICalloutAPI class >> inUFFIContext: aContext [
 	^ self basicNew
 		initializeUFFIContext: aContext;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFICalloutAPI class >> new [
 	self error: 'use #inFFIContext:'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutAPI class >> newCallbackBackendFor: aCallback [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutAPI >> callingConvention [
 	^ callingConvention
 ]
 
-{ #category : #'call conventions' }
+{ #category : 'call conventions' }
 FFICalloutAPI >> cdecl [
 	callingConvention := #cdecl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> context [
 	^ senderContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> convention: aCallingConvention [
 	"It can be #cdecl or #stdcall"
 	callingConvention := aCallingConvention
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICalloutAPI >> findUffiEnterContext [
 	"Finds the initial context where entering the uffi framework.
 	That is, the context that was marked with the #ffiCalloutTranslator pragma, whose caller was not.
@@ -96,19 +98,19 @@ FFICalloutAPI >> findUffiEnterContext [
 	^ uffiEnterContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> fixedArgumentCount [
 
 	^ fixedArgumentCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> fixedArgumentCount: anObject [
 
 	fixedArgumentCount := anObject
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 	| sender ffiMethod ffiMethodSelector |
 	sender := self senderContext.
@@ -134,13 +136,13 @@ FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 	^ self
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 FFICalloutAPI >> function: aCollection module: aClass [
 
 	^ self function: aCollection library: aClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICalloutAPI >> initialize [
 
 	callingConvention := #cdecl.
@@ -150,24 +152,24 @@ FFICalloutAPI >> initialize [
 	super initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICalloutAPI >> initializeContext: aContext [
 	senderContext := aContext.
 	self initialize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICalloutAPI >> initializeUFFIContext: aUFFIEntryPointContext [
 	uFFIEntryPointContext := aUFFIEntryPointContext.
 	self initialize
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FFICalloutAPI >> newBuilder [
 	^ FFICalloutMethodBuilder calloutAPI: self
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FFICalloutAPI >> newCallbackWithSignature: signature block: aBlock library: aLibrary [
 
 	^ (FFICallback signature: signature block: aBlock)
@@ -176,29 +178,29 @@ FFICalloutAPI >> newCallbackWithSignature: signature block: aBlock library: aLib
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> options [
 	^ options
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> options: anObject [
 	options := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> senderContext [
 
 	senderContext ifNotNil: [ ^ senderContext ].
 	^ self findUffiEnterContext sender
 ]
 
-{ #category : #'call conventions' }
+{ #category : 'call conventions' }
 FFICalloutAPI >> stdcall [
 	callingConvention := #stdcall
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutAPI >> uFFIEnterMethodSelector [
 
 	"Return the selector of the uffiEnterContext.

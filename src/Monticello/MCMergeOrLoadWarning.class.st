@@ -2,27 +2,29 @@
 A MCMergeOrLoadWarning is a simple warning used when amerge or a load action may override existing entities.
 "
 Class {
-	#name : #MCMergeOrLoadWarning,
-	#superclass : #Warning,
+	#name : 'MCMergeOrLoadWarning',
+	#superclass : 'Warning',
 	#instVars : [
 		'versions'
 	],
-	#category : #'Monticello-Loading'
+	#category : 'Monticello-Loading',
+	#package : 'Monticello',
+	#tag : 'Loading'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 MCMergeOrLoadWarning class >> signalFor: aVersionCollection [
 	^ self new
 		versions: aVersionCollection;
 		signal
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeOrLoadWarning >> cancel [
 	^ self resume: nil
 ]
 
-{ #category : #exceptionDescription }
+{ #category : 'exceptionDescription' }
 MCMergeOrLoadWarning >> defaultAction [
 	^ ( UIManager default
 		confirm: self messageText
@@ -32,17 +34,17 @@ MCMergeOrLoadWarning >> defaultAction [
 		default: nil ).
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeOrLoadWarning >> load [
 	^ self resume: true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeOrLoadWarning >> merge [
 	^ self resume: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeOrLoadWarning >> messageText [
 	| packageNames |
 	
@@ -59,12 +61,12 @@ MCMergeOrLoadWarning >> messageText [
 			nextPutAll: 'If you continue, you will lose these changes:']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeOrLoadWarning >> versions [
 	^ versions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeOrLoadWarning >> versions: aCollection [
 	versions := aCollection
 ]

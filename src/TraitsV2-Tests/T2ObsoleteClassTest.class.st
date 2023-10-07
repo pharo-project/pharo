@@ -2,12 +2,13 @@
 Unit test for trait handling when classes are removed
 "
 Class {
-	#name : #T2ObsoleteClassTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2ObsoleteClassTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsers [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -25,7 +26,7 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsers [
 	self deny: (t2 users includes: c1).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -44,7 +45,7 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 	self deny: (t2 users includes: c1 class).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2ObsoleteClassTest >> testObsoleteTraitIsRemovedFromUsers [
 	| t1 t2 t3 |
 	t1 := self newTrait: #T1 with: #() uses: {}.

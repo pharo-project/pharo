@@ -16,19 +16,21 @@ For my implementation I use ZnClient, a full featured HTTP client.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnEasy,
-	#superclass : #Object,
-	#category : #'Zinc-HTTP-Client-Server'
+	#name : 'ZnEasy',
+	#superclass : 'Object',
+	#category : 'Zinc-HTTP-Client-Server',
+	#package : 'Zinc-HTTP',
+	#tag : 'Client-Server'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEasy class >> client [
 	^ ZnClient new
 		beOneShot;
 		yourself
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> delete: urlObject [
 	^ self client
 		url: urlObject;
@@ -36,7 +38,7 @@ ZnEasy class >> delete: urlObject [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> delete: urlObject username: username password: password [
 	^ self client
 		url: urlObject;
@@ -45,7 +47,7 @@ ZnEasy class >> delete: urlObject username: username password: password [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> get: urlObject [
 	"self get: 'http://stfx.eu/small.html'."
 
@@ -55,7 +57,7 @@ ZnEasy class >> get: urlObject [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> get: urlObject username: username password: password [
 	^ self client
 		url: urlObject;
@@ -64,7 +66,7 @@ ZnEasy class >> get: urlObject username: username password: password [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> getGif: urlObject [
 	"self getGif: 'http://zn.stfx.eu/zn/Hot-Air-Balloon.gif'."
 
@@ -73,7 +75,7 @@ ZnEasy class >> getGif: urlObject [
 		fromUrl: urlObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEasy class >> getImageOfType: mimeType fromUrl: urlObject [
 	| client |
 	(client := self client)
@@ -86,7 +88,7 @@ ZnEasy class >> getImageOfType: mimeType fromUrl: urlObject [
 	^ (self environment at: #ImageReadWriter) formFromStream: client entity readStream
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> getJpeg: urlObject [
 	"self getJpeg: 'http://stfx.eu/sun-fire-x2100.jpg'."
 
@@ -95,7 +97,7 @@ ZnEasy class >> getJpeg: urlObject [
 		fromUrl: urlObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> getPng: urlObject [
 	"self getPng: 'http://pharo.org/files/pharo.png'."
 	"(self getPng: 'http://chart.googleapis.com/chart?cht=tx&chl=',
@@ -106,7 +108,7 @@ ZnEasy class >> getPng: urlObject [
 		fromUrl: urlObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> head: urlObject [
 	^ self client
 		url: urlObject;
@@ -114,7 +116,7 @@ ZnEasy class >> head: urlObject [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> head: urlObject username: username password: password [
 	^ self client
 		url: urlObject;
@@ -123,7 +125,7 @@ ZnEasy class >> head: urlObject username: username password: password [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> post: urlObject data: entity [
 	^ self client
 		url: urlObject;
@@ -132,7 +134,7 @@ ZnEasy class >> post: urlObject data: entity [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> post: urlObject data: entity username: username password: password [
 	^ self client
 		url: urlObject;
@@ -142,7 +144,7 @@ ZnEasy class >> post: urlObject data: entity username: username password: passwo
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> put: urlObject data: entity [
 	^ self client
 		url: urlObject;
@@ -151,7 +153,7 @@ ZnEasy class >> put: urlObject data: entity [
 		response
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnEasy class >> put: urlObject data: entity username: username password: password [
 	^ self client
 		url: urlObject;

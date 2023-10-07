@@ -2,8 +2,8 @@
 I represent the SDL_SysWMEvent, this event represent a system window event
 "
 Class {
-	#name : #'SDL_SysWMEvent',
-	#superclass : #SDL2MappedEvent,
+	#name : 'SDL_SysWMEvent',
+	#superclass : 'SDL2MappedEvent',
 	#instVars : [
 		'windowId'
 	],
@@ -12,16 +12,18 @@ Class {
 		'OFFSET_TIMESTAMP',
 		'OFFSET_TYPE'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'event type' }
+{ #category : 'event type' }
 SDL_SysWMEvent class >> eventType [
 
 	^ SDL_SYSWMEVENT
 ]
 
-{ #category : #'field description' }
+{ #category : 'field description' }
 SDL_SysWMEvent class >> fieldsDesc [
 	"
 		self rebuildFieldAccessors
@@ -34,7 +36,7 @@ SDL_SysWMEvent class >> fieldsDesc [
  	)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 SDL_SysWMEvent >> accept: aVisitor [
 
 	self isWindows ifFalse: [ ^ nil ].
@@ -43,31 +45,31 @@ SDL_SysWMEvent >> accept: aVisitor [
 	^ aVisitor visitSystemWindowEvent: self
 ]
 
-{ #category : #'event type' }
+{ #category : 'event type' }
 SDL_SysWMEvent >> eventType [
 
 	^ SDL_SYSWMEVENT
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SDL_SysWMEvent >> isWindows [
 
 	^ self msg isWindows
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> msg [
 	"This method was automatically generated"
 	^SDL_SysWMmsg fromHandle: (handle pointerAt: OFFSET_MSG)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> msg: anObject [
 	"This method was automatically generated"
 	handle pointerAt: OFFSET_MSG put: anObject getHandle
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SDL_SysWMEvent >> printOn: aStream [
 
 	super printOn: aStream.
@@ -76,31 +78,31 @@ SDL_SysWMEvent >> printOn: aStream [
 		print: self msg
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> timestamp [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_TIMESTAMP
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> timestamp: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TIMESTAMP put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> type [
 	"This method was automatically generated"
 	^handle unsignedLongAt: OFFSET_TYPE
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> type: anObject [
 	"This method was automatically generated"
 	handle unsignedLongAt: OFFSET_TYPE put: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SysWMEvent >> windowID [
 
 	self isWindows
@@ -115,7 +117,7 @@ SDL_SysWMEvent >> windowID [
 			  ifNone: [ ^ nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SysWMEvent >> windowsMessage [
 
 	^ self msg windowsMessage

@@ -1,6 +1,6 @@
-Extension { #name : #ClySwitchFocusToNextBrowserPaneCommand }
+Extension { #name : 'ClySwitchFocusToNextBrowserPaneCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClySwitchFocusToNextBrowserPaneCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 

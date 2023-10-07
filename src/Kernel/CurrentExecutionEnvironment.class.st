@@ -4,12 +4,14 @@ I am container for special meta object ExecutionEnvironment which represent curr
 Look at ExecutionEnvironment for details
 "
 Class {
-	#name : #CurrentExecutionEnvironment,
-	#superclass : #ProcessLocalVariable,
-	#category : #'Kernel-Processes'
+	#name : 'CurrentExecutionEnvironment',
+	#superclass : 'ProcessLocalVariable',
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 CurrentExecutionEnvironment class >> activate: anExecutionEnvironment for: aBlock [
 
 	| current |
@@ -23,12 +25,12 @@ CurrentExecutionEnvironment class >> activate: anExecutionEnvironment for: aBloc
 		anExecutionEnvironment deactivated]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CurrentExecutionEnvironment class >> isInheritable [
 	^true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 CurrentExecutionEnvironment class >> restoreDefault [
 
 	| current |
@@ -37,12 +39,12 @@ CurrentExecutionEnvironment class >> restoreDefault [
 	self value: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CurrentExecutionEnvironment >> default [
 	^DefaultExecutionEnvironment instance
 ]
 
-{ #category : #inheriting }
+{ #category : 'inheriting' }
 CurrentExecutionEnvironment >> installValue: anExecutionEnvironment intoForked: newProcess from: ownerProcess [
 	super installValue: anExecutionEnvironment intoForked: newProcess from: ownerProcess.
 

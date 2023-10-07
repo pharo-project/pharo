@@ -10,24 +10,26 @@ Use the extract method refactoring, which even checks whether the method you are
 The defined number of statements can be edited in #longMethodSize. In the future such rule should hold state and not be based on method redefinition for its customization. 
 "
 Class {
-	#name : #ReLongMethodsRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReLongMethodsRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReLongMethodsRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReLongMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'LongMethodsRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReLongMethodsRule >> basicCheck: aMethod [
 	| numberOfStatements |
 	"long methods are no problem for tests"
@@ -42,22 +44,22 @@ ReLongMethodsRule >> basicCheck: aMethod [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReLongMethodsRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReLongMethodsRule >> longMethodSize [
 	^ 20
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReLongMethodsRule >> name [
 	^ 'Long methods'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReLongMethodsRule >> rationale [
 	^ 'This smell arises when a long method is found (with {1} or more statements). Note that, it counts statements, not lines. Long methods should often be split into several smaller ones.
 

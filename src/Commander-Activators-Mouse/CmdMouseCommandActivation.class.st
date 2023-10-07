@@ -46,30 +46,31 @@ Internal Representation and Key Implementation Points.
 	whichButton:		<Integer>
 "
 Class {
-	#name : #CmdMouseCommandActivation,
-	#superclass : #CmdCommandActivationStrategy,
+	#name : 'CmdMouseCommandActivation',
+	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
 		'whichButton',
 		'keyboardModifier'
 	],
-	#category : #'Commander-Activators-Mouse'
+	#category : 'Commander-Activators-Mouse',
+	#package : 'Commander-Activators-Mouse'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMouseCommandActivation class >> byYellowButtonFor: aCommandUser [
 
 	^(self for: aCommandUser)
 		beYellowButton
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMouseCommandActivation class >> byYellowButtonWith: aKMModifier for: aCommandUser [
 
 	^(self byYellowButtonFor: aCommandUser)
 		keyboardModifier: aKMModifier
 ]
 
-{ #category : #'morphs setup' }
+{ #category : 'morphs setup' }
 CmdMouseCommandActivation class >> enableInMorph: aMorph withCommandsFrom: someObjectWithCommandContext [
 
 	aMorph
@@ -77,7 +78,7 @@ CmdMouseCommandActivation class >> enableInMorph: aMorph withCommandsFrom: someO
 		send: #handleMouseUsing:event:from: to: self withValue: someObjectWithCommandContext
 ]
 
-{ #category : #'command execition' }
+{ #category : 'command execition' }
 CmdMouseCommandActivation class >> executeCommandInContext: aToolContext [
 
 	self activateAllInContext: aToolContext by: [:activator |
@@ -86,7 +87,7 @@ CmdMouseCommandActivation class >> executeCommandInContext: aToolContext [
 	^false
 ]
 
-{ #category : #'morphs setup' }
+{ #category : 'morphs setup' }
 CmdMouseCommandActivation class >> handleMouseUsing: someObjectWithCommandContext event: anEvent from: sourceMorph [
 	| targetContext |
 	targetContext := someObjectWithCommandContext
@@ -97,44 +98,44 @@ CmdMouseCommandActivation class >> handleMouseUsing: someObjectWithCommandContex
 	anEvent wasHandled: false
 ]
 
-{ #category : #'morphs setup' }
+{ #category : 'morphs setup' }
 CmdMouseCommandActivation class >> morphicEventType [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMouseCommandActivation class >> with: aKMModifier for: aCommandUser [
 
 	^(self for: aCommandUser)
 		keyboardModifier: aKMModifier
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmdMouseCommandActivation >> beBlueButton [
 
 	whichButton := MouseEvent blueButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmdMouseCommandActivation >> beRedButton [
 
 	whichButton := MouseEvent redButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmdMouseCommandActivation >> beYellowButton [
 
 	whichButton := MouseEvent yellowButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmdMouseCommandActivation >> initialize [
 	super initialize.
 
 	self beRedButton
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMouseCommandActivation >> isActiveInContext: aToolContext [
 	| mouseEvent |
 	mouseEvent := aToolContext currentWorld activeHand lastEvent.
@@ -143,35 +144,35 @@ CmdMouseCommandActivation >> isActiveInContext: aToolContext [
 		and: [super isActiveInContext: aToolContext]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMouseCommandActivation >> isBlueButton [
 
 	^whichButton anyMask: MouseEvent blueButton
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMouseCommandActivation >> isRedButton [
 
 	^whichButton anyMask: MouseEvent redButton
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMouseCommandActivation >> isYellowButton [
 
 	^whichButton anyMask: MouseEvent yellowButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMouseCommandActivation >> keyboardModifier [
 	^ keyboardModifier
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMouseCommandActivation >> keyboardModifier: anObject [
 	keyboardModifier := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMouseCommandActivation >> matchesEvent: aMouseEvent [
 	(aMouseEvent respondsTo: #whichButton) ifFalse: [ ^false ].
 	aMouseEvent fixStateForClickAndModifierIssue.
@@ -185,7 +186,7 @@ CmdMouseCommandActivation >> matchesEvent: aMouseEvent [
 	^aMouseEvent whichButton anyMask: whichButton
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CmdMouseCommandActivation >> printOn: aStream [
 	super printOn: aStream.
 
@@ -197,7 +198,7 @@ CmdMouseCommandActivation >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CmdMouseCommandActivation >> printWhichButton [
 	"Return a string identifying expected pressed buttons"
 	self isRedButton ifTrue:[ ^'red' ].
@@ -207,12 +208,12 @@ CmdMouseCommandActivation >> printWhichButton [
 	^'uknown button'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMouseCommandActivation >> whichButton [
 	^ whichButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMouseCommandActivation >> whichButton: anObject [
 	whichButton := anObject
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #ProtoObject }
+Extension { #name : 'ProtoObject' }
 
-{ #category : #'*Fuel-Core-Collections' }
+{ #category : '*Fuel-Core-Collections' }
 ProtoObject >> fuelPointsTo: anObject [
 	"This method returns true if self contains a pointer to anObject,
 		and returns false otherwise"
@@ -13,7 +13,7 @@ ProtoObject >> fuelPointsTo: anObject [
 	^ false"
 ]
 
-{ #category : #'*Fuel-Core-Collections' }
+{ #category : '*Fuel-Core-Collections' }
 ProtoObject >> largeIdentityHash [
 
 	^ self basicIdentityHash

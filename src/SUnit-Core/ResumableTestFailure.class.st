@@ -11,19 +11,21 @@ here''s an example:
 for each element where #odd returns <false>, the element will be printed to the Transcript. 
 "
 Class {
-	#name : #ResumableTestFailure,
-	#superclass : #TestFailure,
-	#category : #'SUnit-Core-Kernel'
+	#name : 'ResumableTestFailure',
+	#superclass : 'TestFailure',
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ResumableTestFailure >> isResumable [
 	"Of course a ResumableTestFailure is resumable ;-)"
 
 	^ true
 ]
 
-{ #category : #'camp smalltalk' }
+{ #category : 'camp smalltalk' }
 ResumableTestFailure >> sunitExitWith: aValue [
 	self resume: aValue
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : 'RGMethodDefinition' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 RGMethodDefinition >> asMCMethodDefinition [
    "Creates a MCMethodDefinition from the receiver"
 	| cached |
@@ -19,24 +19,24 @@ RGMethodDefinition >> asMCMethodDefinition [
 	^ cached
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 RGMethodDefinition >> asMCMethodDefinitionFromActiveDefinition [
 	"Creates a MCMethodDefinition from a source file assuming the current method isActive."
 
-	| compiledMethod methodClass|
+	| compiledMethod methodClass |
 	compiledMethod := self compiledMethod.
 	methodClass := compiledMethod methodClass.
-	
-   ^ MCMethodDefinition
-		className: methodClass instanceSide name
- 	   	classIsMeta: methodClass isMeta
-		selector: compiledMethod selector
-		category: compiledMethod category
-		timeStamp: compiledMethod timeStamp
-		source: compiledMethod sourceCode
+
+	^ MCMethodDefinition
+		  className: methodClass instanceSide name
+		  classIsMeta: methodClass isMeta
+		  selector: compiledMethod selector
+		  category: compiledMethod protocolName
+		  timeStamp: compiledMethod timeStamp
+		  source: compiledMethod sourceCode
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 RGMethodDefinition >> basicAsMCMethodDefinition [
    "Creates a MCMethodDefinition from the receiver"
    
@@ -45,7 +45,7 @@ RGMethodDefinition >> basicAsMCMethodDefinition [
 		ifFalse: [
 		   ^ MCMethodDefinition
 				className: self instanceSideParentName
-		 	   	classIsMeta: self isMetaSide
+		 	   	classIsMeta: self isMeta
 				selector: self selector
 				category: self protocol
 				timeStamp: self stamp

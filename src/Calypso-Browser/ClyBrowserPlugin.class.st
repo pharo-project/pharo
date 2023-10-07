@@ -34,57 +34,59 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyBrowserPlugin,
-	#superclass : #Object,
+	#name : 'ClyBrowserPlugin',
+	#superclass : 'Object',
 	#instVars : [
 		'browser'
 	],
 	#classInstVars : [
 		'isAutoActivated'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserPlugin class >> disable [
 	isAutoActivated := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserPlugin class >> enable [
 	isAutoActivated := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserPlugin class >> isAutoActivated [
 	^isAutoActivated ifNil: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserPlugin >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserPlugin >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #'tools decoration' }
+{ #category : 'tools decoration' }
 ClyBrowserPlugin >> decorateTool: aBrowserTool [
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserPlugin >> isAutoActivated [
 	^self class isAutoActivated
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserPlugin >> isSlow [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserPlugin >> priority [
 	^100
 ]

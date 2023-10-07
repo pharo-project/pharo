@@ -9,16 +9,17 @@ Internal Representation and Key Implementation Points.
 	testResult:		<ClyTestResultProperty>
 "
 Class {
-	#name : #ClyTestedMethodProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyTestedMethodProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'coveringTest',
 		'testResult'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTestedMethodProperty class >> coveringTest: aMethodTest result: aTestResultProperty [
 
 	^self new
@@ -26,22 +27,22 @@ ClyTestedMethodProperty class >> coveringTest: aMethodTest result: aTestResultPr
 		testResult: aTestResultProperty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestedMethodProperty >> coveringTest [
 	^ coveringTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestedMethodProperty >> coveringTest: anObject [
 	coveringTest := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestedMethodProperty >> testResult [
 	^ testResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestedMethodProperty >> testResult: anObject [
 	testResult := anObject
 ]

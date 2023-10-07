@@ -2,30 +2,32 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TPutTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TPutTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutTest >> aValue [
 " return a value to put into nonEmpty"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutTest >> indexArray [
 " return a Collection including indexes between bounds of 'nonEmpty' "
 
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TPutTest >> test0FixturePutOneOrMoreElementsTest [
 	self aValue.
 
@@ -45,14 +47,14 @@ TPutTest >> test0FixturePutOneOrMoreElementsTest [
 	self denyEmpty: self nonEmpty
 ]
 
-{ #category : #'tests - puting with indexes' }
+{ #category : 'tests - puting with indexes' }
 TPutTest >> testAtAllIndexesPut [
 
 	self nonEmpty atAllPut: self aValue.
 	self nonEmpty do:[ :each| self assert: each = self aValue]
 ]
 
-{ #category : #'tests - puting with indexes' }
+{ #category : 'tests - puting with indexes' }
 TPutTest >> testAtAllPut [
 
 	self nonEmpty atAll: self indexArray put: self aValue.
@@ -61,7 +63,7 @@ TPutTest >> testAtAllPut [
 		[:i | self assert: (self nonEmpty at: i) equals: self aValue ]
 ]
 
-{ #category : #'tests - puting with indexes' }
+{ #category : 'tests - puting with indexes' }
 TPutTest >> testAtAllPutAll [
 
 	| aValueArray |
@@ -72,7 +74,7 @@ TPutTest >> testAtAllPutAll [
 		self assert: (self nonEmpty at: element) equals: (aValueArray  at: index) ]
 ]
 
-{ #category : #'tests - puting with indexes' }
+{ #category : 'tests - puting with indexes' }
 TPutTest >> testAtLastPut [
 
 	| index |
@@ -82,7 +84,7 @@ TPutTest >> testAtLastPut [
 	self assert: (self nonEmpty at: (self nonEmpty size + 1 - index)) equals: self aValue
 ]
 
-{ #category : #'tests - puting with indexes' }
+{ #category : 'tests - puting with indexes' }
 TPutTest >> testAtWrapPut [
 
 	| index |
@@ -101,7 +103,7 @@ TPutTest >> testAtWrapPut [
 	self assert: (self nonEmpty at: index) equals: self aValue
 ]
 
-{ #category : #'tests - puting with indexes' }
+{ #category : 'tests - puting with indexes' }
 TPutTest >> testFromToPut [
 
 	| collection index |
@@ -114,7 +116,7 @@ TPutTest >> testFromToPut [
 		[:i | self assert: (collection at:i)= (self nonEmpty at:i)]
 ]
 
-{ #category : #'tests - puting with indexes' }
+{ #category : 'tests - puting with indexes' }
 TPutTest >> testSwapWith [
 
 	| result index |
@@ -125,7 +127,7 @@ TPutTest >> testSwapWith [
 	self assert: (result at: 1) = (self nonEmpty at: index)
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutTest >> valueArray [
 " return a collection (with the same size than 'indexArray' )of values to be put in 'nonEmpty'  at indexes in 'indexArray' "
 	| result |

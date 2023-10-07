@@ -1,6 +1,6 @@
-Extension { #name : #RBTransformationRule }
+Extension { #name : 'RBTransformationRule' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBTransformationRule >> transform: aCritic [
 	| changeCode |
 

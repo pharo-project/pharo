@@ -4,17 +4,19 @@ I represent migration information about a class.
 See 'configuring-migration' protocol in FLMaterializer.
 "
 Class {
-	#name : #FLMigration,
-	#superclass : #Object,
+	#name : 'FLMigration',
+	#superclass : 'Object',
 	#instVars : [
 		'sourceClassName',
 		'variables',
 		'targetClass'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLMigration class >> fromClassNamed: aSymbol toClass: aClass variables: anArray [ 
 
 	^self basicNew
@@ -24,7 +26,7 @@ FLMigration class >> fromClassNamed: aSymbol toClass: aClass variables: anArray 
 		yourself.
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 FLMigration >> applyTo: aVariablesMapping [ 
 	
 	variables associationsDo: [:link |
@@ -33,7 +35,7 @@ FLMigration >> applyTo: aVariablesMapping [
 			to: link value ]
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 FLMigration >> initializeClassNamed: aSymbol toClass: aClass variables: anArray [ 
 	
 	self initialize.
@@ -42,13 +44,13 @@ FLMigration >> initializeClassNamed: aSymbol toClass: aClass variables: anArray 
 	variables := anArray.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMigration >> sourceClassName [
 
 	^ sourceClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMigration >> targetClass [
 
 	^ targetClass

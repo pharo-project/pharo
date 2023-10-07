@@ -3,24 +3,26 @@ Do not explicitly refer to UITheme current but use Smalltalk ui theme. Similarly
 
 "
 Class {
-	#name : #ReThemeAPIUpdateRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReThemeAPIUpdateRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReThemeAPIUpdateRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ThemeAPIUpdateRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReThemeAPIUpdateRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReThemeAPIUpdateRule >> initialize [
 	super initialize.
 	self
@@ -30,7 +32,7 @@ ReThemeAPIUpdateRule >> initialize [
 			with: 'Smalltalk ui icons'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReThemeAPIUpdateRule >> name [
 	^ 'Use "Smalltalk ui theme" and "Smalltalk ui icons"'
 ]

@@ -25,42 +25,44 @@ Internal Representation and Key Implementation Points.
 	localScopeClass:		<ClyLocalClassScope class>
 "
 Class {
-	#name : #ClyClassHierarchyScope,
-	#superclass : #ClyAbstractClassScope,
+	#name : 'ClyClassHierarchyScope',
+	#superclass : 'ClyAbstractClassScope',
 	#instVars : [
 		'localScopeClass'
 	],
-	#category : #'Calypso-SystemQueries-Scopes'
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyScope class >> defaultName [
 	^self hierarchyScopeName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchyScope class >> of: basisObjects in: aNavigationEnvironment localScope: aClassScopeClass [
 	^ (self of: basisObjects in: aNavigationEnvironment)
 		localScopeClass: aClassScopeClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchyScope class >> of: basisObjects localScope: aClassScopeClass [
 	^ (self of: basisObjects) localScopeClass: aClassScopeClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchyScope class >> ofAll: basisObjects in: aNavigationEnvironment localScope: aClassScopeClass [
 	^ (self ofAll: basisObjects in: aNavigationEnvironment)
 		localScopeClass: aClassScopeClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchyScope class >> ofAll: basisObjects localScope: aClassScopeClass [
 	^ (self ofAll: basisObjects) localScopeClass: aClassScopeClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassHierarchyScope >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -70,12 +72,12 @@ ClyClassHierarchyScope >> = anObject [
 	^ localScopeClass = anObject localScopeClass
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyClassHierarchyScope >> adoptLocalScopeClassTo: aLocalScopeClass [
 	localScopeClass := aLocalScopeClass
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyClassHierarchyScope >> allClassesRelatedTo: aClass do: aBlock [
 	"Any hierarchy is defined in terms of relationship between classes
 	retrieved from meta level which are specified by local scope class
@@ -99,12 +101,12 @@ ClyClassHierarchyScope >> allClassesRelatedTo: aClass do: aBlock [
 			self allClassesRelatedTo: each do: aBlock]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyClassHierarchyScope >> asLocalClassScope [
 	^self asScope: localScopeClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassHierarchyScope >> canDetectAffectOnClassesBy: aSystemAnnouncement [
 	"I can not detect that removed class was in my hierarchy.
 	I can not detect that removed trait from class definition was in users hierarchy of some root trait.
@@ -114,56 +116,56 @@ ClyClassHierarchyScope >> canDetectAffectOnClassesBy: aSystemAnnouncement [
 	^(aSystemAnnouncement isKindOf: ClassAnnouncement) not
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyClassHierarchyScope >> classesDo: aBlock [
 
 	basisObjects do: [ :each |
 		self allClassesRelatedTo: each do: aBlock]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyClassHierarchyScope >> classesRelatedTo: aClass do: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassHierarchyScope >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: localScopeClass hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassHierarchyScope >> initialize [
 	super initialize.
 
 	localScopeClass := ClyClassScope "By default we only look at own class meta level"
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyClassHierarchyScope >> localScopeClass [
 	^ localScopeClass
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyClassHierarchyScope >> localScopeClass: aLocalScopeClass [
 	localScopeClass := aLocalScopeClass
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyClassHierarchyScope >> metaLevelsOf: aClass do: aBlock [
 
 	localScopeClass metaLevelsOf: aClass do: aBlock
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyClassHierarchyScope >> methodsDo: aBlock [
 
 	self classesDo: [ :eachClass |
 		eachClass methods do: aBlock ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyClassHierarchyScope >> withMetaLevel: aScopeClass [
 	^self copy
 		localScopeClass: aScopeClass

@@ -2,16 +2,18 @@
 I represent a modification of a method in a class or a trait.
 "
 Class {
-	#name : #EpMethodModification,
-	#superclass : #EpMethodChange,
+	#name : 'EpMethodModification',
+	#superclass : 'EpMethodChange',
 	#instVars : [
 		'oldMethod',
 		'newMethod'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpMethodModification class >> oldMethod: anOldMethod newMethod: aNewMethod [
 
 	^ self basicNew
@@ -20,19 +22,19 @@ EpMethodModification class >> oldMethod: anOldMethod newMethod: aNewMethod [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMethodModification >> accept: aVisitor [
 
 	^ aVisitor visitMethodModification: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> affectedPackageName [
 
 	^ self newMethod package
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpMethodModification >> initializeWithOldMethod: anOldMethod newMethod: aNewMethod [
 
 	self initialize.
@@ -40,43 +42,43 @@ EpMethodModification >> initializeWithOldMethod: anOldMethod newMethod: aNewMeth
 	newMethod := aNewMethod asEpiceaRingDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> methodAffected [
 
 	^ newMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> newMethod [
 
 	^ newMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> newProtocol [
 
 	^ newMethod protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> newSourceCode [
 
 	^ newMethod sourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> oldMethod [
 
 	^ oldMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> oldProtocol [
 
 	^ oldMethod protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodModification >> oldSourceCode [
 
 	^ oldMethod sourceCode

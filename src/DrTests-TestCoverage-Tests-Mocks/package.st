@@ -1,1 +1,1 @@
-Package { #name : #'DrTests-TestCoverage-Tests-Mocks' }
+Package { #name : 'DrTests-TestCoverage-Tests-Mocks' }

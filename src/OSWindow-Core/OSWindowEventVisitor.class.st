@@ -3,12 +3,14 @@ i am a abstract visitor for handling events..
 serving just to cover complete protocol, which user(s) will need to implement in order to act as an OSWindow event handler.
 "
 Class {
-	#name : #OSWindowEventVisitor,
-	#superclass : #Object,
-	#category : #'OSWindow-Core-Events'
+	#name : 'OSWindowEventVisitor',
+	#superclass : 'Object',
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowEventVisitor >> handleEvent: anEvent [
 	anEvent accept: self.
 
@@ -16,134 +18,134 @@ OSWindowEventVisitor >> handleEvent: anEvent [
 	anEvent performDefaultAction
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitJoyAxisEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitJoyButtonDownEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitJoyButtonUpEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitJoyDeviceAddedEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitJoyDeviceRemappedEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitJoyDeviceRemovedEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitKeyDownEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitKeyUpEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitMouseButtonPressEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitMouseButtonReleaseEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitMouseMoveEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitMouseWheelEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitTextEditingEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitTextInputEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitTouchPointerDownEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitTouchPointerMoveEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitTouchPointerUpEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitUnknownEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowCloseEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowDropEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowExposeEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowFocusInEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowFocusOutEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowFrameEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowHiddenEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowMaximizedEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowMinimizedEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowMouseEnterEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowMouseLeaveEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowMoveEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowResizeEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowResolutionChangeEvent: anEvent [
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowEventVisitor >> visitWindowShownEvent: anEvent [
 ]

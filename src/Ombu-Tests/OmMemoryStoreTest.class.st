@@ -1,15 +1,16 @@
 Class {
-	#name : #OmMemoryStoreTest,
-	#superclass : #OmStoreTest,
-	#category : #'Ombu-Tests'
+	#name : 'OmMemoryStoreTest',
+	#superclass : 'OmStoreTest',
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmMemoryStoreTest >> setUpStore [
 	^ OmMemoryStore new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmMemoryStoreTest >> testWithAllContents [
 
 	| entries |
@@ -17,7 +18,7 @@ OmMemoryStoreTest >> testWithAllContents [
 	self assertCollection: (entries collect: [:each | each content]) hasSameElements: #(a b c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmMemoryStoreTest >> testWithAllEntries [
 
 	| entries newStore |

@@ -22,94 +22,96 @@ baseline: spec
 The `<baseline>` pragma marks the method containing the baseline specification.
 "
 Class {
-	#name : #MetacelloMCBaselineProject,
-	#superclass : #MetacelloMCProject,
-	#category : #'Metacello-MC-Model'
+	#name : 'MetacelloMCBaselineProject',
+	#superclass : 'MetacelloMCProject',
+	#category : 'Metacello-MC-Model',
+	#package : 'Metacello-MC',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCBaselineProject class >> singletonVersionName [
     ^ 'baseline'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCBaselineProject class >> versionConstructorClass [
     ^ MetacelloBaselineConstructor
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineProject >> asBaselineProject [
     ^ self
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineProject >> asConfigurationProject [
     ^ MetacelloMCProject new
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> bleedingEdge [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> currentVersion [
     ^ self version isSomethingLoaded
         ifTrue: [ self version ]
         ifFalse: [ nil ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> development [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> hasVersion: versionString [
     ^ versionString = 'baseline'
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> lastVersion [
     ^ self version
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> latestVersion [
     ^ self version
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> latestVersion: blessing [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString excludedBlessings: excluded [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString includedBlessings: included [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString includedBlessings: included excludedBlessings: excludedBlessings [
     ^ nil
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
   "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
    baseline"
@@ -117,34 +119,34 @@ MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unc
   ^ aMetacelloScriptEngine getBaselineProjectUnconditionalLoad: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloMCBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
     "set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
 
     aListOrRepositoryDescriptions do: [:desc | self version spec repository: desc]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> singletonVersionName [
     ^ self class singletonVersionName
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> stableVersion [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> symbolicVersionSymbols [
     ^ nil
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> version [
     ^ self version: self singletonVersionName
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloMCBaselineProject >> versions [
   ^ [ {(self version)} ]
     on: MetacelloVersionDoesNotExistError

@@ -2,20 +2,22 @@
 I am a Gofer Operation that extracts a metacello configuration from the current repository and loads the given version.
 "
 Class {
-	#name : #GoferMetacelloLoad,
-	#superclass : #GoferLoad,
+	#name : 'GoferMetacelloLoad',
+	#superclass : 'GoferLoad',
 	#instVars : [
 		'version'
 	],
-	#category : #'Gofer-Core-Operations'
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferMetacelloLoad >> configuration [
 	^ self configurationReference project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferMetacelloLoad >> configurationReference [
 	^ gofer references
 		detect: [ :ref | ref isConfigurationReference ]
@@ -24,18 +26,18 @@ GoferMetacelloLoad >> configurationReference [
 			^ self configurationReference ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferMetacelloLoad >> execute [
 	super execute.
 	self loadConfiguration
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferMetacelloLoad >> loadConfiguration [
 	self metacelloVersion load
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferMetacelloLoad >> metacelloVersion [
 	| configuration |
 
@@ -60,12 +62,12 @@ GoferMetacelloLoad >> metacelloVersion [
 					configuration version: self version asSymbol ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferMetacelloLoad >> version [
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferMetacelloLoad >> version: aVersionStringOrSymbol [
 	"A version identifiery see MetacelloProject>>#version:"
 	version := aVersionStringOrSymbol

@@ -1,1 +1,1 @@
-Package { #name : #'SUnit-MockObjects-Tests' }
+Package { #name : 'SUnit-MockObjects-Tests' }

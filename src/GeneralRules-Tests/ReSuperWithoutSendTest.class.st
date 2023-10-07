@@ -1,10 +1,12 @@
 Class {
-	#name : #ReSuperWithoutSendTest,
-	#superclass : #TestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReSuperWithoutSendTest',
+	#superclass : 'TestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSuperWithoutSendTest >> testBasicCheck [
 
 	| ast |

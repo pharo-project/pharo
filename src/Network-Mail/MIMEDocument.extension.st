@@ -1,6 +1,6 @@
-Extension { #name : #MIMEDocument }
+Extension { #name : 'MIMEDocument' }
 
-{ #category : #'*Network-Mail' }
+{ #category : '*Network-Mail' }
 MIMEDocument >> parts [
 	"Return the parts of this message.  There is a far more reliable implementation of parts in MailMessage, but for now we are continuing to use this implementation"
 	| parseStream currLine separator msgStream messages currentLine |

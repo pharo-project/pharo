@@ -6,87 +6,89 @@ A PDPackageDependency is a dependency between two packages.
 
 "
 Class {
-	#name : #DAPackageDependency,
-	#superclass : #Object,
+	#name : 'DAPackageDependency',
+	#superclass : 'Object',
 	#instVars : [
 		'source',
 		'target'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackageDependency class >> from: aSourcePackage to: aDestinationPackage [
 	^ self new initializeFrom: aSourcePackage to: aDestinationPackage
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackageDependency >> displayString [
 	^ String streamContents: [ :stream | self printReasonOn: stream ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackageDependency >> hash [
 	^ source hash bitXor: target hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageDependency >> initializeFrom: aSourcePackage to: aTargetPackage [
 	source := aSourcePackage.
 	target := aTargetPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageDependency >> isExtensionDependency [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageDependency >> isExternal [
 	^ self isInternal not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageDependency >> isInheritanceDependency [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageDependency >> isInternal [
 	^ self source = self target
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageDependency >> isMessageSendDependency [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageDependency >> isReferenceDependency [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageDependency >> isTraitDependency [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependency >> numberOfDependencies [
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependency >> packageName [
 	^ target packageName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackageDependency >> printOn: aStream [
 	self printReasonOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackageDependency >> printReasonOn: aStream [
 	aStream
 		nextPutAll: source packageName;
@@ -94,22 +96,22 @@ DAPackageDependency >> printReasonOn: aStream [
 		nextPutAll: target packageName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackageDependency >> printShortReasonOn: aStream [
 	self printReasonOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependency >> reason [
 	^ String streamContents: [ :stream | self printReasonOn: stream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependency >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependency >> target [
 	^ target
 ]

@@ -34,7 +34,9 @@ Implementation Notes
 	
 "
 Class {
-	#name : #ManifestPharoDocComment,
-	#superclass : #PackageManifest,
-	#category : #'PharoDocComment-Manifest'
+	#name : 'ManifestPharoDocComment',
+	#superclass : 'PackageManifest',
+	#category : 'PharoDocComment-Manifest',
+	#package : 'PharoDocComment',
+	#tag : 'Manifest'
 }

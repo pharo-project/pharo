@@ -8,12 +8,14 @@ InternetConfiguration getDownloadPath.
 Seems to work only on MacOSX
 "
 Class {
-	#name : #InternetConfiguration,
-	#superclass : #Object,
-	#category : #'Network-Kernel-Base'
+	#name : 'InternetConfiguration',
+	#superclass : 'Object',
+	#category : 'Network-Kernel-Base',
+	#package : 'Network-Kernel',
+	#tag : 'Base'
 }
 
-{ #category : #'HTTP Proxy' }
+{ #category : 'HTTP Proxy' }
 InternetConfiguration class >> configureHttpProxy [
 
 	self useHTTPProxy
@@ -21,7 +23,7 @@ InternetConfiguration class >> configureHttpProxy [
 		ifFalse: [ NetworkSystemSettings useHTTPProxy: false ]
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getArchiePreferred [
 	"Return the preferred Archie server"
 	"InternetConfiguration getArchiePreferred"
@@ -29,7 +31,7 @@ InternetConfiguration class >> getArchiePreferred [
 	^self primitiveGetStringKeyedBy: 'ArchiePreferred'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getDownloadPath [
 	"Return the download path"
 	"InternetConfiguration getDownloadPath"
@@ -37,7 +39,7 @@ InternetConfiguration class >> getDownloadPath [
 	^self primitiveGetStringKeyedBy: 'DownLoadPath'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getEmail [
 	"Return the  email address of user"
 	"InternetConfiguration getEmail"
@@ -45,7 +47,7 @@ InternetConfiguration class >> getEmail [
 	^self primitiveGetStringKeyedBy: 'Email'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getFTPHost [
 	"Return the FTPHost"
 	"InternetConfiguration getFTPHost"
@@ -53,7 +55,7 @@ InternetConfiguration class >> getFTPHost [
 	^self primitiveGetStringKeyedBy: 'FTPHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getFTPProxyAccount [
 	"Return the second level FTP proxy authorisation"
 	"InternetConfiguration getFTPProxyAccount"
@@ -61,7 +63,7 @@ InternetConfiguration class >> getFTPProxyAccount [
 	^self primitiveGetStringKeyedBy: 'FTPProxyAccount'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getFTPProxyHost [
 	"Return the FTP proxy host"
 	"InternetConfiguration getFTPProxyHost"
@@ -69,7 +71,7 @@ InternetConfiguration class >> getFTPProxyHost [
 	^self primitiveGetStringKeyedBy: 'FTPProxyHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getFTPProxyPassword [
 	"Return the FTP proxy password"
 	"InternetConfiguration getFTPProxyPassword"
@@ -77,7 +79,7 @@ InternetConfiguration class >> getFTPProxyPassword [
 	^self primitiveGetStringKeyedBy: 'FTPProxyPassword'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getFTPProxyUser [
 	"Return the first level FTP proxy authorisation"
 	"InternetConfiguration getFTPProxyUser"
@@ -85,7 +87,7 @@ InternetConfiguration class >> getFTPProxyUser [
 	^self primitiveGetStringKeyedBy: 'FTPProxyUser'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getFingerHost [
 	"Return the default finger server"
 	"InternetConfiguration getFingerHost"
@@ -93,7 +95,7 @@ InternetConfiguration class >> getFingerHost [
 	^self primitiveGetStringKeyedBy: 'FingerHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getGopherHost [
 	"Return the default Gopher server"
 	"InternetConfiguration getGopherHost"
@@ -101,7 +103,7 @@ InternetConfiguration class >> getGopherHost [
 	^self primitiveGetStringKeyedBy: 'GopherHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getGopherProxy [
 	"Return the  Gopher proxy"
 	"InternetConfiguration getGopherProxy"
@@ -109,7 +111,7 @@ InternetConfiguration class >> getGopherProxy [
 	^self primitiveGetStringKeyedBy: 'GopherProxy'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getHTTPProxyHost [
 	"Return the http proxy for this client."
 	"InternetConfiguration getHTTPProxyHost"
@@ -117,7 +119,7 @@ InternetConfiguration class >> getHTTPProxyHost [
 	^self primitiveGetStringKeyedBy: 'HTTPProxyHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getIRCHost [
 	"Return the Internet Relay Chat server"
 	"InternetConfiguration getIRCHost"
@@ -125,7 +127,7 @@ InternetConfiguration class >> getIRCHost [
 	^self primitiveGetStringKeyedBy: 'IRCHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getLDAPSearchbase [
 	"Return the LDAP thing"
 	"InternetConfiguration getLDAPSearchbase"
@@ -133,7 +135,7 @@ InternetConfiguration class >> getLDAPSearchbase [
 	^self primitiveGetStringKeyedBy: 'LDAPSearchbase'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getLDAPServer [
 	"Return the LDAP server"
 	"InternetConfiguration getLDAPServer"
@@ -141,7 +143,7 @@ InternetConfiguration class >> getLDAPServer [
 	^self primitiveGetStringKeyedBy: 'LDAPServer'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getMacintoshFileTypeAndCreatorFrom: aFileName [
 	"Return the application type and application signature for the file
 	 for the macintosh file system based on the file ending, the file does not need to exist
@@ -154,7 +156,7 @@ InternetConfiguration class >> getMacintoshFileTypeAndCreatorFrom: aFileName [
 	^Array with: (string first: 4) with: (string last: 4)
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getMailAccount [
 	"Return the mail account user@host.domain"
 	"InternetConfiguration getMailAccount"
@@ -162,7 +164,7 @@ InternetConfiguration class >> getMailAccount [
 	^self primitiveGetStringKeyedBy: 'MailAccount'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getMailPassword [
 	"Return the mail account Password "
 	"InternetConfiguration getMailPassword "
@@ -170,7 +172,7 @@ InternetConfiguration class >> getMailPassword [
 	^self primitiveGetStringKeyedBy: 'MailPassword'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getNNTPHost [
 	"Return the NNTP server"
 	"InternetConfiguration getNNTPHost"
@@ -178,7 +180,7 @@ InternetConfiguration class >> getNNTPHost [
 	^self primitiveGetStringKeyedBy: 'NNTPHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getNTPHost [
 	"Return the  Network Time Protocol (NTP)"
 	"InternetConfiguration getNTPHost"
@@ -186,7 +188,7 @@ InternetConfiguration class >> getNTPHost [
 	^self primitiveGetStringKeyedBy: 'NTPHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getNewsAuthPassword [
 	"Return the Password for the authorised news servers"
 	"InternetConfiguration getNewsAuthPassword"
@@ -194,7 +196,7 @@ InternetConfiguration class >> getNewsAuthPassword [
 	^self primitiveGetStringKeyedBy: 'NewsAuthPassword'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getNewsAuthUsername [
 	"Return the user name for authorised news servers"
 	"InternetConfiguration getNewsAuthUsername"
@@ -202,7 +204,7 @@ InternetConfiguration class >> getNewsAuthUsername [
 	^self primitiveGetStringKeyedBy: 'NewsAuthUsername'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getNoProxyDomains [
 	"Return a comma seperated string of domains not to proxy"
 	"InternetConfiguration getNoProxyDomains"
@@ -210,7 +212,7 @@ InternetConfiguration class >> getNoProxyDomains [
 	^self primitiveGetStringKeyedBy: 'NoProxyDomains'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getOrganization [
 	"Return the Organization"
 	"InternetConfiguration getOrganization"
@@ -218,7 +220,7 @@ InternetConfiguration class >> getOrganization [
 	^self primitiveGetStringKeyedBy: 'Organization'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getPhHost [
 	"Return the PhHost server"
 	"InternetConfiguration getPhHost"
@@ -226,7 +228,7 @@ InternetConfiguration class >> getPhHost [
 	^self primitiveGetStringKeyedBy: 'PhHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getRealName [
 	"Return the RealName"
 	"InternetConfiguration getRealName"
@@ -234,7 +236,7 @@ InternetConfiguration class >> getRealName [
 	^self primitiveGetStringKeyedBy: 'RealName'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getSMTPHost [
 	"Return the SMTP server"
 	"InternetConfiguration getSMTPHost"
@@ -242,7 +244,7 @@ InternetConfiguration class >> getSMTPHost [
 	^self primitiveGetStringKeyedBy: 'SMTPHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getSocksHost [
 	"Return the Socks server"
 	"InternetConfiguration getSocksHost"
@@ -250,7 +252,7 @@ InternetConfiguration class >> getSocksHost [
 	^self primitiveGetStringKeyedBy: 'SocksHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getTelnetHost [
 	"Return the TelnetHost server"
 	"InternetConfiguration getTelnetHost"
@@ -258,7 +260,7 @@ InternetConfiguration class >> getTelnetHost [
 	^self primitiveGetStringKeyedBy: 'TelnetHost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getWAISGateway [
 	"Return the wais gateway"
 	"InternetConfiguration getWAISGateway"
@@ -266,7 +268,7 @@ InternetConfiguration class >> getWAISGateway [
 	^self primitiveGetStringKeyedBy: 'WAISGateway'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getWWWHomePage [
 	"Return the WWW home page url"
 	"InternetConfiguration getWWWHomePage"
@@ -274,7 +276,7 @@ InternetConfiguration class >> getWWWHomePage [
 	^self primitiveGetStringKeyedBy: 'WWWHomePage'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 InternetConfiguration class >> getWhoisHost [
 	"Return the WhoisHost server"
 	"InternetConfiguration getWhoisHost"
@@ -282,25 +284,25 @@ InternetConfiguration class >> getWhoisHost [
 	^self primitiveGetStringKeyedBy: 'WhoisHost'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 InternetConfiguration class >> initialize [
 	SessionManager default
 		registerNetworkClassNamed: self name
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 InternetConfiguration class >> primitiveGetMacintoshFileTypeAndCreatorFrom: aFileName [
 	<primitive: 'primitiveGetMacintoshFileTypeAndCreatorFrom' module: 'InternetConfigPlugin'>
 	^'********' copy
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 InternetConfiguration class >> primitiveGetStringKeyedBy: aKey [
 	<primitive: 'primitiveGetStringKeyedBy' module: 'InternetConfigPlugin'>
 	^String new
 ]
 
-{ #category : #'HTTP Proxy' }
+{ #category : 'HTTP Proxy' }
 InternetConfiguration class >> setHttpProxy [
 
 	(self getHTTPProxyHost findTokens: ':') ifNotEmpty: [ :p |
@@ -310,18 +312,18 @@ InternetConfiguration class >> setHttpProxy [
 			useHTTPProxy: true ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 InternetConfiguration class >> shutDown [
 	Smalltalk os isMacOS
 		ifTrue: [ NetworkSystemSettings useHTTPProxy: false ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 InternetConfiguration class >> startUp [
 	Smalltalk os configureHttpProxy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InternetConfiguration class >> useFTPProxy [
 	"Return true if UseFTPProxy"
 	<script: 'self useFTPProxy inspect'>
@@ -329,7 +331,7 @@ InternetConfiguration class >> useFTPProxy [
 	^(self primitiveGetStringKeyedBy: 'UseFTPProxy') = '1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InternetConfiguration class >> useGopherProxy [
 	"Return true if UseGopherProxy"
 	<script: 'self useGopherProxy inspect'>
@@ -337,7 +339,7 @@ InternetConfiguration class >> useGopherProxy [
 	^(self primitiveGetStringKeyedBy: 'UseGopherProxy') = '1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InternetConfiguration class >> useHTTPProxy [
 	"Return true if UseHTTPProxy"
 	<script: 'self useHTTPProxy inspect'>
@@ -345,7 +347,7 @@ InternetConfiguration class >> useHTTPProxy [
 	^(self primitiveGetStringKeyedBy: 'UseHTTPProxy') = '1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InternetConfiguration class >> usePassiveFTP [
 	"Return true if UsePassiveFTP"
 	<script: 'self usePassiveFTP inspect'>
@@ -353,7 +355,7 @@ InternetConfiguration class >> usePassiveFTP [
 	^(self primitiveGetStringKeyedBy: 'UsePassiveFTP') = '1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InternetConfiguration class >> useSocks [
 	"Return true if UseSocks"
 	<script: 'self useSocks inspect'>

@@ -1,6 +1,6 @@
-Extension { #name : #MenuRegistration }
+Extension { #name : 'MenuRegistration' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 MenuRegistration >> iconName: aSymbol [
 	"instead of forcing clients to refer to an icon builder such Smalltalk ui icons
 	this message encapsulates it inside the builder itself. When removing uses of Smalltalk ui icons it avoid to force to subclass class with menu to inherit from Model."

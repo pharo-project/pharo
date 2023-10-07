@@ -1,17 +1,17 @@
-Extension { #name : #DateAndTime }
+Extension { #name : 'DateAndTime' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 DateAndTime >> fuelAccept: aGeneralMapper [
 
 	^ aGeneralMapper visitHookPrimitive: self
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 DateAndTime >> fuelSet: julianDay nanoSecond: nanoSeconds seconds: numberOfSeconds offset: anOffset [
 	self setJdn: julianDay seconds: numberOfSeconds nano: nanoSeconds offset: anOffset
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 DateAndTime class >> materializeFrom: aDecoder [
 
 	^ self basicNew
@@ -24,7 +24,7 @@ DateAndTime class >> materializeFrom: aDecoder [
 		yourself.
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 DateAndTime >> serializeOn: anEncoder [
 
 	anEncoder 

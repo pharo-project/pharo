@@ -24,52 +24,54 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTAbstractColumnSortingStrategy,
-	#superclass : #Object,
+	#name : 'FTAbstractColumnSortingStrategy',
+	#superclass : 'Object',
 	#instVars : [
 		'column'
 	],
-	#category : #'Morphic-Widgets-FastTable-Sorting'
+	#category : 'Morphic-Widgets-FastTable-Sorting',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Sorting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractColumnSortingStrategy class >> column: aColumn [
 	^ self new
 		column: aColumn;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractColumnSortingStrategy >> column [
 	^ column
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractColumnSortingStrategy >> column: anObject [
 	column := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTAbstractColumnSortingStrategy >> isSortingEnabled [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractColumnSortingStrategy >> morphicIconNamed: aString [
 	^ (self iconNamed: aString) asMorph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTAbstractColumnSortingStrategy >> reset [
 	self subclassResponsibility
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTAbstractColumnSortingStrategy >> sortDataSource: aDataSource [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractColumnSortingStrategy >> sortingIcon [
 	^ self subclassResponsibility
 ]

@@ -2,12 +2,14 @@
 A test for AthensCairoMatrix
 "
 Class {
-	#name : #AthensCairoMatrixTest,
-	#superclass : #AthensTransformTest,
-	#category : #'Athens-Cairo-Tests-Transforms'
+	#name : 'AthensCairoMatrixTest',
+	#superclass : 'AthensTransformTest',
+	#category : 'Athens-Cairo-Tests-Transforms',
+	#package : 'Athens-Cairo-Tests',
+	#tag : 'Transforms'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoMatrixTest >> testCopy [
 
 	| m |
@@ -16,7 +18,7 @@ AthensCairoMatrixTest >> testCopy [
 	self assert: m getHandle ~~ m copy getHandle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoMatrixTest >> testInverted [
 
 	| m |
@@ -24,7 +26,7 @@ AthensCairoMatrixTest >> testInverted [
 	self assert: m getHandle ~~ m inverted getHandle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensCairoMatrixTest >> transformClass [
 	^ AthensCairoMatrix
 ]

@@ -1,10 +1,11 @@
 Class {
-	#name : #RGUnresolvedValueTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGUnresolvedValueTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGUnresolvedValueTest >> testDefaultValue [
 
 	| unresolved |
@@ -31,7 +32,7 @@ RGUnresolvedValueTest >> testDefaultValue [
 	self deny: unresolved value isRingResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGUnresolvedValueTest >> testReferencedBehaviors [
 
 	| unresolved |

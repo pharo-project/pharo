@@ -8,18 +8,20 @@ this refactoring will add the pool definition to class B.
 
 "
 Class {
-	#name : #RBExpandReferencedPoolsRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'RBExpandReferencedPoolsRefactoring',
+	#superclass : 'RBRefactoring',
 	#instVars : [
 		'pools',
 		'fromClass',
 		'parseTree',
 		'toClasses'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBExpandReferencedPoolsRefactoring class >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	^ self new
 		forMethod: aParseTree
@@ -28,7 +30,7 @@ RBExpandReferencedPoolsRefactoring class >> forMethod: aParseTree fromClass: aCl
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	^ self new
 		model: aRBNamespace;
@@ -38,7 +40,7 @@ RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aPars
 		yourself
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 
 	| poolVariables searcher |
@@ -61,39 +63,39 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 	searcher executeTree: parseTree
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBExpandReferencedPoolsRefactoring >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [
 	fromClass := self model classFor: aClass.
 	parseTree := aParseTree.
 	toClasses := classCollection collect: [:each | self model classFor: each]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBExpandReferencedPoolsRefactoring >> hasPoolsToMove [
 	^pools isNotEmpty
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExpandReferencedPoolsRefactoring >> movePool: aSymbol toClass: aClass [
 	| nonMetaClass |
 	nonMetaClass := aClass instanceSide.
 	(nonMetaClass definesPoolDictionary: aSymbol) ifFalse: [ nonMetaClass addPoolDictionary: aSymbol ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExpandReferencedPoolsRefactoring >> movePoolVariables [
 	pools
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBExpandReferencedPoolsRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
-{ #category : #transforming }
-RBExpandReferencedPoolsRefactoring >> transform [
+{ #category : 'transforming' }
+RBExpandReferencedPoolsRefactoring >> privateTransform [
 	self computePoolsToMove.
 	self hasPoolsToMove
 		ifTrue:
@@ -103,7 +105,7 @@ RBExpandReferencedPoolsRefactoring >> transform [
 	self movePoolVariables
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExpandReferencedPoolsRefactoring >> whichPoolDefines: varName [
 	| currentClass |
 	currentClass := fromClass.

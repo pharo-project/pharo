@@ -50,8 +50,8 @@ targetSelector
 
 "
 Class {
-	#name : #PragmaSetting,
-	#superclass : #Model,
+	#name : 'PragmaSetting',
+	#superclass : 'Model',
 	#instVars : [
 		'precondition',
 		'target',
@@ -65,50 +65,52 @@ Class {
 		'dialog',
 		'allowedInStyle'
 	],
-	#category : #'System-Settings-Core-Base'
+	#category : 'System-Settings-Core-Base',
+	#package : 'System-Settings-Core',
+	#tag : 'Base'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PragmaSetting >> = other [
 	^ self species = other species
 		and: [self name = other name]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PragmaSetting >> acceptSettings: aVisitor [
 	^ aVisitor visitPragmaSetting: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> allowedInStyle [
 	^ allowedInStyle ifNil: [allowedInStyle := self hasValue]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> asString [
 	^ self name
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> chooseFileDirectory [
 	| result |
 	result := self theme chooseDirectoryIn: self currentWorld title: 'Choose a directory' path: nil.
 	result ifNotNil: [ self realValue: result  ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> chooseFilePath [
     | result |
     result := self theme chooseFileIn: self currentWorld title: 'Choose a file' extensions: nil path: nil preview: true.
     result ifNotNil: [ self realValue: result fullName.]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> defaultIcon [
 	^ self iconNamed: #smallConfiguration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> description [
 	"Answer the value of description"
 
@@ -117,35 +119,35 @@ PragmaSetting >> description [
 		ifNotNil: [ description translated ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> description: aString [
 	"Set the value of description"
 
 	description := aString
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> dialog [
 	^ dialog
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> dialog: aValuable [
 	dialog := aValuable
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> enabled [
 	^ true
 ]
 
-{ #category : #export }
+{ #category : 'export' }
 PragmaSetting >> exportSettingAction [
 
 	^ nil
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> fontButtonLabel [
 	| emphases |
 	emphases := IdentityDictionary new at: nil put: 'Regular' translated;
@@ -162,37 +164,37 @@ PragmaSetting >> fontButtonLabel [
 					ifAbsent: ['']) , ' ' , self realValue pointSize asString font: self realValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> hasDefault [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> hasEditableList [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> hasValue [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PragmaSetting >> hash [
 	^ self species hash bitXor: self name hash
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> icon [
 	^ icon ifNil: [icon := self defaultIcon]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> icon: aForm [
 	icon := aForm
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> inputMorphFor: aContainer [
 	^ self inputWidget
 		ifNotNil: [:iw |
@@ -203,7 +205,7 @@ PragmaSetting >> inputMorphFor: aContainer [
 				 yourself]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> inputWidget [
 	"return the default widget for the input a the setting"
 	^ self dialog
@@ -212,100 +214,100 @@ PragmaSetting >> inputWidget [
 				ifFalse: [d value: self]]
 ]
 
-{ #category : #export }
+{ #category : 'export' }
 PragmaSetting >> isExportable [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> label [
 	^ label ifNil: [self name translated] ifNotNil: [label translated]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> label: aString [
 	label := aString
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> labelMorphFor: aContainer [
 	^ StringMorph contents: (aContainer model viewedLabelOfSetting: self)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> name [
 	^ name ifNil: [super name] ifNotNil: [name]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> name: aName [
 	name := aName
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> noOrdering [
 	ordering := false
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> notInStyle [
 	allowedInStyle := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> order [
 	^ order
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> order: aNumber [
 	order := aNumber
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 PragmaSetting >> ordering [
 	^ ordering ifNil: [ordering := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> precondition [
 	^ precondition ifNil: [precondition := [true]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> precondition: aValuable [
 	precondition := aValuable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> realTarget [
 	^ target isSymbol
 		ifTrue: [ Smalltalk globals at: target ifAbsent: [  ] ]
 		ifFalse: [ target ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> settingReceiver [
 	^ self targetSelector ifNil: [self realTarget] ifNotNil: [self realTarget perform: self targetSelector]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> target [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> target: anObject [
 	target := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> targetSelector [
 	^ targetSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaSetting >> targetSelector: aSelector [
 	targetSelector := aSelector
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #ByteLayout }
+Extension { #name : 'ByteLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 ByteLayout class >> mcTypeSymbol [ 
 	^ #bytes
 ]

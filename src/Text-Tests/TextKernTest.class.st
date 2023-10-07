@@ -2,12 +2,14 @@
 SUnit tests for class TextKern
 "
 Class {
-	#name : #TextKernTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextKernTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextKernTest >> setUp [
 	super setUp.
 	prototypes

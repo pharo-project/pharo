@@ -1,6 +1,6 @@
-Extension { #name : #Semaphore }
+Extension { #name : 'Semaphore' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 Semaphore >> signalAll [
 
 	[ self isEmpty ]

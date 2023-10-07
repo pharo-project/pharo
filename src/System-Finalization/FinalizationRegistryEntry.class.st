@@ -21,6 +21,10 @@ When an ephemeron's key is hold strongly just by the ephemeron itself, the Ephem
 
 On the image side, the finalization process will send the message #mourn to an Ephemeron.  #mourn will #finalize the Ephemeron's key, and remove the Ephemeron from it's container to allow its collection during a subsequent garbage collection.
 
+# Implementation details
+
+I am implemented as a double linked list, to make removals O(1)
+
 !! More Documentation
 
 You can read the associated paper to understand better the semantics of ephemerons:
@@ -28,16 +32,20 @@ You can read the associated paper to understand better the semantics of ephemero
 Ephemerons: A New Finalization Mechanism. Barry Hayes. OOPSLA '97
 "
 Class {
-	#name : #FinalizationRegistryEntry,
-	#superclass : #Association,
-	#type : #ephemeron,
+	#name : 'FinalizationRegistryEntry',
+	#superclass : 'Association',
+	#type : 'ephemeron',
 	#instVars : [
-		'container'
+		'container',
+		'next',
+		'previous'
 	],
-	#category : #'System-Finalization-Registry'
+	#category : 'System-Finalization-Registry',
+	#package : 'System-Finalization',
+	#tag : 'Registry'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 
 	^ self new
@@ -47,13 +55,60 @@ FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> chainNext: aNode [
+	"Insert a node in the middle of myself and my next node.
+	Assume the argument is a valid node with has no next or previous."
+	| previousNext |
+	previousNext := next.
+	next := aNode.
+	previousNext ifNotNil: [
+		previousNext previous: aNode ].
+	
+	aNode next: previousNext.
+	aNode previous: self
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> check [
+
+	^ self next previous == self and: [ self previous next == self ]
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> container [
+
+	^ container
+]
+
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> container: anEphemeronContainer [
 
 	container := anEphemeronContainer
 ]
 
-{ #category : #mourning }
+{ #category : 'testing' }
+FinalizationRegistryEntry >> includes: anObject [
+
+	key = anObject ifTrue: [ ^ true ].
+	next ifNil: [ ^ false ].
+	^ next includes: anObject
+]
+
+{ #category : 'enumerating' }
+FinalizationRegistryEntry >> keys [
+
+	"Base case, last entry in the list"
+	next ifNil: [ ^ { key } ].
+
+	"The head is empty, so check that"
+	key ifNil: [ ^ next keys ].
+	
+	"Otherwise, this is the recursive case"
+	^ { key }, next keys
+]
+
+{ #category : 'mourning' }
 FinalizationRegistryEntry >> mourn [
 	"The key is only referenced by myself.
 	This Ephemeron instance is not ephemeric anymore: it cannot be reused.
@@ -61,4 +116,61 @@ FinalizationRegistryEntry >> mourn [
 	Ask the container to finalize myself"
 
 	container finalizeEphemeron: self
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> next [
+
+	^ next
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> next: anObject [
+
+	next := anObject
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> previous [
+
+	^ previous
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> previous: anObject [
+
+	previous := anObject
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> removeFromChain [
+
+	| previousNext |
+	previous ifNil: [ ^ self ].
+
+	previousNext := next.
+	previous next: previousNext.
+
+	previousNext ifNil: [ ^ self ].
+	previousNext previous: previous.
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> size [
+
+	next ifNil: [ ^ 1 ].
+	^ 1 + next size
+]
+
+{ #category : 'enumerating' }
+FinalizationRegistryEntry >> values [
+
+	"Base case, last entry in the list"
+	next ifNil: [ ^ { value } ].
+
+	"The head is empty, so check that"
+	key ifNil: [ ^ next values ].
+
+	"Otherwise, this is the recursive case"
+	^ { value }, next values
 ]

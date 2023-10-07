@@ -1,1 +1,1 @@
-Package { #name : #'FreeType-Morphic' }
+Package { #name : 'FreeType-Morphic' }

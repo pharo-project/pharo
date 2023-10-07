@@ -1,6 +1,6 @@
-Extension { #name : #SycProtectVariableCommand }
+Extension { #name : 'SycProtectVariableCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycProtectVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

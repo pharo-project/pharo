@@ -1,6 +1,6 @@
-Extension { #name : #ThreadSafeTranscript }
+Extension { #name : 'ThreadSafeTranscript' }
 
-{ #category : #'*Transcript-Tool' }
+{ #category : '*Transcript-Tool' }
 ThreadSafeTranscript class >> ensureOpen [
 	"Open a Transcript only if not opened yet. If it is already open, bring it as top window."
 
@@ -8,7 +8,7 @@ ThreadSafeTranscript class >> ensureOpen [
 	^ self new ensureOpen
 ]
 
-{ #category : #'*Transcript-Tool' }
+{ #category : '*Transcript-Tool' }
 ThreadSafeTranscript >> ensureOpen [
 
 	<script: 'self new ensureOpen'>
@@ -22,12 +22,12 @@ ThreadSafeTranscript >> ensureOpen [
 		  window ]
 ]
 
-{ #category : #'*Transcript-Tool' }
+{ #category : '*Transcript-Tool' }
 ThreadSafeTranscript >> interactionModel [
 	^ self
 ]
 
-{ #category : #'*Transcript-Tool' }
+{ #category : '*Transcript-Tool' }
 ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Transcript')
@@ -41,21 +41,21 @@ ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 	aBuilder withSeparatorAfter
 ]
 
-{ #category : #'*Transcript-Tool' }
+{ #category : '*Transcript-Tool' }
 ThreadSafeTranscript class >> open [
 	<script>
 
 	^ self new open
 ]
 
-{ #category : #'*Transcript-Tool' }
+{ #category : '*Transcript-Tool' }
 ThreadSafeTranscript >> open [
 	<script: 'self new open'>
 
 	^ self openLabel: self title
 ]
 
-{ #category : #'*Transcript-Tool' }
+{ #category : '*Transcript-Tool' }
 ThreadSafeTranscript >> openLabel: aString [
 	| window m |
 	window := (SystemWindow labelled: aString) model: self.

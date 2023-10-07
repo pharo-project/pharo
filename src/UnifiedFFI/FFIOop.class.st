@@ -1,53 +1,55 @@
 Class {
-	#name : #FFIOop,
-	#superclass : #FFIExternalType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIOop',
+	#superclass : 'FFIExternalType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIOop class >> externalType [
 	^ ExternalType void asPointerType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIOop class >> externalTypeAlignment [
 	^ self pointerSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIOop class >> externalTypeSize [
 	^ Smalltalk wordSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIOop class >> naturalPointerArity [
 	^ 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIOop >> basicHandle: aHandle at: index [
 	^ aHandle pointerAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIOop >> basicHandle: aHandle at: index put: value [
 	self error: 'Not sure I want to do this.'
 	"But it would be like this:
 	aHandle pointerAt: index put: value"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIOop >> externalTypeSize [
 	^ self pointerSize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIOop >> needsArityUnpacking [
 	"this represent kind of pointers, so it will be unpacked if they are also rolled."
 	^ self needsArityPacking
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIOop >> stackValueParameterClass [
 	^ #integer
 ]

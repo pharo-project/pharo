@@ -1,6 +1,6 @@
-Extension { #name : #RubScrolledTextModel }
+Extension { #name : 'RubScrolledTextModel' }
 
-{ #category : #'*HeuristicCompletion-Morphic' }
+{ #category : '*HeuristicCompletion-Morphic' }
 RubScrolledTextModel >> variableBindings [
 	"Required for polymorphism with the Playground"
 	^ interactionModel

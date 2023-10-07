@@ -8,12 +8,14 @@ If you subclass this class, take note that as it overrides both #emitStore: and 
 
 "
 Class {
-	#name : #InstanceVariableSlot,
-	#superclass : #IndexedSlot,
-	#category : #'Kernel-Variables'
+	#name : 'InstanceVariableSlot',
+	#superclass : 'IndexedSlot',
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 InstanceVariableSlot class >> resetIvarSlots [
 	"when the Ivar slots need to be re-created (e.g. due to changes in the layout of the class),
 	 this method re-creates for every ivar a ivar slot"
@@ -35,7 +37,7 @@ InstanceVariableSlot class >> resetIvarSlots [
 			block value: class classSide ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 InstanceVariableSlot >> definitionOn: aStream [
 	"non special globals are defined by the symbol"
 	^self needsFullDefinition
@@ -43,34 +45,36 @@ InstanceVariableSlot >> definitionOn: aStream [
 		ifFalse: [ self name printOn: aStream ]
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 InstanceVariableSlot >> emitStore: methodBuilder [
 	"generate store bytecode"
 	methodBuilder storeInstVar: index
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 InstanceVariableSlot >> emitValue: methodBuilder [
 	"emit the bytecode to push ivar"
 	methodBuilder pushInstVar: index
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InstanceVariableSlot >> isAccessedIn: aCompiledCode [
+	"Return whether the receiver is accessed in the arg. Pay attention that the compiler is free to remove unused variable so the access is only garanteed for used instance variables e.g. part of return, expression, assignment..."
+	
 	^ aCompiledCode accessesField: index
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InstanceVariableSlot >> isReadIn: aCompiledCode [
 	^aCompiledCode readsField: index
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InstanceVariableSlot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode writesField: index
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InstanceVariableSlot >> needsFullDefinition [
 	"I am just a backward compatible ivar slot and can use simple definitions.
 	 Note: my subclasses need full definitions"

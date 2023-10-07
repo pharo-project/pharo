@@ -1,16 +1,17 @@
 Class {
-	#name : #CDTraitParserTest,
-	#superclass : #TestCase,
-	#category : #'ClassParser-Tests'
+	#name : 'CDTraitParserTest',
+	#superclass : 'TestCase',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CDTraitParserTest >> classDefinitionParserClass [
 
 	^ CDFluidClassDefinitionParser
 ]
 
-{ #category : #'tests - trait users' }
+{ #category : 'tests - trait users' }
 CDTraitParserTest >> testClassSideOfATrait [
 	"MetaclassForTraits allInstances select: [ :each | each hasTraitComposition ]"
 	| def |
@@ -22,7 +23,7 @@ CDTraitParserTest >> testClassSideOfATrait [
 	self assert: def traitDefinition sequence first name equals: #Trait2
 ]
 
-{ #category : #'tests - simple trait definition' }
+{ #category : 'tests - simple trait definition' }
 CDTraitParserTest >> testSimpleDefinition [
 
 	| def |
@@ -33,7 +34,7 @@ CDTraitParserTest >> testSimpleDefinition [
 	self assert: def packageName equals:  #'Kernel-BasicObjects'
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 CDTraitParserTest >> testSimpleDefinitionWithEmptySlots [
 
 	| def |
@@ -46,7 +47,7 @@ CDTraitParserTest >> testSimpleDefinitionWithEmptySlots [
 	self assert: def packageName equals:  #'Kernel-BasicObjects'
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 CDTraitParserTest >> testSimpleDefinitionWithSlots [
 
 	| def |
@@ -60,7 +61,7 @@ CDTraitParserTest >> testSimpleDefinitionWithSlots [
 	self assert: def packageName equals:  #'Kernel-BasicObjects'
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 CDTraitParserTest >> testSimpleDefinitionWithTypedSlots [
 
 	| def |
@@ -73,7 +74,7 @@ CDTraitParserTest >> testSimpleDefinitionWithTypedSlots [
 	self assert: def packageName equals:  #'Kernel-BasicObjects'
 ]
 
-{ #category : #'tests - trait users' }
+{ #category : 'tests - trait users' }
 CDTraitParserTest >> testWithEmptyUses [
 
 	| def |
@@ -86,7 +87,7 @@ CDTraitParserTest >> testWithEmptyUses [
 	self assert: def packageName equals:  #'Kernel-BasicObjects'
 ]
 
-{ #category : #'tests - trait users' }
+{ #category : 'tests - trait users' }
 CDTraitParserTest >> testWithUses [
 
 	| def |

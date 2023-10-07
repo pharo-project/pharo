@@ -2,8 +2,8 @@
 Constants for the baloon engine
 "
 Class {
-	#name : #BalloonEngineConstants,
-	#superclass : #SharedPool,
+	#name : 'BalloonEngineConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'BEAaLevelIndex',
 		'BEBalloonEngineSize',
@@ -208,10 +208,12 @@ Class {
 		'GWTimeNextFillEntry',
 		'GWTimeNextGETEntry'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 BalloonEngineConstants class >> initEdgeConstants [
 	"Initialize the edge constants"
 
@@ -290,7 +292,7 @@ BalloonEngineConstants class >> initEdgeConstants [
 	GBWideSize := 28					"Size of wide beziers"
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 BalloonEngineConstants class >> initFillConstants [
 	"Initialize the fill constants"
 
@@ -329,7 +331,7 @@ BalloonEngineConstants class >> initFillConstants [
 	GBMBaseSize := 18				"Basic size of bitmap fill"
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 BalloonEngineConstants class >> initPrimitiveConstants [
 	"Initialize the primitive constants"
 
@@ -346,7 +348,7 @@ BalloonEngineConstants class >> initPrimitiveConstants [
 	GEObjectUnused := 3			"Currently unused"
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 BalloonEngineConstants class >> initStateConstants [
 	"Initialize the state constants"
 
@@ -371,7 +373,7 @@ BalloonEngineConstants class >> initStateConstants [
 	GErrorAETEntry := 6				"Unknown entry in AET"
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 BalloonEngineConstants class >> initWorkBufferConstants [
 	"Initialize the work buffer constants"
 
@@ -474,7 +476,7 @@ BalloonEngineConstants class >> initWorkBufferConstants [
 	GWCurrentZ := 113				"Current z value of primitives"
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 BalloonEngineConstants class >> initialize [
 
 	self
@@ -488,7 +490,7 @@ BalloonEngineConstants class >> initialize [
 		initializeInstVarNames: BalloonFillData prefixedBy: 'FT'
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 BalloonEngineConstants class >> initializeInstVarNames: aClass prefixedBy: aString [
 
 	| token |
@@ -501,4 +503,10 @@ BalloonEngineConstants class >> initializeInstVarNames: aClass prefixedBy: aStri
 	token := (aString, aClass name,'Size') asSymbol.
 	(self bindingOf: token) ifNil: [ self addClassVarNamed: token ].
 	(self bindingOf: token) value: aClass instSize
+]
+
+{ #category : 'initialization' }
+BalloonEngineConstants >> initialize [
+		<ignoreUnusedClassVariables: #( BEDestOffsetIndex BEPostFlushNeededIndex BEBitBltIndex BESpanIndex ETZValueIndex BEDeferredIndex BEClipRectIndex BEBalloonEngineSize BEFormsIndex FTBalloonFillDataSize BEColorTransformIndex ETYValueIndex FTDestFormIndex FTYValueIndex ETIndexIndex ETBalloonEdgeDataSize BEWorkBufferIndex FTIndexIndex FTMaxXIndex BEAaLevelIndex BEEdgeTransformIndex ETXValueIndex ETSourceIndex FTSourceIndex BEExternalsIndex FTMinXIndex ETLinesIndex )>
+		super initialize.
 ]

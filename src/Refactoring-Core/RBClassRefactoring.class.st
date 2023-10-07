@@ -9,26 +9,28 @@ Check method `RBClassRefactoring class>>#model:className:`
 
 "
 Class {
-	#name : #RBClassRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'RBClassRefactoring',
+	#superclass : 'RBRefactoring',
 	#instVars : [
 		'className'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBClassRefactoring class >> className: aName [
 	^ self new className: aName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBClassRefactoring class >> isAbstract [
 
 	^ self == RBClassRefactoring
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBClassRefactoring class >> model: aRBModel className: aName [
 	^ self new
 		model: aRBModel;
@@ -36,7 +38,7 @@ RBClassRefactoring class >> model: aRBModel className: aName [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBClassRefactoring >> className: aName [
 	className := aName
 ]

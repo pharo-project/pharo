@@ -10,16 +10,18 @@ Try:
         changeSelected: nil) openInWindow extent: 400@20.
 "
 Class {
-	#name : #EditableDropListMorph,
-	#superclass : #DropListMorph,
+	#name : 'EditableDropListMorph',
+	#superclass : 'DropListMorph',
 	#instVars : [
 		'addToListSel',
 		'content'
 	],
-	#category : #'Polymorph-Widgets-Base'
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EditableDropListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel useIndex: useIndex addToList: addToListSel class: aClass getEnabled: getEnabledSel [
 	^ self
 		on: anObject
@@ -33,7 +35,7 @@ EditableDropListMorph class >> on: anObject list: getListSel selected: getSelect
 		default: ''
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EditableDropListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel useIndex: useIndex addToList: addToListSel class: aClass getEnabled: getEnabledSel default: aDefaultValue [
 	^ (super
 		on: anObject
@@ -47,12 +49,12 @@ EditableDropListMorph class >> on: anObject list: getListSel selected: getSelect
 		 yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EditableDropListMorph >> addToListSel: aSelector [
 	addToListSel := aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditableDropListMorph >> adoptPaneColor: paneColor [
 	"Clear the fill style of the text."
 
@@ -60,17 +62,17 @@ EditableDropListMorph >> adoptPaneColor: paneColor [
 	self contentMorph fillStyle: Color transparent
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 EditableDropListMorph >> beReadOnly [
 	self contentMorph beReadOnly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditableDropListMorph >> content [
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditableDropListMorph >> content: anObject [
 	content := anObject.
 	self model perform: addToListSel with: content.
@@ -78,22 +80,22 @@ EditableDropListMorph >> content: anObject [
 	self updateList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EditableDropListMorph >> convertTo: aClass [
 	self contentMorph convertTo: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditableDropListMorph >> converter [
 	^ self contentMorph converter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EditableDropListMorph >> default: anObject [
 	self contentMorph default: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditableDropListMorph >> enabled: aBoolean [
 	"Set the value of enabled"
 
@@ -103,7 +105,7 @@ EditableDropListMorph >> enabled: aBoolean [
 		fillStyle: Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EditableDropListMorph >> font: aFont [
 	"Set the list and content font"
 
@@ -111,27 +113,27 @@ EditableDropListMorph >> font: aFont [
 	self contentMorph font: aFont
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EditableDropListMorph >> layoutInsetToUse [
 	"Answer the layout inset that should be used."
 
 	^ 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EditableDropListMorph >> listHeight [
 	"Answer the height for the list."
 	^(self listMorph listMorph height + 12) min: 200
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 EditableDropListMorph >> minHeight [
 	"Answer the minimum height for the drop list."
 
 	^self theme textFont height
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 EditableDropListMorph >> newContentMorph [
 	"Answer a new content morph"
 	| pt |
@@ -151,19 +153,19 @@ EditableDropListMorph >> newContentMorph [
 		^ pt
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EditableDropListMorph >> objectAsString: anObject [
 	^ self converter objectAsString: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EditableDropListMorph >> updateContentMorphWith: aString [
 
 	content := aString.
 	self contentMorph setText: aString
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 EditableDropListMorph >> wantsFrameAdornments: aBoolean [
 	self contentMorph wantsFrameAdornments: aBoolean
 ]

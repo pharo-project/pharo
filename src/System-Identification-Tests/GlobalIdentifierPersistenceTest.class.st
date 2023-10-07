@@ -2,37 +2,38 @@
 A GlobalIdentifierPersistenceTest is a test class for testing the behavior of GlobalIdentifierPersistence
 "
 Class {
-	#name : #GlobalIdentifierPersistenceTest,
-	#superclass : #TestCase,
+	#name : 'GlobalIdentifierPersistenceTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'preferences',
 		'persistence',
 		'checker'
 	],
-	#category : #'System-Identification-Tests'
+	#category : 'System-Identification-Tests',
+	#package : 'System-Identification-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlobalIdentifierPersistenceTest class >> isAbstract [
 	^ self name = GlobalIdentifierPersistenceTest name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistenceTest >> folderName [
 	^ 'pharoPreferencesTestFolder'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlobalIdentifierPersistenceTest >> newFalseChecker [
 	^ GlobalIdentifierPersistenceMockChecker new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierPersistenceTest >> persistenceClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierPersistenceTest >> setUp [
 	super setUp.
 	self setUpPreferencesAndChecker.
@@ -40,18 +41,18 @@ GlobalIdentifierPersistenceTest >> setUp [
 	persistence checker: checker
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierPersistenceTest >> setUpPreferencesAndChecker [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierPersistenceTest >> tearDown [
 	preferences ensureDelete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testDefault [
 	self
 		deny: preferences exists
@@ -61,7 +62,7 @@ GlobalIdentifierPersistenceTest >> testDefault [
 		description: 'The preference directory should not exist by default.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testDelete [
 	preferences parent ensureCreateDirectory.
 	preferences ensureCreateFile.
@@ -70,25 +71,25 @@ GlobalIdentifierPersistenceTest >> testDelete [
 	self deny: preferences exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testEnsureDirectory [
 	persistence ensureDirectory.
 	self assert: preferences parent exists.
 	self deny: preferences exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testIsEnabled [
 	self assert: persistence isEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testIsEnabled2 [
 	persistence checker: self newFalseChecker.
 	self deny: persistence isEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testLoad [
 	"Load when nothing is stored."
 	| values identifier |
@@ -105,7 +106,7 @@ GlobalIdentifierPersistenceTest >> testLoad [
 	self assert: preferences exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testLoad2 [
 	"Load stored values."
 	| identifier otherIdentifier |
@@ -121,7 +122,7 @@ GlobalIdentifierPersistenceTest >> testLoad2 [
 	self assert: (otherIdentifier persistedInformation includesKey: #secretUUID)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testLoad3 [
 	"Load stored values."
 
@@ -135,7 +136,7 @@ GlobalIdentifierPersistenceTest >> testLoad3 [
 	self assertEmpty: loaded
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testSave [
 	| values |
 	values := Dictionary new.
@@ -144,7 +145,7 @@ GlobalIdentifierPersistenceTest >> testSave [
 	self assert: preferences exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierPersistenceTest >> testSave2 [
 	| values |
 	persistence checker: self newFalseChecker.

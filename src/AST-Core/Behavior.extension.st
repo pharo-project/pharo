@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*AST-Core' }
+{ #category : '*AST-Core' }
 Behavior >> parseTreeFor: aSymbol [
 
 	self
@@ -10,7 +10,7 @@ Behavior >> parseTreeFor: aSymbol [
 	^ self parseTreeForSelector: aSymbol
 ]
 
-{ #category : #'*AST-Core' }
+{ #category : '*AST-Core' }
 Behavior >> parseTreeForSelector: aSymbol [
 	^ (self compiledMethodAt: aSymbol) parseTree
 ]

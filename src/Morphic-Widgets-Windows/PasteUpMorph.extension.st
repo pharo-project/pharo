@@ -1,6 +1,6 @@
-Extension { #name : #PasteUpMorph }
+Extension { #name : 'PasteUpMorph' }
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> fitAllVisibleWindows [
 	"Fit all windows as visible"
 	|allowedArea|
@@ -13,7 +13,7 @@ PasteUpMorph >> fitAllVisibleWindows [
 	self displayWorld
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> isWindowActive: aSystemWindow [
 	"Answer whether the given window is active.
 	True if the current top window."
@@ -21,14 +21,14 @@ PasteUpMorph >> isWindowActive: aSystemWindow [
 	^self currentWindow == aSystemWindow
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> modelWakeUpIn: aWindow [
 	"I am the model of a SystemWindow, that has just been activated"
 
 	self viewBox = aWindow panelRect ifFalse: [self viewBox: aWindow panelRect]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> navigateVisibleWindowForward [
 	"Change the active window to the next visible and not collapsed window."
 
@@ -37,7 +37,7 @@ PasteUpMorph >> navigateVisibleWindowForward [
 		ifNotNil: [:m | m activate]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> navigateWindowBackward [
 	"Change the active window to the previous window."
 
@@ -46,7 +46,7 @@ PasteUpMorph >> navigateWindowBackward [
 		m activate]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> navigateWindowForward [
 	"Change the active window to the next window."
 
@@ -56,7 +56,7 @@ PasteUpMorph >> navigateWindowForward [
 		m activate]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> nextVisibleWindow [
 	"Answer the next (visible) window to navigate to."
 
@@ -67,7 +67,7 @@ PasteUpMorph >> nextVisibleWindow [
 		]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> nextWindow [
 	"Answer the next window to navigate to."
 
@@ -77,7 +77,7 @@ PasteUpMorph >> nextWindow [
 	^sys after: self currentWindow ifAbsent: [sys first]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> previousWindow [
 	"Answer the previous window to navigate to."
 
@@ -87,14 +87,14 @@ PasteUpMorph >> previousWindow [
 	^sys before: self currentWindow ifAbsent: [sys last]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> systemWindows [
 	"Answer the system windows in the world."
 
 	^self submorphsSatisfying: [:m | m isSystemWindow]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 PasteUpMorph >> visibleSystemWindows [
 	"Answer the visible system windows in the world."
 

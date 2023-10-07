@@ -3,43 +3,44 @@ I am a command to debug broken critique.
 I expect that my critique is ReExceptionProperty instance representign the failure which was raisen during critique computation
 "
 Class {
-	#name : #ClyDebugBrokenCritiqueCommand,
-	#superclass : #ClyCritiqueCommand,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyDebugBrokenCritiqueCommand',
+	#superclass : 'ClyCritiqueCommand',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDebugBrokenCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 
 	^aCriticContext hasSelectedItems and: [
 		aCriticContext lastSelectedItem isMarkedWith: ClyBrokenCritiqueTag]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyDebugBrokenCritiqueCommand class >> criticTableIconActivation [
 	<classAnnotation>
 
 	^ClyTableIconCommandActivation for: ReProperty asCalypsoItemContext
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyDebugBrokenCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 	super decorateTableCell: anItemCellMorph with: aMorph.
 
 	anItemCellMorph definitionIcon: #exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDebugBrokenCritiqueCommand >> defaultMenuIconName [
 	^#smallDebug
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDebugBrokenCritiqueCommand >> defaultMenuItemName [
 	^'Debug the exception'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyDebugBrokenCritiqueCommand >> execute [
 
 	(OupsDebugRequest newForContext: critique stack)

@@ -1,6 +1,6 @@
-Extension { #name : #ByteArray }
+Extension { #name : 'ByteArray' }
 
-{ #category : #'*System-Hashing-Core' }
+{ #category : '*System-Hashing-Core' }
 ByteArray >> asByteArrayOfSize: size [
 	"
 		'34523' asByteArray asByteArrayOfSize: 100.
@@ -19,7 +19,7 @@ ByteArray >> asByteArrayOfSize: size [
 	^ (ByteArray new: (size - bytes size)), bytes
 ]
 
-{ #category : #'*System-Hashing-Core' }
+{ #category : '*System-Hashing-Core' }
 ByteArray >> asInteger [
 	"Convert me to an Integer, network byte order, most significant byte first, big endian"
 
@@ -30,7 +30,7 @@ ByteArray >> asInteger [
 	^ integer
 ]
 
-{ #category : #'*System-Hashing-Core' }
+{ #category : '*System-Hashing-Core' }
 ByteArray >> bitXor: aByteArray [
 	| answer |
 	answer := self copy.
@@ -44,7 +44,7 @@ ByteArray >> bitXor: aByteArray [
 	^ answer
 ]
 
-{ #category : #'*System-Hashing-Core' }
+{ #category : '*System-Hashing-Core' }
 ByteArray >> destroy [
 	1 to: self size do:
 		[ : x |

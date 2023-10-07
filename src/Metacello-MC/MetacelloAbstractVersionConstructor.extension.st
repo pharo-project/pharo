@@ -1,6 +1,6 @@
-Extension { #name : #MetacelloAbstractVersionConstructor }
+Extension { #name : 'MetacelloAbstractVersionConstructor' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MetacelloAbstractVersionConstructor >> projectClass [
     ^ MetacelloMCProject
 ]

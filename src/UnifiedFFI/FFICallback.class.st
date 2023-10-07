@@ -9,8 +9,8 @@ I allow blocks to be evaluated when an external block funtion needs it.
 argument types are calculated and converted using same parsing logic than FFICallout
 "
 Class {
-	#name : #FFICallback,
-	#superclass : #Object,
+	#name : 'FFICallback',
+	#superclass : 'Object',
 	#instVars : [
 		'backendCallback',
 		'functionSpec',
@@ -18,15 +18,17 @@ Class {
 		'calloutAPIClass',
 		'library'
 	],
-	#category : #'UnifiedFFI-Callbacks'
+	#category : 'UnifiedFFI-Callbacks',
+	#package : 'UnifiedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFICallback class >> asExternalTypeOn: generator [
 	^ FFICallbackType objectClass: self
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FFICallback class >> exampleCqsort [
 	<sampleInstance>
 	| cb rand values orig sort |
@@ -47,7 +49,7 @@ FFICallback class >> exampleCqsort [
 	^orig -> sort
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFICallback class >> forAddress: address [
 	"Reconstructs a callback from an address (an integer).
 	 This is useful for reading callbacks from a structure.
@@ -58,47 +60,47 @@ FFICallback class >> forAddress: address [
 	^ FFIBackend current lookupCallbackByAddress: address
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 FFICallback class >> primQsort: array with: count with: size with: compare [
 	self
 		ffiCall: #(void qsort (FFIExternalArray array, size_t count, size_t size, FFICallback compare))
 		module: LibC
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFICallback class >> signature: aSignature block: aBlock [
 	^ self new signature: aSignature block: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> backendCallback [
 	"declare the backend callback"
 	^ backendCallback ifNil: [ backendCallback := self calloutAPIClass newCallbackBackendFor: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> beNull [
 
 	self backendCallback beNull
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> calloutAPIClass [
 
 	^ calloutAPIClass ifNil: [ super calloutAPIClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> calloutAPIClass: anObject [
 	calloutAPIClass := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallback >> ffiBindingOf: aName [
 	^ self class ffiBindingOf: aName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallback >> ffiInstVarArgument: argName generator: generator [
 	"Load the instance variable with given name.
 	 It will be ignored anyway in a callback"
@@ -107,35 +109,35 @@ FFICallback >> ffiInstVarArgument: argName generator: generator [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> ffiLibrary: aFFILibrary [
 
 	library := aFFILibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> ffiLibraryName [
 
 	^ (library ifNil: [ 'default' ]) asFFILibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> functionSpec [
 	^ functionSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> getHandle [
 	^ self thunk
 ]
 
-{ #category : #invoking }
+{ #category : 'invoking' }
 FFICallback >> invokeAsFunctionWithArguments: aCollection [
 
 	^ self backendCallback invokeAsFunctionWithArguments: aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallback >> newParser [
 	^ FFIFunctionParser new
 		requestor: (FFICallout new
@@ -144,19 +146,19 @@ FFICallback >> newParser [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallback >> returnOnError [
 
 	^ functionSpec returnType defaultReturnOnError
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallback >> shouldDebugExceptions [
 
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICallback >> signature: signature block: aBlock [
 	| parser |
 	parser := self newParser.
@@ -165,7 +167,7 @@ FFICallback >> signature: signature block: aBlock [
 	block := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallback >> thunk [
 
 	(block isNil or: [functionSpec isNil])
@@ -174,7 +176,7 @@ FFICallback >> thunk [
 	^ self backendCallback thunk
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 FFICallback >> valueWithArguments: args [
 
 	^ [ block valueWithArguments: args ]

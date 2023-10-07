@@ -16,27 +16,29 @@ Use the following methods in the initialization to setup your subclass:
 	
 "
 Class {
-	#name : #ReNodeRewriteRule,
-	#superclass : #RePatternCodeRule,
+	#name : 'ReNodeRewriteRule',
+	#superclass : 'RePatternCodeRule',
 	#instVars : [
 		'matches'
 	],
-	#category : #'Renraku-Rules-Rewrite'
+	#category : 'Renraku-Rules-Rewrite',
+	#package : 'Renraku',
+	#tag : 'Rules-Rewrite'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReNodeRewriteRule class >> isAbstract [
 
 	^self == ReNodeRewriteRule
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReNodeRewriteRule class >> isVisible [
 
 	^ self name ~=  #ReNodeRewriteRule
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeRewriteRule >> addMatchingExpression: aString rewriteTo: aRewriteString [
 	"add a 'from->to' pair of strings that represent a rewrite expression string to match and a rewrite expression to replace the matched node."
 
@@ -46,7 +48,7 @@ ReNodeRewriteRule >> addMatchingExpression: aString rewriteTo: aRewriteString [
 			RBParser parseRewriteExpression: aRewriteString))
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeRewriteRule >> addMatchingExpression: aString rewriteWith: aBlock [
 	"add 	a 'from->to' pair, first element of which is a rewrite expression in a form of a string that is used to match nodes. The second parameter is a block that has to return a node which should replace the matched one. The block may accept 2 atguments: the matched node, and a dictionary of wildcard variables mapping"
 
@@ -55,7 +57,7 @@ ReNodeRewriteRule >> addMatchingExpression: aString rewriteWith: aBlock [
 		put: (ReRewriteBlockWrapper on: aBlock)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeRewriteRule >> addMatchingMethod: aString rewriteTo: aRewriteString [
 	"add a 'from->to' pair of strings that represent a match method string to match and a rewrite method to replace the matched mathod"
 
@@ -65,7 +67,7 @@ ReNodeRewriteRule >> addMatchingMethod: aString rewriteTo: aRewriteString [
 			RBParser parseRewriteMethod: aRewriteString))
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeRewriteRule >> addMatchingMethod: aString rewriteWith: aBlock [
 	"add 	a 'from->to' pair, first element of which is a rewrite method code in a form of a string that is used to match methods. The second parameter is a block that has to return a method ast which should replace the matched one. The block may accept 2 atguments: the matched ast, and a dictionary of wildcard variables mapping"
 
@@ -74,7 +76,7 @@ ReNodeRewriteRule >> addMatchingMethod: aString rewriteWith: aBlock [
 		put: (ReRewriteBlockWrapper on: aBlock)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReNodeRewriteRule >> check: aNode forCritiquesDo: aCriticBlock [
 
 	matches keysAndValuesDo: [ :matcher :rewriter |
@@ -93,7 +95,7 @@ ReNodeRewriteRule >> check: aNode forCritiquesDo: aCriticBlock [
 			onFailure: [  ] ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReNodeRewriteRule >> critiqueFor: aNode by: rewriter withMappings: map [
 
 
@@ -104,32 +106,32 @@ ReNodeRewriteRule >> critiqueFor: aNode by: rewriter withMappings: map [
 		newNode: (rewriter rewriten: aNode with: map)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReNodeRewriteRule >> initialize [
 	super initialize.
 	matches := Dictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReNodeRewriteRule >> isRewriteRule [
 	^true
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeRewriteRule >> replace: aString byEvaluating: aBlock [
 	"add 	a 'from->to' pair, first element of which is a rewrite expression in a form of a string that is used to match nodes. The second parameter is a block that has to return a node which should replace the matched one. The block may accept 2 atguments: the matched node, and a dictionary of wildcard variables mapping"
 
 	self addMatchingExpression: aString rewriteWith: aBlock
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeRewriteRule >> replace: aString with: aRewriteString [
 	"add a 'from->to' pair of strings that represent a match expression string to match and a rewrite expression to replace the matched node"
 
 	self addMatchingExpression: aString rewriteTo: aRewriteString
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeRewriteRule >> replaceMethod: aString with: aRewriteString [
 	"add a 'from->to' pair of strings that represent a match method string to match and a rewrite method to replace the matched code"
 

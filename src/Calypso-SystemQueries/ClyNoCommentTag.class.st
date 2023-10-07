@@ -2,7 +2,9 @@
 I am used to mark classes which has no comment
 "
 Class {
-	#name : #ClyNoCommentTag,
-	#superclass : #ClySimpleTag,
-	#category : #'Calypso-SystemQueries-Properties'
+	#name : 'ClyNoCommentTag',
+	#superclass : 'ClySimpleTag',
+	#category : 'Calypso-SystemQueries-Properties',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Properties'
 }

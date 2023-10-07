@@ -1,1 +1,1 @@
-Package { #name : #'Morphic-Widgets-Menubar' }
+Package { #name : 'Morphic-Widgets-Menubar' }

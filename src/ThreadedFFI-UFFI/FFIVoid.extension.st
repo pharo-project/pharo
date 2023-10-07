@@ -1,6 +1,6 @@
-Extension { #name : #FFIVoid }
+Extension { #name : 'FFIVoid' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIVoid >> tfExternalType [
 
 	^ TFBasicType void

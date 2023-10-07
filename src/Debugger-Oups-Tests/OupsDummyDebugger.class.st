@@ -3,8 +3,8 @@ I am a dummy debugger.
 My instances simulate debugger classes that are named, and can handle any context.
 "
 Class {
-	#name : #OupsDummyDebugger,
-	#superclass : #Object,
+	#name : 'OupsDummyDebugger',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'tag',
@@ -12,10 +12,12 @@ Class {
 		'usable',
 		'error'
 	],
-	#category : #'Debugger-Oups-Tests-Utils'
+	#category : 'Debugger-Oups-Tests-Utils',
+	#package : 'Debugger-Oups-Tests',
+	#tag : 'Utils'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OupsDummyDebugger class >> dummyDebuggerList [
 	^ OrderedCollection
 		withAll:
@@ -24,7 +26,7 @@ OupsDummyDebugger class >> dummyDebuggerList [
 			(self named: #C)}
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OupsDummyDebugger class >> dummySession [
 	| context process session |
 	context := [ Set new ] asContext.
@@ -38,22 +40,22 @@ OupsDummyDebugger class >> dummySession [
 	^ session
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OupsDummyDebugger class >> named: aString [
 	^self new name: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> beError [
 	error := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> beUnusable [
 	usable := false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OupsDummyDebugger >> debugSession: aDebugSession [
 	self isError
 		ifFalse: [ tag := aDebugSession.
@@ -63,38 +65,38 @@ OupsDummyDebugger >> debugSession: aDebugSession [
 	tag signal
 ]
 
-{ #category : #'deferred message' }
+{ #category : 'deferred message' }
 OupsDummyDebugger >> defer: aBlock [
 	aBlock value.
 	deferred := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> deferred [
 	^ deferred ifNil:[deferred := false]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OupsDummyDebugger >> findContextSuchThat: aBlock [
 	^self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OupsDummyDebugger >> handlesDebugSession: aContext [
 	^self isUsable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> isError [
 	^ error ifNil: [ error := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> isUsable [
 	^ usable ifNil: [ usable := true ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OupsDummyDebugger >> methodToDebug [
 	| i |
 	i := 0.
@@ -102,42 +104,42 @@ OupsDummyDebugger >> methodToDebug [
 	^ i
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> receiver [
 	^self
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 OupsDummyDebugger >> signalDebuggerError: exception [
 	(OupsDebuggerFailure of: self on: exception) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> tag [
 	^ tag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDummyDebugger >> tag: anObject [
 	tag := anObject
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 OupsDummyDebugger >> warningDefaultAction: aWarningException [
 	tag := aWarningException
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OupsDummyDebugger >> zeroDivide [
 	1/0
 ]

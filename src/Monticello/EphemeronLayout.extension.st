@@ -1,6 +1,6 @@
-Extension { #name : #EphemeronLayout }
+Extension { #name : 'EphemeronLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 EphemeronLayout class >> mcTypeSymbol [ 
 	^ #ephemeron
 ]

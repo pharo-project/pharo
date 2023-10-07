@@ -13,8 +13,8 @@ IMPORTANT: The #rowHeight is only rendering parameter that HAS NO DEFAULT VALUE 
 
 "
 Class {
-	#name : #HiSimpleRenderer,
-	#superclass : #HiAbstractRenderer,
+	#name : 'HiSimpleRenderer',
+	#superclass : 'HiAbstractRenderer',
 	#instVars : [
 		'linkDashes',
 		'linkWidth',
@@ -27,10 +27,12 @@ Class {
 		'nodeRadio',
 		'colorStrategy'
 	],
-	#category : #'Hiedra-UI'
+	#category : 'Hiedra-UI',
+	#package : 'Hiedra',
+	#tag : 'UI'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> addArrowInto: athensPathBuilder descending: aBoolean [
 
 	| c |
@@ -45,7 +47,7 @@ HiSimpleRenderer >> addArrowInto: athensPathBuilder descending: aBoolean [
 		absolute
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> addLinkFragmentFrom: topPoint to: bottomPoint intermediateY: intermediateY into: athensPathBuilder [
 	"Add a curve between two points in a canvas, that pass via an intermediate Y."
 
@@ -67,7 +69,7 @@ HiSimpleRenderer >> addLinkFragmentFrom: topPoint to: bottomPoint intermediateY:
 				into: athensPathBuilder ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> addLinkFragmentFromTopLeft: topPoint toBottomRight: bottomPoint intermediateY: intermediateY into: athensPathBuilder [
 	"
 		 s
@@ -84,7 +86,7 @@ HiSimpleRenderer >> addLinkFragmentFromTopLeft: topPoint toBottomRight: bottomPo
 		cwArcTo:  bottomPoint angle: self linkCurveAngle
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> addLinkFragmentFromTopRight: topPoint toBottomLeft: bottomPoint intermediateY: intermediateY into: athensPathBuilder [
 	"
 		     s
@@ -101,17 +103,17 @@ HiSimpleRenderer >> addLinkFragmentFromTopRight: topPoint toBottomLeft: bottomPo
 		ccwArcTo: bottomPoint angle: self linkCurveAngle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> arrowSize [
 	^ arrowSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> arrowSize: aNumber [
 	arrowSize := aNumber
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> athensPathForAscendingLink: aHiLink on: athensCanvas [
 	"Answer the Athens path for a link that goes from bottom to top."
 
@@ -149,7 +151,7 @@ HiSimpleRenderer >> athensPathForAscendingLink: aHiLink on: athensCanvas [
 		]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> athensPathForDescendingLink: aHiLink on: athensCanvas [
 	"Answer the Athens path for a link that goes from top to bottom."
 
@@ -187,7 +189,7 @@ HiSimpleRenderer >> athensPathForDescendingLink: aHiLink on: athensCanvas [
 		]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> athensPathForLink: aHiLink on: athensCanvas [
 	"Answer the Athens path for a link."
 
@@ -202,7 +204,7 @@ HiSimpleRenderer >> athensPathForLink: aHiLink on: athensCanvas [
 				on: athensCanvas ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> athensPathForNodeOn: athensCanvas [
 	"Answer the Athens path for a node."
 
@@ -219,47 +221,47 @@ HiSimpleRenderer >> athensPathForNodeOn: athensCanvas [
 			ccwArcTo: nd @ 0 angle: 90 degreesToRadians ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> cellCenterFor: aRulerPoint [
 
 	^ (self cellOriginFor: aRulerPoint) + ((cellWidth // 2) @ (rowHeight // 2))
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> cellOriginFor: aRulerPoint [
 
 	^ ((aRulerPoint x - 1) * cellWidth) @
 	  ((aRulerPoint y - 1) * rowHeight)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> cellWidth [
 	^ cellWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> cellWidth: aNumber [
 	cellWidth := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> colorStrategy [
 	^ colorStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> colorStrategy: aHiColorStrategy [
 	colorStrategy := aHiColorStrategy
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> initialTranslationInAthensCanvas [
 	"Apply left margin + rowsInterval offset."
 
 	^ self cellWidth @ (-1 * (rowsInterval first - 1) * self rowHeight)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiSimpleRenderer >> initialize [
 	super initialize.
 
@@ -278,30 +280,30 @@ HiSimpleRenderer >> initialize [
 	cellWidth := linkWidth * 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> linkColor: aColor [
 	self useUniformColorStrategy.
 	colorStrategy linkColor: aColor
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> linkCurveAngle [
 	^ linkCurveAngle
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> linkCurveAngle: anAngleAsRadians [
 	"Example argument: 45 degreesToRadians"
 
 	linkCurveAngle := anAngleAsRadians
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> linkDashes [
 	^ linkDashes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> linkDashes: anArrayOfFillGapPairs [
 	"Set how are the links dashed.
 	See AthensStrokePaint>>dashes:offset: to understand the parameter."
@@ -309,17 +311,17 @@ HiSimpleRenderer >> linkDashes: anArrayOfFillGapPairs [
 	linkDashes := anArrayOfFillGapPairs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> linkWidth [
 	^ linkWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> linkWidth: aNumber [
 	linkWidth := aNumber
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 HiSimpleRenderer >> newForm [
 	"Answer a new form, rendered with the current ruler and rowInterval."
 
@@ -334,51 +336,51 @@ HiSimpleRenderer >> newForm [
 	^ athensSurface asForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> nodeBorderWidth [
 	^ nodeBorderWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> nodeBorderWidth: aNumber [
 	nodeBorderWidth := aNumber
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> nodeBottomRelativeConnectionPoint [
 
 	^ 0 @ (nodeRadio + nodeConnectionOffset)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> nodeColor: aColor [
 	self useUniformColorStrategy.
 	colorStrategy nodeColor: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> nodeConnectionOffset [
 	^ nodeConnectionOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> nodeConnectionOffset: aNumber [
 	"Set the visual offset between a node and its incoming and outcoming links."
 
 	nodeConnectionOffset := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> nodeRadius [
 	^ nodeRadio
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> nodeRadius: aNumber [
 	nodeRadio := aNumber
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> renderLinks: links on: athensCanvas [
 
 	"Draw each link on the canvas."
@@ -392,7 +394,7 @@ HiSimpleRenderer >> renderLinks: links on: athensCanvas [
 		athensCanvas drawShape: (self athensPathForLink: each on: athensCanvas) ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> renderNodes: nodes on: athensCanvas [
 
 	| nodeAthensPath |
@@ -413,7 +415,7 @@ HiSimpleRenderer >> renderNodes: nodes on: athensCanvas [
 				athensCanvas drawShape: nodeAthensPath ] ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 HiSimpleRenderer >> renderOn: athensCanvas [
 	"Render all nodes and links that correspond to the previously selected rowsInterval in the athensCanvas."
 
@@ -425,12 +427,12 @@ HiSimpleRenderer >> renderOn: athensCanvas [
 	self renderNodes: nodes on: athensCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> rowHeight [
 	^ rowHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> rowHeight: anInteger [
 	"Set the pixel height for rows (an integer number).
 	Note this assumes there is a unique height for all rows."
@@ -438,19 +440,19 @@ HiSimpleRenderer >> rowHeight: anInteger [
 	rowHeight := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> ruler: aHiRuler [
 	super ruler: aHiRuler.
 	colorStrategy ruler: ruler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> useUniformColorStrategy [
 	colorStrategy := HiUniformColorStrategy new.
 	colorStrategy ruler: ruler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiSimpleRenderer >> useWheelColorStrategy [
 	colorStrategy := HiWheelColorStrategy new.
 	colorStrategy ruler: ruler

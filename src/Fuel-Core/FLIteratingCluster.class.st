@@ -2,16 +2,18 @@
 I am a template class whose algorithm for serialize a collection of objects consists on delegate the serialization of each individual object to the subclass.
 "
 Class {
-	#name : #FLIteratingCluster,
-	#superclass : #FLCluster,
+	#name : 'FLIteratingCluster',
+	#superclass : 'FLCluster',
 	#instVars : [
 		'objects',
 		'references'
 	],
-	#category : #'Fuel-Core-Clusters'
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLIteratingCluster >> add: anObject traceWith: aAnalysis [
 	"Add an object to the cluster and trace references."
 
@@ -24,7 +26,7 @@ FLIteratingCluster >> add: anObject traceWith: aAnalysis [
 			aAnalysis trace: aChild ]
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLIteratingCluster >> addReferenceFrom: anObject to: anotherObject [
 	| list |
 	list := self references
@@ -34,41 +36,41 @@ FLIteratingCluster >> addReferenceFrom: anObject to: anotherObject [
 	list add: anotherObject
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLIteratingCluster >> addReferencesFrom: anObject to: aCollection [
 	aCollection do: [ :ref |
 		self addReferenceFrom: anObject to: ref ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLIteratingCluster >> clusterMaterializeStepWith: aDecoder [
 
 	super clusterMaterializeStepWith: aDecoder.
 	objects := Array new: aDecoder nextEncodedUint32
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLIteratingCluster >> clusterSerializeStepWith: anEncoder [
 
 	super clusterSerializeStepWith: anEncoder.
 	anEncoder encodeUint32: objects size
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLIteratingCluster >> initializeAnalyzing [
 
 	super initializeAnalyzing.
 	objects := self newAnalyzingCollection.
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLIteratingCluster >> materializeInstanceWith: aDecoder [
 	"Hook method that each subclass should customize for its special way of materializing"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLIteratingCluster >> materializeInstancesStepWith: aDecoder [
 
 	1 to: objects size do: [ :index |
@@ -77,26 +79,26 @@ FLIteratingCluster >> materializeInstancesStepWith: aDecoder [
 			put: (self materializeInstanceWith: aDecoder) ].
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLIteratingCluster >> newAnalyzingCollection [
 	"Answer a collection for the objects that correspond to this cluster."
 
 	^ FLLargeIdentitySet new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLIteratingCluster >> objects [
 
 	^objects
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLIteratingCluster >> printNameOn: aStream [
 
 	super printOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLIteratingCluster >> printOn: aStream [
 
 	self printNameOn: aStream.
@@ -104,17 +106,17 @@ FLIteratingCluster >> printOn: aStream [
 	objects printElementsOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLIteratingCluster >> references [
 	^ references ifNil: [  references := FLLargeIdentityDictionary new ]
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLIteratingCluster >> referencesOf: anObject do: aBlock [
 	"Evaluate a block with each object referenced by anObject"
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLIteratingCluster >> registerIndexesOn: anEncoder [
 	| indexes |
 	indexes := anEncoder objectsIndexes.
@@ -124,12 +126,12 @@ FLIteratingCluster >> registerIndexesOn: anEncoder [
 			put: indexes size + 1 ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLIteratingCluster >> serializeInstance: anObject with: anEncoder [
 	"Hook method that each subclass should customize for its special way of serializing"
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLIteratingCluster >> serializeInstancesStepWith: anEncoder [
 
 	objects do: [ :instance | self serializeInstance: instance with: anEncoder ]

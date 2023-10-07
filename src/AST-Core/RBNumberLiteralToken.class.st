@@ -6,17 +6,19 @@ the scanner produces the tokens 'a' and '-1'. This will be converted to the toke
 'a', the binary selector token '-' and the number literal token '1'.
 "
 Class {
-	#name : #RBNumberLiteralToken,
-	#superclass : #RBLiteralToken,
-	#category : #'AST-Core-Tokens'
+	#name : 'RBNumberLiteralToken',
+	#superclass : 'RBLiteralToken',
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNumberLiteralToken >> isNumberLiteralToken [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBNumberLiteralToken >> storeOn: aStream [
 	aStream nextPutAll: source
 ]

@@ -18,83 +18,85 @@ I implement a hash table which uses open addressing with linear probing as the m
 
 "
 Class {
-	#name : #HashedCollection,
-	#superclass : #Collection,
+	#name : 'HashedCollection',
+	#superclass : 'Collection',
 	#instVars : [
 		'tally',
 		'array'
 	],
-	#category : #'Collections-Abstract-Base'
+	#category : 'Collections-Abstract-Base',
+	#package : 'Collections-Abstract',
+	#tag : 'Base'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 HashedCollection class >> cleanUp: aggressive [
 	"Rehash all instances when cleaning aggressively"
 
 	aggressive ifTrue: [self compactAll]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 HashedCollection class >> compactAll [
 	"HashedCollection compactAll"
 
 	self allSubclassesDo: #compactAllInstances
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 HashedCollection class >> compactAllInstances [
 	"Do not use #allInstancesDo: because rehash may create new instances."
 
 	self allInstances do: [ :each | each compact ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HashedCollection class >> empty [
 	^ self basicNew
 		initialize: 1;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HashedCollection class >> isAbstract [
 
 	^self name = #HashedCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HashedCollection class >> new [
 	^ self basicNew
 		initialize: 5;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HashedCollection class >> new: nElements [
 	"Create a Set large enough to hold nElements without growing"
 	^ self basicNew initialize: (self sizeFor: nElements)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HashedCollection class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 	^self subclassResponsibility
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 HashedCollection class >> rehashAll [
 	"HashedCollection rehashAll"
 
 	self allSubclassesDo: #rehashAllInstances
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 HashedCollection class >> rehashAllInstances [
 	"Do not use #allInstancesDo: because rehash may create new instances."
 
 	self allInstances do: [ :each | each rehash ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HashedCollection class >> sizeFor: nElements [
 	"Large enough size to hold nElements with some slop (see fullCheck)"
 
@@ -102,7 +104,7 @@ HashedCollection class >> sizeFor: nElements [
 	^ HashTableSizes atLeast: nElements +1 * 4 // 3
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 HashedCollection >> add: newObject withOccurrences: anInteger [
 	"Add newObject anInteger times to the receiver. Do nothing if anInteger is less than one. Answer newObject."
 
@@ -111,26 +113,26 @@ HashedCollection >> add: newObject withOccurrences: anInteger [
 	^ self add: newObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> array [
 	^ array
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> atNewIndex: index put: anObject [
 	array at: index put: anObject.
 	tally := tally + 1.
 	self fullCheck
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HashedCollection >> capacity [
 	"Answer the current capacity of the receiver."
 
 	^ array size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> compact [
 	"Reduce the size of array so that the load factor will be ~75%."
 
@@ -139,13 +141,13 @@ HashedCollection >> compact [
 	self growTo: newCapacity
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> errorNoFreeSpace [
 
 	self error: 'There is no free space in this collection!'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> findElementOrNil: anObject [
 	"Answer the index of a first slot containing either a nil (indicating an empty slot) or an element that matches the given object. Answer the index of that slot or zero. Fail if neither a match nor an empty slot is found."
 
@@ -160,7 +162,7 @@ HashedCollection >> findElementOrNil: anObject [
 	self error: 'There is no free space in this set!'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> fixCollisionsFrom: start [
 	"The element at start has been removed and replaced by nil.
 	This method moves forward from there, relocating any entries
@@ -169,14 +171,14 @@ HashedCollection >> fixCollisionsFrom: start [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> fullCheck [
 	"Keep array at least 1/4 free for decent hash behavior"
 	array size - tally < (array size // 4 max: 1)
 		ifTrue: [self grow]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> grow [
 	"Grow the elements array and reinsert the old elements"
 
@@ -190,14 +192,14 @@ HashedCollection >> grow [
 			each ifNotNil: [ self noCheckAdd: each ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> growSize [
 	"Answer what my next higher table size should be"
 
 	^HashTableSizes atLeast: self capacity * 3 // 2 + 2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> growTo: anInteger [
 	"Grow the elements array and reinsert the old elements"
 
@@ -207,32 +209,32 @@ HashedCollection >> growTo: anInteger [
 	self noCheckNoGrowFillFrom: oldElements
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HashedCollection >> initialize: n [
 	"Initialize array to an array size of n"
 	array := Array new: n.
 	tally := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> noCheckAdd: anObject [
 
     self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> noCheckNoGrowFillFrom: anArray [
 	"Add the elements of anArray except nils to me assuming that I don't contain any of them, they are unique and I have more free space than they require."
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> rehash [
 	self growTo: self capacity
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 HashedCollection >> removeAll [
 	"remove all elements from this collection.
 	Preserve the capacity"
@@ -240,14 +242,14 @@ HashedCollection >> removeAll [
 	self initialize: self capacity
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or raise an error if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashedCollection >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
 
@@ -259,19 +261,19 @@ HashedCollection >> scanForEmptySlotFor: aKey [
 	self errorNoFreeSpace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HashedCollection >> size [
 	^ tally
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 HashedCollection >> union: aCollection [
 	"Answer the set theoretic union of the receiver and aCollection, using the receiver's notion of equality and not side effecting the receiver at all."
 
 	^ self copy addAll: aCollection; yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 HashedCollection >> veryDeepCopyWith: deepCopier [
 	| copyOfSelf|
 	copyOfSelf := super veryDeepCopyWith: deepCopier.

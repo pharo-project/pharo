@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloExplicitLoadDirective,
-	#superclass : #MetacelloVersionLoadDirective,
-	#category : #'Metacello-MC-Directives'
+	#name : 'MetacelloExplicitLoadDirective',
+	#superclass : 'MetacelloVersionLoadDirective',
+	#category : 'Metacello-MC-Directives',
+	#package : 'Metacello-MC',
+	#tag : 'Directives'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloExplicitLoadDirective >> explicitLoadUsing: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadLinearLoadDirective: self gofer: aGofer.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloExplicitLoadDirective >> explicitLoadWithPolicy: aLoadPolicy [
 
 	| gofer |
@@ -20,19 +22,19 @@ MetacelloExplicitLoadDirective >> explicitLoadWithPolicy: aLoadPolicy [
 	self explicitLoadUsing: self gofer: gofer
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloExplicitLoadDirective >> isExplicit [
 
 	^true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloExplicitLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadExplicitLoadDirective: self gofer: aGofer.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloExplicitLoadDirective >> title [
 
 	^'explicit load'

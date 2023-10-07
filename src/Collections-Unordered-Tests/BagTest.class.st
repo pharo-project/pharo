@@ -2,8 +2,8 @@
 SUnit tests for bags
 "
 Class {
-	#name : #BagTest,
-	#superclass : #CollectionRootTest,
+	#name : 'BagTest',
+	#superclass : 'CollectionRootTest',
 	#traits : 'TAddTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TSetArithmetic + TConvertTest + TAsStringCommaAndDelimiterTest + TRemoveForMultiplenessTest + TPrintTest + TConvertAsSortedTest + TConvertAsSetForMultiplinessTest + TConcatenationTest + TStructuralEqualityTest + (TCreationWithTest - {#testOfSize}) + TOccurrencesForMultiplinessTest',
 	#classTraits : 'TAddTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TConvertTest classTrait + TAsStringCommaAndDelimiterTest classTrait + TRemoveForMultiplenessTest classTrait + TPrintTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TConcatenationTest classTrait + TStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
@@ -20,237 +20,239 @@ Class {
 		'otherCollectionWithoutEqualElements',
 		'collectionWithoutNilMoreThan5'
 	],
-	#category : #'Collections-Unordered-Tests-Bags'
+	#category : 'Collections-Unordered-Tests-Bags',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Bags'
 }
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 BagTest >> anotherElementNotIn [
 	^ 42
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> anotherElementOrAssociationIn [
 	" return an element (or an association for Dictionary ) present  in 'collection' "
 	^ self collection anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
 	^ elementNotIn
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 BagTest >> classToBeTested [
 
 	^ Bag
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 BagTest >> collection [
 
 	^ nonEmpty
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 BagTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
 
 	^ Bag
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionInForIncluding [
 	 ^ collectionIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 
 	^ collectionWithoutNilMoreThan5
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionNotIncluded [
 	^ collectionNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionOfFloat [
 	^ collectionOfString
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithCharacters [
 	^ collectionWithCharacters
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
 	^ collectionOfString
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithElement [
 	"Returns a collection that already includes what is returned by #element."
 	^ collectionWithElement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithElementsToRemove [
 	^ collectionIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithEqualElements [
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithoutEqualElements [
 	^ otherCollectionWithoutEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> collectionWithoutNilElements [
 	" return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	^ collectionWithoutNilMoreThan5
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 BagTest >> doWithoutNumber [
 
 	^ 4
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> element [
 	^ super element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> elementInForIncludesTest [
 
 	^ self element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> elementInForOccurrences [
 " return an element included in nonEmpty"
 	^self nonEmpty anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> elementNotIn [
 
 	^elementNotIn
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 BagTest >> elementNotInForOccurrences [
 	^ 666
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 BagTest >> elementToAdd [
 	^ 42
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> elementTwiceIn [
 	^ super elementTwiceIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
 ^ self elementTwiceIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )
 	all elements included are elements for which copy is not identical to the element  "
 	^ collectionOfString
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 BagTest >> empty [
 
 	^ empty
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 BagTest >> emptyButAllocatedWith20 [
 
 		^ emptyButAllocatedWith20
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 BagTest >> expectedSizeAfterReject [
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> integerCollectionWithoutEqualElements [
 	^ otherCollectionWithoutEqualElements
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 BagTest >> nonEmpty [
 
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> nonEmpty1Element [
 
 	^ self speciesClass  new add: self element ;yourself
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> nonEmptyWithoutEqualElements [
 " return a collection without equal elements "
 	^ otherCollectionWithoutEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> otherCollection [
 	^ otherCollectionWithoutEqualElements
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 BagTest >> result [
 
 	^ collectResult
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
 	^ collectionWithCharacters
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> selectedNumber [
 	^ 4
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BagTest >> setUp [
 	super setUp.
 	empty := self speciesClass new.
@@ -311,18 +313,18 @@ BagTest >> setUp [
 		yourself
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 BagTest >> sizeCollection [
 	^ otherCollectionWithoutEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> speciesClass [
 
 	^ Bag
 ]
 
-{ #category : #'basic tests' }
+{ #category : 'basic tests' }
 BagTest >> testAdd [
 
 	| aBag |
@@ -336,7 +338,7 @@ BagTest >> testAdd [
 	self assert: (aBag occurrencesOf: 'a') equals: 2
 ]
 
-{ #category : #'basic tests' }
+{ #category : 'basic tests' }
 BagTest >> testAddWithOccurrences [
 	| aBag |
 	aBag := Bag new.
@@ -344,14 +346,14 @@ BagTest >> testAddWithOccurrences [
 	self assert: aBag size equals: 3
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 BagTest >> testAnySastify [
 
 	self assert: ( self collection anySatisfy: [:each | each = self element]).
 	self deny: (self collection anySatisfy: [:each | each isString])
 ]
 
-{ #category : #'basic tests' }
+{ #category : 'basic tests' }
 BagTest >> testAsBag [
 	| aBag |
 	aBag := Bag new.
@@ -359,7 +361,7 @@ BagTest >> testAsBag [
 	self assert: aBag asBag equals: aBag
 ]
 
-{ #category : #'basic tests' }
+{ #category : 'basic tests' }
 BagTest >> testAsDictionary [
 	| aBag aDictonary |
 	aBag := Bag new.
@@ -373,7 +375,7 @@ BagTest >> testAsDictionary [
 	self deny: aBag asDictionary identicalTo: aBag valuesAndCounts
 ]
 
-{ #category : #'basic tests' }
+{ #category : 'basic tests' }
 BagTest >> testAsSet [
 	| aBag aSet |
 	aBag := Bag new.
@@ -384,7 +386,7 @@ BagTest >> testAsSet [
 	self assert: (aSet occurrencesOf: 'a') equals: 1
 ]
 
-{ #category : #'basic tests' }
+{ #category : 'basic tests' }
 BagTest >> testCopy [
 
 	| aBag newBag |
@@ -396,11 +398,11 @@ BagTest >> testCopy [
 	self assert: newBag asSet size equals: 2
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testCreation [
 	| bag |
 	bag := Bag new.
@@ -408,7 +410,7 @@ BagTest >> testCreation [
 	self assertEmpty: bag
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testCumulativeCounts [
 	| bag cumulativeCounts |
 	bag := Bag new.
@@ -424,7 +426,7 @@ BagTest >> testCumulativeCounts [
 	self assert: cumulativeCounts third equals: (100 -> '3')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testEqual [
 	| bag1 bag2 |
 	bag1 := Bag new.
@@ -447,7 +449,7 @@ BagTest >> testEqual [
 	self assert: bag1 equals: bag2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testFlatCollect [
 	| bag |
 	bag := Bag new.
@@ -459,7 +461,7 @@ BagTest >> testFlatCollect [
 	self assertEmpty: (#() asBag flatCollect: [ :x | 1 to: 4 ])
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 BagTest >> testIdentityIncludes [
 	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
 
@@ -472,7 +474,7 @@ BagTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: anElement)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 BagTest >> testIncludesElementIsNotThere [
 
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
@@ -480,7 +482,7 @@ BagTest >> testIncludesElementIsNotThere [
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
-{ #category : #'basic tests' }
+{ #category : 'basic tests' }
 BagTest >> testOccurrencesOf [
 
 	| aBag |
@@ -498,7 +500,7 @@ BagTest >> testOccurrencesOf [
 	self assert: (aBag occurrencesOf: nil) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testRemove [
 	| bag item |
 	item := 'test item'.
@@ -517,7 +519,7 @@ BagTest >> testRemove [
 	self should: [ bag remove: item ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testRemoveAll [
 	"Allows one to remove all elements of a collection"
 
@@ -532,7 +534,7 @@ BagTest >> testRemoveAll [
 	self assert: c2 size = s2 description: 'the copy has not been modified'
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 BagTest >> testRemoveElementThatExistsTwice [
 	| size |
 	size := self nonEmpty size.
@@ -541,7 +543,7 @@ BagTest >> testRemoveElementThatExistsTwice [
 	self assert: size - 1 equals: self nonEmpty size
 ]
 
-{ #category : #'tests - remove' }
+{ #category : 'tests - remove' }
 BagTest >> testRemoveKey [
 
 	| aBag aSet |
@@ -556,7 +558,7 @@ BagTest >> testRemoveKey [
 		hasSameElements: #( $b $c $d) asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testSortedCounts [
 
 	| bag sortedCounts|
@@ -573,7 +575,7 @@ BagTest >> testSortedCounts [
 	self assert: sortedCounts third equals: (1->'2')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BagTest >> testSortedElements [
 
 	| bag sortedElements|
@@ -591,7 +593,7 @@ BagTest >> testSortedElements [
 	self assert: sortedElements third equals: ('3'->5)
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 BagTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
 	^ nonEmpty

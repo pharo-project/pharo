@@ -1,6 +1,6 @@
-Extension { #name : #OSPlatform }
+Extension { #name : 'OSPlatform' }
 
-{ #category : #'*System-OSEnvironments' }
+{ #category : '*System-OSEnvironments' }
 OSPlatform >> environment [
 	^ OSEnvironment current
 ]

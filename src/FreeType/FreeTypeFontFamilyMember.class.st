@@ -2,8 +2,8 @@
 FreeType FontFamily member  
 "
 Class {
-	#name : #FreeTypeFontFamilyMember,
-	#superclass : #AbstractFontFamilyMember,
+	#name : 'FreeTypeFontFamilyMember',
+	#superclass : 'AbstractFontFamilyMember',
 	#instVars : [
 		'fileInfo',
 		'stretchName',
@@ -14,10 +14,12 @@ Class {
 		'slantValue',
 		'isSimulatedStyle'
 	],
-	#category : #'FreeType-FontManager'
+	#category : 'FreeType-FontManager',
+	#package : 'FreeType',
+	#tag : 'FontManager'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFontFamilyMember class >> fromFileInfo: aFreeTypeFileInfo [
 
 	^ self new
@@ -32,12 +34,12 @@ FreeTypeFontFamilyMember class >> fromFileInfo: aFreeTypeFileInfo [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FreeTypeFontFamilyMember >> <= aFreeTypeFontFamilyMember [
 	^self sortValue <= aFreeTypeFontFamilyMember sortValue
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FreeTypeFontFamilyMember >> asSimulatedBold [
 	^self copy
 		weightValue: LogicalFont weightBold;
@@ -46,7 +48,7 @@ FreeTypeFontFamilyMember >> asSimulatedBold [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
 	^self copy
 		slantValue: LogicalFont slantItalic; "treat italic and oblique the same"
@@ -56,7 +58,7 @@ FreeTypeFontFamilyMember >> asSimulatedBoldOblique [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FreeTypeFontFamilyMember >> asSimulatedOblique [
 	^self copy
 		slantValue: LogicalFont slantItalic;  "treat italic and oblique the same"
@@ -65,69 +67,69 @@ FreeTypeFontFamilyMember >> asSimulatedOblique [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> beSimulatedStyle [
 
 	isSimulatedStyle := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> fileInfo [
 	"Answer the value of fileInfo"
 
 	^ fileInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> fileInfo: anObject [
 	"Set the value of fileInfo"
 
 	fileInfo := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FreeTypeFontFamilyMember >> initialize [
 
 	super initialize.
 	isSimulatedStyle := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFontFamilyMember >> isSimulatedStyle [
 	"Return true if the receiver is a simulated style"
 
 	^isSimulatedStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> slantName [
 	"Answer the value of slantName"
 
 	^ slantName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> slantName: anObject [
 	"Set the value of slantName"
 
 	slantName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> slantValue [
 	"Answer the value of slantValue"
 
 	^ slantValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> slantValue: anObject [
 	"Set the value of slantValue"
 
 	slantValue := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FreeTypeFontFamilyMember >> sortValue [
 	| v normalizedWeight |
 	normalizedWeight := weightValue.
@@ -141,56 +143,56 @@ FreeTypeFontFamilyMember >> sortValue [
 	^v
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> stretchName [
 	"Answer the value of stretchName"
 
 	^ stretchName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> stretchName: anObject [
 	"Set the value of stretchName"
 
 	stretchName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> stretchValue [
 	"Answer the value of stretchValue"
 
 	^ stretchValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> stretchValue: anObject [
 	"Set the value of stretchValue"
 
 	stretchValue := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> weightName [
 	"Answer the value of weightName"
 
 	^ weightName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> weightName: anObject [
 	"Set the value of weightName"
 
 	weightName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> weightValue [
 	"Answer the value of weightValue"
 
 	^ weightValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFontFamilyMember >> weightValue: anObject [
 	"Set the value of weightValue"
 

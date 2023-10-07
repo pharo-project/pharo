@@ -1,18 +1,19 @@
 Class {
-	#name : #ContextDebuggingTest,
-	#superclass : #TestCase,
+	#name : 'ContextDebuggingTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'instVar'
 	],
-	#category : #'Debugging-Utils-Tests'
+	#category : 'Debugging-Utils-Tests',
+	#package : 'Debugging-Utils-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ContextDebuggingTest >> accessorMethod [
 	^instVar
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ContextDebuggingTest >> contextForMethod: aCompiledMethod [
 
 	^ Context
@@ -22,7 +23,7 @@ ContextDebuggingTest >> contextForMethod: aCompiledMethod [
 		  arguments: #(  )
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ContextDebuggingTest >> deadContext [
 	| process context |
 	process := [  ] newProcess.
@@ -31,12 +32,12 @@ ContextDebuggingTest >> deadContext [
 	^ context
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ContextDebuggingTest >> selfReturnMethod [
 	#foo asSymbol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextDebuggingTest >> testStepToSendOrReturn [
 	| context |
 	context := self deadContext.
@@ -45,7 +46,7 @@ ContextDebuggingTest >> testStepToSendOrReturn [
 	self assert: context isDead
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextDebuggingTest >> testUpdatePCForQuickPrimitiveRestart [
 
 	|method newContext  |
@@ -78,12 +79,12 @@ ContextDebuggingTest >> testUpdatePCForQuickPrimitiveRestart [
 		equals: method endPC
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ContextDebuggingTest >> trueReturnMethod [
 	^true
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ContextDebuggingTest >> zeroReturnMethod [
 	^0
 ]

@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloMethodSection,
-	#superclass : #Object,
+	#name : 'MetacelloMethodSection',
+	#superclass : 'Object',
 	#instVars : [
 		'attributes'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMethodSection >> attributePrintString [
     | stream |
     stream := WriteStream on: String new.
@@ -24,18 +26,18 @@ MetacelloMethodSection >> attributePrintString [
     ^ stream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSection >> attributes [
     attributes ifNil: [ attributes := OrderedCollection new ].
     ^ attributes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMethodSection >> attributes: aCollectionOrSymbol [
     attributes := aCollectionOrSymbol asMetacelloAttributeList
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMethodSection >> includesAttributeFrom: attributeCollection [
     ^ (attributeCollection asSet intersection: self attributes asSet) notEmpty
 ]

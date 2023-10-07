@@ -2,87 +2,89 @@
 I model an abstract type of result for the run of a test case.
 "
 Class {
-	#name : #DTTestResultType,
-	#superclass : #Object,
-	#category : #'DrTests-TestsRunner-Results'
+	#name : 'DTTestResultType',
+	#superclass : 'Object',
+	#category : 'DrTests-TestsRunner-Results',
+	#package : 'DrTests-TestsRunner',
+	#tag : 'Results'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> backgroundColorStyle [
 	^ self subclassResponsibility
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> error [
 	^ DTErrorResultType new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> expectedFailure [
 	^ DTExpectedFailureResultType new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> fail [
 	^ DTFailResultType new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> pass [
 	^ DTPassResultType new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> skipped [
 	^ DTSkippedResultType new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> textColor [
 	^ TestResult defaultColorText
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTTestResultType class >> unexpectedPass [
 	^ DTUnexpectedPassResultType new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTestResultType >> isError [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestResultType >> isExpectedFailure [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTestResultType >> isFail [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTestResultType >> isPass [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTestResultType >> isSkipped [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestResultType >> isUnexpectedPass [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestResultType >> name [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestResultType >> pluralName [
 	^ self name , 's'
 ]

@@ -8,7 +8,9 @@ Usually, the cause is one of two things;
 - We should have #setOption: 'SO_BROADCAST' value: true on the (UDP) socket
 "
 Class {
-	#name : #NoBroadcastAllowed,
-	#superclass : #SocketPrimitiveFailed,
-	#category : #'Network-Kernel-Exceptions'
+	#name : 'NoBroadcastAllowed',
+	#superclass : 'SocketPrimitiveFailed',
+	#category : 'Network-Kernel-Exceptions',
+	#package : 'Network-Kernel',
+	#tag : 'Exceptions'
 }

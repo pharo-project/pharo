@@ -1,1 +1,1 @@
-Package { #name : #'Morphic-Widgets-Taskbar-Tests' }
+Package { #name : 'Morphic-Widgets-Taskbar-Tests' }

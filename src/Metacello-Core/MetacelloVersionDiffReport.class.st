@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloVersionDiffReport,
-	#superclass : #Object,
+	#name : 'MetacelloVersionDiffReport',
+	#superclass : 'Object',
 	#instVars : [
 		'additions',
 		'configuration',
@@ -9,52 +9,54 @@ Class {
 		'from',
 		'to'
 	],
-	#category : #'Metacello-Core-Model'
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> additions [
 	additions ifNil: [ additions := Dictionary new ].
 	^ additions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> additions: anObject [
 	additions := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> configuration [
 	^ configuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> configuration: anObject [
 	configuration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> from [
 	^ from
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> from: anObject [
 	from := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> modifications [
 	modifications ifNil: [ modifications := Dictionary new ].
 	^ modifications
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> modifications: anObject [
 	modifications := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionDiffReport >> printOn: aStream [
 	| printBlock |
 	printBlock := [ :pkgName :ar | 
@@ -92,23 +94,23 @@ MetacelloVersionDiffReport >> printOn: aStream [
 	self removals keysAndValuesDo: printBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> removals [
 	removals ifNil: [ removals := Dictionary new ].
 	^ removals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> removals: anObject [
 	removals := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> to [
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDiffReport >> to: anObject [
 	to := anObject
 ]

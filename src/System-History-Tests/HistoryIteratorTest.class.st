@@ -2,21 +2,22 @@
 SUnit tests for HistoryIterator
 "
 Class {
-	#name : #HistoryIteratorTest,
-	#superclass : #TestCase,
+	#name : 'HistoryIteratorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'historyList'
 	],
-	#category : #'System-History-Tests'
+	#category : 'System-History-Tests',
+	#package : 'System-History-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 HistoryIteratorTest >> setUp [
 	super setUp.
 	historyList := HistoryIterator new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIteratorTest >> testGroupedUndo1 [
 	"test of grouping history entries afterwards by #groupFrom:to:"
 	| aCollection |
@@ -38,7 +39,7 @@ HistoryIteratorTest >> testGroupedUndo1 [
 	self assert: ((aCollection last = 3) and: [aCollection second = 2])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIteratorTest >> testGroupedUndo2 [
 	"test of grouping history entries by #openGroup and #closeGroup"
 	| aCollection |
@@ -64,7 +65,7 @@ HistoryIteratorTest >> testGroupedUndo2 [
 	self assert: ((aCollection last = 3) and: [aCollection second = 2])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIteratorTest >> testGrouping [
 	| aCollection |
 	aCollection := OrderedCollection new.
@@ -86,7 +87,7 @@ HistoryIteratorTest >> testGrouping [
 	self assertEmpty: aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIteratorTest >> testMaxSize [
 
 	| aCollection |
@@ -103,7 +104,7 @@ HistoryIteratorTest >> testMaxSize [
 	self assert: historyList size equals: 5
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIteratorTest >> testUndo1 [
 
 	| aCollection |
@@ -119,7 +120,7 @@ HistoryIteratorTest >> testUndo1 [
 	self assert: aCollection size equals: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIteratorTest >> testUndo2 [
 
 	| aCollection |

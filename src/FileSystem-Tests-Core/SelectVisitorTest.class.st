@@ -3,12 +3,14 @@ SUnit tests for class SelectVistor
 
 "
 Class {
-	#name : #SelectVisitorTest,
-	#superclass : #AbstractEnumerationVisitorTest,
-	#category : #'FileSystem-Tests-Core-Visitors'
+	#name : 'SelectVisitorTest',
+	#superclass : 'AbstractEnumerationVisitorTest',
+	#category : 'FileSystem-Tests-Core-Visitors',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Visitors'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelectVisitorTest >> testBreadthFirst [
 	| entries |
 	entries := SelectVisitor breadthFirst: self root.
@@ -24,7 +26,7 @@ SelectVisitorTest >> testBreadthFirst [
 			)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelectVisitorTest >> testBreadthFirstSelect [
 	| entries |
 	entries := SelectVisitor breadthFirst: self root select: [ :node| node name endsWith: #a].
@@ -39,7 +41,7 @@ SelectVisitorTest >> testBreadthFirstSelect [
 			)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelectVisitorTest >> testPostorder [
 	| entries |
 	entries := SelectVisitor postorder: self root.
@@ -55,7 +57,7 @@ SelectVisitorTest >> testPostorder [
 			)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelectVisitorTest >> testPostorderSelect [
 	| entries |
 	entries := SelectVisitor postorder: self root select: [ :node| node name endsWith: #a].
@@ -70,7 +72,7 @@ SelectVisitorTest >> testPostorderSelect [
 			)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelectVisitorTest >> testPreorder [
 	| entries |
 	entries := SelectVisitor preorder: self root.
@@ -86,7 +88,7 @@ SelectVisitorTest >> testPreorder [
 			)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelectVisitorTest >> testPreorderSelect [
 	| entries |
 	entries := SelectVisitor preorder: self root select: [ :node| node name endsWith: #a].

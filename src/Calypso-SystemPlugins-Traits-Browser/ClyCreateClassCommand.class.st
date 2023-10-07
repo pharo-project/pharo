@@ -1,38 +1,39 @@
 Class {
-	#name : #ClyCreateClassCommand,
-	#superclass : #ClyBrowserCommand,
+	#name : 'ClyCreateClassCommand',
+	#superclass : 'ClyBrowserCommand',
 	#instVars : [
 		'package',
 		'classTag'
 	],
-	#category : #'Calypso-SystemPlugins-Traits-Browser'
+	#category : 'Calypso-SystemPlugins-Traits-Browser',
+	#package : 'Calypso-SystemPlugins-Traits-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCreateClassCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
 
 	^aBrowserContext isPackageSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCreateClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 4 for: ClyFullBrowserClassContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCreateClassCommand >> defaultMenuIconName [
 	^#class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCreateClassCommand >> defaultMenuItemName [
 	^'New class'
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 ClyCreateClassCommand >> execute [
 	| classDefinition p resultTrait |
 	p := package name.
@@ -50,7 +51,7 @@ ClyCreateClassCommand >> execute [
 	resultTrait ifNotNil: [ browser selectClass: resultTrait ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyCreateClassCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
 

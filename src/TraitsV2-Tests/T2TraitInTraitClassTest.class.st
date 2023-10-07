@@ -1,10 +1,11 @@
 Class {
-	#name : #T2TraitInTraitClassTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitInTraitClassTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitInTraitClassTest >> testAddingSlotToClassSide [
 
 	| t1 |
@@ -16,7 +17,7 @@ T2TraitInTraitClassTest >> testAddingSlotToClassSide [
 	self assert: t1 classTrait slots anyOne name equals: #aSlot.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitInTraitClassTest >> testAddingSpecialSlotToClassSide [
 
 	| t1 |

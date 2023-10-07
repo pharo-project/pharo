@@ -2,18 +2,20 @@
 Provides native access to the web browser on Mac. Do not use directly, use class WebBrowser instead.
 "
 Class {
-	#name : #WBMacWebBrowser,
-	#superclass : #WebBrowser,
-	#category : #'WebBrowser-Core-OS-Mac'
+	#name : 'WBMacWebBrowser',
+	#superclass : 'WebBrowser',
+	#category : 'WebBrowser-Core-OS-Mac',
+	#package : 'WebBrowser-Core',
+	#tag : 'OS-Mac'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WBMacWebBrowser class >> isForCurrentSystem [
 
 	^ Smalltalk os isMacOS
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WBMacWebBrowser class >> openNativeWebBrowserOn: anURLString [
 
 	| openCommand |
@@ -21,7 +23,7 @@ WBMacWebBrowser class >> openNativeWebBrowserOn: anURLString [
 	self system: openCommand
 ]
 
-{ #category : #'private - uffi' }
+{ #category : 'private - uffi' }
 WBMacWebBrowser class >> system: command [
 
 	^ LibC system: command

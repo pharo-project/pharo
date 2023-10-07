@@ -2,12 +2,14 @@
 I am a command to run all failed tests available in given data source
 "
 Class {
-	#name : #ClyRunFailedTestsFromMethodDataSourceCommand,
-	#superclass : #ClyRunTestsFromMethodDataSourceCommand,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#name : 'ClyRunFailedTestsFromMethodDataSourceCommand',
+	#superclass : 'ClyRunTestsFromMethodDataSourceCommand',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRunFailedTestsFromMethodDataSourceCommand class >> canBeExecutedInContext: aBrowserContext [
 	| testResult |
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false].
@@ -16,12 +18,12 @@ ClyRunFailedTestsFromMethodDataSourceCommand class >> canBeExecutedInContext: aB
 	^testResult hasBrokenTests
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunFailedTestsFromMethodDataSourceCommand class >> menuOrder [
 	^super menuOrder + 1
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunFailedTestsFromMethodDataSourceCommand >> buildTestSuite [
 
 	| suite |
@@ -34,7 +36,7 @@ ClyRunFailedTestsFromMethodDataSourceCommand >> buildTestSuite [
 	^suite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRunFailedTestsFromMethodDataSourceCommand >> defaultMenuItemName [
 	self hasTestResult ifFalse: [ ^'Run failed' ].
 

@@ -4,19 +4,21 @@ I am a refactoring for reformat the source code of all methods in this environme
 I have no precondition.
 "
 Class {
-	#name : #RBPrettyPrintCodeTransformation,
-	#superclass : #RBRefactoring,
-	#category : #'Refactoring-Core-Transformation-Unused'
+	#name : 'RBPrettyPrintCodeTransformation',
+	#superclass : 'RBRefactoring',
+	#category : 'Refactoring-Core-Transformation-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Transformation-Unused'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPrettyPrintCodeTransformation >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
-{ #category : #transforming }
-RBPrettyPrintCodeTransformation >> transform [
+{ #category : 'transforming' }
+RBPrettyPrintCodeTransformation >> privateTransform [
 	| source tree formatted |
 	self model
 		allClassesDo: [ :class |
@@ -31,5 +33,9 @@ RBPrettyPrintCodeTransformation >> transform [
 											(source ~= formatted
 												and: [ (self parserClass parseMethod: formatted) = tree ])
 												ifTrue:
-													[ class compile: formatted classified: (class protocolsFor: selector) ] ] ] ] ] ]
+													[ 	self generateChangesFor:
+															(RBAddMethodTransformation
+																sourceCode: formatted
+																in: class
+																withProtocol: (class protocolsFor: selector)) ] ] ] ] ] ]
 ]

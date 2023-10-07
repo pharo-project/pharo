@@ -1,16 +1,18 @@
 Class {
-	#name : #RubTextFieldAreaTest,
-	#superclass : #TestCase,
-	#category : #'Rubric-Tests-Editing-Core'
+	#name : 'RubTextFieldAreaTest',
+	#superclass : 'TestCase',
+	#category : 'Rubric-Tests-Editing-Core',
+	#package : 'Rubric-Tests',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter [
 
 	^ self simulatedKeyDownFromChar: aCharacter alt: false ctrl: false command: false shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: useCtrl command: useCommand shift: useShift [
 	| event modifier code |
 	event := KeyboardEvent new.
@@ -36,13 +38,13 @@ RubTextFieldAreaTest >> simulatedKeyDownFromChar: aCharacter alt: useAlt ctrl: u
 	^ event
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter [
 
 	^ self simulatedKeyStrokeFromChar: aCharacter alt: false ctrl: false command: false shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl: useCtrl command: useCommand shift: useShift [
 	| event modifier code |
 	event := KeyboardEvent new.
@@ -67,7 +69,7 @@ RubTextFieldAreaTest >> simulatedKeyStrokeFromChar: aCharacter alt: useAlt ctrl:
 	^ event
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testInsertionWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -85,7 +87,7 @@ RubTextFieldAreaTest >> testInsertionWithMaxLength [
 	self assert: m string equals: 'BBD'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testKeyStrokeBackSpaceWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -105,7 +107,7 @@ RubTextFieldAreaTest >> testKeyStrokeBackSpaceWithMaxLength [
 	self assert: m string equals: 'ac'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testKeyStrokeWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -124,7 +126,7 @@ RubTextFieldAreaTest >> testKeyStrokeWithMaxLength [
 	self assert: m string equals: 'ab'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testMaxLengthIsNegative [
 	| m |
 	m := RubTextFieldArea new
@@ -135,7 +137,7 @@ RubTextFieldAreaTest >> testMaxLengthIsNegative [
 	self assert: m text size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testMaxLengthIsSet [
 	| m |
 	m := RubTextFieldArea new
@@ -145,7 +147,7 @@ RubTextFieldAreaTest >> testMaxLengthIsSet [
 	self assert: m maxLength equals: 15
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testMaxLengthTruncatesText [
 	| m |
 	m := RubTextFieldArea new
@@ -169,7 +171,7 @@ RubTextFieldAreaTest >> testMaxLengthTruncatesText [
 	self assert: m text size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testPrivateReplaceFromTo [
 	| m |
 	m := RubTextFieldArea new
@@ -186,7 +188,7 @@ RubTextFieldAreaTest >> testPrivateReplaceFromTo [
 	self assert: m string equals: 'BBDDDCCC'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testReplacementWithMaxLength [
 	| m |
 	m := RubTextFieldArea new
@@ -203,7 +205,7 @@ RubTextFieldAreaTest >> testReplacementWithMaxLength [
 	self assert: m string equals: 'XXX'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testWhenWeHaveTheRubTextFieldAreaInsideOtherMorphHasToHonorTheExtentAssignedToIt [
 
 	| dropList widthOfButton |
@@ -228,7 +230,7 @@ RubTextFieldAreaTest >> testWhenWeHaveTheRubTextFieldAreaInsideOtherMorphHasToHo
 	self assert: (dropList submorphs at: 1) extent x equals: 74
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextFieldAreaTest >> testnewSizeAfterUpdate [
 	| m |
 	" "

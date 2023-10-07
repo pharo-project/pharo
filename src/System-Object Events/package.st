@@ -1,1 +1,1 @@
-Package { #name : #'System-Object Events' }
+Package { #name : 'System-Object Events' }

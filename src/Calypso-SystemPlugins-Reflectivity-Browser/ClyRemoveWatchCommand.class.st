@@ -2,23 +2,25 @@
 I am a command to remove all watchpoints from given method or source node
 "
 Class {
-	#name : #ClyRemoveWatchCommand,
-	#superclass : #ClyRemoveDebuggingCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
+	#name : 'ClyRemoveWatchCommand',
+	#superclass : 'ClyRemoveDebuggingCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Watchpoints'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRemoveWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^aBrowserContext isSelectedItemHasWatch
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRemoveWatchCommand class >> contextMenuOrder [
 	^3
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRemoveWatchCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
@@ -26,7 +28,7 @@ ClyRemoveWatchCommand class >> methodContextMenuActivation [
 			byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRemoveWatchCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
@@ -34,12 +36,12 @@ ClyRemoveWatchCommand class >> sourceCodeMenuActivation [
 		byItemOf: ClyAdvancedDebuggingMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRemoveWatchCommand >> debuggingToolClass [
 	^Watch
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyRemoveWatchCommand >> tableCellIcon [
 	^Smalltalk ui iconNamed: #haloView
 ]

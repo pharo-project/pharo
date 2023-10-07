@@ -18,28 +18,29 @@ Instance Variables
 	next	Function	<SortFunction>	the next SortFunction to evaluate in the event primary collation results are equal values
 "
 Class {
-	#name : #ChainedSortFunction,
-	#superclass : #ComposedSortFunction,
+	#name : 'ChainedSortFunction',
+	#superclass : 'ComposedSortFunction',
 	#instVars : [
 		'nextFunction'
 	],
-	#category : #'SortFunctions-Core'
+	#category : 'SortFunctions-Core',
+	#package : 'SortFunctions-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ChainedSortFunction class >> startWith: aSortFunction then: nextSortFunction [
 	^self new
 		baseSortFunction: aSortFunction;
 		nextFunction: nextSortFunction
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ChainedSortFunction >> , aSortFunction [
 
 	^self class startWith: baseSortFunction then: nextFunction , aSortFunction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ChainedSortFunction >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -51,7 +52,7 @@ ChainedSortFunction >> = anObject [
 			and: [ nextFunction = anObject nextFunction ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ChainedSortFunction >> collate: anObject1 with: anObject2 [
 	"If the result of current function is 0, then pass on to the next function to work it out"
 
@@ -62,19 +63,19 @@ ChainedSortFunction >> collate: anObject1 with: anObject2 [
 		ifFalse: [result]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ChainedSortFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash + nextFunction hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChainedSortFunction >> nextFunction [
 	^ nextFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChainedSortFunction >> nextFunction: anObject [
 	nextFunction := anObject
 ]

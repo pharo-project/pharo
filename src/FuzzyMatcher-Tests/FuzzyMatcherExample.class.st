@@ -4,8 +4,8 @@ See the example on the class side.
 
 "
 Class {
-	#name : #FuzzyMatcherExample,
-	#superclass : #Object,
+	#name : 'FuzzyMatcherExample',
+	#superclass : 'Object',
 	#instVars : [
 		'textModel',
 		'dataSource',
@@ -14,10 +14,12 @@ Class {
 		'pattern',
 		'stringMorph'
 	],
-	#category : #'FuzzyMatcher-Tests-Examples'
+	#category : 'FuzzyMatcher-Tests-Examples',
+	#package : 'FuzzyMatcher-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 FuzzyMatcherExample class >> exampleAuthors [
 	<sampleInstance>
 	| authors blk |
@@ -40,7 +42,7 @@ FuzzyMatcherExample class >> exampleAuthors [
 		open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FuzzyMatcherExample class >> exampleClasses [
 	<sampleInstance>
 
@@ -50,17 +52,17 @@ FuzzyMatcherExample class >> exampleClasses [
 		open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FuzzyMatcherExample class >> examplePackages [
-	<example>
 
+	<example>
 	^ self new
-		pattern: '-st';
-		elements: (RPackage organizer packages collect: [:each | each name] );
-		open
+		  pattern: '-st';
+		  elements: (self packageOrganizer packages collect: [ :each | each name ]);
+		  open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 FuzzyMatcherExample class >> exampleSelectors [
 	<example>
 
@@ -70,13 +72,13 @@ FuzzyMatcherExample class >> exampleSelectors [
 		open
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FuzzyMatcherExample >> aquireFont [
 
 	^ LogicalFont familyName: self fontName pointSize: 16
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 FuzzyMatcherExample >> buildMorph [
 
 	| morph ft |
@@ -105,7 +107,7 @@ FuzzyMatcherExample >> buildMorph [
 	^ morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FuzzyMatcherExample >> elements: aCollection [
 
 	elements := aCollection collect: [:each | each -> 0 ].
@@ -114,13 +116,13 @@ FuzzyMatcherExample >> elements: aCollection [
 	self update
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FuzzyMatcherExample >> fontName [
 
 	^ 'Source Sans Pro'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FuzzyMatcherExample >> initialize [
 
 	super initialize.
@@ -146,7 +148,7 @@ FuzzyMatcherExample >> initialize [
 	stringMorph := StringMorph contents: '' font: self aquireFont
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FuzzyMatcherExample >> match: aPattern for: aCollection [
 
 	| matcher matches |
@@ -168,7 +170,7 @@ FuzzyMatcherExample >> match: aPattern for: aCollection [
 	^ matches
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 FuzzyMatcherExample >> open [
 	<script: 'self new open'>
 	| window area |
@@ -183,13 +185,13 @@ FuzzyMatcherExample >> open [
 	^ window
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FuzzyMatcherExample >> pattern: aString [
 
 	textModel setText: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FuzzyMatcherExample >> setElements: aCollection [
 
 	elements := aCollection collect: [:each | each -> 0 ].
@@ -197,13 +199,13 @@ FuzzyMatcherExample >> setElements: aCollection [
 	dataSource elements: matchedElements
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FuzzyMatcherExample >> update [
 
 	self updatePattern: textModel getText asString
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FuzzyMatcherExample >> updatePattern: newPattern [
 
 	| searchPool t text |

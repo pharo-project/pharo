@@ -4,22 +4,24 @@ I am an abstract exception handler. When an unhandled error happens in a runner,
 Subclasses of me are meant to define different exception handling behaviours such as debugging or logging.
 "
 Class {
-	#name : #TKTExceptionHandler,
-	#superclass : #Object,
-	#category : #'TaskIt-Kernel'
+	#name : 'TKTExceptionHandler',
+	#superclass : 'Object',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #handling }
+{ #category : 'handling' }
 TKTExceptionHandler class >> handleException: anError [
 	^ self new handleException: anError
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 TKTExceptionHandler class >> isDebuggingCompatible [
 	^ false
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 TKTExceptionHandler >> handleException: anError [
 
 	anError debug

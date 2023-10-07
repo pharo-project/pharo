@@ -2,16 +2,18 @@
 Couple examples..
 "
 Class {
-	#name : #SDL2Example,
-	#superclass : #Object,
+	#name : 'SDL2Example',
+	#superclass : 'Object',
 	#pools : [
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #'OSWindow-SDL2-Examples-Examples'
+	#category : 'OSWindow-SDL2-Examples-Examples',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2Example >> osWindow [
 	"
 	self new osWindow
@@ -26,7 +28,7 @@ SDL2Example >> osWindow [
 	^window
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2Example >> simpleBlackWindow [
 	"
 	self new simpleBlackWindow
@@ -48,7 +50,7 @@ SDL2Example >> simpleBlackWindow [
 	window destroy
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2Example >> simpleDrawDisplay [
 	"
 	self new simpleDrawDisplay
@@ -81,7 +83,7 @@ SDL2Example >> simpleDrawDisplay [
 	window destroy
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2Example >> simpleDrawWindow [
 	"
 	self new simpleDrawWindow
@@ -111,7 +113,7 @@ SDL2Example >> simpleDrawWindow [
 	window destroy
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2Example >> simpleWindow [
 	"
 	self new simpleWindow

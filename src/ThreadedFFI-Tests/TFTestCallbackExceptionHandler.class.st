@@ -3,16 +3,17 @@ I am a test callback exception handler.
 I keep the exception so it can be asserted in the test.
 "
 Class {
-	#name : #TFTestCallbackExceptionHandler,
-	#superclass : #Object,
+	#name : 'TFTestCallbackExceptionHandler',
+	#superclass : 'Object',
 	#instVars : [
 		'lastException',
 		'available'
 	],
-	#category : #'ThreadedFFI-Tests'
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #handling }
+{ #category : 'handling' }
 TFTestCallbackExceptionHandler >> handleExceptionDuring: aBlockClosure [
 
 	aBlockClosure on: Exception do: [ :e |
@@ -20,20 +21,20 @@ TFTestCallbackExceptionHandler >> handleExceptionDuring: aBlockClosure [
 		available signal ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFTestCallbackExceptionHandler >> initialize [
 
 	super initialize.
 	available := Semaphore new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFTestCallbackExceptionHandler >> lastException [
 
 	^ lastException
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 TFTestCallbackExceptionHandler >> wait [
 
 	available wait

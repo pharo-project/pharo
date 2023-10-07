@@ -5,7 +5,9 @@ I shouldn't be created directly, but always be part of a refactoring namespace.
 My  namespace usally knows me and my non meta class.
 "
 Class {
-	#name : #RBTraitedMetaclass,
-	#superclass : #RBMetaclass,
-	#category : #'Refactoring-Core-Model'
+	#name : 'RBTraitedMetaclass',
+	#superclass : 'RBMetaclass',
+	#category : 'Refactoring-Core-Model',
+	#package : 'Refactoring-Core',
+	#tag : 'Model'
 }

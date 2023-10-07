@@ -1,10 +1,11 @@
 Class {
-	#name : #RBRefactoringChangeManagerTest,
-	#superclass : #TestCase,
-	#category : #'Refactoring-Tests-Changes'
+	#name : 'RBRefactoringChangeManagerTest',
+	#superclass : 'TestCase',
+	#category : 'Refactoring-Tests-Changes',
+	#package : 'Refactoring-Tests-Changes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeManagerTest >> testChangeFactoryIsCorrectlyInitialized [
 
 	RBRefactoryChangeManager nuke.

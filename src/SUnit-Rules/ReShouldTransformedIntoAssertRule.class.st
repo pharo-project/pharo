@@ -2,20 +2,22 @@
 should: will be deprecated sooner or leater. Use assert: instead
 "
 Class {
-	#name : #ReShouldTransformedIntoAssertRule,
-	#superclass : #ReNodeRewriteRule,
+	#name : 'ReShouldTransformedIntoAssertRule',
+	#superclass : 'ReNodeRewriteRule',
 	#traits : 'ReTSUnitGroupedRule',
 	#classTraits : 'ReTSUnitGroupedRule classTrait',
-	#category : #'SUnit-Rules-Base'
+	#category : 'SUnit-Rules-Base',
+	#package : 'SUnit-Rules',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReShouldTransformedIntoAssertRule class >> uniqueIdentifierName [
 
 	^'ShouldTransformedIntoAssert'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReShouldTransformedIntoAssertRule >> initialize [
 	super initialize.
 
@@ -24,7 +26,7 @@ ReShouldTransformedIntoAssertRule >> initialize [
 		with: 'self assert: ``@object1'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReShouldTransformedIntoAssertRule >> name [
 
 	^ 'Use assert: instead of should:'

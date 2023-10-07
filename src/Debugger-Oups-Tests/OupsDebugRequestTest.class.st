@@ -2,12 +2,22 @@
 A DebugRequestTest is a test class for testing the behavior of DebugRequest
 "
 Class {
-	#name : #OupsDebugRequestTest,
-	#superclass : #TestCase,
-	#category : #'Debugger-Oups-Tests-Tests - infrastructure'
+	#name : 'OupsDebugRequestTest',
+	#superclass : 'TestCase',
+	#category : 'Debugger-Oups-Tests-Tests - infrastructure',
+	#package : 'Debugger-Oups-Tests',
+	#tag : 'Tests - infrastructure'
 }
 
-{ #category : #tests }
+{ #category : 'private' }
+OupsDebugRequestTest >> performTest [
+	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
+
+	('Running: ' , testSelector asString , ' from ' , self class name) traceCr.
+	self perform: testSelector asSymbol
+]
+
+{ #category : 'tests' }
 OupsDebugRequestTest >> testCreationFromException [
 	| error dr |
 	[ self error ] on: Error do: [ :e | error := e].
@@ -16,7 +26,7 @@ OupsDebugRequestTest >> testCreationFromException [
 	self assert: dr process identicalTo: dr defaultProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsDebugRequestTest >> testDebugSession [
 	| error dr ds |
 	[ self error ] on: Error do: [ :e | error := e].
@@ -27,26 +37,26 @@ OupsDebugRequestTest >> testDebugSession [
 	self assert: ds exception identicalTo: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsDebugRequestTest >> testDefaultProcess [
 	| dr |
 	dr := OupsDebugRequest basicNew.
 	self assert: dr process identicalTo: Processor activeProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsDebugRequestTest >> testNewNotAllowed [
 	self should: [ OupsDebugRequest new ] raise: ShouldNotImplement
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsDebugRequestTest >> testNoPreDebugActionsBeforeComputation [
 	| dr |
 	dr := OupsDebugRequest basicNew.
 	self assert: dr preDebugActions isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsDebugRequestTest >> testNullExceptionForNamed [
 	| context name nullException |
 	context := thisContext.
@@ -56,7 +66,7 @@ OupsDebugRequestTest >> testNullExceptionForNamed [
 	self assert: nullException messageText equals: name
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OupsDebugRequestTest >> testPreDebugActionForDebugItMethod [
 	| dr |
 	dr := OupsDebugRequest basicNew.

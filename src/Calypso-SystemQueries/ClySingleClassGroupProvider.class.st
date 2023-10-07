@@ -10,12 +10,14 @@ It should return class query representing classes for the group.
 It should creates group instance using given scope. The package scope is given to build subgroups query if needed. Any class group can be expanded to children subgroups
 "
 Class {
-	#name : #ClySingleClassGroupProvider,
-	#superclass : #ClyClassGroupProvider,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClySingleClassGroupProvider',
+	#superclass : 'ClyClassGroupProvider',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClySingleClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
 
 	| classQuery |
@@ -25,12 +27,12 @@ ClySingleClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
 	aBlock value: (self createClassGroupFor: classQuery from: aPackageScope)
 ]
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClySingleClassGroupProvider >> createClassGroupFor: aClassQuery from: aPackageScope [
 	self subclassResponsibility
 ]
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClySingleClassGroupProvider >> createClassQueryFrom: aPackageScope [
 	self subclassResponsibility
 ]

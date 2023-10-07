@@ -1,10 +1,12 @@
 Class {
-	#name : #STONCStyleCommentsSkipStreamTest,
-	#superclass : #TestCase,
-	#category : #'STON-Tests-Reader'
+	#name : 'STONCStyleCommentsSkipStreamTest',
+	#superclass : 'TestCase',
+	#category : 'STON-Tests-Reader',
+	#package : 'STON-Tests',
+	#tag : 'Reader'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStreamTest >> testBlockReading [
 	| input buffer |
 	input := STONCStyleCommentsSkipStream on: 'abc/*comment*/def' readStream.
@@ -20,7 +22,7 @@ STONCStyleCommentsSkipStreamTest >> testBlockReading [
 	self assert: input atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStreamTest >> testCommentInString [
 	self
 		assert: (STONCStyleCommentsSkipStream on: '''/*comment*/''' readStream) upToEnd
@@ -39,7 +41,7 @@ STONCStyleCommentsSkipStreamTest >> testCommentInString [
 		equals: '{"foo":"//comment\"bar"}'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStreamTest >> testMultiLineComment [
 	self
 		assert: (STONCStyleCommentsSkipStream on: 'foo\//comment\bar' withCRs readStream) upToEnd
@@ -53,7 +55,7 @@ STONCStyleCommentsSkipStreamTest >> testMultiLineComment [
 	self assert: (STONCStyleCommentsSkipStream on: '//comment' readStream) atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStreamTest >> testNonComment [
 	self assert: (STONCStyleCommentsSkipStream on: 'foo' readStream) upToEnd equals: 'foo'.
 	self assert: (STONCStyleCommentsSkipStream on: 'foo' readStream) nextLine equals: 'foo'.
@@ -61,7 +63,7 @@ STONCStyleCommentsSkipStreamTest >> testNonComment [
 	self assert: (STONCStyleCommentsSkipStream on: '' readStream) atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStreamTest >> testSTON [
 	"Comments are processed first and totally removed.
 	They are not even whitespace (not that whitespace is relevant in STON)."
@@ -80,7 +82,7 @@ STONCStyleCommentsSkipStreamTest >> testSTON [
 		raise: STONReaderError
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 STONCStyleCommentsSkipStreamTest >> testSingleLineComment [
 	self assert: (STONCStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) upToEnd equals: 'foobar'.
 	self assert: (STONCStyleCommentsSkipStream on: 'foo/*comment*/bar' readStream) nextLine equals: 'foobar'.

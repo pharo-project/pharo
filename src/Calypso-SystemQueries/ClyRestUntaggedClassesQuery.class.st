@@ -8,12 +8,14 @@ You can see class group #extensions which is based on me.
 It appears only when tagged and untagged classes exist together in the package
 "
 Class {
-	#name : #ClyRestUntaggedClassesQuery,
-	#superclass : #ClyClassQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyRestUntaggedClassesQuery',
+	#superclass : 'ClyClassQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRestUntaggedClassesQuery >> buildResult: aQueryResult [
 
 	| foundClasses |
@@ -23,7 +25,7 @@ ClyRestUntaggedClassesQuery >> buildResult: aQueryResult [
 			^aQueryResult fillWith: foundClasses rawItems]]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRestUntaggedClassesQuery >> checkEmptyResult [
 
 	scope packagesDo: [ :each |
@@ -33,13 +35,14 @@ ClyRestUntaggedClassesQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyRestUntaggedClassesQuery >> description [
 
 	^'rest unclassified classes'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRestUntaggedClassesQuery >> selectsClass: aClass [
-	^aClass tags isEmpty
+
+	^ aClass packageTag isRoot
 ]

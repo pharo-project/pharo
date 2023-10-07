@@ -2,8 +2,8 @@
 A join section usable for merging
 "
 Class {
-	#name : #MergeJoinSection,
-	#superclass : #JoinSection,
+	#name : 'MergeJoinSection',
+	#superclass : 'JoinSection',
 	#instVars : [
 		'selectedBorderColor',
 		'selected',
@@ -11,24 +11,26 @@ Class {
 		'stateIcons',
 		'allowClick'
 	],
-	#category : #'Tool-Diff-Joins'
+	#category : 'Tool-Diff-Joins',
+	#package : 'Tool-Diff',
+	#tag : 'Joins'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> allowClick [
 	"Answer the value of allowClick"
 
 	^ allowClick
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> allowClick: anObject [
 	"Set the value of allowClick"
 
 	allowClick := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeJoinSection >> appendToCompositeText: aText [
 	"If appropriate append the relevant src or dst text to the given text."
 
@@ -40,7 +42,7 @@ MergeJoinSection >> appendToCompositeText: aText [
 			append: self dst text]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> borderColorToUse [
 	"Answer the border color to use based on the selection state."
 
@@ -49,7 +51,7 @@ MergeJoinSection >> borderColorToUse [
 		ifFalse: [super borderColorToUse]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeJoinSection >> clicked [
 	"The receiver or a highlight was clicked."
 
@@ -58,7 +60,7 @@ MergeJoinSection >> clicked [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MergeJoinSection >> containsPoint: aPoint [
 	"Answer whether the receiver contains the given point."
 
@@ -66,7 +68,7 @@ MergeJoinSection >> containsPoint: aPoint [
 		self stateIcon notNil and: [self stateIconBounds containsPoint: aPoint]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> defaultStateIcons [
 	"Answer the default state icons."
 
@@ -74,7 +76,7 @@ MergeJoinSection >> defaultStateIcons [
 	(self iconNamed: #smallOk) . (self iconNamed: #smallCancel)}
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MergeJoinSection >> drawOn: aCanvas [
 	"Draw the join on the given canvas."
 
@@ -85,7 +87,7 @@ MergeJoinSection >> drawOn: aCanvas [
 			at: self stateIconBounds topLeft]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MergeJoinSection >> initialize [
 	"Initialize the receiver."
 
@@ -98,7 +100,7 @@ MergeJoinSection >> initialize [
 	super initialize
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MergeJoinSection >> selectNextState [
 	"Set the selection state to the next one with wraparound."
 
@@ -108,14 +110,14 @@ MergeJoinSection >> selectNextState [
 				self selectionStates size + 1))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> selected [
 	"Answer the value of selected"
 
 	^ selected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> selected: aBoolean [
 	"Set the value of selected"
 
@@ -125,42 +127,42 @@ MergeJoinSection >> selected: aBoolean [
 		changed: #selected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> selectedBorderColor [
 	"Answer the value of selectedBorderColor"
 
 	^ selectedBorderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> selectedBorderColor: anObject [
 	"Set the value of selectedBorderColor"
 
 	selectedBorderColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> selectionState [
 	"Answer the value of selectionState"
 
 	^ selectionState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> selectionState: anObject [
 	"Set the value of selectionState"
 
 	selectionState := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> selectionStates [
 	"Answer the valid selection states in order."
 
 	^#(src dst both neither)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> stateIcon [
 	"Answer the state icon to use."
 
@@ -168,7 +170,7 @@ MergeJoinSection >> stateIcon [
 	^self stateIcons at: (self selectionStates indexOf: self selectionState)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> stateIconBounds [
 	"Answer the bounds of the state icon."
 
@@ -178,21 +180,21 @@ MergeJoinSection >> stateIconBounds [
 		extent: i extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> stateIcons [
 	"Answer the value of stateIcons"
 
 	^ stateIcons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MergeJoinSection >> stateIcons: anObject [
 	"Set the value of stateIcons"
 
 	stateIcons := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MergeJoinSection >> wantsClick [
 	"Allow if explictly enabled and super."
 

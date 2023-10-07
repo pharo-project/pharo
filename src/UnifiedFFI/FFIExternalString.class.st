@@ -3,22 +3,24 @@ String type.
 Represented as char* on C side.
 "
 Class {
-	#name : #FFIExternalString,
-	#superclass : #FFIExternalType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIExternalString',
+	#superclass : 'FFIExternalType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalString class >> externalType [
 	^ ExternalType string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalString class >> externalTypeAlignment [
 	^ self pointerSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalString >> basicHandle: aHandle at: index [
 	| data |
 	data := ExternalData
@@ -28,29 +30,29 @@ FFIExternalString >> basicHandle: aHandle at: index [
 	^ data bytesFromCString utf8Decoded
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalString >> basicHandle: aHandle at: index put: value [
 	self error: 'Not sure I want to do this.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalString >> defaultReturnOnError [
 
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalString >> externalTypeSize [
 	^ self pointerSize "i am live and die as a pointer (a char*)"
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 FFIExternalString >> extractFromCallbackOn: aFFICallbackArgumentReader [
 
 	aFFICallbackArgumentReader extractExternalString: self
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIExternalString >> stackValueParameterClass [
 	^ #integer
 ]

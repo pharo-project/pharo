@@ -9,15 +9,16 @@ clipboard
 
 "
 Class {
-	#name : #ExternalClipboard,
-	#superclass : #Clipboard,
+	#name : 'ExternalClipboard',
+	#superclass : 'Clipboard',
 	#instVars : [
 		'clipboard'
 	],
-	#category : #'System-Clipboard'
+	#category : 'System-Clipboard',
+	#package : 'System-Clipboard'
 }
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ExternalClipboard >> addClipboardData: data dataFormat: aFormat [
 	clipboard = 0 ifTrue: 
 		[Clipboard clipboardText: data asString.	
@@ -25,13 +26,13 @@ ExternalClipboard >> addClipboardData: data dataFormat: aFormat [
 	self primAddClipboardData: clipboard data: data dataFormat: aFormat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalClipboard >> clearClipboard [
 	clipboard = 0 ifTrue: [^self].
 	^ self primClearClipboard: clipboard.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalClipboard >> clipboardText [
 	"Return the text currently in the clipboard. If the system clipboard is empty, or if it differs from the Smalltalk clipboard text, use the Smalltalk clipboard. This is done since (a) the Mac clipboard gives up on very large chunks of text and (b) since not all platforms support the notion of a clipboard."
 
@@ -49,7 +50,7 @@ ExternalClipboard >> clipboardText [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalClipboard >> clipboardText: text [ 
 
 	| string data |
@@ -63,47 +64,47 @@ ExternalClipboard >> clipboardText: text [
 	self primAddClipboardData: clipboard data: data dataFormat: 'public.utf8-plain-text'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalClipboard >> createClipboard [
 	clipboard = 0 ifTrue: [^self].
 	^ self primCreateClipboard.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalClipboard >> initialize [
 	super initialize.
 	clipboard := [self createClipboard] on: Error do: [:ex | clipboard := 0]
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ExternalClipboard >> primAddClipboardData: aClipboard data: data dataFormat: aFormat [
 
 	<primitive:'ioAddClipboardData' module: 'ClipboardExtendedPlugin'>
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ExternalClipboard >> primClearClipboard:  aClipboard [
 	<primitive:'ioClearClipboard' module: 'ClipboardExtendedPlugin'>
 	^ self primitiveFailed.
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ExternalClipboard >> primCreateClipboard [
 	<primitive:'ioCreateClipboard' module: 'ClipboardExtendedPlugin'>
 	^ self primitiveFailed.
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ExternalClipboard >> primGetClipboardFormat: aClipboard formatNumber: formatNumber [
 
 	<primitive:'ioGetClipboardFormat' module: 'ClipboardExtendedPlugin'>
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ExternalClipboard >> primReadClipboardData: aClipboard format: format [
 
 	<primitive:'ioReadClipboardData' module: 'ClipboardExtendedPlugin'>

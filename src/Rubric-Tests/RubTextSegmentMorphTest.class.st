@@ -1,14 +1,16 @@
 Class {
-	#name : #RubTextSegmentMorphTest,
-	#superclass : #TestCase,
+	#name : 'RubTextSegmentMorphTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'editor',
 		'textArea'
 	],
-	#category : #'Rubric-Tests-Editing-Core'
+	#category : 'Rubric-Tests-Editing-Core',
+	#package : 'Rubric-Tests',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RubTextSegmentMorphTest >> setUp [
 	super setUp.
 	textArea := RubEditingArea new.
@@ -17,7 +19,7 @@ RubTextSegmentMorphTest >> setUp [
 	editor addString: 'Lorem ipsum dolor sit amet'.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubTextSegmentMorphTest >> testBasic [
 	| textSegmentMorph |
 	textSegmentMorph := textArea newPrimarySelection.
@@ -26,7 +28,7 @@ RubTextSegmentMorphTest >> testBasic [
 	self assert: textSegmentMorph lastIndex equals: textArea pointIndex.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubTextSegmentMorphTest >> testComputeVerticesMultipleLines [
 	"
 'foo
@@ -58,7 +60,7 @@ br'.
 	
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubTextSegmentMorphTest >> testComputeVerticesSingleLine [
 	| textSegmentMorph vertices |
 	"'Lorem ipsum dolor sit amet'"

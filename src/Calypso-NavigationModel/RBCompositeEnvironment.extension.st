@@ -1,6 +1,6 @@
-Extension { #name : #RBCompositeEnvironment }
+Extension { #name : 'RBCompositeEnvironment' }
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 RBCompositeEnvironment >> query: aQuery [
 
 	self isBasedOnEmptyBasis ifTrue: [

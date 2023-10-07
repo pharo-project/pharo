@@ -21,15 +21,16 @@ restoreState
 
 "
 Class {
-	#name : #DangerousClassNotifier,
-	#superclass : #Object,
+	#name : 'DangerousClassNotifier',
+	#superclass : 'Object',
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder',
+	#package : 'Shift-ClassBuilder'
 }
 
-{ #category : #validation }
+{ #category : 'validation' }
 DangerousClassNotifier class >> check: classSymbol [
 
 	self enabled ifFalse: [ ^false ].
@@ -38,12 +39,12 @@ DangerousClassNotifier class >> check: classSymbol [
 			ifTrue: [ self notify: '"' , classSymbol , '" should not be redefined as its structure is known to the VM. \Only proceed if you know what you are doing!' withCRs ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DangerousClassNotifier class >> disable [
 	enabled := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DangerousClassNotifier class >> disableDuring: aBlock [
 	"execute a block with me disabled. Works even nested and restores the old state"
 	| oldState |
@@ -53,23 +54,23 @@ DangerousClassNotifier class >> disableDuring: aBlock [
 	enabled := oldState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DangerousClassNotifier class >> enable [
 	enabled := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DangerousClassNotifier class >> enabled [
 	^enabled ifNil: [  enabled := false ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DangerousClassNotifier class >> initialize [
 
 	enabled := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DangerousClassNotifier class >> shouldNotBeRedefined: classSymbol [
 	(self tooDangerousClasses includes: classSymbol) ifTrue: [ ^true ].
 	^Smalltalk globals
@@ -78,7 +79,7 @@ DangerousClassNotifier class >> shouldNotBeRedefined: classSymbol [
 		ifAbsent: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DangerousClassNotifier class >> tooDangerousClasses [
 	"Return a list of class names which will not be modified in the public interface"
 	^#(

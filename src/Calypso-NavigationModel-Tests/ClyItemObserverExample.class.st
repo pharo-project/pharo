@@ -1,18 +1,19 @@
 Class {
-	#name : #ClyItemObserverExample,
-	#superclass : #Object,
+	#name : 'ClyItemObserverExample',
+	#superclass : 'Object',
 	#instVars : [
 		'wasNotified'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyItemObserverExample >> itemsChanged [
 	wasNotified := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemObserverExample >> wasNotified [
 	^wasNotified ifNil: [ false ]
 ]

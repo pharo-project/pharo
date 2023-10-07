@@ -1,6 +1,6 @@
-Extension { #name : #SycAbstractVariableCommand }
+Extension { #name : 'SycAbstractVariableCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycAbstractVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

@@ -39,14 +39,16 @@ aRunner exceptionHandler: TKTDebuggerExceptionHandler new.
 ]]]
 "
 Class {
-	#name : #TKTRunner,
-	#superclass : #TKTAbstractExecutor,
+	#name : 'TKTRunner',
+	#superclass : 'TKTAbstractExecutor',
 	#traits : 'TTaskScheduler',
 	#classTraits : 'TTaskScheduler classTrait',
-	#category : #'TaskIt-Kernel'
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTRunner class >> isAbstract [
 
 	^self == TKTRunner

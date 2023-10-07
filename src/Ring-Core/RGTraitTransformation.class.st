@@ -1,32 +1,34 @@
 Class {
-	#name : #RGTraitTransformation,
-	#superclass : #RGObject,
+	#name : 'RGTraitTransformation',
+	#superclass : 'RGObject',
 	#instVars : [
 		'subject'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGTraitTransformation >> addoptToParentStub [
 
 	super addoptToParentStub.
 	self parent addTransformation: self
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGTraitTransformation >> defaultParentStub [
 
 	^ self defaultTraitCompositionStub
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGTraitTransformation >> defaultSubject [
 
 	^ RGUnresolvedValue recursive
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitTransformation >> initialize [
 
 	super initialize.
@@ -34,7 +36,7 @@ RGTraitTransformation >> initialize [
 	subject := self unresolvedValue: self defaultSubject
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 RGTraitTransformation >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -42,13 +44,13 @@ RGTraitTransformation >> initializeUnresolved [
 	subject := self unresolvedValue: self defaultSubject
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGTraitTransformation >> isTraitTransformation [
 
 	^ true
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGTraitTransformation >> makeResolved [
 
 	super makeResolved.
@@ -56,20 +58,20 @@ RGTraitTransformation >> makeResolved [
 	subject := self subject markAsRingResolved
 ]
 
-{ #category : #'queries - methods' }
+{ #category : 'queries - methods' }
 RGTraitTransformation >> methods [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitTransformation >> name: aString [
 
 	self parent parent announceDefinitionChangeDuring: [
 		super name: aString ]
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitTransformation >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -77,13 +79,13 @@ RGTraitTransformation >> pvtResolvableProperties [
 	}
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitTransformation >> pvtSubject [
 
 	^ subject value
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitTransformation >> pvtSubject: anRGTrait [
 
 	self environment verifyOwnership: anRGTrait.
@@ -91,26 +93,26 @@ RGTraitTransformation >> pvtSubject: anRGTrait [
 	^ subject := anRGTrait
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitTransformation >> subject [
 
 	^ self backend forBehavior subjectFor: self
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitTransformation >> subject: anRGTrait [
 
 	self parent parent announceDefinitionChangeDuring: [
 		self backend forBehavior setSubjectFor: self to: anRGTrait. ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitTransformation >> trait [
 
 	^ self subject trait
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitTransformation >> usedTraits [
 
 	^ IdentitySet with: subject

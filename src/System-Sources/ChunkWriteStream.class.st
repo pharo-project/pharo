@@ -6,31 +6,33 @@ I am a write stream that write chunks of Strings. That is, pieces of text separa
 symbols
 "
 Class {
-	#name : #ChunkWriteStream,
-	#superclass : #DecoratorStream,
-	#category : #'System-Sources-Utilities'
+	#name : 'ChunkWriteStream',
+	#superclass : 'DecoratorStream',
+	#category : 'System-Sources-Utilities',
+	#package : 'System-Sources',
+	#tag : 'Utilities'
 }
 
-{ #category : #writing }
+{ #category : 'writing' }
 ChunkWriteStream >> afterNexPut [
 
 	decoratedStream flush
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ChunkWriteStream >> bang [
 
 	decoratedStream nextPut: self terminatorMark
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 ChunkWriteStream >> doesNotUnderstand: aMessage [
 	"Forward message to decoree"
 
 	^ aMessage sendTo: decoratedStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChunkWriteStream >> duplicateTerminatorMarkOn: aString [
 	"Append the argument, aString, to the receiver, doubling embedded ! terminators and adding a extra one"
 
@@ -59,13 +61,13 @@ ChunkWriteStream >> duplicateTerminatorMarkOn: aString [
 	^ newStringStream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChunkWriteStream >> nextChunkPut: aString [
 
 	^ self nextPut: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChunkWriteStream >> nextPut: aString [
 	"Append the argument, aString, to the receiver, doubling embedded ! terminators and adding a extra one"
 
@@ -80,7 +82,7 @@ ChunkWriteStream >> nextPut: aString [
 	self afterNexPut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChunkWriteStream >> terminatorMark [
 	^$!
 ]

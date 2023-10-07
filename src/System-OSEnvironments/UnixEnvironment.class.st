@@ -19,19 +19,21 @@ OSEnvironment current at: 'HOME' encoding: ZnCharacterEncoder utf8.
 I try to use a primitive to get/set environment variables, and if it fails or it is not available, I use corresponding ffi calls using byteArrays with encoded strings as argument.
 "
 Class {
-	#name : #UnixEnvironment,
-	#superclass : #OSEnvironment,
-	#category : #'System-OSEnvironments-Platforms'
+	#name : 'UnixEnvironment',
+	#superclass : 'OSEnvironment',
+	#category : 'System-OSEnvironments-Platforms',
+	#package : 'System-OSEnvironments',
+	#tag : 'Platforms'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnixEnvironment class >> isDefaultFor: aPlatform [
 	^  aPlatform isUnix
 		or: [ aPlatform isMacOSX
 		or: [ aPlatform isMacOS ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey encoding: anEncoding [
 	"Gets the value of an environment variable called `aKey`.
 	Throws a KeyNotFound exception if not found.
@@ -43,7 +45,7 @@ UnixEnvironment >> at: aKey encoding: anEncoding [
 	^ self at: aKey encoding: anEncoding ifAbsent: [ KeyNotFound signalFor: aKey ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey encoding: anEncoding ifAbsent: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Execute aBlock if absent.
@@ -59,7 +61,7 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifAbsent: aBlock [
 	^ result decodeWith: anEncoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey encoding: anEncoding ifAbsentPut: aBlock [
 	"Gets the value of an environment variable called `aKey`.
 	If absent, insert the value given by aBlock.
@@ -71,7 +73,7 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifAbsentPut: aBlock [
 	^ self at: aKey encoding: anEncoding ifAbsent: [ self at: aKey put: aBlock value encoding: anEncoding ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: aBlock [
 	"Gets the value of an environment variable called `aKey` and invoke aBlock with it.
 	Return nil if absent.
@@ -83,7 +85,7 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: aBlock [
 	^ aBlock value: (self at: aKey encoding: anEncoding ifAbsent: [ ^ nil ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: presentBlock ifAbsent: absentBlock [
 	"Gets the value of an environment variable called `aKey`.
 	Call presentBlock with it if present.
@@ -97,7 +99,7 @@ UnixEnvironment >> at: aKey encoding: anEncoding ifPresent: presentBlock ifAbsen
 	^absentBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey ifAbsent: aBlock [
 	"See super>>at:ifAbsent:.
 	Uses a single encoding determined dynamically"
@@ -105,7 +107,7 @@ UnixEnvironment >> at: aKey ifAbsent: aBlock [
 	^ self at: aKey encoding: self defaultEncoding ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey put: aValue [
 	"See super>>at:put:.
 	Uses a single encoding determined dynamically"
@@ -113,7 +115,7 @@ UnixEnvironment >> at: aKey put: aValue [
 	^ self at: aKey put: aValue encoding: self defaultEncoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> at: aKey put: aValue encoding: anEncoding [
 	"Sets the value of an environment variable called `aKey` to `aValue`.
 	Use `anEncoding` to encode both arguments.
@@ -126,7 +128,7 @@ UnixEnvironment >> at: aKey put: aValue encoding: anEncoding [
 		put: (aValue encodeWith: anEncoding)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UnixEnvironment >> basicGetEnvRaw: encodedVariableName [
 
 	"PRIVATE: This primitive call works on Strings, while the correct way to manage encodings is with raw data.
@@ -139,7 +141,7 @@ UnixEnvironment >> basicGetEnvRaw: encodedVariableName [
 	self primitiveFail
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UnixEnvironment >> basicGetEnvRawViaFFI: arg1 [
 
 	"PRIVATE: This FFI call works on Strings, while the correct way to manage encodings is with raw data.
@@ -151,13 +153,13 @@ UnixEnvironment >> basicGetEnvRawViaFFI: arg1 [
 	 ^ self ffiCall: #( String getenv (String arg1) ) module: LibC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> defaultEncoding [
 
 	^ OSPlatform current defaultEncoding
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UnixEnvironment >> environ [
 	"Return the address of the array holding the environment variables"
 	^ FFIExternalArray
@@ -165,12 +167,12 @@ UnixEnvironment >> environ [
 		type: String
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UnixEnvironment >> environAt: index [
 	^ self environ at: index
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 UnixEnvironment >> keysAndValuesDo: aBlock [
 	| index associationString  |
 	index := 1	.
@@ -182,7 +184,7 @@ UnixEnvironment >> keysAndValuesDo: aBlock [
 	] repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> rawAt: anEncodedKey [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Throws a KeyNotFound exception if not found.
@@ -193,7 +195,7 @@ UnixEnvironment >> rawAt: anEncodedKey [
 	^ self rawAt: anEncodedKey ifAbsent: [ KeyNotFound signalFor: anEncodedKey ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> rawAt: anEncodedKey ifAbsent: aBlock [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Execute aBlock if absent.
@@ -208,7 +210,7 @@ UnixEnvironment >> rawAt: anEncodedKey ifAbsent: aBlock [
 		ifNotNil: [ rawValue asByteArray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> rawAt: anEncodedKey ifAbsentPut: aBlock [
 	"Gets the value of an environment variable called `aKey` that is already encoded (i.e., it is a byte array).
 	If absent, insert the value given by aBlock.
@@ -219,7 +221,7 @@ UnixEnvironment >> rawAt: anEncodedKey ifAbsentPut: aBlock [
 	^ self rawAt: anEncodedKey ifAbsent: [ self rawAt: anEncodedKey put: aBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> rawAt: anEncodedKey ifPresent: aBlock [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array) and invoke aBlock with it.
 	Return nil if absent.
@@ -230,7 +232,7 @@ UnixEnvironment >> rawAt: anEncodedKey ifPresent: aBlock [
 	^ aBlock value: (self rawAt: anEncodedKey ifAbsent: [ ^ nil ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> rawAt: anEncodedKey ifPresent: presentBlock ifAbsent: absentBlock [
 	"Gets the value of an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 	Call presentBlock with it if present.
@@ -243,7 +245,7 @@ UnixEnvironment >> rawAt: anEncodedKey ifPresent: presentBlock ifAbsent: absentB
 	^absentBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> rawAt: anEncodedKey put: someBytes [
 	"Sets the value of an environment variable called `anEncodedKey` to `someBytes`.
 	Both arguments should be already encoded (i.e., they are byte arrays).
@@ -254,7 +256,7 @@ UnixEnvironment >> rawAt: anEncodedKey put: someBytes [
 	^ self setEnv: anEncodedKey asString value: someBytes asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> rawRemoveKey: anEncodedKey [
 	"Removes an environment variable called `anEncodedKey` that is already encoded (i.e., it is a byte array).
 
@@ -264,7 +266,7 @@ UnixEnvironment >> rawRemoveKey: anEncodedKey [
 	^ self unsetEnv: anEncodedKey asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> removeKey: key [
 	"See super>>removeKey:.
 	Uses a single encoding determined dynamically"
@@ -272,7 +274,7 @@ UnixEnvironment >> removeKey: key [
 	^ self removeKey: key encoded: self defaultEncoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixEnvironment >> removeKey: key encoded: anEncoding [
 	"Removes the entry `aKey` from the environment variables.
 	Use `anEncoding` to encode the arguments.
@@ -283,7 +285,7 @@ UnixEnvironment >> removeKey: key encoded: anEncoding [
 	^ self rawRemoveKey: (key encodeWith: anEncoding)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UnixEnvironment >> setEnv: nameString value: valueString [
 	"This method calls the Standard C Library setenv() function"
 

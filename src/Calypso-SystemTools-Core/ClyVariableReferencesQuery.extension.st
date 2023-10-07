@@ -1,6 +1,6 @@
-Extension { #name : #ClyVariableReferencesQuery }
+Extension { #name : 'ClyVariableReferencesQuery' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyVariableReferencesQuery >> decorateResultMethodEditor: aMethodEditor [
 	| vars |
 	vars := variableQuery execute items.

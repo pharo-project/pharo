@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnRequestLineTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnRequestLineTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestLineTest >> testReading [
 	| requestLine string |
 	string := 'GET /foo/bar/xyz.txt HTTP/1.1' , String crlf.
@@ -14,21 +15,21 @@ ZnRequestLineTest >> testReading [
 	self assert: requestLine version equals: ZnConstants defaultHTTPVersion
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestLineTest >> testReadingWrongMethod [
 	| string |
 	string := 'GETT /foo/bar/xyz.txt HTTP/1.1', String crlf.
 	self should: [ ZnRequestLine readFrom: string readStream ] raise: ZnUnknownHttpMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestLineTest >> testReadingWrongVersion [
 	| string |
 	string := 'GET /foo/bar/xyz.txt HTTP/1.5', String crlf.
 	self should: [ ZnRequestLine readFrom: string readStream ] raise: ZnUnknownHttpVersion
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestLineTest >> testWriting [
 	| requestLine string |
 	requestLine := ZnRequestLine method: 'GET' uri: '/foo/bar/xyz.txt'.

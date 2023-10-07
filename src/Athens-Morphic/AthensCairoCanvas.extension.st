@@ -1,6 +1,6 @@
-Extension { #name : #AthensCairoCanvas }
+Extension { #name : 'AthensCairoCanvas' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensCairoCanvas >> transformBy: aDisplayTransform withClip: aClipRectangle in: aSubRectangle during: aDrawBlock [
 	self
 		clipBy: currentClipRect

@@ -1,11 +1,11 @@
-Extension { #name : #PluggableMenuSpec }
+Extension { #name : 'PluggableMenuSpec' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 PluggableMenuSpec >> asMenuMorph [
 	^ self asMenuMorphOfKind: self morphClass
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 PluggableMenuSpec >> asMenuMorphOfKind: aMorphClass [
 	| prior menu myitems |
 	prior := parentMenu.
@@ -21,12 +21,12 @@ PluggableMenuSpec >> asMenuMorphOfKind: aMorphClass [
 	^ menu
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 PluggableMenuSpec >> buildWith: aBuilder [
 	^ self asMenuMorph
 ]
 
-{ #category : #'*Morphic-Base-Examples' }
+{ #category : '*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithOneSingleItem [
 	"self exampleWithOneSingleItem"
 
@@ -38,7 +38,7 @@ PluggableMenuSpec class >> exampleWithOneSingleItem [
 	s asMenuMorph popUpInWorld
 ]
 
-{ #category : #'*Morphic-Base-Examples' }
+{ #category : '*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithSubMenu [
 	"
 	self exampleWithSubMenu
@@ -53,7 +53,7 @@ PluggableMenuSpec class >> exampleWithSubMenu [
 	s asMenuMorph popUpInWorld
 ]
 
-{ #category : #'*Morphic-Base-Examples' }
+{ #category : '*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithTwoSimpleItems [
 	"self exampleWithTwoSimpleItems"
 
@@ -69,7 +69,7 @@ PluggableMenuSpec class >> exampleWithTwoSimpleItems [
 	s asMenuMorph popUpInWorld
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 PluggableMenuSpec >> morphClass [
 	^ MenuMorph
 ]

@@ -2,31 +2,33 @@
 SUnit tests for QuotedPrintableMimeConverter
 "
 Class {
-	#name : #QuotedPrintableMimeConverterTest,
-	#superclass : #TestCase,
+	#name : 'QuotedPrintableMimeConverterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'coder'
 	],
-	#category : #'Network-Tests-MIME'
+	#category : 'Network-Tests-MIME',
+	#package : 'Network-Tests',
+	#tag : 'MIME'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuotedPrintableMimeConverterTest >> decode: string [
 	^ coder mimeDecode: string as: String
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuotedPrintableMimeConverterTest >> encode: string [
 	^ coder mimeEncode: string
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 QuotedPrintableMimeConverterTest >> setUp [
 	super setUp.
 	coder := QuotedPrintableMimeConverter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeCRLF [
 
 	self
@@ -35,7 +37,7 @@ QuotedPrintableMimeConverterTest >> testDecodeCRLF [
  and this is the second'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeCustomNewline [
 	| decoder output |
 	decoder := coder new.
@@ -50,7 +52,7 @@ QuotedPrintableMimeConverterTest >> testDecodeCustomNewline [
 		equals: 'foo', String lf, 'bar'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeDecodedStrings [
 
 	self
@@ -58,7 +60,7 @@ QuotedPrintableMimeConverterTest >> testDecodeDecodedStrings [
 		equals: 'Hätten Hüte ein ß im Namen, wären sie möglicherweise keine Hüte mehr'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeSimpleStrings [
 
 	self
@@ -69,7 +71,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSimpleStrings [
 		equals: 'Hätten Hüte ein ß im Namen, wären sie möglicherweise keine Hüte mehr'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreak [
 
 	self
@@ -78,7 +80,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreak [
 		equals: 'This is text may not be decoded as two lines'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCR [
 
 	self
@@ -86,7 +88,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCR [
 		equals: 'This is text may not be decoded as two lines'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCRLF [
 
 	self
@@ -94,7 +96,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakCRLF [
 		equals: 'This is text may not be decoded as two lines'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakLF [
 
 	self
@@ -102,7 +104,7 @@ QuotedPrintableMimeConverterTest >> testDecodeSoftLinebreakLF [
 		equals: 'This is text may not be decoded as two lines'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testEncodeCR [
 
 	self
@@ -110,7 +112,7 @@ QuotedPrintableMimeConverterTest >> testEncodeCR [
 		equals: 'This is the first line=0D=0Aand this is the second'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testEncodeCRLF [
 
 	self
@@ -118,7 +120,7 @@ QuotedPrintableMimeConverterTest >> testEncodeCRLF [
 		equals: 'This is the first line=0D=0Aand this is the second'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testEncodeEncodedStrings [
 
 	"An = becomes =3D and is then not decodable any more (only if you know you have to do it twice ;-) )"
@@ -127,7 +129,7 @@ QuotedPrintableMimeConverterTest >> testEncodeEncodedStrings [
 		equals: 'Z=3DFCrich'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testEncodeLF [
 
 	self
@@ -135,7 +137,7 @@ QuotedPrintableMimeConverterTest >> testEncodeLF [
 		equals: 'This is the first line=0D=0Aand this is the second'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testEncodeLongLine [
 	| input output |
 
@@ -149,7 +151,7 @@ QuotedPrintableMimeConverterTest >> testEncodeLongLine [
 		equals: output
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testEncodeSimpleStrings [
 
 	self
@@ -160,7 +162,7 @@ QuotedPrintableMimeConverterTest >> testEncodeSimpleStrings [
 		equals: '=DCber die F=E4hrverbindungen nach F=F6hr w=FC=DFte ich nicht viel'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testEncodeSoftLinebreak [
 
 	| original encoded |
@@ -185,7 +187,7 @@ d, will come when it will come'.
 	self assert: (self decode: encoded) equals: original
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QuotedPrintableMimeConverterTest >> testLongLine [
 	| input output |
 

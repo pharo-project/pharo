@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloScriptImageExecutor,
-	#superclass : #MetacelloScriptExecutor,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloScriptImageExecutor',
+	#superclass : 'MetacelloScriptExecutor',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'execution callback' }
+{ #category : 'execution callback' }
 MetacelloScriptImageExecutor >> projectSpecSelectBlock [
     ^ [ :projectSpec | 
     projectSpec

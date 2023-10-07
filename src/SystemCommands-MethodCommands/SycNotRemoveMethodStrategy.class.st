@@ -2,16 +2,17 @@
 I am simple cancel method remove operation by doing nothing
 "
 Class {
-	#name : #SycNotRemoveMethodStrategy,
-	#superclass : #SycRemoveMethodStrategy,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycNotRemoveMethodStrategy',
+	#superclass : 'SycRemoveMethodStrategy',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycNotRemoveMethodStrategy >> removeMethods: methods [
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycNotRemoveMethodStrategy >> userRequestString [
 	^'Forget it -- do nothing -- sorry I asked'
 ]

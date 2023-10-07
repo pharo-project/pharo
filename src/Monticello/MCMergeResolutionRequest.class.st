@@ -2,15 +2,17 @@
 Notify to resolve conflicts by merging
 "
 Class {
-	#name : #MCMergeResolutionRequest,
-	#superclass : #Notification,
+	#name : 'MCMergeResolutionRequest',
+	#superclass : 'Notification',
 	#instVars : [
 		'merger'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeResolutionRequest >> autoMerge [
 	"If there are not conflicts, merge, otherwise delegate to the UI"
 	self hasConflicts
@@ -18,27 +20,27 @@ MCMergeResolutionRequest >> autoMerge [
 		ifFalse: [ self merge ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMergeResolutionRequest >> hasConflicts [
 	^ self merger hasConflicts
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeResolutionRequest >> merge [
 	self resume: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeResolutionRequest >> merger [
 	^ merger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeResolutionRequest >> merger: aMerger [
 	merger := aMerger
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeResolutionRequest >> resolve [
 	self pass
 ]

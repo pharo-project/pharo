@@ -1,10 +1,12 @@
 Class {
-	#name : #ClassWithBadAnnotatingMethod,
-	#superclass : #Object,
-	#category : #'ClassAnnotation-Tests-Examples-Annotated classes'
+	#name : 'ClassWithBadAnnotatingMethod',
+	#superclass : 'Object',
+	#category : 'ClassAnnotation-Tests-Examples-Annotated classes',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Examples-Annotated classes'
 }
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithBadAnnotatingMethod class >> badAnnotation [
 	<classAnnotation>
 

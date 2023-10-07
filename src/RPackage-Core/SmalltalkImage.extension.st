@@ -1,6 +1,6 @@
-Extension { #name : #SmalltalkImage }
+Extension { #name : 'SmalltalkImage' }
 
-{ #category : #'*RPackage-Core' }
+{ #category : '*RPackage-Core' }
 SmalltalkImage >> packages [
 
 	^ RPackageOrganizer default packages

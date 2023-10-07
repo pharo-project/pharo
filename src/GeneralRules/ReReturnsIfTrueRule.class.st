@@ -2,24 +2,26 @@
 Check for methods that return the value of an ifTrue: or ifFalse: message. These statements return nil when the block is not executed.
 "
 Class {
-	#name : #ReReturnsIfTrueRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReReturnsIfTrueRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnsIfTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ReturnsIfTrueRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnsIfTrueRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReReturnsIfTrueRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -27,7 +29,7 @@ ReReturnsIfTrueRule >> initialize [
 			'^`@condition ifFalse: [| `@temps | `@.statements]' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnsIfTrueRule >> name [
 	^ 'Returns value of ifTrue:/ifFalse: without ifFalse:/ifTrue: block'
 ]

@@ -10,28 +10,30 @@ When I succeeded to open a debugger, my instance variable ""handled"" becomes tr
 If I failed to find any debugger, or to open the debug session with any debugger, ""handled"" stays false. This is the responsibility of my clients to deal with this situation (i.e., the system was unable to open a debugger).
 "
 Class {
-	#name : #OupsDebuggerSelector,
-	#superclass : #OupsDebuggerSelectionStrategy,
+	#name : 'OupsDebuggerSelector',
+	#superclass : 'OupsDebuggerSelectionStrategy',
 	#instVars : [
 		'handlesDebuggerErrors'
 	],
 	#classInstVars : [
 		'handleDebuggerErrors'
 	],
-	#category : #'Debugger-Oups-Strategies'
+	#category : 'Debugger-Oups-Strategies',
+	#package : 'Debugger-Oups',
+	#tag : 'Strategies'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 OupsDebuggerSelector class >> handleDebuggerErrors [
 	^ handleDebuggerErrors ifNil: [ handleDebuggerErrors := false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OupsDebuggerSelector class >> handleDebuggerErrors: aBoolean [
 	handleDebuggerErrors := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OupsDebuggerSelector class >> handleDebuggerErrorsSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #handleDebuggerErrors)
@@ -42,28 +44,28 @@ OupsDebuggerSelector class >> handleDebuggerErrorsSettingsOn: aBuilder [
 		description: 'Try to debug debugger errors when they occur.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerSelector >> debuggers: aCollection [
 	debuggers := Stack newFrom: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerSelector >> handlesDebuggerErrors [
 	^ handlesDebuggerErrors
 		ifNil: [ handlesDebuggerErrors := self class handleDebuggerErrors ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerSelector >> handlesDebuggerErrors: aBoolean [
 	handlesDebuggerErrors := aBoolean
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 OupsDebuggerSelector >> nextDebugger [
 	^ debuggers pop
 ]
 
-{ #category : #debuggers }
+{ #category : 'debuggers' }
 OupsDebuggerSelector >> nextDebuggerForSession: aDebugSession [
 
 	| debugger |
@@ -75,7 +77,7 @@ OupsDebuggerSelector >> nextDebuggerForSession: aDebugSession [
 	^ debugger
 ]
 
-{ #category : #debuggers }
+{ #category : 'debuggers' }
 OupsDebuggerSelector >> openDebuggerForSession: aDebugSession [
 
 	<debuggerCompleteToSender>
@@ -87,7 +89,7 @@ OupsDebuggerSelector >> openDebuggerForSession: aDebugSession [
 	handled ifFalse: [ self signalErrorHandlingErrorForSession: aDebugSession ]
 ]
 
-{ #category : #debuggers }
+{ #category : 'debuggers' }
 OupsDebuggerSelector >> tryOpen: aDebugSession with: aDebugger [
 
 	<debuggerCompleteToSender>

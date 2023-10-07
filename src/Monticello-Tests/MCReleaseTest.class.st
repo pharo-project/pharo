@@ -1,10 +1,12 @@
 Class {
-	#name : #MCReleaseTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCReleaseTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCReleaseTest >> testMonticelloInitializersAreEnabledByDefault [
 
 	"Monticello should by default have this option enabled.

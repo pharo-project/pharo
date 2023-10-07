@@ -2,27 +2,29 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCopySequenceableSameContents,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCopySequenceableSameContents',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableSameContents >> collectionWithSortableElements [
 	" return a collection only including elements that can be sorted (understanding '<' )"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableSameContents >> empty [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableSameContents >> nonEmpty [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCopySequenceableSameContents >> test0FixtureCopySameContentsTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -30,7 +32,7 @@ TCopySequenceableSameContents >> test0FixtureCopySameContentsTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - copying same contents' }
+{ #category : 'tests - copying same contents' }
 TCopySequenceableSameContents >> testReverse [
 
 	| result |
@@ -43,7 +45,7 @@ TCopySequenceableSameContents >> testReverse [
 	self assert: result size=self nonEmpty size
 ]
 
-{ #category : #'tests - copying same contents' }
+{ #category : 'tests - copying same contents' }
 TCopySequenceableSameContents >> testReversed [
 
 	| result |
@@ -57,7 +59,7 @@ TCopySequenceableSameContents >> testReversed [
 	self assert: result size=self nonEmpty size
 ]
 
-{ #category : #'tests - copying same contents' }
+{ #category : 'tests - copying same contents' }
 TCopySequenceableSameContents >> testShallowCopy [
 
 	| result |
@@ -71,14 +73,14 @@ TCopySequenceableSameContents >> testShallowCopy [
 	self assert: result size equals: self nonEmpty size
 ]
 
-{ #category : #'tests - copying same contents' }
+{ #category : 'tests - copying same contents' }
 TCopySequenceableSameContents >> testShallowCopyEmpty [
 	| result |
 	result := self empty shallowCopy.
 	self assertEmpty: result
 ]
 
-{ #category : #'tests - copying same contents' }
+{ #category : 'tests - copying same contents' }
 TCopySequenceableSameContents >> testShuffled [
 	| result |
 	result := self nonEmpty shuffled .

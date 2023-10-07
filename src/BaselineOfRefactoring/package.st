@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfRefactoring }
+Package { #name : 'BaselineOfRefactoring' }

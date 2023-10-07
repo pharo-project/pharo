@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Network-Mail' }
+{ #category : '*Network-Mail' }
 Collection >> asEmailHeaderString [
 
 	^ String streamContents: [ :str |

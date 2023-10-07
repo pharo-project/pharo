@@ -3,17 +3,18 @@ I am NeoLRUCacheTests.
 
 "
 Class {
-	#name : #LRUCacheTest,
-	#superclass : #TestCase,
-	#category : #'System-Caching-Tests'
+	#name : 'LRUCacheTest',
+	#superclass : 'TestCase',
+	#category : 'System-Caching-Tests',
+	#package : 'System-Caching-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LRUCacheTest >> newCache [
 	^ LRUCache new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> test5kClasses [
 	| cache data |
 	(cache := self newCache)
@@ -34,7 +35,7 @@ LRUCacheTest >> test5kClasses [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> test6k [
 	| cache |
 	(cache := self newCache)
@@ -47,7 +48,7 @@ LRUCacheTest >> test6k [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testAdditionInIfAbsentPut [
 	| cache |
 	cache := self newCache.
@@ -59,7 +60,7 @@ LRUCacheTest >> testAdditionInIfAbsentPut [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testAt [
 	| cache |
 	cache := self newCache.
@@ -70,7 +71,7 @@ LRUCacheTest >> testAt [
 	self should: [ cache at: #foo ] raise: KeyNotFound
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testCustomWeight [
 	| cache |
 	(cache := self newCache)
@@ -88,7 +89,7 @@ LRUCacheTest >> testCustomWeight [
 	self deny: (cache includesKey: 1)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testEmpty [
 	| emptyCache |
 	emptyCache := self newCache.
@@ -102,7 +103,7 @@ LRUCacheTest >> testEmpty [
 	emptyCache keysAndValuesDo: [ :key :value | self fail ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testEnumeration [
 	| cache data keys values |
 	cache := self newCache.
@@ -121,7 +122,7 @@ LRUCacheTest >> testEnumeration [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testEviction [
 	| cache |
 	cache := self newCache.
@@ -138,7 +139,7 @@ LRUCacheTest >> testEviction [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testFactory [
 	| cache |
 	cache := self newCache.
@@ -151,7 +152,7 @@ LRUCacheTest >> testFactory [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testFactoryStyle [
 	| cache factory |
 	cache := self newCache.
@@ -164,7 +165,7 @@ LRUCacheTest >> testFactoryStyle [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testFibonacci [
 	"After an idea by Jan Vrany.
 	Recursively enter the cache and its access protection"
@@ -181,7 +182,7 @@ LRUCacheTest >> testFibonacci [
 	self assert: (fibCache at: 40) equals: 102334155
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testFixedAccess [
 	| cache data keys |
 	(cache := self newCache)
@@ -201,7 +202,7 @@ LRUCacheTest >> testFixedAccess [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testOne [
 	| cache |
 	cache := self newCache.
@@ -217,7 +218,7 @@ LRUCacheTest >> testOne [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testOneHit [
 	| cache value |
 	cache := self newCache.
@@ -232,7 +233,7 @@ LRUCacheTest >> testOneHit [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testOneHitTwice [
 	| cache value |
 	cache := self newCache.
@@ -245,7 +246,7 @@ LRUCacheTest >> testOneHitTwice [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testPopulate [
 	| cache data |
 	cache := self newCache.
@@ -267,7 +268,7 @@ LRUCacheTest >> testPopulate [
 		self assert: (cache at: key) equals: value ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testPrimeFactors [
 
 	| cache data |
@@ -285,7 +286,7 @@ LRUCacheTest >> testPrimeFactors [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testRandomAccess [
 	| cache data random keys |
 	(cache := self newCache)
@@ -306,7 +307,7 @@ LRUCacheTest >> testRandomAccess [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testRemoveAll [
 	| cache |
 	cache := self newCache.
@@ -322,7 +323,7 @@ LRUCacheTest >> testRemoveAll [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testRemoveOne [
 	| cache |
 	cache := self newCache.
@@ -335,7 +336,7 @@ LRUCacheTest >> testRemoveOne [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testRemoveOneOfThree [
 	| cache |
 	cache := self newCache.
@@ -351,7 +352,7 @@ LRUCacheTest >> testRemoveOneOfThree [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testTen [
 	| cache |
 	cache := self newCache.
@@ -368,7 +369,7 @@ LRUCacheTest >> testTen [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testTenThreadSafe [
 	| cache |
 	cache := self newCache.
@@ -384,7 +385,7 @@ LRUCacheTest >> testTenThreadSafe [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testThree [
 	| cache |
 	cache := self newCache.
@@ -402,7 +403,7 @@ LRUCacheTest >> testThree [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testThreeHitSameOne [
 	| cache |
 	cache := self newCache.
@@ -418,7 +419,7 @@ LRUCacheTest >> testThreeHitSameOne [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LRUCacheTest >> testTwo [
 	| cache |
 	cache := self newCache.

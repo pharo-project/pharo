@@ -1,10 +1,11 @@
 Class {
-	#name : #EFParseErrorExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFParseErrorExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFParseErrorExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -15,7 +16,7 @@ EFParseErrorExpressionTest >> basicConfiguration [
 		periodAtEndOfMethod:false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFParseErrorExpressionTest >> testParseError [
 
 	| expr source |
@@ -25,7 +26,7 @@ EFParseErrorExpressionTest >> testParseError [
 	self assert: source equals: '#( 1 3 4'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFParseErrorExpressionTest >> testParseError2 [
 
 	| expr source |

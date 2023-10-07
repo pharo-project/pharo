@@ -1,6 +1,6 @@
-Extension { #name : #ClyScope }
+Extension { #name : 'ClyScope' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyScope >> isCurrentImage [
 	^false
 ]

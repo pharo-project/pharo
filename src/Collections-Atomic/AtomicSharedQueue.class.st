@@ -6,21 +6,23 @@ it can successfully fetch next item from queue.
 
 "
 Class {
-	#name : #AtomicSharedQueue,
-	#superclass : #WaitfreeQueue,
+	#name : 'AtomicSharedQueue',
+	#superclass : 'WaitfreeQueue',
 	#instVars : [
 		'availSema'
 	],
-	#category : #'Collections-Atomic-Base'
+	#category : 'Collections-Atomic-Base',
+	#package : 'Collections-Atomic',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AtomicSharedQueue >> initialize [
 	super initialize.
 	availSema := Semaphore new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AtomicSharedQueue >> next [
 	"Fetch the next item from queue. If queue is locked or empty, block the sender until operation can complete"
 
@@ -34,18 +36,18 @@ AtomicSharedQueue >> next [
 	^ result
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 AtomicSharedQueue >> signalAddedNewItem [
 	availSema signal
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 AtomicSharedQueue >> signalNoMoreItems [
 	"queue is empty, reset sema signals"
 	availSema consumeAllSignals
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 AtomicSharedQueue >> waitForNewItems [
 	availSema wait
 ]

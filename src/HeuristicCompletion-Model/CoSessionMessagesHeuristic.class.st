@@ -2,32 +2,34 @@
 I am an heuristic that autocompletes messages based on a session vocabulary.
 "
 Class {
-	#name : #CoSessionMessagesHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
+	#name : 'CoSessionMessagesHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
 	#instVars : [
 		'session'
 	],
-	#category : #'HeuristicCompletion-Model-SessionHeuristic'
+	#category : 'HeuristicCompletion-Model-SessionHeuristic',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SessionHeuristic'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoSessionMessagesHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ aNode isMethod or: [ aNode isMessage ]
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoSessionMessagesHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
 
 	^ CoCollectionFetcher onCollection: session words
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoSessionMessagesHeuristic >> session [
 	^ session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoSessionMessagesHeuristic >> session: anObject [
 	session := anObject
 ]

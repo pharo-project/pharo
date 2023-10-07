@@ -26,15 +26,17 @@ Instance Variables:
 - peekBuffer     <SmallInteger or nil> The next character to be read from the stream or nil.
 "
 Class {
-	#name : #StdioStream,
-	#superclass : #AbstractBinaryFileStream,
+	#name : 'StdioStream',
+	#superclass : 'AbstractBinaryFileStream',
 	#instVars : [
 		'peekBuffer'
 	],
-	#category : #'Files-Streams'
+	#category : 'Files-Streams',
+	#package : 'Files',
+	#tag : 'Streams'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStream >> next: n [
 	"Return a string with the next n characters of the filestream in it."
 	| readBuffer read startingAt |
@@ -50,7 +52,7 @@ StdioStream >> next: n [
 		ifFalse: [ readBuffer copyFrom: 1 to: read ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStream >> peek [
 	"Answer the next element of the stream, but do not advance the stream pointer.
 	If the receiver is at the end, answer nil."

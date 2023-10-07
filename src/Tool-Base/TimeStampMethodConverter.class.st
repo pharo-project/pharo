@@ -2,12 +2,14 @@
 A TimeStampMessageConverter is a wrapper wich display the timestamp of the provided message
 "
 Class {
-	#name : #TimeStampMethodConverter,
-	#superclass : #AbstractMethodConverter,
-	#category : #'Tool-Base-Converter'
+	#name : 'TimeStampMethodConverter',
+	#superclass : 'AbstractMethodConverter',
+	#category : 'Tool-Base-Converter',
+	#package : 'Tool-Base',
+	#tag : 'Converter'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TimeStampMethodConverter >> formattedModificationTextFor:aUser atStamp:aTimeStampString [
 |stamp|
 stamp:= DateAndTime fromString:aTimeStampString.
@@ -17,7 +19,7 @@ stamp:= DateAndTime fromString:aTimeStampString.
  			s << Character tab << 'by:' << Character tab << Character tab << aUser ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TimeStampMethodConverter >> internalGetText [
 	| list |
 	list := method stamp substrings.

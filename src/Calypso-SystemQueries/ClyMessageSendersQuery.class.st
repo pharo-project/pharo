@@ -2,21 +2,23 @@
 I return all senders of any of given selectors
 "
 Class {
-	#name : #ClyMessageSendersQuery,
-	#superclass : #ClyMessageBasedQuery,
+	#name : 'ClyMessageSendersQuery',
+	#superclass : 'ClyMessageBasedQuery',
 	#instVars : [
 		'specialSelectorIndexes'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMessageSendersQuery >> description [
 
 	^'senders of ', self printSelectors
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMessageSendersQuery >> prepareStateBeforeExecution [
 	super prepareStateBeforeExecution.
 
@@ -26,7 +28,7 @@ ClyMessageSendersQuery >> prepareStateBeforeExecution [
 	self specialSelectorIndexes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMessageSendersQuery >> selectsMethod: aMethod [
 
 	selectors with: self specialSelectorIndexes do: [ :selector :specialIndex |
@@ -36,7 +38,7 @@ ClyMessageSendersQuery >> selectsMethod: aMethod [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMessageSendersQuery >> specialSelectorIndexes [
 	^specialSelectorIndexes ifNil: [
 		specialSelectorIndexes := selectors collect: [:each | Smalltalk specialSelectorIndexOrNil: each]]

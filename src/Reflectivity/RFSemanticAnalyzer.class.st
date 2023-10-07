@@ -4,12 +4,14 @@ I add Reflectivity link analysis to the Semantic analyzer.
 I add #beforeHooks and #afterHooks anotation and make sure to visit them for semantic analysis.
 "
 Class {
-	#name : #RFSemanticAnalyzer,
-	#superclass : #OCASTSemanticAnalyzer,
-	#category : #'Reflectivity-Compiler'
+	#name : 'RFSemanticAnalyzer',
+	#superclass : 'OCASTSemanticAnalyzer',
+	#category : 'Reflectivity-Compiler',
+	#package : 'Reflectivity',
+	#tag : 'Compiler'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> analyseForLinks: aNode generator: aGenerator [
 
 	aNode propertyAt: #preambles put: aGenerator preamble.
@@ -30,7 +32,7 @@ RFSemanticAnalyzer >> analyseForLinks: aNode generator: aGenerator [
  		aNode insteadHooks do: [:each | self visitNode: each]]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> analyseForLinksForNodes: aNode [
 	| generator |
 	aNode hasMetalink
@@ -39,7 +41,7 @@ RFSemanticAnalyzer >> analyseForLinksForNodes: aNode [
 	self analyseForLinks: aNode generator: generator
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> analyseForLinksForVariables: aVariableNode [
 	| variable generator |
 	variable := aVariableNode binding.
@@ -49,22 +51,22 @@ RFSemanticAnalyzer >> analyseForLinksForVariables: aVariableNode [
 	self analyseForLinks: variable generator: generator
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RFSemanticAnalyzer >> analyze: aNode [
 	self visitNode: aNode.
 	RFASTClosureAnalyzer new visitNode: aNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> visitAssignmentNode: aNode [
 	self visitVarWrite: aNode variable.
 	super visitAssignmentNode: aNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
-	scope := OCMethodScope new outerScope: compilationContext scope.
+	scope := OCMethodScope new outerScope: self outerScope.
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
@@ -74,39 +76,39 @@ RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	self visitNode: aMethodNode body
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> visitNode: aNode [
 	"here we add the hook anotations and visit those AST parts for semantic analysis"
 	super visitNode: aNode.
 	aNode isMethod ifFalse: [self analyseForLinksForNodes: aNode]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
+	var := scope lookupVar: name.
 	var	ifNil: [
 			var := scope addTemp: (TemporaryVariable named: aNode name) ].
 	aNode binding: var
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> visitStorePopIntoTempNode: aNode [
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
+	var := scope lookupVar: name.
 	var	ifNil: [
 			var := scope addTemp: (TemporaryVariable named: aNode name) ].
 	aNode binding: var
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> visitVarWrite: aNode [
 	self analyseForLinksForNodes: aNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RFSemanticAnalyzer >> visitVariableNode: aVariableNode [
 	super visitVariableNode: aVariableNode.
 	self analyseForLinksForVariables: aVariableNode

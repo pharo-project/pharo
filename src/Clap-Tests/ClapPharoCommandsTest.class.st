@@ -1,33 +1,35 @@
 Class {
-	#name : #ClapPharoCommandsTest,
-	#superclass : #TestCase,
+	#name : 'ClapPharoCommandsTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'context'
 	],
-	#category : #'Clap-Tests-Commands'
+	#category : 'Clap-Tests-Commands',
+	#package : 'Clap-Tests',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapPharoCommandsTest class >> isAbstract [
 	^ self = ClapPharoCommandsTest
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapPharoCommandsTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ClapPharoCommandsTest >> assertSuccess [
 	self assert: context exitStatus equals: 0
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 ClapPharoCommandsTest >> lineEnding [
 	^ OSPlatform current lineEnding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapPharoCommandsTest >> outputString [
 	^ context stdio stdout contents utf8Decoded
 ]

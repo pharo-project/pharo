@@ -2,30 +2,32 @@
 Message dialog containing a drop list for selection of an item.
 "
 Class {
-	#name : #ChooseDropListDialogWindow,
-	#superclass : #MessageDialogWindow,
+	#name : 'ChooseDropListDialogWindow',
+	#superclass : 'MessageDialogWindow',
 	#instVars : [
 		'listMorph',
 		'list'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #icons }
+{ #category : 'icons' }
 ChooseDropListDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallQuestion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChooseDropListDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
 	^ self iconNamed: #question
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChooseDropListDialogWindow >> initialize [
 	"Initialize the receiver."
 
@@ -33,14 +35,14 @@ ChooseDropListDialogWindow >> initialize [
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChooseDropListDialogWindow >> list [
 	"Answer the value of list"
 
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChooseDropListDialogWindow >> list: anObject [
 	"Set the value of list"
 
@@ -50,21 +52,21 @@ ChooseDropListDialogWindow >> list: anObject [
 		changed: #selectionIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChooseDropListDialogWindow >> listMorph [
 	"Answer the value of listMorph"
 
 	^ listMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChooseDropListDialogWindow >> listMorph: anObject [
 	"Set the value of listMorph"
 
 	listMorph := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ChooseDropListDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
@@ -76,7 +78,7 @@ ChooseDropListDialogWindow >> newContentMorph [
 		self listMorph}
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ChooseDropListDialogWindow >> newListMorph [
 	"Answer a new drop-list morph."
 
@@ -89,14 +91,14 @@ ChooseDropListDialogWindow >> newListMorph [
 		help: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChooseDropListDialogWindow >> selectedItem [
 	"Answer the selected list item or nil if cancelled."
 
 	^self cancelled ifFalse: [self listMorph selectedItem]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChooseDropListDialogWindow >> selectionIndex [
 	"Answer the initial selection index for the list."
 

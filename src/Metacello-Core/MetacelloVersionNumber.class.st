@@ -39,13 +39,15 @@ Examples
 ```
 "
 Class {
-	#name : #MetacelloVersionNumber,
-	#superclass : #Magnitude,
-	#type : #variable,
-	#category : #'Metacello-Core-Model'
+	#name : 'MetacelloVersionNumber',
+	#superclass : 'Magnitude',
+	#type : 'variable',
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionNumber class >> extractNumericComponent: subString [
 	"$. separated components are integers"
 
@@ -58,7 +60,7 @@ MetacelloVersionNumber class >> extractNumericComponent: subString [
 		ifFalse: [ subString ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionNumber class >> fromString: aString [
 
 	| new components |
@@ -76,7 +78,7 @@ MetacelloVersionNumber class >> fromString: aString [
 	^new
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersionNumber >> < aMetacelloVersionNumber [
 
 	| condensed aCondensed |
@@ -89,7 +91,7 @@ MetacelloVersionNumber >> < aMetacelloVersionNumber [
 	^ self compareLessThan: aMetacelloVersionNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersionNumber >> = aMetacelloVersionNumber [
 
 	| condensed aCondensed |
@@ -102,7 +104,7 @@ MetacelloVersionNumber >> = aMetacelloVersionNumber [
 	^ self compareEqualTo: aMetacelloVersionNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionNumber >> approximateBase [
 
 	| base |
@@ -111,13 +113,13 @@ MetacelloVersionNumber >> approximateBase [
 	^base
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MetacelloVersionNumber >> asMetacelloVersionNumber [
 
 	^self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionNumber >> collapseZeros [
 	"the rule must be that zeros can be collapsed as long as the series of zeros ends in a string term"
 
@@ -151,7 +153,7 @@ MetacelloVersionNumber >> collapseZeros [
 	^ new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionNumber >> compareEqualTo: aMetacelloVersionNumber [
 
 	| mySize |
@@ -164,7 +166,7 @@ MetacelloVersionNumber >> compareEqualTo: aMetacelloVersionNumber [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionNumber >> compareLessThan: aMetacelloVersionNumber [
 	| mySize aSize commonSize count more |
 	mySize := self size.
@@ -193,7 +195,7 @@ MetacelloVersionNumber >> compareLessThan: aMetacelloVersionNumber [
 			(self at: commonSize + 1) isString ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloVersionNumber >> copyFrom: start to: stop [ 
 	"Answer a copy of a subset of the receiver, starting from element at 
 	index start until element at index stop."
@@ -208,19 +210,19 @@ MetacelloVersionNumber >> copyFrom: start to: stop [
 	^new
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> decrementMajorVersion [
   self decrementVersionAt: 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> decrementMinorVersion [
   self size < 2
     ifTrue: [ self at: 2 put: 0 ].
   self decrementVersionAt: 2
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> decrementMinorVersionNumber [
 	| int |
 	self size to: 1 by: -1 do: [ :index | 
@@ -231,7 +233,7 @@ MetacelloVersionNumber >> decrementMinorVersionNumber [
 				^ self ] ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> decrementPatchVersion [
   self size < 2
     ifTrue: [ self at: 2 put: 0 ].
@@ -240,7 +242,7 @@ MetacelloVersionNumber >> decrementPatchVersion [
   self decrementVersionAt: 3
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionNumber >> decrementVersionAt: index [
   | int |
   int := self at: index.
@@ -250,14 +252,14 @@ MetacelloVersionNumber >> decrementVersionAt: index [
         ifTrue: [ self at: index put: int - 1 ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionNumber >> do: aBlock [ 
 	"Refer to the comment in Collection|do:."
 	1 to: self size do:
 		[:index | aBlock value: (self at: index)]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionNumber >> do: elementBlock separatedBy: separatorBlock [
 	"Evaluate the elementBlock for all elements in the receiver,
 	and evaluate the separatorBlock between."
@@ -272,7 +274,7 @@ MetacelloVersionNumber >> do: elementBlock separatedBy: separatorBlock [
 		elementBlock value: each]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersionNumber >> hash [
 
 "Returns a numeric hash key for the receiver."
@@ -300,19 +302,19 @@ hashValue := 4459.
 ^ hashValue abs
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> incrementMajorVersion [
   self incrementVersionAt: 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> incrementMinorVersion [
   self size < 2
     ifTrue: [ self at: 2 put: 0 ].
   self incrementVersionAt: 2
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> incrementMinorVersionNumber [
 
 	| int |
@@ -323,7 +325,7 @@ MetacelloVersionNumber >> incrementMinorVersionNumber [
 				^self ]].
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloVersionNumber >> incrementPatchVersion [
   self size < 2
     ifTrue: [ self at: 2 put: 0 ].
@@ -332,7 +334,7 @@ MetacelloVersionNumber >> incrementPatchVersion [
   self incrementVersionAt: 3
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionNumber >> incrementVersionAt: index [
   | int |
   int := self at: index.
@@ -340,7 +342,7 @@ MetacelloVersionNumber >> incrementVersionAt: index [
     ifFalse: [ self at: index put: int + 1 ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersionNumber >> match: aVersionPattern [
 	"Answer whether the version number of the receiver matches the given pattern string.
 
@@ -387,7 +389,7 @@ MetacelloVersionNumber >> match: aVersionPattern [
 "
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionNumber >> printOn: aStream [
 
 	| beforeFirst | 
@@ -403,7 +405,7 @@ MetacelloVersionNumber >> printOn: aStream [
 		aStream nextPutAll: each asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionNumber >> versionString [
 
 	| strm |
@@ -412,7 +414,7 @@ MetacelloVersionNumber >> versionString [
 	^strm contents
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersionNumber >> ~> aMetacelloVersionNumber [
 
 	aMetacelloVersionNumber size == 1 ifTrue: [ ^false ].

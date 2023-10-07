@@ -12,31 +12,33 @@ Internal Representation and Key Implementation Points.
 	ownerTool:		<ClyBrowserTool>
 "
 Class {
-	#name : #ClyStatusBarItemMorph,
-	#superclass : #Morph,
+	#name : 'ClyStatusBarItemMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'ownerTool'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyStatusBarItemMorph class >> for: aBrowserTool [
 	^self new
 		ownerTool: aBrowserTool
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyStatusBarItemMorph >> build [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyStatusBarItemMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyStatusBarItemMorph >> initialize [
 	super initialize.
 	self
@@ -47,12 +49,12 @@ ClyStatusBarItemMorph >> initialize [
 		extent: 0@0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyStatusBarItemMorph >> ownerTool [
 	^ ownerTool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyStatusBarItemMorph >> ownerTool: anObject [
 	ownerTool := anObject.
 	self build

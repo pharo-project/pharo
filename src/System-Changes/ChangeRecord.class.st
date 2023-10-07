@@ -1,24 +1,26 @@
 "
 A ChangeRecord represents a change recorded on a file in fileOut format.
-It includes a type (more needs to be done here), and additional information
-for certain types such as method defs which need class and category.
+
+It includes a type (more needs to be done here), and additional information for certain types such as method defs which need class and protocol name.
 "
 Class {
-	#name : #ChangeRecord,
-	#superclass : #Object,
+	#name : 'ChangeRecord',
+	#superclass : 'Object',
 	#instVars : [
 		'file',
 		'position',
 		'type',
 		'class',
-		'category',
+		'protocol',
 		'meta',
 		'stamp'
 	],
-	#category : #'System-Changes-Records'
+	#category : 'System-Changes-Records',
+	#package : 'System-Changes',
+	#tag : 'Records'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChangeRecord >> <= anotherOne [
 
 	self stamp ifNil: [ ^ false ].
@@ -26,12 +28,7 @@ ChangeRecord >> <= anotherOne [
 	^ self timeStamp <= anotherOne timeStamp
 ]
 
-{ #category : #accessing }
-ChangeRecord >> category [
-	^category
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ChangeRecord >> classIncludesSelector [
 
 	| aClass |
@@ -39,7 +36,7 @@ ChangeRecord >> classIncludesSelector [
 			and: [aClass includesSelector: self methodSelector]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> commentClass [
 	| commentClass |
 	type == #classComment ifFalse: [^ nil].
@@ -49,54 +46,46 @@ ChangeRecord >> commentClass [
 		ifFalse: [commentClass]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChangeRecord >> file: f position: p type: t [
 	file := f.
 	position := p.
 	type := t
 ]
 
-{ #category : #initialization }
-ChangeRecord >> file: f position: p type: t class: c category: cat meta: m stamp: s [
+{ #category : 'initialization' }
+ChangeRecord >> file: f position: p type: t class: c protocol: aProtocol meta: m stamp: s [
 	self file: f position: p type: t.
 	class := c.
-	category := cat.
+	protocol := aProtocol.
 	meta := m.
 	stamp := s
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChangeRecord >> fileIn [
 	"File the receiver in.  If I represent a method or a class-comment, file the method in and make a note of it in the recent-submissions list; if I represent a do-it, then, well, do it."
 
-	UIManager default
-		showWaitCursorWhile:
-			[
-			| methodClass s |
-			(methodClass := self methodClass) notNil
-				ifTrue:
-					[
-					methodClass
-						compile: self text
-						classified: category
-						withStamp: stamp
-						notifying: nil ].
-			type == #doIt
-				ifTrue:
-					[
-					((s := self string) beginsWith: '----')
-						ifFalse: [ self class compiler evaluate: s ] ].
-			type == #classComment
-				ifTrue:
-					[ (Smalltalk globals at: class asSymbol) comment: self text stamp: stamp ] ]
+	UIManager default showWaitCursorWhile: [
+		self methodClass ifNotNil: [ :methodClass |
+			methodClass
+				compile: self string
+				classified: protocol
+				withStamp: stamp
+				notifying: nil ].
+		type == #doIt ifTrue: [
+			| string |
+			string := self string.
+			(string beginsWith: '----') ifFalse: [ self class compiler evaluate: string ] ].
+		type == #classComment ifTrue: [ (Smalltalk globals at: class asSymbol) comment: self string stamp: stamp ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> fileName [
 	^file ifNotNil: [ file name ] ifNil: [ '<no file>' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> fileOutOn: aFileStream [
 	"File the receiver out on the given file stream"
 
@@ -107,7 +96,7 @@ ChangeRecord >> fileOutOn: aFileStream [
 			aString :=  class asString
 							, (meta ifTrue: [' class methodsFor: ']
 									ifFalse: [' methodsFor: '])
-							, category asString printString.
+							, protocol asString printString.
 			stamp ifNotNil:
 				[aString := aString, ' stamp: ''', stamp, ''''].
 			aFileStream nextChunkPut: aString.
@@ -126,12 +115,12 @@ ChangeRecord >> fileOutOn: aFileStream [
 	aFileStream cr
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChangeRecord >> isMetaClassChange [
 	^meta
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChangeRecord >> isMethodDefinedInImage [
 	"answer whether the method represented by the receiver is present in the image"
 
@@ -139,7 +128,7 @@ ChangeRecord >> isMethodDefinedInImage [
 		and: [self classIncludesSelector]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChangeRecord >> isMethodNotDefinedInImage [
 	"answer whether the method represented by the receiver is not present in the image.
 	pay attention is it not just isMethodDefinedInImage not"
@@ -150,7 +139,7 @@ ChangeRecord >> isMethodNotDefinedInImage [
 				[(aClass includesSelector: self methodSelector) not]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ChangeRecord >> isUnchangedMethod [
 
 	^ self isMethodDefinedInImage
@@ -158,7 +147,7 @@ ChangeRecord >> isUnchangedMethod [
 				= (self methodClass sourceCodeAt: self methodSelector) asString withBlanksCondensed ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> methodClass [
 	| methodClass |
 	type == #method
@@ -171,32 +160,38 @@ ChangeRecord >> methodClass [
 		ifFalse: [ methodClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> methodClassName [
 	^ meta
 		ifTrue: [ class , ' class' ]
 		ifFalse: [ class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> methodSelector [
 	^ type == #method
 		ifTrue: [ (Smalltalk globals at: class ifAbsent: [ Object ]) compiler parseSelector: self string ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> position [
 	^ position
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ChangeRecord >> printOn: aStream [
 
 	self type printOn: aStream.
 	self stamp ifNotNil: [ :s | s printOn: aStream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ChangeRecord >> protocol [
+
+	^ protocol
+]
+
+{ #category : 'accessing' }
 ChangeRecord >> sourceCode [
 
 	self type= #preamble ifTrue: [ ^ #preamble printString ].
@@ -206,18 +201,18 @@ ChangeRecord >> sourceCode [
 	^ self string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> stamp [
 	^ stamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> stamp: threePartString [
 
 	stamp := threePartString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> string [
 	| copy |
 	copy := file readOnlyCopy.
@@ -226,7 +221,7 @@ ChangeRecord >> string [
 		ensure: [ copy close ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> timeStamp [
 	"Answer a TimeStamp that corresponds to my (text) stamp"
 
@@ -244,7 +239,7 @@ ChangeRecord >> timeStamp [
 		ifFalse: [ DateAndTime new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChangeRecord >> type [
 	^ type
 ]

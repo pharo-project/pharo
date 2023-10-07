@@ -3,23 +3,25 @@
 
 "
 Class {
-	#name : #ConstantBlockClosure2Arg,
-	#superclass : #ConstantBlockClosure,
-	#type : #variable,
-	#category : #'Kernel-Methods'
+	#name : 'ConstantBlockClosure2Arg',
+	#superclass : 'ConstantBlockClosure',
+	#type : 'variable',
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure2Arg >> value [
 	self numArgsError: 0
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure2Arg >> value: firstArg value: secondArg [
 	^literal
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure2Arg >> valueWithArguments: anArray [
 	(anArray size ~= 2) ifTrue: [self numArgsError: anArray size].
 	^literal

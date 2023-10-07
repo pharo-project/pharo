@@ -17,39 +17,41 @@ Internal Representation and Key Implementation Points.
 	childrenType:		<Class>
 "
 Class {
-	#name : #ClyItemChildrenTag,
-	#superclass : #ClyProperty,
+	#name : 'ClyItemChildrenTag',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'childrenType'
 	],
 	#classVars : [
 		'Types'
 	],
-	#category : #'Calypso-NavigationModel-Tag'
+	#category : 'Calypso-NavigationModel-Tag',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Tag'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemChildrenTag class >> childrenType: itemTypeClass [
 	^self types at: itemTypeClass ifAbsentPut: [
 		self new childrenType: itemTypeClass]
 ]
 
-{ #category : #cache }
+{ #category : 'cache' }
 ClyItemChildrenTag class >> types [
 	^Types ifNil: [ Types := IdentityDictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemChildrenTag >> childrenType [
 	^ childrenType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemChildrenTag >> childrenType: aClass [
 	childrenType := aClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyItemChildrenTag >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.

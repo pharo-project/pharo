@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfProfilerUI,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfProfilerUI
+	#name : 'BaselineOfProfilerUI',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfProfilerUI',
+	#package : 'BaselineOfProfilerUI'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfProfilerUI >> baseline: spec [
 
 	<baseline>

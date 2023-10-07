@@ -2,19 +2,22 @@
 An entry for the FreeTypeCache
 "
 Class {
-	#name : #FreeTypeCacheEntry,
-	#superclass : #Link,
+	#name : 'FreeTypeCacheEntry',
+	#superclass : 'Link',
 	#instVars : [
 		'font',
 		'charCode',
 		'type',
+		'scale',
 		'object',
 		'previousLink'
 	],
-	#category : #'FreeType-Cache'
+	#category : 'FreeType-Cache',
+	#package : 'FreeType',
+	#tag : 'Cache'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FreeTypeCacheEntry >> = aFreeTypeCacheEntry [
 	"equailty based on font,charcode, type, object, but not nextLink"
 
@@ -23,79 +26,92 @@ FreeTypeCacheEntry >> = aFreeTypeCacheEntry [
 	^font = aFreeTypeCacheEntry font and: [
 		charCode = aFreeTypeCacheEntry charCode
 			and: [type = aFreeTypeCacheEntry type
-				and:[object = aFreeTypeCacheEntry object]]]
+				and: [scale = aFreeTypeCacheEntry scale
+					and:[object = aFreeTypeCacheEntry object]]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> charCode [
 	"Answer the value of charCode"
 
 	^ charCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> charCode: anObject [
 	"Set the value of charCode"
 
 	charCode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> font [
 	"Answer the value of font"
 
 	^ font
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> font: anObject [
 	"Set the value of font"
 
 	font := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FreeTypeCacheEntry >> hash [
 
 	^ charCode hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> object [
 	"Answer the value of object"
 
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> object: anObject [
 	"Set the value of object"
 
 	object := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> previousLink [
 	"Answer the value of previousLink"
 
 	^ previousLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> previousLink: anObject [
 	"Set the value of previousLink"
 
 	previousLink := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+FreeTypeCacheEntry >> scale [
+
+	^ scale
+]
+
+{ #category : 'accessing' }
+FreeTypeCacheEntry >> scale: anObject [
+
+	scale := anObject
+]
+
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> type [
 	"Answer the value of type"
 
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeCacheEntry >> type: anObject [
 	"Set the value of type"
 

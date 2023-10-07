@@ -2,18 +2,20 @@
 I am a structure that in the AMD64 SystemV ABI is passed in 1 integer register, and in 1 float register.
 "
 Class {
-	#name : #FFITestStructureSmallIntFloatStructure,
-	#superclass : #FFIExternalStructure,
+	#name : 'FFITestStructureSmallIntFloatStructure',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_W',
 		'OFFSET_X',
 		'OFFSET_Y',
 		'OFFSET_Z'
 	],
-	#category : #'UnifiedFFI-Tests-Test-Data'
+	#category : 'UnifiedFFI-Tests-Test-Data',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Test-Data'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FFITestStructureSmallIntFloatStructure class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
@@ -24,61 +26,61 @@ FFITestStructureSmallIntFloatStructure class >> fieldsDesc [
 	)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FFITestStructureSmallIntFloatStructure >> = another [
 
 	^ (self species = another species) and: [ self getHandle = another getHandle ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FFITestStructureSmallIntFloatStructure >> hash [
 
 	^ self getHandle hash
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> w [
 	"This method was automatically generated"
 	^handle floatAt: OFFSET_W
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> w: anObject [
 	"This method was automatically generated"
 	handle floatAt: OFFSET_W put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> x [
 	"This method was automatically generated"
 	^handle floatAt: OFFSET_X
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> x: anObject [
 	"This method was automatically generated"
 	handle floatAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> y [
 	"This method was automatically generated"
 	^handle signedLongAt: OFFSET_Y
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> y: anObject [
 	"This method was automatically generated"
 	handle signedLongAt: OFFSET_Y put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> z [
 	"This method was automatically generated"
 	^handle floatAt: OFFSET_Z
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FFITestStructureSmallIntFloatStructure >> z: anObject [
 	"This method was automatically generated"
 	handle floatAt: OFFSET_Z put: anObject

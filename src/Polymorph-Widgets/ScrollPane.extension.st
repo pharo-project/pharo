@@ -1,6 +1,6 @@
-Extension { #name : #ScrollPane }
+Extension { #name : 'ScrollPane' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> adoptPaneColor: paneColor [
 	"Match the pane colour."
 
@@ -12,7 +12,7 @@ ScrollPane >> adoptPaneColor: paneColor [
 		self borderStyle: self borderStyleToUse]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> borderStyle: aBorderStyle [
 	"Optimised when no change."
 
@@ -21,7 +21,7 @@ ScrollPane >> borderStyle: aBorderStyle [
 	self setScrollDeltas
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
 
@@ -30,34 +30,34 @@ ScrollPane >> borderStyleToUse [
 		ifFalse: [self theme scrollPaneDisabledBorderStyleFor: self]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> getMenuSelector [
 
 	^ getMenuSelector
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> getMenuSelector: aSymbol [
 	"Set the menu selector."
 
 	getMenuSelector := aSymbol
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> hScrollValue: scrollValue [
 	"Set the horizontal scroll value via the scrollbar itself."
 
 	hScrollBar setValue: scrollValue
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> handlesMouseWheel: evt [
 	"Do I want to receive mouseWheel events?"
 
 	^self vIsScrollable or: [ self hIsScrollable ]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> hideOrShowScrollBar [
 	"Hide or show the scrollbar depending on if the pane is scrolled/scrollable."
 
@@ -68,7 +68,7 @@ ScrollPane >> hideOrShowScrollBar [
 	(self vIsScrollbarNeeded or: [ self isScrolledFromTop ]) ifTrue: [self vShowScrollBar]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> minHeight [
 	"Answer the minimum height."
 
@@ -87,7 +87,7 @@ ScrollPane >> minHeight [
 	^ minH max: super minHeight
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> minWidth [
 	"Answer the minimum width."
 
@@ -104,7 +104,7 @@ ScrollPane >> minWidth [
 	^minW max: super minWidth
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> mouseWheel: event [
 	"Handle a mouseWheel event."
 
@@ -114,27 +114,27 @@ ScrollPane >> mouseWheel: event [
 	event isRight  ifTrue: [ ^ hScrollBar scrollRight: 3 ]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> scrollBarThickness [
 	"Includes border"
 	^ self theme scrollbarThickness
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> scrollValue [
 	"Answer the values of the scrollbars as a point."
 
 	^hScrollBar value @ scrollBar value
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> scrollValue: aPoint [
 	self
 		hScrollValue: aPoint x;
 		vScrollValue: aPoint y
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> themeChanged [
 	"The current theme has changed.
 	Update any dependent visual aspects."
@@ -144,7 +144,7 @@ ScrollPane >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ScrollPane >> vScrollValue: scrollValue [
 	"Set the vertical scroll value via the scrollbar itself."
 

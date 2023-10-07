@@ -8,49 +8,51 @@ The keyword is a HESymbol
 and the arguments si a HEArray
 "
 Class {
-	#name : #HEPragma,
-	#superclass : #HEExportedLiteral,
+	#name : 'HEPragma',
+	#superclass : 'HEExportedLiteral',
 	#instVars : [
 		'method',
 		'arguments',
 		'keyword'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPragma class >> tag [
 	^ 11
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPragma >> arguments [
 	^ arguments
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEPragma >> asLiteralIn: env [
 	^ Pragma for: (method asLiteralIn: env) selector: (keyword asLiteralIn: env) arguments: (arguments asLiteralIn: env)
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEPragma >> doReadFrom: aReader [
 	method := HEExportedLiteral readFrom: aReader.
 	keyword := HEExportedLiteral readFrom: aReader.
 	arguments := HEExportedLiteral readFrom: aReader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPragma >> keyword [
 	^ keyword
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPragma >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPragma >> value: aPragma [
 	method := aPragma method asExportedLiteral.
 	keyword := aPragma selector asExportedLiteral.

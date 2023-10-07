@@ -29,28 +29,30 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTCellMorph,
-	#superclass : #FTSelectableMorph,
+	#name : 'FTCellMorph',
+	#superclass : 'FTSelectableMorph',
 	#instVars : [
 		'topSeparator'
 	],
-	#category : #'Morphic-Widgets-FastTable-Base'
+	#category : 'Morphic-Widgets-FastTable-Base',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Base'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 FTCellMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
 	topSeparator
 		ifTrue: [ aCanvas line: bounds topLeft to: bounds topRight color: self seperatorColor ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTCellMorph >> handlesMouseOver: evt [
 	self table ifNotNil: [ :table | ^ table selectionModeStrategy allowsCellSelection ].
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTCellMorph >> initialize [
 	super initialize.
 	topSeparator := false.
@@ -64,12 +66,12 @@ FTCellMorph >> initialize [
 		wrapCentering: #center
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 FTCellMorph >> seperatorColor [
 	^ self theme scrollbarColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTCellMorph >> withTopSeparator [
 	topSeparator := true
 ]

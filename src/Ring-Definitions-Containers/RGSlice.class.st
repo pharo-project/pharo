@@ -4,19 +4,21 @@ By inheritance it knows how to treat classes and methods
 
 "
 Class {
-	#name : #RGSlice,
-	#superclass : #RGContainer,
-	#category : #'Ring-Definitions-Containers-Base'
+	#name : 'RGSlice',
+	#superclass : 'RGContainer',
+	#category : 'Ring-Definitions-Containers-Base',
+	#package : 'Ring-Definitions-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RGSlice >> addElement: aRGDefinition in: aCollection [
 
 	aRGDefinition environment: self.
 	super addElement: aRGDefinition in: aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGSlice >> isSlice [
 
 	^true

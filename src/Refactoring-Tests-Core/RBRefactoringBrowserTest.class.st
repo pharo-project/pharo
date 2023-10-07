@@ -1,41 +1,42 @@
 Class {
-	#name : #RBRefactoringBrowserTest,
-	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'Refactoring-Tests-Core-Base'
+	#name : 'RBRefactoringBrowserTest',
+	#superclass : 'AbstractEnvironmentTestCase',
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRefactoringBrowserTest class >> isAbstract [
 	^ self name = #RBRefactoringBrowserTest
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
-	aRefactoring primitiveExecute.
+	aRefactoring generateChanges.
 	self parserClass parseExpression: aRefactoring storeString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoringBrowserTest >> objectClassVariable [
 	^Object classPool keys detect: [:each | true]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBRefactoringBrowserTest >> parseExpression: aString [
 	^ self parserClass parseExpression: aString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBRefactoringBrowserTest >> parseMethod: aString [
 	^ self parserClass parseMethod: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoringBrowserTest >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoringBrowserTest >> proceedThroughWarning: aBlock [
 	aBlock on: RBRefactoringWarning do: [ :ex | ex resume ]
 ]

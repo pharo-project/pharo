@@ -1,6 +1,6 @@
-Extension { #name : #ProtoObjectTest }
+Extension { #name : 'ProtoObjectTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ProtoObjectTest >> testPointersToCycle [
 
 	| myObject myArray myArray2 pointingObjects |

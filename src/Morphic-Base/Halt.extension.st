@@ -1,6 +1,6 @@
-Extension { #name : #Halt }
+Extension { #name : 'Halt' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Halt class >> resetOnceMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Enable all break/inspect once')

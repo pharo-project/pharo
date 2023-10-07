@@ -6,17 +6,19 @@ I contains
 	- a label to add indication about what I am supposed to do
 "
 Class {
-	#name : #ClyNotebookPageAction,
-	#superclass : #Object,
+	#name : 'ClyNotebookPageAction',
+	#superclass : 'Object',
 	#instVars : [
 		'action',
 		'icon',
 		'label'
 	],
-	#category : #'Calypso-Browser-Tabs'
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNotebookPageAction class >> action: action icon: icon label: label [
 
 	^ self new
@@ -26,24 +28,24 @@ ClyNotebookPageAction class >> action: action icon: icon label: label [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageAction >> action [
 	^ action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageAction >> action: anObject [
 
 	action := anObject.
 	icon on: #click send: #value to: action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageAction >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageAction >> icon: aForm [
 
 	icon image: aForm.
@@ -52,19 +54,19 @@ ClyNotebookPageAction >> icon: aForm [
 	action ifNotNil: [ icon on: #click send: #value to: action ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNotebookPageAction >> initialize [
 
 	super initialize.
 	icon := ImageMorph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageAction >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageAction >> label: aLabel [
 
 	label := aLabel.

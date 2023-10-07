@@ -1,6 +1,6 @@
-Extension { #name : #CompiledCode }
+Extension { #name : 'CompiledCode' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 CompiledCode >> bytecodesHash [
 	"Answer a 16-bit checksum of the bytecodes."
 

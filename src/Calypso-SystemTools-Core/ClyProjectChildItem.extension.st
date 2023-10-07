@@ -1,6 +1,6 @@
-Extension { #name : #ClyProjectChildItem }
+Extension { #name : 'ClyProjectChildItem' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyProjectChildItem >> decorateTableCell: anItemCellMorph inContext: itemContext [
 
 	^ self
@@ -8,6 +8,6 @@ ClyProjectChildItem >> decorateTableCell: anItemCellMorph inContext: itemContext
 		of: itemContext lastSelectedItem
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyProjectChildItem >> decorateTableCell: anItemCellMorph of: groupItem [
 ]

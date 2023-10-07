@@ -2,16 +2,18 @@
 A ValueChanged is an announcement raised when a value of a NewValueHolder is changed
 "
 Class {
-	#name : #ValueChanged,
-	#superclass : #Announcement,
+	#name : 'ValueChanged',
+	#superclass : 'Announcement',
 	#instVars : [
 		'newValue',
 		'oldValue'
 	],
-	#category : #'System-Model-Announcements'
+	#category : 'System-Model-Announcements',
+	#package : 'System-Model',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ValueChanged class >> newValue: newContents [
 
 	^ self new
@@ -19,7 +21,7 @@ ValueChanged class >> newValue: newContents [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ValueChanged class >> oldValue: oldContent newValue: newValue [
 
 	^ self new
@@ -28,25 +30,25 @@ ValueChanged class >> oldValue: oldContent newValue: newValue [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValueChanged >> newValue [
 
 	^ newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValueChanged >> newValue: anObject [
 
 	newValue := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValueChanged >> oldValue [
 
 	^ oldValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValueChanged >> oldValue: anObject [
 
 	oldValue := anObject

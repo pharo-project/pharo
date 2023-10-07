@@ -8,8 +8,8 @@ The cached objects is held weakly.
 The cache is flushed for a new image session.
 "
 Class {
-	#name : #CairoBackendCache,
-	#superclass : #Object,
+	#name : 'CairoBackendCache',
+	#superclass : 'Object',
 	#instVars : [
 		'cache'
 	],
@@ -20,51 +20,53 @@ Class {
 		'soleInstance',
 		'session'
 	],
-	#category : #'Athens-Cairo-Caching'
+	#category : 'Athens-Cairo-Caching',
+	#package : 'Athens-Cairo',
+	#tag : 'Caching'
 }
 
-{ #category : #'session management' }
+{ #category : 'session management' }
 CairoBackendCache class >> checkSession [
 	session == Smalltalk session ifFalse: [
 		soleInstance := nil.
 		session := Smalltalk session ]
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 CairoBackendCache class >> flush [
 	self soleInstance flush
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoBackendCache class >> new [
 	self error: 'Use #soleInstance'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoBackendCache class >> soleInstance [
 	self checkSession.
 	^ soleInstance ifNil: [ soleInstance := super new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoBackendCache >> at: anObject [
 
 	^ cache at: anObject  ifAbsent: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoBackendCache >> at: anObject ifAbsentPut: aBlock [
 
 	^ cache at: anObject  ifAbsentPut: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoBackendCache >> flush [
 
 	cache := WeakIdentityKeyDictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoBackendCache >> for: anObject at: key ifAbsentPut: aBlock [
 
 	| subCache |
@@ -75,13 +77,13 @@ CairoBackendCache >> for: anObject at: key ifAbsentPut: aBlock [
 	^ subCache at: key ifAbsentPut: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoBackendCache >> initialize [
 
 	self flush
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 CairoBackendCache >> removeAt: anObject [
 
 	^ cache removeKey: anObject  ifAbsent: nil

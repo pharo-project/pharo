@@ -2,47 +2,24 @@
 I am the shout styler decorator for a text area, I highlight the text 
 "
 Class {
-	#name : #RubShoutStylerDecorator,
-	#superclass : #RubParagraphDecorator,
+	#name : 'RubShoutStylerDecorator',
+	#superclass : 'RubParagraphDecorator',
 	#instVars : [
 		'styler',
 		'text',
 		'replaceStart',
 		'replaceStop'
 	],
-	#classVars : [
-		'MinTextSizeForStylingInBackground'
-	],
-	#category : #'Rubric-Styling'
+	#category : 'Rubric-Styling',
+	#package : 'Rubric-Styling'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubShoutStylerDecorator class >> key [
 	^ #shoutStyler
 ]
 
-{ #category : #settings }
-RubShoutStylerDecorator class >> minTextSizeForStylingInBackground [
-	^ MinTextSizeForStylingInBackground ifNil: [ MinTextSizeForStylingInBackground := 4000 ]
-]
-
-{ #category : #settings }
-RubShoutStylerDecorator class >> minTextSizeForStylingInBackground: anInteger [
-	MinTextSizeForStylingInBackground := anInteger
-]
-
-{ #category : #settings }
-RubShoutStylerDecorator class >> rubricSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #minTextSizeForStylingInBackground)
-		target: self;
-		parent: #Rubric;
-		default: 4000;
-		description: 'Set the minimum text size imposed to allow background styling';
-		label: 'Min text size for background styling'
-]
-
-{ #category : #private }
+{ #category : 'private' }
 RubShoutStylerDecorator >> aboutToBeUnplugged [
 
 	self paragraph ifNotNil: [ :paragraph |
@@ -50,29 +27,24 @@ RubShoutStylerDecorator >> aboutToBeUnplugged [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> beForSmalltalkScripting [
 	self styler workspace: self model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
 
 	self styler classOrMetaClass: aBehavior
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> defaultStyler [
 	^SHRBTextStyler new view: self; yourself
 ]
 
-{ #category : #shout }
-RubShoutStylerDecorator >> minTextSizeForStylingInBackground [
-	^ self class minTextSizeForStylingInBackground
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> next: aDecorator [
 	super next: aDecorator.
 	aDecorator ifNotNil: [
@@ -83,12 +55,12 @@ RubShoutStylerDecorator >> next: aDecorator [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> okToStyle [
 	^ self shoutEnabled and: [ self shoutAboutToStyle: self ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubShoutStylerDecorator >> refreshStyling [
 
 	" shout for the whole text "
@@ -96,16 +68,15 @@ RubShoutStylerDecorator >> refreshStyling [
 		ifTrue: [ self text: self text ]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> replaceFrom: start to: stop with: aText [
-	self okToStyle
-		ifFalse: [ ^ next replaceFrom: start to: stop with: aText ].
+
+	self okToStyle ifFalse: [ ^ next replaceFrom: start to: stop with: aText ].
 
 	self paragraph disableDrawingWhile: [
-
 		aText addAttribute: self paragraph defaultFontChange.
 		text ifNil: [ text := self text ].
-		text replaceFrom: start to: stop with: (self styler format: aText).
+		text replaceFrom: start to: stop with: aText.
 		replaceStart := start.
 		replaceStop := stop.
 		self style: text.
@@ -114,23 +85,20 @@ RubShoutStylerDecorator >> replaceFrom: start to: stop with: aText [
 		self paragraph ifNotNil: [ :paragraph |
 			paragraph recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop - start + 1).
 			paragraph textArea paragraphWasComposedFrom: start to: start + aText size - 1.
-			paragraph textArea paragraphReplacedTextFrom: start to: stop with: aText
-		]
-
-	]
+			paragraph textArea paragraphReplacedTextFrom: start to: stop with: aText ] ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubShoutStylerDecorator >> shoutAboutToStyle: myself [
 	^ self paragraph textArea shoutAboutToStyle: myself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubShoutStylerDecorator >> shoutEnabled [
 	^ SHPreferences enabled
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> style: aText [
 	"we can do background styling with (self styler styleInBackgroundProcess: aText), but it is not safe"
 
@@ -144,7 +112,7 @@ RubShoutStylerDecorator >> style: aText [
 			^ aText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> styler [
 	"The styler responsible for highlighting text in the receiver"
 
@@ -157,14 +125,14 @@ RubShoutStylerDecorator >> styler [
 			ifFalse: [ self defaultStyler ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> styler: aTextStyler [
 
 	styler := aTextStyler.
 	styler view: self
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 	next ifNil: [ ^ self ].
 	(text notNil and:[text string = styledCopyOfText string])
@@ -183,31 +151,30 @@ RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 	self updateTextArea
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> stylerStyledInBackground: styledCopyOfText [
 	text ifNil: [ ^self ].
 	self stylerStyled: styledCopyOfText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> text [
 	^ next text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> text: aText [
-	self okToStyle
-		ifFalse: [ ^ next text: aText ].
-	self
-		disableDrawingWhile: [
-			aText addAttribute: self defaultFontChange.
-			next text: (text := (self styler format: aText)).
-			replaceStart := 1.
-			replaceStop := text size.
-			self style: text]
+
+	self okToStyle ifFalse: [ ^ next text: aText ].
+	self disableDrawingWhile: [
+		aText addAttribute: self defaultFontChange.
+		next text: (text := aText).
+		replaceStart := 1.
+		replaceStop := text size.
+		self style: text ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubShoutStylerDecorator >> updateTextArea [
 
 	| textArea |
@@ -220,7 +187,7 @@ RubShoutStylerDecorator >> updateTextArea [
 	(textArea scrollPane ifNil: [ textArea ]) changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubShoutStylerDecorator >> whenTextAcceptRequest: anAnnouncement [
 
 	self refreshStyling

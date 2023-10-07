@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloPackagesSpec,
-	#superclass : #MetacelloMemberListSpec,
-	#category : #'Metacello-Core-Specs'
+	#name : 'MetacelloPackagesSpec',
+	#superclass : 'MetacelloMemberListSpec',
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPackagesSpec >> add: aSpec [
 
 	aSpec addToMetacelloPackages: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackagesSpec >> applyIncludesTo: orderedSpecs for: pkgSpec firstTime: firstTime for: aVersionSpec [
   | movedSpecs baseIndex |
   movedSpecs := Set new.
@@ -33,7 +35,7 @@ MetacelloPackagesSpec >> applyIncludesTo: orderedSpecs for: pkgSpec firstTime: f
   ^ movedSpecs
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloPackagesSpec >> configMethodOn: aStream indent: indent [
 
 	| packageSpecs |
@@ -62,7 +64,7 @@ MetacelloPackagesSpec >> configMethodOn: aStream indent: indent [
 				aStream cr ]]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPackagesSpec >> copy: specNamed to: spec [
 
 	self addMember: 
@@ -73,19 +75,19 @@ MetacelloPackagesSpec >> copy: specNamed to: spec [
 			yourself)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPackagesSpec >> merge: aSpec [
 
 	aSpec mergeIntoMetacelloPackages: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackagesSpec >> packageNamed: aString ifAbsent: aBlock [
 
 	^self map at: aString ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackagesSpec >> packageSpecsInLoadOrderFor: aVersionSpec [
   "order only the packageSpecs and projectSpecs. groupSpec order does not matter"
 
@@ -167,13 +169,13 @@ MetacelloPackagesSpec >> packageSpecsInLoadOrderFor: aVersionSpec [
   ^ orderedPackageSpecs , groupSpecs asOrderedCollection
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPackagesSpec >> remove: aSpec [
 
 	aSpec removeFromMetacelloPackages: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackagesSpec >> slideIn: orderedSpecs spec: targetSpec baseIndex: baseIndex seen: seen firstTime: firstTime for: aVersionSpec [
   | targetIndex requiredSpecNames targetRequires targetRequiresIndexes minIndex baseSpec required |
   (seen includes: targetSpec)
@@ -217,7 +219,7 @@ MetacelloPackagesSpec >> slideIn: orderedSpecs spec: targetSpec baseIndex: baseI
   ^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloPackagesSpec >> sortPackageSpecs: orderedSpecs packageSpec: packageSpec groupLoops: groupLoops for: aVersionSpec [
   | packageIndex moved movePackage targetPackage targetIndex targetSpecNames groupLoopDetected |
   packageIndex := orderedSpecs indexOf: packageSpec.

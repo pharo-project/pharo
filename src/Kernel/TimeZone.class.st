@@ -9,8 +9,8 @@ TimeZone class >> #timeZones returns an array of the known time zones
 TimeZone class >> #default returns the default time zone (Grenwich Mean Time)
 "
 Class {
-	#name : #TimeZone,
-	#superclass : #AbstractTimeZone,
+	#name : 'TimeZone',
+	#superclass : 'AbstractTimeZone',
 	#instVars : [
 		'offset',
 		'abbreviation',
@@ -19,17 +19,19 @@ Class {
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #'Kernel-Chronology'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone class >> abbreviated: aString [
  	"Return the timezone whose abbreviation is aString."
  	^ self timeZones detect: [ :timeZone |
 		timeZone abbreviation = aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone class >> default [
  	"Answer the default time zone - GMT"
 
@@ -37,12 +39,12 @@ TimeZone class >> default [
 		timeZone offset = Duration zero ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone class >> local [
 	^ LocalTimeZone new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone class >> offset: aDuration [
  	"Return the timezone with the given offset
 
@@ -53,7 +55,7 @@ TimeZone class >> offset: aDuration [
 		ifNone: [ self new offset: aDuration ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TimeZone class >> offset: aDuration name: aName abbreviation: anAbbreviation [
 
  	^ self new
@@ -63,7 +65,7 @@ TimeZone class >> offset: aDuration name: aName abbreviation: anAbbreviation [
  		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone class >> timeZones [
 
 	^ {
@@ -82,37 +84,37 @@ TimeZone class >> timeZones [
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone >> abbreviation [
 
  	^ abbreviation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone >> abbreviation: aString [
 
 	abbreviation := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone >> name [
 
  	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone >> offset [
 
  	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimeZone >> offset: aDuration [
 
 	offset := aDuration

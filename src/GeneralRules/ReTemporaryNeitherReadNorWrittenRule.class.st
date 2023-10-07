@@ -2,12 +2,14 @@
 There is something wrong in the method as you have variables that are either nor read or not written (or both).
 "
 Class {
-	#name : #ReTemporaryNeitherReadNorWrittenRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReTemporaryNeitherReadNorWrittenRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isTempVariable ifFalse: [ ^ self ].
 	aNode isDefinition ifFalse: [ ^ self ].
@@ -15,12 +17,12 @@ ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 		aBlock cull: (self critiqueFor: aNode) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTemporaryNeitherReadNorWrittenRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReTemporaryNeitherReadNorWrittenRule >> name [
 	^ 'Temporary variables not read or not written'
 ]

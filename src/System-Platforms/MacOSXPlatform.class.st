@@ -8,34 +8,36 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : #MacOSXPlatform,
-	#superclass : #MacOSPlatform,
-	#category : #'System-Platforms-Mac'
+	#name : 'MacOSXPlatform',
+	#superclass : 'MacOSPlatform',
+	#category : 'System-Platforms-Mac',
+	#package : 'System-Platforms',
+	#tag : 'Mac'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MacOSXPlatform class >> isActivePlatform [
 	^ self isMacOS
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MacOSXPlatform >> accept: aVisitor [
 
 	^ aVisitor visitMacOSX: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MacOSXPlatform >> family [
 	^#MacOSX
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 MacOSXPlatform >> getErrorMessage: errnum [
 
 	^ self ffiCall: #(char *strerror(int errnum)) module: #LibC
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MacOSXPlatform >> isMacOSX [
 	^ true
 ]

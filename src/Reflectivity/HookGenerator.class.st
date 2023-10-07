@@ -5,48 +5,50 @@ New version
 -> returns the complete AST for the hook.
 "
 Class {
-	#name : #HookGenerator,
-	#superclass : #Object,
+	#name : 'HookGenerator',
+	#superclass : 'Object',
 	#instVars : [
 		'entity',
 		'node',
 		'links',
 		'plugins'
 	],
-	#category : #'Reflectivity-Core'
+	#category : 'Reflectivity-Core',
+	#package : 'Reflectivity',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HookGenerator class >> entity: anEntity node: aNode [
 	^self new entity: anEntity node: aNode links: anEntity links
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HookGenerator class >> node: aNode [
 	^self entity: aNode node: aNode
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> afterHooks [
 	^ links
 			select: [ :each | each control = #after ]
 			thenCollect:  [ :link | (self hookFor: link) parent: node]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> beforeHooks [
 	^links
 			select: [ :each | each control = #before ]
 			thenCollect:  [ :link | (self hookFor: link) parent: node]
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> encloseInBlock: nodeOrCollection [
 	"Creates a new block node from a node or a list of nodes"
 	^ RBBlockNode body: nodeOrCollection asSequenceNode
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 HookGenerator >> entity: anEntity node: aNode links: aCollection [
 	plugins := Dictionary new.
 	node := aNode.
@@ -60,7 +62,7 @@ HookGenerator >> entity: anEntity node: aNode links: aCollection [
 		]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HookGenerator >> genReification: aSymbolOrNode for: aLink [
 	| plugin |
 	(aSymbolOrNode isKindOf: RBProgramNode) ifTrue: [ ^ aSymbolOrNode].
@@ -70,7 +72,7 @@ HookGenerator >> genReification: aSymbolOrNode for: aLink [
 	^plugin perform: self selectorForNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HookGenerator >> generateArguments: aMetalink [
 	| arguments |
 
@@ -80,18 +82,18 @@ HookGenerator >> generateArguments: aMetalink [
 	^arguments
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 HookGenerator >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
 	^(node methodNode optionsFor: aLink) includes: aSymbol
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> hook [
 	^RBSequenceNode statements: (links collect:  [ :link | self hookFor: link ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HookGenerator >> hookFor: aLink [
 	| receiver hook arguments |
 
@@ -125,7 +127,7 @@ HookGenerator >> hookFor: aLink [
 	^ hook
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> insteadHooks [
 	| insteadLinks |
 	insteadLinks := ((links select: [ :each | each control = #instead ])) asArray.
@@ -133,17 +135,17 @@ HookGenerator >> insteadHooks [
 	^(self hookFor: insteadLinks last) parent: node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HookGenerator >> links [
 	^links
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HookGenerator >> plugins [
 	^ plugins
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> postamble [
 	| postamble |
 	"This is code executed just before the #after link"
@@ -155,7 +157,7 @@ HookGenerator >> postamble [
 	^postamble
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> preamble [
 	| preamble |
 	"Very simplistic now: needs to do some optimizatons"
@@ -170,13 +172,13 @@ HookGenerator >> preamble [
 	^preamble
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> selectorForNode [
 	"The selector to be called on the Reification plugin"
 	^('genFor' , entity class name) asSymbol
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> wrapCondition: hook link: aLink [
 	| linkBlock conditionExpression condSelector condArguments linkConditionArguments|
 
@@ -204,7 +206,7 @@ HookGenerator >> wrapCondition: hook link: aLink [
 				arguments: {linkBlock}
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> wrapInContext: hook link: aLink [
 	^RFMessageNode
 		receiver: (RBLiteralNode value: aLink)

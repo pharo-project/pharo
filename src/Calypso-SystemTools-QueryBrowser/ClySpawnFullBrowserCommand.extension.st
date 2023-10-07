@@ -1,13 +1,13 @@
-Extension { #name : #ClySpawnFullBrowserCommand }
+Extension { #name : 'ClySpawnFullBrowserCommand' }
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClySpawnFullBrowserCommand class >> queryBrowserDoubleClickMenuActivation [
 	<classAnnotation>
 
 	^CmdDoubleClickActivation for: ClyQueryBrowserContext
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClySpawnFullBrowserCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 

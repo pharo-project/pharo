@@ -21,8 +21,8 @@ SycMethodArgumentsEditorPresenter
 See class side 'example' script to know how to use me.
 "
 Class {
-	#name : #SycMethodArgumentsRemoverPresenter,
-	#superclass : #SpPresenter,
+	#name : 'SycMethodArgumentsRemoverPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'selectorInput',
 		'argumentsList',
@@ -30,10 +30,12 @@ Class {
 		'methodName',
 		'args'
 	],
-	#category : #'SystemCommands-RefactoringSupport-View'
+	#category : 'SystemCommands-RefactoringSupport-View',
+	#package : 'SystemCommands-RefactoringSupport',
+	#tag : 'View'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 SycMethodArgumentsRemoverPresenter class >> defaultLayout [
 
 	<spec>
@@ -49,7 +51,7 @@ SycMethodArgumentsRemoverPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SycMethodArgumentsRemoverPresenter class >> example [
 	<script>
 	self
@@ -59,7 +61,7 @@ SycMethodArgumentsRemoverPresenter class >> example [
 				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: [:each | each name]))
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMethodArgumentsRemoverPresenter class >> openOn: aMethod [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to remove arguments and optionally rename it."
 	|temp|
@@ -67,7 +69,7 @@ SycMethodArgumentsRemoverPresenter class >> openOn: aMethod [
 	^ temp openBlockedDialog
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycMethodArgumentsRemoverPresenter >> connectPresenters [
 
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
@@ -84,7 +86,7 @@ SycMethodArgumentsRemoverPresenter >> connectPresenters [
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodArgumentsRemoverPresenter >> defaultSelectorAfterRemoving: argumentName [
 
 	| argIndex keywords |
@@ -96,7 +98,7 @@ SycMethodArgumentsRemoverPresenter >> defaultSelectorAfterRemoving: argumentName
 	^ (keywords joinUsing: '') asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodArgumentsRemoverPresenter >> getParametersOrder [
 
 	^ argumentsList items
@@ -104,7 +106,7 @@ SycMethodArgumentsRemoverPresenter >> getParametersOrder [
 		  thenCollect: [ :arg | arg newName ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycMethodArgumentsRemoverPresenter >> initializeDialogWindow: aModalPresenter [
 
 	aModalPresenter
@@ -113,7 +115,7 @@ SycMethodArgumentsRemoverPresenter >> initializeDialogWindow: aModalPresenter [
 		initialExtent: 300 @ 300
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycMethodArgumentsRemoverPresenter >> initializePresenters [
 
 	selectorInput := self newTextInput.
@@ -127,7 +129,7 @@ SycMethodArgumentsRemoverPresenter >> initializePresenters [
 	self setFocus
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodArgumentsRemoverPresenter >> renameMethodAndClose: presenter [
 	^ previewResult label = '(invalid)'
 		ifTrue: [ self inform: 'Invalid method name' ]
@@ -140,7 +142,7 @@ SycMethodArgumentsRemoverPresenter >> renameMethodAndClose: presenter [
 				close ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodArgumentsRemoverPresenter >> setFocus [
 
 	self focusOrder
@@ -148,14 +150,14 @@ SycMethodArgumentsRemoverPresenter >> setFocus [
 		add: selectorInput
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 SycMethodArgumentsRemoverPresenter >> setModelBeforeInitialization: aRBMethodName [
 
 	methodName := aRBMethodName.
 	args := methodName arguments copy
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodArgumentsRemoverPresenter >> updateLabel [
 
 	"Update the new method name to display to the user when the user change its name or order of the arguments."

@@ -2,16 +2,18 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCopyPreservingIdentityTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCopyPreservingIdentityTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopyPreservingIdentityTest >> nonEmpty [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyPreservingIdentityTest >> testCopyReturnsIdentity [
 
 	| copy |

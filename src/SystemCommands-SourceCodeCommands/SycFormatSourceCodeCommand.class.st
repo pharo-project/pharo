@@ -7,43 +7,44 @@ Internal Representation and Key Implementation Points.
 	sourceCodeEditor:		<Object>
 "
 Class {
-	#name : #SycFormatSourceCodeCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycFormatSourceCodeCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'sourceCodeEditor'
 	],
-	#category : #'SystemCommands-SourceCodeCommands'
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycFormatSourceCodeCommand >> defaultMenuIconName [
 	^ #smallJustified
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycFormatSourceCodeCommand >> defaultMenuItemName [
 	^ 'Format code'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycFormatSourceCodeCommand >> execute [
 
 	sourceCodeEditor formatSourceCode
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycFormatSourceCodeCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	sourceCodeEditor := aToolContext editor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycFormatSourceCodeCommand >> sourceCodeEditor [
 	^ sourceCodeEditor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycFormatSourceCodeCommand >> sourceCodeEditor: anObject [
 	sourceCodeEditor := anObject
 ]

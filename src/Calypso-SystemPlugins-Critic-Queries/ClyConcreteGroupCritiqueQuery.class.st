@@ -11,22 +11,23 @@ Internal Representation and Key Implementation Points.
 	groupName:		<String>
 "
 Class {
-	#name : #ClyConcreteGroupCritiqueQuery,
-	#superclass : #ClyFilteringCritiqueQuery,
+	#name : 'ClyConcreteGroupCritiqueQuery',
+	#superclass : 'ClyFilteringCritiqueQuery',
 	#instVars : [
 		'groupName'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyConcreteGroupCritiqueQuery class >> filter: aCritiqueQuery from: aScope byGroup: aString [
 
 	^(self filter: aCritiqueQuery from: aScope)
 		groupName: aString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyConcreteGroupCritiqueQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -36,37 +37,37 @@ ClyConcreteGroupCritiqueQuery >> = anObject [
 	^groupName = anObject groupName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyConcreteGroupCritiqueQuery >> description [
 
 	^groupName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConcreteGroupCritiqueQuery >> groupName [
 	^ groupName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConcreteGroupCritiqueQuery >> groupName: anObject [
 	groupName := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyConcreteGroupCritiqueQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: groupName hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyConcreteGroupCritiqueQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	aStream nextPutAll: groupName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyConcreteGroupCritiqueQuery >> selectsCritique: aCritique [
 	^aCritique rule group = groupName
 ]

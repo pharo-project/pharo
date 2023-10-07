@@ -1,6 +1,6 @@
-Extension { #name : #Exception }
+Extension { #name : 'Exception' }
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Exception class >> systemIconName [
 
 	^ #exception

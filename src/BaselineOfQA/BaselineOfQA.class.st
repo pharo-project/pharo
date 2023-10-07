@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfQA,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfQA
+	#name : 'BaselineOfQA',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfQA',
+	#package : 'BaselineOfQA'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfQA >> baseline: spec [
 	<baseline>
 	

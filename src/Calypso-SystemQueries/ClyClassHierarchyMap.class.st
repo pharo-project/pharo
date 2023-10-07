@@ -34,25 +34,27 @@ Internal Representation and Key Implementation Points.
 	roots:		<IdentitySet<Class>>
 "
 Class {
-	#name : #ClyClassHierarchyMap,
-	#superclass : #Object,
+	#name : 'ClyClassHierarchyMap',
+	#superclass : 'Object',
 	#instVars : [
 		'hierarchy',
 		'classes',
 		'roots',
 		'parentMap'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchyMap class >> for: aClassHierarchy of: classes [
 	^self new
 		hierarchy: aClassHierarchy;
 		classes: classes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyClassHierarchyMap >> addActualChild: childClass to: parentClass [
 
 	| children |
@@ -61,7 +63,7 @@ ClyClassHierarchyMap >> addActualChild: childClass to: parentClass [
 	roots remove: childClass ifAbsent: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> addChild: childClass to: parentClass [
 
 	hierarchy isInverse
@@ -69,7 +71,7 @@ ClyClassHierarchyMap >> addChild: childClass to: parentClass [
 		ifFalse: [ self addActualChild: childClass to: parentClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> allChildrenOf: aClass depth: currentDepth do: blockWithClass [
 
 	| children childDepth |
@@ -80,7 +82,7 @@ ClyClassHierarchyMap >> allChildrenOf: aClass depth: currentDepth do: blockWithC
 		self allChildrenOf: eachChild depth: childDepth do: blockWithClass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> allChildrenOf: aClass do: blockWithClass [
 
 	| children |
@@ -90,7 +92,7 @@ ClyClassHierarchyMap >> allChildrenOf: aClass do: blockWithClass [
 		self allChildrenOf: eachChild do: blockWithClass]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchyMap >> build [
 
 	roots := IdentitySet withAll: classes.
@@ -99,27 +101,27 @@ ClyClassHierarchyMap >> build [
 	classes do: [ :each |	hierarchy buildParentMap: self for: each]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> childrenOf: aClass [
 	^parentMap at: aClass ifAbsent: [ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> classes [
 	^ classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> classes: classCollection [
 	classes := classCollection asIdentitySet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> containerForChildren [
 	^hierarchy containerForChildren
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> doInOrder: blockWithClass [
 
 	self rootsDo: [ :root |
@@ -127,7 +129,7 @@ ClyClassHierarchyMap >> doInOrder: blockWithClass [
 		self allChildrenOf: root do: blockWithClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> doInOrderWithDepth: blockWithClassAndDepth [
 
 	self rootsDo: [ :root |
@@ -135,33 +137,33 @@ ClyClassHierarchyMap >> doInOrderWithDepth: blockWithClassAndDepth [
 		self allChildrenOf: root depth: 0 do: blockWithClassAndDepth ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> hierarchy [
 	^ hierarchy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> hierarchy: anObject [
 	hierarchy := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassHierarchyMap >> includesClass: aClass [
 	^classes includes: aClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassHierarchyMap >> initialize [
 	super initialize.
 	parentMap := IdentityDictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> roots [
 	^roots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchyMap >> rootsDo: aBlock [
 
 	self containerForChildren

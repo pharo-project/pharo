@@ -33,12 +33,14 @@ because any metaclass inherits from Class, which itself inherits from Object.
 So the method #metaLevelForHierarchyOf: delegates such decision to concrete local scopes which allows local scopes to restrict the visibility of a class hierarchy.
 "
 Class {
-	#name : #ClyLocalClassScope,
-	#superclass : #ClyAbstractClassScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyLocalClassScope',
+	#superclass : 'ClyAbstractClassScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyLocalClassScope class >> metaLevelForHierarchyOf: aClass [
 	"Subclasses should decide what meta level of given class
 	should be used to retrieve/build hierarchy.
@@ -52,7 +54,7 @@ ClyLocalClassScope class >> metaLevelForHierarchyOf: aClass [
 	self subclassResponsibility
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyLocalClassScope class >> metaLevelsOf: aClass do: aBlock [
 	"Subclasses should decide what class meta level is visible.
 	For example it can be instance side, class side or both"
@@ -60,13 +62,13 @@ ClyLocalClassScope class >> metaLevelsOf: aClass do: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyLocalClassScope >> adoptLocalScopeClassTo: aLocalScopeClass [
 	"Local scopes can not be addopted to another local scope class.
 	So we just ignore this message send. Maybe better message name can be found"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyLocalClassScope >> asFullHierarchyScope [
 	| subclassScope fullScope |
 	subclassScope := self asScope: ClySubclassScope.
@@ -76,23 +78,23 @@ ClyLocalClassScope >> asFullHierarchyScope [
 	^fullScope
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyLocalClassScope >> asLocalClassScope [
 	^self
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyLocalClassScope >> classesDo: aBlock [
 	basisObjects do: [:each |
 		self metaLevelsOf: each do: aBlock]
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyLocalClassScope >> localScopeClass [
 	^self class
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyLocalClassScope >> metaLevelsOf: aClass do: aBlock [
 	"Subclasses can define what meta level is visible.
 	For example it can be instance side, class side or both.
@@ -101,7 +103,7 @@ ClyLocalClassScope >> metaLevelsOf: aClass do: aBlock [
 	self class metaLevelsOf: aClass do: aBlock
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyLocalClassScope >> methodsDo: aBlock [
 
 	self classesDo: [ :eachClass |
@@ -109,7 +111,7 @@ ClyLocalClassScope >> methodsDo: aBlock [
 			concreteMetaLevelClass methods do: aBlock ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyLocalClassScope >> withInheritedScope [
 
 	| fullScope |
@@ -118,7 +120,7 @@ ClyLocalClassScope >> withInheritedScope [
 	^fullScope
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyLocalClassScope >> withInheritingScope [
 
 	| fullScope |
@@ -127,7 +129,7 @@ ClyLocalClassScope >> withInheritingScope [
 	^fullScope
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyLocalClassScope >> withMetaLevel: aScopeClass [
 	^self asScope: aScopeClass
 ]

@@ -13,24 +13,26 @@ collection anySatisfy: [ :each | .... ])
 ]]]
 "
 Class {
-	#name : #ReDetectIfNoneRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReDetectIfNoneRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDetectIfNoneRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DetectIfNoneRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDetectIfNoneRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReDetectIfNoneRule >> initialize [
 	super initialize.
 	self
@@ -56,12 +58,12 @@ ReDetectIfNoneRule >> initialize [
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDetectIfNoneRule >> name [
 	^ '#detect:ifNone: or #contains: -> #anySatisfy:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDetectIfNoneRule >> rationale [
 	^ 'Replaces detect:ifNone: and contains: by anySatisfy:'
 ]

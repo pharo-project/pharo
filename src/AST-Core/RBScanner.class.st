@@ -22,8 +22,8 @@ Shared Variables:
 	PatternVariableCharacter	<Character>	the character that starts a pattern node
 "
 Class {
-	#name : #RBScanner,
-	#superclass : #Object,
+	#name : 'RBScanner',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'buffer',
@@ -32,7 +32,8 @@ Class {
 		'characterType',
 		'classificationTable',
 		'comments',
-		'nextToken'
+		'nextToken',
+		'state'
 	],
 	#classVars : [
 		'CascadePatternCharacter',
@@ -42,32 +43,34 @@ Class {
 	#classInstVars : [
 		'classificationTable'
 	],
-	#category : #'AST-Core-Parser'
+	#category : 'AST-Core-Parser',
+	#package : 'AST-Core',
+	#tag : 'Parser'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner class >> cascadePatternCharacter [
 	^ CascadePatternCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner class >> classificationTable [
 	classificationTable
 		ifNil: [ self initializeClassificationTable ].
 	^ classificationTable
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBScanner class >> initialize [
 	self initializeClassificationTable
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBScanner class >> initializeChars: characters to: aSymbol [
 	characters do: [:c | classificationTable at: c asInteger put: aSymbol]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBScanner class >> initializeClassificationTable [
 	PatternVariableCharacter := $`.
 	KeywordPatternCharacter := $@.
@@ -87,14 +90,14 @@ RBScanner class >> initializeClassificationTable [
 		to: #separator
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBScanner class >> initializeUnderscore [
 	self classificationTable
 		at: $_ asInteger
 		put: #alphabetic
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBScanner class >> isSelector: aSymbol [
 	^ self basicNew
 		on: (ReadStream on: aSymbol asString);
@@ -102,7 +105,7 @@ RBScanner class >> isSelector: aSymbol [
 		isSelector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBScanner class >> isVariable: aString [
 	| scanner token |
 	scanner := self on: (ReadStream on: aString).
@@ -112,18 +115,18 @@ RBScanner class >> isVariable: aString [
 	^(aString includes: $.) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner class >> keywordPatternCharacter [
 	^ KeywordPatternCharacter
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBScanner class >> new [
 	self initializeUnderscore.
 	^ super new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBScanner class >> on: aStream [ 
 	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens."
 	"((RBScanner on: 'Pharo (, { exist ]' readStream) next;  next) value >>> $("
@@ -136,7 +139,7 @@ RBScanner class >> on: aStream [
 	^scanner
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBScanner class >> on: aStream errorBlock: aBlock [
 
 	self
@@ -145,12 +148,12 @@ RBScanner class >> on: aStream errorBlock: aBlock [
 	^ self on: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner class >> patternVariableCharacter [
 	^ PatternVariableCharacter
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 RBScanner class >> scanTokenObjects: aStringOrStream [
 	"Return the tokens objects."
 
@@ -159,12 +162,12 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 	^ scanner contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBScanner >> atEnd [
 	^characterType = #eof and: [ nextToken isNil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBScanner >> classify: aCharacter [
 
 	| index |
@@ -184,7 +187,7 @@ RBScanner >> classify: aCharacter [
 	^ classificationTable at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner >> contents [
 	| contentsStream |
 	contentsStream := (Array new: 50) writeStream.
@@ -193,12 +196,12 @@ RBScanner >> contents [
 	^ contentsStream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner >> errorBlock: aBlock [
 	self deprecated: 'No-op as errorBlock is removed'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner >> getComments [
 	| oldComments |
 	comments isEmpty ifTrue: [^nil].
@@ -207,7 +210,7 @@ RBScanner >> getComments [
 	^oldComments
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBScanner >> isSelector [
 	characterType = #binary
 		ifTrue: [ [ characterType = #binary ] whileTrue: [ self step ].
@@ -217,23 +220,23 @@ RBScanner >> isSelector [
 	^ self isSelectorNonBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBScanner >> isSelectorNonBinary [
 	<script: '(ZnEasy getPng: ''http://www.plantuml.com/plantuml/png/RO-n2i8m48RtUugRXRn0XzBg98wEuX2R4mlNHE8LwTkRL4Xxa2cNx_z2_ki-OgFC4mF8A4nu9QP1GeJRuOx6j7WSlOqBDlXOXy9xVhzipy5Joco-m0vfeoQuP9n2cjFp8PygRJ7_qo259m2ide8REliBBTyGNQa16p9LGUUw1C1_uThk9TBrEl9kdlW7'') inspect'>
 
-	| state |
-	state := #alphaAlone.
+	| aState |
+	aState := #alphaAlone.
 	[ characterType = #alphabetic ]
-		whileTrue: [ state = #colon
-				ifTrue: [ state := #inKeyword ].
+		whileTrue: [ aState = #colon
+				ifTrue: [ aState := #inKeyword ].
 			self scanName.
 			characterType = #eof
-				ifTrue: [ ^ state = #alphaAlone ].
+				ifTrue: [ ^ aState = #alphaAlone ].
 			currentCharacter = $:
-				ifTrue: [ state := #colon.
+				ifTrue: [ aState := #colon.
 					self step ] ].
 	characterType = #eof
-		ifTrue: [ ^ state = #colon ].
+		ifTrue: [ ^ aState = #colon ].
 	^ false
 
 	"Diagram by:
@@ -260,7 +263,7 @@ Binary --> [*] : eof
 @enduml"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner >> next [
 	| token |
 	"Consume the one remembered (likely a bad comment)"
@@ -270,16 +273,13 @@ RBScanner >> next [
 
 	buffer reset.
 	tokenStart := stream position.
-	token := characterType = #eof
-				ifTrue:
-					[RBEOFToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
-				ifFalse: [self scanToken].
+	token := self scanToken.
 	self stripSeparators.
 	token comments: self getComments.
 	^token
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBScanner >> nextPut: anObject [
 	"Provide an error notification that the receiver does not
 	implement this message."
@@ -287,7 +287,7 @@ RBScanner >> nextPut: anObject [
 	self shouldNotImplement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBScanner >> on: aStream [
 	buffer := (String new: 60) writeStream.
 	stream := aStream.
@@ -295,29 +295,32 @@ RBScanner >> on: aStream [
 	comments := OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBScanner >> previousStepPosition [
+	"The index of the previous character (that was consumed)"
+
 	^characterType = #eof
-		ifTrue: [stream position]
-		ifFalse: [stream position - 1]
+		ifTrue: [stream position] "it's the index of the last character"
+		ifFalse: [stream position - 1] "-1 to cancel the lookahead"
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanBackFrom: start [
-	"Return the verbatim content from the `start` position until the current position.
-	 The starting and current character are both included.
+	"Return the verbatim content from the `start` position until the current character.
+	 The starting character is included, the current character is not included.
 	 The stream status (inclutiong its position) is preserved"
 
-	| len string stop |
-	stop := stream position.
+	| len string stop current |
+	current := stream position.
+	stop := self previousStepPosition.
 	len := stop - start + 1.
 	stream position: start - 1.
 	string := stream next: len.
-	stream position: stop.
+	stream position: current.
 	^ string
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanBinary: aClass [
 	"This method isn't supposed to be used in a public context as it accepts any kind of RBValueToken.
 	 The only 2 tokens supposed to be used are RBLiteralToken and RBBinarySelectorToken."
@@ -336,13 +339,13 @@ RBScanner >> scanBinary: aClass [
 	^aClass value: val start: tokenStart
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanBinarySelector [
 	"Used when binary characters are encountered and not beginning with #"
 	^self scanBinary: RBBinarySelectorToken
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanComment [
 	| start stop |
 	start := stream position.
@@ -361,43 +364,25 @@ RBScanner >> scanComment [
 	^ RBCommentToken value: buffer contents start: start stop: stop
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanError: theCause [
-	"An error token accepts every character given, recognised or not."
-	"The value of an error token is one character maximum : the current character."
-	| location |
-	"error location is the next not parseable character. Or current stream position + 1 if
-	an expected character is missing."
-	location := stream position.
-	currentCharacter
-		ifNotNil: [ :char | buffer nextPut: char ]
-		ifNil: [ location := stream position + 1 ].
-	^ RBErrorToken
-		value: buffer contents asString
-		start: tokenStart
-		cause: theCause
-		location: location
+
+	^ self scanError: theCause from: tokenStart
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanError: theCause from: aPosition [
-	"An error token accepts every character given, recognised or not."
-	"The value of the error token is the verbatim text from aPosition to the current position (both included)."
-	| location |
-	"error location is the next not parseable character. Or current stream position + 1 if
-	an expected character is missing."
-	location := stream position.
-	currentCharacter
-		ifNotNil: [ :char | buffer nextPut: char ]
-		ifNil: [ location := stream position + 1 ].
+	"The value of the error token is the verbatim text from aPosition (included) to the current position (not included).
+	The error location is index of the current (problematic) character. Or index of the last character + 1 if eof."
+
 	^ RBErrorToken
-		value: (self scanBackFrom: aPosition)
-		start: aPosition
-		cause: theCause
-		location: location
+		  value: (self scanBackFrom: aPosition)
+		  start: aPosition
+		  cause: theCause
+		  location: self previousStepPosition + 1
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanIdentifierOrKeyword [
 	"!! Attention !! There are 3 case of Literal Tokens : true, false and nil."
 	"This scan accepts keywords only containing a colon."
@@ -407,57 +392,17 @@ RBScanner >> scanIdentifierOrKeyword [
 	| name |
 	self scanName.
 	(currentCharacter = $: and: [stream peek ~= $=])
-		ifTrue: [^self scanKeyword].
+		ifTrue: [
+			buffer nextPut: currentCharacter.
+			self step.
+			name := buffer contents.
+			^RBKeywordToken value: name start: tokenStart ].
 	name := buffer contents.
-	name = 'true'
-		ifTrue:
-			[^RBLiteralToken
-				value: true
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'false'
-		ifTrue:
-			[^RBLiteralToken
-				value: false
-				start: tokenStart
-				stop: self previousStepPosition].
-	name = 'nil'
-		ifTrue:
-			[^RBLiteralToken
-				value: nil
-				start: tokenStart
-				stop: self previousStepPosition].
+	(self scanNamedLiteral: name) ifNotNil: [ :token | ^ token ].
 	^RBIdentifierToken value: name start: tokenStart
 ]
 
-{ #category : #'private - scanning' }
-RBScanner >> scanKeyword [
-	"This scan can actually give odd keywords like a single colon.
-	 : is a keyword but it is an impossible one to reach with a call to next.
-	 However, a call to next can give an RBMultiKeywordLiteralToken even if the string scanned is like
-	 the following : 'keyword:::::::'. Here, each colon is considered a keyword."
-	"Of course, a keyword must finish with a colon. That's why arguments are not taken into account."
-	| outputPosition inputPosition name |
-	[currentCharacter = $:] whileTrue:
-			[buffer nextPut: currentCharacter.
-			outputPosition := buffer position.
-			inputPosition := stream position.
-			self step.	":"
-			[characterType = #alphabetic] whileTrue: [self scanName]].
-	buffer position: outputPosition.
-	stream position: inputPosition.
-	self step.
-	name := buffer contents.
-	^(name occurrencesOf: $:) == 1
-		ifTrue: [RBKeywordToken value: name start: tokenStart]
-		ifFalse:
-			[RBMultiKeywordLiteralToken
-				value: name asSymbol
-				start: tokenStart
-				stop: tokenStart + name size - 1]
-]
-
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanLiteral [
 	"Do not allow whitespace between # and the literal."
 
@@ -468,9 +413,7 @@ RBScanner >> scanLiteral [
 	characterType = #alphabetic
 		ifTrue: [ ^ self scanSymbol ].
 	characterType = #binary
-		ifTrue:
-			[ ^ (self scanLiteralBinary)
-				stop: self previousStepPosition ].
+		ifTrue: [ ^ self scanLiteralBinary ].
 	currentCharacter = $'
 		ifTrue: [ ^ self scanStringSymbol ].
 	(currentCharacter = $( or: [ currentCharacter = $[ ])
@@ -478,43 +421,49 @@ RBScanner >> scanLiteral [
 	"Accept multiple #."
 	currentCharacter = $#
 		ifTrue: [ ^ self scanLiteral ].
-	^ (self scanError: 'Literal expected') value: '#'
+	^ self scanError: 'Literal expected'
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanLiteralArrayToken [
 	"This scan accepts any character but is only meant to be used when a # is followed by ( or [ ."
 	| token |
-	token := RBLiteralArrayToken
-				value: (String with: $# with: currentCharacter)
-				start: tokenStart.
 	self step.
+	token := RBLiteralArrayToken
+				value: (self scanBackFrom: tokenStart)
+				start: tokenStart.
 	^token
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanLiteralBinary [
 	"Used when binary characters are encountered and beginning with #"
-	^self scanBinary: RBLiteralToken
+	^ (self scanBinary: RBLiteralToken) stop: self previousStepPosition
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanLiteralCharacter [
 	"Accepts any character."
 	"This scan must only be used after the encounter of a $."
 	"'$$' is a correct string to be scanned and the second $ mustn't trigger a new scan."
-	| token |
+	| char |
 	self step.	"$"
-	currentCharacter ifNil:[ ^ (self scanError:'Character expected') value: '$'].
-	token := RBLiteralToken
-				value: currentCharacter
-				start: tokenStart
-				stop: stream position.
+	char := currentCharacter.
+	char ifNil:[ ^ self scanError: 'Character expected' ].
 	self step.	"char"
-	^token
+	^ self scanLiteralForValue: char
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
+RBScanner >> scanLiteralForValue: aValue [
+
+	^ RBLiteralToken
+		  value: aValue
+		  start: tokenStart
+		  stop: self previousStepPosition
+]
+
+{ #category : 'private - scanning' }
 RBScanner >> scanLiteralString [
 	"The current character is the first one after the starting quote"
 
@@ -524,8 +473,8 @@ RBScanner >> scanLiteralString [
 	(stream peekBack = $' and: [ stream position > start ]) ifFalse: [
 		"the peek logic here is because #upTo: does not tell if given char was found.
 		So if the stream did not move of if the last char is not a quote, then we have a problem."
-		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
 		self step. "to handle eof"
+		string := self scanBackFrom: tokenStart. "the whole token, including ' (and #')"
 		^ RBErrorToken
 			value: string
 			start: tokenStart
@@ -542,20 +491,26 @@ RBScanner >> scanLiteralString [
 
 	"It's possible to use a plain Text for parsing.
 	In that case string here could be a Text instance but literal value must be a String"
-	^RBLiteralToken
-		value: string asString
-		start: tokenStart
-		stop: self previousStepPosition
+	^ self scanLiteralForValue: string asString
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanName [
 	[characterType = #alphabetic or: [characterType = #digit]] whileTrue:
 			[buffer nextPut: currentCharacter.
 			self step]
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
+RBScanner >> scanNamedLiteral: name [
+
+	name = 'true' ifTrue: [ ^ self scanLiteralForValue: true ].
+	name = 'false' ifTrue: [ ^ self scanLiteralForValue: false ].
+	name = 'nil' ifTrue: [ ^ self scanLiteralForValue: nil ].
+	^ nil
+]
+
+{ #category : 'private - scanning' }
 RBScanner >> scanNumber [
 	| start number stop string gotError |
 	start := stream position.
@@ -563,8 +518,8 @@ RBScanner >> scanNumber [
 	gotError := nil.
 	number := NumberParser parse: stream onError: [ :message | gotError := message ].
 	stop := stream position.
-	string := self scanBackFrom: start.
 	self step.
+	string := self scanBackFrom: start.
 	gotError ifNotNil: [
 	^ RBErrorToken
 		value: string
@@ -579,7 +534,7 @@ RBScanner >> scanNumber [
 		source: string
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanSpecialCharacter [
 	"Every given character gives a RBSpecialCharacterToken with only one character as value except for
 	 : followed by = which gives an assignement."
@@ -599,7 +554,7 @@ RBScanner >> scanSpecialCharacter [
 	^ RBSpecialCharacterToken value: character start: tokenStart
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanStringSymbol [
 	"Converting the value of the literal token to a symbol to get rid of a layer of nested comments."
 	"Only supposed to be used when encountering an apostrophe."
@@ -610,31 +565,53 @@ RBScanner >> scanStringSymbol [
 	^literalToken
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanSymbol [
 	"Always return a literal token but only recognises Identifier and keyword strings.
 	 Therefor any other string lead to an empty string value."
+	self scanSymbolContent.
+	^ self scanLiteralForValue: buffer contents asSymbol
+]
+
+{ #category : 'private - scanning' }
+RBScanner >> scanSymbolContent [
 	[ characterType = #alphabetic or: [ currentCharacter = $: ] ] whileTrue: [
 		self scanName.
 		currentCharacter = $: ifTrue: [
 			buffer nextPut: $:.
-			self step ] ].
-	^ RBLiteralToken
-		value: buffer contents asSymbol
-		start: tokenStart
-		stop: self previousStepPosition
+			self step ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'private - scanning' }
+RBScanner >> scanSymbolOrNamedLiteral [
+	| text |
+	self scanSymbolContent.
+	text := buffer contents.
+	(self scanNamedLiteral: text) ifNotNil: [ :token | ^ token ].
+	^ RBLiteralToken
+		value: text asSymbol
+		start: tokenStart
+		stop: self previousStepPosition
+		source: (self scanBackFrom: tokenStart)
+]
+
+{ #category : 'accessing' }
 RBScanner >> scanToken [
 	"fast-n-ugly. Don't write stuff like this. Has been found to cause cancer in laboratory rats. Basically a
 	case statement. Didn't use Dictionary because lookup is pretty slow."
 
-	characterType = #alphabetic ifTrue: [^self scanIdentifierOrKeyword].
+	characterType = #eof ifTrue: [ ^ RBEOFToken start: tokenStart + 1 ]. "The EOF token should occur after the end of input"
+	characterType = #alphabetic ifTrue: [
+		^ state = #literalArray
+			ifTrue: [self scanSymbolOrNamedLiteral]
+			ifFalse: [self scanIdentifierOrKeyword]].
 	(characterType = #digit
 		or: [currentCharacter = $- and: [(self classify: stream peek) = #digit]])
 			ifTrue: [^self scanNumber].
-	characterType = #binary ifTrue: [^self scanBinarySelector].
+	characterType = #binary ifTrue: [
+		^ state = #literalArray
+			ifTrue: [ self scanLiteralBinary]
+			ifFalse: [ self scanBinarySelector]].
 	characterType = #special ifTrue: [^self scanSpecialCharacter].
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
 	currentCharacter = $# ifTrue: [^self scanLiteral].
@@ -643,16 +620,29 @@ RBScanner >> scanToken [
 	^self scanUnknownCharacter
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> scanUnknownCharacter [
 	| errorToken |
-	errorToken := self scanError: 'Unknown character'.
-	"advance"
+	"consume unexpected character"
 	self step.
+	errorToken := self scanError: 'Unknown character'.
+	errorToken location: tokenStart. "Unlike other scanner errors, error location is here before the bad token"
 	^ errorToken
 ]
 
-{ #category : #private }
+{ #category : 'accessing' }
+RBScanner >> state [
+
+	^ state
+]
+
+{ #category : 'accessing' }
+RBScanner >> state: anObject [
+
+	state := anObject
+]
+
+{ #category : 'private' }
 RBScanner >> step [
 	stream atEnd
 		ifTrue:
@@ -663,7 +653,7 @@ RBScanner >> step [
 	^currentCharacter
 ]
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBScanner >> stripSeparators [
 
 	[[ characterType = #separator ] whileTrue: [ self step ].

@@ -3,17 +3,18 @@ I decorate table with special italic font for abstract classes.
 I am activated only in browser with installed ClyInheritanceAnalysisBrowserPlugin
 "
 Class {
-	#name : #ClyAbstractClassTableDecorator,
-	#superclass : #ClyClassTableDecorator,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
+	#name : 'ClyAbstractClassTableDecorator',
+	#superclass : 'ClyClassTableDecorator',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyAbstractClassTableDecorator class >> browserPluginClass [
 	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyAbstractClassTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| nameMorph |
 
@@ -22,7 +23,7 @@ ClyAbstractClassTableDecorator class >> decorateTableCell: anItemCellMorph of: a
 	nameMorph color: (nameMorph color contrastingColorAdjustment) contrastingColorAdjustment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAbstractClassTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	^aDataSourceItem isMarkedWith: ClyAbstractItemTag
 ]

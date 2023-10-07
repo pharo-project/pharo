@@ -1,6 +1,6 @@
-Extension { #name : #Magnitude }
+Extension { #name : 'Magnitude' }
 
-{ #category : #'*SortFunctions-Core-comparing' }
+{ #category : '*SortFunctions-Core-comparing' }
 Magnitude >> threeWayCompareTo: anotherObject [
 	"Do a three-way comparison between the receiver and anotherObject, returning
 	-1 if self < anotherObject

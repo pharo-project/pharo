@@ -3,15 +3,17 @@ I am a TestResource for testing whether my forked processes do not get terminate
 between individual TestCases being executed.
 "
 Class {
-	#name : #WithForkedProcessTestResource,
-	#superclass : #TestResource,
+	#name : 'WithForkedProcessTestResource',
+	#superclass : 'TestResource',
 	#instVars : [
 		'forkedProcess'
 	],
-	#category : #'SUnit-Tests-Resources'
+	#category : 'SUnit-Tests-Resources',
+	#package : 'SUnit-Tests',
+	#tag : 'Resources'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WithForkedProcessTestResource >> forkedProcess [
 
 	"Answer the receiver's forked process"
@@ -19,7 +21,7 @@ WithForkedProcessTestResource >> forkedProcess [
 	^ forkedProcess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 WithForkedProcessTestResource >> setUp [
 
 	"Create a forked process which should live until the #tearDown message is received.
@@ -29,7 +31,7 @@ WithForkedProcessTestResource >> setUp [
 	forkedProcess := [ "empty process" ] newProcess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 WithForkedProcessTestResource >> tearDown [
 
 	"Terminate forked process"

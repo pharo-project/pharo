@@ -2,16 +2,18 @@
 I am a refactory change for a package renaming. The RBRefactory api is implemented in my super class, I just define the concrete ""package"" renaming.
 "
 Class {
-	#name : #RBRenamePackageChange,
-	#superclass : #RBRefactoryPackageChange,
+	#name : 'RBRenamePackageChange',
+	#superclass : 'RBRefactoryPackageChange',
 	#instVars : [
 		'oldName',
 		'newName'
 	],
-	#category : #'Refactoring-Changes-Changes-Packages'
+	#category : 'Refactoring-Changes-Changes-Packages',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Packages'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenamePackageChange class >> rename: oldString to: newString [
 
 	^ self new
@@ -19,26 +21,26 @@ RBRenamePackageChange class >> rename: oldString to: newString [
 		  yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBRenamePackageChange >> asUndoOperation [
 
 	^ changeFactory renamePackageNamed: newName to: oldName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenamePackageChange >> changePackage [
 
 	^ (browserEnvironment packageAt: oldName ifAbsent: [ nil ]) ifNil: [
 		  browserEnvironment packageAt: newName ifAbsent: [ nil ] ]
 ]
 
-{ #category : #private }
-RBRenamePackageChange >> primitiveExecute [
+{ #category : 'private' }
+RBRenamePackageChange >> generateChanges [
 
 	self changePackage renameTo: newName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenamePackageChange >> printOn: aStream [
 
 	aStream
@@ -48,7 +50,7 @@ RBRenamePackageChange >> printOn: aStream [
 		nextPut: $!
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenamePackageChange >> rename: oldString to: newString [
 
 	oldName := oldString.

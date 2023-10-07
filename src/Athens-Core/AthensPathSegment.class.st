@@ -8,25 +8,27 @@ of AthensPathBuilder.
 Therefore, all my subclasses are considered private and implementation detail.
 "
 Class {
-	#name : #AthensPathSegment,
-	#superclass : #Object,
+	#name : 'AthensPathSegment',
+	#superclass : 'Object',
 	#instVars : [
 		'next'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensPathSegment >> accept: aVisitor [
 	self subclassResponsibility
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensPathSegment >> convertWith: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 AthensPathSegment >> do: aBlock [
 	| segment |
 	segment := self.
@@ -36,29 +38,29 @@ AthensPathSegment >> do: aBlock [
 	  segment notNil ] whileTrue
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensPathSegment >> isCubic [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensPathSegment >> isMove [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensPathSegment >> next [
 
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensPathSegment >> next: anObject [
 
 	next := anObject
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 AthensPathSegment >> sendCommandsTo: aBuilder [
 
 	self do: [ :segment |
@@ -66,7 +68,7 @@ AthensPathSegment >> sendCommandsTo: aBuilder [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensPathSegment >> size [
 	"Answer 1 + the number of segments next to receiver"
 
@@ -78,7 +80,7 @@ AthensPathSegment >> size [
 	^ count
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensPathSegment >> visitWith: visitor [
 
 	self subclassResponsibility

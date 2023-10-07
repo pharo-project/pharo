@@ -3,12 +3,14 @@ I'm a layout specifphic for rows in a fast table.
 I simplify my parent (in an attept to achieve speed), but most important, Itake into account cells width.
 "
 Class {
-	#name : #FTRowLayout,
-	#superclass : #RowLayout,
-	#category : #'Morphic-Widgets-FastTable-Base'
+	#name : 'FTRowLayout',
+	#superclass : 'RowLayout',
+	#category : 'Morphic-Widgets-FastTable-Base',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Base'
 }
 
-{ #category : #layouting }
+{ #category : 'layouting' }
 FTRowLayout >> layout: aMorph in: bounds [
 	"Compute the layout for the given morph based on the new bounds.
 	Supports submorph hResizing, vResizing, cellInset, cellPositioning

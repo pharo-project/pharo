@@ -2,19 +2,20 @@
 I decorate deprecated methods in the table with struck out font
 "
 Class {
-	#name : #ClyDeprecatedItemTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemPlugins-Deprecation-Browser'
+	#name : 'ClyDeprecatedItemTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemPlugins-Deprecation-Browser',
+	#package : 'Calypso-SystemPlugins-Deprecation-Browser'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyDeprecatedItemTableDecorator class >> browserDecorationStrategy [
 	<classAnnotation>
 
 	^ClyTableDecorationStrategyAnnotation for: ClySystemBrowserContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyDeprecatedItemTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| nameMorph |
 
@@ -22,7 +23,7 @@ ClyDeprecatedItemTableDecorator class >> decorateTableCell: anItemCellMorph of: 
 	nameMorph clyAddEmphasis: TextEmphasis struckOut
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyDeprecatedItemTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	^aDataSourceItem isMarkedWith: ClyDeprecatedItemTag
 ]

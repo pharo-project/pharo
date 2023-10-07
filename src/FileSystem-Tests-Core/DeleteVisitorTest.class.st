@@ -2,12 +2,14 @@
 SUnit tests for class DeleteVisitor
 "
 Class {
-	#name : #DeleteVisitorTest,
-	#superclass : #SingleTreeTest,
-	#category : #'FileSystem-Tests-Core-Visitors'
+	#name : 'DeleteVisitorTest',
+	#superclass : 'SingleTreeTest',
+	#category : 'FileSystem-Tests-Core-Visitors',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Visitors'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DeleteVisitorTest >> testBeta [
 	self setUpGreek.
 	DeleteVisitor delete: (filesystem / 'alpha' / 'beta').

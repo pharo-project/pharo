@@ -2,24 +2,26 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TSubCollectionAccess,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TSubCollectionAccess',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSubCollectionAccess >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TSubCollectionAccess >> test0FixtureSubcollectionAccessTest [
 
 	self moreThan3Elements.
 	self assert: self moreThan3Elements size > 2
 ]
 
-{ #category : #'tests - subcollections access' }
+{ #category : 'tests - subcollections access' }
 TSubCollectionAccess >> testAllButFirst [
 
 	| abf col |
@@ -29,7 +31,7 @@ TSubCollectionAccess >> testAllButFirst [
 	self assert: abf size + 1 = col size
 ]
 
-{ #category : #'tests - subcollections access' }
+{ #category : 'tests - subcollections access' }
 TSubCollectionAccess >> testAllButFirstNElements [
 
 	| allButFirst collection |
@@ -40,7 +42,7 @@ TSubCollectionAccess >> testAllButFirstNElements [
 	self assert: allButFirst size + 2 equals: collection size
 ]
 
-{ #category : #'tests - subcollections access' }
+{ #category : 'tests - subcollections access' }
 TSubCollectionAccess >> testAllButLast [
 
 	| abf col |
@@ -50,7 +52,7 @@ TSubCollectionAccess >> testAllButLast [
 	self assert: abf size + 1 equals: col size
 ]
 
-{ #category : #'tests - subcollections access' }
+{ #category : 'tests - subcollections access' }
 TSubCollectionAccess >> testAllButLastNElements [
 
 	| allButLast collection |
@@ -60,7 +62,7 @@ TSubCollectionAccess >> testAllButLastNElements [
 	self assert: allButLast size + 2 equals: collection size
 ]
 
-{ #category : #'tests - subcollections access' }
+{ #category : 'tests - subcollections access' }
 TSubCollectionAccess >> testFirstNElements [
 
 	| result |
@@ -71,7 +73,7 @@ TSubCollectionAccess >> testFirstNElements [
 	self should: [ self moreThan3Elements first: self moreThan3Elements size + 1 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests - subcollections access' }
+{ #category : 'tests - subcollections access' }
 TSubCollectionAccess >> testLastNElements [
 
 	| result |
@@ -83,7 +85,7 @@ TSubCollectionAccess >> testLastNElements [
 		raise: Error
 ]
 
-{ #category : #'tests - subcollections access' }
+{ #category : 'tests - subcollections access' }
 TSubCollectionAccess >> testTakeFirst [
 
 	| abf col |

@@ -5,22 +5,24 @@ Description
 I am a sorting state for ascending sorted table.
 "
 Class {
-	#name : #FTAscendingSortingState,
-	#superclass : #FTAbstractSortingState,
-	#category : #'Morphic-Widgets-FastTable-Sorting'
+	#name : 'FTAscendingSortingState',
+	#superclass : 'FTAbstractSortingState',
+	#category : 'Morphic-Widgets-FastTable-Sorting',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Sorting'
 }
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTAscendingSortingState >> executeSortingOn: aDataSource [
 	aDataSource sortWith: self context ascendingSortFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAscendingSortingState >> nextState [
 	^ FTDescendingSortingState context: self context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAscendingSortingState >> sortingIcon [
 	^ self context morphicIconNamed: #arrowUp
 ]

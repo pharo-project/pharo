@@ -2,91 +2,92 @@
 I'm an abstract class representing a key modifier. A modifier is a key that is pressed to modify the value of a following key. For example, valid modifiers are Alt, Ctrl, Cmd (only for macosx), Shift. Additionally, I could be a composed modifier, combining several of the named above. For example, I could have a value of Alt + Ctrl.
 "
 Class {
-	#name : #KMModifier,
-	#superclass : #KMKeyCombination,
+	#name : 'KMModifier',
+	#superclass : 'KMKeyCombination',
 	#instVars : [
 		'identifier',
 		'name'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMModifier class >> alt [
 	^ KMAltModifier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMModifier class >> command [
 	^ KMCommandModifier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMModifier class >> control [
 	^ KMCtrlModifier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMModifier class >> ctrl [
 	^ KMCtrlModifier new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMModifier class >> isAbstract [
 
 	^ self == KMModifier
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMModifier class >> meta [
 	^ KMMetaModifier new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMModifier class >> shift [
 	^ KMShiftModifier new
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifier >> + modifier [
 	^ modifier asKeyCombination modifiedBy: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMModifier >> = aShortcut [
 	super = aShortcut
 		ifFalse: [ ^ false ].
 	^ aShortcut eventCode = self eventCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifier >> eventCode [
 	"No modifiers"
 
 	^ 0
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMModifier >> hash [
 	^ self eventCode hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifier >> identifier [
 	^ identifier
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMModifier >> matches: aKeyboardEvent [
 	self shouldNotImplement
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMModifier >> matchesEvent: aKeyboardEvent [
 	self subclassResponsibility
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifier >> modifiedBy: modifier [
 	^ KMComposedModifier new
 		modifiedBy: modifier;
@@ -94,33 +95,33 @@ KMModifier >> modifiedBy: modifier [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifier >> name [
 	^ name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMModifier >> printOn: aStream [
 	aStream << name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMModifier >> printOsRepresentationOn: aStream [
 	aStream << name asLowercase
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMModifier >> printingPosition [
 	^self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'private' }
 KMModifier >> species [
 
 	^ KMModifier
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMModifier >> symbol [
 	^ '⌘'
 ]

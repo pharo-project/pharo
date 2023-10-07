@@ -15,8 +15,8 @@ Example of usage:
 	out lf.
 "
 Class {
-	#name : #VTermOutputDriver,
-	#superclass : #Object,
+	#name : 'VTermOutputDriver',
+	#superclass : 'Object',
 	#instVars : [
 		'termcap',
 		'outStream',
@@ -25,10 +25,12 @@ Class {
 		'light',
 		'blink'
 	],
-	#category : #'System-CommandLine-VTerm-Driver'
+	#category : 'System-CommandLine-VTerm-Driver',
+	#package : 'System-CommandLine',
+	#tag : 'VTerm-Driver'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VTermOutputDriver class >> on: anOutputStream [
 	^ self new
 		outStream: (ZnNewLineWriterStream on:
@@ -36,91 +38,91 @@ VTermOutputDriver class >> on: anOutputStream [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VTermOutputDriver class >> stderr [
 	^ self on: Stdio stderr
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VTermOutputDriver class >> stdout [
 	^ self on: Stdio stdout
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 VTermOutputDriver >> << aStringOrCharacter [
 	aStringOrCharacter putOn: outStream
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VTermOutputDriver >> backspace [
 	outStream nextPut: Character backspace.
 	self deleteCharacter
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> black [
 	self color: 30
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> black: aString [
 	self black; << aString; flush; clear
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 VTermOutputDriver >> blinking [
 	self termcap: 'mb'
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> blue [
 	self color: 34
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> blue: aString [
 	self blue; << aString; flush; clear
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 VTermOutputDriver >> bold [
 	" double bright mode "
 	self termcap: 'md'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VTermOutputDriver >> clear [
 	self reset.
 	self colorEscape
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VTermOutputDriver >> clearFromBeginning [
 	self termcap: 'cb'
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VTermOutputDriver >> clearScreen [
 	self termcap: 'cl'
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VTermOutputDriver >> clearToEnd [
 	self termcap: 'ce'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VTermOutputDriver >> closed [
 	^ outStream isNil or: [ outStream closed ]
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> color: aColor [
 	currentColor := aColor.
 	self colorEscape
 ]
 
-{ #category : #escaping }
+{ #category : 'escaping' }
 VTermOutputDriver >> colorEscape [
 	self csiEscape.
 	blink ifTrue: [ outStream nextPutAll: '5;' ].
@@ -130,75 +132,75 @@ VTermOutputDriver >> colorEscape [
 	outStream nextPut: $m
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VTermOutputDriver >> columns [
 	^ termcap getnum: 'co'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> cr [
 	self termcap: 'cr'
 ]
 
-{ #category : #escaping }
+{ #category : 'escaping' }
 VTermOutputDriver >> csiEscape [
 	"Control Sequence Introducer escape"
 	outStream nextPut: Character escape; nextPut: $[
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 VTermOutputDriver >> cursorEnhanced [
 	self termcap: 'vs'
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 VTermOutputDriver >> cursorInvisible [
 	self termcap: 'vi'
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 VTermOutputDriver >> cursorNormal [
 	self termcap: 've'
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> cyan [
 	self color: 36
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> cyan: aString [
 	self cyan; << aString; flush; clear
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VTermOutputDriver >> deleteCharacter [
 	self termcap: 'dc'
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VTermOutputDriver >> deleteLine [
 	self termcap: 'dl'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> down [
 	self termcap: 'do'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> down: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self up ]]
 		ifFalse: [ distance timesRepeat: [ self down ]]
 ]
 
-{ #category : #mode }
+{ #category : 'mode' }
 VTermOutputDriver >> endInsertMode [
 	self termcap: 'ei'
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VTermOutputDriver >> erase [
 	"outStream nextPutAll:
 		(termcap parm: '1' in:
@@ -206,155 +208,155 @@ VTermOutputDriver >> erase [
 	self shouldBeImplemented
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> errorColor [
 	self red
 ]
 
-{ #category : #escaping }
+{ #category : 'escaping' }
 VTermOutputDriver >> escape [
 	outStream nextPut: Character escape
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 VTermOutputDriver >> flush [
 	outStream flush
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> green [
 	self color: 32
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> green: aString [
 	self green; << aString; flush; clear
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> here [
 	self flag: #todo. "use termcap here"
 	self csiEscape.
 	outStream nextPut: $E
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> home [
 	self termcap: 'ho'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VTermOutputDriver >> initialize [
 	super initialize.
 	termcap := Termcap new.
 	self reset
 ]
 
-{ #category : #inserting }
+{ #category : 'inserting' }
 VTermOutputDriver >> insertCharacter [
 	self termcap:  'ic'
 ]
 
-{ #category : #inserting }
+{ #category : 'inserting' }
 VTermOutputDriver >> insertLine [
 	self termcap: 'al'.
 	self lf
 ]
 
-{ #category : #mode }
+{ #category : 'mode' }
 VTermOutputDriver >> insertMode [
 	self termcap: 'im'
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 VTermOutputDriver >> invisible [
 	self termcap: 'mk'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> left [
 	self termcap:  'le'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> left: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self right ]]
 		ifFalse: [ distance timesRepeat: [ self left ]]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 VTermOutputDriver >> lf [
 	outStream lf
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> light [
 	light := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VTermOutputDriver >> lines [
 	^ termcap getnum: 'li'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VTermOutputDriver >> nextPut: aCharacter [
 	outStream nextPut: aCharacter
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VTermOutputDriver >> nextPutAll: aString [
 	outStream nextPutAll: aString
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 VTermOutputDriver >> normal [
 	self termcap: 'me'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VTermOutputDriver >> outStream [
 	^ outStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VTermOutputDriver >> outStream: stream [
 	outStream := stream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 VTermOutputDriver >> overwrite: char [
 	self flag: #TODO. "properly implement this"
 	outStream nextPut: char
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> pink [
 	self color: 35
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> pink: aString [
 	self pink; nextPutAll: aString; flush; clear
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VTermOutputDriver >> print: anObject [
 	outStream print: anObject
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> red [
 	self color: 31
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> red: aString [
 	self red; << aString; flush; clear
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VTermOutputDriver >> reset [
 	currentColor := 0.
 	currentBackground := 0.
@@ -362,129 +364,129 @@ VTermOutputDriver >> reset [
 	blink := false
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> restoreCursor [
 	self termcap: 'rc'
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 VTermOutputDriver >> reverse [
 	self termcap: 'mr'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> right [
 	self termcap: 'nd'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> right: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self left ]]
 		ifFalse: [ distance timesRepeat: [ self right ]]
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> saveCursor [
 	outStream nextPutAll: (termcap getstr: 'sc')
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 VTermOutputDriver >> scrollBackward [
 	self termcap: 'sr'
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 VTermOutputDriver >> scrollForward [
 	self termcap: 'sf'
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 VTermOutputDriver >> space [
 	outStream space
 ]
 
-{ #category : #escaping }
+{ #category : 'escaping' }
 VTermOutputDriver >> ss3Escape [
 	"Control Sequence Introducer escape"
 	outStream nextPut: Character escape; nextPut: $O
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> startOfLine [
 	^ self cr
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VTermOutputDriver >> store: anObject [
 	outStream store: anObject
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 VTermOutputDriver >> tab [
 	outStream tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VTermOutputDriver >> termcap [
 	^ termcap
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 VTermOutputDriver >> termcap: termcapCapabilityIdentifier [
 	"Output the termcap command sequence for the identifier.
 	Use #basicNextPutAll: to avoid possible conversions applied by the stream"
 	outStream basicNextPutAll: (termcap getstr: termcapCapabilityIdentifier)
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> topLeft [
 	self termcap: 'ho'
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 VTermOutputDriver >> underline [
 	self termcap: 'us'
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 VTermOutputDriver >> underlineOff [
 	self termcap: 'ue'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> up [
 	self termcap: 'up'
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 VTermOutputDriver >> up: distance [
 	distance < 0
 		ifTrue: [ 0 - distance timesRepeat: [ self down ]]
 		ifFalse: [ distance timesRepeat: [ self up ]]
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> white [
 	self color: 37
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> white: aString [
 	self white; << aString; flush; clear
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VTermOutputDriver >> width [
 	^ self columns
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> yellow [
 	self color: 33
 ]
 
-{ #category : #coloring }
+{ #category : 'coloring' }
 VTermOutputDriver >> yellow: aString [
 	self yellow; << aString; flush; clear
 ]

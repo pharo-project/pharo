@@ -2,15 +2,17 @@
 We store state in a hidden array. Contrary to normal instance variables the number is unlimited.
 "
 Class {
-	#name : #UnlimitedInstanceVariableSlot,
-	#superclass : #DerivedSlot,
+	#name : 'UnlimitedInstanceVariableSlot',
+	#superclass : 'DerivedSlot',
 	#instVars : [
 		'offset'
 	],
-	#category : #'Slot-Examples-Base'
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot at: index put: <stackTop>'"
 	| tempName |
@@ -25,7 +27,7 @@ UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 		send: #at:put:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
 	"generate bytecode for '<baseSlot> at: offset'"
 	methodBuilder
@@ -34,12 +36,12 @@ UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
 		send: #at:
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 UnlimitedInstanceVariableSlot >> growBaseSlot: aClass [
 	baseSlot default: (baseSlot default grownBy: 1)
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 UnlimitedInstanceVariableSlot >> installingIn: aClass [
 	| unlimitedSlots |
 	super installingIn: aClass.
@@ -56,17 +58,17 @@ UnlimitedInstanceVariableSlot >> installingIn: aClass [
 	offset := unlimitedSlots indexOf: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnlimitedInstanceVariableSlot >> offset [
 	^offset
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> read: anObject [
 	^(baseSlot read: anObject) at: offset
 ]
 
-{ #category : #TODO }
+{ #category : 'TODO' }
 UnlimitedInstanceVariableSlot >> todo [
 	'
     - adding a slots in between --> offsets need to be updated?
@@ -76,7 +78,7 @@ UnlimitedInstanceVariableSlot >> todo [
 	'
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> write: aValue to: anObject [
 	^(baseSlot read: anObject) at: offset put: aValue
 ]

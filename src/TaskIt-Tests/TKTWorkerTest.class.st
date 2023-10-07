@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTWorkerTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Worker'
+	#name : 'TKTWorkerTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Worker',
+	#package : 'TaskIt-Tests',
+	#tag : 'Worker'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerTest >> testWorkerExceptionIsHandledByExceptionHandler [
 
 	| error worker |
@@ -20,7 +22,7 @@ TKTWorkerTest >> testWorkerExceptionIsHandledByExceptionHandler [
 	self assert: worker exceptionHandler error equals: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerTest >> testWorkerProcessDiesAfterStop [
 
 	| worker future |
@@ -32,7 +34,7 @@ TKTWorkerTest >> testWorkerProcessDiesAfterStop [
 	self deny: worker isRunning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerTest >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
 
 	| worker future process waitFuture1 waitFuture2 |
@@ -59,7 +61,7 @@ TKTWorkerTest >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
 	self deny: process isRunning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerTest >> testWorkerProcessDiesAfterWorkerIsCollected [
 
 	| worker future process |
@@ -74,7 +76,7 @@ TKTWorkerTest >> testWorkerProcessDiesAfterWorkerIsCollected [
 	self deny: process isRunning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerTest >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 
 	| worker process waitFuture |
@@ -96,7 +98,7 @@ TKTWorkerTest >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 	self deny: process isRunning
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerTest >> testWorkerRunsAlwaysInSameProcess [
 
 	| worker hash futures hashes |
@@ -109,7 +111,7 @@ TKTWorkerTest >> testWorkerRunsAlwaysInSameProcess [
 	self assert: hashes asSet size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerTest >> testWorkerRunsInSeparateProcess [
 
 	| worker hash future |

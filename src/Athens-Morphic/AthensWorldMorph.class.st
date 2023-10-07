@@ -3,28 +3,29 @@ An AthensWorldMorph is a special version of a WorldMorph.
 It is within a real Morph in a real morphic world. The Morph it is in defines the DisplayScreen dimension. (see AthensWrappedWorldDisplay)
 "
 Class {
-	#name : #AthensWorldMorph,
-	#superclass : #WorldMorph,
-	#category : #'Athens-Morphic'
+	#name : 'AthensWorldMorph',
+	#superclass : 'WorldMorph',
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #'world state' }
+{ #category : 'world state' }
 AthensWorldMorph >> display [
 	worldState display
 ]
 
-{ #category : #'world state' }
+{ #category : 'world state' }
 AthensWorldMorph >> display: aWrappedDisplay [
 	worldState display: aWrappedDisplay
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensWorldMorph >> initialize [
 	super initialize.
 	worldState := AthensWorldState new
 ]
 
-{ #category : #'world state' }
+{ #category : 'world state' }
 AthensWorldMorph >> restoreMorphicDisplay [
 "overwritten for using its own display dimension"
 	DisplayScreen startUp.

@@ -1,6 +1,6 @@
-Extension { #name : #ClyMessageBasedQuery }
+Extension { #name : 'ClyMessageBasedQuery' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyMessageBasedQuery >> decorateResultMethodEditor: aMethodEditor [
 
 	aMethodEditor selectAnySelector: selectors

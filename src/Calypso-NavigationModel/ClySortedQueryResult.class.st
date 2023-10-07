@@ -17,21 +17,23 @@ Internal Representation and Key Implementation Points.
 	sortFunction:		<ClySortFunction>
 "
 Class {
-	#name : #ClySortedQueryResult,
-	#superclass : #ClyQueryResult,
+	#name : 'ClySortedQueryResult',
+	#superclass : 'ClyQueryResult',
 	#instVars : [
 		'sortFunction'
 	],
-	#category : #'Calypso-NavigationModel-Result'
+	#category : 'Calypso-NavigationModel-Result',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Result'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySortedQueryResult class >> using: aSortFunction [
 	^self new
 		sortFunction: aSortFunction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySortedQueryResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -42,29 +44,29 @@ ClySortedQueryResult >> = anObject [
 	^ sortFunction = anObject sortFunction
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClySortedQueryResult >> defaultItems [
 	^SortedCollection sortBlock: sortFunction
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClySortedQueryResult >> fillWith: objects [
 	items addAll: objects
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySortedQueryResult >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: sortFunction hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySortedQueryResult >> sortFunction [
 	^ sortFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySortedQueryResult >> sortFunction: anObject [
 	sortFunction := anObject
 ]

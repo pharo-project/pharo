@@ -1,10 +1,11 @@
 Class {
-	#name : #RGMethodTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGMethodTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testAST [
 
 	| method ast |
@@ -15,7 +16,7 @@ RGMethodTest >> testAST [
 	self assert: ast selector equals: #someMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testFullName [
 
 	| method |
@@ -29,7 +30,7 @@ RGMethodTest >> testFullName [
 	self assert: method fullName equals: 'SomeClass class>>#someMethod'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testImplicitEnvironment [
 
 	| def def2 env |
@@ -43,7 +44,7 @@ RGMethodTest >> testImplicitEnvironment [
 	self assert: (def parent hasResolved: #tagsForMethods).
 	self assert: def parent tagsForMethods isEmpty.
 	self assert: def parent protocols size equals: 1.
-	self assert: def parent protocols anyOne equals: 'as yet unclassified'.
+	self assert: def parent protocols anyOne equals: Protocol unclassified.
 
 	self assert: (def isRingResolved).
 
@@ -56,27 +57,27 @@ RGMethodTest >> testImplicitEnvironment [
 	self assert: def2 parent localMethods size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testMetaSide [
 
 	| anEnvironemnt aMethod |
 
 	anEnvironemnt := RGEnvironment new.
 	aMethod := (anEnvironemnt ensureClassNamed: 'SomeClass class') ensureLocalMethodNamed: #someMethod.
-	self assert: aMethod isMetaSide.
+	self assert: aMethod isMeta.
 	self deny: aMethod isFromTrait.
 	aMethod := (anEnvironemnt ensureClassNamed: 'SomeClass') ensureLocalMethodNamed: #someMethod.
-	self deny: aMethod isMetaSide.
+	self deny: aMethod isMeta.
 	self deny: aMethod isFromTrait.
 	aMethod := (anEnvironemnt ensureTraitNamed: 'SomeTrait classTrait') ensureLocalMethodNamed: #someMethod.
-	self assert: aMethod isMetaSide.
+	self assert: aMethod isMeta.
 	self assert: aMethod isFromTrait.
 	aMethod := (anEnvironemnt ensureTraitNamed: 'SomeTrait') ensureLocalMethodNamed: #someMethod.
-	self deny: aMethod isMetaSide.
+	self deny: aMethod isMeta.
 	self assert: aMethod isFromTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testNewMethod [
 	| method time |
 
@@ -106,7 +107,7 @@ RGMethodTest >> testNewMethod [
 	self assert: method time equals: time
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testNewNamedMethod [
 
 	| method |
@@ -121,10 +122,10 @@ RGMethodTest >> testNewNamedMethod [
 	self assert: method selector equals: 'someMessage'.
 	self assert: method sourceCode lines first equals: 'someMessage'.
 
-	self deny: method isMetaSide
+	self deny: method isMeta
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testPackages [
 	| method class |
 	" implicit environment "
@@ -151,7 +152,7 @@ RGMethodTest >> testPackages [
 	self assert: method environment ask packages size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testRemovePackage [
 	| method class |
 	method := RGMethod unnamed.
@@ -171,7 +172,7 @@ RGMethodTest >> testRemovePackage [
 	self assert: method environment ask packages size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testResolvingConsistency [
 
 	| anObject |
@@ -179,7 +180,7 @@ RGMethodTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testSourceCode [
 
 	| method source |
@@ -201,7 +202,7 @@ RGMethodTest >> testSourceCode [
 	self assert: method numArgs equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMethodTest >> testTagsCollection [
 
 	| method env tag1 tag2 tag3 |

@@ -1,16 +1,18 @@
 Class {
-	#name : #RGObjectLayout,
-	#superclass : #RGLayout,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGObjectLayout',
+	#superclass : 'RGLayout',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGObjectLayout >> isObjectLayout [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGObjectLayout >> slots [
 
 	"only for API compatibility purposes"

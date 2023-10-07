@@ -2,21 +2,23 @@
 I implement a generic way of serializing and materializing an object, for those that do not need more special way of doing it.
 "
 Class {
-	#name : #FLObjectCluster,
-	#superclass : #FLIteratingCluster,
+	#name : 'FLObjectCluster',
+	#superclass : 'FLIteratingCluster',
 	#instVars : [
 		'theClass'
 	],
-	#category : #'Fuel-Core-Clusters'
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLObjectCluster class >> clusterBucketIn: aClusterization [
 
 	^aClusterization baselevelBucket
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLObjectCluster class >> newAnalyzing: aClass [
 
 	^ self basicNew
@@ -24,34 +26,34 @@ FLObjectCluster class >> newAnalyzing: aClass [
 		yourself.
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLObjectCluster >> clusterMaterializeStepWith: aDecoder [
 
 	super clusterMaterializeStepWith: aDecoder.
 	theClass := aDecoder nextEncodedReference
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLObjectCluster >> clusterReferencesDo: aBlock [
 
 	aBlock value: theClass
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLObjectCluster >> clusterSerializeStepWith: anEncoder [
 
 	super clusterSerializeStepWith: anEncoder.
 	anEncoder encodeReferenceToClusterObjectClass: theClass
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLObjectCluster >> initializeAnalyzing: aClass [
 
 	self initializeAnalyzing.
 	theClass := aClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLObjectCluster >> printNameOn: aStream [
 	"Append to the argument, aStream, a sequence of characters that  
 	identifies the receiver."
@@ -62,7 +64,7 @@ FLObjectCluster >> printNameOn: aStream [
 	aStream nextPut: $].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLObjectCluster >> theClass [ 
 	^ theClass
 ]

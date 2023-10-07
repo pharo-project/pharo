@@ -19,31 +19,33 @@ Internal Representation and Key Implementation Points.
 	affectedPackage:		<RPackage>
 "
 Class {
-	#name : #ClyPackageChange,
-	#superclass : #Object,
+	#name : 'ClyPackageChange',
+	#superclass : 'Object',
 	#instVars : [
 		'affectedPackage'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyPackageChange class >> of: aPackage [
 	^self new
 		affectedPackage: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageChange >> affectedPackage [
 	^ affectedPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageChange >> affectedPackage: anObject [
 	affectedPackage := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyPackageChange >> handlesAnnouncement: anAnnouncement [
 
 	^anAnnouncement affectsPackage: affectedPackage

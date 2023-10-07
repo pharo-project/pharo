@@ -2,15 +2,17 @@
 SUnit tests for class PNGReadWriter
 "
 Class {
-	#name : #PNGReadWriterTest,
-	#superclass : #TestCase,
+	#name : 'PNGReadWriterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'fileName'
 	],
-	#category : #'Graphics-Tests-Files'
+	#category : 'Graphics-Tests-Files',
+	#package : 'Graphics-Tests',
+	#tag : 'Files'
 }
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> coloredFiles16 [
 	"Created by
 		{Color red. Color green. Color blue. Color black} collect:[:fillC|
@@ -42,7 +44,7 @@ HD3MKH3GAAAAAElFTkSuQmCC'
 }
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> coloredFiles32 [
 	"Created by
 		{Color red. Color green. Color blue. Color black} collect:[:fillC|
@@ -72,7 +74,7 @@ QmCC'
 }
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> coloredFiles8 [
 	"Created by
 		{Color red. Color green. Color blue. Color black} collect:[:fillC|
@@ -159,7 +161,7 @@ CiHUAAAAGUlEQVR4XmNgZMQPGBhHvoKRr2DkKxihCgBEmAQBphO0cAAAAABJRU5ErkJggg=='
 }
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> decodeColors: colorsAndFiles depth: requiredDepth [
 	colorsAndFiles
 		do: [ :assoc |
@@ -171,13 +173,13 @@ PNGReadWriterTest >> decodeColors: colorsAndFiles depth: requiredDepth [
 			self assert: (form pixelValueAt: 1 @ 1) equals: (color pixelValueForDepth: requiredDepth) ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> deleteFile [
 
 	fileName asFileReference ensureDelete
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> drawStuffOn: aForm [
 	"Draw stuff on aForm. Avoid any symmetry."
 
@@ -196,7 +198,7 @@ PNGReadWriterTest >> drawStuffOn: aForm [
 	^ aForm	"(PNGReadWriterTest new drawStuffOn: (Form extent: 32@32 depth: 16)) display"
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> drawTransparentStuffOn: aForm [
 	"Draw stuff on aForm. Avoid any symmetry."
 
@@ -215,7 +217,7 @@ PNGReadWriterTest >> drawTransparentStuffOn: aForm [
 	^ aForm	"(PNGReadWriterTest new drawStuffOn: (Form extent: 32@32 depth: 16)) display"
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecode: original [
 	"Make sure that the given form is encoded and decoded correctly"
 
@@ -254,14 +256,14 @@ PNGReadWriterTest >> encodeAndDecode: original [
 		ensure: [ stream close ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeAlpha: original [
 	fileName := 'testAlpha', original depth printString,'.png'.
 	self encodeAndDecode: original.
 	self deleteFile
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeColor: aColor depth: aDepth [
 	| aForm |
 	fileName := 'testColor', aColor name, aDepth printString,'.png'.
@@ -271,7 +273,7 @@ PNGReadWriterTest >> encodeAndDecodeColor: aColor depth: aDepth [
 	self deleteFile
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeDisplay: depth [
 	| form |
 	fileName := 'testDisplay', depth printString,'.png'.
@@ -281,14 +283,14 @@ PNGReadWriterTest >> encodeAndDecodeDisplay: depth [
 	self deleteFile
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeForm: original [
 	fileName := 'testForm', original depth printString,'.png'.
 	self encodeAndDecode: original.
 	self deleteFile
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeReverse: original [
 	"Make sure that the given form is encoded and decoded correctly"
 
@@ -337,7 +339,7 @@ PNGReadWriterTest >> encodeAndDecodeReverse: original [
 	self deleteFile
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeStream: file [
 	| aForm |
 	file reset.
@@ -349,7 +351,7 @@ PNGReadWriterTest >> encodeAndDecodeStream: file [
 	self encodeAndDecode: aForm
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeWithColors: aColorForm [
 	"Screw around with aColorForm colors"
 	| colors nColors indexedColors max myRandom |
@@ -372,12 +374,12 @@ PNGReadWriterTest >> encodeAndDecodeWithColors: aColorForm [
 	self deleteFile
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> encodeAndDecodeWithError: aStream [
 	self should:[self encodeAndDecodeStream: aStream] raise: Error
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> encodeColors: colorsAndFiles depth: requiredDepth [
 	colorsAndFiles
 		do: [ :assoc |
@@ -391,7 +393,7 @@ PNGReadWriterTest >> encodeColors: colorsAndFiles depth: requiredDepth [
 			self assert: encoded contents equals: original contents ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> readEncoded: bytes [
 	"Answer a ReadStream on the file named by fileName, if possible; else a ReadStream on bytes"
 
@@ -399,179 +401,179 @@ PNGReadWriterTest >> readEncoded: bytes [
 	^(File named: fileName) readStream
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PNGReadWriterTest >> setUp [
 	super setUp.
 	fileName := nil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PNGReadWriterTest >> tearDown [
 	self currentWorld changed.
 	super tearDown
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test16Bit [
 	self encodeAndDecodeForm: (self drawStuffOn: (Form extent: 33@33 depth: 16))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test16BitDisplay [
 	self encodeAndDecodeDisplay: 16
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test16BitReversed [
 	self encodeAndDecodeReverse: (self drawStuffOn: (Form extent: 33@33 depth: 16))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test1Bit [
 	self encodeAndDecodeForm: (self drawStuffOn: (Form extent: 33@33 depth: 1))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test1BitColors [
 	self encodeAndDecodeWithColors: (self drawStuffOn: (Form extent: 33@33 depth: 1))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test1BitDisplay [
 	self encodeAndDecodeDisplay: 1
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test1BitReversed [
 	self encodeAndDecodeReverse: (self drawStuffOn: (Form extent: 33@33 depth: 1))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test2Bit [
 	self encodeAndDecodeForm: (self drawStuffOn: (Form extent: 33@33 depth: 2))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test2BitColors [
 	self encodeAndDecodeWithColors: (self drawStuffOn: (Form extent: 33@33 depth: 2))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test2BitDisplay [
 	self encodeAndDecodeDisplay: 2
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test2BitReversed [
 	self encodeAndDecodeReverse: (self drawStuffOn: (Form extent: 33@33 depth: 2))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test32Bit [
 	self encodeAndDecodeForm: (self drawStuffOn: (Form extent: 33@33 depth: 32))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test32BitDisplay [
 	self encodeAndDecodeDisplay: 32
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test32BitReversed [
 	self encodeAndDecodeReverse: (self drawStuffOn: (Form extent: 33@33 depth: 32))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test4Bit [
 	self encodeAndDecodeForm: (self drawStuffOn: (Form extent: 33@33 depth: 4))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test4BitColors [
 	self encodeAndDecodeWithColors: (self drawStuffOn: (Form extent: 33@33 depth: 4))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test4BitDisplay [
 	self encodeAndDecodeDisplay: 4
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test4BitReversed [
 	self encodeAndDecodeReverse: (self drawStuffOn: (Form extent: 33@33 depth: 4))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test8Bit [
 	self encodeAndDecodeForm: (self drawStuffOn: (Form extent: 33@33 depth: 8))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test8BitColors [
 	self encodeAndDecodeWithColors: (self drawStuffOn: (Form extent: 33@33 depth: 8))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test8BitDisplay [
 	self encodeAndDecodeDisplay: 8
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> test8BitReversed [
 	self encodeAndDecodeReverse: (self drawStuffOn: (Form extent: 33@33 depth: 8))
 ]
 
-{ #category : #'tests - bits' }
+{ #category : 'tests - bits' }
 PNGReadWriterTest >> testAlphaCoding [
 	self encodeAndDecodeAlpha: (self drawTransparentStuffOn: (Form extent: 33@33 depth: 32))
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testBlack16 [
 	self encodeAndDecodeColor: Color blue depth: 16
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testBlack32 [
 	self encodeAndDecodeColor: Color blue depth: 32
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testBlack8 [
 	self encodeAndDecodeColor: Color blue depth: 8
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testBlue16 [
 	self encodeAndDecodeColor: Color blue depth: 16
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testBlue32 [
 	self encodeAndDecodeColor: Color blue depth: 32
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testBlue8 [
 	self encodeAndDecodeColor: Color blue depth: 8
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testGreen16 [
 	self encodeAndDecodeColor: Color green depth: 16
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testGreen32 [
 	self encodeAndDecodeColor: Color green depth: 32
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testGreen8 [
 	self encodeAndDecodeColor: Color green depth: 8
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testNewFromSampleBytes [
 	"Based on a problem report by Hilaire Fernandes, this fails on 64 bit Spur if a
 	synthesized LargeInteger parameter to Bitmap #at:put: is not normalized prior
@@ -610,52 +612,52 @@ PNGReadWriterTest >> testNewFromSampleBytes [
 	self assert: Form equals: form class
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testPngDecodingColors16 [
 	self decodeColors: self coloredFiles16 depth: 16
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testPngDecodingColors32 [
 	self decodeColors: self coloredFiles32 depth: 32
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testPngDecodingColors8 [
 	self decodeColors: self coloredFiles8 depth: 8
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testPngEncodingColors16 [
 	self encodeColors: self coloredFiles16 depth: 16
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testPngEncodingColors32 [
 	self encodeColors: self coloredFiles32 depth: 32
 ]
 
-{ #category : #'tests - decoding' }
+{ #category : 'tests - decoding' }
 PNGReadWriterTest >> testPngEncodingColors8 [
 	self encodeColors: self coloredFiles8 depth: 8
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testRed16 [
 	self encodeAndDecodeColor: Color red depth: 16
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testRed32 [
 	self encodeAndDecodeColor: Color red depth: 32
 ]
 
-{ #category : #'tests - colors' }
+{ #category : 'tests - colors' }
 PNGReadWriterTest >> testRed8 [
 	self encodeAndDecodeColor: Color red depth: 8
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 PNGReadWriterTest >> writeEncoded: bytes [
 
 	fileName ifNil: [ ^self ].

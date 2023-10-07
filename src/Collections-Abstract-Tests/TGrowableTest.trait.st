@@ -2,35 +2,37 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TGrowableTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TGrowableTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TGrowableTest >> element [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TGrowableTest >> elementNotIn [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TGrowableTest >> empty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TGrowableTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TGrowableTest >> test0FixtureRequirementsOfTGrowableTest [
 	self empty.
 	self nonEmpty.
@@ -42,7 +44,7 @@ TGrowableTest >> test0FixtureRequirementsOfTGrowableTest [
 	self deny: (self nonEmpty includes: self elementNotIn)
 ]
 
-{ #category : #'tests - growable' }
+{ #category : 'tests - growable' }
 TGrowableTest >> testAddEmptyGrows [
 
 	| oldSize |
@@ -51,7 +53,7 @@ TGrowableTest >> testAddEmptyGrows [
 	self assert: (self empty size) = (oldSize + 1)
 ]
 
-{ #category : #'tests - growable' }
+{ #category : 'tests - growable' }
 TGrowableTest >> testAddNonEmptyGrowsWhenNewElement [
 
 	| oldSize |

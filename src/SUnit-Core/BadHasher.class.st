@@ -2,15 +2,17 @@
 I am an object that doesn't always hash correctly.  I am used for testing the HashTester.
 "
 Class {
-	#name : #BadHasher,
-	#superclass : #Object,
+	#name : 'BadHasher',
+	#superclass : 'Object',
 	#classInstVars : [
 		'lastRandomIndex'
 	],
-	#category : #'SUnit-Core-Utilities'
+	#category : 'SUnit-Core-Utilities',
+	#package : 'SUnit-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BadHasher class >> randomValue [
 
 	"For every call return different value. Not really random but we do not want to create
@@ -29,7 +31,7 @@ BadHasher class >> randomValue [
 	^ randomNumbers at: lastRandomIndex
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BadHasher >> hash [
 	"Answer with a different hash some of the time"
 

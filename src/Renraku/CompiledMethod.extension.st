@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 CompiledMethod >> ban: aCritique [
 
 	ReSystemAnnouncer uniqueInstance
@@ -12,21 +12,21 @@ CompiledMethod >> ban: aCritique [
 		banRule: aCritique rule for: self
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 CompiledMethod >> banChecksForValidation [
 "returns ban levels that have to be checked before validation"
 
 	^ { self . self methodClass }
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 CompiledMethod >> banLevelCandidates [
 "returns code entities which can ban a rule for this entity"
 
 	^ { self } , self methodClass banLevelCandidates
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 CompiledMethod >> critiques [
 	| critiques |
 
@@ -38,7 +38,7 @@ CompiledMethod >> critiques [
 	^ critiques
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 CompiledMethod >> overriddenMethods [
 	"all the methods of my superclasses that are overriden by me"
 	| selector |
@@ -48,13 +48,13 @@ CompiledMethod >> overriddenMethods [
 		thenCollect: [ :class | class compiledMethodAt: selector ]
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 CompiledMethod >> reBanName [
 
 	^ self name, ' (Method)'
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 CompiledMethod >> suitableRulesFrom: aReRuleManager [
 	^ aReRuleManager methodRules
 ]

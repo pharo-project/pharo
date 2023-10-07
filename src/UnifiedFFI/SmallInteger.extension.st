@@ -1,6 +1,6 @@
-Extension { #name : #SmallInteger }
+Extension { #name : 'SmallInteger' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 SmallInteger >> unpackFromArity: arity [
 	"FFI can arrive here if the assigned pointer is NULL (in which case plugin will answer not an
 	 address but a plain 0... Take this as an example:

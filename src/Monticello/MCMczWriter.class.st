@@ -2,16 +2,18 @@
 Writing MCZ format
 "
 Class {
-	#name : #MCMczWriter,
-	#superclass : #MCWriter,
+	#name : 'MCMczWriter',
+	#superclass : 'MCWriter',
 	#instVars : [
 		'zip',
 		'infoWriter'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMczWriter class >> fileOut: aVersion on: aStream [
 	| inst |
 	inst := self on: aStream.
@@ -21,12 +23,12 @@ MCMczWriter class >> fileOut: aVersion on: aStream [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczWriter class >> readerClass [
 	^ MCMczReader
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMczWriter >> addString: string at: path [
 	| member |
 	member := zip addString: string as: path.
@@ -34,7 +36,7 @@ MCMczWriter >> addString: string at: path [
 	
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMczWriter >> addString: string at: path encodedTo: encodingName [
 	| member |
 	member := zip addString: (string encodeWith: encodingName) as: path.
@@ -42,24 +44,24 @@ MCMczWriter >> addString: string at: path encodedTo: encodingName [
 	
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMczWriter >> flush [
 	zip writeTo: stream.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczWriter >> format [
 	^ '1'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCMczWriter >> initialize [
 	super initialize.
 	zip := ZipArchive new.
 
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 MCMczWriter >> serializeDefinitions: aCollection [
 	^String streamContents: [:aStream |
 		| writer |
@@ -67,7 +69,7 @@ MCMczWriter >> serializeDefinitions: aCollection [
 		writer writeDefinitions: aCollection]
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 MCMczWriter >> serializeInBinary: aSnapshot [
 	
 	^ ByteArray streamContents: [ :str | | writer |
@@ -75,12 +77,12 @@ MCMczWriter >> serializeInBinary: aSnapshot [
 		writer nextPut: aSnapshot ]
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 MCMczWriter >> serializePackage: aPackage [
 	^ '(name ''', aPackage name, ''')'
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 MCMczWriter >> serializeVersionInfo: aVersionInfo [
 	infoWriter ifNil: [infoWriter := MCVersionInfoWriter new].
 	^ String streamContents: [:s |
@@ -88,33 +90,34 @@ MCMczWriter >> serializeVersionInfo: aVersionInfo [
 		infoWriter writeVersionInfo: aVersionInfo]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczWriter >> snapshotWriterClass [
 	^ MCStWriter
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMczWriter >> writeDefinitions: aVersion [
 	self writeSnapshot: aVersion snapshot
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMczWriter >> writeFormat [
 "	self addString: self format at: 'format'."
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMczWriter >> writePackage: aPackage [
 	self addString: (self serializePackage: aPackage) at: 'package' encodedTo: 'utf8'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMczWriter >> writeSnapshot: aSnapshot [
-	self addString: (self serializeDefinitions: aSnapshot definitions) at: 'snapshot/source.', self snapshotWriterClass extension encodedTo: 'utf8'.
+
+	self addString: (self serializeDefinitions: aSnapshot definitions) at: 'snapshot/source.' , self snapshotWriterClass extension encodedTo: 'utf8'.
 	self addString: (self serializeInBinary: aSnapshot) at: 'snapshot.bin'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMczWriter >> writeVersion: aVersion [
 	self writeFormat.
 	self writePackage: aVersion package.
@@ -123,14 +126,14 @@ MCMczWriter >> writeVersion: aVersion [
 	aVersion dependencies do: [:ea | self writeVersionDependency: ea]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMczWriter >> writeVersionDependency: aVersionDependency [
 	| string |
 	string := (self serializeVersionInfo: aVersionDependency versionInfo).
 	self addString: string at: 'dependencies/', aVersionDependency package name encodedTo: 'utf8'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMczWriter >> writeVersionInfo: aVersionInfo [
 	| string |
 	string := self serializeVersionInfo: aVersionInfo.
@@ -138,7 +141,7 @@ MCMczWriter >> writeVersionInfo: aVersionInfo [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczWriter >> zip [
 	^ zip
 ]

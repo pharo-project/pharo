@@ -69,8 +69,8 @@ Internal Representation and Key Implementation Points.
 	testCompleted:		<Boolean>
 "
 Class {
-	#name : #TestExecutionEnvironment,
-	#superclass : #ExecutionEnvironment,
+	#name : 'TestExecutionEnvironment',
+	#superclass : 'ExecutionEnvironment',
 	#instVars : [
 		'watchDogProcess',
 		'watchDogSemaphore',
@@ -80,15 +80,17 @@ Class {
 		'services',
 		'mainTestProcess'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'fuel support' }
+{ #category : 'fuel support' }
 TestExecutionEnvironment class >> fuelIgnoredInstanceVariableNames [
     ^#('watchDogProcess' 'watchDogSemaphore' 'mainTestProcess')
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TestExecutionEnvironment class >> settingsOn: aBuilder [
 	<systemsettings>
 
@@ -96,7 +98,7 @@ TestExecutionEnvironment class >> settingsOn: aBuilder [
 		each settingsOn: aBuilder]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> activated [
 
 	mainTestProcess := Processor activeProcess.
@@ -104,12 +106,12 @@ TestExecutionEnvironment >> activated [
 	self startWatchDog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> backgroundFailures [
 	^self processMonitor testBackgroundFailures
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> cleanUpAfterTest [
 	"Cleanup is performed over all services (enabled and disabled)
 	because service can change its state during test execution
@@ -118,13 +120,13 @@ TestExecutionEnvironment >> cleanUpAfterTest [
 	services do: [ :each | each cleanUpAfterTest]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> deactivated [
 
 	watchDogProcess ifNotNil: [watchDogProcess terminate]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> disableService: aTestExecutionServiceClass [
 
 	| service |
@@ -132,7 +134,7 @@ TestExecutionEnvironment >> disableService: aTestExecutionServiceClass [
 	service disable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> enableService: aTestExecutionServiceClass [
 
 	| service |
@@ -142,7 +144,7 @@ TestExecutionEnvironment >> enableService: aTestExecutionServiceClass [
 	^service
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> enableService: aTestExecutionServiceClass using: aBlock [
 
 	| service |
@@ -151,39 +153,39 @@ TestExecutionEnvironment >> enableService: aTestExecutionServiceClass using: aBl
 	^service
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> enabledServicesDo: aBlock [
 
 	services select: [ :each | each isEnabled ] thenDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> failures [
 	^self processMonitor testFailures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> findService: aTestExecutionServiceClass [
 	^services detect: [:each | each isKindOf: aTestExecutionServiceClass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> findService: aTestExecutionServiceClass ifAbsent: absentBlock [
 	^services detect: [:each | each isKindOf: aTestExecutionServiceClass] ifNone: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> forkedProcesses [
 	^ self processMonitor forkedProcesses
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> handleCompletedTest [
 
 	self enabledServicesDo: [ :each | each handleCompletedTest]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> handleException: anException [
 
 	self enabledServicesDo: [ :each | each handleException: anException].
@@ -191,50 +193,50 @@ TestExecutionEnvironment >> handleException: anException [
 	anException pass
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> handleNewProcess: aProcess [
 
 	self enabledServicesDo: [ :each | each handleNewProcess: aProcess ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TestExecutionEnvironment >> initialize [
 	super initialize.
 	services := OrderedCollection new.
 	testCompleted := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isMainTestProcess: aProcess [
 	^mainTestProcess = aProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isMainTestProcessActive [
 	^self isMainTestProcess: Processor activeProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isMainTestProcessFailed [
 	^self processMonitor isMainTestProcessFailed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironment >> isTest [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> mainTestProcess [
 	^ mainTestProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> maxTimeForTest [
 	^ maxTimeForTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> maxTimeForTest: aDuration [
 	maxTimeForTest := aDuration.
 	watchDogSemaphore ifNotNil: [
@@ -242,7 +244,7 @@ TestExecutionEnvironment >> maxTimeForTest: aDuration [
 		watchDogSemaphore signal ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	| processBlock |
 	watchDogProcess ifNil: [ ^self ]. "we should not catch watchDogProcess which is always the first one"
@@ -253,12 +255,12 @@ TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	self handleNewProcess: aProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> processMonitor [
 	^self findService: ProcessMonitorTestService
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> registerDefaultServices [
 
 	TestExecutionService enabledServiceClasses do: [ :each |
@@ -266,7 +268,7 @@ TestExecutionEnvironment >> registerDefaultServices [
 	 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TestExecutionEnvironment >> registerService: aTestExecutionService [
 
 	aTestExecutionService executionEnvironment: self.
@@ -274,13 +276,13 @@ TestExecutionEnvironment >> registerService: aTestExecutionService [
 	^aTestExecutionService
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> removeAllServices [
 
 	services removeAll
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> runTestCase: aTestCase [
 	testCase := aTestCase.
 	maxTimeForTest := testCase defaultTimeLimit.
@@ -292,7 +294,7 @@ TestExecutionEnvironment >> runTestCase: aTestCase [
 		self cleanUpAfterTest	]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> runTestCaseUnderWatchdog: aTestCase [
 
 	[
@@ -305,23 +307,23 @@ TestExecutionEnvironment >> runTestCaseUnderWatchdog: aTestCase [
 	]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> runTestsBy: aBlock [
 
 	aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> services [
 	^ services
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> services: anObject [
 	services := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> startWatchDog [
 
 	watchDogSemaphore := Semaphore new.
@@ -333,17 +335,17 @@ TestExecutionEnvironment >> startWatchDog [
 		resume
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> testCase [
 	^ testCase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> testCase: anObject [
 	testCase := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionEnvironment >> watchDogLoop [
 
 	| timeIsGone |
@@ -361,7 +363,7 @@ TestExecutionEnvironment >> watchDogLoop [
 	] repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionEnvironment >> watchDogProcess [
 	^ watchDogProcess
 ]

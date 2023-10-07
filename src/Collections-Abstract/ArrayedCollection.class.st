@@ -2,25 +2,27 @@
 I am an abstract collection of elements with a fixed range of integers (from 1 to n>=0) as external keys.
 "
 Class {
-	#name : #ArrayedCollection,
-	#superclass : #SequenceableCollection,
-	#category : #'Collections-Abstract-Base'
+	#name : 'ArrayedCollection',
+	#superclass : 'SequenceableCollection',
+	#category : 'Collections-Abstract-Base',
+	#package : 'Collections-Abstract',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ArrayedCollection class >> isAbstract [
 
 	^self name = #ArrayedCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> new [
 	"Answer a new instance of me, with size = 0."
 
 	^self new: 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> new: size withAll: value [
 	"Answer an instance of me, with number of elements equal to size, each
 	of which refers to the argument, value."
@@ -28,7 +30,7 @@ ArrayedCollection class >> new: size withAll: value [
 	^(self new: size) atAllPut: value
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 	| newArray |
@@ -44,7 +46,7 @@ ArrayedCollection class >> newFrom: aCollection [
 "
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> newFromArray: anArray [
 
 	| newCollection size |
@@ -54,7 +56,7 @@ ArrayedCollection class >> newFromArray: anArray [
 	^ newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> with: anObject [
 	"Answer a new instance of me, containing only anObject."
 
@@ -64,7 +66,7 @@ ArrayedCollection class >> with: anObject [
 	^newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> with: firstObject with: secondObject [
 	"Answer a new instance of me, containing firstObject and secondObject."
 
@@ -75,7 +77,7 @@ ArrayedCollection class >> with: firstObject with: secondObject [
 	^newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject [
 	"Answer a new instance of me, containing only the three arguments as
 	elements."
@@ -88,7 +90,7 @@ ArrayedCollection class >> with: firstObject with: secondObject with: thirdObjec
 	^newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject [
 	"Answer a new instance of me, containing only the three arguments as
 	elements."
@@ -102,7 +104,7 @@ ArrayedCollection class >> with: firstObject with: secondObject with: thirdObjec
 	^newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject [
 	"Answer a new instance of me, containing only the five arguments as
 	elements."
@@ -117,7 +119,7 @@ ArrayedCollection class >> with: firstObject with: secondObject with: thirdObjec
 	^newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> with: firstObject with: secondObject with: thirdObject with: fourthObject with: fifthObject with: sixthObject [
 	"Answer a new instance of me, containing only the 6 arguments as elements."
 
@@ -132,7 +134,7 @@ ArrayedCollection class >> with: firstObject with: secondObject with: thirdObjec
 	^ newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> with: anObject withAll: aCollection [
 	"Creates an array with anObject followed by elements contained in aCollection."
 	"(Array with: 1 withAll: #(2 3 4)) >>> #(1 2 3 4)"
@@ -147,24 +149,24 @@ ArrayedCollection class >> with: anObject withAll: aCollection [
 	^newArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ArrayedCollection class >> withAll: aCollection [
 	"Create a new collection containing all the elements from aCollection."
 
 	^ (self new: aCollection size) replaceFrom: 1 to: aCollection size with: aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ArrayedCollection >> add: newObject [
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArrayedCollection >> byteSize [
 	^self basicSize * self bytesPerBasicElement
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ArrayedCollection >> bytesPerBasicElement [
 	"Answer the number of bytes that each of my basic elements requires.
 	In other words:
@@ -173,13 +175,13 @@ ArrayedCollection >> bytesPerBasicElement [
 	^self class isBytes ifTrue: [ 1 ] ifFalse: [ 4 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ArrayedCollection >> defaultElement [
 
 	^nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ArrayedCollection >> fillFrom: aCollection with: aBlock [
 	"Evaluate aBlock with each of aCollections's elements as the argument.
 	Collect the resulting values into self. Answer self."
@@ -190,13 +192,13 @@ ArrayedCollection >> fillFrom: aCollection with: aBlock [
 		self at: (index := index + 1) put: (aBlock value: each) ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ArrayedCollection >> removeAll [
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArrayedCollection >> size [
 	"Answer how many elements the receiver contains."
 
@@ -204,7 +206,7 @@ ArrayedCollection >> size [
 	^ self basicSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ArrayedCollection >> storeElementsFrom: firstIndex to: lastIndex on: aStream [
 
 	| noneYet defaultElement arrayElement |
@@ -225,7 +227,7 @@ ArrayedCollection >> storeElementsFrom: firstIndex to: lastIndex on: aStream [
 	^noneYet
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ArrayedCollection >> storeOn: aStream [
 
 	aStream nextPutAll: '(('.
@@ -238,7 +240,7 @@ ArrayedCollection >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ArrayedCollection >> writeOn: aStream [
 	"Store the array of bits onto the argument, aStream.  (leading byte ~= 16r80) identifies this as raw bits (uncompressed).  Always store in Big Endian (Mac) byte order.  Do the writing at BitBlt speeds. We only intend this for non-pointer arrays.  Do nothing if I contain pointers."
 	(self class isPointers or: [ self class isWords not ]) ifTrue: [^ self ].

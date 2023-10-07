@@ -8,38 +8,39 @@ Internal Representation and Key Implementation Points.
 	codeObjects:		<Colletion of<Object>>
 "
 Class {
-	#name : #ClyFileOutCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyFileOutCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'codeObjects'
 	],
-	#category : #'Calypso-SystemPlugins-FileOut-Browser'
+	#category : 'Calypso-SystemPlugins-FileOut-Browser',
+	#package : 'Calypso-SystemPlugins-FileOut-Browser'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyFileOutCommand class >> browserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClySystemBrowserContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFileOutCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext hasSelectedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFileOutCommand >> defaultMenuItemName [
 	^'File Out'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFileOutCommand >> execute [
 
 	codeObjects do: [ :each | each fileOut ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFileOutCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

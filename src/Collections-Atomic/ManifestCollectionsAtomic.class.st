@@ -2,22 +2,24 @@
 Package for thread-safe collections with atomic operations
 "
 Class {
-	#name : #ManifestCollectionsAtomic,
-	#superclass : #PackageManifest,
-	#category : #'Collections-Atomic-Manifest'
+	#name : 'ManifestCollectionsAtomic',
+	#superclass : 'PackageManifest',
+	#category : 'Collections-Atomic-Manifest',
+	#package : 'Collections-Atomic',
+	#tag : 'Manifest'
 }
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsAtomic class >> dependencies [
 	^ #(#Kernel)
 ]
 
-{ #category : #'meta-data - dependency analyser' }
+{ #category : 'meta-data - dependency analyser' }
 ManifestCollectionsAtomic class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsAtomic class >> packageName [
 	^ #'Collections-Atomic'
 ]

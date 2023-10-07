@@ -3,26 +3,28 @@ I am delivered , when driver don't knows how to interpret the event which comes 
 Useful for debugging.
 "
 Class {
-	#name : #OSUnknownEvent,
-	#superclass : #OSEvent,
+	#name : 'OSUnknownEvent',
+	#superclass : 'OSEvent',
 	#instVars : [
 		'data'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSUnknownEvent >> accept: aVisitor [
 	^ aVisitor visitUnknownEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSUnknownEvent >> data [
 
 	^ data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSUnknownEvent >> data: anObject [
 
 	data := anObject

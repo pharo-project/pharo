@@ -3,40 +3,42 @@ Dead Block. The block is not assigned, not returned and no message is send to it
 Often this is a left over from using blocks to comment out code.
 "
 Class {
-	#name : #ReDeadBlockRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReDeadBlockRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeadBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DeadBlockRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReDeadBlockRule >> basicCheck: node [
 	^ node isBlock and: [ node isUsed not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeadBlockRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeadBlockRule >> name [
 	^ 'Dead Block'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeadBlockRule >> rationale [
 	^ 'Dead Block. The block is not assigned, not returned and no message is send to it.
 Often this is a left over from using blocks to comment out code.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeadBlockRule >> severity [
 	^ #information
 ]

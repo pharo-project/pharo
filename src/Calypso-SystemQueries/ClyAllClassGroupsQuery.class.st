@@ -16,17 +16,19 @@ And then each provider creates set of class groups using method:
 Look at ClyClassGroupProvider for details
 "
 Class {
-	#name : #ClyAllClassGroupsQuery,
-	#superclass : #ClyTypedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyAllClassGroupsQuery',
+	#superclass : 'ClyTypedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyAllClassGroupsQuery class >> resultItemsType [
 	^ClyClassGroup
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllClassGroupsQuery >> buildResult: aQueryResult [
 
 	| groups |
@@ -37,7 +39,7 @@ ClyAllClassGroupsQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: groups
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllClassGroupsQuery >> checkEmptyResult [
 
 	scope classGroupsDo: [ :each | ^false].
@@ -45,18 +47,18 @@ ClyAllClassGroupsQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllClassGroupsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 	anEnvironmentPlugin collectMetadataOfClassGroups: aQueryResult
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllClassGroupsQuery >> description [
 
 	^'all class groups'
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAllClassGroupsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^scope includesClassGroupsAffectedBy: aSystemAnnouncement

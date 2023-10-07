@@ -2,16 +2,18 @@
 A version of SparseLargeTable that does not populate its bins until a value other than the default is stored.!
 "
 Class {
-	#name : #SparseLargeArray,
-	#superclass : #SparseLargeTable,
-	#type : #variable,
+	#name : 'SparseLargeArray',
+	#superclass : 'SparseLargeTable',
+	#type : 'variable',
 	#instVars : [
 		'arrayClass'
 	],
-	#category : #'Collections-Sequenceable-Sparse'
+	#category : 'Collections-Sequenceable-Sparse',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Sparse'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeArray >> analyzeSpaceSaving [
 
       | elems tablesTotal nonNilTables lastPage lastChunkSize |
@@ -38,7 +40,7 @@ SparseLargeArray >> analyzeSpaceSaving [
                strm nextPutAll: ' non-nil: '; print: nonNilTables]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeArray >> atAllPut: anObject [
        "Put anObject at every one of the receiver's indices."
 
@@ -48,7 +50,7 @@ SparseLargeArray >> atAllPut: anObject [
        defaultValue := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SparseLargeArray >> initChunkSize: aChunkSize size: aSize arrayClass: aClass base: b defaultValue: d [
        chunkSize := aChunkSize.
        size := aSize.
@@ -57,14 +59,14 @@ SparseLargeArray >> initChunkSize: aChunkSize size: aSize arrayClass: aClass bas
        arrayClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeArray >> noCheckAt: index [
       ^(self basicAt: index - base // chunkSize + 1)
                ifNil: [defaultValue]
                ifNotNil: [:chunk| chunk at: index - base \\ chunkSize + 1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeArray >> noCheckAt: index put: value [
        | chunkIndex chunk lastChunkSize |
        chunkIndex := index - base // chunkSize + 1.

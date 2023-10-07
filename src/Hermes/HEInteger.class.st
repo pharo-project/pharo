@@ -7,22 +7,24 @@ I am stored as:
 This allows to serialize any given Integer in the image
 "
 Class {
-	#name : #HEInteger,
-	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#name : 'HEInteger',
+	#superclass : 'HEExportedLiteral',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEInteger class >> tag [
 	^ 8
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEInteger >> asLiteralIn: env [
 	^ value
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEInteger >> doReadFrom: aReader [
 	| anArray isNegative |
 	isNegative := aReader readByte = 1.

@@ -2,17 +2,19 @@
 I am the reification of the relation morph<->category, created when a morph gets attached a category of shortcuts.
 "
 Class {
-	#name : #KMCategoryBinding,
-	#superclass : #Object,
+	#name : 'KMCategoryBinding',
+	#superclass : 'Object',
 	#instVars : [
 		'target',
 		'category',
 		'morph'
 	],
-	#category : #'Keymapping-Core-Categories'
+	#category : 'Keymapping-Core-Categories',
+	#package : 'Keymapping-Core',
+	#tag : 'Categories'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMCategoryBinding class >> target: aTarget morph: aMorph category: aCategory [
 	^self new
 		target: aTarget;
@@ -21,57 +23,57 @@ KMCategoryBinding class >> target: aTarget morph: aMorph category: aCategory [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategoryBinding >> category [
 
 	^ category
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategoryBinding >> category: aCategory [
 	category := aCategory
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMCategoryBinding >> completeMatch: aKeymap buffer: aBuffer [
 	KMLog logCompleteMatch: aKeymap.
 	KMBuffer uniqueInstance completeMatch.
 	aKeymap action cull: target value cull: morph cull: aBuffer first
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 KMCategoryBinding >> keymapForShortcut: aKey [
 
 	^ category keymapForShortcut: aKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategoryBinding >> morph [
 
 	^ morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategoryBinding >> morph: aMorph [
 	morph := aMorph
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMCategoryBinding >> nextForKmChain: aKMDispatchChain [
 	^self target
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMCategoryBinding >> noMatch [
 	"do nothing"
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMCategoryBinding >> partialMatch [
 	"do nothing"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMCategoryBinding >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -80,18 +82,18 @@ KMCategoryBinding >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategoryBinding >> target [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategoryBinding >> target: aTarget [
 	target := aTarget
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMCategoryBinding >> verifyMatchWith: anEventBuffer notifying: aListener thenDoing: anAction [
 	self flag: #pharoFixMe. "ugly hack with array of listeners"
 	category

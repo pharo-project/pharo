@@ -3,24 +3,26 @@ A prior conversion to an Array or OrderedCollection is not necessary when adding
 
 "
 Class {
-	#name : #ReAsOrderedCollectionNotNeededRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReAsOrderedCollectionNotNeededRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAsOrderedCollectionNotNeededRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AsOrderedCollectionNotNeededRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAsOrderedCollectionNotNeededRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAsOrderedCollectionNotNeededRule >> initialize [
 	super initialize.
 	#('addAll:' 'removeAll:' 'includesAll:' 'copyWithoutAll:')
@@ -32,7 +34,7 @@ ReAsOrderedCollectionNotNeededRule >> initialize [
 					self replace: baseString , conversionMessage with: baseString ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAsOrderedCollectionNotNeededRule >> name [
 	^ '#asOrderedCollection/#asArray not needed'
 ]

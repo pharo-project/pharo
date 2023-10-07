@@ -2,16 +2,18 @@
 I announce that a MCVersion was saved into a MCRepository.
 "
 Class {
-	#name : #MCVersionSaved,
-	#superclass : #Announcement,
+	#name : 'MCVersionSaved',
+	#superclass : 'Announcement',
 	#instVars : [
 		'version',
 		'repository'
 	],
-	#category : #'Monticello-Announcements'
+	#category : 'Monticello-Announcements',
+	#package : 'Monticello',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCVersionSaved class >> version: aMCVersion repository: aMCRepository [
 
 	^ self basicNew
@@ -20,7 +22,7 @@ MCVersionSaved class >> version: aMCVersion repository: aMCRepository [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVersionSaved >> = another [
 
 	^ (self class = another class
@@ -28,7 +30,7 @@ MCVersionSaved >> = another [
 		and: [ self repository = another repository ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVersionSaved >> hash [
 
 	^ (self class hash
@@ -36,7 +38,7 @@ MCVersionSaved >> hash [
 		bitXor: self repository hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCVersionSaved >> initializeWithVersion: aMCVersion repository: aMCRepository [
 
 	self initialize.
@@ -45,7 +47,7 @@ MCVersionSaved >> initializeWithVersion: aMCVersion repository: aMCRepository [
 	repository := aMCRepository.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCVersionSaved >> printOn: aStream [
 
 	super printOn: aStream.
@@ -58,13 +60,13 @@ MCVersionSaved >> printOn: aStream [
 		nextPut: $).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionSaved >> repository [
 
 	^ repository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionSaved >> version [
 
 	^ version

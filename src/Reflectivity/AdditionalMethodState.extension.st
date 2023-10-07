@@ -1,6 +1,6 @@
-Extension { #name : #AdditionalMethodState }
+Extension { #name : 'AdditionalMethodState' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 AdditionalMethodState >> metaLinkOptions [
 	^{
 	#selector -> #( + optionCompileOnLinkInstallation).

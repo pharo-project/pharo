@@ -11,18 +11,20 @@ c) Precomputed huffman tables for fixed blocks
 So we don't have to compute the huffman tables from scratch. The precomputed tables are not in our superclass to avoid double storage (and my superclass is more intended for documentation anyways).
 "
 Class {
-	#name : #FastInflateStream,
-	#superclass : #InflateStream,
+	#name : 'FastInflateStream',
+	#superclass : 'InflateStream',
 	#classVars : [
 		'DistanceMap',
 		'FixedDistTable',
 		'FixedLitTable',
 		'LiteralLengthMap'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FastInflateStream class >> initialize [
 
 	| low high |
@@ -50,7 +52,7 @@ FastInflateStream class >> initialize [
 				mappedBy: DistanceMap
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 FastInflateStream >> decompressBlock: llTable with: dTable [
 	"Process the compressed data in the block.
 	llTable is the huffman table for literal/length codes
@@ -93,12 +95,12 @@ FastInflateStream >> decompressBlock: llTable with: dTable [
 	]
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 FastInflateStream >> distanceMap [
 	^DistanceMap
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 FastInflateStream >> increment: value bits: nBits [
 	"Increment value in reverse bit order, e.g.
 	for a 3 bit value count as follows:
@@ -120,18 +122,18 @@ FastInflateStream >> increment: value bits: nBits [
 	^result bitXor: bit
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 FastInflateStream >> literalLengthMap [
 	^LiteralLengthMap
 ]
 
-{ #category : #'bit access' }
+{ #category : 'bit access' }
 FastInflateStream >> nextSingleBits: n [
 	"Fetch the bits all at once"
 	^self nextBits: n
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 FastInflateStream >> processFixedBlock [
 	litTable := FixedLitTable.
 	distTable := FixedDistTable.

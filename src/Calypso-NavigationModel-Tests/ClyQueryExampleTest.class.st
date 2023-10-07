@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyQueryExampleTest,
-	#superclass : #ClyTypedQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyQueryExampleTest',
+	#superclass : 'ClyTypedQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyQueryExampleTest >> createQuery [
 	^ClyReturningScopeBasisExampleQuery from: ClyExampleScope of: #basisObject in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryExampleTest >> testConvertingWithNewScopeWhenThereIsExtraQueryParameter [
 	| newScope convertedQuery |
 	query extraParameter: #testParameter.
@@ -20,7 +21,7 @@ ClyQueryExampleTest >> testConvertingWithNewScopeWhenThereIsExtraQueryParameter 
 	self assert: convertedQuery extraParameter equals: #testParameter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryExampleTest >> testCreationUnifiedInstanceWhenThereIsExtraScopeParameter [
 
 	| unifiedInstance |

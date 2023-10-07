@@ -2,15 +2,16 @@
 A RTFMethodCallsCollectorTest is a test class for testing the behavior of RTFMethodCallsCollector
 "
 Class {
-	#name : #RTFMethodCallsCollectorTest,
-	#superclass : #TestCase,
+	#name : 'RTFMethodCallsCollectorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'tree'
 	],
-	#category : #'RottenTestsFinder-Tests'
+	#category : 'RottenTestsFinder-Tests',
+	#package : 'RottenTestsFinder-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RTFMethodCallsCollectorTest >> setUp [
 	super setUp.
 	tree := RTFSelfCallRootNode new
@@ -42,7 +43,7 @@ RTFMethodCallsCollectorTest >> setUp [
 				yourself
 ]
 
-{ #category : #'tests-visiting' }
+{ #category : 'tests-visiting' }
 RTFMethodCallsCollectorTest >> testVisitRTFSelfCallNode [
 	| visitor methods |
 	visitor := RTFMethodCallsCollector new.

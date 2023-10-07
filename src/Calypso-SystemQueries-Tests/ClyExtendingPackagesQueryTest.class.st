@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyExtendingPackagesQueryTest,
-	#superclass : #ClyPackageQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyExtendingPackagesQueryTest',
+	#superclass : 'ClyPackageQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyExtendingPackagesQueryTest >> createQuery [
 	^ ClyExtendingPackagesQuery from: ClyClassScope of: Object in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtendingPackagesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: ClySubclassLOfClass0FromPExtendedByP1Mock in: environment).
 	self deny: query checkEmptyResult.
@@ -18,7 +20,7 @@ ClyExtendingPackagesQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtendingPackagesQueryTest >> testFromClassWhichIncludesTwoProtocolExtensionsOfSamePackage [
 
 	self queryFromScope: ClyClassScope of: ClyClass9FromPExtendedByP5Mock.
@@ -26,7 +28,7 @@ ClyExtendingPackagesQueryTest >> testFromClassWhichIncludesTwoProtocolExtensions
 	self assert: resultItems asSet equals: {ClyClass7WithTag1FromP5Mock package} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtendingPackagesQueryTest >> testFromSingleClass [
 
 	self queryFromScope: ClyClassScope of: ClySubclassLOfClass0FromPExtendedByP1Mock.
@@ -34,7 +36,7 @@ ClyExtendingPackagesQueryTest >> testFromSingleClass [
 	self assert: resultItems asSet equals: {ClyClass1FromP1Mock package} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExtendingPackagesQueryTest >> testFromTwoClasses [
 
 	self queryFromScope: ClyClassScope ofAll: {

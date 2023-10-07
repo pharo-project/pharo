@@ -42,12 +42,14 @@ It is safe to store transformation in temporary variable, as long as canvas is v
 
 "
 Class {
-	#name : #AthensTransform,
-	#superclass : #Object,
-	#category : #'Athens-Core-Base'
+	#name : 'AthensTransform',
+	#superclass : 'Object',
+	#category : 'Athens-Core-Base',
+	#package : 'Athens-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTransform >> getMatrix [
 	"Answer an affine transformation matrix currently used by receiver.
 	Note, that resulting matrix should be copied from receiver's data, i.e.
@@ -58,69 +60,69 @@ AthensTransform >> getMatrix [
 	^ self copy
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> invert [
 	"I should invert"
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensTransform >> isAffineTransform [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensTransform >> isIdentity [
 	^ self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> loadAffineTransform: anAthenTransform [
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> loadIdentity [
 	"Load the identity matrix into receiver"
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> restoreAfter: aBlock [
 	"I should save the current transform state, evaluate the block, and then restore the saved transform state"
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> rotateByDegrees: angle [
 
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> rotateByRadians: angle [
 
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> scaleBy: factor [
 
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> scaleX: fx Y: fy [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'vector - transform' }
+{ #category : 'vector - transform' }
 AthensTransform >> transform: aPoint [
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> transformRectangle: aRectangle [
 	^ Rectangle encompassing: {
 		self transform: aRectangle bottomLeft.
@@ -130,18 +132,18 @@ AthensTransform >> transformRectangle: aRectangle [
 	}
 ]
 
-{ #category : #'vector - transform' }
+{ #category : 'vector - transform' }
 AthensTransform >> transformX: px Y: py [
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> translateBy: aPoint [
 
 	self subclassResponsibility
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensTransform >> translateX: px Y: py [
 
 	self subclassResponsibility

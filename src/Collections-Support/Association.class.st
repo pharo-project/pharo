@@ -8,15 +8,17 @@ Note that hash is not redefined even if the = was redefined because Association>
 
 "
 Class {
-	#name : #Association,
-	#superclass : #LookupKey,
+	#name : 'Association',
+	#superclass : 'LookupKey',
 	#instVars : [
 		'value'
 	],
-	#category : #'Collections-Support-Associations'
+	#category : 'Collections-Support-Associations',
+	#package : 'Collections-Support',
+	#tag : 'Associations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Association class >> key: newKey value: newValue [
 	"Answer an instance of me with the arguments as the key and value of
 	the association."
@@ -24,39 +26,39 @@ Association class >> key: newKey value: newValue [
 	^self basicNew key: newKey value: newValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Association >> = anAssociation [
 
 	^ super = anAssociation and: [value = anAssociation value]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Association >> analogousCodeTo: anAssociation [
 	^ self = anAssociation
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Association >> hasLiteral: aLiteral [
 	^false
 ]
 
-{ #category : #'variables-toclean' }
+{ #category : 'variables-toclean' }
 Association >> isAssociation [
 	^ true
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Association >> isSelfEvaluating [
 	^ self class == Association and: [self key isSelfEvaluating and: [self value isSelfEvaluating]]
 ]
 
-{ #category : #'variables-toclean' }
+{ #category : 'variables-toclean' }
 Association >> isVariableBinding [
 	"Can be removed as soon as all bindings are instances of LiteralVariable"
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Association >> key: aKey value: anObject [
 	"Store the arguments as the variables of the receiver."
 
@@ -64,7 +66,7 @@ Association >> key: aKey value: anObject [
 	value := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Association >> literalEqual: otherLiteral [
 	"Answer true if the receiver and otherLiteral represent the same literal.
 	Variable bindings are literally equals only if identical.
@@ -72,7 +74,7 @@ Association >> literalEqual: otherLiteral [
 	^self == otherLiteral
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Association >> printOn: aStream [
 
 	super printOn: aStream.
@@ -80,7 +82,7 @@ Association >> printOn: aStream [
 	value printOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Association >> storeOn: aStream [
 	"Store in the format (key->value)"
 	aStream nextPut: $(.
@@ -90,14 +92,14 @@ Association >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Association >> value [
 	"Answer the value of the receiver."
 
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Association >> value: anObject [
 	"Store the argument, anObject, as the value of the receiver."
 

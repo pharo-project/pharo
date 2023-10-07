@@ -6,27 +6,29 @@ I send these event back to my handler:
 	- OSTouchTwoFingersPinchEndEvent 
 "
 Class {
-	#name : #OSTouchTwoFingersPinchDetector,
-	#superclass : #OSTouchPinchDetector,
-	#category : #'OSWindow-Core-Gestures'
+	#name : 'OSTouchTwoFingersPinchDetector',
+	#superclass : 'OSTouchPinchDetector',
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchTwoFingersPinchDetector >> eventClassBeginGesture [
 	^OSTouchTwoFingersPinchBeginEvent
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchTwoFingersPinchDetector >> eventClassEndGesture [
 	^ OSTouchTwoFingersPinchEndEvent
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchTwoFingersPinchDetector >> eventClassMoveGesture [
 	^ OSTouchTwoFingersPinchMoveEvent
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchTwoFingersPinchDetector >> necessaryFingers [
 	^ 2
 ]

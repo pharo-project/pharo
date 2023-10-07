@@ -1,13 +1,15 @@
 Class {
-	#name : #RubScrolledTextMorphTest,
-	#superclass : #TestCase,
+	#name : 'RubScrolledTextMorphTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'morph'
 	],
-	#category : #'Rubric-Tests-Base'
+	#category : 'Rubric-Tests-Base',
+	#package : 'Rubric-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RubScrolledTextMorphTest >> setUp [
 	super setUp.
 	morph := RubScrolledTextMorph new.
@@ -15,14 +17,14 @@ RubScrolledTextMorphTest >> setUp [
 	morph setTextWith: 'one two three four'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubScrolledTextMorphTest >> tearDown [
 
 	morph delete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubScrolledTextMorphTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	| circle longTextWithCircleAtEnd canvas|
 	self skip. "Test fail in CI"
@@ -46,7 +48,7 @@ RubScrolledTextMorphTest >> testEmbeddedAnchorInTextAreDrawnAtRightPosition [
 	self assert: circle counter > 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubScrolledTextMorphTest >> testGhostText [
 	| scrolledText |
 	scrolledText := RubScrolledTextMorph new

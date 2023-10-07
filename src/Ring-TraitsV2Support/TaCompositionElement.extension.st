@@ -1,6 +1,6 @@
-Extension { #name : #TaCompositionElement }
+Extension { #name : 'TaCompositionElement' }
 
-{ #category : #'*Ring-TraitsV2Support' }
+{ #category : '*Ring-TraitsV2Support' }
 TaCompositionElement >> asRingMinimalDefinitionIn: anRGEnvironment [
 	| def |
 	^ anRGEnvironment backend

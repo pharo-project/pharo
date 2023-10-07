@@ -8,16 +8,17 @@ Internal Representation and Key Implementation Points.
 	stop:		<Integer>
 "
 Class {
-	#name : #ClySourceNodeCritiqueIntervalProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClySourceNodeCritiqueIntervalProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'start',
 		'stop'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySourceNodeCritiqueIntervalProperty class >> from: anInterval [
 
 	anInterval ifEmpty: [ ^ self new start: 0; stop: 0 ].
@@ -27,22 +28,22 @@ ClySourceNodeCritiqueIntervalProperty class >> from: anInterval [
 		stop: anInterval last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySourceNodeCritiqueIntervalProperty >> start [
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySourceNodeCritiqueIntervalProperty >> start: anObject [
 	start := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySourceNodeCritiqueIntervalProperty >> stop [
 	^ stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySourceNodeCritiqueIntervalProperty >> stop: anObject [
 	stop := anObject
 ]

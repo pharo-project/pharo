@@ -2,12 +2,13 @@
 Unit tests for collection arithmetic
 "
 Class {
-	#name : #CollectionArithmeticTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Arithmetic-Tests'
+	#name : 'CollectionArithmeticTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Arithmetic-Tests',
+	#package : 'Collections-Arithmetic-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAdd [
 	| collection |
 	collection := #(1 2 3).
@@ -15,56 +16,56 @@ CollectionArithmeticTest >> testAdd [
 	self assert: 1 + collection  equals: #(2 3 4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverage [
 	| collection |
 	collection := #(1 2 3).
 	self assert: collection average equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageIfEmpty [
 	| collection |
 	collection := #(1 2 3 4).
 	self assert: (collection averageIfEmpty: [ 0 ]) equals: 2.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageIfEmptyWithEmptyArray [
 	self assert: (#() averageIfEmpty: [ 0 ]) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageIfEmptyWithEmptyCollection [
 	self should: [#() averageIfEmpty: [ CollectionIsEmpty signal: 'Collection empty' ]] raise: CollectionIsEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageWithEmptyArray [
 	self should: [ #() average ] raise: CollectionIsEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageWithEmptyArrayShouldRaiseExecption [
 	self should: [ #() average ] raise: CollectionIsEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageWithEmptyDictionary [
 	self should: [ Dictionary new average ] raise: CollectionIsEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageWithEmptyOrderedCollection [
 	self should: [ OrderedCollection new average ] raise: CollectionIsEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testAverageWithEmptySet [
 	self should: [ Set new average ] raise: CollectionIsEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testDevision [
 	| collection |
 	collection := #(2 4).
@@ -72,7 +73,7 @@ CollectionArithmeticTest >> testDevision [
 	self assert: 10 / #(20) equals: {1/2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testRunningAverage [
 	| result collection |
 	collection := #(1 1 2 2 3 3).
@@ -81,7 +82,7 @@ CollectionArithmeticTest >> testRunningAverage [
 	self assert: result equals: {1 . (3/2) . 2 . (5/2) . 3}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testRunningAverageSubscriptOutOfBounds [
 	| collection |
 	collection := #(1 1 2 2 3 3).
@@ -90,7 +91,7 @@ CollectionArithmeticTest >> testRunningAverageSubscriptOutOfBounds [
 	self  should: [ collection runningAverage: -2 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testRunningAverageWithFullSubsetSizeIsSameAsAverage [
 	| collection |
 	collection := #(1 1 2 2 3 3).
@@ -100,7 +101,7 @@ CollectionArithmeticTest >> testRunningAverageWithFullSubsetSizeIsSameAsAverage 
 		equals: { collection average }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testRunningAverageWithSubsetSize1IsSameAsCollection [
 	| collection |
 	collection := #(1 1 2 2 3 3).
@@ -110,7 +111,7 @@ CollectionArithmeticTest >> testRunningAverageWithSubsetSize1IsSameAsCollection 
 		equals: collection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testRunningMax [
 	| result collection |
 	collection := #(1 1 2 2 3 3).
@@ -119,11 +120,33 @@ CollectionArithmeticTest >> testRunningMax [
 	self assert: result equals: {2 . 2 . 3 . 3}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionArithmeticTest >> testRunningMin [
 	| result collection |
 	collection := #(1 1 2 2 3 3).
 	result := collection runningMin: 3.
 
 	self assert: result equals: {1 . 1 . 2 . 2}
+]
+
+{ #category : 'tests' }
+CollectionArithmeticTest >> testStdev [
+
+	| collection |
+	collection := #(1 2 3).
+	self assert: collection stdev equals: 1
+]
+
+{ #category : 'tests' }
+CollectionArithmeticTest >> testStdevIfEmpty [
+
+	self should: [ #() stdev ] raise: CollectionIsEmpty
+]
+
+{ #category : 'tests' }
+CollectionArithmeticTest >> testStdevSingleElement [
+
+	| collection |
+	collection := #(1).
+	self assert: collection stdev equals: 0
 ]

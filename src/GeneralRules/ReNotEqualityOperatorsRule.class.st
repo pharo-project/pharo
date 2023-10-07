@@ -2,17 +2,19 @@
 In pharo, the inequality operators are `~=` (for the negation of `=`) and `~~` (for the negation of `==`).
 "
 Class {
-	#name : #ReNotEqualityOperatorsRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReNotEqualityOperatorsRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotEqualityOperatorsRule >> group [
 	^ 'Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReNotEqualityOperatorsRule >> initialize [
 	super initialize.
 	self
@@ -21,12 +23,12 @@ ReNotEqualityOperatorsRule >> initialize [
 		replace: '``@a !== ``@b' with: '``@a ~~ ``@b'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotEqualityOperatorsRule >> name [
 	^ 'Use the correct non-equality operators'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotEqualityOperatorsRule >> severity [
 	^#error
 ]

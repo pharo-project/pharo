@@ -2,23 +2,25 @@
 Common things for all SDL2 structs
 "
 Class {
-	#name : #SDL2Structure,
-	#superclass : #FFIExternalStructure,
+	#name : 'SDL2Structure',
+	#superclass : 'FFIExternalStructure',
 	#pools : [
 		'SDL2',
 		'SDL2Constants',
 		'SDL2ScanCodeConstants',
 		'SDL2Types'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #native }
+{ #category : 'native' }
 SDL2Structure class >> ffiLibraryName [
 	^ SDL2 ffiLibraryName
 ]
 
-{ #category : #native }
+{ #category : 'native' }
 SDL2Structure >> ffiLibraryName [
 	^self class ffiLibraryName
 ]

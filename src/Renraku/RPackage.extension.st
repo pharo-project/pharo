@@ -1,6 +1,6 @@
-Extension { #name : #RPackage }
+Extension { #name : 'RPackage' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RPackage >> ban: aCritique [
 
 	ReSystemAnnouncer uniqueInstance
@@ -12,36 +12,36 @@ RPackage >> ban: aCritique [
 		banRule: aCritique rule for: self
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RPackage >> banChecksForValidation [
 
 	^ {}
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RPackage >> banLevelCandidates [
 "returns code entities which can ban a rule for this entity"
 
 	^ { self . ReImageRuleBaner . RePersistentImageRuleBaner }
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RPackage >> critiques [
 	^ ReCriticEngine critiquesOf: self
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RPackage >> package [
 	^ self
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RPackage >> reBanName [
 
 	^ self name, ' (Package)'
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RPackage >> suitableRulesFrom: aReRuleManager [
 	^ aReRuleManager packageRules
 ]

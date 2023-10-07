@@ -7,16 +7,18 @@ Instance variables:
 
 "
 Class {
-	#name : #LineSegment,
-	#superclass : #Object,
+	#name : 'LineSegment',
+	#superclass : 'Object',
 	#instVars : [
 		'start',
 		'end'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LineSegment class >> controlPoints: anArray [
 	"Create a new instance of the receiver from the given control points"
 	anArray size = 2 ifTrue:[^LineSegment new initializeFrom: anArray].
@@ -25,23 +27,23 @@ LineSegment class >> controlPoints: anArray [
 	self error:'Unsupported'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LineSegment class >> from: startPoint to: endPoint [
 	^self new from: startPoint to: endPoint
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 LineSegment class >> from: startPoint to: endPoint via: via [
 	(startPoint = via or: [ endPoint = via ]) ifTrue: [ ^self new from: startPoint to: endPoint ].
 	^Bezier2Segment from: startPoint to: endPoint via: via
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 LineSegment class >> fromPoints: pts [
 	^self from: pts first to: pts third via: pts second
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 LineSegment class >> intersectFrom: startPt with: startDir to: endPt with: endDir [
 	"Compute the intersection of two lines, e.g., compute alpha and beta for
 		startPt + (alpha * startDir) = endPt + (beta * endDir).
@@ -66,23 +68,23 @@ LineSegment class >> intersectFrom: startPt with: startDir to: endPt with: endDi
 	^startPt + (alpha * startDir)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> asBezier2Curves: err [
 	^Array with: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LineSegment >> asBezier2Points: error [
 	^Array with: start with: start with: end
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LineSegment >> asBezier2Segment [
 	"Represent the receiver as quadratic bezier segment"
 	^Bezier2Segment from: start to: end
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LineSegment >> asBezier2Segments: error [
 	"Demote a cubic bezier to a set of approximating quadratic beziers."
 	| pts |
@@ -91,29 +93,29 @@ LineSegment >> asBezier2Segments: error [
 		Bezier2Segment from: (pts at: i) via: (pts at: i+1) to: (pts at: i+2)]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LineSegment >> asIntegerSegment [
 	"Convert the receiver into integer representation"
 	^self species from: start asIntegerPoint to: end asIntegerPoint
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LineSegment >> asLineSegment [
 	"Represent the receiver as a straight line segment"
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LineSegment >> asTangentSegment [
 	^LineSegment from: end-start to: end-start
 ]
 
-{ #category : #'bezier clipping' }
+{ #category : 'bezier clipping' }
 LineSegment >> bezierClipCurve: aCurve [
 	^self bezierClipCurve: aCurve epsilon: 1
 ]
 
-{ #category : #'bezier clipping' }
+{ #category : 'bezier clipping' }
 LineSegment >> bezierClipCurve: aCurve epsilon: eps [
 	"Compute the intersection of the receiver (a line) with the given curve using bezier clipping."
 	| tMin tMax clip newCurve |
@@ -134,7 +136,7 @@ LineSegment >> bezierClipCurve: aCurve epsilon: eps [
 	^newCurve bezierClipCurve: self epsilon: eps
 ]
 
-{ #category : #'bezier clipping' }
+{ #category : 'bezier clipping' }
 LineSegment >> bezierClipInterval: aCurve [
 	"Compute the new bezier clip interval for the argument,
 	based on the fat line (the direction aligned bounding box) of the receiver.
@@ -218,23 +220,23 @@ LineSegment >> bezierClipInterval: aCurve [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LineSegment >> bounds [
 	"Return the bounds containing the receiver"
 	^(start min: end) corner: (start max: end)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> controlPoints [
 	^{start. end}
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> controlPointsDo: aBlock [
 	aBlock value: start; value: end
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> curveFrom: parameter1 to: parameter2 [
 	"Create a new segment like the receiver but starting/ending at the given parametric values"
 	| delta |
@@ -242,12 +244,12 @@ LineSegment >> curveFrom: parameter1 to: parameter2 [
 	^self shallowCopy from: delta * parameter1 + start to: delta * parameter2 + start
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LineSegment >> debugDraw [
 	^self debugDrawAt: 0@0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LineSegment >> debugDrawAt: offset [
 	| canvas |
 	canvas := Display getCanvas.
@@ -258,48 +260,48 @@ LineSegment >> debugDrawAt: offset [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LineSegment >> degree [
 	^1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LineSegment >> direction [
 	^end - start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LineSegment >> end [
 	"Return the end point"
 	^end
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LineSegment >> end: aPoint [
 	end := aPoint
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 LineSegment >> from: startPoint to: endPoint [
 	"Initialize the receiver"
 	start := startPoint.
 	end := endPoint
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LineSegment >> hasZeroLength [
 	"Return true if the receiver has zero length"
 	^start = end
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 LineSegment >> initializeFrom: controlPoints [
 	controlPoints size = 2 ifFalse:[self error:'Wrong number of control points'].
 	start := controlPoints at: 1.
 	end := controlPoints at: 2
 ]
 
-{ #category : #intersection }
+{ #category : 'intersection' }
 LineSegment >> intersectionWith: anotherSegment [
 	"Copied from LineIntersections>>intersectFrom:to:with:to:"
 	| det deltaPt alpha beta pt1Dir pt2Dir |
@@ -319,7 +321,7 @@ LineSegment >> intersectionWith: anotherSegment [
 	^start + (alpha * pt1Dir / (det@det))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LineSegment >> isArcSegment [
 	"Answer whether I approximate an arc segment reasonably well"
 	| mid v1 v2 d1 d2 center |
@@ -344,43 +346,43 @@ LineSegment >> isArcSegment [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LineSegment >> isBezier2Segment [
 	"Return true if the receiver is a quadratic bezier segment"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LineSegment >> isLineSegment [
 	"Return true if the receiver is a line segment"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LineSegment >> isStraight [
 	"Return true if the receiver represents a straight line"
 	^true
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> length [
 	"Return the length of the receiver"
 	^start distanceTo: end
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> lineSegments: steps do: aBlock [
 	"Evaluate aBlock with the receiver's line segments"
 	aBlock value: start value: end
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> lineSegmentsDo: aBlock [
 	"Evaluate aBlock with the receiver's line segments"
 	aBlock value: start value: end
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LineSegment >> printOn: aStream [
 	"Print the receiver on aStream"
 	aStream
@@ -392,18 +394,18 @@ LineSegment >> printOn: aStream [
 		space
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LineSegment >> reversed [
 	^self class controlPoints: self controlPoints reversed
 ]
 
-{ #category : #intersection }
+{ #category : 'intersection' }
 LineSegment >> roundTo: quantum [
 	start := start roundTo: quantum.
 	end := end roundTo: quantum
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> sideOfPoint: aPoint [
 	"Return the side of the receiver this point is on. The method returns
 		-1: if aPoint is left
@@ -423,54 +425,54 @@ LineSegment >> sideOfPoint: aPoint [
 "
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LineSegment >> start [
 	"Return the start point"
 	^start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LineSegment >> start: aPoint [
 	start := aPoint
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> tangentAt: parameter [
 	"Return the tangent at the given parametric value along the receiver"
 	^end - start
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> tangentAtEnd [
 	"Return the tangent for the last point"
 	^(end - start)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> tangentAtMid [
 	"Return the tangent for the last point"
 	^(end - start)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> tangentAtStart [
 	"Return the tangent for the last point"
 	^(end - start)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> valueAt: parameter [
 	"Evaluate the receiver at the given parametric value"
 	^start + (end - start * parameter)
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> valueAtEnd [
 	"Evaluate the receiver at it's end point (e.g., self valueAtEnd = (self valueAt: 1.0))"
 	^end
 ]
 
-{ #category : #'vector functions' }
+{ #category : 'vector functions' }
 LineSegment >> valueAtStart [
 	"Evaluate the receiver at it's start point (e.g., self valueAtEnd = (self valueAt: 0.0))"
 	^start

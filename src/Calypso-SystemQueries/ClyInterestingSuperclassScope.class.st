@@ -9,12 +9,14 @@ You can restrict any class scope to be interesting scope using convertation meth
 By default it will return class scope itself. But in case when given scope consist of superclass scope it will be replaced by my instance
 "
 Class {
-	#name : #ClyInterestingSuperclassScope,
-	#superclass : #ClySingleClassRelationScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyInterestingSuperclassScope',
+	#superclass : 'ClySingleClassRelationScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInterestingSuperclassScope class >> classesRelatedTo: aClass do: aBlock [
 	| nextSuperclass |
 	aClass isRootInEnvironment ifTrue: [ ^self ].
@@ -25,7 +27,7 @@ ClyInterestingSuperclassScope class >> classesRelatedTo: aClass do: aBlock [
 	aBlock value: nextSuperclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInterestingSuperclassScope class >> defaultName [
 	^'superclasses'
 ]

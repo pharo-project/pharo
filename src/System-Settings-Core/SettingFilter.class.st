@@ -5,12 +5,14 @@ Instance Variables
 
 "
 Class {
-	#name : #SettingFilter,
-	#superclass : #Object,
-	#category : #'System-Settings-Core-Filter'
+	#name : 'SettingFilter',
+	#superclass : 'Object',
+	#category : 'System-Settings-Core-Filter',
+	#package : 'System-Settings-Core',
+	#tag : 'Filter'
 }
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 SettingFilter >> keepSettingTreeNode: aSettingNode [
 	^ false
 ]

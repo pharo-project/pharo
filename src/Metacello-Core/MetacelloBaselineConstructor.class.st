@@ -9,26 +9,28 @@ MetacelloBaselineConstructor on: BaselineOfExample
 
 "
 Class {
-	#name : #MetacelloBaselineConstructor,
-	#superclass : #MetacelloAbstractVersionConstructor,
-	#category : #'Metacello-Core-Constructors'
+	#name : 'MetacelloBaselineConstructor',
+	#superclass : 'MetacelloAbstractVersionConstructor',
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloBaselineConstructor class >> on: aConfig [
     ^ self new
         on: aConfig;
         yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloBaselineConstructor class >> on: aConfig project: aProject [
     ^ self new
         on: aConfig project: aProject;
         yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloBaselineConstructor >> calculate: aConfig project: aProject [
     | pragma versionMap versionSpec |
     self configuration: aConfig.
@@ -55,7 +57,7 @@ MetacelloBaselineConstructor >> calculate: aConfig project: aProject [
     self project configuration: aConfig
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloBaselineConstructor >> extractBaselinePragmaFor: aClass [
     | pragmas |
     pragmas := Pragma allNamed: #'baseline' in: aClass.
@@ -64,12 +66,12 @@ MetacelloBaselineConstructor >> extractBaselinePragmaFor: aClass [
     ^ pragmas first
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloBaselineConstructor >> on: aConfig [
     self calculate: aConfig project: nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloBaselineConstructor >> on: aConfig project: aProject [
     self calculate: aConfig project: aProject
 ]

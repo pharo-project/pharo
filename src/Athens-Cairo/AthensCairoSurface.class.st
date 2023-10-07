@@ -8,8 +8,8 @@ This class uses image surface (a bitmap located in system memory) and maps to ca
 As a workaround of a bug in bitblt, the Cairo surfaces are created internally with 1 extra pixel higher than requested. However, this is hidden for users.
 "
 Class {
-	#name : #AthensCairoSurface,
-	#superclass : #AthensSurface,
+	#name : 'AthensCairoSurface',
+	#superclass : 'AthensSurface',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
@@ -28,22 +28,24 @@ Class {
 		'dispatch',
 		'dispatchStruct'
 	],
-	#category : #'Athens-Cairo-Surface'
+	#category : 'Athens-Cairo-Surface',
+	#package : 'Athens-Cairo',
+	#tag : 'Surface'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensCairoSurface class >> asExternalTypeOn: generator [
 	"use handle ivar to hold my instance (cairo_surface_t)"
 	^ FFIExternalObjectType objectClass: self
 ]
 
-{ #category : #'session management' }
+{ #category : 'session management' }
 AthensCairoSurface class >> checkSession [
 	session == Smalltalk session
 		ifFalse: [ self initializeForNewSession ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoSurface class >> createFromFile: aFileName ifFailed: aBlock [
 	"Right now, this protocol is Cairo backend only. "
 
@@ -58,7 +60,7 @@ AthensCairoSurface class >> createFromFile: aFileName ifFailed: aBlock [
 	^ surface
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> createGetSurfaceFormatFn [
 	"
 		int getSurfaceFormat(sqIntptr_t handle, int* width, int* height, int* depth, int* isMSB);
@@ -80,7 +82,7 @@ AthensCairoSurface class >> createGetSurfaceFormatFn [
 			on: Error do: [ :e | 0 "Error happened" ]]
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> createLockSurfaceFn [
 	"
 	int lockSurface(sqIntptr_t handle, int *pitch, int x, int y, int w, int h);
@@ -122,7 +124,7 @@ AthensCairoSurface class >> createLockSurfaceFn [
 			self get_data: handle ]
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> createShowSurfaceFn [
 	"
 	int showSurface(sqIntptr_t handle, int x, int y, int w, int h);
@@ -137,7 +139,7 @@ AthensCairoSurface class >> createShowSurfaceFn [
 		block: [ :handle :x :y :w :h | 0 ""Do nothing"" ]"
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> createUnlockSurfaceFn [
 	"
 		int unlockSurface(sqIntptr_t handle, int x, int y, int w, int h);
@@ -154,33 +156,33 @@ AthensCairoSurface class >> createUnlockSurfaceFn [
 		block: [ :handle :x :y :w :h | 0 ""Do nothing"" ]"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> destroyContextHandle: aHandle [
 	^ self ffiCall: #( 	void cairo_destroy (size_t aHandle) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> destroySurfaceHandle: handle [
 	^ self ffiCall: #( void cairo_surface_destroy ( ulong handle ) )
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> dispatchStruct [
 	self checkSession.
 	^ dispatchStruct
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoSurface class >> extent: anExtent [
 	^ self extent: anExtent format: CAIRO_FORMAT_ARGB32
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoSurface class >> extent: anExtent format: aFormat [
 	^ ( self primImage: aFormat width: anExtent x height: anExtent y + 1) initialize
 ]
 
-{ #category : #'finalize resources' }
+{ #category : 'finalize resources' }
 AthensCairoSurface class >> finalizeResourceData: data [
 	"Finalize external state"
 
@@ -194,7 +196,7 @@ AthensCairoSurface class >> finalizeResourceData: data [
 	self destroySurfaceHandle: handle value
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoSurface class >> fromForm: aForm [
 	| form surface newBits |
 	form := aForm unhibernate; asFormOfDepth: 32.
@@ -213,27 +215,27 @@ AthensCairoSurface class >> fromForm: aForm [
 	^ surface
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> get_data: surface [
 	^ self ffiCall: #(void *cairo_image_surface_get_data (void *surface))
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> get_height: surface [
 	^ self ffiCall: #(int cairo_image_surface_get_height (void *surface))
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> get_stride: surface [
 	^ self ffiCall: #(int cairo_image_surface_get_stride (void *surface))
 ]
 
-{ #category : #'surface plugin callbacks' }
+{ #category : 'surface plugin callbacks' }
 AthensCairoSurface class >> get_width: surface [
 	^ self ffiCall: #(int cairo_image_surface_get_width (void *surface))
 ]
 
-{ #category : #'session management' }
+{ #category : 'session management' }
 AthensCairoSurface class >> initializeForNewSession [
 	session := Smalltalk session.
 	"create a dispatch structure"
@@ -247,19 +249,19 @@ AthensCairoSurface class >> initializeForNewSession [
 	dispatch := dispatchStruct getHandle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> primCreateFromFile: aFileName [
 	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_from_png (char* aFileName))
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
 	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create (int aFormat,
                                                          int aWidth,
                                                          int aHeight) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> primImageFromData: data width: width height: height pitch: stride [
 
 	"CAIRO_FORMAT_ARGB32 -> 0"
@@ -272,7 +274,7 @@ AthensCairoSurface class >> primImageFromData: data width: width height: height 
 		int stride) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> primRegisterSurface: aCairoSurfaceHandle dispatch: sqSurfaceDispatchPtr surfaceId: idHolder [
 "
 	Register a new surface with the given handle and
@@ -284,7 +286,7 @@ AthensCairoSurface class >> primRegisterSurface: aCairoSurfaceHandle dispatch: s
 	^false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> primUnregisterSurface: aCairoSurfaceId [
 "
 	ioUnregisterSurface:
@@ -295,7 +297,7 @@ AthensCairoSurface class >> primUnregisterSurface: aCairoSurfaceId [
 	<primitive: 'primitiveUnregisterSurface' module: 'SurfacePlugin'>
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> primWidth: aWidth height: aHeight [
 	^ self ffiCall: #( AthensCairoSurface cairo_image_surface_create (
 						CAIRO_FORMAT_ARGB32,
@@ -303,7 +305,7 @@ AthensCairoSurface class >> primWidth: aWidth height: aHeight [
 						int aHeight) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> registerSurface: anAthensCairoSurface [
 	"register the cairo surface with surface plugin,
 	so, it can be used directly by bitblt operations.
@@ -322,23 +324,23 @@ AthensCairoSurface class >> registerSurface: anAthensCairoSurface [
 	^ id
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface class >> unregisterSurfaceWithId: anAthensCairoSurfaceId [
 
 	self primUnregisterSurface: anAthensCairoSurfaceId
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoSurface class >> width: aWidth height: aHeight [
 	^ (self primWidth: aWidth height: aHeight+1) initialize
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensCairoSurface >> asAthensPaintOn: aCanvas [
 	^ AthensCairoPatternSurfacePaint createForSurface: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensCairoSurface >> asForm [
 	"create a form and copy an image data there"
 	self checkSession.
@@ -348,12 +350,12 @@ AthensCairoSurface >> asForm [
 		yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoSurface >> attemptToRecurseDrawing [
 	^ self
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 AthensCairoSurface >> cacheAt: anObject ifAbsentPut: aBlock [
 	"Answer an object from surface's cache identified by anObject,
 	if there is no cached object under such identifier, evaluate a block
@@ -363,18 +365,18 @@ AthensCairoSurface >> cacheAt: anObject ifAbsentPut: aBlock [
 	^ CairoBackendCache soleInstance at: anObject ifAbsentPut: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> checkSession [
 	session == Smalltalk session ifFalse: [
 		self error: 'Attempt to use invalid external resource (left from previous session)' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> clear [
 	^ self clear: Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> clear: clearPaint [
 	currentCanvas pathTransform restoreAfter: [
 		currentCanvas pathTransform loadIdentity.
@@ -387,7 +389,7 @@ AthensCairoSurface >> clear: clearPaint [
         ]]
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensCairoSurface >> createFormPaint: aForm [
 	"here we should convert form to cairo surface"
 
@@ -398,7 +400,7 @@ AthensCairoSurface >> createFormPaint: aForm [
 	^ newSurface asAthensPaintOn: context
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensCairoSurface >> createLinearGradient: aColorRamp start: aStartPoint stop: aStopPoint [
 	^ AthensCairoGradientPaint
 		createLinearGradient: aColorRamp
@@ -406,17 +408,17 @@ AthensCairoSurface >> createLinearGradient: aColorRamp start: aStartPoint stop: 
 		stop: aStopPoint
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensCairoSurface >> createMeshGradientWithPatches: aListOfMeshPatches [
 	^ AthensCairoMeshGradientPaint createMeshGradientWithPatches: aListOfMeshPatches
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 AthensCairoSurface >> createPath: aPathCreatingBlock [
 	^ builder createPath:  aPathCreatingBlock
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensCairoSurface >> createRadialGradient: colorRamp center: aCenter radius: aRadius focalPoint: fp [
 	^AthensCairoGradientPaint
 		radialBetween: fp
@@ -426,19 +428,19 @@ AthensCairoSurface >> createRadialGradient: colorRamp center: aCenter radius: aR
 		withColorRamp: colorRamp
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensCairoSurface >> createSolidColorPaint: aColor [
 
 	^ AthensCairoSolidPaint new color: aColor
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensCairoSurface >> createStrokePaintFor: aPaint [
 
 	^ AthensCairoStrokePaint new fillPaint: aPaint
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoSurface >> drawDuring: aBlock [
 
 	"You may draw on receiver only when inside a block and only using provided canvas object.
@@ -457,12 +459,12 @@ AthensCairoSurface >> drawDuring: aBlock [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> extent [
 	^ self width @ self height
 ]
 
-{ #category : #'rendering dispatch' }
+{ #category : 'rendering dispatch' }
 AthensCairoSurface >> fillPath: aPath withSolidColor: aColor [
 
 	self loadSolidColor: aColor.
@@ -473,7 +475,7 @@ AthensCairoSurface >> fillPath: aPath withSolidColor: aColor [
 		fill
 ]
 
-{ #category : #'rendering dispatch' }
+{ #category : 'rendering dispatch' }
 AthensCairoSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 
 	self loadSolidColor: aColor.
@@ -487,17 +489,17 @@ AthensCairoSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 		fill
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> finish [
 	^ self ffiCall: #( void cairo_surface_finish (self) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> flush [
 	^ self ffiCall: #( void cairo_surface_flush (self) )
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 AthensCairoSurface >> flushCacheAt: anObject [
 
 	"Flush (delete) any cached value(s) identified by given object, anObject.
@@ -509,7 +511,7 @@ AthensCairoSurface >> flushCacheAt: anObject [
 	CairoBackendCache soleInstance removeAt: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> getDataPtr [
 	"get a pointer to surface bitmap data"
 
@@ -517,38 +519,38 @@ AthensCairoSurface >> getDataPtr [
 		void* cairo_image_surface_get_data ( self ) )
 ]
 
-{ #category : #'text support' }
+{ #category : 'text support' }
 AthensCairoSurface >> getFreetypeFontRendererFor: aFreetypeFont [
 	"answer the same instance, just reset it's font and advance"
 
 	^ ftFontRenderer font: aFreetypeFont; advance: 0@0; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> getHandle [
 
 	^ handle
 ]
 
-{ #category : #'text support' }
+{ #category : 'text support' }
 AthensCairoSurface >> getStrikeFontRendererFor: aStrikeFont [
 	"answer the same instance, just reset it's font and advance"
 
 	^ AthensStrikeFontRenderer on: context  forFont: aStrikeFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> handle [
 	^ handle value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> height [
 
 	^self privateHeight - 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoSurface >> initialize [
 	"the handle should be set already since we using an NB callout to create an instance"
 	handle value = 0 ifTrue: [
@@ -567,22 +569,22 @@ AthensCairoSurface >> initialize [
 	FFIExternalResourceManager addResource: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensCairoSurface >> isSuccess [
 	^ self status  =	CAIRO_STATUS_SUCCESS
 ]
 
-{ #category : #'rendering dispatch' }
+{ #category : 'rendering dispatch' }
 AthensCairoSurface >> loadSolidColor: aColor [
 	currentCanvas setSourceR: aColor red g: aColor green b: aColor blue a: aColor alpha; resetDash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> markDirty [
 	^ self ffiCall: #( void cairo_surface_mark_dirty (self) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> newCanvas [
 	"Answer a preinitialized instance of AthensCanvas.
 	Private to receiver and its subclasses, override seldom"
@@ -590,12 +592,12 @@ AthensCairoSurface >> newCanvas [
 	^ self primCreateCanvas surface: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> primCreateCanvas [
 	^ self ffiCall: #( AthensCairoCanvas cairo_create (self) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> privSetDefaults [
 	"reset matrices"
 	currentCanvas pathTransform loadIdentity.
@@ -603,45 +605,45 @@ AthensCairoSurface >> privSetDefaults [
 	currentCanvas paintMode over
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> privateHeight [
 	^ self ffiCall: #(
 		int cairo_image_surface_get_height ( self ) )
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoSurface >> resourceData [
 	^ { handle value. id. context handle }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> showPage [
 	^ self ffiCall: #( void cairo_surface_show_page (self) )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> status [
 	^ self ffiCall: #(int cairo_surface_status (self) )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSurface >> statusToString: aCairoStatusT [
 	^ self ffiCall: #(String   cairo_status_to_string  (cairo_status_t aCairoStatusT))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> stride [
 	^ self ffiCall: #(
 		int cairo_image_surface_get_stride ( self ) )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSurface >> width [
 	^ self ffiCall: #(
 		int cairo_image_surface_get_width ( self ) )
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensCairoSurface >> writeToPng: aFileName [
 	^ self ffiCall: #(void cairo_surface_write_to_png (self, String aFileName) )
 ]

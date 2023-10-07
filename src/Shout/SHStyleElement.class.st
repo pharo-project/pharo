@@ -2,17 +2,19 @@
 A Shout style element
 "
 Class {
-	#name : #SHStyleElement,
-	#superclass : #Object,
+	#name : 'SHStyleElement',
+	#superclass : 'Object',
 	#instVars : [
 		'tokens',
 		'color',
 		'emphasis'
 	],
-	#category : #'Shout-Styling'
+	#category : 'Shout-Styling',
+	#package : 'Shout',
+	#tag : 'Styling'
 }
 
-{ #category : #'instance creation api' }
+{ #category : 'instance creation api' }
 SHStyleElement class >> color: aColor tokens: tokens [
 
 	^ self new
@@ -20,7 +22,7 @@ SHStyleElement class >> color: aColor tokens: tokens [
 		yourself
 ]
 
-{ #category : #instanceCreation }
+{ #category : 'instanceCreation' }
 SHStyleElement class >> emphasis: anEmphasis tokens: someTokens [
 
 	^ self new
@@ -28,7 +30,7 @@ SHStyleElement class >> emphasis: anEmphasis tokens: someTokens [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SHStyleElement class >> settingInputWidgetForNode: aSettingNode [
 	| theme |
 	theme := UITheme builder.
@@ -47,7 +49,7 @@ SHStyleElement class >> settingInputWidgetForNode: aSettingNode [
 			 width: 100}
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SHStyleElement class >> tokens: aCollection [
 
 	^ self new
@@ -55,13 +57,13 @@ SHStyleElement class >> tokens: aCollection [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SHStyleElement class >> withTokens: aCollection [
 	^ self new tokens: aCollection;
 		 yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SHStyleElement >> = otherObject [
 
 	^ self species = otherObject species
@@ -70,7 +72,7 @@ SHStyleElement >> = otherObject [
 					[ self color = otherObject color and: [ self emphasis = otherObject emphasis ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHStyleElement >> basicColor: aColor tokens: someTokens emphasis: anEmphasis [
 
 	color := aColor.
@@ -78,20 +80,20 @@ SHStyleElement >> basicColor: aColor tokens: someTokens emphasis: anEmphasis [
 	emphasis := anEmphasis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHStyleElement >> color [
 	^ color
 		ifNil: [color := Color colorFrom: (SHPreferences customStyleTable
 							detect: [:e | self tokens first = e first]) second]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHStyleElement >> color: anObject [
 	color := anObject.
 	SHPreferences applyStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHStyleElement >> emphasis [
 	| style |
 	^ emphasis
@@ -105,26 +107,26 @@ SHStyleElement >> emphasis [
 				ifFalse: [#normal]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHStyleElement >> emphasis: anObject [
 	emphasis := anObject.
 	SHPreferences applyStyle
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SHStyleElement >> emphasisAsArray [
 	^ self emphasis = 'bold italic'
 		ifTrue: [#(#bold #italic )]
 		ifFalse: [self emphasis]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SHStyleElement >> hash [
 
 	^ tokens hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SHStyleElement >> printOn: aStream [
 
 	super printOn: aStream.
@@ -145,7 +147,7 @@ SHStyleElement >> printOn: aStream [
 			]
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 SHStyleElement >> styleForTable [
 	^ self tokens
 		collect: [:token |
@@ -157,12 +159,12 @@ SHStyleElement >> styleForTable [
 			style asArray]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHStyleElement >> tokens [
 	^ tokens
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHStyleElement >> tokens: anObject [
 	tokens := anObject
 ]

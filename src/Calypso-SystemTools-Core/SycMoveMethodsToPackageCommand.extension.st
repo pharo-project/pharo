@@ -1,6 +1,6 @@
-Extension { #name : #SycMoveMethodsToPackageCommand }
+Extension { #name : 'SycMoveMethodsToPackageCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMoveMethodsToPackageCommand class >> methodBrowserDragAndDropActivation [
 	<classAnnotation>
 
@@ -9,7 +9,7 @@ SycMoveMethodsToPackageCommand class >> methodBrowserDragAndDropActivation [
 		toDropIn: RPackage asCalypsoItemContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMoveMethodsToPackageCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

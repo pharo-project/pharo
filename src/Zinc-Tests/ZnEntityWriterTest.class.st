@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnEntityWriterTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnEntityWriterTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityWriterTest >> testChunkedOnly [
 	| entity headers writer output reader result |
 	entity := 	ZnEntity text: (String streamContents: [ :out |
@@ -28,7 +29,7 @@ ZnEntityWriterTest >> testChunkedOnly [
 	self assert: result contents equals: entity contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityWriterTest >> testGzippedAndChunked [
 	| entity headers writer output reader result |
 	entity := 	ZnEntity text: (String streamContents: [ :out |
@@ -53,7 +54,7 @@ ZnEntityWriterTest >> testGzippedAndChunked [
 	self assert: result contents equals: entity contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityWriterTest >> testPlain [
 	| entity writer output |
 	entity := ZnEntity text: 'Foo bar!'.
@@ -66,7 +67,7 @@ ZnEntityWriterTest >> testPlain [
 	self assert: output equals: 'Foo bar!' asByteArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityWriterTest >> testPlainUsingReader [
 	| entity headers writer output reader result |
 	entity := ZnEntity text: 'Foo bar!'.

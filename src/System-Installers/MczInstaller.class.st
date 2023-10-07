@@ -4,8 +4,8 @@ An installer for Monticello files with the *.mcz extension.
    MczInstaller installFileNamed: 'MyKillerApp-Core-Author.1.mcz'
 "
 Class {
-	#name : #MczInstaller,
-	#superclass : #Object,
+	#name : 'MczInstaller',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'zip'
@@ -13,20 +13,21 @@ Class {
 	#classVars : [
 		'Versions'
 	],
-	#category : #'System-Installers'
+	#category : 'System-Installers',
+	#package : 'System-Installers'
 }
 
-{ #category : #versioninfo }
+{ #category : 'versioninfo' }
 MczInstaller class >> clearVersionInfo [
 	Versions := Dictionary new
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 MczInstaller class >> extension [
 	^ 'mcz'
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 MczInstaller class >> fileReaderServicesForFile: fileName suffix: suffix [
 	<fileService>
 	^({ self extension. '*' } includes: suffix)
@@ -34,32 +35,32 @@ MczInstaller class >> fileReaderServicesForFile: fileName suffix: suffix [
 		ifFalse: [#()]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MczInstaller class >> initialize [
 	self clearVersionInfo
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MczInstaller class >> installFileNamed: aFileName [
 	self installStream: aFileName asFileReference binaryReadStream
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MczInstaller class >> installStream: aStream [
 	(self on: aStream) install
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 MczInstaller class >> loadVersionFile: fileName [
 	self installFileNamed: fileName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MczInstaller class >> on: aStream [
 	^ self new stream: aStream
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 MczInstaller class >> serviceLoadVersion [
 	^ SimpleServiceEntry
 		provider: self
@@ -68,24 +69,24 @@ MczInstaller class >> serviceLoadVersion [
 		description: 'Load a package version'
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 MczInstaller class >> services [
 	^ Array with: self serviceLoadVersion
 ]
 
-{ #category : #versioninfo }
+{ #category : 'versioninfo' }
 MczInstaller class >> storeVersionInfo: aVersion [
 	Versions
 		at: aVersion package name
 		put: aVersion info asDictionary
 ]
 
-{ #category : #versioninfo }
+{ #category : 'versioninfo' }
 MczInstaller class >> versionInfo [
 	^ Versions
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MczInstaller >> associate: tokens [
 	| result |
 	result := Dictionary new.
@@ -98,7 +99,7 @@ MczInstaller >> associate: tokens [
 	^ result
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MczInstaller >> checkDependencies [
 	| dependencies unmet |
 	dependencies := (zip membersMatching: 'dependencies/*')
@@ -112,7 +113,7 @@ MczInstaller >> checkDependencies [
 			s nextPutAll: 'Do you still want to install this package?'])]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MczInstaller >> contentStreamForMember: member [
 	^[(member contentStreamFromEncoding: 'utf8') text] on: ZnInvalidUTF8
 		do: [:exc |
@@ -125,7 +126,7 @@ MczInstaller >> contentStreamForMember: member [
 			exc return: str]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MczInstaller >> contentsForMember: member [
 	^[(member contentStreamFromEncoding: 'utf8') contents] on: ZnInvalidUTF8
 		do: [:exc |
@@ -138,7 +139,7 @@ MczInstaller >> contentsForMember: member [
 				ifFalse: [str contents])]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MczInstaller >> extractInfoFrom: dict [
 	dict at: #id put: (UUID fromString: (dict at: #id)).
 	dict at: #date ifPresent: [:d | d isEmpty ifFalse: [dict at: #date put: (Date fromString: d)]].
@@ -147,17 +148,17 @@ MczInstaller >> extractInfoFrom: dict [
 	^ dict
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MczInstaller >> extractPackageName [
 	^ (self parseMember: 'package') at: #name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MczInstaller >> extractVersionInfo [
 	^ self extractInfoFrom: (self parseMember: 'version')
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 MczInstaller >> install [
 	| sources |
 	zip := ZipArchive new.
@@ -169,7 +170,7 @@ MczInstaller >> install [
 	sources do: [:src | self installMember: src]
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 MczInstaller >> installMember: member [
 
 	self useNewChangeSetDuring:
@@ -177,7 +178,7 @@ MczInstaller >> installMember: member [
 		]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MczInstaller >> parseMember: memberOrName [
 	| member tokens |
 	member := self zip member: memberOrName.
@@ -185,19 +186,19 @@ MczInstaller >> parseMember: memberOrName [
 	^ self associate: tokens
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MczInstaller >> recordVersionInfo [
 	Versions
 		at: self extractPackageName
 		put: self extractVersionInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MczInstaller >> stream: aStream [
 	stream := aStream
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MczInstaller >> useNewChangeSetDuring: aBlock [
 	| changeHolder oldChanges newChanges |
 	changeHolder := ChangeSet.
@@ -207,14 +208,14 @@ MczInstaller >> useNewChangeSetDuring: aBlock [
 	[ aBlock value ] ensure: [changeHolder newChanges: oldChanges]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MczInstaller >> versions: aVersionList anySatisfy: aDependencyID [
 	^ aVersionList anySatisfy: [:version |
 			aDependencyID = (version at: #id)
 				or: [self versions: (version at: #ancestors) anySatisfy: aDependencyID]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MczInstaller >> zip [
 	^zip
 ]

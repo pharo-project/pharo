@@ -14,15 +14,17 @@ transformation := (RBCustomTransformation with: [ :model |
 (ChangesBrowser changes: transformation model changes changes) open
 "
 Class {
-	#name : #RBCustomTransformation,
-	#superclass : #RBTransformation,
+	#name : 'RBCustomTransformation',
+	#superclass : 'RBTransformation',
 	#instVars : [
 		'transformationBlock'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBCustomTransformation class >> model: aRBModel with: aBlockWithOneArg [
 
 	^ self new
@@ -31,7 +33,7 @@ RBCustomTransformation class >> model: aRBModel with: aBlockWithOneArg [
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCustomTransformation class >> with: aBlockWithOneArg [
 
 	^ self new
@@ -39,20 +41,13 @@ RBCustomTransformation class >> with: aBlockWithOneArg [
 		yourself
 ]
 
-{ #category : #preconditions }
-RBCustomTransformation >> preconditions [
-	"no precondition so far"
-
-	^ self emptyCondition
-]
-
-{ #category : #executing }
+{ #category : 'executing' }
 RBCustomTransformation >> privateTransform [
 
 	transformationBlock value: self model
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBCustomTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -62,7 +57,7 @@ RBCustomTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBCustomTransformation >> transformationBlock: aBlockWithOneArg [
 
 	transformationBlock := aBlockWithOneArg

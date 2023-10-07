@@ -2,8 +2,8 @@
 i represent solid color paint in cairo backend
 "
 Class {
-	#name : #AthensCairoSolidPaint,
-	#superclass : #AthensPaint,
+	#name : 'AthensCairoSolidPaint',
+	#superclass : 'AthensPaint',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
@@ -14,10 +14,12 @@ Class {
 		'origin',
 		'extent'
 	],
-	#category : #'Athens-Cairo-Paints'
+	#category : 'Athens-Cairo-Paints',
+	#package : 'Athens-Cairo',
+	#tag : 'Paints'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoSolidPaint >> athensFillPath: path on: aCanvas [
 
 	aCanvas
@@ -27,7 +29,7 @@ AthensCairoSolidPaint >> athensFillPath: path on: aCanvas [
 		fill
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoSolidPaint >> athensFillRectangle: aRect on: aCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -43,7 +45,7 @@ AthensCairoSolidPaint >> athensFillRectangle: aRect on: aCanvas [
 		fill
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSolidPaint >> color: aColor [
 	r := aColor red.
 	g := aColor green.
@@ -51,18 +53,18 @@ AthensCairoSolidPaint >> color: aColor [
 	a := aColor alpha
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSolidPaint >> extent: anExtent [
 	extent := anExtent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoSolidPaint >> loadOnCairoCanvas: aCanvas [
 	aCanvas
 		setSourceR: r g: g b: b a: a
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoSolidPaint >> origin: aPoint [
 	origin := aPoint
 ]

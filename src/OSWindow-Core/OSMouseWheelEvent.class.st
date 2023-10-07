@@ -2,39 +2,41 @@
 i am delivered when user scrolling the mouse wheel
 "
 Class {
-	#name : #OSMouseWheelEvent,
-	#superclass : #OSMouseEvent,
+	#name : 'OSMouseWheelEvent',
+	#superclass : 'OSMouseEvent',
 	#instVars : [
 		'scrollHorizontal',
 		'scrollVertical'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSMouseWheelEvent >> accept: aVisitor [
 	^ aVisitor visitMouseWheelEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSMouseWheelEvent >> scrollHorizontal [
 
 	^ scrollHorizontal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSMouseWheelEvent >> scrollHorizontal: anObject [
 
 	scrollHorizontal := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSMouseWheelEvent >> scrollVertical [
 
 	^ scrollVertical
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSMouseWheelEvent >> scrollVertical: anObject [
 
 	scrollVertical := anObject

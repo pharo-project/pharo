@@ -1,26 +1,27 @@
 Class {
-	#name : #FloatReferencesRuleTest,
-	#superclass : #TestCase,
+	#name : 'FloatReferencesRuleTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testClass'
 	],
-	#category : #'Kernel-Tests-Rules'
+	#category : 'Kernel-Tests-Rules',
+	#package : 'Kernel-Tests-Rules'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FloatReferencesRuleTest >> setUp [
 	super setUp.
 	testClass := Object newAnonymousSubclass
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FloatReferencesRuleTest >> tearDown [
 
 	testClass := nil.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FloatReferencesRuleTest >> testBasicCheck [
 
 	| testMethod |
@@ -29,7 +30,7 @@ FloatReferencesRuleTest >> testBasicCheck [
 	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FloatReferencesRuleTest >> testBasicCheck1 [
 
 	| testMethod |
@@ -38,7 +39,7 @@ FloatReferencesRuleTest >> testBasicCheck1 [
 	self assert: (FloatReferencesRule new basicCheck: testMethod ast body statements first)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FloatReferencesRuleTest >> testBasicCheck2 [
 
 	| testMethod |

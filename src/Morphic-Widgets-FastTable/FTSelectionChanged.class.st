@@ -24,16 +24,18 @@ From the index you can get an object from the FTTableMorph with:
 aFTTableMorph dataSource elementAt: selectedRowIndex 
 "
 Class {
-	#name : #FTSelectionChanged,
-	#superclass : #FTAnnouncement,
+	#name : 'FTSelectionChanged',
+	#superclass : 'FTAnnouncement',
 	#instVars : [
 		'newSelectedIndexes',
 		'oldSelectedIndexes'
 	],
-	#category : #'Morphic-Widgets-FastTable-Announcement'
+	#category : 'Morphic-Widgets-FastTable-Announcement',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Announcement'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTSelectionChanged class >> from: oldArray to: newArray [
 	^ self new
 		oldSelectedIndexes: oldArray;
@@ -41,22 +43,22 @@ FTSelectionChanged class >> from: oldArray to: newArray [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionChanged >> newSelectedIndexes [
 	^ newSelectedIndexes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionChanged >> newSelectedIndexes: anObject [
 	newSelectedIndexes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionChanged >> oldSelectedIndexes [
 	^ oldSelectedIndexes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionChanged >> oldSelectedIndexes: anObject [
 	oldSelectedIndexes := anObject
 ]

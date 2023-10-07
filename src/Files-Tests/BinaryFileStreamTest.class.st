@@ -2,32 +2,34 @@
 Unit tests for binary file streams
 "
 Class {
-	#name : #BinaryFileStreamTest,
-	#superclass : #TestCase,
-	#category : #'Files-Tests-Streams'
+	#name : 'BinaryFileStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Files-Tests-Streams',
+	#package : 'Files-Tests',
+	#tag : 'Streams'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 BinaryFileStreamTest >> fileStreamForFileNamed: fileName [
 
 	^ (File named: fileName) writeStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BinaryFileStreamTest >> killTestFile [
 
 	(File named: 'testFile') exists
 		ifTrue: [ (File named: 'testFile') delete ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BinaryFileStreamTest >> setUp [
 
 	super setUp.
 	self killTestFile
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BinaryFileStreamTest >> tearDown [
 
 	self killTestFile.
@@ -37,7 +39,7 @@ BinaryFileStreamTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testEmptyFileIsAtEnd [
 
 	| file |
@@ -45,7 +47,7 @@ BinaryFileStreamTest >> testEmptyFileIsAtEnd [
 	self assert: file atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testFileWithSomeBytesSizeIsNotZero [
 
 	| file |
@@ -58,7 +60,7 @@ BinaryFileStreamTest >> testFileWithSomeBytesSizeIsNotZero [
 	self assert: file position equals: 5
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testFullFileIsAtEnd [
 
 	| file |
@@ -67,7 +69,7 @@ BinaryFileStreamTest >> testFullFileIsAtEnd [
 	self assert: file atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testOpenFile [
 
 	self fileStreamForFileNamed: 'testFile'.
@@ -75,7 +77,7 @@ BinaryFileStreamTest >> testOpenFile [
 	self assert: (File named: 'testFile') exists
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testPeekDoesNotAdvanceTheStream [
 
 	| file |
@@ -91,7 +93,7 @@ BinaryFileStreamTest >> testPeekDoesNotAdvanceTheStream [
 	self assert: file position equals: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testReadFullFileIsAtEnd [
 
 	| file |
@@ -104,7 +106,7 @@ BinaryFileStreamTest >> testReadFullFileIsAtEnd [
 	self assert: file atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testReadLessThanAvailableYieldsJustRead [
 
 	| file |
@@ -118,7 +120,7 @@ BinaryFileStreamTest >> testReadLessThanAvailableYieldsJustRead [
 	self assert: (file next:2) equals: #[1 2]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testReadMoreThanAvailableYieldsOnlyAvailable [
 
 	| file |
@@ -133,7 +135,7 @@ BinaryFileStreamTest >> testReadMoreThanAvailableYieldsOnlyAvailable [
 	self assert: (file next:2) equals: #[1]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testReadMultipleBytes [
 
 	| file |
@@ -146,7 +148,7 @@ BinaryFileStreamTest >> testReadMultipleBytes [
 	self assert: (file next: 2) equals: #[1 2]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testReadWhenNothingAvailableYieldsNil [
 
 	| file |
@@ -154,7 +156,7 @@ BinaryFileStreamTest >> testReadWhenNothingAvailableYieldsNil [
 	self assert: file next equals: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testSkipLecture [
 
 	| file |
@@ -169,7 +171,7 @@ BinaryFileStreamTest >> testSkipLecture [
 	self assert: file next equals: 3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testWriteFromStartingAtCount [
 
 	| file |
@@ -182,7 +184,7 @@ BinaryFileStreamTest >> testWriteFromStartingAtCount [
 	self assert: file next equals: 3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testWriteMultipleBytes [
 
 	| file |
@@ -195,7 +197,7 @@ BinaryFileStreamTest >> testWriteMultipleBytes [
 	self assert: file next equals: 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testWriteReadInt [
 
 	| file |
@@ -207,7 +209,7 @@ BinaryFileStreamTest >> testWriteReadInt [
 	self assert: file next equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BinaryFileStreamTest >> testWriteToClosedFileFails [
 
 	| fileStream |

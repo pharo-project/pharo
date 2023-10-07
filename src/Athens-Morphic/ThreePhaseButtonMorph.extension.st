@@ -1,6 +1,6 @@
-Extension { #name : #ThreePhaseButtonMorph }
+Extension { #name : 'ThreePhaseButtonMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ThreePhaseButtonMorph >> drawOnAthensCanvas: anAthensCanvas [
 	| paint |
 	paint := offImage.

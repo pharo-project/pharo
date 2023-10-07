@@ -2,17 +2,19 @@
 Instance variable names on the instance- and class-side should start with a lowercase letter.
 "
 Class {
-	#name : #ReInstanceVariableCapitalizationRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReInstanceVariableCapitalizationRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #'testing-interest' }
+{ #category : 'testing-interest' }
 ReInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 	aClass instVarNames
@@ -20,7 +22,7 @@ ReInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlo
 		thenDo: [ :each | aCriticBlock cull: (self critiqueFor: aClass about: each) ]
 ]
 
-{ #category : #'running - helpers' }
+{ #category : 'running - helpers' }
 ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |
@@ -41,12 +43,12 @@ ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 	^ crit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInstanceVariableCapitalizationRule >> group [
 	^ 'Style'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInstanceVariableCapitalizationRule >> name [
 	^ 'Instance variable capitalized'
 ]

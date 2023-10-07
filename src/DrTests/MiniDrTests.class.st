@@ -2,21 +2,23 @@
 A minified version of the DrTest tool.
 "
 Class {
-	#name : #MiniDrTests,
-	#superclass : #AbstractDrTestsPresenter,
+	#name : 'MiniDrTests',
+	#superclass : 'AbstractDrTestsPresenter',
 	#instVars : [
 		'startButton'
 	],
-	#category : #'DrTests-Spec'
+	#category : 'DrTests-Spec',
+	#package : 'DrTests',
+	#tag : 'Spec'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MiniDrTests >> currentPlugin: anObject [
 
 	currentPlugin := anObject
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MiniDrTests >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -26,13 +28,13 @@ MiniDrTests >> defaultLayout [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MiniDrTests >> evaluateStyle [
 
 	^ pluginResult backgroundColorStyle
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MiniDrTests >> initializeButtons [
 
 	super initializeButtons.
@@ -45,7 +47,7 @@ MiniDrTests >> initializeButtons [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MiniDrTests >> initializeWindow: aWindowPresenter [
 
 	super initializeWindow: aWindowPresenter.
@@ -55,12 +57,12 @@ MiniDrTests >> initializeWindow: aWindowPresenter [
 		windowIcon: (self iconNamed: self class systemIconName)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MiniDrTests >> startButton [
 	^ startButton
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 MiniDrTests >> switchToDrTest [
 
 	(DrTests newApplication: self application)
@@ -70,20 +72,20 @@ MiniDrTests >> switchToDrTest [
 		open
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MiniDrTests >> switchUI [
 
 	super switchUI.
 	self switchToDrTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MiniDrTests >> title [
 
 	^ 'DrTests'
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MiniDrTests >> updateUI [
 
 	super updateUI.
@@ -93,7 +95,7 @@ MiniDrTests >> updateUI [
 	startButton label: pluginResult summarizeInfo
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MiniDrTests >> updateWithResults: results [
 
 	self pluginResult: results.

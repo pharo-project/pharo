@@ -2,18 +2,20 @@
 BalloonBuffer is a repository for primitive data used by the BalloonEngine.
 "
 Class {
-	#name : #BalloonBuffer,
-	#superclass : #Object,
-	#type : #words,
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#name : 'BalloonBuffer',
+	#superclass : 'Object',
+	#type : 'words',
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BalloonBuffer class >> new [
 	^self new: 256
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonBuffer >> at: index [
 	"For simulation only"
 	| word |
@@ -25,7 +27,7 @@ BalloonBuffer >> at: index [
 		ifFalse:[word]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonBuffer >> at: index put: anInteger [
 	"For simulation only"
 	| word |
@@ -37,14 +39,14 @@ BalloonBuffer >> at: index put: anInteger [
 	^anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonBuffer >> floatAt: index [
 	"For simulation only"
 	<primitive: 'primitiveAt' module: 'FloatArrayPlugin'>
 	^Float fromIEEE32Bit: (self basicAt: index)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonBuffer >> floatAt: index put: value [
 	"For simulation only"
 	<primitive: 'primitiveAtPut' module: 'FloatArrayPlugin'>

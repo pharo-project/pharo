@@ -1,6 +1,6 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBMethodNode >> completionEntries: offset [
 	^Symbol selectorTable
 		select: [ :each | each beginsWith: self selector]

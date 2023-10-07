@@ -4,18 +4,20 @@ The presenter can be in install mode or uninstall mode, see class methods.
 The list of links for a node is either all the instances of metalinks from the system when in install mode or all node currently installed on that node.
 "
 Class {
-	#name : #ClyMetaLinkInstallationPresenter,
-	#superclass : #SpPresenter,
+	#name : 'ClyMetaLinkInstallationPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'sourceNode',
 		'toolBar',
 		'isForMetaLinkInstallation',
 		'metalinkListPresenter'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Metalinks'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 ClyMetaLinkInstallationPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		  add: #toolBar
@@ -26,7 +28,7 @@ ClyMetaLinkInstallationPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMetaLinkInstallationPresenter class >> onNode: aSourceNode forInstallation: forInstallation [
 	^ self basicNew
 		  sourceNode: aSourceNode;
@@ -34,18 +36,18 @@ ClyMetaLinkInstallationPresenter class >> onNode: aSourceNode forInstallation: f
 		  initialize
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyMetaLinkInstallationPresenter class >> openInstallerOnNode: aSourceNode [
 
 	(self onNode: aSourceNode forInstallation: true) open
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyMetaLinkInstallationPresenter class >> openUninstallerOnNode: aSourceNode [
 	(self onNode: aSourceNode forInstallation: false) open
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMetaLinkInstallationPresenter >> allRelevantMetaLinks [
 	| baseLinks |
 	baseLinks := self isForMetaLinkInstallation
@@ -61,12 +63,12 @@ But we need to think about how to do that exactly."
 				  ExecutionCounter } includes: link metaObject class ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMetaLinkInstallationPresenter >> close [
 	self withWindowDo: #close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMetaLinkInstallationPresenter >> initializePresenter [
 	metalinkListPresenter := self newList.
 	metalinkListPresenter items: self allRelevantMetaLinks.
@@ -74,40 +76,40 @@ ClyMetaLinkInstallationPresenter >> initializePresenter [
 	self toolbarButtons do: [ :button | toolBar addItem: button ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMetaLinkInstallationPresenter >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter title: sourceNode printString
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 ClyMetaLinkInstallationPresenter >> installSelectedMetalink [
 	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink |
 		sourceNode link: metalink ].
 	self close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMetaLinkInstallationPresenter >> isForMetaLinkInstallation [
 	^isForMetaLinkInstallation ifNil:[isForMetaLinkInstallation := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMetaLinkInstallationPresenter >> isForMetaLinkInstallation: anObject [
 	isForMetaLinkInstallation := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMetaLinkInstallationPresenter >> metalinkListPresenter [
 	^ metalinkListPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMetaLinkInstallationPresenter >> sourceNode: anObject [
 	sourceNode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMetaLinkInstallationPresenter >> toolbarButtons [
 	| buttons |
 	buttons := OrderedCollection new.
@@ -136,7 +138,7 @@ ClyMetaLinkInstallationPresenter >> toolbarButtons [
 	^ buttons
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 ClyMetaLinkInstallationPresenter >> uninstallSelectedMetalink [
 	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink |
 		sourceNode removeLink: metalink ].

@@ -1,10 +1,12 @@
 Class {
-	#name : #ClapMeaningsTest,
-	#superclass : #TestCase,
-	#category : #'Clap-Tests-Integration'
+	#name : 'ClapMeaningsTest',
+	#superclass : 'TestCase',
+	#category : 'Clap-Tests-Integration',
+	#package : 'Clap-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMeaningsTest >> testArgFlagBasicMeaning [
 	| flag match |
 	flag := (ClapFlag id: #foo)
@@ -16,7 +18,7 @@ ClapMeaningsTest >> testArgFlagBasicMeaning [
 	self deny: (flag match: #()) value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMeaningsTest >> testArgFlagCollectionMeaning [
 	| flag match |
 	flag := (ClapFlag id: #foo)
@@ -31,7 +33,7 @@ ClapMeaningsTest >> testArgFlagCollectionMeaning [
 	self assert: match value asArray equals: #(nobar nobaz)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMeaningsTest >> testArgFlagScalarMeaning [
 	| flag match |
 	flag := (ClapFlag id: #foo)
@@ -45,7 +47,7 @@ ClapMeaningsTest >> testArgFlagScalarMeaning [
 	self assert: match value equals: 'oops'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMeaningsTest >> testSimpleFlagBasicMeaning [
 	| flag match |
 	flag := ClapFlag id: #foo.

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddAssignmentTransformationTest,
-	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddAssignmentTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddAssignmentTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,79 +14,84 @@ RBAddAssignmentTransformationTest >> methodAfter [
 	variable := 1 asString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddAssignmentTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddAssignmentTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-							variable: 'variable'
-							value: '1 asString'
-							inMethod: #methodBefore
-							inClass: #RBAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable'
+			 value: '1 asString'
+			 inMethod: #methodBefore
+			 inClass: #RBAssignmentTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddAssignmentTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-							variable: 'variable'
-							value: '1 asString'
-							inMethod: #method
-							inClass: #RBAddAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable'
+			 value: '1 asString'
+			 inMethod: #method
+			 inClass: #RBAddAssignmentTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddAssignmentTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddAssignmentTransformation
-						variable: 'variable'
-						value: '1 asString'
-						inMethod: #methodBefore
-						inClass: #RBAddAssignmentTransformationTest)
-						asRefactoring transform.
+		                variable: 'variable'
+		                value: '1 asString'
+		                inMethod: #methodBefore
+		                inClass: #RBAddAssignmentTransformationTest)
+		               generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBAddAssignmentTransformationTest.
+	class := refactoring model classNamed:
+		         #RBAddAssignmentTransformationTest.
 	self assert: (class directlyDefinesMethod: #methodBefore).
-	self assert: (class parseTreeForSelector: #methodBefore) body statements size equals: 2.
-	self assert: (class parseTreeForSelector: #methodBefore) body statements last value sourceCode equals: '1 asString'
+	self
+		assert:
+		(class parseTreeForSelector: #methodBefore) body statements size
+		equals: 2.
+	self
+		assert:
+			(class parseTreeForSelector: #methodBefore) body statements last
+				value sourceCode
+		equals: '1 asString'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddAssignmentTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddAssignmentTransformation new
-		variable: 'variable'
-		value: '1 asString'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
+		                   variable: 'variable'
+		                   value: '1 asString'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddAssignmentTransformationTest >> testVariableDoesNotExist [
 
 	self shouldFail: (RBAddAssignmentTransformation
-							variable: 'variable1'
-							value: '1 asString'
-							inMethod: #methodBefore
-							inClass: #RBAddAssignmentTransformationTest)
-							asRefactoring
+			 variable: 'variable1'
+			 value: '1 asString'
+			 inMethod: #methodBefore
+			 inClass: #RBAddAssignmentTransformationTest)
 ]

@@ -2,30 +2,31 @@
 A change report
 "
 Class {
-	#name : #HDChangeReport,
-	#superclass : #HDReport,
+	#name : 'HDChangeReport',
+	#superclass : 'HDReport',
 	#instVars : [
 		'gofer'
 	],
-	#category : #'JenkinsTools-ExtraReports'
+	#category : 'JenkinsTools-ExtraReports',
+	#package : 'JenkinsTools-ExtraReports'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 HDChangeReport class >> runClasses: aCollectionOfClasses named: aString [
 	self error: 'The change report is only runnable on packages.'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDChangeReport class >> runPackage: aString [
 	^ self runPackages: (Array with: aString)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDChangeReport class >> runPackages: aCollectionOfStrings [
 	^ (self new initializeOn: aCollectionOfStrings) run
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDChangeReport >> changesFor: aResolvedVersion [
 	| references patch |
 	references := gofer allResolved
@@ -38,7 +39,7 @@ HDChangeReport >> changesFor: aResolvedVersion [
 	^ patch operations asSortedCollection
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDChangeReport >> generateChange: aPatch on: aStream [
 	aPatch isAddition
 		ifTrue: [ ^ self generateChangeAddition: aPatch on: aStream ].
@@ -48,22 +49,22 @@ HDChangeReport >> generateChange: aPatch on: aStream [
 		ifTrue: [ ^ self generateChangeRemoval: aPatch on: aStream ]
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDChangeReport >> generateChangeAddition: aPatch on: aStream [
 	aStream tab; tab; tab; nextPutAll: '<item action="add">'; nextPutAll: (self encode: (self convert: aPatch summary)); nextPutAll: '</item>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDChangeReport >> generateChangeModification: aPatch on: aStream [
 	aStream tab; tab; tab; nextPutAll: '<item action="change">'; nextPutAll: (self encode: (self convert: aPatch summary)); nextPutAll: '</item>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDChangeReport >> generateChangeRemoval: aPatch on: aStream [
 	aStream tab; tab; tab; nextPutAll: '<item action="remove">'; nextPutAll: (self encode: (self convert: aPatch summary)); nextPutAll: '</item>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDChangeReport >> generateChangeSet: aResolvedVersion on: aStream [
 	| info |
 	info := aResolvedVersion version info.
@@ -78,7 +79,7 @@ HDChangeReport >> generateChangeSet: aResolvedVersion on: aStream [
 	aStream tab; nextPutAll: '</logentry>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDChangeReport >> generateOn: aStream [
 	aStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; nextPut: Character lf.
 	aStream nextPutAll: '<changelog>'; nextPut: Character lf.
@@ -87,18 +88,18 @@ HDChangeReport >> generateOn: aStream [
 	aStream nextPutAll: '<changelog>'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HDChangeReport >> initializeOn: aCollection [
 	gofer := Gofer new.
 	aCollection do: [ :each | gofer package: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDChangeReport >> resolved [
 	^ gofer resolved
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDChangeReport >> run [
 	
 	'changelog.xml' asFileReference ensureDelete writeStreamDo: [ :stream|

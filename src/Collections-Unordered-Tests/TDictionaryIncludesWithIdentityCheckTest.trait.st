@@ -2,31 +2,33 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryIncludesWithIdentityCheckTest,
+	#name : 'TDictionaryIncludesWithIdentityCheckTest',
 	#traits : 'TDictionaryIncludesTest',
 	#classTraits : 'TDictionaryIncludesTest classTrait',
-	#category : #'Collections-Unordered-Tests-Traits'
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryIncludesWithIdentityCheckTest >> keyNotInNonEmpty [
 	" return a key not included in nonEmpty"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryIncludesWithIdentityCheckTest >> nonEmpty [
 
 ^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryIncludesWithIdentityCheckTest >> nonEmptyWithCopyNonIdentical [
 " return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
 ^self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludes [
 	| in |
 	self nonEmpty.
@@ -41,14 +43,14 @@ TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludes [
 	self deny: in
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludesIdentity [
 	self nonEmptyWithCopyNonIdentical.
 	self denyEmpty: self nonEmptyWithCopyNonIdentical.
 	self nonEmptyWithCopyNonIdentical do: [ :each | self deny: each == each copy ]
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesWithIdentityCheckTest >> testIncludesAssociation [
 
 	|  nonExistantAssociation associationIn keyIn valueIn |
@@ -66,7 +68,7 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesAssociation [
 	self deny: (self nonEmpty includesAssociation: (self keyNotInNonEmpty -> valueIn  ))
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesWithIdentityCheckTest >> testIncludesComportementForDictionnary [
 	| valueIn collection keyIn |
 	collection := self nonEmpty.
@@ -78,7 +80,7 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesComportementForDictionna
 	self deny: (collection includes: keyIn)
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesWithIdentityCheckTest >> testIncludesIdentityBasicComportement [
 
 | valueIn collection |
@@ -89,7 +91,7 @@ self assert: (collection includesIdentity: valueIn ) .
 self deny: (collection includesIdentity: self valueNotInNonEmpty )
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesWithIdentityCheckTest >> testIncludesIdentitySpecificComportement [
 
 | valueIn collection |
@@ -100,7 +102,7 @@ self assert: (collection includesIdentity: valueIn ) .
 self deny: (collection includesIdentity: valueIn copy )
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesWithIdentityCheckTest >> testIncludesKey [
 
 	| collection keyIn nonExistantKey |
@@ -113,7 +115,7 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesKey [
 	self deny: ( collection includesKey: nonExistantKey )
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryIncludesWithIdentityCheckTest >> valueNotInNonEmpty [
 	" return a value not included in nonEmpty"
 	^ self explicitRequirement

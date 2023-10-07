@@ -1,22 +1,24 @@
 Class {
-	#name : #MCPTest,
-	#superclass : #TestCase,
-	#category : #'Morphic-Tests-Kernel'
+	#name : 'MCPTest',
+	#superclass : 'TestCase',
+	#category : 'Morphic-Tests-Kernel',
+	#package : 'Morphic-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 MCPTest >> defaultBounds [
 	"the default bounds for morphs"
 	^ 0 @ 0 corner: 50 @ 40
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MCPTest >> defaultTop [
 	"the default top for morphs"
 	^ self defaultBounds top
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCPTest >> testTop [
 	"test the #top: messages and its consequences"
 

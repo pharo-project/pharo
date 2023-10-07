@@ -4,25 +4,27 @@ Finds reference paths between objects to help find memory leaks. It finds the sh
 If you want to find a path between the ""Smalltalk"" global dictionary and some instance of a class, you can use the findPathToInstanceOf: method. For example, ""ReferenceFinder findPathToInstanceOf: WriteStream"" will find a reference path between Smalltalk and an instance of WriteStream.
 "
 Class {
-	#name : #ReferenceFinder,
-	#superclass : #Object,
+	#name : 'ReferenceFinder',
+	#superclass : 'Object',
 	#instVars : [
 		'backlinks',
 		'objectsLeft',
 		'testBlock',
 		'foundBlock'
 	],
-	#category : #'ReferenceFinder-Core-Base'
+	#category : 'ReferenceFinder-Core-Base',
+	#package : 'ReferenceFinder-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findAllPathsTo: anObject [
 	"self findAllPathsTo: (Object compiledMethodAt: #printString)"
 
 	^self findAllPathsTo: anObject from: Smalltalk
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findAllPathsTo: anObject from: fromObject [
 	"self findAllPathsTo: (Object compiledMethodAt: #printString) from: Object"
 
@@ -31,14 +33,14 @@ ReferenceFinder class >> findAllPathsTo: anObject from: fromObject [
 		findAllPaths: [:each | each == anObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior [
 	"self findAllPathsToInstanceOf: RefactoringBrowser"
 
 	^self findAllPathsToInstanceOf: aBehavior from: Smalltalk
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior from: fromObject [
 	"self findAllPathsToInstanceOf: RefactoringBrowser from: ScheduledControllers"
 
@@ -47,12 +49,12 @@ ReferenceFinder class >> findAllPathsToInstanceOf: aBehavior from: fromObject [
 		findAllPaths: [:each | each class == aBehavior]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findPathTo: anObject [
 	^self findPathTo: anObject from: Smalltalk
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findPathTo: anObject from: fromObject [
 	"self findPathTo: RefactoringManager instance from: Object"
 
@@ -61,12 +63,12 @@ ReferenceFinder class >> findPathTo: anObject from: fromObject [
 		findPath: [:each | each == anObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findPathToInstanceOf: aBehavior [
 	^self findPathToInstanceOf: aBehavior from: Smalltalk
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder class >> findPathToInstanceOf: aBehavior from: fromObject [
 	"self findPathToInstanceOf: RefactoringManager from: Object"
 
@@ -75,7 +77,7 @@ ReferenceFinder class >> findPathToInstanceOf: aBehavior from: fromObject [
 		findPath: [:each | each class == aBehavior]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> _object: anObject at: anInteger [
 	"Answer the value of an indexable field in anObject. Fail if the
 	 argument anInteger is not an Integer or is out of bounds."
@@ -83,7 +85,7 @@ ReferenceFinder >> _object: anObject at: anInteger [
 	^anObject basicAt: anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> _object: anObject instVarAt: anInteger [
 	"Answer with a fixed variable in anObject.  The numbering of the variables
 	 corresponds to the named instance variables.  Fail if the index is not an
@@ -92,14 +94,14 @@ ReferenceFinder >> _object: anObject instVarAt: anInteger [
 	^anObject instVarAt: anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> _objectClass: anObject [
 	"Answer the object which is the argument's class."
 
 	^anObject class
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> _objectSize: anObject [
 	"Answer the number of indexable fields in the argument anObject.
 	 This value is the same as the largest legal subscript."
@@ -107,17 +109,17 @@ ReferenceFinder >> _objectSize: anObject [
 	^anObject basicSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> addBacklinkFrom: newObject to: anObject [
 	backlinks last at: newObject put: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> addBacklinkLevel [
 	backlinks add: self identityDictionaryClass new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> backlinkFor: anObject [
 	| toObject |
 	backlinks do:
@@ -127,7 +129,7 @@ ReferenceFinder >> backlinkFor: anObject [
 	^nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> computePathFor: anObject [
 	| path object |
 	path := OrderedCollection new.
@@ -138,12 +140,12 @@ ReferenceFinder >> computePathFor: anObject [
 	^path reverse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> find [
 	self searchForObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder >> findAllPaths: aBlock [
 	| paths |
 	paths := OrderedCollection new.
@@ -153,7 +155,7 @@ ReferenceFinder >> findAllPaths: aBlock [
 	^paths
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder >> findPath: aBlock [
 	foundBlock := [:path | ^path].
 	testBlock := aBlock.
@@ -161,27 +163,27 @@ ReferenceFinder >> findPath: aBlock [
 	^nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> hasSearched: newObject [
 	^backlinks anySatisfy: [:each | each includesKey: newObject]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> identityDictionaryClass [
 	^IdentityDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReferenceFinder >> ignore: anObject [
 	self addBacklinkFrom: anObject to: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReferenceFinder >> initialize [
 	self startFrom: Smalltalk
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> printToDoNotice [
 	self
 		crTrace:
@@ -189,7 +191,7 @@ ReferenceFinder >> printToDoNotice [
 				, objectsLeft size printString , ' objects to search'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> processLinkTo: newObject from: anObject [
 	newObject class instSize + newObject basicSize = 0
 		ifTrue:
@@ -211,7 +213,7 @@ ReferenceFinder >> processLinkTo: newObject from: anObject [
 	^nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> searchForObject [
 
 	[| objects |
@@ -230,7 +232,7 @@ ReferenceFinder >> searchForObject [
 			whileFalse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> searchIndicesIn: anObject [
 
 	| class |
@@ -246,7 +248,7 @@ ReferenceFinder >> searchIndicesIn: anObject [
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReferenceFinder >> searchVariablesIn: anObject [
 	| class |
 	class := self _objectClass: anObject.
@@ -257,7 +259,7 @@ ReferenceFinder >> searchVariablesIn: anObject [
 	^nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReferenceFinder >> startFrom: anObject [
 	backlinks := OrderedCollection new.
 	self addBacklinkLevel.

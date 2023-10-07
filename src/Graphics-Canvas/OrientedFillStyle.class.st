@@ -7,17 +7,19 @@ Instance variables:
 	normal	<Point>	Typically, just the direction rotated by 90 degrees.
 "
 Class {
-	#name : #OrientedFillStyle,
-	#superclass : #FillStyle,
+	#name : 'OrientedFillStyle',
+	#superclass : 'FillStyle',
 	#instVars : [
 		'origin',
 		'direction',
 		'normal'
 	],
-	#category : #'Graphics-Canvas-Fills'
+	#category : 'Graphics-Canvas-Fills',
+	#package : 'Graphics-Canvas',
+	#tag : 'Fills'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OrientedFillStyle >> = anOrientedFillStyle [
 	"Answer whether equal."
 
@@ -27,17 +29,17 @@ OrientedFillStyle >> = anOrientedFillStyle [
 		and: [self normal = anOrientedFillStyle normal]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrientedFillStyle >> direction [
 	^direction ifNil:[direction := normal y @ normal x negated]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrientedFillStyle >> direction: aPoint [
 	direction := aPoint
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OrientedFillStyle >> hash [
 	"Hash is implemented because #= is implemented."
 
@@ -47,29 +49,29 @@ OrientedFillStyle >> hash [
 		bitXor: (self normal hash)))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrientedFillStyle >> isOrientedFill [
 	"Return true if the receiver keeps an orientation (e.g., origin, direction, and normal)"
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrientedFillStyle >> normal [
 	^normal ifNil:[normal := direction y negated @ direction x]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrientedFillStyle >> normal: aPoint [
 	normal := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrientedFillStyle >> origin [
 	^origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrientedFillStyle >> origin: aPoint [
 	origin := aPoint
 ]

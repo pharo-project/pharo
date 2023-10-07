@@ -2,8 +2,8 @@
 a message being composed.  When finished, it will be submitted via a Celeste.
 "
 Class {
-	#name : #MailComposition,
-	#superclass : #Model,
+	#name : 'MailComposition',
+	#superclass : 'Model',
 	#instVars : [
 		'messageText',
 		'morphicWindow',
@@ -12,22 +12,23 @@ Class {
 	#classVars : [
 		'SmtpServer'
 	],
-	#category : #'Network-Mail'
+	#category : 'Network-Mail',
+	#package : 'Network-Mail'
 }
 
-{ #category : #'smtp server' }
+{ #category : 'smtp server' }
 MailComposition class >> isSmtpServerSet [
 	^ SmtpServer notNil and: [SmtpServer notEmpty]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MailComposition class >> sendMailMessage: aMailMessage [
 	| newComposition |
 	newComposition := self new.
 	newComposition messageText: aMailMessage text; open
 ]
 
-{ #category : #'smtp server' }
+{ #category : 'smtp server' }
 MailComposition class >> setSmtpServer [
 	"Set the SMTP server used to send outgoing messages via"
 	SmtpServer ifNil: [SmtpServer := ''].
@@ -36,12 +37,12 @@ MailComposition class >> setSmtpServer [
 		initialAnswer: SmtpServer
 ]
 
-{ #category : #'smtp server' }
+{ #category : 'smtp server' }
 MailComposition class >> setSmtpServer: aString [
 	SmtpServer := aString
 ]
 
-{ #category : #'smtp server' }
+{ #category : 'smtp server' }
 MailComposition class >> smtpServer [
 	"Answer the server for sending email"
 
@@ -53,7 +54,7 @@ MailComposition class >> smtpServer [
 	^SmtpServer
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MailComposition >> addAttachment [
 	| fileSelected |
 	self textModel hasUnacceptedEdits
@@ -71,7 +72,7 @@ MailComposition >> addAttachment [
 						yourself) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MailComposition >> breakLines: aString  atWidth: width [
 	"break lines in the given string into shorter lines"
 	| result atAttachment |
@@ -121,7 +122,7 @@ MailComposition >> breakLines: aString  atWidth: width [
 	^result contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MailComposition >> breakLinesInMessage: message [
 	"reformat long lines in the specified message into shorter ones"
 
@@ -145,7 +146,7 @@ MailComposition >> breakLinesInMessage: message [
 	message regenerateBodyFromParts
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MailComposition >> menuGet: aMenu shifted: shifted [
 
 	aMenu addList: {
@@ -158,13 +159,13 @@ MailComposition >> menuGet: aMenu shifted: shifted [
 	^aMenu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MailComposition >> messageText [
 	"return the current text"
 	^messageText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MailComposition >> messageText: aText [
 	"change the current text"
 	messageText := aText.
@@ -172,13 +173,13 @@ MailComposition >> messageText: aText [
 	^true
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MailComposition >> open [
 	"open an interface"
 	self openInMorphic
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MailComposition >> openInMorphic [
 	"open an interface for sending a mail message with the given initial
 	text"
@@ -213,17 +214,17 @@ MailComposition >> openInMorphic [
 	morphicWindow openInWorld
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MailComposition >> sendMailMessage: aMailMessage [
 	self messageText: aMailMessage text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MailComposition >> smtpServer [
 	^self class smtpServer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MailComposition >> submit [
 	| message |
 	"submit the message"
@@ -239,7 +240,7 @@ MailComposition >> submit [
 	morphicWindow ifNotNil: [ morphicWindow delete ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MailComposition >> textModel [
 	^ textModel ifNil: [ textModel := RubScrolledTextModel new interactionModel: self ]
 ]

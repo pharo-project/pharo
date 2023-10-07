@@ -2,12 +2,14 @@
 I am a critique that will propose to the user to remove an instance variable.
 "
 Class {
-	#name : #ReRemoveInstanceVariableCritique,
-	#superclass : #ReAbstractCritique,
-	#category : #'Renraku-Critiques'
+	#name : 'ReRemoveInstanceVariableCritique',
+	#superclass : 'ReAbstractCritique',
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReRemoveInstanceVariableCritique class >> for: anEntity instanceVariable: anInstanceVariable by: aRule [
 
 	^ (self for: anEntity by: aRule)
@@ -15,14 +17,14 @@ ReRemoveInstanceVariableCritique class >> for: anEntity instanceVariable: anInst
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRemoveInstanceVariableCritique >> change [
 
 	^ (RBRefactoryChangeFactory instance)
 		removeInstanceVariable: self tinyHint from: self entity
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReRemoveInstanceVariableCritique >> providesChange [
 
 	^ true

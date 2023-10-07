@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemQueries-Tests-P1WithHierarchy' }
+Package { #name : 'Calypso-SystemQueries-Tests-P1WithHierarchy' }

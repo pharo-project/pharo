@@ -2,17 +2,19 @@
 I represent a rename of a class or a trait.
 "
 Class {
-	#name : #EpBehaviorNameChange,
-	#superclass : #EpBehaviorChange,
+	#name : 'EpBehaviorNameChange',
+	#superclass : 'EpBehaviorChange',
 	#instVars : [
 		'oldName',
 		'newName',
 		'behavior'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpBehaviorNameChange class >> oldName: anOldName newName: aNewName class: aClass [
 
 	^ self basicNew
@@ -20,29 +22,29 @@ EpBehaviorNameChange class >> oldName: anOldName newName: aNewName class: aClass
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBehaviorNameChange >> accept: aVisitor [
 
 	^ aVisitor visitBehaviorNameChange: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorNameChange >> behaviorAffected [
 	^ self classAffected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorNameChange >> behaviorAffectedName [
 	^ self classAffected name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorNameChange >> classAffected [
 
 	^ behavior
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpBehaviorNameChange >> initializeOldName: anOldName newName: aNewName class: aBehavior [
 
 	self initialize.
@@ -51,13 +53,13 @@ EpBehaviorNameChange >> initializeOldName: anOldName newName: aNewName class: aB
 	newName := aNewName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorNameChange >> newName [
 
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorNameChange >> oldName [
 
 	^ oldName

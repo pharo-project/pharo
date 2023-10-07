@@ -7,16 +7,18 @@ Instance variables:
 	selector		<Symbol>
 "
 Class {
-	#name : #RxsMessagePredicate,
-	#superclass : #RxsNode,
+	#name : 'RxsMessagePredicate',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'selector',
 		'negated'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsMessagePredicate >> dispatchTo: aBuilder [
 	"Inform the matcher of the kind of the node, and it
 	will do whatever it has to."
@@ -24,14 +26,14 @@ RxsMessagePredicate >> dispatchTo: aBuilder [
 	^aBuilder syntaxMessagePredicate: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsMessagePredicate >> initializeSelector: aSelector [
 	"The selector must be a one-argument message understood by Character."
 
 	selector := aSelector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsMessagePredicate >> initializeSelector: aSelector negated: aBoolean [
 	"The selector must be a one-argument message understood by Character."
 
@@ -39,13 +41,13 @@ RxsMessagePredicate >> initializeSelector: aSelector negated: aBoolean [
 	negated := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsMessagePredicate >> negated [
 
 	^negated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsMessagePredicate >> selector [
 
 	^selector

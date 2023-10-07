@@ -2,32 +2,34 @@
 I'm a windows platform dynamic library loader.
 "
 Class {
-	#name : #WindowsDynamicLoader,
-	#superclass : #DynamicLoader,
-	#category : #'UnifiedFFI-Libraries'
+	#name : 'WindowsDynamicLoader',
+	#superclass : 'DynamicLoader',
+	#category : 'UnifiedFFI-Libraries',
+	#package : 'UnifiedFFI',
+	#tag : 'Libraries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsDynamicLoader class >> isAvailable [
 	^ Smalltalk os isWindows
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 WindowsDynamicLoader >> lastError [
 	^ self ffiCall: #(int32 GetLastError(void))
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 WindowsDynamicLoader >> loadLibrary: lpFileName [
 	^ self ffiCall: #(void *LoadLibrary(String lpFileName))
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 WindowsDynamicLoader >> loadSymbolFrom: hModule name: lpProcName [
 	^ self ffiCall: #(void *GetProcAddress(void *hModule, String lpProcName))
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 WindowsDynamicLoader >> win32LibraryName [
 	^ 'Kernel32.dll'
 ]

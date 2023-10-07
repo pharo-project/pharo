@@ -1,12 +1,12 @@
-Extension { #name : #TonelRepository }
+Extension { #name : 'TonelRepository' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 TonelRepository >> asRingEnvironmentWith: packageNames [
 
 	^ self asRingEnvironmentWith: packageNames cleaning: true
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 TonelRepository >> asRingEnvironmentWith: packageNames cleaning: aBoolen [
 
 	| aRG2Environment |

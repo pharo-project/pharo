@@ -18,28 +18,30 @@ Internal Representation and Key Implementation Points.
 	methods:		<IdentitySet of: CompiledMethod>
 "
 Class {
-	#name : #ClyConstantMethodQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyConstantMethodQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'description',
 		'methods'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyConstantMethodQuery class >> named: queryDescription with: methods [
 	^(self with: methods)
 		description: queryDescription
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyConstantMethodQuery class >> with: methods [
 	^self new
 		methods: methods
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyConstantMethodQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -48,34 +50,34 @@ ClyConstantMethodQuery >> = anObject [
 	^ methods = anObject methods
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyConstantMethodQuery >> async [
 	^self
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantMethodQuery >> buildResult: aQueryResult [
 
 	aQueryResult fillWith: self scopedMethods
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantMethodQuery >> checkEmptyResult [
 
 	^self installedMethods isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConstantMethodQuery >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConstantMethodQuery >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantMethodQuery >> filterInstalledMethods: methodsCollection [
 
 	^methodsCollection
@@ -83,37 +85,37 @@ ClyConstantMethodQuery >> filterInstalledMethods: methodsCollection [
 		thenReject: [ :each | each isNil or: [each package isNil or: [ each isInstalled not]]]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyConstantMethodQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: methods hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyConstantMethodQuery >> initialize [
 	super initialize.
 
 	description := 'Methods'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantMethodQuery >> installedMethods [
 
 	^self filterInstalledMethods: methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConstantMethodQuery >> methods [
 	^ methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConstantMethodQuery >> methods: anObject [
 	methods := anObject asIdentitySet
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantMethodQuery >> scopedMethods [
 
 	| installedMethods scopedMethods |
@@ -129,14 +131,14 @@ ClyConstantMethodQuery >> scopedMethods [
 	^scopedMethods
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyConstantMethodQuery >> selectsMethod: aMethod [
 
 	^methods anySatisfy: [ :each |
 		each calypsoEnvironmentType checkCalypsoItem: each isEqualTo: aMethod]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyConstantMethodQuery >> semiAsync [
 	^self
 ]

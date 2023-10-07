@@ -2,12 +2,13 @@
 I uninstall the deprecated transformation meta-links within the AST.
 "
 Class {
-	#name : #ClassDeprecationMetaLinkUninstaller,
-	#superclass : #RBProgramNodeVisitor,
-	#category : #ClassDeprecation
+	#name : 'ClassDeprecationMetaLinkUninstaller',
+	#superclass : 'RBProgramNodeVisitor',
+	#category : 'ClassDeprecation',
+	#package : 'ClassDeprecation'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ClassDeprecationMetaLinkUninstaller >> visitGlobalNode: aNode [
 	super visitGlobalNode: aNode.
 	aNode hasDeprecationTransformMetaLink

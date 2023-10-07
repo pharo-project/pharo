@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnBase64EncoderTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnBase64EncoderTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 ZnBase64EncoderTest class >> bench10kDecode [
 	"self bench10kDecode"
 
@@ -15,7 +16,7 @@ ZnBase64EncoderTest class >> bench10kDecode [
 	^ [ ZnBase64Encoder new decode: string ] bench
 ]
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 ZnBase64EncoderTest class >> bench10kEncode [
 	"self bench10kEncode"
 
@@ -25,7 +26,7 @@ ZnBase64EncoderTest class >> bench10kEncode [
 	^ [ ZnBase64Encoder new encode: bytes ] bench
 ]
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 ZnBase64EncoderTest class >> bench1kDecode [
 	"self bench1kDecode"
 
@@ -36,7 +37,7 @@ ZnBase64EncoderTest class >> bench1kDecode [
 	^ [ ZnBase64Encoder new decode: string ] bench
 ]
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 ZnBase64EncoderTest class >> bench1kEncode [
 	"self bench1kEncode"
 
@@ -46,7 +47,7 @@ ZnBase64EncoderTest class >> bench1kEncode [
 	^ [ ZnBase64Encoder new encode: bytes ] bench
 ]
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 ZnBase64EncoderTest class >> benchmarks [
 	"self benchmarks"
 
@@ -54,7 +55,7 @@ ZnBase64EncoderTest class >> benchmarks [
 		 collect: [ :each | each -> (self perform: each) ]) asDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testCustomAlphabetFullSpectrum [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
@@ -68,7 +69,7 @@ ZnBase64EncoderTest >> testCustomAlphabetFullSpectrum [
 	self assert: (encoder decode: output) equals: input
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testCustomLineBreaking [
 	| encoder input output charCount |
 	encoder := ZnBase64Encoder new.
@@ -80,7 +81,7 @@ ZnBase64EncoderTest >> testCustomLineBreaking [
 	self assert: output size equals: (charCount + (charCount // 16 * String crlf size))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testDecodingErrors [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -99,7 +100,7 @@ ZnBase64EncoderTest >> testDecodingErrors [
 	self should: [ encoder decode: '****' ] raise: ZnCharacterEncodingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testEmpty [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -111,7 +112,7 @@ ZnBase64EncoderTest >> testEmpty [
 		equals: #[]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testFullAlphabet [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
@@ -123,7 +124,7 @@ ZnBase64EncoderTest >> testFullAlphabet [
 	self assert: (encoder encode: output) equals: input
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testFullSpectrum [
 	| encoder input output |
 	encoder := ZnBase64Encoder new.
@@ -135,7 +136,7 @@ ZnBase64EncoderTest >> testFullSpectrum [
 	self assert: (encoder decode: output) equals: input
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testPadding [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -150,7 +151,7 @@ ZnBase64EncoderTest >> testPadding [
 	self assert: (encoder decode: 'TWE') equals: 'Ma' asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testQuote [
 	| input output encoder break |
 	encoder := ZnBase64Encoder new lineEndConvention: #cr; breakLines; yourself.
@@ -169,7 +170,7 @@ ZnBase64EncoderTest >> testQuote [
 		equals: input asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testSimple [
 	| encoder |
 	encoder := ZnBase64Encoder new.
@@ -181,7 +182,7 @@ ZnBase64EncoderTest >> testSimple [
 		equals: 'Man' asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBase64EncoderTest >> testWhitespaceAtEnd [
 	| encoder |
 	encoder := ZnBase64Encoder new.

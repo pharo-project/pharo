@@ -2,16 +2,17 @@
 signaled by font loading code when reading a DiskProxy that calls for a missing font.
 "
 Class {
-	#name : #FontSubstitutionDuringLoading,
-	#superclass : #Notification,
+	#name : 'FontSubstitutionDuringLoading',
+	#superclass : 'Notification',
 	#instVars : [
 		'familyName',
 		'pixelSize'
 	],
-	#category : #'Graphics-Fonts'
+	#category : 'Graphics-Fonts',
+	#package : 'Graphics-Fonts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FontSubstitutionDuringLoading class >> forFamilyName: aName pixelSize: aSize [
 	^(self new)
 		familyName: aName;
@@ -19,7 +20,7 @@ FontSubstitutionDuringLoading class >> forFamilyName: aName pixelSize: aSize [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FontSubstitutionDuringLoading >> defaultAction [
 	familyName ifNil: [ familyName := 'NoName' ].
 	pixelSize ifNil: [ pixelSize := 12 ].
@@ -29,35 +30,35 @@ FontSubstitutionDuringLoading >> defaultAction [
 		ifFalse: [ TextStyle default ]) fontOfSize: pixelSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FontSubstitutionDuringLoading >> familyName [
 	"Answer the value of familyName"
 
 	^ familyName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FontSubstitutionDuringLoading >> familyName: anObject [
 	"Set the value of familyName"
 
 	familyName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FontSubstitutionDuringLoading >> pixelSize [
 	"Answer the value of pixelSize"
 
 	^ pixelSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FontSubstitutionDuringLoading >> pixelSize: anObject [
 	"Set the value of pixelSize"
 
 	pixelSize := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FontSubstitutionDuringLoading >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(;

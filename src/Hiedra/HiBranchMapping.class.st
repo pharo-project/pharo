@@ -3,32 +3,34 @@ I know how to map each link and node of a Hiedra ruler to a branch number. This 
 Note that my mapping is arbitrary, and other mappings are possible.
 "
 Class {
-	#name : #HiBranchMapping,
-	#superclass : #Object,
+	#name : 'HiBranchMapping',
+	#superclass : 'Object',
 	#instVars : [
 		'ruler',
 		'branchByLink',
 		'branchCount',
 		'branchByNode'
 	],
-	#category : #'Hiedra-Model'
+	#category : 'Hiedra-Model',
+	#package : 'Hiedra',
+	#tag : 'Model'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 HiBranchMapping class >> builtFor: aHiRuler [
 	^ (self newFor: aHiRuler)
 		build;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HiBranchMapping class >> newFor: aHiRuler [
 	^ self basicNew
 		initializeWith: aHiRuler;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 HiBranchMapping >> allLinksWithSameBranchAs: aHiLink [
 	| branch |
 	branch := self branchAtLink: aHiLink.
@@ -37,36 +39,36 @@ HiBranchMapping >> allLinksWithSameBranchAs: aHiLink [
 			branchNumber = branch ifTrue: [ stream nextPut: link ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiBranchMapping >> branchAtLink: aHiLink [
 	"Answer the branch number for a link."
 
 	^ self branchByLink at: aHiLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiBranchMapping >> branchAtNode: aHiNode [
 	"Answer the branch number for a node."
 
 	^ self branchByNode at: aHiNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiBranchMapping >> branchByLink [
 	^ branchByLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiBranchMapping >> branchByNode [
 	^ branchByNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiBranchMapping >> branchCount [
 	^ branchCount
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 HiBranchMapping >> build [
 	"Build the internal collaborators that will know the branch numbers for each node and link in the ruler. Required after instance creation."
 
@@ -75,7 +77,7 @@ HiBranchMapping >> build [
 	self buildBranchByNode
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 HiBranchMapping >> buildBranchByLink [
 	"Build a dictionary that maps each link to a branch number."
 
@@ -85,7 +87,7 @@ HiBranchMapping >> buildBranchByLink [
 			self markBranchLinksFrom: link ] ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 HiBranchMapping >> buildBranchByNode [
 	"Build a dictionary that maps each node to a branch number."
 
@@ -94,13 +96,13 @@ HiBranchMapping >> buildBranchByNode [
 		self markNode: node ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiBranchMapping >> initializeWith: aHiRuler [
 	self initialize.
 	ruler := aHiRuler
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HiBranchMapping >> markBranchLinksFrom: link [
 	| nextLink |
 
@@ -120,7 +122,7 @@ HiBranchMapping >> markBranchLinksFrom: link [
 	] repeat
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HiBranchMapping >> markNode: aHiNode [
 	| branch |
 	branch := aHiNode hasAnyLink
@@ -131,7 +133,7 @@ HiBranchMapping >> markNode: aHiNode [
 		put: branch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiBranchMapping >> ruler [
 	^ ruler
 ]

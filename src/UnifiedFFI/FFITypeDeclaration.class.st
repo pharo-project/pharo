@@ -3,17 +3,19 @@ I represent a type declaration in a FFI function signature. I have a type name a
 I am resolved as an external FFI type with my arity.
 "
 Class {
-	#name : #FFITypeDeclaration,
-	#superclass : #Object,
+	#name : 'FFITypeDeclaration',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'arity',
 		'resolvedType'
 	],
-	#category : #'UnifiedFFI-Arguments'
+	#category : 'UnifiedFFI-Arguments',
+	#package : 'UnifiedFFI',
+	#tag : 'Arguments'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFITypeDeclaration class >> typeName: aString arity: anInteger [
 
 	^ self new
@@ -22,51 +24,51 @@ FFITypeDeclaration class >> typeName: aString arity: anInteger [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITypeDeclaration >> arity [
 	^ arity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITypeDeclaration >> arity: anObject [
 	arity := anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFITypeDeclaration >> asOldArraySpec [
 
 	^ { name . arity }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITypeDeclaration >> defaultReturnOnError [
 
 	^ self resolvedType defaultReturnOnError
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFITypeDeclaration >> emitReturn: anIRBuilder resultTempVar: aString context: aContext inCallout: aCallout [
 
 	^ resolvedType emitReturn: anIRBuilder resultTempVar: aString context: aContext inCallout: aCallout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITypeDeclaration >> externalTypeWithArity [
 
 	^ resolvedType externalTypeWithArity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITypeDeclaration >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITypeDeclaration >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFITypeDeclaration >> resolveUsing: aResolver [
 
 	resolvedType := (aResolver resolveType: name) pointerArity: arity.
@@ -75,13 +77,13 @@ FFITypeDeclaration >> resolveUsing: aResolver [
 	^ resolvedType
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFITypeDeclaration >> resolveUsing: aResolver forArgument: aFFIVariableArgument [
 
 	^ self resolveUsing: aResolver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFITypeDeclaration >> resolvedType [
 	^ resolvedType
 ]

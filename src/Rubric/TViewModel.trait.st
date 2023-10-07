@@ -6,16 +6,18 @@ The interactionModel can represents your model or a model of the higher level (A
 
 "
 Trait {
-	#name : #TViewModel,
-	#category : #'Rubric-Traits'
+	#name : 'TViewModel',
+	#category : 'Rubric-Traits',
+	#package : 'Rubric',
+	#tag : 'Traits'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModel >> announcer [
 	"Define #announcer if needed"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModel >> interactionModel [
 	^ self
 ]

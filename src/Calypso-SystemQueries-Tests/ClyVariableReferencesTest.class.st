@@ -1,20 +1,22 @@
 Class {
-	#name : #ClyVariableReferencesTest,
-	#superclass : #ClyMethodQueryTest,
+	#name : 'ClyVariableReferencesTest',
+	#superclass : 'ClyMethodQueryTest',
 	#instVars : [
 		'referencedVar1',
 		'readVar1',
 		'writtenVar1'
 	],
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableReferencesTest class >> isAbstract [
 	^self == ClyVariableReferencesTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableReferencesTest >> createQuery [
 	^ self queryClass
 		of: (ClyInstanceVariable
@@ -22,35 +24,35 @@ ClyVariableReferencesTest >> createQuery [
 		from: (ClyClassScope of: self class in: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableReferencesTest >> queryClass [
 	self subclassResponsibility
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReferencesTest >> supeclassReaderOfVar1 [
 
 	^readVar1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReferencesTest >> supeclassReferenceOfVar1 [
 
 	^referencedVar1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReferencesTest >> supeclassWriterOfVar1 [
 
 	writtenVar1 := #superclassValue
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableReferencesTest >> targetVarName [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesTest >> testComparison [
 	self
 		assert: (self queryClass of: {(ClyInstanceVariable named: #x definedIn: Point)})
@@ -65,7 +67,7 @@ ClyVariableReferencesTest >> testComparison [
 		equals: (self queryClass of: (ClyInstanceVariable named: #y definedIn: Point))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesTest >> testComparisonToSimilarQueryButWithDifferentVariables [
 	| query2 |
 	query2 := self createQuery.

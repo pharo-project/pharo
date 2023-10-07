@@ -2,12 +2,13 @@
 I'm a Polygon PathShape (see PathShape).
 "
 Class {
-	#name : #Polygon,
-	#superclass : #PathShape,
-	#category : #'Graphics-Shapes'
+	#name : 'Polygon',
+	#superclass : 'PathShape',
+	#category : 'Graphics-Shapes',
+	#package : 'Graphics-Shapes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Polygon >> containsPoint: aPoint [
 	"Answer whether the receiver contains the given point."
 
@@ -29,7 +30,7 @@ Polygon >> containsPoint: aPoint [
 	^wind ~= 0
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Polygon >> segmentsDo: aBlock [
 	"Evaluate the two-argument block with each vertex and its successor."
 

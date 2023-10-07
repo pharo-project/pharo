@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfClassAnnotation,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfClassAnnotation
+	#name : 'BaselineOfClassAnnotation',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfClassAnnotation',
+	#package : 'BaselineOfClassAnnotation'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfClassAnnotation >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

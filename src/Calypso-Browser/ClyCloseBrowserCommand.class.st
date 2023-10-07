@@ -9,26 +9,28 @@ Also it fixes the case for method browser managed by tabs group window.
 Before `$w` command, it keeps an empty tab without closing it.
 "
 Class {
-	#name : #ClyCloseBrowserCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-Browser-Commands'
+	#name : 'ClyCloseBrowserCommand',
+	#superclass : 'ClyBrowserCommand',
+	#category : 'Calypso-Browser-Commands',
+	#package : 'Calypso-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCloseBrowserCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $w meta for: ClyBrowserContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCloseBrowserCommand class >> textToolShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $w meta for: ClyTextEditorContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyCloseBrowserCommand >> execute [
 	browser close
 ]

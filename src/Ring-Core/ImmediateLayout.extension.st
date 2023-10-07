@@ -1,6 +1,6 @@
-Extension { #name : #ImmediateLayout }
+Extension { #name : 'ImmediateLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 ImmediateLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

@@ -2,17 +2,18 @@
 Unit test for announcement handling when dealing with traits
 "
 Class {
-	#name : #T2TraitAnnouncementsTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitAnnouncementsTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitAnnouncementsTest >> packageName [
 	^ 'TestPackage'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
@@ -28,9 +29,10 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 	self assert: self packageName asPackage methods size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
+	[
 	| c1 t1 |
 
 	t1 := self newTrait: #T1 with: #() uses: #() category: self packageName.
@@ -43,5 +45,6 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
 	self assert: self packageName asPackage methods size equals: 2.
 	(c1 >> #msg) removeFromSystem.
-	self assert: self packageName asPackage methods size equals: 1
+	self assert: self packageName asPackage methods size equals: 1 ] ensure: [ 
+		(self packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Collections-Abstract' }
+{ #category : '*Collections-Abstract' }
 Behavior class >> sortBlock [
 	^ [ :a :b | a name <= b name ]
 ]

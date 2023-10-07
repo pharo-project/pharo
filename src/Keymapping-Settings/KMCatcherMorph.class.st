@@ -2,8 +2,8 @@
 I am a morph that captures keymappings, so they can be used for configuration/customization, or debugging.
 "
 Class {
-	#name : #KMCatcherMorph,
-	#superclass : #BorderedMorph,
+	#name : 'KMCatcherMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'focused',
 		'keystrokes',
@@ -12,17 +12,18 @@ Class {
 		'initialShortcut',
 		'edited'
 	],
-	#category : #'Keymapping-Settings'
+	#category : 'Keymapping-Settings',
+	#package : 'Keymapping-Settings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMCatcherMorph class >> for: aModel [
 	^ (self new)
 		keymapSetting: aModel;
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 KMCatcherMorph >> accept [
 	| shortcut |
 	shortcut := self shortcut.
@@ -31,17 +32,17 @@ KMCatcherMorph >> accept [
 	edited := false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> allowsKeymapping [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCatcherMorph >> balloonText [
 	^ 'Click to edit shortcut.  Right click to open context menu.'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 KMCatcherMorph >> cancel [
 	edited
 		ifFalse: [ ^ self ].
@@ -50,13 +51,13 @@ KMCatcherMorph >> cancel [
 	self initializeKeystrokes
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> clear [
 	self keystrokes removeAll.
 	self showKeystrokes
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 KMCatcherMorph >> drawOn: aCanvas [
 	"Indicate unaccepted edits, conflicts etc."
 
@@ -65,24 +66,24 @@ KMCatcherMorph >> drawOn: aCanvas [
 		self theme drawTextAdornmentFor: self color: Color orange on: aCanvas]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> handlesKeyboard: event [
 	^ focused
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> handlesMouseDown: event [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMCatcherMorph >> initialShortcut: aShortcut [
 	initialShortcut := aShortcut.
 	self showInitialShortcut.
 	self initializeKeystrokes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMCatcherMorph >> initialize [
 	super initialize.
 	self layoutPolicy: TableLayout new.
@@ -98,19 +99,19 @@ KMCatcherMorph >> initialize [
 	self initializeKeystrokes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMCatcherMorph >> initializeKeystrokes [
 	keystrokes := OrderedCollection new
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> keyStroke: aKeyStroke [
 	edited := true.
 	self keystrokes add: aKeyStroke.
 	self showKeystrokes
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> keyboardFocusChange: aBoolean [
 	super keyboardFocusChange: aBoolean.
 	focused := aBoolean.
@@ -120,24 +121,24 @@ KMCatcherMorph >> keyboardFocusChange: aBoolean [
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> keymapSetting: aSetting [
 	keymapSetting := aSetting.
 	self initialShortcut: keymapSetting shortcut
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 KMCatcherMorph >> keystrokes [
 	^ keystrokes
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 KMCatcherMorph >> keystrokes: someKeystrokes [
 	keystrokes := someKeystrokes.
 	self showKeystrokes
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> mouseDown: event [
 	super mouseDown: event.
 	event yellowButtonPressed
@@ -145,12 +146,12 @@ KMCatcherMorph >> mouseDown: event [
 		ifFalse: [ self activeHand newKeyboardFocus: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCatcherMorph >> setMessage: aMessage [
 	labelMorph contents: aMessage
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 KMCatcherMorph >> shortcut [
 	| theKeystrokes |
 	theKeystrokes := self keystrokes.
@@ -163,7 +164,7 @@ KMCatcherMorph >> shortcut [
 			acum , each asKeyCombination ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 KMCatcherMorph >> shortcutString [
 	| shortcut |
 	self keystrokes
@@ -172,7 +173,7 @@ KMCatcherMorph >> shortcutString [
 	^ shortcut asString
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 KMCatcherMorph >> showContextMenu [
 	| menu |
 	menu := MenuMorph new defaultTarget: self.
@@ -187,17 +188,17 @@ KMCatcherMorph >> showContextMenu [
 	menu popUpInWorld
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMCatcherMorph >> showInitialShortcut [
 	self setMessage: initialShortcut asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMCatcherMorph >> showKeystrokes [
 	self setMessage: self shortcutString
 ]
 
-{ #category : #'halos and balloon help' }
+{ #category : 'halos and balloon help' }
 KMCatcherMorph >> wantsBalloon [
 	^ true
 ]

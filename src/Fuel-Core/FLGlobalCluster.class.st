@@ -2,18 +2,20 @@
 I am a cluster for objects that are reachables from Smalltalk global dictionary.
 "
 Class {
-	#name : #FLGlobalCluster,
-	#superclass : #FLPrimitiveCluster,
-	#category : #'Fuel-Core-Clusters-Global'
+	#name : 'FLGlobalCluster',
+	#superclass : 'FLPrimitiveCluster',
+	#category : 'Fuel-Core-Clusters-Global',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters-Global'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLGlobalCluster class >> clusterBucketIn: aClusterization [
 
 	^aClusterization globalsBucket
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCluster >> materializeGlobalAssociationFrom: aDecoder [
 
 	| globalName |
@@ -23,7 +25,7 @@ FLGlobalCluster >> materializeGlobalAssociationFrom: aDecoder [
 		ifAbsent: [ FLGlobalNotFound signalWithName: globalName ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCluster >> materializeGlobalClassFrom: aDecoder [
 
 	| className |
@@ -31,13 +33,13 @@ FLGlobalCluster >> materializeGlobalClassFrom: aDecoder [
 	^ aDecoder classNamed: className
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCluster >> serializeGlobalAssociationKeyed: aSymbol on: anEncoder [
 	
 	anEncoder encodeString: aSymbol
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCluster >> serializeGlobalClass: aClass on: anEncoder [
 	anEncoder encodeString: aClass name
 ]

@@ -7,16 +7,18 @@ Any sender of the prior selector will be changed to the new.
 If the method contains more than one argument, I request the user to choose one of the arguments.
 "
 Class {
-	#name : #RBRemoveParameterRefactoring,
-	#superclass : #RBChangeMethodNameRefactoring,
+	#name : 'RBRemoveParameterRefactoring',
+	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
 		'parameterIndex',
 		'argument'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -26,7 +28,7 @@ RBRemoveParameterRefactoring class >> model: aRBSmalltalk removeParameter: aStri
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass selector: aSelector [
 	^ self new
 		removeParameter: aString
@@ -34,28 +36,28 @@ RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass select
 		selector: aSelector
 ]
 
-{ #category : #validating }
+{ #category : 'validating' }
 RBRemoveParameterRefactoring >> applyValidations [
 
 	| tree |
 	(class directlyDefinesMethod: oldSelector) ifFalse: [
-		self refactoringFailure: 'Method doesn''t exist' ].
+		self refactoringError: 'Method doesn''t exist' ].
 	tree := class parseTreeForSelector: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources' ].
+	tree ifNil: [ self refactoringError: 'Cannot parse sources' ].
 	argument ifNil: [
-		self refactoringFailure: 'This method does not have an argument' ].
+		self refactoringError: 'This method does not have an argument' ].
 	parameterIndex := tree argumentNames
 		                  indexOf: argument
 		                  ifAbsent: [
-		                  self refactoringFailure: 'Select a parameter!!' ].
+		                  self refactoringError: 'Select a parameter!!' ].
 	oldSelector numArgs == 0 ifTrue: [
-		self refactoringFailure: 'This method contains no arguments' ].
+		self refactoringError: 'This method contains no arguments' ].
 	oldSelector isInfix ifTrue: [
-		self refactoringFailure:
+		self refactoringError:
 			'Cannot remove parameters of infix selectors' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveParameterRefactoring >> computeNewSelector [
 	| keywords |
 
@@ -66,24 +68,24 @@ RBRemoveParameterRefactoring >> computeNewSelector [
 	^ (String streamContents: [ :str | keywords do: [ :each | str nextPutAll: each ] ]) asSymbol
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveParameterRefactoring >> getNewSelector [
 	self applyValidations.
 	permutation := (1 to: oldSelector numArgs) copyWithout: parameterIndex.
 	^ newSelector ifNil: [ newSelector := self computeNewSelector ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 
 	| tree |
 
 	tree := each parseTreeForSelector: oldSelector.
-	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
+	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveParameterRefactoring >> myConditions [
 	| imps |
 	imps := self model allImplementorsOf: oldSelector.
@@ -96,27 +98,28 @@ RBRemoveParameterRefactoring >> myConditions [
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRemoveParameterRefactoring >> newSelector: aSelector [
 	newSelector := aSelector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.
 	argument := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveParameterRefactoring >> storeOn: aStream [
+
 	aStream nextPut: $(.
-	self class storeOn: aStream.
+	aStream nextPutAll: self class name.
 	aStream
 		nextPutAll: ' removeParameter: ''';
 		nextPutAll: argument;
 		nextPutAll: ''' in: '.
-	class storeOn: aStream.
+	aStream nextPutAll: class name.
 	aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.

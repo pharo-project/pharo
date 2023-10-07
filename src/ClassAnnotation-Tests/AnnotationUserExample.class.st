@@ -1,25 +1,27 @@
 Class {
-	#name : #AnnotationUserExample,
-	#superclass : #BaseAnnotationUserExample,
+	#name : 'AnnotationUserExample',
+	#superclass : 'BaseAnnotationUserExample',
 	#instVars : [
 		'isSimulatedActiveAnnotation'
 	],
-	#category : #'ClassAnnotation-Tests-Examples-Annotation contexts'
+	#category : 'ClassAnnotation-Tests-Examples-Annotation contexts',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Examples-Annotation contexts'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AnnotationUserExample >> initialize [
 	super initialize.
 
 	isSimulatedActiveAnnotation := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnotationUserExample >> isSimulatedActiveAnnotation [
 	^ isSimulatedActiveAnnotation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnotationUserExample >> isSimulatedActiveAnnotation: anObject [
 	isSimulatedActiveAnnotation := anObject
 ]

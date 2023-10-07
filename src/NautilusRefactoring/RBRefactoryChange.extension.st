@@ -1,11 +1,11 @@
-Extension { #name : #RBRefactoryChange }
+Extension { #name : 'RBRefactoryChange' }
 
-{ #category : #'*NautilusRefactoring' }
+{ #category : '*NautilusRefactoring' }
 RBRefactoryChange >> accept: aText notifying: aController [
 	^ false
 ]
 
-{ #category : #'*NautilusRefactoring' }
+{ #category : '*NautilusRefactoring' }
 RBRefactoryChange >> whatToDisplayIn: aChangeBrowser [
 
 	^ { self }

@@ -4,24 +4,26 @@ Replaces at:ifAbsent: by at:ifAbsentPut:. Its leads to shorter and more readable
 
 "
 Class {
-	#name : #ReAtIfAbsentRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReAtIfAbsentRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAtIfAbsentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AtIfAbsentRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAtIfAbsentRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAtIfAbsentRule >> initialize [
 	super initialize.
 	self
@@ -46,7 +48,7 @@ ReAtIfAbsentRule >> initialize [
 							``@object]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAtIfAbsentRule >> name [
 	^ 'at:ifAbsent: -> at:ifAbsentPut:'
 ]

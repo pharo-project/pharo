@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenuItem }
+Extension { #name : 'CmdMenuItem' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdMenuItem >> buildBrowserToolbar: toolbarMorph [
 
 	self subclassResponsibility

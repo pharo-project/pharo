@@ -1,6 +1,6 @@
-Extension { #name : #TaAliasMethod }
+Extension { #name : 'TaAliasMethod' }
 
-{ #category : #'*TraitsV2-Compatibility' }
+{ #category : '*TraitsV2-Compatibility' }
 TaAliasMethod >> isTraitAlias [
 	^ true
 ]

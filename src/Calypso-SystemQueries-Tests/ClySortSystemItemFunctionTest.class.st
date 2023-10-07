@@ -1,10 +1,12 @@
 Class {
-	#name : #ClySortSystemItemFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClySortSystemItemFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortSystemItemFunctionTest >> testCompareClassesAndMethods [
 
 	function := ClySortSystemItemFunction ascending.
@@ -13,7 +15,7 @@ ClySortSystemItemFunctionTest >> testCompareClassesAndMethods [
 	self assert: (function value: Object >> #printString value: Object )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortSystemItemFunctionTest >> testCompareTwoClasses [
 
 	function := ClySortSystemItemFunction ascending.
@@ -23,7 +25,7 @@ ClySortSystemItemFunctionTest >> testCompareTwoClasses [
 	self assert: (function value: Object value: Object)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortSystemItemFunctionTest >> testCompareTwoMethods [
 
 	function := ClySortSystemItemFunction ascending.

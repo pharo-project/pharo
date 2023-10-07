@@ -4,42 +4,44 @@ I can change in different architectures (32/64bits)
 
 "
 Class {
-	#name : #FFISizeT,
-	#superclass : #FFIIntegerType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFISizeT',
+	#superclass : 'FFIIntegerType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT class >> externalType [
 	^ FFIArchitecture forCurrentArchitecture externalSizeTType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT class >> externalTypeAlignment [
 	^ Smalltalk wordSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT class >> externalTypeSize [
 	^ Smalltalk wordSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFISizeT >> basicHandle: aHandle at: index [
 	^ aHandle platformSizeTAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFISizeT >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformSizeTAt: index put: value
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFISizeT >> emitSelector [
 	^ 'platformSizeTAt'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData
 		fromHandle: (handle {1}: {2})
@@ -49,7 +51,7 @@ FFISizeT >> offsetPointerReadFieldAt: offsetVariableName [
 		offsetVariableName }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> offsetReadFieldAt: offsetVariableName [
 	self isPointer ifTrue: [
 		^ self offsetPointerReadFieldAt: offsetVariableName ].
@@ -58,7 +60,7 @@ FFISizeT >> offsetReadFieldAt: offsetVariableName [
 		stream << '^handle ' << self emitSelector << ': ' << offsetVariableName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> offsetWriteFieldAt: offsetVariableName with: valueName [
 	self isPointer ifTrue: [
 		^ self externalTypeWithArity
@@ -71,14 +73,14 @@ FFISizeT >> offsetWriteFieldAt: offsetVariableName with: valueName [
 			<< ' put: ' << valueName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> pointerReadFieldAt: byteOffset [
 	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of
 	 just passing the offset as a string... it will work :)"
 	^ self offsetPointerReadFieldAt: byteOffset asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> readFieldAt: byteOffset [
 	self isPointer ifTrue: [
 		^ self pointerReadFieldAt: byteOffset ].
@@ -87,7 +89,7 @@ FFISizeT >> readFieldAt: byteOffset [
 		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFISizeT >> writeFieldAt: byteOffset with: valueName [
 
 	self isPointer ifTrue: [

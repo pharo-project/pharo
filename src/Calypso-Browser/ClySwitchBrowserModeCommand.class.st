@@ -8,29 +8,31 @@ The radio button is wraped by ClyBrowserModeSwitch widget.
 Also I force browser toolbar update after execution
 "
 Class {
-	#name : #ClySwitchBrowserModeCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-Browser-Commands'
+	#name : 'ClySwitchBrowserModeCommand',
+	#superclass : 'ClyBrowserCommand',
+	#category : 'Calypso-Browser-Commands',
+	#package : 'Calypso-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchBrowserModeCommand class >> isAbstract [
 	^self = ClySwitchBrowserModeCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchBrowserModeCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	browser rebuildToolbar
 ]
 
-{ #category : #'activation - toolbar support' }
+{ #category : 'activation - toolbar support' }
 ClySwitchBrowserModeCommand >> createToolbarItemFor: aCommandActivator [
 
 	^ClyBrowserModeSwitchMorph activatingBy: aCommandActivator
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchBrowserModeCommand >> isAppliedToBrowser [
 	self subclassResponsibility
 ]

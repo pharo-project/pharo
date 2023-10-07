@@ -5,77 +5,79 @@ This wrapper does exactly that: as a Slot subclass, it has a name. It forwards a
 in the trait.
 "
 Class {
-	#name : #TaRenamedSlotWrapper,
-	#superclass : #Slot,
+	#name : 'TaRenamedSlotWrapper',
+	#superclass : 'Slot',
 	#instVars : [
 		'originalSlot'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaRenamedSlotWrapper class >> for: aSlot [
 	^self new originalSlot: aSlot
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 TaRenamedSlotWrapper >> emitStore: aMethodBuilder [
 	originalSlot emitStore: aMethodBuilder
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 TaRenamedSlotWrapper >> emitValue: aMethodBuilder [
 	originalSlot emitValue: aMethodBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenamedSlotWrapper >> index [
 	^ originalSlot index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenamedSlotWrapper >> index: anInteger [
 	originalSlot index: anInteger
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaRenamedSlotWrapper >> isVirtual [
 	^originalSlot isVirtual
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaRenamedSlotWrapper >> isVisible [
 	^originalSlot isVisible
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenamedSlotWrapper >> originalSlot [
 
 	^ originalSlot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenamedSlotWrapper >> originalSlot: anObject [
 
 	originalSlot := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaRenamedSlotWrapper >> printOn: aStream [
 	originalSlot printOn: aStream
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 TaRenamedSlotWrapper >> read: anObject [
 	^ originalSlot read: anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 TaRenamedSlotWrapper >> wantsInitialization [
 	^ originalSlot wantsInitialization
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 TaRenamedSlotWrapper >> write: aValue to: anObject [
 	^ originalSlot write: aValue to: anObject
 ]

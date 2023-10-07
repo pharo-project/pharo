@@ -8,17 +8,18 @@ Part of Zinc HTTP Components.
 
 "
 Class {
-	#name : #ZnCharacterReadStream,
-	#superclass : #ZnEncodedReadStream,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnCharacterReadStream',
+	#superclass : 'ZnEncodedReadStream',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadStream >> collectionSpecies [
 	^ String
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadStream >> match: subCollection [
 	"Set the access position of the receiver to be past the next occurrence of the subCollection. Answer whether subCollection is found.  No wildcards, and case does matter."
 	| pattern startMatch |
@@ -36,12 +37,12 @@ ZnCharacterReadStream >> match: subCollection [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCharacterReadStream >> nextElement [
 	^ self encoder nextFromStream: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadStream >> nextLine [
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
 
@@ -58,7 +59,7 @@ ZnCharacterReadStream >> nextLine [
 						ifFalse: [ out nextPut: char ] ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."
@@ -83,7 +84,7 @@ ZnCharacterReadStream >> readInto: collection startingAt: offset count: requeste
 				count: requestedCount - 1) + 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterReadStream >> upToAll: aCollection [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
 

@@ -1,14 +1,16 @@
 Class {
-	#name : #MetacelloProjectRegistry,
-	#superclass : #Object,
+	#name : 'MetacelloProjectRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'baselineRegistry',
 		'configurationRegistry'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistry >> baselineProjectSpecs [
     "MetacelloProjectRegistration baselineProjectSpecs"
 
@@ -19,13 +21,13 @@ MetacelloProjectRegistry >> baselineProjectSpecs [
     ^ projectSpecs asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistry >> baselineRegistry [
     baselineRegistry ifNil: [ baselineRegistry := Dictionary new ].
     ^ baselineRegistry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistry >> configurationProjectSpecs [
     "MetacelloProjectRegistration configurationProjectSpecs"
 
@@ -36,26 +38,26 @@ MetacelloProjectRegistry >> configurationProjectSpecs [
     ^ projectSpecs asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistry >> configurationRegistry [
     configurationRegistry ifNil: [ configurationRegistry := Dictionary new ].
     ^ configurationRegistry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistry >> isEmpty [
   ^ self configurationProjectSpecs isEmpty
     and: [ self baselineProjectSpecs isEmpty ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloProjectRegistry >> postCopy [
     super postCopy.
     baselineRegistry := self baselineRegistry copy.
     configurationRegistry := self configurationRegistry copy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloProjectRegistry >> primeRegisterLoadedProjectSpec: projectSpec [
   MetacelloProjectRegistration
     registrationForProjectSpec: projectSpec
@@ -73,7 +75,7 @@ MetacelloProjectRegistry >> primeRegisterLoadedProjectSpec: projectSpec [
               existingCopy merge: new ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloProjectRegistry >> primeRegistryCurrentVersionFor: cl [
   ^ [ cl project currentVersion ]
     on: Error
@@ -85,14 +87,14 @@ MetacelloProjectRegistry >> primeRegistryCurrentVersionFor: cl [
       nil ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloProjectRegistry >> primeRegistryFromImage [
   "MetacelloProjectRegistration primeRegistryFromImage"
 
   self primeRegistryFromImage: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloProjectRegistry >> primeRegistryFromImage: prioritizeConfiguration [
   "MetacelloProjectRegistration primeRegistryFromImage"
 
@@ -102,7 +104,7 @@ MetacelloProjectRegistry >> primeRegistryFromImage: prioritizeConfiguration [
     prioritizeConfiguration: prioritizeConfiguration
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloProjectRegistry >> primeRegistryFromImage: configurationClasses baselineClasses: baselineClasses [
   "MetacelloProjectRegistration primeRegistryFromImage"
 
@@ -112,7 +114,7 @@ MetacelloProjectRegistry >> primeRegistryFromImage: configurationClasses baselin
     prioritizeConfiguration: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloProjectRegistry >> primeRegistryFromImage: configurationClasses baselineClasses: baselineClasses prioritizeConfiguration: prioritizeConfiguration [
   "MetacelloProjectRegistration primeRegistryFromImage"
 
@@ -155,7 +157,7 @@ MetacelloProjectRegistry >> primeRegistryFromImage: configurationClasses baselin
                   self primeRegisterLoadedProjectSpec: projectSpec ] ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloProjectRegistry >> primeRegistryProjectSpecRegistered: projectSpec [
   MetacelloProjectRegistration
     registrationForProjectSpec: projectSpec
@@ -163,7 +165,7 @@ MetacelloProjectRegistry >> primeRegistryProjectSpecRegistered: projectSpec [
     ifPresent: [ :existing :new | ^ true ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectRegistry >> projectSpecForClassNamed: aClassName ifAbsent: absentBlock [
     ^ (self configurationRegistry
         at: aClassName
@@ -171,14 +173,14 @@ MetacelloProjectRegistry >> projectSpecForClassNamed: aClassName ifAbsent: absen
         configurationProjectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistry >> projectSpecs [
     "MetacelloProjectRegistration projectSpecs"
 
     ^ self configurationProjectSpecs , self baselineProjectSpecs
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 MetacelloProjectRegistry >> registerProjectRegistration: aMetacelloProjectRegistration [
   "unconditionally register <newRegistration> ... use with care"
 
@@ -224,7 +226,7 @@ MetacelloProjectRegistry >> registerProjectRegistration: aMetacelloProjectRegist
   aMetacelloProjectRegistration immutable
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 MetacelloProjectRegistry >> registrationFor: aMetacelloProjectRegistration ifPresent: presentBlock ifAbsent: absentBlock [
     | baseName |
     baseName := aMetacelloProjectRegistration baseName.
@@ -239,7 +241,7 @@ MetacelloProjectRegistry >> registrationFor: aMetacelloProjectRegistration ifPre
     ^ absentBlock value
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectRegistry >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
   ^ self
     registrationForExactClassNamed: aClassName
@@ -255,7 +257,7 @@ MetacelloProjectRegistry >> registrationForClassNamed: aClassName ifAbsent: abse
       absentBlock value ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectRegistry >> registrationForExactClassNamed: aClassName ifAbsent: absentBlock [
   self configurationRegistry
     at: aClassName
@@ -266,12 +268,12 @@ MetacelloProjectRegistry >> registrationForExactClassNamed: aClassName ifAbsent:
   ^ absentBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectRegistry >> registrations [
   ^ self baselineRegistry values , self configurationRegistry values
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 MetacelloProjectRegistry >> unregisterProjectRegistration: aMetacelloProjectRegistration [
     aMetacelloProjectRegistration configurationProjectSpec
         ifNotNil: [ :spec | 

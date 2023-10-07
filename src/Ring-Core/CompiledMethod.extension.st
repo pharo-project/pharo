@@ -1,13 +1,13 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 CompiledMethod >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
 		RGMethod named: self selector asSymbol parent: (self methodClass asRingMinimalDefinitionIn: anRGEnvironment)]
 ]
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 CompiledMethod >> ensureRingDefinitionIn: anRGEnvironment [
 
 	| parentModel |

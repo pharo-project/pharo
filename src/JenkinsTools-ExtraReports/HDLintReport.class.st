@@ -2,16 +2,17 @@
 Hudson report for lint results
 "
 Class {
-	#name : #HDLintReport,
-	#superclass : #HDReport,
+	#name : 'HDLintReport',
+	#superclass : 'HDReport',
 	#instVars : [
 		'environment',
 		'rules'
 	],
-	#category : #'JenkinsTools-ExtraReports'
+	#category : 'JenkinsTools-ExtraReports',
+	#package : 'JenkinsTools-ExtraReports'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 HDLintReport class >> runClasses: aCollectionOfClasses named: aString [
 	| classEnvironment |
 	classEnvironment := RBBrowserEnvironment new
@@ -20,14 +21,14 @@ HDLintReport class >> runClasses: aCollectionOfClasses named: aString [
 	^ self runEnvironment: classEnvironment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDLintReport class >> runEnvironment: anEnvironment [
 	^ self new 
 		initializeOn: anEnvironment; 
 		run
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDLintReport class >> runPackage: aString [
 	| packageEnvironment |
 	packageEnvironment := RBBrowserEnvironment new
@@ -36,7 +37,7 @@ HDLintReport class >> runPackage: aString [
 	^ self runEnvironment: packageEnvironment
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDLintReport >> generateClass: aClass on: aStream [
 	| sourceStream sourceName |
 	sourceStream := WriteStream on: String new.
@@ -49,7 +50,7 @@ HDLintReport >> generateClass: aClass on: aStream [
 		stream nextPutAll: sourceStream contents ]
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDLintReport >> generateClass: aClass selector: aSelector source: sourceStream on: aStream [
 	| offset source matching |
 	offset := self
@@ -64,7 +65,7 @@ HDLintReport >> generateClass: aClass selector: aSelector source: sourceStream o
 	self generateViolations: matching source: source offset: offset on: aStream
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDLintReport >> generateClass: aClass source: sourceStream on: aStream [
 	| offset source matching |
 	offset := self
@@ -82,7 +83,7 @@ HDLintReport >> generateClass: aClass source: sourceStream on: aStream [
 		do: [ :selector | self generateClass: aClass selector: selector source: sourceStream on: aStream ]
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDLintReport >> generateOn: aStream [
 	aStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; nextPut: Character lf.
 	aStream nextPutAll: '<checkstyle version="5.2">'; nextPut: Character lf.
@@ -91,7 +92,7 @@ HDLintReport >> generateOn: aStream [
 	aStream nextPutAll: '</checkstyle>'
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDLintReport >> generateViolations: aCollection source: aString offset: aPoint on: aStream [
 	aCollection do: [ :rule |
 		| interval start |
@@ -114,24 +115,24 @@ HDLintReport >> generateViolations: aCollection source: aString offset: aPoint o
 		aStream nextPutAll: '/>'; nextPut: Character lf ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HDLintReport >> initializeOn: anEnvironment [
 	environment := anEnvironment.
 	rules := (RBCompositeLintRule rulesFor: RBBasicLintRule)
 		reject: [ :each | each class name endsWith: 'SpellingRule' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HDLintReport >> isClassEnvironment: anEnvironment [
 	^ #(CategoryEnvironment ClassEnvironment VariableEnvironment) includes: anEnvironment class name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HDLintReport >> isSelectorEnvironment: anEnvironment [
 	^ #(SelectorEnvironment ParseTreeEnvironment VariableEnvironment) includes: anEnvironment class name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDLintReport >> lineAndColumn: aString at: anInteger [
 	| line last stream |
 	line := 1.
@@ -144,12 +145,12 @@ HDLintReport >> lineAndColumn: aString at: anInteger [
 		repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDLintReport >> rules [
 	^rules
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDLintReport >> run [
 	RBSmalllintChecker 
 		runRule: (RBCompositeLintRule rules: rules)

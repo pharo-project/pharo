@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloPackagesSpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloPackagesSpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testAddGroupA [
     "used by MetacelloAbstractVersionConstructor>>group:overrides:"
 
@@ -27,7 +29,7 @@ MetacelloPackagesSpecTestCase >> testAddGroupA [
     self assert: (group includes includes: 'Tests')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testAddGroupB [
     "used by MetacelloAbstractVersionConstructor>>group:overrides:"
 
@@ -48,7 +50,7 @@ MetacelloPackagesSpecTestCase >> testAddGroupB [
     self assert: (group includes includes: 'Tests')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testAddProjectA [
 	"used by MetacelloAbstractVersionConstructor>>project:overrides:"
 
@@ -96,7 +98,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectA [
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testAddProjectB [
 	"used by MetacelloAbstractVersionConstructor>>project:overrides:"
 
@@ -141,7 +143,7 @@ MetacelloPackagesSpecTestCase >> testAddProjectB [
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testCopyToGroup [
     "not currently used by MetacelloAbstractVersionConstructor"
 
@@ -173,7 +175,7 @@ MetacelloPackagesSpecTestCase >> testCopyToGroup [
     self assert: (group includes includes: 'Tests')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testCopyToProject [
 	"used by MetacelloAbstractVersionConstructor>>project:copyFrom:with:"
 
@@ -207,7 +209,7 @@ MetacelloPackagesSpecTestCase >> testCopyToProject [
 	self assert: project postLoadDoIt value identicalTo: #postLoadDoItB
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testMergeGroupA [
     "used by MetacelloAbstractVersionConstructor>>group:with:"
 
@@ -230,7 +232,7 @@ MetacelloPackagesSpecTestCase >> testMergeGroupA [
     self assert: (group includes includes: 'Tests')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testMergeGroupB [
     "used by MetacelloAbstractVersionConstructor>>group:with:"
 
@@ -253,7 +255,7 @@ MetacelloPackagesSpecTestCase >> testMergeGroupB [
     self assert: (group includes includes: 'Tests')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testMergeProjectA [
 	"used by MetacelloAbstractVersionConstructor>>project:with:"
 
@@ -298,7 +300,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectA [
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testMergeProjectB [
 	"used by MetacelloAbstractVersionConstructor>>project:with:"
 
@@ -343,7 +345,7 @@ MetacelloPackagesSpecTestCase >> testMergeProjectB [
 	project projectDo: [ :prjct | self assert: project identicalTo: prjct ] packageDo: [ :ignored | self assert: false ] groupDo: [ :ignored | self assert: false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testRemoveGroupA [
     "used by MetacelloAbstractVersionConstructor>>removeGroup:"
 
@@ -375,7 +377,7 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupA [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testRemoveGroupB [
     "used by MetacelloAbstractVersionConstructor>>removeGroup:"
 
@@ -411,7 +413,7 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupB [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testRemoveGroupC [
     "used by MetacelloAbstractVersionConstructor>>removeGroup:"
 
@@ -442,7 +444,7 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupC [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testRemoveProjectA [
 	"used by MetacelloAbstractVersionConstructor>>removeProject:"
 
@@ -478,7 +480,7 @@ MetacelloPackagesSpecTestCase >> testRemoveProjectA [
 	self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloPackagesSpecTestCase >> testRemoveProjectB [
 	"used by MetacelloAbstractVersionConstructor>>removeProject:"
 

@@ -2,12 +2,14 @@
 A ClyNotRemoveAndShowReferencesClassStrategyTest is a test class for testing the behavior of ClyNotRemoveAndShowReferencesClassStrategy
 "
 Class {
-	#name : #ClyNotRemoveAndShowReferencesClassStrategyTest,
-	#superclass : #TestCase,
-	#category : #'Calypso-SystemTools-QueryBrowser-Tests-Commands-Classes'
+	#name : 'ClyNotRemoveAndShowReferencesClassStrategyTest',
+	#superclass : 'TestCase',
+	#category : 'Calypso-SystemTools-QueryBrowser-Tests-Commands-Classes',
+	#package : 'Calypso-SystemTools-QueryBrowser-Tests',
+	#tag : 'Commands-Classes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNotRemoveAndShowReferencesClassStrategyTest >> testExecutingCommand [
 	| browser command strategy |
 	browser := ClyBrowserMock new.

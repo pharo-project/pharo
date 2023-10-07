@@ -2,21 +2,23 @@
 I represent an accessor for a sequence of objects that can only read objects from the sequence.
 "
 Class {
-	#name : #ReadStream,
-	#superclass : #PositionableStream,
-	#category : #'Collections-Streams-Base'
+	#name : 'ReadStream',
+	#superclass : 'PositionableStream',
+	#category : 'Collections-Streams-Base',
+	#package : 'Collections-Streams',
+	#tag : 'Base'
 }
 
-{ #category : #modes }
+{ #category : 'modes' }
 ReadStream >> ascii [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> localName [
 	^'ReadStream'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> next [
 	"Primitive. Answer the next object in the Stream represented by the
 	receiver. Fail if the collection of this stream is not an Array or a String.
@@ -29,7 +31,7 @@ ReadStream >> next [
 		ifFalse: [ collection at: (position := position + 1) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> next: anInteger [
 	"Answer the next anInteger elements of my collection.  overriden for efficiency"
 
@@ -41,12 +43,12 @@ ReadStream >> next: anInteger [
 	^ans
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> nextPut: anObject [
 	self shouldNotImplement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReadStream >> on: aCollection from: firstIndex to: lastIndex [
 
 	| len |
@@ -59,7 +61,7 @@ ReadStream >> on: aCollection from: firstIndex to: lastIndex [
 				ifFalse: [firstIndex - 1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> readInto: aCollection startingAt: startIndex count: n [
 	"Read n objects into the given collection.
 	Return number of elements that have been read."
@@ -75,20 +77,20 @@ ReadStream >> readInto: aCollection startingAt: startIndex count: n [
 	^ max
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> readStream [
 	"polymorphic with SequenceableCollection.  Return self"
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> size [
 	"Compatibility with other streams (e.g., FileStream)"
 	^readLimit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> skipTo: anObject [
 	"fast version using indexOf:"
 	| end |
@@ -99,7 +101,7 @@ ReadStream >> skipTo: anObject [
 		ifFalse: [ position := end. true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> upTo: anObject [
 	"fast version using indexOf:"
 	| start end |
@@ -115,7 +117,7 @@ ReadStream >> upTo: anObject [
 	^collection copyFrom: start to: (end-1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> upToAnyOf: aCollection do: aBlock [
 	"Overriden for speed"
 	| end result |
@@ -127,7 +129,7 @@ ReadStream >> upToAnyOf: aCollection do: aBlock [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadStream >> upToEnd [
 	| start |
 	start := 1 + position.

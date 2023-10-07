@@ -5,16 +5,18 @@ This announcement will be emitted when a class or a trait is added, using:
 	
 "
 Class {
-	#name : #ClassAdded,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClassAdded',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'classAdded',
 		'classCategory'
 	],
-	#category : #'System-Announcements-System-Classes'
+	#category : 'System-Announcements-System-Classes',
+	#package : 'System-Announcements',
+	#tag : 'System-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassAdded class >> class: aClass category: aClassCategoryName [
 	^self new
 			classAdded: aClass;
@@ -22,27 +24,27 @@ ClassAdded class >> class: aClass category: aClassCategoryName [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAdded >> classAdded [
 	^classAdded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAdded >> classAdded: aClass [
 	classAdded := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAdded >> classAffected [
 	^self classAdded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAdded >> classCategory [
 	^classCategory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAdded >> classCategory: aClassCategoryName [
 	classCategory := aClassCategoryName
 ]

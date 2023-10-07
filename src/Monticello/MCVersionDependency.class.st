@@ -2,68 +2,70 @@
 Dependencies
 "
 Class {
-	#name : #MCVersionDependency,
-	#superclass : #Object,
+	#name : 'MCVersionDependency',
+	#superclass : 'Object',
 	#instVars : [
 		'package',
 		'versionInfo'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCVersionDependency class >> package: aPackage info: aVersionInfo [
 	^ self basicNew initializeWithPackage: aPackage info: aVersionInfo
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVersionDependency >> = other [
 	^ other species = self species
 		and: [other versionInfo = versionInfo
 				and: [other package = package]]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCVersionDependency >> hash [
 	^ versionInfo hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCVersionDependency >> initializeWithPackage: aPackage info: aVersionInfo [
 	package := aPackage.
 	versionInfo := aVersionInfo
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionDependency >> isCurrent [
 	^ package hasWorkingCopy
 		and: [self isFulfilled
 			and: [package workingCopy modified not]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionDependency >> isFulfilled [
 	^package hasWorkingCopy
 		and: [self isFulfilledBy: package workingCopy ancestry]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionDependency >> isFulfilledBy: anAncestry [
 	^ anAncestry ancestors includes: versionInfo
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionDependency >> isFulfilledByAncestors [
 	^ package hasWorkingCopy
 		and: [self isFulfilledByAncestorsOf: package workingCopy ancestry]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionDependency >> isFulfilledByAncestorsOf: anAncestry [
 	^ anAncestry hasAncestor: versionInfo
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionDependency >> isOlder [
 	"Answer true if I represent an older version of a package that is loaded."
 	^ package hasWorkingCopy
@@ -72,24 +74,24 @@ MCVersionDependency >> isOlder [
 				and: [package workingCopy modified not]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionDependency >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionDependency >> repositoryGroup [
 	^ self package workingCopy repositoryGroup
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 MCVersionDependency >> resolve [
 	^ self repositoryGroup
 		versionWithInfo: versionInfo
 		ifNone: [ MCRepositoryGroup default versionWithInfo: versionInfo ifNone: []]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionDependency >> versionInfo [
 	^ versionInfo
 ]

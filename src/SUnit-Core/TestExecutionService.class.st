@@ -40,8 +40,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #TestExecutionService,
-	#superclass : #Object,
+	#name : 'TestExecutionService',
+	#superclass : 'Object',
 	#instVars : [
 		'executionEnvironment',
 		'isEnabled'
@@ -49,10 +49,12 @@ Class {
 	#classInstVars : [
 		'isEnabled'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService class >> defaultServiceClasses [
 
 	^Array streamContents: [ :s |
@@ -60,12 +62,12 @@ TestExecutionService class >> defaultServiceClasses [
 			each isAbstract not & each isEnabledByDefault ifTrue: [s nextPut: each ]]]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TestExecutionService class >> descriptionForSettingsBrowser [
 	^self comment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService class >> enabledServiceClasses [
 
 	^Array streamContents: [ :s |
@@ -73,27 +75,27 @@ TestExecutionService class >> enabledServiceClasses [
 			each isAbstract not & each isEnabled ifTrue: [s nextPut: each ]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService class >> isAbstract [
 	^self = TestExecutionService
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService class >> isEnabled [
 	^isEnabled ifNil: [ isEnabled := self isEnabledByDefault ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService class >> isEnabled: aBoolean [
 	isEnabled := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionService class >> isEnabledByDefault [
 	^true
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TestExecutionService class >> settingsOn: aBuilder [
 	"No need for pragma <systemsettings>:
 	TestExecutionEnvironment organizes settings for all services.
@@ -109,62 +111,62 @@ TestExecutionService class >> settingsOn: aBuilder [
 		description: self descriptionForSettingsBrowser
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionService >> cleanUpAfterTest [
 
 	isEnabled := self isEnabledByDefault
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionService >> disable [
 	isEnabled := false
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionService >> enable [
 	isEnabled := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService >> executionEnvironment [
 	^ executionEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService >> executionEnvironment: anObject [
 	executionEnvironment := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionService >> handleCompletedTest [
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionService >> handleException: anUnhandledException [
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 TestExecutionService >> handleNewProcess: aProcess [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TestExecutionService >> initialize [
 	super initialize.
 
 	isEnabled := self isEnabledByDefault
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService >> isEnabled [
 	^isEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestExecutionService >> isEnabled: aBoolean [
 	isEnabled := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionService >> isEnabledByDefault [
 	^self class isEnabled
 ]

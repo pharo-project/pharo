@@ -1,25 +1,26 @@
 Class {
-	#name : #SycRenameArgOrTempCommandTest,
-	#superclass : #TestCase,
-	#category : #'SystemCommands-MethodCommands-Tests'
+	#name : 'SycRenameArgOrTempCommandTest',
+	#superclass : 'TestCase',
+	#category : 'SystemCommands-MethodCommands-Tests',
+	#package : 'SystemCommands-MethodCommands-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRenameArgOrTempCommandTest >> testCanExecuteOnArgumentNode [
+
 	| argNode sourceCodeContext |
 	"we don't need to set the tools"
-	argNode := RBArgumentNode new.
+	argNode := RBVariableNode new variable: ArgumentVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: argNode.
-	self assert: (SycRenameArgOrTempCommand canBeExecutedInContext: sourceCodeContext).
-
+	self assert: (SycRenameArgOrTempCommand canBeExecutedInContext: sourceCodeContext)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRenameArgOrTempCommandTest >> testCanExecuteOnTemporaryNode [
+
 	| sourceCodeContext tempNode |
 	"we don't need to set the tools"
-	tempNode := RBTemporaryNode new.
+	tempNode := RBVariableNode new variable: TemporaryVariable new.
 	sourceCodeContext := ClySourceCodeContext for: nil selectedNode: tempNode.
-	self assert: (SycRenameArgOrTempCommand canBeExecutedInContext: sourceCodeContext).
-
+	self assert: (SycRenameArgOrTempCommand canBeExecutedInContext: sourceCodeContext)
 ]

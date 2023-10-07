@@ -2,25 +2,27 @@
 Abstract superclass for Repository tests
 "
 Class {
-	#name : #MCRepositoryTest,
-	#superclass : #MCTestCase,
+	#name : 'MCRepositoryTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'repository'
 	],
-	#category : #'Monticello-Tests-Repository'
+	#category : 'Monticello-Tests-Repository',
+	#package : 'Monticello-Tests',
+	#tag : 'Repository'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCRepositoryTest class >> isAbstract [
 	^ self = MCRepositoryTest
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCRepositoryTest >> addVersion: aVersion [
 	self subclassResponsibility 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCRepositoryTest >> addVersionWithSnapshot: aSnapshot name: aString [
 	| version |
 	version := self versionWithSnapshot: aSnapshot name: aString.
@@ -28,32 +30,32 @@ MCRepositoryTest >> addVersionWithSnapshot: aSnapshot name: aString [
 	^ version info
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCRepositoryTest >> assertMissing: aVersionInfo [
 	self assert: (repository versionWithInfo: aVersionInfo) isNil
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCRepositoryTest >> assertVersionInfos: aCollection [
 	self assert: repository allVersionInfos asSet equals: aCollection asSet
 ]
 
-{ #category : #'tests - input data' }
+{ #category : 'tests - input data' }
 MCRepositoryTest >> homeDirectoryUrl [
 	^ FileLocator home asFileReference asZnUrl
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCRepositoryTest >> saveSnapshot1 [
 	^ self saveSnapshot: self snapshot1 named: 'rev1'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCRepositoryTest >> saveSnapshot2 [
 	^ self saveSnapshot: self snapshot2 named: 'rev2'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCRepositoryTest >> saveSnapshot: aSnapshot named: aString [
 	| version |
 	version := self versionWithSnapshot: aSnapshot name: aString.
@@ -62,29 +64,31 @@ MCRepositoryTest >> saveSnapshot: aSnapshot named: aString [
 	
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCRepositoryTest >> snapshot1 [
-	^ (MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition categories: #('y'))))
+
+	^ MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition packageName: 'y'))
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCRepositoryTest >> snapshot2 [
-	^ (MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition categories: #('x'))))
+
+	^ MCSnapshot fromDefinitions: (Array with: (MCOrganizationDefinition packageName: 'x'))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryTest >> snapshotAt: aVersionInfo [
 	^ (repository versionWithInfo: aVersionInfo) snapshot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testAddAndLoad [
 	| node |
 	node := self addVersionWithSnapshot: self snapshot1 name: 'rev1'.
 	self assert: (self snapshotAt: node) equals: self snapshot1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrl [
 
 	repository := MCBitbucketRepository location: 'bitbucket://dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
@@ -96,7 +100,7 @@ MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrl [
 	self assert: repository hostname equals: 'bitbucket.org'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrlWithExplicitHost [
 
 	repository := MCBitbucketRepository location: 'bitbucket://one.other.host:dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
@@ -109,7 +113,7 @@ MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrlWithExplicitHost [
 	self assert: repository sshPort equals: nil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrlWithExplicitHostAndPort [
 
 	repository := MCBitbucketRepository location: 'bitbucket://one.other.host:220:dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
@@ -122,56 +126,56 @@ MCRepositoryTest >> testCanCreateBitBucketRepositoryFromUrlWithExplicitHostAndPo
 	self assert: repository sshPort equals: '220'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateFileRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'file:///tmp'.
 	self assert: (repository isKindOf: MCFileBasedRepository) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateFiletreeRepositoryFromUrl [
 	repository := MCRepository fromUrl: (self homeDirectoryUrl scheme: 'filetree') asString.
 	self assert: (repository isKindOf: MCFileTreeRepository) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateFiletreeRepositoryFromUrlWithRelativePath [
 	repository := MCRepository fromUrl: 'filetree://.' asUrl.
 	self assert: (repository isKindOf: MCFileTreeRepository) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateFtpRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'ftp://ftp.example.com/examples'.
 	self assert: (repository isKindOf: MCFtpRepository) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateGitHubRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'github://dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'.
 	self assert: (repository isKindOf: MCGitHubRepository) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateHttpRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'http://mydomain.com'.
 	self assert: (repository isKindOf: MCHttpRepository) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCanCreateHttpsRepositoryFromUrl [
 	repository := MCRepository fromUrl: 'https://mydomain.com'.
 	self assert: (repository isKindOf: MCHttpRepository) 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testCannotCreateDictionaryRepositoryFromUrl [
 	self
 		should: [ MCRepository fromUrl: 'dict://foo' ]
 		raise: MCRepositoryError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testIncludesName [
 	self deny: (repository includesVersionNamed: 'MonticelloTest-xxx.1-rev1').
 	self saveSnapshot1.
@@ -181,14 +185,14 @@ MCRepositoryTest >> testIncludesName [
 	self assert:  (repository includesVersionNamed: 'MonticelloTest-xxx.1-rev2').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testLoadMissingNode [
 	| node |
 	node := MCVersionInfo new.
 	self assertMissing: node
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryTest >> testStoreAndLoad [
 	| node node2 |
 	node := self saveSnapshot1.
@@ -197,7 +201,7 @@ MCRepositoryTest >> testStoreAndLoad [
 	self assert: (self snapshotAt: node2) equals: self snapshot2
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCRepositoryTest >> versionWithSnapshot: aSnapshot name: aString [
 	| info |
 	info := self mockVersionInfo: aString. 

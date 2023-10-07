@@ -2,26 +2,28 @@
 Reader for an MCD format
 "
 Class {
-	#name : #MCMcdReader,
-	#superclass : #MCMczReader,
+	#name : 'MCMcdReader',
+	#superclass : 'MCMczReader',
 	#instVars : [
 		'baseInfo',
 		'patch'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcdReader class >> extension [
 	^ 'mcd'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcdReader >> baseInfo [
 	^ baseInfo ifNil: [self loadBaseInfo]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcdReader >> basicVersion [
 	^ MCDiffyVersion
 		package: self package
@@ -31,19 +33,19 @@ MCMcdReader >> basicVersion [
 		patch: self patch
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCMcdReader >> buildPatchFrom: oldDefinitions to: newDefinitions [
 	^ MCPatch
 		fromBase: (MCSnapshot fromDefinitions: oldDefinitions)
 		target: (MCSnapshot fromDefinitions: newDefinitions)
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCMcdReader >> loadBaseInfo [
 	^ baseInfo := self extractInfoFrom: (self parseMember: 'base')
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCMcdReader >> loadPatch [
 	| old new |
 	(self zip memberNamed: 'patch.bin') ifNotNil:
@@ -61,7 +63,7 @@ MCMcdReader >> loadPatch [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcdReader >> patch [
 	^ patch ifNil: [self loadPatch]
 ]

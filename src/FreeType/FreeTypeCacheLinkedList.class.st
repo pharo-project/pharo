@@ -2,12 +2,14 @@
 A linked list for the FreeTypeCache
 "
 Class {
-	#name : #FreeTypeCacheLinkedList,
-	#superclass : #LinkedList,
-	#category : #'FreeType-Cache'
+	#name : 'FreeTypeCacheLinkedList',
+	#superclass : 'LinkedList',
+	#category : 'FreeType-Cache',
+	#package : 'FreeType',
+	#tag : 'Cache'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 FreeTypeCacheLinkedList >> add: link after: otherLink [
 	"Add otherLink  after link in the list. Answer aLink."
 
@@ -20,7 +22,7 @@ FreeTypeCacheLinkedList >> add: link after: otherLink [
 	^ link
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FreeTypeCacheLinkedList >> add: link before: otherLink [
 
 	| savedLink |
@@ -35,7 +37,7 @@ FreeTypeCacheLinkedList >> add: link before: otherLink [
 	^ self errorNotFound: otherLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FreeTypeCacheLinkedList >> addFirst: aLink [
 	"Add aLink to the beginning of the receiver's list. Answer aLink."
 
@@ -48,7 +50,7 @@ FreeTypeCacheLinkedList >> addFirst: aLink [
 	^ aLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FreeTypeCacheLinkedList >> addLast: aLink [
 	"Add aLink to the end of the receiver's list. Answer aLink."
 
@@ -61,7 +63,7 @@ FreeTypeCacheLinkedList >> addLast: aLink [
 	^ aLink
 ]
 
-{ #category : #reordering }
+{ #category : 'reordering' }
 FreeTypeCacheLinkedList >> moveDown: aLink [
 	|  e1 e2 e3 e4  |
 
@@ -78,7 +80,7 @@ FreeTypeCacheLinkedList >> moveDown: aLink [
 	e2 previousLink: e1
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [
 
 	| prev next |
@@ -93,7 +95,7 @@ FreeTypeCacheLinkedList >> remove: aLink ifAbsent: aBlock [
 	^ aLink
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 FreeTypeCacheLinkedList >> removeFirst [
 	"Remove the first element and answer it. If the receiver is empty, create
 	an error notification."
@@ -114,7 +116,7 @@ FreeTypeCacheLinkedList >> removeFirst [
 	^ oldLink
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 FreeTypeCacheLinkedList >> removeLast [
 	"Remove the first element and answer it. If the receiver is empty, create
 	an error notification."

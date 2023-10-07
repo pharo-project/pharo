@@ -7,15 +7,16 @@ Internal Representation and Key Implementation Points.
 	ruleSeverity:		<ClyCritiqueSeverity>
 "
 Class {
-	#name : #ClyConcreteCritiqueMethodGroup,
-	#superclass : #ClyMethodGroup,
+	#name : 'ClyConcreteCritiqueMethodGroup',
+	#superclass : 'ClyMethodGroup',
 	#instVars : [
 		'ruleSeverity'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyConcreteCritiqueMethodGroup class >> basedOn: aCritique withMethodsFrom: aScope [
 
 	| groupName methodQuery |
@@ -26,7 +27,7 @@ ClyConcreteCritiqueMethodGroup class >> basedOn: aCritique withMethodsFrom: aSco
 	^self named: groupName asLowercase on: methodQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConcreteCritiqueMethodGroup >> addCritique: aCritique [
 	| newSeverity |
 	newSeverity := ClyCritiqueSeverityProperty of: aCritique.
@@ -34,19 +35,19 @@ ClyConcreteCritiqueMethodGroup >> addCritique: aCritique [
 		ifTrue: [ ruleSeverity := newSeverity ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyConcreteCritiqueMethodGroup >> initialize [
 	super initialize.
 
 	ruleSeverity := ClyCritiqueSeverityProperty default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConcreteCritiqueMethodGroup >> ruleSeverity [
 	^ ruleSeverity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConcreteCritiqueMethodGroup >> ruleSeverity: anObject [
 	ruleSeverity := anObject
 ]

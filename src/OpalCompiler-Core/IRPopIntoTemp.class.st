@@ -2,17 +2,19 @@
 pop into temp
 "
 Class {
-	#name : #IRPopIntoTemp,
-	#superclass : #IRTempAccess,
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#name : 'IRPopIntoTemp',
+	#superclass : 'IRTempAccess',
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPopIntoTemp >> accept: aVisitor [
 	^ aVisitor visitPopIntoTemp: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPopIntoTemp >> nextBytecodeOffsetAfterJump [
 	"if we are in to:do: answers the next byte code offset"
 	^ self sequence last destination last destination first bytecodeOffset

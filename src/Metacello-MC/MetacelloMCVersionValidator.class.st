@@ -44,12 +44,14 @@ Error reason codes:
 
 "
 Class {
-	#name : #MetacelloMCVersionValidator,
-	#superclass : #MetacelloVersionValidator,
-	#category : #'Metacello-MC-Validation'
+	#name : 'MetacelloMCVersionValidator',
+	#superclass : 'MetacelloVersionValidator',
+	#category : 'Metacello-MC-Validation',
+	#package : 'Metacello-MC',
+	#tag : 'Validation'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersionValidator class >> populateReasonCodeDescriptions [
     "update MetacelloMCVersionValidator class comment to include any changes to descriptions"
 
@@ -79,37 +81,37 @@ MetacelloMCVersionValidator class >> populateReasonCodeDescriptions [
     ^ dict
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloMCVersionValidator class >> validateConfigurationLoad: configurationClass [
 	^ ((self new)
 		configurationClass: configurationClass;
 		yourself) validateProjectLoad
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloMCVersionValidator class >> validateConfigurationLoad: configurationClass version: versionString [
 	^self validateConfigurationLoad: configurationClass version: versionString loads: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloMCVersionValidator class >> validateConfigurationLoad: configurationClass version: versionString loads: loadList [
 	^ ((self new)
 		configurationClass: configurationClass;
 		yourself) validateProjectVersionLoad: versionString loads: loadList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersionValidator >> criticalWarningReasonCodes [
 	^ super criticalWarningReasonCodes
 		, #(#noLoadableVersions #noTests #testDeprecation #loadDeprecation #noVersionSpecified #'missingRecommendedProjectSpecField' )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersionValidator >> errorReasonCodes [
 	^ super errorReasonCodes, #(#loadError #testFailures )
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloMCVersionValidator >> validateBaselineVersionSpec: versionSpec [
     | projectNames packageNames groupNames versionMessage |
     self
@@ -253,7 +255,7 @@ MetacelloMCVersionValidator >> validateBaselineVersionSpec: versionSpec [
                 reasonCode: #'shadowedNames' ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionValidator >> validateCleanLoadAndTestsForVersion: version loads: loadList [
 	| cleanLoad cleanTests |
 	cleanTests := cleanLoad := false.
@@ -315,7 +317,7 @@ MetacelloMCVersionValidator >> validateCleanLoadAndTestsForVersion: version load
 				ifFalse: [ MetacelloCleanLoadNotification signal: version ] ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionValidator >> validateProjectLoad [
 	| issues project versions currentVersion collectedIssues |
 	(issues := self validateProject select: [ :issue | issue isError ]) notEmpty
@@ -346,7 +348,7 @@ MetacelloMCVersionValidator >> validateProjectLoad [
 	^ self validationReport
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionValidator >> validateProjectVersionLoad: versionString loads: loadList [
 	| issues project version |
 	(issues := (self validateProjectVersion: versionString) select: [ :issue | issue isError ]) notEmpty
@@ -366,7 +368,7 @@ MetacelloMCVersionValidator >> validateProjectVersionLoad: versionString loads: 
 	^ self validationReport
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionValidator >> validateVersionLoad: version loads: loadList [
 	| list |
 	list := loadList asOrderedCollection.
@@ -377,7 +379,7 @@ MetacelloMCVersionValidator >> validateVersionLoad: version loads: loadList [
 	version load: list
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersionValidator >> validateVersionSpec: versionSpec [
   versionSpec blessing value == #'broken'
     ifTrue: [ ^ self ].
@@ -460,7 +462,7 @@ MetacelloMCVersionValidator >> validateVersionSpec: versionSpec [
   self validateBaselineVersionSpec: versionSpec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersionValidator >> validateVersionSpecForSymbolicVersion: versionSpec symbolicVersion: symbolicVersionString [
 	| blessing |
 	versionSpec blessing value == #broken
@@ -477,7 +479,7 @@ MetacelloMCVersionValidator >> validateVersionSpecForSymbolicVersion: versionSpe
 				reasonCode: #notDevelopmentVersion ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCVersionValidator >> validateVersionTests: version [
 	| testCases cleanTests |
 	testCases := IdentitySet new.
@@ -515,7 +517,7 @@ MetacelloMCVersionValidator >> validateVersionTests: version [
 	^ cleanTests
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCVersionValidator >> warningReasonCodes [
 	^ super warningReasonCodes, #(#loadWarning #notDevelopmentVersion #stableDevelopmentVersion)
 ]

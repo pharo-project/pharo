@@ -3,28 +3,30 @@ ClassListExample new openOn: Object
 
 "
 Class {
-	#name : #ClassListExample,
-	#superclass : #MorphTreeModel,
+	#name : 'ClassListExample',
+	#superclass : 'MorphTreeModel',
 	#instVars : [
 		'rootClass'
 	],
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ClassListExample class >> example [
 	<sampleInstance>
 
 	^self new openOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListExample >> keyStroke: anEvent from: aTreeMorph [
 	self selectedNode
 		ifNotNil: [:current | current keyStroke: anEvent from: aTreeMorph]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListExample >> menu: menu shifted: b [
 	"Set up the menu to apply to the receiver's,
 	honoring the #shifted boolean"
@@ -34,12 +36,12 @@ ClassListExample >> menu: menu shifted: b [
 	^ menu
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassListExample >> open [
 	^ self openOn: Object
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassListExample >> openOn: aClass [
 	| window |
 	self rootClass: aClass.
@@ -53,27 +55,27 @@ ClassListExample >> openOn: aClass [
 	^ window
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListExample >> rootClass [
 	^ rootClass ifNil: [rootClass := Object]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListExample >> rootClass: aClass [
 	 rootClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListExample >> rootItems [
 	^ self rootClass allSubclasses asArray sort: [:a :b | a name < b name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListExample >> rootNodeClassFromItem: anItem [
 	^ClassListNodeExample
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 ClassListExample >> treeMorph [
 	| treeMorph baseColor oddColor evenColor |
 	baseColor := Color lightBlue lighter.

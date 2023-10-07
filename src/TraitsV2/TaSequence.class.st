@@ -5,22 +5,24 @@ The methods and slots are the union of my inner members.
 I solve when there are conflicts.
 "
 Class {
-	#name : #TaSequence,
-	#superclass : #TaAbstractComposition,
+	#name : 'TaSequence',
+	#superclass : 'TaAbstractComposition',
 	#instVars : [
 		'members'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaSequence class >> with: initialValue [
 	^ self new
 		addMember: initialValue;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaSequence class >> withAll: initialMembers [
 
 	initialMembers ifEmpty: [ ^ TaEmptyComposition new ].
@@ -30,28 +32,28 @@ TaSequence class >> withAll: initialMembers [
 		yourself
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaSequence >> + anotherTrait [
 	^ anotherTrait asTraitComposition addToSequence: self copyTraitExpression
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaSequence >> , anotherTrait [
 	^ anotherTrait addToSequence: self copy
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaSequence >> = anotherTrait [
 	^ anotherTrait species = self species and: [ self members = anotherTrait members ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TaSequence >> addAll: aCollection [
 	"Adds all the members in the othe sequence"
 	aCollection do:[:e | self addMember: e]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TaSequence >> addMember: aTrait [
 	"Adds a single trait to me"
 	self validateDuplications: aTrait.
@@ -60,64 +62,53 @@ TaSequence >> addMember: aTrait [
 	members add: aTrait
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaSequence >> addToSequence: sequence [
 	"I add my self to another sequence. When adding I add all my members, not myself"
 	members do:[:e |sequence addMember: e].
 	^ sequence
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 TaSequence >> addUser: aClass [
 	"I propagate the users to all my members"
 	members do: [ :m | m addUser: aClass ]
 ]
 
-{ #category : #'transforming selectors' }
+{ #category : 'transforming selectors' }
 TaSequence >> aliasSelector: aSelector [
 	^ members inject: aSelector into:[:acc :each | each aliasSelector: acc].
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSequence >> allTraits [
 	^ members flatCollect: #allTraits
 ]
 
-{ #category : #accessing }
-TaSequence >> categoryOfMethod: method withSelector: selector [
-	| categories |
-
-	categories := (self methods select: [ :e | e selector = selector ] thenCollect: #category) asSet.
-
-	^ categories size = 1
-		ifTrue: [ ^ categories anyOne ]
-		ifFalse: [ Protocol ambiguous ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 TaSequence >> changesSourceCode: aSelector [
 	"If the selector has conflicts it should be recompiled"
 	^ (self isConflictingSelector: aSelector)
 		or: [ self members anySatisfy: [ :e | e changesSourceCode: aSelector ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> classComposition [
 	^ self class withAll: (members collect: [:each | each classComposition])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> compiledMethodAt: aSelector [
 
 	^ (self memberForSelector: aSelector) compiledMethodAt: aSelector
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaSequence >> copyTraitExpression [
 	^ self class withAll: (members collect: [:each | each copyTraitExpression])
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaSequence >> copyWithoutTrait: aTrait [
 	| newMembers |
 
@@ -126,29 +117,29 @@ TaSequence >> copyWithoutTrait: aTrait [
 	^ self class withAll: newMembers
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TaSequence >> hash [
 	^ self class hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TaSequence >> initialize [
 	super initialize.
 	members := OrderedCollection new
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaSequence >> initializeObject: anObject [
 	members do: [ :e | e initializeObject: anObject ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaSequence >> isAliasSelector: aSelector [
 
 	^ self members anySatisfy: [ :e | e isAliasSelector: aSelector ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaSequence >> isConflictingSelector: aSelector [
 	"I test if a given selector is defined in more than one of my members.
 	Two or more members can have the same method.
@@ -162,56 +153,70 @@ TaSequence >> isConflictingSelector: aSelector [
 	^ (possibleConflicts collect: [:each | each originMethod ] as: Set) size > 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaSequence >> isLocalAliasSelector: aSymbol [
 	^ members anySatisfy: [ :e | e isLocalAliasSelector: aSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> memberForSelector: aSelector [
-
 	"I return the member that defines a given selector.
 	I first look for a valid member, if not, I will return the first"
+
 	^ members
-		detect:
-			[ :e | (e selectors includes: aSelector) and: [ (e compiledMethodAt: aSelector) isRequired not ] ]
-		ifNone: [ members detect: [ :e | e selectors includes: aSelector ] ]
+		  detect: [ :member | (member selectors includes: aSelector) and: [ (member compiledMethodAt: aSelector) isRequired not ] ]
+		  ifNone: [ members detect: [ :member | member selectors includes: aSelector ] ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaSequence >> members [
 	^ members
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> methods [
 	^ members flatCollect: #methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> name [
 	^ '_' join: (members collect: [:each | each name])
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSequence >> originSelectorOf: aSelector [
 
-	^ (self traitDefining: aSelector ifNone: [ ^aSelector ]) originSelectorOf: aSelector
+	^ (self traitDefining: aSelector ifNone: [ ^ aSelector ]) originSelectorOf: aSelector
 ]
 
-{ #category : #users }
+{ #category : 'accessing' }
+TaSequence >> protocolForMethod: aMethod [
+
+	| protocols originalSelector |
+	originalSelector := aMethod selector.
+	protocols := (self methods
+		              select: [ :method | method selector = originalSelector ]
+		              thenCollect: #protocolName) asSet.
+
+	"If we have more than a protocol, for example if there is an alias or if multiple traits have the same method, we return a conflicting protocol name."
+	^ protocols size = 1
+		  ifTrue: [ protocols anyOne ]
+		  ifFalse: [ Protocol traitConflictName ]
+]
+
+{ #category : 'users' }
 TaSequence >> removeUser: aClass [
 	"I propagate to my members the removal of an user"
 	self members do: [ :m | m removeUser: aClass]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSequence >> reverseAlias: aSelector [
 
 	^ self members flatCollect: [ :e | e reverseAlias: aSelector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> selectorForConflict: selector [
 	| args keywords |
 
@@ -238,19 +243,19 @@ TaSequence >> selectorForConflict: selector [
 							space ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> selectors [
 	^ members flatCollect: #selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> slots [
 	^ (members flatCollect: #slots)
 		removeDuplicates;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> sourceCodeAt: selector [
 	(self isConflictingSelector: selector)
 		ifTrue: [ ^ self sourceCodeForConflictFor: selector ].
@@ -258,7 +263,7 @@ TaSequence >> sourceCodeAt: selector [
 	^ (self memberForSelector: selector) sourceCodeAt: selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaSequence >> sourceCodeForConflictFor: selector [
 
 	"I return the method body for a conflicting selector"
@@ -272,7 +277,7 @@ TaSequence >> sourceCodeForConflictFor: selector [
 				nextPutAll: 'self traitConflict' ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaSequence >> traitCompositionExpression [
 	self isEmpty
 		ifTrue: [ ^ '{}' ].
@@ -281,23 +286,23 @@ TaSequence >> traitCompositionExpression [
 		, (members allButFirst collect: [:each | each traitCompositionExpressionWithParens]) joinUsing: ' + '
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSequence >> traitDefining: aSelector [
 	^ (self memberForSelector: aSelector) traitDefining: aSelector
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 TaSequence >> traits [
 	^ members flatCollect: #traits
 ]
 
-{ #category : #validations }
+{ #category : 'validations' }
 TaSequence >> validateDuplications: anElement [
 	(members noneSatisfy: [ :e | e = anElement ])
 		ifFalse:[self error:'Could not include the same traits twice']
 ]
 
-{ #category : #validations }
+{ #category : 'validations' }
 TaSequence >> validateMethods: aTrait [
 	| newMethods myMethods|
 	myMethods := self methods.
@@ -308,7 +313,7 @@ TaSequence >> validateMethods: aTrait [
 		ifFalse: [ self error: 'The added trait duplicates an existing selector' ]
 ]
 
-{ #category : #validations }
+{ #category : 'validations' }
 TaSequence >> validateSlots: anElement [
 	self slots
 		do: [ :e |
@@ -318,7 +323,7 @@ TaSequence >> validateSlots: anElement [
 						ifTrue: [ self error: 'The added trait duplicates an existing slot ' , e name printString , '. Duplication between ' , e definingClass asString , ' and ' , other definingClass asString ] ] ]
 ]
 
-{ #category : #precedence }
+{ #category : 'precedence' }
 TaSequence >> withPrecedenceOf: aTrait [
 
 	| aTraitComposition |
@@ -332,7 +337,7 @@ TaSequence >> withPrecedenceOf: aTrait [
 			yourself
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TaSequence >> without: aTrait [
 	| newMembers |
 	newMembers := members collect:[:e | e without: aTrait] thenSelect:#isNotNil.

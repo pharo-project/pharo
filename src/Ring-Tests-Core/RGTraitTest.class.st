@@ -1,18 +1,19 @@
 Class {
-	#name : #RGTraitTest,
-	#superclass : #RGTest,
+	#name : 'RGTraitTest',
+	#superclass : 'RGTest',
 	#traits : 'TRGBehaviorTest',
 	#classTraits : 'TRGBehaviorTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitTest >> behaviorClass [
 
 	^ RGTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitTest >> testClassSide [
 	| behavior |
 	behavior := RGTrait unnamed.
@@ -20,7 +21,7 @@ RGTraitTest >> testClassSide [
 	self assert: behavior classTrait classSide identicalTo: behavior classTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitTest >> testEnsureProtocol [
 
 	| behavior |
@@ -31,7 +32,7 @@ RGTraitTest >> testEnsureProtocol [
 	self assert: behavior protocols first equals: #SomeProtocol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitTest >> testNewTrait [
 
 	| trait metaclassTrait comment category package |
@@ -71,7 +72,7 @@ RGTraitTest >> testNewTrait [
 	trait sharedPools isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitTest >> testTraitImplicitEnvironment [
 
 	| trait |

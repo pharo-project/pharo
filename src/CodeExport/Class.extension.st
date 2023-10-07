@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> fileOut [
 	"Create a file whose name is the name of the receiver with '.st' as the
 	extension, and file a description of the receiver onto it."
@@ -17,19 +17,19 @@ Class >> fileOut [
 	CodeExporter writeSourceCodeFrom: internalStream baseName: self name isSt: true
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> fileOutInitializerOn: aStream [
 	^self class fileOutInitializerOn: aStream
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> fileOutOn: aFileStream [
 	"File a description of the receiver on aFileStream."
 
 	^ self fileOutOn: aFileStream initializing: true
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> fileOutOn: aFileStream initializing: aBool [
 	"File a description of the receiver on aFileStream."
 
@@ -43,7 +43,7 @@ Class >> fileOutOn: aFileStream initializing: aBool [
 				initializing: aBool ]
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> fileOutPool: aPool onFileStream: aFileStream [
 	| aPoolName |
 	(aPool  isKindOf: SharedPool class) ifTrue:[^self notify: 'we do not fileout SharedPool type shared pools for now'].
@@ -63,7 +63,7 @@ Class >> fileOutPool: aPool onFileStream: aFileStream [
 	aFileStream cr
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> fileOutSharedPoolsOn: aFileStream [
 	"file out the shared pools of this class after prompting the user about each pool"
 	| poolsToFileOut |
@@ -72,13 +72,13 @@ Class >> fileOutSharedPoolsOn: aFileStream [
 	poolsToFileOut do: [:aPool | self fileOutPool: aPool onFileStream: aFileStream]
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> shouldFileOutPool: aPoolName [
 	"respond with true if the user wants to file out aPoolName"
 	^self confirm: ('FileOut the sharedPool ', aPoolName, '?')
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Class >> shouldFileOutPools [
 	"respond with true if the user wants to file out the shared pools"
 	^self confirm: 'FileOut selected sharedPools?'

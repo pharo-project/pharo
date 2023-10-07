@@ -1,58 +1,59 @@
 Class {
-	#name : #TFUFFIStructuresTest,
-	#superclass : #TFUFFITestCase,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIStructuresTest',
+	#superclass : 'TFUFFITestCase',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 TFUFFIStructuresTest >> passStructByParameter: aPoint x: x y: y [
 
 	^ self ffiCall: #(int assertCorrectPoint(TFPointTestStruct aPoint, int x, int y))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 TFUFFIStructuresTest >> passStructByReference: aPoint [
 
 	^ self ffiCall: #(void* id_pointer(TFPointTestStruct* aPoint))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 TFUFFIStructuresTest >> passingLongStructByCopy: st b: b c: c d: d [
 
 	^ self ffiCall: #(int passingLongStruct(TFLongTestStruct st, float b, double c, long d))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 TFUFFIStructuresTest >> passingLongStructByReference: st b: b c: c d: d [
 
 	^ self ffiCall: #(int passingLongStructByRef(TFLongTestStruct* st, float b, double c, long d))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 TFUFFIStructuresTest >> passingNestedStructByCopy: st a: a y: y [
 
 	^ self ffiCall: #(int passingNestedStruct(TFNestedTestStruct st, char a, double y))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 TFUFFIStructuresTest >> returnNewPointX: x Y: y [
 
 	^ self ffiCall: #(TFPointTestStruct newPoint(int x, int y))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 TFUFFIStructuresTest >> sizeOfNestedStruct [
 
 	^ self ffiCall: #(int sizeOfNestedStruct())
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testNestedStructSize [
 
 	self assert: TFNestedTestStruct byteSize equals: self sizeOfNestedStruct
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testPassingByParameterAStructInC [
 
 	| aPoint return |
@@ -67,7 +68,7 @@ TFUFFIStructuresTest >> testPassingByParameterAStructInC [
 	self assert: return equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testPassingByParameterAStructInPharo [
 
 	| aPoint return |
@@ -80,7 +81,7 @@ TFUFFIStructuresTest >> testPassingByParameterAStructInPharo [
 	self assert: return equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testPassingByReferenceAStructInC [
 
 	| aPoint return |
@@ -95,7 +96,7 @@ TFUFFIStructuresTest >> testPassingByReferenceAStructInC [
 	self assert: return asInteger equals: aPoint getHandle asInteger
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testPassingLongStructByCopyInC [
 
 	| aPoint return |
@@ -111,7 +112,7 @@ TFUFFIStructuresTest >> testPassingLongStructByCopyInC [
 	self assert: return equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testPassingLongStructByCopyInPharo [
 
 	| aPoint return |
@@ -125,7 +126,7 @@ TFUFFIStructuresTest >> testPassingLongStructByCopyInPharo [
 	self assert: return equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testPassingLongStructByReferenceInC [
 
 	| aPoint return |
@@ -141,7 +142,7 @@ TFUFFIStructuresTest >> testPassingLongStructByReferenceInC [
 	self assert: return equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testPassingNestedStructByCopyInC [
 
 	| st return |
@@ -156,7 +157,7 @@ TFUFFIStructuresTest >> testPassingNestedStructByCopyInC [
 	self assert: return equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIStructuresTest >> testReturningAnStruct [
 
 	| aPoint |

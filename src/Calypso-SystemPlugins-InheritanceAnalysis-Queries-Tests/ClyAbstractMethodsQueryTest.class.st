@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyAbstractMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
+	#name : 'ClyAbstractMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAbstractMethodsQueryTest >> createQuery [
 	^ClyAbstractMethodsQuery from: ClyClassScope of: ClyAbstractClassMock in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: ClyAbstractClassMock >> #abstractMethod1 in: environment).
@@ -19,7 +20,7 @@ ClyAbstractMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -30,13 +31,13 @@ ClyAbstractMethodsQueryTest >> testFromThreeMethods [
 	self assert: foundSelectors equals: #(abstractMethod1 abstractMethod2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractMethodsQueryTest >> testNotSelectsNotAbstractMethod [
 
 	self deny: (query selectsMethod: Object >> #printString)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractMethodsQueryTest >> testSelectsAbstractMethod [
 
 	self assert: (query selectsMethod: ClyAbstractClassMock>>#abstractMethod1)

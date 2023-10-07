@@ -1,6 +1,6 @@
-Extension { #name : #MCWorkingCopy }
+Extension { #name : 'MCWorkingCopy' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 MCWorkingCopy >> metacelloPackageNameWithBranch [
 	"answer array with package name and package name with branch name"
 	ancestry ancestors isEmpty

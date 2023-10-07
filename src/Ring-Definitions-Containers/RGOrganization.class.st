@@ -2,45 +2,47 @@
 An organization with categories
 "
 Class {
-	#name : #RGOrganization,
-	#superclass : #RGAbstractContainer,
-	#category : #'Ring-Definitions-Containers-Base'
+	#name : 'RGOrganization',
+	#superclass : 'RGAbstractContainer',
+	#category : 'Ring-Definitions-Containers-Base',
+	#package : 'Ring-Definitions-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGOrganization >> categories [
 	"Retrieves categories in the system (tag-packages)"
 
 	^self elements at: #categories ifAbsent:[ #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGOrganization >> categories: aCollection [
 	"Set the categories collection"
 
 	self elements at: #categories put: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGOrganization >> fullName [
 
 	^#organization
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGOrganization >> initialize [
 
 	super initialize.
 	self categories: OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGOrganization >> isOrganization [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGOrganization >> isSameRevisionAs: aRGOrganization [
 	"This method look for equality of the properties of the receiver"
 

@@ -2,24 +2,26 @@
 Do not send requests to ""Smalltalk"" (which models the whole image)  that are related to the envionment of defines classes and globals
 "
 Class {
-	#name : #ReSmalltalkGlobalsRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReSmalltalkGlobalsRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSmalltalkGlobalsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^ 'SmalltalkGlobalsRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSmalltalkGlobalsRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReSmalltalkGlobalsRule >> initialize [
 	super initialize.
 	self
@@ -37,7 +39,7 @@ ReSmalltalkGlobalsRule >> initialize [
 			with: 'Smalltalk globals includesKey: `@statements'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSmalltalkGlobalsRule >> name [
 	^ 'Use "Smalltalk globals" instead of "Smalltalk"'
 ]

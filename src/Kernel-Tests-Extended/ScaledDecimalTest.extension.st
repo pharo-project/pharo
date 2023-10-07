@@ -1,6 +1,6 @@
-Extension { #name : #ScaledDecimalTest }
+Extension { #name : 'ScaledDecimalTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ScaledDecimalTest >> testExactNthRoot [
 	| eight thousandth tenth two |
 	eight := 8.0s1.
@@ -13,7 +13,7 @@ ScaledDecimalTest >> testExactNthRoot [
 	self assert: (tenth class = thousandth class and: [ tenth scale = thousandth scale ])
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ScaledDecimalTest >> testExactSqrt [
 	| four hundredth tenth two |
 	four := 4.0s1.
@@ -26,7 +26,7 @@ ScaledDecimalTest >> testExactSqrt [
 	self assert: (tenth class = hundredth class and: [ tenth scale = hundredth scale ])
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ScaledDecimalTest >> testInexactNthRoot [
 	| tenth cubicRoot3 fifthRootTenth three |
 	three := 3.0s1.
@@ -39,7 +39,7 @@ ScaledDecimalTest >> testInexactNthRoot [
 	self deny: fifthRootTenth squared equals: tenth
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 ScaledDecimalTest >> testInexactSqrt [
 	| tenth sqrt3 sqrtTenth three |
 	three := 3.0s1.

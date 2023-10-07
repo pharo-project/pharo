@@ -25,13 +25,15 @@ There used to be confusion in Squeak, which Pharo inherited, that using Compiled
 The VM must be told to flush the cached state for a compiled method via CompiledMethod>>flushCache and will /try/ and void the state for that method.  But it can't always deal with existing activations of that method, because if there are activations running the machine code, that machine code can't merely be thrown away, and can't be replaced because its length may change, depending on literals or byte codes.  So this kind of byte coded method manipulation needs to be done with case and some understanding of the total system state.
 "
 Class {
-	#name : #MethodDictionary,
-	#superclass : #Dictionary,
-	#type : #variable,
-	#category : #'Kernel-Methods'
+	#name : 'MethodDictionary',
+	#superclass : 'Dictionary',
+	#type : 'variable',
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MethodDictionary class >> compactAllInstances [
 
 	| instancesToExchange newInstances |
@@ -48,41 +50,41 @@ MethodDictionary class >> compactAllInstances [
 	instancesToExchange elementsForwardIdentityTo: newInstances
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MethodDictionary class >> new [
 	"Create a new instance with 32 slots, which can hold at most 24 methods before growing is necessary."
 
 	^self newForCapacity: 32
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MethodDictionary class >> new: numberOfElements [
 	"Create an instance large enough to hold numberOfElements methods without growing."
 
 	^self newForCapacity: (self sizeFor: numberOfElements)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MethodDictionary class >> newForCapacity: capacity [
 	"Create an instance with the given capacity which must be a power of two."
 
 	^(self basicNew: capacity) initialize: capacity
 ]
 
-{ #category : #sizing }
+{ #category : 'sizing' }
 MethodDictionary class >> sizeFor: numberOfElements [
     "Return the minimum capacity of a dictionary that can hold numberOfElements elements. At least 25% of the array must be empty and the return value must be a nonnegative power of 2. Notice that the max: 1 is because a MethodDictionaries can never be entirely empty, as the #grow method requires it not to be (since it does self basicSize * 2)"
 
 	^(numberOfElements * 4 // 3 max: 1) asLargerPowerOfTwo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodDictionary >> add: anAssociation [
 
 	^ self at: anAssociation key put: anAssociation value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodDictionary >> associationAt: key ifAbsent: aBlock [
       "Answer the association with the given key.
        If key is not found, return the result of evaluating aBlock."
@@ -92,7 +94,7 @@ MethodDictionary >> associationAt: key ifAbsent: aBlock [
                ifNotNil: [ :value | key -> value ]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MethodDictionary >> associationsDo: aBlock [
 
 	tally = 0 ifTrue: [^ self].
@@ -101,7 +103,7 @@ MethodDictionary >> associationsDo: aBlock [
 			[ :key | aBlock value: (Association key: key value: (array at: i))]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodDictionary >> at: key ifAbsent: aBlock [
 
 	| index |
@@ -110,14 +112,14 @@ MethodDictionary >> at: key ifAbsent: aBlock [
 	^ array at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodDictionary >> at: key ifPresent: aBlock [
 
 	^(array at: (self findElementOrNil: key))
 		ifNotNil: [ :value | aBlock cull: value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodDictionary >> at: key put: value [
 	"Set the value at key to be value."
 	| index |
@@ -133,7 +135,7 @@ MethodDictionary >> at: key put: value [
 	^ value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> compact [
 	"Make sure that I have the highest possible load factor (between 37.5% and 75%)."
 
@@ -144,7 +146,7 @@ MethodDictionary >> compact [
 		ifFalse: [ self becomeForward: newInstance ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> compactWithoutBecome [
 	"Return a copy of self which has the highest possible load factor (between 37.5% and 75%)."
 
@@ -156,7 +158,7 @@ MethodDictionary >> compactWithoutBecome [
 	^newInstance
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> fixCollisionsFrom: start [
 	"The element at start has been removed and replaced by nil.
 	This method moves forward from there, relocating any entries
@@ -170,7 +172,7 @@ MethodDictionary >> fixCollisionsFrom: start [
 			self swap: index with: newIndex ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> grow [
 	| newSelf |
 	newSelf := self species newForCapacity: self basicSize * 2.
@@ -179,7 +181,7 @@ MethodDictionary >> grow [
 	self becomeForward: newSelf
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MethodDictionary >> isHealthy [
 	"Test that selector hashes match their positions stored in dictionary,
 	answer true if everything ok, false otherwise
@@ -195,7 +197,7 @@ MethodDictionary >> isHealthy [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodDictionary >> keyAtIdentityValue: value ifAbsent: exceptionBlock [
 	"Answer the key whose value equals the argument, value. If there is
 	none, answer the result of evaluating exceptionBlock."
@@ -207,7 +209,7 @@ MethodDictionary >> keyAtIdentityValue: value ifAbsent: exceptionBlock [
 	^ exceptionBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodDictionary >> keyAtValue: value ifAbsent: exceptionBlock [
 	"Answer the key whose value equals the argument, value. If there is
 	none, answer the result of evaluating exceptionBlock."
@@ -219,7 +221,7 @@ MethodDictionary >> keyAtValue: value ifAbsent: exceptionBlock [
 	^ exceptionBlock value
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MethodDictionary >> keysAndValuesDo: aBlock [
 	"Enumerate the receiver with all the keys and values passed to the block"
 	tally = 0 ifTrue: [^ self].
@@ -229,19 +231,19 @@ MethodDictionary >> keysAndValuesDo: aBlock [
 		]
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MethodDictionary >> keysDo: aBlock [
 	tally = 0 ifTrue: [^ self].
 	1 to: self basicSize do:
 		[:i | (self basicAt: i) ifNotNil: [ :key | aBlock value: key]]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MethodDictionary >> postCopy [
 	array := array copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> rehash [
 
 	| newInstance |
@@ -252,7 +254,7 @@ MethodDictionary >> rehash [
 	self copyFrom: newInstance
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 MethodDictionary >> removeAll [
 	"Remove all elements from this collection. Preserve the capacity"
 
@@ -262,7 +264,7 @@ MethodDictionary >> removeAll [
 	self copyFrom: newSelf
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> removeDangerouslyKey: key ifAbsent: aBlock [
 	"This is not really dangerous.  But if normal removal
 	were done WHILE a MethodDict were being used, the
@@ -281,7 +283,7 @@ MethodDictionary >> removeDangerouslyKey: key ifAbsent: aBlock [
 	^ element
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 MethodDictionary >> removeKey: key ifAbsent: errorBlock [
 	"The interpreter might be using this MethodDictionary while
 	this method is running! Therefore we perform the removal
@@ -295,7 +297,7 @@ MethodDictionary >> removeKey: key ifAbsent: errorBlock [
 	^ removedValue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or zero if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
 	| element start finish |
@@ -315,7 +317,7 @@ MethodDictionary >> scanFor: anObject [
 	^ 0  "No match AND no empty slot"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodDictionary >> swap: oneIndex with: otherIndex [
 
 	| element |
@@ -325,7 +327,7 @@ MethodDictionary >> swap: oneIndex with: otherIndex [
 	array swap: oneIndex with: otherIndex
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 MethodDictionary >> valuesDo: aBlock [
 	tally = 0 ifTrue: [^ self].
 	1 to: self basicSize do:

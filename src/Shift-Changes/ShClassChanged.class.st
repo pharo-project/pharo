@@ -3,24 +3,25 @@ When there is a change in the class structure I announce that change.
 I announce with a copy of the old class and the new class.
 "
 Class {
-	#name : #ShClassChanged,
-	#superclass : #ShAbstractChange,
-	#category : #'Shift-Changes'
+	#name : 'ShClassChanged',
+	#superclass : 'ShAbstractChange',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 ShClassChanged >> announceChanges [
 	SystemAnnouncer uniqueInstance classDefinitionChangedFrom: oldClass to: builder newClass.
 	SystemAnnouncer uniqueInstance classModificationAppliedTo: builder newClass
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 ShClassChanged >> builder: anObject [
 	builder := anObject.
 	oldClass := builder oldClass copyForAnnouncement
 ]
 
-{ #category : #propagating }
+{ #category : 'propagating' }
 ShClassChanged >> propagateToSubclasses: anotherBuilder [
 
 	anotherBuilder changes add: (ShSuperclassChanged new

@@ -7,45 +7,47 @@ You can create my instance using:
  
 "
 Class {
-	#name : #ClyGlobalVariable,
-	#superclass : #ClyVariable,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyGlobalVariable',
+	#superclass : 'ClyVariable',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyGlobalVariable class >> on: aGlobalVariable [
 	^self on: aGlobalVariable definedIn: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGlobalVariable >> detectDefiningClassFrom: anUserClass [
 	"There is no defining class for the global"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyGlobalVariable >> isAccessibleFrom: aClass [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyGlobalVariable >> isClassVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyGlobalVariable >> isLive [
 
 	^true
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyGlobalVariable >> openBrowser [
 
 	actualVariable value browse
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyGlobalVariable >> openInspector [
 
 	actualVariable value inspect

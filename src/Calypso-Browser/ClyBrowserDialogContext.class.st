@@ -16,28 +16,30 @@ Internal Representation and Key Implementation Points.
 	dialogClass:		<Class>
 "
 Class {
-	#name : #ClyBrowserDialogContext,
-	#superclass : #AnnotationContext,
+	#name : 'ClyBrowserDialogContext',
+	#superclass : 'AnnotationContext',
 	#instVars : [
 		'dialogClass',
 		'browserClass'
 	],
-	#category : #'Calypso-Browser-Contexts'
+	#category : 'Calypso-Browser-Contexts',
+	#package : 'Calypso-Browser',
+	#tag : 'Contexts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserDialogContext class >> of: aDialogClass in: aBrowserClass [
 	^self new
 		dialogClass: aDialogClass;
 		browserClass: aBrowserClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserDialogContext class >> ofSearchIn: aBrowserClass [
 	^self of: ClyBrowserSearchDialogWindow in: aBrowserClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyBrowserDialogContext >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -49,34 +51,34 @@ ClyBrowserDialogContext >> = anObject [
 		and: [ browserClass = anObject browserClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserDialogContext >> browserClass [
 	^ browserClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserDialogContext >> browserClass: anObject [
 	browserClass := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserDialogContext >> describes: aBrowserDialog [
 
 	^(aBrowserDialog isKindOf: dialogClass)
 		and: [ aBrowserDialog browser isKindOf: browserClass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserDialogContext >> dialogClass [
 	^ dialogClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserDialogContext >> dialogClass: anObject [
 	dialogClass := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyBrowserDialogContext >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 

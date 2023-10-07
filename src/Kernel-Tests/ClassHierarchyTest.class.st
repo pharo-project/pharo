@@ -2,12 +2,14 @@
 SUnit tests for the class hierarchy
 "
 Class {
-	#name : #ClassHierarchyTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Classes'
+	#name : 'ClassHierarchyTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #fixing }
+{ #category : 'fixing' }
 ClassHierarchyTest class >> fixSlotScope [
 	"postscript for issue 11596"
 
@@ -24,7 +26,7 @@ ClassHierarchyTest class >> fixSlotScope [
           ifFalse: [ Smalltalk at: e name ]) removeInstVarNamed: ivName ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyTest >> testObjectFormatInstSize [
 	| offending |
 	"check that #instSize is in sync with the layout of the class"
@@ -33,20 +35,19 @@ ClassHierarchyTest >> testObjectFormatInstSize [
 	self assertCollection: offending hasSameElements: {}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyTest >> testSubclassInstVar [
+
 	| subclasses |
-	SystemNavigation new
-		allClassesDo: [ :cls |
-			subclasses := cls subclasses.
-			self assert: subclasses isNil not.
-			subclasses
-				do: [ :subclass |
-					self assert: (subclasses occurrencesOf: subclass) equals: 1.
-					self assert: subclass superclass identicalTo: cls ] ]
+	SystemNavigation new allClassesDo: [ :cls |
+		subclasses := cls subclasses.
+		self deny: subclasses isNil.
+		subclasses do: [ :subclass |
+			self assert: (subclasses occurrencesOf: subclass) equals: 1.
+			self assert: subclass superclass identicalTo: cls ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyTest >> testSubclasses [
 	" self class fixSubclasses "
 

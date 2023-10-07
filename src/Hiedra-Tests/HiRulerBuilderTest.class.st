@@ -1,21 +1,23 @@
 Class {
-	#name : #HiRulerBuilderTest,
-	#superclass : #TestCase,
+	#name : 'HiRulerBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'ruler'
 	],
 	#classVars : [
 		'DebugShowingRulerInWindow'
 	],
-	#category : #'Hiedra-Tests-Model'
+	#category : 'Hiedra-Tests-Model',
+	#package : 'Hiedra-Tests',
+	#tag : 'Model'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 HiRulerBuilderTest class >> initialize [
 	DebugShowingRulerInWindow := false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HiRulerBuilderTest >> assertRulerHasLinks: expectedLinksAndRulerPointsAsAssociations [
 
 	| actualRulerPoints |
@@ -36,7 +38,7 @@ HiRulerBuilderTest >> assertRulerHasLinks: expectedLinksAndRulerPointsAsAssociat
 	]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HiRulerBuilderTest >> assertRulerHasNodes: expectedNodesAndRulerPointsAsAssociations [
 
 	| actualNodes failures |
@@ -60,7 +62,7 @@ HiRulerBuilderTest >> assertRulerHasNodes: expectedNodesAndRulerPointsAsAssociat
 			format: { failures printString } ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HiRulerBuilderTest >> buildRulerWith: valuesAndParentsAsAssociations [
 
 	| valuesAndParentsAsDictionary values |
@@ -78,7 +80,7 @@ HiRulerBuilderTest >> buildRulerWith: valuesAndParentsAsAssociations [
 	self debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HiRulerBuilderTest >> debugShowingRulerInPresenter: valuesAndParentsAsDictionary [
 	"Open a Spec window when a class variable enables it.
 
@@ -113,7 +115,7 @@ HiRulerBuilderTest >> debugShowingRulerInPresenter: valuesAndParentsAsDictionary
 		open
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testCycle [
 	"
 	b
@@ -138,7 +140,7 @@ HiRulerBuilderTest >> testCycle [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testEmpty [
 	self buildRulerWith: #().
 
@@ -146,7 +148,7 @@ HiRulerBuilderTest >> testEmpty [
 	self assertEmpty: ruler links
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testFourMergedForks [
 	"
 	d
@@ -188,7 +190,7 @@ HiRulerBuilderTest >> testFourMergedForks [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testOneNode [
 	"
 	a
@@ -205,7 +207,7 @@ HiRulerBuilderTest >> testOneNode [
 	self assertEmpty: ruler links
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testThreeMergedForks [
 	"
 	d
@@ -245,7 +247,7 @@ HiRulerBuilderTest >> testThreeMergedForks [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testThreeMergedForks2 [
 	"
 	d
@@ -285,7 +287,7 @@ HiRulerBuilderTest >> testThreeMergedForks2 [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testThreeMergedForks3 [
 	"
 	d
@@ -325,7 +327,7 @@ HiRulerBuilderTest >> testThreeMergedForks3 [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testTwoConnectedNodes [
 	"
 	b
@@ -348,7 +350,7 @@ HiRulerBuilderTest >> testTwoConnectedNodes [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testTwoMergedForks [
 	"
 	c
@@ -380,7 +382,7 @@ HiRulerBuilderTest >> testTwoMergedForks [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testTwoMergedForks2 [
 	"
 	c
@@ -412,7 +414,7 @@ HiRulerBuilderTest >> testTwoMergedForks2 [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testTwoUnconnectedNodes [
 	"
 	b
@@ -434,7 +436,7 @@ HiRulerBuilderTest >> testTwoUnconnectedNodes [
 	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiRulerBuilderTest >> testTwoUnmergedForks [
 	"
 	d

@@ -5,42 +5,44 @@ created using
 command of AthensPathBuilder
 "
 Class {
-	#name : #AthensLineSegment,
-	#superclass : #AthensPathSegment,
+	#name : 'AthensLineSegment',
+	#superclass : 'AthensPathSegment',
 	#instVars : [
 		'point'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensLineSegment >> accept: aVisitor [
 	^ aVisitor lineSegment: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensLineSegment >> endPoint [
 	^ point
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensLineSegment >> point [
 
 	^ point
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensLineSegment >> point: anObject [
 
 	point := anObject
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensLineSegment >> sendCommandTo: aBuilder [
 	^ aBuilder lineTo: point
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensLineSegment >> visitWith: visitor [
 
 	visitor visitLineSegment:  self

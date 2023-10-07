@@ -2,17 +2,19 @@
 **MetacelloLoadProjectSpecVersionNotification** is signalled to indicate that the given project spec was loaded into the image.
 "
 Class {
-	#name : #MetacelloProjectSpecLoadedNotification,
-	#superclass : #MetacelloScriptProjectSpecNotification,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloProjectSpecLoadedNotification',
+	#superclass : 'MetacelloScriptProjectSpecNotification',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'exception description' }
+{ #category : 'exception description' }
 MetacelloProjectSpecLoadedNotification >> defaultAction [
     ^ nil
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloProjectSpecLoadedNotification >> handleResolutionFor: aScriptEngine [
     ^ aScriptEngine handleProjectSpecLoaded: self
 ]

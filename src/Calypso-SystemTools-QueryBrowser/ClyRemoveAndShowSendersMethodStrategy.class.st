@@ -2,23 +2,25 @@
 I am a remove method strategy which removes methods but in addition it shows all senders.
 "
 Class {
-	#name : #ClyRemoveAndShowSendersMethodStrategy,
-	#superclass : #ClyInteractiveRemoveMethodStrategy,
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Methods'
+	#name : 'ClyRemoveAndShowSendersMethodStrategy',
+	#superclass : 'ClyInteractiveRemoveMethodStrategy',
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Methods',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Methods'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRemoveAndShowSendersMethodStrategy >> orderForBrowser [
 	^2
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRemoveAndShowSendersMethodStrategy >> removeMethods: methods [
 	SycSilentlyRemoveMethodStrategy new removeMethods: methods.
 	(ClyShowMessageSenderCommand forMethods: methods by: browser) execute
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRemoveAndShowSendersMethodStrategy >> userRequestString [
 	^'Remove, then browse senders'
 ]

@@ -1,1 +1,1 @@
-Package { #name : #'Shift-ClassInstaller' }
+Package { #name : 'Shift-ClassInstaller' }

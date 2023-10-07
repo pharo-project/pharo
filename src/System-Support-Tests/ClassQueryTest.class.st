@@ -2,12 +2,14 @@
 Unit tests for queries on classes
 "
 Class {
-	#name : #ClassQueryTest,
-	#superclass : #TestCase,
-	#category : #'System-Support-Tests-Base'
+	#name : 'ClassQueryTest',
+	#superclass : 'TestCase',
+	#category : 'System-Support-Tests-Base',
+	#package : 'System-Support-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassQueryTest >> testAllCallsOn [
 
 	| calls |
@@ -16,7 +18,7 @@ ClassQueryTest >> testAllCallsOn [
 	self assert: calls first compiledMethod equals: ClassQueryTest>>#testAllCallsOn
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassQueryTest >> testAllCallsOnASymbol [
 
 	| set cm |
@@ -25,7 +27,7 @@ ClassQueryTest >> testAllCallsOnASymbol [
 	self assert: (cm literals includes: #shallowCopy)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassQueryTest >> testReferencedClasses [
 
 	| refs |

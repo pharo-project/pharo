@@ -2,14 +2,16 @@
 SUnit tests for PharoSyntaxTutorial
 "
 Class {
-	#name : #PharoSyntaxTutorialTest,
-	#superclass : #TestCase,
+	#name : 'PharoSyntaxTutorialTest',
+	#superclass : 'TestCase',
 	#traits : 'TTutorialTest',
 	#classTraits : 'TTutorialTest classTrait',
-	#category : #'ProfStef-Tests-Tests'
+	#category : 'ProfStef-Tests-Tests',
+	#package : 'ProfStef-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoSyntaxTutorialTest >> testDivideTwoByZeroSignalsZeroDivide [
 	[self testedTutorial divideTwoByZero.
 	self fail]
@@ -17,14 +19,14 @@ PharoSyntaxTutorialTest >> testDivideTwoByZeroSignalsZeroDivide [
 	do: []
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoSyntaxTutorialTest >> testEachSelectorExists [
 	self testedTutorial tutorial do: [:aSelector|
 		self assert: (self testedTutorial respondsTo: aSelector)
 	]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 PharoSyntaxTutorialTest >> testedTutorial [
 	"Returns an instance of an AbstractTutorial subclass"
 	^ PharoSyntaxTutorial new

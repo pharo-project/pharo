@@ -2,72 +2,74 @@
 A MCModification represents the operation to modify an entity to a snapshot. 
 "
 Class {
-	#name : #MCModification,
-	#superclass : #MCPatchOperation,
+	#name : 'MCModification',
+	#superclass : 'MCPatchOperation',
 	#instVars : [
 		'obsoletion',
 		'modification'
 	],
-	#category : #'Monticello-Patching'
+	#category : 'Monticello-Patching',
+	#package : 'Monticello',
+	#tag : 'Patching'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCModification class >> of: base to: target [
 	^ self new initializeWithBase: base target: target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> baseDefinition [
 	^ obsoletion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> basicApplyTo: anObject [
 	anObject modifyDefinition: obsoletion to: modification
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> definition [
 	^ modification
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> fromSource [
 	^ obsoletion source
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 MCModification >> initializeWithBase: base target: target [
 	obsoletion := base.
 	modification := target.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> inverse [
 	^ MCModification of: modification to: obsoletion
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCModification >> isClassPatch [
 	^obsoletion isClassDefinition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCModification >> isModification [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> modification [
 	^ modification
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> obsoletion [
 	^ obsoletion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> printAnnotations: request on: aStream [
 	aStream nextPutAll: 'old: '.
 	obsoletion printAnnotations: request on: aStream.
@@ -76,13 +78,13 @@ MCModification >> printAnnotations: request on: aStream [
 	modification printAnnotations: request on: aStream.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> summarySuffix [
 	^ modification summarySuffixOver: obsoletion
 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCModification >> summarySuffixOver: previousDefinition [
 	| sourceChanged categoryChanged timeStampChanged |
 	sourceChanged := self source ~= previousDefinition source.
@@ -102,17 +104,17 @@ MCModification >> summarySuffixOver: previousDefinition [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> targetClass [
 	^ obsoletion actualClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> targetDefinition [
 	^ modification
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCModification >> toSource [
 	^ modification diffSource
 ]

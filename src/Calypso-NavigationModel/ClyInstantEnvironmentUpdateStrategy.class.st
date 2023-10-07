@@ -2,17 +2,19 @@
 I am default updating strategy for navigation environment. I force query result to notify observers immediatelly when any change was happen
 "
 Class {
-	#name : #ClyInstantEnvironmentUpdateStrategy,
-	#superclass : #ClyEnvironmentUpdateStrategy,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyInstantEnvironmentUpdateStrategy',
+	#superclass : 'ClyEnvironmentUpdateStrategy',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyInstantEnvironmentUpdateStrategy >> announceChangesOf: aQueryResult [
 
 	aQueryResult notifyChanges
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyInstantEnvironmentUpdateStrategy >> publishCollectedChanges [
 ]

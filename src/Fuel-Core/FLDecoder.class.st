@@ -2,8 +2,8 @@
 I am an abstraction used by the materialization algorithm to decode the graph from a stream.
 "
 Class {
-	#name : #FLDecoder,
-	#superclass : #Object,
+	#name : 'FLDecoder',
+	#superclass : 'Object',
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
@@ -16,10 +16,12 @@ Class {
 		'migrationsBySource',
 		'migrationsByTarget'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLDecoder >> classNamed: className [
 	^ migrationsBySource
 		at: className
@@ -27,7 +29,7 @@ FLDecoder >> classNamed: className [
 		ifAbsent: [ self globalClassNamed: className ]
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> decodeSignature [
 	| streamSignature |
 	streamSignature := ByteArray new: self configuration signature size.
@@ -35,7 +37,7 @@ FLDecoder >> decodeSignature [
 	^ streamSignature
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> decodeVersion [
 	^ FLVersion
 		newWithMajor: self nextEncodedByte
@@ -43,7 +45,7 @@ FLDecoder >> decodeVersion [
 		patch: self nextEncodedByte
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> decodeYourself [
 	| objectCount |
 	objectCount := self nextEncodedUint32.
@@ -55,7 +57,7 @@ FLDecoder >> decodeYourself [
 	isBigEndian := self nextEncodedUint32
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLDecoder >> globalClassNamed: className [
 
 	^ globalEnvironment 
@@ -63,14 +65,14 @@ FLDecoder >> globalClassNamed: className [
 		ifAbsent: [ FLClassNotFound signalWithName: className ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLDecoder >> globalEnvironment [
 	"Answer a dictionary where the look up for global symbols will be done during materialization."
 	
 	^ globalEnvironment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLDecoder >> initialize [
 	super initialize.
 	
@@ -79,7 +81,7 @@ FLDecoder >> initialize [
 	self initializeMigrations
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 FLDecoder >> initializeMigrations [
 	migrationsBySource := IdentityDictionary new.
 	migrationsByTarget := IdentityDictionary new.
@@ -93,28 +95,28 @@ FLDecoder >> initializeMigrations [
 				add: migration ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLDecoder >> isBigEndian [
 	^ isBigEndian
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedBitmap [
 
 	^ Bitmap newFromStream: stream
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedByte [
 	^stream next
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedBytesInto: aBytesObject [
 	stream next: aBytesObject basicSize into: aBytesObject
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedClusterClass [
 	"Cluster classes should always be found, fall back to system globals"
 	| className |
@@ -125,7 +127,7 @@ FLDecoder >> nextEncodedClusterClass [
 			self class environment at: className ]
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedInt24 [
 	"SmallInteger is 31 / 63 bits. Hence, we can store a full 24 bit signed integer.
 	Look at the high bit to see whether this is actually a negative integer and then
@@ -137,7 +139,7 @@ FLDecoder >> nextEncodedInt24 [
 		ifFalse: [ uInt ]
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedInt32 [
 	"SmallInteger is 31 / 63 bits.
 	Look at the high bit (bit 30, not 31!) to see whether this is actually a negative
@@ -154,7 +156,7 @@ FLDecoder >> nextEncodedInt32 [
 	^ (n bitShift: 8) + stream next
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedInt64 [
 	"SmallInteger is 31 / 63 bits.
 	Look at the high bit (bit 61, not 63!) to see whether this is actually a negative
@@ -177,13 +179,13 @@ FLDecoder >> nextEncodedInt64 [
 	^ (n bitShift: 8) + stream next
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedReference [ 
 
 	^ objects at: indexStream nextIndex
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedString [
 	| length aByteArray |
 
@@ -197,13 +199,13 @@ FLDecoder >> nextEncodedString [
 	^aByteArray asString.
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedUint16 [
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
 	^ (stream next bitShift: 8) + (stream next).
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedUint24 [
 	"Answer the next unsigned, 24-bit integer from this (binary) stream."
 
@@ -213,7 +215,7 @@ FLDecoder >> nextEncodedUint24 [
 	^ (n bitShift: 8) + stream next
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedUint32 [
 	"Answer the next unsigned, 32-bit integer from this (binary) stream."
 
@@ -224,7 +226,7 @@ FLDecoder >> nextEncodedUint32 [
 	^ (n bitShift: 8) + stream next
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedUint64 [
 	"Answer the next unsigned, 64-bit integer from this (binary) stream."
 
@@ -239,29 +241,29 @@ FLDecoder >> nextEncodedUint64 [
 	^ (n bitShift: 8) + stream next
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedUint8 [
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
 	^ stream next
 ]
 
-{ #category : #decoding }
+{ #category : 'decoding' }
 FLDecoder >> nextEncodedWordsInto: aWordsObject [ 
 	stream fuelNextWordsInto: aWordsObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLDecoder >> objects [
 	^ objects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLDecoder >> registerAll: someObjects [
 
 	objectsWriteStream nextPutAll: someObjects.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLDecoder >> variablesMappingFor: aClass [
 	| variables |
 	variables := FLVariablesMapping

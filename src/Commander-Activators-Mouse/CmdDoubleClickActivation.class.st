@@ -2,12 +2,13 @@
 I represent activation of commands using mouse double click event
 "
 Class {
-	#name : #CmdDoubleClickActivation,
-	#superclass : #CmdMouseCommandActivation,
-	#category : #'Commander-Activators-Mouse'
+	#name : 'CmdDoubleClickActivation',
+	#superclass : 'CmdMouseCommandActivation',
+	#category : 'Commander-Activators-Mouse',
+	#package : 'Commander-Activators-Mouse'
 }
 
-{ #category : #'morphs setup' }
+{ #category : 'morphs setup' }
 CmdDoubleClickActivation class >> morphicEventType [
 	^#doubleClick
 ]

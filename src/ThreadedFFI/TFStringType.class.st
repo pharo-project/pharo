@@ -5,15 +5,17 @@ I override the marshalling methods to allow reading/writing strings from/to C po
 See my superclass for more details.
 "
 Class {
-	#name : #TFStringType,
-	#superclass : #TFDerivedType,
+	#name : 'TFStringType',
+	#superclass : 'TFDerivedType',
 	#classVars : [
 		'AllocatedStrings'
 	],
-	#category : #'ThreadedFFI-Types'
+	#category : 'ThreadedFFI-Types',
+	#package : 'ThreadedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFStringType >> allocateString: aString [
 	| anExternalAddress |
 
@@ -22,19 +24,19 @@ TFStringType >> allocateString: aString [
 	^ anExternalAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFStringType >> allocatedStrings [
 
 	^ AllocatedStrings ifNil: [ AllocatedStrings := Set new ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFStringType >> callbackReadValue: anExternalAddress [
 
 	^ (self readValue: anExternalAddress) utf8StringFromCString
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStringType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argumentsArrayTempName withBuilder: anIRBuilder [
 
 	"I will send the message #freeValueIfNeeded: to myself with the argument from the argumentArray at the position passed as parameter.
@@ -48,13 +50,13 @@ TFStringType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argume
 	anIRBuilder popTop
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStringType >> emitMarshallFromPrimitive: anIRBuilder [
 
 	anIRBuilder send: #utf8StringFromCString
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStringType >> emitMarshallToPrimitive: anIRBuilder [
 
 	anIRBuilder addTemp: #__marshall_temp.
@@ -65,7 +67,7 @@ TFStringType >> emitMarshallToPrimitive: anIRBuilder [
 	anIRBuilder send: #prepareStringForMarshalling:
 ]
 
-{ #category : #freeing }
+{ #category : 'freeing' }
 TFStringType >> freeValueIfNeeded: aCHeapValueHolder [
 	| pointer |
 
@@ -84,13 +86,13 @@ TFStringType >> freeValueIfNeeded: aCHeapValueHolder [
 	pointer isNull ifFalse: [ pointer free ]
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFStringType >> marshallToPrimitive: aValue [
 
 	^ self prepareStringForMarshalling: aValue
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFStringType >> prepareStringForMarshalling: aStringOrExternalAddress [
 
 	"The TFString type supports four possible parameters.
@@ -123,13 +125,13 @@ TFStringType >> prepareStringForMarshalling: aStringOrExternalAddress [
 		^ self error: 'Could not handle this object'
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFStringType >> readValue: anExternalAddress [
 
 	^ self basicType readValue: anExternalAddress
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFStringType >> write: aStringOrExternalAddress into: targetAddress [
 
 	"If the argument is a aString I have to allocate it and later free it"

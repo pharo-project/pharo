@@ -4,7 +4,9 @@ It is only kept for compatibility.
 The Class Traits now are instances of MetaclassForTraits.
 "
 Class {
-	#name : #ClassTrait,
-	#superclass : #TraitDescription,
-	#category : #'TraitsV2-Compatibility-Base'
+	#name : 'ClassTrait',
+	#superclass : 'TraitDescription',
+	#category : 'TraitsV2-Compatibility-Base',
+	#package : 'TraitsV2-Compatibility',
+	#tag : 'Base'
 }

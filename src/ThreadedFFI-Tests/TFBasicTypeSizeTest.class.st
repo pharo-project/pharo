@@ -1,10 +1,11 @@
 Class {
-	#name : #TFBasicTypeSizeTest,
-	#superclass : #TFTestCase,
-	#category : #'ThreadedFFI-Tests'
+	#name : 'TFBasicTypeSizeTest',
+	#superclass : 'TFTestCase',
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFBasicTypeSizeTest >> assertType: typename equals: aSize [
 
 	| function |
@@ -12,7 +13,7 @@ TFBasicTypeSizeTest >> assertType: typename equals: aSize [
 	self assert: (runner invokeFunction: function) equals: aSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFBasicTypeSizeTest >> externalFunction: name [
 
 	^ TFExternalFunction
@@ -23,85 +24,85 @@ TFBasicTypeSizeTest >> externalFunction: name [
 			returnType: TFBasicType sizeT)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeCharEnum [
 
 	self assertType: 'charenum' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeDouble [
 
 	self assertType: 'double' equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeFloat [
 
 	self assertType: 'float' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeLongLong [
 
 	self assertType: 'longlong' equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizePointer [
 
 	self assertType: 'pointer' equals: Smalltalk wordSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedChar [
 
 	self assertType: 'char' equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedInt [
 
 	self assertType: 'int' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedInt16 [
 
 	self assertType: 'int16_t' equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedInt32 [
 
 	self assertType: 'int32_t' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedInt64 [
 
 	self assertType: 'int64_t' equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedInt8 [
 
 	self assertType: 'int8_t' equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedIntEnum [
 
 	self assertType: 'sintenum' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedLongLong [
 
 	self assertType: 'longlong' equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedLongUnix [
 
 	OSPlatform current isWindows ifTrue: [
@@ -110,7 +111,7 @@ TFBasicTypeSizeTest >> testSizeSignedLongUnix [
 	self assertType: 'long' equals: Smalltalk wordSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedLongWindows [
 
 	OSPlatform current isWindows ifFalse: [
@@ -119,55 +120,55 @@ TFBasicTypeSizeTest >> testSizeSignedLongWindows [
 	self assertType: 'long' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeSignedShort [
 
 	self assertType: 'short' equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedChar [
 
 	self assertType: 'uchar' equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedInt [
 
 	self assertType: 'uint' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedInt16 [
 
 	self assertType: 'uint16_t' equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedInt64 [
 
 	self assertType: 'uint64_t' equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedInt8 [
 
 	self assertType: 'uint8_t' equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedIntEnum [
 
 	self assertType: 'uintenum' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedLongLong [
 
 	self assertType: 'ulonglong' equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedLongUnix [
 
 	OSPlatform current isWindows ifTrue: [
@@ -176,7 +177,7 @@ TFBasicTypeSizeTest >> testSizeUnsignedLongUnix [
 	self assertType: 'ulong' equals: Smalltalk wordSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedLongWindows [
 
 	OSPlatform current isWindows ifFalse: [
@@ -185,7 +186,7 @@ TFBasicTypeSizeTest >> testSizeUnsignedLongWindows [
 	self assertType: 'ulong' equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeSizeTest >> testSizeUnsignedShort [
 
 	self assertType: 'ushort' equals: 2

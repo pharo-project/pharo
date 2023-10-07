@@ -2,12 +2,14 @@
 An ALSourceCleanerTest is a test class for testing the behavior of ALSourceCleaner
 "
 Class {
-	#name : #ReMethodSourceCleanerTest,
-	#superclass : #TestCase,
-	#category : #'Renraku-Tests-Utilities'
+	#name : 'ReMethodSourceCleanerTest',
+	#superclass : 'TestCase',
+	#category : 'Renraku-Tests-Utilities',
+	#package : 'Renraku-Tests',
+	#tag : 'Utilities'
 }
 
-{ #category : #'private - test data' }
+{ #category : 'private - test data' }
 ReMethodSourceCleanerTest >> aleadyCleanedMethodStringKeepingDot [
 	"This method returns the method body of #dirtyMethodWithUnnecessarySpacesAndFinalDot with a final dot"
 
@@ -19,7 +21,7 @@ ReMethodSourceCleanerTest >> aleadyCleanedMethodStringKeepingDot [
 	temp := 3 + 4.'
 ]
 
-{ #category : #'private - test data' }
+{ #category : 'private - test data' }
 ReMethodSourceCleanerTest >> alreadyCleanedMethodString [
 	"This method returns the method body of #dirtyMethodWithUnnecessarySpacesAndFinalDot without a final dot"
 
@@ -31,7 +33,7 @@ ReMethodSourceCleanerTest >> alreadyCleanedMethodString [
 	temp := 3 + 4'
 ]
 
-{ #category : #'private - test data' }
+{ #category : 'private - test data' }
 ReMethodSourceCleanerTest >> dirtyMethodWithUnnecessarySpacesAndFinalDot [
 	"Do not format this method - it by intention should include unnecessary spaces and a final dot"
 
@@ -40,21 +42,21 @@ ReMethodSourceCleanerTest >> dirtyMethodWithUnnecessarySpacesAndFinalDot [
 	temp := 3 + 4
 ]
 
-{ #category : #'private - test data' }
+{ #category : 'private - test data' }
 ReMethodSourceCleanerTest >> properMethodWithFinalDot [
 	"Do not format this method - this is a method without any unnecessary separators in the method body but a final dot"
 
 	^ 3 + 4.
 ]
 
-{ #category : #'private - test data' }
+{ #category : 'private - test data' }
 ReMethodSourceCleanerTest >> properMethodWithoutFinalDot [
 	"Do not format this method - this is a method without any unnecessary separators in the method body and without a final dot"
 
 	^ 3 + 4
 ]
 
-{ #category : #'tests - cleaning' }
+{ #category : 'tests - cleaning' }
 ReMethodSourceCleanerTest >> testCleaning [
 
 	| cleaned method |
@@ -64,7 +66,7 @@ ReMethodSourceCleanerTest >> testCleaning [
 	self assert: cleaned equals: self alreadyCleanedMethodString
 ]
 
-{ #category : #'tests - cleaning' }
+{ #category : 'tests - cleaning' }
 ReMethodSourceCleanerTest >> testCleaningNotKeepingDot [
 
 	| cleaned method |
@@ -73,7 +75,7 @@ ReMethodSourceCleanerTest >> testCleaningNotKeepingDot [
 	self assert: cleaned equals: self alreadyCleanedMethodString
 ]
 
-{ #category : #'tests - cleaning' }
+{ #category : 'tests - cleaning' }
 ReMethodSourceCleanerTest >> testFollowsSettingForCleaningFinalDotUponInstantiation [
 
 	self
@@ -81,7 +83,7 @@ ReMethodSourceCleanerTest >> testFollowsSettingForCleaningFinalDotUponInstantiat
 		equals: ReMethodSourceCleaner keepFinalDotInMethodBody
 ]
 
-{ #category : #'tests - cleaning' }
+{ #category : 'tests - cleaning' }
 ReMethodSourceCleanerTest >> testIsNecessaryToCleanProperMethodWithFinalDot [
 
 	| method |
@@ -90,7 +92,7 @@ ReMethodSourceCleanerTest >> testIsNecessaryToCleanProperMethodWithFinalDot [
 	self assert: (ReMethodSourceCleaner isNecessaryToClean: method allowFinalDot: false)
 ]
 
-{ #category : #'tests - cleaning' }
+{ #category : 'tests - cleaning' }
 ReMethodSourceCleanerTest >> testIsNotNecessaryToCleanAnAlreadyCleanMethod [
 
 	| method |
@@ -102,7 +104,7 @@ ReMethodSourceCleanerTest >> testIsNotNecessaryToCleanAnAlreadyCleanMethod [
 			 allowFinalDot: false)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReMethodSourceCleanerTest >> testIsNotNecessaryToCleanProperMethodWithFinalDot [
 
 	| method |
@@ -111,7 +113,7 @@ ReMethodSourceCleanerTest >> testIsNotNecessaryToCleanProperMethodWithFinalDot [
 	self deny: (ReMethodSourceCleaner isNecessaryToClean: method allowFinalDot: true)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReMethodSourceCleanerTest >> testIsNotNecessaryToCleanProperMethodWithoutFinalDot [
 
 	| method |
@@ -120,7 +122,7 @@ ReMethodSourceCleanerTest >> testIsNotNecessaryToCleanProperMethodWithoutFinalDo
 	self deny: (ReMethodSourceCleaner isNecessaryToClean: method allowFinalDot: false)
 ]
 
-{ #category : #'tests - settings' }
+{ #category : 'tests - settings' }
 ReMethodSourceCleanerTest >> testKeepFinalDotIsDisabledByDefault [
 
 	self assert: ReMethodSourceCleaner keepFinalDotInMethodBody equals: false

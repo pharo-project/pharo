@@ -2,8 +2,8 @@
 A ZIP encoder
 "
 Class {
-	#name : #ZipEncoder,
-	#superclass : #WriteStream,
+	#name : 'ZipEncoder',
+	#superclass : 'WriteStream',
 	#instVars : [
 		'bitBuffer',
 		'bitPosition',
@@ -12,38 +12,40 @@ Class {
 	#pools : [
 		'ZipConstants'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 ZipEncoder >> bitPosition [
 	^ encodedStream position + position * 8 + bitPosition
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 ZipEncoder >> close [
 	self flush.
 	encodedStream close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipEncoder >> commit [
 	encodedStream next: position putAll: collection.
 	position := readLimit := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoder >> encodedStream [
 	^encodedStream
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 ZipEncoder >> flush [
 	self flushBits.
 	self commit
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 ZipEncoder >> flushBits [
 	"Flush currently unsent bits"
 	[bitPosition > 0] whileTrue:[
@@ -53,7 +55,7 @@ ZipEncoder >> flushBits [
 	bitPosition := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoder >> nextBits: nBits put: value [
 	"Store a value of nBits"
 	"self assert:[value >= 0 and:[(1 bitShift: nBits) > value]]."
@@ -65,7 +67,7 @@ ZipEncoder >> nextBits: nBits put: value [
 		bitPosition := bitPosition - 8]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoder >> nextBytePut: anObject [
 	"Primitive. Insert the argument at the next position in the Stream
 	represented by the receiver. Fail if the collection of this stream is not an
@@ -80,7 +82,7 @@ ZipEncoder >> nextBytePut: anObject [
 			collection byteAt: position put: anObject ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipEncoder >> on: aCollectionOrStream [
 	encodedStream := aCollectionOrStream isStream
 		ifTrue: [ aCollectionOrStream ]
@@ -91,14 +93,14 @@ ZipEncoder >> on: aCollectionOrStream [
 	bitPosition := bitBuffer := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoder >> pastEndPut: anObject [
 	"Flush the current buffer and store the new object at the beginning"
 	self commit.
 	^self nextBytePut: anObject asInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoder >> privateSendBlock: literalStream with: distanceStream with: litTree with: distTree [
 	"Send the current block using the encodings from the given literal/length and distance tree"
 	| lit dist code extra sum |
@@ -138,7 +140,7 @@ ZipEncoder >> privateSendBlock: literalStream with: distanceStream with: litTree
 	^sum
 ]
 
-{ #category : #'block encoding' }
+{ #category : 'block encoding' }
 ZipEncoder >> sendBlock: literalStream with: distanceStream with: litTree with: distTree [
 	"Send the current block using the encodings from the given literal/length and distance tree"
 	| result |

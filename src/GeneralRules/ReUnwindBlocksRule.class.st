@@ -15,24 +15,26 @@ var := [ statements.
 ]]]
 "
 Class {
-	#name : #ReUnwindBlocksRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReUnwindBlocksRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnwindBlocksRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UnwindBlocksRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnwindBlocksRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReUnwindBlocksRule >> initialize [
 	super initialize.
 	self
@@ -46,7 +48,7 @@ ReUnwindBlocksRule >> initialize [
 			with: '^[| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReUnwindBlocksRule >> name [
 	^ 'Move assignment out of unwind blocks'
 ]

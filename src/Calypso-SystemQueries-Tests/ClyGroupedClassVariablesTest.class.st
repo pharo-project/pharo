@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyGroupedClassVariablesTest,
-	#superclass : #ClyGroupedVariablesTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyGroupedClassVariablesTest',
+	#superclass : 'ClyGroupedVariablesTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyGroupedClassVariablesTest >> createQueryResult [
 	^ClyGroupedClassVariablesResult withHierarchy: ClySubclassHierarchy new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedClassVariablesTest >> testFillingWithEmptyList [
 
 	queryResult fillWith: { }.
@@ -17,7 +19,7 @@ ClyGroupedClassVariablesTest >> testFillingWithEmptyList [
 	self assertItems: {}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedClassVariablesTest >> testFillingWithSingleClassVar [
 
 	| classVarGroup allClassVarGroup |
@@ -34,7 +36,7 @@ ClyGroupedClassVariablesTest >> testFillingWithSingleClassVar [
 	self assert: allClassVarGroup methodQuery variableQuery class equals: ClyAllClassVariablesQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedClassVariablesTest >> testFillingWithThreeClasVarsOfSuperclassAndSubclass [
 
 	queryResult fillWith: {

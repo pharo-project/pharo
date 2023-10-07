@@ -2,32 +2,34 @@
 Provides for another morph to occupy the full screen area (less docking bars).
 "
 Class {
-	#name : #FullscreenMorph,
-	#superclass : #Morph,
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#name : 'FullscreenMorph',
+	#superclass : 'Morph',
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullscreenMorph >> contentMorph [
 	"Answer the current content."
 
 	^self submorphs first
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 FullscreenMorph >> defaultColor [
 	"Return the receiver's default color."
 
 	^Color white
 ]
 
-{ #category : #'change reporting' }
+{ #category : 'change reporting' }
 FullscreenMorph >> displayExtentChanged [
 
 	self updateBounds
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FullscreenMorph >> initialize [
 	"Initialize the receiver."
 
@@ -38,7 +40,7 @@ FullscreenMorph >> initialize [
 		beSticky
 ]
 
-{ #category : #'private - layout' }
+{ #category : 'private - layout' }
 FullscreenMorph >> layoutChanged [
 	"Don't pass to owner, since the receiver doesn't care! Improves frame rate."
 
@@ -46,7 +48,7 @@ FullscreenMorph >> layoutChanged [
 	self layoutPolicy ifNotNil:[:l | l flushLayoutCache]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 FullscreenMorph >> postOpenInWorld: aWorld [
 
 	(self submorphs notEmpty and: [ self submorphs first isSystemWindow ])
@@ -54,13 +56,13 @@ FullscreenMorph >> postOpenInWorld: aWorld [
 	super postOpenInWorld: aWorld
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 FullscreenMorph >> preOpenInWorld: aWorld [
 
 	"Do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullscreenMorph >> setContentMorph: aMorph [
 	"Replace the submorphs with aMorph."
 
@@ -70,7 +72,7 @@ FullscreenMorph >> setContentMorph: aMorph [
 		fullFrame: LayoutFrame identity
 ]
 
-{ #category : #'private - layout' }
+{ #category : 'private - layout' }
 FullscreenMorph >> updateBounds [
 	"Update the receiver's bounds to fill the world."
 

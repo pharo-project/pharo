@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries' }
+Package { #name : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries' }

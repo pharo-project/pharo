@@ -4,14 +4,16 @@ A TransformationMorph is like a transformMorph, except that it does not clip, an
 See TransformationMorph class example1 method.
 "
 Class {
-	#name : #TransformationMorph,
-	#superclass : #TransformMorph,
+	#name : 'TransformationMorph',
+	#superclass : 'TransformMorph',
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
-	#category : #'Morphic-Core-Support'
+	#category : 'Morphic-Core-Support',
+	#package : 'Morphic-Core',
+	#tag : 'Support'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 TransformationMorph class >> example1 [
 	| stringMorph transformationMorph |
 	stringMorph := 'vertical text' asMorph.
@@ -21,7 +23,7 @@ TransformationMorph class >> example1 [
 	transformationMorph openInWorld
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TransformationMorph >> adjustAfter: changeBlock [
 	"Cause this morph to remain cetered where it was before, and
 	choose appropriate smoothing, after a change of scale or rotation."
@@ -32,7 +34,7 @@ TransformationMorph >> adjustAfter: changeBlock [
 	owner ifNotNil: [owner invalidRect: bounds]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TransformationMorph >> asFlexOf: aMorph [
 	"Initialize me with position and bounds of aMorph,
 	and with an offset that provides centered rotation."
@@ -44,7 +46,7 @@ TransformationMorph >> asFlexOf: aMorph [
 	transform := transform withOffset: aMorph position - pos
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TransformationMorph >> chooseSmoothing [
 	"Choose appropriate smoothing, after a change of scale or rotation."
 
@@ -53,7 +55,7 @@ TransformationMorph >> chooseSmoothing [
 		ifFalse: [1]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TransformationMorph >> computeBounds [
 	self hasSubmorphs ifTrue:
 		[bounds := (transform localBoundsToGlobal:
@@ -63,18 +65,18 @@ TransformationMorph >> computeBounds [
 	fullBounds := bounds
 ]
 
-{ #category : #'geometry - etoy' }
+{ #category : 'geometry - etoy' }
 TransformationMorph >> degreesOfFlex [
 	"Return any rotation due to flexing"
 	^ self rotationDegrees
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TransformationMorph >> drawOn: aCanvas [
 	submorphs isEmpty ifTrue: [super drawOn: aCanvas]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformationMorph >> embeddedWindowOrNil [
 
 	"answer nil for common morphs, yourself from system windows and first submorph for transformation morphs"
@@ -87,7 +89,7 @@ TransformationMorph >> embeddedWindowOrNil [
 	^ nil
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TransformationMorph >> extent: newExtent [
 
 	self adjustAfter:
@@ -95,7 +97,7 @@ TransformationMorph >> extent: newExtent [
 		self scale: (scaleFactor detentBy: 0.1 atMultiplesOf: 1.0 snap: false)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformationMorph >> forwardDirection [
 	"Return the rendee's forward direction.
 	If I have no rendee then return 0.0 degrees "
@@ -105,7 +107,7 @@ TransformationMorph >> forwardDirection [
 		ifFalse: [^ rendee forwardDirection]
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TransformationMorph >> grabTransform [
 	"Return the transform for the receiver which should be applied during grabbing"
 	self renderedMorph isWorldMorph
@@ -113,13 +115,13 @@ TransformationMorph >> grabTransform [
 	^owner ifNil:[self transform] ifNotNil:[owner grabTransform composedWithLocal: self transform]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformationMorph >> hasNoScaleOrRotation [
 
 	^ transform isPureTranslation
 ]
 
-{ #category : #'geometry - etoy' }
+{ #category : 'geometry - etoy' }
 TransformationMorph >> heading [
 	"End recusion when necessary."
 	| rendee |
@@ -128,40 +130,40 @@ TransformationMorph >> heading [
 		ifFalse: [rendee heading]
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 TransformationMorph >> isFlexMorph [
 
 	^ true
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 TransformationMorph >> isRenderer [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TransformationMorph >> isSticky [
 	submorphs isEmpty ifFalse: [^ submorphs first isSticky].
 	^false
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TransformationMorph >> layoutChanged [
 	"Recompute bounds as a result of change"
 	self computeBounds.
 	super layoutChanged
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 TransformationMorph >> prepareForRotating [
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 TransformationMorph >> prepareForScaling [
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TransformationMorph >> printOn: aStream [
 	super printOn: aStream.
 	submorphs isEmpty
@@ -169,7 +171,7 @@ TransformationMorph >> printOn: aStream [
 		ifFalse: [aStream nextPutAll: ' on ' ; print: submorphs first ]
 ]
 
-{ #category : #'geometry - etoy' }
+{ #category : 'geometry - etoy' }
 TransformationMorph >> referencePosition [
 	"Answer the  receiver's reference position, bullet-proofed against infinite recursion in the unlikely but occasionally-seen case that I am my own renderee"
 
@@ -181,7 +183,7 @@ TransformationMorph >> referencePosition [
 			[transform localPointToGlobal: rendered referencePosition]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 TransformationMorph >> removeFlexShell [
 
 	"Remove the shell used to make a morph rotatable and scalable."
@@ -203,7 +205,7 @@ TransformationMorph >> removeFlexShell [
 	^ unflexed
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 TransformationMorph >> renderedMorph [
 "We are a renderer. Answer appropriately."
 
@@ -211,7 +213,7 @@ TransformationMorph >> renderedMorph [
 	^self firstSubmorph renderedMorph
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 TransformationMorph >> replaceSubmorph: oldMorph by: newMorph [
 	| t b |
 	t := transform.
@@ -222,24 +224,24 @@ TransformationMorph >> replaceSubmorph: oldMorph by: newMorph [
 	self layoutChanged
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 TransformationMorph >> rotationDegrees [
 	^ self angle radiansToDegrees negated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformationMorph >> rotationDegrees: degrees [
 	self adjustAfter:[self angle: degrees degreesToRadians negated]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformationMorph >> scaleFactor [
 	"Answer the scaleFactor"
 
 	^ transform scale
 ]
 
-{ #category : #nil }
+{ #category : 'nil' }
 TransformationMorph >> scaleToMatch: aPoint [
 	| scaleFactor tfm originalScale |
 	tfm := transform withScale: 1.0.
@@ -254,7 +256,7 @@ TransformationMorph >> scaleToMatch: aPoint [
 	self adjustAfter:[self scale: ((scaleFactor min: 8.0) max: 0.1)]
 ]
 
-{ #category : #'geometry - etoy' }
+{ #category : 'geometry - etoy' }
 TransformationMorph >> setDirectionFrom: aPoint [
 	| delta degrees inner |
 	inner := self renderedMorph.
@@ -264,7 +266,7 @@ TransformationMorph >> setDirectionFrom: aPoint [
 	self forwardDirection: (degrees \\ 360) rounded
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TransformationMorph >> stepTime [
 	"Answer the stepTime of my rendered morph if posible"
 
@@ -274,7 +276,7 @@ TransformationMorph >> stepTime [
 	^rendered stepTime
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TransformationMorph >> transformedBy: aTransform [
 	self changed.
 	self transform: (self transform composedWithGlobal: aTransform).
@@ -282,7 +284,7 @@ TransformationMorph >> transformedBy: aTransform [
 	self changed
 ]
 
-{ #category : #'geometry - etoy' }
+{ #category : 'geometry - etoy' }
 TransformationMorph >> visible: aBoolean [
 	"Set the receiver's visibility property"
 

@@ -6,33 +6,35 @@ I am a ZnEntity.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnApplicationFormUrlEncodedEntity,
-	#superclass : #ZnEntity,
+	#name : 'ZnApplicationFormUrlEncodedEntity',
+	#superclass : 'ZnEntity',
 	#instVars : [
 		'fields',
 		'representation'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnApplicationFormUrlEncodedEntity class >> designatedMimeType [
 	^ ZnMimeType applicationFormUrlEncoded
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnApplicationFormUrlEncodedEntity class >> withAll: keyedCollection [
 	^ self new
 		addAll: keyedCollection;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> add: association [
 	self at: association key put: association value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> addAll: keyedCollection [
 	"Note that we use #addAllMulti:"
 
@@ -41,81 +43,81 @@ ZnApplicationFormUrlEncodedEntity >> addAll: keyedCollection [
 	^ keyedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> at: key [
 	^ self fields at: key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> at: key add: value [
 	self invalidateRepresentation.
 	^ self fields at: key add: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> at: key ifAbsent: block [
 	^ self fields at: key ifAbsent: block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> at: key put: value [
 	self invalidateRepresentation.
 	^ self fields at: key put: value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnApplicationFormUrlEncodedEntity >> computeRepresentation [
 	representation := ByteArray streamContents: [ :stream |
 		self writeRepresentationOn: (ZnBivalentWriteStream on: stream) ].
 	contentLength := representation size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> contentLength [
 
 	contentLength ifNil: [ self computeRepresentation ].
 	^ contentLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> contents [
 	^ self fields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnApplicationFormUrlEncodedEntity >> fields [
 	^ fields
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ZnApplicationFormUrlEncodedEntity >> fieldsDo: block [
 	self fields keysAndValuesDo: block
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnApplicationFormUrlEncodedEntity >> includesField: field [
 	^ self fields includesKey: field
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnApplicationFormUrlEncodedEntity >> initialize [
 	super initialize.
 	fields := ZnMultiValueDictionary new.
 	self contentType: self class designatedMimeType
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnApplicationFormUrlEncodedEntity >> invalidateRepresentation [
 	representation := nil.
 	contentLength := nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnApplicationFormUrlEncodedEntity >> isEmpty [
 	^ self fields isEmpty
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnApplicationFormUrlEncodedEntity >> printContentsOn: stream [
 	super printContentsOn: stream.
 	self isEmpty
@@ -124,7 +126,7 @@ ZnApplicationFormUrlEncodedEntity >> printContentsOn: stream [
 	fields printElementsOn: stream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnApplicationFormUrlEncodedEntity >> readFrom: stream [
 	"We parse from stream, limited to content length if available."
 
@@ -137,7 +139,7 @@ ZnApplicationFormUrlEncodedEntity >> readFrom: stream [
 	fields := ZnResourceMetaUtils parseQueryFrom: readStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnApplicationFormUrlEncodedEntity >> writeOn: stream [
 	"In most use cases, contentLength will have been asked first so that a representation is cached"
 
@@ -145,7 +147,7 @@ ZnApplicationFormUrlEncodedEntity >> writeOn: stream [
 	ZnUtils nextPutAll: representation on: stream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnApplicationFormUrlEncodedEntity >> writeRepresentationOn: stream [
 	self contentType charSet
 		ifNotNil: [:charSet|

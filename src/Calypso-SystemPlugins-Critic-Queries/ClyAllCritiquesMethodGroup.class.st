@@ -6,12 +6,13 @@ Also I am expanded to critique groups allowing user filter methods by particular
 I am based on async method query. And in the browser I am animated to indicate query background processing
 "
 Class {
-	#name : #ClyAllCritiquesMethodGroup,
-	#superclass : #ClyAsyncMethodGroup,
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#name : 'ClyAllCritiquesMethodGroup',
+	#superclass : 'ClyAsyncMethodGroup',
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyAllCritiquesMethodGroup class >> withMethods: aMethodQuery from: aClassScope [
 	| subgroupsQuery |
 	subgroupsQuery := ClyAllMethodCritiqueQuery
@@ -20,7 +21,7 @@ ClyAllCritiquesMethodGroup class >> withMethods: aMethodQuery from: aClassScope 
 	^self named: 'critiques' priority: 8.5 on: aMethodQuery withSubgroupsFrom: subgroupsQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAllCritiquesMethodGroup >> loadAsyncQueryResult [
 	"Here method query is based on actual critiques query.
 	And each subgroup method query is also based on it.

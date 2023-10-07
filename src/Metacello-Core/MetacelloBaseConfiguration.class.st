@@ -6,7 +6,9 @@ The class is being kept around because many extant Metacello configurations use 
 Once the Metacello scripting API becomes prevalent (the api has it's own ensureMetacello logic) this class can be removed.
 "
 Class {
-	#name : #MetacelloBaseConfiguration,
-	#superclass : #ConfigurationOf,
-	#category : #'Metacello-Core-Deprecated'
+	#name : 'MetacelloBaseConfiguration',
+	#superclass : 'ConfigurationOf',
+	#category : 'Metacello-Core-Deprecated',
+	#package : 'Metacello-Core',
+	#tag : 'Deprecated'
 }

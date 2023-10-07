@@ -3,43 +3,45 @@ Bool type.
 Represented as single byte on C side.
 "
 Class {
-	#name : #FFIBool,
-	#superclass : #FFIExternalType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIBool',
+	#superclass : 'FFIExternalType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIBool class >> externalType [
 	^ ExternalType bool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIBool class >> externalTypeAlignment [
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIBool class >> externalTypeSize [
 	^ 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIBool >> basicHandle: aHandle at: index [
 	^ aHandle booleanAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIBool >> basicHandle: aHandle at: index put: value [
 	^ aHandle booleanAt: index put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIBool >> defaultReturnOnError [
 
 	^ false
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIBool >> stackValueParameterClass [
 	^ #integer
 ]

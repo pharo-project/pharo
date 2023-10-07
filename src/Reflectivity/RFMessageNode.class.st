@@ -2,12 +2,14 @@
 A message node
 "
 Class {
-	#name : #RFMessageNode,
-	#superclass : #RBMessageNode,
-	#category : #'Reflectivity-Compiler'
+	#name : 'RFMessageNode',
+	#superclass : 'RBMessageNode',
+	#category : 'Reflectivity-Compiler',
+	#package : 'Reflectivity',
+	#tag : 'Compiler'
 }
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 RFMessageNode >> debugHighlightRange [
 	^ parent debugHighlightRange
 ]

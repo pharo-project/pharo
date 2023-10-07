@@ -8,17 +8,19 @@ Some small structures are split and passed in registers, according to an algorit
 These ABI details are very important to keep in mind for receiving callbacks.
 "
 Class {
-	#name : #'FFI_x86_64_SystemV',
-	#superclass : #'FFI_x86_64',
-	#category : #'UnifiedFFI-Architecture'
+	#name : 'FFI_x86_64_SystemV',
+	#superclass : 'FFI_x86_64',
+	#category : 'UnifiedFFI-Architecture',
+	#package : 'UnifiedFFI',
+	#tag : 'Architecture'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFI_x86_64_SystemV class >> isActive [
 	^ Smalltalk vm wordSize = 8 and: [ OSPlatform current isWindows not ]
 ]
 
-{ #category : #'default abi' }
+{ #category : 'default abi' }
 FFI_x86_64_SystemV >> computeStructureRegisterPassingLayout: aStructureClass [
 	| layout |
 	aStructureClass structureSize > self maxStructureSizeToPassInRegisters ifTrue: [ ^ nil ].
@@ -26,13 +28,13 @@ FFI_x86_64_SystemV >> computeStructureRegisterPassingLayout: aStructureClass [
 	^ layout isPassedInMemory ifTrue: [ nil ] ifFalse: [ layout ]
 ]
 
-{ #category : #'default abi' }
+{ #category : 'default abi' }
 FFI_x86_64_SystemV >> maxStructureSizeToPassInRegisters [
 	"Four eightbytes according to the ABI documentation."
 	^ 16
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 FFI_x86_64_SystemV >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [
 
 	^ FFISystemV64CallbackArgumentReader

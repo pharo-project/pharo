@@ -2,101 +2,103 @@
 I provide ""primitives"" for doing IO on files in a MemoryFileSystem. I delegate most of my actions to the MemoryFile. This way there is only one place needed where the data is stored.
 "
 Class {
-	#name : #MemoryHandle,
-	#superclass : #FileSystemHandle,
+	#name : 'MemoryHandle',
+	#superclass : 'FileSystemHandle',
 	#instVars : [
 		'entry'
 	],
-	#category : #'FileSystem-Memory-Base'
+	#category : 'FileSystem-Memory-Base',
+	#package : 'FileSystem-Memory',
+	#tag : 'Base'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> at: index [
 	^ entry at: index
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> at: index put: anObject [
 	^ entry at: index put: anObject
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> at: index read: aCollection startingAt: start count: count [
 	^ entry at: index read: aCollection startingAt: start count: count
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> at: first write: aCollection startingAt: start count: count [
 	writable ifFalse: [ self primitiveFailed ].
 	entry at: first write: aCollection startingAt: start count: count
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 MemoryHandle >> binaryReadStream [
 
 	^ entry binaryReadStream
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 MemoryHandle >> binaryWriteStream [
 
 	^ entry binaryWriteStream
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> close [
 	self isOpen ifFalse: [ ^ self ].
 	self truncate.
 	entry := nil
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryHandle >> copyFrom: from to: position [
 	^ entry copyFrom: from to: position
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> flush [
 	self truncate
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryHandle >> grow [
 	entry grow
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryHandle >> grownBy: length [
 	entry grownBy: length
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryHandle >> isOpen [
 	^ entry notNil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> open [
 	entry := self basicOpen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryHandle >> size [
 	"Return the size for the internal entry"
 	^ entry internalSize
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> sync [
 	self flush
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> truncate [
 	entry truncate
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryHandle >> truncateTo: anInteger [
 	entry truncateTo: anInteger
 ]

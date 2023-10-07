@@ -2,24 +2,26 @@
 I am the FFI backend implemented by using TFFI
 "
 Class {
-	#name : #TFFIBackend,
-	#superclass : #FFIBackend,
-	#category : #'ThreadedFFI-Base'
+	#name : 'TFFIBackend',
+	#superclass : 'FFIBackend',
+	#category : 'ThreadedFFI-Base',
+	#package : 'ThreadedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #detecting }
+{ #category : 'detecting' }
 TFFIBackend class >> isAvailable [
 
 	^ self new isAvailable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFIBackend class >> priority [
 
 	^ 10
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFIBackend >> allocate: byteSize [
 
 	"Primitive. Allocate an object on the external heap."
@@ -28,20 +30,20 @@ TFFIBackend >> allocate: byteSize [
 	^ self primitiveFailed
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFIBackend >> calloutAPIClass [
 
 	^ TFCalloutAPI
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFIBackend >> free: anExternalAddress [
 
 	<primitive:'primitiveFFIFree'>
 	^self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFIBackend >> integerOfObject: anObject at: byteOffset put: value size: nBytes signed: aBoolean [
 	"Primitive. Store the given value as integer of nBytes size
 	in the receiver. Fail if the value is out of range.
@@ -51,7 +53,7 @@ TFFIBackend >> integerOfObject: anObject at: byteOffset put: value size: nBytes 
 	^self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFIBackend >> integerOfObject: anObject at: byteOffset size: nBytes signed: aBoolean [
 	"Primitive. Return an integer of nBytes size from the receiver.
 	Note: This primitive will access memory in the outer space if
@@ -60,13 +62,13 @@ TFFIBackend >> integerOfObject: anObject at: byteOffset size: nBytes signed: aBo
 	^self primitiveFailed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TFFIBackend >> isAvailable [
 
 	^ [ self loadSymbol: #primitiveLoadSymbolFromModule module: nil. true ] onErrorDo: [ false ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFIBackend >> loadSymbol: moduleSymbol module: module [
 
 	| encodedString |
@@ -76,19 +78,19 @@ TFFIBackend >> loadSymbol: moduleSymbol module: module [
 	^ self primLoadSymbol: moduleSymbol module: encodedString
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 TFFIBackend >> lookupCallbackByAddress: address [
 
 	^ (TFCallbackQueue uniqueInstance lookupCallback: address) frontendCallback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFIBackend >> on: anObject float32At: offset [
 
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFIBackend >> on: anObject float32At: offset put: value [
 
 	value isFloat ifFalse: [
@@ -103,13 +105,13 @@ TFFIBackend >> on: anObject float32At: offset put: value [
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFIBackend >> on: anObject float64At: offset [
 
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFIBackend >> on: anObject float64At: offset put: value [
 
 	value isFloat ifFalse: [
@@ -124,10 +126,14 @@ TFFIBackend >> on: anObject float64At: offset put: value [
 	^ self primitiveFailed
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFIBackend >> primLoadSymbol: moduleSymbol module: module [
+
+	"The primitive is expected the module to be a utf8Encoded String."
 
 	<primitive: 'primitiveLoadSymbolFromModule'>
 
-	^ self primitiveFailed
+	^ SymbolNotFoundError
+		  symbolName: moduleSymbol
+		  module: (module ifNotNil: [ :m | m asByteArray utf8Decoded ])
 ]

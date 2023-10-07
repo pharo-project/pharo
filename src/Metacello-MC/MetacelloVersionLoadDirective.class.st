@@ -1,75 +1,77 @@
 Class {
-	#name : #MetacelloVersionLoadDirective,
-	#superclass : #MetacelloDirective,
+	#name : 'MetacelloVersionLoadDirective',
+	#superclass : 'MetacelloDirective',
 	#instVars : [
 		'loadDirectives'
 	],
-	#category : #'Metacello-MC-Directives'
+	#category : 'Metacello-MC-Directives',
+	#package : 'Metacello-MC',
+	#tag : 'Directives'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> add: aDirective [
 
 	self loadDirectives add: aDirective
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> directivesDo: aBlock [
 
 	aBlock value: self.
 	self loadDirectives do: [:directive | directive directivesDo: aBlock ].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> finalizeLoad: aGofer [
 	"nothing special for linear loads"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersionLoadDirective >> isExplicit [
 
 	^false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionLoadDirective >> label [
 
 	self spec == nil ifTrue: [ ^'' ].
 	^self spec label
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> loadAtomicLoadDirective: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadDirectives do: [:directive | directive loadUsing: aLoaderDirective gofer: aGofer ].
 	aLoaderDirective finalizeLoad: aGofer.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionLoadDirective >> loadDirectives [
 
 	loadDirectives == nil ifTrue: [ loadDirectives := OrderedCollection new ].
 	^ loadDirectives
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionLoadDirective >> loadDirectives: anObject [
 	loadDirectives := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> loadExplicitLoadDirective: aLoaderDirective gofer: aGofer [
 	"load has already been performed, no need to load again"
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadDirectives do: [:directive | directive loadUsing: aLoaderDirective gofer: aGofer ].
 	aLoaderDirective finalizeLoad: aGofer.
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionLoadDirective >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 
 	aPackageLoadDirective loader loadingSpecLoader 
@@ -77,7 +79,7 @@ MetacelloVersionLoadDirective >> loadPackageDirective: aPackageLoadDirective gof
 		gofer: aGofer
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionLoadDirective >> loadPostloadDirective: aPostloadDirective [ 
 
 	| block |
@@ -91,7 +93,7 @@ MetacelloVersionLoadDirective >> loadPostloadDirective: aPostloadDirective [
 			MetacelloNotification signal: ('Evaluated -> ', aPostloadDirective spec label, ' >> ', aPostloadDirective spec postLoadDoIt value asString)]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionLoadDirective >> loadPreloadDirective: aPreloadDirective [ 
 
 	| block |
@@ -105,7 +107,7 @@ MetacelloVersionLoadDirective >> loadPreloadDirective: aPreloadDirective [
 			MetacelloNotification signal: ('Evaluated -> ', aPreloadDirective spec label, ' >> ', aPreloadDirective spec preLoadDoIt value asString)]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> loadWithPolicy: aLoadPolicy [
 
 	| gofer |
@@ -115,31 +117,31 @@ MetacelloVersionLoadDirective >> loadWithPolicy: aLoadPolicy [
 	self loadUsing: self gofer: gofer
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> packageDirectivesDo: aBlock [
 
 	self loadDirectives do: [:directive | directive packageDirectivesDo: aBlock ].
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> packagesDo: aBlock [
 
 	self loadDirectives do: [:directive | directive packageDo: aBlock ].
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> prepostLoadDirectivesDo: aBlock [
 
 	self loadDirectives do: [:directive | directive prepostLoadDirectivesDo: aBlock ].
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> prepostLoadsDo: aBlock [
 
 	self loadDirectives do: [:directive | directive prepostLoadDo: aBlock ].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionLoadDirective >> printLoadDirectivesOn: aStream indent: indent [
 
 	self loadDirectives do: [:each |
@@ -147,14 +149,14 @@ MetacelloVersionLoadDirective >> printLoadDirectivesOn: aStream indent: indent [
 		each printOn: aStream indent: indent + 1 ].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionLoadDirective >> printOn: aStream indent: indent [
 
 	super printOn: aStream indent: indent.
 	self printLoadDirectivesOn: aStream indent: indent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionLoadDirective >> spec [
 	"Expected to be a MetacelloVersionSpec"
 	
@@ -166,27 +168,27 @@ MetacelloVersionLoadDirective >> spec [
 	^spec
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> versionDirectivesDepthFirstDo: aBlock [
 
 	self loadDirectives do: [:directive | directive versionDirectivesDepthFirstDo: aBlock ].
 	aBlock value: self.
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> versionDirectivesDo: aBlock [
 
 	aBlock value: self.
 	self loadDirectives do: [:directive | directive versionDirectivesDo: aBlock ].
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> versionDo: aBlock [
 
 	aBlock value: self.
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionLoadDirective >> versionsDo: aBlock [
 
 	self loadDirectives do: [:directive | directive versionDo: aBlock ].

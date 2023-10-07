@@ -1,31 +1,33 @@
 Class {
-	#name : #MetacelloCleanNotification,
-	#superclass : #Notification,
+	#name : 'MetacelloCleanNotification',
+	#superclass : 'Notification',
 	#instVars : [
 		'version'
 	],
-	#category : #'Metacello-Core-Exceptions-Notifications'
+	#category : 'Metacello-Core-Exceptions-Notifications',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Notifications'
 }
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 MetacelloCleanNotification class >> signal: aMetacelloVersion [
 
 	^ self new signal: aMetacelloVersion
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 MetacelloCleanNotification >> signal: aMetacelloVersion [
 
 	self version: aMetacelloVersion.
 	^ self signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCleanNotification >> version [
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCleanNotification >> version: anObject [
 	version := anObject
 ]

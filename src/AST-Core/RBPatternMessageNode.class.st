@@ -6,16 +6,18 @@ Instance Variables:
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one-argument method whereas `@keywords: would match 0 or more arguments)
 "
 Class {
-	#name : #RBPatternMessageNode,
-	#superclass : #RBMessageNode,
+	#name : 'RBPatternMessageNode',
+	#superclass : 'RBMessageNode',
 	#instVars : [
 		'isList',
 		'isCascadeList'
 	],
-	#category : #'AST-Core-Pattern'
+	#category : 'AST-Core-Pattern',
+	#package : 'AST-Core',
+	#tag : 'Pattern'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBPatternMessageNode class >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 
 	^aSelector value asSymbol isPatternVariable
@@ -33,7 +35,7 @@ RBPatternMessageNode class >> receiver: aValueNode selector: aSelector keywordsP
 				arguments: valueNodes]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternMessageNode >> copyInContext: aDictionary [
 	| keywordSelector |
 	self isList
@@ -47,22 +49,22 @@ RBPatternMessageNode >> copyInContext: aDictionary [
 		arguments: (self copyList: self arguments inContext: aDictionary)
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternMessageNode >> isList [
 	^isCascadeList and: [parent notNil and: [parent isCascade]]
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternMessageNode >> isPatternNode [
 	^true
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternMessageNode >> isSelectorList [
 	^isList
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternMessageNode >> match: aNode inContext: aDictionary [
 	aNode class == self matchingClass ifFalse: [^false].
 	(receiver match: aNode receiver inContext: aDictionary) ifFalse: [^false].
@@ -75,7 +77,7 @@ RBPatternMessageNode >> match: aNode inContext: aDictionary [
 	^self matchArgumentsAgainst: aNode inContext: aDictionary
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternMessageNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	self arguments size = aNode arguments size
 		ifFalse: [ ^ false ].
@@ -87,7 +89,7 @@ RBPatternMessageNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	^ true
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternMessageNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	self selectorParts with: aNode selectorParts do: [ :first :second |
 		| keyword |
@@ -102,12 +104,12 @@ RBPatternMessageNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBPatternMessageNode >> matchingClass [
 	^RBMessageNode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPatternMessageNode >> receiver: aValueNode selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	| message |
 	self
@@ -132,7 +134,7 @@ RBPatternMessageNode >> receiver: aValueNode selector: aSymbol keywordsPositions
 						ifFalse: [^self]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternMessageNode >> sentMessages [
 	^ super sentMessages
 		remove: self selector ifAbsent: [ ];

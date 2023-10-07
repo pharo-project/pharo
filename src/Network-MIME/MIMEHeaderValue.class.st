@@ -10,16 +10,18 @@ For traditional non-MIME headers, the complete value returned for mainValue and 
 For MIME headers, both mainValue and parameters are used.
 "
 Class {
-	#name : #MIMEHeaderValue,
-	#superclass : #Object,
+	#name : 'MIMEHeaderValue',
+	#superclass : 'Object',
 	#instVars : [
 		'mainValue',
 		'parameters'
 	],
-	#category : #'Network-MIME-Base'
+	#category : 'Network-MIME-Base',
+	#package : 'Network-MIME',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEHeaderValue class >> forField: aFName fromString: aString [
 	"Create a MIMEHeaderValue from aString. How it is parsed depends on whether it is a MIME specific field or a generic header field."
 
@@ -28,7 +30,7 @@ MIMEHeaderValue class >> forField: aFName fromString: aString [
 		ifFalse: [ self fromTraditionalHeader: aString ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEHeaderValue class >> fromMIMEHeader: aString [
 	"This is the value of a MIME header field and so is parsed to extract the various parts"
 	| parts newValue parms |
@@ -55,7 +57,7 @@ MIMEHeaderValue class >> fromMIMEHeader: aString [
 	^ newValue
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEHeaderValue class >> fromTraditionalHeader: aString [
 	"This is a traditional non-MIME header (like Subject:) and so should be stored whole"
 
@@ -66,7 +68,7 @@ MIMEHeaderValue class >> fromTraditionalHeader: aString [
 	^newValue
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MIMEHeaderValue >> asHeaderValue [
 	| strm |
 	strm := (String new: 20) writeStream.
@@ -82,32 +84,32 @@ MIMEHeaderValue >> asHeaderValue [
 	^ strm contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEHeaderValue >> mainValue [
 	^mainValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEHeaderValue >> mainValue: anObject [
 	mainValue := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEHeaderValue >> parameterAt: aParameter put: value [
 	parameters at: aParameter put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEHeaderValue >> parameters [
 	^parameters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEHeaderValue >> parameters: anObject [
 	parameters := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MIMEHeaderValue >> printOn: aStream [
 	super printOn: aStream.
 	aStream

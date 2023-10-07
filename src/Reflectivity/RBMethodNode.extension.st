@@ -1,12 +1,12 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RBMethodNode >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
 	^(self optionsFor: aLink) includes: aSymbol
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RBMethodNode >> metaLinkOptions [
 	^{
 	#metaLinkOptionsFromClassAndMethod -> #( + optionCompileOnLinkInstallation).
@@ -14,7 +14,7 @@ RBMethodNode >> metaLinkOptions [
 	}
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 	| options |
 	options := Set new.
@@ -34,7 +34,7 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 	^ options
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RBMethodNode >> optionsFor: aLink [
 	| options |
 	options := aLink options copy.

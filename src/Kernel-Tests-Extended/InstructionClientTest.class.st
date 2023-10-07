@@ -5,12 +5,14 @@ This is the unit test for the class InstructionClient. Unit tests are a good way
 	- the sunit class category
 "
 Class {
-	#name : #InstructionClientTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Extended-Methods'
+	#name : 'InstructionClientTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Extended-Methods',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Methods'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 InstructionClientTest >> testInstructions [
 	"just interpret all of methods of Object"
 

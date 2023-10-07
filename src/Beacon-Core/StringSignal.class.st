@@ -10,34 +10,36 @@ This is a simple signal that holds a message.
 
 "
 Class {
-	#name : #StringSignal,
-	#superclass : #BeaconSignal,
+	#name : 'StringSignal',
+	#superclass : 'BeaconSignal',
 	#instVars : [
 		'message'
 	],
-	#category : #'Beacon-Core-Signals'
+	#category : 'Beacon-Core-Signals',
+	#package : 'Beacon-Core',
+	#tag : 'Signals'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StringSignal class >> emit: aString [
 	^ self new
 		message: aString;
 		emit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StringSignal >> message [
 
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StringSignal >> message: anObject [
 
 	message := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 StringSignal >> printOneLineContentsOn: stream [
 
 	stream nextPutAll: self message

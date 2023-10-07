@@ -19,17 +19,19 @@ foo
 ]]]
 "
 Class {
-	#name : #ReGuardClauseRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReGuardClauseRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReGuardClauseRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReGuardClauseRule >> initialize [
 	super initialize.
 	self
@@ -57,7 +59,7 @@ ReGuardClauseRule >> initialize [
 					`@.Statements1'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReGuardClauseRule >> name [
 	^ 'Replace single branch conditional with guard clause'
 ]

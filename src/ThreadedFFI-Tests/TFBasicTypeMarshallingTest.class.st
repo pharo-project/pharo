@@ -1,10 +1,11 @@
 Class {
-	#name : #TFBasicTypeMarshallingTest,
-	#superclass : #TFTestCase,
-	#category : #'ThreadedFFI-Tests'
+	#name : 'TFBasicTypeMarshallingTest',
+	#superclass : 'TFTestCase',
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFBasicTypeMarshallingTest >> assertSignedIntsWithFunction: function [
 
 	| return |
@@ -12,7 +13,7 @@ TFBasicTypeMarshallingTest >> assertSignedIntsWithFunction: function [
 	self assert: return equals: -1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFBasicTypeMarshallingTest >> assertUnsignedIntsWithFunction: function [
 
 	| return |
@@ -20,7 +21,7 @@ TFBasicTypeMarshallingTest >> assertUnsignedIntsWithFunction: function [
 	self assert: return equals: 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFBasicTypeMarshallingTest >> externalFunction: name ofType: type [
 
 	^ TFExternalFunction
@@ -31,7 +32,7 @@ TFBasicTypeMarshallingTest >> externalFunction: name ofType: type [
 			returnType: type)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumCharEnum [
 
 	| function |
@@ -39,7 +40,7 @@ TFBasicTypeMarshallingTest >> testSumCharEnum [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumDouble [
 
 	| function return |
@@ -49,7 +50,7 @@ TFBasicTypeMarshallingTest >> testSumDouble [
 	self assert: (return between: 5.79999999 and: 5.80001)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumFloat [
 
 	| function return |
@@ -59,7 +60,7 @@ TFBasicTypeMarshallingTest >> testSumFloat [
 	self assert: (return between: 5.79999999 and: 5.80001)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedChar [
 
 	| function |
@@ -67,7 +68,7 @@ TFBasicTypeMarshallingTest >> testSumSignedChar [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedInt [
 
 	| function |
@@ -75,7 +76,7 @@ TFBasicTypeMarshallingTest >> testSumSignedInt [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedInt16 [
 
 	| function |
@@ -83,7 +84,7 @@ TFBasicTypeMarshallingTest >> testSumSignedInt16 [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedInt32 [
 
 	| function |
@@ -91,7 +92,7 @@ TFBasicTypeMarshallingTest >> testSumSignedInt32 [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedInt64 [
 
 	| function |
@@ -99,7 +100,7 @@ TFBasicTypeMarshallingTest >> testSumSignedInt64 [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedInt8 [
 
 	| function |
@@ -107,7 +108,7 @@ TFBasicTypeMarshallingTest >> testSumSignedInt8 [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedIntEnum [
 
 	| function |
@@ -115,7 +116,7 @@ TFBasicTypeMarshallingTest >> testSumSignedIntEnum [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedLong [
 
 	| function |
@@ -123,7 +124,7 @@ TFBasicTypeMarshallingTest >> testSumSignedLong [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumSignedShort [
 
 	| function |
@@ -131,7 +132,7 @@ TFBasicTypeMarshallingTest >> testSumSignedShort [
 	self assertSignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedChar [
 
 	| function |
@@ -139,7 +140,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedChar [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedInt [
 
 	| function |
@@ -147,7 +148,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedInt [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedInt16 [
 
 	| function |
@@ -155,7 +156,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedInt16 [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedInt32 [
 
 	| function |
@@ -163,7 +164,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedInt32 [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedInt64 [
 
 	| function |
@@ -171,7 +172,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedInt64 [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedInt8 [
 
 	| function |
@@ -179,7 +180,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedInt8 [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedIntEnum [
 
 	| function |
@@ -187,7 +188,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedIntEnum [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedLong [
 
 	| function |
@@ -195,7 +196,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedLong [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testSumUnsignedShort [
 
 	| function |
@@ -203,7 +204,7 @@ TFBasicTypeMarshallingTest >> testSumUnsignedShort [
 	self assertUnsignedIntsWithFunction: function
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingTest >> testUnrefPointer [
 
 	| function holder pointerToHolder return |

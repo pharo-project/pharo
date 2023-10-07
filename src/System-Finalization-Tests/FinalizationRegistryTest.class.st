@@ -1,6 +1,6 @@
 Class {
-	#name : #FinalizationRegistryTest,
-	#superclass : #TestCase,
+	#name : 'FinalizationRegistryTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'finalizationRegistry',
 		'finalizationCount',
@@ -11,10 +11,11 @@ Class {
 		'finalizer',
 		'failed'
 	],
-	#category : #'System-Finalization-Tests'
+	#category : 'System-Finalization-Tests',
+	#package : 'System-Finalization-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryTest >> handleErrorsDuring: aBlock [
 
 	"Extending the error handler from the finalization registry"
@@ -24,7 +25,7 @@ FinalizationRegistryTest >> handleErrorsDuring: aBlock [
 		do: [ :e | failed := true ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FinalizationRegistryTest >> setUp [
 
 	super setUp.
@@ -49,7 +50,7 @@ FinalizationRegistryTest >> setUp [
 	finalizedObject := finalizerThatCounts
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryTest >> testFinalization [
 
 	finalizationRegistry add: finalizer.
@@ -58,7 +59,7 @@ FinalizationRegistryTest >> testFinalization [
 	self assert: finalizationCount equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryTest >> testFinalizationRemovesEntryFromRegistry [
 
 	finalizationRegistry add: finalizer.
@@ -67,7 +68,7 @@ FinalizationRegistryTest >> testFinalizationRemovesEntryFromRegistry [
 	self assertEmpty: finalizationRegistry
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryTest >> testFinalizationWithMultipleFinalizersPerObject [
 
 	finalizedObject := Object new.
@@ -81,7 +82,7 @@ FinalizationRegistryTest >> testFinalizationWithMultipleFinalizersPerObject [
 	self assert: finalizationCount equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryTest >> testFinalizationWithOnFork [
 
 	finalizationRegistry
@@ -103,7 +104,7 @@ FinalizationRegistryTest >> testFinalizationWithOnFork [
 	self assert: finalizationCount equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryTest >> testFinalizationWithOnFork2 [
 
 	finalizationRegistry
@@ -124,13 +125,13 @@ FinalizationRegistryTest >> testFinalizationWithOnFork2 [
 	self assert: finalizationCount equals: 1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FinalizationRegistryTest >> triggerFinalization [
 
 	self triggerFinalizationTimes: 1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FinalizationRegistryTest >> triggerFinalizationTimes: timesToWaitForFinalization [
 
 	"Nil the finalized object to trigger finalization.

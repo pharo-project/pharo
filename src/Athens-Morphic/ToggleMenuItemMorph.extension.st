@@ -1,6 +1,6 @@
-Extension { #name : #ToggleMenuItemMorph }
+Extension { #name : 'ToggleMenuItemMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ToggleMenuItemMorph >> drawKeyTextOnAthenCanvas: aCanvas [
 	"Draw the key text on the canvas."
 
@@ -11,14 +11,14 @@ ToggleMenuItemMorph >> drawKeyTextOnAthenCanvas: aCanvas [
 		drawOnAthensCanvas: aCanvas
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ToggleMenuItemMorph >> drawOnAthensCanvas: anAthensCanvas [
 
 	super drawOnAthensCanvas: anAthensCanvas.
 	self drawKeyTextOnAthenCanvas: anAthensCanvas
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ToggleMenuItemMorph >> drawText: aStringOrText onAthensCanvas: aCanvas in: aRectangle color: stringColor [
 	| wrapper |
 	"Draw the text on the canvas within the given bounds."

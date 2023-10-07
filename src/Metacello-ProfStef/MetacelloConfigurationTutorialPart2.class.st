@@ -1,10 +1,11 @@
 Class {
-	#name : #MetacelloConfigurationTutorialPart2,
-	#superclass : #AbstractTutorial,
-	#category : #'Metacello-ProfStef'
+	#name : 'MetacelloConfigurationTutorialPart2',
+	#superclass : 'AbstractTutorial',
+	#category : 'Metacello-ProfStef',
+	#package : 'Metacello-ProfStef'
 }
 
-{ #category : #intro }
+{ #category : 'intro' }
 MetacelloConfigurationTutorialPart2 >> introductionText [
 
 	^'Covers project reference specifications:
@@ -14,7 +15,7 @@ MetacelloConfigurationTutorialPart2 >> introductionText [
 	3. Have fun!"'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloConfigurationTutorialPart2 >> lesson07 [
 	^Lesson
 		title: 'Lesson 7'
@@ -37,7 +38,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloConfigurationTutorialPart2 >> lesson10 [
 	^Lesson
 		title: 'Lesson 10'
@@ -75,7 +76,7 @@ ProfStef next.
 
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloConfigurationTutorialPart2 >> lesson11 [
 	^Lesson
 		title: 'Lesson 11'
@@ -107,7 +108,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloConfigurationTutorialPart2 >> lesson12 [
 	^Lesson
 		title: 'Lesson 12'
@@ -135,7 +136,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloConfigurationTutorialPart2 >> lesson13 [
 	^Lesson
 		title: 'Lesson 13'
@@ -163,7 +164,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloConfigurationTutorialPart2 >> lesson14 [
 	^Lesson
 		title: 'Lesson 14'
@@ -240,7 +241,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 MetacelloConfigurationTutorialPart2 >> tutorial [
 	^ #(#lesson07 #lesson10 #lesson11 #lesson12 #lesson13 #lesson14)
 ]

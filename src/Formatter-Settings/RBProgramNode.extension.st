@@ -1,20 +1,20 @@
-Extension { #name : #RBProgramNode }
+Extension { #name : 'RBProgramNode' }
 
-{ #category : #'*Formatter-Settings' }
+{ #category : '*Formatter-Settings' }
 RBProgramNode class >> defaultFormatter [
 
 	^ self formatters first
 
 ]
 
-{ #category : #'*Formatter-Settings' }
+{ #category : '*Formatter-Settings' }
 RBProgramNode class >> formatters [
 
 	^ (RBAbstractFormatter subclasses reject: [ :each | each isAbstract ])
 			sort: [ :a :b | a priority > b priority ]
 ]
 
-{ #category : #'*Formatter-Settings' }
+{ #category : '*Formatter-Settings' }
 RBProgramNode class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 
@@ -23,7 +23,7 @@ RBProgramNode class >> settingsGroupOn: aBuilder [
 		parent: #codeBrowsing
 ]
 
-{ #category : #'*Formatter-Settings' }
+{ #category : '*Formatter-Settings' }
 RBProgramNode class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #formatterClass)

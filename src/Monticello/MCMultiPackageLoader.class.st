@@ -2,12 +2,14 @@
 A PackageLoader doing some additional cross-package checks
 "
 Class {
-	#name : #MCMultiPackageLoader,
-	#superclass : #MCPackageLoader,
-	#category : #'Monticello-Loading'
+	#name : 'MCMultiPackageLoader',
+	#superclass : 'MCPackageLoader',
+	#category : 'Monticello-Loading',
+	#package : 'Monticello',
+	#tag : 'Loading'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MCMultiPackageLoader >> analyze [
 	| index |
 	index := MCDefinitionIndex definitions: additions.

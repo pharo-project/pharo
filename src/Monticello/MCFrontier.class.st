@@ -2,26 +2,28 @@
 Utility class
 "
 Class {
-	#name : #MCFrontier,
-	#superclass : #Object,
+	#name : 'MCFrontier',
+	#superclass : 'Object',
 	#instVars : [
 		'frontier',
 		'bag'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCFrontier class >> frontierOn: aVersionInfo [
 	^ self frontierOnAll: (Array with: aVersionInfo)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCFrontier class >> frontierOn: aVersionInfo and: otherVersionInfo [
 	^ self frontierOnAll: (Array with: aVersionInfo with: otherVersionInfo)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCFrontier class >> frontierOnAll: aCollection [
 	| remaining  allVersions |
 	remaining := Bag new.
@@ -30,18 +32,18 @@ MCFrontier class >> frontierOnAll: aCollection [
 	^self new frontier: aCollection bag: remaining
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFrontier >> frontier [
 	^frontier
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCFrontier >> frontier: f bag: remaining [
 	frontier := f asOrderedCollection.
 	bag := remaining
 ]
 
-{ #category : #advancing }
+{ #category : 'advancing' }
 MCFrontier >> remove: aVersionInfo [
 	frontier remove: aVersionInfo.
 	aVersionInfo ancestors  do:
@@ -52,7 +54,7 @@ MCFrontier >> remove: aVersionInfo [
 	^aVersionInfo
 ]
 
-{ #category : #advancing }
+{ #category : 'advancing' }
 MCFrontier >> removeAll: collection [
 	collection do: [ :n | self remove: n]
 ]

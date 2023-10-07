@@ -13,8 +13,8 @@ Instance Variables
 	tags:			<Array of: Symbol>
 "
 Class {
-	#name : #STONTestDomainObject,
-	#superclass : #Object,
+	#name : 'STONTestDomainObject',
+	#superclass : 'Object',
 	#instVars : [
 		'created',
 		'modified',
@@ -26,10 +26,12 @@ Class {
 		'bytes',
 		'boolean'
 	],
-	#category : #'STON-Tests-Support'
+	#category : 'STON-Tests-Support',
+	#package : 'STON-Tests',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 STONTestDomainObject class >> dummy [
 	^ self new
 		integer: 999999 atRandom;
@@ -45,12 +47,12 @@ STONTestDomainObject class >> dummy [
 		yourself
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 STONTestDomainObject class >> stonName [
 	^ #TestDomainObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 STONTestDomainObject >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -76,67 +78,67 @@ STONTestDomainObject >> = anObject [
 																and: [ tags = anObject tags ] ] ] ] ] ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> boolean [
 	^ boolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> boolean: anObject [
 	boolean := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> bytes [
 	^ bytes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> bytes: anObject [
 	bytes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> color: anObject [
 	color := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> created [
 	^ created
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> created: anObject [
 	created := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> float [
 	^ float
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> float: anObject [
 	float := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 STONTestDomainObject >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
@@ -150,37 +152,37 @@ STONTestDomainObject >> hash [
 								bitXor: (boolean hash bitXor: (float hash bitXor: (bytes hash bitXor: (integer hash bitXor: tags hash)))))))
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 STONTestDomainObject >> initialize [
 	created := modified := DateAndTime now
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> integer [
 	^ integer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> integer: anObject [
 	integer := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> modified [
 	^ modified
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> modified: anObject [
 	modified := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> tags [
 	^ tags
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestDomainObject >> tags: anObject [
 	tags := anObject
 ]

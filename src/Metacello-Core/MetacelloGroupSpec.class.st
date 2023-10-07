@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloGroupSpec,
-	#superclass : #MetacelloAbstractPackageSpec,
-	#category : #'Metacello-Core-Specs'
+	#name : 'MetacelloGroupSpec',
+	#superclass : 'MetacelloAbstractPackageSpec',
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGroupSpec >> answers: aListOfPairs [
 
 	self shouldNotImplement
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloGroupSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
 
 	aMember methodUpdateSelector == #remove:
@@ -27,7 +29,7 @@ MetacelloGroupSpec >> configMethodCascadeOn: aStream member: aMember last: lastC
 		ifFalse: [ aStream nextPut: $;; cr ].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloGroupSpec >> configMethodOn: aStream indent: indent [
 
 	aStream 
@@ -39,29 +41,29 @@ MetacelloGroupSpec >> configMethodOn: aStream indent: indent [
 	aStream nextPut: $.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
   ^ #()
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloGroupSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
 	groupBlock value: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGroupSpec >> requiredSpecsForPackageOrdering: aVersionSpec [
   ^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGroupSpec >> requires: aCollection [
 
 	self shouldNotImplement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGroupSpec >> requiresSpecsForPackageOrdering: aVersionSpec [
   "expand the names in the group to a package or project"
 
@@ -80,7 +82,7 @@ MetacelloGroupSpec >> requiresSpecsForPackageOrdering: aVersionSpec [
   ^ packageOrProjectSpecs
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGroupSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
   "expand the names in the group to a package or project"
 

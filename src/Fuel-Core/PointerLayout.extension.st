@@ -1,6 +1,6 @@
-Extension { #name : #PointerLayout }
+Extension { #name : 'PointerLayout' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 PointerLayout >> hasSlotScope [
 	^ true
 ]

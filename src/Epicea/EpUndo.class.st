@@ -2,29 +2,31 @@
 I represent a Undo operation performed in a EpLogBrowser.
 "
 Class {
-	#name : #EpUndo,
-	#superclass : #EpLogBrowserOperation,
-	#category : #'Epicea-Model'
+	#name : 'EpUndo',
+	#superclass : 'EpLogBrowserOperation',
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpUndo class >> forAll: aCollectionOfEntryReferences [
 	^ self basicNew
 		initializeWith: aCollectionOfEntryReferences;
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpUndo >> accept: aChangeVisitor [
 	^ aChangeVisitor visitUndo: self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 EpUndo >> copyWithEntryReferences: aCollection [
 	^ self class forAll: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpUndo >> title [
 	^ 'Revert changes'
 ]

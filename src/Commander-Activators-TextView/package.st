@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Activators-TextView' }
+Package { #name : 'Commander-Activators-TextView' }

@@ -1,6 +1,6 @@
-Extension { #name : #ClassModificationApplied }
+Extension { #name : 'ClassModificationApplied' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClassModificationApplied >> affectsMethod: aMethod [
 	"Class modification leads to methods recompilation (because variables are changed).
 	So it means that this event affects any method of modified class"
@@ -8,7 +8,7 @@ ClassModificationApplied >> affectsMethod: aMethod [
 	^self classAffected == aMethod origin
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClassModificationApplied >> affectsVariablesOf: aClass [
 	"Any class has ClassVariables which are visible from both sides: instance side and class 	side.
 	Therefore any class modification can affect variables from both class sides.

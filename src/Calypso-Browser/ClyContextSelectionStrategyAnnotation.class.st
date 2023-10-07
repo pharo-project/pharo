@@ -4,21 +4,23 @@ I describe the way the context of browser selection should be actived
 
 "
 Class {
-	#name : #ClyContextSelectionStrategyAnnotation,
-	#superclass : #ClassAnnotation,
+	#name : 'ClyContextSelectionStrategyAnnotation',
+	#superclass : 'ClassAnnotation',
 	#instVars : [
 		'targetItemType'
 	],
-	#category : #'Calypso-Browser-Contexts'
+	#category : 'Calypso-Browser-Contexts',
+	#package : 'Calypso-Browser',
+	#tag : 'Contexts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyContextSelectionStrategyAnnotation class >> for: aBrowserClass selectionType: aScopeClass [
 	^(self for: aBrowserClass)
 		targetItemType: aScopeClass
 ]
 
-{ #category : #query }
+{ #category : 'query' }
 ClyContextSelectionStrategyAnnotation class >> selectContextOf: aSelection for: aBrowser [
 
 	self activeInstancesInContext: aBrowser do: [ :strategy |
@@ -28,7 +30,7 @@ ClyContextSelectionStrategyAnnotation class >> selectContextOf: aSelection for: 
 	^ClyUnknownBrowserContext for: aBrowser
 ]
 
-{ #category : #query }
+{ #category : 'query' }
 ClyContextSelectionStrategyAnnotation class >> selectContextOfSingleItem: aDataSourceItem for: aBrowser [
 
 	self activeInstancesInContext: aBrowser do: [ :strategy |
@@ -38,19 +40,19 @@ ClyContextSelectionStrategyAnnotation class >> selectContextOfSingleItem: aDataS
 	^ClyUnknownBrowserContext for: aBrowser
 ]
 
-{ #category : #'context creation' }
+{ #category : 'context creation' }
 ClyContextSelectionStrategyAnnotation >> createBrowserContextOf: aSelection for: aBrowser [
 
 	^annotatedClass ofSelection: aSelection for: aBrowser
 ]
 
-{ #category : #'context creation' }
+{ #category : 'context creation' }
 ClyContextSelectionStrategyAnnotation >> createBrowserContextOfSingleItem: aDataSourceItem for: aBrowser [
 
 	^annotatedClass of: {aDataSourceItem} for: aBrowser
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyContextSelectionStrategyAnnotation >> printOn: aStream [
 	super printOn: aStream.
 
@@ -65,7 +67,7 @@ ClyContextSelectionStrategyAnnotation >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyContextSelectionStrategyAnnotation >> shouldBeAppliedFor: aSelectionOrItem [
 
 	targetItemType ifNil: [
@@ -75,12 +77,12 @@ ClyContextSelectionStrategyAnnotation >> shouldBeAppliedFor: aSelectionOrItem [
 	^aSelectionOrItem isBasedOnItemType: targetItemType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyContextSelectionStrategyAnnotation >> targetItemType [
 	^ targetItemType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyContextSelectionStrategyAnnotation >> targetItemType: aClass [
 	targetItemType := aClass
 ]

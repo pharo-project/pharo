@@ -4,68 +4,70 @@ I contain an AST and provide information for the autocompletion based on it.
 See CoStaticBenchmarks.
 "
 Class {
-	#name : #CoBenchmarkContext,
-	#superclass : #Object,
+	#name : 'CoBenchmarkContext',
+	#superclass : 'Object',
 	#instVars : [
 		'callsite',
 		'position'
 	],
-	#category : #'HeuristicCompletion-Model-Benchmarks'
+	#category : 'HeuristicCompletion-Model-Benchmarks',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Benchmarks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> callsite [
 	^ callsite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> callsite: anObject [
 	callsite := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> completionClass [
 
 	^ callsite methodNode methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> doItContext [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> doItRequestor [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> environmentAt: aString ifPresent: aBlockClosure [
 
 	self class environment at: aString ifPresent: aBlockClosure
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoBenchmarkContext >> isScripting [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> position [
 
 	^ position first + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> position: aPosition [
 
 	position := aPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBenchmarkContext >> source [
 
 	^ callsite methodNode method sourceCode

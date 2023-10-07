@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfNewValueHolder }
+Package { #name : 'BaselineOfNewValueHolder' }

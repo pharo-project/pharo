@@ -10,45 +10,47 @@ Internal Representation and Key Implementation Points.
 	stringPattern:		<ClyStringPatter>
 "
 Class {
-	#name : #ClyTableFilterFactory,
-	#superclass : #Object,
+	#name : 'ClyTableFilterFactory',
+	#superclass : 'Object',
 	#instVars : [
 		'itemFilterClass',
 		'stringPattern'
 	],
-	#category : #'Calypso-Browser-Table'
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTableFilterFactory class >> of: anItemStringFilterClass [
 	^self new
 		itemFilterClass: anItemStringFilterClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTableFilterFactory class >> of: anItemStringFilterClass using: aStringPattern [
 	^(self of: anItemStringFilterClass)
 		stringPattern: aStringPattern
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTableFilterFactory >> initialize [
 	super initialize.
 
 	stringPattern := ClySubstringPattern with: '' caseSensitive: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableFilterFactory >> itemFilterClass [
 	^ itemFilterClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableFilterFactory >> itemFilterClass: anObject [
 	itemFilterClass := anObject
 ]
 
-{ #category : #'filter creation' }
+{ #category : 'filter creation' }
 ClyTableFilterFactory >> pattern: aString [
 	"The method is called from fast table filter function to create new instance of item filter"
 	| newPattern |
@@ -57,12 +59,12 @@ ClyTableFilterFactory >> pattern: aString [
 	^itemFilterClass pattern: newPattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableFilterFactory >> stringPattern [
 	^ stringPattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableFilterFactory >> stringPattern: anObject [
 	stringPattern := anObject
 ]

@@ -15,21 +15,23 @@ Internal Representation and Key Implementation Points.
 	value:		<String>
 "
 Class {
-	#name : #ClyStringPattern,
-	#superclass : #Object,
+	#name : 'ClyStringPattern',
+	#superclass : 'Object',
 	#instVars : [
 		'value'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyStringPattern class >> with: patternString [
 	^self new
 		value: patternString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyStringPattern >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -40,19 +42,19 @@ ClyStringPattern >> = anObject [
 	^ value = anObject value
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyStringPattern >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ value hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyStringPattern >> matches: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyStringPattern >> printOn: aStream [
 	super printOn: aStream.
 
@@ -62,12 +64,12 @@ ClyStringPattern >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyStringPattern >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyStringPattern >> value: anObject [
 	value := anObject
 ]

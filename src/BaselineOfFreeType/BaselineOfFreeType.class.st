@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfFreeType,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfFreeType
+	#name : 'BaselineOfFreeType',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfFreeType',
+	#package : 'BaselineOfFreeType'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfFreeType >> baseline: spec [
 	<baseline>
 	
@@ -19,7 +20,7 @@ BaselineOfFreeType >> baseline: spec [
 		spec group: 'tests' with: #('core' 'FreeType-Tests') ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfFreeType >> project [
 	
 	| aProject |

@@ -2,25 +2,27 @@
 I am a visitor to find differents combinations of sequences nodes
 "
 Class {
-	#name : #RBCombinatorVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'RBCombinatorVisitor',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'combinations'
 	],
-	#category : #'Refactoring-Core-Base'
+	#category : 'Refactoring-Core-Base',
+	#package : 'Refactoring-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCombinatorVisitor >> combinations [
 	^ combinations
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBCombinatorVisitor >> initialize [
 	combinations := OrderedCollection new
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBCombinatorVisitor >> visitSequenceNode: aSequenceNode [
 	| starts ends |
 	starts := aSequenceNode statements collect: [ :node | node start ].

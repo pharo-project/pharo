@@ -1,6 +1,6 @@
-Extension { #name : #Exception }
+Extension { #name : 'Exception' }
 
-{ #category : #'*Commander-Core' }
+{ #category : '*Commander-Core' }
 Exception >> notifyUserOfCommand: aCommand [
 
 	self pass

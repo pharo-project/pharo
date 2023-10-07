@@ -20,40 +20,42 @@ primitiveOperation
 		ifFalse: [ self primitiveFailed ].
 "
 Class {
-	#name : #PrimitiveError,
-	#superclass : #Object,
+	#name : 'PrimitiveError',
+	#superclass : 'Object',
 	#instVars : [
 		'errorName',
 		'errorCode'
 	],
-	#category : #'System-Support-VM'
+	#category : 'System-Support-VM',
+	#package : 'System-Support',
+	#tag : 'VM'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimitiveError >> errorCode [
 
 	^errorCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimitiveError >> errorCode: anInteger [
 
 	errorCode := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimitiveError >> errorName [
 
 	^errorName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimitiveError >> errorName: aSymbol [
 
 	errorName := aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PrimitiveError >> isPrimitiveError [
 	"Answer a boolean indicating if the receiver is an error object returned by a primitive"
 	^true

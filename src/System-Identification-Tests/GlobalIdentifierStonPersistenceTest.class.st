@@ -2,17 +2,18 @@
 SUnit tests for GlobalIdentifierStonPersistence
 "
 Class {
-	#name : #GlobalIdentifierStonPersistenceTest,
-	#superclass : #GlobalIdentifierPersistenceTest,
-	#category : #'System-Identification-Tests'
+	#name : 'GlobalIdentifierStonPersistenceTest',
+	#superclass : 'GlobalIdentifierPersistenceTest',
+	#category : 'System-Identification-Tests',
+	#package : 'System-Identification-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierStonPersistenceTest >> persistenceClass [
 	^ GlobalIdentifierStonPersistence
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierStonPersistenceTest >> setUpPreferencesAndChecker [
 	| memory |
 	memory := FileSystem memory.

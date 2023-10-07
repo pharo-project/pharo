@@ -10,17 +10,18 @@ Note that while scope and result in that cases are use same type of trait relati
 - trat scope is responsible to retrieve trait related classes from given scope
 "
 Class {
-	#name : #ClySwitchTraitHierarchyModeCommand,
-	#superclass : #ClySwitchClassViewModeCommand,
-	#category : #'Calypso-SystemPlugins-Traits-Browser'
+	#name : 'ClySwitchTraitHierarchyModeCommand',
+	#superclass : 'ClySwitchClassViewModeCommand',
+	#category : 'Calypso-SystemPlugins-Traits-Browser',
+	#package : 'Calypso-SystemPlugins-Traits-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchTraitHierarchyModeCommand class >> isAbstract [
 	^self = ClySwitchTraitHierarchyModeCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchTraitHierarchyModeCommand >> execute [
 	| classScope |
 	classScope := browser classSelection asItemsScope: ClyClassScope.
@@ -30,18 +31,18 @@ ClySwitchTraitHierarchyModeCommand >> execute [
 		inScope: classScope, (classScope asScope: self traitScopeClass)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchTraitHierarchyModeCommand >> isAppliedToBrowser [
 
 	^browser classView showsItemsFromScope: self traitScopeClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchTraitHierarchyModeCommand >> requiredQueryResult [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchTraitHierarchyModeCommand >> traitScopeClass [
 	self subclassResponsibility
 ]

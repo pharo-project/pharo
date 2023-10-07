@@ -2,21 +2,22 @@
 A TickSelectionCheckboxButtonMorph is the button hidden into the TickSelectionCheckboxMorph
 "
 Class {
-	#name : #TickSelectionCheckboxButtonMorph,
-	#superclass : #CheckboxButtonMorph,
+	#name : 'TickSelectionCheckboxButtonMorph',
+	#superclass : 'CheckboxButtonMorph',
 	#instVars : [
 		'index'
 	],
-	#category : #'Morphic-Widgets-TickList'
+	#category : 'Morphic-Widgets-TickList',
+	#package : 'Morphic-Widgets-TickList'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickSelectionCheckboxButtonMorph >> index: anIndex [
 
 	index := anIndex
 ]
 
-{ #category : #event }
+{ #category : 'event' }
 TickSelectionCheckboxButtonMorph >> mouseUp: evt [
 	"Handle the transitions."
 	| result |
@@ -25,7 +26,7 @@ TickSelectionCheckboxButtonMorph >> mouseUp: evt [
 	^ result
 ]
 
-{ #category : #event }
+{ #category : 'event' }
 TickSelectionCheckboxButtonMorph >> pressed: anIndex [
 
 	self owner pressed: anIndex

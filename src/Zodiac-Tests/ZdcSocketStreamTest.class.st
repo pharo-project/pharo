@@ -2,17 +2,18 @@
 ZdcSocketStreamTests tests ZdcSocketStream
 "
 Class {
-	#name : #ZdcSocketStreamTest,
-	#superclass : #ZdcAbstractSocketStreamTest,
-	#category : #'Zodiac-Tests'
+	#name : 'ZdcSocketStreamTest',
+	#superclass : 'ZdcAbstractSocketStreamTest',
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSocketStreamTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcSocketStreamTest >> socketStreamClass [
 	^ ZdcSocketStream
 ]

@@ -11,23 +11,25 @@ So to create me use single basis #of: message:
 And to access the system I provide simple message #system which just returns single basis item
 "
 Class {
-	#name : #ClySystemScope,
-	#superclass : #ClyTypedScope,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClySystemScope',
+	#superclass : 'ClyTypedScope',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ClySystemScope >> asUnifiedInstance [
 	^self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClySystemScope >> description [
 
 	^name ifNil: [self system name]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClySystemScope >> prepareBasisFrom: aCollection [
 	aCollection size = 1 ifFalse: [
 		self error: 'System scope should be created on single basis' ].
@@ -35,13 +37,13 @@ ClySystemScope >> prepareBasisFrom: aCollection [
 	^aCollection
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClySystemScope >> printBasisObject: aSystemEnvironment on: aStream [
 
 	aStream nextPutAll: aSystemEnvironment name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySystemScope >> system [
 	^basisObjects anyOne
 ]

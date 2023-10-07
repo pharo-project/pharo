@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyConstantQueryTest,
-	#superclass : #ClyTypedQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyConstantQueryTest',
+	#superclass : 'ClyTypedQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyConstantQueryTest >> createQuery [
 
 	^ self createQuery: #( #item1 #item2 )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyConstantQueryTest >> createQuery: aCollection [
 
 	^ ClyConstantQuery
@@ -18,7 +19,7 @@ ClyConstantQueryTest >> createQuery: aCollection [
 		  from: (ClyExampleScope emptyIn: environment)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantQueryTest >> testCheckingForEmptyResult [
 
 	| empty notEmpty |
@@ -28,7 +29,7 @@ ClyConstantQueryTest >> testCheckingForEmptyResult [
 		deny: notEmpty checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantQueryTest >> testComparisonToSimilarQueryWhichReturningDifferentObjects [
 	| query2 |
 	query2 := self createQuery.
@@ -37,7 +38,7 @@ ClyConstantQueryTest >> testComparisonToSimilarQueryWhichReturningDifferentObjec
 	self deny: query equals: query2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantQueryTest >> testConvertingToAsyncQuery [
 	| convertedQuery |
 	convertedQuery := query async.
@@ -45,7 +46,7 @@ ClyConstantQueryTest >> testConvertingToAsyncQuery [
 	self assert: convertedQuery identicalTo: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantQueryTest >> testConvertingToSemiAsyncQuery [
 	| convertedQuery |
 	convertedQuery := query semiAsync.
@@ -53,7 +54,7 @@ ClyConstantQueryTest >> testConvertingToSemiAsyncQuery [
 	self assert: convertedQuery identicalTo: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantQueryTest >> testExecution [
 
 	self executeQuery.

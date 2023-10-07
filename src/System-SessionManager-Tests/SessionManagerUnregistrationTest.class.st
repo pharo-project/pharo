@@ -2,21 +2,22 @@
 SUnit tests for unregistration from the Pharo session manager
 "
 Class {
-	#name : #SessionManagerUnregistrationTest,
-	#superclass : #TestCase,
+	#name : 'SessionManagerUnregistrationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'sessionManager'
 	],
-	#category : #'System-SessionManager-Tests'
+	#category : 'System-SessionManager-Tests',
+	#package : 'System-SessionManager-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SessionManagerUnregistrationTest >> setUp [
 	super setUp.
 	sessionManager := SessionManager new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerUnregistrationTest >> testCanUnregisterClass [
 
 	sessionManager registerSystemClassNamed: #Foo.
@@ -27,7 +28,7 @@ SessionManagerUnregistrationTest >> testCanUnregisterClass [
 		equals: #( Bar )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerUnregistrationTest >> testUnregisterUnknownClassDoesNotFail [
 
 	sessionManager registerSystemClassNamed: #Foo.

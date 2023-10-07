@@ -1,6 +1,6 @@
-Extension { #name : #PasteUpMorph }
+Extension { #name : 'PasteUpMorph' }
 
-{ #category : #'*Tool-Base' }
+{ #category : '*Tool-Base' }
 PasteUpMorph >> defaultDesktopCommandKeyTriplets [
 	"Answer a list of triplets of the form
 		<key> <receiver> <selector>   [+ optional fourth element, a <description> for use in desktop-command-key-help]

@@ -1,6 +1,6 @@
-Extension { #name : #CDSharedVariableNode }
+Extension { #name : 'CDSharedVariableNode' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 CDSharedVariableNode >> asCalypsoVariableOf: aClass [
 
 	| actualClass classVar |

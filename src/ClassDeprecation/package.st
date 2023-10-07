@@ -1,1 +1,1 @@
-Package { #name : #ClassDeprecation }
+Package { #name : 'ClassDeprecation' }

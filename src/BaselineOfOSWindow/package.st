@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfOSWindow }
+Package { #name : 'BaselineOfOSWindow' }

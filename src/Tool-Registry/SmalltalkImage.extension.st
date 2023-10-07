@@ -1,6 +1,6 @@
-Extension { #name : #SmalltalkImage }
+Extension { #name : 'SmalltalkImage' }
 
-{ #category : #'*Tool-Registry' }
+{ #category : '*Tool-Registry' }
 SmalltalkImage >> tools [
 
 	^ Tools ifNil: [

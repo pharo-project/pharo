@@ -25,26 +25,28 @@ will not see Class and Object. It will end up at Object class and ProtoObject cl
 So I am the default local scope for hierarchy scopes which gives the natural look at classes without user metalevel restrictions
 "
 Class {
-	#name : #ClyClassScope,
-	#superclass : #ClyLocalClassScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyClassScope',
+	#superclass : 'ClyLocalClassScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyClassScope class >> metaLevelForHierarchyOf: aClass [
 	"I not restrict any hierarchy.
 	It will be native hierarchy of given class"
 	^aClass
 ]
 
-{ #category : #'meta level' }
+{ #category : 'meta level' }
 ClyClassScope class >> metaLevelsOf: aClass do: aBlock [
 	"By default meta level of class is class itself"
 
 	aBlock value: aClass
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyClassScope >> asRBEnvironment [
 
 	^ RBClassEnvironment classes: basisObjects

@@ -4,24 +4,26 @@ This smell arises when methods send messages that perform low level things. You 
 This rule is not active for methods in test classes.
 "
 Class {
-	#name : #ReBadMessageRule,
-	#superclass : #ReNodeBasedRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReBadMessageRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReBadMessageRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'BadMessageRule2'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReBadMessageRule >> badSelectors [
 	^ #( #become: #isKindOf: #respondsTo: #isMemberOf: #perform: #perform:arguments: #perform:with: #perform:with:with: #perform:with:with:with: #allOwners #instVarAt: #instVarAt:put: #nextInstance instVarsInclude: #nextObject caseOf: caseOf:otherwise: caseError isThisEverCalled isThisEverCalled: becomeForward: instVarNamed: instVarNamed:put: someObject primitiveChangeClassTo:)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReBadMessageRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^false ].
 	"In tests using these messages (like isKindOf:) is no problem"
@@ -29,17 +31,17 @@ ReBadMessageRule >> basicCheck: aNode [
 	^ self badSelectors includes: aNode selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReBadMessageRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReBadMessageRule >> name [
 	^ 'Sends "questionable" message'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReBadMessageRule >> rationale [
 	^ 'Check methods that send messages that perform low level things.'
 ]

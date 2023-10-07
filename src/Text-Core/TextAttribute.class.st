@@ -33,69 +33,71 @@ See RunArray class scanFrom: where decoding is done.
 
 "
 Class {
-	#name : #TextAttribute,
-	#superclass : #Object,
-	#category : #'Text-Core-Attributes'
+	#name : 'TextAttribute',
+	#superclass : 'Object',
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAttribute >> anchoredMorph [
 	"If one hides here, return it"
 	^nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAttribute >> dominatedByCmd0 [
 	"Subclasses may override if cmd-0 should turn them off"
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAttribute >> dominates: another [
 	"Subclasses may override condense multiple attributes"
 	^ false
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 TextAttribute >> emphasisCode [
 	"Subclasses may override to add bold, italic, etc"
 	^ 0
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 TextAttribute >> forFontInStyle: aTextStyle do: aBlock [
 	"No action is the default.  Overridden by font specs"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAttribute >> isKern [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAttribute >> mayActOnEvent: anEvent [
 	"Subclasses may override to provide, eg, hot-spot actions"
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAttribute >> mayBeExtended [
 	"A quality that may be overridden by subclasses, such as TextAnchors, that really only apply to a single character"
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAttribute >> mayHaveExternalReferences [
 	"Answer if this attribute can have references to some external objects like AST nodes"
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TextAttribute >> reset [
 	"Allow subclasses to prepare themselves for merging attributes"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAttribute >> set [
 	"Respond true to include this attribute (as opposed to, eg, a bold
 	emphasizer that is clearing the property"

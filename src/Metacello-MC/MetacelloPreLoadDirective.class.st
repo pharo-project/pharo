@@ -1,34 +1,36 @@
 Class {
-	#name : #MetacelloPreLoadDirective,
-	#superclass : #MetacelloPrePostLoadDirective,
-	#category : #'Metacello-MC-Directives'
+	#name : 'MetacelloPreLoadDirective',
+	#superclass : 'MetacelloPrePostLoadDirective',
+	#category : 'Metacello-MC-Directives',
+	#package : 'Metacello-MC',
+	#tag : 'Directives'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 
 	spec preLoadDoIt value ~~ nil ifTrue: [ aLoaderDirective add: self ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloPreLoadDirective >> label [
 
 	^super label, ' >> ', self spec preLoadDoIt value asString
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPreLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadPreloadDirective: self.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloPreLoadDirective >> preLoadDo: aBlock [
 
 	aBlock value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPreLoadDirective >> title [
 
 	^'preload'

@@ -2,12 +2,14 @@
 Benchmark for window processing
 "
 Class {
-	#name : #OSWindowBench,
-	#superclass : #Object,
-	#category : #'OSWindow-Tests-Benchmarks'
+	#name : 'OSWindowBench',
+	#superclass : 'Object',
+	#category : 'OSWindow-Tests-Benchmarks',
+	#package : 'OSWindow-Tests',
+	#tag : 'Benchmarks'
 }
 
-{ #category : #benchmarking }
+{ #category : 'benchmarking' }
 OSWindowBench >> benchEventProcessing [
 	<script: 'self new benchEventProcessing'>
 

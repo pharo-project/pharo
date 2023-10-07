@@ -1,12 +1,12 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Epicea' }
+{ #category : '*Epicea' }
 Object >> isEpEvent [
 
 	^ false
 ]
 
-{ #category : #'*Epicea-Triggering' }
+{ #category : '*Epicea-Triggering' }
 Object >> isEpiceaInterestingJobOwner [
 
 	^ false

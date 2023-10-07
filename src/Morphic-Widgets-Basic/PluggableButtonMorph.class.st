@@ -22,8 +22,8 @@ Options:
 
 "
 Class {
-	#name : #PluggableButtonMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'PluggableButtonMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'model',
 		'label',
@@ -55,10 +55,12 @@ Class {
 		'iconPosition',
 		'lastState'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #shortcuts }
+{ #category : 'shortcuts' }
 PluggableButtonMorph class >> buildPluggableButtonShortcutsOn: aBuilder [
 	<keymap>
 	(aBuilder shortcut: #action1)
@@ -67,7 +69,7 @@ PluggableButtonMorph class >> buildPluggableButtonShortcutsOn: aBuilder [
 		do: [ :target :morph :event | morph performAction ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 PluggableButtonMorph class >> exampleButtonNoAction [
 	<sampleInstance>
 
@@ -78,7 +80,7 @@ PluggableButtonMorph class >> exampleButtonNoAction [
 		help: 'This is a button'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableButtonMorph class >> newButtonFor: aModel action: actionSel label: stringOrText help: helpText [
 	"Answer a new button."
 
@@ -92,7 +94,7 @@ PluggableButtonMorph class >> newButtonFor: aModel action: actionSel label: stri
 		help: helpText
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableButtonMorph class >> newButtonFor: aModel getState: stateSel action: actionSel arguments: args getEnabled: enabledSel label: label help: helpText [
 	"Answer a new button."
 
@@ -111,13 +113,13 @@ PluggableButtonMorph class >> newButtonFor: aModel getState: stateSel action: ac
 	^b
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableButtonMorph class >> on: anObject [
 
 	^ self on: anObject getState: #isOn action: #switch
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionSel [
 
 	^ self new
@@ -129,7 +131,7 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		menu: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionSel label: labelSel [
 
 	^ self new
@@ -141,7 +143,7 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		menu: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionSel label: labelSel icon: iconSel menu: menuSel [
 
 	^ self new
@@ -153,7 +155,7 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		menu: menuSel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionSel label: labelSel menu: menuSel [
 
 	^ self new
@@ -165,41 +167,41 @@ PluggableButtonMorph class >> on: anObject getState: getStateSel action: actionS
 		menu: menuSel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> action [
 	"Answer the action selector."
 
 	^self actionSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> action: aSymbol [
 	"Set actionSelector to be the action defined by aSymbol."
 
 	actionSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> actionBlock [
 
 	^ actionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> actionBlock: aBlock [
 	"an action can be either specified by a block or a selector. If the block is set it takes priority over selector."
 
 	actionBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> actionSelector [
 	"Answer the receiver's actionSelector"
 
 	^ actionSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> actionSelector: aSymbol [
 	"Set actionSelector to be the action defined by aSymbol.
 	SimpleButtonMorph cross-compatibility"
@@ -207,7 +209,7 @@ PluggableButtonMorph >> actionSelector: aSymbol [
 	actionSelector := aSymbol
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
 
 	aMenu add: 'browse action' selector: #browseAction.
@@ -215,14 +217,14 @@ PluggableButtonMorph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
 	super addStandardHaloMenuItemsTo: aMenu hand: aHandMorph
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> adoptColor: aColor [
 	"Go through paneColorChanged instead."
 
 	self paneColorChanged
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> adoptPaneColor: aColor [
 
 	super adoptPaneColor: aColor.
@@ -230,7 +232,7 @@ PluggableButtonMorph >> adoptPaneColor: aColor [
 	self adoptColor: self colorToUse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> arguments [
 	"Answer the static arguments.
 	SimpleButtonMorph cross-compatibility."
@@ -238,14 +240,14 @@ PluggableButtonMorph >> arguments [
 	^arguments
 ]
 
-{ #category : #arguments }
+{ #category : 'arguments' }
 PluggableButtonMorph >> arguments: args [
 	"If the receiver takes argument(s) that are static, they can be filled by calling this.  If its argument(s) are to be dynamically determined, then use an argumentProvider and argumentSelector instead"
 
 	arguments := args
 ]
 
-{ #category : #arguments }
+{ #category : 'arguments' }
 PluggableButtonMorph >> argumentsProvider: anObject argumentsSelector: aSelector [
 	"Set the argument provider and selector"
 
@@ -253,20 +255,20 @@ PluggableButtonMorph >> argumentsProvider: anObject argumentsSelector: aSelector
 	argumentsSelector := aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> askBeforeChanging [
 
 	^ askBeforeChanging
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> askBeforeChanging: aBoolean [
 	"If this preference is turned on, then give the model an opportunity to ask the user before accepting a change that might cause unaccepted edits to be lost."
 
 	askBeforeChanging := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> availableBorderStyles [
 	"Return the selectors of the the available border styles for each state.
 	Must match the order of interactionStates."
@@ -275,7 +277,7 @@ PluggableButtonMorph >> availableBorderStyles [
 		selectedBorderStyle selectedPressedBorderStyle selectedMouseOverBorderStyle selectedDisabledBorderStyle)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> availableFillStyles [
 	"Return the selectors of the the available fill styles for each state.
 	Must match the order of interactionStates."
@@ -284,42 +286,42 @@ PluggableButtonMorph >> availableFillStyles [
 		selectedFillStyle selectedPressedFillStyle selectedMouseOverFillStyle selectedDisabledFillStyle)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> beIconBottom [
 	"show icon top to label"
 	iconPosition := #bottom.
 	self update: getIconSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> beIconLeft [
 	"show icon left to label"
 	iconPosition := #left.
 	self update: getIconSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> beIconRight [
 	"show icon right to label"
 	iconPosition := #right.
 	self update: getIconSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> beIconTop [
 	"show icon top to label"
 	iconPosition := #top.
 	self update: getIconSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> borderStyleToUse [
 	"Return the borderStyle to use for the receiver."
 
 	^ self perform: (self availableBorderStyles at: (self interactionStates indexOf: self interactionState))
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PluggableButtonMorph >> browseAction [
 
 	| classDefiningAction |
@@ -327,7 +329,7 @@ PluggableButtonMorph >> browseAction [
 	Smalltalk tools browser openOnClass: classDefiningAction selector: self actionSelector
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> changed [
 	"Update the fillStyle here."
 
@@ -351,7 +353,7 @@ PluggableButtonMorph >> changed [
 	super changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> color: aColor [
 	"Check to avoid repeats of the same color."
 
@@ -361,7 +363,7 @@ PluggableButtonMorph >> color: aColor [
 	super color: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> colorToUse [
 	"Answer the color we should use."
 
@@ -380,14 +382,14 @@ PluggableButtonMorph >> colorToUse [
 	^c
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> contentHolder [
 	"Answer the alignment morph for extra control."
 
 	^self submorphs first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> cornerStyle: aSymbol [
 	"Adjust the layout inset."
 
@@ -395,40 +397,40 @@ PluggableButtonMorph >> cornerStyle: aSymbol [
 	self layoutInset: (self theme buttonLabelInsetFor: self)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluggableButtonMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ self theme borderWidth
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluggableButtonMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ self containingWindow ifNil: [Color lightGreen] ifNotNil: [:w | w defaultBackgroundColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> disable [
 	"Disable the button."
 
 	self enabled: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> disabledBorderStyle [
 	"Return the disabled borderStyle of the receiver."
 
 	^self theme buttonDisabledBorderStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> disabledFillStyle [
 	"Return the disabled fillStyle of the receiver."
 
 	^self theme buttonDisabledFillStyleFor: self
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PluggableButtonMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front.
 	Draw the focus here since we are using inset bounds
@@ -438,19 +440,19 @@ PluggableButtonMorph >> drawSubmorphsOn: aCanvas [
 	self hasKeyboardFocus ifTrue: [self drawKeyboardFocusOn: aCanvas]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> enable [
 	"Enable the button."
 
 	self enabled: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> enabled [
 	^ enabled ifNil: [enabled := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> enabled: aBoolean [
 	"Set the enabled state of the receiver."
 
@@ -460,7 +462,7 @@ PluggableButtonMorph >> enabled: aBoolean [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> feedbackColor: aColor [
 	"Set the color of this button's selection feedback border."
 
@@ -468,7 +470,7 @@ PluggableButtonMorph >> feedbackColor: aColor [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> fillStyleToUse [
 	"Return the fillStyle to use for the receiver."
 
@@ -476,21 +478,21 @@ PluggableButtonMorph >> fillStyleToUse [
 			self interactionStates indexOf: self interactionState))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> focusBounds [
 	"Answer the bounds for drawing the focus indication."
 
 	^self theme buttonFocusBoundsFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> focusColor [
 	"Answer the keyboard focus indication color."
 
 	^self color contrastingBlackAndWhiteColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> focusIndicatorCornerRadius [
 	"Answer the corner radius preferred for the focus indicator
 	for the receiver for themes that support this."
@@ -498,51 +500,51 @@ PluggableButtonMorph >> focusIndicatorCornerRadius [
 	^self theme buttonFocusIndicatorCornerRadiusFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> font [
 	^ font
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> font: anObject [
 	font := anObject.
 	self update: getLabelSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getColorSelector [
 	^getColorSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getColorSelector: aSymbol [
 	getColorSelector := aSymbol.
 	self update: getColorSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getEnabledSelector [
 	^getEnabledSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getEnabledSelector: aSymbol [
 	getEnabledSelector := aSymbol.
 	self update: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getFontSelector [
 	^ getFontSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getFontSelector: anObject [
 	getFontSelector := anObject.
 	self update: getFontSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PluggableButtonMorph >> getMenu: shiftPressed [
 
 	"Answer the menu for this button, supplying an empty menu to be filled in. If the menu selector takes an extra argument, pass in the current state of the shift key."
@@ -558,14 +560,14 @@ PluggableButtonMorph >> getMenu: shiftPressed [
 	^ self error: 'The getMenuSelector must be a 1- or 2-keyword symbol'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getMenuSelector: aSymbol [
 	"Set the menu selector."
 
 	getMenuSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> getModelState [
 	"Answer the result of sending the receiver's model the getStateSelector message.
 	If the selector expects arguments then supply as for the actionSelector."
@@ -579,7 +581,7 @@ PluggableButtonMorph >> getModelState [
 							model perform: getStateSelector withEnoughArguments: arguments]]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> handlesKeyboard: evt [
 	"Answer true, we'll handle spacebar for pressing plus the usual
 	tab navigation."
@@ -587,46 +589,46 @@ PluggableButtonMorph >> handlesKeyboard: evt [
 	^true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> handlesMouseDown: evt [
 
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> handlesMouseOver: evt [
 
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> handlesMouseOverDragging: evt [
 
 	^ true
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 PluggableButtonMorph >> helpText [
 	^ self balloonText
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 PluggableButtonMorph >> helpText: aString [
 
 	self setBalloonText: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> icon: anIcon [
 	icon := anIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> iconPosition [
 	"Position of the icon.
 	  #left - Icon will be left to the label
@@ -635,7 +637,7 @@ PluggableButtonMorph >> iconPosition [
 	^ iconPosition ifNil: [ iconPosition := #left ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PluggableButtonMorph >> indicateModalChild [
 	"Flash the button border."
 
@@ -658,7 +660,7 @@ PluggableButtonMorph >> indicateModalChild [
 		self invalidRect: self bounds]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluggableButtonMorph >> initialize [
 	"Initialize the state of the receiver."
 
@@ -686,21 +688,21 @@ PluggableButtonMorph >> initialize [
 	self clipSubmorphs: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluggableButtonMorph >> initializeLabelMorph [
 	labelMorph := LabelMorph new
 		extent: 0 @ 0;
 		yourself	"this is a safe guard for enabled: among others."
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 PluggableButtonMorph >> initializeShortcuts: aKMDispatcher [
 	super initializeShortcuts: aKMDispatcher.
 	aKMDispatcher attachCategory: #MorphFocusNavigation.
 	aKMDispatcher attachCategory: #PluggableButtonMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> interactionState [
 	"Return the state that the receiver is in, #pressed, #normal etc.."
 
@@ -725,7 +727,7 @@ PluggableButtonMorph >> interactionState [
 			ifFalse: [#disabled]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> interactionStates [
 	"Return all the states that the receiver may be in at any given moment."
 
@@ -733,7 +735,7 @@ PluggableButtonMorph >> interactionStates [
 		selected selectedPressed selectedMouseOver selectedDisabled)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PluggableButtonMorph >> invokeMenu: evt [
 	"Invoke my menu in response to the given event."
 	| menu |
@@ -741,14 +743,14 @@ PluggableButtonMorph >> invokeMenu: evt [
 	menu ifNotNil: [menu popUpEvent: evt in: self world]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> isDefault [
 	"Answer whether the button is considered to be a default one."
 
 	^self valueOfProperty: #isDefault ifAbsent: [false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> isDefault: aBoolean [
 	"Set whether the button is to be considered default."
 
@@ -758,7 +760,7 @@ PluggableButtonMorph >> isDefault: aBoolean [
 	self changed
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 PluggableButtonMorph >> keyDown: event [
 	"Process spacebar for action and tab keys for navigation."
 
@@ -767,7 +769,7 @@ PluggableButtonMorph >> keyDown: event [
 		ifTrue: [self performAction]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 PluggableButtonMorph >> keyStroke: event [
 	"Process spacebar for action and tab keys for navigation."
 
@@ -775,7 +777,7 @@ PluggableButtonMorph >> keyStroke: event [
 		ifTrue: [self performAction]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 PluggableButtonMorph >> keyboardFocusChange: aBoolean [
 	"The message is sent to a morph when its keyboard focus changes.
 	Update for focus feedback."
@@ -783,14 +785,14 @@ PluggableButtonMorph >> keyboardFocusChange: aBoolean [
 	self focusChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> label [
 	"Answer the DisplayObject used as this button's label."
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> label: aStringOrTextOrMorph [
 	"Label this button with the given string or morph."
 	font ifNil: [
@@ -798,7 +800,7 @@ PluggableButtonMorph >> label: aStringOrTextOrMorph [
 	ifNotNil: [ self label: aStringOrTextOrMorph font: font ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> label: aStringOrTextOrMorph font: aFont [
 	"Label this button with the given string or morph."
 	| containerMorph |
@@ -838,45 +840,45 @@ PluggableButtonMorph >> label: aStringOrTextOrMorph font: aFont [
 	self updateLabelEnablement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> labelMorph [
 	"Answer the actual label morph."
 
 	^ labelMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> lastState [
 	^ lastState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> lastState: anObject [
 	lastState := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> minHeight [
 	"Consult the theme also."
 
 	^super minHeight max: self theme buttonMinHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> minWidth [
 	"Consult the theme also."
 
 	^super minWidth max: self theme buttonMinWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> model [
 	"Answer the receiver's model."
 
 	^model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> model: anObject [
 	"Set my model and make me me a dependent of the given object."
 
@@ -885,7 +887,7 @@ PluggableButtonMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> mouseDown: evt [
 	"Details: If this button is triggered on mouse down or the event is the menu gesture, handle it immediately. Otherwise, make a list of buttons (including the receiver) for mouseMove feedback. This allows a simple radio-button effect among the button submorphs of a given morph."
 
@@ -901,7 +903,7 @@ PluggableButtonMorph >> mouseDown: evt [
 			self updateFeedbackForEvt: evt]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> mouseEnter: evt [
 	"Update the appearance."
 
@@ -912,7 +914,7 @@ PluggableButtonMorph >> mouseEnter: evt [
 	super mouseEnter: evt
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> mouseLeave: evt [
 	"Update the appearance."
 
@@ -923,34 +925,34 @@ PluggableButtonMorph >> mouseLeave: evt [
 	super mouseLeave: evt
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> mouseLeaveDragging: evt [
 
 	self mouseLeave: evt
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> mouseMove: evt [
 
 	allButtons ifNil: [^ self].
 	allButtons do: [:m | m updateFeedbackForEvt: evt]
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> mouseOverBorderStyle [
 	"Return the mouse over borderStyle of the receiver."
 
 	^self theme buttonMouseOverBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> mouseOverFillStyle [
 	"Return the mouse over fillStyle of the receiver."
 
 	^self theme buttonMouseOverFillStyleFor: self
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PluggableButtonMorph >> mouseUp: evt [
 	"Perform the button action if the mouse pointer is in a button in the group.
 	Optimised feedback updates."
@@ -967,7 +969,7 @@ PluggableButtonMorph >> mouseUp: evt [
 	self showSelectionFeedback ifTrue: [self changed]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> newLabel [
 	"Answer a new label for the receiver."
 	|lbl|
@@ -977,7 +979,7 @@ PluggableButtonMorph >> newLabel [
 	^lbl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> newLabel: aFont [
 	"Answer a new label for the receiver with the given font."
 
@@ -985,40 +987,40 @@ PluggableButtonMorph >> newLabel: aFont [
 		font: aFont
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> normalBorderStyle [
 	"Return the normal borderStyle of the receiver."
 
 	^self theme buttonNormalBorderStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> normalColor [
 	"Return the normal colour for the receiver."
 
 	^self theme buttonColorFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
 
 	^self theme buttonNormalFillStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> offColor [
 	^ offColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> offColor: colorWhenOff [
 	"Set the fill colors to be used when this button is off."
 
 	self onColor: onColor offColor: colorWhenOff
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel label: labelSel icon: iconSel menu: menuSel [
 	"Set up the pluggable parameters.
 	Update label and state."
@@ -1034,7 +1036,7 @@ PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel lab
 		update: getStateSel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel label: labelSel menu: menuSel [
 	"This method is for backward compatibility."
 	self
@@ -1046,14 +1048,14 @@ PluggableButtonMorph >> on: anObject getState: getStateSel action: actionSel lab
 		menu: menuSel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> onColor [
 	"Answer the on color."
 
 	^onColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> onColor: colorWhenOn offColor: colorWhenOff [
 	"Set the fill colors to be used when this button is on/off."
 
@@ -1063,21 +1065,21 @@ PluggableButtonMorph >> onColor: colorWhenOn offColor: colorWhenOff [
 	self update: getStateSelector
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> paneColorChanged [
 	"Use changed to update the appearance."
 
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> performAction [
 	"backward compatibility"
 
 	self performAction: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> performAction: event [
 	"Inform the model that this button has been pressed. Sent by the controller when this button is pressed. If the button's actionSelector takes any arguments, they are obtained dynamically by sending the argumentSelector to the argumentsProvider"
 
@@ -1093,21 +1095,21 @@ PluggableButtonMorph >> performAction: event [
 					model perform: actionSelector withArguments: arguments]]
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> pressedBorderStyle [
 	"Return the pressed borderStyle of the receiver."
 
 	^self theme buttonPressedBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
 
 	^self theme buttonPressedFillStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> roundedCorners: anArray [
 	"Adjust the layout inset if necessary."
 
@@ -1115,103 +1117,103 @@ PluggableButtonMorph >> roundedCorners: anArray [
 	self layoutInset: (self theme buttonLabelInsetFor: self)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> selectedBorderStyle [
 	"Return the selected borderStyle of the receiver."
 
 	^self theme buttonSelectedBorderStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> selectedDisabledBorderStyle [
 	"Return the selected disabled borderStyle of the receiver."
 
 	^self theme buttonSelectedDisabledBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> selectedDisabledFillStyle [
 	"Return the selected disabled fillStyle of the receiver."
 
 	^self theme buttonSelectedDisabledFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> selectedFillStyle [
 	"Return the selected fillStyle of the receiver."
 
 	^self theme buttonSelectedFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> selectedMouseOverBorderStyle [
 	"Return the selected mouse over borderStyle of the receiver."
 
 	^self theme buttonSelectedMouseOverBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> selectedMouseOverFillStyle [
 	"Return the selected mouse over fillStyle of the receiver."
 
 	^self theme buttonSelectedMouseOverFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> selectedPressedBorderStyle [
 	"Return the selected pressed borderStyle of the receiver."
 
 	^self theme buttonSelectedPressedBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 PluggableButtonMorph >> selectedPressedFillStyle [
 	"Return the selected pressed fillStyle of the receiver."
 
 	^self theme buttonSelectedPressedFillStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> shortcutCharacter [
 	"Return the Character to be used as a shortcut to turn on this switch, or nil if this switch doesn't have a keyboard shortcut."
 
 	^ shortcutCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> shortcutCharacter: aCharacter [
 	"Set the character to be used as a keyboard shortcut for turning on this switch."
 
 	shortcutCharacter := aCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> showSelectionFeedback [
 	"Answer whether the feedback should be shown for being pressed."
 
 	^showSelectionFeedback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> showSelectionFeedback: aBoolean [
 	"Set the feedback."
 
 	showSelectionFeedback := aBoolean
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 PluggableButtonMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> target [
 	^model
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> themeChanged [
 
 	self
@@ -1227,20 +1229,20 @@ PluggableButtonMorph >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> triggerOnMouseDown [
 
 	^ triggerOnMouseDown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableButtonMorph >> triggerOnMouseDown: aBoolean [
 	"If this preference is turned on, then trigger my action immediately when the mouse goes down."
 
 	triggerOnMouseDown := aBoolean
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> update: aParameter [
 	|state|
 
@@ -1271,7 +1273,7 @@ PluggableButtonMorph >> update: aParameter [
 	aParameter first = #askBeforeChanging: ifTrue: [ self askBeforeChanging: aParameter second ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> updateFeedbackForEvt: evt [
 
 	| newState |
@@ -1281,14 +1283,14 @@ PluggableButtonMorph >> updateFeedbackForEvt: evt [
 		self changed; layoutChanged]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableButtonMorph >> updateLabelEnablement [
 	"Set the enabled state of the label if possible."
 
 	self labelMorph enabled: self enabled
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PluggableButtonMorph >> veryDeepFixupWith: deepCopier [
 	"If fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
@@ -1296,7 +1298,7 @@ super veryDeepFixupWith: deepCopier.
 model := deepCopier references at: model ifAbsent: [model]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PluggableButtonMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.  Some need to be not copied at all, but shared.  	Warning!!  Every instance variable defined in this class must be handled.  We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
 
@@ -1321,7 +1323,7 @@ argumentsProvider := argumentsProvider veryDeepCopyWith: deepCopier.
 argumentsSelector := argumentsSelector.  " a Symbol"
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 PluggableButtonMorph >> wantsKeyboardFocusNavigation [
 	"Answer whether the receiver would like keyboard focus
 	when navigated to by keyboard."
@@ -1330,7 +1332,7 @@ PluggableButtonMorph >> wantsKeyboardFocusNavigation [
 		self valueOfProperty: #wantsKeyboardFocusNavigation ifAbsent: [true]]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 PluggableButtonMorph >> wantsKeyboardFocusOnMouseDown [
 	"Answer whether the receiver would like keyboard focus
 	on a mouse down event. use a property here for apps that want to take keyboard

@@ -1,6 +1,6 @@
-Extension { #name : #WordLayout }
+Extension { #name : 'WordLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 WordLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

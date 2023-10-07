@@ -1,6 +1,6 @@
-Extension { #name : #RBReturnNode }
+Extension { #name : 'RBReturnNode' }
 
-{ #category : #'*SystemCommands-SourceCodeCommands' }
+{ #category : '*SystemCommands-SourceCodeCommands' }
 RBReturnNode >> displaySourceCode [
 	^ '^'
 ]

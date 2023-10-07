@@ -3,12 +3,14 @@ Tests for the new algorithm that is diffing changes.
 Tests from L. Uzonyi (from squeak trunk System.ul207and 208)
 "
 Class {
-	#name : #TextDiffBuilderTest,
-	#superclass : #TestCase,
-	#category : #'Text-Diff-Tests-Building'
+	#name : 'TextDiffBuilderTest',
+	#superclass : 'TestCase',
+	#category : 'Text-Diff-Tests-Building',
+	#package : 'Text-Diff-Tests',
+	#tag : 'Building'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TextDiffBuilderTest >> convertToString: array [
 
 	^String streamContents: [ :stream |
@@ -16,7 +18,7 @@ TextDiffBuilderTest >> convertToString: array [
 			stream nextPutAll: each asString; cr ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextDiffBuilderTest >> patchSequenceFor: x and: y [
 
 	^(TextDiffBuilder
@@ -24,7 +26,7 @@ TextDiffBuilderTest >> patchSequenceFor: x and: y [
 		to:  (self convertToString: y)) buildPatchSequence
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testEmptyLcs1 [
 
 	| patch |
@@ -33,7 +35,7 @@ TextDiffBuilderTest >> testEmptyLcs1 [
 	self assert: (patch allSatisfy: [ :each | each key = #remove ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testEmptyLcs2 [
 
 	| patch |
@@ -42,7 +44,7 @@ TextDiffBuilderTest >> testEmptyLcs2 [
 	self assert: (patch allSatisfy: [ :each | each key = #insert ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testEmptyLcs3 [
 
 	| patch |
@@ -53,14 +55,14 @@ TextDiffBuilderTest >> testEmptyLcs3 [
 		each key = #insert ifTrue: [ self assert: ('defg' includes: each value first) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testEmptySequences [
 	| patch |
 	patch := self patchSequenceFor: #() and: #().
 	self assertEmpty: patch
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testIfPatchIsMinimal [
 	| patch |
 	patch := self patchSequenceFor: #(a a a b) and: #(a b a a).
@@ -71,7 +73,7 @@ TextDiffBuilderTest >> testIfPatchIsMinimal [
 	patch do: [ :each | each key = #match ifTrue: [ self assert: each value first equals: $a ] ifFalse: [ self assert: each value first equals: $b ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testIfSequence1 [
 
 	| patch |
@@ -86,7 +88,7 @@ TextDiffBuilderTest >> testIfSequence1 [
 			ifFalse: [ self assert: ('abc' includes: each value first) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testIfSequence2 [
 
 	| patch |
@@ -101,7 +103,7 @@ TextDiffBuilderTest >> testIfSequence2 [
 			ifFalse: [ self assert: ('ab' includes: each value first) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testIfSequence3 [
 
 	| patch |
@@ -116,7 +118,7 @@ TextDiffBuilderTest >> testIfSequence3 [
 			ifFalse: [ self assert: ('ac' includes: each value first) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testIfSequence4 [
 
 	| patch |
@@ -131,7 +133,7 @@ TextDiffBuilderTest >> testIfSequence4 [
 			ifFalse: [ self assert: ('ad' includes: each value first) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testIfSequence5 [
 
 	| patch matches nonMatches |
@@ -149,7 +151,7 @@ TextDiffBuilderTest >> testIfSequence5 [
 			ifFalse: [ self assert: (nonMatches includes: each value first) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testIfSequence6 [
 
 	| patch |
@@ -164,7 +166,7 @@ TextDiffBuilderTest >> testIfSequence6 [
 			ifFalse: [ self assert: each value first equals: $d ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testSameSequence [
 
 	| patch |
@@ -173,7 +175,7 @@ TextDiffBuilderTest >> testSameSequence [
 	self assert: (patch allSatisfy: [ :each | each key = #match ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextDiffBuilderTest >> testSameSequenceWithRepetitions [
 
 	| patch |

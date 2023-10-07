@@ -13,12 +13,13 @@ For more information and prepared scripts see:
    https://github.com/noha/pharo-minimal
 "
 Class {
-	#name : #BaselineOfTelePharoSupport,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfTelePharoSupport
+	#name : 'BaselineOfTelePharoSupport',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfTelePharoSupport',
+	#package : 'BaselineOfTelePharoSupport'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfTelePharoSupport >> baseline: spec [ 
     
 	<baseline>

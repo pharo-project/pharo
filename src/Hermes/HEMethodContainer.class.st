@@ -4,8 +4,8 @@ I implement all the handling of methods (instance side and class side) and the t
 The headers of a class and a trait are different. Each subclass implements this reading.
 "
 Class {
-	#name : #HEMethodContainer,
-	#superclass : #HEAbstractExported,
+	#name : 'HEMethodContainer',
+	#superclass : 'HEAbstractExported',
 	#instVars : [
 		'methods',
 		'classSideMethods',
@@ -13,46 +13,48 @@ Class {
 		'classTraitComposition',
 		'category'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> category [
 	^ category
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> category: anObject [
 	category := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> classSideMethods [
 	^ classSideMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> classSideMethods: anObject [
 	classSideMethods := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> classTraitComposition [
 	^ classTraitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> classTraitComposition: anObject [
 	classTraitComposition := anObject
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEMethodContainer >> doReadHeaderFrom: aReader [
 	"The headers of a class and a trait are different. Each subclass implements this reading"
 	self subclassResponsibility
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEMethodContainer >> doReadMethodsFrom: aReader [
 	| numberOfMethods numberOfClassMethods |
 	"The category of a trait or a class is stored as a byteString."
@@ -70,28 +72,28 @@ HEMethodContainer >> doReadMethodsFrom: aReader [
 	classTraitComposition := HEExportedLiteral readFrom: aReader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> methods [
 	^ methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> methods: anObject [
 	methods := anObject
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEMethodContainer >> readFrom: aReader [
 	self doReadHeaderFrom: aReader.
 	self doReadMethodsFrom: aReader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> traitComposition [
 	^ traitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodContainer >> traitComposition: anObject [
 	traitComposition := anObject
 ]

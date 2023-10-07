@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnDispatcherDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnDispatcherDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnDispatcherDelegateTest >> testDispatcherDelegate [
 	self withServerDo: [ :server |  | client |
 		server delegate: (ZnDispatcherDelegate new
@@ -28,7 +29,7 @@ ZnDispatcherDelegateTest >> testDispatcherDelegate [
 		client close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnDispatcherDelegateTest >> withServerDo: block [
 	ZnServer withOSAssignedPortDo: block
 ]

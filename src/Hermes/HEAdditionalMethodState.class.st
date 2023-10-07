@@ -10,21 +10,23 @@ Each of this elements is exported as a HEExportedLiteral.
 My value contains the array of elements in the AdditionalMethodState.
 "
 Class {
-	#name : #HEAdditionalMethodState,
-	#superclass : #HEExportedLiteral,
+	#name : 'HEAdditionalMethodState',
+	#superclass : 'HEExportedLiteral',
 	#instVars : [
 		'method',
 		'selector'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEAdditionalMethodState class >> tag [
 	^ 1
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEAdditionalMethodState >> asLiteralIn: env [
 	"When the literal is deserialized in the environment, the method is the actual method that is currently deserialized (this #newMethod message)."
 	| additionalMethodState |
@@ -36,14 +38,14 @@ HEAdditionalMethodState >> asLiteralIn: env [
 	^ additionalMethodState
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEAdditionalMethodState >> doReadFrom: aReader [
 	method := HEExportedLiteral readFrom: aReader.
 	selector := HEExportedLiteral readFrom: aReader.
 	value := HEExportedLiteral readFrom: aReader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEAdditionalMethodState >> value: anAdditionalMethodState [
 	"I extract the information from the additional method state and convert it to exported literals."
 	method := anAdditionalMethodState method asExportedLiteral.

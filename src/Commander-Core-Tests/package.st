@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Core-Tests' }
+Package { #name : 'Commander-Core-Tests' }

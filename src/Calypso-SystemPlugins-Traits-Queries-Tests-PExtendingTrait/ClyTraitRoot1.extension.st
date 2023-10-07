@@ -1,5 +1,5 @@
-Extension { #name : #ClyTraitRoot1 }
+Extension { #name : 'ClyTraitRoot1' }
 
-{ #category : #'*Calypso-SystemPlugins-Traits-Queries-Tests-PExtendingTrait' }
+{ #category : '*Calypso-SystemPlugins-Traits-Queries-Tests-PExtendingTrait' }
 ClyTraitRoot1 >> extensionMethodFromRoot1Trait [
 ]

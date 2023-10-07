@@ -4,15 +4,16 @@ I wrap an item to be displayed in a TreeMorph, so I can answer content and repre
 My hierarchy usually follows TreeMorphModel one.
 "
 Class {
-	#name : #MorphTreeNodeModel,
-	#superclass : #ListItemWrapper,
+	#name : 'MorphTreeNodeModel',
+	#superclass : 'ListItemWrapper',
 	#instVars : [
 		'parentNode'
 	],
-	#category : #'Morphic-Widgets-Tree'
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : #dependents }
+{ #category : 'dependents' }
 MorphTreeNodeModel >> addDependent: aDependent [
 	"Ensure to only have one dependent at every moment"
 
@@ -20,63 +21,63 @@ MorphTreeNodeModel >> addDependent: aDependent [
 	super addDependent: aDependent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> childNodeClassFromItem: anItem [
 	^ self class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> childNodeFromItem: anItem [
 	^ ((self childNodeClassFromItem: anItem) with: anItem model: model) parentNode: self; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> childrenItems [
 	^ Array new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> color [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> contents [
 	^ self childrenItems collect: [:ci | self childNodeFromItem: ci ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> enabled [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphTreeNodeModel >> hasContentToShow [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> helpText [
 	^ model helpText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> includesSubstringAnywhere: aString [
 	^ (Array with: self asString) includesSubstringAnywhere: aString
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 MorphTreeNodeModel >> isExpanded [
 
 	^ false
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 MorphTreeNodeModel >> isExpanded: aBoolean [
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphTreeNodeModel >> isPartialMatch [
 	| result |
 
@@ -88,47 +89,47 @@ MorphTreeNodeModel >> isPartialMatch [
 	^ result
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 MorphTreeNodeModel >> lastClicked: aBoolean [
 	"Do nothing but introduce a hook"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> level [
 	^ parentNode ifNil: [1] ifNotNil: [parentNode level + 1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MorphTreeNodeModel >> mouseDown: event [
 	"Do not do anything"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> name [
 	^ self item name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> parentNode [
 	^ parentNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> parentNode: aNode [
 	parentNode := aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> path [
 	^ self pathIn: OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> pathIn: aCollection [
 	self parentNode
 		ifNotNil: [(aCollection includes: self parentNode)
@@ -137,25 +138,25 @@ MorphTreeNodeModel >> pathIn: aCollection [
 	^ aCollection
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MorphTreeNodeModel >> printOn: aStream [
 	aStream nextPutAll: 'Node('.
 	self item printOn: aStream.
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeNodeModel >> rowMorphForColumn: aTreeColumn [
 	^ self item ifNotNil: [:i | self asString asMorph]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 MorphTreeNodeModel >> selected [
 
 	^ false
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 MorphTreeNodeModel >> selected: aBoolean [
 	"Do nothing but introduce a hook"
 ]

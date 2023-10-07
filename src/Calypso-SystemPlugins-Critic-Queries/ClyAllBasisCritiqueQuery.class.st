@@ -4,17 +4,18 @@ So I am a kind of universal query because I do not restrict scopes for informati
 I just ask scope basis objects for critiques
 "
 Class {
-	#name : #ClyAllBasisCritiqueQuery,
-	#superclass : #ClyAllCritiqueQuery,
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#name : 'ClyAllBasisCritiqueQuery',
+	#superclass : 'ClyAllCritiqueQuery',
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllBasisCritiqueQuery >> analyzedObjectsDo: aBlock [
 	scope basisObjects do: aBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllBasisCritiqueQuery >> description [
 
 	^'critiques of scope basis'

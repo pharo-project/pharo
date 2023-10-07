@@ -6,68 +6,70 @@ Instance variables:
 	pixelValue32 <Integer>	The cached pixel value to use.
 "
 Class {
-	#name : #SolidFillStyle,
-	#superclass : #FillStyle,
+	#name : 'SolidFillStyle',
+	#superclass : 'FillStyle',
 	#instVars : [
 		'color',
 		'pixelValue32'
 	],
-	#category : #'Graphics-Canvas-Fills'
+	#category : 'Graphics-Canvas-Fills',
+	#package : 'Graphics-Canvas',
+	#tag : 'Fills'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SolidFillStyle class >> color: aColor [
 	^self new color: aColor
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SolidFillStyle >> = aFillStyle [
 
 	^ aFillStyle species = self species
 		and: [ self asColor = aFillStyle asColor ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SolidFillStyle >> asColor [
 	^color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SolidFillStyle >> color: aColor [
 	color := aColor.
 	pixelValue32 := aColor scaledPixelValue32
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SolidFillStyle >> hash [
 
 	^ color hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SolidFillStyle >> isSolidFill [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SolidFillStyle >> isTranslucent [
 
 	^ color isTranslucent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SolidFillStyle >> isTransparent [
 
 	^ color isTransparent
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SolidFillStyle >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut:$(; print: color; nextPut:$)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SolidFillStyle >> scaledPixelValue32 [
 	"Return the alpha scaled pixel value for depth 32"
 	^pixelValue32

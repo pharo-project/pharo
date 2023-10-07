@@ -1,6 +1,6 @@
-Extension { #name : #StrikeFont }
+Extension { #name : 'StrikeFont' }
 
-{ #category : #'*System-Settings-Core' }
+{ #category : '*System-Settings-Core' }
 StrikeFont >> acceptSettings: aVisitor [
 	^ aVisitor visitStrikeFont: self
 ]

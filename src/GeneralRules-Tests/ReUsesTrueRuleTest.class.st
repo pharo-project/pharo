@@ -2,12 +2,14 @@
 A RBUsesTrueRuleTest is a test class for testing the behavior of RBUsesTrueRule
 "
 Class {
-	#name : #ReUsesTrueRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReUsesTrueRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #sample }
+{ #category : 'sample' }
 ReUsesTrueRuleTest >> sampleMethod [
 	"You should not use True or False, but true and false. Unless it is the classes you refer to"
 	| foo balse|
@@ -15,7 +17,7 @@ ReUsesTrueRuleTest >> sampleMethod [
 	balse := False | foo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReUsesTrueRuleTest >> testRule [
 	| critiques|
  	critiques := self myCritiques .

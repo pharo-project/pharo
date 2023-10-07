@@ -2,17 +2,19 @@
 Tests for external enumerations
 "
 Class {
-	#name : #FFIExternalEnumerationTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFIExternalEnumerationTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationTest >> enumClass [
 	^ FFITestEnumeration
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 FFIExternalEnumerationTest >> ffiTestCall: enumValue format: format to: buffer [
 	^ self
 		ffiCall: #( int sprintf ( void* buffer, String format, FFITestEnumeration enumValue ) )
@@ -20,7 +22,7 @@ FFIExternalEnumerationTest >> ffiTestCall: enumValue format: format to: buffer [
 		fixedArgumentCount: 2
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 FFIExternalEnumerationTest >> ffiTestReturn: aNumber format: format to: buffer [
 	^ self
 		ffiCall: #( FFITestEnumeration sprintf ( void* buffer, String format, int aNumber ) )
@@ -28,7 +30,7 @@ FFIExternalEnumerationTest >> ffiTestReturn: aNumber format: format to: buffer [
 		fixedArgumentCount: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalEnumerationTest >> testCall [
 	| result buffer |
 
@@ -38,19 +40,19 @@ FFIExternalEnumerationTest >> testCall [
 	self assert: (buffer first: result) asString equals: '2400'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalEnumerationTest >> testEnumIdents [
 	self assert: self enumClass AAA value equals: 1.
 	self assert: self enumClass DDD value equals: 2400
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalEnumerationTest >> testEnumIncludes [
 	self assert: (self enumClass includes: #DDD).
 	self deny: (self enumClass includes: #EEE)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalEnumerationTest >> testFromInteger [
 	self assert: (self enumClass fromInteger: 1) value equals: 1.
 	self assert: (self enumClass fromInteger: 2) value equals: 2.
@@ -59,12 +61,12 @@ FFIExternalEnumerationTest >> testFromInteger [
 	self should: [ self enumClass fromInteger: 234 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalEnumerationTest >> testNewError [
 	self should: [ self enumClass new ] raise: ShouldNotImplement
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalEnumerationTest >> testReturn [
 	| result buffer |
 

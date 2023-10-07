@@ -1,5 +1,5 @@
-Extension { #name : #ClyMethodQuery }
+Extension { #name : 'ClyMethodQuery' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyMethodQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 ]

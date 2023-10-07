@@ -1,6 +1,6 @@
-Extension { #name : #SmalltalkImage }
+Extension { #name : 'SmalltalkImage' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 SmalltalkImage >> reBanName [
 	^ 'The whole image'
 ]

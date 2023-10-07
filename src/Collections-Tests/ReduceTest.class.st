@@ -2,22 +2,24 @@
 SUnit tests for reducing collections
 "
 Class {
-	#name : #ReduceTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Tests-Sequenceable'
+	#name : 'ReduceTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Tests-Sequenceable',
+	#package : 'Collections-Tests',
+	#tag : 'Sequenceable'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReduceTest >> collectionClasses [
 	^ (Array with: Set with: Bag) , (self sequenceableClasses)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReduceTest >> sequenceableClasses [
 	^ Array with: Array with: OrderedCollection with: SortedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceCollection2Arguments [
 	| block |
 	block := [ :a :b | a + b ].
@@ -37,7 +39,7 @@ ReduceTest >> testReduceCollection2Arguments [
 				equals: 10 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceCollection3Arguments [
 	| block |
 	block := [ :a :b :c | a + b + c ].
@@ -56,7 +58,7 @@ ReduceTest >> testReduceCollection3Arguments [
 				raise: Error ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceLeft2Arguments [
 	| block |
 	block := [ :a :b | Array with: a with: b ].
@@ -85,7 +87,7 @@ ReduceTest >> testReduceLeft2Arguments [
 				equals: #(#(#(#(a b) c) d) e) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceLeft3Arguments [
 	| block |
 	block := [ :a :b :c | Array with: a with: b with: c ].
@@ -113,13 +115,13 @@ ReduceTest >> testReduceLeft3Arguments [
 				equals: #(#(a b c) d e) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceLeftSpecial [
 	self assert: ((1 to: 100) reduceLeft: [ :a :b | a - b ]) equals: -5048.
 	self assert: ('abc' reduceLeft: [ :a :b | Array with: a with: b ]) equals: #(#($a $b) $c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceRight2Arguments [
 	| block |
 	block := [ :a :b | Array with: a with: b ].
@@ -148,7 +150,7 @@ ReduceTest >> testReduceRight2Arguments [
 				equals: #(a #(b #(c #(d e)))) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceRight3Arguments [
 	| block |
 	block := [ :a :b :c | Array with: a with: b with: c ].
@@ -176,7 +178,7 @@ ReduceTest >> testReduceRight3Arguments [
 				equals: #(a b #(c d e)) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReduceTest >> testReduceRightSpecial [
 	self assert: ((1 to: 100) reduceRight: [ :a :b | a - b ]) equals: -50.
 	self assert: ('abc' reduceRight: [ :a :b | Array with: a with: b ]) equals: #($a #($b $c))

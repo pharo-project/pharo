@@ -2,18 +2,20 @@
 Specific SDL initialization for Windows
 "
 Class {
-	#name : #SDLWindowsPlatform,
-	#superclass : #SDLAbstractPlatform,
-	#category : #'OSWindow-SDL2-Bindings'
+	#name : 'SDLWindowsPlatform',
+	#superclass : 'SDLAbstractPlatform',
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLWindowsPlatform class >> enableDebugWindowMenu: hwnd [
 
 	self ffiCall: #(int enableDebugWindowMenu(void* hwnd)) module: 'PharoVMCore.dll'
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLWindowsPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 
 	| sdlWindowInfo handle |
@@ -28,11 +30,11 @@ SDLWindowsPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 	SDL2 eventType: SDL_SYSWMEVENT state: 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLWindowsPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDLWindowsPlatform >> initPlatformSpecific [
 
 	"For windows and Unix, we activate linearization.
@@ -41,7 +43,7 @@ SDLWindowsPlatform >> initPlatformSpecific [
 	SDL2 setHint: SDL_HINT_RENDER_SCALE_QUALITY value: '1'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDLWindowsPlatform >> systemCursorConversionTable [
 
 	^ {

@@ -1,10 +1,12 @@
 Class {
-	#name : #RelationSetTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-Examples - Associations'
+	#name : 'RelationSetTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-Examples - Associations',
+	#package : 'Slot-Tests',
+	#tag : 'Examples - Associations'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSetTest >> testCopy [
 	"A copy of an RelationSet should give us a regular Set."
 
@@ -15,7 +17,7 @@ RelationSetTest >> testCopy [
 	self deny: movie actors copy class equals: RelationSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSetTest >> testSelect [
 
 	| movie result |

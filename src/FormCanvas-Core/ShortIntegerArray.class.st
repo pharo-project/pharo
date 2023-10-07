@@ -2,16 +2,18 @@
 ShortIntegerArray is an array for efficiently representing integers in the 16bit range.
 "
 Class {
-	#name : #ShortIntegerArray,
-	#superclass : #ArrayedCollection,
-	#type : #words,
+	#name : 'ShortIntegerArray',
+	#superclass : 'ArrayedCollection',
+	#type : 'words',
 	#classVars : [
 		'LastSaveOrder'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ShortIntegerArray class >> initialize [
 	LastSaveOrder := self new: 2.
 	LastSaveOrder at: 1 put: 42.
@@ -21,12 +23,12 @@ ShortIntegerArray class >> initialize [
 		registerSystemClassNamed: self name
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ShortIntegerArray class >> new: n [
 	^super new: n + 1 // 2
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : 'startup - shutdown' }
 ShortIntegerArray class >> startUp [
 	"Check if the word order has changed from the last save"
 	((LastSaveOrder at: 1) = 42 and:[(LastSaveOrder at: 2) = 13])
@@ -36,12 +38,12 @@ ShortIntegerArray class >> startUp [
 	^self error:'This must never happen'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortIntegerArray class >> swapShortObjects [
 	self allSubInstancesDo:[:inst| inst swapShortObjects]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortIntegerArray >> at: index [
 	"Return the 16-bit integer value at the given index of the receiver."
 
@@ -50,7 +52,7 @@ ShortIntegerArray >> at: index [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortIntegerArray >> at: index put: value [
 	"Store the given 16-bit integer at the given index in the receiver."
 
@@ -63,12 +65,12 @@ ShortIntegerArray >> at: index put: value [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortIntegerArray >> defaultElement [
 	^0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortIntegerArray >> pvtAt: index [
 	"Private -- for swapping only"
 	<primitive: 143>
@@ -76,7 +78,7 @@ ShortIntegerArray >> pvtAt: index [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortIntegerArray >> pvtAt: index put: value [
 	"Private -- for swapping only"
 
@@ -89,7 +91,7 @@ ShortIntegerArray >> pvtAt: index put: value [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ShortIntegerArray >> restoreEndianness [
 	"This word object was just read in from a stream.  It was stored in Big Endian (Mac) format.  Swap each pair of bytes (16-bit word), if the current machine is Little Endian.
 	Why is this the right thing to do?  We are using memory as a byteStream.  High and low bytes are reversed in each 16-bit word, but the stream of words ascends through memory.  Different from a Bitmap."
@@ -98,12 +100,12 @@ ShortIntegerArray >> restoreEndianness [
 		ifTrue: [ self swapBytePairsHacky ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShortIntegerArray >> size [
 	^super size * 2
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ShortIntegerArray >> swapBytePairsHacky [
 
 	"The implementation is a hack, but fast for large ranges"
@@ -124,7 +126,7 @@ ShortIntegerArray >> swapBytePairsHacky [
 		do: [:array | [:a :b| blt sourceX: a; destX: b; copyBits ] valueWithArguments: array ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ShortIntegerArray >> swapShortObjects [
 	"Private -- swap all the short quantities in the receiver"
 	| tmp |
@@ -135,25 +137,25 @@ ShortIntegerArray >> swapShortObjects [
 	]
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ShortIntegerArray >> write: shortInteger bigEndianOn: aStream [
 	^ aStream nextNumber: 4 put: shortInteger
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ShortIntegerArray >> write: shortInteger littleEndianOn: aStream [
 
 	#(2 1 4 3) do: [:digitIndex| aStream nextPut: (shortInteger byteAt: digitIndex) ]
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ShortIntegerArray >> write: shortInteger on: aStream [
 	^ EndianDetector isLittleEndian
 		ifFalse: [ self write: shortInteger bigEndianOn: aStream ]
 		ifTrue: [ self write: shortInteger littleEndianOn: aStream ]
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 ShortIntegerArray >> writeOn: aStream [
 	aStream nextInt32Put: self basicSize.
 	1 to: self basicSize do: [ :i |

@@ -10,19 +10,21 @@ that is used to read any of my subclasses.
 Each of my subclasses knows how to read itself from the stream.
 "
 Class {
-	#name : #HEAbstractExported,
-	#superclass : #Object,
-	#category : #'Hermes-Model'
+	#name : 'HEAbstractExported',
+	#superclass : 'Object',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HEAbstractExported class >> readFrom: aReader [
 	^ self new
 		readFrom: aReader;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HEAbstractExported >> = anObject [
 	"The comparison is implemented using a set of my instance variables.
 	Each subclass has the responsibility to tell the instance variables to use."
@@ -31,7 +33,7 @@ HEAbstractExported >> = anObject [
 	^ self valuesToCompareForEquality = anObject valuesToCompareForEquality
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HEAbstractExported >> hash [
 	"The hash is calculated with the instance variable used for comparison"
 	^ self valuesToCompareForEquality
@@ -39,13 +41,13 @@ HEAbstractExported >> hash [
 		into: [ :hash :comparisonValue | (hash bitXor: comparisonValue hash) hashMultiply ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HEAbstractExported >> instVarNamesForEqualityComparison [
 	"By default all the instance variables are used in the comparison and in the hash calculation"
 	^ self class allInstVarNames
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HEAbstractExported >> valuesToCompareForEquality [
 	"By default all the instance variables are used in the comparison and in the hash calculation"
 	^ self instVarNamesForEqualityComparison collect: [ :ivName | self instVarNamed: ivName ]

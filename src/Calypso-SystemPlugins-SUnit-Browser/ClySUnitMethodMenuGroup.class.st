@@ -1,20 +1,22 @@
 Class {
-	#name : #ClySUnitMethodMenuGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-MenuGroups'
+	#name : 'ClySUnitMethodMenuGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-MenuGroups',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'MenuGroups'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySUnitMethodMenuGroup >> isInlined [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySUnitMethodMenuGroup >> name [
 	^ 'SUnit'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySUnitMethodMenuGroup >> order [
 	^ 1.5
 ]

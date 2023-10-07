@@ -20,8 +20,8 @@ CommandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword' pe
 CommandLinePasswordManager removePasswordProtection
 "
 Class {
-	#name : #CommandLinePasswordManager,
-	#superclass : #Object,
+	#name : 'CommandLinePasswordManager',
+	#superclass : 'Object',
 	#instVars : [
 		'hashingPepper',
 		'numberOfHashIterations',
@@ -30,47 +30,49 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : #'System-BasicCommandLineHandler-Management'
+	#category : 'System-BasicCommandLineHandler-Management',
+	#package : 'System-BasicCommandLineHandler',
+	#tag : 'Management'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager class >> current [
 	^ Instance ifNil: [ Instance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager class >> defaultHashingPepper [
 	^ 'Pharo'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager class >> defaultNumberOfHashIterations [
 	^ 5
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CommandLinePasswordManager class >> exampleEnablePasswordProtection [
 	self protectCommandLinesByPasswordWith: 'PharoPassword'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CommandLinePasswordManager class >> exampleEnablePasswordProtectionCustomized [
 	self protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CommandLinePasswordManager class >> exampleRemovePasswordProtection [
 	self removePasswordProtection
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString [
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications."
 
 	self protectCommandLinesByPasswordWith: aString pepper: nil numberOfHashIterations: nil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString pepper: anotherString [
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications.
 		This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information."
@@ -78,7 +80,7 @@ CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString p
 	self protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: nil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: aNumber [
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications.
 	This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information.
@@ -87,17 +89,17 @@ CommandLinePasswordManager class >> protectCommandLinesByPasswordWith: aString p
 	self current protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: aNumber
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 CommandLinePasswordManager class >> removePasswordProtection [
 	self current removePasswordProtection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CommandLinePasswordManager >> hasPasswordSet [
 	^ self passwordHash isNotNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CommandLinePasswordManager >> hashString: password [
 	| hash |
 	hash := self hashingPepper , password.
@@ -105,55 +107,55 @@ CommandLinePasswordManager >> hashString: password [
 	^ hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager >> hashingPepper [
 	"If password protection is enabled, developer should change the pepper used for password  cyphering. (https://en.wikipedia.org/wiki/Pepper_(cryptography))"
 
 	^ hashingPepper ifNil: [ hashingPepper := self class defaultHashingPepper ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager >> hashingPepper: aString [
 	self hasPasswordSet ifTrue: [ self error: 'The pepper should not be changed when the password is already saved! Please, use #removePasswordProtection.' ].
 	hashingPepper := aString
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CommandLinePasswordManager >> isMatchingPassword: aPassword [
 	^ (self hashString: aPassword) = self passwordHash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager >> numberOfHashIterations [
 	"When the password protection is activated, define the number of times the password is hashed."
 
 	^ numberOfHashIterations ifNil: [ numberOfHashIterations := self class defaultNumberOfHashIterations ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager >> numberOfHashIterations: anObject [
 	self hasPasswordSet ifTrue: [ self error: 'Number of iterations should not be changed when the password is already saved! Please, use #removePasswordProtection.' ].
 	numberOfHashIterations := anObject
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 CommandLinePasswordManager >> password: aString [
 	self passwordHash: (self hashString: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager >> passwordHash [
 	"When this variable is not nil, the command lines are protected by a password. The command line needs to begin with the argument '--password=ThePasswordDefinedByTheDev'"
 
 	^ passwordHash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLinePasswordManager >> passwordHash: aString [
 	passwordHash := aString
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 CommandLinePasswordManager >> protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: aNumber [
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is useful in deployment mode of private applications.
 	This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information.
@@ -166,7 +168,7 @@ CommandLinePasswordManager >> protectCommandLinesByPasswordWith: aString pepper:
 	self password: aString
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 CommandLinePasswordManager >> removePasswordProtection [
 	self passwordHash: nil
 ]

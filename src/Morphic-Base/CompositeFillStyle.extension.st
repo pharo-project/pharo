@@ -1,13 +1,13 @@
-Extension { #name : #CompositeFillStyle }
+Extension { #name : 'CompositeFillStyle' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 CompositeFillStyle >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 	"Add the items for changing the current fill style of the receiver"
 	aMenu add: 'change origin' target: self selector: #changeOriginIn:event: argument: aMorph.
 	aMenu add: 'change orientation' target: self selector: #changeOrientationIn:event: argument: aMorph
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 CompositeFillStyle >> changeOrientationIn: aMorph event: evt [
 	"Interactively change the origin of the receiver"
 	| handle |
@@ -19,7 +19,7 @@ CompositeFillStyle >> changeOrientationIn: aMorph event: evt [
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 CompositeFillStyle >> changeOriginIn: aMorph event: evt [
 	"Interactively change the origin of the receiver"
 	| handle |

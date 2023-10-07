@@ -1,6 +1,6 @@
 Class {
-	#name : #RubSurfaceSelectionShape,
-	#superclass : #Object,
+	#name : 'RubSurfaceSelectionShape',
+	#superclass : 'Object',
 	#instVars : [
 		'color',
 		'borderColor',
@@ -9,10 +9,12 @@ Class {
 		'lastIndex',
 		'vertices'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubSurfaceSelectionShape class >> vertices: aCollectionOfPoints firstIndex: firstCharBlock lastIndex: lastCharBlock color: aColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	^ self new
 		vertices: aCollectionOfPoints
@@ -23,32 +25,32 @@ RubSurfaceSelectionShape class >> vertices: aCollectionOfPoints firstIndex: firs
 		borderColor: aBorderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSurfaceSelectionShape >> backgroundColor [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSurfaceSelectionShape >> borderColor [
 	^ borderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSurfaceSelectionShape >> borderWidth [
 	^ borderWidth
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubSurfaceSelectionShape >> bounds [
 	^ self polygon bounds
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubSurfaceSelectionShape >> drawOn: aCanvas [
 	aCanvas drawPolygon: self vertices color: self backgroundColor borderWidth: borderWidth borderColor:  borderColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubSurfaceSelectionShape >> drawOnAthensCanvas: aCanvas [
 	| path |
 	path := aCanvas
@@ -69,27 +71,27 @@ RubSurfaceSelectionShape >> drawOnAthensCanvas: aCanvas [
 			aCanvas draw ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSurfaceSelectionShape >> firstIndex [
 	^ firstIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSurfaceSelectionShape >> lastIndex [
 	^ lastIndex
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubSurfaceSelectionShape >> polygon [
 	^ Polygon vertices: self vertices
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubSurfaceSelectionShape >> vertices [
 	^ vertices
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubSurfaceSelectionShape >> vertices: aCollectionOfPoints firstIndex: firstCharIndex lastIndex: lastCharIndex color: aColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	firstIndex := firstCharIndex.
 	lastIndex := lastCharIndex.

@@ -13,29 +13,31 @@ Make sure to always send #flush or #close when you're done, otherwise the last b
 
 "
 Class {
-	#name : #FLBufferedWriteStream,
-	#superclass : #Stream,
+	#name : 'FLBufferedWriteStream',
+	#superclass : 'Stream',
 	#instVars : [
 		'stream',
 		'buffer',
 		'position',
 		'streamRespondsToNextPutAllStartingAt'
 	],
-	#category : #'Fuel-Core-Streams'
+	#category : 'Fuel-Core-Streams',
+	#package : 'Fuel-Core',
+	#tag : 'Streams'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream class >> defaultBufferSize [ 
 	^ 4096
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLBufferedWriteStream class >> on: writeStream [ 
 
 	^ self on: writeStream bufferSize: self defaultBufferSize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLBufferedWriteStream class >> on: writeStream bufferSize: aSize [
 	^ self basicNew
 		initializeOn: writeStream 
@@ -43,24 +45,24 @@ FLBufferedWriteStream class >> on: writeStream bufferSize: aSize [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLBufferedWriteStream >> buffer [
 	buffer ifNil: [ self sizeBuffer: self defaultBufferSize ].
 	^ buffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream >> bufferFreeSize [
 	^ buffer size - position
 ]
 
-{ #category : #'file open/close' }
+{ #category : 'file open/close' }
 FLBufferedWriteStream >> close [
 	self flushBuffer.
 	stream close
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLBufferedWriteStream >> copyWordObjectToBuffer: aWordObject [
 	| blt |
 	blt := (BitBlt
@@ -78,18 +80,18 @@ FLBufferedWriteStream >> copyWordObjectToBuffer: aWordObject [
 	blt copyBits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream >> defaultBufferSize [
 	^ 8192 "2 raisedTo: 13  "
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream >> flush [
 	self flushBuffer.
 	stream flush
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLBufferedWriteStream >> flushBuffer [
 	position = 0 ifTrue: [ ^ self ].
 	position = buffer size
@@ -102,13 +104,13 @@ FLBufferedWriteStream >> flushBuffer [
 	position := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLBufferedWriteStream >> flushBufferIfFull [
 	position = buffer size 
 		ifTrue: [ self flushBuffer ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLBufferedWriteStream >> initializeOn: writeStream bufferSize: aSize [
 
 	self initialize.
@@ -117,14 +119,14 @@ FLBufferedWriteStream >> initializeOn: writeStream bufferSize: aSize [
 	position := 0.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLBufferedWriteStream >> initializeStream: aWriteStream [
 	stream := aWriteStream.
 	"This is ugly, but it is an optimization for #flushBuffer"
 	streamRespondsToNextPutAllStartingAt := (stream respondsTo: #next:putAll:startingAt:).
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 FLBufferedWriteStream >> nextBytesPutAll: collection [
 	self flushBufferIfFull.
 	collection size <= self bufferFreeSize
@@ -138,14 +140,14 @@ FLBufferedWriteStream >> nextBytesPutAll: collection [
 				ifFalse: [ self nextBytesPutAll: collection ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream >> nextPut: object [
 	self flushBufferIfFull.
 	position := position + 1.
 	self buffer at: position put: object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream >> nextPutAll: collection [
 	self flushBufferIfFull.
 	collection size <= self bufferFreeSize
@@ -159,7 +161,7 @@ FLBufferedWriteStream >> nextPutAll: collection [
 				ifFalse: [ self nextPutAll: collection ] ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 FLBufferedWriteStream >> nextWordsPut: aWordObject [
 
 	| byteSize |
@@ -177,19 +179,19 @@ FLBufferedWriteStream >> nextWordsPut: aWordObject [
 	position := position +  byteSize.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream >> position [
 	^ position + stream position
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLBufferedWriteStream >> printOn: aStream [
 	aStream 
 		nextPutAll: 'a '; 
 		nextPutAll: self class name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLBufferedWriteStream >> sizeBuffer: size [
     buffer ifNotNil: [self flushBuffer].
     buffer := (stream isBinary ifTrue: [ ByteArray ] ifFalse: [ String ]) new: size

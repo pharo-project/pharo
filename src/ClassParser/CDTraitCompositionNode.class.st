@@ -6,26 +6,28 @@ Operations on traits
 	
 "
 Class {
-	#name : #CDTraitCompositionNode,
-	#superclass : #CDAbstractTraitCompositionNode,
+	#name : 'CDTraitCompositionNode',
+	#superclass : 'CDAbstractTraitCompositionNode',
 	#instVars : [
 		'subject'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDTraitCompositionNode class >> isAbstract [
 
 	^ self == CDTraitCompositionNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitCompositionNode >> subject [
 	^subject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitCompositionNode >> subject: aNode [
 
 	subject := aNode

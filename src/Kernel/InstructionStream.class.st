@@ -6,8 +6,8 @@ Instance variables:
 My instances can interpret the byte-encoded Smalltalk instruction set. They maintain a program counter (pc) for streaming through CompiledMethods. My subclasses are Contexts, which inherit this capability. They store the return pointer in the instance variable sender, and the current position in their method in the instance variable pc. For other users, sender can hold a method to be similarly interpreted. The unclean re-use of sender to hold the method was to avoid a trivial subclass for the stand-alone scanning function.
 "
 Class {
-	#name : #InstructionStream,
-	#superclass : #Object,
+	#name : 'InstructionStream',
+	#superclass : 'Object',
 	#instVars : [
 		'sender',
 		'pc'
@@ -15,10 +15,12 @@ Class {
 	#classVars : [
 		'SpecialConstants'
 	],
-	#category : #'Kernel-Methods'
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 InstructionStream class >> initialize [
 	"Initialize an array of special constants returned by single-bytecode returns."
 
@@ -28,26 +30,26 @@ InstructionStream class >> initialize [
 	"InstructionStream initialize."
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 InstructionStream class >> on: method [
 	"Answer an instance of me on the argument, method."
 
 	^self on: method pc: method initialPC
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 InstructionStream class >> on: method pc: aPC [
 	"Answer an instance of me on the argument, method."
 
 	^self new method: method pc: aPC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InstructionStream >> compiledCode [
 	^self method
 ]
 
-{ #category : #interpreting }
+{ #category : 'interpreting' }
 InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
 	"Send to the argument, client, a message that specifies the next instruction.
 	 This method handles the two-byte codes.
@@ -115,7 +117,7 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 	^self interpretUnusedBytecode: client at: startPC
 ]
 
-{ #category : #interpreting }
+{ #category : 'interpreting' }
 InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
 	"Send to the argument, client, a message that specifies the next instruction.
 	 This method handles the three-byte codes.
@@ -152,14 +154,14 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 	^self interpretUnusedBytecode: client at: startPC
 ]
 
-{ #category : #interpreting }
+{ #category : 'interpreting' }
 InstructionStream >> interpretNextInstructionFor: client [
 	"Send to the argument, client, a message that specifies the type of the
 	next instruction."
 	^ self compiledCode encoderClass interpretNextInstructionFor: client  in: self
 ]
 
-{ #category : #interpreting }
+{ #category : 'interpreting' }
 InstructionStream >> interpretNextSistaV1InstructionFor: client [
 	"Send to the argument, client, a message that specifies the next instruction."
 
@@ -268,7 +270,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 	^self interpretNext3ByteSistaV1Instruction: byte for: client extA: extA extB: extB startPC: savedPC
 ]
 
-{ #category : #interpreting }
+{ #category : 'interpreting' }
 InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 	"Implement the extended push for non-zero extensions."
 	"*	82			01010010			Push thisContext, (then Extend B = 1 => push
@@ -280,19 +282,19 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 	self error: 'undefined extended push'
 ]
 
-{ #category : #interpreting }
+{ #category : 'interpreting' }
 InstructionStream >> interpretUnusedBytecode: client at: startPC [
 	^ client unusedBytecode
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 InstructionStream >> method [
 	"Answer the compiled method that supplies the receiver's bytecodes."
 
 	^sender		"method access when used alone (not as part of a context)"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InstructionStream >> method: method pc: startpc [
 
 	sender := method.
@@ -300,14 +302,14 @@ InstructionStream >> method: method pc: startpc [
 	pc := startpc
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 InstructionStream >> pc [
 	"Answer the index of the next bytecode."
 
 	^pc
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InstructionStream >> pc: anInteger [
 
 	pc := anInteger

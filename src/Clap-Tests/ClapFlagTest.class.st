@@ -1,15 +1,17 @@
 Class {
-	#name : #ClapFlagTest,
-	#superclass : #ClapParameterizedTest,
-	#category : #'Clap-Tests-Unit'
+	#name : 'ClapFlagTest',
+	#superclass : 'ClapParameterizedTest',
+	#category : 'Clap-Tests-Unit',
+	#package : 'Clap-Tests',
+	#tag : 'Unit'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapFlagTest >> classToTest [
 	^ ClapFlag
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapFlagTest >> testMatchesLongForm [
 	| subject argv flagName match |
 	subject := self namedSubject.
@@ -26,7 +28,7 @@ ClapFlagTest >> testMatchesLongForm [
 	self assert: argv next equals: #remainder
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapFlagTest >> testMatchesShortForm [
 	| subject argv flagName match |
 	subject := self namedSubject.
@@ -43,7 +45,7 @@ ClapFlagTest >> testMatchesShortForm [
 	self assert: argv next equals: #remainder
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapFlagTest >> testMismatchesWrongLongForm [
 	| subject argv badFlag match |
 	subject := self namedSubject.
@@ -60,7 +62,7 @@ ClapFlagTest >> testMismatchesWrongLongForm [
 	self assert: argv next identicalTo: badFlag
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapFlagTest >> testMismatchesWrongShortForm [
 	| subject argv badFlag match |
 	subject := self namedSubject.

@@ -6,18 +6,20 @@ I am usually at the end of the chain of responsibility.
 See my superclass for details.
 "
 Class {
-	#name : #CoUnknownMessageHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoUnknownMessageHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoUnknownMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ aNode isMethod or: [ aNode isMessage ]
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoUnknownMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 	"This is the main heuristic used for those messages where we cannot guess the type.
 	I can be used also after more fine heuristics, to complete guessed heuristics that cannot be trusted too much, like variable names"

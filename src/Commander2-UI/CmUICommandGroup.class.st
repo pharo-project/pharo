@@ -6,73 +6,75 @@ Basically, I add:
 - the strategy to display commands group in a menu (I am displayed as a sub-menu by default).
 "
 Class {
-	#name : #CmUICommandGroup,
-	#superclass : #CmCommandGroupDecorator,
+	#name : 'CmUICommandGroup',
+	#superclass : 'CmCommandGroupDecorator',
 	#instVars : [
 		'displayStrategy',
 		'isRoot',
 		'icon',
 		'iconName'
 	],
-	#category : #'Commander2-UI-Core'
+	#category : 'Commander2-UI-Core',
+	#package : 'Commander2-UI',
+	#tag : 'Core'
 }
 
-{ #category : #default }
+{ #category : 'default' }
 CmUICommandGroup class >> defaultDisplayStrategy [
 
 	^ CmUIDisplayAsSubMenu new
 ]
 
-{ #category : #default }
+{ #category : 'default' }
 CmUICommandGroup class >> defaultIconName [
 	^ #blank
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommandGroup >> beDisplayedAsGroup [
 	self displayStrategy: CmUIDisplayAsGroup new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommandGroup >> beDisplayedAsSubMenu [
 	self displayStrategy: CmUIDisplayAsSubMenu new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommandGroup >> beRoot [
 	self isRoot: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommandGroup >> displayStrategy [
 	^ displayStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommandGroup >> displayStrategy: anObject [
 	displayStrategy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommandGroup >> icon [
 
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommandGroup >> icon: anIcon [
 
 	icon := anIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommandGroup >> iconName: aSymbol [
 
 
 	iconName := aSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmUICommandGroup >> initialize [
 
 	super initialize.
@@ -80,12 +82,12 @@ CmUICommandGroup >> initialize [
 	self isRoot: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommandGroup >> isRoot [
 	^ isRoot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommandGroup >> isRoot: anObject [
 	isRoot := anObject
 ]

@@ -4,12 +4,14 @@ I am the implementation of insensitive comparison.
 
 "
 Class {
-	#name : #CoCaseInsensitiveBeginsWithFilter,
-	#superclass : #CoBeginsWithFilter,
-	#category : #'HeuristicCompletion-Model-Core'
+	#name : 'CoCaseInsensitiveBeginsWithFilter',
+	#superclass : 'CoBeginsWithFilter',
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoCaseInsensitiveBeginsWithFilter class >> filterString: aString [
 
 	^ self new
@@ -17,25 +19,25 @@ CoCaseInsensitiveBeginsWithFilter class >> filterString: aString [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCaseInsensitiveBeginsWithFilter >> accepts: aCandidate [
 
 	^ aCandidate contents asLowercase beginsWith: completionString asLowercase
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCaseInsensitiveBeginsWithFilter >> isLessNarrowThanCaseInsensitive: anotherFilter [
 
 	^ anotherFilter completionString beginsWith: self completionString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCaseInsensitiveBeginsWithFilter >> isLessNarrowThanCaseSensitive: anotherFilter [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCaseInsensitiveBeginsWithFilter >> isMoreNarrowThan: anotherFilter [
 
 	^ anotherFilter isLessNarrowThanCaseInsensitive: self

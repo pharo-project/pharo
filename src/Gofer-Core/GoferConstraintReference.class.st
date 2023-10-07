@@ -2,15 +2,17 @@
 A GoferPackageReference refers to the latest version of a Monticello package satisfying an additional constraint.
 "
 Class {
-	#name : #GoferConstraintReference,
-	#superclass : #GoferPackageReference,
+	#name : 'GoferConstraintReference',
+	#superclass : 'GoferPackageReference',
 	#instVars : [
 		'constraintBlock'
 	],
-	#category : #'Gofer-Core-References'
+	#category : 'Gofer-Core-References',
+	#package : 'Gofer-Core',
+	#tag : 'References'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GoferConstraintReference class >> name: aString constraint: aBlock [
 
 	^ self basicNew
@@ -18,14 +20,14 @@ GoferConstraintReference class >> name: aString constraint: aBlock [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferConstraintReference >> initializeName: aString constraint: aBlock [
 
 	self initializeName: aString.
 	constraintBlock := aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferConstraintReference >> matches: aResolvedReference [
 
 	^ (super matches: aResolvedReference) and: [

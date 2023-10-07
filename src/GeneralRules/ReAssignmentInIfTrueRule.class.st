@@ -10,24 +10,26 @@ var :=  test
 	ifFalse: [2]
 "
 Class {
-	#name : #ReAssignmentInIfTrueRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReAssignmentInIfTrueRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentInIfTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AssignmentInIfTrueRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentInIfTrueRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAssignmentInIfTrueRule >> initialize [
 	super initialize.
 	self
@@ -37,12 +39,12 @@ ReAssignmentInIfTrueRule >> initialize [
 		with: '`variable := ``@Boolean ifFalse: [``@true] ifTrue: [``@false]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentInIfTrueRule >> name [
 	^ 'Move variable assignment outside of single statement ifTrue:ifFalse: blocks'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentInIfTrueRule >> rationale [
 	^ 'Moving assignments outside blocks leads to shorter and more efficient code.'
 ]

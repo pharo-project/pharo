@@ -35,8 +35,8 @@ someone else's fault that their decompress failed, and not Pharo.
 [3] http://www.gzip.org/#faq15
 "
 Class {
-	#name : #GZipConstants,
-	#superclass : #SharedPool,
+	#name : 'GZipConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'GZipAsciiFlag',
 		'GZipCommentFlag',
@@ -48,15 +48,17 @@ Class {
 		'GZipNameFlag',
 		'GZipReservedFlags'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #'pool initialization' }
+{ #category : 'pool initialization' }
 GZipConstants class >> gzipMagic [
 	^GZipMagic
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 GZipConstants class >> initialize [
 
 	GZipMagic := 16r8B1F.		"GZIP magic number"

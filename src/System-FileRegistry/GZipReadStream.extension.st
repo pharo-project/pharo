@@ -1,6 +1,6 @@
-Extension { #name : #GZipReadStream }
+Extension { #name : 'GZipReadStream' }
 
-{ #category : #'*System-FileRegistry' }
+{ #category : '*System-FileRegistry' }
 GZipReadStream class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 	| services |
@@ -15,7 +15,7 @@ GZipReadStream class >> fileReaderServicesForFile: fullName suffix: suffix [
 	^ services
 ]
 
-{ #category : #'*System-FileRegistry' }
+{ #category : '*System-FileRegistry' }
 GZipReadStream class >> serviceDecompressToFile [
 
 	^ FileModifyingSimpleServiceEntry
@@ -25,7 +25,7 @@ GZipReadStream class >> serviceDecompressToFile [
 				description: 'Decompress to file'
 ]
 
-{ #category : #'*System-FileRegistry' }
+{ #category : '*System-FileRegistry' }
 GZipReadStream class >> serviceFileIn [
 	"Answer a service for filing in an entire file"
 
@@ -37,7 +37,7 @@ GZipReadStream class >> serviceFileIn [
 		buttonLabel: 'Filein'
 ]
 
-{ #category : #'*System-FileRegistry' }
+{ #category : '*System-FileRegistry' }
 GZipReadStream class >> serviceViewDecompress [
 
 	^ SimpleServiceEntry
@@ -47,7 +47,7 @@ GZipReadStream class >> serviceViewDecompress [
 				description: 'View decompressed'
 ]
 
-{ #category : #'*System-FileRegistry' }
+{ #category : '*System-FileRegistry' }
 GZipReadStream class >> services [
 
 	^ Array

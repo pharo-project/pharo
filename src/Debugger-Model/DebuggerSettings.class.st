@@ -2,19 +2,21 @@
 General debugger settings with default values for TDebugger users
 "
 Class {
-	#name : #DebuggerSettings,
-	#superclass : #Object,
-	#category : #'Debugger-Model-Core'
+	#name : 'DebuggerSettings',
+	#superclass : 'Object',
+	#category : 'Debugger-Model-Core',
+	#package : 'Debugger-Model',
+	#tag : 'Core'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 DebuggerSettings class >> availableDebuggers [
 
 	^ (self systemDebuggers select: [ :dbgClass |
 		   dbgClass availableAutomatically ]) asOrderedCollection
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 DebuggerSettings class >> debuggerRankSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #debuggers)
@@ -41,17 +43,17 @@ Lowest priority: 1. Highest priority: 10'.
 						'(De)activates the debugger. A deactivated debugger will not be used by the system.' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebuggerSettings class >> defaultAvailability [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebuggerSettings class >> defaultDebuggerRank [
 	^1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebuggerSettings class >> emergencyDebugger [
 
 	^ self environment
@@ -59,7 +61,7 @@ DebuggerSettings class >> emergencyDebugger [
 		  ifAbsent: [ DebuggerEmmergencyLogger new ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 
 	<systemsettings>
@@ -106,7 +108,7 @@ DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 					'A name of the file, which will be used for logging all errors and notifications' ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 DebuggerSettings class >> systemDebuggers [
 
 	^ (TDebugger users flatCollect: [ :class | class withAllSubclasses ])

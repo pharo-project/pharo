@@ -2,12 +2,14 @@
 I break on all variable accesses in the selected class
 "
 Class {
-	#name : #SycVariableAccessBreakpointCommand,
-	#superclass : #SycVariableBreakpointCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
+	#name : 'SycVariableAccessBreakpointCommand',
+	#superclass : 'SycVariableBreakpointCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'VariableBreakpoints'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycVariableAccessBreakpointCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation
@@ -16,12 +18,12 @@ SycVariableAccessBreakpointCommand class >> browserContextMenuActivation [
 		for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycVariableAccessBreakpointCommand >> defaultMenuItemName [
 	^'Break on all variable accesses'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycVariableAccessBreakpointCommand >> installVariableBreakpointInTargetClass [
 	VariableBreakpoint watchVariablesInClass: targetClass
 ]

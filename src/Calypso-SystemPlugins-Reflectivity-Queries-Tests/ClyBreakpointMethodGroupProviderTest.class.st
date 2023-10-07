@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyBreakpointMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Breakpoints'
+	#name : 'ClyBreakpointMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Breakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBreakpointMethodGroupProviderTest >> classSampleWhichHasGroup [
 	^ClyClassWithHaltsMock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBreakpointMethodGroupProviderTest >> groupProviderClass [
 	^ClyBreakpointMethodGroupProvider
 ]

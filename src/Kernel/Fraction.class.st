@@ -11,16 +11,18 @@ Examples: (note the parentheses required to get the right answers in Smalltalk a
 
 "
 Class {
-	#name : #Fraction,
-	#superclass : #Number,
+	#name : 'Fraction',
+	#superclass : 'Number',
 	#instVars : [
 		'numerator',
 		'denominator'
 	],
-	#category : #'Kernel-Numbers'
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Fraction class >> numerator: numInteger denominator: denInteger [
 	"Answer an instance of me (numInteger/denInteger).
 	NOTE: This primitive initialization method will not reduce improper fractions,
@@ -32,7 +34,7 @@ Fraction class >> numerator: numInteger denominator: denInteger [
 	^self new setNumerator: numInteger denominator: denInteger
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Fraction >> * aNumber [
 	"Answer the result of multiplying the receiver by aNumber."
 	| d1 d2 |
@@ -46,7 +48,7 @@ Fraction >> * aNumber [
 	^ aNumber adaptToFraction: self andSend: #*
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Fraction >> + aNumber [
 	"Answer the sum of the receiver and aNumber."
 	| n d d1 d2 |
@@ -62,7 +64,7 @@ Fraction >> + aNumber [
 	^ aNumber adaptToFraction: self andSend: #+
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Fraction >> - aNumber [
 	"Answer the difference between the receiver and aNumber."
 	aNumber isInteger ifTrue:
@@ -72,7 +74,7 @@ Fraction >> - aNumber [
 	^ aNumber adaptToFraction: self andSend: #-
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Fraction >> / aNumber [
 	"Answer the result of dividing the receiver by aNumber."
 	aNumber isFraction
@@ -80,21 +82,21 @@ Fraction >> / aNumber [
 	^ aNumber adaptToFraction: self andSend: #/
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Fraction >> < aNumber [
 	aNumber isFraction ifTrue:
 		[^ numerator * aNumber denominator < (aNumber numerator * denominator)].
 	^ aNumber adaptToFraction: self andCompare: #<
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Fraction >> <= aNumber [
 	aNumber isFraction ifTrue:
 		[^ numerator * aNumber denominator <= (aNumber numerator * denominator)].
 	^ aNumber adaptToFraction: self andCompare: #<=
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Fraction >> = aNumber [
 	aNumber isNumber ifFalse: [^ false].
 	aNumber isFraction
@@ -106,27 +108,27 @@ Fraction >> = aNumber [
 	^ aNumber adaptToFraction: self andCompare: #=
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Fraction >> > aNumber [
 	aNumber isFraction ifTrue:
 		[^ numerator * aNumber denominator > (aNumber numerator * denominator)].
 	^ aNumber adaptToFraction: self andCompare: #>
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Fraction >> >= aNumber [
 	aNumber isFraction ifTrue:
 		[^ numerator * aNumber denominator >= (aNumber numerator * denominator)].
 	^ aNumber adaptToFraction: self andCompare: #>=
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Fraction >> adaptToInteger: rcvr andSend: selector [
 	"If I am involved in arithmetic with an Integer, convert it to a Fraction."
 	^ (Fraction numerator: rcvr denominator: 1) perform: selector with: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Fraction >> asFloat [
 	"Answer a Float that closely approximates the value of the receiver.
 	This implementation will answer the closest floating point number to the receiver.
@@ -180,14 +182,14 @@ Fraction >> asFloat [
 		timesTwoPower: exponent
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Fraction >> asFraction [
 	"Answer the receiver itself."
 
 	^self
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Fraction >> asLargerPowerOfTwo [
 	"Convert the receiver into a power of two which is not less than the receiver"
 	| quotient |
@@ -202,7 +204,7 @@ Fraction >> asLargerPowerOfTwo [
 					ifFalse: [1 bitShift: (quotient highBit )]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Fraction >> asScaledDecimal [
 	"Convert the receiver to a ScaledDecimal.
 	If there is a finite decimal representation of the receiver, then use the exact number of decimal places required.
@@ -221,7 +223,7 @@ Fraction >> asScaledDecimal [
 	^self asScaledDecimal: (pow2 max: pow5)
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Fraction >> asSmallerPowerOfTwo [
 	"Convert the receiver into a power of two which is not larger than the receiver"
 	| quotient |
@@ -236,13 +238,13 @@ Fraction >> asSmallerPowerOfTwo [
 		ifFalse: [1 bitShift: ((numerator // denominator) highBit -1)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Fraction >> denominator [
 
 	^denominator
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Fraction >> hash [
 	"Hash is reimplemented because = is implemented.
 	Care is taken that a Fraction equal to a Float also have an equal hash"
@@ -258,22 +260,22 @@ Fraction >> hash [
 	^numerator hash bitXor: denominator hash
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Fraction >> isFraction [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Fraction >> isPowerOfTwo [
 	^ numerator = 1 and: [ denominator isPowerOfTwo ]
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Fraction >> isSelfEvaluating [
 	^ true
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Fraction >> negated [
 	"Refer to the comment in Number|negated."
 
@@ -282,19 +284,19 @@ Fraction >> negated [
 		denominator: denominator
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Fraction >> negative [
 
 	^numerator negative
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Fraction >> numerator [
 
 	^numerator
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Fraction >> printOn: aStream [
 
 	aStream nextPut: $(.
@@ -304,7 +306,7 @@ Fraction >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Fraction >> printOn: aStream base: base [
 
 	aStream nextPut: $(.
@@ -314,7 +316,7 @@ Fraction >> printOn: aStream base: base [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Fraction >> printOn: aStream showingDecimalPlaces: placesDesired [
 	"Same as super, but provides a faster implementation by inlining some Fraction protocol thus avoiding intermediate Fraction creation."
 
@@ -336,14 +338,14 @@ Fraction >> printOn: aStream showingDecimalPlaces: placesDesired [
 			roundedFractionPart printOn: aStream base: 10 length: placesDesired padded: true]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Fraction >> reciprocal [
 
 	numerator abs = 1 ifTrue: [^denominator * numerator].
 	^self class numerator: denominator denominator: numerator
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Fraction >> reduced [
 
 	| gcd numer denom |
@@ -355,7 +357,7 @@ Fraction >> reduced [
 	^Fraction numerator: numer denominator: denom
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Fraction >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
    "(1/3 round: 2) >>> (33/100) "
@@ -364,7 +366,7 @@ Fraction >> round: numberOfWishedDecimal [
 	^self roundTo: (10 raisedTo: numberOfWishedDecimal negated)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Fraction >> setNumerator: n denominator: d [
 
 	d = 0
@@ -375,7 +377,7 @@ Fraction >> setNumerator: n denominator: d [
 			d < 0 ifTrue: [numerator := numerator negated]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Fraction >> storeOn: aStream base: base [
 
 	aStream nextPut: $(.
@@ -385,7 +387,7 @@ Fraction >> storeOn: aStream base: base [
 	aStream nextPut: $)
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Fraction >> truncated [
 	"Refer to the comment in Number|truncated."
 

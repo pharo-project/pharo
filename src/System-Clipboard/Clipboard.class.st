@@ -4,8 +4,8 @@ The Clipboard class is the abstract superclass for the concrete platform specifi
 The Clipboard implements a basic buffering scheme for text. The currently selected text is also exported to the OS so that text can be copied from and to other applications. Commonly only a single instance is used (the default clipboard) but applications are free to use other than the default clipboard if necessary.
 "
 Class {
-	#name : #Clipboard,
-	#superclass : #Object,
+	#name : 'Clipboard',
+	#superclass : 'Object',
 	#instVars : [
 		'contents',
 		'recent'
@@ -13,51 +13,52 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'System-Clipboard'
+	#category : 'System-Clipboard',
+	#package : 'System-Clipboard'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> chooseRecentClipping [  "Clipboard chooseRecentClipping"
 	"Choose by menu from among the recent clippings"
 	^self default chooseRecentClipping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> clipboardText [ "Clipboard clipboardText"
 	^self default clipboardText.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> clipboardText: aText [ 
 	^self default clipboardText: aText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> default [
 	^Default ifNil: [Default := Smalltalk os clipboardClass new].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Clipboard class >> initialize [
 	self startUp: true.
 	SessionManager default 
 		registerSystemClassNamed: self name
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Clipboard class >> shutDown: isImageQuitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
 
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Clipboard class >> startUp: isImageStarting [
 	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
 	isImageStarting
 		ifTrue: [Default := nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> chooseRecentClipping [
 
 	"Choose by menu from among the recent clippings"
@@ -73,7 +74,7 @@ Clipboard >> chooseRecentClipping [
 		  values: recent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> clipboardText [
 	"Return the text currently in the clipboard. If the system clipboard is empty, or if it differs from the Smalltalk clipboard text, use the Smalltalk clipboard. This is done since (a) the Mac clipboard gives up on very large chunks of text and (b) since not all platforms support the notion of a clipboard."
 
@@ -89,7 +90,7 @@ Clipboard >> clipboardText [
 		ifFalse: [decodedString asText]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> clipboardText: text [
 
 	| string |
@@ -100,14 +101,14 @@ Clipboard >> clipboardText: text [
 	self primitiveClipboardText: string
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Clipboard >> initialize [
 	super initialize.
 	contents := '' asText.
 	recent := OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Clipboard >> noteRecentClipping: text [
 	"Keep most recent clippings in a queue for pasteRecent (paste... command)"
 	text isEmpty ifTrue: [^ self].
@@ -118,14 +119,14 @@ Clipboard >> noteRecentClipping: text [
 
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Clipboard >> primitiveClipboardText [
 	"Get the current clipboard text. Return the empty string if the primitive fails."
 	<primitive: 141>
 	^ ''
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Clipboard >> primitiveClipboardText: aString [
 	"Set the current clipboard text to the given string."
 

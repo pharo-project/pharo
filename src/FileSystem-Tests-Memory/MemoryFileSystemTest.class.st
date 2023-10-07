@@ -2,17 +2,19 @@
 SUnit tests for MemoryFileSystem
 "
 Class {
-	#name : #MemoryFileSystemTest,
-	#superclass : #FileSystemTest,
-	#category : #'FileSystem-Tests-Memory-Base'
+	#name : 'MemoryFileSystemTest',
+	#superclass : 'FileSystemTest',
+	#category : 'FileSystem-Tests-Memory-Base',
+	#package : 'FileSystem-Tests-Memory',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MemoryFileSystemTest >> createFileSystem [
 	^ FileSystem memory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryFileSystemTest >> createFilesIn: root from: anArray [
 	"Helper method to create a directory hierarchy with files."
 
@@ -27,7 +29,7 @@ MemoryFileSystemTest >> createFilesIn: root from: anArray [
 				stream nextPutAll: path pathString ] ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> lastModificationTimeOf: fileReference [
 	"DateAndTime primUTCMicrosecondsClock is not precise across all OS so put in slight delay between calling modificationTime"
 
@@ -35,7 +37,7 @@ MemoryFileSystemTest >> lastModificationTimeOf: fileReference [
 		ensure: [ (Delay forMilliseconds: 100) wait ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testCopyFromto [
 
 	| fileReference buffer |
@@ -48,7 +50,7 @@ MemoryFileSystemTest >> testCopyFromto [
 	self assert: fileReference contents equals: buffer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testCurrentEqual [
 	| other another |
 	another := FileSystem currentMemoryFileSystem.
@@ -56,7 +58,7 @@ MemoryFileSystemTest >> testCurrentEqual [
 	self assert: other equals: another
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testDirectoryMoveTo [
 	"Test the scenario where the source is a directory, the destination is an existing directory and they are on separate file systems."
 	| srcFS destFS src dest count f33 |
@@ -95,7 +97,7 @@ MemoryFileSystemTest >> testDirectoryMoveTo [
 			dest exists ifTrue: [ dest deleteAll ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testDirectoryMoveToRename [
 	"Test the scenario where the source is a directory, the destination doesn't exist (its parent does) and they are on separate file systems, i.e. move and rename the source to the destination."
 	| srcFS destFS src dest count f33 |
@@ -133,7 +135,7 @@ MemoryFileSystemTest >> testDirectoryMoveToRename [
 			dest exists ifTrue: [ dest deleteAll ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testEnsureCreateFileDoesNotOverwriteExistingContent [
 	| file |
 	file := filesystem root / 'a.txt'.
@@ -145,17 +147,17 @@ MemoryFileSystemTest >> testEnsureCreateFileDoesNotOverwriteExistingContent [
 	self assert: file contents equals: 'ok'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testIsMemoryFileSystem [
 	self assert: filesystem isMemoryFileSystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testModifiedTimeWhenFileCreated [
 	self assert: (filesystem / 'file.txt') ensureCreateFile modificationTime notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedByWriteStream [
 	| modifiedTime fileReference |
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
@@ -165,7 +167,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedByWriteStream [
 	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedWithBinaryWriteStream [
 	| modifiedTime fileReference data |
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
@@ -180,7 +182,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedWithBinaryWriteStream [
 	self assert: data equals: (fileReference readStreamDo: [ :aStream | aStream upToEnd ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testModifiedTimeWhenFileWrittenTo [
 	| modifiedTime fileReference |
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
@@ -190,7 +192,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileWrittenTo [
 	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testModifiedTimeWhenHandleTruncated [
 	| modifiedTime fileReference handle |
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
@@ -201,21 +203,21 @@ MemoryFileSystemTest >> testModifiedTimeWhenHandleTruncated [
 	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testNotEqualWhenCreatingNewMemoryFileSystem [
 	| other |
 	other := FileSystem memory.
 	self deny: other equals: filesystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testNotEqualWhenRequestingMemoryFileSystem [
 	| other |
 	other := self createFileSystem.
 	self deny: other equals: filesystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MemoryFileSystemTest >> testStreamWriteAndRead [
 	"Test writing custom collection and reading it [partially] back."
 

@@ -3,12 +3,14 @@ I clusterize CompiledMethods that will be obtained on materialization accessing 
 
 "
 Class {
-	#name : #FLGlobalCompiledMethodCluster,
-	#superclass : #FLGlobalCompiledCodeCluster,
-	#category : #'Fuel-Core-Clusters-Global'
+	#name : 'FLGlobalCompiledMethodCluster',
+	#superclass : 'FLGlobalCompiledCodeCluster',
+	#category : 'Fuel-Core-Clusters-Global',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters-Global'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 	| methodClass selector method serializedHash |
 	methodClass := self materializeGlobalClassFrom: aDecoder.
@@ -29,7 +31,7 @@ FLGlobalCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 	^ method
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCompiledMethodCluster >> serializeInstance: aCompiledMethod with: anEncoder [
 	self
 		serializeGlobalClass: aCompiledMethod methodClass

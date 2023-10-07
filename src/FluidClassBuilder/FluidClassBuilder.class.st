@@ -33,20 +33,23 @@ ShiftClassInstaller new makeWithBuilder: (Object << #Point33
 
 "
 Class {
-	#name : #FluidClassBuilder,
-	#superclass : #FluidBuilder,
+	#name : 'FluidClassBuilder',
+	#superclass : 'FluidBuilder',
 	#instVars : [
 		'superclassToBuild',
 		'layout',
 		'sharedVariables',
 		'sharedPools'
 	],
-	#category : #'FluidClassBuilder-Base'
+	#category : 'FluidClassBuilder-Base',
+	#package : 'FluidClassBuilder',
+	#tag : 'Base'
 }
 
-{ #category : #copying }
+{ #category : 'copying' }
 FluidClassBuilder >> fillInstanceSideFromClass: aClass [
 
+	<reflection: 'Class structural inspection - Pragma'>
 	super fillInstanceSideFromClass: aClass.
 	self superclass: aClass superclass.
 
@@ -56,7 +59,7 @@ FluidClassBuilder >> fillInstanceSideFromClass: aClass [
 	self sharedPools: 	(aClass sharedPools collect: [ :each | each name ]) asArray
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FluidClassBuilder >> fillShiftClassBuilder [
 
 	super fillShiftClassBuilder.
@@ -70,7 +73,7 @@ FluidClassBuilder >> fillShiftClassBuilder [
 	^ shiftClassBuilder
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FluidClassBuilder >> initialize [
 
 	super initialize.
@@ -79,55 +82,55 @@ FluidClassBuilder >> initialize [
 	layout := FixedLayout
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidClassBuilder >> layout: aClass [
 
 	layout := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FluidClassBuilder >> layoutToBuild [
 
 	^ layout
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidClassBuilder >> sharedPools: aString [
 
 	sharedPools := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FluidClassBuilder >> sharedPoolsToBuild [
 
 	^ sharedPools
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 FluidClassBuilder >> sharedVariables: aCollection [
 
 	sharedVariables := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FluidClassBuilder >> sharedVariablesToBuild [
 
 	^ sharedVariables
 ]
 
-{ #category : #'accessing - mandatory' }
+{ #category : 'accessing - mandatory' }
 FluidClassBuilder >> superclass: aClass [
 
 	superclassToBuild := aClass
 ]
 
-{ #category : #'accessing - mandatory' }
+{ #category : 'accessing - mandatory' }
 FluidClassBuilder >> superclassToBuild [
 
 	^ superclassToBuild
 ]
 
-{ #category : #'accessing - mandatory' }
+{ #category : 'accessing - mandatory' }
 FluidClassBuilder >> superclassToBuild: aClass [
 
 	superclassToBuild := aClass

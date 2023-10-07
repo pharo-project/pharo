@@ -1,6 +1,6 @@
-Extension { #name : #MacOSXPlatform }
+Extension { #name : 'MacOSXPlatform' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 MacOSXPlatform >> isTranslated [
 	"Tells if the Pharo VM is translated by Rosetta.
 	See https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment#3616845 for more details.
@@ -20,7 +20,7 @@ MacOSXPlatform >> isTranslated [
 	^ (LibC resultOfCommand: 'sysctl -n sysctl.proc_translated') trim = '1'
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 MacOSXPlatform >> processorArchitecture [
 
 	^ self isTranslated

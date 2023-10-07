@@ -2,17 +2,19 @@
 I represent a shared pool of a class. Shared are objects shared between classes.
 "
 Class {
-	#name : #CDSharedPoolNode,
-	#superclass : #CDNode,
+	#name : 'CDSharedPoolNode',
+	#superclass : 'CDNode',
 	#instVars : [
 		'name',
 		'start',
 		'stop'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CDSharedPoolNode class >> node: aRBLiteralValueNode name: aString start: anInteger stop: anInteger2 [
 	^ self new
 			node: aRBLiteralValueNode;
@@ -22,27 +24,27 @@ CDSharedPoolNode class >> node: aRBLiteralValueNode name: aString start: anInteg
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDSharedPoolNode >> name [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDSharedPoolNode >> name: aString [
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDSharedPoolNode >> node: aRBLiteralValueNode [
 	originalNode := aRBLiteralValueNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDSharedPoolNode >> start: anInteger [
 	start := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDSharedPoolNode >> stop: anInteger [
 	stop := anInteger
 ]

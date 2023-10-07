@@ -14,8 +14,8 @@ Both, cellSize and extraSpace contains points where
 
 "
 Class {
-	#name : #LayoutCell,
-	#superclass : #Object,
+	#name : 'LayoutCell',
+	#superclass : 'Object',
 	#instVars : [
 		'target',
 		'cellSize',
@@ -23,58 +23,60 @@ Class {
 		'flags',
 		'nextCell'
 	],
-	#category : #'Morphic-Base-Layouts'
+	#category : 'Morphic-Base-Layouts',
+	#package : 'Morphic-Base',
+	#tag : 'Layouts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> addExtraSpace: aPoint [
 	extraSpace := extraSpace
 		ifNil: [ aPoint ]
 		ifNotNil: [ extraSpace + aPoint ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> cellSize [
 	^cellSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> cellSize: aPoint [
 	cellSize := aPoint
 ]
 
-{ #category : #collection }
+{ #category : 'collection' }
 LayoutCell >> do: aBlock [
 	aBlock value: self.
 	nextCell ifNotNil:[nextCell do: aBlock]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> extraSpace [
 	^extraSpace ifNil:[0@0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> extraSpace: aPoint [
 	extraSpace := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> flags [
 	^flags ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> hSpaceFill [
 	^self flags anyMask: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> hSpaceFill: aBool [
 	flags := aBool ifTrue:[self flags bitOr: 1] ifFalse:[self flags bitClear: 1]
 ]
 
-{ #category : #collection }
+{ #category : 'collection' }
 LayoutCell >> inject: thisValue into: binaryBlock [
 	"Accumulate a running value associated with evaluating the argument,
 	binaryBlock, with the current value of the argument, thisValue, and the
@@ -88,17 +90,17 @@ LayoutCell >> inject: thisValue into: binaryBlock [
 	^nextValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> nextCell [
 	^nextCell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> nextCell: aCell [
 	nextCell := aCell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> size [
 	| n cell |
 	n := 0.
@@ -109,22 +111,22 @@ LayoutCell >> size [
 	^n
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> target [
 	^target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> target: newTarget [
 	target := newTarget
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> vSpaceFill [
 	^self flags anyMask: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutCell >> vSpaceFill: aBool [
 	flags := aBool ifTrue:[self flags bitOr: 2] ifFalse:[self flags bitClear: 2]
 ]

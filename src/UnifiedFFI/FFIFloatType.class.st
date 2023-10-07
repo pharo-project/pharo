@@ -2,29 +2,31 @@
 A generic (abstract) float type.
 "
 Class {
-	#name : #FFIFloatType,
-	#superclass : #FFIExternalType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIFloatType',
+	#superclass : 'FFIExternalType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFloatType >> callbackReturnOn: callbackContext for: aFloat [
 	^ callbackContext floatResult: aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFloatType >> defaultReturnOnError [
 
 	^ 0.0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIFloatType >> isFloatType [
 
 	^ true
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIFloatType >> stackValueParameterClass [
 	^ #float
 ]

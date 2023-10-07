@@ -1,10 +1,11 @@
 Class {
-	#name : #ClySortItemGroupFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClySortItemGroupFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortItemGroupFunctionTest >> testAscending [
 
 	function := ClySortItemGroupFunction ascending.
@@ -21,7 +22,7 @@ ClySortItemGroupFunctionTest >> testAscending [
 		value: (ClyItemGroup named: 'group1') value: (ClyItemGroup named: 'group2'))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortItemGroupFunctionTest >> testDescending [
 
 	function := ClySortItemGroupFunction descending.

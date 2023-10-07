@@ -1,6 +1,6 @@
-Extension { #name : #ImageMorph }
+Extension { #name : 'ImageMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ImageMorph >> drawOnAthensCanvas: aCanvas [
 
 	| cached style|

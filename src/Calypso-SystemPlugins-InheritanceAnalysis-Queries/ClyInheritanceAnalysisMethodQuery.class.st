@@ -4,12 +4,13 @@ I am abstract method query to group together other queries which analyzes method
 I provide implementation to react on system changes and some helper methods for subclasses
 "
 Class {
-	#name : #ClyInheritanceAnalysisMethodQuery,
-	#superclass : #ClyMethodQuery,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
+	#name : 'ClyInheritanceAnalysisMethodQuery',
+	#superclass : 'ClyMethodQuery',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyInheritanceAnalysisMethodQuery >> isFromScopeWithClassKindOf: aClass [
 	scope
 		classesDo: [ :each |
@@ -18,7 +19,7 @@ ClyInheritanceAnalysisMethodQuery >> isFromScopeWithClassKindOf: aClass [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyInheritanceAnalysisMethodQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	"This query is not restricted by the scope
 	because it analyses methods from scope classes together with all superclasses.

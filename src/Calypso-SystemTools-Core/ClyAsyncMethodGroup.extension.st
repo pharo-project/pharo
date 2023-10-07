@@ -1,6 +1,6 @@
-Extension { #name : #ClyAsyncMethodGroup }
+Extension { #name : 'ClyAsyncMethodGroup' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyAsyncMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	super decorateTableCell: anItemCellMorph of: groupItem.
 

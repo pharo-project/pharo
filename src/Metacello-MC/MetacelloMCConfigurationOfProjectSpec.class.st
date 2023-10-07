@@ -1,25 +1,27 @@
 Class {
-	#name : #MetacelloMCConfigurationOfProjectSpec,
-	#superclass : #MetacelloMCProjectSpec,
-	#category : #'Metacello-MC-Specs'
+	#name : 'MetacelloMCConfigurationOfProjectSpec',
+	#superclass : 'MetacelloMCProjectSpec',
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCConfigurationOfProjectSpec >> asConfigurationProjectSpec [
     ^ self
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCConfigurationOfProjectSpec >> asProjectRegistration [
     ^ MetacelloProjectRegistration fromMCConfigurationProjectSpec: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCConfigurationOfProjectSpec >> constructClassName [
     ^ 'ConfigurationOf' , self name
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloMCConfigurationOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
   | copy |
   aMetacelloProjectRegistration
@@ -36,12 +38,12 @@ MetacelloMCConfigurationOfProjectSpec >> copyForRegistration: aMetacelloProjectR
         ifAbsent: [ aBlock value: nil ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMCConfigurationOfProjectSpec >> hasClassName [
     ^ className ~~ nil and: [ className ~= self constructClassName ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCConfigurationOfProjectSpec >> hasConflictWithBaselineSpec: projectSpec [
 	projectSpec name = self name
 		ifFalse: [ ^ true ].
@@ -51,22 +53,22 @@ MetacelloMCConfigurationOfProjectSpec >> hasConflictWithBaselineSpec: projectSpe
 		or: [ projectSpec repositories hasNoLoadConflicts: self repositories ]) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCConfigurationOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
 	^ projectSpec hasConflictWithConfigurationSpec: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCConfigurationOfProjectSpec >> isConfigurationOfProjectSpec [
 	^ true
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloMCConfigurationOfProjectSpec >> mergeSpec: anotherSpec [
     ^ super mergeSpec: anotherSpec asConfigurationProjectSpec
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMCConfigurationOfProjectSpec >> projectLabel [
     ^ 'configuration'
 ]

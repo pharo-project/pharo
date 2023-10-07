@@ -2,17 +2,19 @@
 Instance variables are initialized to nil by default. There is no need to do it explicitly in the initialize method.
 "
 Class {
-	#name : #ReNoNilAssignationInInitializeRule,
-	#superclass : #ReAbstractRule,
-	#category : #'Renraku-Rules'
+	#name : 'ReNoNilAssignationInInitializeRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'Renraku-Rules',
+	#package : 'Renraku',
+	#tag : 'Rules'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReNoNilAssignationInInitializeRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemAssigments|
 	(aMethod selector = #initialize and: [ aMethod methodClass isInstanceSide ]) ifFalse: [ ^ self ].
@@ -24,19 +26,19 @@ ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBloc
 		 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNoNilAssignationInInitializeRule >> group [
 
 	^ 'Style'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNoNilAssignationInInitializeRule >> name [
 
 	^ 'Initialize method does not need nil assignation'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNoNilAssignationInInitializeRule >> severity [
 	^ #information
 ]

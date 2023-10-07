@@ -1,6 +1,6 @@
-Extension { #name : #MenuMorph }
+Extension { #name : 'MenuMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MenuMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the menu. Add keyboard-focus feedback if appropriate"
 

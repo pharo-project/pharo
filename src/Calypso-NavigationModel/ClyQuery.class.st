@@ -101,22 +101,24 @@ Internal Representation and Key Implementation Points.
 	scope:		<ClyScope>
 "
 Class {
-	#name : #ClyQuery,
-	#superclass : #Object,
+	#name : 'ClyQuery',
+	#superclass : 'Object',
 	#instVars : [
 		'requiredResult',
 		'scope'
 	],
-	#category : #'Calypso-NavigationModel-Query'
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyQuery class >> as: aQueryResultClass [
 	^self new
 		requiredResult: aQueryResultClass
 ]
 
-{ #category : #'merging queries' }
+{ #category : 'merging queries' }
 ClyQuery class >> mergeOwnInstances: queries [
 	"Subclasses should return collection of queries merged from given array.
 	For example two AllClasses queries from same package scope can be merged.
@@ -125,27 +127,27 @@ ClyQuery class >> mergeOwnInstances: queries [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyQuery class >> sortedBy: aSortFunction [
 	^self as: (ClySortedQueryResult using: aSortFunction)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyQuery class >> unionFrom: subqueries [
 	^ClyUnionQuery with: subqueries
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyQuery class >> unionFrom: subqueries as: aQueryResult [
 	^ClyUnionQuery with: subqueries as: aQueryResult
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyQuery >> , anotherQuery [
 	self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -156,44 +158,44 @@ ClyQuery >> = anObject [
 		and: [scope = anObject scope]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> async [
 	^ClyAsyncQuery for: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQuery >> bindTo: aScope in: aNavigationEnvironment [
 	aScope bindTo: aNavigationEnvironment.
 	self scope: aScope
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> buildResult: aQueryResult [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> buildsDefaultResult [
 
 	^self retrievesItemsAs: self defaultResult class
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> checkEmptyResult [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQuery >> defaultResult [
 	^ClyRawQueryResult new
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyQuery >> description [
 	^String streamContents: [:s |
 		s nextPutAll: self class name.
@@ -202,7 +204,7 @@ ClyQuery >> description [
 		s nextPut: $)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQuery >> ensureScope: aScope [
 	scope == ClyUnknownScope instance ifTrue: [ ^self scope: aScope ].
 
@@ -210,18 +212,18 @@ ClyQuery >> ensureScope: aScope [
 		self error: 'Scope modification is forbidden. Query is bound to scope forever' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQuery >> environment [
 	scope ifNil: [ self error: 'Scope is not defined. So environment is undefined' ].
 	^scope environment
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> execute [
 	^scope query: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> executesQuery: aTypedQueryClass [
 	"We should be able to check that given query executes particular kind of query class.
 	It allows simple check for tools that desired kind of query is activated.
@@ -229,12 +231,12 @@ ClyQuery >> executesQuery: aTypedQueryClass [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> filteredBy: anItemFilter [
 	^ClyFilterQuery for: self filter: anItemFilter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> fixStateBeforeExecution [
 	"Here the query should become readonly object together with all required internal state. By default it is only instance itself. But subclasses like composite query force additional objects (subqueries) to fix their state.
 	If query needs additional state for execution
@@ -244,98 +246,98 @@ ClyQuery >> fixStateBeforeExecution [
 	scope beReadOnlyObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyQuery >> fullDescription [
 
 	^self description, ' from ',
 		(scope isBasedOnEmptyBasis ifTrue: [ 'empty scope'] ifFalse: [ scope description])
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> hasEmptyResult [
 	^scope isQueryEmpty: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^requiredResult hash bitXor: scope hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQuery >> initialize [
 	super initialize.
 	self resetScope.
 	self requiredResult: self defaultResult
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> isAsync [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> isBoundToEnvironment [
 	^scope isBoundToEnvironment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> isExecutedFromEmptyScope [
 
 	^scope isBasedOnEmptyBasis
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> isExecutedFromMultipleScope [
 	^scope isBasedOnMultipleBasis
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> isExecutedFromScope: aTypedScopeClass [
 
 	^scope representsScope: aTypedScopeClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> isExecutedFromScopeOf: basisObject [
 
 	^scope isBasedOn: basisObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> isExecutedFromSingleScope [
 	^scope isBasedOnSingleBasis
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> openBrowserCursorFor: anItemObserver [
 	^self execute openBrowserCursorFor: anItemObserver
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> prepareNewResult [
 
 	^requiredResult prepareNewFor: self in: self environment
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyQuery >> prepareStateBeforeExecution [
 	"Here subclasses can initialize some additional state from own instance variables
 	which is required for execution"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyQuery >> printExtraInfoOn: aStream [
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyQuery >> printOn: aStream [
 	| position |
 	super printOn: aStream.
@@ -352,53 +354,53 @@ ClyQuery >> printOn: aStream [
 		ifFalse: [ scope printDescriptionOn: aStream]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQuery >> requiredResult [
 	^ requiredResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQuery >> requiredResult: aQueryResult [
 	requiredResult := aQueryResult.
 	requiredResult beReadOnlyObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQuery >> resetScope [
 	scope := ClyUnknownScope instance
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> restrictedByScope: aScope [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> retrievesBrowserItems [
 	^requiredResult representsBrowserItems
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> retrievesItem: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> retrievesItemsAs: aQueryResultClass [
 	^requiredResult isKindOf: aQueryResultClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQuery >> retrievesItemsOfType: itemTypeClass [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQuery >> scope [
 	^ scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQuery >> scope: aScope [
 	aScope isBoundToEnvironment ifFalse: [
 		^self error: 'Query should be always initialized with scope bound to concrete environment' ].
@@ -408,20 +410,20 @@ ClyQuery >> scope: aScope [
 	scope := aScope
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> semiAsync [
 	^self async
 		asyncResult: ClySemiAsyncQueryResult new
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyQuery >> unionWith: typedQueries as: aQueryResult [
 	"Subclasses should return ClyUnionQuery with collection of given subqueries together with itself or own subqueries if exists.
 	To create ClyUnionQuery they can yse short version ClyQuery unionFrom:"
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> withResult: aQueryResult [
 	| copy |
 	copy := self copy.
@@ -429,17 +431,17 @@ ClyQuery >> withResult: aQueryResult [
 	^copy
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> withScope: aScope [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> withScopeOf: newBasisObjects [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQuery >> withoutItemsOfType: anItemTypeClass [
 	self subclassResponsibility
 ]

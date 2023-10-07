@@ -20,32 +20,34 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTPropertyColumnSortingStrategy,
-	#superclass : #FTStateBasedColumnSortingStrategy,
+	#name : 'FTPropertyColumnSortingStrategy',
+	#superclass : 'FTStateBasedColumnSortingStrategy',
 	#instVars : [
 		'property'
 	],
-	#category : #'Morphic-Widgets-FastTable-Sorting'
+	#category : 'Morphic-Widgets-FastTable-Sorting',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Sorting'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPropertyColumnSortingStrategy class >> column: aColumn property: aValuable [
 	^ (self column: aColumn)
 		property: aValuable;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPropertyColumnSortingStrategy >> ascendingSortFunction [
 	^ [ :entity | self property value: entity ] ascending
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPropertyColumnSortingStrategy >> property [
 	^ property
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPropertyColumnSortingStrategy >> property: aString [
 	property := aString
 ]

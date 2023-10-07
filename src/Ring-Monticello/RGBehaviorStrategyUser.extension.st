@@ -1,6 +1,6 @@
-Extension { #name : #RGBehaviorStrategyUser }
+Extension { #name : 'RGBehaviorStrategyUser' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGBehaviorStrategyUser >> asMCDefinition [
 
 	^ self behaviorStrategy asMCDefinition

@@ -1,6 +1,6 @@
-Extension { #name : #ByteArray }
+Extension { #name : 'ByteArray' }
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 ByteArray >> lastIndexOfPKSignature: aSignature [
 	"Answer the last index in me where aSignature (4 bytes long) occurs, or 0 if not found"
 	| a b c d |
@@ -18,7 +18,7 @@ ByteArray >> lastIndexOfPKSignature: aSignature [
 	^0
 ]
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 ByteArray >> unzipped [
 	"Assuming the receiver contains GZIP compressed data,
 	return a ByteArray with the decompressed data."
@@ -28,7 +28,7 @@ ByteArray >> unzipped [
 	^ (GZipReadStream on: self) upToEnd
 ]
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 ByteArray >> zipped [
 	"Return a ByteArray containing a GZIP compressed version of the receiver"
 

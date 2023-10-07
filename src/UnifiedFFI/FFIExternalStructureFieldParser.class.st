@@ -2,20 +2,22 @@
 I'm a parser for fields in FFIExternalStructure
 "
 Class {
-	#name : #FFIExternalStructureFieldParser,
-	#superclass : #Object,
+	#name : 'FFIExternalStructureFieldParser',
+	#superclass : 'Object',
 	#instVars : [
 		'fieldSpec'
 	],
-	#category : #'UnifiedFFI-External-StructureHandling'
+	#category : 'UnifiedFFI-External-StructureHandling',
+	#package : 'UnifiedFFI',
+	#tag : 'External-StructureHandling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureFieldParser >> fieldSpec [
 	^ fieldSpec
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FFIExternalStructureFieldParser >> parseFields: fields structure: structClass [
 	| stream type fieldName generator anonFieldCount |
 

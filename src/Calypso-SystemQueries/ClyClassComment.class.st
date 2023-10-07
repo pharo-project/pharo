@@ -13,20 +13,22 @@ Internal Representation and Key Implementation Points.
 	definingClass:		<Class>
 "
 Class {
-	#name : #ClyClassComment,
-	#superclass : #Object,
+	#name : 'ClyClassComment',
+	#superclass : 'Object',
 	#instVars : [
 		'definingClass'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassComment class >> checkCalypsoItem: anObject isSameAs: anObject2 [
 	^self checkCalypsoItem: anObject isEqualTo: anObject2
 ]
 
-{ #category : #'item convertation' }
+{ #category : 'item convertation' }
 ClyClassComment class >> convertToCalypsoBrowserItem: aClassComment [
 
 	| item |
@@ -35,28 +37,29 @@ ClyClassComment class >> convertToCalypsoBrowserItem: aClassComment [
 	^item
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyClassComment class >> defaultSortFunctionForCalypso [
 	^ClySortByDefiningClassFunction ascending
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassComment class >> match: aClassComment forQueryBrowserFilter: aQueryBrowserFilter [
 	^aClassComment definingClass matchesQueryBrowserFilter: aQueryBrowserFilter
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassComment class >> of: aClass [
 	^self new
 		definingClass: aClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassComment class >> printSystemPathTo: aClassComment [
-	^aClassComment definingClass package name, ' / ' , aClassComment definingClass name
+
+	^ aClassComment definingClass package name , ' / ' , aClassComment definingClass name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassComment >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -67,24 +70,24 @@ ClyClassComment >> = anObject [
 	^ definingClass = anObject definingClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassComment >> definingClass [
 	^ definingClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassComment >> definingClass: anObject [
 	definingClass := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassComment >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ definingClass hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassComment >> printOn: aStream [
 	super printOn: aStream.
 

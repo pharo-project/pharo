@@ -2,23 +2,24 @@
 SUnit tests for session error handling
 "
 Class {
-	#name : #SessionErrorHandlingTest,
-	#superclass : #TestCase,
+	#name : 'SessionErrorHandlingTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'manager',
 		'session'
 	],
-	#category : #'System-SessionManager-Tests'
+	#category : 'System-SessionManager-Tests',
+	#package : 'System-SessionManager-Tests'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SessionErrorHandlingTest >> newTestSessionfor: aManager [
 	^ TestWorkingSession new
 		manager: aManager;
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SessionErrorHandlingTest >> setUp [
 	super setUp.
 	manager := SessionManager new.
@@ -26,7 +27,7 @@ SessionErrorHandlingTest >> setUp [
 	manager installSession: session
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStartupWhenStartupUiManagerActive [
 	<haltOrBreakpointForTesting>
 	UIManager nonInteractiveDuring: [	manager register: (TestSessionHandler onStartup: [ Halt now ]).
@@ -43,7 +44,7 @@ SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStart
 			equals: 1]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefaultUiManagerActive [
 	"session errorHandler will be TestWorkingSession that will register caught errors"
 	<haltOrBreakpointForTesting>
@@ -57,7 +58,7 @@ SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefa
 	self assertEmpty: (session instVarNamed: 'deferredStartupActions')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenStartupUiManagerActive [
 	<haltOrBreakpointForTesting>
 	manager register: (TestSessionHandler onShutdown: [ ZeroDivide signal ]).
@@ -74,7 +75,7 @@ SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenSta
 		equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtStartupWhenDefaultUiManagerActive [
 	<haltOrBreakpointForTesting>
 	"session errorHandler will be TestWorkingSession that will register caught errors"

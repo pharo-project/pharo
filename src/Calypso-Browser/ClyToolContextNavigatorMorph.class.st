@@ -11,12 +11,14 @@ I simply ask the tool:
 
 "
 Class {
-	#name : #ClyToolContextNavigatorMorph,
-	#superclass : #ClyStatusBarItemMorph,
-	#category : #'Calypso-Browser-UI'
+	#name : 'ClyToolContextNavigatorMorph',
+	#superclass : 'ClyStatusBarItemMorph',
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyToolContextNavigatorMorph >> build [
 	| goButton contextLabel |
 	contextLabel := ownerTool printContext.
@@ -34,7 +36,7 @@ ClyToolContextNavigatorMorph >> build [
 	self addMorphBack: goButton
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyToolContextNavigatorMorph >> restoreBrowserState [
 	ownerTool restoreBrowserState
 ]

@@ -3,52 +3,54 @@ I define a strategy to handle selections.
 The sense of this class is shown in my children: I allow to handle the case of multiple and simple selection in a well designed way, instead using ifs everywhere.
 "
 Class {
-	#name : #FTSelectionStrategy,
-	#superclass : #Object,
+	#name : 'FTSelectionStrategy',
+	#superclass : 'Object',
 	#instVars : [
 		'table'
 	],
-	#category : #'Morphic-Widgets-FastTable-Selection'
+	#category : 'Morphic-Widgets-FastTable-Selection',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Selection'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTSelectionStrategy class >> table: aFastTableMorph [
 	^ self new
 		table: aFastTableMorph;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTSelectionStrategy >> isMultiple [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTSelectionStrategy >> isSimple [
 	^ self isMultiple not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionStrategy >> selectIndex: rowIndex event: event [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionStrategy >> selectionModeStrategy [
 	^ self table selectionModeStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionStrategy >> table [
 	^ table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionStrategy >> table: aTable [
 	table := aTable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTSelectionStrategy >> toggleIndex: index [
 	((self table selectedIndexes includes: index) and: [ self table selectedIndexes size = 1 and: [ self table allowsDeselection ]	"just one selected" ])
 		ifTrue: [ self table deselectAll ]

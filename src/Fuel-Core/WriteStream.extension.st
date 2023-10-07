@@ -1,6 +1,6 @@
-Extension { #name : #WriteStream }
+Extension { #name : 'WriteStream' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 WriteStream >> nextBytesPutAll: aCollection [
 	"Append the bytes of aCollection to the sequence of bytes accessible 
 	by the receiver. Answer aCollection."

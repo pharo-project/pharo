@@ -2,22 +2,24 @@
 A preamble evaluated before unloading/removing
 "
 Class {
-	#name : #MCRemovalPreambleDefinition,
-	#superclass : #MCScriptDefinition,
-	#category : #'Monticello-Modeling'
+	#name : 'MCRemovalPreambleDefinition',
+	#superclass : 'MCScriptDefinition',
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemovalPreambleDefinition class >> scriptSelector [
 	^ #preambleOfRemoval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRemovalPreambleDefinition >> sortKey [
 	^ 'zzz' "force to the end so it gets unloaded early"
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCRemovalPreambleDefinition >> unload [
 	super unload.
 	self evaluate

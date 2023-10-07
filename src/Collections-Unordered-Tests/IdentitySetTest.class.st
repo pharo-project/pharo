@@ -2,33 +2,35 @@
 SUnit tests for identity sets
 "
 Class {
-	#name : #IdentitySetTest,
-	#superclass : #SetTest,
+	#name : 'IdentitySetTest',
+	#superclass : 'SetTest',
 	#instVars : [
 		'floatCollection'
 	],
-	#category : #'Collections-Unordered-Tests-Sets'
+	#category : 'Collections-Unordered-Tests-Sets',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Sets'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 IdentitySetTest class >> shouldInheritSelectors [
 
 ^true
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 IdentitySetTest >> classToBeTested [
 
 	^ IdentitySet
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IdentitySetTest >> identityCollectionWithElementsCopyNotIdentical [
 " return a collection including elements for which #copy return a new object "
 	^ floatCollection ifNil: [ floatCollection := IdentitySet new add: 2.5 ; add: 4.5 ; add:5.5 ; yourself ]
 ]
 
-{ #category : #'tests - identity' }
+{ #category : 'tests - identity' }
 IdentitySetTest >> testGrowWithNil [
 	"This test covers that grow take into account that nil are wrapped elements of sets"
 	| set |
@@ -38,7 +40,7 @@ IdentitySetTest >> testGrowWithNil [
 	self assert: (set includes: nil)
 ]
 
-{ #category : #'tests - identity' }
+{ #category : 'tests - identity' }
 IdentitySetTest >> testIdentity [
 	| identitySet aString anOtherString |
 	aString := 'hello'.

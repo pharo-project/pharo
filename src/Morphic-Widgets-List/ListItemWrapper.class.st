@@ -3,110 +3,111 @@ Contributed by Bob Arning as part of the ObjectExplorer package.
 
 "
 Class {
-	#name : #ListItemWrapper,
-	#superclass : #Model,
+	#name : 'ListItemWrapper',
+	#superclass : 'Model',
 	#instVars : [
 		'item',
 		'model'
 	],
-	#category : #'Morphic-Widgets-List'
+	#category : 'Morphic-Widgets-List',
+	#package : 'Morphic-Widgets-List'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ListItemWrapper class >> with: anObject [
 
 	^self new setItem: anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ListItemWrapper class >> with: anObject model: aModel [
 
 	^self new setItem: anObject model: aModel
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 ListItemWrapper >> acceptDroppingObject: anotherItem [
 
 	^item acceptDroppingObject: anotherItem
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ListItemWrapper >> asString [
 
 	^item asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> balloonText [
 
 	^nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ListItemWrapper >> canBeDragged [
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> contents [
 
 	^Array new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ListItemWrapper >> handlesMouseOver: evt [
 
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> hasContents [
 
 	^self contents isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ListItemWrapper >> hasEquivalentIn: aCollection [
 	^ aCollection anySatisfy: [ :each | each withoutListWrapper = item withoutListWrapper ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> highlightingColor [
 	^ self theme selectionColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> icon [
 	"Answer a form to be used as icon"
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> item [
 	"Answer the item. It is useful!"
 
 	^item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> item: newItem [
 	item := newItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> model [
 	"Answer the model. It is useful!"
 
 	^model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> preferredColor [
 	^ nil
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 ListItemWrapper >> sendSettingMessageTo: aModel [
 
 	aModel
@@ -114,38 +115,38 @@ ListItemWrapper >> sendSettingMessageTo: aModel [
 		with: self withoutListWrapper
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> setItem: anObject [
 
 	item := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> setItem: anObject model: aModel [
 
 	item := anObject.
 	model := aModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> setItemFromBlock: aBlock [
 
 	self setItem: aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ListItemWrapper >> settingSelector [
 
 	^nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ListItemWrapper >> wantsDroppedObject: anotherItem [
 
 	^false
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ListItemWrapper >> withoutListWrapper [
 
 	^item withoutListWrapper

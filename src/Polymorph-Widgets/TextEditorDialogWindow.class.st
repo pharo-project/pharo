@@ -2,23 +2,25 @@
 Multi-line text entry dialog.
 "
 Class {
-	#name : #TextEditorDialogWindow,
-	#superclass : #MessageDialogWindow,
+	#name : 'TextEditorDialogWindow',
+	#superclass : 'MessageDialogWindow',
 	#instVars : [
 		'entryText',
 		'textEditorMorph'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #icons }
+{ #category : 'icons' }
 TextEditorDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallQuestion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditorDialogWindow >> cancel [
 	"Cancel and close."
 
@@ -26,7 +28,7 @@ TextEditorDialogWindow >> cancel [
 	^super cancel
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 TextEditorDialogWindow >> defaultFocusMorph [
 	"Answer the morph that should have the keyboard
 	focus by default when the dialog is opened."
@@ -34,7 +36,7 @@ TextEditorDialogWindow >> defaultFocusMorph [
 	^self textEditorMorph textMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextEditorDialogWindow >> entryHeight: aNumber [
 	"Set the height of the text editor morph.
 	Set the width to be 2 times this also."
@@ -44,14 +46,14 @@ TextEditorDialogWindow >> entryHeight: aNumber [
 		minWidth: 500
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditorDialogWindow >> entryText [
 	"Answer the value of entryText"
 
 	^ entryText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditorDialogWindow >> entryText: anObject [
 	"Set the value of entryText"
 
@@ -62,14 +64,14 @@ TextEditorDialogWindow >> entryText: anObject [
 	self textEditorMorph hasUnacceptedEdits: true
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 TextEditorDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
 	^ self iconNamed: #question
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TextEditorDialogWindow >> initialize [
 	"Initialize the receiver."
 
@@ -80,14 +82,14 @@ TextEditorDialogWindow >> initialize [
 	self textEditorMorph selectAll
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 TextEditorDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newOKButton. self newCancelButton}
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 TextEditorDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
@@ -100,7 +102,7 @@ TextEditorDialogWindow >> newContentMorph [
 		self textEditorMorph}
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 TextEditorDialogWindow >> newTextEditorMorph [
 	"Answer a new text entry morph."
 	^(self
@@ -111,21 +113,21 @@ TextEditorDialogWindow >> newTextEditorMorph [
 		selectAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditorDialogWindow >> textEditorMorph [
 	"Answer the value of textEditorMorph"
 
 	^ textEditorMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextEditorDialogWindow >> textEditorMorph: anObject [
 	"Set the value of textEditorMorph"
 
 	textEditorMorph := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextEditorDialogWindow >> textLines [
 
 	^ super textLines, entryText asString lines

@@ -2,33 +2,34 @@
 Unit tests for File dialog window
 "
 Class {
-	#name : #FileDialogWindowTest,
-	#superclass : #TestCase,
+	#name : 'FileDialogWindowTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'memFs'
 	],
-	#category : #'Tool-FileList-Tests'
+	#category : 'Tool-FileList-Tests',
+	#package : 'Tool-FileList-Tests'
 }
 
-{ #category : #'tests - helper' }
+{ #category : 'tests - helper' }
 FileDialogWindowTest >> dialogOnMemFs [
 	^ FileDialogWindow onFileSystem: memFs
 ]
 
-{ #category : #'tests - helper' }
+{ #category : 'tests - helper' }
 FileDialogWindowTest >> randomTestPathName [
 
-	^ 'FileDialogWindowTest-' , UUIDGenerator next asString
+	^ 'FileDialogWindowTest-' , UUID new asString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileDialogWindowTest >> setUp [
 	super setUp.
 
 	memFs := FileSystem memory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileDialogWindowTest >> testDeleteFileOrDirectory [
 	| pathName aFolder dialog |
 
@@ -61,7 +62,7 @@ FileDialogWindowTest >> testDeleteFileOrDirectory [
 	self deny: aFolder exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileDialogWindowTest >> testUsingMemoryFileSystemAbsolutePathCanBeSelected [
 	| pathName aFolder dialog |
 
@@ -76,7 +77,7 @@ FileDialogWindowTest >> testUsingMemoryFileSystemAbsolutePathCanBeSelected [
 		equals: aFolder fullName asLowercase
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileDialogWindowTest >> testUsingMemoryFileSystemRelativePathCanBeSelected [
 	| pathName aFolder dialog |
 
@@ -91,7 +92,7 @@ FileDialogWindowTest >> testUsingMemoryFileSystemRelativePathCanBeSelected [
 		equals: aFolder fullName asLowercase
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileDialogWindowTest >> testUsingMemoryFileSystemSelectInvalidDirectory [
 	"Tests that selecting a non existent directory defaults to selecting the working directory"
 	| nonExistentDirectory dialog |

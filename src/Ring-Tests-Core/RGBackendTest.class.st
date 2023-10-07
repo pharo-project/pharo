@@ -1,16 +1,17 @@
 Class {
-	#name : #RGBackendTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGBackendTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBackendTest >> backendClass [
 
 	^ RGEnvironmentBackend
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBackendTest >> testDefaultContentFor: anRGEnvironment [
 
 "	| names defaultNames kernelPackage |

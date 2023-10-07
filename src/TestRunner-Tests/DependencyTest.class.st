@@ -1,43 +1,45 @@
 Class {
-	#name : #DependencyTest,
-	#superclass : #MockTest,
+	#name : 'DependencyTest',
+	#superclass : 'MockTest',
 	#classInstVars : [
 		'data'
 	],
-	#category : #'TestRunner-Tests-Utilities-Test'
+	#category : 'TestRunner-Tests-Utilities-Test',
+	#package : 'TestRunner-Tests',
+	#tag : 'Utilities-Test'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest class >> data [
 
 	^ data
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest class >> data: anInteger [
 
 	data := anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest class >> incrementData [
 	data := data + 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest class >> reset [
 
 	<script>
 	data := 10
 ]
 
-{ #category : #script }
+{ #category : 'script' }
 DependencyTest >> resetData [
 	<script>
 	self class reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest >> testDataIs10ThenIncrement [
 
 	self skipOnPharoCITestingEnvironment.
@@ -46,7 +48,7 @@ DependencyTest >> testDataIs10ThenIncrement [
 	self class incrementData
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest >> testDataIs11ThenIncrement [
 
 	self skipOnPharoCITestingEnvironment.
@@ -54,7 +56,7 @@ DependencyTest >> testDataIs11ThenIncrement [
 	self class incrementData
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest >> testDataIs12ThenIncrement [
 
 	self skipOnPharoCITestingEnvironment.
@@ -62,7 +64,7 @@ DependencyTest >> testDataIs12ThenIncrement [
 	self class incrementData
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest >> testDataIs13ThenIncrement [
 
 	self skipOnPharoCITestingEnvironment.
@@ -70,7 +72,7 @@ DependencyTest >> testDataIs13ThenIncrement [
 	self class incrementData
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest >> testDataIs14ThenIncrement [
 
 	self skipOnPharoCITestingEnvironment.
@@ -78,7 +80,7 @@ DependencyTest >> testDataIs14ThenIncrement [
 	self class incrementData
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DependencyTest >> testDataIs15ThenIncrement [
 
 	self skipOnPharoCITestingEnvironment.

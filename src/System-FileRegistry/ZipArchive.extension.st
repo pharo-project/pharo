@@ -1,6 +1,6 @@
-Extension { #name : #ZipArchive }
+Extension { #name : 'ZipArchive' }
 
-{ #category : #'*System-FileRegistry' }
+{ #category : '*System-FileRegistry' }
 ZipArchive class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 	"Answers a collection of services that can handle the file and suffixes"
@@ -11,7 +11,7 @@ ZipArchive class >> fileReaderServicesForFile: fullName suffix: suffix [
 	^services
 ]
 
-{ #category : #'*System-FileRegistry' }
+{ #category : '*System-FileRegistry' }
 ZipArchive class >> serviceExtractAll [
 	"Answer a service for extracting files in a zip to a user-specified directory"
 

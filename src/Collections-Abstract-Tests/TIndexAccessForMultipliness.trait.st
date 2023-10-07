@@ -2,25 +2,27 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TIndexAccessForMultipliness,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TIndexAccessForMultipliness',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIndexAccessForMultipliness >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIndexAccessForMultipliness >> collectionWithSameAtEndAndBegining [
 	" return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIndexAccessForMultipliness >> test0FixtureIndexAccessFotMultipliness [
 
 	self collectionWithSameAtEndAndBegining.
@@ -31,7 +33,7 @@ TIndexAccessForMultipliness >> test0FixtureIndexAccessFotMultipliness [
 			ifTrue: [ self deny: (self collectionWithSameAtEndAndBegining at: i) = self collectionWithSameAtEndAndBegining first ] ]
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIdentityIndexOfDuplicate [
 
 	| collection element |
@@ -47,7 +49,7 @@ TIndexAccessForMultipliness >> testIdentityIndexOfDuplicate [
 	self assert: (collection identityIndexOf: element) equals: collection size
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIdentityIndexOfIAbsentDuplicate [
 
 	| collection element elementCopy |
@@ -63,7 +65,7 @@ TIndexAccessForMultipliness >> testIdentityIndexOfIAbsentDuplicate [
 			ifAbsent: [ 55 ]) equals: 55
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIndexOfDuplicate [
 
 	| collection element |
@@ -75,7 +77,7 @@ TIndexAccessForMultipliness >> testIndexOfDuplicate [
 	self assert: (collection indexOf: element) equals: 1
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIndexOfIfAbsentDuplicate [
 
 	| collection element |
@@ -89,7 +91,7 @@ TIndexAccessForMultipliness >> testIndexOfIfAbsentDuplicate [
 			ifAbsent: [ 55 ]) equals: 1
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIndexOfStartingAtDuplicate [
 
 	| collection element |
@@ -108,7 +110,7 @@ TIndexAccessForMultipliness >> testIndexOfStartingAtDuplicate [
 			ifAbsent: [ 55 ]) equals: collection size
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfDuplicate [
 
 	| collection element |
@@ -120,7 +122,7 @@ TIndexAccessForMultipliness >> testLastIndexOfDuplicate [
 	self assert: (collection lastIndexOf: element) equals: collection size
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfIfAbsentDuplicate [
 
 	| collection element |
@@ -134,7 +136,7 @@ TIndexAccessForMultipliness >> testLastIndexOfIfAbsentDuplicate [
 			ifAbsent: [ 55 ]) equals: collection size
 ]
 
-{ #category : #'tests - index accessing for multipliness' }
+{ #category : 'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfStartingAtDuplicate [
 
 	| collection element |

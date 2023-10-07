@@ -1,6 +1,6 @@
-Extension { #name : #RBCreateAccessorsForVariableTransformation }
+Extension { #name : 'RBCreateAccessorsForVariableTransformation' }
 
-{ #category : #'*NautilusRefactoring' }
+{ #category : '*NautilusRefactoring' }
 RBCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [
 
 	^ (self changes changes

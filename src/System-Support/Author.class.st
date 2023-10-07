@@ -2,18 +2,20 @@
 I am responsible for the full name used to identify the current code author.
 "
 Class {
-	#name : #Author,
-	#superclass : #Object,
+	#name : 'Author',
+	#superclass : 'Object',
 	#instVars : [
 		'fullName'
 	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'System-Support-Authoring'
+	#category : 'System-Support-Authoring',
+	#package : 'System-Support',
+	#tag : 'Authoring'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 Author class >> authorSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #authorFullName)
@@ -29,14 +31,14 @@ Author class >> authorSettingOn: aBuilder [
 		description: AuthorNameRequest messagePrompt
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Author class >> changeStamp [
 	"Answer a string to be pasted into source code to mark who changed it and when."
 	^ self fullName , ' ' , Date today mmddyyyy, ' ',
 		((String streamContents: [:s | Time now print24: true on: s]) copyFrom: 1 to: 5)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Author class >> changeStampPerSe [
 	"Answer a string to be pasted into source code to mark who changed it and when."
 
@@ -45,7 +47,7 @@ Author class >> changeStampPerSe [
 			copyFrom: 1 to: 5)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Author class >> fixStamp: changeStamp [
 	| parts |
 	parts := changeStamp findTokens: ' '.
@@ -57,48 +59,48 @@ Author class >> fixStamp: changeStamp [
 	^ changeStamp
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 Author class >> fullName [
 	^ self uniqueInstance fullName
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 Author class >> fullName: aString [
 	^ self uniqueInstance checkAndSetFullNameWith: aString
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 Author class >> fullNamePerSe [
 	^ self uniqueInstance fullNamePerSe
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Author class >> new [
 	self error: 'Author is a singleton -- send uniqueInstance instead'
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 Author class >> requestFullName [
 	^ self uniqueInstance requestFullName
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Author class >> reset [
 	<script>
 	^ self uniqueInstance reset
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Author class >> uniqueInstance [
 	^ uniqueInstance ifNil: [ uniqueInstance := super new ]
 ]
 
-{ #category : #'testing - support' }
+{ #category : 'testing - support' }
 Author class >> useAuthor: aString during: aBlock [
 	^ self uniqueInstance useAuthor: aString during: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Author >> checkAndSetFullNameWith: aString [
 
 	fullName :=
@@ -109,7 +111,7 @@ Author >> checkAndSetFullNameWith: aString [
 	(fullName = aString and: [ fullName isNotEmpty ]) ifFalse: [ self requestFullName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Author >> fullName [
 	"Answer the full name to be used to identify the current code author."
 
@@ -121,18 +123,18 @@ Author >> fullName [
 	^ fullName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Author >> fullName: aString [
 	fullName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Author >> fullNamePerSe [
 	"Answer the currently-prevailing author full name, such as it is, empty or not"
 	^ fullName
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 Author >> ifUnknownAuthorUse: aString during: aBlock [
 	"If no author is set use the name aString while executing aBlock."
 	"for compatibility with 1.0"
@@ -142,13 +144,13 @@ Author >> ifUnknownAuthorUse: aString during: aBlock [
 	^ aBlock ensure: [ self reset ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Author >> initialize [
 	super initialize.
 	fullName := ''
 ]
 
-{ #category : #'ui - requests' }
+{ #category : 'ui - requests' }
 Author >> requestFullName [
 	| initialAnswer |
 
@@ -161,12 +163,12 @@ Author >> requestFullName [
 		"nil means that the dialog was cancelled "
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Author >> reset [
 	fullName := ''
 ]
 
-{ #category : #'testing - support' }
+{ #category : 'testing - support' }
 Author >> useAuthor: aString during: aBlock [
 	| previous |
 	previous := fullName.

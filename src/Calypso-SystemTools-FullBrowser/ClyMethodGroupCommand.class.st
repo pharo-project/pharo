@@ -7,42 +7,44 @@ Internal Representation and Key Implementation Points.
 	methodGroups:		<Collection of<ClyMethodGroup>>
 "
 Class {
-	#name : #ClyMethodGroupCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyMethodGroupCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'methodGroups'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroupCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMethodGroupSelected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroupCommand class >> isAbstract [
 	^self = ClyMethodGroupCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroupCommand >> methodGroups [
 	^ methodGroups
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroupCommand >> methodGroups: anObject [
 	methodGroups := anObject
 ]
 
-{ #category : #'activation - drag and drop' }
+{ #category : 'activation - drag and drop' }
 ClyMethodGroupCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
 
 	methodGroups := aToolContext selectedMethodGroups
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

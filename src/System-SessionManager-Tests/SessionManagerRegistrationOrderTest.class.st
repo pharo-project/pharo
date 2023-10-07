@@ -2,22 +2,23 @@
 SUnit tests for registration order on the Pharo session manager
 "
 Class {
-	#name : #SessionManagerRegistrationOrderTest,
-	#superclass : #TestCase,
+	#name : 'SessionManagerRegistrationOrderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'manager'
 	],
-	#category : #'System-SessionManager-Tests'
+	#category : 'System-SessionManager-Tests',
+	#package : 'System-SessionManager-Tests'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 SessionManagerRegistrationOrderTest >> assertHandledId: aSessionHandlerList equals: aCollection [
 	self
 		assert: (aSessionHandlerList collect: [:each | each handledId])
 		equals: aCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> register: aString atSystemPriority: anInteger [
 	manager
 		register: aString
@@ -25,13 +26,13 @@ SessionManagerRegistrationOrderTest >> register: aString atSystemPriority: anInt
 		atPriority: anInteger
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SessionManagerRegistrationOrderTest >> setUp [
 	super setUp.
 	manager := SessionManager new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testCategoriesPriorityOrder [
 	manager
 		register: (ClassSessionHandler forClassNamed: 'anObject');
@@ -42,7 +43,7 @@ SessionManagerRegistrationOrderTest >> testCategoriesPriorityOrder [
 		equals: #( 'aFirstSubscription' 'anObject' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testCreateCategoryFailsIfAfterUnexistentCategory [
 	| customCategory |
 
@@ -51,7 +52,7 @@ SessionManagerRegistrationOrderTest >> testCreateCategoryFailsIfAfterUnexistentC
 		raise: NotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testCustomCategoryGoesAfterSystemCategoryByDefault [
 	| customCategory |
 	customCategory := manager createCategory: 'Custom'.
@@ -64,7 +65,7 @@ SessionManagerRegistrationOrderTest >> testCustomCategoryGoesAfterSystemCategory
 		equals: #( 'aSystemAction' 'aCustomAction' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testCustomCategoryOrderIsPreserved [
 	| customCategory |
 	customCategory := manager createCategory: 'First'.
@@ -78,7 +79,7 @@ SessionManagerRegistrationOrderTest >> testCustomCategoryOrderIsPreserved [
 		equals: #( 'first' 'second' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testPriorityOrderInTheSameCategoryIsRespected [
 	manager
 		registerSystemClassNamed: 'aFirstSubscription' atPriority: 100;
@@ -91,7 +92,7 @@ SessionManagerRegistrationOrderTest >> testPriorityOrderInTheSameCategoryIsRespe
 		equals: #( 'aThirdSubscriptionThatShouldGoFirst' 'aFirstSubscription' 'aSecondSubscription' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testRegisterElementByDefault [
 	manager register: (ClassSessionHandler forClassNamed: 'anObject').
 
@@ -100,7 +101,7 @@ SessionManagerRegistrationOrderTest >> testRegisterElementByDefault [
 		equals: #( 'anObject' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testRegisterSystemElement [
 	manager registerSystemClassNamed: 'anObject' atPriority: 1.
 
@@ -109,7 +110,7 @@ SessionManagerRegistrationOrderTest >> testRegisterSystemElement [
 		equals: #( 'anObject' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationOrderTest >> testSubscriptionReverseOrder [
 	manager
 		registerSystemClassNamed: 'aFirstSubscription' atPriority: 100;

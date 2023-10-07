@@ -2,15 +2,17 @@
 I am a base class for commands which add/remove metalinks into given method or source node
 "
 Class {
-	#name : #ClyReflectivityCommand,
-	#superclass : #ClyDebuggingCommand,
+	#name : 'ClyReflectivityCommand',
+	#superclass : 'ClyDebuggingCommand',
 	#classVars : [
 		'ShowReflectivityCommands'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Commands'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyReflectivityCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	| node |
@@ -22,18 +24,18 @@ ClyReflectivityCommand class >> canBeExecutedInContext: aBrowserContext [
 					  node isPragma not and: [ node isSequence not ] ] ] ] ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyReflectivityCommand class >> contextMenuOrder [
 	<classAnnotationDependency>
 	^ 8
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyReflectivityCommand class >> isAbstract [
 	^self == ClyReflectivityCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyReflectivityCommand class >> methodContextMenuActivation [
 
 	<classAnnotation>
@@ -41,7 +43,7 @@ ClyReflectivityCommand class >> methodContextMenuActivation [
 		byItemOf: ClyReflectivityMenuGroup order: self contextMenuOrder for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ClyReflectivityCommand class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #reflectivity)
@@ -56,19 +58,19 @@ ClyReflectivityCommand class >> settingsOn: aBuilder [
 				description: 'Enable the usage of reflectivity commands (such as Metalinks) to instrument the code. These commands become visible in the contextual menu under the submenu ''Reflectivity''']
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ClyReflectivityCommand class >> showReflectivityCommands [
 
 	^ ShowReflectivityCommands ifNil: [ ShowReflectivityCommands := false ]
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ClyReflectivityCommand class >> showReflectivityCommands: aBoolean [
 
 	ShowReflectivityCommands := aBoolean
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyReflectivityCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

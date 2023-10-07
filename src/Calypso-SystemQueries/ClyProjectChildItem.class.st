@@ -18,12 +18,14 @@ Internal Representation and Key Implementation Points.
 	project:		<ClyManagedProject>
 "
 Class {
-	#name : #ClyProjectChildItem,
-	#superclass : #Object,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyProjectChildItem',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'item convertation' }
+{ #category : 'item convertation' }
 ClyProjectChildItem class >> convertToCalypsoBrowserItem: aProjectChildItem [
 	| item |
 	item := ClyBrowserItem named: aProjectChildItem name with: aProjectChildItem.
@@ -31,35 +33,35 @@ ClyProjectChildItem class >> convertToCalypsoBrowserItem: aProjectChildItem [
 	^item
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyProjectChildItem class >> defaultSortFunctionForCalypso [
 	^ClySortByNameFunction ascending
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyProjectChildItem class >> prepareClassQueriesFrom: projectItems in: aNavigationEnvironment [
 	^{ClyAllClassesQuery from: ClyProjectScope ofAll: projectItems in: aNavigationEnvironment }
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyProjectChildItem class >> prepareProjectItemsQueryFrom: aProjectChildItem in: aNavigationEnvironment [
 
 	^ ClyProjectContentQuery
 			sortedFrom: (ClyProjectScope of: aProjectChildItem in: aNavigationEnvironment)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyProjectChildItem class >> project: aProject [
 	^self new
 		project: aProject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyProjectChildItem >> isEmpty [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyProjectChildItem >> items [
 	self subclassResponsibility
 ]

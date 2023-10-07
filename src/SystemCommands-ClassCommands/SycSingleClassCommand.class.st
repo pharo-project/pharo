@@ -7,39 +7,40 @@ Internal Representation and Key Implementation Points.
 	targetClass:		<Class>
 "
 Class {
-	#name : #SycSingleClassCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycSingleClassCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycSingleClassCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [
 		  aToolContext isClassSelected ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycSingleClassCommand class >> isAbstract [
 	^self = SycSingleClassCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycSingleClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	targetClass := aToolContext lastSelectedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSingleClassCommand >> targetClass [
 	^ targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSingleClassCommand >> targetClass: anObject [
 	targetClass := anObject
 ]

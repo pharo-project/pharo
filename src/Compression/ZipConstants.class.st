@@ -66,8 +66,8 @@ http://www.ietf.org/rfc/rfc1952.txt
 [2f] trees.h 
 "
 Class {
-	#name : #ZipConstants,
-	#superclass : #SharedPool,
+	#name : 'ZipConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'BaseDistance',
 		'BaseLength',
@@ -102,10 +102,12 @@ Class {
 		'WindowMask',
 		'WindowSize'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ZipConstants class >> initialize [
 
 	self
@@ -113,7 +115,7 @@ ZipConstants class >> initialize [
 		initializeWriteStreamConstants
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ZipConstants class >> initializeDeflateConstants [
 
 	WindowSize := 16r8000.
@@ -128,7 +130,7 @@ ZipConstants class >> initializeDeflateConstants [
 	HashShift := (HashBits + MinMatch - 1) // MinMatch
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ZipConstants class >> initializeDistanceCodes [
 	| dist |
 	BaseDistance := WordArray new: MaxDistCodes.
@@ -148,7 +150,7 @@ ZipConstants class >> initializeDistanceCodes [
 			DistanceCodes at: 256 + dist put: code-1]]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ZipConstants class >> initializeExtraBits [
 	ExtraLengthBits :=
 		WordArray withAll: #(0 0 0 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 0).
@@ -160,7 +162,7 @@ ZipConstants class >> initializeExtraBits [
 		WordArray withAll: #(16 17 18 0 8 7 9 6 10 5 11 4 12 3 13 2 14 1 15)
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ZipConstants class >> initializeFixedTrees [
 
 	| counts nodes |
@@ -186,7 +188,7 @@ ZipConstants class >> initializeFixedTrees [
 		codes: ((0 to: MaxDistCodes) collect:[:i| FixedDistanceTree reverseBits: i length: 5])
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ZipConstants class >> initializeLengthCodes [
 	| length |
 	BaseLength := WordArray new: MaxLengthCodes.
@@ -199,7 +201,7 @@ ZipConstants class >> initializeLengthCodes [
 			MatchLengthCodes at: length put: NumLiterals + code]]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ZipConstants class >> initializeWriteStreamConstants [
 
 	MaxBits := 15.

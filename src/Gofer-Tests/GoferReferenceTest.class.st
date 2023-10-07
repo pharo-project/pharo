@@ -2,19 +2,21 @@
 SUnit tests for GoferReference and subclasses
 "
 Class {
-	#name : #GoferReferenceTest,
-	#superclass : #GoferTest,
-	#category : #'Gofer-Tests-Tests'
+	#name : 'GoferReferenceTest',
+	#superclass : 'GoferTest',
+	#category : 'Gofer-Tests-Tests',
+	#package : 'Gofer-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 GoferReferenceTest >> setUp [
 
 	super setUp.
 	gofer repository: self monticelloRepository
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferReferenceTest >> testBranchAfterAuthorIsNotABranch [
 
 	| queryReference |
@@ -37,7 +39,7 @@ GoferReferenceTest >> testBranchAfterAuthorIsNotABranch [
 	self assert: queryReference versionNumber equals: 69
 ]
 
-{ #category : #'tests - reference' }
+{ #category : 'tests - reference' }
 GoferReferenceTest >> testContraintShouldFindLatestVersion [
 
 	| constraintReference reference |
@@ -82,7 +84,7 @@ GoferReferenceTest >> testContraintShouldFindLatestVersion [
 	self should: [ constraintReference resolveWith: gofer ] raise: Error
 ]
 
-{ #category : #'tests - working' }
+{ #category : 'tests - working' }
 GoferReferenceTest >> testContraintShouldFindWorkingCopy [
 
 	| constraintReference workingCopy |
@@ -93,7 +95,7 @@ GoferReferenceTest >> testContraintShouldFindWorkingCopy [
 	self assert: workingCopy packageName equals: 'Gofer-Core'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferReferenceTest >> testLoadableShouldSortCorrectly [
 
 	| sorted |
@@ -107,7 +109,7 @@ GoferReferenceTest >> testLoadableShouldSortCorrectly [
 				ifTrue: [ self assert: second <= first ]]]
 ]
 
-{ #category : #'tests - reference' }
+{ #category : 'tests - reference' }
 GoferReferenceTest >> testPackageShouldFindLatestVersion [
 
 	| packageReference reference |
@@ -121,7 +123,7 @@ GoferReferenceTest >> testPackageShouldFindLatestVersion [
 	self assert: reference repository equals: self monticelloRepository
 ]
 
-{ #category : #'tests - working' }
+{ #category : 'tests - working' }
 GoferReferenceTest >> testPackageShouldFindWorkingCopy [
 
 	| packageReference workingCopy |
@@ -130,7 +132,7 @@ GoferReferenceTest >> testPackageShouldFindWorkingCopy [
 	self assert: workingCopy packageName equals: 'Gofer-Core'
 ]
 
-{ #category : #'tests - reference' }
+{ #category : 'tests - reference' }
 GoferReferenceTest >> testResolvedShouldFindLatestVersion [
 
 	| versionReference reference |
@@ -144,7 +146,7 @@ GoferReferenceTest >> testResolvedShouldFindLatestVersion [
 	self assert: reference repository equals: self monticelloRepository
 ]
 
-{ #category : #'tests - working' }
+{ #category : 'tests - working' }
 GoferReferenceTest >> testResolvedShouldFindWorkingCopy [
 
 	| versionReference workingCopy |
@@ -153,7 +155,7 @@ GoferReferenceTest >> testResolvedShouldFindWorkingCopy [
 	self assert: workingCopy packageName equals: 'Gofer-Core'
 ]
 
-{ #category : #'tests - reference' }
+{ #category : 'tests - reference' }
 GoferReferenceTest >> testVersionShouldFindLatestVersion [
 
 	| versionReference reference |
@@ -170,7 +172,7 @@ GoferReferenceTest >> testVersionShouldFindLatestVersion [
 	self should: [ versionReference resolveWith: gofer ] raise: Error
 ]
 
-{ #category : #'tests - working' }
+{ #category : 'tests - working' }
 GoferReferenceTest >> testVersionShouldFindWorkingCopy [
 
 	| versionReference workingCopy |
@@ -180,7 +182,7 @@ GoferReferenceTest >> testVersionShouldFindWorkingCopy [
 	self assert: workingCopy packageName equals: 'Gofer-Core'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferReferenceTest >> testVersionShouldParseComplexName [
 
 	| queryReference |

@@ -2,12 +2,13 @@
 A transform morph that allows the use of a layout policy to arrange submorphs.
 "
 Class {
-	#name : #TransformWithLayoutMorph,
-	#superclass : #TransformMorph,
-	#category : #'Morphic-Widgets-Scrolling'
+	#name : 'TransformWithLayoutMorph',
+	#superclass : 'TransformMorph',
+	#category : 'Morphic-Widgets-Scrolling',
+	#package : 'Morphic-Widgets-Scrolling'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 TransformWithLayoutMorph >> doLayoutIn: layoutBounds [
 	"Compute a new layout based on the given layout bounds."
 
@@ -28,7 +29,7 @@ TransformWithLayoutMorph >> doLayoutIn: layoutBounds [
 		ifFalse: [self invalidRect: (priorBounds quickMerge: box)]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TransformWithLayoutMorph >> fullBounds [
 	"Do the ordinary thing. See comment in superclass."
 

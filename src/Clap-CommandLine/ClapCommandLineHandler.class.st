@@ -2,17 +2,18 @@
 I hook Clap into the existing command-line handlers system.
 "
 Class {
-	#name : #ClapCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #'Clap-CommandLine'
+	#name : 'ClapCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'Clap-CommandLine',
+	#package : 'Clap-CommandLine'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandLineHandler class >> commandName [
 	^ 'clap'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapCommandLineHandler >> activate [
 	[
 		ClapContext withPragmaCommands
@@ -25,7 +26,7 @@ ClapCommandLineHandler >> activate [
 	named: 'Clap commandline handler process'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapCommandLineHandler >> handleExit: exit [
 	Smalltalk isInteractive
 		ifFalse: [ ^ exit pass ].
@@ -34,7 +35,7 @@ ClapCommandLineHandler >> handleExit: exit [
 		ifFalse: [ ^ exit resignalAs: (Error new messageText: exit messageText) ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapCommandLineHandler >> noneMatched [
 	self exitFailure: 'Unknown command'
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #PackageManifest }
+Extension { #name : 'PackageManifest' }
 
-{ #category : #'*AST-Core' }
+{ #category : '*AST-Core' }
 PackageManifest class >> formatter [
 
 	^ RBProgramNode formatterClass new

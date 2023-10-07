@@ -2,12 +2,13 @@
 Writer for Metacello MCM
 "
 Class {
-	#name : #MCMcmWriter,
-	#superclass : #MCWriter,
-	#category : #MonticelloConfigurations
+	#name : 'MCMcmWriter',
+	#superclass : 'MCWriter',
+	#category : 'MonticelloConfigurations',
+	#package : 'MonticelloConfigurations'
 }
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMcmWriter class >> fileOut: aConfiguration on: aStream [
 	| inst |
 	inst := self on: aStream.
@@ -17,17 +18,17 @@ MCMcmWriter class >> fileOut: aConfiguration on: aStream [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcmWriter class >> readerClass [
 	^ MCMcmReader
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMcmWriter >> close [
 	stream close
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMcmWriter >> writeConfiguration: aConfiguration [
 
 	stream nextPut: $(.

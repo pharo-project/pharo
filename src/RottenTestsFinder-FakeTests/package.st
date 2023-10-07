@@ -1,1 +1,1 @@
-Package { #name : #'RottenTestsFinder-FakeTests' }
+Package { #name : 'RottenTestsFinder-FakeTests' }

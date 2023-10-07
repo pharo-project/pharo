@@ -3,29 +3,31 @@ To facilitate unit tests without interferring with the live VM interface,
 I simulate the VM code for the microsecond primitives.
 "
 Class {
-	#name : #DelayMicrosecondTickerSimulation,
-	#superclass : #DelayMicrosecondTicker,
+	#name : 'DelayMicrosecondTickerSimulation',
+	#superclass : 'DelayMicrosecondTicker',
 	#instVars : [
 		'vmSimNow',
 		'vmSimTheTimerSemaphore',
 		'vmSimNextWakeupTick'
 	],
-	#category : #'Kernel-Delays'
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelayMicrosecondTickerSimulation >> initialize [
 	super initialize.
 	vmSimTheTimerSemaphore := Semaphore new.
 	vmSimNow := 0
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMicrosecondTickerSimulation >> nowTick [
 	^vmSimNow
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 DelayMicrosecondTickerSimulation >> primSignal: sempahore atUTCMicroseconds: nextTick [
 	"This is a simulation of the primitive, working hand-in-hand with #simulate_vmMilliseconds:"
 	(sempahore isKindOf: Semaphore) ifTrue: [
@@ -61,7 +63,7 @@ StackInterpreterPrimitives >> primitiveSignalAtUTCMicroseconds
 "
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMicrosecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [
 
 	vmSimNextWakeupTick ~= 0 ifTrue: [
@@ -85,7 +87,7 @@ StackInterpreter>>checkForEventsMayContextSwitch:
 "
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMicrosecondTickerSimulation >> vmSimNextWakeupMilliseconds [
 	^vmSimNextWakeupTick / 1000
 ]

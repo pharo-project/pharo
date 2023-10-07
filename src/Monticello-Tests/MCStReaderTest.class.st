@@ -1,10 +1,12 @@
 Class {
-	#name : #MCStReaderTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-IO'
+	#name : 'MCStReaderTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-IO',
+	#package : 'Monticello-Tests',
+	#tag : 'IO'
 }
 
-{ #category : #util }
+{ #category : 'util' }
 MCStReaderTest >> commentWithStyle [
 	^ '!AEDesc commentStamp: ''<historical>'' prior: 0!
 I represent an Apple Event Descriptor.  I am a low-level representation of Apple Event (and hence Applescript) information.  For further Information, see Apple''s Inside Macintosh: Interapplication Communications, at
@@ -16,7 +18,7 @@ Essentially, I represent a record comprising a one-word "string" (treating the w
 '
 ]
 
-{ #category : #util }
+{ #category : 'util' }
 MCStReaderTest >> commentWithoutStyle [
 	^ '
 CharacterScanner subclass: #CanvasCharacterScanner
@@ -38,7 +40,7 @@ setStopConditions
 		put: (alignment = Justified ifTrue: [#paddedSpace])! !'
 ]
 
-{ #category : #util }
+{ #category : 'util' }
 MCStReaderTest >> methodWithStyle [
 	^ '!EventHandler methodsFor: ''copying'' stamp: ''tk 1/22/2001 17:39''!
 veryDeepInner: deepCopier
@@ -52,21 +54,21 @@ veryDeepInner: deepCopier
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCStReaderTest >> testCommentWithStyle [
 	| reader |
 	reader := MCStReader on: self commentWithStyle readStream.
 	reader definitions
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCStReaderTest >> testCommentWithoutStyle [
 	| reader |
 	reader := MCStReader on: self commentWithoutStyle readStream.
 	self assert: (reader definitions anySatisfy: [:ea | ea isMethodDefinition]).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCStReaderTest >> testMethodWithStyle [
 	| reader |
 	reader := MCStReader on: self methodWithStyle readStream.

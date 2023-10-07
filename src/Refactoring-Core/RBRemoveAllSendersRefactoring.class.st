@@ -37,47 +37,54 @@ RBRefactoryTestDataApp >> caller1
 ```
 "
 Class {
-	#name : #RBRemoveAllSendersRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBRemoveAllSendersRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'selector'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemoveAllSendersRefactoring class >> model: aModel removeSendersOf: aSelector [
 	^ self new
 		model: aModel;
 		removeSendersOf: aSelector
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemoveAllSendersRefactoring class >> removeSendersOf: aSelector [
 	^ self new
 		removeSendersOf: aSelector
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveAllSendersRefactoring >> messagePattern [
 	^ 'self ' , (self buildSelectorString: selector)
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBRemoveAllSendersRefactoring >> preconditions [
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
-{ #category : #removing }
+{ #category : 'transforming' }
+RBRemoveAllSendersRefactoring >> privateTransform [
+	self removeSelfSenders
+]
+
+{ #category : 'removing' }
 RBRemoveAllSendersRefactoring >> removeMethod: aMethod of: node [
-	self performCompositeRefactoring: (RBRemoveSenderRefactoring
+	self generateChangesFor: (RBRemoveSenderRefactoring
 		model: self model
 		remove: node sourceInterval
 		inMethod: aMethod selector
 		forClass: aMethod methodClass)
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveAllSendersRefactoring >> removeSelfSenders [
 	| flag |
 	flag := false.
@@ -93,12 +100,12 @@ RBRemoveAllSendersRefactoring >> removeSelfSenders [
 				]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBRemoveAllSendersRefactoring >> removeSendersOf: aSelector [
 	selector := aSelector
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveAllSendersRefactoring >> selfSendIn: aTree [
 	| searcher nodes |
 	nodes := OrderedCollection new.
@@ -110,16 +117,11 @@ RBRemoveAllSendersRefactoring >> selfSendIn: aTree [
 	^ nodes
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' removeSendersOf: '.
 	aStream nextPutAll: selector.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBRemoveAllSendersRefactoring >> transform [
-	self removeSelfSenders
 ]

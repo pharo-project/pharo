@@ -4,17 +4,18 @@ The context is not initialized so that we are sure about the configuration we ar
 
 "
 Class {
-	#name : #EFTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'EFTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'configurationSelector',
 		'formatterClass',
 		'contextClass'
 	],
-	#category : #'EnlumineurFormatter-Tests'
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 EFTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -22,17 +23,17 @@ EFTest class >> testParameters [
 		yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFTest >> contextClass [
 	^ contextClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFTest >> contextClass: anObject [
 	contextClass := anObject
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFTest >> formatExpression: anExpression [
 
 	| expr |
@@ -40,31 +41,31 @@ EFTest >> formatExpression: anExpression [
 	^ self formatter format: expr.
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFTest >> formatter [
 	^ self formatterClass new
 		installNewContext: (self perform: configurationSelector)
 		yourself
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFTest >> formatterClass [
 
 	^ formatterClass
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFTest >> formatterClass: aFormatterClass [
 	formatterClass := aFormatterClass
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFTest >> parseExpression: anExpression [
 
 	^ self parserClass parseExpression: anExpression
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFTest >> parserClass [
 	^ RBParser
 ]

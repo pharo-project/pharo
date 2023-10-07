@@ -2,15 +2,16 @@
 I represent a powerful class for implementing recurring schedules.
 "
 Class {
-	#name : #Schedule,
-	#superclass : #Timespan,
+	#name : 'Schedule',
+	#superclass : 'Timespan',
 	#instVars : [
 		'schedule'
 	],
-	#category : #'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Schedule >> between: aStart and: anEnd do: aBlock [
 	"from Cuis 99"
 
@@ -37,7 +38,7 @@ Schedule >> between: aStart and: anEnd do: aBlock [
 
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Schedule >> dateAndTimes [
 
 	| dateAndTimes |
@@ -46,7 +47,7 @@ Schedule >> dateAndTimes [
 	^ dateAndTimes asArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Schedule >> everyDayAtSameTimes [
 	"Answer false if unknown"
 
@@ -55,7 +56,7 @@ Schedule >> everyDayAtSameTimes [
 	^ count >= 1 and: [ count isInteger ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Schedule >> includes: aDateAndTime [
 
 	| dt |
@@ -64,24 +65,24 @@ Schedule >> includes: aDateAndTime [
 	^ false
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Schedule >> schedule [
 	^ schedule
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Schedule >> schedule: anArrayOfDurations [
 
 	schedule := anArrayOfDurations
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Schedule >> scheduleDo: aBlock [
 
 	self between: (self start) and: (self end) do: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Schedule >> scheduleDuration [
 	^ schedule sum
 ]

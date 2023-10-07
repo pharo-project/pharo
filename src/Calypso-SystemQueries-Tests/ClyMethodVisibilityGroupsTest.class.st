@@ -1,26 +1,28 @@
 Class {
-	#name : #ClyMethodVisibilityGroupsTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyMethodVisibilityGroupsTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodVisibilityGroupsTest >> createQuery [
 	^super createQuery
 		scope: (ClyClassScope of: ClyClass1FromP1Mock in: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodVisibilityGroupsTest >> createQueryResult [
 	^ClyMethodVisibilityGroupsResult withHierarchy: ClySubclassHierarchy new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodVisibilityGroupsTest >> meaningfullObjectToAssert: resultItem [
 	^resultItem actualObject methodQuery scope basisObjects anyOne
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodVisibilityGroupsTest >> testComparisonWithAnotherHierarchy [
 	| queryResult2 |
 	queryResult2 := self createQueryResult.
@@ -29,13 +31,13 @@ ClyMethodVisibilityGroupsTest >> testComparisonWithAnotherHierarchy [
 	self deny: queryResult equals: queryResult2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodVisibilityGroupsTest >> testDefaultHierarchyShouldExist [
 
 	self assert: (ClyMethodVisibilityGroupsResult defaultHierarchy isKindOf: ClyClassHierarchy)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodVisibilityGroupsTest >> testFillingWithSingleClasses [
 	| group visibilityLevel |
 	queryResult fillWith: {ClyClass2FromP1Mock}.
@@ -59,7 +61,7 @@ ClyMethodVisibilityGroupsTest >> testFillingWithSingleClasses [
 		equals: (ClyClassScope of: ClyClass2FromP1Mock in: environment)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodVisibilityGroupsTest >> testFillingWithThreeClasses [
 
 	queryResult fillWith: {ClyClass2FromP1Mock. ClySubclassN1OfClass1FromP1Mock. ClyClass1FromP1Mock}.

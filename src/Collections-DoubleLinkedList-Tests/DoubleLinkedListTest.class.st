@@ -1,10 +1,12 @@
 Class {
-	#name : #DoubleLinkedListTest,
-	#superclass : #TestCase,
-	#category : #'Collections-DoubleLinkedList-Tests-Base'
+	#name : 'DoubleLinkedListTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-DoubleLinkedList-Tests-Base',
+	#package : 'Collections-DoubleLinkedList-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DoubleLinkedListTest >> testAddAfterLink [
 	| list link |
 	list := DoubleLinkedList new.
@@ -15,7 +17,7 @@ DoubleLinkedListTest >> testAddAfterLink [
 	self assert: list asArray equals: #( 1 2 0 3 )
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DoubleLinkedListTest >> testAddBeforeLink [
 	| list link |
 	list := DoubleLinkedList new.
@@ -26,7 +28,7 @@ DoubleLinkedListTest >> testAddBeforeLink [
 	self assert: list asArray equals: #( 1 0 2 3 )
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DoubleLinkedListTest >> testAddFirst [
 	| list |
 	list := DoubleLinkedList new.
@@ -38,7 +40,7 @@ DoubleLinkedListTest >> testAddFirst [
 	self assert: list asArray equals: #( 0 1 2 3 )
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 DoubleLinkedListTest >> testAddLast [
 	| list |
 	list := DoubleLinkedList new.
@@ -50,7 +52,7 @@ DoubleLinkedListTest >> testAddLast [
 	self assert: list asArray equals: #( 1 2 3 0 )
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 DoubleLinkedListTest >> testCollect [
 	| list doubles |
 	list := DoubleLinkedList new.
@@ -59,7 +61,7 @@ DoubleLinkedListTest >> testCollect [
 	self assert: doubles asArray equals: #(2 4 6)
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 DoubleLinkedListTest >> testDo [
 	| list value |
 	list := DoubleLinkedList new.
@@ -70,7 +72,7 @@ DoubleLinkedListTest >> testDo [
 		value := value + 1 ]
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 DoubleLinkedListTest >> testEmpty [
 	| list |
 	list := DoubleLinkedList new.
@@ -80,7 +82,7 @@ DoubleLinkedListTest >> testEmpty [
 	list do: [ :each | self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoubleLinkedListTest >> testFirstAndLastLink [
 	| list firstLink secondLink |
 	list := DoubleLinkedList new.
@@ -102,7 +104,7 @@ DoubleLinkedListTest >> testFirstAndLastLink [
 	self assert: list lastLink value equals: #two
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 DoubleLinkedListTest >> testIncludes [
 	| list |
 	list := DoubleLinkedList new.
@@ -111,7 +113,7 @@ DoubleLinkedListTest >> testIncludes [
 	self deny: (list includes: 0)
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 DoubleLinkedListTest >> testLinksDo [
 	| list links index |
 	list := DoubleLinkedList new.
@@ -125,7 +127,7 @@ DoubleLinkedListTest >> testLinksDo [
 		index := index + 1 ]
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 DoubleLinkedListTest >> testNewFromCollection [
 
 	|d|
@@ -138,7 +140,7 @@ DoubleLinkedListTest >> testNewFromCollection [
 	self assert: d lastLink previousLink value equals: #b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoubleLinkedListTest >> testOne [
 	| list |
 	list := DoubleLinkedList new.
@@ -149,7 +151,7 @@ DoubleLinkedListTest >> testOne [
 	self assert: list asArray equals: #( one )
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DoubleLinkedListTest >> testOneRemoveFirst [
 	| list |
 	list := DoubleLinkedList new.
@@ -161,7 +163,7 @@ DoubleLinkedListTest >> testOneRemoveFirst [
 	self assertEmpty: list
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DoubleLinkedListTest >> testOneRemoveLast [
 	| list |
 	list := DoubleLinkedList new.
@@ -173,7 +175,7 @@ DoubleLinkedListTest >> testOneRemoveLast [
 	self assertEmpty: list
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DoubleLinkedListTest >> testReject [
 	| list even |
 	list := DoubleLinkedList new.
@@ -182,7 +184,7 @@ DoubleLinkedListTest >> testReject [
 	self assert: even asArray equals: #(2 4 6 8 10)
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 DoubleLinkedListTest >> testReverseDo [
 	| list value |
 	list := DoubleLinkedList new.
@@ -193,7 +195,7 @@ DoubleLinkedListTest >> testReverseDo [
 		value := value - 1 ]
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 DoubleLinkedListTest >> testReverseLinksDo [
 	| list links index |
 	list := DoubleLinkedList new.
@@ -207,7 +209,7 @@ DoubleLinkedListTest >> testReverseLinksDo [
 		index := index - 1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoubleLinkedListTest >> testSelect [
 	| list even |
 	list := DoubleLinkedList new.
@@ -216,7 +218,7 @@ DoubleLinkedListTest >> testSelect [
 	self assert: even asArray equals: #(2 4 6 8 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DoubleLinkedListTest >> testThree [
 	| list |
 	list := DoubleLinkedList new.
@@ -227,7 +229,7 @@ DoubleLinkedListTest >> testThree [
 	self assert: list asArray equals: #( 1 2 3 )
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DoubleLinkedListTest >> testThreeRemoveFirst [
 	| list link |
 	list := DoubleLinkedList new.
@@ -239,7 +241,7 @@ DoubleLinkedListTest >> testThreeRemoveFirst [
 	self assert: list asArray equals: #( 2 3 )
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DoubleLinkedListTest >> testThreeRemoveLast [
 	| list link |
 	list := DoubleLinkedList new.
@@ -251,7 +253,7 @@ DoubleLinkedListTest >> testThreeRemoveLast [
 	self assert: list asArray equals: #( 1 2 )
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 DoubleLinkedListTest >> testThreeRemoveLink [
 	| list link |
 	list := DoubleLinkedList new.

@@ -2,18 +2,20 @@
 I break on all accesses to selected target variable in the source code
 "
 Class {
-	#name : #ClyBreakOnVarReadsCommand,
-	#superclass : #ClyVariableBreakpointCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
+	#name : 'ClyBreakOnVarReadsCommand',
+	#superclass : 'ClyVariableBreakpointCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'VariableBreakpoints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBreakOnVarReadsCommand >> defaultMenuItemName [
 	sourceNode isVariable ifFalse:[^'(unvalid node)'].
 	^'Break on reads to  ', sourceNode name
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBreakOnVarReadsCommand >> installVariableBreakpointOn: aVariableName in: methodOrClass [
 	VariableBreakpoint watchVariableReads: sourceNode name inClass: methodOrClass
 ]

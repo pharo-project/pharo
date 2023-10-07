@@ -1,6 +1,6 @@
-Extension { #name : #GradientFillStyle }
+Extension { #name : 'GradientFillStyle' }
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 	"Add the items for changing the current fill style of the receiver"
 	self isRadialFill
@@ -12,24 +12,24 @@ GradientFillStyle >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
 	super addFillStyleMenuItems: aMenu hand: aHand from: aMorph
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> addNewColorIn: aMorph event: evt [
 	^self inform:'not yet implemented'
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> beLinearGradientIn: aMorph [
 	self radial: false.
 	aMorph changed
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> beRadialGradientIn: aMorph [
 	self radial: true.
 	aMorph changed
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> changeColorAt: rampIndex to: aColor [
 	| ramp |
 	ramp := colorRamp deepCopy.
@@ -40,7 +40,7 @@ GradientFillStyle >> changeColorAt: rampIndex to: aColor [
 	pixelRamp := nil
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> changeColorOf: aMorph rampIndex: rampIndex [
 	| originalColor |
 	originalColor := (colorRamp at: rampIndex) value.
@@ -50,7 +50,7 @@ GradientFillStyle >> changeColorOf: aMorph rampIndex: rampIndex [
 		aMorph changed]
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> changeColorSelector: aSymbol hand: aHand morph: aMorph originalColor: originalColor [
 	"Change either the firstColor or the lastColor (depending on aSymbol).  Put up a color picker to hande it.  We always use a modal picker so that the user can adjust both colors concurrently."
 	|arraySelector|
@@ -65,17 +65,17 @@ GradientFillStyle >> changeColorSelector: aSymbol hand: aHand morph: aMorph orig
 				with: aHand]
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> changeFirstColorIn: aMorph event: evt [
 	^self changeColorOf: aMorph rampIndex: 1
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> changeSecondColorIn: aMorph event: evt [
 	^self changeColorOf: aMorph rampIndex: 2
 ]
 
-{ #category : #'*Morphic-Base-Balloon' }
+{ #category : '*Morphic-Base-Balloon' }
 GradientFillStyle >> copyWith: aColor atRamp: rampIndex [
 	| ramp |
 	ramp := colorRamp deepCopy.

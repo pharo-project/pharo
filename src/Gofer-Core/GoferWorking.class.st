@@ -2,21 +2,23 @@
 Common superclass for workin copies in Gofer
 "
 Class {
-	#name : #GoferWorking,
-	#superclass : #GoferOperation,
+	#name : 'GoferWorking',
+	#superclass : 'GoferOperation',
 	#instVars : [
 		'workingCopies'
 	],
-	#category : #'Gofer-Core-Operations'
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GoferWorking class >> isAbstract [
 
 	^ self == GoferWorking
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferWorking >> addReference: aReference [
 
 	| workingCopy |
@@ -29,13 +31,13 @@ GoferWorking >> addReference: aReference [
 			name: package name) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferWorking >> initialize [
 	super initialize.
 	workingCopies := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferWorking >> initializeOn: aGofer [
 
 	super initializeOn: aGofer.
@@ -43,7 +45,7 @@ GoferWorking >> initializeOn: aGofer [
 		do: [ :each | self addReference: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferWorking >> workingCopies [
 	"Answer the working copies to be operated on."
 

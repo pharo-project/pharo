@@ -1,6 +1,6 @@
-Extension { #name : #AthensBalloonSurface }
+Extension { #name : 'AthensBalloonSurface' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensBalloonSurface >> displayOnMorphicCanvas: canvas at: aPoint [
 	"Display receiver on morphic canvas"
 

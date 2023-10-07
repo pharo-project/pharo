@@ -2,19 +2,21 @@
 This class should trigger the RBAddRemoveDependentsRule critic.
 "
 Class {
-	#name : #RBSmalllintTestAddRemoveDependentsObject,
-	#superclass : #RBSmalllintTestSuperclassObject,
-	#category : #'Refactoring-Tests-Critics-Base'
+	#name : 'RBSmalllintTestAddRemoveDependentsObject',
+	#superclass : 'RBSmalllintTestSuperclassObject',
+	#category : 'Refactoring-Tests-Critics-Base',
+	#package : 'Refactoring-Tests-Critics',
+	#tag : 'Base'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RBSmalllintTestAddRemoveDependentsObject >> addDependentSends [
 	self
 		addDependent: #one;
 		addDependent: #two
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBSmalllintTestAddRemoveDependentsObject >> removeDependentSends [
 	self removeDependent: #one
 ]

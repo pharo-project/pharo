@@ -1,65 +1,62 @@
 Class {
-	#name : #RBAddSubtreeTransformationTest,
-	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddSubtreeTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testMethodDoesNotExist [
-	| transformation |
-	transformation := (RBAddSubtreeTransformation
+	
+	self shouldFail: (RBAddSubtreeTransformation
 		interval: (0 to: 1)
 		with: 'self printString'
 		from: #two
-		in: self changeMock name) transform.
-
-	self assertEmpty: transformation model changes changes
+		in: self changeMockClass name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testParseFailure [
-	| transformation |
-	transformation := (RBAddSubtreeTransformation
+
+	self shouldFail: (RBAddSubtreeTransformation
 		interval: (0 to: 1)
 		with: ':= 123'
 		from: #one
-		in: self changeMock name) transform.
-
-	self assertEmpty: transformation model changes changes
+		in: self changeMockClass name)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testRefactoring [
 
 	self
 		shouldFail: (RBAddSubtreeTransformation
-							interval: (0 to: 1)
-							with: ':= 123'
-							from: #selector:from:
-							in: #RBRemoveMethodTransformation)
-							asRefactoring;
+				 interval: (0 to: 1)
+				 with: ':= 123'
+				 from: #selector:from:
+				 in: #RBRemoveMethodTransformation);
 		shouldFail: (RBAddSubtreeTransformation
-							interval: (0 to: 1)
-							with: '^ selector'
-							from: #selector:for:
-							in: #RBRemoveMethodTransformation)
-							asRefactoring
+				 interval: (0 to: 1)
+				 with: '^ selector'
+				 from: #selector:for:
+				 in: #RBRemoveMethodTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddSubtreeTransformation
-		interval: (0 to: 1)
-		with: 'self printString'
-		from: #one
-		in: self changeMock name)
-		transform.
+		                   interval: (0 to: 1)
+		                   with: 'self printString'
+		                   from: #one
+		                   in: self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed: self changeMock name asSymbol.
+	class := transformation model classNamed: self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
-	self assert: (class parseTreeForSelector: #one) body statements size equals: 2
+	self
+		assert: (class parseTreeForSelector: #one) body statements size
+		equals: 2
 ]

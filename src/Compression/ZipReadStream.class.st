@@ -6,34 +6,36 @@ Since Zip archive members keep their expected CRC value separately in Zip header
 Instead, if you want the CRC verification to work you have to call #expectedCrc: with the expected CRC-32 value from the Zip member header.
 "
 Class {
-	#name : #ZipReadStream,
-	#superclass : #FastInflateStream,
+	#name : 'ZipReadStream',
+	#superclass : 'FastInflateStream',
 	#instVars : [
 		'expectedCrc'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #crc }
+{ #category : 'crc' }
 ZipReadStream >> expectedCrc: aNumberOrNil [
 	"If expectedCrc is set, it will be compared against the calculated CRC32 in verifyCrc.
 	This number should be the number read from the Zip header (which is the bitwise complement of my crc if all is working correctly)"
 	expectedCrc := aNumberOrNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	super on: aCollection from: firstIndex to: lastIndex.
 	crc := 16rFFFFFFFF.
 	expectedCrc := nil
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 ZipReadStream >> updateCrc: oldCrc from: start to: stop in: aCollection [
 	^ZipWriteStream updateCrc: oldCrc from: start to: stop in: aCollection
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 ZipReadStream >> verifyCrc [
 	"Verify the CRC-32 checksum calculated from the input against the expected CRC-32, if any.
 	Answer the calculated CRC-32 in any case.

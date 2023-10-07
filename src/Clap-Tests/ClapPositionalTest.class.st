@@ -1,15 +1,17 @@
 Class {
-	#name : #ClapPositionalTest,
-	#superclass : #ClapParameterTest,
-	#category : #'Clap-Tests-Unit'
+	#name : 'ClapPositionalTest',
+	#superclass : 'ClapParameterTest',
+	#category : 'Clap-Tests-Unit',
+	#package : 'Clap-Tests',
+	#tag : 'Unit'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapPositionalTest >> classToTest [
 	^ ClapPositional
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPositionalTest >> testMatches [
 	| subject argv match |
 	subject := self namedSubject.

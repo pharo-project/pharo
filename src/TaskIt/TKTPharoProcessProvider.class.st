@@ -2,12 +2,14 @@
 I am a process provider that creates Pharo processes using the standard #fork message
 "
 Class {
-	#name : #TKTPharoProcessProvider,
-	#superclass : #TKTProcessProvider,
-	#category : #'TaskIt-Kernel'
+	#name : 'TKTPharoProcessProvider',
+	#superclass : 'TKTProcessProvider',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TKTPharoProcessProvider >> createProcessDoing: aValuable [
 	| toFork |
 	toFork := aValuable isBlock
@@ -16,7 +18,7 @@ TKTPharoProcessProvider >> createProcessDoing: aValuable [
 	^ toFork fork
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TKTPharoProcessProvider >> createProcessDoing: aValuable named: aName [
 	| block |
 	block := aValuable isMessageSend

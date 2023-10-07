@@ -2,28 +2,30 @@
 I implement how to write entries to a stream using Ston serializer.
 "
 Class {
-	#name : #OmSTONEntryWriter,
-	#superclass : #OmEntryWriter,
+	#name : 'OmSTONEntryWriter',
+	#superclass : 'OmEntryWriter',
 	#instVars : [
 		'writer'
 	],
-	#category : #'Ombu-Persistence'
+	#category : 'Ombu-Persistence',
+	#package : 'Ombu',
+	#tag : 'Persistence'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmSTONEntryWriter >> initialize [
 	super initialize.
 	writer := self newSTONWriter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmSTONEntryWriter >> newSTONWriter [
 	^ STON writer
 		prettyPrint: true;
 		yourself
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OmSTONEntryWriter >> on: aStream nextEntryPut: anEntry [
 
 	OmCurrentGlobalName

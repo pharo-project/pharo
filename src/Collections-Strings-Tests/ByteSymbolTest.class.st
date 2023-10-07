@@ -2,18 +2,20 @@
 SUnit tests for byte symbols
 "
 Class {
-	#name : #ByteSymbolTest,
-	#superclass : #SymbolTest,
-	#category : #'Collections-Strings-Tests-Base'
+	#name : 'ByteSymbolTest',
+	#superclass : 'SymbolTest',
+	#category : 'Collections-Strings-Tests-Base',
+	#package : 'Collections-Strings-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ByteSymbolTest >> classToBeTested [
 
 	^ ByteSymbol
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ByteSymbolTest >> testAs [
 	| tStr |
 	tStr := DateAndTime now asString.
@@ -26,13 +28,13 @@ ByteSymbolTest >> testAs [
 	self assert: (ByteSymbol allInstances select: [ :e | e asString = tStr ]) size equals: 1
 ]
 
-{ #category : #'tests - non-creation' }
+{ #category : 'tests - non-creation' }
 ByteSymbolTest >> testNew [
 
 	self should: [ByteSymbol new: 5 ] raise: self defaultTestError
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ByteSymbolTest >> testNewFrom [
 	| dt |
 	dt := DateAndTime now asString.
@@ -45,7 +47,7 @@ ByteSymbolTest >> testNewFrom [
 	self assert: (ByteSymbol allInstances select: [ :e | e = dt ]) size equals: 1
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ByteSymbolTest >> testReadFromString [
 	| str strWithPound |
 	Smalltalk garbageCollect.

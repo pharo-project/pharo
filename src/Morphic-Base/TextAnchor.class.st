@@ -12,41 +12,43 @@ In the morphic world, simply embed any form or morph in text.
 	textWithMorph asMorph openInHand.
 "
 Class {
-	#name : #TextAnchor,
-	#superclass : #TextAttribute,
+	#name : 'TextAnchor',
+	#superclass : 'TextAttribute',
 	#instVars : [
 		'anchoredMorph'
 	],
-	#category : #'Morphic-Base-Text Support'
+	#category : 'Morphic-Base-Text Support',
+	#package : 'Morphic-Base',
+	#tag : 'Text Support'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextAnchor >> = other [
 
 	^ other class == self class and: [
 		  other anchoredMorph == anchoredMorph ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAnchor >> anchoredMorph [
 
 	^ anchoredMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAnchor >> anchoredMorph: aMorph [
 
 	anchoredMorph := aMorph
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextAnchor >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 
 	^anchoredMorph identityHash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAnchor >> mayBeExtended [
 	"A textAnchor is designed to modify only a single character, and therefore must not be extended by the ParagraphEditor's emphasisHere facility"
 

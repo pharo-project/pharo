@@ -1,24 +1,25 @@
 Class {
-	#name : #ClyScopeTest,
-	#superclass : #ClyAbstractNavigationEnvironmentTest,
+	#name : 'ClyScopeTest',
+	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
 		'scope',
 		'result'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScopeTest class >> isAbstract [
 	^self == ClyScopeTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyScopeTest >> createSampleScope [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyScopeTest >> setUp [
 	super setUp.
 
@@ -26,7 +27,7 @@ ClyScopeTest >> setUp [
 	result := SortedCollection sortBlock: #printString ascending
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeTest >> testBindToEnvironment [
 
 	scope := self createSampleScope.
@@ -37,7 +38,7 @@ ClyScopeTest >> testBindToEnvironment [
 	self assert: scope isBoundToEnvironment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeTest >> testComparisonWithCopy [
 
 	| copy |
@@ -47,7 +48,7 @@ ClyScopeTest >> testComparisonWithCopy [
 	self assert: scope hash equals: copy hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeTest >> testComparisonWithDifferentScope [
 	| scope2 |
 	scope := self createSampleScope.
@@ -55,7 +56,7 @@ ClyScopeTest >> testComparisonWithDifferentScope [
 	self deny: scope equals: scope2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeTest >> testComparisonWithItself [
 
 	scope := self createSampleScope.
@@ -63,7 +64,7 @@ ClyScopeTest >> testComparisonWithItself [
 	self assert: scope equals: scope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeTest >> testComparisonWithSimilarScope [
 
 	| scope2 |
@@ -74,7 +75,7 @@ ClyScopeTest >> testComparisonWithSimilarScope [
 	self assert: scope hash equals: scope2 hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -86,7 +87,7 @@ ClyScopeTest >> testConvertingToAnotherScopeClass [
 	self assert: convertedScope environment equals: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyScopeTest >> testConvertingToAnotherScopeClassShouldKeepName [
 	| convertedScope |
 	scope := self createSampleScope.

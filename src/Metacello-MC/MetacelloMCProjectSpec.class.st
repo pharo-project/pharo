@@ -1,20 +1,22 @@
 Class {
-	#name : #MetacelloMCProjectSpec,
-	#superclass : #MetacelloGenericProjectSpec,
+	#name : 'MetacelloMCProjectSpec',
+	#superclass : 'MetacelloGenericProjectSpec',
 	#instVars : [
 		'file'
 	],
-	#category : #'Metacello-MC-Specs'
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloMCProjectSpec class >> new [
 	self name == #MetacelloMCProjectSpec
 		ifTrue: [ self error: 'This class is abstract' ].
 	^ super new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> allPackagesLoaded: aLoader [
     "answer true if all of the packages (excluding projects) are loaded"
 
@@ -31,17 +33,17 @@ MetacelloMCProjectSpec >> allPackagesLoaded: aLoader [
     ^ true
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> asBaselineProjectSpec [
     ^ self copyForScriptingInto: (MetacelloMCBaselineOfProjectSpec for: self project asBaselineProject)
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> asConfigurationProjectSpec [
     ^ self copyForScriptingInto: (MetacelloMCConfigurationOfProjectSpec for: self project asConfigurationProject)
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> asProjectRegistration [
   (self className beginsWith: 'BaselineOf')
     ifTrue: [ 
@@ -51,38 +53,38 @@ MetacelloMCProjectSpec >> asProjectRegistration [
     fromMCConfigurationProjectSpec: self asConfigurationProjectSpec
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> asProjectSpec [
     ^ self
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> asProjectSpecForVersion: vrsn [
   ^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> baseName [
 	^ MetacelloScriptEngine baseNameOf: self className
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> canDowngradeTo: aMetacelloProjectSpec [
     ^ (super canDowngradeTo: aMetacelloProjectSpec) and: [ self file = aMetacelloProjectSpec file ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> canUpgradeTo: aMetacelloProjectSpec [
     ^ (super canUpgradeTo: aMetacelloProjectSpec) and: [ self file = aMetacelloProjectSpec file ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> className: aString [
     super className: aString.
     self projectPackage: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
     ^ (MetacelloLookupProjectSpecForLoad new
         projectSpec: self;
@@ -93,14 +95,14 @@ MetacelloMCProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus:
         using: anMCLoader
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> compareEqual: aMetacelloProjectSpec [
     "'projectPackage repositories'"
 
     ^ (super compareEqual: aMetacelloProjectSpec) and: [ self file = aMetacelloProjectSpec file ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> compareRelativeCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
 
 	| cv vrsn |
@@ -111,12 +113,12 @@ MetacelloMCProjectSpec >> compareRelativeCurrentVersion: anOperator targetVersio
 	^false
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloMCProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
     self subclassResponsibility
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> copyForScriptingInto: aProjectSpec [
     ^aProjectSpec
         setName: name;
@@ -130,7 +132,7 @@ MetacelloMCProjectSpec >> copyForScriptingInto: aProjectSpec [
         file: file
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCProjectSpec >> determineCurrentVersionForLoad [
     "don't use self currentVersion, because we are interested in the currentVersion of the project as loaded in image, not the current version relative to our load list"
 
@@ -166,7 +168,7 @@ MetacelloMCProjectSpec >> determineCurrentVersionForLoad [
     ^ nil
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
   "answer true if the configuration should be reloaded:
     blessing is #development
@@ -179,7 +181,7 @@ MetacelloMCProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
   ^ false
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCProjectSpec >> ensureLoadUsing: aLoader [
   | pp |
   pp := (MetacelloLookupProjectSpec new
@@ -195,7 +197,7 @@ MetacelloMCProjectSpec >> ensureLoadUsing: aLoader [
   pp ensureLoadUsing: aLoader
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCProjectSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
   "for #development projects, always need latest version of package when contemplating a load"
   | ensured |
@@ -213,7 +215,7 @@ MetacelloMCProjectSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 	self ensureProjectFetch: mcLoader ]
 ]
 
-{ #category : #'private - loading' }
+{ #category : 'private - loading' }
 MetacelloMCProjectSpec >> ensureProjectFetch: mcLoader [
 
 	"projectClass == nil or version == nil"
@@ -229,7 +231,7 @@ MetacelloMCProjectSpec >> ensureProjectFetch: mcLoader [
 		put: #'present'
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCProjectSpec >> ensureProjectLoaded [
   "Ensure that the MetacelloProject is loaded in image. 
 	 projectClass == nil or requested version non-existent warrants a project package load."
@@ -253,7 +255,7 @@ MetacelloMCProjectSpec >> ensureProjectLoaded [
   ^ self projectClass ~~ nil
 ]
 
-{ #category : #'private - loading' }
+{ #category : 'private - loading' }
 MetacelloMCProjectSpec >> ensureProjectLoaded: mcLoader ensured: ensured [
 	| version |
 
@@ -270,49 +272,49 @@ MetacelloMCProjectSpec >> ensureProjectLoaded: mcLoader ensured: ensured [
 	mcLoader ensuredMap at: self name put: #'latest'
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCProjectSpec >> fetchUsing: aLoader [
     (MetacelloLookupProjectSpec new
         projectSpec: self;
         yourself) signal projectPackage fetchUsing: aLoader
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCProjectSpec >> file [
     file ifNil: [ ^ self className ].
     ^ file
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> file: aString [
     self shouldBeMutable.
     file := aString.
     self projectPackage: nil
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloMCProjectSpec >> file: aString constructor: aVersionConstructor [
     aVersionConstructor fileForProject: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> getFile [
     "raw access to iv"
 
     ^ file
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> hasConflictWithBaselineSpec: projectSpec [
 	^ self hasLoadConflicts: projectSpec
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> hasConflictWithConfigurationSpec: projectSpec [
 	^ self hasLoadConflicts: projectSpec
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> hasConflictWithProjectSpec: projectSpec [
   (self className beginsWith: 'BaselineOf')
     ifTrue: [ ^ projectSpec hasConflictWithBaselineSpec: self asBaselineProjectSpec ].
@@ -320,7 +322,7 @@ MetacelloMCProjectSpec >> hasConflictWithProjectSpec: projectSpec [
     hasConflictWithConfigurationSpec: self asConfigurationProjectSpec
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
   "'projectPackage repositories'"
 
@@ -328,17 +330,17 @@ MetacelloMCProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
     and: [ self file = aMetacelloProjectSpec file ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> isBaselineOfProjectSpec [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> isConfigurationOfProjectSpec [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> isPartiallyLoaded: aLoader [
 
 	| vrsn |
@@ -349,7 +351,7 @@ MetacelloMCProjectSpec >> isPartiallyLoaded: aLoader [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCProjectSpec >> isPossibleBaseline [
 
 	| vrsn |
@@ -359,7 +361,7 @@ MetacelloMCProjectSpec >> isPossibleBaseline [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> loadPackageList [
 
 	| vrsn pkgs |
@@ -370,7 +372,7 @@ MetacelloMCProjectSpec >> loadPackageList [
 	^pkgs
 ]
 
-{ #category : #'private - loading' }
+{ #category : 'private - loading' }
 MetacelloMCProjectSpec >> loadProjectIsLocked: version [
 	"Just inform is already loaded"
 
@@ -379,7 +381,7 @@ MetacelloMCProjectSpec >> loadProjectIsLocked: version [
 		signal
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCProjectSpec >> loadVersion: aVersionOrNil [
 	"Load the correct version of the project"
 
@@ -427,7 +429,7 @@ MetacelloMCProjectSpec >> loadVersion: aVersionOrNil [
 		defaultDictionary: Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> loadedPackageNames: aLoader [
 
 	| vrsn pkgs |
@@ -439,14 +441,14 @@ MetacelloMCProjectSpec >> loadedPackageNames: aLoader [
 	^pkgs
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> metacelloRegistrationHash [
     "file"
 
     ^ String stringHash: self file initialHash: super metacelloRegistrationHash
 ]
 
-{ #category : #'private - loading' }
+{ #category : 'private - loading' }
 MetacelloMCProjectSpec >> notifyCleanStackCache [
 	| pc |
 
@@ -461,7 +463,7 @@ MetacelloMCProjectSpec >> notifyCleanStackCache [
 				{ pc } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> packageFileSpecFor: aMetacelloPackagesSpec [
 
 	^(aMetacelloPackagesSpec project projectReferenceSpec)
@@ -470,14 +472,14 @@ MetacelloMCProjectSpec >> packageFileSpecFor: aMetacelloPackagesSpec [
 			yourself.
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCProjectSpec >> projectClass [
     self className == nil
         ifTrue: [ ^ nil ].
     ^ Smalltalk at: self className asSymbol ifAbsent: [  ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCProjectSpec >> projectClassProject [
     "indirection needed when projectClass is _not_ a subclass of MetacelloProject"
 
@@ -486,7 +488,7 @@ MetacelloMCProjectSpec >> projectClassProject [
         yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> projectPackage [
     projectPackage
         ifNil: [ 
@@ -498,7 +500,7 @@ MetacelloMCProjectSpec >> projectPackage [
     ^ projectPackage
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCProjectSpec >> relativeCurrentVersion [
     "currentVersion calculated relative to the loadList"
 
@@ -517,7 +519,7 @@ MetacelloMCProjectSpec >> relativeCurrentVersion [
     ^ self projectClassProject currentVersionAgainst: expanded
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCProjectSpec >> resolveToAllPackagesIn: aVersionSpec visited: visited [
     | vrsn |
     visited
@@ -533,7 +535,7 @@ MetacelloMCProjectSpec >> resolveToAllPackagesIn: aVersionSpec visited: visited 
     ^ #()
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProjectSpec >> updateForSpawnMethod: sourceSpec [
 	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
 	
@@ -541,7 +543,7 @@ MetacelloMCProjectSpec >> updateForSpawnMethod: sourceSpec [
 	sourceSpec ~~ nil ifTrue: [ versionString := sourceSpec versionString ].
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloMCProjectSpec >> updatePackageSpec: updatedSpecs [
     "Add project copy to updatedSpecs if the current version of the project 
 	 is different from the receiver's version"
@@ -559,7 +561,7 @@ MetacelloMCProjectSpec >> updatePackageSpec: updatedSpecs [
     updatedSpecs at: spec name put: spec
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionString: defaultVersionString withDefaultRepositoryDecription: defaultRepositoryDecription [
     | issues callSite |
     issues := OrderedCollection new.
@@ -598,7 +600,7 @@ MetacelloMCProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersio
     ^ issues
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString [
     self versionString
         ifNil: [ 
@@ -615,7 +617,7 @@ MetacelloMCProjectSpec >> validateVersionString: issues withDefaultVersionString
                                 explanation: 'version field required') ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
@@ -633,7 +635,7 @@ MetacelloMCProjectSpec >> version [
 		ifFalse: [ self projectClassProject version: self versionString ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
     | prj |
     prj := self projectClass ifNil: [ self project ] ifNotNil: [ self projectClassProject ].
@@ -644,7 +646,7 @@ MetacelloMCProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
         repositoryOverrides: aMetacelloScriptEngine repositoryOverrides
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpec >> workingCopy [
   ^ self projectPackage workingCopy
 ]

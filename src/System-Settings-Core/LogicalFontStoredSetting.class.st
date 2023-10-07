@@ -2,28 +2,30 @@
 I am responsible for storing information about LogicalFont objects.
 "
 Class {
-	#name : #LogicalFontStoredSetting,
-	#superclass : #AbstractFontStoredSetting,
+	#name : 'LogicalFontStoredSetting',
+	#superclass : 'AbstractFontStoredSetting',
 	#instVars : [
 		'fallbackFamilyNames',
 		'stretchValue',
 		'weightValue',
 		'slantValue'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings'
+	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-StoredSettings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> fallbackFamilyNames [
 	^ fallbackFamilyNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> fallbackFamilyNames: aCollectionOrNil [
 	fallbackFamilyNames := aCollectionOrNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> realValue [
 	^ (self class environment at: self fontClassName)
 				familyName: self familyName
@@ -34,32 +36,32 @@ LogicalFontStoredSetting >> realValue [
 				slantValue: self slantValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> slantValue [
 	^ slantValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> slantValue: anInteger [
 	slantValue := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> stretchValue [
 	^ stretchValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> stretchValue: anInteger [
 	stretchValue := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> weightValue [
 	^ weightValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontStoredSetting >> weightValue: anInteger [
 	weightValue := anInteger
 ]

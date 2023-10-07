@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-InheritanceAnalysis-Browser' }
+Package { #name : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser' }

@@ -1,18 +1,18 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 String >> heightToDisplayInTree: aTree [
 
 	^ aTree fontToUse height
 ]
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 String class >> systemIconName [
 
 	^ #string
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 String >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont from: aMorph [
 
 	aCanvas
@@ -22,7 +22,7 @@ String >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont 
 		color: drawColor
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 String >> widthToDisplayInTree: aTree [
 
 	^ aTree fontToUse widthOfStringOrText: self contents

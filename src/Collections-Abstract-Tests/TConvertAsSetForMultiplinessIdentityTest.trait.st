@@ -2,13 +2,15 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TConvertAsSetForMultiplinessIdentityTest,
+	#name : 'TConvertAsSetForMultiplinessIdentityTest',
 	#traits : 'TConvertAsSetForMultiplinessTest',
 	#classTraits : 'TConvertAsSetForMultiplinessTest classTrait',
-	#category : #'Collections-Abstract-Tests-Traits'
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertAsSetForMultiplinessIdentityTest >> collectionWithCopy [
 	"Return a collection of type 'self collectionWIithoutEqualsElements class' containing no elements equals (with identity equality)
 	but 2 elements only equals with classic equality"
@@ -20,7 +22,7 @@ TConvertAsSetForMultiplinessIdentityTest >> collectionWithCopy [
 	^ result
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertAsSetForMultiplinessIdentityTest >> collectionWithIdentical [
 	"Return a collection of type: 'self collectionWIithoutEqualsElements class containing two elements equals (with identity equality)."
 
@@ -32,14 +34,14 @@ TConvertAsSetForMultiplinessIdentityTest >> collectionWithIdentical [
 	^ result
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertAsSetForMultiplinessIdentityTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot incllude equal elements ( classic equality )
 	all elements included are elements for which copy is not identical to the element  "
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TConvertAsSetForMultiplinessIdentityTest >> test0FixtureAsSetForIdentityMultiplinessTest [
 	"A collection (of elements for which copy is not identical ) without equal elements:"
 
@@ -54,7 +56,7 @@ TConvertAsSetForMultiplinessIdentityTest >> test0FixtureAsSetForIdentityMultipli
 	self assert: res = false
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TConvertAsSetForMultiplinessIdentityTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	"a collection  with equal elements:"
 
@@ -65,7 +67,7 @@ TConvertAsSetForMultiplinessIdentityTest >> test0FixtureTConvertAsSetForMultipli
 	self assert: res = true
 ]
 
-{ #category : #'tests - as set tests' }
+{ #category : 'tests - as set tests' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithEqualsElements [
 
 	| result collection |
@@ -75,7 +77,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithEqualsElements 
 	self assert: result class = IdentitySet
 ]
 
-{ #category : #'tests - as identity set' }
+{ #category : 'tests - as identity set' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithIdentityEqualsElements [
 
 	| result |
@@ -93,7 +95,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithIdentityEqualsE
 	self assert: result class = IdentitySet
 ]
 
-{ #category : #'tests - as identity set' }
+{ #category : 'tests - as identity set' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithoutIdentityEqualsElements [
 
 	| result collection |
@@ -107,7 +109,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithoutIdentityEqua
 	self assert: result class = IdentitySet
 ]
 
-{ #category : #'tests - as set tests' }
+{ #category : 'tests - as set tests' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsSetWithEqualsElements [
 
 	| result |
@@ -116,7 +118,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsSetWithEqualsElements [
 	self assert: result class = Set
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertAsSetForMultiplinessIdentityTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
 	^ self explicitRequirement

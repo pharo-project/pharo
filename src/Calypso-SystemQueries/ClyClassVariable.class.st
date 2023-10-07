@@ -8,31 +8,33 @@ You can create my instance using:
  
 "
 Class {
-	#name : #ClyClassVariable,
-	#superclass : #ClyVariable,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyClassVariable',
+	#superclass : 'ClyVariable',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassVariable class >> named: aSymbol definedIn: aClass [
 	^self
 		on: (aClass classVariableNamed: aSymbol)
 		definedIn: aClass
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyClassVariable class >> queryClass [
 	^ClyAllClassVariablesQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassVariable >> detectDefiningClassFrom: anUserClass [
 
 	self detectDefiningClassFrom: anUserClass ifAbsent: [
 		self error: 'Cant find the class defining variable' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassVariable >> detectDefiningClassFrom: anUserClass ifAbsent: aBlock [
 
 	(anUserClass instanceSide classVariables includes: actualVariable) ifTrue: [
@@ -48,7 +50,7 @@ ClyClassVariable >> detectDefiningClassFrom: anUserClass ifAbsent: aBlock [
 	self detectDefiningClassFrom: anUserClass superclass ifAbsent: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassVariable >> isAccessibleFrom: aClass [
 
 	(aClass instanceSide withAllSuperclasses anySatisfy: [ :c |
@@ -58,18 +60,18 @@ ClyClassVariable >> isAccessibleFrom: aClass [
 		  aClass instanceSide inheritsFrom: definingClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassVariable >> isClassVariable [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassVariable >> isLive [
 
 	^true
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyClassVariable >> openInspector [
 
 	actualVariable value inspect

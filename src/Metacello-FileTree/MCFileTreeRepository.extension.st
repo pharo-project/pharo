@@ -1,6 +1,6 @@
-Extension { #name : #MCFileTreeRepository }
+Extension { #name : 'MCFileTreeRepository' }
 
-{ #category : #'*Metacello-FileTree' }
+{ #category : '*Metacello-FileTree' }
 MCFileTreeRepository >> metacelloProjectClassFor: aScriptEngine [
     aScriptEngine versionString isEmptyOrNil
         ifFalse: [ 
@@ -10,7 +10,7 @@ MCFileTreeRepository >> metacelloProjectClassFor: aScriptEngine [
     ^ MetacelloMCBaselineProject
 ]
 
-{ #category : #'*Metacello-FileTree' }
+{ #category : '*Metacello-FileTree' }
 MCFileTreeRepository >> repositoryBranchName [
   "extract a branch name from the repository ... if possible"
 
@@ -19,13 +19,13 @@ MCFileTreeRepository >> repositoryBranchName [
   ^ super repositoryBranchName
 ]
 
-{ #category : #'*Metacello-FileTree' }
+{ #category : '*Metacello-FileTree' }
 MCFileTreeRepository >> repositoryDescription [
   ^ self description , ' [' , self repositoryVersionString , ':'
     , self repositoryBranchName , ']'
 ]
 
-{ #category : #'*Metacello-FileTree' }
+{ #category : '*Metacello-FileTree' }
 MCFileTreeRepository >> repositoryVersionString [
   "extract a version string from the repository ... if possible"
 
@@ -34,7 +34,7 @@ MCFileTreeRepository >> repositoryVersionString [
   ^ super repositoryVersionString
 ]
 
-{ #category : #'*Metacello-FileTree' }
+{ #category : '*Metacello-FileTree' }
 MCFileTreeRepository >> resetDirectory [
 	directory := nil
 ]

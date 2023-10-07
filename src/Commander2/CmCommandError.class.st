@@ -14,32 +14,34 @@ LtCommandError signalCommand: LtCommand new
 ]]]
 "
 Class {
-	#name : #CmCommandError,
-	#superclass : #Error,
+	#name : 'CmCommandError',
+	#superclass : 'Error',
 	#instVars : [
 		'command'
 	],
-	#category : #'Commander2-Errors'
+	#category : 'Commander2-Errors',
+	#package : 'Commander2',
+	#tag : 'Errors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmCommandError class >> command: aCmSpecCommand [
 	^ self new
 		command: aCmSpecCommand;
 		yourself
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 CmCommandError class >> signalCommand: aCmSpecCommand [
 	(self command: aCmSpecCommand) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandError >> command [
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandError >> command: aCmSpecCommand [
 	command := aCmSpecCommand
 ]

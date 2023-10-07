@@ -7,12 +7,14 @@ or the closure : { array node .
 
 "
 Class {
-	#name : #RBArrayErrorNode,
-	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#name : 'RBArrayErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 RBArrayErrorNode class >> error: aToken withNodes: aCollection [
 	"Analyses the token to identify if it's an opening or a closure."
 	| message |
@@ -27,18 +29,18 @@ RBArrayErrorNode class >> error: aToken withNodes: aCollection [
 		ifFalse: [ self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayErrorNode >> isArrayError [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayErrorNode >> repairCollection [
 	^ (self errorMessage = '''}'' expected') ifTrue: [ self repairCollectionFromStart ]
 													    ifFalse: [ self repairCollectionFromStop ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayErrorNode >> repairCollectionFromStart [
 	" The repair process goes through goes through the statements that are compatible with an array.
 	  Begins with all statements included in the array and gets one of every time.
@@ -60,7 +62,7 @@ RBArrayErrorNode >> repairCollectionFromStart [
 	^collection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayErrorNode >> repairCollectionFromStop [
 	" The repair process goes through goes through the statements that are compatible with an array.
 	  Begins with all statements included in the array and gets one of every time.

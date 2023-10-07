@@ -9,28 +9,30 @@ And I provide extra convertation method to get similar query but from different 
 	aVariableQuery withMetaLevelScope: ClyInstanceSideScope
 "
 Class {
-	#name : #ClyVariableQuery,
-	#superclass : #ClyTypedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyVariableQuery',
+	#superclass : 'ClyTypedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyVariableQuery class >> resultItemsType [
 	^ClyVariable
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyVariableQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 	self flag: #todo
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyVariableQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^scope includesVariablesAffectedBy: aSystemAnnouncement
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyVariableQuery >> withMetaLevelScope: aScopeClass [
 	^self withScope: (scope withMetaLevel: aScopeClass)
 ]

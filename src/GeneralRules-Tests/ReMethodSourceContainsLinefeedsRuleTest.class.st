@@ -2,12 +2,14 @@
 A RBMethodSourceContainsLinefeedsRuleTest is a test class for testing the behavior of RBMethodSourceContainsLinefeedsRule
 "
 Class {
-	#name : #ReMethodSourceContainsLinefeedsRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReMethodSourceContainsLinefeedsRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : 'test-help' }
 ReMethodSourceContainsLinefeedsRuleTest >> sampleMethod [
 	"This method contains two linefeeds which should be carriage returns."
 	"There is one after this line" 7.
@@ -16,7 +18,7 @@ ReMethodSourceContainsLinefeedsRuleTest >> sampleMethod [
 	"That was it." -1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReMethodSourceContainsLinefeedsRuleTest >> testRule [
 	| sampleMethod critiques|
 	sampleMethod := 'sampleMethod

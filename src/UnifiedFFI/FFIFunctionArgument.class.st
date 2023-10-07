@@ -3,35 +3,37 @@ I am an abstract class representing a call-out argument, having a value and a ty
 See my subclasses for the concrete kind of arguments.
 "
 Class {
-	#name : #FFIFunctionArgument,
-	#superclass : #Object,
+	#name : 'FFIFunctionArgument',
+	#superclass : 'Object',
 	#instVars : [
 		'loader',
 		'resolvedType',
 		'type'
 	],
-	#category : #'UnifiedFFI-Arguments'
+	#category : 'UnifiedFFI-Arguments',
+	#package : 'UnifiedFFI',
+	#tag : 'Arguments'
 }
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIFunctionArgument >> asOldArraySpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionArgument >> defaultReturnOnError [
 
 	^ self resolvedType defaultReturnOnError
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIFunctionArgument >> emitArgument: anIRBuilder context: aContext inCallout: aCallout [
 
 	self resolvedType emitArgument: anIRBuilder context: aContext inCallout: aCallout
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIFunctionArgument >> emitReturnArgument: anIRBuilder context: aContext [
 
 	self resolvedType
@@ -39,37 +41,37 @@ FFIFunctionArgument >> emitReturnArgument: anIRBuilder context: aContext [
 		context: aContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionArgument >> externalTypeWithArity [
 
 	^ self resolvedType externalTypeWithArity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionArgument >> loader [
 
 	^ loader
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIFunctionArgument >> resolveUsing: aResolver [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionArgument >> resolvedType [
 
 	^ resolvedType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionArgument >> type [
 
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionArgument >> type: anObject [
 	type := anObject
 ]

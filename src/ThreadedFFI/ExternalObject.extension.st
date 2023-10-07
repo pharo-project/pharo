@@ -1,6 +1,6 @@
-Extension { #name : #ExternalObject }
+Extension { #name : 'ExternalObject' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 ExternalObject >> tfPointerAddress [
 
 	^ self getHandle tfPointerAddress

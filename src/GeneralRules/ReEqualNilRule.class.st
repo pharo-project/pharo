@@ -2,24 +2,26 @@
 Replaces = nil and == nil by isNil, ~= nil and ~~ nil by notNil to make the code more readable.  
 "
 Class {
-	#name : #ReEqualNilRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReEqualNilRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEqualNilRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'EqualNilRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEqualNilRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReEqualNilRule >> initialize [
 	super initialize.
 	self
@@ -29,7 +31,7 @@ ReEqualNilRule >> initialize [
 		replace: '``@object ~~ nil' with: '``@object notNil'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEqualNilRule >> name [
 	^ '= nil -> isNil AND ~= nil -> notNil'
 ]

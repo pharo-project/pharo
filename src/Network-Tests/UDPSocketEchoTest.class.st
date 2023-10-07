@@ -13,12 +13,14 @@ by inspecting each expression separately.
 The server runs until it receives quit as message. If necessary, use the Process Browser to terminate a running server.
 "
 Class {
-	#name : #UDPSocketEchoTest,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-Kernel'
+	#name : 'UDPSocketEchoTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDPSocketEchoTest >> clientSend: message [
 	"Send message to the local UDP echo service and return the result"
 
@@ -30,21 +32,21 @@ UDPSocketEchoTest >> clientSend: message [
 			ensure: [ socket closeAndDestroy ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UDPSocketEchoTest >> localhost [
 	"Return the host address where the UDP echo service runs, the local host address"
 
 	^ NetNameResolver localHostAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UDPSocketEchoTest >> port [
 	"Return the port where the UDP echo service runs"
 
 	^ 6666
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UDPSocketEchoTest >> receiveUDPDataFrom: socket [
 	"Receive a UDP datagram from socket, return a 3-element array:
 	{ contents. source host address. source port }
@@ -57,14 +59,14 @@ UDPSocketEchoTest >> receiveUDPDataFrom: socket [
 	^ { buffer copyFrom: 1 to: result first. result second asSocketAddress. result third }
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDPSocketEchoTest >> runServer [
 	"Run and return a local UDP echo server"
 
 	^ self withUDPEchoServer: [ :process | process ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDPSocketEchoTest >> testEcho [
 	| socket message result |
 
@@ -81,7 +83,7 @@ UDPSocketEchoTest >> testEcho [
 	] ensure: [ socket closeAndDestroy ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UDPSocketEchoTest >> withUDPEchoServer: block [
 	"Run a local UDP echo server on localhost:port and execute block.
 	Optionally pass the new process to block. When quit is received, stop the server"

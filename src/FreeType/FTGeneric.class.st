@@ -2,8 +2,8 @@
 I implement the FT_Generic type
 "
 Class {
-	#name : #FTGeneric,
-	#superclass : #FFIExternalStructure,
+	#name : 'FTGeneric',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_DATA',
 		'OFFSET_FINALIZER'
@@ -11,10 +11,12 @@ Class {
 	#pools : [
 		'FT2Types'
 	],
-	#category : #'FreeType-Bindings'
+	#category : 'FreeType-Bindings',
+	#package : 'FreeType',
+	#tag : 'Bindings'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FTGeneric class >> fieldsDesc [
 
 	"self rebuildFieldAccessors"
@@ -24,28 +26,28 @@ FTGeneric class >> fieldsDesc [
     void*  finalizer;)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGeneric >> data [
 	"This method was automatically generated"
 
 	^ ExternalData fromHandle: (handle pointerAt: OFFSET_DATA) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGeneric >> data: anObject [
 	"This method was automatically generated"
 
 	handle pointerAt: OFFSET_DATA put: anObject getHandle
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGeneric >> finalizer [
 	"This method was automatically generated"
 
 	^ ExternalData fromHandle: (handle pointerAt: OFFSET_FINALIZER) type: ExternalType void asPointerType
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGeneric >> finalizer: anObject [
 	"This method was automatically generated"
 

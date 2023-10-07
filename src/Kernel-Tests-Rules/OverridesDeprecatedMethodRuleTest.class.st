@@ -1,20 +1,21 @@
 Class {
-	#name : #OverridesDeprecatedMethodRuleTest,
-	#superclass : #TestCase,
+	#name : 'OverridesDeprecatedMethodRuleTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testClass',
 		'testSubclass'
 	],
-	#category : #'Kernel-Tests-Rules'
+	#category : 'Kernel-Tests-Rules',
+	#package : 'Kernel-Tests-Rules'
 }
 
-{ #category : #properties }
+{ #category : 'properties' }
 OverridesDeprecatedMethodRuleTest >> methodName [
 
 	^ 'testMethod'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OverridesDeprecatedMethodRuleTest >> setUp [
 	super setUp.
 	testClass := Object newAnonymousSubclass.
@@ -23,7 +24,7 @@ OverridesDeprecatedMethodRuleTest >> setUp [
 	testClass compile: self methodName, ' self deprecated: ''method is deprecated'''
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OverridesDeprecatedMethodRuleTest >> tearDown [
 
 	testClass := nil.
@@ -31,7 +32,7 @@ OverridesDeprecatedMethodRuleTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OverridesDeprecatedMethodRuleTest >> testBasicCheck [
 
 	| testMethod |
@@ -41,14 +42,14 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck [
 	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isNotEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OverridesDeprecatedMethodRuleTest >> testBasicCheck1 [
 	| testMethod |
 	testMethod := testSubclass >> (testSubclass compile: self methodName , '1').
 	self assertEmpty: (OverridesDeprecatedMethodRule new check: testMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OverridesDeprecatedMethodRuleTest >> testDoesNotActivateForDeprecatedMethods [
 	| testMethod |
 	testMethod := testSubclass >> (testSubclass compile: self methodName , ' self deprecated: ''Add another explanation message''').

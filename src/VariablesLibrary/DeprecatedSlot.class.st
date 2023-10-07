@@ -21,32 +21,34 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #DeprecatedSlot,
-	#superclass : #IndexedSlot,
+	#name : 'DeprecatedSlot',
+	#superclass : 'IndexedSlot',
 	#instVars : [
 		'message'
 	],
-	#category : #'VariablesLibrary-DeprecatedSlot'
+	#category : 'VariablesLibrary-DeprecatedSlot',
+	#package : 'VariablesLibrary',
+	#tag : 'DeprecatedSlot'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DeprecatedSlot class >> message: aString [
 	^ self new
 		message: aString;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DeprecatedSlot >> message [
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DeprecatedSlot >> message: anObject [
 	message := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DeprecatedSlot >> printOn: aStream [
 	aStream
 		store: self name;
@@ -57,20 +59,29 @@ DeprecatedSlot >> printOn: aStream [
 		store: self message
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 DeprecatedSlot >> read: anObject [
-	SlotDeprecation new
-		context: thisContext;
-		explanation: self message;
-		signal.
+
+	"In case this is ShiftClassInstaller then we are migrating the instances and we should not raise a deprecation"
+	<reflection: 'Object Inspection - State inspection'>
+	thisContext sender class = ShiftClassInstaller ifFalse: [
+		SlotDeprecation new
+			context: thisContext;
+			explanation: self message;
+			signal ].
 	super read: anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 DeprecatedSlot >> write: aValue to: anObject [
-	SlotDeprecation new
-		context: thisContext;
-		explanation: self message;
-		signal.
+
+	"In case this is ShiftClassInstaller then we are migrating the instances and we should not raise a deprecation"
+	<reflection: 'Object Modification - State modification'>
+	thisContext sender class = ShiftClassInstaller ifFalse: [
+		SlotDeprecation new
+			context: thisContext;
+			explanation: self message;
+			signal ].
+
 	super write: aValue to: anObject
 ]

@@ -2,15 +2,17 @@
 Primitives can declare a local variable that will hold the error code.
 "
 Class {
-	#name : #PrimitiveErrorVariable,
-	#superclass : #LocalVariable,
+	#name : 'PrimitiveErrorVariable',
+	#superclass : 'LocalVariable',
 	#instVars : [
 		'node'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PrimitiveErrorVariable class >> node: aVariableNode [
 	^self new
 		name: aVariableNode name;
@@ -19,17 +21,17 @@ PrimitiveErrorVariable class >> node: aVariableNode [
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 PrimitiveErrorVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitTemporaryVariableNode: aNode
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 PrimitiveErrorVariable >> definingNode [
 	^node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimitiveErrorVariable >> node: anObject [
 	node := anObject
 ]

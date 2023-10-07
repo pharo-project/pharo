@@ -2,19 +2,21 @@
 This class contains tests for class `ReExcessiveArgumentsRule`
 "
 Class {
-	#name : #ReExcessiveArgumentsRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReExcessiveArgumentsRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReExcessiveArgumentsRuleTest >> longArgMethod: arg1 with: arg2 with: arg3 with: arg4 with: arg5 [
 	"This method should be critisized due to too many arguments"
 
 	^self
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReExcessiveArgumentsRuleTest >> longArgMethodCallingFFI: arg1 with: arg2 with: arg3 with: arg4 with: arg5 [
 	"This method should not be critisized as it includes an FFI call"
 
@@ -27,7 +29,7 @@ ReExcessiveArgumentsRuleTest >> longArgMethodCallingFFI: arg1 with: arg2 with: a
         			int arg5)) module: #someModule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReExcessiveArgumentsRuleTest >> testRule [
 
 	| critiques|
@@ -35,7 +37,7 @@ ReExcessiveArgumentsRuleTest >> testRule [
 	self assert: critiques size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReExcessiveArgumentsRuleTest >> testRuleNotApplyToFFICallingMethods [
 
 	| critiques|

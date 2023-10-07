@@ -64,75 +64,77 @@ Internal Representation and Key Implementation Points.
 	environment:		<ClyNavigationEnvironment>
 "
 Class {
-	#name : #ClyEnvironmentPlugin,
-	#superclass : #Object,
+	#name : 'ClyEnvironmentPlugin',
+	#superclass : 'Object',
 	#instVars : [
 		'environment'
 	],
 	#classInstVars : [
 		'isAutoActivated'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyEnvironmentPlugin class >> disable [
 	isAutoActivated := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyEnvironmentPlugin class >> enable [
 	isAutoActivated := true
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClyEnvironmentPlugin class >> initialize [
 	self isAbstract ifTrue: [ ^self ].
 
 	ClyNavigationEnvironment installNewPlugin: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyEnvironmentPlugin class >> isAbstract [
 	^self = ClyEnvironmentPlugin
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyEnvironmentPlugin class >> isAutoActivated [
 	^isAutoActivated ifNil: [ true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyEnvironmentPlugin class >> isAutoActivatedOn: aNavigationEnvironment [
 	^self isAbstract not & self isAutoActivated
 		and: [ self isRelatedTo: aNavigationEnvironment system ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyEnvironmentPlugin class >> isRelatedTo: aSystem [
 	"My subclasses should decide what kind of system they are related to"
 
 	self subclassResponsibility
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyEnvironmentPlugin >> attachToSystem [
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyEnvironmentPlugin >> decorateBrowserItem: anItem ofObject: anObject [
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyEnvironmentPlugin >> detachFromSystem [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyEnvironmentPlugin >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyEnvironmentPlugin >> environment: anObject [
 	environment := anObject
 ]

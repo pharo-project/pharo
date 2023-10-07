@@ -10,83 +10,85 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyRenameClassTagCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyRenameClassTagCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'package',
 		'classGroup',
 		'newName'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Class groups'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Class groups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Class groups'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRenameClassTagCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassTagSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRenameClassTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRenameClassTagCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRenameClassTagCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	aToolContext showPackage: package atClassTag: newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameClassTagCommand >> classGroup [
 	^ classGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameClassTagCommand >> classGroup: anObject [
 	classGroup := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameClassTagCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRenameClassTagCommand >> execute [
 
 	classGroup renameClassTagTo: newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameClassTagCommand >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameClassTagCommand >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameClassTagCommand >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRenameClassTagCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRenameClassTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

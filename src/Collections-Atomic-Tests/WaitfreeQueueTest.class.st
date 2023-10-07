@@ -1,10 +1,12 @@
 Class {
-	#name : #WaitfreeQueueTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Atomic-Tests-Base'
+	#name : 'WaitfreeQueueTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Atomic-Tests-Base',
+	#package : 'Collections-Atomic-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'helper methods' }
+{ #category : 'helper methods' }
 WaitfreeQueueTest >> newItems: count [
 	"Answer a collection with the requested number of items"
 
@@ -15,7 +17,7 @@ WaitfreeQueueTest >> newItems: count [
 	^collection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WaitfreeQueueTest >> testNextOrNil [
 
 	| queue |
@@ -47,7 +49,7 @@ WaitfreeQueueTest >> testNextOrNil [
 	self assert: queue itemCount equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WaitfreeQueueTest >> testNextOrNilSuchThat [
 
 	| queue |
@@ -91,7 +93,7 @@ WaitfreeQueueTest >> testNextOrNilSuchThat [
 	self assert: queue itemCount equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WaitfreeQueueTest >> testZombieFirst [
 	"Check that a zombie item at the start of the queue is correctly removed"
 
@@ -121,7 +123,7 @@ WaitfreeQueueTest >> testZombieFirst [
 	self assert: items last isZombie
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WaitfreeQueueTest >> testZombieLast [
 	"Check that a zombie item at the end of the queue is correctly left"
 
@@ -155,7 +157,7 @@ WaitfreeQueueTest >> testZombieLast [
 	self assert: queue itemCount equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WaitfreeQueueTest >> testZombieMiddle [
 	"Check that a zombie item at the start of the queue is correctly removed"
 

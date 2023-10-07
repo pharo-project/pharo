@@ -7,18 +7,20 @@ For example, for a self reference I can guess it by looking at the type of the c
 However, some types are problematic. For example, ints and floats can have different size/precisions.
 "
 Class {
-	#name : #FFIInferenceResolutionMode,
-	#superclass : #Object,
-	#category : #'UnifiedFFI-Callouts'
+	#name : 'FFIInferenceResolutionMode',
+	#superclass : 'Object',
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIInferenceResolutionMode >> isStrict [
 
 	^ false
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIInferenceResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument withResolver: aResolver [
 
 	(aFFIValueArgument value isNil

@@ -4,18 +4,20 @@ I implement an heuristic for variables in a workspace/playground.
 See my superclass for details.
 "
 Class {
-	#name : #CoWorkspaceVariablesHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoWorkspaceVariablesHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoWorkspaceVariablesHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ aContext isScripting
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoWorkspaceVariablesHeuristic >> buildFetcherFor: aNode inContext: aContext [
 
 	^ (CoCollectionFetcher onCollection: aContext variableBindingNames)

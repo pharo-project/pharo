@@ -2,48 +2,49 @@
 A GlobalIdentifierTest is a test class for testing the behavior of GlobalIdentifier
 "
 Class {
-	#name : #GlobalIdentifierTest,
-	#superclass : #TestCase,
+	#name : 'GlobalIdentifierTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'identifier',
 		'preferences'
 	],
-	#category : #'System-Identification-Tests'
+	#category : 'System-Identification-Tests',
+	#package : 'System-Identification-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlobalIdentifierTest class >> isAbstract [
 	^ self = GlobalIdentifierTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierTest >> actualPreferencesFileName [
 	^ identifier persistenceStrategy fileName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierTest >> folderName [
 	^ 'pharoPreferencesTestFolder'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlobalIdentifierTest >> newChecker [
 	^ GlobalIdentifierPersistenceMockChecker new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierTest >> setUp [
 	super setUp.
 	identifier := GlobalIdentifier basicNew initialize.
 	self setUpPersistenceStrategyAndChecker
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierTest >> setUpPersistenceStrategyAndChecker [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierTest >> tearDown [
 	preferences ensureDelete.
 	(FileLocator workingDirectory / self folderName)
@@ -52,7 +53,7 @@ GlobalIdentifierTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testBackwardCompatibility [
 	"Let's say that we have information stored using FUEL, but we use STON.
 	We do not have any STON stored value.
@@ -78,7 +79,7 @@ GlobalIdentifierTest >> testBackwardCompatibility [
 	self assert: identifier persistenceStrategy preferences exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testBackwardCompatibility2 [
 	"Let's say that we have information stored using both FUEL and STON, and we use STON.
 	We will ignore FUEL file and load STON."
@@ -107,7 +108,7 @@ GlobalIdentifierTest >> testBackwardCompatibility2 [
 	self assert: identifier computerUUID equals: 21 asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testBackwardCompatibility3 [
 	"Let's say that we have information stored using FUEL but we cannot read the file.
 	We use STON. We do not have any STON stored value.
@@ -130,7 +131,7 @@ GlobalIdentifierTest >> testBackwardCompatibility3 [
 	self assert: identifier persistenceStrategy preferences exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testBackwardCompatibility4 [
 	"Let's say that we have information stored using FUEL but we cannot read the file.
 	We use STON. The STON preference file is broken, we cannot read it.
@@ -167,7 +168,7 @@ GlobalIdentifierTest >> testBackwardCompatibility4 [
 	self assert: newIdentifier persistedInformation equals: identifier persistedInformation
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testComputerUUID [
 	"The computer UUID is not stored immediately because the Pharo Integration Server
 	raised building errors when storing the computer UUID on the CI server."
@@ -176,13 +177,13 @@ GlobalIdentifierTest >> testComputerUUID [
 	self testDefault
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testDefault [
 	self deny: preferences exists description: 'The preference file should not exists by default.'.
 	self deny: preferences parent exists description: 'The preference directory should not exists by default.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testDoNotStoreIfHomeDoesNotExists [
 	"Ignore persistence if HOME directory does not exists.
 	In the case that the image is deployed on a server, HOME directory may not exists.
@@ -202,7 +203,7 @@ GlobalIdentifierTest >> testDoNotStoreIfHomeDoesNotExists [
 	self assert: identifier computerUUID notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testEnsure [
 	"The computer UUID is not stored immediately because the Pharo Integration Server
 	raised building errors when storing the computer UUID on the CI server."
@@ -214,7 +215,7 @@ GlobalIdentifierTest >> testEnsure [
 	self assert: stored equals: identifier persistedInformation
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierTest >> testPreferenceFilesNotCollideWithRealPreferences [
 	"Ensure that setUp is done correctly and we do not override or change production preferences.
 	See https://pharo.manuscript.com/f/cases/19501"

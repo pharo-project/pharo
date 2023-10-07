@@ -2,8 +2,8 @@
 I represent a 2D vector of type FT_Vector. I am used to do transformations.
 "
 Class {
-	#name : #FTVector,
-	#superclass : #FFIExternalStructure,
+	#name : 'FTVector',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_X',
 		'OFFSET_Y'
@@ -11,10 +11,12 @@ Class {
 	#pools : [
 		'FT2Types'
 	],
-	#category : #'FreeType-Bindings'
+	#category : 'FreeType-Bindings',
+	#package : 'FreeType',
+	#tag : 'Bindings'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FTVector class >> fieldsDesc [
 
 	"self rebuildFieldAccessors"
@@ -24,28 +26,28 @@ FTVector class >> fieldsDesc [
     FT_Pos  y;)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTVector >> x [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_X
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTVector >> x: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTVector >> y [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_Y
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTVector >> y: anObject [
 	"This method was automatically generated"
 

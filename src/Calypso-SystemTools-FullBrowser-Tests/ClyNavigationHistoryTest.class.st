@@ -1,25 +1,26 @@
 Class {
-	#name : #ClyNavigationHistoryTest,
-	#superclass : #TestCase,
+	#name : 'ClyNavigationHistoryTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'environment',
 		'browser',
 		'navigationState'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Tests'
+	#category : 'Calypso-SystemTools-FullBrowser-Tests',
+	#package : 'Calypso-SystemTools-FullBrowser-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNavigationHistoryTest class >> isAbstract [
 	^self == ClyNavigationHistoryTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyNavigationHistoryTest >> createBrowser [
 	^ClyFullBrowserMorph new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyNavigationHistoryTest >> setUp [
 	super setUp.
 
@@ -31,7 +32,7 @@ ClyNavigationHistoryTest >> setUp [
 	browser plugins removeAll
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyNavigationHistoryTest >> snapshotState [
 	self subclassResponsibility
 ]

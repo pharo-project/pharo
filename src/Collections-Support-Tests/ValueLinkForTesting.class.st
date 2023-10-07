@@ -7,7 +7,9 @@ so I don't introduce any new methods but provide myself to check that newly
 created links keep the class of the chain we are pushing on.
 "
 Class {
-	#name : #ValueLinkForTesting,
-	#superclass : #ValueLink,
-	#category : #'Collections-Support-Tests-Links'
+	#name : 'ValueLinkForTesting',
+	#superclass : 'ValueLink',
+	#category : 'Collections-Support-Tests-Links',
+	#package : 'Collections-Support-Tests',
+	#tag : 'Links'
 }

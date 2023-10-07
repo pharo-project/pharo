@@ -2,20 +2,22 @@
 A trait to use as a mock in test classes like `FluidClassBuilderTest` and class `FluidTraitBuilderTest`
 "
 Trait {
-	#name : #TViewModelMock,
+	#name : 'TViewModelMock',
 	#classInstVars : [
 		'a'
 	],
-	#category : #'FluidClassBuilder-Tests-Mocks'
+	#category : 'FluidClassBuilder-Tests-Mocks',
+	#package : 'FluidClassBuilder-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModelMock classSide >> a [
 
 	^ a
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TViewModelMock classSide >> a: anObject [
 
 	a := anObject

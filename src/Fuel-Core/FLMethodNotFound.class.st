@@ -2,12 +2,14 @@
 I represent an error produced during materialization when a serialized method in a class or trait name doesn't exist (at Smalltalk globals).
 "
 Class {
-	#name : #FLMethodNotFound,
-	#superclass : #FLMaterializationError,
-	#category : #'Fuel-Core-Errors'
+	#name : 'FLMethodNotFound',
+	#superclass : 'FLMaterializationError',
+	#category : 'Fuel-Core-Errors',
+	#package : 'Fuel-Core',
+	#tag : 'Errors'
 }
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 FLMethodNotFound class >> signalWith: aGlobalName and: aSelector [
 	^ self signal: 'Method ', aGlobalName, '>>#', aSelector, ' not found.'
 ]

@@ -51,8 +51,8 @@ DirectoryAttrib         := 8r040000.
 FileAttrib             := 8r0100000. 
 "
 Class {
-	#name : #ZipFileConstants,
-	#superclass : #SharedPool,
+	#name : 'ZipFileConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'CentralDirectoryFileHeaderSignature',
 		'CompressionDeflated',
@@ -75,10 +75,12 @@ Class {
 		'IfaTextFile',
 		'LocalFileHeaderSignature'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ZipFileConstants class >> initialize [
 
 	FaMsdos		:= 0.

@@ -1,6 +1,6 @@
-Extension { #name : #VariableLayout }
+Extension { #name : 'VariableLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 VariableLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

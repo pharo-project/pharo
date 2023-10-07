@@ -2,29 +2,31 @@
 Recording damages to repair by repainting
 "
 Class {
-	#name : #DamageRecorder,
-	#superclass : #Object,
+	#name : 'DamageRecorder',
+	#superclass : 'Object',
 	#instVars : [
 		'invalidRects',
 		'totalRepaint'
 	],
-	#category : #'Morphic-Core-Support'
+	#category : 'Morphic-Core-Support',
+	#package : 'Morphic-Core',
+	#tag : 'Support'
 }
 
-{ #category : #recording }
+{ #category : 'recording' }
 DamageRecorder >> doFullRepaint [
 	"Record that a full redisplay is needed. No further damage rectangles will be recorded until after the next reset."
 
 	^ totalRepaint := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DamageRecorder >> initialize [
 	super initialize.
 	self reset
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 DamageRecorder >> invalidRectsFullBounds: aRectangle [
 	"Return a collection of damaged rectangles for the given canvas. If a total repaint has been requested, return the given rectangle."
 
@@ -33,7 +35,7 @@ DamageRecorder >> invalidRectsFullBounds: aRectangle [
 		ifFalse: [ invalidRects copy]
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 DamageRecorder >> recordInvalidRect: newRect [
 	"Record the given rectangle in my damage list, a list of rectangular areas of the display that should be redraw on the next display cycle."
 	"Details: Damaged rectangles are often identical or overlap significantly. In these cases, we merge them to reduce the number of damage rectangles that must be processed when the display is updated. Moreover, above a certain threshold, we ignore the individual rectangles completely, and simply do a complete repaint on the next cycle."
@@ -69,7 +71,7 @@ DamageRecorder >> recordInvalidRect: newRect [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DamageRecorder >> reset [
 	"Clear the damage list."
 
@@ -77,7 +79,7 @@ DamageRecorder >> reset [
 	totalRepaint := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DamageRecorder >> updateIsNeeded [
 	"Return true if the display needs to be updated."
 

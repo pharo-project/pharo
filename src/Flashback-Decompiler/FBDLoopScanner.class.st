@@ -8,23 +8,25 @@ currentPC <Smi> by opposition to self pc which holds the pc just *after* the ins
 
 "
 Class {
-	#name : #FBDLoopScanner,
-	#superclass : #InstructionClient,
+	#name : 'FBDLoopScanner',
+	#superclass : 'InstructionClient',
 	#instVars : [
 		'instructionStream',
 		'branchTargets',
 		'loops',
 		'currentPC'
 	],
-	#category : #'Flashback-Decompiler-Utilities'
+	#category : 'Flashback-Decompiler-Utilities',
+	#package : 'Flashback-Decompiler',
+	#tag : 'Utilities'
 }
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 FBDLoopScanner class >> scan: method [
 	^ self new scan: method
 ]
 
-{ #category : #'instruction decoding' }
+{ #category : 'instruction decoding' }
 FBDLoopScanner >> interpretMethod: method [
 	[ instructionStream pc > method endPC ]
 		whileFalse: [
@@ -32,7 +34,7 @@ FBDLoopScanner >> interpretMethod: method [
 			instructionStream interpretNextInstructionFor: self ]
 ]
 
-{ #category : #'instruction decoding' }
+{ #category : 'instruction decoding' }
 FBDLoopScanner >> jump: offset [
 	| loop backjumpTarget |
 	offset < 0 ifFalse: [ ^ self ].
@@ -46,17 +48,17 @@ FBDLoopScanner >> jump: offset [
 		ifNotNil: [ :col | col add: loop ]
 ]
 
-{ #category : #'instruction decoding' }
+{ #category : 'instruction decoding' }
 FBDLoopScanner >> jump: offset if: bool [
 	branchTargets at: self pc + offset put: currentPC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FBDLoopScanner >> pc [
 	^ instructionStream pc
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 FBDLoopScanner >> scan: method [
 	loops := Array new: method endPC.
 	branchTargets := Array new: method endPC.

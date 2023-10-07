@@ -2,8 +2,8 @@
 I representing a single line of text
 "
 Class {
-	#name : #AthensTextLine,
-	#superclass : #Object,
+	#name : 'AthensTextLine',
+	#superclass : 'Object',
 	#instVars : [
 		'text',
 		'startIndex',
@@ -16,10 +16,11 @@ Class {
 		'commands',
 		'tail'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> addCommand: aCommand [
 
 	commands
@@ -28,89 +29,89 @@ AthensTextLine >> addCommand: aCommand [
 	tail := tail tail
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> addWidth: aNumber [
 	width := width + aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> bottom [
 	^ top + self heightAndDescent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> commands [
 
 	^ commands
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> commands: anObject [
 
 	commands := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> endIndex [
 
 	^ endIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> endIndex: anObject [
 
 	endIndex := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> height [
 	^ height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> height: anObject [
 
 	height := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> heightAndDescent [
 
 	^ height + maxDescent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensTextLine >> initialize [
 	width := height := maxAscent := maxDescent := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> maxAscent [
 	^ maxAscent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> maxAscent: mascent [
 	maxAscent := mascent max: maxAscent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> maxDescent [
 	^ maxDescent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> maxDescent: mascent [
 
 	maxDescent := mascent max: maxDescent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> maxHeight: aHeight [
 	height := height max: aHeight
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextLine >> renderOn: aTextRenderer [
 
 	commands ifNil: [ ^ self ].
@@ -119,49 +120,49 @@ AthensTextLine >> renderOn: aTextRenderer [
 	]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextLine >> renderOn: anAthensTextRenderer x: aSmallInteger y: aSmallInteger3 [
 	self shouldBeImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> startIndex [
 
 	^ startIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> startIndex: index [
 	startIndex := index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> text [
 
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> text: aText [
 	text := aText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> top [
 	^ top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> top: aTop [
 	top := aTop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextLine >> width: anObject [
 
 	width := anObject

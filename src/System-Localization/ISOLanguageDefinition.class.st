@@ -4,8 +4,8 @@ The language definitions from International Organization for Standardization.
 You can obtain the list of the all the ISOCountries and languages.
 "
 Class {
-	#name : #ISOLanguageDefinition,
-	#superclass : #Object,
+	#name : 'ISOLanguageDefinition',
+	#superclass : 'Object',
 	#instVars : [
 		'iso3',
 		'iso2',
@@ -18,10 +18,12 @@ Class {
 		'ISO3Countries',
 		'ISO3Table'
 	],
-	#category : #'System-Localization-Utilities'
+	#category : 'System-Localization-Utilities',
+	#package : 'System-Localization',
+	#tag : 'Utilities'
 }
 
-{ #category : #'private - ISO 3166' }
+{ #category : 'private - ISO 3166' }
 ISOLanguageDefinition class >> buildIso3166CodesTables [
 	"ISOLanguageDefinition buildIso3166CodesTables"
 	| rawdata stream country isoa2 isoa3 unNumeric macName macCode windowsName windowsCode empty table |
@@ -46,14 +48,14 @@ ISOLanguageDefinition class >> buildIso3166CodesTables [
 	^table
 ]
 
-{ #category : #'private - ISO 3166' }
+{ #category : 'private - ISO 3166' }
 ISOLanguageDefinition class >> initISO3LanguageTable [
 	"self  initISO3LanguageTable"
 
 	^ self readISOLanguagesFrom: self isoLanguages readStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ISOLanguageDefinition class >> initISOCountries [
 	"self initISOCountries"
 	| iso3166Table |
@@ -65,14 +67,14 @@ ISOLanguageDefinition class >> initISOCountries [
 		ISO3Countries at: (entry at: 3) put: (entry at: 1)]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ISOLanguageDefinition class >> initialize [
 
 	ISO3Table := nil.
 	ISO2Table := nil
 ]
 
-{ #category : #'private - ISO 2' }
+{ #category : 'private - ISO 2' }
 ISOLanguageDefinition class >> iso2Countries [
 	"self iso2Countries"
 	"ISO2Countries := nil. ISO3Countries := nil"
@@ -81,12 +83,12 @@ ISOLanguageDefinition class >> iso2Countries [
 	^ISO2Countries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition class >> iso2LanguageDefinition: aString [
 	^self iso2LanguageTable at: aString
 ]
 
-{ #category : #'private - ISO 2' }
+{ #category : 'private - ISO 2' }
 ISOLanguageDefinition class >> iso2LanguageTable [
 	"self iso2LanguageTable"
 
@@ -97,7 +99,7 @@ ISOLanguageDefinition class >> iso2LanguageTable [
 	^ISO2Table
 ]
 
-{ #category : #'private - ISO 3166' }
+{ #category : 'private - ISO 3166' }
 ISOLanguageDefinition class >> iso3166Codes [
 	"http://www.unicode.org/onlinedat/countries.html"
 
@@ -2064,7 +2066,7 @@ CTRY_ZIMBABWE
 '
 ]
 
-{ #category : #'private - ISO 3' }
+{ #category : 'private - ISO 3' }
 ISOLanguageDefinition class >> iso3Countries [
 	"self iso3Countries"
 	"ISO2Countries := nil. ISO3Countries := nil"
@@ -2073,19 +2075,19 @@ ISOLanguageDefinition class >> iso3Countries [
 	^ISO3Countries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition class >> iso3LanguageDefinition: aString [
 	^self iso3LanguageTable at: aString
 ]
 
-{ #category : #'private - ISO 3' }
+{ #category : 'private - ISO 3' }
 ISOLanguageDefinition class >> iso3LanguageTable [
 	"self iso3LanguageTable"
 
 	^ISO3Table ifNil: [ISO3Table := self initISO3LanguageTable]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ISOLanguageDefinition class >> isoLanguages [
 	"ISO 639: 3-letter codes"
 	^'abk	ab	Abkhazian
@@ -2494,7 +2496,7 @@ zul	zu	Zulu
 zun		Zuni'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ISOLanguageDefinition class >> readISOLanguagesFrom: stream [
 	"self readISOLanguagesFrom: self isoLanguages readStream "
 	| languages language code3 index line |
@@ -2516,42 +2518,42 @@ ISOLanguageDefinition class >> readISOLanguagesFrom: stream [
 	^languages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> iso2 [
 	^iso2 ifNil: [self iso3]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> iso2: aString [
 	iso2 := aString ifEmpty: [nil] ifNotEmpty: [aString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> iso3 [
 	^iso3 ifNil: ['']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> iso3: aString [
 	iso3 := aString ifEmpty: [nil] ifNotEmpty: [aString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> iso3Alternate [
 	^iso3Alternate ifNil: ['']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> iso3Alternate: aString [
 	iso3Alternate := aString ifEmpty: [nil] ifNotEmpty: [aString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> language [
 	^ language
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ISOLanguageDefinition >> language: aString [
 	language := aString
 ]

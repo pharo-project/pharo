@@ -2,29 +2,30 @@
 I am a command to ban given critique rule
 "
 Class {
-	#name : #ClyBanCritiqueRuleCommand,
-	#superclass : #ClyCritiqueCommand,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyBanCritiqueRuleCommand',
+	#superclass : 'ClyCritiqueCommand',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBanCritiqueRuleCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 
 	aToolContext tool criticView update
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBanCritiqueRuleCommand >> defaultMenuIconName [
 	^#smallCancel
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyBanCritiqueRuleCommand >> description [
 	^'Ban this rule'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBanCritiqueRuleCommand >> execute [
 
 	critique guidedBan

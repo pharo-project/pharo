@@ -2,13 +2,15 @@
 My instances provide contiguous storage of bits, primarily to hold the graphical data of Forms. Forms and their subclasses provide the additional structural information as to how the bits should be interpreted in two dimensions.
 "
 Class {
-	#name : #Bitmap,
-	#superclass : #ArrayedCollection,
-	#type : #words,
-	#category : #'Graphics-Primitives-Base'
+	#name : 'Bitmap',
+	#superclass : 'ArrayedCollection',
+	#type : 'words',
+	#category : 'Graphics-Primitives-Base',
+	#package : 'Graphics-Primitives',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bitmap class >> decodeIntFrom: s [
 	"Decode an integer in stream s as follows...
 		0-223	0-223
@@ -25,7 +27,7 @@ Bitmap class >> decodeIntFrom: s [
 	^ int
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bitmap class >> decompressFromByteArray: byteArray [
 	| s bitmap size |
 	s := byteArray readStream.
@@ -38,14 +40,14 @@ Bitmap class >> decompressFromByteArray: byteArray [
 	^ bitmap
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Bitmap class >> initialize [
 	Smalltalk specialObjectsArray
 		at: 5
 		put: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Bitmap class >> newFromStream: s [
 	| len |
 	s next = 128
@@ -59,7 +61,7 @@ Bitmap class >> newFromStream: s [
 		ifFalse: [ "Old raw data format" s nextWordsInto: (self new: len) ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 Bitmap class >> swapBytesIn: aNonPointerThing from: start to: stop [
 	"Perform a bigEndian/littleEndian byte reversal of my words.
 	We only intend this for non-pointer arrays.  Do nothing if I contain pointers."
@@ -99,7 +101,7 @@ Bitmap class >> swapBytesIn: aNonPointerThing from: start to: stop [
 		copyBits
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bitmap >> asByteArray [
 	"Faster way to make a byte array from me.
 	copyFromByteArray: makes equal Bitmap."
@@ -124,21 +126,21 @@ Bitmap >> asByteArray [
 	^ bytes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> atAllPut: value [
 	"Fill the receiver, an indexable bytes or words object, with the given positive integer. The range of possible fill values is [0..255] for byte arrays and [0..(2^32 - 1)] for word arrays."
 	<primitive: 145>
 	super atAllPut: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> bitPatternForDepth: depth [
 	"The raw call on BitBlt needs a Bitmap to represent this color.  I already am Bitmap like. I am already adjusted for a specific depth.  Interpret me as an array of (32/depth) Color pixelValues. BitBlt aligns the first element of this array with the top scanline of the destinationForm, the second with the second, and so on, cycling through the color array as necessary."
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> byteAt: byteAddress [
 	"Extract a byte from a Bitmap.  Note that this is a byte address and it is one-order.  For repeated use, create an instance of BitBlt and use pixelAt:.  See Form>>#pixelAt:"
 	| lowBits |
@@ -146,7 +148,7 @@ Bitmap >> byteAt: byteAddress [
 	^ ((self at: (byteAddress - 1 - lowBits) // 4 + 1) bitShift: (lowBits - 3) * 8) bitAnd: 255
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> byteAt: byteAddress put: byte [
 	"Insert a byte into a Bitmap.  Note that this is a byte address and it is one-order.  For repeated use, create an instance of BitBlt and use pixelAt:put:.  See Form>>#pixelAt:put:"
 	| longWord shift lowBits longAddr |
@@ -161,12 +163,12 @@ Bitmap >> byteAt: byteAddress put: byte [
 	^ byte
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> byteSize [
 	^self size * 4
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> compress: bm toByteArray: ba [
 	"Store a run-coded compression of the receiver into the byteArray ba,
 	and return the last index stored into. ba is assumed to be large enough.
@@ -261,7 +263,7 @@ Bitmap >> compress: bm toByteArray: ba [
 	^ i - 1	"number of bytes actually stored"
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> compressToByteArray [
 	"Return a run-coded compression of this bitmap into a byteArray"
 	"Without skip codes, it is unlikely that the compressed bitmap will be any larger than was the original.  The run-code cases are...
@@ -281,7 +283,7 @@ The worst that can happen is that the method begins with unequal words, and than
 		to: lastByte
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> copyFromByteArray: byteArray [
 	"This method should work with either byte orderings"
 
@@ -292,7 +294,7 @@ Bitmap >> copyFromByteArray: byteArray [
 	byteHack displayOn: myHack
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> decompress: bm fromByteArray: ba at: index [
 	"Decompress the body of a byteArray encoded by compressToByteArray (qv)...
 	The format is simply a sequence of run-coded pairs, {N D}*.
@@ -346,13 +348,13 @@ Bitmap >> decompress: bm fromByteArray: ba at: index [
 							bm at: k put: data.  k := k+1]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> defaultElement [
 	"Return the default element of the receiver"
 	^0
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> encodeBytesOf: anInt in: ba at: i [
 	"Copy the integer anInt into byteArray ba at index i, and return the next index"
 
@@ -361,7 +363,7 @@ Bitmap >> encodeBytesOf: anInt in: ba at: i [
 	^ i + 4
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> encodeInt: int [
 	"Encode the integer int as per encodeInt:in:at:, and return it as a ByteArray"
 	| byteArray next |
@@ -375,7 +377,7 @@ Bitmap >> encodeInt: int [
 		to: next - 1
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> encodeInt: anInt in: ba at: i [
 	"Encode the integer anInt in byteArray ba at index i, and return the next index.
 	The encoding is as follows...
@@ -394,14 +396,14 @@ Bitmap >> encodeInt: anInt in: ba at: i [
 	^ self encodeBytesOf: anInt in: ba at: i + 1
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 Bitmap >> fromByteStream: aStream [
 	"Initialize the array of bits by reading integers from the argument,
 	aStream."
 	aStream nextWordsInto: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> integerAt: index [
 	"Return the integer at the given index"
 	| word |
@@ -416,7 +418,7 @@ Bitmap >> integerAt: index [
 		ifFalse: [ word ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> integerAt: index put: anInteger [
 	"Store the integer at the given index"
 	| word |
@@ -432,21 +434,21 @@ Bitmap >> integerAt: index put: anInteger [
 	^ anInteger
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Bitmap >> isColormap [
 	"Bitmaps were used as color maps for BitBlt.
 	This method allows to recognize real color maps."
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> pixelValueForDepth: depth [
 	"Self is being used to represent a single color.  Answer bits that appear in ONE pixel of this color in a Bitmap of the given depth. The depth must be one of 1, 2, 4, 8, 16, or 32.  Returns an integer.  First pixel only.  "
 
 	^ (self at: 1) bitAnd: (1 bitShift: depth) - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> primFill: aPositiveInteger [
 	"Fill the receiver, an indexable bytes or words object, with the given positive integer. The range of possible fill values is [0..255] for byte arrays and [0..(2^32 - 1)] for word arrays."
 
@@ -454,13 +456,13 @@ Bitmap >> primFill: aPositiveInteger [
 	self errorImproperStore
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Bitmap >> printOn: aStream [
 	self printNameOn: aStream.
 	aStream nextPutAll: ' of length '; print: self size
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> readCompressedFrom: strm [
 	"Decompress an old-style run-coded stream into this bitmap:
 		[0 means end of runs]
@@ -495,19 +497,19 @@ Bitmap >> readCompressedFrom: strm [
 	self copyFromByteArray: outBuff
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Bitmap >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Bitmap >> restoreEndianness [
 	"nothing to do here?"
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> storeBits: startBit to: stopBit on: aStream [
 	"Store my bits as a hex string, breaking the lines every 100 bytes or
 	so to comply with the maximum line length limits of Postscript (255
@@ -528,7 +530,7 @@ Bitmap >> storeBits: startBit to: stopBit on: aStream [
 	lineWidth > 0 ifTrue: [ aStream cr ]
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> writeOn: aStream [
 	"Store the array of bits onto the argument, aStream. A leading byte of 16r80 identifies this as compressed by compressToByteArray (qv)."
 	| b |
@@ -539,7 +541,7 @@ Bitmap >> writeOn: aStream [
 		nextPutAll: b
 ]
 
-{ #category : #filing }
+{ #category : 'filing' }
 Bitmap >> writeUncompressedOn: aStream [
 	"Store the array of bits onto the argument, aStream.
 	(leading byte ~= 16r80) identifies this as raw bits (uncompressed)."

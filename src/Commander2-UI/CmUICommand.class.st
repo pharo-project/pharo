@@ -9,8 +9,8 @@ Basically, I add:
 
 "
 Class {
-	#name : #CmUICommand,
-	#superclass : #CmCommandDecorator,
+	#name : 'CmUICommand',
+	#superclass : 'CmCommandDecorator',
 	#instVars : [
 		'iconProvider',
 		'iconName',
@@ -18,90 +18,92 @@ Class {
 		'displayStrategy',
 		'positionStrategy'
 	],
-	#category : #'Commander2-UI-Core'
+	#category : 'Commander2-UI-Core',
+	#package : 'Commander2-UI',
+	#tag : 'Core'
 }
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommand >> beDisabledWhenCantBeRun [
 	self displayStrategy: CmUIDisableWhenCantBeRun new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommand >> beDisplayedOnLeftSide [
 	positionStrategy := CmUILeftPositionStrategy new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommand >> beDisplayedOnRightSide [
 	positionStrategy := CmUIRightPositionStrategy new
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommand >> beHiddenWhenCantBeRun [
 	self displayStrategy: CmUIHideWhenCantBeRun new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> displayStrategy [
 	^ displayStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> displayStrategy: anObject [
 	displayStrategy := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmUICommand >> hasIcon [
 
 	^ self iconName isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmUICommand >> hasShortcutKey [
 
 	^ shortcutKey isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> icon [
 	self iconName ifNil: [ ^ nil ].
 
 	^ self iconNamed: self iconName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> iconName [
 	^ iconName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> iconName: aSymbol [
 	iconName := aSymbol
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 CmUICommand >> iconName: aString from: anIconProvider [
 	self iconProvider: anIconProvider.
 	self iconName: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> iconNamed: aSymbol [
 	^ self iconProvider iconNamed: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> iconProvider [
 	^ iconProvider ifNil: [ iconProvider := Smalltalk ui icons ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> iconProvider: anObject [
 	iconProvider := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmUICommand >> initialize [
 
 	super initialize.
@@ -109,24 +111,24 @@ CmUICommand >> initialize [
 	self beDisplayedOnLeftSide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> positionStrategy [
 	^ positionStrategy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CmUICommand >> printOn: stream [
 
 	super printOn: stream.
 	stream << '(' << self name << ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> shortcutKey [
 	^ shortcutKey ifNil: [ CmNoShortcutIsDefined signalCommand: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmUICommand >> shortcutKey: aShortcutKey [
  	shortcutKey := aShortcutKey
 ]

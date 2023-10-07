@@ -2,17 +2,19 @@
 I am a toolbar to be used in the EpLogBrowserModel.
 "
 Class {
-	#name : #EpLogBrowserToolbarPresenter,
-	#superclass : #SpPresenter,
+	#name : 'EpLogBrowserToolbarPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'logBrowserPresenter',
 		'filtersButton',
 		'statusLabel'
 	],
-	#category : #'EpiceaBrowsers-UI-Log'
+	#category : 'EpiceaBrowsers-UI-Log',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Log'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 EpLogBrowserToolbarPresenter class >> defaultLayout [
 	^ SpBoxLayout newLeftToRight
 		add: #statusLabel;
@@ -20,12 +22,12 @@ EpLogBrowserToolbarPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserToolbarPresenter >> activeFiltersString [
 	^ 'Filters (' , logBrowserPresenter filters size asString , ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> beApplyMode [
 	filtersButton
 		icon: (self iconNamed: #smallRedo);
@@ -33,7 +35,7 @@ EpLogBrowserToolbarPresenter >> beApplyMode [
 		action: [ logBrowserPresenter applyAllChangesAndCloseWindow ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> beHistoryMode [
 	filtersButton
 		icon: (self iconNamed: #smallFind);
@@ -42,7 +44,7 @@ EpLogBrowserToolbarPresenter >> beHistoryMode [
 				openWithSpecAt: self currentWorld activeHand position ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> beRevertMode [
 	filtersButton
 		icon: (self iconNamed: #smallUndo);
@@ -50,24 +52,24 @@ EpLogBrowserToolbarPresenter >> beRevertMode [
 		action: [ logBrowserPresenter revertAllChangesAndCloseWindow ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogBrowserToolbarPresenter >> initializePresenters [
 	filtersButton := self newButton.
 	statusLabel := self newLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> logBrowserPresenter: anObject [
 	logBrowserPresenter := anObject
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserToolbarPresenter >> refresh [
 	filtersButton label: self activeFiltersString.
 	statusLabel label: self statusString
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserToolbarPresenter >> statusString [
 	^ String
 		streamContents: [ :stream |

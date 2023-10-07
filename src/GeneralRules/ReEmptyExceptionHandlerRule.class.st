@@ -8,19 +8,21 @@ Empty exception handler blocks hide potential bugs. The situation should be hand
 having an empty block is a bad idea because the program silently fails.
 "
 Class {
-	#name : #ReEmptyExceptionHandlerRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReEmptyExceptionHandlerRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEmptyExceptionHandlerRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'EmptyExceptionHandlerRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReEmptyExceptionHandlerRule >> afterCheck: aNode mappings: mappingDict [
 	| exception class |
 	exception := mappingDict at: '`exception'.
@@ -33,12 +35,12 @@ ReEmptyExceptionHandlerRule >> afterCheck: aNode mappings: mappingDict [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEmptyExceptionHandlerRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReEmptyExceptionHandlerRule >> initialize [
 	super initialize.
 	self matches:
@@ -47,7 +49,7 @@ ReEmptyExceptionHandlerRule >> initialize [
 			do: [ :`@err | | `@temps | ]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEmptyExceptionHandlerRule >> name [
 	^ 'Empty exception handler'
 ]

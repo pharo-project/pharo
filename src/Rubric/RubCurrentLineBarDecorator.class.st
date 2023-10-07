@@ -1,15 +1,17 @@
 Class {
-	#name : #RubCurrentLineBarDecorator,
-	#superclass : #RubParagraphDecorator,
-	#category : #'Rubric-Editing-Core'
+	#name : 'RubCurrentLineBarDecorator',
+	#superclass : 'RubParagraphDecorator',
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubCurrentLineBarDecorator class >> key [
 	^ #selectionBar
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubCurrentLineBarDecorator >> drawOn: aCanvas [
 
 	| line bnd |
@@ -23,7 +25,7 @@ RubCurrentLineBarDecorator >> drawOn: aCanvas [
 	aCanvas fillRectangle: bnd color: self selectionBarColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubCurrentLineBarDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	| line bnd |
 	super drawOnAthensCanvas: anAthensCanvas.
@@ -35,7 +37,7 @@ RubCurrentLineBarDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas draw
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCurrentLineBarDecorator >> selectionBarColor [
 	^ self theme selectionBarColor
 ]

@@ -1,20 +1,22 @@
 Class {
-	#name : #SDL2ScanCodeConstants,
-	#superclass : #SharedPool,
+	#name : 'SDL2ScanCodeConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'SDL_SCANCODE_COMMA',
 		'SDL_SCANCODE_PERIOD'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2ScanCodeConstants class >> initialize [
 
 	self initializeScanCodes
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 SDL2ScanCodeConstants class >> initializeScanCodes [
 
 	SDL_SCANCODE_COMMA := 54.

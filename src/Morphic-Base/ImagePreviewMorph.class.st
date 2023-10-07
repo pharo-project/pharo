@@ -2,17 +2,19 @@
 Displays an image scaled to a fixed size along with a label describing the original dimensions.
 "
 Class {
-	#name : #ImagePreviewMorph,
-	#superclass : #Morph,
+	#name : 'ImagePreviewMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'imageMorph',
 		'textMorph',
 		'defaultImageForm'
 	],
-	#category : #'Morphic-Base-Basic'
+	#category : 'Morphic-Base-Basic',
+	#package : 'Morphic-Base',
+	#tag : 'Basic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> cornerStyle: aSymbol [
 	"Pass on to selector and content too."
 
@@ -20,7 +22,7 @@ ImagePreviewMorph >> cornerStyle: aSymbol [
 	self imageMorph cornerStyle: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> defaultImageFormOfSize: aPoint [
 	"Answer a default preview image form."
 
@@ -29,7 +31,7 @@ ImagePreviewMorph >> defaultImageFormOfSize: aPoint [
 		ifFalse: [defaultImageForm]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> image: form size: imageSize [
 	"Set the image and update the description."
 
@@ -46,21 +48,21 @@ ImagePreviewMorph >> image: form size: imageSize [
 							format: {form width asString. form height asString})]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> imageMorph [
 	"Answer the value of imageMorph"
 
 	^ imageMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> imageMorph: anObject [
 	"Set the value of imageMorph"
 
 	imageMorph := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ImagePreviewMorph >> initialize [
 	"Initialize the receiver."
 
@@ -77,7 +79,7 @@ ImagePreviewMorph >> initialize [
 		addMorphBack: self textMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> newImageMorph [
 	"Answer a new image morph."
 
@@ -87,21 +89,21 @@ ImagePreviewMorph >> newImageMorph [
 		alpha: 1.0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> newTextMorph [
 	"Answer a new text morph."
 
 	^StringMorph contents: ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> textMorph [
 	"Answer the value of textMorph"
 
 	^ textMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImagePreviewMorph >> textMorph: anObject [
 	"Set the value of textMorph"
 

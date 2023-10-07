@@ -3,29 +3,31 @@ This rule checks for method that wrongly initialize an object twice. Contrary to
 A warning is raised when the statement self new initialize is found in a method.
 "
 Class {
-	#name : #ReSuperSendsNewRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReSuperSendsNewRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSuperSendsNewRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'SuperSendsNewRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReSuperSendsNewRule >> afterCheck: aNode mappings: mappingDict [
 	^ aNode methodNode methodClass isMeta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSuperSendsNewRule >> group [
 	^ 'Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReSuperSendsNewRule >> initialize [
 	super initialize.
 	self matchesAny: #(
@@ -35,7 +37,7 @@ ReSuperSendsNewRule >> initialize [
 			'(self new: `@expr) initialize' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSuperSendsNewRule >> name [
 	^ 'Sends super new initialize or self new initialize'
 ]

@@ -4,12 +4,14 @@ ZnEntityTooLarge is signalled when too big an entity is read from a stream.
 This is a resumable exception
 "
 Class {
-	#name : #ZnEntityTooLarge,
-	#superclass : #Error,
-	#category : #'Zinc-HTTP-Exceptions'
+	#name : 'ZnEntityTooLarge',
+	#superclass : 'Error',
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityTooLarge >> isResumable [
 	"Determine whether an exception is resumable."
 

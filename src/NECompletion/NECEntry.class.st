@@ -4,8 +4,8 @@ I represent a completion entry that is management by a ECModel and shown in the 
 Each of my subclass will represent a specific kind of entity. For example a globalvariable, self...
 "
 Class {
-	#name : #NECEntry,
-	#superclass : #Object,
+	#name : 'NECEntry',
+	#superclass : 'Object',
 	#instVars : [
 		'contents',
 		'node',
@@ -14,32 +14,34 @@ Class {
 	#classVars : [
 		'SpaceAfterCompletion'
 	],
-	#category : #'NECompletion-Model'
+	#category : 'NECompletion-Model',
+	#package : 'NECompletion',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NECEntry class >> contents: aString node: aNode [
 	^ self new contents: aString node: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntry class >> spaceAfterCompletion [
 
 	^ SpaceAfterCompletion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntry class >> spaceAfterCompletion: aBoolean [
 
 	SpaceAfterCompletion := aBoolean
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 NECEntry >> activateOn: aCompletionContext [
 
 	| entryContents |
@@ -51,43 +53,43 @@ NECEntry >> activateOn: aCompletionContext [
 	aCompletionContext replaceTokenInEditorWith: entryContents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECEntry >> browse [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntry >> contents [
 	^contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntry >> contents: aString node: aNode [
 	contents := aString.
 	node := aNode
 ]
 
-{ #category : #'detail information' }
+{ #category : 'detail information' }
 NECEntry >> createDescription [
 	self subclassResponsibility
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 NECEntry >> description [
 	^description ifNil: [ description := self createDescription ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntry >> hightlightSymbol [
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntry >> label [
 	^ 'unknown'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 NECEntry >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;

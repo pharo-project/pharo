@@ -8,22 +8,24 @@ There are a number of options for holding sets of characters:
 
 "
 Class {
-	#name : #ManifestCollectionsSupport,
-	#superclass : #PackageManifest,
-	#category : #'Collections-Support-Manifest'
+	#name : 'ManifestCollectionsSupport',
+	#superclass : 'PackageManifest',
+	#category : 'Collections-Support-Manifest',
+	#package : 'Collections-Support',
+	#tag : 'Manifest'
 }
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsSupport class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Native' #'Collections-Unordered' #Kernel #'Collections-Abstract')
 ]
 
-{ #category : #'meta-data - dependency analyser' }
+{ #category : 'meta-data - dependency analyser' }
 ManifestCollectionsSupport class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsSupport class >> packageName [
 	^ #'Collections-Support'
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMessageNodeTest,
-	#superclass : #RBParseTreeTest,
-	#category : #'AST-Core-Tests-Nodes'
+	#name : 'RBMessageNodeTest',
+	#superclass : 'RBParseTreeTest',
+	#category : 'AST-Core-Tests-Nodes',
+	#package : 'AST-Core-Tests',
+	#tag : 'Nodes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 + 2 '.
@@ -12,7 +14,7 @@ RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
 	self assert: message argumentPartStrings equals: #('2')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
 	| tree message |
 	tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
@@ -20,7 +22,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
 	self assert: message argumentPartStrings asArray equals: #('x + 2' '(y foo: 3)')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 	| tree message |
 	tree := self parseMethod: 'test self between: 2 and: 3'.
@@ -28,7 +30,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 	self assert: message argumentPartStrings asArray equals: #('2' '3')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
 
 		| tree message |
@@ -41,7 +43,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
 		self assert: message argumentPartStrings asArray equals: #('x' 'y' 'zzz')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 foo '.
@@ -49,7 +51,7 @@ RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
 	self assert: message argumentPartStrings equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testIntersectsInterval [
 		| tree message |
 		tree := self parseMethod: 'test self doit.'.
@@ -60,7 +62,7 @@ RBMessageNodeTest >> testIntersectsInterval [
 		self deny:   (message intersectsInterval: (15 to: 14))	" caret placed after '.' "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.
@@ -72,7 +74,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		self assert: message selectorAndArgumentNames equals: 'between: x and: y and: zzz'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexArgs [
 		| tree message |
 		tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
@@ -80,7 +82,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexAr
 		self assert: message selectorAndArgumentNames equals: 'between: x + 2 and: (y foo: 3)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self doit: 5'.
@@ -88,7 +90,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 		self assert: message selectorAndArgumentNames equals: 'doit: 5'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
@@ -96,7 +98,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
 		self assert: message selectorAndArgumentNames equals: 'doit'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorInterval [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
@@ -107,7 +109,7 @@ RBMessageNodeTest >> testSelectorInterval [
 		self assert: message selectorInterval equals: (11 to: 27)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 + 2 '.
@@ -115,7 +117,7 @@ RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
 	self assert: message selectorParts equals: #(#+)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorPartsForKeywordMessages [
 		| tree message |
 		tree := self parseMethod: 'test self doit: 5'.
@@ -127,7 +129,7 @@ RBMessageNodeTest >> testSelectorPartsForKeywordMessages [
 		self assert: message selectorParts equals: #(#between: #and:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorPartsForUnaryMessages [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
@@ -135,7 +137,7 @@ RBMessageNodeTest >> testSelectorPartsForUnaryMessages [
 		self assert: message selectorParts equals: #(#doit)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMessageNodeTest >> testStart [
 	| tree message delta |
 

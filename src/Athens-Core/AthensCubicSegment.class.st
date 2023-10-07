@@ -2,27 +2,29 @@
 i represent a cubic Bezier path segment
 "
 Class {
-	#name : #AthensCubicSegment,
-	#superclass : #AthensPathSegment,
+	#name : 'AthensCubicSegment',
+	#superclass : 'AthensPathSegment',
 	#instVars : [
 		'via1',
 		'via2',
 		'to'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensCubicSegment >> accept: aVisitor [
 	^ aVisitor cubicBezierSegment: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicSegment >> endPoint [
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicSegment >> from: origin
 	via: controlPoint
 	and: secondControlPoint
@@ -34,33 +36,33 @@ AthensCubicSegment >> from: origin
 	to := destination
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensCubicSegment >> isCubic [
 	^true
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensCubicSegment >> sendCommandTo: aBuilder [
 	^ aBuilder curveVia: via1 and: via2  to: to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicSegment >> to [
 
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicSegment >> via1 [
 	^ via1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicSegment >> via2 [
 	^ via2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicSegment >> via2reflected [
 	^self endPoint * 2 - via2
 ]

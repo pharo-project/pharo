@@ -7,20 +7,22 @@ I can be used for generating and parsing.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnRequest,
-	#superclass : #ZnMessage,
+	#name : 'ZnRequest',
+	#superclass : 'ZnMessage',
 	#instVars : [
 		'requestLine'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> delete: urlObject [
 	^ self method: #DELETE url: urlObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> empty [
 	^ self new
 		requestLine: ZnRequestLine empty;
@@ -28,17 +30,17 @@ ZnRequest class >> empty [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> get: urlObject [
 	^ self method: #GET url: urlObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> head: urlObject [
 	^ self method: #HEAD url: urlObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> method: method url: urlObject [
 	| url |
 	url := urlObject asZnUrl.
@@ -48,56 +50,56 @@ ZnRequest class >> method: method url: urlObject [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> options: urlObject [
 	^ self method: #OPTIONS url: urlObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> patch: urlObject [
 	^ self method: #PATCH url: urlObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> post: urlObject [
 	^ self method: #POST url: urlObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequest class >> put: urlObject [
 	^ self method: #PUT url: urlObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnRequest >> = other [
 	^ super = other and: [ self requestLine = other requestLine ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> absoluteUrl [
 	^ self host
 		ifNil: [ self url ]
 		ifNotNil: [ :hostUrl | self url inContextOf: hostUrl ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> accept [
 	^ self headers singleAt: 'Accept' ifAbsent: [ '*/*' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequest >> acceptsEncodingGzip [
 	| value |
 	value := self headers singleAt: 'Accept-Encoding' ifAbsent: [ ^ false ].
 	^ value includesSubstring: 'gzip'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> authorization [
 	^ self headers at: 'Authorization'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> basicAuthentication [
 	| authorization separator |
 	authorization := self authorization findTokens: ' '.
@@ -110,7 +112,7 @@ ZnRequest >> basicAuthentication [
 	^ { authorization first: separator - 1. authorization allButFirst: separator }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> cookies [
 	| value cookies |
 	value := self headers at: 'Cookie' ifAbsent: [ ^ #() ].
@@ -120,12 +122,12 @@ ZnRequest >> cookies [
 	^ cookies collect: [ :each | ZnCookie fromString: each ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnRequest >> hash [
 	^ super hash bitXor: self requestLine hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> host [
 	| host scheme |
 	host := self headers at: 'Host' ifAbsent: [ ^ nil ].
@@ -133,17 +135,17 @@ ZnRequest >> host [
 	^ ZnUrl fromString: host defaultScheme: scheme
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequest >> isHttp10 [
 	^ self requestLine isHttp10
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequest >> isHttp11 [
 	^ self requestLine isHttp11
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> mergedFields [
 	"Return a new ZnMultiValueDictionary containing all query fields, if any,
 	merged with all ZnApplicationFormUrlEncodedEntity fields, if any,
@@ -158,23 +160,23 @@ ZnRequest >> mergedFields [
 	^ fields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> method [
 	^ self requestLine method
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnRequest >> method: method [
 	self requestLine method: method
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ZnRequest >> postCopy [
 	super postCopy.
 	requestLine := requestLine copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnRequest >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
@@ -182,28 +184,28 @@ ZnRequest >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnRequest >> readHeaderFrom: stream [
 	self requestLine: (ZnRequestLine readFrom: stream).
 	super readHeaderFrom: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> relativeUrl [
 	^ self url asRelativeUrl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> requestLine [
 	^ requestLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> requestLine: object [
 	requestLine := object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> session [
 	"Return the current server session.
 	If necessary a new session is created.
@@ -217,22 +219,22 @@ ZnRequest >> session [
 			session ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> setAccept: object [
 	self headers at: 'Accept' put: object asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> setAcceptEncodingGzip [
 	self headers at: 'Accept-Encoding' put: 'gzip'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> setAuthorization: authorization [
 	self headers at: 'Authorization'  put: authorization
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> setBasicAuthenticationUsername: username password: password [
 	(username isNil | password isNil)
 		ifTrue: [
@@ -241,7 +243,7 @@ ZnRequest >> setBasicAuthenticationUsername: username password: password [
 			self setAuthorization: 'Basic ', (ZnUtils encodeBase64: (username, ':', password)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> setBearerAuthentication: token [
 
 	token
@@ -249,33 +251,33 @@ ZnRequest >> setBearerAuthentication: token [
 		ifNotNil: [ self setAuthorization: 'Bearer ' , token ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> setCookie: cookie [
 	self headers at: 'Cookie' put: cookie
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> setIfModifiedSince: reference [
 	self headers at: 'If-Modified-Since' put: (ZnUtils httpDate: reference)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> uri [
 	^ self requestLine uri
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequest >> url [
 	^ self uri
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnRequest >> url: url [
 	self requestLine uri: url.
 	self headers request: self url
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequest >> wantsConnectionClose [
 	"Return if the HTTP protocol should close the connection after processing the receiver.
 	Overwritten to return true in case of the presense of an explicit connection close request header
@@ -285,7 +287,7 @@ ZnRequest >> wantsConnectionClose [
 		or: [ self isHttp10 and: [ self isConnectionKeepAlive not ] ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnRequest >> writeOn: stream [
 	| bivalentWriteStream |
 	bivalentWriteStream := ZnBivalentWriteStream on: stream.

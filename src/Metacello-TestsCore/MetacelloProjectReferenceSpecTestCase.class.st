@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloProjectReferenceSpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloProjectReferenceSpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloProjectReferenceSpecTestCase >> testProjectReferenceMergeSpec [
 	| projectReferenceA projectReferenceB projectReference project |
 	projectReferenceA := self projectReferenceSpec
@@ -33,7 +35,7 @@ MetacelloProjectReferenceSpecTestCase >> testProjectReferenceMergeSpec [
 	self assert: project versionString equals: '1.0'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloProjectReferenceSpecTestCase >> testProjectReferenceSpec [
 	| projectReference project |
 	projectReference := self projectReferenceSpec

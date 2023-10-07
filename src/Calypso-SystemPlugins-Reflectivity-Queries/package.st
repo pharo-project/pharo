@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Reflectivity-Queries' }
+Package { #name : 'Calypso-SystemPlugins-Reflectivity-Queries' }

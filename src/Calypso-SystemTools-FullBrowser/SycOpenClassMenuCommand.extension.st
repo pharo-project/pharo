@@ -1,6 +1,6 @@
-Extension { #name : #SycOpenClassMenuCommand }
+Extension { #name : 'SycOpenClassMenuCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycOpenClassMenuCommand class >> fullBrowserTabActivation [
 	<classAnnotation>
 

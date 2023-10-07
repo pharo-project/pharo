@@ -1,5 +1,5 @@
-Extension { #name : #ClyTypedQuery }
+Extension { #name : 'ClyTypedQuery' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyTypedQuery >> decorateResultMethodEditor: aMethodEditor [
 ]

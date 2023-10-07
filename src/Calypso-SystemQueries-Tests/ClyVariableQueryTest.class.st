@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyVariableQueryTest,
-	#superclass : #ClyTypedQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyVariableQueryTest',
+	#superclass : 'ClyTypedQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableQueryTest class >> isAbstract [
 	^self = ClyVariableQueryTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableQueryTest >> testConvertingToNewMetaLevel [
 
 	| newQuery |

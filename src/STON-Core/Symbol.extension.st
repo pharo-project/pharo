@@ -1,6 +1,6 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Symbol >> stonOn: stonWriter [
 	stonWriter writeSymbol: self
 ]

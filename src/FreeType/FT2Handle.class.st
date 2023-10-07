@@ -2,15 +2,17 @@
 handle holds a (typically 32-bit) pointer to an externally managed object.
 "
 Class {
-	#name : #FT2Handle,
-	#superclass : #FFIExternalObject,
+	#name : 'FT2Handle',
+	#superclass : 'FFIExternalObject',
 	#pools : [
 		'FT2Constants'
 	],
-	#category : #'FreeType-Base'
+	#category : 'FreeType-Base',
+	#package : 'FreeType',
+	#tag : 'Base'
 }
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 FT2Handle class >> compileAllFieldsInOrder [
 	"Force the correct order of generation of FFI Bindings"
 	"This used to be done in #startUp:, we keep it in case FTBindings are changed and have to be regenerated"
@@ -24,43 +26,43 @@ FT2Handle class >> compileAllFieldsInOrder [
  	FTFaceRec compileFields
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FT2Handle >> beNull [
 
 	^ self handle beNull
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 FT2Handle >> errorCode [
 
 	^ FT2Library current errorCode
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 FT2Handle >> errorString [
 
 	^ FT2Library current errorString
 ]
 
-{ #category : #'library path' }
+{ #category : 'library path' }
 FT2Handle >> ffiLibraryName [
 
 	^ FT2FFILibrary
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FT2Handle >> initialize [
 
 	self shouldNotImplement
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FT2Handle >> isValid [
 
 	^ self isNull not
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FT2Handle >> printOn: aStream [
 
 	| handleHex |

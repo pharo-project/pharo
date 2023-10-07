@@ -2,26 +2,27 @@
 A test slot used in ShClassInstallerTest
 "
 Class {
-	#name : #ShTestSlot,
-	#superclass : #IndexedSlot,
-	#category : #'Shift-ClassInstaller-Tests'
+	#name : 'ShTestSlot',
+	#superclass : 'IndexedSlot',
+	#category : 'Shift-ClassInstaller-Tests',
+	#package : 'Shift-ClassInstaller-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShTestSlot >> initialize: anObject [
 
 	super write: 'initialized' to: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShTestSlot >> wantsInitialization [
 
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShTestSlot >> write: aValue to: anObject [
-
+	<reflection: 'Object Modification - State modification'>
 	^(self read: anObject)
 		ifNil: [ super write: aValue to: anObject ]
 ]

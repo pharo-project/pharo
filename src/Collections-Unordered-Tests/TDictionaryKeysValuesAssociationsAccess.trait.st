@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryKeysValuesAssociationsAccess,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryKeysValuesAssociationsAccess',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryKeysValuesAssociationsAccess >> nonEmpty [
 
 self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryKeysValuesAssociationsAccess >> test0FixtureDictionaryKeysValuesAssociationsAccess [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty
 ]
 
-{ #category : #'tests - dictionary keys values associations access' }
+{ #category : 'tests - dictionary keys values associations access' }
 TDictionaryKeysValuesAssociationsAccess >> testAssociations [
 
 	| collection result  |
@@ -30,7 +32,7 @@ TDictionaryKeysValuesAssociationsAccess >> testAssociations [
 	"keys do: [ :key | self assert: ( result at: key ) = ( collection at: key )] ."
 ]
 
-{ #category : #'tests - dictionary keys values associations access' }
+{ #category : 'tests - dictionary keys values associations access' }
 TDictionaryKeysValuesAssociationsAccess >> testKeys [
 	| collection result |
 	collection := self nonEmpty.
@@ -40,7 +42,7 @@ TDictionaryKeysValuesAssociationsAccess >> testKeys [
 	self should: [ result detect: [ :each | (result occurrencesOf: each) > 1 ] ] raise: Error
 ]
 
-{ #category : #'tests - dictionary keys values associations access' }
+{ #category : 'tests - dictionary keys values associations access' }
 TDictionaryKeysValuesAssociationsAccess >> testKeysSortedSafely [
 	| collection result |
 	collection := self nonEmpty.
@@ -51,7 +53,7 @@ TDictionaryKeysValuesAssociationsAccess >> testKeysSortedSafely [
 	self assert: result asArray isSorted
 ]
 
-{ #category : #'tests - dictionary keys values associations access' }
+{ #category : 'tests - dictionary keys values associations access' }
 TDictionaryKeysValuesAssociationsAccess >> testValues [
 
 	| collection result |

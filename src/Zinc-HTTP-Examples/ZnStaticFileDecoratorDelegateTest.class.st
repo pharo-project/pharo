@@ -2,12 +2,13 @@
 Unit test for ZnStaticFileDecoratorDelegate
 "
 Class {
-	#name : #ZnStaticFileDecoratorDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnStaticFileDecoratorDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnStaticFileDecoratorDelegateTest >> testServeStaticFile [
 	|  delegate handled response file |
 	handled := false.

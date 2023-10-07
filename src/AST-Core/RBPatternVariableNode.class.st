@@ -17,8 +17,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBPatternVariableNode,
-	#superclass : #RBVariableNode,
+	#name : 'RBPatternVariableNode',
+	#superclass : 'RBVariableNode',
 	#instVars : [
 		'recurseInto',
 		'isList',
@@ -26,31 +26,33 @@ Class {
 		'isStatement',
 		'isAnything'
 	],
-	#category : #'AST-Core-Pattern'
+	#category : 'AST-Core-Pattern',
+	#package : 'AST-Core',
+	#tag : 'Pattern'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBPatternVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 	^anIdentifierName isPatternVariable
 		ifTrue: [super identifierNamed: anIdentifierName at: aPosition]
 		ifFalse: [RBVariableNode identifierNamed: anIdentifierName at: aPosition]
 ]
 
-{ #category : #verification }
+{ #category : 'verification' }
 RBPatternVariableNode >> compare: anObject with: aNode [
 	^ anObject isCollection
 		ifTrue: [ anObject anySatisfy: [ :e | e = aNode ] ]
 		ifFalse: [ anObject = aNode ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternVariableNode >> copyInContext: aDictionary [
 	^ (self isList and: [ self isStatement ])
 		ifTrue: [ self copyList: (aDictionary at: self) inContext: aDictionary ]
 		ifFalse: [ (aDictionary at: self) copy ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPatternVariableNode >> initializePatternVariables [
 	| myname |
 	myname := self name.
@@ -74,32 +76,32 @@ RBPatternVariableNode >> initializePatternVariables [
 										ifFalse: [^self]]]]]
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternVariableNode >> isAnything [
 	^isAnything
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternVariableNode >> isList [
 	^isList
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternVariableNode >> isLiteralNode [
 	^isLiteral
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternVariableNode >> isPatternNode [
 	^true
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternVariableNode >> isStatement [
 	^isStatement
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternVariableNode >> match: aNode inContext: aDictionary [
 	self isAnything
 		ifTrue: [^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode].
@@ -110,32 +112,32 @@ RBPatternVariableNode >> match: aNode inContext: aDictionary [
 	^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternVariableNode >> matchLiteral: aNode inContext: aDictionary [
 
 	^aNode isLiteralNode
 		and: [ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternVariableNode >> matchStatement: aNode inContext: aDictionary [
 	(aNode parent notNil and: [aNode parent isSequence]) ifFalse: [^false].
 	^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBPatternVariableNode >> matchingClass [
 	^RBVariableNode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPatternVariableNode >> named: aName start: aPosition [
 
 	super named: aName start: aPosition.
 	self initializePatternVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternVariableNode >> parent: aBRProgramNode [
 	"Fix the case where '``@node' should match a single node, not a sequence node."
 
@@ -149,7 +151,7 @@ RBPatternVariableNode >> parent: aBRProgramNode [
 				ifFalse: [isList := false]]
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternVariableNode >> recurseInto [
 	^recurseInto
 ]

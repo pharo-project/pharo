@@ -2,29 +2,31 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TIndexAccess,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TIndexAccess',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIndexAccess >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIndexAccess >> elementInForIndexAccessing [
 " return an element included in 'collectionMoreThan1NoDuplicates' "
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIndexAccess >> elementNotInForIndexAccessing [
 " return an element not included in 'collectionMoreThan1NoDuplicates' "
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIndexAccess >> test0FixtureIndexAccessTest [
 	| res |
 	self collectionMoreThan1NoDuplicates.
@@ -40,7 +42,7 @@ TIndexAccess >> test0FixtureIndexAccessTest [
 	self deny: (self collectionMoreThan1NoDuplicates includes: self elementNotInForIndexAccessing)
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIdentityIndexOf [
 
 	| collection element |
@@ -49,7 +51,7 @@ TIndexAccess >> testIdentityIndexOf [
 	self assert: (collection identityIndexOf: element) equals: (collection indexOf: element)
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIdentityIndexOfIAbsent [
 	| collection element |
 	collection := self collectionMoreThan1NoDuplicates.
@@ -61,7 +63,7 @@ TIndexAccess >> testIdentityIndexOfIAbsent [
 		  equals: 55
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIndexOf [
 
 	| tmp index collection |
@@ -74,7 +76,7 @@ TIndexAccess >> testIndexOf [
 	self assert: (collection indexOf: self elementInForIndexAccessing) equals: index
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIndexOfIfAbsent [
 
 	| collection |
@@ -87,7 +89,7 @@ TIndexAccess >> testIndexOfIfAbsent [
 			ifAbsent: [ 33 ]) equals: 33
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIndexOfStartingAt [
 
 	| element collection |
@@ -107,7 +109,7 @@ TIndexAccess >> testIndexOfStartingAt [
 			ifAbsent: [ 99 ]) equals: 99
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIndexOfStartingAtIfAbsent [
 
 	| element collection |
@@ -127,7 +129,7 @@ TIndexAccess >> testIndexOfStartingAtIfAbsent [
 			ifAbsent: [ 99 ]) equals: 99
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIndexOfSubCollectionStartingAt [
 
 	| subcollection index collection |
@@ -143,7 +145,7 @@ TIndexAccess >> testIndexOfSubCollectionStartingAt [
 	self assert: index equals: 0
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testIndexOfSubCollectionStartingAtIfAbsent [
 	| absent subcollection collection |
 	collection := self collectionMoreThan1NoDuplicates.
@@ -156,7 +158,7 @@ TIndexAccess >> testIndexOfSubCollectionStartingAtIfAbsent [
 	self assert: absent
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testLastIndexOf [
 
 	| element collection |
@@ -166,7 +168,7 @@ TIndexAccess >> testLastIndexOf [
 	self assert: (collection lastIndexOf: self elementNotInForIndexAccessing) = 0
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testLastIndexOfIfAbsent [
 
 	| element collection |
@@ -180,7 +182,7 @@ TIndexAccess >> testLastIndexOfIfAbsent [
 			ifAbsent: [ 99 ]) equals: 99
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 TIndexAccess >> testLastIndexOfStartingAt [
 
 	| element collection |

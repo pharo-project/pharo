@@ -2,35 +2,37 @@
 This smell arises when a statement such as x := x is found. This statement has not effect, it can be removed.
 "
 Class {
-	#name : #ReAssignmentWithoutEffectRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReAssignmentWithoutEffectRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentWithoutEffectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AssignmentWithoutEffectRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentWithoutEffectRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAssignmentWithoutEffectRule >> initialize [
 	super initialize.
 	self  replace: 	'`var := `var' with: ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentWithoutEffectRule >> name [
 	^ 'Assignment has no effect'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAssignmentWithoutEffectRule >> severity [
 	^ #information
 ]

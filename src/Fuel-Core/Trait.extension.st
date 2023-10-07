@@ -1,12 +1,12 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Trait >> basicEnvironment [
 
 	^self environment
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Trait >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitTrait: self

@@ -1,27 +1,29 @@
 Class {
-	#name : #ReImplementedNotSentRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReImplementedNotSentRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : 'test-help' }
 ReImplementedNotSentRuleTest >> calledMethod [
 
 	^ true
 ]
 
-{ #category : #'test-help' }
+{ #category : 'test-help' }
 ReImplementedNotSentRuleTest >> methodWithReallySpecificNameInTheSystem [
 
 	^ self calledMethod
 ]
 
-{ #category : #'test-help' }
+{ #category : 'test-help' }
 ReImplementedNotSentRuleTest >> methodWithReallySpecificNameInTheSystemCallingItself [
 	false ifTrue: [ self methodWithReallySpecificNameInTheSystemCallingItself ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReImplementedNotSentRuleTest >> testRule [
 
 	| critiques |
@@ -30,7 +32,7 @@ ReImplementedNotSentRuleTest >> testRule [
 	self assert: critiques size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReImplementedNotSentRuleTest >> testRuleDoesNotMatchCalledMethod [
 
 	| critiques |
@@ -39,7 +41,7 @@ ReImplementedNotSentRuleTest >> testRuleDoesNotMatchCalledMethod [
 	self assertEmpty: critiques
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReImplementedNotSentRuleTest >> testRuleOnSelfCall [
 
 	| critiques |

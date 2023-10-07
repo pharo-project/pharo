@@ -2,18 +2,20 @@
 Handling remote changes
 "
 Class {
-	#name : #GoferRemoteChanges,
-	#superclass : #GoferChanges,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferRemoteChanges',
+	#superclass : 'GoferChanges',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #queries }
+{ #category : 'queries' }
 GoferRemoteChanges >> sourceSnapshotOf: aReference [
 
 	^ aReference workingCopy package snapshot
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferRemoteChanges >> targetSnapshotOf: aReference [
 
 	^ (aReference resolveWith: self gofer) version snapshot

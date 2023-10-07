@@ -2,21 +2,22 @@
 A CNSelectorExtractorTest is a test class for testing the behavior of CNSelectorExtractor
 "
 Class {
-	#name : #CNSelectorExtractorTest,
-	#superclass : #TestCase,
+	#name : 'CNSelectorExtractorTest',
+	#superclass : 'TestCase',
 	#classVars : [
 		'selectorExtractor'
 	],
-	#category : #'Tools-CodeNavigation-Tests'
+	#category : 'Tools-CodeNavigation-Tests',
+	#package : 'Tools-CodeNavigation-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CNSelectorExtractorTest >> initialize [
 
 	selectorExtractor := CNSelectorExtractor new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesReturnsNil [
 
    |source position|
@@ -43,7 +44,7 @@ CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionBorderCasesRet
 	self assert: (selectorExtractor extractSelectorFromSource: source atPosition: position) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CNSelectorExtractorTest >> testExtractSelectorFromSourceAtPositionGeneralCasesExtractsSelector [
 
 	"Note that the tested method (#extractSelectorFromSource:atPosition:) uses internally #extractSelectorFromAST:atPosition:"

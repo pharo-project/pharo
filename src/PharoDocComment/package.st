@@ -1,1 +1,1 @@
-Package { #name : #PharoDocComment }
+Package { #name : 'PharoDocComment' }

@@ -22,8 +22,8 @@ Implementation notes
 
 "
 Class {
-	#name : #RubFloatingEditorBuilder,
-	#superclass : #Object,
+	#name : 'RubFloatingEditorBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'editor',
 		'announcer',
@@ -34,10 +34,12 @@ Class {
 		'customizeValuable',
 		'escapeBlock'
 	],
-	#category : #'Rubric-Editing-Core-Support'
+	#category : 'Rubric-Editing-Core-Support',
+	#package : 'Rubric',
+	#tag : 'Editing-Core-Support'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubFloatingEditorBuilder class >> exampleCommandLauncher [
 	<sampleInstance>
 	<example>
@@ -52,7 +54,7 @@ RubFloatingEditorBuilder class >> exampleCommandLauncher [
 		openEditorWithContents: 'self inspect'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubFloatingEditorBuilder class >> exampleEditableStringMorph [
 	<example>
 	| pane stringMorph edBuilder |
@@ -92,28 +94,28 @@ RubFloatingEditorBuilder class >> exampleEditableStringMorph [
 		openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> acceptOnCR: aBoolean [
 	acceptOnCR := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> announcer [
 	^ announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> announcerDo: aBlock [
 	announcer ifNil: [ ^ self ].
 	aBlock cull: announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> autoAccept: aBoolean [
 	autoAccept := aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubFloatingEditorBuilder >> buildEditor [
 	editor := RubScrolledTextMorph new forbidMenu.
 	editor
@@ -137,40 +139,40 @@ RubFloatingEditorBuilder >> buildEditor [
 	^ self customizedEditor
 ]
 
-{ #category : #'announcement handling' }
+{ #category : 'announcement handling' }
 RubFloatingEditorBuilder >> closeEditor [
 	editor ifNil: [ ^ self ].
 	editor delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> customizeEditorWith: aBlock [
 	customizeValuable := aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubFloatingEditorBuilder >> customizedEditor [
 	customizeValuable cull: editor.
 	^ editor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubFloatingEditorBuilder >> defaultAnnouncer [
 	^ Announcer new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> editorDo: aBlock [
 	editor ifNil: [ ^ self ].
 	aBlock cull: editor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> font: aFont [
 	font := aFont
 ]
 
-{ #category : #'events - processing' }
+{ #category : 'events - processing' }
 RubFloatingEditorBuilder >> handleListenEvent: anEvent [
 	anEvent isMouse
 		ifFalse: [ ^ self ].
@@ -181,17 +183,17 @@ RubFloatingEditorBuilder >> handleListenEvent: anEvent [
 		ifFalse: [ self closeEditor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> initialContents [
 	^ initialContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> initialContents: anObject [
 	initialContents := anObject asText
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubFloatingEditorBuilder >> initialize [
 	super initialize.
 	announcer := self defaultAnnouncer.
@@ -203,7 +205,7 @@ RubFloatingEditorBuilder >> initialize [
 	customizeValuable := [  ]
 ]
 
-{ #category : #'public editing' }
+{ #category : 'public editing' }
 RubFloatingEditorBuilder >> openEditor [
 	self buildEditor.
 	editor ifNil: [ ^ self ].
@@ -213,14 +215,14 @@ RubFloatingEditorBuilder >> openEditor [
 	editor textArea takeKeyboardFocus
 ]
 
-{ #category : #'public editing' }
+{ #category : 'public editing' }
 RubFloatingEditorBuilder >> openEditorWithContents: aText [
 	self
 		initialContents: aText;
 		openEditor
 ]
 
-{ #category : #'public editing' }
+{ #category : 'public editing' }
 RubFloatingEditorBuilder >> openEditorWithContents: aText thenDo: aBlock [
 	self
 		initialContents: aText;
@@ -228,30 +230,30 @@ RubFloatingEditorBuilder >> openEditorWithContents: aText thenDo: aBlock [
 	aBlock cull: editor
 ]
 
-{ #category : #'announcement handling' }
+{ #category : 'announcement handling' }
 RubFloatingEditorBuilder >> whenEditorDeleted: anAnnouncement [
 	anAnnouncement morph announcer unsubscribe: self.
 	editor := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> whenEditorEscapedDo: aBlock [
 	escapeBlock := aBlock
 ]
 
-{ #category : #'announcement handling' }
+{ #category : 'announcement handling' }
 RubFloatingEditorBuilder >> whenEditorLostFocus: anAnnouncement [
 	self closeEditor
 ]
 
-{ #category : #'announcement handling' }
+{ #category : 'announcement handling' }
 RubFloatingEditorBuilder >> whenKeystroke: anAnnouncement [
 	anAnnouncement event keyCharacter = Character escape
 		ifTrue: [ escapeBlock value.
 			self closeEditor ]
 ]
 
-{ #category : #'announcement handling' }
+{ #category : 'announcement handling' }
 RubFloatingEditorBuilder >> whenReturnEntered: anAnnouncement [
 	acceptOnCR
 		ifTrue: [ anAnnouncement accepted: true ].
@@ -264,7 +266,7 @@ RubFloatingEditorBuilder >> whenReturnEntered: anAnnouncement [
 			self closeEditor ]
 ]
 
-{ #category : #'announcement handling' }
+{ #category : 'announcement handling' }
 RubFloatingEditorBuilder >> whenTextAccepted: anAnnouncement [
 	self
 		editorDo:
@@ -277,7 +279,7 @@ RubFloatingEditorBuilder >> whenTextAccepted: anAnnouncement [
 			self announcer announce: ann ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubFloatingEditorBuilder >> withEditedContentsDo: aBlock [
 	self
 		announcerDo:

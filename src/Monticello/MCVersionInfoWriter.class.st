@@ -4,20 +4,22 @@ If the version info has been serialized before I output a compacted version cons
 
 "
 Class {
-	#name : #MCVersionInfoWriter,
-	#superclass : #MCWriter,
+	#name : 'MCVersionInfoWriter',
+	#superclass : 'MCWriter',
 	#instVars : [
 		'written'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionInfoWriter >> isWritten: aVersionInfo [
 	^ self written includes: aVersionInfo
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 MCVersionInfoWriter >> writeVersionInfo: aVersionInfo [
 	(self isWritten: aVersionInfo)
 		ifTrue: [^ stream nextPutAll: '(id '; print: aVersionInfo id asString; nextPut: $) ].
@@ -35,12 +37,12 @@ MCVersionInfoWriter >> writeVersionInfo: aVersionInfo [
 	self wrote: aVersionInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfoWriter >> written [
 	^ written ifNil: [written := Set new]
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 MCVersionInfoWriter >> wrote: aVersionInfo [
 	self written add: aVersionInfo
 ]

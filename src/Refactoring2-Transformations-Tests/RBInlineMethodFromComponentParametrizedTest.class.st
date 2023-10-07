@@ -1,27 +1,38 @@
 Class {
-	#name : #RBInlineMethodFromComponentParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBInlineMethodFromComponentParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInlineMethodFromComponentRefactoring };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInlineMethodFromComponentParametrizedTest >> constructor [
 	^ #inline:inMethod:forClass:
 ]
 
-{ #category : #tests }
+{ #category : 'failure tests' }
+RBInlineMethodFromComponentParametrizedTest >> testFailureInlineMethodFromComponentFailure [
+
+	self shouldFail: (self createRefactoringWithArguments: {
+				 (50 to: 64).
+				 #inlineFailed.
+				 RBClassDataForRefactoringTest })
+]
+
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMessage [
 	| refactoring |
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-				{(35 to: 79) . #inlineComponent . RBRefactoryTestDataApp}.
+				{(35 to: 79) . #inlineComponent . RBClassDataForRefactoringTest}.
 		(refactoring model classNamed: #Behavior)
 			compile: 'hasImmediateInstances ^self format = 0'
 			classified: #(#accessing ).
@@ -29,7 +40,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp)
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
 	| a aBehavior |
@@ -40,12 +51,12 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentIntoCascadedMe
 	^aBehavior yourself')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 	| refactoring |
 	self proceedThroughWarning: [ | class |
 			refactoring := self createRefactoringWithArguments:
-				{ (47 to: 58) . #inlineMax . RBRefactoryTestDataApp }.
+				{ (47 to: 58) . #inlineMax . RBClassDataForRefactoringTest }.
 			self setupInlineExpressionFor: refactoring toReturn: true.
 			class := refactoring model classNamed: #Magnitude.
 			class
@@ -62,7 +73,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 			setupImplementorToInlineFor: refactoring
 			toReturn: class.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #inlineMax) equals: (self parseMethod: 'inlineMax
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMax) equals: (self parseMethod: 'inlineMax
 								| x y q |
 								x := 5.
 								y := 10.
@@ -72,13 +83,13 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 								^q')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	| refactoring |
 
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			 { (35 to: 91) . #inlineComponent . RBRefactoryTestDataApp }.
+			 { (35 to: 91) . #inlineComponent . RBClassDataForRefactoringTest }.
 		self
 			setupInlineExpressionFor: refactoring
 			toReturn: false.
@@ -87,7 +98,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 			setupImplementorToInlineFor: refactoring
 			toReturn: (refactoring model classNamed: #Object).
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp)
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 		parseTreeForSelector: #inlineComponent)
 		equals: (self parseMethod: 'inlineComponent
 	| a anObject |
@@ -98,13 +109,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 	^anObject')
 ]
 
-{ #category : #'failure tests' }
-RBInlineMethodFromComponentParametrizedTest >> testInlineMethodFromComponentFailure [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (50 to: 64) . #inlineFailed . RBRefactoryTestDataApp })
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
@@ -123,7 +128,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames1 [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.
@@ -145,7 +150,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 						parseMethod: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle origin extent: temp extent')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames2 [
 	| class refactoring |
 	model := RBClassModelFactory rbNamespace new.

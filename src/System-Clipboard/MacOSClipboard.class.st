@@ -2,12 +2,13 @@
 The clipboard for MacOS
 "
 Class {
-	#name : #MacOSClipboard,
-	#superclass : #ExternalClipboard,
-	#category : #'System-Clipboard'
+	#name : 'MacOSClipboard',
+	#superclass : 'ExternalClipboard',
+	#category : 'System-Clipboard',
+	#package : 'System-Clipboard'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MacOSClipboard >> addUF8StringClipboardData: aString [
 	| ba  |
 

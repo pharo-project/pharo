@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Jobs' }
+{ #category : '*Jobs' }
 Collection >> do: aBlock displayingProgress: aStringOrBlock [
 	"Enumerate aBlock displaying progress information. 
  	 If the argument is a string, use a static label for the process. 
@@ -16,7 +16,7 @@ Collection >> do: aBlock displayingProgress: aStringOrBlock [
 	^self do: aBlock displayingProgress: aStringOrBlock every: 20
 ]
 
-{ #category : #'*Jobs' }
+{ #category : '*Jobs' }
 Collection >> do: aBlock displayingProgress: aStringOrBlock every: msecs [
 	"Enumerate aBlock displaying progress information.
  	 If the argument is a string, use a static label for the process.

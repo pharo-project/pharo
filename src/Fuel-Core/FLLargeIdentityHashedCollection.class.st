@@ -2,8 +2,8 @@
 I share behavior for special HashedCollections that are optimized for including a large number of elements.
 "
 Class {
-	#name : #FLLargeIdentityHashedCollection,
-	#superclass : #Collection,
+	#name : 'FLLargeIdentityHashedCollection',
+	#superclass : 'Collection',
 	#instVars : [
 		'tally',
 		'tallies'
@@ -11,10 +11,12 @@ Class {
 	#classVars : [
 		'PermutationMap'
 	],
-	#category : #'Fuel-Core-Collections'
+	#category : 'Fuel-Core-Collections',
+	#package : 'Fuel-Core',
+	#tag : 'Collections'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FLLargeIdentityHashedCollection class >> initialize [
 
 	| rng |
@@ -22,27 +24,27 @@ FLLargeIdentityHashedCollection class >> initialize [
 	PermutationMap := (0 to: 4095) asArray shuffleBy: rng
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLLargeIdentityHashedCollection class >> permuteHash: anInteger [
 	"Return an integer between 1 and 4096 when the argument is between 1 and 4096."
 
 	^ PermutationMap at: anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLLargeIdentityHashedCollection >> initialize [
 
 	tally := 0.
 	tallies := Array new: 4096 withAll: 0
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FLLargeIdentityHashedCollection >> postCopy [
 
 	tallies := tallies copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityHashedCollection >> size [
 
 	^tally

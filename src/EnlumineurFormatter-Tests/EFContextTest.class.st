@@ -1,10 +1,11 @@
 Class {
-	#name : #EFContextTest,
-	#superclass : #TestCase,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFContextTest',
+	#superclass : 'TestCase',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFContextTest >> testNumberOfSpaces [
 
 	| context |
@@ -12,7 +13,7 @@ EFContextTest >> testNumberOfSpaces [
 	self assert: context indentExtraSpaces equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFContextTest >> testOneLineMessage [
 
 	| context |
@@ -21,7 +22,7 @@ EFContextTest >> testOneLineMessage [
 	self assert: (context oneLineMessages includes: #to:do:).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFContextTest >> testOneLineMessageClassSide [
 
 	self assert: (EFFormatter oneLineMessages includes: #to:).  

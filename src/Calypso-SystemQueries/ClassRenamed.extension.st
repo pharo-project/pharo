@@ -1,6 +1,6 @@
-Extension { #name : #ClassRenamed }
+Extension { #name : 'ClassRenamed' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClassRenamed >> canAffectResultOfMethodQuery: aMethodQuery [
 	^true
 ]

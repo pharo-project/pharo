@@ -14,15 +14,23 @@ Preconditions:
 - the method exists.
 "
 Class {
-	#name : #RBMethodProtocolTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBMethodProtocolTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model'
+	#category : 'Refactoring2-Transformations-Model',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model'
 }
 
-{ #category : #api }
+{ #category : 'testing' }
+RBMethodProtocolTransformation class >> isTransformation [
+
+	^ true
+]
+
+{ #category : 'api' }
 RBMethodProtocolTransformation class >> model: aRBModel protocol: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -33,7 +41,7 @@ RBMethodProtocolTransformation class >> model: aRBModel protocol: aString inMeth
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector inClass: aClassName [
 
 	^ self new
@@ -43,35 +51,37 @@ RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector in
 		yourself
 ]
 
-{ #category : #preconditions }
-RBMethodProtocolTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBMethodProtocolTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition definesSelector: selector in: self definingClass)
+	^ self classExist
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [ protocol isNotNil ]
+			   errorString:
+			   ('Protocol of <1s> should not be nil' expandMacrosWith:
+				    className))
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBMethodProtocolTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString:
+		  ('Class named <1s> does not exist' expandMacrosWith: className)
+]
+
+{ #category : 'executing' }
 RBMethodProtocolTransformation >> privateTransform [
 
 	self model
 		selector: self definingMethod selector
 		in: self definingClass
-		classified: self protocol
+		classified: protocol
 ]
 
-{ #category : #executing }
-RBMethodProtocolTransformation >> protocol [
-
-	^ protocol ifNil: [
-		self uiManager
-			chooseOrRequestFrom: self definingClass protocols
-			title: 'Class name was not defined to perform ', self class baseClass name,
-					 '. Please select a class to resume this transformation.'  ]
-]
-
-{ #category : #api }
+{ #category : 'api' }
 RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass: aClassName [
 
 	self className: aClassName.
@@ -79,7 +89,7 @@ RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass:
 	protocol := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

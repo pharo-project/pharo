@@ -16,32 +16,34 @@ result := Smalltalk compiler
 Shadowed global variables can be assigned to even if they referene a class.
 "
 Class {
-	#name : #OCExtraBindingScope,
-	#superclass : #OCAbstractScope,
+	#name : 'OCExtraBindingScope',
+	#superclass : 'OCAbstractScope',
 	#instVars : [
 		'bindings'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #'temp vars' }
+{ #category : 'temp vars' }
 OCExtraBindingScope >> allTemps [
 	^#()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCExtraBindingScope >> bindings [
 	^ bindings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCExtraBindingScope >> bindings: anObject [
 	bindings := anObject
 ]
 
-{ #category : #lookup }
-OCExtraBindingScope >> lookupVar: name declare: aBoolean [
+{ #category : 'lookup' }
+OCExtraBindingScope >> lookupVar: name [
 	^(bindings bindingOf: name asSymbol)
 		ifNotNil: [ :var | var ]
-		ifNil: [ outerScope lookupVar: name declare: aBoolean]
+		ifNil: [ super lookupVar: name ]
 ]

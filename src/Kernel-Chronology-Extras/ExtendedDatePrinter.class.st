@@ -2,12 +2,13 @@
 I extend the behavior of BasicDatePrinter with the whole format supported in Pharo
 "
 Class {
-	#name : #ExtendedDatePrinter,
-	#superclass : #BasicDatePrinter,
-	#category : #'Kernel-Chronology-Extras'
+	#name : 'ExtendedDatePrinter',
+	#superclass : 'BasicDatePrinter',
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExtendedDatePrinter >> printDate: aDate format: formatArray on: aStream [
 
 	"Print a description of aDate on aStream using the format

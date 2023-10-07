@@ -6,22 +6,24 @@ While I can be opened on anMCVersion, you've probably seen me most often after s
 I have buttons to perform common version-related actions - like browsing, loading, and viewing changes. In my main text area, I display the following information about my version - name, author, timestamp, UUID, ancestors and log message.
 "
 Class {
-	#name : #MCVersionInspector,
-	#superclass : #MCTool,
+	#name : 'MCVersionInspector',
+	#superclass : 'MCTool',
 	#instVars : [
 		'version'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #icons }
+{ #category : 'icons' }
 MCVersionInspector class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^ #smallSave
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> adopt [
 	(self confirm:
 'Modifying ancestry can be dangerous unless you know
@@ -30,13 +32,13 @@ what you are doing.  Are you sure you want to adopt
 		ifTrue: [self version adopt]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> browse [
 
 	^ self version browse
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionInspector >> buttonSpecs [
        ^ #((Browse browse 'Browse this version' hasVersion)
                (History history 'Browse the history of this version' hasVersion)
@@ -51,7 +53,7 @@ hasVersion)
 hasVersion))
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> changes [
 	"Open a patch morph for the changes."
 	
@@ -61,12 +63,12 @@ MCVersionInspector >> changes [
 		to: self version info name
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionInspector >> defaultLabel [
 	^ 'Version: ', self version info name
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> diff [
 	| ancestorVersion |
 	self pickAncestor ifNotNil:
@@ -75,32 +77,32 @@ MCVersionInspector >> diff [
 		(self version asDiffAgainst: ancestorVersion) open]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionInspector >> hasVersion [
 	^version notNil
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> history [
 	(MCVersionHistoryBrowser new ancestry: self versionInfo) show
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionInspector >> initialExtent [
 	^ 400@200
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> load [
 	Cursor wait showWhile: [self version load]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> merge [
 	self version merge
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionInspector >> pickAncestor [
 	| index versions |
 	versions := self version info breadthFirstAncestors.
@@ -109,7 +111,7 @@ MCVersionInspector >> pickAncestor [
 	^ index = 0 ifFalse: [versions at: index]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionInspector >> pickRepository [
 	| index |
 	index := UIManager default chooseFrom: (self repositories collect: [:ea | ea description])
@@ -117,12 +119,12 @@ MCVersionInspector >> pickRepository [
 	^ index = 0 ifFalse: [self repositories at: index]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionInspector >> repositories [
 	^ MCRepositoryGroup default repositories
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionInspector >> save [
 	
 	self pickRepository 
@@ -131,34 +133,34 @@ MCVersionInspector >> save [
 			ea storeVersion: self version ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInspector >> summary [
 	^self hasVersion
 		ifTrue: [ self versionSummary ]
 		ifFalse: [ String new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInspector >> version [
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInspector >> version: aVersion [
 	version := aVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInspector >> versionInfo [
 	^ self version info
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInspector >> versionSummary [
 	^ self version summary
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCVersionInspector >> widgetSpecs [
 	^ #(
 		((buttonRow) (0 0 1 0) (0 0 0 30))

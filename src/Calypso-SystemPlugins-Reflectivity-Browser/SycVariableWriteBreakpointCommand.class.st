@@ -2,12 +2,14 @@
 I break on all variable writes in the selected class
 "
 Class {
-	#name : #SycVariableWriteBreakpointCommand,
-	#superclass : #SycVariableBreakpointCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
+	#name : 'SycVariableWriteBreakpointCommand',
+	#superclass : 'SycVariableBreakpointCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'VariableBreakpoints'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycVariableWriteBreakpointCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation
@@ -16,12 +18,12 @@ SycVariableWriteBreakpointCommand class >> browserContextMenuActivation [
 		for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycVariableWriteBreakpointCommand >> defaultMenuItemName [
 	^'Break on all variable writes'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycVariableWriteBreakpointCommand >> installVariableBreakpointInTargetClass [
 	VariableBreakpoint watchVariablesWritesInClass: targetClass
 ]

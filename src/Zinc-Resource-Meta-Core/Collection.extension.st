@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Zinc-Resource-Meta-Core' }
+{ #category : '*Zinc-Resource-Meta-Core' }
 Collection >> addedToZnUrl: url [
 	^ url withPathSegments: self
 ]

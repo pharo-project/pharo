@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodVisibilityLevel }
+Extension { #name : 'ClyMethodVisibilityLevel' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyMethodVisibilityLevel >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	self subclassResponsibility
 ]

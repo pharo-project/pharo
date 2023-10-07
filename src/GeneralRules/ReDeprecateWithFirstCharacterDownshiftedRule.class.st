@@ -2,31 +2,33 @@
 Use uncapitalized instead of withFirstCharacterDownshifted since withFirstCharacterDownshifted is ugly and is deprecated now.
 "
 Class {
-	#name : #ReDeprecateWithFirstCharacterDownshiftedRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReDeprecateWithFirstCharacterDownshiftedRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeprecateWithFirstCharacterDownshiftedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'FirstCharacterDownShifted'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeprecateWithFirstCharacterDownshiftedRule >> group [
 	^ 'Style'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReDeprecateWithFirstCharacterDownshiftedRule >> initialize [
 	super initialize.
 	self
 		replace: '``@object withFirstCharacterDownshifted' with: '``@object uncapitalized'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDeprecateWithFirstCharacterDownshiftedRule >> name [
 	^ 'Use uncapitalized instead of withFirstCharacterDownshifted'
 ]

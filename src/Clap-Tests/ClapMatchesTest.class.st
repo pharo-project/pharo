@@ -4,17 +4,19 @@ Tests around matching non-trivial commands and parameters.
 In the absence of a parent context however, we can't test invalid or extra arguments; see ClapContextTest for this.
 "
 Class {
-	#name : #ClapMatchesTest,
-	#superclass : #TestCase,
+	#name : 'ClapMatchesTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'clap',
 		'dirFlag',
 		'slowFlag'
 	],
-	#category : #'Clap-Tests-Integration'
+	#category : 'Clap-Tests-Integration',
+	#package : 'Clap-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClapMatchesTest >> setUp [
 	super setUp.
 	dirFlag := (ClapFlag id: #directory)
@@ -34,7 +36,7 @@ ClapMatchesTest >> setUp [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testFlagAbsentValue [
 	| match flagMatch |
 	slowFlag meaning: [ :flag | flag isMismatch not ].
@@ -49,7 +51,7 @@ ClapMatchesTest >> testFlagAbsentValue [
 	self deny: flagMatch value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testFlagOmittedValue [
 	| match flagMatch |
 	clap add: slowFlag. "we need another flag to follow the incomplete one"
@@ -65,7 +67,7 @@ ClapMatchesTest >> testFlagOmittedValue [
 	self assert: (match at: slowFlag) isExplicit
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testFlagValue [
 	| match flagMatch |
 	slowFlag meaning: [ :flag | flag isMismatch not ].
@@ -80,7 +82,7 @@ ClapMatchesTest >> testFlagValue [
 	self assert: flagMatch value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testMultiplePositional [
 	| match |
 	clap add: ((ClapPositional id: #list) multiple: true).
@@ -98,7 +100,7 @@ ClapMatchesTest >> testMultiplePositional [
 		equals: #('foo' 'bar' 'baz')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testParameterizedFlagValue [
 	| match |
 	dirFlag meaning: [ :flag | Path from: (flag at: #DIR) value ].
@@ -110,7 +112,7 @@ ClapMatchesTest >> testParameterizedFlagValue [
 		equals: (Path * 'foo' / 'bar' / 'baz')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testRootPositionalBeforeSubcommand [
 	| match |
 	match := clap match: #('clap' '--directory' 'foo/bar/baz' 'this').
@@ -127,7 +129,7 @@ ClapMatchesTest >> testRootPositionalBeforeSubcommand [
 		equals: #( 'foo/bar/baz' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testSubcommandAccessing [
 	| match |
 	match := clap match: #('clap' 'this').
@@ -147,7 +149,7 @@ ClapMatchesTest >> testSubcommandAccessing [
 		raise: Notification
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testThis [
 	| match |
 	match := clap match: #('clap' 'this').
@@ -160,7 +162,7 @@ ClapMatchesTest >> testThis [
 	self deny: ((match at: #this) includesMatchOf: #slow)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapMatchesTest >> testWrongCommandMismatches [
 	| match |
 	match := clap match: #('foo' '-d' 'bar/baz/qux' 'this').

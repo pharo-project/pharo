@@ -2,29 +2,31 @@
 Functional tests for image IO to binary streams and files for the major formats (JPEG,PNG,GIF,BMP)
 "
 Class {
-	#name : #ImageReadWriterTest,
-	#superclass : #TestCase,
-	#category : #'Graphics-Tests-Files'
+	#name : 'ImageReadWriterTest',
+	#superclass : 'TestCase',
+	#category : 'Graphics-Tests-Files',
+	#package : 'Graphics-Tests',
+	#tag : 'Files'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageReadWriterTest >> pharoLogoForm [
 	^ (PNGReadWriter on: (ZnBase64Encoder new decode: PolymorphSystemSettings pharoLogoContents) readStream) nextImage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageReadWriterTest >> pharoLogoFormDepth8 [
 	^ self pharoLogoFormNonTransparent asFormOfDepth: 8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageReadWriterTest >> pharoLogoFormNonTransparent [
 	^ self pharoLogoForm
 		mapColor: Color transparent to: Color white;
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testBmpWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
@@ -37,7 +39,7 @@ ImageReadWriterTest >> testBmpWriteReadInMemory [
 	self assert: form bits equals: result bits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testBmpWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormNonTransparent.
@@ -54,7 +56,7 @@ ImageReadWriterTest >> testBmpWriteReadUsingFiles [
 	file delete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testCanGetFormOutOfBase64EncodedStringImage [
 	| encodedImage form expextedFrom |
 	encodedImage := PolymorphSystemSettings pharoLogoContents.
@@ -76,7 +78,7 @@ ImageReadWriterTest >> testCanGetFormOutOfBase64EncodedStringImage [
 		equals: self pharoLogoForm bits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testGifWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormDepth8.
@@ -89,7 +91,7 @@ ImageReadWriterTest >> testGifWriteReadInMemory [
 	self assert: form bits equals: result bits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testGifWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormDepth8.
@@ -105,7 +107,7 @@ ImageReadWriterTest >> testGifWriteReadUsingFiles [
 	file delete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testHasMagicNumber [
 	"Tests now account for the new Streams, for which we cannot
 	 assume we will be able to know the whole size"
@@ -128,7 +130,7 @@ ImageReadWriterTest >> testHasMagicNumber [
 	self assert: (reader hasMagicNumber: exampleNumber) equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testJpegWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
@@ -141,7 +143,7 @@ ImageReadWriterTest >> testJpegWriteReadInMemory [
 	self assert: form bits size equals: result bits size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testJpegWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormNonTransparent.
@@ -157,7 +159,7 @@ ImageReadWriterTest >> testJpegWriteReadUsingFiles [
 	file delete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testPluginBasedJpegWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
@@ -170,7 +172,7 @@ ImageReadWriterTest >> testPluginBasedJpegWriteReadInMemory [
 	self assert: form bits size equals: result bits size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testPluginBasedJpegWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoFormNonTransparent.
@@ -186,7 +188,7 @@ ImageReadWriterTest >> testPluginBasedJpegWriteReadUsingFiles [
 	file delete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testPngWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoForm.
@@ -199,7 +201,7 @@ ImageReadWriterTest >> testPngWriteReadInMemory [
 	self assert: form bits equals: result bits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ImageReadWriterTest >> testPngWriteReadUsingFiles [
 	| form file result |
 	form := self pharoLogoForm.

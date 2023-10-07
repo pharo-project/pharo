@@ -13,18 +13,20 @@ I use my work instance variable as a queue, adding nodes to be visited to the en
 
 "
 Class {
-	#name : #BreadthFirstGuide,
-	#superclass : #FileSystemGuide,
-	#category : #'FileSystem-Core-Base-Guide'
+	#name : 'BreadthFirstGuide',
+	#superclass : 'FileSystemGuide',
+	#category : 'FileSystem-Core-Base-Guide',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Guide'
 }
 
-{ #category : #showing }
+{ #category : 'showing' }
 BreadthFirstGuide >> show: aReference [
 	self push: aReference entry.
 	self whileNotDoneDo: [ self visitNextEntry: self top ]
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 BreadthFirstGuide >> visitNextEntry: entry [
 	entry ifAbsent: [ ^ nil ].
 

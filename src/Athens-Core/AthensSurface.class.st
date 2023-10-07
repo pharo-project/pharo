@@ -15,15 +15,17 @@ for surfaces which don't need to have dimensions specified,
 it would just #new.
 "
 Class {
-	#name : #AthensSurface,
-	#superclass : #Object,
+	#name : 'AthensSurface',
+	#superclass : 'Object',
 	#instVars : [
 		'currentCanvas'
 	],
-	#category : #'Athens-Core-Base'
+	#category : 'Athens-Core-Base',
+	#package : 'Athens-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensSurface class >> extent: aPoint [
 	"Create a new surface with given extent.
 	Note that some surfaces may not support this method, since they may represent an infinite surface."
@@ -31,19 +33,19 @@ AthensSurface class >> extent: aPoint [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensSurface >> asForm [
 	"Answer a Form , which contains a bits, converted from surface "
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensSurface >> asMorph [
 	"Answer a Morph, given this Athens surface"
 	^ self asForm asMorph
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 AthensSurface >> cacheAt: anObject ifAbsentPut: aBlock [
 	"Answer an object from surface's cache identified by anObject,
 	if there is no cached object under such identifier, evaluate a block
@@ -54,31 +56,31 @@ AthensSurface >> cacheAt: anObject ifAbsentPut: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 AthensSurface >> clear [
 	"clear the surface"
 
 	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 AthensSurface >> clear: clearColor [
 	"clear the surface"
 
 	self subclassResponsibility
 ]
 
-{ #category : #clipping }
+{ #category : 'clipping' }
 AthensSurface >> clipBy: aRectangle during: aBlockClosure [
 	self subclassResponsibility
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createFormPaint: aForm [
 	self subclassResponsibility
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
 
 	"This protocol is deprecated. Use #createLinearGradient: start:stop: instead"
@@ -87,49 +89,49 @@ AthensSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
 	self shouldNotImplement
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createMeshGradientWithPatches: aListOfMeshPatches [
 	self subclassResponsibility
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 AthensSurface >> createPath: aPathBuilder [
 	"Create a path from provided path builder instance"
 	self subclassResponsibility
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createRadialGradient: colorRamp center: aCenter radius: aRadius [
 	"by default, focal point coincede with center"
 	^ self createRadialGradient: colorRamp center: aCenter radius: aRadius focalPoint: aCenter
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createRadialGradient: colorRamp center: aCenter radius: aRadius focalPoint: fp [
 
 	self subclassResponsibility
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 AthensSurface >> createRectanglePath: aRectangle [
 	^ aRectangle
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createShadowPaint: aColor [
 	 "Answer an instance of AthensPaint, valid for use with given surface"
 
 	self subclassResponsibility
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createSolidColorPaint: aColor [
 	 "Answer an instance of AthensPaint, valid for use with given surface"
 
 	self subclassResponsibility
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensSurface >> createStrokePaintFor: aPaint [
 	 "Answer an instance of AthensPaint, valid for use as stroke paint on receiver,
 	using an argument, paint for fills"
@@ -137,12 +139,12 @@ AthensSurface >> createStrokePaintFor: aPaint [
 	self subclassResponsibility
 ]
 
-{ #category : #masking }
+{ #category : 'masking' }
 AthensSurface >> disableMask [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 AthensSurface >> drawDuring: aBlock [
 
 	"You may draw on receiver only when inside a block and only using provided canvas object.
@@ -160,24 +162,24 @@ AthensSurface >> drawDuring: aBlock [
 	]
 ]
 
-{ #category : #masking }
+{ #category : 'masking' }
 AthensSurface >> enableMask [
 	self subclassResponsibility
 ]
 
-{ #category : #'rendering dispatch' }
+{ #category : 'rendering dispatch' }
 AthensSurface >> fillPath: aPath withSolidColor: aColor [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'rendering dispatch' }
+{ #category : 'rendering dispatch' }
 AthensSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 
 	self subclassResponsibility
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 AthensSurface >> flushCacheAt: anObject [
 
 	"Flush (delete) any cached value(s) identified by given object, anObject.
@@ -189,19 +191,19 @@ AthensSurface >> flushCacheAt: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #masking }
+{ #category : 'masking' }
 AthensSurface >> maskEnabled [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensSurface >> newCanvas [
 	"Answer a preinitialized instance of AthensCanvas.
 	Private to receiver and its subclasses, override seldom"
 	^ AthensCanvas on: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensSurface >> releaseCanvas [
 	currentCanvas := nil
 ]

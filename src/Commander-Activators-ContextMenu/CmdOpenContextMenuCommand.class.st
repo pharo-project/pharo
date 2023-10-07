@@ -10,48 +10,49 @@ Internal Representation and Key Implementation Points.
 	context:		<CmdToolContext>
 "
 Class {
-	#name : #CmdOpenContextMenuCommand,
-	#superclass : #CmdCommand,
+	#name : 'CmdOpenContextMenuCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'context'
 	],
-	#category : #'Commander-Activators-ContextMenu'
+	#category : 'Commander-Activators-ContextMenu',
+	#package : 'Commander-Activators-ContextMenu'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdOpenContextMenuCommand class >> isAbstract [
 	^self = CmdOpenContextMenuCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdOpenContextMenuCommand >> activationStrategy [
 	"Subclasses should return specific kind of activation strategy
 	which will be used to collect context menu commands"
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdOpenContextMenuCommand >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdOpenContextMenuCommand >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 CmdOpenContextMenuCommand >> createContextMenu [
 
 	^self activationStrategy buildContextMenuFor: context tool inContext: context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdOpenContextMenuCommand >> defaultMenuItemName [
 	^'Open context menu'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdOpenContextMenuCommand >> execute [
 
 	| menu |
@@ -62,7 +63,7 @@ CmdOpenContextMenuCommand >> execute [
 	menu invokeModal
 ]
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 CmdOpenContextMenuCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	"Here we need to take care because this command itself is added to menu of same context.
 	So we will always enter into this method during submenu generation.
@@ -78,14 +79,14 @@ CmdOpenContextMenuCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdOpenContextMenuCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.
 
 	context := aToolContext
 ]
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 CmdOpenContextMenuCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 	"Here we need to take care because this command itself is added to menu of same context.
 	So we will always enter into this method during submenu generation.

@@ -3,30 +3,31 @@ I am a command to fix given critique by applying proposed changes.
 I open changes preview on them
 "
 Class {
-	#name : #ClyFixCritiqueCommand,
-	#superclass : #ClyCritiqueCommand,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyFixCritiqueCommand',
+	#superclass : 'ClyCritiqueCommand',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFixCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 	(super canBeExecutedInContext: aCriticContext) ifFalse: [ ^false ].
 
 	^aCriticContext lastSelectedItem isMarkedWith: ClyCritiqueFixableTag
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFixCritiqueCommand >> defaultMenuIconName [
 	^#repair
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyFixCritiqueCommand >> description [
 	^'Automatically resolve the issue'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFixCritiqueCommand >> execute [
 
-	(ChangesBrowser changes: { critique change }) open
+	(StChangesBrowserPresenter changes: { critique change }) open
 ]

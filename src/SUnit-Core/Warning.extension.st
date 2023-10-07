@@ -1,6 +1,6 @@
-Extension { #name : #Warning }
+Extension { #name : 'Warning' }
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 Warning >> manageTestProcessBy: aProcessMonitorTestService [
 	"Warnings are considered as a test failure.
 	So we are recording it in the process monitor"
@@ -8,7 +8,7 @@ Warning >> manageTestProcessBy: aProcessMonitorTestService [
 	aProcessMonitorTestService recordTestFailure: self
 ]
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 Warning >> sunitAnnounce: aTestCase toResult: aTestResult [
 	aTestResult addFailure: aTestCase
 ]

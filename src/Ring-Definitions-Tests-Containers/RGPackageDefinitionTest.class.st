@@ -2,12 +2,14 @@
 SUnit tests for packages
 "
 Class {
-	#name : #RGPackageDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Containers-Base'
+	#name : 'RGPackageDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Containers-Base',
+	#package : 'Ring-Definitions-Tests-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinitionTest >> testAddingClass [
 	| newPackage newClass |
 	newPackage := RGPackageDefinition named: #'Collections-Sequenceable'.
@@ -19,7 +21,7 @@ RGPackageDefinitionTest >> testAddingClass [
 	self assert: (newPackage classNamed: #OrderedCollection) identicalTo: newClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinitionTest >> testAddingPackage [
 	| newPackage childPackage |
 	newPackage := RGPackageDefinition named: #Collections.
@@ -33,7 +35,7 @@ RGPackageDefinitionTest >> testAddingPackage [
 	self assert: childPackage package equals: newPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinitionTest >> testNewPackage [
 	| newPackage |
 	newPackage := RGPackageDefinition named: 'Collections-Sequenceable'.

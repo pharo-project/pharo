@@ -9,8 +9,8 @@ Structure:
 	progressObservers 	any object understanding #show: can be registered as a progress observer (login, transfer, etc)
 "
 Class {
-	#name : #ProtocolClient,
-	#superclass : #Object,
+	#name : 'ProtocolClient',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'connectInfo',
@@ -18,25 +18,27 @@ Class {
 		'pendingResponses',
 		'progressObservers'
 	],
-	#category : #'Network-Protocols-Protocols'
+	#category : 'Network-Protocols-Protocols',
+	#package : 'Network-Protocols',
+	#tag : 'Protocols'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClient class >> defaultPortNumber [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClient class >> logFlag [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProtocolClient class >> openOnHost: hostIP port: portNumber [
 	^self new openOnHost: hostIP port: portNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProtocolClient class >> openOnHostNamed: hostName [
 	"If the hostname uses the colon syntax to express a certain portnumber
 	we use that instead of the default port number."
@@ -51,14 +53,14 @@ ProtocolClient class >> openOnHostNamed: hostName [
 			self openOnHostNamed: s port: p ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProtocolClient class >> openOnHostNamed: hostName port: portNumber [
 	| serverIP |
 	serverIP := NetNameResolver addressForName: hostName timeout: 20.
 	^self openOnHost: serverIP port: portNumber
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> checkForPendingError [
 	"If data is waiting, check it to catch any error reports.
 	In case the response is not an error, push it back."
@@ -74,7 +76,7 @@ ProtocolClient >> checkForPendingError [
 	self pushResponse: self lastResponse
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> checkResponse [
 	self
 		checkResponseOnError: [:response | (TelnetProtocolError protocolInstance: self)
@@ -83,7 +85,7 @@ ProtocolClient >> checkResponse [
 				signal: response]
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> checkResponse: aResponse onError: errorBlock onWarning: warningBlock [
 	"Get the response from the server and check for errors. Invoke one of the blocks if an error or warning is encountered. See class comment for classification of error codes."
 
@@ -93,7 +95,7 @@ ProtocolClient >> checkResponse: aResponse onError: errorBlock onWarning: warnin
 		ifTrue: [warningBlock value: aResponse]
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> checkResponseOnError: errorBlock onWarning: warningBlock [
 	"Get the response from the server and check for errors. Invoke one of the blocks if an error or warning is encountered. See class comment for classification of error codes."
 
@@ -101,7 +103,7 @@ ProtocolClient >> checkResponseOnError: errorBlock onWarning: warningBlock [
 	self checkResponse: self lastResponse onError: errorBlock onWarning: warningBlock
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ProtocolClient >> close [
 	self stream
 		ifNotNil: [
@@ -109,18 +111,18 @@ ProtocolClient >> close [
 			stream := nil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> connectionInfo [
 	connectInfo ifNil: [connectInfo := Dictionary new].
 	^connectInfo
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> defaultPortNumber [
 	^self class defaultPortNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> ensureConnection [
 	self isConnected
 		ifTrue: [^self].
@@ -132,89 +134,89 @@ ProtocolClient >> ensureConnection [
 	self login
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> fetchNextResponse [
 	self lastResponse: self stream nextLine
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> fetchPendingResponse [
 	^pendingResponses
 		ifNil: [self fetchNextResponse; lastResponse]
 		ifNotNil: [self popResponse]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> host [
 	^self connectionInfo at: #host
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> host: hostId [
 	^self connectionInfo at: #host put: hostId
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProtocolClient >> isConnected [
 	^stream notNil
 		and: [stream isConnected]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> lastResponse [
 	^lastResponse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> lastResponse: aString [
 	lastResponse := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> logFlag [
 	^self class logFlag
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> logProgress: aString [
 	self progressObservers do: [:each | each show: aString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClient >> logProgressToTranscript [
-	self progressObservers add: Transcript
+	self progressObservers add: Smalltalk tools transcript
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClient >> messageText [
 	^super messageText
 		ifNil: [self response]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> openOnHost: hostIP port: portNumber [
 	self host: hostIP.
 	self port: portNumber.
 	self ensureConnection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> password [
 	^self connectionInfo at: #password
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> password: aString [
 	^self connectionInfo at: #password put: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> pendingResponses [
 	pendingResponses ifNil: [pendingResponses := OrderedCollection new].
 	^pendingResponses
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> popResponse [
 	| pendingResponse |
 	pendingResponse := self pendingResponses removeFirst.
@@ -223,78 +225,78 @@ ProtocolClient >> popResponse [
 	^pendingResponse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> port [
 	^self connectionInfo at: #port
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> port: aPortNumber [
 	^self connectionInfo at: #port put: aPortNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> progressObservers [
 	progressObservers ifNil: [progressObservers := OrderedCollection new].
 	^progressObservers
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> pushResponse: aResponse [
 	self pendingResponses add: aResponse
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ProtocolClient >> reopen [
 	self ensureConnection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> resetConnectionInfo [
 	connectInfo := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClient >> response [
 	^self protocolInstance lastResponse
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 ProtocolClient >> responseIsError [
 	self subclassResponsibility
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 ProtocolClient >> responseIsWarning [
 	self subclassResponsibility
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> sendCommand: aString [
 	self stream sendCommand: aString
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ProtocolClient >> sendStreamContents: aStream [
 	self stream sendStreamContents: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClient >> stream [
 	^stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClient >> stream: aStream [
 	stream := aStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> user [
 	^self connectionInfo at: #user ifAbsent: [nil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProtocolClient >> user: aString [
 	^self connectionInfo at: #user put: aString
 ]

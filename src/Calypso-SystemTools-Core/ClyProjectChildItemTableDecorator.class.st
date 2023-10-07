@@ -1,21 +1,23 @@
 Class {
-	#name : #ClyProjectChildItemTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyProjectChildItemTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyProjectChildItemTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
 	itemContext lastSelectedItem actualObject
 		decorateTableCell: anItemCellMorph inContext: itemContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyProjectChildItemTableDecorator class >> decorateTableCell: anItemCellMorph of: groupItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyProjectChildItemTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 

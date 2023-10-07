@@ -2,12 +2,13 @@
 This is the baseline for Clap - the Pharo command line handler
 "
 Class {
-	#name : #BaselineOfClap,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfClap
+	#name : 'BaselineOfClap',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfClap',
+	#package : 'BaselineOfClap'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfClap >> baseline: spec [
 	<baseline>
 	spec for: #common do: [ spec

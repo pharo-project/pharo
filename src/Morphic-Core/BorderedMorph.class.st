@@ -13,16 +13,18 @@ BorderedMorph new borderStyle: (BorderStyle inset width: 2); openInWorld.
 
 "
 Class {
-	#name : #BorderedMorph,
-	#superclass : #Morph,
+	#name : 'BorderedMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'borderWidth',
 		'borderColor'
 	],
-	#category : #'Morphic-Core-Kernel'
+	#category : 'Morphic-Core-Kernel',
+	#package : 'Morphic-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 BorderedMorph >> acquireBorderWidth: aBorderWidth [
 	"Gracefully acquire the new border width, keeping the interior area intact and not seeming to shift"
 
@@ -33,7 +35,7 @@ BorderedMorph >> acquireBorderWidth: aBorderWidth [
 	self layoutChanged
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 	"Add border-style menu items"
 
@@ -51,22 +53,22 @@ BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 	aMenu add: 'border style' subMenu: subMenu
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BorderedMorph >> basicBorderColor: aColor [
 	borderColor := aColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BorderedMorph >> basicBorderWidth: aNumber [
 	borderWidth := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderColor [
 	^ borderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderColor: colorOrSymbolOrNil [
 	self doesBevels ifFalse:[
 		colorOrSymbolOrNil isColor ifFalse:[^self]].
@@ -75,17 +77,17 @@ BorderedMorph >> borderColor: colorOrSymbolOrNil [
 		self changed]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderInset [
 	self borderColor: #inset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderRaised [
 	self borderColor: #raised
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderStyle [
 	"Work around the borderWidth/borderColor pair"
 
@@ -109,7 +111,7 @@ BorderedMorph >> borderStyle [
 	^style trackColorFrom: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderStyle: aBorderStyle [
 	"Work around the borderWidth/borderColor pair"
 
@@ -136,19 +138,19 @@ BorderedMorph >> borderStyle: aBorderStyle [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderWidth [
 	^ borderWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> borderWidth: anInteger [
 	borderColor ifNil: [borderColor := Color black].
 	borderWidth := anInteger max: 0.
 	self changed
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 BorderedMorph >> closestPointTo: aPoint [
 	"account for round corners. Still has a couple of glitches at upper left and right corners"
 	| pt |
@@ -161,7 +163,7 @@ BorderedMorph >> closestPointTo: aPoint [
 	^pt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> colorForInsets [
 	"Return the color to be used for shading inset borders."
 
@@ -170,19 +172,19 @@ BorderedMorph >> colorForInsets [
 	^super colorForInsets
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 BorderedMorph >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ Color black
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 BorderedMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ self theme borderWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> doesBevels [
 	"To return true means that this object can show bevelled borders, and
 	therefore can accept, eg, #raised or #inset as valid borderColors.
@@ -191,7 +193,7 @@ BorderedMorph >> doesBevels [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BorderedMorph >> initialize [
 	"Initializes the receiver"
 
@@ -199,7 +201,7 @@ BorderedMorph >> initialize [
 	self initializeBorder
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 BorderedMorph >> initializeBorder [
 	"Initialize the receiver state related to border."
 
@@ -207,7 +209,7 @@ BorderedMorph >> initializeBorder [
 	borderWidth := self defaultBorderWidth
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BorderedMorph >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
 
@@ -218,7 +220,7 @@ BorderedMorph >> isTranslucentButNotTransparent [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderedMorph >> useSquareCorners [
 	self cornerStyle: #square
 ]

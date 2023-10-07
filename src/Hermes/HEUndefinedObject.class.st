@@ -3,21 +3,23 @@ I represent nil as a literal.
 I am only stored as my tag. I have no content.
 "
 Class {
-	#name : #HEUndefinedObject,
-	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#name : 'HEUndefinedObject',
+	#superclass : 'HEExportedLiteral',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEUndefinedObject class >> tag [
 	^ 13
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEUndefinedObject >> asLiteralIn: env [
 	^ nil
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEUndefinedObject >> doReadFrom: aReader [
 ]

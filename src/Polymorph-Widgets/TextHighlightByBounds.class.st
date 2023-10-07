@@ -2,8 +2,8 @@
 Definition of a clickable highlighted range of text with optional borders.
 "
 Class {
-	#name : #TextHighlightByBounds,
-	#superclass : #Object,
+	#name : 'TextHighlightByBounds',
+	#superclass : 'Object',
 	#instVars : [
 		'color',
 		'lineRange',
@@ -13,87 +13,89 @@ Class {
 		'borderSides',
 		'fillWidth'
 	],
-	#category : #'Polymorph-Widgets-Utilities'
+	#category : 'Polymorph-Widgets-Utilities',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> borderColor [
 	"Answer the value of borderColor"
 
 	^ borderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> borderColor: anObject [
 	"Set the value of borderColor"
 
 	borderColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> borderSides [
 	"Answer the value of borderSides"
 
 	^ borderSides
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> borderSides: anObject [
 	"Set the value of borderSides"
 
 	borderSides := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> borderWidth [
 	"Answer the value of borderWidth"
 
 	^ borderWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> borderWidth: anObject [
 	"Set the value of borderWidth"
 
 	borderWidth := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> bounds [
 	"Answer the value of bounds"
 
 	^ bounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> bounds: anObject [
 	"Set the value of bounds"
 
 	bounds := anObject
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TextHighlightByBounds >> clicked: evt [
 	"The receiver has had a mouse down."
 
 	self triggerEvent: #clicked
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> color [
 	"Answer the value of color"
 
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> color: anObject [
 	"Set the value of color"
 
 	color := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextHighlightByBounds >> containsPoint: aPoint in: rect [
 	"Answer whther the bounds contain the given (local coordinate) point."
 
@@ -105,7 +107,7 @@ TextHighlightByBounds >> containsPoint: aPoint in: rect [
 	^r containsPoint: aPoint
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TextHighlightByBounds >> drawOn: aCanvas in: rect offset: o [
 	"Draw the highlight on the given canvas for the given rectangle."
 
@@ -132,21 +134,21 @@ TextHighlightByBounds >> drawOn: aCanvas in: rect offset: o [
 				ifTrue: [ aCanvas fillRectangle: (r withWidth: self borderWidth) color: self borderColor ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> fillWidth [
 	"Answer the value of fillWidth"
 
 	^ fillWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> fillWidth: anObject [
 	"Set the value of fillWidth"
 
 	fillWidth := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TextHighlightByBounds >> initialize [
 	"Initialize the receiver."
 
@@ -160,35 +162,35 @@ TextHighlightByBounds >> initialize [
 		fillWidth: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> lineNumber [
 	"Answer the first in the line range."
 
 	^self lineRange first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> lineRange [
 	"Answer the value of lineRange"
 
 	^ lineRange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> lineRange: anObject [
 	"Set the value of lineRange"
 
 	lineRange := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> position [
 	"Answer the bounds top left."
 
 	^self bounds topLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextHighlightByBounds >> position: aPoint [
 	"Set the bounds top left."
 

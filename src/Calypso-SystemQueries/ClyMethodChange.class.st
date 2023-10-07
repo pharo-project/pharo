@@ -23,36 +23,38 @@ Internal Representation and Key Implementation Points.
 	affectedMethod:		<CompiledMethod>
 "
 Class {
-	#name : #ClyMethodChange,
-	#superclass : #Object,
+	#name : 'ClyMethodChange',
+	#superclass : 'Object',
 	#instVars : [
 		'affectedMethod'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodChange class >> of: aMethod [
 	^self new
 		affectedMethod: aMethod
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodChange class >> ofAll: methods [
 	^methods collect: [ :each | self of: each ] as: AnnouncementSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodChange >> affectedMethod [
 	^ affectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodChange >> affectedMethod: anObject [
 	affectedMethod := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodChange >> handlesAnnouncement: anAnnouncement [
 
 	| newMethod |

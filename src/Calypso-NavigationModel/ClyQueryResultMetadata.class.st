@@ -32,54 +32,56 @@ Internal Representation and Key Implementation Points.
 	properties:	<OrderedCollection of: <ClyProperty>>
 "
 Class {
-	#name : #ClyQueryResultMetadata,
-	#superclass : #Object,
+	#name : 'ClyQueryResultMetadata',
+	#superclass : 'Object',
 	#instVars : [
 		'properties'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultMetadata >> addProperty: aProperty [
 	properties add: aProperty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultMetadata >> getProperty: aPropertyClass [
 
 	^properties detect: [ :each | each isKindOf: aPropertyClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResultMetadata >> hasProperty: aPropertyClass [
 
 	^properties anySatisfy: [ :each | each isKindOf: aPropertyClass ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryResultMetadata >> initialize [
 	super initialize.
 
 	properties := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultMetadata >> properties [
 	^ properties
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultMetadata >> properties: anObject [
 	properties := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultMetadata >> removeProperty: aProperty [
 	properties remove: aProperty ifAbsent: [  ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryResultMetadata >> reset [
 	properties removeAll
 ]

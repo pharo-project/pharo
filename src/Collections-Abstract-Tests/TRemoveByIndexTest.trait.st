@@ -2,30 +2,32 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TRemoveByIndexTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TRemoveByIndexTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TRemoveByIndexTest >> collectionWith5Elements [
 " return a collection of size 5 including 5 elements"
 self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TRemoveByIndexTest >> empty [
 " return an empty collection"
 self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TRemoveByIndexTest >> test0FixtureRemoveByIndexTest [
 
 	self collectionWith5Elements.
 	self assert: self collectionWith5Elements size = 5
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveAt [
 
 	| collection element result oldSize |
@@ -38,13 +40,13 @@ TRemoveByIndexTest >> testRemoveAt [
 	self assert: collection size equals: (oldSize - 1)
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveAtNotPresent [
 
 	self should: [self empty removeAt: 2] raise: Error
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveFirst [
 
 	| collection element result oldSize |
@@ -57,7 +59,7 @@ TRemoveByIndexTest >> testRemoveFirst [
 	self assert: collection size equals: (oldSize - 1)
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveFirstNElements [
 
 	| collection elements result oldSize |
@@ -70,19 +72,19 @@ TRemoveByIndexTest >> testRemoveFirstNElements [
 	self assert: collection size equals: (oldSize - 2)
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveFirstNElementsNotPresent [
 
 	self should: [self empty removeFirst: 2] raise: Error
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveFirstNotPresent [
 
 	self should: [self empty removeFirst] raise: Error
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveLast [
 
 	| collection element result oldSize |
@@ -95,7 +97,7 @@ TRemoveByIndexTest >> testRemoveLast [
 	self assert: collection size equals: (oldSize - 1)
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveLastNElements [
 
 	| collection result oldSize elements |
@@ -108,13 +110,13 @@ TRemoveByIndexTest >> testRemoveLastNElements [
 	self assert: collection size equals: (oldSize - 2)
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveLastNElementsNElements [
 
 	self should: [self empty removeLast: 2] raise: Error
 ]
 
-{ #category : #'tests - removing by index' }
+{ #category : 'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveLastNotPresent [
 
 	self should: [self empty removeLast] raise: Error

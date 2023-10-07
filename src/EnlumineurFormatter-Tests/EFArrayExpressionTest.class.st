@@ -1,10 +1,11 @@
 Class {
-	#name : #EFArrayExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFArrayExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -23,7 +24,7 @@ EFArrayExpressionTest >> basicConfiguration [
 		manually so that the spacesBefore string is correctly computed."
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> fiveSpacesInsideArrayConfiguration [
 
 	^ self contextClass basicNew
@@ -42,7 +43,7 @@ EFArrayExpressionTest >> fiveSpacesInsideArrayConfiguration [
 		manually so that the spacesBefore string is correctly computed."
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> maxLineLengthConfiguration [
 	"Here we can control explicitely the configuration we want."
 
@@ -64,7 +65,7 @@ EFArrayExpressionTest >> maxLineLengthConfiguration [
 		manually so that the spacesBefore string is correctly computed."
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> maxLineLengthConfigurationWithSpaceBefore [
 	"Here we can control explicitely the configuration we want."
 
@@ -86,7 +87,7 @@ EFArrayExpressionTest >> maxLineLengthConfigurationWithSpaceBefore [
 		manually so that the spacesBefore string is correctly computed."
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> multiLineConfiguration [
 
 	^ self contextClass basicNew
@@ -109,7 +110,7 @@ EFArrayExpressionTest >> multiLineConfiguration [
 		numberOfSpacesBeforeDotInDynamicArray: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> oneSpaceInsideArrayConfiguration [
 
 	^ self contextClass basicNew
@@ -128,7 +129,7 @@ EFArrayExpressionTest >> oneSpaceInsideArrayConfiguration [
 		manually so that the spacesBefore string is correctly computed."
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> periodAtEndOfMethod [
 	"Here we can control explicitely the configuration we want."
 
@@ -154,7 +155,7 @@ EFArrayExpressionTest >> periodAtEndOfMethod [
 		numberOfSpacesBeforeDotInDynamicArray: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> spaceInsideArrayConfiguration [
 
 	^ self contextClass basicNew
@@ -172,7 +173,7 @@ EFArrayExpressionTest >> spaceInsideArrayConfiguration [
 		manually so that the spacesBefore string is correctly computed."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testEmptyArray [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -180,7 +181,7 @@ EFArrayExpressionTest >> testEmptyArray [
 	self assert: source equals: '{}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testFiveSpaceAroundBrackets [
 	| source |
 	configurationSelector := #fiveSpacesInsideArrayConfiguration.
@@ -188,7 +189,7 @@ EFArrayExpressionTest >> testFiveSpaceAroundBrackets [
 	self assert: source equals: '{     1. 2. 3     }'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testFormatElement [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -199,7 +200,7 @@ EFArrayExpressionTest >> testFormatElement [
 	(b := 2)}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testNewLineAfterBracesWhenMultiline [
 	| source |
 	configurationSelector := #multiLineConfiguration.
@@ -225,7 +226,7 @@ EFArrayExpressionTest >> testNewLineAfterBracesWhenMultiline [
 	(self + (1 @ -1))}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testNoExtraSpaceAroundPeriod [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -233,7 +234,7 @@ EFArrayExpressionTest >> testNoExtraSpaceAroundPeriod [
 	self assert: source equals: '{1. 2. 3}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testNoSpaceAroundBrackets [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -241,7 +242,7 @@ EFArrayExpressionTest >> testNoSpaceAroundBrackets [
 	self assert: source equals: '{1. 2. 3}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testOneSpaceAroundBrackets [
 	| source |
 	configurationSelector := #oneSpaceInsideArrayConfiguration.
@@ -249,7 +250,7 @@ EFArrayExpressionTest >> testOneSpaceAroundBrackets [
 	self assert: source equals: '{ 1. 2. 3 }'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testPeriodAtEndOfMethod [
 	| source |
 	configurationSelector := #periodAtEndOfMethod.
@@ -257,7 +258,7 @@ EFArrayExpressionTest >> testPeriodAtEndOfMethod [
 	self assert: source equals: '{1 factorial}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testPeriodAtEndOfMethodWithMultipleElementArrayShouldNotHavePeriodAtEnd [
 	| source |
 	configurationSelector := #periodAtEndOfMethod.
@@ -267,7 +268,7 @@ EFArrayExpressionTest >> testPeriodAtEndOfMethodWithMultipleElementArrayShouldNo
 	(a := 2)}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testPeriodAtEndOfMethodWithMultipleElementArrayShouldNotHavePointAtTheEnd [
 	| source |
 	configurationSelector := #periodAtEndOfMethod.
@@ -278,7 +279,7 @@ EFArrayExpressionTest >> testPeriodAtEndOfMethodWithMultipleElementArrayShouldNo
 	(3 + 2)}' "we should not have a point at the end."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testSpaceAroundPeriod [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -286,7 +287,7 @@ EFArrayExpressionTest >> testSpaceAroundPeriod [
 	self assert: source equals: '{1. 2. 3}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testSpaceBeforePeriod [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -294,7 +295,7 @@ EFArrayExpressionTest >> testSpaceBeforePeriod [
 	self assert: source equals: '{1. 2. 3}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testSpaceInside [
 	| source |
 	configurationSelector := #spaceInsideArrayConfiguration.
@@ -302,7 +303,7 @@ EFArrayExpressionTest >> testSpaceInside [
 	self assert: source equals: '{     1. 2. 3     }'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testThreeSpacesBeforePeriod [
 	| source |
 	configurationSelector := #threeSpacesBeforeDotInArrayConfiguration.
@@ -310,7 +311,7 @@ EFArrayExpressionTest >> testThreeSpacesBeforePeriod [
 	self assert: source equals: '{1   . 2   . 3}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testToLongNewLine [
 	| source |
 	configurationSelector := #maxLineLengthConfiguration.
@@ -323,7 +324,7 @@ EFArrayExpressionTest >> testToLongNewLine [
 	1}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testToLongNewLine2 [
 	| source |
 	configurationSelector := #maxLineLengthConfiguration.
@@ -335,7 +336,7 @@ EFArrayExpressionTest >> testToLongNewLine2 [
 5. 6. 7. 1}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testToLongNewLine2WithSpaceBefore [
 	| source |
 	configurationSelector := #maxLineLengthConfigurationWithSpaceBefore.
@@ -347,7 +348,7 @@ EFArrayExpressionTest >> testToLongNewLine2WithSpaceBefore [
 5 . 6 . 7 . 1}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFArrayExpressionTest >> testToLongNewLineWithSpaceBefore [
 	| source |
 	configurationSelector := #maxLineLengthConfigurationWithSpaceBefore.
@@ -360,7 +361,7 @@ EFArrayExpressionTest >> testToLongNewLineWithSpaceBefore [
 	1}'
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFArrayExpressionTest >> threeSpacesBeforeDotInArrayConfiguration [
 
 	^ self contextClass basicNew

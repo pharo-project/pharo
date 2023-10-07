@@ -10,35 +10,37 @@ Tools could define specific environment to provide specific hooks for code execu
 For example SUnit installs special TestExecutionEnvironment to manage all forked processes during test
 "
 Class {
-	#name : #ExecutionEnvironment,
-	#superclass : #Object,
-	#category : #'Kernel-Processes'
+	#name : 'ExecutionEnvironment',
+	#superclass : 'Object',
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ExecutionEnvironment >> activated [
 	"Method is called just after installation as current environment.
 	Any preparation logic could be here"
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ExecutionEnvironment >> beActiveDuring: aBlock [
 
 	CurrentExecutionEnvironment activate: self for: aBlock
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ExecutionEnvironment >> deactivated [
 	"Method is called just after uninstallation when current environment become different.
 	Any cleanup logic could be here"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExecutionEnvironment >> isTest [
 	^false
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ExecutionEnvironment >> prepareForNewProcess: aProcess [
 	self subclassResponsibility
 ]

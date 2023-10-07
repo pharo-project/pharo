@@ -2,12 +2,14 @@
 SUnit tests for Gofer API
 "
 Class {
-	#name : #GoferApiTest,
-	#superclass : #GoferTest,
-	#category : #'Gofer-Tests-Tests'
+	#name : 'GoferApiTest',
+	#superclass : 'GoferTest',
+	#category : 'Gofer-Tests-Tests',
+	#package : 'Gofer-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 GoferApiTest >> assert: registry on: serverUrlString hasUser: nameString withPassword: passwordString [
 
 	registry repositoryAt: serverUrlString credentialsDo: [ :user :password |
@@ -15,7 +17,7 @@ GoferApiTest >> assert: registry on: serverUrlString hasUser: nameString withPas
 		self assert: passwordString equals: password ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 GoferApiTest >> assert: aGofer repositories: anArray [
 
 	self assert: aGofer repositories size equals: anArray size.
@@ -24,14 +26,14 @@ GoferApiTest >> assert: aGofer repositories: anArray [
 			self assert: first description equals: second ]
 ]
 
-{ #category : #'tests - repositories - places' }
+{ #category : 'tests - repositories - places' }
 GoferApiTest >> testBlueplane [
 
 	gofer blueplane: 'SIXX'.
 	self assert: gofer repositories: #('http://squeaksource.blueplane.jp/SIXX')
 ]
 
-{ #category : #'tests - references' }
+{ #category : 'tests - references' }
 GoferApiTest >> testConstraintReference [
 
 	| reference |
@@ -51,7 +53,7 @@ GoferApiTest >> testConstraintReference [
 	self assert: reference repository equals: self monticelloRepository
 ]
 
-{ #category : #'tests - repositories' }
+{ #category : 'tests - repositories' }
 GoferApiTest >> testCustomRepository [
 
 	gofer repository: self monticelloRepository.
@@ -60,7 +62,7 @@ GoferApiTest >> testCustomRepository [
 	self assert: gofer repositories first equals: self monticelloRepository
 ]
 
-{ #category : #'tests - repositories' }
+{ #category : 'tests - repositories' }
 GoferApiTest >> testDirectoryRepository [
 
 	gofer directory: FileSystem disk workingDirectory fullName.
@@ -69,14 +71,14 @@ GoferApiTest >> testDirectoryRepository [
 	self assert: (gofer repositories first isKindOf: MCDirectoryRepository)
 ]
 
-{ #category : #'tests - repositories - places' }
+{ #category : 'tests - repositories - places' }
 GoferApiTest >> testGemsource [
 
 	gofer gemsource: 'Seaside29'.
 	self assert: gofer repositories: #('http://seaside.gemstone.com/ss/Seaside29')
 ]
 
-{ #category : #'tests - repositories' }
+{ #category : 'tests - repositories' }
 GoferApiTest >> testHttpRepository [
 
 	gofer url: 'http://source.lukas-renggli.ch/pier' username: 'foo' password: 'bar'.
@@ -85,7 +87,7 @@ GoferApiTest >> testHttpRepository [
 	self assert: (gofer repositories first isKindOf: MCHttpRepository)
 ]
 
-{ #category : #'tests - repositories' }
+{ #category : 'tests - repositories' }
 GoferApiTest >> testHttpRepositoryOverrideStoredCredentials [
 
 	| exampleServer registry |
@@ -103,7 +105,7 @@ GoferApiTest >> testHttpRepositoryOverrideStoredCredentials [
 		registry removeCredentialsFor: exampleServer ]
 ]
 
-{ #category : #'tests - repositories' }
+{ #category : 'tests - repositories' }
 GoferApiTest >> testHttpRepositoryUseStoredCredentials [
 
 	| exampleServer registry |
@@ -120,13 +122,13 @@ GoferApiTest >> testHttpRepositoryUseStoredCredentials [
 		registry removeCredentialsFor: exampleServer ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferApiTest >> testInitialReferences [
 
 	self assertEmpty: gofer references
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GoferApiTest >> testInitialRepositories [
 
 	gofer := Gofer new.
@@ -135,7 +137,7 @@ GoferApiTest >> testInitialRepositories [
 	self assert: (gofer repositories first isKindOf: MCCacheRepository uniqueInstance class)
 ]
 
-{ #category : #'tests - repositories - options' }
+{ #category : 'tests - repositories - options' }
 GoferApiTest >> testPackageCache [
 
 	gofer squeaksource: 'r1'; squeaksource: 'r2'.
@@ -147,7 +149,7 @@ GoferApiTest >> testPackageCache [
 	self assert: gofer repositories: #('http://www.squeaksource.com/r1' 'http://www.squeaksource.com/r2')
 ]
 
-{ #category : #'tests - references' }
+{ #category : 'tests - references' }
 GoferApiTest >> testPackageReference [
 
 	| reference |
@@ -167,14 +169,14 @@ GoferApiTest >> testPackageReference [
 	self assert: reference repository equals: self monticelloRepository
 ]
 
-{ #category : #'tests - repositories - places' }
+{ #category : 'tests - repositories - places' }
 GoferApiTest >> testRenggli [
 
 	gofer renggli: 'pier'.
 	self assert: gofer repositories: #('http://source.lukas-renggli.ch/pier')
 ]
 
-{ #category : #'tests - repositories - options' }
+{ #category : 'tests - repositories - options' }
 GoferApiTest >> testRepositoryErrors [
 
 	gofer
@@ -187,14 +189,14 @@ GoferApiTest >> testRepositoryErrors [
 	gofer resolved
 ]
 
-{ #category : #'tests - repositories - places' }
+{ #category : 'tests - repositories - places' }
 GoferApiTest >> testSmalltalkhub [
 
 	gofer smalltalkhubUser: 'dh83' project: 'ci'.
 	self assert: gofer repositories: #('http://smalltalkhub.com/mc/dh83/ci/main/')
 ]
 
-{ #category : #'tests - repositories' }
+{ #category : 'tests - repositories' }
 GoferApiTest >> testSubDirectoryRepository [
 
 	testingEnvironment
@@ -206,7 +208,7 @@ GoferApiTest >> testSubDirectoryRepository [
 			self assert: (gofer repositories first isKindOf: subDirectoryRepositoryClass) ]
 ]
 
-{ #category : #'tests - references' }
+{ #category : 'tests - references' }
 GoferApiTest >> testVersionReference [
 
 	| reference |
@@ -225,7 +227,7 @@ GoferApiTest >> testVersionReference [
 	self assert: reference repository equals: self monticelloRepository
 ]
 
-{ #category : #'tests - repositories - places' }
+{ #category : 'tests - repositories - places' }
 GoferApiTest >> testWiresong [
 
 	gofer wiresong: 'ob'.

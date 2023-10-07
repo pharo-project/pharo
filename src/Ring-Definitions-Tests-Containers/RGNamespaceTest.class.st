@@ -2,12 +2,14 @@
 SUnit tests for namespaces
 "
 Class {
-	#name : #RGNamespaceTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Containers-Base'
+	#name : 'RGNamespaceTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Containers-Base',
+	#package : 'Ring-Definitions-Tests-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGNamespaceTest >> testCreatingNamespace [
 	| newNamespace newPackage newClass |
 	newNamespace := RGNamespace named: #RingNamespace.

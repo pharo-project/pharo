@@ -1,6 +1,6 @@
-Extension { #name : #WideString }
+Extension { #name : 'WideString' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 WideString class >> newFromStream: s [
 	"Only meant for my subclasses that are raw bits and word-like.  For quick unpack form the disk."
 	| len |

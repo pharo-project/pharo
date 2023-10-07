@@ -4,12 +4,14 @@ ZnTooManyRedirects is signalled when an HTTP client has been following more redi
 Part of Zinc HTTP Components. 
 "
 Class {
-	#name : #ZnTooManyRedirects,
-	#superclass : #Error,
-	#category : #'Zinc-HTTP-Exceptions'
+	#name : 'ZnTooManyRedirects',
+	#superclass : 'Error',
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnTooManyRedirects >> isResumable [
 	"Determine whether an exception is resumable."
 

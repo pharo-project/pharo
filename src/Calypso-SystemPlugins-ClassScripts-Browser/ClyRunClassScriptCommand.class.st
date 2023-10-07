@@ -9,16 +9,17 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyRunClassScriptCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyRunClassScriptCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'targetClass',
 		'script'
 	],
-	#category : #'Calypso-SystemPlugins-ClassScripts-Browser'
+	#category : 'Calypso-SystemPlugins-ClassScripts-Browser',
+	#package : 'Calypso-SystemPlugins-ClassScripts-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRunClassScriptCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
 
@@ -26,34 +27,34 @@ ClyRunClassScriptCommand class >> canBeExecutedInContext: aBrowserContext [
 		and: [ aBrowserContext isClassScriptSelected ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunClassScriptCommand class >> methodTableIconActivation [
 	<classAnnotation>
 
 	^ClyTableIconCommandActivation for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRunClassScriptCommand >> defaultMenuIcon [
 	^Smalltalk ui iconNamed: script iconName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRunClassScriptCommand >> defaultMenuIconName [
 	^#scriptManager
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRunClassScriptCommand >> defaultMenuItemName [
 	^'Run script'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunClassScriptCommand >> execute [
 	script executeOn: targetClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunClassScriptCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
 
@@ -63,7 +64,7 @@ ClyRunClassScriptCommand >> prepareFullExecutionInContext: aBrowserContext [
 		ifNone: [ script implementorClass ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunClassScriptCommand >> readParametersFromContext: aBrowserContext [
 	super readParametersFromContext: aBrowserContext.
 

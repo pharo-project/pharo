@@ -8,18 +8,20 @@ Do not use methods such as
 because they do not take into account an environment. Instead use `self class environment at: #ClassName`
 "
 Class {
-	#name : #ReAsClassRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReAsClassRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAsClassRule >> group [
 
 	^ 'Design Flaws'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAsClassRule >> initialize [
 	super initialize.
 	self
@@ -33,13 +35,13 @@ ReAsClassRule >> initialize [
 		with: 'self class environment at: `@expr ifPresent: `@block'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAsClassRule >> name [
 
 	^ 'Do not use #asClass & similar'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAsClassRule >> severity [
 
 	^ #error

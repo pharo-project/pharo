@@ -5,22 +5,24 @@ This is the unit test for the class Base64MimeConverter. Unit tests are a good w
 	- the sunit class category
 "
 Class {
-	#name : #Base64MimeConverterTest,
-	#superclass : #TestCase,
+	#name : 'Base64MimeConverterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'message'
 	],
-	#category : #'Network-Tests-Kernel'
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 Base64MimeConverterTest >> setUp [
 
 	super setUp.
 	message := 'Hi There!' readStream
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Base64MimeConverterTest >> testBase64Encoded [
 
 	| encoded |
@@ -28,7 +30,7 @@ Base64MimeConverterTest >> testBase64Encoded [
 	self assert: encoded equals: 'Hi There!' asByteArray base64Encoded
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Base64MimeConverterTest >> testDecodeMimeHeader [
 	"Test MIME decoding from single-byte encoding to Unicode"
 
@@ -41,7 +43,7 @@ Base64MimeConverterTest >> testDecodeMimeHeader [
 	self assert: mimeHeader equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Base64MimeConverterTest >> testMimeEncodeDecode [
 
 	| encoded |

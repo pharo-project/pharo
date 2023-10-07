@@ -1,6 +1,6 @@
-Extension { #name : #SycGenerateEqualAndHashCommand }
+Extension { #name : 'SycGenerateEqualAndHashCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycGenerateEqualAndHashCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

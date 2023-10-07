@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*System-Support' }
+{ #category : '*System-Support' }
 ClassDescription >> allCallsOnIn: aSystemNavigation [
 	"Answer a SortedCollection of all the methods that refer to me by name or as part of an association in a global dict."
 

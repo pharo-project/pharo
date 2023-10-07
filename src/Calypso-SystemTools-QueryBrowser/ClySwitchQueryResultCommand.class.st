@@ -7,17 +7,19 @@ My subclasses should implement class side method:
 - requiredQueryResult
 "
 Class {
-	#name : #ClySwitchQueryResultCommand,
-	#superclass : #ClySwitchBrowserModeCommand,
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Controlling'
+	#name : 'ClySwitchQueryResultCommand',
+	#superclass : 'ClySwitchBrowserModeCommand',
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Controlling',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Controlling'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchQueryResultCommand class >> isAbstract [
 	^self = ClySwitchQueryResultCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchQueryResultCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 

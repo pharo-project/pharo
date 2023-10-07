@@ -1,6 +1,6 @@
 Class {
-	#name : #RBSmalllintContext,
-	#superclass : #Object,
+	#name : 'RBSmalllintContext',
+	#superclass : 'Object',
 	#instVars : [
 		'class',
 		'selector',
@@ -11,31 +11,33 @@ Class {
 		'selectors',
 		'compiledMethod'
 	],
-	#category : #'Refactoring-Critics'
+	#category : 'Refactoring-Critics',
+	#package : 'Refactoring-Critics'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBSmalllintContext class >> newNoCache [
 	^self basicNew
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> addLiteralsFor: aCompiledMethod [
 	2 to: aCompiledMethod numLiterals - 1
 		do: [ :index | self checkLiteral: (aCompiledMethod objectAt: index) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> buildParseTree [
 
 	| tree |
 
 	tree := self selectedClass parseTreeForSelector: self selector.
 	tree ifNil: [ ^ RBParser parseMethod: 'method' ].
+	tree doSemanticAnalysis.
 	^ tree
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> checkLiteral: aLiteral [
 	(aLiteral isSymbol or: [aLiteral isVariableBinding])
 		ifTrue: [literals add: aLiteral]
@@ -44,20 +46,20 @@ RBSmalllintContext >> checkLiteral: aLiteral [
 				ifTrue: [aLiteral do: [:each | self checkLiteral: each]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> compiledMethod [
 	^compiledMethod notNil
 		ifTrue: [compiledMethod]
 		ifFalse: [compiledMethod := class compiledMethodAt: selector]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> computeLiterals [
 	literalSemaphore := Semaphore new.
 	literalProcess := [self primitiveComputeLiterals] fork
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> computeLiteralsForClass: aClass [
 	(selectors addAll: aClass selectors) do:
 			[:sel |
@@ -65,22 +67,18 @@ RBSmalllintContext >> computeLiteralsForClass: aClass [
 			Processor yield]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [
 
-	| method |
-
-	method := aClass compiledMethodAt: aSelector ifAbsent: [ nil ].
-	method ifNil: [ ^ self ].
-	self addLiteralsFor: method
+	aClass compiledMethodAt: aSelector ifPresent: [ :method | self addLiteralsFor: method ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSmalllintContext >> implements: aSelector [
 	^self selectors includes: aSelector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSmalllintContext >> includesBehaviorNamed: aClassName [
 	| current |
 	current := self selectedClass.
@@ -91,17 +89,17 @@ RBSmalllintContext >> includesBehaviorNamed: aClassName [
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBSmalllintContext >> initialize [
 	self computeLiterals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> instVarNames [
 	^self selectedClass allInstVarNames
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSmalllintContext >> isAbstract: aClass [
 	^(aClass isMeta or:
 			[(self literals includes: aClass name)
@@ -109,7 +107,7 @@ RBSmalllintContext >> isAbstract: aClass [
 		not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> literals [
 
 	literalSemaphore
@@ -122,18 +120,18 @@ RBSmalllintContext >> literals [
 	^ literals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> messages [
     ^(self parseTree sendNodes collect: [ :node | node selector ]) asSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> parseTree [
 
 	^ parseTree ifNil: [ parseTree := self buildParseTree ] ifNotNil: [ parseTree ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> primitiveComputeLiterals [
 	| semaphore |
 	literals := IdentitySet new: 25000.
@@ -147,7 +145,7 @@ RBSmalllintContext >> primitiveComputeLiterals [
 	^literalProcess := nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBSmalllintContext >> printOn: aStream [
 
 	super printOn: aStream.
@@ -163,45 +161,46 @@ RBSmalllintContext >> printOn: aStream [
 			]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> protocol [
-	^self selectedClass whichCategoryIncludesSelector: self selector
+
+	^ self selectedClass protocolNameOfSelector: self selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> protocols [
 	^Array with: self protocol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBSmalllintContext >> release [
 	literalProcess ifNotNil: [literalProcess terminate].
 	super release
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> selectedClass [
 	^class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> selectedClass: anObject [
 	class := anObject.
 	self selector: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> selector [
 	^selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> selector: anObject [
 	selector := anObject.
 	parseTree := compiledMethod := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> selectors [
 
 	literalSemaphore
@@ -214,24 +213,24 @@ RBSmalllintContext >> selectors [
 	^ selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> selfMessages [
     ^self parseTree selfMessages
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> signalProcesses: aSemaphore [
 
 	aSemaphore ifNil: [ ^ self ].
 	[ aSemaphore isEmpty ] whileFalse: [ aSemaphore signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> sourceCode [
 	^self selectedClass sourceCodeAt: self selector ifAbsent: [ '' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintContext >> specialSelectors [
 	| answer |
 	answer := IdentityDictionary new.
@@ -240,12 +239,12 @@ RBSmalllintContext >> specialSelectors [
 	^answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintContext >> superMessages [
     ^self parseTree superMessages
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSmalllintContext >> uses: anObject [
 	^self literals includes: anObject
 ]

@@ -13,17 +13,19 @@ That is why the ABI is initialized to nil and then different primitives are used
 
 "
 Class {
-	#name : #TFFunctionDefinition,
-	#superclass : #FFIExternalReference,
+	#name : 'TFFunctionDefinition',
+	#superclass : 'FFIExternalReference',
 	#instVars : [
 		'parameterTypes',
 		'returnType',
 		'abi'
 	],
-	#category : #'ThreadedFFI-Base'
+	#category : 'ThreadedFFI-Base',
+	#package : 'ThreadedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFunctionDefinition class >> finalizeResourceData: handle [
 
 	handle isNull ifTrue: [ ^ self ].
@@ -33,19 +35,19 @@ TFFunctionDefinition class >> finalizeResourceData: handle [
 		primFreeDefinition
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFunctionDefinition class >> fromHandle: aHandle [
 
 	^ self error: 'should not be used'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFunctionDefinition class >> parameterTypes: someParameters returnType: returnType [
 
 	^ self parameterTypes: someParameters returnType: returnType abi: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFFunctionDefinition class >> parameterTypes: someParameters returnType: returnType abi: abi [
 
 	^ self new
@@ -56,19 +58,19 @@ TFFunctionDefinition class >> parameterTypes: someParameters returnType: returnT
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFunctionDefinition >> abi [
 
 	^ abi
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFunctionDefinition >> abi: anObject [
 
 	abi := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFFunctionDefinition >> doValidate: parameterHandlers [
 
 	"As we maybe keep the function definition when we are saving the image, we cannot put a default value to the ABI, as the default value changes from platform to platform"
@@ -85,17 +87,17 @@ TFFunctionDefinition >> doValidate: parameterHandlers [
 				abi: abi asInteger ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFunctionDefinition >> parameterTypes [
 	^ parameterTypes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFunctionDefinition >> parameterTypes: anObject [
 	parameterTypes := anObject
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 TFFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler [
 
 	<primitive: 'primitiveDefineFunction' error: ec>
@@ -103,7 +105,7 @@ TFFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: re
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 TFFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: returnTypeHandler abi: abiType [
 
 	<primitive: 'primitiveDefineFunction' error: ec>
@@ -111,7 +113,7 @@ TFFunctionDefinition >> primDefineFunctionWith: parameterHandlers returnType: re
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 TFFunctionDefinition >> primFreeDefinition [
 
 	<primitive: 'primitiveFreeDefinition'>
@@ -119,21 +121,23 @@ TFFunctionDefinition >> primFreeDefinition [
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFunctionDefinition >> returnType [
 	^ returnType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFunctionDefinition >> returnType: anObject [
 	returnType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFFunctionDefinition >> validate [
-	| parameterHandlers |
+	"Ensure I am ready to be called. Normally, there are actions to take after a new session started (or it is the first time after instance creation)."
 
-	handle isNull ifFalse: [ ^self ].
+	| parameterHandlers |
+	"A non-NULL handle is enough to determine I am ready."
+	handle isNull ifFalse: [ ^ self ].
 
 	"First, we get valid parameter handles."
 	parameterTypes do: [ :e | e validate ].

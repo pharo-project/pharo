@@ -7,70 +7,72 @@ Instance variables:
 	kind		<Selector>
 "
 Class {
-	#name : #RxsContextCondition,
-	#superclass : #RxsNode,
+	#name : 'RxsContextCondition',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'kind'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RxsContextCondition >> beAny [
 	"Matches anything but a newline."
 
 	kind := #syntaxAny
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsContextCondition >> beBeginningOfLine [
 	"Matches empty string at the beginning of a line."
 
 	kind := #syntaxBeginningOfLine
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsContextCondition >> beBeginningOfWord [
 	"Matches empty string at the beginning of a word."
 
 	kind := #syntaxBeginningOfWord
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsContextCondition >> beEndOfLine [
 	"Matches empty string at the end of a line."
 
 	kind := #syntaxEndOfLine
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsContextCondition >> beEndOfWord [
 	"Matches empty string at the end of a word."
 
 	kind := #syntaxEndOfWord
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsContextCondition >> beNonWordBoundary [
 	"Analog of \B."
 
 	kind := #syntaxNonWordBoundary
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsContextCondition >> beWordBoundary [
 	"Analog of \w (alphanumeric plus _)."
 
 	kind := #syntaxWordBoundary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsContextCondition >> dispatchTo: aBuilder [
 
 	^aBuilder perform: kind
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsContextCondition >> isNullable [
 
 	^#syntaxAny ~~ kind

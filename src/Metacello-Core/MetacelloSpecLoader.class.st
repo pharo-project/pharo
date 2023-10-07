@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloSpecLoader,
-	#superclass : #Object,
+	#name : 'MetacelloSpecLoader',
+	#superclass : 'Object',
 	#instVars : [
 		'spec'
 	],
-	#category : #'Metacello-Core-Loaders'
+	#category : 'Metacello-Core-Loaders',
+	#package : 'Metacello-Core',
+	#tag : 'Loaders'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloSpecLoader class >> on: aMetacelloPackagesSpec [
 
 	^(self new) 
@@ -15,38 +17,38 @@ MetacelloSpecLoader class >> on: aMetacelloPackagesSpec [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloSpecLoader >> load [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSpecLoader >> loadType [
 	"#atomic or #linear"
 	
 	^self project loadType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSpecLoader >> project [
 
 	^self spec project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSpecLoader >> spec [
 
 	^spec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSpecLoader >> spec: aMetacelloPackagesSpec [
 
 	spec := aMetacelloPackagesSpec
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloSpecLoader >> unload [
 
 	self subclassResponsibility

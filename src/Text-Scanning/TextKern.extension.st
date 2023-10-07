@@ -1,6 +1,6 @@
-Extension { #name : #TextKern }
+Extension { #name : 'TextKern' }
 
-{ #category : #'*Text-Scanning' }
+{ #category : '*Text-Scanning' }
 TextKern >> emphasizeScanner: scanner [
 	"Augment (or diminish) the kerning offset for text display"
 	scanner addKern: kern

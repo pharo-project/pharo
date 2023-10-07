@@ -8,37 +8,40 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SycVariableCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycVariableCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
-		'variables'
+		'variables',
+		'toolContext'
 	],
-	#category : #'SystemCommands-VariableCommands'
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycVariableCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isVariableSelected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycVariableCommand class >> isAbstract [
 	^self = SycVariableCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycVariableCommand >> prepareFullExecutionInContext: aToolContext [
+	
 	super prepareFullExecutionInContext: aToolContext.
-
+	toolContext := aToolContext.
 	variables := aToolContext selectedVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycVariableCommand >> variables [
 	^ variables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycVariableCommand >> variables: anObject [
 	variables := anObject
 ]

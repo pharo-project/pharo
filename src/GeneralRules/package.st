@@ -1,1 +1,1 @@
-Package { #name : #GeneralRules }
+Package { #name : 'GeneralRules' }

@@ -8,44 +8,46 @@ An indication that a class may have too many responsibilities is when different 
 The defined number of methods can be edited in #methodsCount.
 "
 Class {
-	#name : #ReExcessiveMethodsRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReExcessiveMethodsRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReExcessiveMethodsRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ExcessiveMethodsRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReExcessiveMethodsRule >> basicCheck: aClass [
 	^ aClass selectors size >= self methodsCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveMethodsRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReExcessiveMethodsRule >> methodsCount [
 	^ 60
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveMethodsRule >> name [
 	^ 'Excessive number of methods'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExcessiveMethodsRule >> rationale [
 	^ 'Large classes are indications that the class may be trying to do too much.'
 ]

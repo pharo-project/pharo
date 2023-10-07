@@ -1,41 +1,39 @@
 Class {
-	#name : #RBRemoveProtocolTransformationTest,
-	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBRemoveProtocolTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveProtocolTransformationTest >> testRefactoring [
 
 	| refactoring |
 	refactoring := (RBAddProtocolTransformation
-						protocol: 'transforming'
-						inClass: #RBDummyEmptyClass)
-						transform.
+		                protocol: 'transforming'
+		                inClass: #RBDummyEmptyClass) generateChanges.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	refactoring := (RBRemoveProtocolTransformation
-						protocol: 'transforming'
-						inClass: #RBDummyEmptyClass)
-						asRefactoring transform.
+		                protocol: 'transforming'
+		                inClass: #RBDummyEmptyClass) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRemoveProtocolTransformationTest >> testTransform [
 
 	| transformation |
 	transformation := (RBAddProtocolTransformation
-							protocol: 'transforming'
-							inClass: #RBDummyEmptyClass)
-							transform.
+		                   protocol: 'transforming'
+		                   inClass: #RBDummyEmptyClass) generateChanges.
 
 	transformation := (RBRemoveProtocolTransformation
-							model: transformation model
-							protocol: 'transforming'
-							inClass: #RBDummyEmptyClass)
-							transform.
+		                   model: transformation model
+		                   protocol: 'transforming'
+		                   inClass: #RBDummyEmptyClass) generateChanges.
 
 	self assert: transformation model changes changes size equals: 2
 ]

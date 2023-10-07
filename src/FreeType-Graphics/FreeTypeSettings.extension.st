@@ -1,6 +1,6 @@
-Extension { #name : #FreeTypeSettings }
+Extension { #name : 'FreeTypeSettings' }
 
-{ #category : #'*FreeType-Graphics' }
+{ #category : '*FreeType-Graphics' }
 FreeTypeSettings >> bitBltSubPixelAvailable [
 	"Answer true if the the subPixel combination rule is available, false otherwise.
 	to test :-
@@ -28,7 +28,7 @@ FreeTypeSettings >> bitBltSubPixelAvailable [
 	^bitBltSubPixelAvailable := true
 ]
 
-{ #category : #'*FreeType-Graphics' }
+{ #category : '*FreeType-Graphics' }
 FreeTypeSettings >> glyphContrast: aContrastValue [
 	" value between 1 and 100.
 	100 is highest contrast and maps to gamma 0.25

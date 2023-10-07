@@ -2,12 +2,14 @@
 Test for user level Base64 access
 "
 Class {
-	#name : #Base64Test,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-Kernel'
+	#name : 'Base64Test',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 Base64Test >> testHelloWorldEncoding [
 	| bytes base64Encoded |
 	bytes := 'Hello World!' utf8Encoded.
@@ -16,7 +18,7 @@ Base64Test >> testHelloWorldEncoding [
 	self assert: base64Encoded base64Decoded utf8Decoded equals: 'Hello World!'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Base64Test >> testPrimesEncoding [
 	| bytes base64Encoded |
 	bytes := (Integer primesUpTo: 255) asByteArray.
@@ -24,7 +26,7 @@ Base64Test >> testPrimesEncoding [
 	self assert: base64Encoded base64Decoded equals: bytes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Base64Test >> testRangeEncoding [
 	| bytes base64Encoded |
 	bytes := (0 to: 255) asByteArray.
@@ -32,7 +34,7 @@ Base64Test >> testRangeEncoding [
 	self assert: base64Encoded base64Decoded equals: bytes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Base64Test >> testWikipediaExampleQuote [
 	"https://en.wikipedia.org/wiki/Base64#Examples"
 

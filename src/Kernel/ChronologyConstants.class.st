@@ -2,8 +2,8 @@
 ChronologyConstants is a SharedPool for the constants used by the Kernel-Chronology classes.
 "
 Class {
-	#name : #ChronologyConstants,
-	#superclass : #SharedPool,
+	#name : 'ChronologyConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'DayNames',
 		'DaysInMonth',
@@ -19,10 +19,12 @@ Class {
 		'SecondsInMinute',
 		'SqueakEpoch'
 	],
-	#category : #'Kernel-Chronology'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ChronologyConstants class >> initialize [
 	"ChronologyConstants initialize"
 	SqueakEpoch := 2415386. 		"Julian day number of 1 Jan 1901"

@@ -4,18 +4,20 @@ They implement behaviour which is needed to query project and package informatio
 Project and package are represented by classes ClyManagedProject and ClyManagedPackage
 "
 Class {
-	#name : #ClyProjectManager,
-	#superclass : #Object,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyProjectManager',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'api - queries' }
+{ #category : 'api - queries' }
 ClyProjectManager >> projectQueryFor: aClySystemEnvironmentScope [
 
 	^ ClyUnknownQuery instance
 ]
 
-{ #category : #'api - queries' }
+{ #category : 'api - queries' }
 ClyProjectManager >> queryClass [
 	^ self subclassResponsibility
 ]

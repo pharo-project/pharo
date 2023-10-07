@@ -2,45 +2,46 @@
 I am a command to merge given variable into another
 "
 Class {
-	#name : #SycMergeVariableCommand,
-	#superclass : #SycRenameVariableCommand,
-	#category : #'SystemCommands-VariableCommands'
+	#name : 'SycMergeVariableCommand',
+	#superclass : 'SycRenameVariableCommand',
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMergeVariableCommand class >> defaultMenuIconName [
 	^ #merge
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycMergeVariableCommand class >> fullBrowserShortcutActivation [
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycMergeVariableCommand class >> sourceCodeMenuActivation [
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycMergeVariableCommand class >> sourceCodeShortcutActivation [
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMergeVariableCommand >> classRefactoring [
 	^ RBMergeInstanceVariableIntoAnother
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMergeVariableCommand >> defaultMenuItemName [
 	^'Merge into another'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMergeVariableCommand >> newVariableName [
 
 	^ newName name
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMergeVariableCommand >> requestNewNameIn: aToolContext [
 	newName := aToolContext
 		           requestSimpleVariable: 'Select a variable'

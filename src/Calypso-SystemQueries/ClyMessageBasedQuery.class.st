@@ -16,36 +16,38 @@ Internal Representation and Key Implementation Points.
 	selectors:		<Array of<Symbol>>
 "
 Class {
-	#name : #ClyMessageBasedQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyMessageBasedQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'selectors'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMessageBasedQuery class >> of: aSelector [
 	^self ofAny: { aSelector }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMessageBasedQuery class >> of: aSelector from: aScope [
 	^self ofAny: {aSelector} from: aScope
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMessageBasedQuery class >> ofAny: selectors [
 	^self new
 		selectors: selectors
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMessageBasedQuery class >> ofAny: selectors from: aScope [
 	^aScope adoptQuery: (self ofAny: selectors)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMessageBasedQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -54,32 +56,32 @@ ClyMessageBasedQuery >> = anObject [
 	^selectors = anObject selectors
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMessageBasedQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: selectors hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMessageBasedQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	aStream nextPutAll: self printSelectors
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMessageBasedQuery >> printSelectors [
 
 	^',' join: selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMessageBasedQuery >> selectors [
 	^ selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMessageBasedQuery >> selectors: anObject [
 	selectors := anObject
 ]

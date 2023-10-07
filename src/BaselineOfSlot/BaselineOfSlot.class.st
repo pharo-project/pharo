@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfSlot,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSlot
+	#name : 'BaselineOfSlot',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSlot',
+	#package : 'BaselineOfSlot'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfSlot class >> corePackages [
 	| groups |
 
@@ -12,7 +13,7 @@ BaselineOfSlot class >> corePackages [
 	^ groups flatCollect: [ :e | self packagesOfGroupNamed: e ].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfSlot >> baseline: spec [
 	<baseline>
 	spec

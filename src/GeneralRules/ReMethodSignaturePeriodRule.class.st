@@ -2,17 +2,19 @@
 A rule to check for a period terminating the method signature, which is unnecessary, probably unintentional, and can cause problems when portin to other platforms like GemStone.
 "
 Class {
-	#name : #ReMethodSignaturePeriodRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReMethodSignaturePeriodRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReMethodSignaturePeriodRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReMethodSignaturePeriodRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	| firstLine hasDot |
@@ -26,12 +28,12 @@ ReMethodSignaturePeriodRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				 by: self) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMethodSignaturePeriodRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMethodSignaturePeriodRule >> name [
 	^ 'Method signature has terminating period'
 ]

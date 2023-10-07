@@ -37,22 +37,24 @@ Examples
 
 "
 Class {
-	#name : #HermesCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #'Hermes-CommandLineHandler'
+	#name : 'HermesCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'Hermes-CommandLineHandler',
+	#package : 'Hermes',
+	#tag : 'CommandLineHandler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HermesCommandLineHandler class >> commandName [
 	^ 'loadHermes'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HermesCommandLineHandler class >> description [
 	^ 'Loads the hermes files passed as parameter'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 HermesCommandLineHandler >> activate [
 	self activateHelp ifTrue: [ ^ self ].
 	self validateParameters.
@@ -65,7 +67,7 @@ HermesCommandLineHandler >> activate [
 	self exitSuccess
 ]
 
-{ #category : #'processing files' }
+{ #category : 'processing files' }
 HermesCommandLineHandler >> createInstaller [
 	"In the basic installation, the bootstraped version of Hermes,
 	there is only one Installer, the HEInstaller.
@@ -80,7 +82,7 @@ HermesCommandLineHandler >> createInstaller [
 		ifAbsent: [ HEInstaller new ]
 ]
 
-{ #category : #'processing files' }
+{ #category : 'processing files' }
 HermesCommandLineHandler >> processFile: file [
 	"It loads the package and installs it in the image"
 	| installer reader readPackage |
@@ -97,13 +99,13 @@ HermesCommandLineHandler >> processFile: file [
 	installer installPackage: readPackage
 ]
 
-{ #category : #'processing files' }
+{ #category : 'processing files' }
 HermesCommandLineHandler >> processFiles [
 	"The files are processed in order of the command line"
 	(self commandLine allFilesWithExtension: '.hermes') do: [ :file | self processFile: file ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 HermesCommandLineHandler >> validateParameters [
 	"The command line handle should have at least one .hermes file"
 	(self commandLine hasFileWithExtension: '.hermes')

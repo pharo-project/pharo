@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfEquals }
+Package { #name : 'BaselineOfEquals' }

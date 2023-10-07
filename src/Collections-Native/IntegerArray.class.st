@@ -5,18 +5,20 @@ Negative values are stored as 2's complement.
 For further comments read comments of `WordArray`.
 "
 Class {
-	#name : #IntegerArray,
-	#superclass : #ArrayedCollection,
-	#type : #words,
-	#category : #'Collections-Native-Base'
+	#name : 'IntegerArray',
+	#superclass : 'ArrayedCollection',
+	#type : 'words',
+	#category : 'Collections-Native-Base',
+	#package : 'Collections-Native',
+	#tag : 'Base'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 IntegerArray >> asIntegerArray [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IntegerArray >> at: index [
 	| word |
 	<primitive: 165>
@@ -28,7 +30,7 @@ IntegerArray >> at: index [
 		ifFalse:[word]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IntegerArray >> at: index put: anInteger [
 	| word |
 	<primitive: 166>
@@ -40,7 +42,7 @@ IntegerArray >> at: index put: anInteger [
 	^anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IntegerArray >> atAllPut: anInteger [
 	| word |
 	anInteger < 0
@@ -50,13 +52,13 @@ IntegerArray >> atAllPut: anInteger [
 	self primFill: word
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IntegerArray >> defaultElement [
 	"Return the default element of the receiver"
 	^0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IntegerArray >> primFill: aPositiveInteger [
 	"Fill the receiver, an indexable bytes or words object, with the given positive integer. The range of possible fill values is [0..255] for byte arrays and [0..(2^32 - 1)] for word arrays."
 

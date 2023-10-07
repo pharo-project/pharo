@@ -1,18 +1,18 @@
-Extension { #name : #ByteSymbol }
+Extension { #name : 'ByteSymbol' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ByteSymbol >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitHookPrimitive: self
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ByteSymbol class >> materializeFrom: aDecoder [
 
 	^ aDecoder nextEncodedString asSymbol
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ByteSymbol >> serializeOn: anEncoder [
 
 	anEncoder encodeString: self

@@ -2,18 +2,20 @@
 A variable definition
 "
 Class {
-	#name : #RGVariableDefinition,
-	#superclass : #RGElementDefinition,
-	#category : #'Ring-Definitions-Core-Base'
+	#name : 'RGVariableDefinition',
+	#superclass : 'RGElementDefinition',
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinition class >> isAbstract [
 
 	^ self == RGVariableDefinition
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RGVariableDefinition >> = aRGVariableDefinition [
 	"This variable look for equality of the key properties of the receiver"
 
@@ -21,13 +23,13 @@ RGVariableDefinition >> = aRGVariableDefinition [
 		and:[ self name == aRGVariableDefinition name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGVariableDefinition >> environment [
 
 	^ self parent environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGVariableDefinition >> fullName [
 	"Keeps a unique description for the receiver. As annotation to avoid converting each time is invoked"
 
@@ -35,37 +37,37 @@ RGVariableDefinition >> fullName [
 		ifAbsentPut:[ (self parentName, '->', self name) asSymbol ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RGVariableDefinition >> hash [
 
 	^super hash bitXor: self name hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinition >> isClassInstanceVariable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinition >> isClassVariable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinition >> isInstanceVariable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinition >> isPoolVariable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinition >> isVariable [
 
 	^true

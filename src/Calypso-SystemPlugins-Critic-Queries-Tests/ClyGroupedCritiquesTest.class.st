@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyGroupedCritiquesTest,
-	#superclass : #ClyQueryNavigationResultTest,
-	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
+	#name : 'ClyGroupedCritiquesTest',
+	#superclass : 'ClyQueryNavigationResultTest',
+	#category : 'Calypso-SystemPlugins-Critic-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyGroupedCritiquesTest >> createQuery [
 
 	^ClyAllProblemMethodQuery from: (ClyClassScope emptyIn: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyGroupedCritiquesTest >> createQueryResult [
 	^ClyGroupedCritiqueResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedCritiquesTest >> testFillingWithEmptyList [
 
 	queryResult fillWith: { }.
@@ -23,7 +24,7 @@ ClyGroupedCritiquesTest >> testFillingWithEmptyList [
 	self assert: queryResult isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedCritiquesTest >> testFillingWithOneCritique [
 	| method critique group |
 	method := ClyClassWithProblemMethods >> #methodWithHalt.
@@ -38,7 +39,7 @@ ClyGroupedCritiquesTest >> testFillingWithOneCritique [
 	self assert: group ruleSeverity name equals: critique rule severity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedCritiquesTest >> testFillingWithTwoSimilarCritiques [
 	| method method2 critique group |
 	method := ClyClassWithProblemMethods >> #methodWithHalt.

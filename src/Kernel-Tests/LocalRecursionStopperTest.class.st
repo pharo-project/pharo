@@ -2,16 +2,18 @@
 SUnit tests for class  LocalRecursionStopper
 "
 Class {
-	#name : #LocalRecursionStopperTest,
-	#superclass : #TestCase,
+	#name : 'LocalRecursionStopperTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'fork',
 		'value'
 	],
-	#category : #'Kernel-Tests-Processes'
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 LocalRecursionStopperTest class >> defaultTimeLimit [
 	"Those tests are supposed to be fast.
 	But with broken LocalRecursionStopper they will hang the image.
@@ -19,25 +21,25 @@ LocalRecursionStopperTest class >> defaultTimeLimit [
 	^100 milliSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalRecursionStopperTest >> complexRecursion [
 
 	LocalRecursionStopper during: [ self complexRecursionFirstCall ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalRecursionStopperTest >> complexRecursionFirstCall [
 
 	LocalRecursionStopper during: [ self complexRecursionLastCall ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalRecursionStopperTest >> complexRecursionLastCall [
 
 	self complexRecursion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalRecursionStopperTest >> mixedMethod [
 
 	LocalRecursionStopper during: [
@@ -60,26 +62,26 @@ LocalRecursionStopperTest >> mixedMethod [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LocalRecursionStopperTest >> recursion [
 
 	LocalRecursionStopper during: [ self recursion ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LocalRecursionStopperTest >> setUp [
 	super setUp.
 	value := 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 LocalRecursionStopperTest >> tearDown [
 
 	fork ifNotNil: [ fork terminate. fork := nil ].
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocalRecursionStopperTest >> testMixedMethod [
 
 	| result |
@@ -89,7 +91,7 @@ LocalRecursionStopperTest >> testMixedMethod [
 	self assert: result equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocalRecursionStopperTest >> testNoRecursion [
 
 	LocalRecursionStopper during: [ value := value + 1 ].
@@ -97,13 +99,13 @@ LocalRecursionStopperTest >> testNoRecursion [
 	self assert: value equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocalRecursionStopperTest >> testWithComplexRecursion [
 
 	self complexRecursion
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocalRecursionStopperTest >> testWithRecursion [
 
 	self recursion

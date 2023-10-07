@@ -2,16 +2,17 @@
 Colour selector featuring a saturation/volume area and a hue selection strip.
 "
 Class {
-	#name : #HSVColorSelectorMorph,
-	#superclass : #Morph,
+	#name : 'HSVColorSelectorMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'svMorph',
 		'hMorph'
 	],
-	#category : #'Morphic-Widgets-ColorPicker'
+	#category : 'Morphic-Widgets-ColorPicker',
+	#package : 'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVColorSelectorMorph >> colorSelected: aColor [
 	"A color has been selected. Make the hue match."
 
@@ -20,28 +21,28 @@ HSVColorSelectorMorph >> colorSelected: aColor [
 	self triggerEvent: #colorSelected with: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVColorSelectorMorph >> defaultColor [
 	"Answer the default color/fill style for the receiver."
 
 	^Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVColorSelectorMorph >> hMorph [
 	"Answer the value of hMorph"
 
 	^ hMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVColorSelectorMorph >> hMorph: anObject [
 	"Set the value of hMorph"
 
 	hMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVColorSelectorMorph >> hue: aFloat [
 	"Set the hue in the range 0.0 - 1.0. Update the SV morph and hMorph."
 
@@ -49,7 +50,7 @@ HSVColorSelectorMorph >> hue: aFloat [
 	self svMorph color: (Color h: aFloat * 359.9 s: 1.0 v: 1.0)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HSVColorSelectorMorph >> initialize [
 	"Initialize the receiver."
 
@@ -68,7 +69,7 @@ HSVColorSelectorMorph >> initialize [
 		hue: 0.5
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVColorSelectorMorph >> newHColorMorph [
 	"Answer a new hue color morph."
 
@@ -80,7 +81,7 @@ HSVColorSelectorMorph >> newHColorMorph [
 		extent: 36@36
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVColorSelectorMorph >> newSVColorMorph [
 	"Answer a new saturation/volume color morph."
 
@@ -91,14 +92,14 @@ HSVColorSelectorMorph >> newSVColorMorph [
 		when: #colorSelected send: #colorSelected: to: self
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVColorSelectorMorph >> selectedColor [
 	"Answer the selected color."
 
 	^self svMorph selectedColor
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVColorSelectorMorph >> selectedColor: aColor [
 	"Set the hue and sv components."
 
@@ -106,14 +107,14 @@ HSVColorSelectorMorph >> selectedColor: aColor [
 	self svMorph selectedColor: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVColorSelectorMorph >> svMorph [
 	"Answer the value of svMorph"
 
 	^ svMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVColorSelectorMorph >> svMorph: anObject [
 	"Set the value of svMorph"
 

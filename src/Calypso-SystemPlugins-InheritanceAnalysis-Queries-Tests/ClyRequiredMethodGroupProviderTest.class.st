@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyRequiredMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
+	#name : 'ClyRequiredMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyRequiredMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 	^ClyClassWhichInheritsAbstractSubclassMock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyRequiredMethodGroupProviderTest >> groupProviderClass [
 	^ClyRequiredMethodGroupProvider
 ]

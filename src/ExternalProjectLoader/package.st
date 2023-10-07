@@ -1,1 +1,1 @@
-Package { #name : #ExternalProjectLoader }
+Package { #name : 'ExternalProjectLoader' }

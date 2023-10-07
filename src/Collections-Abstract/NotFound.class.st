@@ -8,15 +8,17 @@ The collection where this thing was not found is in my inherited signaler instan
 [ NotFound signalFor: 10 in: #(1 2 3) ] on: NotFound do: [ :exception | exception ]
 "
 Class {
-	#name : #NotFound,
-	#superclass : #Error,
+	#name : 'NotFound',
+	#superclass : 'Error',
 	#instVars : [
 		'object'
 	],
-	#category : #'Collections-Abstract-Errors'
+	#category : 'Collections-Abstract-Errors',
+	#package : 'Collections-Abstract',
+	#tag : 'Errors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NotFound class >> signalFor: anObject [
 	"Create and signal a NotFound exception for anObject in the default receiver."
 
@@ -25,7 +27,7 @@ NotFound class >> signalFor: anObject [
 		signal
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NotFound class >> signalFor: anObject in: aCollection [
 	"Create and signal a NotFound exception for anObject in aCollection."
 
@@ -35,42 +37,42 @@ NotFound class >> signalFor: anObject in: aCollection [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NotFound >> collection [
 	"Return the collection where something is not found in"
 
 	^ self signaler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NotFound >> collection: aCollection [
 	"Set the collection where something is not found in"
 
 	self signaler: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NotFound >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
 
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NotFound >> object [
 	"Return the object that was not found"
 
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NotFound >> object: anObject [
 	"Set the object that was not found"
 
 	object := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NotFound >> standardMessageText [
 	"Generate a standard textual description"
 

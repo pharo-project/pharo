@@ -2,42 +2,43 @@
 A node for ""lazy drawing"" in a morphic based tree
 "
 Class {
-	#name : #LazyMorphTreeNodeMorph,
-	#superclass : #MorphTreeNodeMorph,
+	#name : 'LazyMorphTreeNodeMorph',
+	#superclass : 'MorphTreeNodeMorph',
 	#instVars : [
 		'drawable'
 	],
-	#category : #'Morphic-Widgets-Tree'
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphTreeNodeMorph >> drawOn: aCanvas [
 	drawable
 		ifFalse: [container buildRowMorphsFrom: self]
 		ifTrue: [super drawOn: aCanvas]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphTreeNodeMorph >> drawSubmorphsOn: aCanvas [
 	drawable ifFalse: [^ self].
 	super drawSubmorphsOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyMorphTreeNodeMorph >> drawable [
 	^ drawable ifNil: [false]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyMorphTreeNodeMorph >> drawable: aBoolean [
 	drawable := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LazyMorphTreeNodeMorph >> initRow [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LazyMorphTreeNodeMorph >> initialize [
 	super initialize.
 	drawable := false

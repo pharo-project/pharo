@@ -13,22 +13,24 @@ Instance Variables:
 	last	<Character>
 "
 Class {
-	#name : #RxsRange,
-	#superclass : #RxsNode,
+	#name : 'RxsRange',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'first',
 		'last'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RxsRange class >> from: aCharacter to: anotherCharacter [
 
 	^self new initializeFirst: aCharacter last: anotherCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsRange >> enumerateTo: aSet ignoringCase: aBoolean [
 	"Add all of the elements I represent to the collection."
 
@@ -43,14 +45,14 @@ RxsRange >> enumerateTo: aSet ignoringCase: aBoolean [
 		ifFalse: [aSet add: character]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsRange >> initializeFirst: aCharacter last: anotherCharacter [
 
 	first := aCharacter.
 	last := anotherCharacter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsRange >> isEnumerable [
 
 	^true

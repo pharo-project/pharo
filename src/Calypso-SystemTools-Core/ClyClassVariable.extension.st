@@ -1,6 +1,6 @@
-Extension { #name : #ClyClassVariable }
+Extension { #name : 'ClyClassVariable' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyClassVariable >> createRefactoring: variableRefactoringClass for: aClass [
 	^variableRefactoringClass classVariableAnalog
 			variable: actualVariable name

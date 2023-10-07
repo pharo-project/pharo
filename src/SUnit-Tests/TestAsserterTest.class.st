@@ -1,10 +1,12 @@
 Class {
-	#name : #TestAsserterTest,
-	#superclass : #TestCase,
-	#category : #'SUnit-Tests-Core'
+	#name : 'TestAsserterTest',
+	#superclass : 'TestCase',
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TestAsserterTest >> testAssertCollectionHasSameElements [
 	| c1 c2 |
 	c1 := { 1. 2. 3 }.
@@ -15,7 +17,7 @@ TestAsserterTest >> testAssertCollectionHasSameElements [
 	self should: [ self assertCollection: c1 hasSameElements: c2 ] raise: TestFailure
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TestAsserterTest >> testDenyCollectionHasSameElements [
 	| c1 c2 |
 	c1 := { 1. 2. 3 }.

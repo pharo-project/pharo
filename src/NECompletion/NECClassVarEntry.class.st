@@ -2,17 +2,19 @@
 I represent a class Variable
 "
 Class {
-	#name : #NECClassVarEntry,
-	#superclass : #NECCVariableEntry,
-	#category : #'NECompletion-Model'
+	#name : 'NECClassVarEntry',
+	#superclass : 'NECCVariableEntry',
+	#category : 'NECompletion-Model',
+	#package : 'NECompletion',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECClassVarEntry >> hightlightSymbol [
 	^ #classVar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECClassVarEntry >> label [
 	^ 'class variable'
 ]

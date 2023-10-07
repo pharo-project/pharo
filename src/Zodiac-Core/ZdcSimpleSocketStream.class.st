@@ -9,12 +9,13 @@ I rely on the rather inefficient implementation of my superclass' methods,
 funneling all access through #next and #nextPut.
 "
 Class {
-	#name : #ZdcSimpleSocketStream,
-	#superclass : #ZdcAbstractSocketStream,
-	#category : #'Zodiac-Core'
+	#name : 'ZdcSimpleSocketStream',
+	#superclass : 'ZdcAbstractSocketStream',
+	#category : 'Zodiac-Core',
+	#package : 'Zodiac-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZdcSimpleSocketStream class >> openConnectionToHost: hostIP port: portNumber [
 	| platformSocket |
 	platformSocket := Socket newTCP.
@@ -23,7 +24,7 @@ ZdcSimpleSocketStream class >> openConnectionToHost: hostIP port: portNumber [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZdcSimpleSocketStream class >> openConnectionToHost: hostIP port: portNumber timeout: timeout [
 	| platformSocket |
 	platformSocket := Socket newTCP.
@@ -33,7 +34,7 @@ ZdcSimpleSocketStream class >> openConnectionToHost: hostIP port: portNumber tim
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZdcSimpleSocketStream class >> openConnectionToHostNamed: hostName port: portNumber [
 	| platformSocket socketStream hostIPAddress |
 	platformSocket := Socket newTCP.
@@ -46,7 +47,7 @@ ZdcSimpleSocketStream class >> openConnectionToHostNamed: hostName port: portNum
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSimpleSocketStream >> atEnd [
 	"I am atEnd when there is no more data to be read and there never will be.
 	This means that readBuffer must be empty, there must be no more unread data
@@ -61,7 +62,7 @@ ZdcSimpleSocketStream >> atEnd [
 	^ self isConnected not
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZdcSimpleSocketStream >> connectTo: hostAddress port: portNumber [
 	"Connect our socket to hostAddress:portNumber.
 	Wait up to timeout for a connection"
@@ -69,7 +70,7 @@ ZdcSimpleSocketStream >> connectTo: hostAddress port: portNumber [
 	self socketConnectTo: hostAddress port: portNumber
 ]
 
-{ #category : #'private - in' }
+{ #category : 'private - in' }
 ZdcSimpleSocketStream >> fillBytes: bytes startingAt: offset count: count [
 	"Ask the socket to read count elements into bytes starting at offset. Do not wait. Return read count."
 
@@ -80,7 +81,7 @@ ZdcSimpleSocketStream >> fillBytes: bytes startingAt: offset count: count [
 		count: count
 ]
 
-{ #category : #'private - in' }
+{ #category : 'private - in' }
 ZdcSimpleSocketStream >> fillReadBuffer [
 	"Ask the socket to fill the read buffer with data. Wait for a data."
 
@@ -91,7 +92,7 @@ ZdcSimpleSocketStream >> fillReadBuffer [
 			self fillReadBuffer ]
 ]
 
-{ #category : #'private - in' }
+{ #category : 'private - in' }
 ZdcSimpleSocketStream >> fillReadBufferNoWait [
 	"Ask the socket to fill the read buffer with data. Do not wait for data."
 
@@ -105,7 +106,7 @@ ZdcSimpleSocketStream >> fillReadBufferNoWait [
 	^ readCount
 ]
 
-{ #category : #'private - out' }
+{ #category : 'private - out' }
 ZdcSimpleSocketStream >> flushBytes: bytes startingAt: offset count: count [
 	"Ask the socket to write count bytes starting from offset. Wait. Fail if not successful"
 
@@ -119,7 +120,7 @@ ZdcSimpleSocketStream >> flushBytes: bytes startingAt: offset count: count [
 			ifFalse: [ ConnectionTimedOut signal: 'Data send timed out.' ] ]
 ]
 
-{ #category : #'private - out' }
+{ #category : 'private - out' }
 ZdcSimpleSocketStream >> flushWriteBuffer [
 	"Ask the socket to write all data in the write buffer. Fail if not successful"
 
@@ -131,14 +132,14 @@ ZdcSimpleSocketStream >> flushWriteBuffer [
 	writeBuffer reset
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSimpleSocketStream >> isConnected [
 	"Are we connected at the socket level ?"
 
 	^ socket notNil and: [ self socketIsConnected ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcSimpleSocketStream >> isDataAvailable [
 	"Return true when there is data available for reading.
 	This does not block."

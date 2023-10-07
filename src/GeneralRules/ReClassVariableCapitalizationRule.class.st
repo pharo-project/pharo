@@ -2,17 +2,19 @@
 Class and pool variable names should start with an uppercase letter.
 "
 Class {
-	#name : #ReClassVariableCapitalizationRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReClassVariableCapitalizationRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #'testing-interest' }
+{ #category : 'testing-interest' }
 ReClassVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 	aClass isMeta ifTrue: [ ^ self ].
 	aClass classVarNames, aClass sharedPoolNames
@@ -22,7 +24,7 @@ ReClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock 
 				(self critiqueFor: aClass about: each) ]
 ]
 
-{ #category : #'running - helpers' }
+{ #category : 'running - helpers' }
 ReClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |
@@ -43,12 +45,12 @@ ReClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 	^ crit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassVariableCapitalizationRule >> group [
 	^ 'Style'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReClassVariableCapitalizationRule >> name [
 	^ 'Class (or pool) variable not capitalized'
 ]

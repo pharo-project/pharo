@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Activators-DragAndDrop' }
+Package { #name : 'Commander-Activators-DragAndDrop' }

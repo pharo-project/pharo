@@ -2,40 +2,35 @@
 A metacello repository in a directory 
 "
 Class {
-	#name : #MCDirectoryRepository,
-	#superclass : #MCFileBasedRepository,
+	#name : 'MCDirectoryRepository',
+	#superclass : 'MCFileBasedRepository',
 	#instVars : [
 		'directory'
 	],
 	#classVars : [
 		'DefaultDirectoryName'
 	],
-	#category : #'Monticello-Repositories'
+	#category : 'Monticello-Repositories',
+	#package : 'Monticello',
+	#tag : 'Repositories'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepository class >> defaultDirectoryName [
 	^ DefaultDirectoryName ifNil: [ FileSystem workingDirectory fullName].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepository class >> defaultDirectoryName: aDirectoryName [
 	DefaultDirectoryName := aDirectoryName.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepository class >> description [
 	^ 'directory'
 ]
 
-{ #category : #'instance creation' }
-MCDirectoryRepository class >> morphicConfigure [
-	^ (UIManager default chooseDirectoryFrom: self defaultDirectoryName asFileReference) ifNotNil:
-		[:directory |
-		self new directory: directory]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepository >> allFileNamesForVersionNamed: aString [
 	"avoid slow default implementation and directly check for existing files"
 	|extensions|
@@ -45,60 +40,60 @@ MCDirectoryRepository >> allFileNamesForVersionNamed: aString [
 		thenSelect: [ :fileName| self includesFileNamed: fileName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepository >> description [
 	^ directory fullName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepository >> directory [
 	^ directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepository >> directory: aDirectory [
 	directory := aDirectory
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCDirectoryRepository >> hash [
 	^ directory hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDirectoryRepository >> includesFileNamed: aString [
 	"HACK: speed up the cache hits"
 	^ (directory / aString) exists.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDirectoryRepository >> includesVersionNamed: aString [
 	"avoid slow default implementation and directly check for existing files"
 	^ (self allFileNamesForVersionNamed: aString) isEmpty not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCDirectoryRepository >> initialize [
 	super initialize.
 	directory := FileSystem workingDirectory
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDirectoryRepository >> isValid [
 	^directory exists
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCDirectoryRepository >> loadAllFileNames [
 	^ (directory entries sort: [:a :b | a modificationTime >= b modificationTime]) collect: [:ea | ea basename]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCDirectoryRepository >> pathForFileNamed: aFileName [
   ^ (directory / aFileName) fullName
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	| val |
 	directory / aString binaryReadStreamDo: [ :stream|
@@ -106,7 +101,7 @@ MCDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	^ val
 ]
 
-{ #category : #'i/o' }
+{ #category : 'i/o' }
 MCDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace do: aBlock [
 
 	| file |

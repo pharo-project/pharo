@@ -1,1 +1,1 @@
-Package { #name : #'HeuristicCompletion-Model' }
+Package { #name : 'HeuristicCompletion-Model' }

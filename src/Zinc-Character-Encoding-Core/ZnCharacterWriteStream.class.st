@@ -5,27 +5,28 @@ I wrap another binary WriteStream and use a ZnCharacerEncoder to allow Character
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnCharacterWriteStream,
-	#superclass : #ZnEncodedWriteStream,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnCharacterWriteStream',
+	#superclass : 'ZnEncodedWriteStream',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> cr [
 	self nextPut: Character cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> crlf [
 	self cr; lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> lf [
 	self nextPut: Character lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> next: count putAll: collection startingAt: offset [
 	"Write count characters from collection starting at offset."
 
@@ -36,7 +37,7 @@ ZnCharacterWriteStream >> next: count putAll: collection startingAt: offset [
 		toStream: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> nextPut: object [
 	self encoder
 		nextPut: object
@@ -44,17 +45,17 @@ ZnCharacterWriteStream >> nextPut: object [
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> print: object [
 	object printOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> space [
 	self nextPut: Character space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterWriteStream >> tab [
 	self nextPut: Character tab
 ]

@@ -18,27 +18,29 @@ References:
 
 "
 Class {
-	#name : #AthensCairoExportSurface,
-	#superclass : #AthensCairoSurface,
+	#name : 'AthensCairoExportSurface',
+	#superclass : 'AthensCairoSurface',
 	#instVars : [
 		'extent'
 	],
-	#category : #'Athens-Cairo-Surface'
+	#category : 'Athens-Cairo-Surface',
+	#package : 'Athens-Cairo',
+	#tag : 'Surface'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoExportSurface class >> createExportingTo: fileName width: width height: height [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoExportSurface class >> extent: anExtent fileName: fileName [
 	^ (self createExportingTo: fileName width: anExtent x asFloat height: anExtent y asFloat)
 		initializeWith: anExtent;
 		yourself
 ]
 
-{ #category : #'finalize resources' }
+{ #category : 'finalize resources' }
 AthensCairoExportSurface class >> finalizeResourceData: data [
 	"Finalize external state. I override super behavior for two reasons:
 	* Export surfaces do not register to the SurfacePlugin, so there is less state to finalize.
@@ -54,12 +56,12 @@ AthensCairoExportSurface class >> finalizeResourceData: data [
 	surfaceHandle beNull
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoExportSurface class >> registerSurface: surface [
 	"Do not register my instances with SurfacePlugin since I only write to file."
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 AthensCairoExportSurface >> close [
 	"Finish and flush to file the external surface. It is a required step when drawing is done and file should be written to disk."
 
@@ -68,24 +70,24 @@ AthensCairoExportSurface >> close [
 		finalizeResourceData "Destroy surface (and canvas) and flush buffer to disk"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoExportSurface >> extent [
 	^ extent
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 AthensCairoExportSurface >> finalizeResourceData [
 	"Finalize my external state. Read comment on #finalizeResourceData: on class-side."
 
 	self class finalizeResourceData: self resourceData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoExportSurface >> height [
 	^ extent y
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoExportSurface >> initializeWith: anExtent [
 	self initialize.
 
@@ -93,14 +95,14 @@ AthensCairoExportSurface >> initializeWith: anExtent [
 	extent := anExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoExportSurface >> resourceData [
 	"See #finalizeResourceData: at class-side."
 
 	^ { handle. context handle }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoExportSurface >> width [
 	^ extent x
 ]

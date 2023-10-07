@@ -7,17 +7,19 @@ store, pop => popInto
 some returns => quick returns
 "
 Class {
-	#name : #IRFix,
-	#superclass : #IRVisitor,
+	#name : 'IRFix',
+	#superclass : 'IRVisitor',
 	#instVars : [
 		'prevInstr',
 		'storePopToFix',
 		'retToFix'
 	],
-	#category : #'OpalCompiler-Core-IR-Manipulation'
+	#category : 'OpalCompiler-Core-IR-Manipulation',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Manipulation'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 IRFix >> convertRet: assoc forSeq: seq [
 	| push ret |
 	push := assoc key.
@@ -26,7 +28,7 @@ IRFix >> convertRet: assoc forSeq: seq [
 	seq remove: ret
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRFix >> convertStorePop: assoc forSeq: seq [
 	| store pop |
 	store := assoc key.
@@ -35,7 +37,7 @@ IRFix >> convertStorePop: assoc forSeq: seq [
 	seq remove: pop
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRFix >> initialize [
 
 	super initialize.
@@ -44,13 +46,13 @@ IRFix >> initialize [
 	retToFix := OrderedCollection new
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRFix >> visitInstruction: instr [
 	self visitNode: instr.
 	prevInstr := instr
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRFix >> visitPop: pop [
 	prevInstr ifNil: [ ^ self ].
 	prevInstr isStore ifFalse: [ ^ self ].
@@ -58,14 +60,14 @@ IRFix >> visitPop: pop [
 	storePopToFix add: prevInstr -> pop
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRFix >> visitReturn: ret [
 	prevInstr ifNil: [ ^ self ].
 	prevInstr canBeQuickReturn ifFalse: [ ^ self ].
 	retToFix add: prevInstr -> ret
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRFix >> visitSequence: instructionSequence [
 	prevInstr := nil.
 	storePopToFix reset.

@@ -2,12 +2,13 @@
 I represent activation of commands using mouse click event
 "
 Class {
-	#name : #CmdClickActivation,
-	#superclass : #CmdMouseCommandActivation,
-	#category : #'Commander-Activators-Mouse'
+	#name : 'CmdClickActivation',
+	#superclass : 'CmdMouseCommandActivation',
+	#category : 'Commander-Activators-Mouse',
+	#package : 'Commander-Activators-Mouse'
 }
 
-{ #category : #'morphs setup' }
+{ #category : 'morphs setup' }
 CmdClickActivation class >> enableInMorph: aMorph withCommandsFrom: someObjectWithCommandContext [
 	super enableInMorph: aMorph withCommandsFrom: someObjectWithCommandContext.
 
@@ -19,7 +20,7 @@ CmdClickActivation class >> enableInMorph: aMorph withCommandsFrom: someObjectWi
 		send: #handleYellowMouseClickUsing:event:from: to: self withValue: someObjectWithCommandContext
 ]
 
-{ #category : #'morphs setup' }
+{ #category : 'morphs setup' }
 CmdClickActivation class >> handleYellowMouseClickUsing: someObjectWithCommandContext event: anEvent from: sourceMorph [
 
 	anEvent yellowButtonChanged ifFalse: [ ^ self ].
@@ -27,7 +28,7 @@ CmdClickActivation class >> handleYellowMouseClickUsing: someObjectWithCommandCo
 	^self handleMouseUsing: someObjectWithCommandContext event: anEvent from: sourceMorph
 ]
 
-{ #category : #'morphs setup' }
+{ #category : 'morphs setup' }
 CmdClickActivation class >> morphicEventType [
 	^#click
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #ClapPharoVersionTest,
-	#superclass : #ClapPharoCommandsTest,
-	#category : #'Clap-Tests-Commands'
+	#name : 'ClapPharoVersionTest',
+	#superclass : 'ClapPharoCommandsTest',
+	#category : 'Clap-Tests-Commands',
+	#package : 'Clap-Tests',
+	#tag : 'Commands'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testDefaultFormat [
 	context := ClapPharoVersion version activateWith: #('version').
 
@@ -14,7 +16,7 @@ ClapPharoVersionTest >> testDefaultFormat [
 		equals: SystemVersion current imageVersionString , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testFullFormat [
 	context := ClapPharoVersion version activateWith: #('version' '--full').
 
@@ -24,7 +26,7 @@ ClapPharoVersionTest >> testFullFormat [
 		equals: SystemVersion current imageVersionString , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testHashFormat [
 	context := ClapPharoVersion version activateWith: #('version' '--hash').
 
@@ -34,7 +36,7 @@ ClapPharoVersionTest >> testHashFormat [
 		equals: SystemVersion current commitHash , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testHelpFlag [
 	context := ClapPharoVersion version activateWith: #('version' '--help').
 
@@ -44,7 +46,7 @@ ClapPharoVersionTest >> testHelpFlag [
 		equals: 'Displays version information, in various formats'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testLicenseFormat [
 	context := ClapPharoVersion version activateWith: #('version' '--license').
 
@@ -54,7 +56,7 @@ ClapPharoVersionTest >> testLicenseFormat [
 		equals: (Smalltalk licenseString withLineEndings: self lineEnding)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testMultipleFormats [
 	| lines |
 	context := ClapPharoVersion version activateWith: #('version' '--hash' '--release' '--numeric').
@@ -72,7 +74,7 @@ ClapPharoVersionTest >> testMultipleFormats [
 		equals: SystemVersion current highestUpdate printString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testNumericFormat [
 	context := ClapPharoVersion version activateWith: #('version' '--numeric').
 
@@ -82,7 +84,7 @@ ClapPharoVersionTest >> testNumericFormat [
 		equals: SystemVersion current highestUpdate printString , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testReleaseFormat [
 	context := ClapPharoVersion version activateWith: #('version' '--release').
 
@@ -92,7 +94,7 @@ ClapPharoVersionTest >> testReleaseFormat [
 		equals: SystemVersion current shortVersionString , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapPharoVersionTest >> testVmFormat [
 	context := ClapPharoVersion version activateWith: #('version' '--vm').
 

@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Ring-Definitions-Core' }
+{ #category : '*Ring-Definitions-Core' }
 Object >> isRingObject [
 
 	^ false

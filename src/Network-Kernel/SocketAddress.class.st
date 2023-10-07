@@ -19,13 +19,15 @@ Reference
 	https://en.wikipedia.org/wiki/IP_address
 "
 Class {
-	#name : #SocketAddress,
-	#superclass : #ByteArray,
-	#type : #bytes,
-	#category : #'Network-Kernel-Base'
+	#name : 'SocketAddress',
+	#superclass : 'ByteArray',
+	#type : 'bytes',
+	#category : 'Network-Kernel-Base',
+	#package : 'Network-Kernel',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SocketAddress class >> fromDottedString: string [
 	"Create a SocketAddress from its dotted notation"
 
@@ -40,7 +42,7 @@ SocketAddress class >> fromDottedString: string [
 	^ self newFrom: integers
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SocketAddress class >> fromOldByteAddress: byteArray [
 	"Create a SocketAddress from byteArray, enforcing the correc length, 4"
 
@@ -48,32 +50,32 @@ SocketAddress class >> fromOldByteAddress: byteArray [
 	^ self newFrom: byteArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SocketAddress class >> zero [
 	"Return the zero SocketAddress, 0.0.0.0"
 
 	^ self basicNew: 4
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SocketAddress >> asSocketAddress [
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SocketAddress >> displayStringOn: stream [
 	"Overwrite to get standard object behaviour"
 
 	^ self printOn: stream
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketAddress >> isPrivateAddress [
 	^ self first = 10
 		or: [ (self first = 172 and: [ self second between: 16 and: 31 ])
 				or: [ self first = 192 and: [ self second = 168 ] ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SocketAddress >> printOn: stream [
 	self
 		do: [ :each | each printOn: stream ]

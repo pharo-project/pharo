@@ -1,6 +1,6 @@
-Extension { #name : #MCClassDefinition }
+Extension { #name : 'MCClassDefinition' }
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 MCClassDefinition >> asRingDefinition [
 	| ring |
 

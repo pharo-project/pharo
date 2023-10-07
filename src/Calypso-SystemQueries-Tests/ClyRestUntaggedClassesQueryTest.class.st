@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyRestUntaggedClassesQueryTest,
-	#superclass : #ClyClassQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyRestUntaggedClassesQueryTest',
+	#superclass : 'ClyClassQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyRestUntaggedClassesQueryTest >> createQuery [
 	^ClyRestUntaggedClassesQuery from: ClyPackageScope of: Object package in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testEmptyInPackageWithoutAnyTags [
 	query scope: (ClyPackageScope
 		of: ClyClass9FromPExtendedByP5Mock package in: environment).
@@ -17,7 +19,7 @@ ClyRestUntaggedClassesQueryTest >> testEmptyInPackageWithoutAnyTags [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testFromPackageWithExtensionsButWithoutTags [
 
 	self queryFromScope: ClyPackageScope of: ClyClass1FromP1Mock package.
@@ -25,7 +27,7 @@ ClyRestUntaggedClassesQueryTest >> testFromPackageWithExtensionsButWithoutTags [
 	self assert: resultItems isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testFromPackageWithTagsAndUncategorizedClasses [
 
 	self queryFromScope: ClyPackageScope of: ClyClass6UntaggedFromP5Mock package.
@@ -33,7 +35,7 @@ ClyRestUntaggedClassesQueryTest >> testFromPackageWithTagsAndUncategorizedClasse
 	self assert: resultItems asSet equals: {ClyClass6UntaggedFromP5Mock} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testFromPackageWithoutTagsAndExtensions [
 
 	self queryFromScope: ClyPackageScope of: ClyClass9FromPExtendedByP5Mock package.
@@ -41,7 +43,7 @@ ClyRestUntaggedClassesQueryTest >> testFromPackageWithoutTagsAndExtensions [
 	self assert: resultItems isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testIsEmptyFromEmptyClassScope [
 	"This query supports only package scope"
 	<expectedFailure>
@@ -49,7 +51,7 @@ ClyRestUntaggedClassesQueryTest >> testIsEmptyFromEmptyClassScope [
 	super testIsEmptyFromEmptyClassScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testNotEmptyInPackageWithTagsAndUncategorizedClasses [
 	query scope: (ClyPackageScope
 		of: ClyClass6UntaggedFromP5Mock package in: environment).
@@ -57,13 +59,13 @@ ClyRestUntaggedClassesQueryTest >> testNotEmptyInPackageWithTagsAndUncategorized
 	self deny: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testNotSelectsTaggedClass [
 
 	self deny: (query selectsClass: ClyClass7WithTag1FromP5Mock)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRestUntaggedClassesQueryTest >> testSelectsClassWithoutTags [
 
 	self assert: (query selectsClass: ClyClass6UntaggedFromP5Mock)

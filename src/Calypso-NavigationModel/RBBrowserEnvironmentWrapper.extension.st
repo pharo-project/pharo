@@ -1,6 +1,6 @@
-Extension { #name : #RBBrowserEnvironmentWrapper }
+Extension { #name : 'RBBrowserEnvironmentWrapper' }
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 RBBrowserEnvironmentWrapper >> query: aQuery [
 
 	self isBasedOnEmptyBasis ifTrue: [
@@ -13,7 +13,7 @@ RBBrowserEnvironmentWrapper >> query: aQuery [
 	^environment query: aQuery
 ]
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 RBBrowserEnvironmentWrapper >> supportsQuery: aQuery [
 	^ aQuery isKindOf: ClyTypedQuery
 ]

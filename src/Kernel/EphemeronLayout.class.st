@@ -2,12 +2,14 @@
 A layout for ephemeron objects
 "
 Class {
-	#name : #EphemeronLayout,
-	#superclass : #PointerLayout,
-	#category : #'Kernel-Layout'
+	#name : 'EphemeronLayout',
+	#superclass : 'PointerLayout',
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 
 	^ (superLayout extendEphemeron: aScope)
@@ -15,7 +17,7 @@ EphemeronLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 EphemeronLayout class >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
@@ -23,7 +25,7 @@ EphemeronLayout class >> subclassDefiningSymbol [
 	^#ephemeronSubclass:
 ]
 
-{ #category : #format }
+{ #category : 'format' }
 EphemeronLayout >> instanceSpecification [
 	^ 5
 ]

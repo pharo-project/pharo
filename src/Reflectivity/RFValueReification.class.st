@@ -12,22 +12,24 @@ Return: what will be returned
 
 "
 Class {
-	#name : #RFValueReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFValueReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFValueReification class >> entities [
 	^{RBValueNode . RBReturnNode. RBMethodNode . Variable}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFValueReification class >> key [
 	^#value
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
 
@@ -37,59 +39,59 @@ RFValueReification >> genForInstanceVariableSlot [
 		arguments: {RBVariableNode selfNode}
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal"
 	^RBLiteralNode value: entity value
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBArrayNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBAssignmentNode [
 	"#value for Assignemnt is the old value, is that what we want?"
 	^RBVariableNode named: entity variable name
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBBlockNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBCascadeNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBLiteralArrayNode [
 	^RBLiteralArrayNode value: entity value
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBLiteralValueNode [
 	^RBLiteralValueNode value: entity value
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBMessageNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBMethodNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBReturnNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> genForRBVariableNode [
 	entity variable
 		ifNotNil: [ entity variable isLiteralVariable
@@ -97,7 +99,7 @@ RFValueReification >> genForRBVariableNode [
 	^ RBVariableNode named: entity name
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> postamble: aNode [
 	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
 	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: self varName. ].
@@ -106,7 +108,7 @@ RFValueReification >> postamble: aNode [
 	^super postamble: aNode
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFValueReification >> preambleForArray: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -130,12 +132,12 @@ RFValueReification >> preambleForArray: aNode [
 	^ preamble
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFValueReification >> preambleForReturn: aNode [
 	^ RFStoreIntoTempNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFValueReification >> varName [
 	^#RFReifyValueVar
 ]

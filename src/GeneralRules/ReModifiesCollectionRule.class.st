@@ -10,31 +10,33 @@ into
 aCol copy do: [ :each |  ... aCol remove:... ]
 "
 Class {
-	#name : #ReModifiesCollectionRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReModifiesCollectionRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReModifiesCollectionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ModifiesCollectionRule'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReModifiesCollectionRule >> afterCheck: aNode mappings: mappingDict [
 	^ self
 		modifiesCollection: (mappingDict at: '`@collection')
 		inAnyStatement: (mappingDict at: '`@.Statements')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReModifiesCollectionRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReModifiesCollectionRule >> initialize [
 	super initialize.
 	self
@@ -46,7 +48,7 @@ ReModifiesCollectionRule >> initialize [
 			'`@collection inject: `@value into: [:`sum :`each | | `@temps | `@.Statements]')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReModifiesCollectionRule >> modifiesCollection: aCollectionNode inAnyStatement: aStatementCollection [
 	aStatementCollection do: [ :statement |
 		statement nodesDo: [ :node |
@@ -55,12 +57,12 @@ ReModifiesCollectionRule >> modifiesCollection: aCollectionNode inAnyStatement: 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReModifiesCollectionRule >> name [
 	^ 'Modifies collection while iterating over it'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReModifiesCollectionRule >> rationale [
 
 	^ 'Checks for remove:''s of elements inside of collection iteration methods such as do:. '

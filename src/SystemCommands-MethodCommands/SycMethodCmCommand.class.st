@@ -2,17 +2,18 @@
 This class is an extension so we can mix command of Commander2 with Commander.
 "
 Class {
-	#name : #SycMethodCmCommand,
-	#superclass : #SycCmCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycMethodCmCommand',
+	#superclass : 'SycCmCommand',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMethodCmCommand class >> activationStrategy [
 	^ SycMethodMenuActivation
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 SycMethodCmCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	self setUpModelFromContext: context

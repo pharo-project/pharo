@@ -19,7 +19,7 @@ packageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames, #BaselineO
 environment := repository asRing2EnvironmentWith: packageNames.		
 
 environment fixProtoObjectClassSuperclass.
-environment addGlobalsNamed: #(Undeclared Smalltalk UTF8TextConverter MacRomanTextConverter FileStream ChangeSet Character Processor SystemOrganization).
+environment addGlobalsNamed: #(Undeclared Smalltalk UTF8TextConverter MacRomanTextConverter FileStream ChangeSet Character Processor).
 
 environment clean.
 

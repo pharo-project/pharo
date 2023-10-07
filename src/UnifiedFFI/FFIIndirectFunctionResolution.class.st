@@ -6,17 +6,19 @@ In summary: I take a function pointer kept in a global symbol and execute it.
 I implement the option:  optIndirectCall 
 "
 Class {
-	#name : #FFIIndirectFunctionResolution,
-	#superclass : #FFIFunctionResolutionStrategy,
-	#category : #'UnifiedFFI-Callouts'
+	#name : 'FFIIndirectFunctionResolution',
+	#superclass : 'FFIFunctionResolutionStrategy',
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIIndirectFunctionResolution >> isApplicableFor: aRequestor [
 	^ aRequestor optionAt: #optIndirectCall
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FFIIndirectFunctionResolution >> resolveFunction: anExternalFunction [
 	^ (ExternalAddress
 		loadSymbol: anExternalFunction name

@@ -1,6 +1,6 @@
-Extension { #name : #Character }
+Extension { #name : 'Character' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 Character >> asText [
 	^ self asString asText
 ]

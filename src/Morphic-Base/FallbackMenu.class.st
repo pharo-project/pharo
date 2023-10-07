@@ -7,16 +7,18 @@ I include items to:
 * Custom: clients can add items to me by implementing #fallbackMenuOn:. Browse implementors for examples.
 "
 Class {
-	#name : #FallbackMenu,
-	#superclass : #Object,
+	#name : 'FallbackMenu',
+	#superclass : 'Object',
 	#instVars : [
 		'builder',
 		'client'
 	],
-	#category : #'Morphic-Base-Menus'
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FallbackMenu class >> when: aPragmaMenuBuilder fails: anObject [
 
 	^ self new
@@ -25,26 +27,26 @@ FallbackMenu class >> when: aPragmaMenuBuilder fails: anObject [
 			menu
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> builder: aPragmaMenuBuilder [
 
 	builder := aPragmaMenuBuilder
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> client: anObject [
 
 	client := anObject
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 FallbackMenu >> debug [
 
 	"If we don't reset the builder after debugging, the fallback menu does not appear anymore"
 	[ builder menuSpec asMenuMorph ] ensure: [ builder reset ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> fallbackMenuExplanations [
 
 	| workspace wsBindings |
@@ -58,7 +60,7 @@ menu debug'.
 		setBindings: wsBindings
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
 

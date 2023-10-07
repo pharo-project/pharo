@@ -1,6 +1,6 @@
-Extension { #name : #UnixPlatform }
+Extension { #name : 'UnixPlatform' }
 
-{ #category : #'*System-Clipboard' }
+{ #category : '*System-Clipboard' }
 UnixPlatform >> clipboardClass [
 	^UnixClipboard
 ]

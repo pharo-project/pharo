@@ -4,12 +4,14 @@ I am a specialization of FLMaterializer that knows how to materialize the header
 I copy the current configuration and manipulated some values to make the configuration works for header materialization. I also prevent recursive header materialization.
 "
 Class {
-	#name : #FLHeaderMaterializer,
-	#superclass : #FLMaterializer,
-	#category : #'Fuel-Core-Configuration'
+	#name : 'FLHeaderMaterializer',
+	#superclass : 'FLMaterializer',
+	#category : 'Fuel-Core-Configuration',
+	#package : 'Fuel-Core',
+	#tag : 'Configuration'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLHeaderMaterializer >> initialize [
 	super initialize.
 	
@@ -23,7 +25,7 @@ FLHeaderMaterializer >> initialize [
 	self prepare
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 FLHeaderMaterializer >> materialize [
 	| materializedObjects |
 	(FLCurrentConfiguration value isMemberOf: self class) ifTrue: [
@@ -40,7 +42,7 @@ FLHeaderMaterializer >> materialize [
 	^ materializedObjects
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLHeaderMaterializer >> prepare [
 	#(
 		object
@@ -55,12 +57,12 @@ FLHeaderMaterializer >> prepare [
 			ifAbsent: [] ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 FLHeaderMaterializer >> shouldFinalizeStream [
 	^ false
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 FLHeaderMaterializer >> useDuring: aBlock [
 	| stream |
 	stream := FLCurrentContext value stream.

@@ -1,6 +1,6 @@
-Extension { #name : #MethodModified }
+Extension { #name : 'MethodModified' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 MethodModified >> canAffectResultOfMethodQuery: aMethodQuery [
 
 	^(aMethodQuery isAffectedByChangedMethod: self oldMethod)

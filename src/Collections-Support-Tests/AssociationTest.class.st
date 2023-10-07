@@ -2,22 +2,24 @@
 SUnit tests for Associations
 "
 Class {
-	#name : #AssociationTest,
-	#superclass : #ClassTestCase,
+	#name : 'AssociationTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'a',
 		'b'
 	],
-	#category : #'Collections-Support-Tests-Associations'
+	#category : 'Collections-Support-Tests-Associations',
+	#package : 'Collections-Support-Tests',
+	#tag : 'Associations'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 AssociationTest >> classToBeTested [
 
 	^ Association
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AssociationTest >> setUp [
 
 	super setUp.
@@ -25,13 +27,13 @@ AssociationTest >> setUp [
 	b := 1 -> 'een'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssociationTest >> testComparison [
 
 	self assert: ((#a -> 'foo') < (#b -> 'zork'))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssociationTest >> testEquality [
 	self
 		assert: a key equals: b key;
@@ -39,7 +41,7 @@ AssociationTest >> testEquality [
 		deny: a equals: b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssociationTest >> testHash [
 
 	self
@@ -47,7 +49,7 @@ AssociationTest >> testHash [
 		assert: a hash equals: b hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssociationTest >> testIsSelfEvaluating [
 	| anotherAssociation |
 	self assert: a isSelfEvaluating.
@@ -60,7 +62,7 @@ AssociationTest >> testIsSelfEvaluating [
 							description: 'a self evaluating should evaluate as self' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssociationTest >> testStoreOnNegativeInteger [
 	| association storeString |
 	association := 'a'-> -1.
@@ -70,7 +72,7 @@ AssociationTest >> testStoreOnNegativeInteger [
 	self assert: storeString equals: '(''a''-> -1)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AssociationTest >> testStoreOnPositiveInteger [
 	| association storeString |
 	association := 'a'-> 1.

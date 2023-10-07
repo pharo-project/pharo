@@ -2,22 +2,24 @@
 A selection block in a text paragraph 
 "
 Class {
-	#name : #ParagraphSelectionBlock,
-	#superclass : #Object,
+	#name : 'ParagraphSelectionBlock',
+	#superclass : 'Object',
 	#instVars : [
 		'first',
 		'last',
 		'color'
 	],
-	#category : #'Morphic-Base-Text Support'
+	#category : 'Morphic-Base-Text Support',
+	#package : 'Morphic-Base',
+	#tag : 'Text Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ParagraphSelectionBlock class >> first: firstCharBlock last: lastCharBlock color: aColor [
 	^ self new first: firstCharBlock last: lastCharBlock color: aColor
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 ParagraphSelectionBlock >> displayInLine: line on: aCanvas [
 	"Display myself in the passed line."
 	| startIdx stopIdx leftX rightX |
@@ -35,13 +37,13 @@ ParagraphSelectionBlock >> displayInLine: line on: aCanvas [
 	aCanvas fillRectangle: (leftX @ line top corner: rightX @ line bottom) color: color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParagraphSelectionBlock >> first [
 
 	^ first
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ParagraphSelectionBlock >> first: firstCharBlock last: lastCharBlock color: aColor [
 
 	first := firstCharBlock.
@@ -49,7 +51,7 @@ ParagraphSelectionBlock >> first: firstCharBlock last: lastCharBlock color: aCol
 	color := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParagraphSelectionBlock >> last [
 
 	^ last

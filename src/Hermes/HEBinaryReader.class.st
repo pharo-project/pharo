@@ -14,30 +14,32 @@ In this way the format can be used in any platform and architecture.
 The integers are stored in little endian style.
 "
 Class {
-	#name : #HEBinaryReader,
-	#superclass : #Object,
+	#name : 'HEBinaryReader',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Hermes-CommandLineHandler'
+	#category : 'Hermes-CommandLineHandler',
+	#package : 'Hermes',
+	#tag : 'CommandLineHandler'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEBinaryReader >> close [
 	self stream close
 ]
 
-{ #category : #sizes }
+{ #category : 'sizes' }
 HEBinaryReader >> intSize [
 	^ 4
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEBinaryReader >> readByte [
 	^ stream next
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEBinaryReader >> readByteArray [
 	| byteArray size |
 	size := self readInt32.
@@ -45,17 +47,17 @@ HEBinaryReader >> readByteArray [
 	^ byteArray
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEBinaryReader >> readByteString [
 	^ self readByteArray asString
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEBinaryReader >> readByteSymbol [
 	^ self readByteString asSymbol
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEBinaryReader >> readInt32 [
 	| byteArray n |
 	byteArray := stream next: self intSize.
@@ -68,7 +70,7 @@ HEBinaryReader >> readInt32 [
 	^ n
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEBinaryReader >> readUInt32 [
 	| byteArray n |
 	byteArray := stream next: self intSize.
@@ -79,12 +81,12 @@ HEBinaryReader >> readUInt32 [
 	^ n
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEBinaryReader >> stream [
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEBinaryReader >> stream: anObject [
 	stream := anObject
 ]

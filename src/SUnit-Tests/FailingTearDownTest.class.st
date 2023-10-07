@@ -8,42 +8,44 @@ If true, it will fail during tearDown.
 If false, it will not fail.
 "
 Class {
-	#name : #FailingTearDownTest,
-	#superclass : #TestCase,
+	#name : 'FailingTearDownTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'shouldFailTearDown',
 		'assignedVariableToTestCleanup'
 	],
-	#category : #'SUnit-Tests-Core'
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FailingTearDownTest >> failTearDown [
 
 	shouldFailTearDown := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FailingTearDownTest >> initialize [
 
 	super initialize.
 	shouldFailTearDown := false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FailingTearDownTest >> isClean [
 
 	^ assignedVariableToTestCleanup isNil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FailingTearDownTest >> tearDown [
 
 	shouldFailTearDown ifTrue: [ self error: 'Failing to test the tearDown' ].
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FailingTearDownTest >> testAssignToTestCleanup [
 
 	"
@@ -54,7 +56,7 @@ FailingTearDownTest >> testAssignToTestCleanup [
 	assignedVariableToTestCleanup := 'some value'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FailingTearDownTest >> testFailingTearDown [
 
 	| testCase |

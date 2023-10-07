@@ -3,24 +3,26 @@ I am a base class for the commands which switch the full browser mode of the cla
 It can be flat list or class hierarchy for example
 "
 Class {
-	#name : #ClySwitchClassViewModeCommand,
-	#superclass : #ClySwitchBrowserModeCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Hierarchy'
+	#name : 'ClySwitchClassViewModeCommand',
+	#superclass : 'ClySwitchBrowserModeCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Hierarchy',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Hierarchy'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchClassViewModeCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchClassViewModeCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
 
 	^ClyToolbarActivation byItemOf: ClyClassHierarchyToolbarGroup for: ClyFullBrowserClassContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchClassViewModeCommand class >> isAbstract [
 	^self = ClySwitchClassViewModeCommand
 ]

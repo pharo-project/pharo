@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyAsyncQueryTest,
-	#superclass : #ClyWrapQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyAsyncQueryTest',
+	#superclass : 'ClyWrapQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAsyncQueryTest >> createQuery [
 	^ ClyAsyncQuery for: (ClyReturningScopeBasisExampleQuery
 			from: ClyExampleScope of: self class in: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAsyncQueryTest >> queryClass [
 	^ClyAsyncQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryTest >> testComparingWithAnotherAsyncQueryWithDifferentAsyncResult [
 	| anotherQuery |
 	anotherQuery := query semiAsync.
@@ -23,12 +24,12 @@ ClyAsyncQueryTest >> testComparingWithAnotherAsyncQueryWithDifferentAsyncResult 
 	self deny: query equals: anotherQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryTest >> testConvertingToAsyncQuery [
 	self assert: query async identicalTo: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryTest >> testConvertingToSemiAsyncQuery [
 	| convertedQuery |
 	convertedQuery := query semiAsync.
@@ -40,13 +41,13 @@ ClyAsyncQueryTest >> testConvertingToSemiAsyncQuery [
 	self assert: convertedQuery scope identicalTo: query scope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryTest >> testHasAsyncResultbyDefault [
 
 	self assert: query asyncResult class equals: ClyAsyncQueryResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryTest >> testPrepareResultForExecution [
 	| preparedResult |
 	preparedResult := query prepareNewResult.
@@ -57,7 +58,7 @@ ClyAsyncQueryTest >> testPrepareResultForExecution [
 	self assert: preparedResult isProtected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryTest >> testPrepareResultForExecutionWhenItIsSemiAsync [
 	| preparedResult |
 	preparedResult := query semiAsync prepareNewResult.

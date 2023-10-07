@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfBaseLibraries }
+Package { #name : 'BaselineOfBaseLibraries' }

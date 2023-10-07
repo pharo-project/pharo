@@ -28,21 +28,23 @@ Short version of RFC2045, Sect. 6.7:
  must be used.  An equal sign as the last character on a encoded line indicates such a non-significant (""soft"") line break in the encoded text.
 "
 Class {
-	#name : #QuotedPrintableMimeConverter,
-	#superclass : #MimeConverter,
+	#name : 'QuotedPrintableMimeConverter',
+	#superclass : 'MimeConverter',
 	#instVars : [
 		'newline'
 	],
-	#category : #'Network-MIME-Converter'
+	#category : 'Network-MIME-Converter',
+	#package : 'Network-MIME',
+	#tag : 'Converter'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 QuotedPrintableMimeConverter >> initialize [
 	super initialize.
 	newline := String cr
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 QuotedPrintableMimeConverter >> mimeDecode [
 	| char outChar previousChar |
 	previousChar := nil.
@@ -67,7 +69,7 @@ QuotedPrintableMimeConverter >> mimeDecode [
 				previousChar := outChar ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 QuotedPrintableMimeConverter >> mimeEncode [
 	| char charValue lineLength |
 	lineLength := 0.
@@ -95,7 +97,7 @@ QuotedPrintableMimeConverter >> mimeEncode [
 						lineLength := lineLength + 3 ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 QuotedPrintableMimeConverter >> newline: string [
 	"Set another newline convention, like CRLF or LF that I should use.
 	By default I use CR."

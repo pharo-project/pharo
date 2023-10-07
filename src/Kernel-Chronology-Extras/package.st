@@ -1,1 +1,1 @@
-Package { #name : #'Kernel-Chronology-Extras' }
+Package { #name : 'Kernel-Chronology-Extras' }

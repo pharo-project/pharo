@@ -19,16 +19,18 @@ Internal Representation and Key Implementation Points.
 	conditionBlock:		<BlockClosure>
 "
 Class {
-	#name : #AnnouncementDeliveryCondition,
-	#superclass : #Object,
+	#name : 'AnnouncementDeliveryCondition',
+	#superclass : 'Object',
 	#instVars : [
 		'announcementClass',
 		'conditionBlock'
 	],
-	#category : #'Announcements-Core-Conditions'
+	#category : 'Announcements-Core-Conditions',
+	#package : 'Announcements-Core',
+	#tag : 'Conditions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AnnouncementDeliveryCondition class >> for: anAnnouncementClass where: aBlock [
 
 	^self new
@@ -36,29 +38,33 @@ AnnouncementDeliveryCondition class >> for: anAnnouncementClass where: aBlock [
 		conditionBlock: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementDeliveryCondition >> announcementClass [
+
 	^ announcementClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementDeliveryCondition >> announcementClass: anObject [
+
 	announcementClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementDeliveryCondition >> conditionBlock [
+
 	^ conditionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementDeliveryCondition >> conditionBlock: anObject [
+
 	conditionBlock := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AnnouncementDeliveryCondition >> handlesAnnouncement: anAnnouncement [
 
-	^(announcementClass handlesAnnouncement: anAnnouncement)
+	^ (announcementClass handlesAnnouncement: anAnnouncement)
 		and: [conditionBlock value: anAnnouncement ]
 ]

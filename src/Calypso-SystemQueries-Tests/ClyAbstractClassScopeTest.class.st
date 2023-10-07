@@ -1,25 +1,27 @@
 Class {
-	#name : #ClyAbstractClassScopeTest,
-	#superclass : #ClyTypedScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyAbstractClassScopeTest',
+	#superclass : 'ClyTypedScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAbstractClassScopeTest class >> isAbstract [
 	^self == ClyAbstractClassScopeTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAbstractClassScopeTest >> extraBasisSample [
 	^ClyClass2FromP1Mock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAbstractClassScopeTest >> singleBasisSample [
 	^ClyClass1FromP1Mock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractClassScopeTest >> testConvertingToIncreasedScopeByExtraClassScope [
 	| convertedScope extraClassScope |
 	scope := self singleScopeSample.
@@ -31,7 +33,7 @@ ClyAbstractClassScopeTest >> testConvertingToIncreasedScopeByExtraClassScope [
 	self assert: convertedScope basisObjects equals: scope basisObjects, self class allSuperclasses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractClassScopeTest >> testConvertingToInterestingClassScope [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -41,7 +43,7 @@ ClyAbstractClassScopeTest >> testConvertingToInterestingClassScope [
 	self assert: convertedScope equals: scope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractClassScopeTest >> testConvertingToReducedScopeByExtraClassScope [
 
 	| convertedScope extraClassScope increasedScope |
@@ -54,7 +56,7 @@ ClyAbstractClassScopeTest >> testConvertingToReducedScopeByExtraClassScope [
 	self assert: convertedScope basisObjects equals: (scope basisObjects collect: [:each | each instanceSide])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAbstractClassScopeTest >> testConvertingToSomeHierarchyScope [
 	| convertedScope |
 	scope := self createSampleScope.

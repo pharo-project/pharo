@@ -2,12 +2,14 @@
 STONWritePrettyPrinterReadTests tests pretty printed serialization followed by materialization.
 "
 Class {
-	#name : #STONWritePrettyPrinterReadTest,
-	#superclass : #STONWriteReadTest,
-	#category : #'STON-Tests-Write-Read'
+	#name : 'STONWritePrettyPrinterReadTest',
+	#superclass : 'STONWriteReadTest',
+	#category : 'STON-Tests-Write-Read',
+	#package : 'STON-Tests',
+	#tag : 'Write-Read'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 STONWritePrettyPrinterReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		STON writer
@@ -16,7 +18,7 @@ STONWritePrettyPrinterReadTest >> serialize: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWritePrettyPrinterReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
 		STON jsonWriter

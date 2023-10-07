@@ -1,6 +1,6 @@
-Extension { #name : #RBLiteralValueNode }
+Extension { #name : 'RBLiteralValueNode' }
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBLiteralValueNode >> completionEntries: offset [
 	value isSymbol ifFalse: [ ^ #() ].
 	"return all symbols that start with value"
@@ -9,7 +9,7 @@ RBLiteralValueNode >> completionEntries: offset [
 		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
 ]
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBLiteralValueNode >> completionToken: offset [
 	^ self value asString
 ]

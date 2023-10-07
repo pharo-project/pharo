@@ -1,6 +1,6 @@
 Class {
-	#name : #ClyInstallMetaLinkPresenterTest,
-	#superclass : #TestCase,
+	#name : 'ClyInstallMetaLinkPresenterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'node',
 		'metalink',
@@ -9,30 +9,32 @@ Class {
 		'executionCounter',
 		'watchpoint'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Tests-Metalinks'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Tests-Metalinks',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser-Tests',
+	#tag : 'Metalinks'
 }
 
-{ #category : #'helper methods' }
+{ #category : 'helper methods' }
 ClyInstallMetaLinkPresenterTest >> dummyMethod [
 	self
 ]
 
-{ #category : #'helper methods' }
+{ #category : 'helper methods' }
 ClyInstallMetaLinkPresenterTest >> nodeInRealMethod [
 	^(self class >> #dummyMethod) ast statements first
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyInstallMetaLinkPresenterTest >> presenterForMetalinkInstallation [
 	^ClyMetaLinkInstallationPresenter onNode: node forInstallation:  true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyInstallMetaLinkPresenterTest >> presenterForMetalinkUninstallation [
 	^ ClyMetaLinkInstallationPresenter onNode: node forInstallation: false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyInstallMetaLinkPresenterTest >> setUp [
 	super setUp.
 	MetaLink uninstallAll.
@@ -45,14 +47,14 @@ ClyInstallMetaLinkPresenterTest >> setUp [
 	node propertyAt: #links put: {metalink. breakpoint. executionCounter. watchpoint} asOrderedCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyInstallMetaLinkPresenterTest >> tearDown [
 	metalink uninstall.
 	metalink2 uninstall.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalink [
 	|presenter list|
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
@@ -64,7 +66,7 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalink [
 	self assert: self nodeInRealMethod links asArray first identicalTo: list items first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
 	|presenter list|
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
@@ -76,7 +78,7 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
 	self assert: self nodeInRealMethod links asArray first identicalTo: list items first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForInstallation [
 	|links|
 	links := self presenterForMetalinkInstallation allRelevantMetaLinks.
@@ -85,7 +87,7 @@ ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForInstallation [
 	self denyCollection: links includesAll: { breakpoint. watchpoint. executionCounter  }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForUninstallation [
 	| links |
 	links := self presenterForMetalinkUninstallation allRelevantMetaLinks.
@@ -93,13 +95,13 @@ ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForUninstallation [
 	self assertCollection: links hasSameElements: { metalink }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testToolbarButtonsCollectionSize [
 	self assert: self presenterForMetalinkInstallation toolbarButtons size equals: 2.
 	self assert: self presenterForMetalinkUninstallation toolbarButtons size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testToolbarButtonsForMetalinkInstallation [
 	|toolbarButtons|
 	toolbarButtons := self presenterForMetalinkInstallation toolbarButtons.
@@ -107,7 +109,7 @@ ClyInstallMetaLinkPresenterTest >> testToolbarButtonsForMetalinkInstallation [
 	self assert: toolbarButtons last label equals: 'Cancel'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testToolbarButtonsForMetalinkUninstallation [
 	|toolbarButtons|
 	toolbarButtons := self presenterForMetalinkUninstallation toolbarButtons.
@@ -115,7 +117,7 @@ ClyInstallMetaLinkPresenterTest >> testToolbarButtonsForMetalinkUninstallation [
 	self assert: toolbarButtons last label equals: 'Cancel'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalink [
 	|presenter list|
 	self nodeInRealMethod link: metalink.
@@ -127,7 +129,7 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalink [
 	self deny: self nodeInRealMethod hasMetaLinks
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalinkActionButton [
 	|presenter list|
 	self nodeInRealMethod link: metalink.

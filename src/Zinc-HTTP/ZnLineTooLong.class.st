@@ -4,27 +4,29 @@ ZnLineTooLong is signalled when an HTTP CRLF terminated input line exceeds a pre
 Part of Zinc HTTP Components. 
 "
 Class {
-	#name : #ZnLineTooLong,
-	#superclass : #ZnParseError,
+	#name : 'ZnLineTooLong',
+	#superclass : 'ZnParseError',
 	#instVars : [
 		'limit'
 	],
-	#category : #'Zinc-HTTP-Exceptions'
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnLineTooLong class >> limit: limit [
 	^ self new
 		limit: limit;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLineTooLong >> limit [
 	^ limit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLineTooLong >> limit: anObject [
 	limit := anObject
 ]

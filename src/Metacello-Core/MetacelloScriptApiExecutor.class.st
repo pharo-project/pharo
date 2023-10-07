@@ -2,18 +2,20 @@
 MetacelloScriptExecutor decodes script args and launches MetacelloScriptEngine to run for each projectSpec encounters...i,e., primarily here to handl array and block args to configuration:, baseline: or project:.
 "
 Class {
-	#name : #MetacelloScriptApiExecutor,
-	#superclass : #MetacelloScriptExecutor,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloScriptApiExecutor',
+	#superclass : 'MetacelloScriptExecutor',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'execution callback' }
+{ #category : 'execution callback' }
 MetacelloScriptApiExecutor >> executeBlock: selectBlock do: projectSpecBlock [
     (self projectSpecsFromRepositoryArg select: selectBlock)
         do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
 ]
 
-{ #category : #'execution callback' }
+{ #category : 'execution callback' }
 MetacelloScriptApiExecutor >> executeCollection: aCollection do: projectSpecBlock [
     self projectSpecsFromRepositoryArg
         do: [ :projectSpec | 
@@ -21,7 +23,7 @@ MetacelloScriptApiExecutor >> executeCollection: aCollection do: projectSpecBloc
                 ifTrue: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
 ]
 
-{ #category : #'execution callback' }
+{ #category : 'execution callback' }
 MetacelloScriptApiExecutor >> executeString: aString do: projectSpecBlock [
   singleRoot ifNil: [ self singleRoot: true ].
   (projectSpecGenerator projectSpecCreationBlock value: aString)
@@ -30,7 +32,7 @@ MetacelloScriptApiExecutor >> executeString: aString do: projectSpecBlock [
         ifNotNil: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
 ]
 
-{ #category : #'execution callback' }
+{ #category : 'execution callback' }
 MetacelloScriptApiExecutor >> projectSpecsFromRepositoryArg [
     | spec repo projectSpecs |
     repositoryArg ifNil: [ ^ #() ].

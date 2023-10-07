@@ -2,25 +2,27 @@
 I am the event handler linked to the SDL2AthensExample
 "
 Class {
-	#name : #OSWindowAthensExampleEventHandler,
-	#superclass : #OSWindowEventVisitor,
+	#name : 'OSWindowAthensExampleEventHandler',
+	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
 		'athensExample'
 	],
-	#category : #'OSWindow-SDL2-Examples-Examples'
+	#category : 'OSWindow-SDL2-Examples-Examples',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAthensExampleEventHandler >> athensExample [
 	^ athensExample
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAthensExampleEventHandler >> athensExample: anObject [
 	athensExample := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowAthensExampleEventHandler >> visitWindowCloseEvent: anEvent [
 	athensExample destroy
 ]

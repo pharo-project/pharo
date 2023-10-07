@@ -1,33 +1,35 @@
 Class {
-	#name : #RGTraitExclusion,
-	#superclass : #RGTraitTransformation,
+	#name : 'RGTraitExclusion',
+	#superclass : 'RGTraitTransformation',
 	#instVars : [
 		'exclusions'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitExclusion >> addExclusion: aSymbol [
 
 	self parent parent announceDefinitionChangeDuring: [
 		self backend forBehavior addExclusion: aSymbol to: self. ]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitExclusion >> cleanExclusions [
 
 	self parent parent announceDefinitionChangeDuring: [
 		self backend forBehavior cleanExclusionsFor: self. ]
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGTraitExclusion >> defaultExclusions [
 
 	^ OrderedCollection new
 ]
 
-{ #category : #'queries - exclusions' }
+{ #category : 'queries - exclusions' }
 RGTraitExclusion >> exclusions [
 
 	| allExclusions |
@@ -36,13 +38,13 @@ RGTraitExclusion >> exclusions [
 	^ allExclusions
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitExclusion >> exclusionsDo: aBlock [
 
 	self backend forBehavior exclusionsFor: self do: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitExclusion >> initialize [
 
 	super initialize.
@@ -50,7 +52,7 @@ RGTraitExclusion >> initialize [
 	exclusions := self unresolvedValue: self defaultExclusions
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitExclusion >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -58,13 +60,13 @@ RGTraitExclusion >> initializeUnresolved [
 	exclusions := self unresolvedValue: self defaultExclusions
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGTraitExclusion >> isTraitExclusion [
 
 	^ true
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGTraitExclusion >> makeResolved [
 
 	super makeResolved.
@@ -72,13 +74,13 @@ RGTraitExclusion >> makeResolved [
 	exclusions := self exclusions markAsRingResolved
 ]
 
-{ #category : #'queries - methods' }
+{ #category : 'queries - methods' }
 RGTraitExclusion >> methods [
 
 	^ self subject methods reject: [ :each | self exclusions includes: each name  ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitExclusion >> pvtAddExclusion: aSymbol [
 
 
@@ -88,25 +90,25 @@ RGTraitExclusion >> pvtAddExclusion: aSymbol [
 	exclusions add: aSymbol
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitExclusion >> pvtCleanExclusions [
 
 	exclusions := self defaultExclusions
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitExclusion >> pvtExclusionsDo: aBlock [
 
 	exclusions value do: aBlock
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitExclusion >> pvtRemoveExclusion: aSymbol [
 
 	exclusions remove: aSymbol
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitExclusion >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -114,14 +116,14 @@ RGTraitExclusion >> pvtResolvableProperties [
 	}
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitExclusion >> removeExclusion: aSymbol [
 
 	self parent parent announceDefinitionChangeDuring: [
 		self backend forBehavior removeExclusion: aSymbol from: self. ]
 ]
 
-{ #category : #traits }
+{ #category : 'traits' }
 RGTraitExclusion >> traitCompositionString [
 
 	^ String streamContents: [:aStream |
@@ -136,7 +138,7 @@ RGTraitExclusion >> traitCompositionString [
 	aStream nextPut: $}]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitExclusion >> traitTransformationString [
 
 	^ String streamContents: [:aStream |

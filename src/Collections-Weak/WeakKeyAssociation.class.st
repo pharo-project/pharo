@@ -6,28 +6,30 @@ Since I know my container, I am not shareable between different dictionaries.
 
 "
 Class {
-	#name : #WeakKeyAssociation,
-	#superclass : #Association,
-	#type : #ephemeron,
+	#name : 'WeakKeyAssociation',
+	#superclass : 'Association',
+	#type : 'ephemeron',
 	#instVars : [
 		'container'
 	],
-	#category : #'Collections-Weak-Dictionaries'
+	#category : 'Collections-Weak-Dictionaries',
+	#package : 'Collections-Weak',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakKeyAssociation >> container [
 
 	^ container
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakKeyAssociation >> container: anObject [
 
 	container := anObject
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 WeakKeyAssociation >> mourn [
 
 	container removeKey: key ifAbsent: [

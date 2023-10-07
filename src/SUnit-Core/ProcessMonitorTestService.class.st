@@ -83,8 +83,8 @@ Internal Representation and Key Implementation Points.
 	shouldSuspendBackgroundFailures:		<Boolean>
 "
 Class {
-	#name : #ProcessMonitorTestService,
-	#superclass : #TestExecutionService,
+	#name : 'ProcessMonitorTestService',
+	#superclass : 'TestExecutionService',
 	#instVars : [
 		'forkedProcesses',
 		'testFailures',
@@ -96,15 +96,17 @@ Class {
 		'shouldFailTestLeavingProcesses',
 		'shouldTerminateProcesses'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'fuel support' }
+{ #category : 'fuel support' }
 ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
     ^#('forkedProcesses' 'suspendedBackgroundFailures')
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ProcessMonitorTestService class >> settingsForFailingStrategyOn: aBuilder [
 
 	(aBuilder setting: #shouldFailTestLeavingProcesses)
@@ -122,7 +124,7 @@ And this setting is to facilitate such rule relatively to background processes f
 See ProcessMonitorTestService comment for more details'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ProcessMonitorTestService class >> settingsForTerminationStrategyOn: aBuilder [
 
 	(aBuilder setting: #shouldTerminateProcesses)
@@ -137,7 +139,7 @@ This setting is about doing it in automatic way.
 See ProcessMonitorTestService comment for more details'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ProcessMonitorTestService class >> settingsOn: aBuilder [
 	super settingsOn: aBuilder.
 
@@ -146,27 +148,27 @@ ProcessMonitorTestService class >> settingsOn: aBuilder [
 		settingsForTerminationStrategyOn: aBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService class >> shouldFailTestLeavingProcesses [
 	^shouldFailTestLeavingProcesses ifNil: [ shouldFailTestLeavingProcesses := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService class >> shouldFailTestLeavingProcesses: aBoolean [
 	shouldFailTestLeavingProcesses := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService class >> shouldTerminateProcesses [
 	^ shouldTerminateProcesses ifNil: [ shouldTerminateProcesses := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService class >> shouldTerminateProcesses: anObject [
 	shouldTerminateProcesses := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> allowRunningProcessesToFinish [
 	"The idea here is to allow most trivial processes to finish themselves.
 	So they would not be a garbage left by test.
@@ -190,13 +192,13 @@ ProcessMonitorTestService >> allowRunningProcessesToFinish [
 		whileFalse: [ runningProcesses := restProcesses ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> allowTestToLeaveProcesses [
 
 	shouldFailTestLeavingProcesses := false
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> cleanUpAfterTest [
 	super cleanUpAfterTest.
 
@@ -209,25 +211,25 @@ ProcessMonitorTestService >> cleanUpAfterTest [
 	self useDefaultTerminationStrategyForRunningProcesses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> disableBackgroudFailuresSuspension [
 
 	shouldSuspendBackgroundFailures := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> disableProcessesTermination [
 
 	shouldTerminateProcesses := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> enableBackgroudFailuresSuspension [
 
 	shouldSuspendBackgroundFailures := true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> ensureNoBackgroundFailures [
 	self isMainTestProcessFailed & self shouldPassBackgroundFailures ifTrue: [
 		"We don't need extra error about failed process when all errors are shown to the user:
@@ -246,7 +248,7 @@ ProcessMonitorTestService >> ensureNoBackgroundFailures [
 			e pass]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> ensureNoRunningProcesses [
 	"If test was already failed due to an error in the main test process
 	we do not need an extra failure about left processes"
@@ -265,23 +267,23 @@ ProcessMonitorTestService >> ensureNoRunningProcesses [
 	TestLeftRunningProcess signalFrom: executionEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> failTestLeavingProcesses [
 
 	shouldFailTestLeavingProcesses := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> forkedProcesses [
 	^ forkedProcesses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> forkedProcesses: anObject [
 	forkedProcesses := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> handleBackgroundException: anUnhandledException [
 
 	self handleException: anUnhandledException.
@@ -289,7 +291,7 @@ ProcessMonitorTestService >> handleBackgroundException: anUnhandledException [
 	anUnhandledException pass
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> handleCompletedTest [
 	super handleCompletedTest.
 
@@ -298,14 +300,14 @@ ProcessMonitorTestService >> handleCompletedTest [
 	self ensureNoRunningProcesses
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> handleException: anException [
 	super handleException: anException.
 
 	anException manageTestProcessBy: self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> handleNewProcess: aProcess [
 	super handleNewProcess: aProcess.
 
@@ -315,7 +317,7 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 		self handleBackgroundException: err]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
 	self recordTestFailure: anUnhandledException.
 
@@ -325,7 +327,7 @@ ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
 		self suspendBackgroundFailure: anUnhandledException]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessMonitorTestService >> initialize [
 	super initialize.
 
@@ -336,18 +338,18 @@ ProcessMonitorTestService >> initialize [
 	testFailures := OrderedIdentityDictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessMonitorTestService >> isMainTestProcessFailed [
 	^self isTestProcessFailed: executionEnvironment mainTestProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessMonitorTestService >> isTestProcessFailed: aProcess [
 
 	^testFailures at: aProcess ifPresent: [ true ] ifAbsent: [ false ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> passBackgroundFailures [
 	self disableBackgroudFailuresSuspension.
 	self disableProcessesTermination.
@@ -357,7 +359,7 @@ ProcessMonitorTestService >> passBackgroundFailures [
 		thenDo: [:each | each resume ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> recordTestFailure: anException [
 
 	| activeProcess |
@@ -369,48 +371,48 @@ ProcessMonitorTestService >> recordTestFailure: anException [
 	testFailures at: activeProcess put: anException
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> runningProcesses [
 	"Suspended processes are not scheduled and therefore they are not considered as running"
 	^ forkedProcesses reject: [ :each | each isTerminated or: [ each isSuspended ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> shouldFailTestLeavingProcesses [
 	^ shouldFailTestLeavingProcesses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> shouldFailTestLeavingProcesses: anObject [
 	shouldFailTestLeavingProcesses := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessMonitorTestService >> shouldPassBackgroundFailures [
 	^shouldSuspendBackgroundFailures not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> shouldSuspendBackgroundFailures [
 	^ shouldSuspendBackgroundFailures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> shouldSuspendBackgroundFailures: anObject [
 	shouldSuspendBackgroundFailures := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> shouldTerminateProcesses [
 	^ shouldTerminateProcesses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> shouldTerminateProcesses: anObject [
 	shouldTerminateProcesses := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 
 	| activeProcess |
@@ -423,41 +425,41 @@ ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 	activeProcess suspend
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> suspendedBackgroundFailures [
 	^ testFailures associationsSelect: [ :each | each key isSuspended ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> terminateProcessesAfterTest [
 
 	shouldTerminateProcesses := true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ProcessMonitorTestService >> terminateRunningProcesses [
 	forkedProcesses do: [:each | each terminate]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> testBackgroundFailures [
 	^ testFailures copy
 		removeKey: executionEnvironment mainTestProcess ifAbsent: [ ];
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessMonitorTestService >> testFailures [
 	^ testFailures
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessMonitorTestService >> useDefaultFailingStrategyForRunningProcesses [
 
 	shouldFailTestLeavingProcesses := self class shouldFailTestLeavingProcesses
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessMonitorTestService >> useDefaultTerminationStrategyForRunningProcesses [
 	shouldTerminateProcesses := self class shouldTerminateProcesses
 ]

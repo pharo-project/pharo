@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyOverriddenMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
+	#name : 'ClyOverriddenMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyOverriddenMethodsQueryTest >> createQuery [
 	^ ClyOverriddenMethodsQuery from: ClyClassScope of: ClyAbstractClassMock in: environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyOverriddenMethodsQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
 	environment addPlugin: ClyInheritanceAnalysisEnvironmentPlugin new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyAbstractClassMock >> #abstractMethod1)	in: environment).
@@ -30,7 +31,7 @@ ClyOverriddenMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -41,7 +42,7 @@ ClyOverriddenMethodsQueryTest >> testFromThreeMethods [
 	self assert: foundSelectors equals: #(abstractMethod1 overriddenMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testFromThreeMethodsWhenImplementorsCacheShouldBeUsed [
 	| plugin |
 	plugin := environment getPlugin: ClyInheritanceAnalysisEnvironmentPlugin.
@@ -56,7 +57,7 @@ ClyOverriddenMethodsQueryTest >> testFromThreeMethodsWhenImplementorsCacheShould
 	self assert: foundSelectors equals: #(abstractMethod1 overriddenMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testIsAffectedByChangeOfOwnMethodWhichIsNotOverridden [
 	query := ClyOverriddenMethodsQuery
 		from: ClyClassScope of: ClyClassWhichInheritsAbstractClassMock in: environment.
@@ -64,31 +65,31 @@ ClyOverriddenMethodsQueryTest >> testIsAffectedByChangeOfOwnMethodWhichIsNotOver
 	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock >>#notOverriddenMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testIsAffectedByChangeOfOwnMethodWhichIsOverridden [
 
 	self assert: (query isAffectedByChangedMethod: ClyAbstractClassMock>>#overriddenMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testIsAffectedByChangeOfSubclassMethodWhichOverridesSuperclass [
 
 	self assert: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock>>#overriddenMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testNotAffectedByChangeOfSubclassMethodWhichNotOverridesSuperclass [
 
 	self deny: (query isAffectedByChangedMethod: ClyClassWhichInheritsAbstractClassMock>>#notOverriddenMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testNotSelectsNotOverriddenMethod [
 
 	self deny: (query selectsMethod: ClyClassWhichInheritsAbstractClassMock>>#notOverriddenMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyOverriddenMethodsQueryTest >> testSelectsOverriddenMethod [
 
 	self assert: (query selectsMethod: ClyAbstractClassMock>>#overriddenMethod)

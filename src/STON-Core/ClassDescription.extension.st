@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 ClassDescription >> stonContainSubObjects [
 	^ false
 ]

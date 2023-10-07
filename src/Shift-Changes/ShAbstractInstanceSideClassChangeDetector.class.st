@@ -2,18 +2,19 @@
 I am an special Class change detector, used when we have to include the change in the instance structure.
 "
 Class {
-	#name : #ShAbstractInstanceSideClassChangeDetector,
-	#superclass : #ShAbstractClassChangeDetector,
-	#category : #'Shift-Changes'
+	#name : 'ShAbstractInstanceSideClassChangeDetector',
+	#superclass : 'ShAbstractClassChangeDetector',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShAbstractInstanceSideClassChangeDetector class >> isAbstract [
 
 	^ self == ShAbstractInstanceSideClassChangeDetector
 ]
 
-{ #category : #changes }
+{ #category : 'changes' }
 ShAbstractInstanceSideClassChangeDetector >> newChanges [
 	^ {ShClassChanged new
 		builder: builder;

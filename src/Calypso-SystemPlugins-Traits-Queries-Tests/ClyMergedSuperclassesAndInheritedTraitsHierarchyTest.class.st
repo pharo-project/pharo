@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyMergedSuperclassesAndInheritedTraitsHierarchyTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
+	#name : 'ClyMergedSuperclassesAndInheritedTraitsHierarchyTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> createQueryResult [
 	^(ClySubclassHierarchy inverse, ClyTraitUserHierarchy inverse)
 		asQueryResult sortedBy: ClyTraitFirstSortFunction ascending
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItsDeepTwoTraits [
 
 	queryResult fillWith: {ClyClassWithTraits. ClyTraitChild2. ClyTraitRoot2 }.
@@ -21,7 +22,7 @@ ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndI
 			ClyTraitRoot2. 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraits [
 
 	queryResult fillWith: {
@@ -33,7 +34,7 @@ ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndI
 			ClyTraitChild2Child. 1. ClyTraitChild2. 2. ClyTraitRoot1. 3}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraitsWhenSomeMiddleTraitIsMissing [
 
 	queryResult fillWith: {
@@ -45,7 +46,7 @@ ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassAndI
 			ClyTraitChild2Child. 1. ClyTraitRoot1. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassWithoutTraits [
 
 	queryResult fillWith: {ClyClassWithoutTraits}.
@@ -53,7 +54,7 @@ ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithClassWith
 	self assertItems: {ClyClassWithoutTraits. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithOnlyClassWhichHasTraits [
 
 	queryResult fillWith: {ClyClassWithTraits}.
@@ -61,7 +62,7 @@ ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithOnlyClass
 	self assertItems: {ClyClassWithTraits. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithTraitsOfClassWhichIsMissingInGivenList [
 
 	queryResult fillWith: {
@@ -72,7 +73,7 @@ ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithTraitsOfC
 		ClyTraitChild2Child. 0. ClyTraitChild2. 1. ClyTraitRoot1. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithTwoClassWhichInheriteSameTraits [
 
 	queryResult fillWith: {ClyClassWithTraits. ClyTraitChild2. ClyTraitRoot2.
@@ -86,7 +87,7 @@ ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithTwoClassW
 				ClyTraitRoot2. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMergedSuperclassesAndInheritedTraitsHierarchyTest >> testFillingWithTwoClassWhichInheriteSameTraitsAndTheirSuperclasses [
 
 	queryResult fillWith: {ClyClassWithTraits. ClyTraitChild2. ClyTraitRoot2.

@@ -1,10 +1,11 @@
 Class {
-	#name : #OmFileStoreTest,
-	#superclass : #OmStoreTest,
-	#category : #'Ombu-Tests'
+	#name : 'OmFileStoreTest',
+	#superclass : 'OmStoreTest',
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmFileStoreTest >> setUpOtherStore [
 
 	^ OmFileStore
@@ -12,7 +13,7 @@ OmFileStoreTest >> setUpOtherStore [
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OmFileStoreTest >> setUpStore [
 
 	^ OmFileStore
@@ -20,7 +21,7 @@ OmFileStoreTest >> setUpStore [
 		inDirectory: self directoryForTests ensureCreateDirectory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmFileStoreTest >> tearDown [
 
 	store fileReference ensureDelete.
@@ -28,7 +29,7 @@ OmFileStoreTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testEnsureDeleteFile [
 	| loadedStore |
 	store newEntry: (OmEntry content: 42).
@@ -46,7 +47,7 @@ OmFileStoreTest >> testEnsureDeleteFile [
 	self assert: loadedStore entriesCount equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testIsOutdated [
 
 	| copy |
@@ -64,7 +65,7 @@ OmFileStoreTest >> testIsOutdated [
 	self deny: copy isOutdated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile1 [
 	"Bad character"
 
@@ -86,7 +87,7 @@ OmFileStoreTest >> testLoadFromCorruptFile1 [
 		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile2 [
 	"Bad class name"
 
@@ -108,7 +109,7 @@ OmFileStoreTest >> testLoadFromCorruptFile2 [
 		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile3 [
 	"Bad class name. Last entry."
 
@@ -129,7 +130,7 @@ OmFileStoreTest >> testLoadFromCorruptFile3 [
 		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromCorruptFile4 [
 	"Content is corrupted"
 
@@ -154,7 +155,7 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 		raise: OmFileStoreReadingError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromFile [
 
 	| loadedStore |
@@ -170,7 +171,7 @@ OmFileStoreTest >> testLoadFromFile [
 	self assert: (loadedStore entries collect: #content as: Array) equals: #( 42 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmFileStoreTest >> testLoadFromFileTrickyCase [
 
 	| loadedStore |

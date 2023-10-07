@@ -1,9 +1,9 @@
 ## Using environment
 
 The first and main use for browser environments are to restrict the namespace in which a refactoring operation is applied. 
-For example, if you want to rename a method and and update all senders of this method, but only in a certain package, you can create a `RBNamespace` from a scoped 'view' of the classes from the whole system. Only the classes in this restricted environment are affected by the transformation.
+For example, if you want to rename a method and update all senders of this method, but only in a certain package, you can create a `RBNamespace` from a scoped 'view' of the classes from the whole system. Only the classes in this restricted environment are affected by the transformation.
 
-In the mean time other tools are using this environment classes as well. Finder, MessageBrowser or the SystemBrowser can work with a scoped environment to show and operate only on classes and methods in this environment.
+In the meantime other tools are using this environment classes as well. Finder, MessageBrowser or the SystemBrowser can work with a scoped environment to show and operate only on classes and methods in this environment.
 
 There are different subclasses of RBBrowserEnvironment for the different kind of 'scopes'. 
 
@@ -18,13 +18,13 @@ You start with a default environment containing all classes from the system and 
 
 For example, creating an environment for all classes in package 'Kernel':
 
-```
+```st
 RBBrowserEnvironment new forPackageNames:{'Kernel'}.
 ```
 
 You can query the environment.
 
-```
+```st
 | env |
 env := RBBrowserEnvironment new forPackageNames:{'Kernel'}.
 env allClasses 
@@ -33,26 +33,26 @@ env allClasses
 
 or open a browser
 
-```
+```st
 env browse 
 -> starts Calypso showing only this package
 ```
 
 and you can further restrict this package environment by calling one of the other factory methods:
 
-```
+```st
 env class 
 -> a RBPackageEnvironment
 ```
 
-```
+```st
 (env implementorsOf:#collect:) class
 ->  RBSelectorEnvironment
 ```
 
 Another way to combine or further restrict environments is to use boolean operations and, not or or.
 
-```
+```st
 | implDrawOn callsDrawOn implAndCalls |
 callsDrawOn := RBBrowserEnvironment new referencesTo: #drawOn:.
 implDrawOn :=  RBBrowserEnvironment new implementorsOf: #drawOn:.
@@ -64,7 +64,7 @@ MessageBrowser browse: implAndCalls methods.
 
 This opens a MessageBrowser on all methods in the system that implement `#drawOn:` and calls `drawOn:`.
 
-```
+```st
 | implPrintOn notImplPrintOn |
 implPrintOn := RBBrowserEnvironment new implementorsOf: #printOn:.
 "create a 'not'-environment"
@@ -79,7 +79,7 @@ Classes implementing `#printOn:` are not in the 'not'-environment.
 
 A more generic way to create an environment by giving an explicit 'test'-block to select methods for this environment:
 
-```
+```st
 | implementedByMe |
 implementedByMe := RBBrowserEnvironment new 
 			selectMethods: [:m | m author = Author fullName ].

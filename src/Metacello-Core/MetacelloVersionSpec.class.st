@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloVersionSpec,
-	#superclass : #MetacelloSpec,
+	#name : 'MetacelloVersionSpec',
+	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'versionString',
 		'blessing',
@@ -13,10 +13,12 @@ Class {
 		'importName',
 		'importArray'
 	],
-	#category : #'Metacello-Core-Specs'
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> author [
 
 	author == nil 
@@ -27,28 +29,28 @@ MetacelloVersionSpec >> author [
 	^ author
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> author: anObject [
 
 	anObject setAuthorInMetacelloVersion: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> author: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor authorForVersion: aBlockOrString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> baseline: aString constructor: aVersionConstructor [
     aVersionConstructor baselineForVersion: aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> baseline: aString with: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor baselineForVersion: aString with: aBlockOrString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> blessing [
 
 	blessing == nil 
@@ -59,18 +61,18 @@ MetacelloVersionSpec >> blessing [
 	^ blessing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> blessing: anObject [
 
 	anObject setBlessingInMetacelloVersion: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> blessing: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor blessingForVersion: aBlockOrString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
     | values lastIndex lastBlock |
     last
@@ -125,7 +127,7 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
         indent: indent
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> configMethodOn: aStream for: spec selector: selector last: last indent: indent [
 	spec == nil
 		ifTrue: [ ^ self ].
@@ -139,13 +141,13 @@ MetacelloVersionSpec >> configMethodOn: aStream for: spec selector: selector las
 		ifFalse: [ aStream cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> configMethodOn: aStream indent: indent [
 
 	self configMethodOn: aStream last: true indent: indent
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
     | hasPackageSpecs |
     hasPackageSpecs := false.
@@ -167,7 +169,7 @@ MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
         ifFalse: [ aStream cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> configMethodValueOn: aStream for: spec selector: selector last: last indent: indent [
 	| valuePrintString |
 	spec == nil
@@ -182,7 +184,7 @@ MetacelloVersionSpec >> configMethodValueOn: aStream for: spec selector: selecto
 		ifFalse: [ aStream cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 
 	| projectSpecs packageSpecs groupSpecs |
@@ -219,7 +221,7 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 				index ~= groupSpecs size ifTrue: [ aStream tab: indent + 1 ]]].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> configSpawnMethodOn: aStream indent: indent [
 
 	self configMethodValueOn: aStream for: self getBlessing selector: 'blessing:' last: false indent: indent.
@@ -227,18 +229,18 @@ MetacelloVersionSpec >> configSpawnMethodOn: aStream indent: indent [
 	self configMethodValueOn: aStream for: self getTimestamp selector: 'timestamp:' last: false indent: indent.
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> configuration: aString with: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor configurationForVersion: aString with: aBlockOrString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionSpec >> createVersion [
 
 	^self versionClass fromSpec: self
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionSpec >> defaultPackageNames [
 	"if there is a package named 'default' (a group) then it defines the default package names,
 	 otherwise answer a list of all of the package names in this version"
@@ -247,14 +249,14 @@ MetacelloVersionSpec >> defaultPackageNames [
 	^#('default')
 ]
 
-{ #category : #'toolbox support' }
+{ #category : 'toolbox support' }
 MetacelloVersionSpec >> deleteSpec: aSpec [
     "remove the spec from packages"
 
     self packages deleteSpec: aSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> description [
 
 	description == nil 
@@ -265,18 +267,18 @@ MetacelloVersionSpec >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> description: anObject [
 
 	anObject setDescriptionInMetacelloVersion: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> description: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor descriptionForVersion: aBlockOrString
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> difference: otherVersionSpec [
     "Return a dictionary of additions, removals and modifications"
 
@@ -323,7 +325,7 @@ MetacelloVersionSpec >> difference: otherVersionSpec [
     ^ report
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionSpec >> expandToLoadableSpecNames: nameList [
 
 	| cacheKey names |
@@ -336,96 +338,96 @@ MetacelloVersionSpec >> expandToLoadableSpecNames: nameList [
 			cache at: cacheKey put: names ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> getAuthor [
 	^author
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> getBlessing [
 	^blessing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> getDescription [
 	^description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> getPostLoadDoIt [
 	^postLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> getPreLoadDoIt [
 	^preLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> getTimestamp [
 	^timestamp
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> group: aString overrides: aStringOrCollection constructor: aVersionConstructor [
     aVersionConstructor groupForVersion: aString overrides: aStringOrCollection
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> group: aString with: aStringOrCollection constructor: aVersionConstructor [
     aVersionConstructor groupForVersion: aString with: aStringOrCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> import [
     ^ importName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> import: aString [
   importName := aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> import: aString constructor: aVersionConstructor [
     aVersionConstructor importForVersion: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> import: aString provides: anArray [
   importArray := importArray
     ifNil: [ {(aString -> anArray)} ]
     ifNotNil: [ importArray , {(aString -> anArray)} ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> import: aString provides: anArray constructor: aVersionConstructor [
   aVersionConstructor importForVersion: aString provides: anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> importArray [
   ^ importArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersionSpec >> isPartiallyCurrent: notLoadedMatters useEquality: useEquality [
 
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersionSpec >> isPossibleBaseline [
     self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionSpec >> label [
 
 	^self versionString, ' [', self projectLabel, ']'
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloVersionSpec >> mergeMap [
     | map |
     map := super mergeMap.
@@ -440,7 +442,7 @@ MetacelloVersionSpec >> mergeMap [
     ^ map
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloVersionSpec >> mergeSpec: anotherSpec [
     | newSpec map anotherPackages |
     newSpec := super mergeSpec: anotherSpec.
@@ -455,18 +457,18 @@ MetacelloVersionSpec >> mergeSpec: anotherSpec [
     ^ newSpec
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloVersionSpec >> nonOverridable [
     ^ super nonOverridable , #(#'packageList')
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> packageNamed: aString [
 
 	^self packageNamed: aString ifAbsent: [ nil ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> packageNamed: aString forLoad: ignored forMap: map ifAbsent: absentBlock [
   "at the end of the day, I don't the forLoad arg is important ... 
    it just ends up triggering an error ... when during a real load, you would 
@@ -504,7 +506,7 @@ MetacelloVersionSpec >> packageNamed: aString forLoad: ignored forMap: map ifAbs
         ifFalse: [ absentBlock value ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock [
     "import: only allowed to be used with baseline project specs"
 
@@ -515,43 +517,43 @@ MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock 
         ifAbsent: absentBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> packageNamed: aString ifAbsent: aBlock [
 
 	^self packageNamed: aString forMap: self packages map ifAbsent: aBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> packageNames [
     packageList == nil
         ifTrue: [ ^ #() ].
     ^ self packages map keys asSet
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> packageSpecsInLoadOrder [
   ^ self packages packageSpecsInLoadOrderFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> packages [
     packageList == nil
         ifTrue: [ packageList := self project packagesSpec ].
     ^ packageList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> packages: anObject [
     packageList := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> packagesSpec [
 
 	^self packages
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloVersionSpec >> postCopy [
     super postCopy.
     blessing := blessing copy.
@@ -561,99 +563,99 @@ MetacelloVersionSpec >> postCopy [
     packageList := packageList copy
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> postLoadDoIt [
 
 	^postLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> postLoadDoIt: anObject [
 
 	anObject setPostLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> postLoadDoIt: aSymbol constructor: aVersionConstructor [
     aVersionConstructor postLoadDoItForVersion: aSymbol
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> preLoadDoIt [
 
 	^preLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> preLoadDoIt: anObject [
 
 	anObject setPreLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> preLoadDoIt: aSymbol constructor: aVersionConstructor [
     aVersionConstructor preLoadDoItForVersion: aSymbol
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> project: aString constructor: aVersionConstructor [
     aVersionConstructor projectForVersion: aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> project: aString copyFrom: oldSpecName with: aBlock constructor: aVersionConstructor [
     aVersionConstructor projectForVersion: aString copyFrom: oldSpecName with: aBlock
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> project: aString overrides: aBlock constructor: aVersionConstructor [
     aVersionConstructor projectForVersion: aString overrides: aBlock
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> project: aString with: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor projectForVersion: aString with: aBlockOrString
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloVersionSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
 	self packageSpecsInLoadOrder do: [:pkgSpec |
 		pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> projectLabel [
 
 	^self project label
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> removeGroup: aString constructor: aVersionConstructor [
     aVersionConstructor removeGroupForVersion: aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> removeProject: aString constructor: aVersionConstructor [
     aVersionConstructor removeProjectForVersion: aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> repositories: aBlock constructor: aVersionConstructor [
     aVersionConstructor repositoriesForVersion: aBlock
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> repository: anObject constructor: aVersionConstructor [
     aVersionConstructor repositoryForVersion: anObject
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
     aVersionConstructor repositoryForVersion: aString username: username password: password
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionSpec >> resolveToLoadableSpec: aString forLoad: forLoad forMap: map packages: packageMap [
     | package |
     package := self
@@ -665,7 +667,7 @@ MetacelloVersionSpec >> resolveToLoadableSpec: aString forLoad: forLoad forMap: 
     ^ {package}
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionSpec >> resolveToLoadableSpecs: nameList [
   "Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
 	not traversed during the transitive closure. The scope is that of the version itself.
@@ -681,7 +683,7 @@ MetacelloVersionSpec >> resolveToLoadableSpecs: nameList [
   ^ map values
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloVersionSpec >> resolveToLoadableSpecs: required forLoad: forLoad map: packageMap [
   | reqd allReqd map newReqd spec |
   reqd := required copy.
@@ -710,46 +712,46 @@ MetacelloVersionSpec >> resolveToLoadableSpecs: required forLoad: forLoad map: p
         ifFalse: [ packageMap at: pkgName put: (packageMap at: pkgName) resolveToLoadableSpec ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> setAuthor: anObject [
 	author := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> setBlessing: anObject [
 	blessing := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> setDescription: anObject [
 	description := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> setImport: anArray [
   importArray := importArray
     ifNil: [ anArray ]
     ifNotNil: [ importArray , anArray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> setPostLoadDoIt: aSymbol [
 
 	postLoadDoIt := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> setPreLoadDoIt: aSymbol [
 
 	preLoadDoIt := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> setTimestamp: anObject [
 	timestamp := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> timestamp [
 
 	timestamp == nil 
@@ -760,40 +762,40 @@ MetacelloVersionSpec >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> timestamp: anObject [
 
 	anObject setTimestampInMetacelloVersion: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> timestamp: aBlockOrStringOrDateAndTime constructor: aVersionConstructor [
     aVersionConstructor timestampForVersion: aBlockOrStringOrDateAndTime
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionSpec >> versionClass [
 
 	^MetacelloVersion
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionSpec >> versionNumber [
     ^ self project versionNumberClass fromString: self versionString
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersionSpec >> versionString [
 	versionString == nil ifTrue: [ ^'' ].
 	^ versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionSpec >> versionString: anObject [
 	versionString := anObject
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloVersionSpec >> versionString: anObject constructor: aVersionConstructor [
     aVersionConstructor versionStringForVersion: anObject
 ]

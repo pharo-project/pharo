@@ -2,15 +2,17 @@
 I am a cluster for simple objects who define serialization and materialization via hooks on their classes.
 "
 Class {
-	#name : #FLHookPrimitiveCluster,
-	#superclass : #FLPrimitiveCluster,
+	#name : 'FLHookPrimitiveCluster',
+	#superclass : 'FLPrimitiveCluster',
 	#instVars : [
 		'theClass'
 	],
-	#category : #'Fuel-Core-Clusters'
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLHookPrimitiveCluster class >> newAnalyzing: aClass [
 
 	^ self basicNew
@@ -18,40 +20,40 @@ FLHookPrimitiveCluster class >> newAnalyzing: aClass [
 		yourself.
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLHookPrimitiveCluster >> clusterMaterializeStepWith: aDecoder [
 
 	super clusterMaterializeStepWith: aDecoder.
 	theClass := aDecoder nextEncodedReference
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLHookPrimitiveCluster >> clusterReferencesDo: aBlock [
 
 	aBlock value: theClass
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLHookPrimitiveCluster >> clusterSerializeStepWith: anEncoder [
 
 	super clusterSerializeStepWith: anEncoder.
 	anEncoder encodeReferenceToClusterObjectClass: theClass
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLHookPrimitiveCluster >> initializeAnalyzing: aClass [
 
 	self initializeAnalyzing.
 	theClass := aClass
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLHookPrimitiveCluster >> materializeInstanceWith: aDecoder [
 	
 	^theClass materializeFrom: aDecoder
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLHookPrimitiveCluster >> printNameOn: aStream [
 	"Append to the argument, aStream, a sequence of characters that  
 	identifies the receiver."
@@ -62,7 +64,7 @@ FLHookPrimitiveCluster >> printNameOn: aStream [
 	aStream nextPut: $].
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLHookPrimitiveCluster >> serializeInstance: anObject with: anEncoder [
 
 	anObject serializeOn: anEncoder

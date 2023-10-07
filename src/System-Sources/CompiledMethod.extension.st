@@ -1,19 +1,18 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*System-Sources' }
-CompiledMethod >> putSource: sourceStr class: class category: catName withStamp: changeStamp priorMethod: priorMethod [
-	^ self
-		putSource: sourceStr
-		withPreamble: [ :file |
-			class
-				printCategoryChunk: catName
-				on: file
-				withStamp: changeStamp
-				priorMethod: priorMethod.
-			file cr ]
+{ #category : '*System-Sources' }
+CompiledMethod >> putSource: sourceStr class: class protocol: protocol withStamp: changeStamp priorMethod: priorMethod [
+
+	^ self putSource: sourceStr withPreamble: [ :file |
+		  class
+			  printProtocolChunk: protocol
+			  on: file
+			  withStamp: changeStamp
+			  priorMethod: priorMethod.
+		  file cr ]
 ]
 
-{ #category : #'*System-Sources' }
+{ #category : '*System-Sources' }
 CompiledMethod >> putSource: source withPreamble: preambleBlock [
 	"Store the source code for the receiver on an external file."
 
@@ -24,7 +23,8 @@ CompiledMethod >> putSource: source withPreamble: preambleBlock [
 			"Method chunk needs a final ! !"
 			(SourceChunkWriteStream on: theChangesFileStream) nextPut: ' '.
 			"Update with new source pointer"
-			self setSourcePointer: newSourcePointer ]
+			self sourcePointer: newSourcePointer ]
 		onFail: [
-			self becomeForward: (self copyWithSource: source) ]
+			"if we can not store the source pointer, we put back the property"
+			self propertyAt: #source put: source ]
 ]

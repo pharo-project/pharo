@@ -1,1 +1,1 @@
-Package { #name : #StartupPreferences }
+Package { #name : 'StartupPreferences' }

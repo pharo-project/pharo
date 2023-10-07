@@ -2,24 +2,26 @@
 A profile for testing
 "
 Class {
-	#name : #TKTTestProfile,
-	#superclass : #TKTProfile,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTTestProfile',
+	#superclass : 'TKTProfile',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TKTTestProfile class >> priority [
 
 	^ -1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTTestProfile class >> profileName [
 
 	^ #test
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTTestProfile class >> profileValues [
 
 	^ {(#debugging -> false).

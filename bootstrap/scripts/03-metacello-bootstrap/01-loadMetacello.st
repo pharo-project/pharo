@@ -1,3 +1,4 @@
+| mcPackages |
 mcPackages := #(
  'ScriptingExtensions'
  'System-FileRegistry'
@@ -30,9 +31,12 @@ mcPackages := #(
 MCMethodDefinition initializersEnabled: false.
 
 (MonticelloBootstrap inDirectory: (MCCacheRepository uniqueInstance directory))
-  loadPackagesNamed: mcPackages.
+  loadPackagesNamed: mcPackages!
 
 MCMethodDefinition initializersEnabled: true.
+
+"For now, it happens that the bootstrap does not caches the pragmas. This should be fixed later by reloading the packages after Metacello and Monticello are reloaded but we need them for reseting the system announcer for example."
+CompiledMethod allInstancesDo: [ :m | m cachePragmas ].
 
 RxMatcher initialize.
 RxParser initialize.
@@ -40,12 +44,9 @@ RxsPredicate initialize.
 
 MCFileTreeStCypressWriter initialize.
 MCFileTreeFileSystemUtils initialize.
-MCMockASubclass initialize.
-MCMockClassA initialize.
 
 MetacelloPlatform initialize.
-MetacelloPharoPlatform initialize.
-MetacelloPharo30Platform initialize.
+MetacelloPharoCommonPlatform initialize.
 
 STONWriter initialize.
 

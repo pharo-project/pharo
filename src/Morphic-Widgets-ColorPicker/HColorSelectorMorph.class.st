@@ -2,17 +2,18 @@
 ColorComponentSelector showing a hue rainbow palette.
 "
 Class {
-	#name : #HColorSelectorMorph,
-	#superclass : #BracketSliderMorph,
-	#category : #'Morphic-Widgets-ColorPicker'
+	#name : 'HColorSelectorMorph',
+	#superclass : 'BracketSliderMorph',
+	#category : 'Morphic-Widgets-ColorPicker',
+	#package : 'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HColorSelectorMorph >> color: aColor [
 	"Ignore to preserve fill style."
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 HColorSelectorMorph >> defaultFillStyle [
 	"Answer the hue gradient."
 

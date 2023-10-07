@@ -3,60 +3,62 @@ I am a node in the match tree.
 My parent is either the match I'm a child of, or the context for the whole command invocation.
 "
 Class {
-	#name : #ClapSubExpression,
-	#superclass : #ClapExpression,
+	#name : 'ClapSubExpression',
+	#superclass : 'ClapExpression',
 	#instVars : [
 		'parent'
 	],
-	#category : #'Clap-Core-Activation'
+	#category : 'Clap-Core-Activation',
+	#package : 'Clap-Core',
+	#tag : 'Activation'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapSubExpression class >> isAbstract [
 	^ self == ClapSubExpression
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClapSubExpression >> allOccurrences [
 	^ self parent
 		occurrencesOf: self specification
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClapSubExpression >> allOccurrencesCollect: aBlock [
 	^ self parent
 		occurrencesOf: self specification
 		collect: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClapSubExpression >> allOccurrencesDo: aBlock [
 	^ self parent
 		occurrencesOf: self specification
 		do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapSubExpression >> context [
 	^ parent context
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapSubExpression >> ifMatch: matchBlock ifMismatch: mismatchBlock [
 	^ matchBlock cull: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapSubExpression >> isExplicit [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapSubExpression >> parent [
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapSubExpression >> parent: aMatch [
 	parent := aMatch
 ]

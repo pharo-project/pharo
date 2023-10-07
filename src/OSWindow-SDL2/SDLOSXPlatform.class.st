@@ -2,16 +2,18 @@
 I execute specific operations on SDL for OSX
 "
 Class {
-	#name : #SDLOSXPlatform,
-	#superclass : #SDLAbstractPlatform,
-	#category : #'OSWindow-SDL2-Bindings'
+	#name : 'SDLOSXPlatform',
+	#superclass : 'SDLAbstractPlatform',
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLOSXPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 	| aParam cocoaWindow wmInfo selector |
@@ -27,13 +29,13 @@ SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 	self release: aParam
 ]
 
-{ #category : #'ffi-calls' }
+{ #category : 'ffi-calls' }
 SDLOSXPlatform >> ffiLibraryName [
 
 	^ 'libobjc.dylib'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDLOSXPlatform >> initPlatformSpecific [
 	| sel cls |
 
@@ -42,19 +44,19 @@ SDLOSXPlatform >> initPlatformSpecific [
 	self sendMessage: sel to: cls
 ]
 
-{ #category : #'utilities - objectiveC' }
+{ #category : 'utilities - objectiveC' }
 SDLOSXPlatform >> lookupClass: aString [
 
 	^ self ffiCall: #(void* objc_lookUpClass(char *aString))
 ]
 
-{ #category : #'utilities - objectiveC' }
+{ #category : 'utilities - objectiveC' }
 SDLOSXPlatform >> lookupSelector: aString [
 
 	^ self ffiCall: #(void* sel_registerName(const char *aString))
 ]
 
-{ #category : #'utilities - objectiveC' }
+{ #category : 'utilities - objectiveC' }
 SDLOSXPlatform >> nsStringOf: aString [
 
 	| class selector encoded param |
@@ -71,7 +73,7 @@ SDLOSXPlatform >> nsStringOf: aString [
 	^ self sendMessage: selector to: class with: param
 ]
 
-{ #category : #'utilities - objectiveC' }
+{ #category : 'utilities - objectiveC' }
 SDLOSXPlatform >> release: aObjCObject [
 
 	| releaseSelector |
@@ -79,13 +81,13 @@ SDLOSXPlatform >> release: aObjCObject [
 	self sendMessage: releaseSelector to: aObjCObject
 ]
 
-{ #category : #'utilities - objectiveC' }
+{ #category : 'utilities - objectiveC' }
 SDLOSXPlatform >> sendMessage: sel to: cls [
 
 	^ self ffiCall: #(void* objc_msgSend(void* cls, void* sel))
 ]
 
-{ #category : #'utilities - objectiveC' }
+{ #category : 'utilities - objectiveC' }
 SDLOSXPlatform >> sendMessage: sel to: rcv with: aParam [
 
 	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam))

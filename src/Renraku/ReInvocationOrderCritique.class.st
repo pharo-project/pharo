@@ -2,16 +2,18 @@
 A critic which represents that there is an issue with the order of messages being sent
 "
 Class {
-	#name : #ReInvocationOrderCritique,
-	#superclass : #ReAbstractCritique,
+	#name : 'ReInvocationOrderCritique',
+	#superclass : 'ReAbstractCritique',
 	#instVars : [
 		'targetMethodName',
 		'condition'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReInvocationOrderCritique class >> withAnchor: anAnchor by: aRule method: aString condition: aCondition [
 
 	^ self new
@@ -23,7 +25,7 @@ ReInvocationOrderCritique class >> withAnchor: anAnchor by: aRule method: aStrin
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReInvocationOrderCritique >> initializeRule: aRule sourceAnchor: anAnchor method: aString condition: aCondition [
 
 	self initializeRule: aRule sourceAnchor: anAnchor.
@@ -31,7 +33,7 @@ ReInvocationOrderCritique >> initializeRule: aRule sourceAnchor: anAnchor method
 	condition := aCondition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReInvocationOrderCritique >> providesChange [
 	^ false
 ]

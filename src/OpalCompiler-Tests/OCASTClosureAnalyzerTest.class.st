@@ -1,10 +1,12 @@
 Class {
-	#name : #OCASTClosureAnalyzerTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTClosureAnalyzerTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCASTClosureAnalyzerTest >> testArgumentIsRead [
 
 	| ast |
@@ -12,7 +14,7 @@ OCASTClosureAnalyzerTest >> testArgumentIsRead [
 	self assert: ast arguments first variable usage equals: #read
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 	| ast blockNode |
 	ast := (OCOpalExamples>>#exampleForBlockArgument) parseTree.
@@ -21,7 +23,7 @@ OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 	self assert: blockNode arguments first isArgumentVariable
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testDoubleRemoteAnidatedBlocks [
 	| ast scopes |
 	ast := (OCOpalExamples >> #doubleRemoteAnidatedBlocks) parseTree.
@@ -37,7 +39,7 @@ OCASTClosureAnalyzerTest >> testDoubleRemoteAnidatedBlocks [
 	self deny: (scopes second lookupVar: 'i') isRemote
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCASTClosureAnalyzerTest >> testExampleBlockArgument [
 	| ast blockScope blockScope2 |
 	ast := (OCOpalExamples >> #exampleBlockArgument) parseTree.
@@ -68,7 +70,7 @@ OCASTClosureAnalyzerTest >> testExampleBlockArgument [
 	self assert: blockScope2 copiedVars size equals: 1
 ]
 
-{ #category : #'tests - optimized blocks' }
+{ #category : 'tests - optimized blocks' }
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 	| ast  assignment var |
 	ast := (OCOpalExamples>>#exampleSimpleBlockLocalIf) parseTree.
@@ -79,7 +81,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 	self deny: var isEscaping
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
 	| ast scopes |
 	ast := (OCOpalExamples >> #exampleSimpleBlockLocalWhile) parseTree.
@@ -98,7 +100,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
 	self deny: (scopes fourth lookupVar: 'hallo') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockNested [
 	| ast scopes |
 	ast := (OCOpalExamples >> #exampleSimpleBlockNested) parseTree.
@@ -120,7 +122,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockNested [
 	self assert: scopes second copiedVars size equals: 3
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCASTClosureAnalyzerTest >> testExampleWhileModificationBefore [
 	| ast |
 	ast := (OCOpalExamples >> #exampleWhileModificationBefore) parseTree.
@@ -132,7 +134,7 @@ OCASTClosureAnalyzerTest >> testExampleWhileModificationBefore [
 	self assert: (ast scope lookupVar: 'index') isRemote
 ]
 
-{ #category : #'tests - blocks' }
+{ #category : 'tests - blocks' }
 OCASTClosureAnalyzerTest >> testExampleWhileNoModification [
 	"A block in an optimized loop with no modification on temp vars in the loop
 only needs to copy the tempvars. No write -> no indirection vector."
@@ -148,7 +150,7 @@ only needs to copy the tempvars. No write -> no indirection vector."
 	self deny: (ast scope lookupVar: 'c') isRemote
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCASTClosureAnalyzerTest >> testInlinedBlockArgumentIsArgumentVariable [
 	| ast blockNode |
 	ast := (OCOpalExamples>>#exampleForInlinedBlockArgument) parseTree.
@@ -157,7 +159,7 @@ OCASTClosureAnalyzerTest >> testInlinedBlockArgumentIsArgumentVariable [
 	self assert: blockNode arguments first isArgumentVariable
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCASTClosureAnalyzerTest >> testMethodArgumentIsArgumentVariable [
 	| ast |
 	ast := (OCOpalExamples>>#exampleWithArgument:) parseTree.
@@ -165,7 +167,7 @@ OCASTClosureAnalyzerTest >> testMethodArgumentIsArgumentVariable [
 	self assert: ast arguments first isArgumentVariable
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase1 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #nestedBlocksRemoteInBlockCase1) parseTree.
@@ -183,7 +185,7 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase1 [
 	self assert: (scopes second tempVector at: 'b') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase2 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #nestedBlocksRemoteInBlockCase2) parseTree.
@@ -210,7 +212,7 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase2 [
 	self assert: (scopes fifth tempVector at: 'b') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase3 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #nestedBlocksRemoteInBlockCase3) parseTree.
@@ -237,7 +239,7 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase3 [
 	self assert: (scopes fifth tempVector at: 'b') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNoRemoteBlockArgument [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteBlockArgument) parseTree.
@@ -249,7 +251,7 @@ OCASTClosureAnalyzerTest >> testNoRemoteBlockArgument [
 	self deny: (ast scope lookupVar: 'block2') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNoRemoteReadInBlock [
 	| ast |
 	ast := (OCOpalExamples >> #noRemoteReadInBlock) parseTree.
@@ -260,7 +262,7 @@ OCASTClosureAnalyzerTest >> testNoRemoteReadInBlock [
 	self deny: (ast scope lookupVar: 'a') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNoRemoteReadNestedBlocks [
 	| ast scopes |
 	ast := (OCOpalExamples >> #noRemoteReadNestedBlocks) parseTree.
@@ -274,7 +276,7 @@ OCASTClosureAnalyzerTest >> testNoRemoteReadNestedBlocks [
 	self deny: (scopes second lookupVar: 'a') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockReadInBlock [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockReadInBlock) parseTree.
@@ -286,7 +288,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockReadInBlock [
 	self assert: (ast scope lookupVar: 't1') isTempVariable
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInBlock [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInBlock) parseTree.
@@ -297,7 +299,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInBlock [
 	self deny: (ast scope lookupVar: 't1') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlock [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlock) parseTree.
@@ -308,7 +310,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlock [
 	self assert: (ast scope lookupVar: 't1') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase2 [
 	| ast |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlockCase2) parseTree.
@@ -320,7 +322,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase2 [
 	self assert: ast scope copiedVars size equals: 0
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase3 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlockCase3) parseTree.
@@ -339,7 +341,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase3 [
 	self assert: (scopes second copiedVars at: '0vector0') isStoringTempVector
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWriteInNestedBlockCase4) parseTree.
@@ -357,7 +359,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
 	scopes second copiedVars at: '0vector0' ifAbsent: [ self fail ]
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWrittenAfterClosedOverCase1) parseTree.
@@ -376,7 +378,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	self assert: (scopes third tempVector at: 'temp') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 	| ast scopes |
 	ast := (OCOpalExamples >> #optimizedBlockWrittenAfterClosedOverCase2) parseTree.
@@ -390,7 +392,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 	self assert: (scopes third tempVector at: 'temp') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteDifferentBlocksSameArgumentName) parseTree.
@@ -403,7 +405,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 	self assert: (ast scope lookupVar: 'z') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testSingleRemoteMethodArgument [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteMethodArgument) parseTree.
@@ -415,7 +417,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteMethodArgument [
 	self assert: (ast scope lookupVar: 'temp') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testSingleRemoteReadNestedBlocks [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteReadNestedBlocks) parseTree.
@@ -426,7 +428,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteReadNestedBlocks [
 	self assert: (ast scope lookupVar: 'a') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteTempVar) parseTree.
@@ -440,7 +442,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 	self deny: (ast scope lookupVar: 'theCollection') isRemote
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 OCASTClosureAnalyzerTest >> testVariableDefintionScopeUpdate [
 	"the scope of local var definitons needs to be updated, too"
 
@@ -457,7 +459,7 @@ t1 := 1.
 	self assert: ast temporaries second variable class equals: OCVectorTempVariable
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testWrittenAfterClosedOver [
 	| ast |
 	ast := (OCOpalExamples >> #writtenAfterClosedOver) parseTree.
@@ -468,7 +470,7 @@ OCASTClosureAnalyzerTest >> testWrittenAfterClosedOver [
 	self assert: (ast scope lookupVar: 'a') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	| ast |
 	ast := (OCOpalExamples >> #exampleWhileWithTempNotInlined) parseTree.
@@ -481,7 +483,7 @@ OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	self deny: (ast scope lookupVar: 'block') isRemote
 ]
 
-{ #category : #'tests - special cases' }
+{ #category : 'tests - special cases' }
 OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWrittenAfterClosedOver [
 	| ast |
 	ast := (OCOpalExamples >> #singleRemoteTempVarWrittenAfterClosedOver) parseTree.

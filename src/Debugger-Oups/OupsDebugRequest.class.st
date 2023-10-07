@@ -28,8 +28,8 @@ Once this object is filled, call its #debug or #warning method to open a debugge
 - the getters are meant to be used by whatever objects is opening a debugger based on the information contained in this object
 "
 Class {
-	#name : #OupsDebugRequest,
-	#superclass : #Object,
+	#name : 'OupsDebugRequest',
+	#superclass : 'Object',
 	#instVars : [
 		'exception',
 		'context',
@@ -39,21 +39,23 @@ Class {
 		'preDebugActions',
 		'debugSession'
 	],
-	#category : #'Debugger-Oups-Infrastructure'
+	#category : 'Debugger-Oups-Infrastructure',
+	#package : 'Debugger-Oups',
+	#tag : 'Infrastructure'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OupsDebugRequest class >> new [
 	self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OupsDebugRequest class >> newForContext: aContext [
 	<debuggerCompleteToSender>
 	^ self basicNew context: aContext; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OupsDebugRequest class >> newForException: anException [
 	"By default we assume that the debugger is requested from the process itself as the result of anException. In that case we must use #realActiveProcess instead of #activeProcess.
 	When debugger opens it must stop the current process. Otherwise the error signal will return to the sender and it will continue execution. Obviously it may cause an unexpected behavior and in worst case it may break the system completely (with some infinite recursion triggering debuggers at every step).
@@ -66,12 +68,12 @@ OupsDebugRequest class >> newForException: anException [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OupsDebugRequest >> computePreDebugActions [
 
 	"If compiledMethod is not nil, this DebugRequest has been created to debug the execution of a specific method. Add a pre-debug action to step the execution until that method is reached"
@@ -81,61 +83,61 @@ OupsDebugRequest >> computePreDebugActions [
 		(self preDebugActionForDebugItMethod: compiledMethod)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> debugSession [
 
 	^ debugSession ifNil: [ debugSession := self newDebugSession ]
 ]
 
-{ #category : #'default values' }
+{ #category : 'default values' }
 OupsDebugRequest >> defaultException [
 
 	^ self nullExceptionFor: context named: self label
 ]
 
-{ #category : #'default values' }
+{ #category : 'default values' }
 OupsDebugRequest >> defaultLabel [
 	^ 'No label was provided'
 ]
 
-{ #category : #'default values' }
+{ #category : 'default values' }
 OupsDebugRequest >> defaultProcess [
 	^ Processor activeProcess
 ]
 
-{ #category : #'default values' }
+{ #category : 'default values' }
 OupsDebugRequest >> defaultUIManager [
 	^ UIManager default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> exception [
 
 	^ exception ifNil: [ exception := self defaultException ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> exception: anObject [
 	exception := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> label [
 
 	^ label ifNil: [ label := self defaultLabel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> label: anObject [
 	label := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OupsDebugRequest >> newDebugSession [
 
 	^ (self process
@@ -145,14 +147,14 @@ OupsDebugRequest >> newDebugSession [
 		  yourself
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OupsDebugRequest >> nullExceptionFor: aContext named: aString [
 	^ (OupsNullException fromSignallerContext: aContext)
 		messageText: aString;
 		yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 OupsDebugRequest >> preDebugActionForDebugItMethod: aCompiledMethod [
 
 	"Return a PreDebug action that will step the debugged execution until it is in a call to aCompiledMethod"
@@ -162,24 +164,24 @@ OupsDebugRequest >> preDebugActionForDebugItMethod: aCompiledMethod [
 		  currentContext method == aCompiledMethod ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> preDebugActions [
 	preDebugActions ifNil: [ preDebugActions := OrderedCollection new ].
 	^ preDebugActions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> process [
 	"If a process was provided, return it, otherwise use the result of 'self defaultProcess'"
 	^ process ifNil: [ self defaultProcess ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebugRequest >> process: anObject [
 	process := anObject
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 OupsDebugRequest >> submit [
 	<debuggerCompleteToSender>
 	"Submit this debug request to the system. The system will typically open a debugger for it"

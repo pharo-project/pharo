@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Behavior >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName option: option [
 	| variable |
 
@@ -12,7 +12,7 @@ Behavior >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName
 		instanceSpecific: false
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Behavior >> metaLinkOptions [
 	^{
 	#methodDict -> #( + optionCompileOnLinkInstallation).

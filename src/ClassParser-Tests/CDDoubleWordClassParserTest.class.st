@@ -1,10 +1,11 @@
 Class {
-	#name : #CDDoubleWordClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDDoubleWordClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDDoubleWordClassParserTest >> classDefinitionString [
 
 	^ '{superclassName} variableDoubleWordSubclass: #{classname}
@@ -20,7 +21,7 @@ CDDoubleWordClassParserTest >> classDefinitionString [
 				'classvar2' -> self secondClassVariableName. } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDDoubleWordClassParserTest >> testDoubleWordClass [
 
 	self assert: classDefinition layoutClass equals: DoubleWordLayout

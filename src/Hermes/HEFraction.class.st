@@ -3,22 +3,24 @@ I represent a Fraction.
 I store myself as two exported literals: the numerator and the denominator.
 "
 Class {
-	#name : #HEFraction,
-	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#name : 'HEFraction',
+	#superclass : 'HEExportedLiteral',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEFraction class >> tag [
 	^ 24
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEFraction >> asLiteralIn: aFraction [
 	^ value
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEFraction >> doReadFrom: aReader [
 	| denominator numerator |
 	numerator := HEExportedLiteral readFrom: aReader.

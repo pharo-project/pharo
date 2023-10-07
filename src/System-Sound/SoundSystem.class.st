@@ -20,23 +20,24 @@ SoundSystem current: BaseSoundSystem new
 
 "
 Class {
-	#name : #SoundSystem,
-	#superclass : #Object,
+	#name : 'SoundSystem',
+	#superclass : 'Object',
 	#classVars : [
 		'Current',
 		'SoundEnabled',
 		'SoundQuickStart'
 	],
-	#category : #'System-Sound'
+	#category : 'System-Sound',
+	#package : 'System-Sound'
 }
 
-{ #category : #current }
+{ #category : 'current' }
 SoundSystem class >> current [
 
 	^ Current ifNil: [ Current := DummySoundSystem new ]
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 SoundSystem class >> current: aSoundSystem [
 
 	Current ifNotNil: [Current deactivate].
@@ -44,102 +45,102 @@ SoundSystem class >> current: aSoundSystem [
 	Current activate
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 SoundSystem class >> resetSoundSystem [
 	Current := nil
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 SoundSystem class >> soundEnabled [
 	^ SoundEnabled ifNil: [SoundEnabled := false]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 SoundSystem class >> soundEnabled: aBoolean [
 	SoundEnabled := aBoolean
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 SoundSystem class >> soundQuickStart [
 	^ SoundQuickStart ifNil: [SoundQuickStart := false]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 SoundSystem class >> soundQuickStart: aBoolean [
 	SoundQuickStart := aBoolean
 ]
 
-{ #category : #'activation - hooks' }
+{ #category : 'activation - hooks' }
 SoundSystem >> activate [
 	"Hook for possible specialization when activating a sound system"
 ]
 
-{ #category : #beep }
+{ #category : 'beep' }
 SoundSystem >> beep [
 	"Make a primitive beep."
 
 	self subclassResponsibility
 ]
 
-{ #category : #'activation - hooks' }
+{ #category : 'activation - hooks' }
 SoundSystem >> deactivate [
 	"Hook for possible specialization when activating a sound system"
 ]
 
-{ #category : #sounds }
+{ #category : 'sounds' }
 SoundSystem >> playSampledSound: samples rate: rate [
 
 	self subclassResponsibility
 ]
 
-{ #category : #sounds }
+{ #category : 'sounds' }
 SoundSystem >> playSoundNamed: soundName [
 
 	self subclassResponsibility
 ]
 
-{ #category : #sounds }
+{ #category : 'sounds' }
 SoundSystem >> playSoundNamed: soundName ifAbsentReadFrom: aifFileName [
 
 	self subclassResponsibility
 ]
 
-{ #category : #sounds }
+{ #category : 'sounds' }
 SoundSystem >> playSoundNamedOrBeep: soundName [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'to deprecate' }
+{ #category : 'to deprecate' }
 SoundSystem >> randomBitsFromSoundInput: bitCount [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'to deprecate' }
+{ #category : 'to deprecate' }
 SoundSystem >> sampledSoundChoices [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'activation - hooks' }
+{ #category : 'activation - hooks' }
 SoundSystem >> shutDown [
 	"by default do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundSystem >> soundEnabled [
 
 	^ self class soundEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SoundSystem >> soundEnabled: aBoolean [
 
 	^ self class soundEnabled: aBoolean
 ]
 
-{ #category : #query }
+{ #category : 'query' }
 SoundSystem >> soundNamed: soundName [
 
 	self subclassResponsibility

@@ -2,16 +2,18 @@
 A MCWorkingCopyCreated is a announcement raised when a new MCWorkingCopy is created
 "
 Class {
-	#name : #MCWorkingCopyCreated,
-	#superclass : #Announcement,
+	#name : 'MCWorkingCopyCreated',
+	#superclass : 'Announcement',
 	#instVars : [
 		'package',
 		'workingCopy'
 	],
-	#category : #'Monticello-Announcements'
+	#category : 'Monticello-Announcements',
+	#package : 'Monticello',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCWorkingCopyCreated class >> workingCopy: workingCopy [
 
 	^ self new
@@ -19,7 +21,7 @@ MCWorkingCopyCreated class >> workingCopy: workingCopy [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCWorkingCopyCreated class >> workingCopy: aWC package: package [
 
 	^ self new
@@ -28,22 +30,22 @@ MCWorkingCopyCreated class >> workingCopy: aWC package: package [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyCreated >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyCreated >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyCreated >> workingCopy [
 	^ workingCopy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWorkingCopyCreated >> workingCopy: anObject [
 	workingCopy := anObject
 ]

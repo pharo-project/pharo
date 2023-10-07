@@ -10,24 +10,25 @@ Internal Representation and Key Implementation Points.
 	name:		<String>
 "
 Class {
-	#name : #ClyGoToSpotterCandidate,
-	#superclass : #Object,
+	#name : 'ClyGoToSpotterCandidate',
+	#superclass : 'Object',
 	#instVars : [
 		'targetView',
 		'name',
 		'icon',
 		'actionBlock'
 	],
-	#category : #'Calypso-SystemPlugins-Spotter'
+	#category : 'Calypso-SystemPlugins-Spotter',
+	#package : 'Calypso-SystemPlugins-Spotter'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyGoToSpotterCandidate class >> target: aView named: aString icon: aForm using: aBlock [
 	^(self target: aView named: aString using: aBlock)
 		icon: aForm 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyGoToSpotterCandidate class >> target: aView named: aString using: aBlock [
 	^self new 
 		targetView: aView;
@@ -35,78 +36,78 @@ ClyGoToSpotterCandidate class >> target: aView named: aString using: aBlock [
 		actionBlock: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> actionBlock [
 	^ actionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> actionBlock: anObject [
 	actionBlock := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyGoToSpotterCandidate >> activate [
 	actionBlock value
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClyGoToSpotterCandidate >> doEvaluate [
 
 	self activate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> icon: anObject [
 	icon := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> label [
 
 	^ self name
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ClyGoToSpotterCandidate >> matchesText: aString [ 
 
 	^ self name = aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> spotterPreview [
 
 	^ nil
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ClyGoToSpotterCandidate >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	
 	^targetView spotterPreviewMorphIn: aComposite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> targetView [
 	^ targetView
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGoToSpotterCandidate >> targetView: anObject [
 	targetView := anObject
 ]

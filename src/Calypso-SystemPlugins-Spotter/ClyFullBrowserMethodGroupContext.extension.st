@@ -1,6 +1,6 @@
-Extension { #name : #ClyFullBrowserMethodGroupContext }
+Extension { #name : 'ClyFullBrowserMethodGroupContext' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyFullBrowserMethodGroupContext >> simpleNameForSpotterMenu [
 	^'Protocols'
 ]

@@ -16,8 +16,8 @@ StandardFonts setDemoFonts.
 StandardFonts restoreDefaultFonts.
 "
 Class {
-	#name : #StandardFonts,
-	#superclass : #Object,
+	#name : 'StandardFonts',
+	#superclass : 'Object',
 	#classVars : [
 		'BalloonFont',
 		'ButtonFont',
@@ -30,20 +30,21 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Graphics-Fonts'
+	#category : 'Graphics-Fonts',
+	#package : 'Graphics-Fonts'
 }
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> balloonFont [
 	^ BalloonFont ifNil: [BalloonFont := self defaultFont]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> balloonFont: aFont [
 	BalloonFont := aFont
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> bigPointSizeForStyleNamed: aSymbol [
 	| all s idx |
 	StrikeFont defaultFontKey.
@@ -55,32 +56,32 @@ StandardFonts class >> bigPointSizeForStyleNamed: aSymbol [
 			ifFalse: [all at: idx + 1]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> buttonFont [
 	^ ButtonFont ifNil: [ButtonFont := self defaultFont]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> buttonFont: aFont [
 	 ButtonFont := aFont
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> codeFont [
 	^ CodeFont ifNil: [CodeFont := self defaultFont]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> codeFont: aFont [
 	 CodeFont := aFont
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> defaultFont [
 	^ TextStyle defaultFont
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> defaultFont: aFont [
 	"Establish the default text font and style"
 
@@ -92,7 +93,7 @@ StandardFonts class >> defaultFont: aFont [
 	TextSharedInformation at: #DefaultTextStyle put: newDefaultStyle
 ]
 
-{ #category : #'small font fixing' }
+{ #category : 'small font fixing' }
 StandardFonts class >> fixSmallDejaVuPunctuationMarks [
 	"Just a small hack to make small font punctuation marks readable"
 	| fb |
@@ -104,7 +105,7 @@ StandardFonts class >> fixSmallDejaVuPunctuationMarks [
 			StandardFonts defaultFont characterFormAt: ch put: (fb characterFormAt: ch) deepCopy]
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> fontsSpecForStyleNamed: aSymbol [
 	| k small regular big |
 	k := StrikeFont defaultFontKey.
@@ -122,7 +123,7 @@ StandardFonts class >> fontsSpecForStyleNamed: aSymbol [
 			{#buttonFont:. k. regular } }
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> getCurrentFontsSpec [
 	"self getCurrentFontsSpec "
 	^ self systemFontAspects collect: [:aspect | | font |
@@ -130,38 +131,38 @@ StandardFonts class >> getCurrentFontsSpec [
 		Array with: (aspect, ':') asSymbol with: font familyName with: font pointSize]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> haloFont [
 	^ HaloFont ifNil: [HaloFont := StandardFonts defaultFont]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> haloFont: aFont [
 	HaloFont := aFont
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> listFont [
 	^ ListFont ifNil: [ListFont := self defaultFont]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> listFont: aFont [
 	 ListFont := aFont
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> menuFont [
 	^ MenuFont ifNil: [MenuFont := self defaultFont]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> menuFont: aFont [
 	aFont ~= MenuFont
 		ifTrue: [ MenuFont := aFont ]
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> pointSizeForStyleNamed: aSymbol [
 	"
 	self pointSizeForStyleNamed: #small.
@@ -176,7 +177,7 @@ StandardFonts class >> pointSizeForStyleNamed: aSymbol [
 			ifNotNil: [:info | info second]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> printStandardSystemFonts [
 	"self printStandardSystemFonts"
 
@@ -201,12 +202,12 @@ StandardFonts class >> printStandardSystemFonts [
 		title: 'Current system font settings' translated
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> setAllStandardFontsTo: aFont [
 	self systemFontAspects do: [:selector | StandardFonts perform: (selector, ':') asSymbol with: aFont]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 StandardFonts class >> setDefaultFonts: defaultFontsSpec [
 	"Since this is called from menus, we can take the opportunity to prompt for missing font styles."
 
@@ -224,7 +225,7 @@ StandardFonts class >> setDefaultFonts: defaultFontsSpec [
 		with: (((map at: triplet second) fontOfPointSize: triplet third) emphasized: (emphases at: triplet second))]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> setFontsFromSpec: fontsSpec [
 	"set some fonts by interpreting fontsSpec.
 	fontsSpec is a collection.
@@ -258,37 +259,37 @@ StandardFonts class >> setFontsFromSpec: fontsSpec [
 						emphasized: (emphases at: triplet second))]
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> setFontsToHuge [
 	self setFontsToStyleNamed: #huge
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> setFontsToLarge [
 	self setFontsToStyleNamed: #large
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> setFontsToMedium [
 	self setFontsToStyleNamed: #medium
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> setFontsToSmall [
 	self setFontsToStyleNamed: #small
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> setFontsToStyleNamed: aSymbol [
 	self setFontsFromSpec: (self fontsSpecForStyleNamed: aSymbol)
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> setFontsToVeryLarge [
 	self setFontsToStyleNamed: #verylarge
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> setSmallBitmapFonts [
 
 	| sans fixed |
@@ -306,7 +307,7 @@ StandardFonts class >> setSmallBitmapFonts [
  	self haloFont: (LogicalFont familyName: sans pointSize: 9)
 ]
 
-{ #category : #styles }
+{ #category : 'styles' }
 StandardFonts class >> smallPointSizeForStyleNamed: aSymbol [
 	| all s idx |
 	StrikeFont defaultFontKey.
@@ -318,17 +319,17 @@ StandardFonts class >> smallPointSizeForStyleNamed: aSymbol [
 			ifFalse: [all at: idx]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> systemFontAspects [
 	^ self systemFontAspectsAndLabels collect: [:assoc | assoc key]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> systemFontAspectsAndLabels [
 	^ {#defaultFont -> 'Default font' translated. #listFont -> 'List font'  translated. #menuFont -> 'Menu font'  translated. #windowTitleFont -> 'Window title'  translated. #balloonFont -> 'Balloon help font'  translated. #codeFont -> 'Code font'  translated. #buttonFont -> 'Button font'  translated. #haloFont -> 'Halo font'  translated }
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> systemFontLabelOf: aSelector [
 	^ self systemFontAspectsAndLabels
 		detect: [ :assoc | assoc key = aSelector ]
@@ -336,17 +337,17 @@ StandardFonts class >> systemFontLabelOf: aSelector [
 		ifNone: [ '' ]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> systemFontLabels [
 	^ self systemFontAspectsAndLabels collect: [:assoc | assoc value]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> windowTitleFont [
 	^ WindowTitleFont ifNil: [WindowTitleFont := StandardFonts defaultFont]
 ]
 
-{ #category : #'font accessing' }
+{ #category : 'font accessing' }
 StandardFonts class >> windowTitleFont: aFont [
 	WindowTitleFont := aFont
 ]

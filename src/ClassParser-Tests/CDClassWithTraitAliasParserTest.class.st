@@ -1,40 +1,41 @@
 Class {
-	#name : #CDClassWithTraitAliasParserTest,
-	#superclass : #CDTraitCompositionClassParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDClassWithTraitAliasParserTest',
+	#superclass : 'CDTraitCompositionClassParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDClassWithTraitAliasParserTest >> aliasName [
 
 	^ #alias
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassWithTraitAliasParserTest >> existingSelectorName [
 
 	^ #existing
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassWithTraitAliasParserTest >> testTraitAliasShouldBeFromAliasName [
 
 	self assert: (self traitCompositionNode aliases keys includes: self aliasName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassWithTraitAliasParserTest >> testTraitAliasTargetSelectorShouldBeExistingSelector [
 
 	self assert: (self traitCompositionNode aliases values includes: self existingSelectorName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassWithTraitAliasParserTest >> testTraitDefinitionNodeIsTraitAliasNode [
 
 	self assert: self traitCompositionNode isTraitAliasNode
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDClassWithTraitAliasParserTest >> traitDefinition [
 
 	^ 'MyTrait @ \{#''{aliasName}'' -> #''{existingSelectorName}''\}'

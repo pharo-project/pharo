@@ -5,8 +5,8 @@ If you need a point in time on a particular day, use DateAndTime.  If you need a
 
 "
 Class {
-	#name : #Time,
-	#superclass : #Magnitude,
+	#name : 'Time',
+	#superclass : 'Magnitude',
 	#instVars : [
 		'seconds',
 		'nanos'
@@ -14,16 +14,18 @@ Class {
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #'Kernel-Chronology'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> current [
 
 	^ self now
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> fromSeconds: secondCount [
 	"Answer an instance of me that is secondCount number of seconds since midnight."
 
@@ -35,21 +37,21 @@ Time class >> fromSeconds: secondCount [
 	^ self seconds: integerSeconds nanoSeconds: nanos
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Time class >> microsecondClockValue [
 	"Answer the number of microseconds since Epoch"
 
 	^self primUTCMicrosecondsClock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time class >> microsecondsSince: lastTimeInMicroSeconds [
  	"Answer the elapsed time since last recorded in microseconds"
 
  	^self microsecondClockValue - lastTimeInMicroSeconds
 ]
 
-{ #category : #'general inquiries' }
+{ #category : 'general inquiries' }
 Time class >> microsecondsToRun: timedBlock [
 	"Answer the number of milliseconds timedBlock takes to return its value."
 
@@ -59,7 +61,7 @@ Time class >> microsecondsToRun: timedBlock [
 	^self microsecondClockValue - initialMicroseconds
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Time class >> millisecondClockValue [
 	"Answer the number of milliseconds since the millisecond clock was last reset or rolled over.
 	Answer 0 if the primitive fails."
@@ -68,21 +70,21 @@ Time class >> millisecondClockValue [
 	^ 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> new [
 	"Answer a Time representing midnight"
 
 	^ self midnight
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> now [
 	"Answer a Time representing the time right now - this is a 24 hour clock."
 
 	^ self nowLocal
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> nowLocal [
 	"Answer the time since midnight in local timezone"
 
@@ -93,7 +95,7 @@ Time class >> nowLocal [
 		nanoSeconds: microSecondsToday \\ 1000000 * 1000
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> nowUTC [
 	"Answer the time since midnight in UTC timezone"
 
@@ -104,7 +106,7 @@ Time class >> nowUTC [
 		nanoSeconds: microSecondsToday \\ 1000000 * 1000
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Time class >> primMillisecondClock [
 	"Primitive. Answer the number of milliseconds since the millisecond clock
 	 was last reset or rolled over. Answer zero if the primitive fails.
@@ -114,7 +116,7 @@ Time class >> primMillisecondClock [
 	^ 0
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Time class >> primUTCMicrosecondsClock [
 	"Answer the number of micro-seconds ellapsed since epoch.
 	That is since 00:00 on the morning of January 1, 1901 UTC.
@@ -125,7 +127,7 @@ Time class >> primUTCMicrosecondsClock [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Time class >> primUTCMillisecondsClock [
 	"Answer the number of whole milliseconds ellapsed since epoch.
 	That is since 00:00 on the morning of January 1, 1901 UTC"
@@ -133,7 +135,7 @@ Time class >> primUTCMillisecondsClock [
 	^self primUTCMicrosecondsClock // 1e3
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Time class >> primUTCSecondsClock [
 	"Answer the number of whole seconds ellapsed since epoch.
 	That is since 00:00 on the morning of January 1, 1901 UTC"
@@ -141,14 +143,14 @@ Time class >> primUTCSecondsClock [
 	^self primUTCMicrosecondsClock // 1e6
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> seconds: seconds [
 	"Answer a Time from midnight."
 	TimeError validateSeconds: seconds andNanos: 0.
 	^ self basicNew ticks: (Duration seconds: seconds) ticks
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Time class >> seconds: seconds nanoSeconds: nanoCount [
 	"Answer a Time from midnight."
 	TimeError validateSeconds: seconds andNanos: nanoCount.
@@ -156,7 +158,7 @@ Time class >> seconds: seconds nanoSeconds: nanoCount [
 		ticks: (Duration seconds: seconds nanoSeconds: nanoCount) ticks
 ]
 
-{ #category : #clock }
+{ #category : 'clock' }
 Time class >> secondsWhenClockTicks [
 
 	"waits for the moment when a new second begins"
@@ -169,34 +171,34 @@ Time class >> secondsWhenClockTicks [
 	^ lastSecond + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time class >> totalSeconds [
 	"Answer the total seconds ellapsed since the epoch: 1 January 1901 00:00 UTC"
 
 	^ self primUTCSecondsClock
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Time >> < aTime [
 
 	^ self asDuration < aTime asDuration
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Time >> = aTime [
 
 	^ [ self ticks = aTime ticks ]
 		on: MessageNotUnderstood do: [false]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Time >> addSeconds: nSeconds [
 	"Answer a Time that is nSeconds after the receiver."
 
 	^ self class seconds: self asSeconds + nSeconds
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Time >> addTime: timeAmount [
  	"Answer a Time that is timeInterval after the receiver. timeInterval is an
  	instance of Date or Time."
@@ -204,83 +206,83 @@ Time >> addTime: timeAmount [
  	^ self class seconds: self asSeconds + timeAmount asSeconds
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asDate [
 
 	^ Date today
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asDateAndTime [
 
 	^ DateAndTime today + self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asDuration [
 	"Answer the duration since midnight"
 
 	^ Duration seconds: seconds nanoSeconds: nanos
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asMilliSeconds [
 	"Answer the number of milliseconds since midnight"
 
 	^ self asDuration asMilliSeconds
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asMonth [
 
 	^ self asDateAndTime asMonth
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
 	^ self asDuration asNanoSeconds
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asSeconds [
  	"Answer the number of seconds since midnight of the receiver."
 
  	^ seconds
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asTime [
 
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asWeek [
 
 	^ self asDateAndTime asWeek
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Time >> asYear [
 
 	^ self asDateAndTime asYear
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> duration [
 
 	^ Duration zero
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Time >> hash [
 
 	^ self ticks hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> hhmm24 [
  	"Return a string of the form 1123 (for 11:23 am), 2154 (for 9:54 pm), of exactly 4 digits"
 
@@ -289,20 +291,20 @@ Time >> hhmm24 [
 		self minute printOn: aStream base: 10 length: 2 padded: true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> hour [
 
 	^ self hour24
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> hour12 [
  	"Answer an <integer> between 1 and 12, inclusive, representing the hour
  	of the day in the 12-hour clock of the local time of the receiver."
 	^ self hour24 - 1 \\ 12 + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> hour24 [
 	"Answer a number that represents the number of complete hours in the receiver,
 	after the number of complete days has been removed."
@@ -310,13 +312,13 @@ Time >> hour24 [
  	^ (seconds rem: SecondsInDay) quo: SecondsInHour
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> hours [
 
 	^ self hour
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> intervalString [
 	"Treat the time as a difference.  Give it in hours and minutes with two digits of accuracy."
 
@@ -328,13 +330,13 @@ Time >> intervalString [
 		d seconds > 0 ifTrue: [s space; print: d seconds; nextPutAll: ' seconds'] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> meridianAbbreviation [
 
 	^ self hour < 12 ifTrue: ['AM'] ifFalse: ['PM']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> minute [
 	"Answer a number that represents the number of complete minutes in the receiver,
 	after the number of complete hours has been removed."
@@ -342,19 +344,19 @@ Time >> minute [
 	^ (seconds rem: SecondsInHour) quo: SecondsInMinute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> minutes [
 
 	^ self asDuration minutes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> nanoSecond [
 
 	^ nanos
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> print24 [
  	"Return as 8-digit string 'hh:mm:ss', with leading zeros if needed"
 
@@ -362,7 +364,7 @@ Time >> print24 [
 		self print24: true on: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> print24: hr24 on: aStream [
  	"Format is 'hh:mm:ss' or 'h:mm:ss am' "
 
@@ -386,7 +388,7 @@ Time >> print24: hr24 on: aStream [
 	hr24 ifFalse: [ aStream nextPutAll: (h < 12 ifTrue: [ ' am' ] ifFalse: [ ' pm' ]) ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> print24: hr24 showSeconds: showSeconds on: aStream [
 	"Format is 'hh:mm:ss.nnnnnnnnn' or 'h:mm:ss.nnnnnnnnn am'  or, if showSeconds is false, 'hh:mm' or 'h:mm am'"
 
@@ -418,7 +420,7 @@ Time >> print24: hr24 showSeconds: showSeconds on: aStream [
 	hr24 ifFalse: [ aStream nextPutAll: (h < 12 ifTrue: [ ' am' ] ifFalse: [ ' pm' ]) ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> printMinutes [
  	"Return as string 'hh:mm pm'  "
 
@@ -426,7 +428,7 @@ Time >> printMinutes [
 		self print24: false showSeconds: false on: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> printOn: aStream [
 
 	self
@@ -435,7 +437,7 @@ Time >> printOn: aStream [
 		on: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> second [
 	"Answer a number that represents the number of complete seconds in the receiver,
 	after the number of complete minutes has been removed."
@@ -443,13 +445,13 @@ Time >> second [
  	^ (seconds rem: SecondsInMinute)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> seconds [
 
 	^ self second
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Time >> seconds: secondCount [
 	"Private - only used by Time class."
 	TimeError validateSeconds: secondCount andNanos: 0.
@@ -457,7 +459,7 @@ Time >> seconds: secondCount [
 	nanos := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Time >> seconds: secondCount nanoSeconds: nanoCount [
 	"Private - only used by Time class."
 	TimeError validateSeconds: secondCount andNanos: nanoCount.
@@ -465,13 +467,13 @@ Time >> seconds: secondCount nanoSeconds: nanoCount [
 	nanos := nanoCount
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Time >> storeOn: aStream [
 
  	aStream print: self printString; nextPutAll: ' asTime'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Time >> subtractTime: timeAmount [
 	"Answer a Time that is timeInterval before the receiver. timeInterval is
 	an instance of Date or Time."
@@ -479,14 +481,14 @@ Time >> subtractTime: timeAmount [
 	^ self class seconds: self asSeconds - timeAmount asSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Time >> ticks [
 	"Answer an Array: { seconds. nanoSeconds }"
 
 	^ Array with: 0 with: seconds with: nanos
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Time >> ticks: anArray [
 	"ticks is an Array: { days. seconds. nanoSeconds }"
 	TimeError validateSeconds: (anArray at: 2) andNanos: (anArray at: 3).

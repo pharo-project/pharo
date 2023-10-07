@@ -1,12 +1,12 @@
-Extension { #name : #Text }
+Extension { #name : 'Text' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Text >> heightToDisplayInTree: aTree [
 
 	^ aTree fontToUse height
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Text >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont from: aMorph [
 
 	"Method extracted from LazyListMorph"
@@ -39,7 +39,7 @@ Text >> treeRenderOn: aCanvas bounds: drawBounds color: drawColor font: aFont fr
 		strikethroughColor: drawColor
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Text >> widthToDisplayInTree: aTree [
 
 	^ aTree fontToUse widthOfStringOrText: self contents

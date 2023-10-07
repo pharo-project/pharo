@@ -12,27 +12,29 @@ Typical use-case:
 	
 "
 Class {
-	#name : #SearchMorph,
-	#superclass : #EditableDropListMorph,
+	#name : 'SearchMorph',
+	#superclass : 'EditableDropListMorph',
 	#instVars : [
 		'maxSize',
 		'currentCompletionIndex',
 		'updateSelector'
 	],
-	#category : #'Polymorph-Widgets-Base'
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> acceptSelector [
 	^ self setIndexSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> acceptSelector: aSymbol [
 	self setIndexSelector: aSymbol
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SearchMorph >> addToList: aString [
 	aString isEmpty ifTrue: [ ^ self ].
 	list ifNil: [
@@ -44,7 +46,7 @@ SearchMorph >> addToList: aString [
 	self changed: #list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> content: anObject [
 	content := anObject asString trimBoth.
 	self addToList: content.
@@ -52,14 +54,14 @@ SearchMorph >> content: anObject [
 	self updateList
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SearchMorph >> contentChanged: aString [
 	content := aString.
 	self updateSelector ifNotNil: [ :selector|
 		self model perform: selector with: aString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SearchMorph >> currentTabCompletion [
 	self searchList ifEmpty: [ ^ ''].
 
@@ -69,7 +71,7 @@ SearchMorph >> currentTabCompletion [
 	^ self searchList at: currentCompletionIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SearchMorph >> initialize [
 	super initialize.
 	self convertTo: String.
@@ -78,13 +80,13 @@ SearchMorph >> initialize [
 	self ghostText: 'Hit return to accept' translated
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SearchMorph >> keyStroke: event fromMorph: morph [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> listSelectionIndex: anInteger [
 	"Set the list selection."
 
@@ -98,17 +100,17 @@ SearchMorph >> listSelectionIndex: anInteger [
 		ifFalse: [ ^ super listSelectionIndex: anInteger ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> maxSize [
 	^ maxSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> maxSize: aNumber [
 	maxSize := aNumber
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SearchMorph >> newContentMorph [
 	| editorMorph|
 	editorMorph := super newContentMorph.
@@ -121,55 +123,55 @@ SearchMorph >> newContentMorph [
 	^ editorMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SearchMorph >> nextCompletion [
 	currentCompletionIndex := (currentCompletionIndex + 1 \\ self searchList size) + 1.
 	^ self currentTabCompletion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> searchList [
 	^ list ifNil: [ list := OrderedCollection new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> searchList: aCollection [
 	self list: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> searchString [
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> selectionInterval [
 	^ contentMorph selectionInterval
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SearchMorph >> showList [
 	"trigger a list update so that shared search results are updated properly"
 	self changed: #list.
 	super showList
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 SearchMorph >> takeKeyboardFocus [
 	contentMorph takeKeyboardFocus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> updateSelector [
 	^ updateSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SearchMorph >> updateSelector: aSymbol [
 	updateSelector := aSymbol
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SearchMorph >> whenKeystroke: anAnnouncement [
 	^ self keyStroke: anAnnouncement event fromMorph: anAnnouncement morph
 ]

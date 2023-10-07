@@ -1,6 +1,6 @@
-Extension { #name : #TextAttribute }
+Extension { #name : 'TextAttribute' }
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 TextAttribute >> rubMayActOnEvent: anEvent [
 	^ self mayActOnEvent: anEvent
 ]

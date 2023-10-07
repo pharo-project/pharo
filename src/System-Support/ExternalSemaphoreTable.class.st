@@ -12,16 +12,18 @@ Therefore, while in general not all users will care if the table is above a cert
 
 "
 Class {
-	#name : #ExternalSemaphoreTable,
-	#superclass : #Object,
+	#name : 'ExternalSemaphoreTable',
+	#superclass : 'Object',
 	#classVars : [
 		'ProtectAdd',
 		'ProtectRemove'
 	],
-	#category : #'System-Support-Utilities'
+	#category : 'System-Support-Utilities',
+	#package : 'System-Support',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalSemaphoreTable class >> clearExternalObjects [
 	"Clear the array of objects that have been registered for use in non-Smalltalk code."
 	"Only lock additions, removals executing in parallel would have little effect on the resulting array"
@@ -30,7 +32,7 @@ ExternalSemaphoreTable class >> clearExternalObjects [
 		self unprotectedExternalObjects: Array new]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalSemaphoreTable class >> collectionBasedOn: externalObjects withRoomFor: anObject [
 	"Called if no slots to put anObject in have been found in externalObjects "
 	"Return a externalObject collection which does, either:
@@ -53,14 +55,14 @@ ExternalSemaphoreTable class >> collectionBasedOn: externalObjects withRoomFor: 
 	^newObjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalSemaphoreTable class >> externalObjects [
 	"Not really sure why this is protected, once called you are out of protection of the locks anyways, and any use of the object is dangerous...
 	Only additions can potentially change the actual array in use though, so only lock that."
 	^ProtectAdd critical: [self unprotectedExternalObjects]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalSemaphoreTable class >> freedSlotsIn: externalObjects ratherThanIncreaseSizeTo: newSize [
 	"In some VM's, the external object table has a max size, which has to be increased for vm to reference them correctly."
 	"In that case, try to gc to free slots first before actually increasing the max size"
@@ -85,13 +87,13 @@ ExternalSemaphoreTable class >> freedSlotsIn: externalObjects ratherThanIncrease
 		ifNil:[false]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalSemaphoreTable class >> initialize [
 	ProtectAdd := Semaphore forMutualExclusion.
 	ProtectRemove := Semaphore forMutualExclusion
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalSemaphoreTable class >> privateRegisterExternalObject: anObject [
 	"Register the given object in the external objects array and return its index. If it is already there, just return its index.
 	Calls to this method must be guarded against simultaneous removes from multiple threads."
@@ -109,7 +111,7 @@ ExternalSemaphoreTable class >> privateRegisterExternalObject: anObject [
 	^ firstEmptyIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalSemaphoreTable class >> privateUnregisterExternalObject: anObject [
 	"Unregister the given object in the external objects array. Do nothing if it isn't registered.
 	Calls to this method must be guarded against simultaneous removes from multiple threads."
@@ -123,12 +125,12 @@ ExternalSemaphoreTable class >> privateUnregisterExternalObject: anObject [
 		^self]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalSemaphoreTable class >> registerExternalObject: anObject [
 	^ ProtectAdd critical: [self privateRegisterExternalObject: anObject]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalSemaphoreTable class >> slotFor: anObject in: aCollection [
 	"find the first empty slot, or nil if there is none"
 
@@ -146,17 +148,17 @@ ExternalSemaphoreTable class >> slotFor: anObject in: aCollection [
 	^ firstEmptyIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalSemaphoreTable class >> unprotectedExternalObjects [
 	^Smalltalk specialObjectsArray at: 39
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalSemaphoreTable class >> unprotectedExternalObjects: aCollection [
 	^Smalltalk specialObjectsArray at: 39 put: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalSemaphoreTable class >> unregisterExternalObject: anObject [
 	ProtectRemove critical: [self privateUnregisterExternalObject: anObject]
 ]

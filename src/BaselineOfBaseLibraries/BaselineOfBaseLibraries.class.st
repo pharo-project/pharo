@@ -1,10 +1,19 @@
+"
+Baseline to load libraries used in base image:
+ - SUnit (Unit Testing framework)
+ - Beacon (Logging framework)
+ - Clap (Command line handling)
+ - ...
+"
 Class {
-	#name : #BaselineOfBaseLibraries,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfBaseLibraries
+	#name : 'BaselineOfBaseLibraries',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfBaseLibraries-Base',
+	#package : 'BaselineOfBaseLibraries',
+	#tag : 'Base'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfBaseLibraries >> baseline: spec [
 	<baseline>
 	| repository |

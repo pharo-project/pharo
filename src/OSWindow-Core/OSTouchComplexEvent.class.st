@@ -3,25 +3,27 @@ I am a touch event composed by several others basic events.
 
 "
 Class {
-	#name : #OSTouchComplexEvent,
-	#superclass : #OSTouchEvent,
+	#name : 'OSTouchComplexEvent',
+	#superclass : 'OSTouchEvent',
 	#instVars : [
 		'position'
 	],
-	#category : #'OSWindow-Core-Events-Touch'
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchComplexEvent class >> id [
 	^ #default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchComplexEvent >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchComplexEvent >> position: anObject [
 	position := anObject
 ]

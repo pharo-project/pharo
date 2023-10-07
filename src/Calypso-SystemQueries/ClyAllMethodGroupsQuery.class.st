@@ -28,17 +28,19 @@ Scope also allow static groups which do not need any method check. Provider of s
 Look at ClyMethodGroupProvider for more details
 "
 Class {
-	#name : #ClyAllMethodGroupsQuery,
-	#superclass : #ClyTypedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyAllMethodGroupsQuery',
+	#superclass : 'ClyTypedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyAllMethodGroupsQuery class >> resultItemsType [
 	^ClyMethodGroup
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllMethodGroupsQuery >> buildResult: aQueryResult [
 
 	| groups |
@@ -49,7 +51,7 @@ ClyAllMethodGroupsQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: groups
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllMethodGroupsQuery >> checkEmptyResult [
 
 	scope methodGroupsDo: [ :each | ^false].
@@ -57,18 +59,18 @@ ClyAllMethodGroupsQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllMethodGroupsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 	anEnvironmentPlugin collectMetadataOfMethodGroups: aQueryResult
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllMethodGroupsQuery >> description [
 
 	^'all method groups'
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAllMethodGroupsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	| asyncGroups |
@@ -83,12 +85,12 @@ ClyAllMethodGroupsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncemen
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAllMethodGroupsQuery >> shortName [
 	^'Methods'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyAllMethodGroupsQuery >> withMetaLevelScope: aScopeClass [
 	^self withScope: (scope withMetaLevel: aScopeClass)
 ]

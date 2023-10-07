@@ -1,6 +1,6 @@
-Extension { #name : #RBMessageNode }
+Extension { #name : 'RBMessageNode' }
 
-{ #category : #'*ClassParser' }
+{ #category : '*ClassParser' }
 RBMessageNode >> extractClassDefinitionFor: aFluidParser [
 
 	aFluidParser setAdequateClassDefinitionFrom: self

@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloScriptNotification,
-	#superclass : #Notification,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloScriptNotification',
+	#superclass : 'Notification',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptNotification >> handleResolutionFor: aScriptEngine [
     self subclassResponsibility
 ]

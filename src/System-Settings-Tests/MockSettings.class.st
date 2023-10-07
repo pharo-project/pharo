@@ -2,8 +2,8 @@
 I contains some system settings that are used for testing.
 "
 Class {
-	#name : #MockSettings,
-	#superclass : #Object,
+	#name : 'MockSettings',
+	#superclass : 'Object',
 	#classInstVars : [
 		'cacheDirectory',
 		'booleanMockSetting',
@@ -11,44 +11,45 @@ Class {
 		'defaultDirectoryName',
 		'booleanSettingWithDefault'
 	],
-	#category : #'System-Settings-Tests'
+	#category : 'System-Settings-Tests',
+	#package : 'System-Settings-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> booleanSetting [
 	^ booleanMockSetting ifNil: [ booleanMockSetting := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> booleanSetting: aBoolean [
 	^ booleanMockSetting := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> booleanSettingNode [
 	^ self settingTree nodeNamed: #booleanSetting
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> booleanSettingNodeOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder setting: #booleanSetting)
 		label: 'Mock boolean setting'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> booleanSettingWithDefault [
 
 	^ booleanSettingWithDefault ifNil: [ booleanSettingWithDefault := false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> booleanSettingWithDefault: aValue [
 
 	booleanSettingWithDefault := aValue
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> booleanSettingWithDefaultNodeOn: aBuilder [
 	<mocksystemsettings>
 
@@ -58,22 +59,22 @@ MockSettings class >> booleanSettingWithDefaultNodeOn: aBuilder [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> cacheDirectory [
 	^ cacheDirectory ifNil: [ cacheDirectory := FileLocator workingDirectory ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> cacheDirectory: aFileReference [
 	cacheDirectory := aFileReference
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> cacheDirectorySettingNode [
 	^ self settingTree nodeNamed: #cacheDirectory
 ]
 
-{ #category : #'setting strings' }
+{ #category : 'setting strings' }
 MockSettings class >> changedClassStoredSettingVariable [
 	^
 '[
@@ -87,7 +88,7 @@ MockSettings class >> changedClassStoredSettingVariable [
 ]'
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 MockSettings class >> cleanUp [
 	self booleanSetting: nil.
 	self rangeSetting: nil.
@@ -96,17 +97,17 @@ MockSettings class >> cleanUp [
 	self booleanSettingWithDefault: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> defaultDirectoryName [
 	^ defaultDirectoryName ifNil: [ defaultDirectoryName := FileLocator workingDirectory ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> defaultDirectoryName: aFileReference [
 	defaultDirectoryName := aFileReference
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> monticelloSettingsOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder group: #monticello)
@@ -126,13 +127,13 @@ MockSettings class >> monticelloSettingsOn: aBuilder [
 			]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> nodeSettings [
 	"self nodeSettings"
 	^ self settingTree nodeList
 ]
 
-{ #category : #'setting strings' }
+{ #category : 'setting strings' }
 MockSettings class >> notExistingClassStoredSettingSTONString [
 	^
 '[
@@ -143,7 +144,7 @@ MockSettings class >> notExistingClassStoredSettingSTONString [
 ]'
 ]
 
-{ #category : #'setting strings' }
+{ #category : 'setting strings' }
 MockSettings class >> oneStoredSettingSTONString [
 	^
 '[
@@ -154,22 +155,22 @@ MockSettings class >> oneStoredSettingSTONString [
 ]'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> rangeSetting [
 	^ rangeSetting ifNil: [ rangeSetting := 10 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> rangeSetting: anInteger [
 	rangeSetting := anInteger
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> rangeSettingNode [
 	^ self settingTree nodeNamed: #rangeSetting
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MockSettings class >> rangeSettingNodeOn: aBuilder [
 	<mocksystemsettings>
 	(aBuilder range: #rangeSetting)
@@ -177,13 +178,13 @@ MockSettings class >> rangeSettingNodeOn: aBuilder [
 		range: (0 to: 100 by: 5)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> settingTree [
 	"self settingTree"
 	^ SettingTree new acceptableKeywords: (Array with: #mocksystemsettings)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MockSettings class >> storedSettings [
 	"self storedSettings"
 	| builder |
@@ -191,7 +192,7 @@ MockSettings class >> storedSettings [
 	^ self nodeSettings collect: [ :e | builder from: e ]
 ]
 
-{ #category : #'setting strings' }
+{ #category : 'setting strings' }
 MockSettings class >> twoStoredSettingsSTONString [
 	^
 '[

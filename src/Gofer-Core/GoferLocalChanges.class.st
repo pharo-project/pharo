@@ -2,12 +2,14 @@
 Handling local changes
 "
 Class {
-	#name : #GoferLocalChanges,
-	#superclass : #GoferChanges,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferLocalChanges',
+	#superclass : 'GoferChanges',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #queries }
+{ #category : 'queries' }
 GoferLocalChanges >> sourceSnapshotOf: aReference [
 
 	| ancestors reference |
@@ -17,7 +19,7 @@ GoferLocalChanges >> sourceSnapshotOf: aReference [
 	^ (reference resolveWith: self gofer) version snapshot
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 GoferLocalChanges >> targetSnapshotOf: aReference [
 
 	^ aReference workingCopy package snapshot

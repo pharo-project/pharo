@@ -2,8 +2,8 @@
 I'm only for SUnit TestCases.
 "
 Class {
-	#name : #NECTestClass,
-	#superclass : #NECTestSuperClass,
+	#name : 'NECTestClass',
+	#superclass : 'NECTestSuperClass',
 	#instVars : [
 		'typeSuggestingParameter',
 		'messageSend',
@@ -24,16 +24,17 @@ Class {
 	#classVars : [
 		'ClassVar'
 	],
-	#category : #'NECompletion-Tests'
+	#category : 'NECompletion-Tests',
+	#package : 'NECompletion-Tests'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 NECTestClass class >> initialize [
 
 	ClassVar := 'Any string'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NECTestClass >> initialize: aRectangle [
 	constantInteger := 15.
 	constantLargeInteger := 1152921504606846976. "(SmallInteger maxVal + 1) on 64-bit"
@@ -55,14 +56,14 @@ NECTestClass >> initialize: aRectangle [
 	complexInit2 := Dictionary new: aRectangle origin x
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NECTestClass >> lowPriorityOverrides: aRectangle [
 
 	messageSend := aRectangle.
 	typeSuggestingParameter2 := aRectangle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NECTestClass >> testIt: anArgument [
 	| loc1 x2 t |
 	x2 := [:bar :var | var < bar].

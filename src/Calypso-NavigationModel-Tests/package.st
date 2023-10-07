@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-NavigationModel-Tests' }
+Package { #name : 'Calypso-NavigationModel-Tests' }

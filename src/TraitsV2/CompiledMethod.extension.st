@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 CompiledMethod >> traitSource [
 	^ self propertyAt: #traitSource
 ]

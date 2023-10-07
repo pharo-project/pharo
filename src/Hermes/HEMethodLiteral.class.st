@@ -4,44 +4,46 @@ I am stored as a className and a selector.
 Both elements are stored as HEExportedLiterals.
 "
 Class {
-	#name : #HEMethodLiteral,
-	#superclass : #HEExportedLiteral,
+	#name : 'HEMethodLiteral',
+	#superclass : 'HEExportedLiteral',
 	#instVars : [
 		'className',
 		'selector'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodLiteral class >> tag [
 	^ 10
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEMethodLiteral >> asLiteralIn: env [
 	^ (env newClass name = className and: [ env newSelector = selector ])
 		ifTrue: [ env newMethod ]
 		ifFalse: [ (env classNamed: className) >> selector ]
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 HEMethodLiteral >> className [
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodLiteral >> className: anObject [
 	className := anObject
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEMethodLiteral >> doReadFrom: aReader [
 	className := aReader readByteSymbol.
 	selector := aReader readByteSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethodLiteral >> value: aMethod [
 	className := aMethod methodClass name.
 	selector := aMethod selector

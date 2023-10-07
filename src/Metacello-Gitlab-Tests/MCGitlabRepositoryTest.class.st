@@ -1,10 +1,11 @@
 Class {
-	#name : #MCGitlabRepositoryTest,
-	#superclass : #TestCase,
-	#category : #'Metacello-Gitlab-Tests'
+	#name : 'MCGitlabRepositoryTest',
+	#superclass : 'TestCase',
+	#category : 'Metacello-Gitlab-Tests',
+	#package : 'Metacello-Gitlab-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCGitlabRepositoryTest >> testLocation [
 	| repository |
 	repository := MCGitlabRepository location: 'gitlab://pharo-project/pharo:master/src'.
@@ -32,7 +33,7 @@ MCGitlabRepositoryTest >> testLocation [
 		assert: repository sshPort isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCGitlabRepositoryTest >> testProjectTagsUrlFor [
 	| repository |
 	repository := MCGitlabRepository location: 'gitlab://pharo-project/pharo:master/src'.
@@ -43,7 +44,7 @@ MCGitlabRepositoryTest >> testProjectTagsUrlFor [
 	self assert: (repository projectTagsUrlFor: 'pharo-project/pharo') equals: 'https://git.pharo.org/api/v4/projects/pharo-project/pharo/repository/tags'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCGitlabRepositoryTest >> testSelfHostedLocation [
 	| repository |
 	repository := MCGitlabRepository location: 'gitlab://git.pharo.org:pharo-project/pharo:master/src'.
@@ -71,7 +72,7 @@ MCGitlabRepositoryTest >> testSelfHostedLocation [
 		assert: repository sshPort isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCGitlabRepositoryTest >> testSelfHostedLocationWithNonDefaultSSHPort [
 	| repository |
 	repository := MCGitlabRepository location: 'gitlab://git.pharo.org:1234:pharo-project/pharo:master/src'.

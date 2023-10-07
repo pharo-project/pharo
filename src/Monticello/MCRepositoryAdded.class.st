@@ -2,20 +2,22 @@
 Announcement sent when a Repository is added to a Repository group.
 "
 Class {
-	#name : #MCRepositoryAdded,
-	#superclass : #Announcement,
+	#name : 'MCRepositoryAdded',
+	#superclass : 'Announcement',
 	#instVars : [
 		'repository'
 	],
-	#category : #'Monticello-Announcements'
+	#category : 'Monticello-Announcements',
+	#package : 'Monticello',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryAdded >> repository [
 	^ repository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryAdded >> repository: anObject [
 	repository := anObject
 ]

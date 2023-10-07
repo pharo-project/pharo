@@ -15,33 +15,34 @@ Internal Representation and Key Implementation Points.
 	systemEnvironment:		<Object>
 "
 Class {
-	#name : #SycAddNewPackageCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycAddNewPackageCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'systemEnvironment',
 		'packageName',
 		'resultPackage'
 	],
-	#category : #'SystemCommands-PackageCommands'
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddNewPackageCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	aToolContext showPackage: resultPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> defaultMenuIconName [
 	^#add
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> defaultMenuItemName [
 	^'New package'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddNewPackageCommand >> execute [
 
 	resultPackage := [ systemEnvironment createPackageNamed: packageName ]
@@ -49,17 +50,17 @@ SycAddNewPackageCommand >> execute [
 		                 do: [ systemEnvironment packageNamed: packageName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> packageName [
 	^ packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> packageName: anObject [
 	packageName := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddNewPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
@@ -73,22 +74,22 @@ SycAddNewPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	packageName isEmptyOrNil ifTrue: [ ^CmdCommandAborted signal]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> resultPackage [
 	^ resultPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> resultPackage: anObject [
 	resultPackage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> systemEnvironment [
 	^ systemEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewPackageCommand >> systemEnvironment: anObject [
 	systemEnvironment := anObject
 ]

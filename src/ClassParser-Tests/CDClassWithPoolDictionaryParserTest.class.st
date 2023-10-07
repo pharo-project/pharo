@@ -1,10 +1,11 @@
 Class {
-	#name : #CDClassWithPoolDictionaryParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDClassWithPoolDictionaryParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDClassWithPoolDictionaryParserTest >> classDefinitionString [
 	^ '{superclassName} subclass: #{classname}
 		instanceVariableNames: ''{instvar1} {instvar2}''
@@ -21,7 +22,7 @@ CDClassWithPoolDictionaryParserTest >> classDefinitionString [
 				'sharedPoolName' -> self sharedPoolName } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDClassWithPoolDictionaryParserTest >> sharedPoolName [
 	^ 'TextConstants AnotherSharedPool'
 ]

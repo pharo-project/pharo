@@ -2,18 +2,20 @@
 SUnit tests for WeakMessageSend
 "
 Class {
-	#name : #WeakMessageSendTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'WeakMessageSendTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeakMessageSendTest >> classToBeTested [
 
 	^ WeakMessageSend
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testCollectArguments [
 
 	"Fogbugz issue 18127"
@@ -38,7 +40,7 @@ WeakMessageSendTest >> testCollectArguments [
 	self assertCollection: rcvr asArray equals: { Color black . #a  . Color green }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testNoArguments [
 
 	| m |
@@ -48,7 +50,7 @@ WeakMessageSendTest >> testNoArguments [
 	self assert: (m value)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testOneArgument [
 
 	| m |
@@ -60,7 +62,7 @@ WeakMessageSendTest >> testOneArgument [
 	self assert: m value equals: { 1 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testOneArgumentWithGC [
 
 	| m |
@@ -72,7 +74,7 @@ WeakMessageSendTest >> testOneArgumentWithGC [
 	self assert: (m value isNil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testReceiverWithGC [
 
 	| m |
@@ -83,7 +85,7 @@ WeakMessageSendTest >> testReceiverWithGC [
 	self assert: (m value isNil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testTwoArguments [
 	| m |
 	m := WeakMessageSend receiver: Array selector: #with:with: arguments: {1 . 2}.

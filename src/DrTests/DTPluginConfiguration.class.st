@@ -2,24 +2,26 @@
 I hold the information that would be used by a DrTestPlugin.
 "
 Class {
-	#name : #DTPluginConfiguration,
-	#superclass : #Object,
+	#name : 'DTPluginConfiguration',
+	#superclass : 'Object',
 	#instVars : [
 		'items',
 		'packagesSelected',
 		'testSuite'
 	],
-	#category : #'DrTests-Model'
+	#category : 'DrTests-Model',
+	#package : 'DrTests',
+	#tag : 'Model'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTPluginConfiguration class >> items: aCollectionOfClasses [
 	^ self new
 		items: aCollectionOfClasses;
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTPluginConfiguration class >> items: aCollectionOfClasses packages: aCollectionOfPackages [
 	^ self new
 		items: aCollectionOfClasses;
@@ -27,7 +29,7 @@ DTPluginConfiguration class >> items: aCollectionOfClasses packages: aCollection
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DTPluginConfiguration >> asTestSuite [
 	| suite |
 	suite := TestSuite new.
@@ -37,43 +39,43 @@ DTPluginConfiguration >> asTestSuite [
 	^ suite
 ]
 
-{ #category : #'result handling' }
+{ #category : 'result handling' }
 DTPluginConfiguration >> handleResults: aPluginResult for: aPlugin [
 	^ aPluginResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginConfiguration >> items [
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginConfiguration >> items: anObject [
 	items := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginConfiguration >> items: anObject packages: packages [
 	items := anObject.
 	packagesSelected := packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginConfiguration >> packagesSelected [
 	^ packagesSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginConfiguration >> packagesSelected: packages [
 	packagesSelected := packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginConfiguration >> testSuite [
 	^ testSuite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginConfiguration >> testSuite: anObject [
 	testSuite := anObject
 ]

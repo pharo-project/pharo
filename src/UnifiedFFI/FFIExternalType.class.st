@@ -2,47 +2,49 @@
 I'm an abstract class to implement FFI external types (types who will later be mapped to something understandable for a C library)
 "
 Class {
-	#name : #FFIExternalType,
-	#superclass : #Object,
+	#name : 'FFIExternalType',
+	#superclass : 'Object',
 	#instVars : [
 		'pointerArity',
 		'loader'
 	],
-	#category : #'UnifiedFFI-Types'
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalType class >> asExternalTypeOn: generator [
 	^ self new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType class >> externalType [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType class >> externalTypeAlignment [
 	"Answer a number of bytes, which takes a value of given type
 	(not a pointer to it)"
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType class >> externalTypeSize [
 	"Answer a number of bytes, which takes a value of given type
 	(not a pointer to it)"
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalType class >> naturalPointerArity [
 	"Indicates 'natural' pointer artity of type (atomic types are zero while any kind of
 	 pointer/reference/etc. is one)"
 	^ 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalType class >> newBuffer [
 	"This method is used to provide convencience buffer accessor to types.
 	 This is useful when you need to pass a reference to an argument to take the value later.
@@ -77,51 +79,51 @@ would have an FFI declaration...
 	^ ByteArray new: self externalTypeSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType class >> pointerAlignment [
 	^ OSPlatform current ffiPointerAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType class >> pointerSize [
 	"Answer a number of bytes, which takes a pointer value"
 	^ Smalltalk vm wordSize
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FFIExternalType class >> resolveType: aTypeName [
 	^ FFICallout new resolveType: aTypeName
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FFIExternalType class >> sizeOf: aTypeName [
 	^ (self resolveType: aTypeName) typeSize
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
 	self loader
 		emitArgument: aBuilder
 		context: aContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalType >> basicHandle: aHandle at: index [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalType >> basicHandle: aHandle at: index put: value [
 	self subclassResponsibility
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 FFIExternalType >> callbackReturnOn: callbackContext for: anObject [
 	"By default, I answer an integral return (not a float)"
 	^ callbackContext wordResult: anObject
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 FFIExternalType >> callbackValueFor: anObject at: index [
 	"This is the value for a callback.
 	 The callback parameters came from an external adress who can be treated as a ByteArray, so it
@@ -129,7 +131,7 @@ FFIExternalType >> callbackValueFor: anObject at: index [
 	^ self handle: anObject at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> defaultReturnOnError [
 	"In case of a callback error, the image will try to show a debugger and that will most ot the
 	 time crashes the VM (because it will break the process and will let a C function waiting and
@@ -140,19 +142,19 @@ FFIExternalType >> defaultReturnOnError [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> emitArgument: aBuilder context: aContext inCallout: aCallout [
 	self basicEmitArgument: aBuilder context: aContext inCallout: aCallout.
 	self needsArityPacking
 		ifTrue: [ self  emitPointerArityRoll: aBuilder context: aContext ]
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIExternalType >> emitFlatStructureLayoutFieldInto: flatStructureLayout [
 	flatStructureLayout addField: self stackParameterClass size: self typeSize alignment: self typeAlignment
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> emitPointerArityRoll: aBuilder context: aContext [
 	self loader
 		emitPointerArityPack: aBuilder
@@ -160,18 +162,18 @@ FFIExternalType >> emitPointerArityRoll: aBuilder context: aContext [
 		arity: self pointerArity
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
 	^ aBuilder returnTop
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
 
 	^ self emitReturn: aBuilder resultTempVar: resultVar context: aContext
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> emitReturnArgument: builder context: aContext [
 	"Some times functions need some post-process (for example, to unpack pointers).
 	 This call MUST exit with result value in top of the stack (otherwise it will
@@ -182,84 +184,84 @@ FFIExternalType >> emitReturnArgument: builder context: aContext [
 		context: aContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> externalType [
 	^ self class externalType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> externalTypeAlignment [
 	^ self class externalTypeAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> externalTypeSize [
 	^ self class externalTypeSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> externalTypeWithArity [
 	^ self pointerArity > 0
 		ifTrue: [ self externalType asPointerType ]
 		ifFalse: [ self externalType ]
 ]
 
-{ #category : #'accessing - array' }
+{ #category : 'accessing - array' }
 FFIExternalType >> handle: aHandle at: index [
 	self isPointer ifTrue: [ ^ aHandle pointerAt: index ].
 	^ self basicHandle: aHandle at: index
 ]
 
-{ #category : #'accessing - array' }
+{ #category : 'accessing - array' }
 FFIExternalType >> handle: aHandle at: index put: value [
 	self isPointer ifTrue: [ ^ aHandle pointerAt: index put: value ].
 	^ self basicHandle: aHandle at: index put: value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalType >> initialize [
 	super initialize.
 	pointerArity := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> isExternalStructure [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> isExternalType [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> isFloatType [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> isPointer [
 	^ self pointerArity > 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> isVoid [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> loader [
 	^ loader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> loader: aLoader [
 	loader := aLoader
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> needsArityPacking [
 	"Regular types needs to be ''rolled'' if they are passed as pointers to its calling functions.
 	 For example, executing consecutivelly this (simplified) two functions:
@@ -277,7 +279,7 @@ FFIExternalType >> needsArityPacking [
 	^ self pointerArity > self class naturalPointerArity
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> needsArityUnpacking [
 	"Simple types do not need ''unpacking'' because they can not used as buffers (to receive values
 	 from C functions).
@@ -290,7 +292,7 @@ FFIExternalType >> needsArityUnpacking [
 	^ false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalType >> newBuffer [
 	"as its counterpart on class-side (newBuffer), this method get a memory segment that can be translated to C function as reference (to take later it's value).
 	For example:
@@ -311,81 +313,81 @@ FFIExternalType >> newBuffer [
 	^ self class newBuffer
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> offsetReadFieldAt: offsetVariableName [
 	^ self externalTypeWithArity offsetReadFieldAt: offsetVariableName
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> offsetWriteFieldAt: offsetVariableName with: valueName [
 	^ self externalTypeWithArity
 		offsetWriteFieldAt: offsetVariableName
 		with: valueName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> pointerAlignment [
 	^ self class pointerAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> pointerArity [
 	^ pointerArity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> pointerArity: additionalArity [
 	pointerArity := pointerArity + additionalArity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> pointerSize [
 	^ self class pointerSize
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FFIExternalType >> printOn: aStream [
 	super printOn: aStream.
 	pointerArity timesRepeat: [ aStream nextPut: $* ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> readFieldAt: byteOffset [
 	^ self externalTypeWithArity readFieldAt: byteOffset
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIExternalType >> stackParameterClass [
 	^ self isPointer ifTrue: [ #integer ] ifFalse: [ self stackValueParameterClass ]
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIExternalType >> stackValueParameterClass [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> typeAlignment [
 	"Answer a number of bytes, which receiver type takes in memory"
 	self pointerArity > 0 ifTrue: [ ^ self pointerAlignment ].
 	^ self externalTypeAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalType >> typeSize [
 	"Answer a number of bytes, which receiver type takes in memory"
 	self pointerArity > 0 ifTrue: [ ^ self pointerSize ].
 	^ self externalTypeSize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalType >> validateAfterParse: typeAndArityTuple [
 	"After parse an argument or return, some times I need to validate arity is correct.
 	 This usually is ok, but since UFFI has types who do not have sense if they are not referenced as
 	 pointer (check my overrides), I act as an ''after parse'' validation."
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalType >> writeFieldAt: byteOffset with: valueName [
 	^ self externalTypeWithArity
 		writeFieldAt: byteOffset

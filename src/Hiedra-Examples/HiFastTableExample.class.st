@@ -2,20 +2,22 @@
 I am an example of use of Hiedra in a FastTable.
 "
 Class {
-	#name : #HiFastTableExample,
-	#superclass : #FTSimpleDataSource,
+	#name : 'HiFastTableExample',
+	#superclass : 'FTSimpleDataSource',
 	#instVars : [
 		'hiedraColumnController'
 	],
-	#category : #'Hiedra-Examples-FastTable'
+	#category : 'Hiedra-Examples-FastTable',
+	#package : 'Hiedra-Examples',
+	#tag : 'FastTable'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 HiFastTableExample class >> example60RandomCommits [
 	^ self openExample: #randomlyGenerated
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 HiFastTableExample class >> openExample: selector [
 
 	| commits dataSource table |
@@ -35,7 +37,7 @@ HiFastTableExample class >> openExample: selector [
 	^ table openInWindowLabeled: ('Hiedra in FastTable - {1} - {2} elements' format: {selector. commits size})
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiFastTableExample >> cellColumn: column row: rowIndex [
 	"Answer a morph with the cell view."
 
@@ -52,7 +54,7 @@ HiFastTableExample >> cellColumn: column row: rowIndex [
 	^ self error
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiFastTableExample >> elements: commits [
 	super elements: commits.
 
@@ -70,7 +72,7 @@ HiFastTableExample >> elements: commits [
 	hiedraColumnController reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiFastTableExample >> initialize [
 	super initialize.
 	hiedraColumnController := HiColumnController new.

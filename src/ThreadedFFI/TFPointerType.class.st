@@ -5,24 +5,26 @@ I override the marshalling methods to allow reading/writing C pointers from/to C
 See my superclass for more details.
 "
 Class {
-	#name : #TFPointerType,
-	#superclass : #TFBasicType,
-	#category : #'ThreadedFFI-Types'
+	#name : 'TFPointerType',
+	#superclass : 'TFBasicType',
+	#category : 'ThreadedFFI-Types',
+	#package : 'ThreadedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFPointerType >> emitMarshallToPrimitive: builder [
 
 	builder send: #tfPointerAddress
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 TFPointerType >> readValue: anExternalAddress offset: offset [
 
 	^ anExternalAddress pointerAt: offset
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 TFPointerType >> write: anExternalAddress into: targetAddress [
 
 	targetAddress

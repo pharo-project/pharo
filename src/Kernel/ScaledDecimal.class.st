@@ -6,15 +6,17 @@ Note that a ScaledDecimal does not printOn: exactly, however it will storeOn: ex
 This is mostly usefull with denominators being powers of 10.
 "
 Class {
-	#name : #ScaledDecimal,
-	#superclass : #Fraction,
+	#name : 'ScaledDecimal',
+	#superclass : 'Fraction',
 	#instVars : [
 		'scale'
 	],
-	#category : #'Kernel-Numbers'
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ScaledDecimal class >> newFromNumber: aNumber scale: anInteger [
 	| aFraction |
 	aFraction := aNumber asFraction.
@@ -23,7 +25,7 @@ ScaledDecimal class >> newFromNumber: aNumber scale: anInteger [
 		ifFalse: [self new setNumerator: aFraction denominator: 1 scale: anInteger]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ScaledDecimal >> * aNumber [
 
 	aNumber class = self class ifTrue: [
@@ -32,69 +34,69 @@ ScaledDecimal >> * aNumber [
 	^ self coerce: self asFraction * aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ScaledDecimal >> + aNumber [
 	aNumber class = self class ifTrue: [^self asFraction + aNumber asFraction asScaledDecimal: (scale max: aNumber scale)].
 	^self coerce: self asFraction + aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ScaledDecimal >> - aNumber [
 	aNumber class = self class ifTrue: [^self asFraction - aNumber asFraction asScaledDecimal: (scale max: aNumber scale)].
 	^self coerce: self asFraction - aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ScaledDecimal >> / aNumber [
 	aNumber class = self class ifTrue: [^self asFraction / aNumber asFraction asScaledDecimal: (scale max: aNumber scale)].
 	^self coerce: self asFraction / aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ScaledDecimal >> < aNumber [
 	aNumber class = self class ifTrue: [^self asFraction < aNumber asFraction].
 	^self asFraction < aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ScaledDecimal >> <= aNumber [
 	aNumber class = self class ifTrue: [^self asFraction <= aNumber asFraction].
 	^self asFraction <= aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ScaledDecimal >> = aNumber [
 	aNumber class = self class ifTrue: [^self asFraction = aNumber asFraction].
 	^self asFraction = aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ScaledDecimal >> > aNumber [
 	aNumber class = self class ifTrue: [^self asFraction > aNumber asFraction].
 	^self asFraction > aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ScaledDecimal >> >= aNumber [
 	aNumber class = self class ifTrue: [^self asFraction >= aNumber asFraction].
 	^self asFraction >= aNumber
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ScaledDecimal >> adaptToFraction: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Fraction, convert it to a ScaledDecimal."
 
-	^(rcvr asScaledDecimal: scale) perform: selector with: self
+	^(rcvr asScaledDecimal: 0) perform: selector with: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ScaledDecimal >> adaptToInteger: rcvr andSend: selector [
 	"If I am involved in arithmetic with an Integer, convert it to a ScaledDecimal."
 
-	^(rcvr asScaledDecimal: scale) perform: selector with: self
+	^(rcvr asScaledDecimal: 0) perform: selector with: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ScaledDecimal >> asFraction [
 	"Convert the receiver to a Fraction.
 	Avoid using numerator / denominator to save a useless and costly gcd: computation"
@@ -104,7 +106,7 @@ ScaledDecimal >> asFraction [
 		ifFalse: [Fraction numerator: numerator denominator: denominator]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ScaledDecimal >> coerce: aNumber [
 	"Note: this quick hack could be replaced by double dispatching"
 
@@ -113,14 +115,14 @@ ScaledDecimal >> coerce: aNumber [
 	^aNumber
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ScaledDecimal >> isFraction [
 	"Though kind of Fraction, pretend we are not a Fraction to let coercion works correctly"
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ScaledDecimal >> isLiteral [
 	"Answer if this number could be a well behaved literal.
 	Well, it would only if evaluating back to self.
@@ -135,13 +137,13 @@ ScaledDecimal >> isLiteral [
 			(10 raisedTo: scale) \\ denominator = 0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaledDecimal >> isSelfEvaluating [
     "Not all scaled decimal are self evaluating, because they print rounded digits."
     ^self isLiteral
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ScaledDecimal >> literalEqual: other [
 	"Testing equality is not enough.
 	It is also necessary to test number of decimal places (scale).
@@ -150,12 +152,12 @@ ScaledDecimal >> literalEqual: other [
 	^(super literalEqual: other) and: [self scale = other scale]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ScaledDecimal >> negated [
 	^self class newFromNumber: super negated scale: scale
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ScaledDecimal >> printOn: aStream [
 	"Append an approximated representation of the receiver on aStream.
 	Use prescribed number of digits after decimal point (the scale) using a rounding operation if not exact"
@@ -166,18 +168,18 @@ ScaledDecimal >> printOn: aStream [
 	aStream nextPut: $s; print: scale
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ScaledDecimal >> printOn: aStream base: base [
 	base = 10 ifFalse: [self error: 'ScaledDecimals should be printed only in base 10'].
 	self printOn: aStream
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 ScaledDecimal >> raisedTo: aNumber [
 	^self coerce: (super raisedTo: aNumber)
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 ScaledDecimal >> raisedToFraction: aFraction [
 	| result |
 	result := self asFraction raisedToFraction: aFraction.
@@ -186,34 +188,34 @@ ScaledDecimal >> raisedToFraction: aFraction [
 		ifFalse: [result asScaledDecimal: scale]
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 ScaledDecimal >> raisedToInteger: aNumber [
 	^self class newFromNumber: (super raisedToInteger: aNumber) scale: scale
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ScaledDecimal >> reciprocal [
 	^self class newFromNumber: super reciprocal scale: scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScaledDecimal >> scale [
 	^scale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ScaledDecimal >> setNumerator: n denominator: d scale: s [
 
 	self setNumerator: n denominator: d.
 	scale := s
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ScaledDecimal >> squared [
 	^self class newFromNumber: super squared scale: scale
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ScaledDecimal >> storeOn: aStream [
 	"ScaledDecimal sometimes have more digits than they print (potentially an infinity).
 	In this case, do not use printOn: because it would loose some extra digits"

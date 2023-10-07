@@ -2,12 +2,14 @@
 I am a refactoring for removing an instance variable. My changes are executed on the instance or class side.
 "
 Class {
-	#name : #RBRemoveInstanceVariableChange,
-	#superclass : #RBRefactoryVariableChange,
-	#category : #'Refactoring-Changes-Changes-Variables'
+	#name : 'RBRemoveInstanceVariableChange',
+	#superclass : 'RBRefactoryVariableChange',
+	#category : 'Refactoring-Changes-Changes-Variables',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Variables'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBRemoveInstanceVariableChange >> asUndoOperation [
 
 	^ changeFactory
@@ -15,7 +17,7 @@ RBRemoveInstanceVariableChange >> asUndoOperation [
 		  to: self changeClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveInstanceVariableChange >> changeString [
 
 	^ 'Remove instance variable <1s> from <2s>'
@@ -23,7 +25,7 @@ RBRemoveInstanceVariableChange >> changeString [
 		  with: self displayClassName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRemoveInstanceVariableChange >> changeSymbol [
 
 	^ #removeInstVarNamed:

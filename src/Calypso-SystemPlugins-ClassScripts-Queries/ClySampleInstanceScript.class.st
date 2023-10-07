@@ -12,28 +12,29 @@ example1
 It will still open an inspector even if the browser consider them as example (see comments of the ClyExampleScript class)
 "
 Class {
-	#name : #ClySampleInstanceScript,
-	#superclass : #ClyClassScript,
-	#category : #'Calypso-SystemPlugins-ClassScripts-Queries'
+	#name : 'ClySampleInstanceScript',
+	#superclass : 'ClyClassScript',
+	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
+	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'
 }
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClySampleInstanceScript class >> isImplementedByMethod: aMethod [
 	^aMethod hasPragmaNamed: #sampleInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySampleInstanceScript >> description [
 	^ 'Get the class sample (predefined instance) in a inspector to tweak it and have fun with it'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySampleInstanceScript >> executeOn: aClass [
 
  	(super executeOn: aClass) inspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySampleInstanceScript >> iconName [
 	^ #smallDoIt
 ]

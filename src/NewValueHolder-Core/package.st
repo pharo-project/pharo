@@ -1,1 +1,1 @@
-Package { #name : #'NewValueHolder-Core' }
+Package { #name : 'NewValueHolder-Core' }

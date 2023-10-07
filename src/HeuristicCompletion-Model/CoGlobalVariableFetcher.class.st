@@ -2,12 +2,14 @@
 I am a fetcher looking for globals in an environment.
 "
 Class {
-	#name : #CoGlobalVariableFetcher,
-	#superclass : #CoGlobalFetcher,
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#name : 'CoGlobalVariableFetcher',
+	#superclass : 'CoGlobalFetcher',
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	self systemNavigation

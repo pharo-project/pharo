@@ -2,25 +2,26 @@
 A RTFSelfCallInterpreterTest is a test class for testing the behavior of RTFSelfCallInterpreter
 "
 Class {
-	#name : #RTFSelfCallInterpreterTest,
-	#superclass : #TestCase,
-	#category : #'RottenTestsFinder-Tests'
+	#name : 'RTFSelfCallInterpreterTest',
+	#superclass : 'TestCase',
+	#category : 'RottenTestsFinder-Tests',
+	#package : 'RottenTestsFinder-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RTFSelfCallInterpreterTest >> setUp [
 	"See RTFFakeTestSuperClass comment for more information."
 	super setUp.
 	RTFFakeTestSuperClass superclass: TestCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RTFSelfCallInterpreterTest >> tearDown [
 	RTFFakeTestSuperClass superclass: Object.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFSelfCallInterpreterTest >> testCallingSuperHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
@@ -33,7 +34,7 @@ RTFSelfCallInterpreterTest >> testCallingSuperHelper [
 		assertCollection: interpreter selfSentMethods hasSameElements: { RTFFakeTestSuperClass >> #superAssertHelper }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFSelfCallInterpreterTest >> testSimple [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
@@ -46,7 +47,7 @@ RTFSelfCallInterpreterTest >> testSimple [
 		assert: interpreter selfSentMethods isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFSelfCallInterpreterTest >> testWithHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
@@ -59,7 +60,7 @@ RTFSelfCallInterpreterTest >> testWithHelper [
 		assertCollection: interpreter selfSentMethods hasSameElements: { RTFFakeTestClass >> #assertHelper }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFSelfCallInterpreterTest >> testWithHelperHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.
@@ -72,7 +73,7 @@ RTFSelfCallInterpreterTest >> testWithHelperHelper [
 		assertCollection: interpreter selfSentMethods hasSameElements: { RTFFakeTestClass >> #helperHelper. RTFFakeTestClass >> #assertHelper }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RTFSelfCallInterpreterTest >> testWithSuperHelper [
 	| interpreter |
 	interpreter := RTFSelfCallInterpreter new.

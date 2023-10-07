@@ -5,29 +5,30 @@ I can parse different kind of URIs, containing the host, in the following format
 hosting://[host:]owner/project[:version]/code/path'
 "
 Class {
-	#name : #MCPrivateHostableRepository,
-	#superclass : #MCGitBasedNetworkRepository,
+	#name : 'MCPrivateHostableRepository',
+	#superclass : 'MCGitBasedNetworkRepository',
 	#instVars : [
 		'hostname',
 		'sshPort'
 	],
-	#category : #'Metacello-GitBasedRepository'
+	#category : 'Metacello-GitBasedRepository',
+	#package : 'Metacello-GitBasedRepository'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPrivateHostableRepository class >> isAbstract [
     "abstract as far as creating new repositories interactively? yes"
 
     ^ self == MCPrivateHostableRepository
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPrivateHostableRepository class >> isEnabled [
 
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCPrivateHostableRepository class >> parseLocation: locationUrl version: versionString [
 	"Gitlab can be self hosted, so we need some way to tell in the location the service url and not use gitlab.com in 
 	a hardcoded way.
@@ -61,22 +62,22 @@ MCPrivateHostableRepository class >> parseLocation: locationUrl version: version
 				yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPrivateHostableRepository >> hostname [
 	^ hostname
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCPrivateHostableRepository >> hostname: aString [ 
 	hostname := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPrivateHostableRepository >> httpsUrl [
 	^ 'https://<1s>/<2s>.git' expandMacrosWith: self hostname with: projectPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPrivateHostableRepository >> scpUrl [
 	"If the sshPort is not nil it means that we have a non default ssh port. Thus we need to add `ssh://` and th port number to the scheme"
 
@@ -85,12 +86,12 @@ MCPrivateHostableRepository >> scpUrl [
 		ifNotNil: [ :port | 'ssh://git@<1s>:<2s>/<3s>.git' expandMacrosWith: self hostname with: port with: projectPath ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPrivateHostableRepository >> sshPort [
 	^ sshPort
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPrivateHostableRepository >> sshPort: anObject [
 	sshPort := anObject
 ]

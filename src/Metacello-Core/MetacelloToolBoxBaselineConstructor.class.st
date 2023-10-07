@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloToolBoxBaselineConstructor,
-	#superclass : #MetacelloToolBoxConstructor,
-	#category : #'Metacello-Core-Constructors'
+	#name : 'MetacelloToolBoxBaselineConstructor',
+	#superclass : 'MetacelloToolBoxConstructor',
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloToolBoxBaselineConstructor >> evaluateBaselineMethodSection: methodSection [
   | versionSpec |
   versionSpec := self project versionSpec.
@@ -15,7 +17,7 @@ MetacelloToolBoxBaselineConstructor >> evaluateBaselineMethodSection: methodSect
     do: [ :ms | self evaluateBaselineMethodSection: ms ]
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloToolBoxBaselineConstructor >> extractBaselinePragmaFor: aClass [
     | pragmas |
     pragmas := Pragma allNamed: #'baseline' in: aClass.
@@ -24,12 +26,12 @@ MetacelloToolBoxBaselineConstructor >> extractBaselinePragmaFor: aClass [
     ^ pragmas first
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 MetacelloToolBoxBaselineConstructor >> extractMethodSectionsFor: aBaselineClass [
   self shouldNotImplement
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 MetacelloToolBoxBaselineConstructor >> extractMethodSectionsForClass: aBaselineClass [
   | pragma |
   pragma := self extractBaselinePragmaFor: aBaselineClass.

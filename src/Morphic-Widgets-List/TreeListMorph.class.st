@@ -4,15 +4,16 @@ A SimpleHierarchicalListMorph subclass supporting alternative fonts for all item
 This class is badly named and should be merged with its superclass - Stephane Ducasse
 "
 Class {
-	#name : #TreeListMorph,
-	#superclass : #SimpleHierarchicalListMorph,
+	#name : 'TreeListMorph',
+	#superclass : 'SimpleHierarchicalListMorph',
 	#instVars : [
 		'font'
 	],
-	#category : #'Morphic-Widgets-List'
+	#category : 'Morphic-Widgets-List',
+	#package : 'Morphic-Widgets-List'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TreeListMorph >> addSubmorphsAfter: parentMorph fromCollection: aCollection allowSorting: sortBoolean [
 	"Update the font on each morph."
 
@@ -30,21 +31,21 @@ TreeListMorph >> addSubmorphsAfter: parentMorph fromCollection: aCollection allo
 	^answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeListMorph >> font [
 	"Answer the value of font"
 
 	^font ifNil: [TextStyle defaultFont]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeListMorph >> font: anObject [
 	"Set the value of font"
 
 	font := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TreeListMorph >> insertNewMorphs: morphList [
 	"Update the font on each morph."
 
@@ -55,7 +56,7 @@ TreeListMorph >> insertNewMorphs: morphList [
 	^super insertNewMorphs: morphList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TreeListMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver.
 	Update the scroller and scrollbars now since bounds set directly

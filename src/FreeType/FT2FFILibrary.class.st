@@ -3,15 +3,17 @@ I am the entry point to the FFILibrary.
 I have definitions about the errors and the name of the modules in the different architectures.
 "
 Class {
-	#name : #FT2FFILibrary,
-	#superclass : #FFILibrary,
+	#name : 'FT2FFILibrary',
+	#superclass : 'FFILibrary',
 	#classVars : [
 		'ErrorCodeTable'
 	],
-	#category : #'FreeType-Bindings'
+	#category : 'FreeType-Bindings',
+	#package : 'FreeType',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FT2FFILibrary class >> initialize [
 
 	ErrorCodeTable := {
@@ -130,24 +132,24 @@ FT2FFILibrary class >> initialize [
 	(16rBA -> 'Font glyphs corrupted or missing fields')} asDictionary
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 FT2FFILibrary class >> translateErrorCode: aCode [
 	^ ErrorCodeTable at: aCode ifAbsent: [ 'Unknown Error code' ]
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FT2FFILibrary >> macLibraryName [
 
 	^ 'libfreetype.dylib'
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FT2FFILibrary >> unixLibraryName [
 
 	^ 'libfreetype.so.6'
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 FT2FFILibrary >> win32LibraryName [
 
 	#( 'freetype.dll' 'libfreetype.dll' 'libfreetype-6.dll' )

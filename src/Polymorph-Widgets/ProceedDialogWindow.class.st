@@ -2,19 +2,21 @@
 Yes/no dialog. Test result as to whether the dialog is cancelled (no) or not (yes).
 "
 Class {
-	#name : #ProceedDialogWindow,
-	#superclass : #MessageDialogWindow,
-	#category : #'Polymorph-Widgets-Windows'
+	#name : 'ProceedDialogWindow',
+	#superclass : 'MessageDialogWindow',
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #icons }
+{ #category : 'icons' }
 ProceedDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallQuestion
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProceedDialogWindow >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event"
 
@@ -23,14 +25,14 @@ ProceedDialogWindow >> handlesKeyboard: evt [
 		evt keyCharacter = $n]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProceedDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
 	^ self iconNamed: #question
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProceedDialogWindow >> keyStroke: evt [
 	"Additionally check for y and n keys (aliases for ok and cancel)."
 
@@ -40,21 +42,21 @@ ProceedDialogWindow >> keyStroke: evt [
 	^false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ProceedDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newOKButton. self newCancelButton isDefault: true}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProceedDialogWindow >> no [
 	"Answer no."
 
 	self cancel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProceedDialogWindow >> yes [
 	"Answer yes."
 

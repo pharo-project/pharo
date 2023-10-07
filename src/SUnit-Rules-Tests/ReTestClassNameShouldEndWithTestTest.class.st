@@ -1,10 +1,12 @@
 Class {
-	#name : #ReTestClassNameShouldEndWithTestTest,
-	#superclass : #ReTestBasedTestCase,
-	#category : #'SUnit-Rules-Tests-Base'
+	#name : 'ReTestClassNameShouldEndWithTestTest',
+	#superclass : 'ReTestBasedTestCase',
+	#category : 'SUnit-Rules-Tests-Base',
+	#package : 'SUnit-Rules-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTestClassNameShouldEndWithTestTest >> testBasicCheck [
 	self assert: (testClass critiques noneSatisfy: [ :critic | critic rule class = ReTestClassNameShouldEndWithTestRule ]).
 	

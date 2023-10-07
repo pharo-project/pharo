@@ -2,17 +2,19 @@
 I represent an absolute path (a position starting from Path root)
 "
 Class {
-	#name : #AbsolutePath,
-	#superclass : #Path,
-	#type : #variable,
-	#category : #'FileSystem-Path-Base'
+	#name : 'AbsolutePath',
+	#superclass : 'Path',
+	#type : 'variable',
+	#category : 'FileSystem-Path-Base',
+	#package : 'FileSystem-Path',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AbsolutePath class >> addEmptyElementTo: result [
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AbsolutePath class >> from: aString delimiter: aDelimiterCharater [
 	aString = '/'
 		ifTrue: [ ^ self root ].
@@ -20,17 +22,30 @@ AbsolutePath class >> from: aString delimiter: aDelimiterCharater [
 	^ super from: aString delimiter: aDelimiterCharater
 ]
 
-{ #category : #testing }
+{ #category : 'private' }
+AbsolutePath class >> removeRedundantSegments: segments [
+	"Remove redundant elements ('.' and '') from the supplied segments.
+	The parent of the root directory is itself."
+	| newSegments |
+
+	newSegments := segments asOrderedCollection copy.
+	[ newSegments isNotEmpty and: [ newSegments first = '..' ] ] whileTrue:
+		[ newSegments removeFirst ].
+	^ newSegments select:
+		[ :segment | segment notEmpty and: [ segment ~= '.' ] ]
+]
+
+{ #category : 'testing' }
 AbsolutePath >> isAbsolute [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbsolutePath >> isRoot [
 	^ self size = 0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbsolutePath >> printOn: aStream [
 	aStream nextPutAll: 'Path'.
 	self isRoot
@@ -44,7 +59,7 @@ AbsolutePath >> printOn: aStream [
 					nextPut: $']]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbsolutePath >> printPathOn: aStream delimiter: aCharacter [
 	"Print the path elements of the receiver, without the 'Path *' part"
 
@@ -52,7 +67,7 @@ AbsolutePath >> printPathOn: aStream delimiter: aCharacter [
 	super printPathOn: aStream delimiter: aCharacter
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 AbsolutePath >> withParents [
 	| root |
 	root := Path root.

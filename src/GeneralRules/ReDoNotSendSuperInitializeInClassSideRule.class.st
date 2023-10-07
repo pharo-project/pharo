@@ -12,19 +12,21 @@ ZnServer class>>initialize
 ]]]
 "
 Class {
-	#name : #ReDoNotSendSuperInitializeInClassSideRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReDoNotSendSuperInitializeInClassSideRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DoNotSendSuperInitializeInClassSideRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReDoNotSendSuperInitializeInClassSideRule >> afterCheck: aNode mappings: mappingDict [
 
 	aNode methodNode ifNotNil: [ :methNode |
@@ -36,12 +38,12 @@ ReDoNotSendSuperInitializeInClassSideRule >> afterCheck: aNode mappings: mapping
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule >> group [
 	^ 'Potential Bugs'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 	super initialize.
 	self
@@ -49,7 +51,7 @@ ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 		with: ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule >> name [
 	^ 'Class-side #initialize should not send "super initialize".'
 ]

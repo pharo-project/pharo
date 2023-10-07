@@ -4,15 +4,17 @@ Also I rename all the uses of this slot in my methods.
 I implement the #>> operator in traits.
 "
 Class {
-	#name : #TaRenameSlot,
-	#superclass : #TaSingleComposition,
+	#name : 'TaRenameSlot',
+	#superclass : 'TaSingleComposition',
 	#instVars : [
 		'renames'
 	],
-	#category : #'TraitsV2-Compositions'
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaRenameSlot class >> from:oldName to: newName on: aTrait [
 	^ self new
 		oldName: oldName;
@@ -21,7 +23,7 @@ TaRenameSlot class >> from:oldName to: newName on: aTrait [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaRenameSlot class >> rename: anArrayOfAssociations on: aTrait [
 	^ self new
 		renames: anArrayOfAssociations;
@@ -29,24 +31,24 @@ TaRenameSlot class >> rename: anArrayOfAssociations on: aTrait [
 		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 TaRenameSlot >> copyTraitExpression [
 	^ self class rename: renames on: inner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenameSlot >> renames [
 
 	^ renames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenameSlot >> renames: anObject [
 
 	renames := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenameSlot >> slots [
 
 	^ inner slots collect: [ :slot |
@@ -56,7 +58,7 @@ TaRenameSlot >> slots [
 			  ifFalse: [ slot ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaRenameSlot >> sourceCodeAt: aSelector [
 	| originalSourceCode parseTree rewriter |
 	originalSourceCode := super sourceCodeAt: aSelector.
@@ -72,7 +74,7 @@ TaRenameSlot >> sourceCodeAt: aSelector [
 		tree) formattedCode
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TaRenameSlot >> traitCompositionExpression [
 
 	^ self inner traitCompositionExpressionWithParens , ' @@ ' , renames printString

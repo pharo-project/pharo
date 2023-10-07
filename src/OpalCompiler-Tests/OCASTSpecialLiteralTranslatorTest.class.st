@@ -1,10 +1,12 @@
 Class {
-	#name : #OCASTSpecialLiteralTranslatorTest,
-	#superclass : #OCASTTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTSpecialLiteralTranslatorTest',
+	#superclass : 'OCASTTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayIsNotInLiteralFrame [
 
 	| aCompiledMethod array |
@@ -14,7 +16,7 @@ OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayIsNotInLiteralFrame 
 	self deny: (aCompiledMethod literals identityIncludes: array)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsAlwaysNewArray [
 
 	| aCompiledMethod |
@@ -23,13 +25,13 @@ OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsAlwaysNewArra
 	self assert: (self executeMethodOnInstance: aCompiledMethod) ~~ (self executeMethodOnInstance: aCompiledMethod)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsArray [
 
 	self assert: (self testExample: #examplePushDynamicLiteralArray) equals: #(1 3)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsEqualsArray [
 
 	| aCompiledMethod |
@@ -38,7 +40,7 @@ OCASTSpecialLiteralTranslatorTest >> testDynamicLiteralArrayReturnsEqualsArray [
 	self assert: (self executeMethodOnInstance: aCompiledMethod) equals: (self executeMethodOnInstance: aCompiledMethod)
 ]
 
-{ #category : #'tests - literals' }
+{ #category : 'tests - literals' }
 OCASTSpecialLiteralTranslatorTest >> testSpecialLiteralsNotInLiteralFrame [
 
 	self testExample: #examplePushNonSpecialSmallInteger.

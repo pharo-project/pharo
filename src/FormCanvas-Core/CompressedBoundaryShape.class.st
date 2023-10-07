@@ -18,8 +18,8 @@ In case you have trouble with a), try to merge some of the fills into one. You m
 
 "
 Class {
-	#name : #CompressedBoundaryShape,
-	#superclass : #Object,
+	#name : 'CompressedBoundaryShape',
+	#superclass : 'Object',
 	#instVars : [
 		'points',
 		'leftFills',
@@ -28,15 +28,17 @@ Class {
 		'lineFills',
 		'fillStyles'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompressedBoundaryShape class >> points: pointList leftFills: leftFillList rightFills: rightFillList fillStyles: fillStyleList lineWidths: lineWidthList lineFills: lineFillList [
 	^self new setPoints: pointList leftFills: leftFillList rightFills: rightFillList fillStyles: fillStyleList lineWidths: lineWidthList lineFills: lineFillList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> bounds [
 	| min max width |
 	points isEmpty ifTrue:[^0@0 corner: 1@1].
@@ -50,37 +52,37 @@ CompressedBoundaryShape >> bounds [
 	^(min corner: max) insetBy: (width negated asPoint)
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 CompressedBoundaryShape >> collectFills: aBlock [
 	fillStyles := fillStyles collect: aBlock
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 CompressedBoundaryShape >> copyAndCollectFills: aBlock [
 	^self copy collectFills: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> fillStyles [
 	^fillStyles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> leftFills [
 	^leftFills
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> lineFills [
 	^lineFills
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> lineWidths [
 	^lineWidths
 ]
 
-{ #category : #morphing }
+{ #category : 'morphing' }
 CompressedBoundaryShape >> morphFrom: srcShape to: dstShape at: ratio [
 	| scale unscale srcPoints dstPoints pt1 pt2 x y |
 	scale := (ratio * 1024) asInteger.
@@ -97,22 +99,22 @@ CompressedBoundaryShape >> morphFrom: srcShape to: dstShape at: ratio [
 		points at: i put: x@y]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> numSegments [
 	^points size // 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> points [
 	^points
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> rightFills [
 	^rightFills
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompressedBoundaryShape >> segments [
 	"Return all the segments in the receiver"
 	| out |
@@ -121,7 +123,7 @@ CompressedBoundaryShape >> segments [
 	^out contents
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CompressedBoundaryShape >> segmentsDo: aBlock [
 	"Enumerate all segments in the receiver and execute aBlock"
 	| p1 p2 p3 |
@@ -137,7 +139,7 @@ CompressedBoundaryShape >> segmentsDo: aBlock [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompressedBoundaryShape >> setPoints: pointList leftFills: leftFillList rightFills: rightFillList fillStyles: fillStyleList lineWidths: lineWidthList lineFills: lineFillList [
 	points := pointList.
 	leftFills := leftFillList.

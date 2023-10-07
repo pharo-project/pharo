@@ -1,6 +1,6 @@
-Extension { #name : #ChangeRecord }
+Extension { #name : 'ChangeRecord' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 ChangeRecord >> text [
 	| text |
 	^ file ifNil: ['']

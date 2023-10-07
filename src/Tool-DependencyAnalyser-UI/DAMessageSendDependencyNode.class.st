@@ -2,15 +2,17 @@
 I'm a tree node representing a specific message send in the package under analysis.
 "
 Class {
-	#name : #DAMessageSendDependencyNode,
-	#superclass : #DAMessageSendNode,
+	#name : 'DAMessageSendDependencyNode',
+	#superclass : 'DAMessageSendNode',
 	#instVars : [
 		'sentMessages'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DAMessageSendDependencyNode >> label [
 	^ String streamContents: [ :stream |
 		stream
@@ -22,7 +24,7 @@ DAMessageSendDependencyNode >> label [
 			stream nextPutAll: message ] ]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 DAMessageSendDependencyNode >> sentMessages: aListOfSelectors [
 	sentMessages := aListOfSelectors
 ]

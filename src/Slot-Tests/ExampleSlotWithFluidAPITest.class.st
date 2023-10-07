@@ -1,10 +1,12 @@
 Class {
-	#name : #ExampleSlotWithFluidAPITest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'ExampleSlotWithFluidAPITest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExampleSlotWithFluidAPITest >> testExampleSlotWithFluidAPI [
 
 	"Shows that we can use cascade (fluid api) to set meta data on slots. As the #=> has precedense, the cascade

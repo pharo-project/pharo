@@ -1,12 +1,12 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> asLiteralNode [
 
 	^ RBLiteralNode value: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> asMethodConstant [
 
 	| const constNode link |
@@ -20,43 +20,43 @@ Object >> asMethodConstant [
 	^ const
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> haltOnAccess [
 
 	^ VariableBreakpoint watchVariablesInObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> haltOnAccessTo: aVariableName [
 
 	^ VariableBreakpoint watchVariable: aVariableName inObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> haltOnCallTo: aSelector [
 
 	^ Breakpoint breakOn: aSelector inObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> haltOnRead [
 
 	^ VariableBreakpoint watchVariablesReadsInObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> haltOnReadTo: aVariableName [
 
 	^ VariableBreakpoint watchVariableReads: aVariableName inObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> haltOnWrite [
 
 	^ VariableBreakpoint watchVariablesWritesInObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> haltOnWriteTo: aVariableName [
 
 	^ VariableBreakpoint
@@ -64,29 +64,29 @@ Object >> haltOnWriteTo: aVariableName [
 		  inObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> intanceSpecificMetaLinksAvailable [
 	^true
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toAST: aNode [
 	aNode link: aMetaLink forObject: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toClassVariable: aClassVariable [
 	"Object specific links cannot be put on class variables"
 
 	self shouldNotImplement
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toClassVariableNamed: aClassVariableName [
 	self link: aMetaLink toClassVariableNamed: aClassVariableName option: #all
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toClassVariableNamed: aClassVariableName option: option [
 	aMetaLink
 		installOnVariableNamed: aClassVariableName
@@ -95,29 +95,29 @@ Object >> link: aMetaLink toClassVariableNamed: aClassVariableName option: optio
 		instanceSpecific: self intanceSpecificMetaLinksAvailable
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toMethodNamed: aMethodName [
 	self link: aMetaLink toAST: (self nonAnonymousClass lookupSelector: aMethodName asSymbol) ast
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toNodes: nodes [
 	nodes do: [ :node | self link: aMetaLink toAST: node ]
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toSlot: aSlot [
 	"Object specific links cannot be put on slots"
 
 	self shouldNotImplement
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toSlotNamed: aSlotName [
 	self link: aMetaLink toSlotNamed: aSlotName option: #all
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toSlotNamed: aSlotName option: option [
 	aMetaLink
 		installOnVariableNamed: aSlotName
@@ -126,14 +126,14 @@ Object >> link: aMetaLink toSlotNamed: aSlotName option: option [
 		instanceSpecific: self intanceSpecificMetaLinksAvailable
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toTemporary: aTempVar [
 	"Object specific links cannot be put on temporaries"
 
 	self shouldNotImplement
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName [
 	self
 		link: aMetaLink
@@ -142,7 +142,7 @@ Object >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName [
 		option: #all
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Object >> link: aMetaLink toTemporaryNamed: aTempVarName inMethod: aMethodName option: option [
 	| variable |
 

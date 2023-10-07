@@ -1,29 +1,28 @@
 Class {
-	#name : #MCChangeNotificationTest,
-	#superclass : #MCTestCase,
+	#name : 'MCChangeNotificationTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'workingCopy'
 	],
-	#category : #'Monticello-Tests-Base'
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MCChangeNotificationTest >> foreignMethod [
 	"see testForeignMethodModified"
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MCChangeNotificationTest >> modifiedEventFor: aSelector ofClass: aClass [
+
 	| method |
 	method := aClass compiledMethodAt: aSelector.
-	^ MethodModified 
-		methodChangedFrom: method
-		to: method
-		oldProtocol: nil
-
+	^ MethodModified methodChangedFrom: method to: method oldProtocol: nil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCChangeNotificationTest >> setUp [
        "FIXME: Unregister Monticellomocks if it got created in another test
        (for example MCMethodDefinitionTest may create it implicitly).
@@ -36,10 +35,10 @@ MCChangeNotificationTest >> setUp [
                ifAbsent:[].
        PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
 		super setUp.	
-      workingCopy := MCWorkingCopy forPackage: self mockPackage.
+      workingCopy := MCWorkingCopy ensureForPackage: self mockPackage.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCChangeNotificationTest >> testCoreMethodModified [
 	| event |
 	workingCopy modified: false.
@@ -48,7 +47,7 @@ MCChangeNotificationTest >> testCoreMethodModified [
 	self assert: workingCopy modified
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCChangeNotificationTest >> testExtMethodModified [
 	| event method |
 	workingCopy modified: false.
@@ -58,7 +57,7 @@ MCChangeNotificationTest >> testExtMethodModified [
 	self assert: workingCopy modified
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCChangeNotificationTest >> testForeignMethodModified [
 	| event |
 	workingCopy modified: false.

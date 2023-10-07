@@ -2,8 +2,8 @@
 A column in a morphic based tree
 "
 Class {
-	#name : #MorphTreeColumn,
-	#superclass : #Object,
+	#name : 'MorphTreeColumn',
+	#superclass : 'Object',
 	#instVars : [
 		'header',
 		'container',
@@ -14,41 +14,42 @@ Class {
 		'isPotentialDropTarget',
 		'resizable'
 	],
-	#category : #'Morphic-Widgets-Tree'
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeColumn >> asDraggableMorph [
 	^ self thumbnailOfSize: self header fullBounds extent
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> asPotentialDropTarget [
 	isPotentialDropTarget := true.
 	self container invalidRect: self visibleBounds
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> color [
 	^ color ifNil: [self container columnColors at: ((self index \\ 2) + 1)]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> container [
 	^ container
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> container: aTreeMorph [
 	container := aTreeMorph
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> contentWidth [
 	| w |
 	w := 0.
@@ -56,32 +57,32 @@ MorphTreeColumn >> contentWidth [
 	^ w
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> currentWidth [
 	^ currentWidth ifNil: [currentWidth := self defaultWidth]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> currentWidth: anInteger [
 	self resizable ifTrue: [currentWidth := anInteger]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> dataBounds [
 	^ self visibleBounds withTop: self container topHeader bottom
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> defaultRowMorph [
 	^ Morph new color: Color red; borderWidth: 0; extent: 0@0; yourself
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> defaultWidth [
 	^ 100
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MorphTreeColumn >> drawColumnOn: aCanvas [
 	self isPotentialDropTarget
 		ifTrue: [aCanvas
@@ -103,29 +104,29 @@ MorphTreeColumn >> drawColumnOn: aCanvas [
 									aCanvas fillRectangle: self dataBounds  basicFillStyle: c]]]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> fixedWidth: anInteger [
 	currentWidth := anInteger.
 	resizable := false
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> forceWidthTo: anInteger [
 	currentWidth := anInteger
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> header [
 	^ header ifNil: [header :=  (Morph new extent: 0@0) color: Color transparent]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> header: aMorph [
 	header := aMorph clipSubmorphs: true; yourself.
 	header model: self
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> headerButton [
 	self header: ((TreeColumnButtonMorph new)
 		layoutPolicy: RowLayout new;
@@ -136,13 +137,13 @@ MorphTreeColumn >> headerButton [
 		yourself)
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> headerButtonLabel: aLabel font: aFont [
 	self headerButton.
 	self header label: aLabel font: aFont
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> headerButtonLabel: aLabel font: aFont icon: anIconForm target: aReceiver actionSelector: aSelector arguments: aCollection [
 	self headerButton.
 	self header label: aLabel font: aFont.
@@ -152,7 +153,7 @@ MorphTreeColumn >> headerButtonLabel: aLabel font: aFont icon: anIconForm target
 	self header arguments: aCollection
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> headerButtonLabel: aLabel font: aFont target: aReceiver actionSelector: aSelector arguments: aCollection [
 	self headerButton.
 	self header label: aLabel font: aFont.
@@ -161,66 +162,66 @@ MorphTreeColumn >> headerButtonLabel: aLabel font: aFont target: aReceiver actio
 	self header arguments: aCollection
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> headerButtonLabel: aLabel icon: anIconForm [
 	self headerButtonLabel: aLabel font: nil.
 	self header cellInset: 3@0.
 	self header icon: (ImageMorph new form: anIconForm)
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 MorphTreeColumn >> height [
 	^ header ifNil: [0] ifNotNil: [header height]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> index [
 	^ self container columns indexOf: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphTreeColumn >> isFirstColumn [
 	^ container columns first = self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphTreeColumn >> isLastColumn [
 	^ container columns last = self
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> isPotentialDropTarget [
 	^ isPotentialDropTarget ifNil: [isPotentialDropTarget := false]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> itemMorphGetter: aSelectorOrAValuable [
 	rowMorphGetSelector := aSelectorOrAValuable isSymbol
 		ifTrue: [[:node | node complexContents item perform: aSelectorOrAValuable]]
 		ifFalse: [[:node | aSelectorOrAValuable value: node complexContents item]]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> itemStringGetter: aSelectorOrAValuable [
 	rowMorphGetSelector := aSelectorOrAValuable isSymbol
 		ifTrue: [[:node | (node complexContents item perform: aSelectorOrAValuable) asMorph]]
 		ifFalse: [[:node | (aSelectorOrAValuable value: node complexContents item) asMorph]]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> noMorePotentialDropTarget [
 	isPotentialDropTarget := false.
 	self container invalidRect: self visibleBounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeColumn >> nodeStringGetter: aSelectorOrAValuable [
 	rowMorphGetSelector := aSelectorOrAValuable isSymbol
 		ifTrue: [[:node | (node complexContents perform: aSelectorOrAValuable) asMorph]]
 		ifFalse: [[:node | (aSelectorOrAValuable value: node complexContents ) asMorph]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MorphTreeColumn >> release [
 	container := nil.
 	header := nil.
@@ -228,17 +229,17 @@ MorphTreeColumn >> release [
 	super release
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> resizable [
 	^ resizable ifNil: [resizable := true]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> resizable: aBoolean [
 	resizable := aBoolean
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> rowMorphFor: aNode [
 	| rowMorph |
 
@@ -252,17 +253,17 @@ MorphTreeColumn >> rowMorphFor: aNode [
 	^ rowMorph rowMorphForNode: aNode inColumn: self
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> rowMorphGetSelector [
 	^ rowMorphGetSelector
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> rowMorphGetSelector: aSelector [
 	rowMorphGetSelector := aSelector
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> rowMorphGetterBlock [
 	^ self rowMorphGetSelector isSymbol
 		ifTrue: [self rowMorphGetSelector numArgs = 0
@@ -273,22 +274,22 @@ MorphTreeColumn >> rowMorphGetterBlock [
 				ifFalse: [[:node :cont| self rowMorphGetSelector value: node]]]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> shrinkWrap [
 	^ shrinkWrap ifNil: [shrinkWrap := false]
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> shrinkWrap: aBoolean [
 	shrinkWrap := aBoolean
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> startWidth: anInteger [
 	currentWidth := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeColumn >> thumbnailOfSize: thumbExtent [
 	"Answer a new thumbnail for the receiver."
 
@@ -305,7 +306,7 @@ MorphTreeColumn >> thumbnailOfSize: thumbExtent [
 		form: f
 ]
 
-{ #category : #'column drawing' }
+{ #category : 'column drawing' }
 MorphTreeColumn >> visibleBounds [
 	^ self header bounds withBottom: self container scroller bottom
 ]

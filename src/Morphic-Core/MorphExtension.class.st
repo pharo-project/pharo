@@ -2,8 +2,8 @@
 MorphExtension provides access to extra instance state that is not required in most simple morphs.  This allows simple morphs to remain relatively lightweight while still admitting more complex structures as necessary.  The otherProperties field takes this policy to the extreme of allowing any number of additional named attributes, albeit at a certain cost in speed and space.
 "
 Class {
-	#name : #MorphExtension,
-	#superclass : #Object,
+	#name : 'MorphExtension',
+	#superclass : 'Object',
 	#instVars : [
 		'locked',
 		'visible',
@@ -21,24 +21,26 @@ Class {
 		'actionMap',
 		'clipSubmorphs'
 	],
-	#category : #'Morphic-Core-Kernel'
+	#category : 'Morphic-Core-Kernel',
+	#package : 'Morphic-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> actionMap [
 	"Answer the value of actionMap"
 
 	^actionMap ifNil: [self valueOfProperty: #actionMap]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> actionMap: anObject [
 	"Set the value of actionMap"
 
 	actionMap := anObject
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> assureOtherProperties [
 
 	"creates an otherProperties for the receiver if needed"
@@ -46,45 +48,45 @@ MorphExtension >> assureOtherProperties [
 	^ otherProperties ifNil: [  otherProperties := SmallIdentityDictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> balloonText [
 	^ balloonText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> balloonText: newValue [
 	balloonText := newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> borderStyle [
 	"Answer the value of borderStyle"
 
 	^borderStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> borderStyle: anObject [
 	"Set the value of borderStyle"
 
 	borderStyle := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> clipSubmorphs [
 	"Answer the value of clipSubmorphs"
 
 	^clipSubmorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> clipSubmorphs: anObject [
 	"Set the value of clipSubmorphs"
 
 	clipSubmorphs := anObject
 ]
 
-{ #category : #'connectors - copying' }
+{ #category : 'connectors - copying' }
 MorphExtension >> copyWeakly [
 	"list of names of properties whose values should be weak-copied when veryDeepCopying a morph.  See DeepCopier."
 
@@ -94,57 +96,57 @@ MorphExtension >> copyWeakly [
 	"formerOwner should really be nil at the time of the copy, but this will work just fine."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> cornerStyle [
 	"Answer the value of cornerStyle"
 
 	^cornerStyle ifNil: [#square]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> cornerStyle: anObject [
 	"Set the value of cornerStyle"
 
 	cornerStyle := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> eventHandler [
 	"answer the receiver's eventHandler"
 	^ eventHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> eventHandler: newValue [
 	eventHandler := newValue
 ]
 
-{ #category : #viewer }
+{ #category : 'viewer' }
 MorphExtension >> externalName [
 	^ externalName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> externalName: aString [
 	"change the receiver's externalName"
 	externalName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> fillStyle [
 	"Answer the value of fillStyle"
 
 	^ fillStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> fillStyle: anObject [
 	"Set the value of fillStyle"
 
 	fillStyle := anObject
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> hasProperty: aSymbol [
 
 	"Answer whether the receiver has the property named aSymbol"
@@ -154,7 +156,7 @@ MorphExtension >> hasProperty: aSymbol [
 		  ifNotNil: [ :prop | prop includesKey: aSymbol ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MorphExtension >> initialize [
 
 	locked := false.
@@ -162,7 +164,7 @@ MorphExtension >> initialize [
 	sticky := false
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 MorphExtension >> inspectElement [
 	"Create and schedule an Inspector on the otherProperties and the
 	named properties."
@@ -182,7 +184,7 @@ MorphExtension >> inspectElement [
 		ifFalse: [obj inspect]
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 MorphExtension >> isDefault [
 	"Return true if the receiver is a default and can be omitted"
 	locked == true
@@ -198,62 +200,62 @@ MorphExtension >> isDefault [
 	^ true
 ]
 
-{ #category : #'accessing - layout properties' }
+{ #category : 'accessing - layout properties' }
 MorphExtension >> layoutFrame [
 
 	^layoutFrame
 ]
 
-{ #category : #'accessing - layout properties' }
+{ #category : 'accessing - layout properties' }
 MorphExtension >> layoutFrame: aLayoutFrame [
 
 	layoutFrame := aLayoutFrame
 ]
 
-{ #category : #'accessing - layout properties' }
+{ #category : 'accessing - layout properties' }
 MorphExtension >> layoutPolicy [
 
 	^layoutPolicy
 ]
 
-{ #category : #'accessing - layout properties' }
+{ #category : 'accessing - layout properties' }
 MorphExtension >> layoutPolicy: aLayoutPolicy [
 
 	layoutPolicy := aLayoutPolicy
 ]
 
-{ #category : #'accessing - layout properties' }
+{ #category : 'accessing - layout properties' }
 MorphExtension >> layoutProperties [
 
 	^layoutProperties
 ]
 
-{ #category : #'accessing - layout properties' }
+{ #category : 'accessing - layout properties' }
 MorphExtension >> layoutProperties: newProperties [
 	"Return the current layout properties associated with the receiver"
 
 	layoutProperties := newProperties
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> locked [
 	"answer whether the receiver is Locked"
 	^ locked
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> locked: aBoolean [
 	"change the receiver's locked property"
 	locked := aBoolean
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> otherProperties [
 	"answer the receiver's otherProperties"
 	^ otherProperties
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MorphExtension >> printOn: aStream [
 	"Append to the argument, aStream, a sequence of characters that
 	identifies the receiver."
@@ -295,7 +297,7 @@ MorphExtension >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #'connectors - copying' }
+{ #category : 'connectors - copying' }
 MorphExtension >> propertyNamesNotCopied [
 	"list of names of properties whose values should be deleted when veryDeepCopying a morph.
 	See DeepCopier."
@@ -304,13 +306,13 @@ MorphExtension >> propertyNamesNotCopied [
 	"add yours to this list"
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> removeOtherProperties [
 	"Remove the 'other' properties"
 	otherProperties := nil
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> removeProperty: aSymbol [
 	"removes the property named aSymbol if it exists"
 	otherProperties ifNil: [^ self].
@@ -318,13 +320,13 @@ MorphExtension >> removeProperty: aSymbol [
 	otherProperties isEmpty ifTrue: [self removeOtherProperties]
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> setProperty: aSymbol toValue: abObject [
 	"change the receiver's property named aSymbol to anObject"
 	self assureOtherProperties at: aSymbol put: abObject
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> sortedPropertyNames [
 	"answer the receiver's property names in a sorted way"
 
@@ -340,25 +342,25 @@ MorphExtension >> sortedPropertyNames [
 	^props contents sort: [:s1 :s2 | s1 <= s2]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> sticky [
 	^ sticky
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> sticky: aBoolean [
 	"change the receiver's sticky property"
 	sticky := aBoolean
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> valueOfProperty: aSymbol [
 	"Answer the value of the receiver's property named aSymbol"
 
 	^ otherProperties ifNotNil: [ :prop | prop at: aSymbol ifAbsent: nil ]
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> valueOfProperty: aSymbol ifAbsent: aBlock [
 
 	"if the receiver possesses a property of the given name, answer
@@ -370,7 +372,7 @@ MorphExtension >> valueOfProperty: aSymbol ifAbsent: aBlock [
 		  ifNil: [ aBlock value ]
 ]
 
-{ #category : #'accessing - other properties' }
+{ #category : 'accessing - other properties' }
 MorphExtension >> valueOfProperty: aSymbol ifAbsentPut: aBlock [
 	"If the receiver possesses a property of the given name, answer
 	its value. If not, then create a property of the given name, give
@@ -379,7 +381,7 @@ MorphExtension >> valueOfProperty: aSymbol ifAbsentPut: aBlock [
 	^self assureOtherProperties at: aSymbol ifAbsentPut: aBlock
 ]
 
-{ #category : #'connectors - copying' }
+{ #category : 'connectors - copying' }
 MorphExtension >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.
 	If they were in the tree being copied, fix them up, otherwise point to the originals!!"
@@ -394,7 +396,7 @@ MorphExtension >> veryDeepFixupWith: deepCopier [
 				put: (deepCopier references at: property ifAbsent: [ property ])]]
 ]
 
-{ #category : #'connectors - copying' }
+{ #category : 'connectors - copying' }
 MorphExtension >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.
 	Some otherProperties need to be not copied at all, but shared. Their names are given by copyWeakly.
@@ -434,13 +436,13 @@ MorphExtension >> veryDeepInner: deepCopier [
 	namesOfWeaklyCopiedProperties with: weaklyCopiedValues do: [ :name :value | value ifNotNil: [ otherProperties at: name put: value ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> visible [
 	"answer whether the receiver is visible"
 	^ visible
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphExtension >> visible: newValue [
 	visible := newValue
 ]

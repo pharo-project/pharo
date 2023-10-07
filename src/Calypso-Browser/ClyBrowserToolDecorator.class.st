@@ -17,39 +17,41 @@ Internal Representation and Key Implementation Points.
 	browserTool:		<ClyBrowserTool>
 "
 Class {
-	#name : #ClyBrowserToolDecorator,
-	#superclass : #Object,
+	#name : 'ClyBrowserToolDecorator',
+	#superclass : 'Object',
 	#instVars : [
 		'browserTool'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolDecorator >> browser [
 	^ browserTool browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolDecorator >> browserEnvironment [
 	^ self browser navigationEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolDecorator >> browserTool [
 	^ browserTool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolDecorator >> browserTool: anObject [
 	browserTool := anObject
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyBrowserToolDecorator >> decorateTool [
 	self subclassResponsibility
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserToolDecorator >> toolWasRemoved [
 ]

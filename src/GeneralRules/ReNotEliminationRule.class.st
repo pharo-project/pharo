@@ -23,24 +23,26 @@ aCollection reject: [ :each | ... anObject ]
 ]]]
 "
 Class {
-	#name : #ReNotEliminationRule,
-	#superclass : #ReNodeRewriteRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReNotEliminationRule',
+	#superclass : 'ReNodeRewriteRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotEliminationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'NotEliminationRule'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotEliminationRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReNotEliminationRule >> initialize [
 	super initialize.
 	self
@@ -70,12 +72,12 @@ ReNotEliminationRule >> initialize [
 		replace: '(``@a > ``@b) not' with: '``@a <= ``@b'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotEliminationRule >> name [
 	^ 'Eliminate unnecessary not''s'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReNotEliminationRule >> rationale [
 	^ 'Eliminate unnecessary not''s in relation of conditionals'
 ]

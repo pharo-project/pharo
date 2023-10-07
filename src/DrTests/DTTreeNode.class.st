@@ -3,8 +3,8 @@ I am a node from a tree used to show results in DrTestUI.
 
 "
 Class {
-	#name : #DTTreeNode,
-	#superclass : #DTAbstractTreeNode,
+	#name : 'DTTreeNode',
+	#superclass : 'DTAbstractTreeNode',
 	#instVars : [
 		'name',
 		'subResults',
@@ -14,65 +14,67 @@ Class {
 		'shouldStartExpanded',
 		'displayColor'
 	],
-	#category : #'DrTests-Model'
+	#category : 'DrTests-Model',
+	#package : 'DrTests',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DTTreeNode class >> empty [
 	^ self new
 		subResults: #();
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DTTreeNode >> acceptVisitor: aDTResultsTreeVisitor [
 	^ aDTResultsTreeVisitor visitDTTreeNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> browseBlock [
 	^ browseBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> browseBlock: anObject [
 	browseBlock := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTreeNode >> canBeBrowsed [
 
 	^ self browseBlock isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> contentForReRun [
 	^ (DTLeavesCollector collectLeavesOf: self) flatCollect: #contentForReRun
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> contextMenuBlock [
 	^ contextMenuBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> contextMenuBlock: anObject [
 	contextMenuBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> displayColor [
 
 	^ displayColor value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> displayColor: aValuableOrColor [
 
 	displayColor := aValuableOrColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> displayColorIfNotEmpty: aColor [
 
 	self displayColor: [
@@ -81,7 +83,7 @@ DTTreeNode >> displayColorIfNotEmpty: aColor [
 			ifEmpty: [ nil ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DTTreeNode >> drTestsBrowse [
 	"Browse the tree node according to what is specified by my #browseBlock.
 	 If my #browseBlock is nil, does nothing."
@@ -91,12 +93,12 @@ DTTreeNode >> drTestsBrowse [
 	self browseBlock cull: self
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 DTTreeNode >> drTestsBuildContextMenu: menu [
 	self contextMenuBlock value: menu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> drTestsName [
 
 	^ String streamContents: [ :s |
@@ -107,7 +109,7 @@ DTTreeNode >> drTestsName [
 			<< ')' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTTreeNode >> initialize [
 
 	super initialize.
@@ -116,50 +118,50 @@ DTTreeNode >> initialize [
 	shouldStartExpanded := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTreeNode >> shouldStartExpanded [
 
 	^ shouldStartExpanded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> startContracted [
 
 	shouldStartExpanded := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> startExpanded [
 
 	shouldStartExpanded := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> subResults [
 	^ subResults
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> subResults: anObject [
 	subResults := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> subResultsAggregator [
 	^ subResultsAggregator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeNode >> subResultsAggregator: anObject [
 	subResultsAggregator := anObject
 ]

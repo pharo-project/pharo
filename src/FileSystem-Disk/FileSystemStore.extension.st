@@ -1,6 +1,6 @@
-Extension { #name : #FileSystemStore }
+Extension { #name : 'FileSystemStore' }
 
-{ #category : #'*FileSystem-Disk' }
+{ #category : '*FileSystem-Disk' }
 FileSystemStore >> isDiskFileSystem [
 	^ false
 ]

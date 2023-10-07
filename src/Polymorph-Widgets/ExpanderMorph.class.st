@@ -2,23 +2,25 @@
 A morph that can expand or collapse to show its contents.
 "
 Class {
-	#name : #ExpanderMorph,
-	#superclass : #PanelMorph,
+	#name : 'ExpanderMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'titleMorph',
 		'announcer'
 	],
-	#category : #'Polymorph-Widgets-Base'
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExpanderMorph class >> titleText: aStringOrText [
 	"Answer a new instance of the receiver with the given title text."
 
 	^self new titleText: aStringOrText
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderMorph >> addedMorph: aMorph [
 	"Notify the receiver that the given morph was just added."
 
@@ -29,7 +31,7 @@ ExpanderMorph >> addedMorph: aMorph [
 				disableTableLayout: self expanded not]]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderMorph >> announce: anAnnouncement [
 	"see Announcements packages.
 	No need to announce if no subscribers."
@@ -37,20 +39,20 @@ ExpanderMorph >> announce: anAnnouncement [
 	announcer ifNotNil: [announcer announce: anAnnouncement]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> announcer [
 	"Answer the receiver's announcer, creating if required."
 
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> announcer: anObject [
 
 	announcer := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExpanderMorph >> defaultTitleMorph [
 	"Answer a default title morph for the receiver."
 
@@ -62,28 +64,28 @@ ExpanderMorph >> defaultTitleMorph [
 		basicTheme: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> expanded [
 	"Answer whether the title is expanded."
 
 	^self titleMorph expanded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> expanded: aBoolean [
 	"Set whether the title is expanded."
 
 	self titleMorph expanded: aBoolean
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderMorph >> expandedSizingRigid [
 	"Set the vResizing to be (temporarily) #rigid."
 
 	self expanded ifTrue: [self vResizing: #rigid]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderMorph >> fixLayout [
 	"Fix the owner layout, nasty!"
 
@@ -99,21 +101,21 @@ ExpanderMorph >> fixLayout [
 	self defer: (MessageSend receiver: self owner selector: #changed)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> font [
 	"Answer the title font"
 
 	^self titleMorph font
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> font: aFont [
 	"Set the title font"
 
 	self titleMorph font: aFont
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExpanderMorph >> initialize [
 	"Initialize the receiver."
 
@@ -127,7 +129,7 @@ ExpanderMorph >> initialize [
 		expanded: false
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderMorph >> showMorphs: aBoolean [
 	"Hide/Show the other morphs."
 
@@ -138,14 +140,14 @@ ExpanderMorph >> showMorphs: aBoolean [
 				disableTableLayout: aBoolean not]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> titleMorph [
 	"Answer the value of titleMorph"
 
 	^ titleMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorph >> titleMorph: aMorph [
 	"Set the value of titleMorph"
 
@@ -156,13 +158,13 @@ ExpanderMorph >> titleMorph: aMorph [
 		 self addMorph: aMorph]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderMorph >> titleText: aStringOrText [
 
 	self titleMorph titleText: aStringOrText
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ExpanderMorph >> update: aspect [
 	"Update the receiver."
 

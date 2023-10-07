@@ -1,10 +1,11 @@
 Class {
-	#name : #RGEnvironmentTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGEnvironmentTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testBehaviortNamed [
 
 	| env behavior |
@@ -31,7 +32,7 @@ RGEnvironmentTest >> testBehaviortNamed [
 	self assert: (env ask behaviorNamed: 'NonexistingBehavior classTrait') equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testBehaviortNamedIndirect [
 
 	| env behavior |
@@ -61,7 +62,7 @@ RGEnvironmentTest >> testBehaviortNamedIndirect [
 	self assert: (env ask behaviorNamed: 'SomeTrait class') equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testCleanUnusedUnreferencedBehaviors [
 
 	| env class1 class2 |
@@ -84,7 +85,7 @@ RGEnvironmentTest >> testCleanUnusedUnreferencedBehaviors [
 	self assert: env ask behaviors size equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testCleanUnusedUnreferencedPackages [
 
 	| env package1 package2 |
@@ -110,7 +111,7 @@ RGEnvironmentTest >> testCleanUnusedUnreferencedPackages [
 	self deny: (env ask packages includes: package2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testCompatibility [
 
 	"TODO: needs rewriting"
@@ -144,7 +145,7 @@ RGEnvironmentTest >> testCompatibility [
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testDefaultEnvironment [
 
 	| env  |
@@ -153,7 +154,7 @@ RGEnvironmentTest >> testDefaultEnvironment [
 	self assert: (env ask behaviors collect: [:each | each name]) asSortedCollection equals: #(#Behavior #'Behavior class' #Class #'Class class' #ClassDescription #'ClassDescription class' #Metaclass #'Metaclass class' #Object #'Object class' #ProtoObject #'ProtoObject class') asSortedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testEnsureClassNamed [
 
 	| env definition |
@@ -177,7 +178,7 @@ RGEnvironmentTest >> testEnsureClassNamed [
 	self assert: definition isMetaclassTrait not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testEnvironmentWithNamespace [
 
 	| newEnvironment newPackage|
@@ -201,7 +202,7 @@ RGEnvironmentTest >> testEnvironmentWithNamespace [
 	self should: [newEnvironment addPackage: newPackage] raise: RGWrongEnvironment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testFixProtoObjectClassSuperclass [
 	| env protoObject class |
 	env := RGEnvironment new.
@@ -213,7 +214,7 @@ RGEnvironmentTest >> testFixProtoObjectClassSuperclass [
 	self assert: protoObject classSide superclass equals: class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testMerging [
 
 "	| env1 env2 |
@@ -244,7 +245,7 @@ RGEnvironmentTest >> testMerging [
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testNewEnvironment [
 	| newEnvironment |
 	newEnvironment := RGEnvironment named: 'Testing environment'.
@@ -266,7 +267,7 @@ RGEnvironmentTest >> testNewEnvironment [
 	self assert: newEnvironment ask packages isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testPackageNamed [
 
 	| env package |
@@ -279,7 +280,7 @@ RGEnvironmentTest >> testPackageNamed [
 	self assert: (env ask packageNamed: 'SomePackage') equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testReferencedPackages [
 
 	| env |
@@ -289,7 +290,7 @@ RGEnvironmentTest >> testReferencedPackages [
 	self assert: env referencedPackages isEmpty."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testTraitNamed [
 
 	| env trait |
@@ -307,7 +308,7 @@ RGEnvironmentTest >> testTraitNamed [
 	self assert: (env ask traitNamed: 'SomeTrait') equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testUnifyClassTrait [
 	| env trait1 trait2 classTrait |
 	env := RGEnvironment new.
@@ -330,7 +331,7 @@ RGEnvironmentTest >> testUnifyClassTrait [
 	self assert: trait1 classTrait metaclass equals: classTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testUnifyMetaclass [
 	| env class1 class2 metaclass |
 	env := RGEnvironment new.
@@ -353,7 +354,7 @@ RGEnvironmentTest >> testUnifyMetaclass [
 	self assert: class1 metaclass metaclass equals: metaclass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testUnifyTrait [
 	| env trait1 trait2 trait |
 	env := RGEnvironment new.
@@ -376,7 +377,7 @@ RGEnvironmentTest >> testUnifyTrait [
 	self assert: trait1 metaclass equals: trait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentTest >> testUnpackagedPackage [
 
 	| env package |

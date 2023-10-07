@@ -2,8 +2,8 @@
 I am a simple interface to the Display screen canvas to draw text.
 "
 Class {
-	#name : #EDDisplayInterface,
-	#superclass : #Object,
+	#name : 'EDDisplayInterface',
+	#superclass : 'Object',
 	#instVars : [
 		'window',
 		'renderer',
@@ -11,15 +11,17 @@ Class {
 		'windowClosedAction',
 		'extent'
 	],
-	#category : #'EmergencyDebugger-View'
+	#category : 'EmergencyDebugger-View',
+	#package : 'EmergencyDebugger',
+	#tag : 'View'
 }
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 EDDisplayInterface >> black [
 	^ Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EDDisplayInterface >> clear [
 
 	self drawDuring: [ :canvas |
@@ -30,7 +32,7 @@ EDDisplayInterface >> clear [
 			borderColor: self red ]
 ]
 
-{ #category : #'private - display' }
+{ #category : 'private - display' }
 EDDisplayInterface >> closeWindow [
 
 	windowClosedAction
@@ -38,7 +40,7 @@ EDDisplayInterface >> closeWindow [
 		ifNil: [ self terminateWindow ]
 ]
 
-{ #category : #'private - text' }
+{ #category : 'private - text' }
 EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 	| paragraph |
 
@@ -52,7 +54,7 @@ EDDisplayInterface >> composeParagraphWith: aText inFrame: aRect [
 	^ paragraph
 ]
 
-{ #category : #'private - display' }
+{ #category : 'private - display' }
 EDDisplayInterface >> display: aParagraph in: aRect [
 
 	self drawDuring: [ :canvas |
@@ -62,7 +64,7 @@ EDDisplayInterface >> display: aParagraph in: aRect [
 			color: self black ]
 ]
 
-{ #category : #'private - display' }
+{ #category : 'private - display' }
 EDDisplayInterface >> drawDuring: aBlock [
 
 	self ensureWindowOpen.
@@ -71,7 +73,7 @@ EDDisplayInterface >> drawDuring: aBlock [
 		renderer present ]
 ]
 
-{ #category : #'private - display' }
+{ #category : 'private - display' }
 EDDisplayInterface >> ensureWindowOpen [
 	| attrs |
 
@@ -91,37 +93,37 @@ EDDisplayInterface >> ensureWindowOpen [
 	renderer := window newFormRenderer: (Form extent: self extent depth: 32)
 ]
 
-{ #category : #'private - display' }
+{ #category : 'private - display' }
 EDDisplayInterface >> extent [
 
 	^ extent ifNil: [
 		extent := DisplayScreen actualScreenSize min: (650@700) ]
 ]
 
-{ #category : #'private - display' }
+{ #category : 'private - display' }
 EDDisplayInterface >> frame [
 
 	^ 0@0 corner: self extent
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 EDDisplayInterface >> gray [
 	^ Color gray
 ]
 
-{ #category : #'private - text' }
+{ #category : 'private - text' }
 EDDisplayInterface >> pushChar: char [
 
 	characterReceivedAction ifNil: [ ^ self ].
 	characterReceivedAction value: char
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 EDDisplayInterface >> red [
 	^ Color red
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EDDisplayInterface >> show: aText [
 
 	self
@@ -131,32 +133,32 @@ EDDisplayInterface >> show: aText [
 		in: self frame
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EDDisplayInterface >> terminateWindow [
 
 	window ifNil: [ ^ self ].
 	window destroy
 ]
 
-{ #category : #'private - text' }
+{ #category : 'private - text' }
 EDDisplayInterface >> textStyle [
 	^ TextStyle default
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 EDDisplayInterface >> whenCharacterReceivedDo: aBlock [
 
 	characterReceivedAction := aBlock
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 EDDisplayInterface >> whenWindowClosedDo: aBlock [
 	"informs when window was closed from buttons"
 
 	windowClosedAction := aBlock
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 EDDisplayInterface >> white [
 	^ Color white
 ]

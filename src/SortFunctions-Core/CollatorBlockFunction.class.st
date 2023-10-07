@@ -13,21 +13,22 @@ Internal Representation and Key Implementation Points.
 	collatorBlock:		<BlockClosure>	This is the collation function that must return a -1, 0, or 1
 "
 Class {
-	#name : #CollatorBlockFunction,
-	#superclass : #SortFunction,
+	#name : 'CollatorBlockFunction',
+	#superclass : 'SortFunction',
 	#instVars : [
 		'collatorBlock'
 	],
-	#category : #'SortFunctions-Core'
+	#category : 'SortFunctions-Core',
+	#package : 'SortFunctions-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CollatorBlockFunction class >> usingBlock: twoArgsBlock [
 	^self new
 		collatorBlock: twoArgsBlock
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CollatorBlockFunction >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -38,23 +39,23 @@ CollatorBlockFunction >> = anObject [
 	^collatorBlock = anObject collatorBlock
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CollatorBlockFunction >> collate: anObject1 with: anObject2 [
 
 	^collatorBlock value: anObject1 value: anObject2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CollatorBlockFunction >> collatorBlock [
 	^ collatorBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CollatorBlockFunction >> collatorBlock: anObject [
 	collatorBlock := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CollatorBlockFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 

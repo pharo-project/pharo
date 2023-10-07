@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Spec2-Compatibility' }
+Package { #name : 'Commander-Spec2-Compatibility' }

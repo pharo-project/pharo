@@ -4,57 +4,58 @@ I am a special kind of MethodAnnouncement which represent that overriding method
 So I modify default MethodAnnouncement processing logic to affect overriding methods.
 "
 Class {
-	#name : #ClyOverridingMethodsChanged,
-	#superclass : #MethodAnnouncement,
+	#name : 'ClyOverridingMethodsChanged',
+	#superclass : 'MethodAnnouncement',
 	#instVars : [
 		'announcerPlugin'
 	],
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyOverridingMethodsChanged class >> initiatedBy: anInheritenceAnalysisPlugin forOverriddenMethod: aMethod [
 	^self new
 		method: aMethod;
 		announcerPlugin: anInheritenceAnalysisPlugin
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverridingMethodsChanged >> affectsMethod: aMethod [
 	^(aMethod selector = self overriddenMethod selector)
 		and: [ aMethod origin inheritsFrom: self overriddenMethod origin]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverridingMethodsChanged >> affectsMethodsDefinedInClass: aClass [
 
 	^ (aClass includesLocalSelector: self overriddenMethod selector)
 			and: [ aClass inheritsFrom: self overriddenMethod origin ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverridingMethodsChanged >> affectsMethodsDefinedInPackage: aPackage [
 
 	^aPackage definesOverridesOf: self overriddenMethod
 ]
 
-{ #category : #testing }
-ClyOverridingMethodsChanged >> affectsMethodsTaggedWith: tagName [
+{ #category : 'testing' }
+ClyOverridingMethodsChanged >> affectsMethodsInProtocol: protocol [
 
 	^announcerPlugin isMethodOverridden: method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOverridingMethodsChanged >> announcerPlugin [
 	^ announcerPlugin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOverridingMethodsChanged >> announcerPlugin: anObject [
 	announcerPlugin := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOverridingMethodsChanged >> overriddenMethod [
 	^method
 ]

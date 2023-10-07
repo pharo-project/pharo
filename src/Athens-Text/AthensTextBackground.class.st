@@ -2,43 +2,44 @@
 Athens text background 
 "
 Class {
-	#name : #AthensTextBackground,
-	#superclass : #TextAttribute,
+	#name : 'AthensTextBackground',
+	#superclass : 'TextAttribute',
 	#instVars : [
 		'color'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextBackground >> color [
 
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextBackground >> color: anObject [
 
 	color := anObject
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 AthensTextBackground >> dominates: other [
 	^ other class == self class
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 AthensTextBackground >> emphasizeScanner: scanner [
 	"Set the emphasis for text display"
 	scanner textBackground: color
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AthensTextBackground >> hash [
 	^ color hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AthensTextBackground >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' code: '; print: color

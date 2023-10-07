@@ -2,37 +2,39 @@
 ZnResponseWrittenEvent signals that response was written in duration milliseconds.
 "
 Class {
-	#name : #ZnResponseWrittenEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnResponseWrittenEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'response',
 		'duration'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponseWrittenEvent >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponseWrittenEvent >> duration: anObject [
 	duration := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnResponseWrittenEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Response Written '; print: response; space; print: duration; << 'ms'
+	stream << 'Response Written '; print: response; space; print: duration; << 'ms'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponseWrittenEvent >> response [
 	^ response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnResponseWrittenEvent >> response: anObject [
 	response := anObject
 ]

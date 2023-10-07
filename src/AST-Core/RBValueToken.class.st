@@ -7,31 +7,33 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBValueToken,
-	#superclass : #RBToken,
+	#name : 'RBValueToken',
+	#superclass : 'RBToken',
 	#instVars : [
 		'value'
 	],
-	#category : #'AST-Core-Tokens'
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBValueToken class >> isAbstract [
 
 	^ self == RBValueToken
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBValueToken class >> value: aString start: anInteger [
 	^self new value: aString start: anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBValueToken >> length [
 	^value size
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBValueToken >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -39,22 +41,22 @@ RBValueToken >> printOn: aStream [
 	aStream nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBValueToken >> source [
 	^ self value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBValueToken >> value [
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBValueToken >> value: anObject [
 	value := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBValueToken >> value: aString start: anInteger [
 	value := aString.
 	sourcePointer := anInteger

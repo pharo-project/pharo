@@ -10,16 +10,18 @@ Instanciate me using """"newFromTransformBlock: aBlock andPriority: aPriority"""
 Check out my test class (`OCDynamicASTCompilerPluginTest`) for a usage example.
 "
 Class {
-	#name : #OCDynamicASTCompilerPlugin,
-	#superclass : #OCASTCompilerPlugin,
+	#name : 'OCDynamicASTCompilerPlugin',
+	#superclass : 'OCASTCompilerPlugin',
 	#instVars : [
 		'priority',
 		'transformBlock'
 	],
-	#category : #'OpalCompiler-Core-Plugins'
+	#category : 'OpalCompiler-Core-Plugins',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Plugins'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OCDynamicASTCompilerPlugin class >> newFromTransformBlock: aBlock [
 	"Return a new instance of the receiver using the given AST transformation block and default priority."
 
@@ -28,7 +30,7 @@ OCDynamicASTCompilerPlugin class >> newFromTransformBlock: aBlock [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OCDynamicASTCompilerPlugin class >> newFromTransformBlock: aBlock andPriority: aPriority [
 	"Return a new instance of the receiver using the given AST transformation block and the given priority."
 
@@ -37,38 +39,38 @@ OCDynamicASTCompilerPlugin class >> newFromTransformBlock: aBlock andPriority: a
 			yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCDynamicASTCompilerPlugin >> initialize [
 
 	super initialize.
 	self priority: self class defaultPriority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCDynamicASTCompilerPlugin >> priority [
 
 	^ priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCDynamicASTCompilerPlugin >> priority: anObject [
 
 	priority := anObject
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 OCDynamicASTCompilerPlugin >> transform: ast [
 
 	^ transformBlock value: ast copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCDynamicASTCompilerPlugin >> transformBlock [
 
 	^ transformBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCDynamicASTCompilerPlugin >> transformBlock: anObject [
 
 	transformBlock := anObject

@@ -9,15 +9,17 @@ Also, the highlight color for the selection is easy to modify in the #highlightS
 when testing just to see it work.
 "
 Class {
-	#name : #PluggableMultiColumnListMorph,
-	#superclass : #PluggableListMorph,
+	#name : 'PluggableMultiColumnListMorph',
+	#superclass : 'PluggableListMorph',
 	#instVars : [
 		'gapSize'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Lists'
+	#category : 'Morphic-Widgets-Pluggable-Lists',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Lists'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableMultiColumnListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel wrapSelector: wrapSel [
 	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
 
@@ -31,7 +33,7 @@ PluggableMultiColumnListMorph class >> on: anObject list: getListSel selected: g
 		wrapSelector: wrapSel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableMultiColumnListMorph class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel wrapSelector: wrapSel [
 	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
 
@@ -45,37 +47,37 @@ PluggableMultiColumnListMorph class >> on: anObject list: getListSel selected: g
 		wrapSelector: wrapSel
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 PluggableMultiColumnListMorph >> basicKeyPressed: aChar [
 	"net supported for multi-column lists; which column should be used?!  The issue is that the base class implementation uses getList expecting a single collectino to come back instead of several of them"
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMultiColumnListMorph >> findSubmorphFor: ptY [
 	^ scroller submorphThat: [ :item | ptY between: item top and: item bottom ] ifNone: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMultiColumnListMorph >> gapSize [
 
 	^ gapSize ifNil: [ gapSize := 10 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMultiColumnListMorph >> gapSize: anInteger [
 
 	gapSize := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMultiColumnListMorph >> getListRow: row [
 	"return the strings that should appear in the requested row"
 	getListElementSelector ifNotNil: [ ^model perform: getListElementSelector with: row ].
 	^self getList at: row
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMultiColumnListMorph >> getListSize [
 	| l |
 	getListSizeSelector ifNotNil: [ ^model perform: getListSizeSelector ].
@@ -85,18 +87,18 @@ PluggableMultiColumnListMorph >> getListSize [
 	^l size
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 PluggableMultiColumnListMorph >> listForSearching [
 
 	^ super listForSearching collect: [:each | each first ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableMultiColumnListMorph >> listMorphClass [
 	^MulticolumnLazyListMorph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluggableMultiColumnListMorph >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel  wrapSelector: wrapSel [
 	self model: anObject.
 	getListSelector := getListSel.
