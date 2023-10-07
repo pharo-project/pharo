@@ -18,6 +18,18 @@ MySubAccessingSuperclassState >> accessing2InSub [
 	^ instVarName1 
 ]
 
+{ #category : 'accessing' }
+MySubAccessingSuperclassState >> accessingSharedVariable [
+
+	^ Shared1 
+]
+
+{ #category : 'accessing' }
+MySubAccessingSuperclassState >> accessingSharedVariable2 [
+
+	^ Shared2
+]
+
 { #category : 'actions' }
 MySubAccessingSuperclassState >> writing [
 

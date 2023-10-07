@@ -6,8 +6,8 @@ Class {
 		'instVarName2'
 	],
 	#classVars : [
-		'ClassVarName1',
-		'ClassVarName2'
+		'Shared1',
+		'Shared2'
 	],
 	#category : 'Refactoring-DataForTesting-StaticModel',
 	#package : 'Refactoring-DataForTesting',
@@ -18,6 +18,12 @@ Class {
 MyClassARoot >> accessing [
 
 	^ instVarName1 
+]
+
+{ #category : 'accessing' }
+MyClassARoot >> accessingSharedVariable [
+
+	^ Shared1 
 ]
 
 { #category : 'initialization' }
