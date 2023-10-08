@@ -29,6 +29,21 @@ RBClassTest >> setUp [
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
+{ #category : 'tests - definition' }
+RBClassTest >> testBindingOf [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {Delay . DelayWaitTimeout }).
+	root := rbNamespace classNamed: #Delay.
+	sub := rbNamespace classNamed: #DelayWaitTimeout.
+	
+	self assert: (root bindingOf: #Scheduler) equals: (Delay bindingOf: #Scheduler).
+	self assert: (sub bindingOf: #Scheduler) equals: (DelayWaitTimeout bindingOf: #Scheduler).
+	
+	self assert: (root classSide bindingOf: #Scheduler) equals: (Delay class bindingOf: #Scheduler).
+	self assert: (sub classSide bindingOf: #Scheduler) equals: (DelayWaitTimeout class bindingOf: #Scheduler).
+]
+
 { #category : 'tests - navigation' }
 RBClassTest >> testClassSide [
 

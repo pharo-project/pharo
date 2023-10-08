@@ -170,6 +170,7 @@ RBAbstractClass >> binding [
 
 { #category : 'method accessing' }
 RBAbstractClass >> bindingOf: aString [
+
 	^self realClass bindingOf: aString
 ]
 
