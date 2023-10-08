@@ -57,5 +57,5 @@ DoItChunk >> isDoItDeclaration [
 DoItChunk >> isPackageAddition: ast [
 	"This is for backward compatibility to be able to import code with old way of creating a package."
 
-	^ ast isMessage and: [ ast receiver name = #SystemOrganization and: [ ast selector = #addCategory: ] ]
+	^ ast isMessage and: [ ast receiver isVariable and: [ ast receiver name = #SystemOrganization and: [ ast selector = #addCategory: ] ] ]
 ]
