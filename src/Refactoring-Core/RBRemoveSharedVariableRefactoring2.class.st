@@ -1,28 +1,25 @@
 Class {
-	#name : 'RBRemoveSharedVariableRefactoring',
+	#name : 'RBRemoveSharedVariableRefactoring2',
 	#superclass : 'RBVariableRefactoring',
-	#instVars : [
-		'breakingChangePreconditions'
-	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
 }
 
 { #category : 'instance creation' }
-RBRemoveSharedVariableRefactoring class >> model: aNamespace remove: variable from: class [
+RBRemoveSharedVariableRefactoring2 class >> model: aNamespace remove: variable from: class [
 
 	^ self model: aNamespace variable: variable class: class
 ]
 
 { #category : 'removing' }
-RBRemoveSharedVariableRefactoring class >> remove: variable from: class [
+RBRemoveSharedVariableRefactoring2 class >> remove: variable from: class [
 
 	^ self variable: variable class: class
 ]
 
 { #category : 'preconditions' }
-RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
+RBRemoveSharedVariableRefactoring2 >> applicabilityPreconditions [
 
 	^ ( RBCondition isMetaclass: class ) not
 		& ( RBCondition definesClassVariable: variableName in: class )
@@ -30,16 +27,15 @@ RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
+RBRemoveSharedVariableRefactoring2 >> breakingChangePreconditions [
 	
-	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
-		(RBSharedVariableHasReferences new 
-			hierarchyOf: class referencesSharedVariable: variableName) not ]
-	
+	^ (RBCondition
+		   hierarchyOf: class
+		   referencesSharedVariable: variableName) not
 ]
 
 { #category : 'executing' }
-RBRemoveSharedVariableRefactoring >> generateChanges [
+RBRemoveSharedVariableRefactoring2 >> generateChanges [
 
 	self prepareForExecution.
 
@@ -55,18 +51,18 @@ RBRemoveSharedVariableRefactoring >> generateChanges [
 ]
 
 { #category : 'preconditions' }
-RBRemoveSharedVariableRefactoring >> preconditions [
+RBRemoveSharedVariableRefactoring2 >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
-RBRemoveSharedVariableRefactoring >> privateTransform [
+RBRemoveSharedVariableRefactoring2 >> privateTransform [
 	class removeClassVariable: variableName
 ]
 
 { #category : 'accessing' }
-RBRemoveSharedVariableRefactoring >> refactoredClass [
+RBRemoveSharedVariableRefactoring2 >> refactoredClass [
 
 	^ class
 ]

@@ -90,6 +90,21 @@ RBClassTest >> testDefinesPoolDictionary [
 ]
 
 { #category : 'tests - definition' }
+RBClassTest >> testDefinesSharedVariable2 [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root definesClassVariable: #Shared2).
+	
+	"a subclass is considered defining a variable even if it is defined by the superclass."
+	self assert: (sub definesClassVariable: #Shared2).
+]
+
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesTraitMethod [
 	| user trait |
 	user := rbNamespace classNamed: #MOPTestClassD.
@@ -102,6 +117,36 @@ RBClassTest >> testDefinesTraitMethod [
 	trait := rbNamespace classNamed: #Trait2.
 	self assert: (user methodFor: #c2) modelClass equals: trait.
 	self assert: (user methodFor: #c) modelClass equals: trait
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testDirectlyDefinesSharedVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root directlyDefinesClassVariable: #Shared2).
+	
+	self assert: (sub definesClassVariable: #Shared2).
+	self deny: (sub directlyDefinesClassVariable: #Shared2).
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testDirectlyDefinesSharedVariable2 [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root definesClassVariable: #Shared2).
+	
+	"a subclass is considered defining a variable even if it is defined by the superclass."
+	self assert: (sub definesClassVariable: #Shared2).
 ]
 
 { #category : 'method tests' }
@@ -183,6 +228,42 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
 			((rbNamespace classNamed: #Model) whichClassIncludesSelector:
 				 #doesNotExistAtAll)
 		equals: nil
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testWhichMethodsReferToClassVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	
+	self assert: (root whichMethodsReferToSharedVariable:  #Shared1) isNotEmpty.
+	self assert: (sub whichMethodsReferToSharedVariable: #Shared1) isNotEmpty.
+	
+	self assert: (root classSide whichMethodsReferToSharedVariable: #Shared1) isNotEmpty.
+	self assert: (sub classSide whichMethodsReferToSharedVariable: #Shared1) isEmpty.
+	self assert: (sub classSide whichMethodsReferToSharedVariable: #Shared2) isNotEmpty.
+	
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testWhichSelectorsReferToClassVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	
+	self assert: (root whichSelectorsReferToSharedVariable:  #Shared1) isNotEmpty.
+	self assert: (sub whichSelectorsReferToSharedVariable: #Shared1) isNotEmpty.
+	
+	self assert: (root classSide whichSelectorsReferToSharedVariable: #Shared1) isNotEmpty.
+	self assert: (sub classSide whichSelectorsReferToSharedVariable: #Shared1) isEmpty.
+	self assert: (sub classSide whichSelectorsReferToSharedVariable: #Shared2) isNotEmpty.
+	
 ]
 
 { #category : 'tests - defining methods' }
