@@ -30,6 +30,23 @@ ScalingCanvas class >> example [
 ]
 
 { #category : 'examples' }
+ScalingCanvas class >> exampleDrawPolygon [
+
+	^ self privateExampleWithExtent: 37@44 fillColor: Color white scale: 7 drawBlock: [ :canvas |
+		{
+			{ 2@2. 2@7. 7@7. 7@2 }.
+			{ 8.1@2.1. 8.1@7.1. 13.1@7.1. 13.1@2.1 }.
+			{ 14.9@2.9. 14.9@7.9. 19.9@7.9. 19.9@2.9 }.
+			{ 2@9. 19@9. 19@15. 11@15. 11@19. 2@19 }.
+			{ 2.9@21.1. 19.1@21.1. 19.1@27.9. 11.5@27.9. 11.5@31.3. 2.9@31.3 }.
+			{ 18@34. 18@39. 3@39. 3@42. 12@42. 12@34 }.
+			{ 25@11. 30@1. 35@11 }.
+			{ 35@22. 26@22. 35@13. 26@13 }.
+		} do: [ :vertices |
+			canvas drawPolygon: vertices fillStyle: (SolidFillStyle color: (Color red alpha: 0.25)) ] ]
+]
+
+{ #category : 'examples' }
 ScalingCanvas class >> exampleFillRectangle [
 
 	^ self privateExampleWithExtent: 11@3 fillColor: Color white scale: 10 drawBlock: [ :canvas |
@@ -188,6 +205,16 @@ ScalingCanvas >> depth [
 	^ formCanvas depth
 ]
 
+{ #category : 'drawing - polygons' }
+ScalingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc [
+
+	bw = 0 ifTrue: [
+		(self scalePolygon: vertices) ifNotNil: [ :scaledPolygon |
+			formCanvas drawPolygon: scaledPolygon color: aColor borderWidth: 0 borderColor: bc.
+			^ self ] ].
+	super drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc
+]
+
 { #category : 'private' }
 ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 
@@ -314,6 +341,19 @@ ScalingCanvas >> paragraph: paragraph bounds: bounds color: c [
 ScalingCanvas >> scale [
 
 	^ scale
+]
+
+{ #category : 'private' }
+ScalingCanvas >> scalePolygon: vertices [
+
+	| previousPoint |
+	
+	vertices ifEmpty: [ ^ #() ].
+	previousPoint := vertices last.
+	^ vertices collect: [ :point |
+		((point x = previousPoint x) or: [ point y = previousPoint y ]) ifFalse: [ ^ nil ].
+		previousPoint := point.
+		point truncated * scale ]
 ]
 
 { #category : 'accessing' }
