@@ -123,6 +123,53 @@ ScalingCanvas class >> exampleImageMorph [
 		yourself)
 ]
 
+{ #category : 'examples' }
+ScalingCanvas class >> exampleLine1 [
+
+	^ self privateExampleWithExtent: 101@101 fillColor: Color white scale: 4 drawBlock: [ :canvas |
+		| center innerRadius outerRadius |
+		center := 50@50.
+		innerRadius := 15.
+		outerRadius := 45.
+		0 to: 359 by: 10 do: [ :degrees |
+			| factors |
+			factors := degrees degreeCos @ degrees degreeSin.
+			canvas line: center + (innerRadius * factors) rounded
+				to: center + (outerRadius * factors) rounded
+				width: 1 color: (Color h: degrees s: 1.0 v: 1.0) ] ]
+]
+
+{ #category : 'examples' }
+ScalingCanvas class >> exampleLine2 [
+
+	^ self privateExampleWithExtent: 61@40 fillColor: Color white scale: 10 drawBlock: [ :canvas |
+		{
+			{ 1. { (1@1) -> (1@1). (1@3) -> (2@3). (1@5) -> (3@5) } }.
+			{ 2. { (6@2) -> (6@2). (6@5) -> (7@5). (6@8) -> (8@8) } }.
+			{ 3. { (11@2) -> (11@2). (11@6) -> (12@6). (11@10) -> (13@10) } }.
+			{ 4. { (18@3) -> (18@3). (18@8) -> (19@8). (18@13) -> (20@13) } }.
+			{ 5. { (25@3) -> (25@3). (25@9) -> (26@9). (25@15) -> (27@15) } }.
+			{ 1. { (23.0@20.0) -> (23.0@20.0). (25.0@20.0) -> (25.1@20.0). (27.0@20.0) -> (27.9@20.0) } }.
+			{ 1. { (23.9@22.0) -> (24.0@22.0). (25.1@22.0) -> (26.0@22.0). (28.0@22.0) -> (28.0@22.0) } }.
+			{ 1.5. { (23.0@24.0) -> (23.0@24.0). (25.1@24.0) -> (26.9@24.0) } }.
+		} do: [ :arguments |
+			arguments bind: [ :width :pointAssociations |
+				pointAssociations do: [ :pointAssociation |
+					canvas
+						line: pointAssociation key
+							to: pointAssociation value
+							width: width color: Color blue;
+						line: pointAssociation key transposed + (0@9)
+							to: pointAssociation value transposed + (0@9)
+							width: width color: Color blue;
+						line: pointAssociation key + (30@0)
+							to: pointAssociation value + (30@0)
+							width: width color: Color blue translucent;
+						line: pointAssociation key transposed + (30@9)
+							to: pointAssociation value transposed + (30@9)
+							width: width color: Color blue translucent ] ] ] ]
+]
+
 { #category : 'instance creation' }
 ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 
@@ -340,6 +387,23 @@ ScalingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 ScalingCanvas >> isShadowDrawing [
 
 	^ formCanvas isShadowDrawing
+]
+
+{ #category : 'drawing' }
+ScalingCanvas >> line: pt1 to: pt2 width: w color: c [
+
+	(c isTranslucentButNotTransparent not and: [ (w truncated = w) and: [
+		((pt1 x = pt2 x) or: [ pt1 y = pt2 y ]) and: [
+			pt1 truncated = pt1 and: [ pt2 truncated = pt2 ] ] ] ]) ifTrue: [
+				| offset widthScaled scaledOffset |
+				offset := w // 2.
+				widthScaled := w * scale.
+				scaledOffset := widthScaled // 2.
+				formCanvas line: (pt1 - offset) * scale + scaledOffset
+					to: (pt2 - offset) * scale + scaledOffset
+					width: widthScaled color: c.
+				^ self ].
+	super line: pt1 to: pt2 width: w color: c
 ]
 
 { #category : 'accessing' }
