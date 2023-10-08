@@ -170,8 +170,8 @@ RBAbstractClass >> binding [
 
 { #category : 'method accessing' }
 RBAbstractClass >> bindingOf: aString [
-	^self realClass classPool associationAt: aString asSymbol
-		ifAbsent: [self realClass classPool associationAt: aString asString ifAbsent: [nil]]
+
+	^ self realClass bindingOf: aString
 ]
 
 { #category : 'testing' }
