@@ -1,6 +1,9 @@
 Class {
 	#name : 'OSWorldRendererScalingCanvas',
 	#superclass : 'OSWorldRenderer',
+	#classInstVars : [
+		'isApplicable'
+	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',
 	#tag : 'Morphic'
@@ -20,9 +23,21 @@ OSWorldRendererScalingCanvas class >> example [
 ]
 
 { #category : 'accessing' }
+OSWorldRendererScalingCanvas class >> isApplicable [
+
+	^ isApplicable ifNil: [ false ]
+]
+
+{ #category : 'accessing' }
+OSWorldRendererScalingCanvas class >> isApplicable: boolean [
+
+	isApplicable := boolean
+]
+
+{ #category : 'accessing' }
 OSWorldRendererScalingCanvas class >> isApplicableFor: aWorld [
 
-	^ false
+	^ self isApplicable
 ]
 
 { #category : 'utilities' }
