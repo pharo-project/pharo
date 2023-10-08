@@ -61,21 +61,51 @@ ScalingCanvas class >> exampleFillRectangle [
 ]
 
 { #category : 'examples' }
-ScalingCanvas class >> exampleFrameAndFillRectangle [
+ScalingCanvas class >> exampleFrameAndFillRectangle1 [
+	
+	^ self privateExampleWithExtent: 80@54 fillColor: Color white scale: 5 drawBlock: [ :canvas |
+		canvas
+			frameAndFillRectangle: (5@5 extent: 20@20)
+				fillColor: Color blue
+				borderWidth: 2 borderColor: Color green;
+			frameAndFillRectangle: (30@5 extent: 20@20)
+				fillColor: Color green
+				borderWidth: 3 borderColor: Color transparent;
+			frameAndFillRectangle: (55@5 extent: 20@20)
+				fillColor: Color transparent
+				borderWidth: 5 borderColor: Color blue;
+			frameAndFillRectangle: (6@31 corner: 49@49)
+				fillColor: Color cyan translucent
+				borderWidth: 4 borderColor: Color red translucent;
+			frameAndFillRectangle: (31@31 corner: 74@49)
+				fillColor: Color blue translucent
+				borderWidth: 4 borderColor: Color yellow translucent ]
+]
 
-	^ self privateExampleWithExtent: 10@24 fillColor: Color white scale: 10 drawBlock: [ :canvas |
+{ #category : 'examples' }
+ScalingCanvas class >> exampleFrameAndFillRectangle2 [
+
+	^ self privateExampleWithExtent: 25@35 fillColor: Color white scale: 10 drawBlock: [ :canvas |
 		{
 			1.0@2.0 extent: 3.0@3.0.
-			1.1@6.1 extent: 3.1@3.1.
-			1.1@10.1 extent: 3.9@3.9.
-			1.9@14.9 extent: 3.1@3.1.
-			1.9@18.9 extent: 3.9@3.9
+			1.1@6.1 extent: 3.0@3.0.
+			1.9@10.9 extent: 3.0@3.0.
+			1.1@14.1 extent: 3.1@3.1.
+			1.1@18.1 extent: 3.9@3.9.
+			1.9@22.9 extent: 3.1@3.1.
+			1.9@26.9 extent: 3.9@3.9
 		} do: [ :rectangle |
 			canvas
 				frameAndFillRectangle: rectangle fillColor: Color blue
 					borderWidth: 0 borderColor: Color green;
-				frameAndFillRectangle: (rectangle translateBy: 5@1) fillColor: (Color blue alpha: 0.5)
-					borderWidth: 0 borderColor: Color green ] ]
+				frameAndFillRectangle: (rectangle translateBy: 5@1) fillColor: Color blue translucent
+					borderWidth: 0 borderColor: Color green;
+				frameAndFillRectangle: (rectangle translateBy: 10@2) fillColor: Color blue translucent
+					borderWidth: 1 borderColor: Color green translucent;
+				frameAndFillRectangle: (rectangle translateBy: 15@3) fillColor: Color blue translucent
+					borderWidth: 1.1 borderColor: Color green translucent;
+				frameAndFillRectangle: (rectangle translateBy: 20@4) fillColor: Color blue translucent
+					borderWidth: 1.9 borderColor: Color green translucent ] ]
 ]
 
 { #category : 'examples' }
@@ -279,15 +309,19 @@ ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 { #category : 'drawing - rectangles' }
 ScalingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 
-	borderWidth = 0 ifTrue: [
-		| maxCorner origin corner scaledRectangle |
-		maxCorner := (1 << 31 - 1) asPoint - formCanvas origin.
-		origin := r origin truncated * scale.
-		corner := origin + (r extent truncated * scale).
-		scaledRectangle := Rectangle origin: r origin truncated * scale corner: (corner min: maxCorner).
-		formCanvas frameAndFillRectangle: scaledRectangle fillColor: fillColor
-			borderWidth: borderWidth borderColor: borderColor.
-		^ self ].
+	borderWidth truncated = borderWidth ifTrue: [
+		| extent extentTruncated |
+		extent := r extent.
+		extentTruncated := r extent truncated.
+		(borderWidth = 0 or: [ extentTruncated = extent ]) ifTrue: [
+			| maxCorner origin corner scaledRectangle |
+			maxCorner := (1 << 31 - 1) asPoint - formCanvas origin.
+			origin := r origin truncated * scale.
+			corner := origin + (extentTruncated * scale).
+			scaledRectangle := Rectangle origin: origin corner: (corner min: maxCorner).
+			formCanvas frameAndFillRectangle: scaledRectangle fillColor: fillColor
+				borderWidth: borderWidth * scale borderColor: borderColor.
+			^ self ] ].
 	super frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor
 ]
 
