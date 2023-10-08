@@ -36,7 +36,11 @@ OSWorldRendererScalingCanvas >> doActivate [
 
 	super doActivate.
 	self osWindow backendWindow renderer canvasBlock: [ :formCanvas |
-		ScalingCanvas formCanvas: formCanvas scale: world scaleFactor reciprocal ]
+		| scale |
+		scale := world scaleFactor reciprocal.
+		(scale ~= 1 and: [ scale truncated = scale ])
+			ifTrue: [ ScalingCanvas formCanvas: formCanvas scale: scale ]
+			ifFalse: [ formCanvas ] ]
 ]
 
 { #category : 'operations' }
