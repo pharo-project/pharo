@@ -20,6 +20,8 @@ package-cache/
 iceberg-cache/
 play-cache/
 
+build/
+
 github--*.zip
 
 **/.DS_STORE
