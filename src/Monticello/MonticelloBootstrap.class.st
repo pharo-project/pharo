@@ -86,7 +86,7 @@ MonticelloBootstrap >> createWorkingCopies [
 			Stdio stdout
 				nextPutAll: 'Method name absent';
 				lf ].
-	(MCClassInstanceVariableDefinition lookupSelector: #name)
+	(MCClassInstanceVariableDefinition lookupSelector: #name:)
 		ifNil: [
 			Stdio stdout
 				nextPutAll: 'Method name absent in class instance variable definition';
@@ -95,7 +95,7 @@ MonticelloBootstrap >> createWorkingCopies [
 			Stdio stdout
 				nextPutAll: 'Method name present in class instance variable definition';
 				lf ].
-	(MCInstanceVariableDefinition lookupSelector: #name)
+	(MCInstanceVariableDefinition lookupSelector: #name:)
 		ifNil: [
 			Stdio stdout
 				nextPutAll: 'Method name absent in instance variable definition';
