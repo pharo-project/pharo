@@ -30,7 +30,8 @@ ShLayoutDefinition >> builder: anObject [
 
 { #category : 'accessing' }
 ShLayoutDefinition >> classSlots [
-	^ classSlots ifNil: [ #() ]
+
+	^ classSlots
 ]
 
 { #category : 'accessing' }
@@ -59,7 +60,7 @@ ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
 { #category : 'copying' }
 ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [
 
-	classSlots ifNotNil: [ ^ self ].
+	classSlots ifNotEmpty: [ ^ self ].
 
 	classSlots := oldSlots
 		select: [:each | each isDefinedByOwningClass ]

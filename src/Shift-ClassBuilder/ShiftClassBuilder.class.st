@@ -256,7 +256,7 @@ ShiftClassBuilder >> createMetaclass [
 		configureMetaclass: newMetaclass
 		superclass: self metaSuperclass
 		withLayoutType: FixedLayout
-		slots: self layoutDefinition classSlots.
+		slots: self classSlots.
 
 	self builderEnhancer metaclassCreated: self
 ]
