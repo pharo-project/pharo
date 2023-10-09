@@ -124,7 +124,9 @@ DoItChunk >> importFor: requestor logSource: logSource [
 			 logSource: logSource;
 			 yourself).
 
-	ast := RBParser parseExpression: contents onError: [ ^ self ].
+	ast := RBParser parseExpression: contents.
+
+	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
 
 	(hasNilSuperclass := self isNilSuperclassDefinition: ast) ifTrue: [ ast := ast statements first ].
 
@@ -271,6 +273,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
 		  isTrait ifTrue: [ aBuilder beTrait ].
 		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ]
+
 ]
 
 { #category : 'testing' }
@@ -289,4 +292,11 @@ DoItChunk >> isNilSuperclassDefinition: ast [
 					  ast statements second selector = #superclass: and: [
 						  ast statements second arguments first value isNil and: [
 							  (ast statements first arguments first value withoutPrefix: '#') = ast statements second receiver formattedCode ] ] ] ] ] ]
+]
+
+{ #category : 'testing' }
+DoItChunk >> isPackageAddition: ast [
+	"This is for backward compatibility to be able to import code with old way of creating a package."
+
+	^ ast isMessage and: [ ast receiver isVariable and: [ ast receiver name = #SystemOrganization and: [ ast selector = #addCategory: ] ] ]
 ]

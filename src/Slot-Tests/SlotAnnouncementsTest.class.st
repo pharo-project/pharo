@@ -194,21 +194,6 @@ SlotAnnouncementsTest >> testClassCreationShouldAnnounceClassAdded [
 	self assert: self collectedAnnouncements first classAdded equals: aClass
 ]
 
-{ #category : 'tests' }
-SlotAnnouncementsTest >> testClassRecategorizationShouldAnnounceClassModified [
-
-	self subscribeOn: ClassRecategorized.
-
-	aClass := self make: [ :builder | builder package: self slotTestPackageName ].
-	anotherClass := self make: [ :builder | builder package: self slotTestPackageName , '2' ].
-
-	self assert: self collectedAnnouncements size equals: 1.
-	announcement := self collectedAnnouncements first.
-	self assert: announcement oldCategory equals: self slotTestPackageName.
-	self assert: announcement newCategory equals: self slotTestPackageName , '2'.
-	self assert: announcement classRecategorized identicalTo: anotherClass
-]
-
 { #category : 'tests - comments' }
 SlotAnnouncementsTest >> testCreateAndChangeWithCommentDoesAnnounceBoth [
 

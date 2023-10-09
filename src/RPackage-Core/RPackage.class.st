@@ -140,14 +140,9 @@ RPackage >> <= aRPackage [
 
 { #category : 'add class' }
 RPackage >> addClass: aClass [
-	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
+	"If no tag is given we put the class in the root tag"
 
-	"This does two things:
-		- make sure the class tag for ourselves exists
-		- change the class category as appropriate.
-			(and by cascade, ensure systemClassRecategorizedAction: is called)."
-
-	aClass instanceSide category: self rootTag categoryName
+	self moveClass: aClass toTag: self rootTag
 ]
 
 { #category : 'add method - compiled method' }
@@ -526,6 +521,8 @@ RPackage >> methodsForClass: aClass [
 
 { #category : 'private' }
 RPackage >> moveClass: aClass toTag: aTag [
+	"I am the main method to add a class to myself. 
+	I will take care of removing the class from its old package. I'll renamed its extensions protocols refering myself into the unclassified protocol. I'll add the class to the right tag and announce the change."
 
 	| oldPackage newTag oldTag |
 	newTag := self ensureTag: aTag.
@@ -538,7 +535,7 @@ RPackage >> moveClass: aClass toTag: aTag [
 	If we update the package we should remove the class from the old one and update the methods"
 	oldPackage = self ifTrue: [ oldTag removeClass: aClass ] ifFalse: [ oldPackage removeClass: aClass ].
 
-	newTag addClass: aClass instanceSide.
+	newTag privateAddClass: aClass instanceSide.
 	
 	oldPackage = self ifFalse: [
 		"In case I contain extension methods."

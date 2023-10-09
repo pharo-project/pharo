@@ -75,10 +75,7 @@ ClassDescription >> packageTag [
 
 { #category : '*RPackage-Core' }
 ClassDescription >> packageTag: aTag [
-
-	(aTag isString
-		 ifTrue: [ self package ensureTag: aTag ]
-		 ifFalse: [ aTag ]) addClass: self
+	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
 ]
 
 { #category : '*RPackage-Core' }
