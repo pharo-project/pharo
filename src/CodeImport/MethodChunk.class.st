@@ -66,13 +66,7 @@ MethodChunk >> handleMissingBehavior [
 MethodChunk >> importFor: requestor logSource: logSource [
 
 	self existsBehavior ifFalse: [ self handleMissingBehavior ].
-	Stdio stdout
-		nextPutAll: 'Importing method in "';
-		nextPutAll: self targetClass name;
-		nextPutAll: '" : ';
-		lf;
-		nextPutAll: contents;
-		lf.
+
 	^ (self targetClass compiler
 		   permitUndeclared: true;
 		   protocol: categoryName;
