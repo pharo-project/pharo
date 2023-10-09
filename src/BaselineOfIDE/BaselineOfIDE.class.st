@@ -348,8 +348,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	gofer load.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	Smalltalk cleanOutUndeclared. 
+
 
 	Stdio stdout 
 		nextPutAll: ' ------------ Obsolete ------------';
