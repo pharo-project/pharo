@@ -202,7 +202,6 @@ ShiftClassInstaller >> make [
 ShiftClassInstaller >> make: aBlock [
 
 	aBlock value: builder.
-1halt.
 	^self make
 ]
 
