@@ -184,9 +184,9 @@ DoItChunk >> importFor: requestor logSource: logSource [
 
 	Stdio stdout
 		nextPutAll: 'Importing: ';
-		cr;
+		lf;
 		nextPutAll: contents;
-		cr.
+		lf.
 
 	SystemAnnouncer announce: (DoItChunkImported new
 			 contents: contents;
