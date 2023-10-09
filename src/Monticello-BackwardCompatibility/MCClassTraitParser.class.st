@@ -6,9 +6,8 @@ MCClassTraitDefinition are not generated anymore by Pharo. This is just here for
 Class {
 	#name : 'MCClassTraitParser',
 	#superclass : 'MCDoItParser',
-	#category : 'Monticello-Chunk Format',
-	#package : 'Monticello',
-	#tag : 'Chunk Format'
+	#category : 'Monticello-BackwardCompatibility',
+	#package : 'Monticello-BackwardCompatibility'
 }
 
 { #category : 'factory identification hook' }

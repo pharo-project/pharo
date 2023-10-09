@@ -12,9 +12,10 @@ Class {
 	#instVars : [
 		'classVariableNames',
 		'poolDictionaryNames',
-		'category',
 		'comment',
-		'classPool'
+		'classPool',
+		'packageName',
+		'tagName'
 	],
 	#classVars : [
 		'LookupComment'
@@ -91,17 +92,6 @@ RBClass >> allPoolDictionaryNames [
 ]
 
 { #category : 'accessing' }
-RBClass >> category [
-
-	^ category ifNil: [ category := self realClass category ]
-]
-
-{ #category : 'accessing' }
-RBClass >> category: aSymbol [
-	category := aSymbol
-]
-
-{ #category : 'accessing' }
 RBClass >> classPool [
 	^classPool ifNil: [ classPool := Dictionary new ]
 ]
@@ -131,49 +121,6 @@ RBClass >> comment [
 { #category : 'accessing' }
 RBClass >> comment: aString [
 	self model changes comment: (comment := aString) in: self
-]
-
-{ #category : 'accessing' }
-RBClass >> definitionString [
-	^ String
-		streamContents:
-			[ :definitionStream |
-			definitionStream
-				nextPutAll: self superclass printString;
-				nextPutAll: ' subclass: #';
-				nextPutAll: self name;
-				nextPutAll:
-					'
-	instanceVariableNames: '''.
-			self instanceVariableNames
-				do: [ :each |
-					definitionStream
-						nextPutAll: each;
-						nextPut: $  ].
-			definitionStream
-				nextPutAll:
-					'''
-	classVariableNames: '''.
-			self classVariableNames
-				do: [ :each |
-					definitionStream
-						nextPutAll: each;
-						nextPut: $  ].
-			definitionStream
-				nextPutAll:
-					'''
-	poolDictionaries: '''.
-			self sharedPoolNames
-				do: [ :each |
-					definitionStream
-						nextPutAll: each;
-						nextPut: $  ].
-			definitionStream
-				nextPutAll:
-					'''
-	category: #'''.
-			definitionStream nextPutAll: self category asString.
-			definitionStream nextPut: $' ]
 ]
 
 { #category : 'testing' }
@@ -233,6 +180,18 @@ RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
 			modelClass := self model classNamed: aMethod methodClass name.
 			modelClass methodFor: aMethod selector
 		]
+]
+
+{ #category : 'accessing' }
+RBClass >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+RBClass >> packageName: anObject [
+
+	packageName := anObject
 ]
 
 { #category : 'accessing' }
@@ -312,4 +271,16 @@ RBClass >> sharedPoolNames [
 { #category : 'accessing' }
 RBClass >> sharedPools [
 	^ self allPoolDictionaryNames collect: [ :each | Smalltalk globals at: each asSymbol ifAbsent: [ Dictionary new ] ]
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName: anObject [
+
+	tagName := anObject
 ]

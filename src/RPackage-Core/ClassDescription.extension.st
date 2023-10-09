@@ -43,9 +43,27 @@ ClassDescription >> package [
 ]
 
 { #category : '*RPackage-Core' }
+ClassDescription >> package: aPackage [
+
+	^ aPackage addClass: self
+]
+
+{ #category : '*RPackage-Core' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+]
+
+{ #category : '*RPackage-Core' }
 ClassDescription >> packageFromOrganizer: anOrganizer [
 	"returns the package that defines this class"
 	^ anOrganizer packageOf: self
+]
+
+{ #category : '*RPackage-Core' }
+ClassDescription >> packageName [
+
+	^ self package ifNotNil: [ :package | package name ]
 ]
 
 { #category : '*RPackage-Core' }
@@ -56,10 +74,8 @@ ClassDescription >> packageTag [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> packageTag: aSymbol [
-
-	self flag: #package. "In the future this method should work with a real package tag also."
-	(self package ensureTag: aSymbol) addClass: self
+ClassDescription >> packageTag: aTag [
+	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
 ]
 
 { #category : '*RPackage-Core' }

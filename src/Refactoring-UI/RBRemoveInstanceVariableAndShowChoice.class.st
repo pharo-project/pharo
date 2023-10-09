@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBRemoveInstanceVariableAndShowChoice',
-	#superclass : 'RBInstanceVariableChoice',
+	#superclass : 'RBVariableChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
@@ -10,7 +10,7 @@ Class {
 RBRemoveInstanceVariableAndShowChoice >> action [
 
 	driver browseInstanceVariableReferences.
-	driver removeInstanceVariables
+	driver applyChanges
 ]
 
 { #category : 'accessing' }

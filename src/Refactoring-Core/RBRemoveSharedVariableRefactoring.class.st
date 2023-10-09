@@ -1,6 +1,9 @@
 Class {
 	#name : 'RBRemoveSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
+	#instVars : [
+		'breakingChangePreconditions'
+	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -29,9 +32,10 @@ RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 	
-	^ (RBCondition
-		   hierarchyOf: class
-		   referencesSharedVariable: variableName) not
+	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
+		(RBSharedVariableHasReferences new 
+			hierarchyOf: class referencesSharedVariable: variableName) not ]
+	
 ]
 
 { #category : 'executing' }

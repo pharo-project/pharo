@@ -280,7 +280,7 @@ MCMethodDefinition >> overridenMethodOrNil [
 		ifAbsent: [ ^ nil ].
 		
 	^ SourceFiles
-		changeRecordsFor: realMethod asRingDefinition
+		changeRecordsFor: realMethod
 		detect: [ :protocol | protocol ~= category ]
 ]
 

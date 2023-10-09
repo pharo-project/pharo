@@ -399,14 +399,10 @@ RGClassStrategy >> package: anRGPackage [
 	self owner announceDefinitionChangeDuring: [
 		self owner backend forBehavior setPackageFor: self owner to: anRGPackage.
 		self owner environment addPackage: anRGPackage.
-		(oldPackage hasResolved: #definedBehaviors)
-			ifTrue: [ oldPackage removeDefinedBehavior: self owner ].
-		anRGPackage addDefinedBehavior: self owner. ].
+		(oldPackage hasResolved: #definedBehaviors) ifTrue: [ oldPackage removeDefinedBehavior: self owner ].
+		anRGPackage addDefinedBehavior: self owner ].
 
-	self owner announce: (ClassRepackaged
-		classRepackaged: self owner
-		oldPackage: oldPackage
-		newPackage: anRGPackage)
+	self owner announce: (ClassRepackaged classRepackaged: self owner oldTag: oldPackage newTag: anRGPackage)
 ]
 
 { #category : 'accessing' }

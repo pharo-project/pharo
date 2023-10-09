@@ -97,12 +97,12 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 
 { #category : 'private - transforming' }
 RBSplitClassRefactoring >> addClass [
-	self generateChangesFor: (RBInsertNewClassRefactoring
-				model: self model
-				addClass: newClassName
-				superclass: Object
-				subclasses: #()
-				category: class category).
+
+	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: newClassName)
+			 superclass: Object;
+			 packageName: class packageName;
+			 tagName: class tagName;
+			 yourself).
 	newClass := self model classNamed: newClassName
 ]
 

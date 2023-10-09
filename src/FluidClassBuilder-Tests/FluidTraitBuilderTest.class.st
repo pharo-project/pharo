@@ -148,9 +148,7 @@ FluidTraitBuilderTest >> testFillShiftClassBuilder [
 	shift := builder shiftClassBuilder.
 	self assert: shift name equals: #TPoint2.
 	self assert: shift slots size equals: 2.
-	self assert: shift category equals: self packageNameForTest , '-Mafia'.
-	self flag: #askPablo
-	"self assert: clas package packageName equals: self packageNameForTest"
+	self assert: shift category equals: self packageNameForTest , '-Mafia'
 ]
 
 { #category : 'tests - install' }
@@ -192,13 +190,12 @@ FluidTraitBuilderTest >> testInstallSimplePoint2 [
 FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 
 	| trait |
-	builder := Trait << #TPoint3
-						package: 'Fake'.
+	builder := Trait << #TPoint3 package: 'Fake'.
 
 	trait := builder build.
 
 	self assert: trait name equals: #TPoint3.
-	self assert: trait package packageName equals: '_UnpackagedPackage'
+	self assert: trait package name equals: '_UnpackagedPackage'
 ]
 
 { #category : 'tests' }
@@ -212,5 +209,5 @@ FluidTraitBuilderTest >> testTraitUse [
 
 	self assert: trait name equals: #TPoint3.
 	self assert: trait traitComposition innerClass equals: TViewModelMock.
-	self assert: trait package packageName equals: '_UnpackagedPackage'
+	self assert: trait package name equals: '_UnpackagedPackage'
 ]

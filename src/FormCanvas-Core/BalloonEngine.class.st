@@ -254,8 +254,13 @@ BalloonEngine >> bitBlt [
 
 { #category : 'accessing' }
 BalloonEngine >> bitBlt: aBitBlt [
+
+	| width |
 	bitBlt := aBitBlt.
 	bitBlt ifNil: [^self].
+	width := bitBlt destForm width.
+	width <= 0 ifTrue: [ width := self class defaultBitmapWidth ].
+	span := Bitmap new: width.
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
 	bitBlt
@@ -435,7 +440,6 @@ BalloonEngine >> initialize [
 
 	super initialize.
 
-	self initializeSpan.
 	externals := OrderedCollection new: 100.
 
 	self bitBlt: ((BitBlt toForm: Display)
@@ -444,17 +448,6 @@ BalloonEngine >> initialize [
 
 	forms := #().
 	deferred := false
-]
-
-{ #category : 'initialization' }
-BalloonEngine >> initializeSpan [
-	| width |
-
-	"Get the display width to initialize width of the bitmap, if the width is zero or negative, use a default width"
-	width := Display width.
-	width <= 0 ifTrue:[ width := self class defaultBitmapWidth ].
-
-	span := Bitmap new: width
 ]
 
 { #category : 'initialize' }

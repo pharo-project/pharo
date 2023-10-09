@@ -402,25 +402,26 @@ ReSmalllintTest >> testPrecedence [
 
 { #category : 'tests' }
 ReSmalllintTest >> testRBMissingSubclassResponsibilityRule [
+
 	| superClass subClass1 subClass2 rule |
 	rule := ReMissingSubclassResponsibilityRule new.
 
 	superClass := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: 'MySuperclass';
-			package: self class category ].
+		              aClassBuilder
+			              name: 'MySuperclass';
+			              package: self class package name ].
 
 	subClass1 := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: 'MySubclass1';
-			superclass: superClass;
-			package: self class category ].
+		             aClassBuilder
+			             name: 'MySubclass1';
+			             superclass: superClass;
+			             package: self class package name ].
 
 	subClass2 := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: 'MySubclass2';
-			superclass: superClass;
-			package: self class category ].
+		             aClassBuilder
+			             name: 'MySubclass2';
+			             superclass: superClass;
+			             package: self class package name ].
 
 	subClass1 compile: 'method ^ 3'.
 	subClass2 compile: 'method ^ 5'.

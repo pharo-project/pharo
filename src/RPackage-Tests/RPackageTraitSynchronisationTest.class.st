@@ -4,10 +4,9 @@ SUnit tests for RPackage trait synchronization
 "
 Class {
 	#name : 'RPackageTraitSynchronisationTest',
-	#superclass : 'RPackageMCSynchronisationTest',
-	#category : 'Monticello-Tests-RPackage',
-	#package : 'Monticello-Tests',
-	#tag : 'RPackage'
+	#superclass : 'RPackageTestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests - operations on methods' }
@@ -26,44 +25,6 @@ RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMetho
 	class addToComposition: trait.
 	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: trait).
 	self assertEmpty: xPackage methods
-]
-
-{ #category : 'tests - operations on traits' }
-RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
-
-	| xPackage tag class |
-	tag := self ensureTagYinX.
-	xPackage := tag package.
-
-	class := self newTraitNamed: 'NewClass' inTag: tag.
-
-	self assert: (xPackage definesClass: class).
-	self assert: xPackage equals: class package
-]
-
-{ #category : 'tests - operations on traits' }
-RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
-
-	| xPackage class |
-	xPackage := self ensureXPackage.
-	self ensureTagYinX.
-
-	class := self newTraitNamed: 'NewClass' in: xPackage.
-
-	self assert: (xPackage definesClass: class).
-	self assert: xPackage equals: class package
-]
-
-{ #category : 'tests - operations on traits' }
-RPackageTraitSynchronisationTest >> testAddTraitUpdateTheOrganizerMappings [
-	"test that when we add a Trait, the organizer 'classPackageMapping' dictionary is updated, so that the trait is linked to its package and so that we can access its owning package"
-
-	| xPackage class |
-	xPackage := self ensureXPackage.
-
-	class := self newTraitNamed: 'NewClass' in: xPackage.
-
-	self assert: class package equals: xPackage
 ]
 
 { #category : 'tests - operations on methods' }

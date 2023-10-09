@@ -30,11 +30,6 @@ EpIconVisitor >> removalIcon [
 ]
 
 { #category : 'visitor' }
-EpIconVisitor >> visitBehaviorCategoryChange: aClassRecategorizationChange [
-	^ self modificationIcon
-]
-
-{ #category : 'visitor' }
 EpIconVisitor >> visitBehaviorCommentChange: aChange [
 	^ self modificationIcon
 ]
@@ -46,6 +41,11 @@ EpIconVisitor >> visitBehaviorCopy: anEvent [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitBehaviorNameChange: aClassRenamedChange [
+	^ self modificationIcon
+]
+
+{ #category : 'visitor' }
+EpIconVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 	^ self modificationIcon
 ]
 

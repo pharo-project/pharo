@@ -43,20 +43,6 @@ RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
 	testingEnvironment at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
 ]
 
-{ #category : 'running' }
-RPackageIncrementalTest >> setUp [
-	super setUp.
-	Author fullName ifNil: [Author fullName: 'RPackage']
-]
-
-{ #category : 'running' }
-RPackageIncrementalTest >> tearDown [
-
-	self organizer packages do: [ :package | package removeFromSystem ].
-
-	super tearDown
-]
-
 { #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testAddClassNoDuplicate [
 
@@ -184,8 +170,8 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 	b1 := self newClassNamed: #B1InPAckageP1 in: p.
 	self assert: p definedClasses size equals: 2.
 
-	p importClass: a1 inTag: 'a1-tag'.
-	p importClass: b1 inTag: 'b1-tag'.
+	p moveClass: a1 toTag: 'a1-tag'.
+	p moveClass: b1 toTag: 'b1-tag'.
 	self assert: p classTags size equals: 2.
 
 	self assert: (p includesClass: a1).
