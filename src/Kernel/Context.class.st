@@ -1841,7 +1841,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Context >> runUntilReturnFrom: aContext [
 	"Run the receiver (which must be its stack top context) until aContext returns. Avoid a context that cannot return.
 	Note: to avoid infinite recursion of MNU error inside unwind blocks, implement e.g. a wrapper around the message
@@ -1865,7 +1865,7 @@ Context >> runUntilReturnFrom: aContext [
 	"Note 3: it doesn't matter newTop is not a proper stack top context because #terminate will use it only as a starting point in the search for the next unwind context and the computation will never return here. Cf. the pattern in #runUntilErrorOrReturnFrom:: removing the inserted ensure context by stepping until popped when executing non-local returns is not applicable here and would fail the tests testTerminationDuringNestedUnwindWithReturn1 and 2."
 ]
 
-{ #category : #'debugger access' }
+{ #category : 'debugger access' }
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
 	<reflection: 'Stack Manipulation - Context'>
@@ -2294,7 +2294,7 @@ Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 	^ self doPrimitive: primIndex method: aMethod receiver: aReceiver args: arguments
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Context >> unwindAndStop: aProcess [
 	"I'm a helper method to #terminate; I create and answer
 	 a helper stack for a terminating process to unwind itself from."
@@ -2304,7 +2304,7 @@ Context >> unwindAndStop: aProcess [
 
 ]
 
-{ #category : #'special context access' }
+{ #category : 'special context access' }
 Context >> unwindBlock [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
 

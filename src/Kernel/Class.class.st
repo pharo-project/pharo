@@ -1117,62 +1117,6 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 				environment: self environment ]
 ]
 
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: package [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  layoutClass: layoutClass;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  package: package ]
-]
-
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: package [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  layoutClass: layoutClass;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
-			  package: package ]
-]
-
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition package: package [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  package: package ]
-]
-
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: package [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
-			  package: package ]
-]
-
 { #category : 'accessing - class hierarchy' }
 Class >> subclasses [
 	"Answer a Set containing the receiver's subclasses."
