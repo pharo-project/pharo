@@ -146,9 +146,8 @@ ShiftTraitBuilderTest >> testFillShiftClassBuilder [
 		           yourself.
 	self assert: builder name equals: #TPoint2.
 	self assert: builder slots size equals: 2.
-	self assert: builder category equals: self packageNameForTest , '-Mafia'.
-	self flag: #askPablo
-	"self assert: clas package packageName equals: self packageNameForTest"
+	self assert: builder package equals: self packageNameForTest.
+	self assert: builder tag equals: 'Mafia'
 ]
 
 { #category : 'tests - install' }
