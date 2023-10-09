@@ -12,7 +12,7 @@ Class {
 ShBitLayoutChangeDetector >> compareClass [
 	| oldLayout newLayout bitLayoutNames |
 	oldLayout := builder oldClass classLayout class name.
-	newLayout := builder layoutDefinition layoutClass name.
+	newLayout := builder layoutClass name.
 
 	oldLayout = newLayout ifTrue: [ ^ #() ].
 	bitLayoutNames := BitsLayout allSubclasses collect: [ :e | e name ].
