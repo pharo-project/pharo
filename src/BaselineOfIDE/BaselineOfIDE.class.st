@@ -81,10 +81,6 @@ BaselineOfIDE >> additionalInitialization [
 	SDL_Event initialize.
 	
 	HiRulerBuilderTest initialize.
-		
-	3 timesRepeat: [
-		Smalltalk garbageCollect.
-		Undeclared removeUnreferencedKeys.].
 	
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.

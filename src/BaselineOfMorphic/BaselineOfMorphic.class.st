@@ -141,8 +141,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
-	Undeclared removeUnreferencedKeys.
-	Smalltalk globals flushClassNameCache.
 	ScrollBarMorph initializeImagesCache.
 
 	Smalltalk garbageCollect.
