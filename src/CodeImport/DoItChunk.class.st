@@ -88,7 +88,7 @@ DoItChunk >> allowedSelectors [
 { #category : 'importing' }
 DoItChunk >> buildClassFromOldDefinition: ast [
 
-	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName tag poolDictionariesNames traitsDefinition isTrait class |
+	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName tag poolDictionariesNames traitsDefinition isTrait |
 	superclassName := ast receiver formattedCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
@@ -97,12 +97,12 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 	self if: selectorParts in: ast includes: #subclass do: [ :argument | subclassName := argument value ].
 
 	self if: selectorParts in: ast includes: #named do: [ :argument |
-		subclassName := argument value.
-		isTrait := true ].
+			subclassName := argument value.
+			isTrait := true ].
 
 	self if: selectorParts in: ast includes: #immediateSubclass do: [ :argument |
-		subclassName := argument value.
-		layoutClass := ImmediateLayout ].
+			subclassName := argument value.
+			layoutClass := ImmediateLayout ].
 
 	self if: selectorParts in: ast includes: #variableSubclass do: [ :argument |
 			subclassName := argument value.
@@ -125,20 +125,21 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 	self if: selectorParts in: ast includes: #classVariableNames do: [ :argument | classVariableNames := argument value ].
 
 	self if: selectorParts in: ast includes: #category do: [ :argument |
-		"This is not right but we cannot rely on categories anymore and this is for backward compatibility."
-		| aString |
-		aString := argument value.
-		(aString includes: $-)
-		ifTrue: [
-			packageName := (aString copyUpToLast: $-).
-			tag := (aString copyAfterLast: $-) ]
-		ifFalse: [ packageName := aString ] ].
+			"This is not right but we cannot rely on categories anymore and this is for backward compatibility."
+			| aString |
+			aString := argument value.
+			(aString includes: $-)
+				ifTrue: [
+					packageName := aString copyUpToLast: $-.
+					tag := aString copyAfterLast: $- ]
+				ifFalse: [ packageName := aString ] ].
 
 	self if: selectorParts in: ast includes: #package do: [ :argument | packageName := argument value ].
 
 	self if: selectorParts in: ast includes: #poolDictionaries do: [ :argument | poolDictionariesNames := argument value ].
 
-	self if: selectorParts in: ast includes: #layout do: [ :argument | layoutClass := self class environment at: argument formattedCode ifAbsent: [ self error: 'Layout ' , argument formattedCode , ' not found.' ] ].
+	self if: selectorParts in: ast includes: #layout do: [ :argument |
+		layoutClass := self class environment at: argument formattedCode ifAbsent: [ self error: 'Layout ' , argument formattedCode , ' not found.' ] ].
 
 	self if: selectorParts in: ast includes: #uses do: [ :argument | traitsDefinition := argument formattedCode ].
 
@@ -148,30 +149,21 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 
 	(#( CompiledBlock CompiledCode CompiledMethod ) includes: subclassName) ifTrue: [ layoutClass := CompiledMethodLayout ].
 
-	class := self class classInstaller make: [ :aBuilder |
-			| superclass |
-			superclass := self class environment at: superclassName asSymbol.
+	^ self class classInstaller make: [ :aBuilder |
+		  | superclass |
+		  superclass := self class environment at: superclassName asSymbol.
 		  aBuilder
 			  superclass: superclass;
 			  environment: superclass environment;
 			  name: subclassName;
 			  layoutClass: layoutClass.
-			instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
-			classVariableNames ifNotNil: [ aBuilder sharedVariablesFromString: classVariableNames ].
-			packageName ifNotNil: [ aBuilder package: packageName ].
-			tag ifNotNil: [ aBuilder tag: tag ].
-			poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
-			isTrait ifTrue: [ aBuilder beTrait ].
-		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ].
-	
-	Stdio stdout
-		nextPutAll: 'Compiled class named "';
-		nextPutAll: class name;
-		nextPutAll: '" with superclass "';
-		nextPutAll: class superclass name;
-		nextPutAll: '"';
-		lf.
-	^ class
+		  instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
+		  classVariableNames ifNotNil: [ aBuilder sharedVariablesFromString: classVariableNames ].
+		  packageName ifNotNil: [ aBuilder package: packageName ].
+		  tag ifNotNil: [ aBuilder tag: tag ].
+		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
+		  isTrait ifTrue: [ aBuilder beTrait ].
+		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ]
 ]
 
 { #category : 'accessing' }
@@ -194,21 +186,14 @@ DoItChunk >> importFor: requestor logSource: logSource [
 	| ast |
 	(contents beginsWith: '----') ifTrue: [ ^ self ].
 
-	Stdio stdout
-		nextPutAll: 'Importing: ';
-		lf;
-		nextPutAll: contents;
-		lf.
-
 	SystemAnnouncer announce: (DoItChunkImported new
 			 contents: contents;
 			 logSource: logSource;
 			 yourself).
 
+	"The package and class creation code got updated in Pharo but Monticello rely on this code. In order to not break the compatibility we are now checking if the code to import is this code and we handle it in another way."
 	ast := RBParser parseExpression: contents.
-
 	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
-
 	(self isOldClassCreation: ast) ifTrue: [ ^ self buildClassFromOldDefinition: ast ].
 
 	^ Smalltalk compiler class new

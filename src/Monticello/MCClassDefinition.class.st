@@ -74,25 +74,6 @@ MCClassDefinition >> actualClass [
 { #category : 'initialization' }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
 
-	MCVariableDefinition class
-		compiledMethodAt: #name:
-		ifPresent: [
-			Stdio stdout
-				nextPutAll: 'Method name present';
-				lf ]
-		ifAbsent: [
-			Stdio stdout
-				nextPutAll: 'Method name absent';
-				lf ].
-	(aClass lookupSelector: #name:)
-		ifNil: [
-			Stdio stdout
-				nextPutAll: 'Method name: absent in "' , aClass name , '"';
-				lf ]
-		ifNotNil: [
-			Stdio stdout
-				nextPutAll: 'Method name: present in "' , aClass name , '"';
-				lf ].
 	variables addAll: (aCollection collect: [ :var | aClass name: var asString ])
 ]
 
