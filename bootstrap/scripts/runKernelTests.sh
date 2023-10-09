@@ -9,10 +9,10 @@ set -o xtrace
 # The first parameter is the architecture
 # The second parameter is the stage name
 
-CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
-
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
+
+CACHE="${BOOTSTRAP_CACHE}"
 
 
 find ${CACHE}
