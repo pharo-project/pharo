@@ -36,10 +36,6 @@ DoItChunk >> allowedSelectors [
 #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:
 #subclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
 
-#subclass:layout:slots:classVariables:category:
-#subclass:layout:slots:classVariables:poolDictionaries:category:
-#subclass:slots:classVariables:category:
-#subclass:slots:classVariables:poolDictionaries:category:
 #subclass:uses:
 #subclass:uses:instanceVariableNames:classVariableNames:category:
 #subclass:uses:instanceVariableNames:classVariableNames:package:
@@ -89,160 +85,54 @@ DoItChunk >> allowedSelectors [
 )
 ]
 
-{ #category : 'accessing' }
-DoItChunk >> description [
-
-	^ 'DoIt (', (contents first: (40 min: contents size)), ')'
-]
-
-{ #category : 'private' }
-DoItChunk >> if: selectorParts in: ast includes: aSymbol do: aBlock [
-
-	| index |
-	index := selectorParts indexOf: aSymbol ifAbsent: [ ^ self ].
-	aBlock value: (ast arguments at: index)
-]
-
 { #category : 'importing' }
-DoItChunk >> importFor: requestor logSource: logSource [
+DoItChunk >> buildClassFromOldDefinition: ast [
 
-	| ast layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait hasNilSuperclass |
-	(contents beginsWith: '----') ifTrue: [ ^ self ].
-
-	Stdio stdout
-		nextPutAll: 'Importing: ';
-		cr;
-		nextPutAll: contents;
-		cr.
-
-	SystemAnnouncer announce: (DoItChunkImported new
-			 contents: contents;
-			 logSource: logSource;
-			 yourself).
-
-	ast := RBParser parseExpression: contents.
-
-	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
-
-	(hasNilSuperclass := self isNilSuperclassDefinition: ast) ifTrue: [ ast := ast statements first ].
-
-	"If this is true, that means this is the old class definition."
-	(ast isMessage and: [ self allowedSelectors includes: ast selector ]) ifFalse: [
-		^ Smalltalk compiler class new
-			  source: contents;
-			  requestor: requestor;
-			  logged: logSource;
-			  evaluate ].
-
+	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait |
 	superclassName := ast receiver formattedCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
 	layoutClass := FixedLayout.
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #subclass
-		do: [ :argument | subclassName := argument value ].
+	self if: selectorParts in: ast includes: #subclass do: [ :argument | subclassName := argument value ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #named
-		do: [ :argument |
-			subclassName := argument value.
-			isTrait := true ].
+	self if: selectorParts in: ast includes: #named do: [ :argument |
+		subclassName := argument value.
+		isTrait := true ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #immediateSubclass
-		do: [ :argument |
-			subclassName := argument value.
-			layoutClass := ImmediateLayout ].
+	self if: selectorParts in: ast includes: #immediateSubclass do: [ :argument |
+		subclassName := argument value.
+		layoutClass := ImmediateLayout ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #variableSubclass
-		do: [ :argument |
+	self if: selectorParts in: ast includes: #variableSubclass do: [ :argument |
 			subclassName := argument value.
 			layoutClass := VariableLayout ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #variableByteSubclass
-		do: [ :argument |
+	self if: selectorParts in: ast includes: #variableByteSubclass do: [ :argument |
 			subclassName := argument value.
 			layoutClass := ByteLayout ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #variableWordSubclass
-		do: [ :argument |
+	self if: selectorParts in: ast includes: #variableWordSubclass do: [ :argument |
 			subclassName := argument value.
 			layoutClass := WordLayout ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #weakSubclass
-		do: [ :argument |
+	self if: selectorParts in: ast includes: #weakSubclass do: [ :argument |
 			subclassName := argument value.
 			layoutClass := WeakLayout ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #instanceVariableNames
-		do: [ :argument | instanceVariableNames := argument value ].
+	self if: selectorParts in: ast includes: #instanceVariableNames do: [ :argument | instanceVariableNames := argument value ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #classVariableNames
-		do: [ :argument | classVariableNames := argument value ].
+	self if: selectorParts in: ast includes: #classVariableNames do: [ :argument | classVariableNames := argument value ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #category
-		do: [ :argument | "This is not right but we cannot rely on categories anymore and this is for backward compatibility." packageName := argument value ].
+	self if: selectorParts in: ast includes: #category do: [ :argument | "This is not right but we cannot rely on categories anymore and this is for backward compatibility." packageName := argument value ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #package
-		do: [ :argument | packageName := argument value ].
+	self if: selectorParts in: ast includes: #package do: [ :argument | packageName := argument value ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #poolDictionaries
-		do: [ :argument | poolDictionariesNames := argument value ].
+	self if: selectorParts in: ast includes: #poolDictionaries do: [ :argument | poolDictionariesNames := argument value ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #layout
-		do: [ :argument |
-		layoutClass := self class environment at: argument formattedCode ifAbsent: [ self error: 'Layout ' , argument formattedCode , ' not found.' ] ].
+	self if: selectorParts in: ast includes: #layout do: [ :argument | layoutClass := self class environment at: argument formattedCode ifAbsent: [ self error: 'Layout ' , argument formattedCode , ' not found.' ] ].
 
-	self
-		if: selectorParts
-		in: ast
-		includes: #slots
-		do: [ :argument | self shouldBeImplemented ].
-
-	self
-		if: selectorParts
-		in: ast
-		includes: #uses
-		do: [ :argument | traitsDefinition := argument formattedCode ].
-
-	hasNilSuperclass ifTrue: [ superclassName := nil ].
+	self if: selectorParts in: ast includes: #uses do: [ :argument | traitsDefinition := argument formattedCode ].
 
 	(#( #instanceVariableNames: uses: uses:instanceVariableNames: ) includes: ast selector) ifTrue: [
 		subclassName := ast receiver formattedCode asSymbol.
@@ -261,7 +151,50 @@ DoItChunk >> importFor: requestor logSource: logSource [
 		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
 		  isTrait ifTrue: [ aBuilder beTrait ].
 		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ]
+]
 
+{ #category : 'accessing' }
+DoItChunk >> description [
+
+	^ 'DoIt (', (contents first: (40 min: contents size)), ')'
+]
+
+{ #category : 'private' }
+DoItChunk >> if: selectorParts in: ast includes: aSymbol do: aBlock [
+
+	| index |
+	index := selectorParts indexOf: aSymbol ifAbsent: [ ^ self ].
+	aBlock value: (ast arguments at: index)
+]
+
+{ #category : 'importing' }
+DoItChunk >> importFor: requestor logSource: logSource [
+
+	| ast |
+	(contents beginsWith: '----') ifTrue: [ ^ self ].
+
+	Stdio stdout
+		nextPutAll: 'Importing: ';
+		cr;
+		nextPutAll: contents;
+		cr.
+
+	SystemAnnouncer announce: (DoItChunkImported new
+			 contents: contents;
+			 logSource: logSource;
+			 yourself).
+
+	ast := RBParser parseExpression: contents.
+
+	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
+
+	(self isOldClassCreation: ast) ifTrue: [ ^ self buildClassFromOldDefinition: ast ].
+
+	^ Smalltalk compiler class new
+		  source: contents;
+		  requestor: requestor;
+		  logged: logSource;
+		  evaluate
 ]
 
 { #category : 'testing' }
@@ -270,16 +203,11 @@ DoItChunk >> isDoItDeclaration [
 	^ true
 ]
 
-{ #category : 'testing' }
-DoItChunk >> isNilSuperclassDefinition: ast [
+{ #category : 'importing' }
+DoItChunk >> isOldClassCreation: ast [
+	"If this is true, that means this is the old class definition."
 
-	^ ast isSequence and: [
-		  ast statements size = 2 and: [
-			  (ast statements allSatisfy: #isMessage) and: [
-				  (self allowedSelectors includes: ast statements first selector) and: [
-					  ast statements second selector = #superclass: and: [
-						  ast statements second arguments first value isNil and: [
-							  (ast statements first arguments first value withoutPrefix: '#') = ast statements second receiver formattedCode ] ] ] ] ] ]
+	^ ast isMessage and: [ self allowedSelectors includes: ast selector ]
 ]
 
 { #category : 'testing' }
