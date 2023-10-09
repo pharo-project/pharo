@@ -1072,51 +1072,6 @@ Class >> subclass: t [
 	
 ]
 
-{ #category : 'subclass creation' }
-Class >> subclass: t instanceVariableNames: ins [
-	<reflection: 'Class structural modification - Old class creation'>
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self; 
-				name: t;
-				slotsFromString: ins;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation' }
-Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aPackageSymbol [
-	"Added to allow for a simplified subclass creation experience. "
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: aSubclassSymbol;
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				category: aPackageSymbol;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation' }
-Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: package [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: self classLayout class;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				package: package;
-				environment: self environment ]
-]
-
 { #category : 'accessing - class hierarchy' }
 Class >> subclasses [
 	"Answer a Set containing the receiver's subclasses."
