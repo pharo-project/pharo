@@ -6,8 +6,8 @@ Class {
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'classRepackaged',
-		'newPackage',
-		'oldPackage'
+		'oldTag',
+		'newTag'
 	],
 	#category : 'System-Announcements-System-Packages',
 	#package : 'System-Announcements',
@@ -15,12 +15,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-ClassRepackaged class >> classRepackaged: aClass oldPackage: oldPackage newPackage: newPackage [
-	^self new
-			classRepackaged: aClass;
-			oldPackage: oldPackage;
-			newPackage: newPackage;
-			yourself
+ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
+
+	^ self new
+		  classRepackaged: aClass;
+		  oldTag: oldTag;
+		  newTag: newTag;
+		  yourself
 ]
 
 { #category : 'testing' }
@@ -38,7 +39,7 @@ ClassRepackaged >> affectsMethodsDefinedInClass: aClass [
 { #category : 'testing' }
 ClassRepackaged >> affectsMethodsDefinedInPackage: aPackage [
 
-	^oldPackage == aPackage or: [ newPackage == aPackage ]
+	^self oldPackage == aPackage or: [ self newPackage == aPackage ]
 ]
 
 { #category : 'testing' }
@@ -66,30 +67,59 @@ ClassRepackaged >> classRepackaged: anObject [
 ]
 
 { #category : 'accessing' }
-ClassRepackaged >> newPackage [
+ClassRepackaged >> classTagsAffected [
 
-	^ newPackage
+	^ {
+		  self newTag.
+		  self oldTag }
 ]
 
 { #category : 'accessing' }
-ClassRepackaged >> newPackage: anObject [
+ClassRepackaged >> newPackage [
 
-	newPackage := anObject
+	^ self newTag package
+]
+
+{ #category : 'accessing' }
+ClassRepackaged >> newTag [
+
+	^ newTag
+]
+
+{ #category : 'accessing' }
+ClassRepackaged >> newTag: anObject [
+
+	newTag := anObject
 ]
 
 { #category : 'accessing' }
 ClassRepackaged >> oldPackage [
 
-	^ oldPackage
+	^ self oldTag package
 ]
 
 { #category : 'accessing' }
-ClassRepackaged >> oldPackage: anObject [
+ClassRepackaged >> oldTag [
 
-	oldPackage := anObject
+	^ oldTag
+]
+
+{ #category : 'accessing' }
+ClassRepackaged >> oldTag: anObject [
+
+	oldTag := anObject
+]
+
+{ #category : 'testing' }
+ClassRepackaged >> packagedChanged [
+
+	^ self oldPackage ~= self newPackage
 ]
 
 { #category : 'accessing' }
 ClassRepackaged >> packagesAffected [
-	^{oldPackage. newPackage}
+
+	^ {
+		  self oldPackage.
+		  self newPackage }
 ]

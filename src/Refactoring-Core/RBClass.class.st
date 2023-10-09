@@ -12,9 +12,10 @@ Class {
 	#instVars : [
 		'classVariableNames',
 		'poolDictionaryNames',
-		'category',
 		'comment',
-		'classPool'
+		'classPool',
+		'packageName',
+		'tagName'
 	],
 	#classVars : [
 		'LookupComment'
@@ -88,17 +89,6 @@ RBClass >> allPoolDictionaryNames [
 	^ sprClass
 		ifNil: [ self sharedPoolNames ]
 		ifNotNil: [ sprClass allPoolDictionaryNames , self sharedPoolNames ]
-]
-
-{ #category : 'accessing' }
-RBClass >> category [
-
-	^ category ifNil: [ category := self realClass category ]
-]
-
-{ #category : 'accessing' }
-RBClass >> category: aSymbol [
-	category := aSymbol
 ]
 
 { #category : 'accessing' }
@@ -193,6 +183,18 @@ RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
 ]
 
 { #category : 'accessing' }
+RBClass >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+RBClass >> packageName: anObject [
+
+	packageName := anObject
+]
+
+{ #category : 'accessing' }
 RBClass >> poolDictionaryNames [
 
 	^ self privatePoolDictionaryNames copy
@@ -269,4 +271,16 @@ RBClass >> sharedPoolNames [
 { #category : 'accessing' }
 RBClass >> sharedPools [
 	^ self allPoolDictionaryNames collect: [ :each | Smalltalk globals at: each asSymbol ifAbsent: [ Dictionary new ] ]
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName: anObject [
+
+	tagName := anObject
 ]

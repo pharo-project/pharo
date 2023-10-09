@@ -96,6 +96,14 @@ RPackage >> definedClassesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> definesClass: aClass [
+
+	self deprecated: 'Use #includesClass: instead.' transformWith: '`@rcv definesClass: `@arg' -> '`@rcv includesClass: `@arg'.
+
+	^ self includesClass: aClass
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> extensionCategoriesForClass: aClass [
 
 	self
@@ -105,10 +113,10 @@ RPackage >> extensionCategoriesForClass: aClass [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> importClass: aClass [
+RPackage >> importClasses: classCollection [
 
-	self deprecated: 'Use #addClass: instead or #moveClass:toTag:' transformWith: '`@rcv importClass: `@arg' -> '`@rcv addClass: `@arg'.
-	^ self addClass: aClass
+	self deprecated: 'This method will be removed in future versions of Pharo'.
+	classCollection do: [ :each | self addClass: each ]
 ]
 
 { #category : '*Deprecated12' }

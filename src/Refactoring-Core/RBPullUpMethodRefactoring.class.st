@@ -346,12 +346,17 @@ RBPullUpMethodRefactoring >> removeDuplicatesOf: aSelector [
 							self
 								refactoringConfirmWarning: 'Do you want to remove duplicate subclass methods?'].
 					removeDuplicates ifTrue:[
-					each removeMethod: aSelector]]]
+						self generateChangesFor:
+							(RBRemoveMethodTransformation
+								selector: aSelector from: each)]]]
 ]
 
 { #category : 'transforming' }
 RBPullUpMethodRefactoring >> removePulledUpMethods [
-	selectors do: [:each | class removeMethod: each]
+
+	selectors do: [ :each |
+		self generateChangesFor:
+			(RBRemoveMethodTransformation selector: each from: class) ]
 ]
 
 { #category : 'preconditions' }

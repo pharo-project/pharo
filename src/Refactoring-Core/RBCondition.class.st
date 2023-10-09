@@ -258,14 +258,16 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 
 { #category : 'instance creation' }
 RBCondition class >> hierarchyOf: aClass referencesSharedVariable: aString [
-	"Returns whether a shared variable is accessed anywhere in a class hierarchy, being it class or instance side."
+	"Returns whether a shared variable is accessed anywhere in a class hierarchy, being it class or instance side. "
 	
 	^ self new
 		  block: [
-			  (aClass withAllSubclasses anySatisfy: [ :each |
+			| aclass |
+			aclass := aClass instanceSide.
+			  (aclass withAllSubclasses anySatisfy: [ :each |
 				   (each whichSelectorsReferToClassVariable: aString) isNotEmpty ])
 				  or: [
-					  aClass classSide withAllSubclasses anySatisfy: [ :each |
+					  aclass classSide withAllSubclasses anySatisfy: [ :each |
 						  (each whichSelectorsReferToClassVariable: aString) isNotEmpty ] ] ]
 		  errorString: aClass printString
 			  , ' or subclass <1?:does not >reference<1?s:> shared variable '

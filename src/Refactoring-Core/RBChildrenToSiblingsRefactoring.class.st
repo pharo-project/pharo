@@ -58,12 +58,13 @@ RBChildrenToSiblingsRefactoring >> abstractSuperclass [
 
 { #category : 'transforming' }
 RBChildrenToSiblingsRefactoring >> addSuperclass [
-	self generateChangesFor: (RBInsertNewClassRefactoring
-				model: self model
-				addClass: className
-				superclass: parent superclass
-				subclasses: (Array with: parent)
-				category: parent category)
+
+	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
+			 superclass: parent superclass;
+			 subclasses: { parent };
+			 packageName: parent packageName;
+			 tagName: parent tagName;
+			 yourself)
 ]
 
 { #category : 'transforming' }
@@ -210,7 +211,11 @@ RBChildrenToSiblingsRefactoring >> pushUpMethodsFrom: aClass [
 			(selectorsToPushUp includes: each)
 				ifTrue: [self pushUp: each in: aClass]
 				ifFalse: [self createSubclassResponsibilityFor: each in: aClass]].
-	selectorsToPushUp do: [:each | aClass removeMethod: each]
+	selectorsToPushUp do: [:each | 
+		self generateChangesFor:
+			(RBRemoveMethodTransformation
+				selector: each 
+				from: aClass) ]
 ]
 
 { #category : 'transforming' }

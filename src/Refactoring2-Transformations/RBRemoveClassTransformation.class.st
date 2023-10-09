@@ -41,28 +41,11 @@ RBRemoveClassTransformation class >> cannotRemoveTopLevelClassErrorMesssage [
 ]
 
 { #category : 'api' }
-RBRemoveClassTransformation class >> className: aClassName [
-
-	^ self new
-		className: aClassName;
-		yourself
-]
-
-{ #category : 'api' }
 RBRemoveClassTransformation class >> classNames: aCollection [
 
 	^ self
 		model: RBTransformation new model
 		classNames: aCollection
-]
-
-{ #category : 'api' }
-RBRemoveClassTransformation class >> model: aRBSmalltalk className: aClassName [
-
-	^ self new
-		model: aRBSmalltalk;
-		className: aClassName;
-		yourself
 ]
 
 { #category : 'api' }

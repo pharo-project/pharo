@@ -67,7 +67,7 @@ RBAddMethodTransformation >> method [
 	^ rbMethod 
 ]
 
-{ #category : 'executing' }
+{ #category : 'transforming' }
 RBAddMethodTransformation >> privateTransform [
 
 	self definingClass

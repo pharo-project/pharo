@@ -28,22 +28,34 @@ DoItChunk >> description [
 { #category : 'importing' }
 DoItChunk >> importFor: requestor logSource: logSource [
 
-	(contents beginsWith: '----') ifTrue: [ ^self ].
+	| ast |
+	(contents beginsWith: '----') ifTrue: [ ^ self ].
 
 	SystemAnnouncer announce: (DoItChunkImported new
-		contents: contents;
-		logSource: logSource;
-		yourself).
+			 contents: contents;
+			 logSource: logSource;
+			 yourself).
 
-	^Smalltalk compiler class new
-		source: contents;
-		requestor: requestor;
-		logged: logSource;
-		evaluate
+	ast := RBParser parseExpression: contents.
+
+	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
+
+	^ Smalltalk compiler class new
+		  source: contents;
+		  requestor: requestor;
+		  logged: logSource;
+		  evaluate
 ]
 
 { #category : 'testing' }
 DoItChunk >> isDoItDeclaration [
 
 	^ true
+]
+
+{ #category : 'testing' }
+DoItChunk >> isPackageAddition: ast [
+	"This is for backward compatibility to be able to import code with old way of creating a package."
+
+	^ ast isMessage and: [ ast receiver isVariable and: [ ast receiver name = #SystemOrganization and: [ ast selector = #addCategory: ] ] ]
 ]
