@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBRemoveInstanceVariableChoice',
+	#name : 'RBRemoveSharedVariableChoice',
 	#superclass : 'RBVariableChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
@@ -7,13 +7,13 @@ Class {
 }
 
 { #category : 'accessing' }
-RBRemoveInstanceVariableChoice >> action [
+RBRemoveSharedVariableChoice >> action [
 
 	driver applyChanges
 ]
 
 { #category : 'accessing' }
-RBRemoveInstanceVariableChoice >> description [ 
+RBRemoveSharedVariableChoice >> description [ 
 
-	^ 'Remove instance variables anyway'
+	^ 'Remove shared variables anyway'
 ]

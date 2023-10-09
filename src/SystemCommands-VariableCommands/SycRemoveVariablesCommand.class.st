@@ -29,7 +29,8 @@ SycRemoveVariablesCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 SycRemoveVariablesCommand >> execute [
-
+	"Clearly from the UI we do not accept variables mixed from different classes and kinds"
+	
 	variables first isClassVariable
 		ifFalse: [
 			(RBRemoveInstanceVariablesDriver new
@@ -37,10 +38,9 @@ SycRemoveVariablesCommand >> execute [
 				 variables: (variables collect: [:each | each name])
 				 for: variables first definingClass) runRefactoring ]
 		ifTrue: [
-			"should be migrated to work on multiple elements"
-			(RBRemoveSharedVariableDriver new
+			(RBRemoveSharedVariablesDriver new
 				 scopes: toolContext refactoringScopes
-				 variable: variables first name
+				 variables: (variables collect: [:each | each name])
 				 for: variables first definingClass) runRefactoring ]
 ]
 

@@ -141,8 +141,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
-	Undeclared removeUnreferencedKeys.
-	Smalltalk globals flushClassNameCache.
 	ScrollBarMorph initializeImagesCache.
 
 	Smalltalk garbageCollect.
@@ -273,7 +271,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SystemNotification signal: 'Starting postload action'.
 
-	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
 
 	TextConstants initialize.
@@ -334,8 +331,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
-
-	Smalltalk cleanOutUndeclared.
 
 	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].
