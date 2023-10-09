@@ -1,6 +1,13 @@
 Extension { #name : 'RPackageOrganizer' }
 
 { #category : '*Deprecated12' }
+RPackageOrganizer >> addCategory: aCategory [
+
+	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
+	self ensurePackageMatching: aCategory
+]
+
+{ #category : '*Deprecated12' }
 RPackageOrganizer >> categories [
 
 	| categories |
