@@ -109,6 +109,18 @@ ClyNotebookMorph >> toolbarMorph [
 	^ toolbarMorph
 ]
 
+{ #category : 'private' }
+ClyNotebookMorph >> updateContentMorph: aMorph with: newMorph [
+	| pageBounds |
+
+	pageBounds := self pageMorph bounds.
+	"We should replace aMorph which comes from pageMorph ONLY if it is present in the contentMorph (a PanelMorph), which is a container in the receiver"
+	(self contentMorph findA: aMorph class)
+		ifNotNil: [ : replaceMorph | self contentMorph replaceSubmorph: aMorph by: newMorph ].
+	self pageMorph bounds: pageBounds.
+	self pageMorph layoutChanged
+]
+
 { #category : 'accessing' }
 ClyNotebookMorph >> useSortedTabsBy: aBlock [
 
