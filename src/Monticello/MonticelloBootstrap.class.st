@@ -76,34 +76,6 @@ MonticelloBootstrap >> createWorkingCopies [
 	"For each of the packages inside the image, excepted by the Unpackaged package, create a monticello working copy.
 	This is achieved by creating an instance of a working copy and snapshotting it. This generates and registers the working copy automatically."
 
-	MCVariableDefinition class
-		compiledMethodAt: #name:
-		ifPresent: [
-			Stdio stdout
-				nextPutAll: 'Method name present';
-				lf ]
-		ifAbsent: [
-			Stdio stdout
-				nextPutAll: 'Method name absent';
-				lf ].
-	(MCClassInstanceVariableDefinition lookupSelector: #name:)
-		ifNil: [
-			Stdio stdout
-				nextPutAll: 'Method name absent in class instance variable definition';
-				lf ]
-		ifNotNil: [
-			Stdio stdout
-				nextPutAll: 'Method name present in class instance variable definition';
-				lf ].
-	(MCInstanceVariableDefinition lookupSelector: #name:)
-		ifNil: [
-			Stdio stdout
-				nextPutAll: 'Method name absent in instance variable definition';
-				lf ]
-		ifNotNil: [
-			Stdio stdout
-				nextPutAll: 'Method name present in instance variable definition';
-				lf ].
 	(RPackageOrganizer default packageNames copyWithout: UndefinedPackage undefinedPackageName) asSortedCollection do: [ :packageName |
 		SystemNotification signal: 'Creating Snapshot of: ' , packageName.
 		(MCWorkingCopy ensureForPackageNamed: packageName) snapshot ]

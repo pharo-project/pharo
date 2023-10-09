@@ -149,8 +149,11 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 	(#( CompiledBlock CompiledCode CompiledMethod ) includes: subclassName) ifTrue: [ layoutClass := CompiledMethodLayout ].
 
 	class := self class classInstaller make: [ :aBuilder |
+			| superclass |
+			superclass := self class environment at: superclassName asSymbol.
 		  aBuilder
-			  superclassName: superclassName;
+			  superclass: superclass;
+			  environment: superclass environment;
 			  name: subclassName;
 			  layoutClass: layoutClass.
 			instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
@@ -168,6 +171,7 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 		nextPutAll: class superclass name;
 		nextPutAll: '"';
 		lf.
+	^ class
 ]
 
 { #category : 'accessing' }
