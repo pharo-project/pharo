@@ -163,7 +163,7 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 		  tag ifNotNil: [ aBuilder tag: tag ].
 		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
 		  isTrait ifTrue: [ aBuilder beTrait ].
-		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ]
+		  traitsDefinition ifNotNil: [ aBuilder traitComposition: (self class compiler evaluate: traitsDefinition) ] ]
 ]
 
 { #category : 'accessing' }
@@ -196,7 +196,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
 	(self isOldClassCreation: ast) ifTrue: [ ^ self buildClassFromOldDefinition: ast ].
 
-	^ Smalltalk compiler class new
+	^ self class compiler class new
 		  source: contents;
 		  requestor: requestor;
 		  logged: logSource;
