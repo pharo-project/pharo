@@ -401,6 +401,135 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 ]
 
 { #category : '*Deprecated12' }
+Class >> subclass: aName uses: aTraitComposition [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith: '`@rcv subclass: `@name uses: `@trait' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@name;
+					traitComposition: `@trait;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  traitComposition: aTraitComposition ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategory [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith:
+			'`@rcv subclass: `@name uses: `@trait instanceVariableNames: `@instVar classVariableNames: `@classVar category: `@package' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@name;
+					slotsFromString: `@instVar;
+					sharedVariablesFromString: `@classVar;
+					traitComposition: `@trait;
+					category: `@package;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: package [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith:
+			'`@rcv subclass: `@name uses: `@trait instanceVariableNames: `@instVar classVariableNames: `@classVar package: `@package' -> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@name;
+					slotsFromString: `@instVar;
+					sharedVariablesFromString: `@classVar;
+					traitComposition: `@trait;
+					package: `@package;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: instVarNameList;
+			  sharedVariablesFromString: classVarNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  package: package ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith:
+			'`@rcv subclass: `@name uses: `@trait instanceVariableNames: `@instVar classVariableNames: `@classVar poolDictionaries: `@pools category: `@package'
+			-> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@name;
+					slotsFromString: `@instVar;
+					sharedVariablesFromString: `@classVar;
+					sharedPools: `@pools;
+					traitComposition: `@trait;
+					category: `@package;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  category: aCategory ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: package [
+
+	self
+		deprecated: 'This method uses the old way of creating classes. The new way is to use the ShiftClassInstaller.'
+		transformWith:
+			'`@rcv subclass: `@name uses: `@trait instanceVariableNames: `@instVar classVariableNames: `@classVar poolDictionaries: `@pools package: `@package'
+			-> '`@rcv classInstaller
+			make: [ :builder |
+				builder
+					superclass: `@rcv;
+					name: `@name;
+					slotsFromString: `@instVar;
+					sharedVariablesFromString: `@classVar;
+					sharedPools: `@pools;
+					traitComposition: `@trait;
+					package: `@package;
+					environment: `@rcv environment ]'.
+	^ self classInstaller make: [ :builder |
+		  builder
+			  name: aName;
+			  superclass: self;
+			  slotsFromString: someInstanceVariableNames;
+			  sharedVariablesFromString: someClassVariableNames;
+			  sharedPools: someSharedPoolNames;
+			  traitComposition: aTraitCompositionOrArray;
+			  package: package ]
+]
+
+{ #category : '*Deprecated12' }
 Class >> variableByteSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
 
 	self
