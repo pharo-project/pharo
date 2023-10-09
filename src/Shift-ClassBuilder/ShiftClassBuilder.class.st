@@ -8,6 +8,29 @@ See ShDefaultBuilderEnhancer for a default implementation.
 I can be used directly to create anonymous classes, but it is better if you use the anonymous class installer.
 
 I also can compare the old class with the configured new class to calculate the required changes.
+
+I'm responsible to build class expressed with the fluid syntax.
+
+```st
+Object << #Point 
+	slots: { #x . #y };
+	tag: 'Basics';
+	package: 'Kernel'
+```	
+	
+### Design decisions
+
+The KEY design decisions are:
+- The code snippet above should be able to be used for scripting (interactively).
+- The code snippet above must return a class builder 
+- A class builder should offer two important messsage: 
+-- `build` that returns a class but does not install it. 
+-- `install` that installs the class in the system.
+
+To manage class side slots and traits, I get all the instance side information in addition to the class side one.
+For this the fillFromClass: method is responsible to convert all the class information into an information expected by the class builder. 
+
+In the future we would like to revisit the need for such fluid class builders and also revisit the API of the class builder.There are too many conversion and we should realigned the APIs with the class default values too. 
 "
 Class {
 	#name : 'ShiftClassBuilder',

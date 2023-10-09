@@ -1,7 +1,14 @@
 "
-In case a user is using me to update the class side of a class only, I am here to provide a different API to the user. 
+I'm a builder responsible for handling the specific case of 
 
-For example the user will be able to use #slots: instead of #classSlots:.
+```st
+Object class >> Point class
+	slots: ;
+	traits: ....;
+```
+
+We want to make sure that we are not forced to use classSlots: and classTraits: because users will be confused. 
+
 "
 Class {
 	#name : 'ShiftClassSideBuilder',
