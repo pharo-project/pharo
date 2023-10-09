@@ -147,15 +147,8 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	HashedCollection rehashAll.
 	Symbol rehash.
 
-	"Remove empty packages and protocols"
-	self packageOrganizer removeEmptyPackagesAndTags.
-	Smalltalk allClassesAndTraitsDo: [ :class |
-		class removeEmptyProtocols.
-		class class removeEmptyProtocols ].
-
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
-	Smalltalk garbageCollect.
 	Author reset
 ]
 
