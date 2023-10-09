@@ -88,7 +88,7 @@ DoItChunk >> allowedSelectors [
 { #category : 'importing' }
 DoItChunk >> buildClassFromOldDefinition: ast [
 
-	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait |
+	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName tag poolDictionariesNames traitsDefinition isTrait |
 	superclassName := ast receiver formattedCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
@@ -124,7 +124,15 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 
 	self if: selectorParts in: ast includes: #classVariableNames do: [ :argument | classVariableNames := argument value ].
 
-	self if: selectorParts in: ast includes: #category do: [ :argument | "This is not right but we cannot rely on categories anymore and this is for backward compatibility." packageName := argument value ].
+	self if: selectorParts in: ast includes: #category do: [ :argument |
+		"This is not right but we cannot rely on categories anymore and this is for backward compatibility."
+		| aString |
+		aString := argument value.
+		(aString includes: $-)
+		ifTrue: [
+			packageName := (aString copyUpToLast: $-).
+			tag := (aString copyAfterLast: $-) ]
+		ifFalse: [ packageName := aString ] ].
 
 	self if: selectorParts in: ast includes: #package do: [ :argument | packageName := argument value ].
 
@@ -145,11 +153,12 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 			  superclassName: superclassName;
 			  name: subclassName;
 			  layoutClass: layoutClass.
-		  instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
-		  classVariableNames ifNotNil: [ aBuilder sharedVariablesFromString: classVariableNames ].
-		  packageName ifNotNil: [ aBuilder package: packageName ].
-		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
-		  isTrait ifTrue: [ aBuilder beTrait ].
+			instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
+			classVariableNames ifNotNil: [ aBuilder sharedVariablesFromString: classVariableNames ].
+			packageName ifNotNil: [ aBuilder package: packageName ].
+			tag ifNotNil: [ aBuilder tag: tag ].
+			poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
+			isTrait ifTrue: [ aBuilder beTrait ].
 		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ]
 ]
 
