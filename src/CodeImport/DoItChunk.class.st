@@ -23,10 +23,6 @@ DoItChunk >> accept: aVisitor [
 DoItChunk >> allowedSelectors [
 
 	^ #(
-#ephemeronSubclass:instanceVariableNames:classVariableNames:package:
-#ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
-#ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:
-
 #immediateSubclass:instanceVariableNames:classVariableNames:package:
 #immediateSubclass:instanceVariableNames:classVariableNames:category:
 #immediateSubclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
@@ -196,14 +192,6 @@ DoItChunk >> importFor: requestor logSource: logSource [
 		do: [ :argument |
 			subclassName := argument value.
 			layoutClass := WeakLayout ].
-
-	self
-		if: selectorParts
-		in: ast
-		includes: #ephemeronSubclass
-		do: [ :argument |
-			subclassName := argument value.
-			layoutClass := EphemeronLayout ].
 
 	self
 		if: selectorParts
