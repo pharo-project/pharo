@@ -290,7 +290,7 @@ Class >> category: aString [
 		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
 ]
 
-{ #category : 'subclass creation - variableByte' }
+{ #category : 'subclass creation' }
 Class >> checkForCompiledMethodLayout: className [ 
 	"There is no class definiton message for CompiledMethodLayout, it just uses the one for bytelayout for CompiledCode, CompiledMethod and CompiledBlock"
 
@@ -1170,105 +1170,6 @@ Class >> usesPoolVarNamed: aString [
 	"Return whether the receiver has a pool variable named: aString, taking into account superclasses too"
 	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^self allSharedPools anySatisfy: [:each | each usesClassVarNamed: aString]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableByteSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: package [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				package: package;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableByteSubclass: className instanceVariableNames: f classVariableNames: d poolDictionaries: s package: package [
-	"This is the standard initialization message for creating a new class as a
-	subclass of an existing class (the receiver) in which the subclass is to
-	have indexable byte-sized nonpointer variables."
-	
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				package: package;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: package [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: DoubleByteLayout;
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				package: package;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: package [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: DoubleWordLayout;
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				package: package;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableWord' }
-Class >> variableWordSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	"Variable word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a full word (32 bits).
-
-	Objects on the heap are either pointers or bits.  For example instances of Point, Array, BlockClosure etc are pointer objects.  But Bitmap, ByteString, WideString etc are bits objects.  In v3 bits objects are either a sequence of bytes (ByteArray, ByteString, ByteSymbol etc) or 32-bit words (WideString, Float, Bitmap etc).  Spur supports byte, short, word and double-word bits objects even though currently only byte and word classes exist.  16-bit strings will be useful on Windows, for example."
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: WordLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableWord' }
-Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a subclass of an existing class (the receiver) in which the subclass is to have indexable word-sized nonpointer variables."
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: WordLayout;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
 ]
 
 { #category : 'subclass creation - weak' }
