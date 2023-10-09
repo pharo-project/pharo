@@ -88,7 +88,7 @@ DoItChunk >> allowedSelectors [
 { #category : 'importing' }
 DoItChunk >> buildClassFromOldDefinition: ast [
 
-	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName tag poolDictionariesNames traitsDefinition isTrait |
+	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName tag poolDictionariesNames traitsDefinition isTrait class |
 	superclassName := ast receiver formattedCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
@@ -148,7 +148,7 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 
 	(#( CompiledBlock CompiledCode CompiledMethod ) includes: subclassName) ifTrue: [ layoutClass := CompiledMethodLayout ].
 
-	^ self class classInstaller make: [ :aBuilder |
+	class := self class classInstaller make: [ :aBuilder |
 		  aBuilder
 			  superclassName: superclassName;
 			  name: subclassName;
@@ -159,7 +159,15 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 			tag ifNotNil: [ aBuilder tag: tag ].
 			poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
 			isTrait ifTrue: [ aBuilder beTrait ].
-		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ]
+		  traitsDefinition ifNotNil: [ aBuilder traitComposition: traitsDefinition ] ].
+	
+	Stdio stdout
+		nextPutAll: 'Compiled class named "';
+		nextPutAll: class name;
+		nextPutAll: '" with superclass "';
+		nextPutAll: class superclass name;
+		nextPutAll: '"';
+		lf.
 ]
 
 { #category : 'accessing' }
