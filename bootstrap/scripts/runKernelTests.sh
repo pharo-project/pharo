@@ -22,7 +22,7 @@ find ${CACHE}
 # WARNING: I'm assuming CACHE=bootstrap-cache
 # WARNING: If you change this, you will need to change "runTests.sh" too
 #
-TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
+TEST_NAME_PREFIX=$(basename `find ${CACHE} -name "Pharo*.zip" | head -n 1` | cut -d'-' -f 1-2)
 
 # Extract the VM version from the image file version, avoiding going to git to extract the tags
 # This is handy in later stages of the build process when no repository is available, e.g., to run the tests
