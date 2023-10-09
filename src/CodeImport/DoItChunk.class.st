@@ -36,7 +36,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 			 logSource: logSource;
 			 yourself).
 
-	ast := RBParser parseExpression: contents onError: [ ^ self ].
+	ast := RBParser parseExpression: contents.
 
 	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
 
