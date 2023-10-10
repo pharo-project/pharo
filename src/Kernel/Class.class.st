@@ -286,7 +286,7 @@ Class >> category: aString [
 	self basicCategory: aString asSymbol.
 
 	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: self inCategory: self category ]
+		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: self) ]
 		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
 ]
 

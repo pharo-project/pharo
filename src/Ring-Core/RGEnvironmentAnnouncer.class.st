@@ -30,7 +30,7 @@ RGEnvironmentAnnouncer >> announce: anAnnouncement [
 { #category : 'triggering' }
 RGEnvironmentAnnouncer >> behaviorAdded: anRGBehavior [
 
-	self announce: (ClassAdded class: anRGBehavior category: nil)
+	self announce: (ClassAdded class: anRGBehavior)
 ]
 
 { #category : 'triggering' }
