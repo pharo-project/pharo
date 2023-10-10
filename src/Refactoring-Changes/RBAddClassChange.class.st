@@ -5,84 +5,29 @@ calling on ""my superclass"" (or ProtoObject) subclass:....instancevariable... e
 "
 Class {
 	#name : 'RBAddClassChange',
-	#superclass : 'RBRefactoryDefinitionChange',
+	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
-		'superclassName',
-		'instanceVariableNames',
-		'classVariableNames',
-		'poolDictionaryNames',
-		'category'
+		'builder',
+		'definedClass'
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
 	#package : 'Refactoring-Changes',
 	#tag : 'Changes-Classes'
 }
 
-{ #category : 'private' }
-RBAddClassChange class >> definitionPatterns [
-	^ #('`@superclass subclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass subclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass variableByteSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass variableByteSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass variableSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass variableSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass variableWordSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass variableWordSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass weakSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass weakSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries category: `#category'
-		'`@superclass subclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass subclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass variableByteSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass variableByteSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass variableSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass variableSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass variableWordSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass variableWordSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass weakSubclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
-		'`@superclass weakSubclass: `#className uses: `@traitComposition instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames poolDictionaries: `#poolDictionaries package: `#category'
+{ #category : 'instance creation' }
+RBAddClassChange class >> make: aBlock [
 
+	| builder |
+	builder := ShiftClassBuilder new.
 
-		'`@superclass subclass: `#className instanceVariableNames: `#instanceVariableNames classVariableNames: `#classVariableNames package: `#category'
+	[ aBlock value: builder ]
+		on: Warning
+		do: [ :e | e resume ].
 
-		'`@superclass << `#className
-			package: `#category'
-
-		'`@superclass << `#className
-			slots: `@slots ;
-			package: `#category'
-
-		'`@superclass << `#className
-			slots: `@slots ;
-			sharedVariables: `@sharedVariables ;
-			package: `#category'
-
-
-
-		'`@superclass << `#className
-			sharedVariables:  `@sharedVariables ;
-			package: `#category'
-
-		'`@superclass << `#className
-			slots: `@slots ;
-			sharedPools: `@pools;
-			package: `#category'
-
-		'`@superclass << `#className
-			sharedPools: `@pools ;
-			package: `#category'
-
-		'`@superclass << `#className
-			sharedVariables: `@sharedVariables  ;
-			sharedPools: `@pools;
-			package: `#category'
-
-			'`@superclass << `#className
-			slots: `@slots ;
-			sharedVariables: `@sharedVariables  ;
-			sharedPools: `@pools;
-			package: `#category'
-		)
-		flatCollect: [ :each | Array with: each with: (each copyReplaceAll: '`@superclass' with: 'ProtoObject') , '. `className superclass: `@superclass' ]
+	^ self new
+		  builder: builder;
+		  yourself
 ]
 
 { #category : 'converting' }
@@ -92,20 +37,46 @@ RBAddClassChange >> asUndoOperation [
 	class := onSystemDictionary classNamed: self changeClassName.
 
 	^ class isBehavior
-		  ifTrue: [ changeFactory addClassDefinition: class oldDefinition ]
+		  ifTrue: [ changeFactory addClassDefinition: [ :aBuilder | aBuilder fillFor: class ] ]
 		  ifFalse: [ changeFactory removeClassNamed: self changeClassName ]
 ]
 
 { #category : 'accessing' }
-RBAddClassChange >> category [
+RBAddClassChange >> builder [
 
-	^ category
+	^ builder
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> builder: aClassBuilder [
+
+	isMeta := false.
+	builder := aClassBuilder.
+	className := builder name
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> classInstanceVariableNames [
+
+	^ builder classSlots collect: [ :slot | slot name ]
 ]
 
 { #category : 'accessing' }
 RBAddClassChange >> classVariableNames [
 
-	^ classVariableNames
+	^ builder sharedVariables collect: [ :slot | slot name ]
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> comment [
+
+	^ builder comment
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> definedClass [
+
+	^ definedClass
 ]
 
 { #category : 'private' }
@@ -116,67 +87,21 @@ RBAddClassChange >> definitionClass [
 ]
 
 { #category : 'private' }
-RBAddClassChange >> fillOutDefinition: aDictionary [
-	"What a bad method name!!! This has nothing to do with it. It fills up a domain object out of the dictionary."
-	"Pay attention that the variables used as key in the dictionary correspond to the pattern variables defined
-	in the expressions defined in the definitionPatterns method!"
+RBAddClassChange >> generateChanges [
 
-	superclassName := (aDictionary at: '`@superclass')
-		ifNotNil: [ :value | value asSymbol ].
-	className := (aDictionary at: '`#className') asSymbol.
+	definedClass := self class classInstaller new makeWithBuilder: self builder
+]
 
-	(aDictionary includesKey: '`#instanceVariableNames')
-		ifTrue: [
-		instanceVariableNames := self namesIn: (aDictionary
-			at: '`#instanceVariableNames'
-			ifAbsent: [ String new ]).
-	].
+{ #category : 'comparing' }
+RBAddClassChange >> hash [
 
-	(aDictionary includesKey: '`@slots')
-		ifTrue: [
-		instanceVariableNames :=  (aDictionary
-			at: '`@slots') statements collect: [ :each | each value asString ]
-	].
-
-	(aDictionary includesKey: '`#classVariableNames')
-		ifTrue: [
-	classVariableNames := self namesIn: (aDictionary
-		at: '`#classVariableNames'
-		ifAbsent: [ String new ]).
-	].
-
-	(aDictionary includesKey: '`@sharedVariables')
-		ifTrue: [
-		classVariableNames := (aDictionary at: '`@sharedVariables') statements collect: [ :each | each value asString ]
-	].
-
-
-	(aDictionary includesKey: '`#poolDictionaries')
-		ifTrue: [
-
-	poolDictionaryNames := self namesIn: (aDictionary
-		at: '`#poolDictionaries'
-		ifAbsent: [ String new ]).
-	].
-
-	(aDictionary includesKey: '`@pools')
-		ifTrue: [
-
-	poolDictionaryNames :=  (aDictionary
-			at: '`@pools') statements collect: [ :each | each name ].
-	].
-
-
-	category := (aDictionary
-		at: '`#category'
-		ifAbsent: [ Class unclassifiedCategory ])
-			asSymbol
+	^ builder hash
 ]
 
 { #category : 'accessing' }
 RBAddClassChange >> instanceVariableNames [
 
-	^ instanceVariableNames
+	^ builder slots collect: [ :slot | slot name ]
 ]
 
 { #category : 'accessing' }
@@ -186,19 +111,31 @@ RBAddClassChange >> nameToDisplay [
 ]
 
 { #category : 'accessing' }
+RBAddClassChange >> package [
+
+	^ builder package
+]
+
+{ #category : 'accessing' }
 RBAddClassChange >> sharedPoolNames [
 
-	^ poolDictionaryNames
+	^ builder ifNotNil: [ builder sharedPools ]
 ]
 
 { #category : 'accessing' }
 RBAddClassChange >> superclassName [
 
-	^ superclassName
+	^ builder superclassName
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> tag [
+
+	^ builder tag
 ]
 
 { #category : 'accessing' }
 RBAddClassChange >> textToDisplay [
 
-	^ self definition
+	^ 'Add class change for ' , self builder name
 ]

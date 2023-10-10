@@ -364,12 +364,6 @@ FormCanvas >> flush [
 	engine ifNotNil:[engine flush]
 ]
 
-{ #category : 'other' }
-FormCanvas >> flushDisplay [
-
-	Display deferUpdates: false
-]
-
 { #category : 'accessing' }
 FormCanvas >> form [
 
@@ -512,23 +506,6 @@ FormCanvas >> privateClipRect [
 FormCanvas >> privatePort [
 
 	^port
-]
-
-{ #category : 'private' }
-FormCanvas >> privateWarp: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
-	"Warp the given using the appropriate transform and offset."
-	| globalRect sourceQuad warp tfm |
-	tfm := aTransform.
-	globalRect := tfm localBoundsToGlobal: sourceRect.
-	sourceQuad := (tfm sourceQuadFor: globalRect) collect: [:p| p - sourceRect topLeft].
-	extraOffset ifNotNil:[globalRect := globalRect translateBy: extraOffset].
-     warp := (WarpBlt toForm: port destForm)
-                combinationRule: Form paint;
-                sourceQuad: sourceQuad destRect: (globalRect origin corner: globalRect corner+(1@1));
-                clipRect: port clipRect.
-	warp cellSize: cellSize.
-	warp sourceForm: aForm.
-	warp warpBits
 ]
 
 { #category : 'initialization' }
@@ -753,12 +730,4 @@ FormCanvas >> warpFrom: sourceQuad toRect: destRect [
 		combinationRule: Form paint;
 		sourceQuad: sourceQuad destRect: (destRect translateBy: origin);
 		clipRect: clipRect
-]
-
-{ #category : 'drawing - images' }
-FormCanvas >> warpImage: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
-	"Warp the given using the appropriate transform and offset."
-	| tfm |
-	tfm := (MatrixTransform2x3 withOffset: origin) composedWithLocal: aTransform.
-	^self privateWarp: aForm transform: tfm at: extraOffset sourceRect: sourceRect cellSize: cellSize
 ]

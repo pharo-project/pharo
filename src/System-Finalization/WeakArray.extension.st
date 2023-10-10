@@ -63,6 +63,12 @@ WeakArray class >> restartFinalizationProcess [
 ]
 
 { #category : '*System-Finalization' }
+WeakArray class >> restartMethods [
+
+	self restartFinalizationProcess
+]
+
+{ #category : '*System-Finalization' }
 WeakArray class >> startUp: resuming [
 	resuming ifFalse: [ ^self ].
 	self restartFinalizationProcess

@@ -258,14 +258,16 @@ RBCondition class >> hierarchyOf: aClass referencesInstanceVariable: aString [
 
 { #category : 'instance creation' }
 RBCondition class >> hierarchyOf: aClass referencesSharedVariable: aString [
-	"Returns whether a shared variable is accessed anywhere in a class hierarchy, being it class or instance side."
+	"Returns whether a shared variable is accessed anywhere in a class hierarchy, being it class or instance side. "
 	
 	^ self new
 		  block: [
-			  (aClass withAllSubclasses anySatisfy: [ :each |
+			| aclass |
+			aclass := aClass instanceSide.
+			  (aclass withAllSubclasses anySatisfy: [ :each |
 				   (each whichSelectorsReferToClassVariable: aString) isNotEmpty ])
 				  or: [
-					  aClass classSide withAllSubclasses anySatisfy: [ :each |
+					  aclass classSide withAllSubclasses anySatisfy: [ :each |
 						  (each whichSelectorsReferToClassVariable: aString) isNotEmpty ] ] ]
 		  errorString: aClass printString
 			  , ' or subclass <1?:does not >reference<1?s:> shared variable '
@@ -311,7 +313,7 @@ RBCondition class >> isClassNamed: className definedIn: aModel [
 
 	^ self new 
 		block: [ | aClassOrTrait |
-				aClassOrTrait := aModel classNamed: className asSymbol.
+				aClassOrTrait := aModel classNamed: className.
 				aClassOrTrait isNotNil ]
 		errorString: [ className , ' is <1?:not > defined' ]
 ]
@@ -319,9 +321,7 @@ RBCondition class >> isClassNamed: className definedIn: aModel [
 { #category : 'instance creation' }
 RBCondition class >> isGlobal: aString in: aRBSmalltalk [
 
-	^ self new
-		  block: [ aRBSmalltalk includesGlobal: aString asSymbol ]
-		  errorString: aString , ' is <1?:not >a class or global variable'
+	^ self new block: [ aRBSmalltalk includesGlobal: aString asSymbol ] errorString: aString , ' is <1?:not >a class or global variable'
 ]
 
 { #category : 'instance creation' }

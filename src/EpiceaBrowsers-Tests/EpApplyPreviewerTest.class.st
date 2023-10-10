@@ -58,25 +58,6 @@ EpApplyPreviewerTest >> outputEvents [
 ]
 
 { #category : 'tests' }
-EpApplyPreviewerTest >> testBehaviorCategoryChange [
-
-	| aClass aCategory anotherCategory |
-	aClass := classFactory newClass.
-	aCategory := aClass category.
-	anotherCategory := aCategory, '2'.
-	aClass category: anotherCategory.
-	self setHeadAsInputEntry.
-
-	aClass category: aCategory.
-
-	self assertOutputsAnEventWith: [:output |
-		self assert: output class equals: EpBehaviorCategoryChange.
-		self assert: output oldCategory equals: aCategory.
-		self assert: output newCategory equals: anotherCategory.
-		]
-]
-
-{ #category : 'tests' }
 EpApplyPreviewerTest >> testBehaviorCommentChange [
 
 	| aClass |
@@ -109,6 +90,30 @@ EpApplyPreviewerTest >> testBehaviorNameChange [
 		self assert: output oldName equals: oldName.
 		self assert: output newName equals: newName.
 		]
+]
+
+{ #category : 'tests' }
+EpApplyPreviewerTest >> testBehaviorRepackagedChange [
+
+	| aClass packageName tagName newPackageName newTagName |
+	aClass := classFactory newClass.
+	packageName := aClass package name.
+	tagName := aClass packageTag name.
+	newPackageName := packageName , '2'.
+	newTagName := tagName , '2'.
+
+	aClass package: newPackageName tag: newTagName.
+
+	self setHeadAsInputEntry.
+
+	aClass package: packageName tag: tagName.
+
+	self assertOutputsAnEventWith: [ :output |
+		self assert: output class equals: EpBehaviorRepackagedChange.
+		self assert: output oldPackageName equals: packageName.
+		self assert: output oldTagName equals: tagName.
+		self assert: output newPackageName equals: newPackageName.
+		self assert: output newTagName equals: newTagName ]
 ]
 
 { #category : 'tests' }
@@ -389,35 +394,6 @@ EpApplyPreviewerTest >> testProtocolRemovalWithProtocolAdded [
 ]
 
 { #category : 'tests' }
-EpApplyPreviewerTest >> testRedundantBehaviorCategoryChange [
-
-	| aClass aCategory anotherCategory |
-	aClass := classFactory newClass.
-	aCategory := aClass category.
-	anotherCategory := aCategory, '2'.
-	aClass category: anotherCategory.
-	aClass category: aCategory. "Rollback"
-	self setHeadAsInputEntry.
-
-	self assertEmptyPreviewLog
-]
-
-{ #category : 'tests' }
-EpApplyPreviewerTest >> testRedundantBehaviorCategoryChangeWithAbsentBehavior [
-
-	| aClass aCategory anotherCategory |
-	aClass := classFactory newClass.
-	aCategory := aClass category.
-	anotherCategory := aCategory, '2'.
-	aClass category: anotherCategory.
-	aClass category: aCategory. "Rollback"
-	self setHeadAsInputEntry.
-	aClass removeFromSystem.
-
-	self assertEmptyPreviewLog
-]
-
-{ #category : 'tests' }
 EpApplyPreviewerTest >> testRedundantBehaviorCommentChange [
 
 	| aClass |
@@ -436,6 +412,39 @@ EpApplyPreviewerTest >> testRedundantBehaviorCommentChangeWithAbsentBehavior [
 	| aClass |
 	aClass := classFactory newClass.
 	aClass comment: 'before'.
+	self setHeadAsInputEntry.
+	aClass removeFromSystem.
+
+	self assertEmptyPreviewLog
+]
+
+{ #category : 'tests' }
+EpApplyPreviewerTest >> testRedundantBehaviorRepackagedChange [
+
+	| aClass package tag newPackage newTag |
+	aClass := classFactory newClass.
+	package := aClass package name.
+	tag := aClass packageTag name.
+	newPackage := package , '2'.
+	newTag := tag , '2'.
+	aClass package: newPackage tag: newTag.
+	aClass package: package tag: tag. "Rollback"
+	self setHeadAsInputEntry.
+
+	self assertEmptyPreviewLog
+]
+
+{ #category : 'tests' }
+EpApplyPreviewerTest >> testRedundantBehaviorRepackagedChangeWithAbsentBehavior [
+
+	| aClass package tag newPackage newTag |
+	aClass := classFactory newClass.
+	package := aClass package name.
+	tag := aClass packageTag name.
+	newPackage := package , '2'.
+	newTag := tag , '2'.
+	aClass package: newPackage tag: newTag.
+	aClass package: package tag: tag. "Rollback"
 	self setHeadAsInputEntry.
 	aClass removeFromSystem.
 

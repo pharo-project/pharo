@@ -95,7 +95,7 @@ BreakpointGroup >> name: aString [
 
 { #category : 'API' }
 BreakpointGroup >> remove [
-	breakpoints copy do: [ :bp | bp group: self class ungroupedBreakpointsGroup ].
+	breakpoints copy do: [ :bp | bp addToGroup: self class ungroupedBreakpointsGroup ].
 	AllGroups remove: self
 ]
 

@@ -12,14 +12,6 @@ Class {
 }
 
 { #category : 'visitor' }
-EpApplyVisitor >> visitBehaviorCategoryChange: aChange [
-
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [:aClassOrTrait | aClassOrTrait category: aChange newCategory ]
-]
-
-{ #category : 'visitor' }
 EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 
 	self
@@ -34,6 +26,12 @@ EpApplyVisitor >> visitBehaviorCommentChange: aChange [
 EpApplyVisitor >> visitBehaviorNameChange: aClassRenameChange [
 	(environment classOrTraitNamed: aClassRenameChange oldName)
 		rename: aClassRenameChange newName
+]
+
+{ #category : 'visitor' }
+EpApplyVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
+
+	self behaviorNamed: aBehaviorRepackagedChange behaviorAffectedName ifPresent: [ :aClassOrTrait | aClassOrTrait package: aBehaviorRepackagedChange newPackageName tag: aBehaviorRepackagedChange newTagName ]
 ]
 
 { #category : 'visitor' }

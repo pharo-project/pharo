@@ -34,22 +34,6 @@ EpApplyTest >> testBehaviorNameChange [
 ]
 
 { #category : 'tests' }
-EpApplyTest >> testClassAdditionWithCategoryChanged [
-
-	| aClass aCategory anotherCategory |
-	aClass := classFactory newClass.
-	self setHeadAsInputEntry.
-
-	aCategory := aClass category.
-	anotherCategory := aCategory, '2'.
-	aClass category: anotherCategory.
-
-	self assert: aClass category equals: anotherCategory.
-	self applyInputEntry.
-	self assert: aClass category equals: aCategory
-]
-
-{ #category : 'tests' }
 EpApplyTest >> testClassAdditionWithClassRemoved [
 
 	| aClass className |
@@ -105,6 +89,27 @@ EpApplyTest >> testClassAdditionWithMetaclassInstanceVariablesChanged [
 	self assert: aClass classSide instVarNames equals: #(x).
 	self applyInputEntry.
 	self assert: aClass classSide instVarNames equals: #()
+]
+
+{ #category : 'tests' }
+EpApplyTest >> testClassAdditionWithPackageChanged [
+
+	| aClass package tag newPackage newTag |
+	aClass := classFactory newClass.
+	self setHeadAsInputEntry.
+
+	package := aClass package name.
+	tag := aClass packageTag name.
+	newPackage := package , '2'.
+	newTag := tag , '2'.
+
+	aClass package: newPackage tag: newTag.
+
+	self assert: aClass package name equals: newPackage.
+	self assert: aClass packageTag name equals: newTag.
+	self applyInputEntry.
+	self assert: aClass package name equals: package.
+	self assert: aClass packageTag name equals: tag
 ]
 
 { #category : 'tests' }

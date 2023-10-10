@@ -47,6 +47,11 @@ RBCompositeRefactoring >> preconditions [
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
+{ #category : 'preparation' }
+RBCompositeRefactoring >> prepareForInteractiveMode [
+	self 
+]
+
 { #category : 'transforming' }
 RBCompositeRefactoring >> privateTransform [
 

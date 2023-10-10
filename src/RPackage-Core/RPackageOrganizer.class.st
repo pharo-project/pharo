@@ -151,13 +151,6 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
-{ #category : 'adding' }
-RPackageOrganizer >> addCategory: aCategory [
-
-	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
-	self ensurePackageMatching: aCategory
-]
-
 { #category : 'private' }
 RPackageOrganizer >> addMethod: method [
 	"we have to register the method in the parent RPackage of the class.
@@ -552,7 +545,7 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 	method origin = ann methodClass ifFalse: [ ^ self ]. "Methods from traits are not treated"
 
-	ann methodClass package ifNil: [ ^ self ]. "Classes that are not packages are not treated"
+	ann methodClass package isUndefined ifTrue: [ ^ self ]. "Classes that are not packages are not treated"
 
 	"If the new protocol is nil it means we are removing the method and this will be managed by the method removal"
 	ann newProtocol ifNotNil: [ :newProtocol |
@@ -583,7 +576,7 @@ RPackageOrganizer >> testPackages [
 	^ self packages select: [ :package | package isTestPackage ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 RPackageOrganizer >> undefinedPackage [
 
 	^ self packages detect: [ :package | package isUndefined ]

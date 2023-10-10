@@ -131,8 +131,8 @@ SessionManager class >> initializeKernelRegistrations [
 		registerSystemClassNamed: #OSPlatform atPriority: 50;
 		registerSystemClassNamed: #ExternalObject atPriority: 60;
 		registerSystemClassNamed: #FFIBackend atPriority: 60;
+		registerSystemClassNamed: #File atPriority: 90;
 		registerSystemClassNamed: #WeakArray;
-		registerSystemClassNamed: #File;
 		registerSystemClassNamed: #Stdio;
 		registerSystemClassNamed: #SharedRandom;
 		registerSystemClassNamed: #EndianDetector;

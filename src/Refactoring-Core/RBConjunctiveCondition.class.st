@@ -115,3 +115,9 @@ RBConjunctiveCondition >> violationMessageOn: aStream [
 		ifTrue: [ left violationMessageOn: aStream ]
 		ifFalse: [ right violationMessageOn: aStream ]
 ]
+
+{ #category : 'accessing' }
+RBConjunctiveCondition >> violators [ 
+
+	^ left violators , right violators
+]

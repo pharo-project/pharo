@@ -3,6 +3,7 @@ I am ZdcSecureSMTPClient.
 
 I open a ZdcSecureSocketStream to the SMTP server and connect it at the SSL level.
 
+```
 | mailMessage |
 mailMessage := MailMessage empty.
 mailMessage setField: 'subject' toString: 'ZdcSecureSMTPClient Test'.
@@ -12,13 +13,15 @@ ZdcSecureSMTPClient
 	password: '<your-password>'
 	to: '<email-address>' 
 	message: mailMessage
+```
 "
 Class {
 	#name : 'ZdcSecureSMTPClient',
 	#superclass : 'SMTPClient',
 	#instVars : [
 		'variant',
-		'lineReader'
+		'lineReader',
+		'skipRequireStartTLS'
 	],
 	#category : 'Zodiac-Extra',
 	#package : 'Zodiac-Extra'
@@ -100,7 +103,8 @@ ZdcSecureSMTPClient >> fetchNextResponse [
 { #category : 'initialization' }
 ZdcSecureSMTPClient >> initialize [
 	super initialize.
-	self useSSL
+	self useSSL.
+	skipRequireStartTLS := false
 ]
 
 { #category : 'testing' }
@@ -128,6 +132,12 @@ ZdcSecureSMTPClient >> nextLineFromStream [
 
 { #category : 'private - protocol' }
 ZdcSecureSMTPClient >> requireStartTLS [
+	"Normally, the server advertises is capabilities before the upgrade from plain to TLS.
+	It should list STARTTLS as one of its capabilities. If not, we signal an error.
+	The option skipRequireStartTLS allows for this test to be skipped,
+	assuming STARTTLS capability even though it was not advertised."
+
+	skipRequireStartTLS ifTrue: [ ^ self ].
 	(self lastResponse includesSubstring: 'STARTTLS')
 		ifFalse: [ ^ self error: 'Server does not seem to support STARTTLS' ]
 ]
@@ -165,6 +175,16 @@ ZdcSecureSMTPClient >> setupStreamForStartTLS [
 	self initiateSession.
 	self requireStartTLS.
 	self startTLS
+]
+
+{ #category : 'initialize-release' }
+ZdcSecureSMTPClient >> skipRequireStartSSL [
+	"Normally, the server advertises is capabilities before the upgrade from plain to TLS.
+	It should list STARTTLS as one of its capabilities. If not, we signal an error.
+	The option skipRequireStartTLS allows for this test to be skipped,
+	assuming STARTTLS capability even though it was not advertised."
+
+	skipRequireStartTLS := true
 ]
 
 { #category : 'private - protocol' }

@@ -39,11 +39,6 @@ RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage >> importClasses: classCollection [
-	classCollection do: [ :each | self addClass: each ]
-]
-
-{ #category : '*Calypso-SystemQueries' }
 RPackage >> isAboutPackage: aPackage [
 
 	^self == aPackage

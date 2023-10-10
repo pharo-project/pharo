@@ -26,10 +26,10 @@ RPackageTag class >> package: aPackage name: aString [
 
 { #category : 'accessing' }
 RPackageTag >> addClass: aClass [
+	"I cannot just add the class myself because I need to be sure it is removed from the old packages and that extension methods are managed.
+	So I deleate to the package."
 
-	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
-	classes add: aClass.
-	self organizer registerPackage: self package forClass: aClass
+	self package moveClass: aClass toTag: self
 ]
 
 { #category : 'private' }
@@ -63,12 +63,6 @@ RPackageTag >> environment [
 ]
 
 { #category : 'testing' }
-RPackageTag >> hasClass: aClass [
-
-	^ self classes includes: aClass instanceSide
-]
-
-{ #category : 'testing' }
 RPackageTag >> hasClassNamed: aSymbol [
 	^ self classNames includes: aSymbol
 ]
@@ -77,7 +71,7 @@ RPackageTag >> hasClassNamed: aSymbol [
 RPackageTag >> includesClass: aClass [
 	"To deprecate in favor of #hasClass:"
 
-	^ self hasClass: aClass
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : 'initialization' }
@@ -96,6 +90,12 @@ RPackageTag >> isEmpty [
 RPackageTag >> isRoot [
 
 	^ self name = self package rootTagName
+]
+
+{ #category : 'testing' }
+RPackageTag >> isUndefined [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -138,6 +138,17 @@ RPackageTag >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
+{ #category : 'private' }
+RPackageTag >> privateAddClass: aClass [
+	"This method adds the class to the tag but does not check is the class was already in the right package."
+
+	classes add: aClass.
+	self organizer registerPackage: self package forClass: aClass.
+
+	self flag: #package. "Next line should first use #basicCategory: to not start a ping pong then be totally removed once we will not need the category"
+	aClass category: self categoryName
+]
+
 { #category : 'converting' }
 RPackageTag >> promoteAsPackage [
 	"This method converts this package tag into a package"
@@ -154,11 +165,9 @@ RPackageTag >> promoteAsPackage [
 { #category : 'accessing' }
 RPackageTag >> removeClass: aClass [
 
-	| oldObject |
-	oldObject := classes remove: aClass ifAbsent: [  ].
+	classes remove: aClass ifAbsent: [ ^ self ].
 	self organizer unregisterPackage: self package forClass: aClass.
-	self isEmpty ifTrue: [ self removeFromPackage ].
-	^ oldObject
+	self isEmpty ifTrue: [ self removeFromPackage ]
 ]
 
 { #category : 'accessing' }

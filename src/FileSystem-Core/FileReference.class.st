@@ -169,7 +169,7 @@ FileReference >> delete [
 FileReference >> deleteIfAbsent: aBlock [
 	self exists
 		ifTrue: [ self delete ]
-		ifFalse: aBlock
+		ifFalse: [ aBlock value ]
 ]
 
 { #category : 'accessing' }
@@ -205,32 +205,6 @@ FileReference >> entry [
 FileReference >> exists [
 	"Answer a boolean indicating whether the receiver exists on the file system"
 	^ filesystem exists: path
-]
-
-{ #category : 'versions' }
-FileReference >> extractVersionNumberFrom: filename basename: basename extension: extension [
-	"Answer the version number written in filename considering
-	that it consists of basename and extension.
-	For example filename=basename.10.extension will return 10.
-	filename=basename.extension without number will return 0
-	It returns nil if given file does not satisfy this pattern"
-
-	"ensure prefix basename."
-	| versionStart versionEnd |
-	(filename beginsWith: basename) ifFalse: [^nil].
-	(filename size > basename size and: [(filename at: basename size + 1) = $.])
-		ifFalse: [ ^nil ].
-	"ensure suffix .extension"
-	(filename endsWith: extension) ifFalse: [^nil].
-	(filename size > extension size and: [(filename at: filename size - extension size) = $.])
-		 ifFalse: [ ^nil ].
-
-	versionStart := basename size + 2.
-	versionEnd := filename size - extension size - 1.
-	versionStart to: versionEnd do: [:i |
-		(filename at: i) isDigit ifFalse: [ ^nil ] ].
-	versionStart > versionEnd ifTrue: [ ^0]. "means pattern baseline.extension"
-	^(filename copyFrom: versionStart to: versionEnd) asNumber
 ]
 
 { #category : 'accessing' }
@@ -370,7 +344,7 @@ FileReference >> isWritable [
 	^ filesystem isWritable: path
 ]
 
-{ #category : 'utilities' }
+{ #category : 'versions' }
 FileReference >> lastFileFor: baseFileName extension: extension [
 	"Assumes a file is named using a version number encoded as '.' followed by digits
   preceding the file extension, e.g., games.22.ston
@@ -379,14 +353,12 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 
 	"FileSystem workingDirectory lastFileFor: 'games' extension: 'ston'"
 
-	| version |
-
-	version := self versionNumberFor: baseFileName extension: extension.
-	^(version
+	^ (((FileVersionner from: self) versionNumberWithoutNumberPatternFor: baseFileName extension: extension)
 		ifNil: [ self error: 'No file with number pattern' ]
-		ifNotNil: [ version = 0
-			ifTrue: [ baseFileName, '.', extension ]
-			ifFalse: [ baseFileName , '.' , version asString , '.' , extension ] ]) asFileReference
+		ifNotNil: [: version | 
+			version = 0
+				ifTrue: [ baseFileName, '.', extension ]
+				ifFalse: [ baseFileName , '.' , version asString , '.' , extension ] ]) asFileReference
 ]
 
 { #category : 'accessing' }
@@ -413,7 +385,7 @@ FileReference >> moveTo: aReference [
 		self setFileSystem: result fileSystem path: result path ]
 ]
 
-{ #category : 'utilities' }
+{ #category : 'versions' }
 FileReference >> nextNameFor: baseFileName extension: extension [
   "Assumes a file name includes a version number encoded as '.' followed by digits
    preceding the file extension, e.g., games.22.ston
@@ -422,38 +394,20 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 
 	"(FileSystem workingDirectory nextNameFor: 'games' extension: 'ston') asFileReference ensureCreateFile"
 
-	| version |
-
-	version := self versionNumberFor: baseFileName extension: extension.
-	^version
+	^ ((FileVersionner from: self) versionNumberWithoutNumberPatternFor: baseFileName extension: extension)
 		ifNil: [ baseFileName, '.1.', extension ]
-		ifNotNil: [ baseFileName , '.' , (version+1) asString , '.' , extension ]
+		ifNotNil: [ : version |  baseFileName , '.' , (version + 1) asString , '.' , extension ]
 ]
 
-{ #category : 'utilities' }
+{ #category : 'versions' }
 FileReference >> nextVersion [
 	"Assumes a file (or folder) name includes a version number encoded as '.' followed by digits
 	preceding the file extension.  Increment the version number and answer the new file name.
 	If a version number is not found, return just the file"
 
-	| parent basename nameWithoutExtension extension max index |
-
 	self exists
 		ifFalse: [ ^ self ].
-
-	parent := self parent.
-	extension := self extension.
-	basename := self basename.
-	nameWithoutExtension := basename copyFrom: 1 to: (basename size - extension size - 1).
-	"At this stage nameWithoutExtension may still include a version number.  Remove it if necessary"
-	index := nameWithoutExtension size.
-	[ index > 0 and: [ (nameWithoutExtension at: index) isDigit ] ] whileTrue:
-		[ index := index - 1 ].
-	((index between: 1 and: nameWithoutExtension size - 1) and: [ (nameWithoutExtension at: index) = $. ]) ifTrue:
-		[ nameWithoutExtension := nameWithoutExtension copyFrom: 1 to: index-1 ].
-
-	max := parent versionNumberFor: nameWithoutExtension extension: extension.
-	^ parent / (nameWithoutExtension, '.', (max+1) asString) , self extension
+	^ (FileVersionner from: self) nextVersion
 ]
 
 { #category : 'accessing' }
@@ -595,16 +549,9 @@ FileReference >> versionNumberFor: basename extension: extension [
 	"Answer the latest (largest) version number for the specified file.
 	0 = basename.extension exists, but nothing later.
 	nil = no file exists"
-	| maxVersion |
-	maxVersion := 0.
-	self fileSystem childNamesAt: self path do: [ :child | | childVersion |
-		childVersion := self extractVersionNumberFrom: child basename: basename extension: extension.
-		childVersion ifNotNil: [ maxVersion := maxVersion max: childVersion ]].
-	^maxVersion = 0
-		ifTrue: [ (self / (basename, '.', extension)) asFileReference exists
-			ifTrue: [ 0 ]
-			ifFalse: [ nil ] ]
-		ifFalse: [ maxVersion ]
+
+	^ (FileVersionner from: self) versionNumberFor: basename extension: extension
+
 ]
 
 { #category : 'streams' }

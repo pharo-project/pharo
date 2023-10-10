@@ -29,6 +29,13 @@ RBInteractionDriver class >> isAbstract [
 ]
 
 { #category : 'execution' }
+RBInteractionDriver >> applyChanges [
+	"I'm a hook to actually execute the changes"
+	
+	self subclassResponsibility
+]
+
+{ #category : 'execution' }
 RBInteractionDriver >> furtherActionFor: aReport [
 	
 	aReport browse

@@ -117,9 +117,7 @@ ClyMethodEditorToolMorph >> fillStatusBar [
 	position comeToFront.
 	statusBar addCommandItem: (ClyTextWrapModeSwitchMorph of: textMorph).
 	statusBar addCommandItem: (ClyTextLineNumbersSwitchMorph of: textMorph).
-	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph).
-
-	statusBar addCommandItem: (ClyProtocolEditorMorph for: self)
+	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph)
 ]
 
 { #category : 'operations' }

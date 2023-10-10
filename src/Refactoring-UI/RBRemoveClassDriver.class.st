@@ -1,3 +1,10 @@
+"
+I'm an interaction object responsible for driving the analysis and interactive removal of classes.
+In particular I propose different refactorings based on the situation:
+- push state of the remove class to children
+- reparent the children to their grand-parent.
+
+"
 Class {
 	#name : 'RBRemoveClassDriver',
 	#superclass : 'RBInteractionDriver',
@@ -11,6 +18,13 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'actions' }
+RBRemoveClassDriver >> applyChanges [
+
+	self openPreviewWithChanges: refactoring removeClassChanges
+
+]
 
 { #category : 'actions' }
 RBRemoveClassDriver >> browseReferences [
@@ -49,7 +63,7 @@ RBRemoveClassDriver >> handleBreakingChanges [
 		ifTrue: [ ^ items first action ].
 		
 	select := SpSelectDialog new
-		          title: 'There are potentital breaking changes!';
+		          title: 'There are potential breaking changes!';
 		          label: self labelBasedOnBreakingChanges;
 		          items: items;
 		          display: [ :each | each description ];
@@ -82,13 +96,6 @@ RBRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 	self openPreviewWithChanges: refactoring removeClassesChanges
 ]
 
-{ #category : 'actions' }
-RBRemoveClassDriver >> removeClassChanges [
-
-	self openPreviewWithChanges: refactoring removeClassChanges
-
-]
-
 { #category : 'execution' }
 RBRemoveClassDriver >> runRefactoring [
 	
@@ -100,7 +107,7 @@ RBRemoveClassDriver >> runRefactoring [
 	noSubclasses := refactoring preconditionHaveNoSubclasses.
 
 	haveNoReferences check & emptyClasses check & noSubclasses check
-			ifTrue: [ self removeClassChanges ]
+			ifTrue: [ self applyChanges ]
 			ifFalse: [ self handleBreakingChanges ]
 
 ]

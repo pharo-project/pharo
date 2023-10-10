@@ -69,11 +69,6 @@ ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass comment: builder comment stamp: builder commentStamp ]
 ]
 
-{ #category : 'building' }
-ShiftClassInstaller >> copyClassSlotsFromExistingClass [
-	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
-]
-
 { #category : 'copying' }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
@@ -176,7 +171,6 @@ ShiftClassInstaller >> make [
 
 	[
 		builder oldClass: oldClass.
-		self copyClassSlotsFromExistingClass.
 		newClass := builder build.
 
 		self installInEnvironment: newClass.

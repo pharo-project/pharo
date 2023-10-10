@@ -85,7 +85,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-UI'.
 		spec package: 'Refactoring-Environment'.
-		spec package: 'Monticello-OldDataStreamCompatibility'.
+		spec package: 'Monticello-BackwardCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		
 		self specRefactoring: spec.
@@ -106,8 +106,6 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 	
 	RBRefactoryChangeManager nuke.
-	Smalltalk garbageCollect.
-	Smalltalk cleanOutUndeclared. 
 	
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.

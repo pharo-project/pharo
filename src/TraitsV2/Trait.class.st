@@ -26,6 +26,24 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'class building' }
+Trait class >> << aSymbolOrAClassSideTrait [
+	"Return a builder of class FluidTraitBuilder. To get a trait, this builder should be sent build. This way we can manipulate and test trait definition without be forced to get them added to the environment."
+
+	aSymbolOrAClassSideTrait isSymbol ifFalse: [
+		^ ShiftClassSideBuilder new
+			  beTrait;
+			  name: aSymbolOrAClassSideTrait soleInstance name;
+			  fillInstanceSideFromClass: aSymbolOrAClassSideTrait soleInstance;
+			  yourself ].
+
+	^ ShiftClassBuilder new
+		  beTrait;
+		  name: aSymbolOrAClassSideTrait;
+		  fillClassSideFromEnvironment: self environment;
+		  yourself
+]
+
 { #category : 'old pharo 8 syntax' }
 Trait class >> named: aName [
 
@@ -66,7 +84,7 @@ Trait class >> named: aName uses: aCompositionOrArray [
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName [
 
 	^ self classInstaller make: [ :builder |
@@ -77,7 +95,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPacka
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -134,7 +152,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory [
 
 	^ self classInstaller make: [ :builder |
@@ -146,7 +164,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 			  beTrait ]
 ]
 
-{ #category : 'deprecated' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -249,19 +267,19 @@ Trait >> expandedDefinitionStringFor: aPrinter [
 
 { #category : 'testing' }
 Trait >> isBaseTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
 { #category : 'testing' }
 Trait >> isClass [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
 { #category : 'testing' }
 Trait >> isClassTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
@@ -277,6 +295,7 @@ Trait >> isEmpty [
 
 { #category : 'testing' }
 Trait >> isTrait [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -292,7 +311,7 @@ Trait >> isTraitExclusion [
 
 { #category : 'testing' }
 Trait >> isUsed [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ super isUsed or: [ self traitUsers notEmpty ]
 ]
 
@@ -337,11 +356,13 @@ Trait >> removeUser: aClass [
 
 { #category : 'accessing' }
 Trait >> traitUsers [
+	<reflection: 'Class structural inspection - Traits'>
 	^ self users
 ]
 
 { #category : 'users' }
 Trait >> users [
+	<reflection: 'Class structural inspection - Traits'>
 	^ users ifNil: [ users := IdentitySet new ]
 ]
 

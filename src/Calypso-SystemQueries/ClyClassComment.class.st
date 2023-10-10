@@ -55,7 +55,8 @@ ClyClassComment class >> of: aClass [
 
 { #category : 'printing' }
 ClyClassComment class >> printSystemPathTo: aClassComment [
-	^aClassComment definingClass packageName, ' / ' , aClassComment definingClass name
+
+	^ aClassComment definingClass package name , ' / ' , aClassComment definingClass name
 ]
 
 { #category : 'comparing' }

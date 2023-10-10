@@ -527,6 +527,13 @@ SmallDictionary >> initialize [
 	size := 0
 ]
 
+{ #category : 'enumerating' }
+SmallDictionary >> intersection: aCollection [
+	"Answer the set theoretic intersection of two collections. "
+
+	^ self species newFrom: (self associations asSet intersection: aCollection associations)
+]
+
 { #category : 'testing' }
 SmallDictionary >> isDictionary [
 	^true

@@ -18,7 +18,7 @@ EpCodeChangeIntegrationTest >> packageNameForTesting [
 { #category : 'tests' }
 EpCodeChangeIntegrationTest >> packageTagNameForTesting [
 
-	^ 'WeirdCategoryName'
+	^ 'WeirdPackageTagName'
 ]
 
 { #category : 'running' }
@@ -113,17 +113,17 @@ EpCodeChangeIntegrationTest >> testClassRemoval [
 { #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassRemovalWithMethods [
 
-	| events category |
+	| events package |
 	aClass := classFactory newClass.
-	category := aClass category.
-	1 to: 7 do: [:index |
-		aClass compile: 'inst', index asString.
-		aClass classSide compile: 'class', index asString ].
+	package := aClass package name.
+	1 to: 7 do: [ :index |
+		aClass compile: 'inst' , index asString.
+		aClass classSide compile: 'class' , index asString ].
 	aClass removeFromSystem.
 
 	events := self allLogEventsWith: EpMethodRemoval.
 	self assert: events size equals: 14.
-	self assert: (events allSatisfy: [ :each | each affectedPackageName = category ])
+	self assert: (events allSatisfy: [ :each | each affectedPackageName = package ])
 ]
 
 { #category : 'tests' }
@@ -351,14 +351,14 @@ EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 { #category : 'tests' }
 EpCodeChangeIntegrationTest >> testTraitAddition [
 
-	| trait category events event |
+	| trait events event package |
 	trait := classFactory newTrait.
-	category := trait category.
+	package := trait package name.
 
 	events := self allLogEventsWith: EpTraitAddition.
 	self assert: events size equals: 1.
 	event := events anyOne.
-	self assert: event behaviorAffected category equals: category
+	self assert: event behaviorAffected package equals: package
 ]
 
 { #category : 'tests' }
@@ -377,15 +377,15 @@ EpCodeChangeIntegrationTest >> testTraitModificationOfTraitComposition [
 { #category : 'tests' }
 EpCodeChangeIntegrationTest >> testTraitRemoval [
 
-	| trait category events event |
+	| trait package events event |
 	trait := classFactory newTrait.
-	category := trait category.
+	package := trait package name.
 	trait removeFromSystem.
 
 	events := self allLogEventsWith: EpTraitRemoval.
 	self assert: events size equals: 1.
 	event := events anyOne.
-	self assert: event behaviorAffected category equals: category
+	self assert: event behaviorAffected package equals: package
 ]
 
 { #category : 'running' }

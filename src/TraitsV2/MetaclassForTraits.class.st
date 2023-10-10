@@ -57,7 +57,7 @@ MetaclassForTraits >> isBaseTrait [
 
 { #category : 'testing' }
 MetaclassForTraits >> isClassTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -78,6 +78,7 @@ MetaclassForTraits >> isRejectedMethod: aSelector [
 
 { #category : 'testing' }
 MetaclassForTraits >> isTrait [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -128,16 +129,18 @@ MetaclassForTraits >> removeUser: aClass [
 
 { #category : 'accessing' }
 MetaclassForTraits >> traitUsers [
+	<reflection: 'Class structural inspection - Traits'>
 	^ self users
 ]
 
 { #category : 'accessing' }
 MetaclassForTraits >> users [
-
+	<reflection: 'Class structural inspection - Traits'>
 	^ users ifNil: [ users := IdentitySet new ]
 ]
 
 { #category : 'accessing' }
 MetaclassForTraits >> users: anObject [
+	<reflection: 'Class structural inspection - Traits'>
 	users := anObject
 ]

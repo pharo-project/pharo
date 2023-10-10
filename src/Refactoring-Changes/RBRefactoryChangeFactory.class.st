@@ -19,22 +19,7 @@ RBRefactoryChangeFactory class >> instance [
 { #category : 'refactory changes - classes' }
 RBRefactoryChangeFactory >> addClassDefinition: definition [
 
-	^ RBAddClassChange definition: definition
-]
-
-{ #category : 'refactory changes - classes' }
-RBRefactoryChangeFactory >> addClassDefinition: definition for: aController [
-
-	^ RBAddClassChange definition: definition for: aController
-]
-
-{ #category : 'refactory changes - classes' }
-RBRefactoryChangeFactory >> addClassDefinition: definition for: aController context: aDictionary [
-
-	^ RBAddClassChange
-		  definition: definition
-		  for: aController
-		  context: aDictionary
+	^ RBAddClassChange make: definition
 ]
 
 { #category : 'refactory changes - variables' }
@@ -64,22 +49,6 @@ RBRefactoryChangeFactory >> addMethodSource: sourceCode in: aClass classified: a
 		  classified: aProtocol
 ]
 
-{ #category : 'refactory changes - methods' }
-RBRefactoryChangeFactory >> addMethodSource: sourceCode in: aClass classified: aProtocol for: aController [
-
-	^ RBAddMethodChange
-		  compile: sourceCode
-		  in: aClass
-		  classified: aProtocol
-		  for: aController
-]
-
-{ #category : 'refactory changes - methods' }
-RBRefactoryChangeFactory >> addMethodSource: sourceCode in: aClass for: aController [
-
-	^ RBAddMethodChange compile: sourceCode in: aClass for: aController
-]
-
 { #category : 'refactory changes - packages' }
 RBRefactoryChangeFactory >> addPackageNamed: aString [
 
@@ -90,12 +59,6 @@ RBRefactoryChangeFactory >> addPackageNamed: aString [
 RBRefactoryChangeFactory >> addPoolVariable: variableName to: aClass [
 
 	^ RBAddPoolVariableChange add: variableName to: aClass
-]
-
-{ #category : 'refactory changes - classes' }
-RBRefactoryChangeFactory >> addTraitDefinition: definition [
-
-	^ RBAddTraitChange definition: definition
 ]
 
 { #category : 'refactory changes - classes' }

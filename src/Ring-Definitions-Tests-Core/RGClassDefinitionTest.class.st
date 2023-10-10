@@ -20,7 +20,7 @@ RGClassDefinitionTest >> testAddingMethods [
 			'add: newObject
 									^self addLast: newObject'.
 
-	self assert: newMethod isMetaSide not.
+	self assert: newMethod isMeta not.
 	self assert: newClass hasMethods not.
 
 	newClass addMethod: newMethod.

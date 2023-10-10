@@ -170,8 +170,8 @@ RBAbstractClass >> binding [
 
 { #category : 'method accessing' }
 RBAbstractClass >> bindingOf: aString [
-	^self realClass classPool associationAt: aString asSymbol
-		ifAbsent: [self realClass classPool associationAt: aString asString ifAbsent: [nil]]
+
+	^self realClass bindingOf: aString
 ]
 
 { #category : 'testing' }
@@ -257,10 +257,12 @@ RBAbstractClass >> convertMethod: selector using: searchReplacer [
 
 { #category : 'testing' }
 RBAbstractClass >> definesClassVariable: aSymbol [
-	self realClass isTrait ifTrue: [^false].
-	(self directlyDefinesClassVariable: aSymbol) ifTrue: [^true].
-	^self superclass notNil
-		and: [self superclass definesClassVariable: aSymbol]
+	"Returns whether the class or its superclasses define a shared variable named: aSymbol"
+
+	self realClass isTrait ifTrue: [ ^ false ].
+	(self directlyDefinesClassVariable: aSymbol) ifTrue: [ ^ true ].
+	^ self superclass notNil
+		and: [ self superclass definesClassVariable: aSymbol ]
 ]
 
 { #category : 'testing' }
@@ -340,11 +342,15 @@ RBAbstractClass >> existingMethodsThatReferTo: aSymbol [
 
 { #category : 'method accessing' }
 RBAbstractClass >> existingMethodsThatReferToClassVariable: aString [
-	| binding existingMethods |
-	binding := (self bindingOf: aString)
-		ifNil: [ ^ #() ].
-	existingMethods := self realClass
-		whichSelectorsReferTo: binding.
+
+	^ self existingMethodsThatReferToSharedVariable: aString 
+]
+
+{ #category : 'method accessing' }
+RBAbstractClass >> existingMethodsThatReferToInstanceVariable: aString [
+	| existingMethods rClass |
+	rClass := self realClass. "no idea what we cannot use the variable realClass"
+	existingMethods :=  (realClass whichSelectorsAccess: aString) collect: [ :each | realClass >> each ].
 	(newMethods isNil and: [ removedMethods isNil ])
 		ifTrue: [ ^ existingMethods ].
 	^ existingMethods
@@ -352,10 +358,39 @@ RBAbstractClass >> existingMethodsThatReferToClassVariable: aString [
 ]
 
 { #category : 'method accessing' }
-RBAbstractClass >> existingMethodsThatReferToInstanceVariable: aString [
+RBAbstractClass >> existingMethodsThatReferToSharedVariable: aString [
+	| binding existingMethods |
+	binding := (self bindingOf: aString)
+		ifNil: [ ^ #() ].
+	existingMethods := self realClass whichMethodsReferTo: binding.
+	(newMethods isNil and: [ removedMethods isNil ])
+		ifTrue: [ ^ existingMethods ].
+	^ existingMethods
+		reject: [ :each | (self hasRemoved: each) or: [ self newMethods includesKey: each ] ]
+]
+
+{ #category : 'method accessing' }
+RBAbstractClass >> existingSelectorsThatReferToClassVariable: aString [
+	^ self existingSelectorsThatReferToSharedVariable: aString
+]
+
+{ #category : 'method accessing' }
+RBAbstractClass >> existingSelectorsThatReferToInstanceVariable: aString [
 	| existingMethods |
 	existingMethods := self realClass
 		whichSelectorsAccess: aString.
+	(newMethods isNil and: [ removedMethods isNil ])
+		ifTrue: [ ^ existingMethods ].
+	^ existingMethods
+		reject: [ :each | (self hasRemoved: each) or: [ self newMethods includesKey: each ] ]
+]
+
+{ #category : 'method accessing' }
+RBAbstractClass >> existingSelectorsThatReferToSharedVariable: aString [
+	| binding existingMethods |
+	binding := (self bindingOf: aString)
+		ifNil: [ ^ #() ].
+	existingMethods := self realClass whichSelectorsReferTo: binding.
 	(newMethods isNil and: [ removedMethods isNil ])
 		ifTrue: [ ^ existingMethods ].
 	^ existingMethods
@@ -784,6 +819,40 @@ RBAbstractClass >> whichClassIncludesSelector: aSelector [
 ]
 
 { #category : 'method accessing' }
+RBAbstractClass >> whichMethodsReferToInstanceVariable: aString [
+
+	| methods |
+	methods := Set new.
+	newMethods
+		ifNotNil: [ newMethods
+				do: [ :each |
+					( each refersToVariable: aString )
+						ifTrue: [ methods add: each  ]
+					]
+			].
+	self isDefined
+		ifTrue: [ methods addAll: ( self existingMethodsThatReferToInstanceVariable: aString ) ].
+	^ methods
+]
+
+{ #category : 'method accessing' }
+RBAbstractClass >> whichMethodsReferToSharedVariable: aString [
+
+	| methods |
+	methods := Set new.
+	newMethods
+		ifNotNil: [ newMethods
+				do: [ :each |
+					( each refersToVariable: aString )
+						ifTrue: [ methods add: each  ]
+					]
+			].
+	self isDefined
+		ifTrue: [ methods addAll: ( self existingMethodsThatReferToSharedVariable: aString ) ].
+	^ methods
+]
+
+{ #category : 'method accessing' }
 RBAbstractClass >> whichSelectorsReferToClass: aRBClass [
 
 	| selectors |
@@ -814,7 +883,7 @@ RBAbstractClass >> whichSelectorsReferToClassVariable: aString [
 				selectors add: each selector ] ] ].
 	self isDefined ifTrue: [
 		selectors addAll:
-			(self existingMethodsThatReferToClassVariable: aString) ].
+			(self existingSelectorsThatReferToClassVariable: aString) ].
 	^ selectors
 ]
 
@@ -831,7 +900,22 @@ RBAbstractClass >> whichSelectorsReferToInstanceVariable: aString [
 					]
 			].
 	self isDefined
-		ifTrue: [ selectors addAll: ( self existingMethodsThatReferToInstanceVariable: aString ) ].
+		ifTrue: [ selectors addAll: ( self existingSelectorsThatReferToInstanceVariable: aString ) ].
+	^ selectors
+]
+
+{ #category : 'method accessing' }
+RBAbstractClass >> whichSelectorsReferToSharedVariable: aString [
+
+	| selectors |
+	selectors := Set new.
+	newMethods ifNotNil: [
+		newMethods do: [ :each |
+			(each refersToVariable: aString) ifTrue: [
+				selectors add: each selector ] ] ].
+	self isDefined ifTrue: [
+		selectors addAll:
+			(self existingSelectorsThatReferToSharedVariable: aString) ].
 	^ selectors
 ]
 

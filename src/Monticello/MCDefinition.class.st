@@ -108,6 +108,11 @@ MCDefinition >> isScriptDefinition [
 	^false
 ]
 
+{ #category : 'testing' }
+MCDefinition >> isTraitDefinition [
+	^ false
+]
+
 { #category : 'installing' }
 MCDefinition >> load [
 	

@@ -247,9 +247,15 @@ RGMethod >> isLiteralMethod [
 ]
 
 { #category : 'testing' }
-RGMethod >> isMetaSide [
+RGMethod >> isMeta [
 
 	^ self parent isMeta
+]
+
+{ #category : 'testing' }
+RGMethod >> isMetaSide [
+
+	^ self isMeta
 ]
 
 { #category : 'testing' }

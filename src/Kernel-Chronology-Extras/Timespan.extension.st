@@ -260,6 +260,16 @@ Timespan >> weeksDo: aBlock [
 ]
 
 { #category : '*Kernel-Chronology-Extras' }
+Timespan >> workDates [
+ 	"Exclude Saturday and Sunday"
+
+	| workDays |
+	workDays := OrderedCollection new.
+	self workDatesDo: [ :each | workDays add: each ].
+	^ workDays
+]
+
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> workDatesDo: aBlock [
  	"Exclude Saturday and Sunday"
 

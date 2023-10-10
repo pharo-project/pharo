@@ -48,6 +48,13 @@ Class {
 	#package : 'Tool-Registry'
 }
 
+{ #category : 'cleanup' }
+ToolRegistry class >> cleanUp: aggressive [
+
+	aggressive ifTrue: [
+		self allSubInstancesDo: [ :each | each resetAnnouncer ] ]
+]
+
 { #category : 'announcer' }
 ToolRegistry >> announcer [
 	announcer ifNil: [ announcer := Announcer new ].

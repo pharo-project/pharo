@@ -27,7 +27,7 @@ FLFullBasicSerializationTest >> defaultTimeLimit [
 { #category : 'initialization' }
 FLFullBasicSerializationTest >> initialize [
 		<ignoreUnusedClassVariables: #( ClassVariableForTesting )>
-		super initialize.
+		super initialize
 ]
 
 { #category : 'tests' }

@@ -13,7 +13,6 @@ Class {
 		'source',
 		'selector',
 		'protocols',
-		'controller',
 		'definedSelector'
 	],
 	#category : 'Refactoring-Changes-Changes-Classes',
@@ -24,33 +23,13 @@ Class {
 { #category : 'instance creation' }
 RBAddMethodChange class >> compile: aString in: aClass [
 
-	^ self compile: aString in: aClass for: nil
+	^ self new class: aClass source: aString
 ]
 
 { #category : 'instance creation' }
 RBAddMethodChange class >> compile: aString in: aBehavior classified: aProtocol [
 
-	^ self
-		  compile: aString
-		  in: aBehavior
-		  classified: aProtocol
-		  for: nil
-]
-
-{ #category : 'instance creation' }
-RBAddMethodChange class >> compile: aString in: aBehavior classified: aProtocol for: aController [
-
-	^ self new
-		  class: aBehavior
-		  protocol: aProtocol
-		  source: aString
-		  controller: aController
-]
-
-{ #category : 'instance creation' }
-RBAddMethodChange class >> compile: aString in: aClass for: aController [
-
-	^ self new class: aClass source: aString controller: aController
+	^ self new class: aBehavior protocol: aProtocol source: aString
 ]
 
 { #category : 'comparing' }
@@ -109,35 +88,11 @@ RBAddMethodChange >> class: aClass protocol: aProtocol source: aString [
 ]
 
 { #category : 'initialization' }
-RBAddMethodChange >> class: aClass protocol: aProtocol source: aString controller: aController [
-
-	self changeClass: aClass.
-	self protocols: aProtocol.
-	source := aString.
-	controller := aController
-]
-
-{ #category : 'initialization' }
-RBAddMethodChange >> class: aClass source: aString controller: aController [
+RBAddMethodChange >> class: aClass source: aString [
 
 	self changeClass: aClass.
 	source := aString.
-	self protocols: (RBBrowserEnvironment new
-			 whichProtocolIncludes: self selector
-			 in: aClass).
-	controller := aController
-]
-
-{ #category : 'private' }
-RBAddMethodChange >> controller [
-
-	^ controller
-]
-
-{ #category : 'initialization' }
-RBAddMethodChange >> controller: aController [
-
-	controller := aController
+	self protocols: (RBBrowserEnvironment new whichProtocolIncludes: self selector in: aClass)
 ]
 
 { #category : 'accessing' }
@@ -149,10 +104,7 @@ RBAddMethodChange >> definedSelector [
 { #category : 'private' }
 RBAddMethodChange >> generateChanges [
 
-	definedSelector := self changeClass
-		                   compile: self source
-		                   classified: self protocol
-		                   notifying: self controller
+	definedSelector := self changeClass compile: self source classified: self protocol
 ]
 
 { #category : 'comparing' }

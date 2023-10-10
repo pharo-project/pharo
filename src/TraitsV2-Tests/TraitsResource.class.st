@@ -186,7 +186,7 @@ TraitsResource >> createdClassesAndTraits [
 { #category : 'accessing' }
 TraitsResource >> packageName [
 
-	^ self class packageName
+	^ self class package name
 ]
 
 { #category : 'running' }
