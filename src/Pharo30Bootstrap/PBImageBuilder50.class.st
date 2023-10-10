@@ -336,7 +336,8 @@ PBImageBuilder50 >> createInitialObjects [
 
 	PBSubStepFinishedSignal emit: 'Installing symbol table'.
 	self bootstrapInterpreter evaluateCode: 'Symbol initialize.
-	Symbol classPool at: #SymbolTable put: (WeakSet withAll: ByteSymbol allInstances)'.
+	Symbol classPool at: #SymbolTable put: (WeakSet withAll: ByteSymbol allInstances).
+	Symbol classPool at: #Trie put: (SymbolTrie withAll: ByteSymbol allInstances)'.
 	objectSpace symbolTable:
 		(EPInternalSymbolTable new objectSpace: objectSpace).
 

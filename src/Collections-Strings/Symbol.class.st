@@ -30,9 +30,9 @@ Class {
 	#name : 'Symbol',
 	#superclass : 'String',
 	#classVars : [
+		'Trie',
 		'SelectorTable',
-		'SymbolTable',
-		'Trie'
+		'SymbolTable'
 	],
 	#category : 'Collections-Strings-Base',
 	#package : 'Collections-Strings',
