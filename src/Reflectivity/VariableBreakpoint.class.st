@@ -41,7 +41,7 @@ VariableBreakpoint class >> newForClass: aClass [
 		targetVariableNames: (self allSlotNamesFor: aClass)
 ]
 
-{ #category : 'observers' }
+{ #category : 'notifications' }
 VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
 	| announcement |
 	announcement := BreakpointHit

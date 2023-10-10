@@ -223,6 +223,15 @@ WorldState class >> quitSession [
 		ifFalse: [Smalltalk snapshot: false andQuit: true]
 ]
 
+{ #category : 'cleanup' }
+WorldState class >> restartMethods [
+
+	self allInstancesDo: [ :ws |
+		ws
+			convertAlarms;
+			cleanStepList ]
+]
+
 { #category : 'world menu items' }
 WorldState class >> saveAndQuit [
 	Cursor write showWhile: [

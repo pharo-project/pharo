@@ -336,7 +336,7 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: ClassCommented send: #classCommented: to: aChangeSet;
 		when: ClassRenamed send: #classRenamed: to: aChangeSet;
 		when: ProtocolAnnouncement send: #classReorganized: to: aChangeSet;
-		when: ClassRecategorized send: #classRecategorized: to: aChangeSet;
+		when: ClassRepackaged send: #classRepackaged: to: aChangeSet;
 		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet.
 
 	SystemAnnouncer uniqueInstance private weak
@@ -701,14 +701,6 @@ ChangeSet >> classModified: anEvent [
 ]
 
 { #category : 'change logging' }
-ChangeSet >> classRecategorized: anEvent [
-
-	self
-		changeClass: anEvent classRecategorized
-		from: anEvent classRecategorized
-]
-
-{ #category : 'change logging' }
 ChangeSet >> classRemoved: anEvent [
 
 	self noteRemovalOf: anEvent classRemoved
@@ -748,6 +740,12 @@ ChangeSet >> classRenamed: anEvent [
 ChangeSet >> classReorganized: anEvent [
 
 	self reorganizeClass: anEvent classReorganized
+]
+
+{ #category : 'change logging' }
+ChangeSet >> classRepackaged: anEvent [
+
+	self changeClass: anEvent classRepackaged from: anEvent classRepackaged
 ]
 
 { #category : 'initialization' }

@@ -99,12 +99,14 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterCalled:
 
 	| selector |
 	selector := aSymbol.
-	self definingClass
-		compile:  ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
+	(RBAddMethodTransformation
+		model: self model
+		sourceCode: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
 			expandMacrosWith: selector
 			with: variableName
 			with: self defaultValue)
-		classified: #(#accessing).
+		in: self definingClass
+		withProtocol: 'accessing') generateChanges.
 	^ selector
 ]
 

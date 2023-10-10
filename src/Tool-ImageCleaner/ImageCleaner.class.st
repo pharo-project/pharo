@@ -117,15 +117,6 @@ ImageCleaner >> cleanUpForRelease [
 ImageCleaner >> cleanUpMethods [
 	"Make sure that all methods in use are restarted"
 	<script: 'self new cleanUpMethods'>
-	WeakArray restartFinalizationProcess.
-	ToolRegistry allSubInstances do: [:each | each resetAnnouncer].
-
-	WorldState
-		allInstancesDo: [ :ws | ws convertAlarms; cleanStepList].
-
-	ProcessBrowser initialize.
-	Delay restartTimerEventLoop.
-	"We are moving all the restart code to the classes"
 	Smalltalk restartMethods
 ]
 

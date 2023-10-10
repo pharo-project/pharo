@@ -81,7 +81,7 @@ GoferOperationTest >> testCleanup [
 		package: 'GoferFoo';
 		load.
 	class := environment classNamed: #GoferFoo.
-	environment organization ensureTagNamed: #Empty inPackageNamed: #GoferFoo.
+	environment organization ensureTag: #Empty inPackage: #GoferFoo.
 	class addProtocol: #empty.
 	class class addProtocol: #empty.
 	gofer cleanup.

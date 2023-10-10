@@ -53,9 +53,12 @@ RBAddVariableAccessorTransformation >> createSetterAccessor [
 RBAddVariableAccessorTransformation >> defineGetterMethod [
 
 	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
-	self definingClass
-		compile: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
-		classified: #(#accessing).
+	(RBAddMethodTransformation
+		model: self model 
+		sourceCode: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
+		in: self definingClass
+		withProtocol: 'accessing') generateChanges.
+
 	^ getterMethod
 ]
 
@@ -65,10 +68,12 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
 	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
-	self definingClass
-		compile: (sourceCode expandMacrosWith: setterMethod with: variableName)
-		classified: #accessing.
-	^setterMethod
+	(RBAddMethodTransformation
+		model: self model
+		sourceCode: (sourceCode expandMacrosWith: setterMethod with: variableName)
+		in: self definingClass 
+		withProtocol: 'accessing') generateChanges.
+	^ setterMethod
 ]
 
 { #category : 'accessing' }

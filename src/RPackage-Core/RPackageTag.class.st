@@ -26,10 +26,10 @@ RPackageTag class >> package: aPackage name: aString [
 
 { #category : 'accessing' }
 RPackageTag >> addClass: aClass [
+	"I cannot just add the class myself because I need to be sure it is removed from the old packages and that extension methods are managed.
+	So I deleate to the package."
 
-	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
-	classes add: aClass.
-	self organizer registerPackage: self package forClass: aClass
+	self package moveClass: aClass toTag: self
 ]
 
 { #category : 'private' }
@@ -136,6 +136,17 @@ RPackageTag >> printOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self name.
 	aStream nextPut: $)
+]
+
+{ #category : 'private' }
+RPackageTag >> privateAddClass: aClass [
+	"This method adds the class to the tag but does not check is the class was already in the right package."
+
+	classes add: aClass.
+	self organizer registerPackage: self package forClass: aClass.
+
+	self flag: #package. "Next line should first use #basicCategory: to not start a ping pong then be totally removed once we will not need the category"
+	aClass category: self categoryName
 ]
 
 { #category : 'converting' }

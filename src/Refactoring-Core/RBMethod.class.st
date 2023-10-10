@@ -117,8 +117,10 @@ RBMethod >> modelClass: aRBClass [
 
 { #category : 'accessing' }
 RBMethod >> package [
+
 	compiledMethod ifNotNil: [ ^ compiledMethod package name ].
-	^ class category
+
+	^ class packageName
 ]
 
 { #category : 'accessing' }

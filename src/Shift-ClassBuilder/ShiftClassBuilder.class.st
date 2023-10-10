@@ -8,6 +8,29 @@ See ShDefaultBuilderEnhancer for a default implementation.
 I can be used directly to create anonymous classes, but it is better if you use the anonymous class installer.
 
 I also can compare the old class with the configured new class to calculate the required changes.
+
+I'm responsible to build class expressed with the fluid syntax.
+
+```st
+Object << #Point 
+	slots: { #x . #y };
+	tag: 'Basics';
+	package: 'Kernel'
+```	
+	
+### Design decisions
+
+The KEY design decisions are:
+- The code snippet above should be able to be used for scripting (interactively).
+- The code snippet above must return a class builder 
+- A class builder should offer two important messsage: 
+-- `build` that returns a class but does not install it. 
+-- `install` that installs the class in the system.
+
+To manage class side slots and traits, I get all the instance side information in addition to the class side one.
+For this the fillFromClass: method is responsible to convert all the class information into an information expected by the class builder. 
+
+In the future we would like to revisit the need for such fluid class builders and also revisit the API of the class builder.There are too many conversion and we should realigned the APIs with the class default values too. 
 "
 Class {
 	#name : 'ShiftClassBuilder',
@@ -46,6 +69,12 @@ Class {
 { #category : 'defaults' }
 ShiftClassBuilder class >> defaultBuildEnhancer [
 	^ BuilderEnhancer ifNil: [ ShDefaultBuilderEnhancer ]
+]
+
+{ #category : 'class initialization' }
+ShiftClassBuilder class >> initialize [
+
+	self deprecatedAliases: #( #FluidBuilder #FluidClassBuilder #FluidTraitBuilder )
 ]
 
 { #category : 'accessing' }
@@ -175,19 +204,6 @@ ShiftClassBuilder >> classSlots: aSlotCollection [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> classTraitComposition [
-	^ extensibleProperties at: #classTraitComposition ifAbsent: {}
-]
-
-{ #category : 'accessing' }
-ShiftClassBuilder >> classTraitComposition: aValue [
-
-	"The enhander needs to be put to nil in case the trait composition is updated."
-	builderEnhancer := nil.
-	^ extensibleProperties at: #classTraitComposition put: aValue
-]
-
-{ #category : 'accessing' }
 ShiftClassBuilder >> comment [
 	^ comment
 ]
@@ -247,7 +263,7 @@ ShiftClassBuilder >> createClass [
 	self builderEnhancer
 		configureClass: newClass
 		superclass: self superclass
-		withLayoutType: self layoutDefinition layoutClass
+		withLayoutType: self layoutClass
 		slots: self layoutDefinition slots.
 
 	newClass environment: self installingEnvironment.
@@ -263,7 +279,7 @@ ShiftClassBuilder >> createMetaclass [
 		configureMetaclass: newMetaclass
 		superclass: self metaSuperclass
 		withLayoutType: FixedLayout
-		slots: self layoutDefinition classSlots.
+		slots: self classSlots.
 
 	self builderEnhancer metaclassCreated: self
 ]
@@ -320,9 +336,20 @@ ShiftClassBuilder >> environment: anObject [
 	^ self buildEnvironment: anObject
 ]
 
+{ #category : 'copying' }
+ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
+
+	| old |
+	old := anEnvironment at: name ifAbsent: [ ^ self ].
+
+	self classSlots: old class slots.
+	self classTraits: old class traitComposition
+]
+
 { #category : 'initialization' }
 ShiftClassBuilder >> fillFor: aClass [
 
+	self flag: #package. "package tag should be improved in the future"
 	self
 		superclass: aClass superclass;
 		name: aClass getName;
@@ -331,11 +358,38 @@ ShiftClassBuilder >> fillFor: aClass [
 		classSlots: aClass class localSlots;
 		sharedVariablesFromString: aClass classVariablesString;
 		sharedPools: aClass sharedPoolsString;
-		category: aClass category;
+		package: aClass package name;
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
 
+	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
+
 	self builderEnhancer fillBuilder: self from: aClass
+]
+
+{ #category : 'copying' }
+ShiftClassBuilder >> fillInstanceSideFromClass: aClass [
+
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
+	self privateSlots: aClass slots.
+	self privateTraitComposition: aClass traitComposition.
+	self package: aClass package name.
+
+	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
+
+	self superclass: aClass superclass.
+
+	self layout: aClass classLayout class.
+
+	self sharedVariables: aClass classVariables.
+	self sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray
+]
+
+{ #category : 'building' }
+ShiftClassBuilder >> fluidInstall [
+	"Install the class in the system environment, method #fluidInstall is implemented in behavior, too"
+
+	^ self install
 ]
 
 { #category : 'testing' }
@@ -365,6 +419,13 @@ ShiftClassBuilder >> initialize [
 	buildEnvironment := self class environment
 ]
 
+{ #category : 'actions' }
+ShiftClassBuilder >> install [
+	"Install the class in the system environment"
+
+	^ ShiftClassInstaller new makeWithBuilder: self
+]
+
 { #category : 'building' }
 ShiftClassBuilder >> installSlotsAndVariables [
 	"notify all the variables so they can react to being installed in a class"
@@ -392,6 +453,19 @@ ShiftClassBuilder >> isInRemake [
 	"If the builder is in remake (when propagating changes to subclasses)"
 
 	^ inRemake
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> layout: aLayoutClass [
+	"Added while merging FluidClassBuilder API and ShiftClassBuilder. Maybe we should deprecate #layoutClass:"
+
+	^ self layoutClass: aLayoutClass
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> layoutClass [
+
+	^ self layoutDefinition layoutClass
 ]
 
 { #category : 'accessing' }
@@ -486,6 +560,11 @@ ShiftClassBuilder >> package: aString [
 	package := aString
 ]
 
+{ #category : 'private' }
+ShiftClassBuilder >> privateSlots: aCollection [
+	self layoutDefinition slots: aCollection
+]
+
 { #category : 'changes' }
 ShiftClassBuilder >> propagateChangesTo: anotherBuilder [
 	changes do: [ :e | e propagateToSubclasses: anotherBuilder ]
@@ -507,13 +586,12 @@ ShiftClassBuilder >> sharedPools [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> sharedPools: aString [
-	self layoutDefinition sharedPools: ((aString substrings: ' ') collect: [:e | e asSymbol])
-]
+ShiftClassBuilder >> sharedPools: anObject [
+	"The paramter can be either a collection of symbols or a string that should be converted into a collection of symbols."
 
-{ #category : 'accessing' }
-ShiftClassBuilder >> sharedPoolsCollectionOfSymbols: aCol [
-	self layoutDefinition sharedPools: aCol
+	self layoutDefinition sharedPools: (anObject isString
+			 ifTrue: [ (anObject substrings: ' ') collect: [ :e | e asSymbol ] ]
+			 ifFalse: [ anObject ])
 ]
 
 { #category : 'accessing' }
@@ -543,7 +621,8 @@ ShiftClassBuilder >> slots [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> slots: aCollection [
-	self layoutDefinition slots: aCollection
+
+	self privateSlots: aCollection
 ]
 
 { #category : 'accessing' }
@@ -606,7 +685,7 @@ ShiftClassBuilder >> useStrictSuperclass [
 	self superclassResolver: ClassResolverStrictResolve new
 ]
 
-{ #category : 'private - validating' }
+{ #category : 'private' }
 ShiftClassBuilder >> validateClassName [
 	name ifNil: [ ^self ].
 
@@ -623,7 +702,7 @@ ShiftClassBuilder >> validateClassName [
 	DangerousClassNotifier check: name
 ]
 
-{ #category : 'private - validating' }
+{ #category : 'private' }
 ShiftClassBuilder >> validateSuperclass [
 	self superclass ifNil: [ ^self ].
 	oldClass ifNil: [ ^ self ].
