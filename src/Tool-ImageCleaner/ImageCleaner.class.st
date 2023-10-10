@@ -96,14 +96,12 @@ ImageCleaner >> cleanUpForRelease [
 		allObjectsDo: [ :each |
 			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
 				ifTrue: [ each releaseCachedState ] ].
-
-	self removeEmptyCategories.
-	self packageOrganizer removeEmptyPackagesAndTags.
-
+	
 	Smalltalk
 		garbageCollect;
 		cleanOutUndeclared;
 		fixObsoleteReferences;
+		removeEmptyMessageCategories;
 		cleanUp: true except: #() confirming: false.
 
 	FreeTypeFontProvider current prepareForRelease.
@@ -194,13 +192,6 @@ ImageCleaner >> packagesForCleanUpInProduction [
 	 WARNING, ORDER IS IMPORTANT"
 
 	^#('MonticelloMocks')
-]
-
-{ #category : 'cleaning' }
-ImageCleaner >> removeEmptyCategories [
-	"Remove empty categories"
-	
-	Smalltalk image removeEmptyMessageCategories
 ]
 
 { #category : 'literal sharing' }
