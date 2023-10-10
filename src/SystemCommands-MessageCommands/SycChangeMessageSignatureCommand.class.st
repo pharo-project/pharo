@@ -15,94 +15,104 @@ Internal Representation and Key Implementation Points.
 	originalMessage:		<ClyMessageDescription>
 "
 Class {
-	#name : #SycChangeMessageSignatureCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycChangeMessageSignatureCommand',
+	#superclass : 'CmdCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'originalMessage',
-		'refactoringScopes'
+		'refactoringScopes',
+		'refactoredClass'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycChangeMessageSignatureCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMessageSelected | aToolContext isMethodSelected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycChangeMessageSignatureCommand class >> isAbstract [
 	^self = SycChangeMessageSignatureCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
 
-	aToolContext showMessage: originalMessage renamedTo: self resultMessageSelector asSymbol
+	super applyResultInContext: aToolContext.
+	aToolContext
+		showMessage: originalMessage
+		renamedTo: self resultMessageSelector asSymbol
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> asRefactorings [
 	^{self createRefactoring}
 ]
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycChangeMessageSignatureCommand >> canAddArgs [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycChangeMessageSignatureCommand >> canEditName [
 	^ true
 ]
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycChangeMessageSignatureCommand >> canRemoveArgs [
 	^ true
 ]
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycChangeMessageSignatureCommand >> canRenameArgs [
 	^ true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> createRefactoring [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> execute [
 
 	self executeRefactorings
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycChangeMessageSignatureCommand >> isComplexRefactoring [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycChangeMessageSignatureCommand >> originalMessage [
 	^ originalMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycChangeMessageSignatureCommand >> originalMessage: anObject [
 	originalMessage := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self setUpModelFromContext: aToolContext.
+	refactoredClass := aToolContext lastSelectedClass.
 	refactoringScopes := aToolContext refactoringScopes.
 	originalMessage := aToolContext lastSelectedMessage
 ]
 
-{ #category : #requesting }
+{ #category : 'accessing' }
+SycChangeMessageSignatureCommand >> refactoredClass: aClass [ 
+	refactoredClass := aClass
+]
+
+{ #category : 'requesting' }
 SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 
 	| methodName dialog invalidArgNames |
@@ -125,7 +135,7 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 	^ methodName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycChangeMessageSignatureCommand >> resultMessageSelector [
 	self subclassResponsibility
 ]

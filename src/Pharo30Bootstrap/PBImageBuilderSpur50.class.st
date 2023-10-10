@@ -2,16 +2,17 @@
 I implement the initial image building for Spur VMs. I'm an abstract class. My subclasses implement specifics about 32 and 64 bit images.
 "
 Class {
-	#name : #PBImageBuilderSpur50,
-	#superclass : #PBImageBuilder50,
+	#name : 'PBImageBuilderSpur50',
+	#superclass : 'PBImageBuilder50',
 	#instVars : [
 		'nextOrdinaryClassIndex',
 		'freeListsOop'
 	],
-	#category : #Pharo30Bootstrap
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 PBImageBuilderSpur50 class >> example5617 [
 
 	| vm om |
@@ -27,7 +28,7 @@ PBImageBuilderSpur50 class >> example5617 [
 		bootstrap.
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 PBImageBuilderSpur50 class >> forArchitecture: architecture [
 
 	| candidates |
@@ -41,7 +42,7 @@ PBImageBuilderSpur50 class >> forArchitecture: architecture [
 	^ candidates anyOne new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> allocateClassTable [
 	"Allocate the root of the classTable plus enough pages to accomodate all classes in
 	 the classToIndex map.  Don't fill in the entries yet; the classes have yet to be cloned."
@@ -94,7 +95,7 @@ PBImageBuilderSpur50 >> allocateClassTable [
 	newHeap setHiddenRootsObj: tableRoot
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilderSpur50 >> allocateFreeLists [
 	"Allocate the freeLists array."
 	| newOop |
@@ -114,13 +115,13 @@ PBImageBuilderSpur50 >> allocateFreeLists [
 	self objectMemory initializeFreeSpacePostLoad: freeListsOop.
 ]
 
-{ #category : #'class-indexes' }
+{ #category : 'class-indexes' }
 PBImageBuilderSpur50 >> arrayClassIndex [
 	
 	^ self objectMemory arrayClassIndexPun
 ]
 
-{ #category : #'final steps' }
+{ #category : 'final steps' }
 PBImageBuilderSpur50 >> compactImage [
 	| firstFree lastUsed newHeap |
 	newHeap := espellBackend objectMemory.
@@ -133,7 +134,7 @@ PBImageBuilderSpur50 >> compactImage [
 		[^self].
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilderSpur50 >> createBehaviorFromDefinition: aRFiDefinition [
 
 	[ ^ super createBehaviorFromDefinition: aRFiDefinition ]
@@ -142,7 +143,7 @@ PBImageBuilderSpur50 >> createBehaviorFromDefinition: aRFiDefinition [
 					and: [ e signalerContext sender method selector = #mapStackPages ]) ifFalse: [ e pass ]] 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilderSpur50 >> createFalse [
 
 	"False format should be changed and calculated depending on the image"
@@ -155,7 +156,7 @@ PBImageBuilderSpur50 >> createFalse [
 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilderSpur50 >> createNil [
 
 	"UndefinedObject format should be changed and calculated depending on the image"
@@ -167,7 +168,7 @@ PBImageBuilderSpur50 >> createNil [
 	^ objectSpace nilObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilderSpur50 >> createTrue [
 
 	"True format should be changed and calculated depending on the image"
@@ -180,11 +181,11 @@ PBImageBuilderSpur50 >> createTrue [
 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilderSpur50 >> createVMStubs [
 
 	| specialObjectsArray |
-	super log: 'creating initial Objects needed by the VM'.
+	self log: 'Creating initial Objects needed by the VM'.
 
 	self createNil.	
 	self createFalse.
@@ -238,7 +239,7 @@ PBImageBuilderSpur50 >> createVMStubs [
 	objectSpace backend specialSelectors: ((self classNamed: #Array) mirror basicNew: 64)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> errorMessagesArray [
 
 	"return objects for error messages - special objects array at index 52"
@@ -255,16 +256,18 @@ PBImageBuilderSpur50 >> errorMessagesArray [
 		#'object moved'. #'object not pinned'. #'callback error'} asLiteralInObjectSpace: objectSpace
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> firstOrdinaryClassIndex [
 	
 	^ self objectMemory classTablePageSize
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PBImageBuilderSpur50 >> flushNewSpace [
 
 	| newHeap |
+	
+	self log: 'Flushing new space.'.
 	newHeap := espellBackend objectMemory.
 	newHeap initializePostBootstrap.
 	
@@ -290,7 +293,7 @@ PBImageBuilderSpur50 >> flushNewSpace [
 	self prepareSimulatorForExecution.
 ]
 
-{ #category : #'final steps' }
+{ #category : 'final steps' }
 PBImageBuilderSpur50 >> followForwardingPointers [
 	| newHeap |
 	newHeap := espellBackend objectMemory.
@@ -306,7 +309,7 @@ PBImageBuilderSpur50 >> followForwardingPointers [
 						withValue: (newHeap followForwarded: field)]]]].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> formatOfClass: aRFiClass [ 
 	
 	"A class format is composed by"
@@ -324,7 +327,7 @@ PBImageBuilderSpur50 >> formatOfClass: aRFiClass [
 	^newInstSpec << 16 + instSize
 ]
 
-{ #category : #'final step' }
+{ #category : 'final step' }
 PBImageBuilderSpur50 >> freeForwarders [
 	"Check that all forwarders have been followed.  Then free them."
 	| numForwarders numFreed newHeap |
@@ -347,7 +350,7 @@ PBImageBuilderSpur50 >> freeForwarders [
 	self assert: numFreed = numForwarders
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> instSpecOfClass: aRFiClass [
 
 	"NEW:
@@ -377,13 +380,13 @@ PBImageBuilderSpur50 >> instSpecOfClass: aRFiClass [
 	self error: 'illegal old format'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> instantiateClassLoader [
 
 	classLoader := PBSpurClassLoader new.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBImageBuilderSpur50 >> newSpecialObjectsArray [
 	| newSpecialObjectsArray |
 	newSpecialObjectsArray := espellBackend arrayClass asClassMirror basicNew: 60.
@@ -438,7 +441,7 @@ PBImageBuilderSpur50 >> newSpecialObjectsArray [
 	^newSpecialObjectsArray.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> nextOrdinaryClassIndex [
 	
 	| result |
@@ -448,13 +451,13 @@ PBImageBuilderSpur50 >> nextOrdinaryClassIndex [
 	^ result
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> objectMemory [
 	
 	^ espellBackend simulator objectMemory
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> prepareSimulatorForExecution [
 
 	| savedEndOfMemory |
@@ -472,7 +475,7 @@ PBImageBuilderSpur50 >> prepareSimulatorForExecution [
 		runLeakCheckerForFullGC.
 ]
 
-{ #category : #'final steps' }
+{ #category : 'final steps' }
 PBImageBuilderSpur50 >> reportSizes [
 	| oldAvgBytes "newAvgBytes" newHeapSize newHeap |
 	newHeapSize := 20 * 1024 * 1024.
@@ -493,7 +496,7 @@ PBImageBuilderSpur50 >> reportSizes [
 		flush
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBImageBuilderSpur50 >> writeSnapshot: imageFileName ofTransformedImage: spurHeap headerFlags: headerFlags screenSize: screenSizeInteger [
 	"The bootstrapped image typically contains a few big free chunks and one huge free chunk.
 	 Test snapshot writing and loading by turning the largest non-huge chunks into segment bridges

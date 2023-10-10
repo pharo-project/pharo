@@ -9,22 +9,27 @@ DADependencyChecker new transitiveDependenciesOf: #'CargoPackageManager-Minimal'
 DADependencyChecker new dependentsOf: #CargoPackageManager.
 "
 Class {
-	#name : #DADependencyChecker,
-	#superclass : #Object,
+	#name : 'DADependencyChecker',
+	#superclass : 'Object',
 	#instVars : [
-		'report'
+		'report',
+		'shouldComputeMessageSendDependencies'
 	],
-	#category : #'Tool-DependencyAnalyser-Report'
+	#category : 'Tool-DependencyAnalyser-Report',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Report'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyChecker >> buildPackageRelationGraphFor: aPackageName [
-	^ [ (DAPackageRelationGraph onPackagesNamed: { aPackageName }) build ]
+	^ [ (DAPackageRelationGraph onPackagesNamed: { aPackageName })
+		 	shouldComputeMessageSendDependencies: self shouldComputeMessageSendDependencies;
+			build ]
 		on: DAPotentialOutDatedDependencyWarning
 		do: [ :ex | report addWarning: ex. ex resume ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyChecker >> computeDependenciesOf: aPackageName [
 	| dependencies |
 	dependencies := (self daPackageFor: aPackageName) dependentPackages collect: [:each | each packageName].
@@ -35,7 +40,7 @@ DADependencyChecker >> computeDependenciesOf: aPackageName [
 		sorted
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyChecker >> computeDependenciesOf: aPackageName visitedPackages: visited [
 	| packageName |
 	packageName := aPackageName asSymbol.
@@ -45,21 +50,20 @@ DADependencyChecker >> computeDependenciesOf: aPackageName visitedPackages: visi
 	visited add: packageName
 ]
 
-{ #category : #'computing - dependencies' }
+{ #category : 'computing - dependencies' }
 DADependencyChecker >> computeImageDependencies [
+
 	| visited |
 	self newReport.
 	report
 		analysisRunString: 'Pharo image dependencies';
 		imageVersion: SystemVersion current.
 	visited := Set new.
-	RPackageOrganizer default packageNames
-		do: [ :packageName |
-			self computeDependenciesOf: packageName visitedPackages: visited ].
+	self packageOrganizer packageNames do: [ :packageName | self computeDependenciesOf: packageName visitedPackages: visited ].
 	^ report
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyChecker >> computeTransitiveDependenciesOf: aPackageName visitedPackages: visited [
 	(visited includes: aPackageName) ifTrue: [ ^ self ].
 	self computeDependenciesOf: aPackageName visitedPackages: visited.
@@ -67,41 +71,41 @@ DADependencyChecker >> computeTransitiveDependenciesOf: aPackageName visitedPack
 		do: [ :each | self computeTransitiveDependenciesOf: each visitedPackages: visited ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyChecker >> daPackageFor: aPackageName [
 	^ (((self buildPackageRelationGraphFor: aPackageName) packages)
 			select: #isSeen) first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyChecker >> dependenciesOf: aPackageName [
 	^ report
 		dependenciesOf: aPackageName asSymbol
 		ifAbsentPut: [ self computeDependenciesOf: aPackageName ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyChecker >> ignoredDependenciesOf: aPackageName [
-	^ (RPackage organizer packageNamed: aPackageName) ignoredDependencies
+	^ (self packageOrganizer packageNamed: aPackageName) ignoredDependencies
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DADependencyChecker >> initialize [
 	super initialize.
 	self newReport
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DADependencyChecker >> manuallyResolvedDependenciesOf: aPackageName [
-	^ (RPackage organizer packageNamed: aPackageName) manuallyResolvedDependencies
+	^ (self packageOrganizer packageNamed: aPackageName) manuallyResolvedDependencies
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DADependencyChecker >> newReport [
 	^ report := DADependencyReport new
 ]
 
-{ #category : #'computing - dependencies' }
+{ #category : 'computing - dependencies' }
 DADependencyChecker >> shortestPathToPackageIntroducingDependency: dependencyPackageName startingFrom: aPackageName [
 	"This method allows to easily spots a package dependency we want to avoid in the System.
 	ex: DADependencyChecker new
@@ -123,7 +127,17 @@ DADependencyChecker >> shortestPathToPackageIntroducingDependency: dependencyPac
 	^ dijkstra reconstructPath
 ]
 
-{ #category : #'computing - dependencies' }
+{ #category : 'accessing' }
+DADependencyChecker >> shouldComputeMessageSendDependencies [
+	^ shouldComputeMessageSendDependencies ifNil: [ true ]
+]
+
+{ #category : 'accessing' }
+DADependencyChecker >> shouldComputeMessageSendDependencies: aBoolean [
+	shouldComputeMessageSendDependencies := aBoolean 
+]
+
+{ #category : 'computing - dependencies' }
 DADependencyChecker >> transitiveDependenciesOf: aPackageName [
 	self newReport.
 	report
@@ -133,7 +147,7 @@ DADependencyChecker >> transitiveDependenciesOf: aPackageName [
 	^ report
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependencyChecker >> unresolvedDependenciesOf: aPackageName [
 	^ [ (DAMessageSendAnalyzer on: aPackageName) missingMethodsWithPotentialMatchAfterManuallyResolvedDependenciesAddition
 		reject: #isEmpty ]

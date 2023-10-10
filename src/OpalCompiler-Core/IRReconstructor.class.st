@@ -2,23 +2,25 @@
 I am a specialized IRBuilder for the decompiler
 "
 Class {
-	#name : #IRReconstructor,
-	#superclass : #IRBuilder,
+	#name : 'IRReconstructor',
+	#superclass : 'IRBuilder',
 	#instVars : [
 		'temps',
 		'remoteTemps',
 		'closureCopiedValues'
 	],
-	#category : #'OpalCompiler-Core-Bytecode'
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
 }
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRReconstructor >> blockReturnTop [
 	self fixPushNilsForTemps.
 	^ super blockReturnTop
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRReconstructor >> createTempVectorNamed: name withVars: anArray [
 	" Don't add the temp yet, we only know it's index at the end of the block or method "
 	"self addVectorTemps: anArray"
@@ -27,17 +29,17 @@ IRReconstructor >> createTempVectorNamed: name withVars: anArray [
 	self add: (IRInstruction createTempVectorNamed: name withVars: anArray)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRReconstructor >> currentSequence [
 	^currentSequence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRReconstructor >> currentSequence: aSeq [
 	currentSequence := aSeq
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 IRReconstructor >> fixPushNilsForTemps [
 	" There are pushConstant: nil in the beginning of the blocksequence for all of the defined temps.
 	  We got these pushConstant: nil in. Now our closure will generate them again, meaning we will double
@@ -48,7 +50,7 @@ IRReconstructor >> fixPushNilsForTemps [
 	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRReconstructor >> initialize [
 	temps := Dictionary new.
 	remoteTemps := Dictionary new.
@@ -57,14 +59,14 @@ IRReconstructor >> initialize [
 	super initialize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRReconstructor >> isLastClosureInstruction [
 	| nextJumps |
 	nextJumps := jumpAheadStacks at: sourceMapByteIndex + 1 ifAbsent: [ ^ false ].
 	^ nextJumps anySatisfy: [ :anOrigin | anOrigin = self currentScope ]
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRReconstructor >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues [
 	| anInstruction |
 	anInstruction := super pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues.
@@ -73,21 +75,21 @@ IRReconstructor >> pushFullClosureCompiledBlock: compiledBlock copiedValues: cop
 		self rememberReference: anInstruction -> index to: aValue in: closureCopiedValues ]
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRReconstructor >> pushRemoteTemp: name inVector: nameOfVector [
 	| anInstruction |
 	anInstruction := super pushRemoteTemp: name inVector: nameOfVector.
 	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRReconstructor >> pushTemp: aSelector [
 	| anInstruction |
 	anInstruction := super pushTemp: aSelector.
 	self rememberReference: anInstruction to: aSelector in: temps
 ]
 
-{ #category : #remapping }
+{ #category : 'remapping' }
 IRReconstructor >> remapTemp: aTemp toRemote: aRemote [
 	(temps removeKey: aTemp ifAbsent: [ #() ])
 		do: [ :tempAccess |
@@ -107,13 +109,13 @@ IRReconstructor >> remapTemp: aTemp toRemote: aRemote [
 			self rememberReference: aClosureAndIndex to: aRemote in: closureCopiedValues. ]
 ]
 
-{ #category : #remapping }
+{ #category : 'remapping' }
 IRReconstructor >> rememberReference: anInstruction to: name in: dictionary [
 	(dictionary at: name ifAbsentPut: [ OrderedCollection new ])
 		add: anInstruction
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 IRReconstructor >> removeLast: n [
 	" Make the address of the instruction be the address of the first removed instruction. "
 	sourceMapByteIndex := sourceMapByteIndex - n.
@@ -122,14 +124,14 @@ IRReconstructor >> removeLast: n [
 		node name ]
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRReconstructor >> storeRemoteTemp: name inVector: nameOfVector [
 	| anInstruction |
 	anInstruction := super storeRemoteTemp: name inVector: nameOfVector.
 	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
 ]
 
-{ #category : #instructions }
+{ #category : 'instructions' }
 IRReconstructor >> storeTemp: aSelector [
 	| anInstruction |
 	anInstruction := super storeTemp: aSelector.

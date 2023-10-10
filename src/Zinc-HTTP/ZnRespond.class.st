@@ -6,27 +6,29 @@ I am ZnRespond, a Notification to signal the end of #handleRequest: processing w
 Normal #handleRequest: processing in a ZnServer delegate takes a ZnRequest object as input argument and needs to produce a ZnResponse as output, returning it as a regular result. Sometimes you do not want to keep managing this single result with many levels of condition on a complex or deep stack, but instead directly want to return a response: that is when you can use the ZnRespond notification.
 "
 Class {
-	#name : #ZnRespond,
-	#superclass : #Notification,
+	#name : 'ZnRespond',
+	#superclass : 'Notification',
 	#instVars : [
 		'response'
 	],
-	#category : #'Zinc-HTTP-Exceptions'
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRespond class >> signalWith: response [
 	^ self new
 		response: response;
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRespond >> response [
 	^ response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRespond >> response: anObject [
 	response := anObject
 ]

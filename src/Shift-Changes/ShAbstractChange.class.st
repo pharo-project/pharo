@@ -11,70 +11,71 @@ My  subclasses should know:
 - If the change affect the subclasses.
 "
 Class {
-	#name : #ShAbstractChange,
-	#superclass : #Object,
+	#name : 'ShAbstractChange',
+	#superclass : 'Object',
 	#instVars : [
 		'builder',
 		'oldClass'
 	],
-	#category : #'Shift-Changes'
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShAbstractChange class >> isAbstract [
 
 	^ self == ShAbstractChange
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ShAbstractChange >> = another [
 	^ self species = another species and: [ builder = another builder ]
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 ShAbstractChange >> announceChanges [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShAbstractChange >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShAbstractChange >> builder: anObject [
 	builder := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShAbstractChange >> hasChangeClassSideShape [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShAbstractChange >> hasChangeInstanceSideShape [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShAbstractChange >> hasToMigrateInstances [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ShAbstractChange >> hash [
 	^ builder hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShAbstractChange >> oldClass [
 	^ oldClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShAbstractChange >> oldClass: anObject [
 	oldClass := anObject
 ]
 
-{ #category : #propagating }
+{ #category : 'propagating' }
 ShAbstractChange >> propagateToSubclasses: aBuilder [
 ]

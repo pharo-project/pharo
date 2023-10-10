@@ -1,10 +1,11 @@
 Class {
-	#name : #ClapMetacello,
-	#superclass : #ClapPharoApplication,
-	#category : #'Clap-Commands-Pharo'
+	#name : 'ClapMetacello',
+	#superclass : 'ClapPharoApplication',
+	#category : 'Clap-Commands-Pharo',
+	#package : 'Clap-Commands-Pharo'
 }
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 ClapMetacello class >> metacello [
 	<commandline>
 	^ (ClapCommand id: #metacello)
@@ -28,12 +29,12 @@ ClapMetacello class >> metacello [
 			(self with: args) execute ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 ClapMetacello >> baselineName [
 	^ arguments at: #NAME
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClapMetacello >> execute [
 	self outputStreamDo: [ :out |
 		out
@@ -42,17 +43,17 @@ ClapMetacello >> execute [
 			newLine ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapMetacello >> groups [
 	^ arguments at: #version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapMetacello >> repositoryUrl [
 	^ arguments at: #REPOSITORY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapMetacello >> version [
 	^ arguments at: #groups
 ]

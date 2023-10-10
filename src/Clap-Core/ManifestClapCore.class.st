@@ -15,7 +15,9 @@ The general process in Clap has three steps:
 
 "
 Class {
-	#name : #ManifestClapCore,
-	#superclass : #PackageManifest,
-	#category : #'Clap-Core-Manifest'
+	#name : 'ManifestClapCore',
+	#superclass : 'PackageManifest',
+	#category : 'Clap-Core-Manifest',
+	#package : 'Clap-Core',
+	#tag : 'Manifest'
 }

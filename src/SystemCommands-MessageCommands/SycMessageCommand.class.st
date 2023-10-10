@@ -10,46 +10,47 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SycMessageCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycMessageCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'messages'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMessageCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isMessageSelected | aToolContext isMethodSelected
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMessageCommand class >> for: messages [
 	^self new
 		messages: messages
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMessageCommand class >> forMethods: methods [
 	^self for: (methods collect: [:each | SycMessageDescription ofMethod: each])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMessageCommand class >> isAbstract [
 	^self = SycMessageCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageCommand >> messages [
 	^ messages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageCommand >> messages: anObject [
 	messages := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

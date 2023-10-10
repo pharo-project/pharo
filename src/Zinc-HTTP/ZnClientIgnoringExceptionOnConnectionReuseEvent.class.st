@@ -3,26 +3,28 @@ ZnClientIgnoringExceptionOnConnectionReuseEvent signals that a client connection
 
 "
 Class {
-	#name : #ZnClientIgnoringExceptionOnConnectionReuseEvent,
-	#superclass : #ZnClientLogEvent,
+	#name : 'ZnClientIgnoringExceptionOnConnectionReuseEvent',
+	#superclass : 'ZnClientLogEvent',
 	#instVars : [
 		'exception'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientIgnoringExceptionOnConnectionReuseEvent >> exception [
 	^ exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientIgnoringExceptionOnConnectionReuseEvent >> exception: anObject [
 	exception := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnClientIgnoringExceptionOnConnectionReuseEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Ignoring Exception On Connection Reuse '; print: exception
+	stream << 'Ignoring Exception On Connection Reuse '; print: exception
 ]

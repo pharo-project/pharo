@@ -5,8 +5,8 @@ A MethodNameEditor is an editor to set the name of a method.
 	MethodNameEditor openOn: (RBMethodName selector: #foo: arguments: #('x')) 
 "
 Class {
-	#name : #RBMethodNameEditor,
-	#superclass : #DialogWindowMorph,
+	#name : 'RBMethodNameEditor',
+	#superclass : 'DialogWindowMorph',
 	#instVars : [
 		'argumentIndex',
 		'labelMorph',
@@ -14,20 +14,22 @@ Class {
 		'selectorField',
 		'labelGroup'
 	],
-	#category : #'Refactoring2-Transformations-Utilities'
+	#category : 'Refactoring2-Transformations-Utilities',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodNameEditor class >> on: aMethodName [
 	^ self basicNew initializeOn: aMethodName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodNameEditor class >> openOn: aMethodName [
 	^ (self on: aMethodName) openModal
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodNameEditor >> add [
 
 	| newArguments |
@@ -38,7 +40,7 @@ RBMethodNameEditor >> add [
 	self update
 ]
 
-{ #category : #grips }
+{ #category : 'grips' }
 RBMethodNameEditor >> addEdgeGrips [
 	"Should add these to the front!"
 
@@ -53,24 +55,24 @@ RBMethodNameEditor >> addEdgeGrips [
 		addMorph: r
 ]
 
-{ #category : #grips }
+{ #category : 'grips' }
 RBMethodNameEditor >> addGrips [
 
 	self addEdgeGrips
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNameEditor >> argumentIndex [
 	^ argumentIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNameEditor >> argumentIndex: anInteger [
 	argumentIndex := anInteger.
 	self update
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNameEditor >> argumentList [
 
 	^ self methodName
@@ -78,13 +80,13 @@ RBMethodNameEditor >> argumentList [
 		ifNotNil: [ :method | method arguments copy ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodNameEditor >> cancel [
 	methodName := nil.
 	^ super cancel
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 RBMethodNameEditor >> defaultFocusMorph [
 	"Answer the morph that should have the keyboard
 	focus by default when the dialog is opened."
@@ -93,14 +95,14 @@ RBMethodNameEditor >> defaultFocusMorph [
 		ifNil: [ super defaultFocusMorph ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodNameEditor >> down [
 	self isDownEnabled ifFalse: [ ^ self ].
 	self argumentList swap: self argumentIndex with: self argumentIndex + 1.
 	self argumentIndex: self argumentIndex + 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMethodNameEditor >> initialize [
 
 	super initialize.
@@ -108,7 +110,7 @@ RBMethodNameEditor >> initialize [
 	self beResizeable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMethodNameEditor >> initializeOn: aMethodName [
 	methodName := aMethodName.
 	argumentIndex := 0.
@@ -116,29 +118,29 @@ RBMethodNameEditor >> initializeOn: aMethodName [
 	self title: 'Method Name'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNameEditor >> isDownEnabled [
 	^ self argumentIndex ~= 0 and: [ self argumentIndex + 1 between: 1 and: self argumentList size ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNameEditor >> isOkEnabled [
 
 	^ self methodName isNotNil
 		and: [ self methodName isValid ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNameEditor >> isUpEnabled [
 	^ self argumentIndex ~= 0 and: [ self argumentIndex - 1 between: 1 and: self argumentList size ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNameEditor >> methodName [
 	^ methodName
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 RBMethodNameEditor >> newContentMorph [
 
 	^ labelGroup := (self newRow: {
@@ -168,12 +170,12 @@ RBMethodNameEditor >> newContentMorph [
 		yourself
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 RBMethodNameEditor >> newOKButton [
 	^ self newOKButtonFor: self getEnabled: #isOkEnabled
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodNameEditor >> remove [
 
 	| newArguments |
@@ -184,13 +186,13 @@ RBMethodNameEditor >> remove [
 	self update
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNameEditor >> selector [
 
 	^ self methodName ifNotNil: [ :method | method selector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNameEditor >> selector: aString [
 
 	super selector: aString.
@@ -198,14 +200,14 @@ RBMethodNameEditor >> selector: aString [
 		self extent: ((labelGroup extent x+20) @ labelGroup extent y) ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBMethodNameEditor >> up [
 	self isUpEnabled ifFalse: [ ^ self ].
 	self argumentList swap: self argumentIndex with: self argumentIndex - 1.
 	self argumentIndex: self argumentIndex - 1
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 RBMethodNameEditor >> update [
 	self changed: #argumentList; changed: #argumentIndex.
 	self changed: #isUpEnabled; changed: #isDownEnabled; changed: #isOkEnabled.

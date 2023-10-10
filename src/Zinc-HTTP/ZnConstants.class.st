@@ -4,79 +4,81 @@ I am ZnConstants, holding various constants that we use.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnConstants,
-	#superclass : #Object,
+	#name : 'ZnConstants',
+	#superclass : 'Object',
 	#classVars : [
 		'HTTPStatusCodes'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> defaultHTTPVersion [
 	^ 'HTTP/1.1'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> defaultServerString [
 	^ self frameworkNameAndVersion , ' (' , self systemVersion , ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> defaultUserAgent [
 	^ self frameworkNameAndVersion , ' (' , self systemVersion , ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> faviconBytes [
 	^ #(0 0 1 0 1 0 16 16 16 0 0 0 0 0 40 1 0 0 22 0 0 0 40 0 0 0 16 0 0 0 32 0 0 0 1 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 0 0 189 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 17 17 17 1 16 1 16 1 17 17 17 1 16 1 16 1 16 0 0 1 16 1 16 0 17 0 0 1 16 1 16 0 1 16 0 1 16 1 16 0 0 17 0 1 17 17 16 0 0 1 16 1 1 17 0 0 0 0 17 0 0 0 0 1 17 17 17 0 0 0 0 1 17 17 17 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0) asByteArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> frameworkLicense [
 	"http://en.wikipedia.org/wiki/MIT_License"
 
 	^ 'MIT License'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> frameworkMCVersion [
 	MCWorkingCopy managersForClass: self class do: [ :each | ^ each ancestors first name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> frameworkName [
 	^ 'Zinc HTTP Components'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> frameworkNameAndVersion [
 	^ self frameworkName, ' ', self frameworkVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> frameworkVersion [
 	^ '1.0'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> httpStatusCodes [
 	^ HTTPStatusCodes
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ZnConstants class >> initialize [
 	"Forced source code change for automatic initialization: 20180921"
 
 	self initializeHTTPStatusCodes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnConstants class >> initializeHTTPStatusCodes [
 	HTTPStatusCodes := Dictionary newFromPairs: self officialHTTPStatusCodesSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> knownHTTPMethods [
 	^ #(
 		"Standard HTTP 1.1 Verbs"
@@ -86,12 +88,12 @@ ZnConstants class >> knownHTTPMethods [
 		PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> knownHTTPVersions [
 	^ #('HTTP/1.1' 'HTTP/1.0')
 ]
 
-{ #category : #'resource limits' }
+{ #category : 'resource limits' }
 ZnConstants class >> maximumLineLength [
 	"Return the maximum line length to accept.
 	Used by ZnLineReader and thus for reading request/status lines as well as headers.
@@ -100,7 +102,7 @@ ZnConstants class >> maximumLineLength [
 	^ 4096
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> officialHTTPStatusCodesSpec [
 	"This is the official list from http://www.iana.org/assignments/http-status-codes (version 2018-09-21)"
 
@@ -174,12 +176,12 @@ ZnConstants class >> officialHTTPStatusCodesSpec [
 	)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> remoteAddressHeader [
 	^ 'X-Zinc-Remote-Address'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConstants class >> systemVersion [
 	^ SystemVersion current type , '/' , SystemVersion current dottedMajorMinor
 ]

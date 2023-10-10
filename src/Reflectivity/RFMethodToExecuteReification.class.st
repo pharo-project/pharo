@@ -4,22 +4,24 @@ a message send at runtime has all the information to know which method will be c
 This reification uses lookupSelector: to calculate the method.
 "
 Class {
-	#name : #RFMethodToExecuteReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFMethodToExecuteReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFMethodToExecuteReification class >> entities [
 	^{RBMessageNode}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFMethodToExecuteReification class >> key [
 	^#methodToExecute
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFMethodToExecuteReification >> genForRBMessageNode [
 	^RBMessageNode
 		receiver: (RBMessageNode receiver: (RBVariableNode named: #RFReceiverReificationVar) selector: #class)
@@ -27,7 +29,7 @@ RFMethodToExecuteReification >> genForRBMessageNode [
 		arguments: (RBLiteralValueNode value: entity selector)
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFMethodToExecuteReification >> preambleForMessage: aNode [
 	| preamble |
 	preamble := OrderedCollection new.

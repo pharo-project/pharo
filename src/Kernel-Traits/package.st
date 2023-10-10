@@ -1,1 +1,1 @@
-Package { #name : #'Kernel-Traits' }
+Package { #name : 'Kernel-Traits' }

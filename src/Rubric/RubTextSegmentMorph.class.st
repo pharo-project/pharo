@@ -1,6 +1,6 @@
 Class {
-	#name : #RubTextSegmentMorph,
-	#superclass : #RubSegmentMorph,
+	#name : 'RubTextSegmentMorph',
+	#superclass : 'RubSegmentMorph',
 	#instVars : [
 		'textArea',
 		'firstIndex',
@@ -10,20 +10,22 @@ Class {
 		'label',
 		'changeable'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubTextSegmentMorph class >> from: aFirstCharIndex to: aLastCharIndex [
 	^ self new from: aFirstCharIndex to: aLastCharIndex
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubTextSegmentMorph class >> inTextArea: aTextArea from: aFirstCharIndex to: aLastCharIndex [
 	^ self new inTextArea: aTextArea from: aFirstCharIndex to: aLastCharIndex
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 RubTextSegmentMorph >> addItemToMenu: aMenu [
 
 |item|
@@ -38,38 +40,38 @@ RubTextSegmentMorph >> addItemToMenu: aMenu [
 		^ aMenu addMenuItem: item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> beChangeable [
 	self changeable: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> beExtendable [
 	self changeable: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubTextSegmentMorph >> beSmoothCurve [
 	super beSmoothCurve.
 	self textArea ifNotNil: [ self computeVertices ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> changeable [
 	^ changeable ifNil: [ changeable := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> changeable: aBoolean [
 	changeable := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> characterBlockForIndex: anIndex [
 	^ self textArea paragraph characterBlockForIndex: anIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextSegmentMorph >> computeSmoothVertices [
 	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine verts |
 	firstLineIndex := self lineIndexOfCharacterIndex: firstIndex.
@@ -113,66 +115,75 @@ RubTextSegmentMorph >> computeSmoothVertices [
 	self setVertices: verts
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextSegmentMorph >> computeStraightVertices [
-	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine verts secondLine thirdLine |
+	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine 
+	verts lines textarea margins segmentGap textAreaLeft |
 	firstCB := self characterBlockForIndex: firstIndex.
 	lastCB := self characterBlockForIndex: lastIndex.
+	lines := self lines.
+	textarea := self textArea.
+	margins := self margins.
 	firstLineIndex := self lineIndexOfCharacterIndex: firstIndex.
 	lastLineIndex := self lineIndexOfCharacterIndex: lastIndex.
-	firstLine := self lines at: firstLineIndex.
-	lastLine := self lines at: lastLineIndex.
+	firstLine := lines at: firstLineIndex.
+	lastLine := lines at: lastLineIndex.
 	verts := OrderedCollection new.
-	firstLine = lastLine
-		ifTrue: [
-			verts add: firstCB bottomLeft.
-			verts add: firstCB topLeft.
-			firstIndex ~= lastIndex
-				ifTrue: [
-					verts add: lastCB topLeft.
-					verts add: lastCB bottomLeft.
-					verts add: firstCB bottomLeft ] ]
-		ifFalse: [
-			secondLine := self lines at: firstLineIndex + 1.
-			thirdLine := self lines at: lastLineIndex - 1.
-			verts add: firstCB bottomLeft - (1 @ 0).
-			verts add: firstCB topLeft - (1 @ 0).
-			verts add: (self textArea right - self margins right) @ firstLine top.
-			verts add: (self textArea right - self margins right) @ thirdLine bottom.
+	segmentGap := 1@0.
+	firstLine = lastLine ifTrue: [
+		verts add: firstCB bottomLeft.
+		verts add: firstCB topLeft.
+		firstIndex ~= lastIndex ifTrue: [
 			verts add: lastCB topLeft.
 			verts add: lastCB bottomLeft.
-			verts add: lastLine bottomLeft - (1 @ 0).
-			verts add: secondLine topLeft - (1 @ 0).
-			verts add: firstCB bottomLeft - (1 @ 0) ].
+			verts add: firstCB bottomLeft ] ]
+	ifFalse: [ 
+		textAreaLeft := textArea left + margins left.
+		verts 
+			add: firstCB bottomLeft - segmentGap;
+			add: firstCB topLeft - segmentGap.
+		firstLineIndex to: lastLineIndex - 1 do: [ :index | | line |
+			line := lines at: index.
+			verts 
+				add: line actualWidth + margins left @ line top + segmentGap;
+				add: line actualWidth + margins left @ line bottom + segmentGap.
+		].
+		
+		verts
+			add: lastCB topLeft + segmentGap;
+			add: lastCB bottomLeft + segmentGap;
+			add: textAreaLeft @ lastLine bottom - segmentGap;
+			add: textAreaLeft @ firstLine bottom - segmentGap.
+	].
 	self setVertices: verts
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubTextSegmentMorph >> computeVertices [
 	self isCurve
 		ifTrue: [ self computeSmoothVertices ]
 		ifFalse: [ self computeStraightVertices ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubTextSegmentMorph >> defaultColor [
 	^ Color red
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 RubTextSegmentMorph >> delete [
 	textArea ifNotNil: [ :ta | ta removeSegment: self ].
 	textArea := nil.
 	super delete
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubTextSegmentMorph >> displayIconAt: aPosition on: aCanvas [
 	self icon ifNil: [ ^self ].
 	aCanvas translucentImage: self icon at: aPosition
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubTextSegmentMorph >> displayIconAt: aPosition onAthensCanvas: aCanvas [
 	self icon ifNil: [ ^self ].
 	aCanvas pathTransform
@@ -183,71 +194,71 @@ RubTextSegmentMorph >> displayIconAt: aPosition onAthensCanvas: aCanvas [
 			aCanvas drawShape: self icon boundingBox]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> firstIndex [
 	^ firstIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> firstIndex: anInteger [
 	firstIndex := anInteger.
 	self computeVertices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> firstLineIndex [
 	^  self lineIndexOfCharacterIndex: firstIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> from: aFirstCharIndex to: aLastCharIndex [
 	lastIndex := aFirstCharIndex max: aLastCharIndex.
 	firstIndex := aFirstCharIndex min: aLastCharIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> getText [
 	^ self textArea text copyFrom: self firstIndex to: self lastIndex - 1
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> handlesMouseOver: evt [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> icon: aForm [
 	icon := aForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> iconBlock [
 	^ iconBlock ifNil: [ iconBlock := [ :seg :evt | ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> iconBlock: aBlock [
 	iconBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> inTextArea: aTextArea [
 	textArea := aTextArea.
 	self computeVertices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> inTextArea: aTextArea from: aFirstCharIndex to: aLastCharIndex [
 	self from: aFirstCharIndex to: aLastCharIndex.
 	self inTextArea:  aTextArea
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubTextSegmentMorph >> initialize [
 	super initialize.
 	self borderWidth: 0.
@@ -255,82 +266,82 @@ RubTextSegmentMorph >> initialize [
 	self clipSubmorphs: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> interval [
 	^ self firstIndex to: self lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> label [
 	^ label value ifNil: [ label := '']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> label: aStringOrBlock [
 	label := aStringOrBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> lastIndex [
 	^ lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> lastIndex: anInteger [
 	lastIndex := anInteger.
 	self computeVertices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> lastLineIndex [
 	^ self lineIndexOfCharacterIndex: lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> lineIndexOfCharacterIndex: anIndex [
 	^ self textArea paragraph lineIndexOfCharacterIndex: anIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> lines [
 	^ self textArea paragraph lines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> margins [
 	^ self textArea margins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> mouseDownOnIcon: anEvent [
 	^ self iconBlock value: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> mouseEnter: anEvent [
 	self showMouseHasEntered.
 	super mouseEnter: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> mouseLeave: anEvent [
 	self showMouseHasLeaved.
 	super mouseLeave: anEvent
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubTextSegmentMorph >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self registerTextArea
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextSegmentMorph >> privateMoveBy: aPoint [
 	super privateMoveBy: aPoint.
 	self computeVertices
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 RubTextSegmentMorph >> readOnlyView [
 	^ RubScrolledTextMorph new
 		setTextWith: self getText;
@@ -339,46 +350,46 @@ RubTextSegmentMorph >> readOnlyView [
 		yourself
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 RubTextSegmentMorph >> readWriteView [
 	^ self readOnlyView on: self
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> registerTextArea [
 	textArea announcer
 	when: RubExtentChanged send: #whenExtentChanged: to: self;
 	when: RubTextChanged send: #whenTextChanged: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> replaceTextWith: aText [
 	self textArea replaceFrom: self firstIndex  to: self lastIndex with: aText asText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> setText: aText from: aView [
 	self replaceTextWith: aText.
 	self announcer announce: RubTextUpdatedInModel.
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> showMouseHasEntered [
 	self borderWidth: 1
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> showMouseHasLeaved [
 	self borderWidth: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentMorph >> textArea [
 	^ textArea
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> textChangedFrom: begin to: end delta: delta [
 	| changeInterval |
 	self flag: 'Dirty code, that does not work well, to be reviewed'.
@@ -403,18 +414,18 @@ RubTextSegmentMorph >> textChangedFrom: begin to: end delta: delta [
 			^ self computeVertices ]
 ]
 
-{ #category : #structure }
+{ #category : 'structure' }
 RubTextSegmentMorph >> topRendererOrSelf [
 	^owner
 		ifNotNil: [ owner topRendererOrSelf ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> whenExtentChanged: anAnnouncement [
 	self computeVertices
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentMorph >> whenTextChanged: anAnnouncement [
 	| beg end delta |
 	textArea ifNil: [ ^self ].

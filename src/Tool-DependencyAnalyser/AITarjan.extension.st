@@ -1,6 +1,6 @@
-Extension { #name : #AITarjan }
+Extension { #name : 'AITarjan' }
 
-{ #category : #'*Tool-DependencyAnalyser' }
+{ #category : '*Tool-DependencyAnalyser' }
 AITarjan >> runOnDAPackageRelationGraph: aRelationGraph [
 
     | dependencies |

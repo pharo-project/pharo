@@ -1,10 +1,11 @@
 Class {
-	#name : #RBMethodNameTest,
-	#superclass : #TestCase,
-	#category : #'Refactoring-Tests-Core-Base'
+	#name : 'RBMethodNameTest',
+	#superclass : 'TestCase',
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMethodNameTest >> testCreation [
 	"Yes this is stupid test but it would have save time to understand what should be passed as argument!"
 
@@ -14,7 +15,7 @@ RBMethodNameTest >> testCreation [
 	self assert: rbmethod arguments equals: #('x')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMethodNameTest >> testIsValid [
 	"A valid RBMethodName is a method name with a valid selector and corresponding arguments"
 

@@ -1,10 +1,11 @@
 Class {
-	#name : #T2PrecedenceCompositionTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2PrecedenceCompositionTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testClassCompositionOnPrecedenceKeepsPreference [
 
 	| t1 t2 original copy |
@@ -26,7 +27,7 @@ T2PrecedenceCompositionTest >> testClassCompositionOnPrecedenceKeepsPreference [
 		equals: copy preferedTrait innerClass instanceSide
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testCopyingAPrecedenceKeepsPreference [
 
 	| t1 t2 original copy |
@@ -46,7 +47,7 @@ T2PrecedenceCompositionTest >> testCopyingAPrecedenceKeepsPreference [
 	self assert: original preferedTrait equals: copy preferedTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 	| t1 t2 t3 c1 |
 	t1 := self newTrait: #T1 with: #() uses: #().
@@ -75,7 +76,7 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 	package: ''TraitsV2-Tests-TestClasses'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithAlias [
 	| t1 t2 t3 c1 |
 	t1 := self newTrait: #T1 with: #() uses: #().
@@ -102,11 +103,11 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithA
 	package: ''TraitsV2-Tests-TestClasses'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testPrecedencesCanBeCombined [
 
 	| t1 t2 t3 c1 |
-
+	<ignoreNotImplementedSelectors: #(m1 m2)>
 	t1 := self newTrait: #T1 with: #() uses: #().
 	t1 classTrait uses: {} slots: #().
 
@@ -127,7 +128,7 @@ T2PrecedenceCompositionTest >> testPrecedencesCanBeCombined [
 	self assert: (c1 new m2) equals: 11
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testWithPrecedenceIsNonAConflict [
 
 	| t1 t2 c1 |
@@ -146,9 +147,9 @@ T2PrecedenceCompositionTest >> testWithPrecedenceIsNonAConflict [
 	self deny: (c1 >> #m1) isConflict
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOne [
-
+	<ignoreNotImplementedSelectors: #(m1)>
 	| t1 t2 c1 |
 
 	t1 := self newTrait: #T1 with: #() uses: #().
@@ -165,9 +166,9 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOne [
 	self assert: (c1 new m1) equals: 33
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOneWithoutCaringOrderOfSequence [
-
+	<ignoreNotImplementedSelectors: #(m1)>
 	| t1 t2 c1 |
 
 	t1 := self newTrait: #T1 with: #() uses: #().
@@ -184,7 +185,7 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOneWithoutCaring
 	self assert: (c1 new m1) equals: 33
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2PrecedenceCompositionTest >> testWithoutPrecedenceIsAConflict [
 
 	| t1 t2 c1 |

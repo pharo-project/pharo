@@ -2,8 +2,8 @@
 Hudson report for test results
 "
 Class {
-	#name : #HDTestReport,
-	#superclass : #HDReport,
+	#name : 'HDTestReport',
+	#superclass : 'HDReport',
 	#instVars : [
 		'suite',
 		'stream',
@@ -20,20 +20,21 @@ Class {
 	#classVars : [
 		'CurrentStageName'
 	],
-	#category : #'JenkinsTools-Core'
+	#category : 'JenkinsTools-Core',
+	#package : 'JenkinsTools-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport class >> currentStageName [
 	^CurrentStageName ifNil: [ '' ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport class >> currentStageName: aStageName [
 	CurrentStageName := aStageName
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
 	| suite classes |
 	suite := TestSuite named: aString.
@@ -48,18 +49,19 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
 	^ self runSuite: suite
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport class >> runPackage: aString [
-	^ self runClasses: (RPackage organizer packageNamed: aString) definedClasses named: aString
+
+	^ self runClasses: (self packageOrganizer packageNamed: aString) definedClasses named: aString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport class >> runSuite: aTestSuite [
 	^ self new
 		runSuite: aTestSuite
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> calculateNodeName [
 	| environmentClass name bitString |
 	bitString := Smalltalk vm is32bit
@@ -83,33 +85,33 @@ HDTestReport >> calculateNodeName [
 		ifAbsent: [ '' ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> done [
 	"just close the file"
 	[ progressStream close ] on: Error do: []
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> generateTestName: aTestCase [
 	^ nodeName , (aTestCase class category copyReplaceAll: '-' with: '.')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HDTestReport >> hasErrors [ 
 	^ suiteErrors ~= 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HDTestReport >> hasFailures [ 
 	^ suiteFailures ~= 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HDTestReport >> hasFailuresOrErrors [ 
 	^ self hasFailures or: [ self hasErrors ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HDTestReport >> initialize [
 
 	super initialize.
@@ -122,12 +124,12 @@ HDTestReport >> initialize [
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HDTestReport >> initializeOn: aTestSuite [
 	suite := aTestSuite
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> newLogDuring: aBlock [
 
 	| currentStream tempStream |
@@ -137,7 +139,7 @@ HDTestReport >> newLogDuring: aBlock [
 	^tempStream contents
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HDTestReport >> openProgressStream [ 
 	
 	| aFile |
@@ -148,17 +150,17 @@ HDTestReport >> openProgressStream [
 			encoding: 'utf8'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> progressFileName [
 	^ progressFileName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> progressFileName: anObject [
 	progressFileName := anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> recordError: anError duringTest: aTestCase [ 
 
 	aTestCase shouldPass ifFalse: [ ^self ].
@@ -168,7 +170,7 @@ HDTestReport >> recordError: anError duringTest: aTestCase [
 	self serializeError: anError of: aTestCase.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> recordFailure: aTestFailure duringTest: aTestCase [ 
 
 	aTestCase shouldPass ifFalse: [ ^self ].
@@ -178,15 +180,15 @@ HDTestReport >> recordFailure: aTestFailure duringTest: aTestCase [
 	self serializeError: aTestFailure of: aTestCase.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> recordPassOf: aTestCase [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> recordSkip: aTestSkip duringTest: aTestCase [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> recordUnexpectedPassOf: aTestCase [
 	suiteFailures := suiteFailures + 1.
 	
@@ -196,7 +198,7 @@ HDTestReport >> recordUnexpectedPassOf: aTestCase [
 		using: [  ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 	| time testLog |
 	progressStream
@@ -228,7 +230,7 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 	progressStream nextPutAll: 'finished' ; crlf; flush
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> run [
 	Author uniqueInstance
 		ifUnknownAuthorUse: 'hudson'
@@ -239,14 +241,14 @@ HDTestReport >> run [
 					ensure: [ self tearDown ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> runAll [
 	CurrentExecutionEnvironment runTestsBy: [ 
 		suite tests do: [ :each | each run: self ]
 	]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> runCase: aTestCase [
 	self
 		reportTestCase: aTestCase
@@ -260,7 +262,7 @@ HDTestReport >> runCase: aTestCase [
 		]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> runSuite: aTestSuite [
 	^ self
 		initializeOn: aTestSuite;
@@ -268,7 +270,7 @@ HDTestReport >> runSuite: aTestSuite [
 		done
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> serializeError: error of: aTestCase [
 
 	"We got an error from a test, let's serialize it so we can properly debug it later on..."
@@ -281,7 +283,8 @@ HDTestReport >> serializeError: error of: aTestCase [
 		at: #FLDebuggerStackSerializer
 		ifPresent: [ :fuelOutStackDebugAction | 
 			| context testCaseMethodContext |
-			context := error signalerContext.
+			"we use signalContext and findMethodContextSuchThat: to find the method even with clean blocks in the middle"
+ 			context := error signalContext.
 			testCaseMethodContext := context findMethodContextSuchThat: [ :ctx | 
 				                         ctx receiver == aTestCase and: [ 
 					                         ctx selector == #performTest ] ].
@@ -296,7 +299,7 @@ HDTestReport >> serializeError: error of: aTestCase [
 				do: [ :err | Stdio stderr << err messageText; crlf; flush ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> setUp [
 
 	| aFile |
@@ -328,43 +331,43 @@ HDTestReport >> setUp [
 			ifFalse: [ each signalInitializationError ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> shouldSerializeError [
 	^ shouldSerializeError
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> shouldSerializeError: aBoolean [
 	shouldSerializeError := aBoolean.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> stackTraceString: err of: aTestCase [
 	^ self newLogDuring: [ self writeExceptionStack: err of: aTestCase ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> stageName [
 	"The stage name is used by the CI to name the report files"
 	^ stageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> stageName: anObject [
 	stageName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> suiteErrors [
 	^ suiteErrors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> suiteFailures [
 	^ suiteFailures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> suiteFileNameWithoutExtension [
 
 	| fileName |
@@ -374,19 +377,19 @@ HDTestReport >> suiteFileNameWithoutExtension [
 	^ fileName , suite name , '-Test'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> suitePassing [ 
 	^ self suiteTotal - self suiteFailures - self suiteErrors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HDTestReport >> suiteTotal [
 	^ suite 
 		ifNotNil: [ suite tests size ]
 		ifNil: [ 0 ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDTestReport >> tearDown [
 	suite resources 
 		do: [ :each | each reset ].
@@ -409,13 +412,13 @@ HDTestReport >> tearDown [
 		close
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> writeError: anError of: aTestCase [
 
 	self writeException: anError of: aTestCase asNode: 'error'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> writeException: anException asNode: errorNodeName using: writeBlock [
 	| encodedErrorName encodedErrorDescription |
 	stream tab; tab; nextPutAll: '<' ; nextPutAll: errorNodeName; nextPutAll: ' type="'.
@@ -433,7 +436,7 @@ HDTestReport >> writeException: anException asNode: errorNodeName using: writeBl
 	stream tab; tab; nextPutAll: '</'; nextPutAll: errorNodeName; nextPutAll: '>'; lf
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> writeException: anException of: aTestCase asNode: errorNodeName [
 
 	self  
@@ -442,7 +445,7 @@ HDTestReport >> writeException: anException of: aTestCase asNode: errorNodeName 
 		using: [ 	self writeExceptionStack: anException of: aTestCase ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> writeExceptionStack: anException of: aTestCase [
 	| context |
 	context := anException signalerContext.
@@ -453,7 +456,7 @@ HDTestReport >> writeExceptionStack: anException of: aTestCase [
 			context := context sender ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDTestReport >> writeFailure: aTestFailure of: aTestCase [
 
 	self writeException: aTestFailure of: aTestCase asNode: 'failure'

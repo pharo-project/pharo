@@ -1,6 +1,6 @@
 Class {
-	#name : #CDClassWithFullDefinitionExample,
-	#superclass : #Object,
+	#name : 'CDClassWithFullDefinitionExample',
+	#superclass : 'Object',
 	#instVars : [
 		'instVar1',
 		'instVar2'
@@ -13,38 +13,39 @@ Class {
 		'classSideVar1',
 		'classSideVar2'
 	],
-	#category : #'ClassParser-Tests'
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassWithFullDefinitionExample class >> classSideVar1 [
 
 	^ classSideVar1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassWithFullDefinitionExample class >> classSideVar2 [
 
 	^ classSideVar2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassWithFullDefinitionExample >> classVar1 [
 	^ClassVar1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassWithFullDefinitionExample >> classVar2 [
 	^ClassVar2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassWithFullDefinitionExample >> instVar1 [
 
 	^ instVar1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassWithFullDefinitionExample >> instVar2 [
 
 	^ instVar2

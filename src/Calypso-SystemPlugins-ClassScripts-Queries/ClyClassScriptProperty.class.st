@@ -11,26 +11,27 @@ Internal Representation and Key Implementation Points.
 	script:		<ClyClassScript>
 "
 Class {
-	#name : #ClyClassScriptProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyClassScriptProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'script'
 	],
-	#category : #'Calypso-SystemPlugins-ClassScripts-Queries'
+	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
+	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassScriptProperty class >> script: aClassScript [
 	^self new
 		script: aClassScript
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScriptProperty >> script [
 	^ script
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassScriptProperty >> script: anObject [
 	script := anObject
 ]

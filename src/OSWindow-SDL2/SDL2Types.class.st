@@ -2,8 +2,8 @@
 Various types used by SDL2
 "
 Class {
-	#name : #SDL2Types,
-	#superclass : #SharedPool,
+	#name : 'SDL2Types',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'Int16',
 		'Int32',
@@ -28,10 +28,12 @@ Class {
 		'Uint64',
 		'Uint8'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Types class >> initialize [
 	"
 	self initialize

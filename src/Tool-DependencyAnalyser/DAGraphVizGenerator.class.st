@@ -2,28 +2,30 @@
 A class able to generate a dot file to represent a graph.
 "
 Class {
-	#name : #DAGraphVizGenerator,
-	#superclass : #Object,
+	#name : 'DAGraphVizGenerator',
+	#superclass : 'Object',
 	#instVars : [
 		'builder',
 		'graphviz',
 		'nameOfGraph'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAGraphVizGenerator class >> isAbstract [
 
 	^ self == DAGraphVizGenerator
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAGraphVizGenerator class >> newWith: aContent named: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #'build items' }
+{ #category : 'build items' }
 DAGraphVizGenerator >> buildGraphViz [
 	graphviz := (self class environment at: #GVGraphViz) new.
 	graphviz
@@ -37,33 +39,33 @@ DAGraphVizGenerator >> buildGraphViz [
 		buildEdges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAGraphVizGenerator >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAGraphVizGenerator >> graphviz [
 	^ graphviz
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAGraphVizGenerator >> nameOfGraph [
 	^ nameOfGraph ifNil: [ 'UnamedGraph' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAGraphVizGenerator >> nameOfGraph: anObject [
 	nameOfGraph := anObject
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 DAGraphVizGenerator >> openWith: extension [
 	"make sure the .gv is generated and converted into a image format"
 	graphviz openInWindowWith: extension
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 DAGraphVizGenerator >> saveDotFileAndGenerateForType: extension [
 	^ graphviz generator makeNoWait: extension
 ]

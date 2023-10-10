@@ -2,60 +2,62 @@
 I am an expert on Mac OS X filesystem conventions. I resolve origins according to these conventions.
 "
 Class {
-	#name : #MacOSResolver,
-	#superclass : #PlatformResolver,
-	#category : #'FileSystem-Core-Base-Resolver'
+	#name : 'MacOSResolver',
+	#superclass : 'PlatformResolver',
+	#category : 'FileSystem-Core-Base-Resolver',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Resolver'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MacOSResolver class >> platformName [
 	^  'Mac OS'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> cache [
 	^ self library / 'Caches'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> home [
 	^ self directoryFromEnvVariableNamed: 'HOME'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> library [
 	^ self userLibrary
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> preferences [
 	^ self home / 'Library' / 'Preferences'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> systemApplicationSupport [
 	<origin>
 	^ self systemLibrary / 'Application Support'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> systemLibrary [
 	<origin>
 	^  FileSystem disk root / 'Library'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> temp [
 	^ '/tmp' asFileReference
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> userApplicationSupport [
 	<origin>
 	^self userLibrary / 'Application Support'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 MacOSResolver >> userLibrary [
 	<origin>
 	^  self home / 'Library'

@@ -2,17 +2,18 @@
 SUnit tests for key mapping categories
 "
 Class {
-	#name : #KMCategoryTest,
-	#superclass : #AbstractKeymappingTest,
-	#category : #'Keymapping-Tests'
+	#name : 'KMCategoryTest',
+	#superclass : 'AbstractKeymappingTest',
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMCategoryTest >> categoryContainer [
 	^ KMFactory keymapContainer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMCategoryTest >> testAddKeymapToCategory [
 	| categoryToAdd entry |
 	categoryToAdd := KMCategory named: #TestCategory.
@@ -23,7 +24,7 @@ KMCategoryTest >> testAddKeymapToCategory [
 	self assert: (categoryToAdd allEntries) size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMCategoryTest >> testCreateExistentCategoryFails [
 	| categoryToAdd |
 	categoryToAdd := KMCategory named: #TestCategory.
@@ -34,7 +35,7 @@ KMCategoryTest >> testCreateExistentCategoryFails [
 	self should: [self categoryContainer addCategory: categoryToAdd] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMCategoryTest >> testCreateUnexistentCategory [
 	| categoryToAdd |
 	categoryToAdd := KMCategory named: #TestCategory.

@@ -4,43 +4,45 @@ I am a RBRefactoring intended for prepagating another refactoring. We call to pr
 For example, the propagation of a 'message rename' is to change the senders of the old selector to use the new selector. 
 "
 Class {
-	#name : #EpRBPropagateRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'EpRBPropagateRefactoring',
+	#superclass : 'RBRefactoring',
 	#instVars : [
 		'targetRefactoring'
 	],
-	#category : #'Epicea-Support'
+	#category : 'Epicea-Support',
+	#package : 'Epicea',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpRBPropagateRefactoring class >> target: aRefactoring [
 	^ self basicNew
 		initializeWith: aRefactoring;
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EpRBPropagateRefactoring >> asEpiceaEvent [
 	^ EpPropagateRefactoring target: targetRefactoring asEpiceaEvent
 ]
 
-{ #category : #initialization }
+{ #category : 'executing' }
+EpRBPropagateRefactoring >> generateChanges [
+	targetRefactoring propagateTransformation
+]
+
+{ #category : 'initialization' }
 EpRBPropagateRefactoring >> initializeWith: aRefactoring [
 	self initialize.
 	targetRefactoring := aRefactoring
 ]
 
-{ #category : #private }
-EpRBPropagateRefactoring >> primitiveExecute [
-	targetRefactoring propagateTransformation
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRBPropagateRefactoring >> setOption: aString toUse: aBlockClosure [
 	targetRefactoring setOption: aString toUse: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRBPropagateRefactoring >> whatToDisplayIn: aNautilusChangesBrowser [
 	^ targetRefactoring whatToDisplayIn: aNautilusChangesBrowser
 ]

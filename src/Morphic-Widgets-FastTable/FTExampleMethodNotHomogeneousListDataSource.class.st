@@ -1,10 +1,12 @@
 Class {
-	#name : #FTExampleMethodNotHomogeneousListDataSource,
-	#superclass : #FTExampleMethodListDataSource,
-	#category : #'Morphic-Widgets-FastTable-Examples'
+	#name : 'FTExampleMethodNotHomogeneousListDataSource',
+	#superclass : 'FTExampleMethodListDataSource',
+	#category : 'Morphic-Widgets-FastTable-Examples',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodNotHomogeneousListDataSource >> cellColumn: column row: rowIndex [
 
 	^ FTCellMorph new
@@ -21,7 +23,7 @@ FTExampleMethodNotHomogeneousListDataSource >> cellColumn: column row: rowIndex 
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodNotHomogeneousListDataSource >> rowHeight: rowIndex [
 
 	^ 50

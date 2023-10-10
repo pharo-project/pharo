@@ -4,17 +4,23 @@ I represent a syntax or a semantic error in some pharo code.
 My instances are signaled by the parser or the compiler.
 "
 Class {
-	#name : #CodeError,
-	#superclass : #Error,
+	#name : 'CodeError',
+	#superclass : 'Error',
 	#instVars : [
-		'node',
-		'location',
-		'sourceCode'
+		'notice'
 	],
-	#category : #'AST-Core-Exception'
+	#category : 'AST-Core-Exception',
+	#package : 'AST-Core',
+	#tag : 'Exception'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CodeError >> description [
+
+	^ self class name , ':' , self notice description
+]
+
+{ #category : 'accessing' }
 CodeError >> errorCode [
 
 	self
@@ -24,7 +30,7 @@ CodeError >> errorCode [
 	^ self sourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> errorMessage [
 
 	self
@@ -34,57 +40,60 @@ CodeError >> errorMessage [
 	^ messageText
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 CodeError >> isResumable [
 
 	"When resumed, faulty AST are produced"
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> location [
 
-	location ifNotNil: [ ^ location  ].
-	node ifNotNil: [ ^ node start ].
-	^ nil
+	^ self position
 ]
 
-{ #category : #accessing }
-CodeError >> location: anInteger [
+{ #category : 'accessing' }
+CodeError >> messageText [
 
-	location := anInteger
+	^ self notice messageText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> methodClass [
-	^self methodNode methodClass
+	^ self methodNode methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> methodNode [
-	^node methodNode
+	^ self node methodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> node [
-	^ node
+	^ self notice node
 ]
 
-{ #category : #accessing }
-CodeError >> node: aNode [
-	node := aNode
+{ #category : 'accessing' }
+CodeError >> notice [
+
+	^ notice
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CodeError >> notice: anObject [
+
+	notice := anObject
+]
+
+{ #category : 'accessing' }
+CodeError >> position [
+
+	^ self notice position
+]
+
+{ #category : 'accessing' }
 CodeError >> sourceCode [
 
-	sourceCode ifNotNil: [  ^ sourceCode ].
-	node ifNotNil: [  ^ node sourceCode ].
-	^ nil
-]
-
-{ #category : #accessing }
-CodeError >> sourceCode: aString [
-
-	sourceCode := aString
+	^ self methodNode sourceCode
 ]

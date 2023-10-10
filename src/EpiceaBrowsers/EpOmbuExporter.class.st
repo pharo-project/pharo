@@ -2,15 +2,17 @@
 I know how to export Epicea entries from one log to a new one.
 "
 Class {
-	#name : #EpOmbuExporter,
-	#superclass : #Object,
+	#name : 'EpOmbuExporter',
+	#superclass : 'Object',
 	#instVars : [
 		'outputLog'
 	],
-	#category : #'EpiceaBrowsers-Exporter'
+	#category : 'EpiceaBrowsers-Exporter',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Exporter'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 EpOmbuExporter class >> askFileNameAndFileOut: entries in: aDirectory [
 
 	| fileNameOrNil outputLog |
@@ -31,7 +33,7 @@ EpOmbuExporter class >> askFileNameAndFileOut: entries in: aDirectory [
 		fileOut: entries
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpOmbuExporter >> fileOut: epiceaEntries [
 
 	| originalReference anEvent exportedReference visitor map |
@@ -51,12 +53,12 @@ EpOmbuExporter >> fileOut: epiceaEntries [
 	outputLog store flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpOmbuExporter >> outputLog [
 	^ outputLog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpOmbuExporter >> outputLog: anObject [
 	outputLog := anObject
 ]

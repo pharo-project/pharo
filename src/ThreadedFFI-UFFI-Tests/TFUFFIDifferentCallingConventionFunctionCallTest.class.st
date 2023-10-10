@@ -1,23 +1,24 @@
 Class {
-	#name : #TFUFFIDifferentCallingConventionFunctionCallTest,
-	#superclass : #TFUFFITestCase,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIDifferentCallingConventionFunctionCallTest',
+	#superclass : 'TFUFFITestCase',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIDifferentCallingConventionFunctionCallTest >> calloutWithManyArguments: arg1 and: arg2 and: arg3 and: arg4 and: arg5 and: arg6 and: arg7 and: arg8 and: arg9 and: arg10 [
 	^ self
 		ffiCall:
 			#(int w64Convention #(int arg1 , int arg2 , int arg3 , int arg4 , int arg5 , int arg6 , int arg7 , int arg8 , int arg9 , int arg10))
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFUFFIDifferentCallingConventionFunctionCallTest >> ffiCallingConvention [
 
 	^ #win64
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIDifferentCallingConventionFunctionCallTest >> testCallingFunctionWithW64CallingConvention [
 
 	| result |

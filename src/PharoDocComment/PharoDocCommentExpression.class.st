@@ -2,17 +2,19 @@
 I am represent an expression within a String (typically the contents of a RBCommentNode resp. the comment text of a method. I am used as expression or the expected expression value by a PharoDocCommentNode.
 "
 Class {
-	#name : #PharoDocCommentExpression,
-	#superclass : #Object,
+	#name : 'PharoDocCommentExpression',
+	#superclass : 'Object',
 	#instVars : [
 		'source',
 		'node',
 		'cachedExpressionNode'
 	],
-	#category : #'PharoDocComment-Base'
+	#category : 'PharoDocComment-Base',
+	#package : 'PharoDocComment',
+	#tag : 'Base'
 }
 
-{ #category : #operation }
+{ #category : 'operation' }
 PharoDocCommentExpression >> evaluate [
 
 	"Note: it seems there is no easy way here to reuse in Opal the parsed AST and just compile&evaluate it."
@@ -21,12 +23,12 @@ PharoDocCommentExpression >> evaluate [
 
 	^ self methodClass compiler
 		  source: self source;
-		  noPattern: true;
+		  isScripting: true;
 		  receiver: self methodClass;
 		  evaluate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentExpression >> expressionNode [
 
 	cachedExpressionNode ifNil: [
@@ -35,19 +37,18 @@ PharoDocCommentExpression >> expressionNode [
 	^ cachedExpressionNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentExpression >> expressionNodeReal [
-
 	"Force the parsing of the expression node"
 
 	^ self methodClass compiler
 		  source: self source;
-		  noPattern: true;
+		  isScripting: true;
 		  receiver: self methodClass;
 		  parse
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PharoDocCommentExpression >> isFaulty [
 
 	"Check is the ast is OK and follows the 2 specific doccomments rules"
@@ -55,7 +56,7 @@ PharoDocCommentExpression >> isFaulty [
 	^ self isNotWellFormed or: [ self expressionNode isFaulty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PharoDocCommentExpression >> isNotWellFormed [
 
 	"Check is the ast follows the 2 specific doccomments rules"
@@ -74,28 +75,28 @@ PharoDocCommentExpression >> isNotWellFormed [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PharoDocCommentExpression >> isWellFormed [
 
 	^self isNotWellFormed not
 ]
 
-{ #category : #operation }
+{ #category : 'operation' }
 PharoDocCommentExpression >> methodClass [
 	^ node sourceNode methodNode methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentExpression >> node [
 	^ node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentExpression >> node: anObject [
 	node := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PharoDocCommentExpression >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: '('.
@@ -103,12 +104,12 @@ PharoDocCommentExpression >> printOn: aStream [
 	aStream nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentExpression >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDocCommentExpression >> source: anObject [
 	source := anObject
 ]

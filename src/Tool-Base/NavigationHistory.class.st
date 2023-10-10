@@ -2,30 +2,32 @@
 I act as a web browser history
 "
 Class {
-	#name : #NavigationHistory,
-	#superclass : #Object,
+	#name : 'NavigationHistory',
+	#superclass : 'Object',
 	#instVars : [
 		'storage',
 		'index',
 		'maxSize',
 		'paused'
 	],
-	#category : #'Tool-Base-Utilities'
+	#category : 'Tool-Base-Utilities',
+	#package : 'Tool-Base',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NavigationHistory class >> defaultMaxSize [
 
 	^ 15
 ]
 
-{ #category : #'collection compatibility' }
+{ #category : 'collection compatibility' }
 NavigationHistory >> add: anEntry [
 
 	self addEntry: anEntry
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> addEntry: anEntry [
 
 	self isPaused ifTrue: [ ^ self ].
@@ -33,13 +35,13 @@ NavigationHistory >> addEntry: anEntry [
 	self basicAdd: anEntry
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> back [
 
 	index := ((index - 1) max: 0)
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> basicAdd: anEntry [
 
 	( storage isNotEmpty and: [ storage last = anEntry ] ) ifTrue: [ ^ self ].
@@ -53,7 +55,7 @@ NavigationHistory >> basicAdd: anEntry [
 			storage at: index put: (anEntry -> DateAndTime now)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NavigationHistory >> checkSize [
 
 	[ storage size >= self maxSize ]
@@ -62,31 +64,31 @@ NavigationHistory >> checkSize [
 			index := index -1]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> current [
 
 	^ storage at: index ifAbsent: [ nil -> nil ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> entries [
 
 	^ storage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NavigationHistory >> hasNext [
 
 	^ index < storage size
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NavigationHistory >> hasPrevious [
 
 	^ index > 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NavigationHistory >> initialize [
 
 	storage := OrderedCollection new.
@@ -94,37 +96,37 @@ NavigationHistory >> initialize [
 	paused := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NavigationHistory >> isPaused [
 	^ paused
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> last [
 
 	^ storage last
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> maxSize [
 
 	^ maxSize ifNil: [ maxSize := self class defaultMaxSize ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> maxSize: anInteger [
 
 	maxSize := anInteger
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> next [
 
 	index := ((index + 1) min: storage size).
 	^ storage at: index
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> pauseDuring: aBlock [
 	| previousPausedValue |
 	"Don't accept any new entries while executing aBlock"
@@ -133,14 +135,14 @@ NavigationHistory >> pauseDuring: aBlock [
 	aBlock ensure: [ paused := previousPausedValue ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> previous [
 
 	index := index-1 max: 1.
 	^ storage at: index
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> removeEntry: anEntry [
 	| toRemove |
 
@@ -152,7 +154,7 @@ NavigationHistory >> removeEntry: anEntry [
 	storage addLast: toRemove
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> removeLastEntry [
 
 	self isPaused ifTrue: [ ^ self ].
@@ -162,7 +164,7 @@ NavigationHistory >> removeLastEntry [
 	index := index -1
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 NavigationHistory >> replaceCurrentWith: anEntry [
 	"Change the current history item to the given object"
 	storage at: index put: (anEntry -> DateAndTime now)

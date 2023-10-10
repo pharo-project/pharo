@@ -2,20 +2,22 @@
 An attribute which evaluates an arbitrary block when it is selected.
 "
 Class {
-	#name : #PluggableTextAttribute,
-	#superclass : #TextAction,
+	#name : 'PluggableTextAttribute',
+	#superclass : 'TextAction',
 	#instVars : [
 		'evalBlock'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableTextAttribute class >> evalBlock: aBlock [
 	^super new evalBlock: aBlock
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PluggableTextAttribute >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
 
 	evalBlock ifNil: [ ^self ].
@@ -24,7 +26,7 @@ PluggableTextAttribute >> actOnClick: anEvent for: anObject in: paragraph editor
 	self error: 'evalBlock should have 0 or 1 arguments'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTextAttribute >> evalBlock: aBlock [
 	evalBlock := aBlock
 ]

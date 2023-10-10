@@ -8,23 +8,25 @@ Instance Variables
 	statements: <SequenceableCollection of: RBValueNode> the statement nodes
 "
 Class {
-	#name : #RBArrayNode,
-	#superclass : #RBValueNode,
+	#name : 'RBArrayNode',
+	#superclass : 'RBValueNode',
 	#instVars : [
 		'left',
 		'right',
 		'statements',
 		'periods'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBArrayNode class >> statements: statements [
 	^ self new statements: statements
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBArrayNode >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
@@ -33,12 +35,12 @@ RBArrayNode >> = anObject [
 	^ true
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBArrayNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitArrayNode: self
 ]
 
-{ #category : #'adding nodes' }
+{ #category : 'adding nodes' }
 RBArrayNode >> addNode: aNode [
 	statements := statements asOrderedCollection
 		add: aNode;
@@ -47,7 +49,7 @@ RBArrayNode >> addNode: aNode [
 	^ aNode
 ]
 
-{ #category : #'adding nodes' }
+{ #category : 'adding nodes' }
 RBArrayNode >> addNode: aNode before: anotherNode [
 	| index |
 	aNode isReturn
@@ -61,7 +63,7 @@ RBArrayNode >> addNode: aNode before: anotherNode [
 	^ aNode
 ]
 
-{ #category : #'adding nodes' }
+{ #category : 'adding nodes' }
 RBArrayNode >> addNodeFirst: aNode [
 	statements := statements asOrderedCollection
 		addFirst: aNode;
@@ -70,7 +72,7 @@ RBArrayNode >> addNodeFirst: aNode [
 	^ aNode
 ]
 
-{ #category : #'adding nodes' }
+{ #category : 'adding nodes' }
 RBArrayNode >> addNodes: aCollection [
 	statements := statements asOrderedCollection
 		addAll: aCollection;
@@ -79,13 +81,13 @@ RBArrayNode >> addNodes: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'adding nodes' }
+{ #category : 'adding nodes' }
 RBArrayNode >> addNodes: aCollection before: anotherNode [
 	aCollection do: [ :each | self addNode: each before: anotherNode ].
 	^ aCollection
 ]
 
-{ #category : #'adding nodes' }
+{ #category : 'adding nodes' }
 RBArrayNode >> addNodesFirst: aCollection [
 	statements := statements asOrderedCollection
 		addAllFirst: aCollection;
@@ -94,24 +96,24 @@ RBArrayNode >> addNodesFirst: aCollection [
 	^ aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> allStatements [
 	^ statements asOrderedCollection copy
 			addAll: super allStatements;
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> children [
 	^ statements
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBArrayNode >> copyInContext: aDictionary [
 	^ self class statements: (self copyList: self statements inContext: aDictionary)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBArrayNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class
 		ifFalse: [ ^ false ].
@@ -125,12 +127,12 @@ RBArrayNode >> equalTo: anObject withMapping: aDictionary [
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBArrayNode >> hash [
 	^ self hashForCollection: self statements
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBArrayNode >> indexOfNode: aNode [
 	"Try to find the node by first looking for ==, and then for ="
 
@@ -139,7 +141,7 @@ RBArrayNode >> indexOfNode: aNode [
 		ifNone: [ statements indexOf: aNode ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBArrayNode >> initialize [
 	super initialize.
 	statements := OrderedCollection new.
@@ -147,76 +149,76 @@ RBArrayNode >> initialize [
 	left := right := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayNode >> isDynamicArray [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayNode >> isEmpty [
 	^ statements isEmpty
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBArrayNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayNode >> lastIsReturn [
 	statements isEmpty ifTrue:[ ^false ].
 	^statements last lastIsReturn
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBArrayNode >> left [
 	^ left
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBArrayNode >> left: anInteger [
 	left := anInteger
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBArrayNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [ ^ false ].
 	^ self matchList: statements against: aNode statements inContext: aDictionary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayNode >> needsParenthesis [
 	^ false
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBArrayNode >> periods [
 	^ periods
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBArrayNode >> periods: anArray [
 	periods := anArray
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBArrayNode >> postCopy [
 	super postCopy.
 	self statements: (self statements collect: [ :each | each copy ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> precedence [
 	^0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayNode >> references: aVariableName [
 	^ statements anySatisfy: [ :each | each references: aVariableName ]
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBArrayNode >> replaceNode: oldNode  withNode: newNode [
 	self statements: (statements collect: [ :statement |
 		statement == oldNode
@@ -224,43 +226,43 @@ RBArrayNode >> replaceNode: oldNode  withNode: newNode [
 			ifFalse: [ statement ] ])
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBArrayNode >> right [
 	^ right
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBArrayNode >> right: anInteger [
 	right := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> startWithoutParentheses [
 	^ left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> statementComments [
 	^self comments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> statements [
 	^statements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> statements: statements0 [
 	statements := statements0.
 	statements do: [:statement | statement parent: self]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArrayNode >> stopWithoutParentheses [
 	^ right
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArrayNode >> uses: aNode [
 	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsed ]
 ]

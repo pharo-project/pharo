@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> * arg [
 
 	"Pairwise product of two sequenceable collections of the same length."
@@ -11,7 +11,7 @@ Collection >> * arg [
 	^ arg adaptToCollection: self andSend: #*
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> + arg [
 
 	"Pairwise sum of two sequenceable collections of the same length."
@@ -22,7 +22,7 @@ Collection >> + arg [
 	^ arg adaptToCollection: self andSend: #+
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> - arg [
 
 	"Pairwise difference of two sequenceable collections of the same length."
@@ -33,7 +33,7 @@ Collection >> - arg [
 	^ arg adaptToCollection: self andSend: #-
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> / arg [
 
 	"Pairwise quotient of two sequenceable collections of the same length."
@@ -44,7 +44,7 @@ Collection >> / arg [
 	^ arg adaptToCollection: self andSend: #/
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> // arg [
 
 	"Pairwise integer quotient of two sequenceable collections of the same length."
@@ -55,7 +55,7 @@ Collection >> // arg [
 	^ arg adaptToCollection: self andSend: #//
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> \\ arg [
 
 	"Pairwise integer modulo of two sequenceable collections of the same length."
@@ -66,7 +66,7 @@ Collection >> \\ arg [
 	^ arg adaptToCollection: self andSend: #\\
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> abs [
 	"Absolute value of all elements in the collection"
 
@@ -76,22 +76,22 @@ Collection >> abs [
 	^ self collect: [:a | a abs]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> arcCos [
 	^self collect: [:each | each arcCos]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> arcSin [
 	^self collect: [:each | each arcSin]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> arcTan [
 	^self collect: [:each | each arcTan]
 ]
 
-{ #category : #'*Collections-Arithmetic' }
+{ #category : '*Collections-Arithmetic' }
 Collection >> average [
 	"Calculate the average of a collection, return a CollectionIsEmpty exception if the collection is empty. Look averageIfEmpty: aBlock"
 
@@ -102,7 +102,7 @@ Collection >> average [
 	^ self sum / self size
 ]
 
-{ #category : #'*Collections-Arithmetic' }
+{ #category : '*Collections-Arithmetic' }
 Collection >> averageIfEmpty: aBlock [
 
 	"This method return the average of the collection if it is not empty. In the other case,
@@ -117,47 +117,47 @@ Collection >> averageIfEmpty: aBlock [
 	^ self average
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> ceiling [
 	^ self collect: [:a | a ceiling]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> cos [
 	^self collect: [:each | each cos]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> degreeCos [
 	^self collect: [:each | each degreeCos]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> degreeSin [
 	^self collect: [:each | each degreeSin]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> exp [
 	^self collect: [:each | each exp]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> floor [
 	^ self collect: [:a | a floor]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> ln [
 	^self collect: [:each | each ln]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> log [
 	^ self collect: [:each | each log]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> max [
 
 	"Return the maximum value of the collection"
@@ -168,7 +168,7 @@ Collection >> max [
 	^ self inject: self anyOne into: [ :max :each | max max: each ]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> min [
 	"Return the minimum value of the collection"
 
@@ -178,7 +178,7 @@ Collection >> min [
 	^ self inject: self anyOne into: [:min :each | min min: each]
 ]
 
-{ #category : #'*Collections-Arithmetic' }
+{ #category : '*Collections-Arithmetic' }
 Collection >> negated [
 
 	"Negated value of all elements in the collection"
@@ -189,13 +189,13 @@ Collection >> negated [
 	^ self collect: [ :a | a negated ]
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> raisedTo: arg [
 
 	^ arg adaptToCollection: self andSend: #raisedTo:
 ]
 
-{ #category : #'*Collections-Arithmetic' }
+{ #category : '*Collections-Arithmetic' }
 Collection >> range [
 
 	"returns the difference between the max and min element, their positions notwithstanding"
@@ -206,7 +206,7 @@ Collection >> range [
 	^ self max - self min
 ]
 
-{ #category : #'*Collections-Arithmetic' }
+{ #category : '*Collections-Arithmetic' }
 Collection >> reciprocal [
 
 	"Return the reciever full of reciprocated elements"
@@ -217,17 +217,17 @@ Collection >> reciprocal [
 	^ self collect: [ :a | a reciprocal ]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> roundTo: quantum [
 	^self collect: [ :ea | ea roundTo: quantum ]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> rounded [
 	^ self collect: [:a | a rounded]
 ]
 
-{ #category : #'*Collections-Arithmetic' }
+{ #category : '*Collections-Arithmetic' }
 Collection >> sign [
 
 	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
@@ -239,26 +239,28 @@ Collection >> sign [
 	^ self collect: [ :each | each sign ]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> sin [
 	^self collect: [:each | each sin]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> sqrt [
 	^ self collect: [:each | each sqrt]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> squared [
 	^ self collect: [:each | each * each]
 ]
 
-{ #category : #'*Collections-Arithmetic' }
+{ #category : '*Collections-Arithmetic' }
 Collection >> stdev [
 	| avg sample sum |
 	"In statistics, the standard deviation is a measure that is used to quantify the amount of variation or dispersion of a set of data values.
 	For details about implementation see comment in self sum."
+	
+	self size = 1 ifTrue: [ ^ 0 ].
 	avg := self average.
 	sample := self anyOne.
 	sum := self inject: sample into: [ :accum :each | accum + (each - avg) squared ].
@@ -266,7 +268,7 @@ Collection >> stdev [
 	^ (sum / (self size - 1)) sqrt
 ]
 
-{ #category : #'*Collections-arithmetic' }
+{ #category : '*Collections-arithmetic' }
 Collection >> sum [
 
 	"This is implemented using a variant of the normal inject:into: pattern.
@@ -294,12 +296,12 @@ Collection >> sum [
 	^ sum - sample
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> tan [
 	^self collect: [:each | each tan]
 ]
 
-{ #category : #'*Collections-arithmetic-collectors' }
+{ #category : '*Collections-arithmetic-collectors' }
 Collection >> truncated [
 	^ self collect: [:a | a truncated]
 ]

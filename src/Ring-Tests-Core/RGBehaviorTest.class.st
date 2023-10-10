@@ -1,30 +1,32 @@
 Class {
-	#name : #RGBehaviorTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGBehaviorTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> behaviorClass [
 
 	^ RGClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testBadInstantiation [
 
 	self should: [ RGBehavior named: #SomeBehavior ] raise: RGBadInstantiationError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testBehaviorWithMethodTags [
+
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
 	self assert: newBehavior name equals: #SomeClass.
-	self assert: (newBehavior hasUnresolvedAll: #(superclass localMethods protocols)).
+	self assert: (newBehavior hasUnresolvedAll: #( superclass localMethods protocols )).
 	self assert: newBehavior methods isEmpty.
 
-	1 to: 10 do: [ :i | newBehavior addMethodTag: ('tag' , i asString) asSymbol ].
+	1 to: 10 do: [ :i | newBehavior addProtocol: ('tag' , i asString) asSymbol ].
 
 	self assert: (newBehavior hasResolved: #tagsForMethods).
 
@@ -37,15 +39,16 @@ RGBehaviorTest >> testBehaviorWithMethodTags [
 	self assert: newBehavior tagsForMethods isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testBehaviorWithProtocols [
+
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
 	self assert: newBehavior name equals: #SomeClass.
-	self assert: (newBehavior hasUnresolvedAll: #(superclass localMethods protocols)).
+	self assert: (newBehavior hasUnresolvedAll: #( superclass localMethods protocols )).
 	self assert: newBehavior methods isEmpty.
 
-	1 to: 10 do: [ :i | newBehavior addMethodTag: ('tag' , i asString) asSymbol ].
+	1 to: 10 do: [ :i | newBehavior addProtocol: ('tag' , i asString) asSymbol ].
 
 	self assert: (newBehavior protocols allSatisfy: #isSymbol).
 
@@ -56,14 +59,14 @@ RGBehaviorTest >> testBehaviorWithProtocols [
 	self assert: newBehavior protocols isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testInheritsFromUnresolved [
 
 	self deny: (RGBehavior new inheritsFrom: RGClass unresolved).
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testOldDefinition [
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -74,7 +77,7 @@ RGBehaviorTest >> testOldDefinition [
 	category: ''unresolved'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testResolvingConsistency [
 
 	| anObject |
@@ -82,7 +85,7 @@ RGBehaviorTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testSiblings [
 
 	| newBehavior |
@@ -111,7 +114,7 @@ RGBehaviorTest >> testSiblings [
 	self assert: newBehavior instanceSide equals: newBehavior baseTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testUnresolveSuperclass [
 	| env class1 class2 |
 

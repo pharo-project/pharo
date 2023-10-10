@@ -2,130 +2,169 @@
 SUnit tests for RPackage tags
 "
 Class {
-	#name : #RPackageTagTest,
-	#superclass : #RPackageTestCase,
-	#category : #'RPackage-Tests'
+	#name : 'RPackageTagTest',
+	#superclass : 'RPackageTestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #running }
-RPackageTagTest >> tearDown [
-
-	#(TestClass TestClassOther)
-		do: [ :each |
-			self class environment at: each ifPresent: #removeFromSystem ].
-	super tearDown
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTagTest >> testAddClass [
-	| package1 package2 class |
 
-	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1'.
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: #NewClass in: xPackage tag: #TAG.
 
-	self assert: (package1 includesClass: class).
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
 
-	package2 := (self packageClass named: #Test2) register.
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	yTag addClass: class.
 
-	(package2 addClassTag: #TAG) addClass: class.
-
-	self deny: (package1 includesClass: class).
-	self assert: (package2 includesClass: class).
-	self assert: (package2 classTagNamed: #TAG ifAbsent: [ nil ]) notNil.
-	self assert: ((package2 classTagNamed: #TAG ifAbsent: [ nil ]) includesClass: class)
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
 ]
 
-{ #category : #tests }
-RPackageTagTest >> testAddClassFromTag [
-	| package1 package2 class |
+{ #category : 'tests' }
+RPackageTagTest >> testAddClassSettingPackageTag [
 
-	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: #NewClass in: xPackage tag: #TAG.
 
-	self assert: (package1 includesClass: class).
-	self assert: (package1 classTagNamed: #TAG1 ifAbsent: [ nil ]) notNil.
-	self assert: ((package1 classTagNamed: #TAG1 ifAbsent: [ nil ]) includesClass: class).
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
 
-	package2 := (self packageClass named: #Test2) register.
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	class packageTag: yTag.
 
-	(package2 addClassTag: #TAG2) addClass: class.
-
-	self deny: (package1 includesClass: class).
-	self assert: (package2 includesClass: class).
-	self assert: (package2 classTagNamed: #TAG2 ifAbsent: [ nil ]) notNil.
-	self assert: ((package2 classTagNamed: #TAG2 ifAbsent: [ nil ]) includesClass: class)
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
 ]
 
-{ #category : #tests }
-RPackageTagTest >> testAsRPackage [
-	| package1 tag convertedTag class |
+{ #category : 'tests' }
+RPackageTagTest >> testAddTrait [
 
-	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
-	class compile: 'foo ^42' classified: 'accessing'.
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newTraitNamed: #NewClass in: xPackage tag: #TAG.
 
-	tag := (package1 classTagNamed: #TAG1).
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
 
-	convertedTag := tag asRPackage.
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	yTag addClass: class.
 
-	self assert: (convertedTag includesClass: class).
-	self assert: (convertedTag includesSelector: 'foo' ofClass:  class)
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
 ]
 
-{ #category : #tests }
-RPackageTagTest >> testAsRPackageWithExtensionMethods [
-	| package1 convertedTag class |
-	package1 := (self packageClass named: #Test1) register.
-	package1 addClassTag: #TAG1.
+{ #category : 'tests' }
+RPackageTagTest >> testAddTraitSettingPackageTag [
 
-	(self packageClass named: #Test2) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test2'.
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newTraitNamed: #NewClass in: xPackage tag: #TAG.
 
-	class compile: 'foo ^42' classified: '*Test1-TAG1'.
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
 
-	convertedTag := (package1 classTagNamed: #TAG1) asRPackage.
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	class packageTag: yTag.
 
-	self assertEmpty: convertedTag definedClasses.
-	self assert: (convertedTag includesExtensionSelector: 'foo' ofClass: class)
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
 ]
 
-{ #category : #tests }
-RPackageTagTest >> testPromoteAsRPackage [
+{ #category : 'tests' }
+RPackageTagTest >> testIncludesClass [
+
+	| package class tag |
+	package := self ensurePackage: #Test1.
+	class := self newClassNamed: 'TestClass' in: package tag: 'TAG'.
+	tag := class packageTag.
+
+	self assert: (package includesClass: class).
+	self assert: (package hasTag: tag).
+	self assert: tag name equals: 'TAG'.
+
+	self assert: (tag includesClass: class).
+	self assert: (tag includesClass: class class). "We want it to work with class side too"
+	self deny: (tag includesClass: self class)
+]
+
+{ #category : 'tests' }
+RPackageTagTest >> testPromoteAsPackage [
+
 	| package1 package2 class tag1 |
-
-	package1 := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
+	package1 := self ensurePackage: #Test1.
+	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
 	tag1 := package1 classTagNamed: 'TAG1'.
 
-	tag1 promoteAsRPackage.
+	tag1 promoteAsPackage.
 
-	package2:= self packageClass organizer packageNamed: 'Test1-TAG1'.
-	self assert: package2 notNil.
+	package2 := self organizer packageNamed: 'Test1-TAG1'.
+	self assert: package2 isNotNil.
 	self assert: (package2 classes includes: class).
 	self deny: (package1 classes includes: class)
 ]
 
-{ #category : #tests }
-RPackageTagTest >> testPromoteAsRPackageWithExtension [
-	| packageOriginal packagePromoted class classOther tag |
+{ #category : 'tests' }
+RPackageTagTest >> testRemoveClass [
 
-	packageOriginal := (self packageClass named: #Test1) register.
-	class := self createNewClassNamed: 'TestClass' inCategory: 'Test1-TAG1'.
-	class compile: 'foo ^42' classified: #'accessing'.
+	| package tag class |
+	package := self ensurePackage: #Test1.
+	tag := package ensureTag: #TAG.
+	class := self newClassNamed: 'TestClass' in: package tag: 'TAG'.
 
-	classOther := self createNewClassNamed: 'TestClassOther' inCategory: 'XXXX'.
-	classOther compile: 'bar ^42' classified: #'*Test1-TAG1'.
+	self assert: (tag includesClass: class).
 
-	tag := packageOriginal classTagNamed: 'TAG1'.
-	tag promoteAsRPackage.
+	tag removeClass: class.
 
-	packagePromoted:= RPackage organizer packageNamed: 'Test1-TAG1'.
-	self assert: packagePromoted notNil.
-	self assert: (packagePromoted classes includes: class).
-	self assert: (packagePromoted extensionMethods includes: classOther>>#bar).
-	self assert: (classOther>>#bar) protocol equals: '*Test1-TAG1'.
-	self deny: (packageOriginal classes includes: class).
-	self deny: (packageOriginal extensionMethods includes: classOther>>#bar)
+	self deny: (tag includesClass: class).
+	self deny: (package includesClass: class).
+	self deny: class packageTag equals: tag
+]
+
+{ #category : 'tests' }
+RPackageTagTest >> testRemoveClassRemoveTagIfEmpty [
+
+	| package tag class |
+	package := self ensurePackage: #Test1.
+	tag := package ensureTag: #TAG.
+	class := self newClassNamed: 'TestClass' in: package tag: 'TAG'.
+
+	self assert: (tag includesClass: class).
+	self assert: (package hasTag: tag).
+
+	tag removeClass: class.
+
+	self deny: (tag includesClass: class).
+	self deny: (package hasTag: tag)
 ]

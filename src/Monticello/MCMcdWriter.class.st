@@ -2,17 +2,19 @@
 Writing MCD format
 "
 Class {
-	#name : #MCMcdWriter,
-	#superclass : #MCMczWriter,
-	#category : #'Monticello-Storing'
+	#name : 'MCMcdWriter',
+	#superclass : 'MCMczWriter',
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMcdWriter class >> readerClass [
 	^ MCMcdReader
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMcdWriter >> writeBaseInfo: aVersionInfo [
 	| string |
 	string := self serializeVersionInfo: aVersionInfo.
@@ -20,23 +22,23 @@ MCMcdWriter >> writeBaseInfo: aVersionInfo [
 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMcdWriter >> writeDefinitions: aVersion [
 	self writeBaseInfo: aVersion baseInfo.
 	self writePatch: aVersion patch.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMcdWriter >> writeNewDefinitions: aCollection [
 	self addString: (self serializeDefinitions: aCollection) at: 'new/source.', self snapshotWriterClass extension encodedTo: 'utf8'.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMcdWriter >> writeOldDefinitions: aCollection [
 	self addString: (self serializeDefinitions: aCollection) at: 'old/source.', self snapshotWriterClass extension encodedTo: 'utf8'.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCMcdWriter >> writePatch: aPatch [
 	| old new |
 	old := OrderedCollection new.

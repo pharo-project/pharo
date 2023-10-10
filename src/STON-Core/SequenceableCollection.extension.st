@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 SequenceableCollection class >> fromSton: stonReader [
 	"Overwritten to use #streamContents: and #nextPut:"
 
@@ -9,7 +9,7 @@ SequenceableCollection class >> fromSton: stonReader [
 			stream nextPut: each ] ]
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 SequenceableCollection >> stonOn: stonWriter [
 	"Instances of STON listClass will be encoded directly, without a class tag.
 	Other (sub)classes will be encoded with a class tag and will use a list representation. "

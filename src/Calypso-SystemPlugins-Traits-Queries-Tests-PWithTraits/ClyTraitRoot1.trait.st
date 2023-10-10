@@ -1,12 +1,13 @@
 Trait {
-	#name : #ClyTraitRoot1,
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
+	#name : 'ClyTraitRoot1',
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTraitRoot1 classSide >> classSideMethodFromRoot1 [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTraitRoot1 >> methodFromRoot1 [
 ]

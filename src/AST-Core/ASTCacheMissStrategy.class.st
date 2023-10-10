@@ -9,12 +9,14 @@ If Reflectivity is loaded, the RFReflectivityASTCacheStrategy is used instead wh
 will take the AST from the ReflectiveMethod, should it have been created.
 "
 Class {
-	#name : #ASTCacheMissStrategy,
-	#superclass : #Object,
-	#category : #'AST-Core-Parser'
+	#name : 'ASTCacheMissStrategy',
+	#superclass : 'Object',
+	#category : 'AST-Core-Parser',
+	#package : 'AST-Core',
+	#tag : 'Parser'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCacheMissStrategy >> getASTFor: aCompiledMethod [
 	^ aCompiledMethod parseTree
 ]

@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCopySequenceableWithReplacement,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCopySequenceableWithReplacement',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithReplacement >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithReplacement >> collectionWith2TimeSubcollection [
 " return a collection including 'oldSubCollection'  two or many time "
 	self explicitRequirement
 ]
 
-{ #category : #'tests - copying with replacement' }
+{ #category : 'tests - copying with replacement' }
 TCopySequenceableWithReplacement >> firstIndexesOf: aSubCollection in: collection [
 " return an OrderedCollection with the first indexes of the occurrences of subCollection in  collection "
 	| tmp result currentIndex |
@@ -45,7 +47,7 @@ TCopySequenceableWithReplacement >> firstIndexesOf: aSubCollection in: collectio
 	^ result
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCopySequenceableWithReplacement >> howMany: aSubCollection in: collection [
 " return an integer representing how many time 'subCollection'  appears in 'collection'  "
 	| tmp nTime |
@@ -65,20 +67,20 @@ TCopySequenceableWithReplacement >> howMany: aSubCollection in: collection [
 	^ nTime
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithReplacement >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithReplacement >> replacementCollection [
 " return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCopySequenceableWithReplacement >> test0FixtureCopyWithReplacementTest [
 	self replacementCollection.
 	self oldSubCollection.
@@ -86,7 +88,7 @@ TCopySequenceableWithReplacement >> test0FixtureCopyWithReplacementTest [
 	self assert: (self howMany: self oldSubCollection in: self collectionWith1TimeSubcollection) = 1
 ]
 
-{ #category : #'tests - copying with replacement' }
+{ #category : 'tests - copying with replacement' }
 TCopySequenceableWithReplacement >> testCopyReplaceAllWith1Occurrence [
 	| result  firstIndexesOfOccurrence index endPartIndexResult endPartIndexCollection |
 
@@ -125,7 +127,7 @@ TCopySequenceableWithReplacement >> testCopyReplaceAllWith1Occurrence [
 		]
 ]
 
-{ #category : #'tests - copying with replacement' }
+{ #category : 'tests - copying with replacement' }
 TCopySequenceableWithReplacement >> testCopyReplaceAllWithManyOccurrence [
 	| result firstIndexesOfOccurrence resultBetweenPartIndex collectionBetweenPartIndex diff |
 	" testing fixture here as this method may be not used for collection that can't contain equals element :"
@@ -157,7 +159,7 @@ TCopySequenceableWithReplacement >> testCopyReplaceAllWithManyOccurrence [
 					= (self collectionWith2TimeSubcollection at: firstIndexesOfOccurrence last + self oldSubCollection size - 1 + i) ]
 ]
 
-{ #category : #'tests - copying with replacement' }
+{ #category : 'tests - copying with replacement' }
 TCopySequenceableWithReplacement >> testCopyReplaceFromToWith [
 	| result  indexOfSubcollection lastIndexOfOldSubcollection lastIndexOfReplacementCollection |
 
@@ -192,7 +194,7 @@ TCopySequenceableWithReplacement >> testCopyReplaceFromToWith [
 		]
 ]
 
-{ #category : #'tests - copying with replacement' }
+{ #category : 'tests - copying with replacement' }
 TCopySequenceableWithReplacement >> testCopyReplaceFromToWithInsertion [
 	| result  indexOfSubcollection |
 

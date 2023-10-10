@@ -6,32 +6,34 @@ My tests ensure the ReadOnly property of objects work properly.
 The VM needs to be compiled with -DIMMUTABILTY= true for those tests to work.
 "
 Class {
-	#name : #WriteBarrierTest,
-	#superclass : #TestCase,
+	#name : 'WriteBarrierTest',
+	#superclass : 'TestCase',
 	#classVars : [
 		'ContextInstance'
 	],
-	#category : #'Kernel-Tests-Extended-WriteBarrier'
+	#category : 'Kernel-Tests-Extended-WriteBarrier',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'WriteBarrier'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 WriteBarrierTest class >> initialize [
 
 	ContextInstance := Context sender: nil receiver: self new method: self >> #alwaysWritableObjects arguments: #()
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 WriteBarrierTest class >> restartMethods [
    self initialize
 ]
 
-{ #category : #'guinea pigs' }
+{ #category : 'guinea pigs' }
 WriteBarrierTest >> alwaysReadOnlyObjects [
 	"Immediates are always immutable"
 	^ { 1 }
 ]
 
-{ #category : #'guinea pigs' }
+{ #category : 'guinea pigs' }
 WriteBarrierTest >> alwaysWritableObjects [
 	"Objects that currently can't be immutable"
 	^ { ContextInstance .
@@ -39,37 +41,37 @@ WriteBarrierTest >> alwaysWritableObjects [
 		Processor activeProcess }
 ]
 
-{ #category : #'guinea pigs' }
+{ #category : 'guinea pigs' }
 WriteBarrierTest >> maybeReadOnlyObjects [
 	"ByteObject, Variable object, fixed sized object"
 	^ { { 1 . 2 . 3 } asByteArray . { 1 . 2 . 3 } . (MessageSend receiver: 1 selector: #+ argument: 2) }
 ]
 
-{ #category : #'tests - proxy' }
+{ #category : 'tests - proxy' }
 WriteBarrierTest >> testBasicProxyReadOnly [
 	self alwaysReadOnlyObjects do: [ :each |
 		self assert: (MirrorPrimitives isObjectReadOnly: each) equals: true ]
 ]
 
-{ #category : #'tests - proxy' }
+{ #category : 'tests - proxy' }
 WriteBarrierTest >> testBasicProxyWritable [
 	self alwaysWritableObjects , self maybeReadOnlyObjects do: [ :each |
 		self assert: (MirrorPrimitives isObjectReadOnly: each) equals: false ]
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testBasicReadOnly [
 	self alwaysReadOnlyObjects do: [ :each |
 		self assert: each isReadOnlyObject equals: true ]
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testBasicWritable [
 	self alwaysWritableObjects , self maybeReadOnlyObjects do: [ :each |
 		self assert: each isReadOnlyObject equals: false ]
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
 	| guineaPig |
 	guineaPig := ByteArray new: 5.
@@ -89,7 +91,7 @@ WriteBarrierTest >> testMutateByteArrayUsingByteAtPut [
 	self assert: guineaPig first equals: 12
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
 	| guineaPig |
 	<expectedFailure>
@@ -110,7 +112,7 @@ WriteBarrierTest >> testMutateByteArrayUsingDoubleAtPut [
 	self assert: guineaPig first equals: (2 raisedTo: 65) asFloat
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateByteArrayUsingFloatAtPut [
 	<expectedFailure>
 	| guineaPig |
@@ -131,7 +133,7 @@ WriteBarrierTest >> testMutateByteArrayUsingFloatAtPut [
 	self assert: guineaPig first equals: 1.0
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateByteStringyUsingAtPut [
 	| guineaPig |
 	guineaPig := ByteString new: 5.
@@ -151,7 +153,7 @@ WriteBarrierTest >> testMutateByteStringyUsingAtPut [
 	self assert: guineaPig first equals: $h
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateByteStringyUsingByteAtPut [
 	| guineaPig |
 	guineaPig := ByteString new: 5.
@@ -171,7 +173,7 @@ WriteBarrierTest >> testMutateByteStringyUsingByteAtPut [
 	self assert: guineaPig first asciiValue equals: 100
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateByteSymbolUsingPrivateAtPut [
 	| guineaPig |
 	guineaPig := #hello.
@@ -183,7 +185,7 @@ WriteBarrierTest >> testMutateByteSymbolUsingPrivateAtPut [
 	self assert: guineaPig first equals: $h
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateIVObject [
 	| guineaPig |
 	guineaPig := MessageSend new.
@@ -203,7 +205,7 @@ WriteBarrierTest >> testMutateIVObject [
 	self assert: guineaPig selector identicalTo: #+
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateObjectClass [
 	| guineaPig |
 	guineaPig := WriteBarrierStub new.
@@ -222,7 +224,7 @@ WriteBarrierTest >> testMutateObjectClass [
 	self assert: guineaPig class equals: WriteBarrierAnotherStub
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateObjectFirstInstVarWithManyVars [
 	| guineaPig failure |
 	guineaPig := WriteBarrierStub new.
@@ -232,7 +234,7 @@ WriteBarrierTest >> testMutateObjectFirstInstVarWithManyVars [
 	self assert: failure fieldIndex equals: 1
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateObjectInstVarShouldCatchRightFailure [
 	| guineaPig failure |
 	guineaPig := MessageSend new.
@@ -243,10 +245,10 @@ WriteBarrierTest >> testMutateObjectInstVarShouldCatchRightFailure [
 
 	self assert: failure object identicalTo: guineaPig.
 	self assert: failure newValue equals: #test.
-	self assert: failure fieldIndex equals: 1
+	self assert: failure fieldIndex equals: 4
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateObjectInstVarUsingAtPut [
 	| guineaPig |
 	guineaPig := Array new: 5.
@@ -266,7 +268,7 @@ WriteBarrierTest >> testMutateObjectInstVarUsingAtPut [
 	self assert: guineaPig first equals: #test
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateObjectInstVarUsingBasicAtPut [
 	| guineaPig |
 	guineaPig := Array new: 5.
@@ -286,7 +288,7 @@ WriteBarrierTest >> testMutateObjectInstVarUsingBasicAtPut [
 	self assert: guineaPig first equals: #test
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateObjectInstVarUsingInstVarAtPut [
 	| guineaPig |
 	guineaPig := WriteBarrierStub new.
@@ -306,7 +308,7 @@ WriteBarrierTest >> testMutateObjectInstVarUsingInstVarAtPut [
 	self assert: guineaPig var1 equals: #test
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateObjectLastInstVarWithManyVars [
 	| guineaPig failure |
 	guineaPig := WriteBarrierStub new.
@@ -316,7 +318,7 @@ WriteBarrierTest >> testMutateObjectLastInstVarWithManyVars [
 	self assert: failure fieldIndex equals: 10
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateVariableObject [
 	| guineaPigs |
 	guineaPigs := {#[1 2 3] copy . #(1 2 3) copy}.
@@ -338,7 +340,7 @@ WriteBarrierTest >> testMutateVariableObject [
 			self assert: guineaPig third equals: 3 ]
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateWideStringUsingAtPut [
 	| guineaPig |
 	guineaPig := 'hello' asWideString.
@@ -358,7 +360,7 @@ WriteBarrierTest >> testMutateWideStringUsingAtPut [
 	self assert: guineaPig first equals: $q
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateWideStringUsingWordAtPut [
 	| guineaPig |
 	guineaPig := 'hello' asWideString.
@@ -378,7 +380,7 @@ WriteBarrierTest >> testMutateWideStringUsingWordAtPut [
 	self assert: guineaPig first asciiValue equals: 65536
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testMutateWideSymbolUsingPrivateAtPut [
 	| guineaPig |
 	[ guineaPig := ('hello', (Character codePoint: 8002) asString) asSymbol.
@@ -392,7 +394,7 @@ WriteBarrierTest >> testMutateWideSymbolUsingPrivateAtPut [
 	self assert: guineaPig first  equals: $h
 ]
 
-{ #category : #'tests - helper' }
+{ #category : 'tests - helper' }
 WriteBarrierTest >> testObject: object initialState: initialState tuples: tuples [
 	self
 		testObject: object
@@ -401,7 +403,7 @@ WriteBarrierTest >> testObject: object initialState: initialState tuples: tuples
 		setReadOnlyBlock: [ :value | object setIsReadOnlyObject: value ]
 ]
 
-{ #category : #'tests - helper' }
+{ #category : 'tests - helper' }
 WriteBarrierTest >> testObject: object initialState: initialState tuples: tuples setReadOnlyBlock: setImmutabilityBlock [
 	self assert: object isReadOnlyObject equals: initialState.
 	tuples do: [ :tuple |
@@ -415,7 +417,7 @@ WriteBarrierTest >> testObject: object initialState: initialState tuples: tuples
 		self assert: object isReadOnlyObject equals: expectedNewState ]
 ]
 
-{ #category : #'tests - helper' }
+{ #category : 'tests - helper' }
 WriteBarrierTest >> testProxyObject: object initialState: initialState tuples: tuples [
 	self
 		testObject: object
@@ -425,7 +427,7 @@ WriteBarrierTest >> testProxyObject: object initialState: initialState tuples: t
 			MirrorPrimitives makeObject: object readOnly: value ]
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testReadOnlyImmediate [
 	"immediate objects like SmallIntegers are read only"
 	self assert: 1 isReadOnlyObject.
@@ -433,7 +435,7 @@ WriteBarrierTest >> testReadOnlyImmediate [
 	self assert: 1 beReadOnlyObject
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testRetryingInstVarModification [
 	| guineaPig |
 	guineaPig := MessageSend new.
@@ -446,7 +448,7 @@ WriteBarrierTest >> testRetryingInstVarModification [
 	self assert: guineaPig receiver equals: 1
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testSetIsReadOnlyFailure [
 	self alwaysWritableObjects do: [ :each |
 		self
@@ -455,7 +457,7 @@ WriteBarrierTest >> testSetIsReadOnlyFailure [
 			tuples: #( (true false false) (false false false) ) ]
 ]
 
-{ #category : #'tests - proxy' }
+{ #category : 'tests - proxy' }
 WriteBarrierTest >> testSetIsReadOnlyFailureProxy [
 	self alwaysWritableObjects do: [ :each |
 		self
@@ -464,7 +466,7 @@ WriteBarrierTest >> testSetIsReadOnlyFailureProxy [
 			tuples: #( (true false false) (false false false) ) ]
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testSetIsReadOnlyImmediate [
 	self alwaysReadOnlyObjects do: [ :each |
 		self
@@ -473,7 +475,7 @@ WriteBarrierTest >> testSetIsReadOnlyImmediate [
 			tuples: #( (true true true) (false true true) ) ]
 ]
 
-{ #category : #'tests - proxy' }
+{ #category : 'tests - proxy' }
 WriteBarrierTest >> testSetIsReadOnlyImmediateProxy [
 	self alwaysReadOnlyObjects do: [ :each |
 		self
@@ -482,7 +484,7 @@ WriteBarrierTest >> testSetIsReadOnlyImmediateProxy [
 			tuples: #( (true true true) (false true true) ) ]
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 WriteBarrierTest >> testSetIsReadOnlySuccess [
 	self maybeReadOnlyObjects do: [ :each |
 		self
@@ -491,7 +493,7 @@ WriteBarrierTest >> testSetIsReadOnlySuccess [
 			tuples: #( (true false true) (false true false) ) ]
 ]
 
-{ #category : #'tests - proxy' }
+{ #category : 'tests - proxy' }
 WriteBarrierTest >> testSetIsReadOnlySuccessProxy [
 	self maybeReadOnlyObjects do: [ :each |
 		self

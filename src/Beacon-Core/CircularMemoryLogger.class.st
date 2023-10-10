@@ -21,18 +21,20 @@
 ```
 "
 Class {
-	#name : #CircularMemoryLogger,
-	#superclass : #MemoryLogger,
+	#name : 'CircularMemoryLogger',
+	#superclass : 'MemoryLogger',
 	#instVars : [
 		'entryCount',
 		'index',
 		'fullBuffer',
 		'loopCount'
 	],
-	#category : #'Beacon-Core-Loggers'
+	#category : 'Beacon-Core-Loggers',
+	#package : 'Beacon-Core',
+	#tag : 'Loggers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CircularMemoryLogger class >> fromSton: stonReader [
 
 	| logger |
@@ -50,7 +52,7 @@ CircularMemoryLogger class >> fromSton: stonReader [
 	^ logger
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 CircularMemoryLogger >> asStonDictionary [
 
 	^ Dictionary new
@@ -63,7 +65,7 @@ CircularMemoryLogger >> asStonDictionary [
 		  yourself
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 CircularMemoryLogger >> basicEntryCount: anInteger [
 	"Set the receiver's entryCount.
 	This is normally only used when loading saved instances from file"
@@ -71,7 +73,7 @@ CircularMemoryLogger >> basicEntryCount: anInteger [
 	entryCount := anInteger
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 CircularMemoryLogger >> basicFullBuffer: aBoolean [
 	"Set the receiver's fullBuffer.
 	This is normally only used when loading saved instances from file"
@@ -79,7 +81,7 @@ CircularMemoryLogger >> basicFullBuffer: aBoolean [
 	fullBuffer := aBoolean
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 CircularMemoryLogger >> basicIndex: anInteger [
 	"Set the receiver's index.
 	This is normally only used when loading saved instances from file"
@@ -87,7 +89,7 @@ CircularMemoryLogger >> basicIndex: anInteger [
 	index := anInteger
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 CircularMemoryLogger >> basicLoopCount: anInteger [
 	"Set the receiver's fullBuffer.
 	This is normally only used when loading saved instances from file"
@@ -95,7 +97,7 @@ CircularMemoryLogger >> basicLoopCount: anInteger [
 	loopCount := anInteger
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 CircularMemoryLogger >> basicRecordings: aCollection [
 	"Set the receiver's recordings.
 	This is normally only used when loading saved instances from file"
@@ -103,7 +105,7 @@ CircularMemoryLogger >> basicRecordings: aCollection [
 	recordings := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CircularMemoryLogger >> basicReset [
 	"It simply removes all recordings without
 	affecting the running status of the logger.
@@ -115,7 +117,7 @@ CircularMemoryLogger >> basicReset [
 	index := 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CircularMemoryLogger >> entryCount: anInteger [
 
 	mutex critical: [
@@ -123,7 +125,7 @@ CircularMemoryLogger >> entryCount: anInteger [
 		self basicReset ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CircularMemoryLogger >> initialize [
 
 	entryCount := 5000.
@@ -131,7 +133,7 @@ CircularMemoryLogger >> initialize [
 	super initialize
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CircularMemoryLogger >> nextPut: aSignal [
 
 	mutex critical: [
@@ -150,7 +152,7 @@ CircularMemoryLogger >> nextPut: aSignal [
 	self announcer announce: aSignal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CircularMemoryLogger >> recordings [
 	"It answers a copy of the recorded collection to not grant
 	access to the users to a shared resource that should only be
@@ -162,7 +164,7 @@ CircularMemoryLogger >> recordings [
 		  ifFalse: [ recordings first: index ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CircularMemoryLogger >> reset [
 	"it simply removes all recordings without
 	affecting the running status of the logger"

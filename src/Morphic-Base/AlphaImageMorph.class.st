@@ -5,8 +5,8 @@ Displays an image with the specified alpha value (translucency) and optional sca
 
 "
 Class {
-	#name : #AlphaImageMorph,
-	#superclass : #ImageMorph,
+	#name : 'AlphaImageMorph',
+	#superclass : 'ImageMorph',
 	#instVars : [
 		'alpha',
 		'cachedForm',
@@ -20,24 +20,26 @@ Class {
 	#classVars : [
 		'DefaultImage'
 	],
-	#category : #'Morphic-Base-Basic'
+	#category : 'Morphic-Base-Basic',
+	#package : 'Morphic-Base',
+	#tag : 'Basic'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AlphaImageMorph class >> defaultImage: aForm [
 	"Set the default image used for new instances of the receiver."
 
 	DefaultImage := aForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> alpha [
 	"Answer the value of alpha"
 
 	^ alpha
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> alpha: anObject [
 	"Set the value of alpha"
 
@@ -48,21 +50,21 @@ AlphaImageMorph >> alpha: anObject [
 		changed: #alpha
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> autoSize [
 	"Answer the value of autoSize"
 
 	^ autoSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> autoSize: anObject [
 	"Set the value of autoSize"
 
 	autoSize := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> cachedForm [
 	"Answer the value of cachedForm"
 
@@ -83,28 +85,28 @@ AlphaImageMorph >> cachedForm [
 	^cachedForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> cachedForm: anObject [
 	"Set the value of cachedForm"
 
 	cachedForm := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlphaImageMorph >> defaultColor [
 	"Answer the default color for the receiver."
 
 	^Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlphaImageMorph >> defaultImage [
 	"Answer the default image for the receiver."
 
 	^DefaultImage ifNil: [DefaultImage := DefaultForm asFormOfDepth: 32]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 AlphaImageMorph >> displayBounds [
 	"Answer a rectangle in display coordinates that
 	bounds the image (may be larger/smaller than visible area).
@@ -113,7 +115,7 @@ AlphaImageMorph >> displayBounds [
 	^self layoutPosition extent: self cachedForm extent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AlphaImageMorph >> drawOn: aCanvas [
 	"Draw with the current alpha
 	Can't do simple way since BitBlt rules are dodgy!."
@@ -126,14 +128,14 @@ AlphaImageMorph >> drawOn: aCanvas [
 					c translucentImage: self cachedForm at: self layoutPosition]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> enabled [
 	"Answer the value of enabled"
 
 	^enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> enabled: anObject [
 	"Set the value of enabled"
 
@@ -143,7 +145,7 @@ AlphaImageMorph >> enabled: anObject [
 		changed
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 AlphaImageMorph >> extent: aPoint [
 	"Allow as normal."
 
@@ -152,26 +154,26 @@ AlphaImageMorph >> extent: aPoint [
 	(self layout = #scaled or: [self layout = #scaledAspect]) ifTrue: [self cachedForm: nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> getImageSelector [
 
 	^ getImageSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> getImageSelector: anObject [
 
 	getImageSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> image: anImage [
 	"Clear the cached form."
 
 	^self image: anImage size: anImage extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> image: aForm size: aPoint [
 	"Set the image to be the form scaled to the given size and padded if neccesary."
 
@@ -193,14 +195,14 @@ AlphaImageMorph >> image: aForm size: aPoint [
 	self changed: #imageExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> imageExtent [
 	"Answer the extent of the original form."
 
 	^self form extent
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 AlphaImageMorph >> imageRectangleFromDisplayRectangle: aRectangle [
 	"Answer a rectangle in (original) image coordinates that
 	corresponds to the given rectangle (in relative display coordinates)."
@@ -220,7 +222,7 @@ AlphaImageMorph >> imageRectangleFromDisplayRectangle: aRectangle [
 					scaleBy: 1 / self scale) rounded]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AlphaImageMorph >> initialize [
 	"Initialize the receiver.
 	Use the 32 bit depth default image to avoid
@@ -234,14 +236,14 @@ AlphaImageMorph >> initialize [
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> layout [
 	"Answer the value of layout"
 
 	^ layout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> layout: aSymbol [
 	"Set the value of layout"
 
@@ -253,7 +255,7 @@ AlphaImageMorph >> layout: aSymbol [
 	self changed
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 AlphaImageMorph >> layoutPosition [
 	"Answer the position that the cached form should be drawn
 	based on the layout"
@@ -269,7 +271,7 @@ AlphaImageMorph >> layoutPosition [
 	^self innerBounds topLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> layoutSymbols [
 	"Answer the available layout options."
 
@@ -278,13 +280,13 @@ AlphaImageMorph >> layoutSymbols [
 		#bottomRight #bottomCenter #bottomLeft #leftCenter)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> model [
 
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> model: anObject [
 	"Set my model and make me me a dependent of the given object."
 
@@ -293,21 +295,21 @@ AlphaImageMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 AlphaImageMorph >> optimalExtent [
 	"Answer the optimal extent for the receiver."
 
 	^self form extent * self scale + (self borderWidth * 2)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> scale [
 	"Answer the value of scale"
 
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> scale: aNumber [
 	"Set the value of scale"
 
@@ -319,7 +321,7 @@ AlphaImageMorph >> scale: aNumber [
 		changed: #scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> scaledImage [
 	"Answer the image scaled as required."
 
@@ -327,17 +329,17 @@ AlphaImageMorph >> scaledImage [
 	i := self form.
 	i boundingBox area = 0 ifTrue: [^i].
 	(self layout == #scaled and: [self extent ~= i extent]) ifTrue: [
-		^i magnify: i boundingBox by: (self extent / i extent) smoothing: 2].
+		^i magnifyBy: (self extent / i extent) smoothing: 2].
 	(self layout == #scaledAspect and: [self extent ~= i extent]) ifTrue: [
 		^self width / i width > (self height / i height)
-			ifTrue: [i magnify: i boundingBox by: (self height / i height) smoothing: 2]
-			ifFalse: [i magnify: i boundingBox by: (self width / i width) smoothing: 2]].
+			ifTrue: [i magnifyBy: (self height / i height) smoothing: 2]
+			ifFalse: [i magnifyBy: (self width / i width) smoothing: 2]].
 	self scale ~= 1 ifTrue: [
-		^i magnify: i boundingBox by: self scale smoothing: 2].
+		^i magnifyBy: self scale smoothing: 2].
 	^i
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> update: aSymbol [
 	"Update the image if changed."
 
@@ -346,7 +348,7 @@ AlphaImageMorph >> update: aSymbol [
 		self updateImage]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaImageMorph >> updateImage [
 	"Get the image from the model."
 

@@ -1,11 +1,13 @@
 Class {
-	#name : #ArgumentVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'ArgumentVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #tests }
-ArgumentVariableTest >> testDeclaringNode [
+{ #category : 'tests' }
+ArgumentVariableTest >> testDefiningNode [
 	| method declaringNode declaringNodeViaVariable|
 
 	method := OrderedCollection >> #do:.
@@ -19,7 +21,7 @@ ArgumentVariableTest >> testDeclaringNode [
 	self assert: declaringNodeViaVariable equals: declaringNode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentVariableTest >> testUsingMethods [
 
 	| method |

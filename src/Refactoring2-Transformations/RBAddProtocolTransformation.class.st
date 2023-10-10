@@ -14,15 +14,17 @@ Preconditions:
 - The protocol name is a valid name.
 "
 Class {
-	#name : #RBAddProtocolTransformation,
-	#superclass : #RBClassTransformation,
+	#name : 'RBAddProtocolTransformation',
+	#superclass : 'RBClassTransformation',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddProtocolTransformation class >> model: aRBModel protocol: aString inClass: aClassName [
 
 	^ self new
@@ -32,7 +34,7 @@ RBAddProtocolTransformation class >> model: aRBModel protocol: aString inClass: 
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 
 	^ self new
@@ -41,32 +43,44 @@ RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 		yourself
 ]
 
-{ #category : #preconditions }
-RBAddProtocolTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBAddProtocolTransformation >> applicabilityPreconditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'Class named ', className, ' does not exist' )
-	  & ( RBCondition withBlock: [ (( model environment
-			protocolsFor: self definingClass realClass )
-			includes: protocol ) not ]
-			errorString: 'Protocol named ', protocol, ' already exists' )
+	^ self classExist & self protocolExist
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBAddProtocolTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'Class named ' , className , ' does not exist'
+]
+
+{ #category : 'executing' }
 RBAddProtocolTransformation >> privateTransform [
 
 	self definingClass addProtocolNamed: protocol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBAddProtocolTransformation >> protocol: aString inClass: aClassName [
 
 	self className: aClassName.
 	protocol := aString
 ]
 
-{ #category : #printing }
+{ #category : 'preconditions' }
+RBAddProtocolTransformation >> protocolExist [
+
+	^ RBCondition
+		  withBlock: [
+			  ((model environment protocolsFor: self definingClass realClass)
+				   includes: protocol) not ]
+		  errorString: 'Protocol named ' , protocol , ' already exists'
+]
+
+{ #category : 'printing' }
 RBAddProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

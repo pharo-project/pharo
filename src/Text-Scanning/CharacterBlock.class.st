@@ -16,8 +16,8 @@ corner (Point): The bottom-right corner of the area allocated for displaying 
 
 "
 Class {
-	#name : #CharacterBlock,
-	#superclass : #Rectangle,
+	#name : 'CharacterBlock',
+	#superclass : 'Rectangle',
 	#instVars : [
 		'stringIndex',
 		'text',
@@ -26,10 +26,12 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Text-Scanning-Base'
+	#category : 'Text-Scanning-Base',
+	#package : 'Text-Scanning',
+	#tag : 'Base'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterBlock >> < aCharacterBlock [
 	"Answer whether the string index of the receiver precedes that of
 	aCharacterBlock."
@@ -37,7 +39,7 @@ CharacterBlock >> < aCharacterBlock [
 	^stringIndex < aCharacterBlock stringIndex
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterBlock >> <= aCharacterBlock [
 	"Answer whether the string index of the receiver does not come after that
 	of aCharacterBlock."
@@ -45,15 +47,14 @@ CharacterBlock >> <= aCharacterBlock [
 	^(self > aCharacterBlock) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterBlock >> = aCharacterBlock [
 
-	^self species = aCharacterBlock species
-		ifTrue: [ stringIndex = aCharacterBlock stringIndex]
-		ifFalse: [ false]
+	^ self species = aCharacterBlock species
+		and: [ stringIndex = aCharacterBlock stringIndex ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterBlock >> > aCharacterBlock [
 	"Answer whether the string index of the receiver comes after that of
 	aCharacterBlock."
@@ -61,7 +62,7 @@ CharacterBlock >> > aCharacterBlock [
 	^aCharacterBlock < self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterBlock >> >= aCharacterBlock [
 	"Answer whether the string index of the receiver does not precede that of
 	aCharacterBlock."
@@ -69,7 +70,7 @@ CharacterBlock >> >= aCharacterBlock [
 	^(self < aCharacterBlock) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterBlock >> max: aCharacterBlock [
 	aCharacterBlock ifNil:[^self].
 	^aCharacterBlock > self
@@ -77,7 +78,7 @@ CharacterBlock >> max: aCharacterBlock [
 		ifFalse:[self]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterBlock >> min: aCharacterBlock [
 	aCharacterBlock ifNil:[^self].
 	^aCharacterBlock < self
@@ -85,7 +86,7 @@ CharacterBlock >> min: aCharacterBlock [
 		ifFalse:[self]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterBlock >> moveBy: aPoint [
 	"Change the corner positions of the receiver so that its area translates by
 	the amount defined by the argument, aPoint."
@@ -93,7 +94,7 @@ CharacterBlock >> moveBy: aPoint [
 	corner := corner + aPoint
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CharacterBlock >> printOn: aStream [
 
 	aStream nextPutAll: 'a CharacterBlock with index '.
@@ -107,14 +108,14 @@ CharacterBlock >> printOn: aStream [
 				textLine printOn: aStream]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CharacterBlock >> stringIndex [
 	"Answer the position of the receiver in the string it indexes."
 
 	^stringIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterBlock >> stringIndex: anInteger text: aText topLeft: topLeft extent: extent [
 	stringIndex := anInteger.
 	text := aText.
@@ -123,12 +124,12 @@ CharacterBlock >> stringIndex: anInteger text: aText topLeft: topLeft extent: ex
 		point: topLeft + extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CharacterBlock >> textLine [
 	^ textLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CharacterBlock >> textLine: aLine [
 	textLine := aLine
 ]

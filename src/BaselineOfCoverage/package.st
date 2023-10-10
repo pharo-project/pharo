@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfCoverage }
+Package { #name : 'BaselineOfCoverage' }

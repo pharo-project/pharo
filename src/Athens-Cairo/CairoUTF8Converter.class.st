@@ -2,22 +2,24 @@
 i use persistent buffer to convert strings to utf-8 strings (an input neede by cairo)
 "
 Class {
-	#name : #CairoUTF8Converter,
-	#superclass : #Object,
+	#name : 'CairoUTF8Converter',
+	#superclass : 'Object',
 	#instVars : [
 		'buffer',
 		'encoder',
 		'bs'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoUTF8Converter >> buffer [
 	^ buffer
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CairoUTF8Converter >> checkBufferSpace: minimalSize [
 	| size |
 
@@ -30,7 +32,7 @@ CairoUTF8Converter >> checkBufferSpace: minimalSize [
 		]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CairoUTF8Converter >> convert: aString from: start to: end [
 
 	self checkBufferSpace: 4*(end-start + 2).
@@ -46,7 +48,7 @@ CairoUTF8Converter >> convert: aString from: start to: end [
 	^ bs position
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CairoUTF8Converter >> convertChar: aCharacter [
 
 	self checkBufferSpace: 8.
@@ -57,7 +59,7 @@ CairoUTF8Converter >> convertChar: aCharacter [
 	^ buffer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoUTF8Converter >> initialize [
 	encoder := ZnUTF8Encoder new
 ]

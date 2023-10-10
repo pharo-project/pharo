@@ -2,28 +2,30 @@
 I'm a class using two shared pools. 
 "
 Class {
-	#name : #ClassMultiplePoolUser,
-	#superclass : #Object,
+	#name : 'ClassMultiplePoolUser',
+	#superclass : 'Object',
 	#pools : [
 		'PoolDefiner',
 		'PoolDefiner2'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassMultiplePoolUser class >> author [
 
 	^ AnAuthor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassMultiplePoolUser class >> gloups [
 
 	^ Gloups
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassMultiplePoolUser class >> variableInPoolDefiner2 [
 
 	^ VariableInPoolDefiner2

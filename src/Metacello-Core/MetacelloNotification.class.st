@@ -2,12 +2,14 @@
 I am a notification for logging of textual represenation of Metacello events
 "
 Class {
-	#name : #MetacelloNotification,
-	#superclass : #SystemNotification,
-	#category : #'Metacello-Core-Exceptions-Notifications'
+	#name : 'MetacelloNotification',
+	#superclass : 'SystemNotification',
+	#category : 'Metacello-Core-Exceptions-Notifications',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Notifications'
 }
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 MetacelloNotification class >> signal: message level: aLevel [
 	"Signal the occurrence of an exceptional condition with a specified textual description."
 	

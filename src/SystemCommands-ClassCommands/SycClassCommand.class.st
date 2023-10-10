@@ -7,50 +7,51 @@ Internal Representation and Key Implementation Points.
 	classes:		<Colletion of<Class>>
 "
 Class {
-	#name : #SycClassCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycClassCommand',
+	#superclass : 'CmdCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'classes'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycClassCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isClassSelected
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycClassCommand class >> for: classes [
 	^self new
 		classes: classes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycClassCommand class >> isAbstract [
 	^self = SycClassCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycClassCommand >> classes [
 	^ classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycClassCommand >> classes: anObject [
 	classes := anObject
 ]
 
-{ #category : #'activation - drag and drop' }
+{ #category : 'activation - drag and drop' }
 SycClassCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.
 
 	classes := aToolContext selectedClasses
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	classes := aToolContext selectedClasses

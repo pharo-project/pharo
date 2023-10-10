@@ -1,83 +1,163 @@
 Class {
-	#name : #CoCompletionEngineTest,
-	#superclass : #CompletionEngineTest,
-	#category : #'HeuristicCompletion-Tests'
+	#name : 'CoCompletionEngineTest',
+	#superclass : 'CompletionEngineTest',
+	#category : 'HeuristicCompletion-Tests',
+	#package : 'HeuristicCompletion-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'testing' }
+CoCompletionEngineTest class >> shouldInheritSelectors [
+
+	^ true
+]
+
+{ #category : 'accessing' }
 CoCompletionEngineTest >> doItContext [
 
 	^ nil
 ]
 
-{ #category : #running }
+{ #category : 'testing' }
+CoCompletionEngineTest >> hasBindingOf: aSymbol [
+	^ false
+]
+
+{ #category : 'running' }
 CoCompletionEngineTest >> newCompletionEngine [
 
 	^ CoCompletionEngine new
 ]
 
-{ #category : #asserting }
-CoCompletionEngineTest >> shouldInheritSelectors [
+{ #category : 'tests - interaction' }
+CoCompletionEngineTest >> testCmdCtrlLeft [
 
-	^ true
-]
-
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testAdvanceWordDoesNotCloseCompletionContext [
-	"Because it will still be at the end of the current word"
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size - 10.
+	self setEditorTextWithCaret: 'self asOrder|ed'.
 
 	editor textArea openInWorld.
 	controller openMenu.
+	"Force the drawing of the menu, so the detail can get its position..."
+	WorldMorph doOneCycle.
 
-	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	editor keyDown: (self keyboardEventFor: Character arrowRight useCommand: true).
+	editor keyDown:
+		((self keyboardEventFor: Character arrowLeft) buttons:
+			 KMModifier meta eventCode).
 
-	self assert: controller hasCompletionContext
+	self assert: self editorTextWithCaret equals: 'self |asOrdered'.
+	self assert: controller isMenuOpen.
+
+	editor keyDown:
+		((self keyboardEventFor: Character arrowLeft) buttons:
+			 KMModifier meta eventCode).
+
+	self assert: self editorTextWithCaret equals: '|self asOrdered'.
+	self deny: controller isMenuOpen
 ]
 
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testAdvanceWordGoesToNextWord [
+{ #category : 'tests - interaction' }
+CoCompletionEngineTest >> testCmdCtrlRight [
 
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size - 10.
+	self setEditorTextWithCaret: 'self asOrder|ed trac'.
 
 	editor textArea openInWorld.
 	controller openMenu.
+	"Force the drawing of the menu, so the detail can get its position..."
+	WorldMorph doOneCycle.
 
-	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	editor keyDown: (self keyboardEventFor: Character arrowRight useCommand: true).
+	editor keyDown:
+		((self keyboardEventFor: Character arrowRight) buttons:
+			 KMModifier meta eventCode).
 
-	self assert: editor caret equals: text size - 'toto' size
+	self assert: self editorTextWithCaret equals: 'self asOrdered| trac'.
+	self assert: controller isMenuOpen.
+
+	editor keyDown:
+		((self keyboardEventFor: Character arrowRight) buttons:
+			 KMModifier meta eventCode).
+
+	self assert: self editorTextWithCaret equals: 'self asOrdered trac|'.
+	self deny: controller isMenuOpen
 ]
 
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testAdvanceWordTwiceClosesCompletionContext [
-	"Because it exists current word"
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size - 10.
+{ #category : 'tests' }
+CoCompletionEngineTest >> testCompleteSuper [
 
-	editor textArea openInWorld.
-	controller openMenu.
+	| entries |
+	"Unary"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'postCopy ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'postCopy'.
 
-	"This is the current shortcut of the completion engine... Cmd+right for all platforms"
-	2 timesRepeat: [
-		editor keystroke: (self keyboardEventFor: Character arrowRight useCommand: true) ].
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'postCopy ^ super po|'.
+	self assert: controller completionToken equals: 'po'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'postCopy'.
 
-	self deny: controller hasCompletionContext
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'postCopy ^ super xx|'.
+	self assert: controller completionToken equals: 'xx'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: 'postCopy'.
+
+	"Binary"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: '= aaa ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: '= aaa'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: '= aaa ^ super xx|'.
+	self assert: controller completionToken equals: 'xx'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: '= aaa'.
+
+	"Keyword"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'at: bbb put: ccc ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'at: bbb put: ccc'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'at: bbb put: ccc ^ super a|'.
+	self assert: controller completionToken equals: 'a'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assert: entries first contents equals: 'at: bbb put: ccc'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'at: bbb put: ccc ^ super xx|'.
+	self assert: controller completionToken equals: 'xx'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: 'at: bbb put: ccc'.
+
+	"Message unknown in superclass, so does not appear in super completion"
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'notARedefinition ^ super |'.
+	self assert: controller completionToken equals: ''.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self deny: entries first contents equals: 'notARedefinition'.
+
+	controller menuClosed. "clear the controler"
+	self setEditorTextWithCaret: 'notARedefinition ^ super notARedefinitio|'.
+	self assert: controller completionToken equals: 'notARedefinitio'.
+	controller context completionClass: Point.
+	entries := controller context entries.
+	self assertEmpty: entries
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testEndClosesCompletionContext [
 
 	| text |
@@ -94,7 +174,7 @@ CoCompletionEngineTest >> testEndClosesCompletionContext [
 	self deny: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testEndGoesToEndOfLine [
 
 	| text |
@@ -111,7 +191,43 @@ CoCompletionEngineTest >> testEndGoesToEndOfLine [
 	self assert: editor caret equals: text size + 1
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
+CoCompletionEngineTest >> testExitingWordClosesCompletionContext [
+
+	self setEditorTextWithCaret: 'self mEthOdThatDoesNotExis|t toto'.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	self assert: controller hasCompletionContext.
+	self assert: self editorTextWithCaret equals: 'self mEthOdThatDoesNotExis|t toto'.
+	self assert: controller completionToken equals: 'mEthOdThatDoesNotExis'.
+	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: self editorTextWithCaret equals: 'self mEthOdThatDoesNotExist| toto'.
+	self assert: controller completionToken equals: 'mEthOdThatDoesNotExist'.
+	self assert: controller hasCompletionContext.
+	editor keyDown: (self keyboardEventFor: Character arrowRight).
+	self assert: self editorTextWithCaret equals: 'self mEthOdThatDoesNotExist |toto'.
+	self assert: controller completionToken equals: ''.
+	self deny: controller hasCompletionContext.
+
+	self setEditorTextWithCaret: 'self m|EthOdThatDoesNotExist toto'.
+	controller openMenu.
+
+	self assert: controller hasCompletionContext.
+	self assert: self editorTextWithCaret equals: 'self m|EthOdThatDoesNotExist toto'.
+	self assert: controller completionToken equals: 'm'.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: self editorTextWithCaret equals: 'self |mEthOdThatDoesNotExist toto'.
+	self assert: controller completionToken equals: ''.
+	self assert: controller hasCompletionContext.
+	editor keyDown: (self keyboardEventFor: Character arrowLeft).
+	self assert: self editorTextWithCaret equals: 'self| mEthOdThatDoesNotExist toto'.
+	self assert: controller completionToken equals: 'self'.
+	self deny: controller hasCompletionContext
+]
+
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testHomeClosesCompletionContext [
 
 	| text |
@@ -128,7 +244,7 @@ CoCompletionEngineTest >> testHomeClosesCompletionContext [
 	self deny: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testHomeGoesToStartOfLine [
 
 	| text |
@@ -145,7 +261,7 @@ CoCompletionEngineTest >> testHomeGoesToStartOfLine [
 	self assert: editor caret equals: 1
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testInitialCompletionEngineHasNoContext [
 
 	"If we did no interaction, no completion context should be initialized"
@@ -159,7 +275,7 @@ CoCompletionEngineTest >> testInitialCompletionEngineHasNoContext [
 	self deny: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testLeftWithoutResultsBroadensSelection [
 
 	| text |
@@ -176,7 +292,7 @@ CoCompletionEngineTest >> testLeftWithoutResultsBroadensSelection [
 	self assert: controller context completionToken equals: 'mEthOdThatDoesNotExis'
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testLeftWithoutResultsDoesNotCloseContext [
 
 	| text firstContext |
@@ -194,7 +310,7 @@ CoCompletionEngineTest >> testLeftWithoutResultsDoesNotCloseContext [
 	self assert: controller context equals: firstContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testOpenMenuCreatesCompletionContext [
 
 	| text |
@@ -209,43 +325,7 @@ CoCompletionEngineTest >> testOpenMenuCreatesCompletionContext [
 	self assert: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testPreviousWordClosesCompletionContext [
-
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size.
-
-	editor textArea openInWorld.
-	controller openMenu.
-
-	"This is the current shortcut of the completion engine... Cmd+left for all platforms"
-	editor keystroke: (self keyboardEventFor: Character arrowLeft useCommand: true).
-
-	self deny: controller hasCompletionContext
-]
-
-{ #category : #'tests - interaction' }
-CoCompletionEngineTest >> testPreviousWordGoesToPreviousWord [
-
-	| text |
-	text := 'self mEthOdThatDoesNotExist toto'.
-	self
-		setEditorText: text;
-		selectAt: text size.
-
-	editor textArea openInWorld.
-	controller openMenu.
-
-	"This is the current shortcut of the completion engine... Cmd+left for all platforms"
-	editor keyDown: (self keyboardEventFor: Character arrowLeft useCommand: true).
-
-	self assert: editor caret equals: text size - 'toto' size + 1
-]
-
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testTypeCharacterWithoutResultsDoesNotCloseContext [
 
 	| text firstContext |
@@ -263,7 +343,7 @@ CoCompletionEngineTest >> testTypeCharacterWithoutResultsDoesNotCloseContext [
 	self assert: controller context equals: firstContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testTypeCharacterWithoutResultsNarrowsSelection [
 
 	| text |

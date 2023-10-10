@@ -1,10 +1,12 @@
 Class {
-	#name : #CoNarrowHistoryFetcherTest,
-	#superclass : #CoBasicFetcherWithElementsTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoNarrowHistoryFetcherTest',
+	#superclass : 'CoBasicFetcherWithElementsTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoNarrowHistoryFetcherTest >> setUp [
 
 	super setUp.
@@ -13,7 +15,7 @@ CoNarrowHistoryFetcherTest >> setUp [
 	expectedElements := #(a b c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 
 	| f1Result f2Result f3Result |
@@ -38,7 +40,7 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 	self assertCollection: f1Result equals: f3Result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectly [
 
 	| originalSearch narrowedResults selectors |
@@ -71,7 +73,7 @@ CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectl
 	self assertCollection: originalSearch equals: narrowedResults
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoNarrowHistoryFetcherTest >> testUnnarrowingAndThenNarrowingReturnsSameResult [
 
 

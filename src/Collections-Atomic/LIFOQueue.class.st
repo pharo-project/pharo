@@ -4,20 +4,22 @@ based on atomic operations.
 
 "
 Class {
-	#name : #LIFOQueue,
-	#superclass : #AtomicCollection,
+	#name : 'LIFOQueue',
+	#superclass : 'AtomicCollection',
 	#instVars : [
 		'head'
 	],
-	#category : #'Collections-Atomic-Base'
+	#category : 'Collections-Atomic-Base',
+	#package : 'Collections-Atomic',
+	#tag : 'Base'
 }
 
-{ #category : #'stack-compliant protocol' }
+{ #category : 'stack-compliant protocol' }
 LIFOQueue >> errorEmptyStack [
 	self error: 'this stack is empty'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LIFOQueue >> fastPeek [
 	"Answer a top-most value without removing it from queue.
 	Answer nil, if queue is empty or currently blocked by other process,
@@ -33,7 +35,7 @@ LIFOQueue >> fastPeek [
 	^ result
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LIFOQueue >> initialize [
 	| dummy |
 	dummy := self newItem.
@@ -41,7 +43,7 @@ LIFOQueue >> initialize [
 	head := dummy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LIFOQueue >> next [
 	| dummy tail |
 
@@ -68,7 +70,7 @@ LIFOQueue >> next [
 	^ tail object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LIFOQueue >> nextIfNone: aBlock [
 	| dummy tail |
 
@@ -91,12 +93,12 @@ LIFOQueue >> nextIfNone: aBlock [
 	^ tail object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LIFOQueue >> nextOrNil [
 	^ self nextIfNone: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LIFOQueue >> nextPut: anObject [
 
 	| newItem oldHead |
@@ -114,7 +116,7 @@ LIFOQueue >> nextPut: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LIFOQueue >> peek [
 	"answer a top-most value without removing it,  or nil, if queue is empty.
 	May block if there's another process reading from queue"
@@ -129,13 +131,13 @@ LIFOQueue >> peek [
 	^ result
 ]
 
-{ #category : #'stack-compliant protocol' }
+{ #category : 'stack-compliant protocol' }
 LIFOQueue >> pop [
 
 	^ self nextIfNone: [ self errorEmptyStack ]
 ]
 
-{ #category : #'stack-compliant protocol' }
+{ #category : 'stack-compliant protocol' }
 LIFOQueue >> push: anObject [
 	^ self nextPut: anObject
 ]

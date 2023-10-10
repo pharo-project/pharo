@@ -1,18 +1,20 @@
 Class {
-	#name : #CDTraitPrecedenceCompositionNode,
-	#superclass : #CDTraitCompositionSequenceNode,
+	#name : 'CDTraitPrecedenceCompositionNode',
+	#superclass : 'CDTraitCompositionSequenceNode',
 	#instVars : [
 		'preferedTrait'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitPrecedenceCompositionNode >> preferedTrait [
 	^ preferedTrait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitPrecedenceCompositionNode >> preferedTrait: anObject [
 	preferedTrait := anObject
 ]

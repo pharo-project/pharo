@@ -2,22 +2,24 @@
 I am KeyNotFound, an exception indicating that a key was not found in a Dictionary.
 "
 Class {
-	#name : #KeyNotFound,
-	#superclass : #NotFound,
-	#category : #'Collections-Unordered-Exceptions'
+	#name : 'KeyNotFound',
+	#superclass : 'NotFound',
+	#category : 'Collections-Unordered-Exceptions',
+	#package : 'Collections-Unordered',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyNotFound >> key [
 	^ self object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyNotFound >> key: aKey [
 	self object: aKey
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KeyNotFound >> standardMessageText [
 	"Generate a standard textual description"
 

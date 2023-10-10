@@ -6,18 +6,20 @@ This test intercept the Notification before the pop-up is raised.
 
 "
 Class {
-	#name : #OCCompilerSyntaxErrorNotifyingTest,
-	#superclass : #OCCompilerNotifyingTest,
-	#category : #'OpalCompiler-Tests-FromOld'
+	#name : 'OCCompilerSyntaxErrorNotifyingTest',
+	#superclass : 'OCCompilerNotifyingTest',
+	#category : 'OpalCompiler-Tests-FromOld',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'FromOld'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCCompilerSyntaxErrorNotifyingTest class >> shouldInheritSelectors [
 	"This class can recycle all of super tests, it just has to refine internal Compiler evaluation machinery"
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OCCompilerSyntaxErrorNotifyingTest >> enumerateAllSelections [
 	"This method intercepts the SyntaxErrorNotification and prevent the SyntaxError morph to open.
 	The notification errorCode hold the source of evaluated sub-selection with inserted error message.
@@ -45,12 +47,7 @@ OCCompilerSyntaxErrorNotifyingTest >> enumerateAllSelections [
 				          exc return: nil ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OCCompilerSyntaxErrorNotifyingTest >> evaluateSelection [
-	^ OpalCompiler new
-		source: morph editor selection readStream;
-		"Note subtle difference versus  (morph editor selectionAsStream).
-		The later does not answer the same contents and would raise a SyntaxErrorNotification with wrong sub-selection"
-		failBlock: [^failure];
-		evaluate
+	^ OpalCompiler new evaluate: morph editor selection
 ]

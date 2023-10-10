@@ -8,25 +8,27 @@ See ServerDirectory openFTP, ServerDirectory getFileNamed:, ServerDirectory putF
 See TCP/IP, second edition, by Dr. Sidnie Feit, McGraw-Hill, 1997, Chapter 14, p311.
 "
 Class {
-	#name : #FTPClient,
-	#superclass : #TelnetProtocolClient,
+	#name : 'FTPClient',
+	#superclass : 'TelnetProtocolClient',
 	#instVars : [
 		'dataSocket'
 	],
-	#category : #'Network-Protocols-Protocols'
+	#category : 'Network-Protocols-Protocols',
+	#package : 'Network-Protocols',
+	#tag : 'Protocols'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPClient class >> defaultPortNumber [
 	^21
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPClient class >> logFlag [
 	^#ftp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPClient class >> rawResponseCodes [
 	#(200 'Command okay.'
 	500 'Syntax error, command unrecognized. This may include errors such as command line too long.'
@@ -71,31 +73,31 @@ FTPClient class >> rawResponseCodes [
 	553 'Requested action not taken. File name not allowed.')
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> abortDataConnection [
 	self sendCommand: 'ABOR'.
 	self closeDataSocket
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> ascii [
 	self sendCommand: 'TYPE A'.
 	self lookForCode: 200
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> binary [
 	self sendCommand: 'TYPE I'.
 	self lookForCode: 200
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> changeDirectoryTo: newDirName [
 	self sendCommand: 'CWD ' , newDirName.
 	self checkResponse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPClient >> closeDataSocket [
 	self dataSocket
 		ifNotNil: [
@@ -103,29 +105,29 @@ FTPClient >> closeDataSocket [
 			self dataSocket: nil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPClient >> dataSocket [
 	^dataSocket
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPClient >> dataSocket: aSocket [
 	dataSocket := aSocket
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> deleteDirectory: dirName [
 	self sendCommand: 'RMD ' , dirName.
 	self checkResponse
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> deleteFileNamed: fileName [
 	self sendCommand: 'DELE ' , fileName.
 	self checkResponse
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 FTPClient >> get: limit dataInto: dataStream [
 	"Reel in data until the server closes the connection or the limit is reached.
 	At the same time, watch for errors on otherSocket."
@@ -144,7 +146,7 @@ FTPClient >> get: limit dataInto: dataStream [
 	^ dataStream
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 FTPClient >> getData [
 
 	| dataStream |
@@ -154,7 +156,7 @@ FTPClient >> getData [
 	^dataStream contents
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 FTPClient >> getDataInto: dataStream [
 	"Reel in all data until the server closes the connection.  At the same time, watch for errors on otherSocket.  Don't know how much is coming.  Put the data on the stream."
 
@@ -168,7 +170,7 @@ FTPClient >> getDataInto: dataStream [
 	^ dataStream
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> getDirectory [
 	| dirList |
 	self openPassiveDataConnection.
@@ -179,7 +181,7 @@ FTPClient >> getDirectory [
 	^dirList
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> getFileList [
 	| dirList |
 	self openPassiveDataConnection.
@@ -190,7 +192,7 @@ FTPClient >> getFileList [
 	^dirList
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> getFileNamed: remoteFileName [
 	| data |
 	self openPassiveDataConnection.
@@ -205,7 +207,7 @@ FTPClient >> getFileNamed: remoteFileName [
 	^data
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> getFileNamed: remoteFileName into: dataStream [
 	self openPassiveDataConnection.
 	self sendCommand: 'RETR ', remoteFileName.
@@ -219,7 +221,7 @@ FTPClient >> getFileNamed: remoteFileName into: dataStream [
 	self checkResponse
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> getPartial: limit fileNamed: remoteFileName into: dataStream [
 	| data |
 	self openPassiveDataConnection.
@@ -234,7 +236,7 @@ FTPClient >> getPartial: limit fileNamed: remoteFileName into: dataStream [
 	^data
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPClient >> login [
 
 	self user ifNil: [^self].
@@ -255,7 +257,7 @@ FTPClient >> login [
 			(LoginFailedException protocolInstance: self) signal: self lastResponse]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> loginUser: userName password: passwdString [
 
 	self user: userName.
@@ -264,7 +266,7 @@ FTPClient >> loginUser: userName password: passwdString [
 	self login
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 FTPClient >> lookForCode: code ifDifferent: handleBlock [
 	"We are expecting a certain numeric code next.
 	However, in the FTP protocol, multiple lines are allowed.
@@ -288,19 +290,19 @@ FTPClient >> lookForCode: code ifDifferent: handleBlock [
 	^ super lookForCode: code ifDifferent: handleBlock
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> makeDirectory: newDirName [
 	self sendCommand: 'MKD ' , newDirName.
 	self checkResponse
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> openDataSocket: remoteHostAddress port: dataPort [
 	dataSocket := Socket new.
 	dataSocket connectTo: remoteHostAddress port: dataPort
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 FTPClient >> openPassiveDataConnection [
 	| portInfo list dataPort remoteHostAddress remoteAddressString |
 	self sendCommand: 'PASV'.
@@ -320,13 +322,13 @@ FTPClient >> openPassiveDataConnection [
 	self openDataSocket: (NetNameResolver addressForName: remoteAddressString) port: dataPort
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> passive [
 	self sendCommand: 'PASV'.
 	self lookForCode: 227
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> putFileNamed: filePath as: fileNameOnServer [
 	"FTP a file to the server."
 
@@ -335,7 +337,7 @@ FTPClient >> putFileNamed: filePath as: fileNameOnServer [
 	]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> putFileStreamContents: fileStream as: fileNameOnServer [
 	"FTP a file to the server."
 
@@ -352,7 +354,7 @@ FTPClient >> putFileStreamContents: fileStream as: fileNameOnServer [
 	self checkResponse
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> pwd [
 	| result |
 	self sendCommand: 'PWD'.
@@ -361,19 +363,19 @@ FTPClient >> pwd [
 	^result copyFrom: (result indexOf: $")+1 to: (result lastIndexOf: $")-1
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> quit [
 	self sendCommand: 'QUIT'.
 	self close
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> removeFileNamed: remoteFileName [
 	self sendCommand: 'DELE ', remoteFileName.
 	self checkResponse
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTPClient >> renameFileNamed: oldFileName to: newFileName [
 	self sendCommand: 'RNFR ' , oldFileName.
 	self lookForCode: 350.
@@ -381,7 +383,7 @@ FTPClient >> renameFileNamed: oldFileName to: newFileName [
 	self lookForCode: 250
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPClient >> sendStreamContents: aStream [
 	self dataSocket sendStreamContents: aStream checkBlock: [self checkForPendingError. true]
 ]

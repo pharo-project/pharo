@@ -1,6 +1,6 @@
-Extension { #name : #SmalltalkImage }
+Extension { #name : 'SmalltalkImage' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 SmalltalkImage >> metaLinkOptions [
 	^{
 	#vm -> #( + optionCompileOnLinkInstallation).

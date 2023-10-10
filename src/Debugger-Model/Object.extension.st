@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Debugger-Model' }
+{ #category : '*Debugger-Model' }
 Object class >> canonicalArgumentName [
 	"Imagine you write a method using this object (self) as argument, I return how you would likely
 	name that argument.

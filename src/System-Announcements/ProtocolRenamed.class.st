@@ -1,31 +1,54 @@
 "
-This is event about protocol rename. It should substitute ClassReorganized announcement 
+I am an announcement raised when we rename a protocol.
+
+I should not be used because I will soon be removed since a rename is an addition and a removal in the end.
 "
 Class {
-	#name : #ProtocolRenamed,
-	#superclass : #ProtocolAnnouncement,
+	#name : 'ProtocolRenamed',
+	#superclass : 'ProtocolAnnouncement',
 	#instVars : [
-		'newProtocolName'
+		'newProtocol'
 	],
-	#category : #'System-Announcements-System-Protocols'
+	#category : 'System-Announcements-System-Protocols',
+	#package : 'System-Announcements',
+	#tag : 'System-Protocols'
 }
 
-{ #category : #accessing }
-ProtocolRenamed >> newProtocolName [
-	^ newProtocolName
+{ #category : 'class initialization' }
+ProtocolRenamed class >> in: aClass from: oldName to: newName [
+
+	^ (self in: aClass protocol: oldName)
+		  newProtocol: newName;
+		  yourself
 ]
 
-{ #category : #accessing }
-ProtocolRenamed >> newProtocolName: anObject [
-	newProtocolName := anObject
+{ #category : 'testing' }
+ProtocolRenamed class >> isDeprecated [
+	"Renaming is a composition of ProtocolAdded and ProtocolRemoved. To act on a renaming, those two are the announcements to listen to."
+
+	^ true
 ]
 
-{ #category : #accessing }
-ProtocolRenamed >> oldProtocolName [
-	^ protocol
+{ #category : 'accessing' }
+ProtocolRenamed >> newProtocol [
+
+	^ newProtocol
 ]
 
-{ #category : #accessing }
-ProtocolRenamed >> oldProtocolName: aString [
-	self protocol: aString
+{ #category : 'accessing' }
+ProtocolRenamed >> newProtocol: anObject [
+
+	newProtocol := anObject
+]
+
+{ #category : 'accessing' }
+ProtocolRenamed >> oldProtocol [
+
+	^ self protocol
+]
+
+{ #category : 'accessing' }
+ProtocolRenamed >> oldProtocol: aProtocol [
+
+	self protocol: aProtocol
 ]

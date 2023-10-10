@@ -8,18 +8,20 @@ A set of characters:
 See the package comments for a description of how each of the classes in Collections-Support-CharacterSets is used.
 "
 Class {
-	#name : #CharacterSet,
-	#superclass : #Collection,
+	#name : 'CharacterSet',
+	#superclass : 'Collection',
 	#instVars : [
 		'map'
 	],
 	#classVars : [
 		'CrLf'
 	],
-	#category : #'Collections-Support-CharacterSets'
+	#category : 'Collections-Support-CharacterSets',
+	#package : 'Collections-Support',
+	#tag : 'CharacterSets'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CharacterSet class >> allByteCharacters [
 
 	| set |
@@ -28,7 +30,7 @@ CharacterSet class >> allByteCharacters [
 	^ set
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CharacterSet class >> allCharacters [
 
 	"This name is obsolete since only the characters that will fit in a byte can be queried"
@@ -41,13 +43,13 @@ CharacterSet class >> allCharacters [
 	^ self allByteCharacters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CharacterSet class >> crlf [
 	CrLf ifNil: [CrLf := self with: Character cr with: Character lf].
 	^CrLf
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CharacterSet class >> newFrom: aCollection [
 	| newCollection |
 	newCollection := self new.
@@ -55,14 +57,14 @@ CharacterSet class >> newFrom: aCollection [
 	^newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CharacterSet class >> nonSeparators [
 	"return a set containing everything but the whitespace characters"
 
 	^self separators complement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CharacterSet class >> separators [
 	"return a set containing just the whitespace characters"
 
@@ -72,13 +74,13 @@ CharacterSet class >> separators [
 	^set
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterSet >> = anObject [
 	^self species == anObject species and: [
 		self byteArrayMap = anObject byteArrayMap ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 CharacterSet >> add: aCharacter [
 	"I automatically become a WideCharacterSet if you add a wide character to myself"
 
@@ -93,7 +95,7 @@ CharacterSet >> add: aCharacter [
 	^aCharacter
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CharacterSet >> asString [
 	"Convert the receiver into a String"
 
@@ -103,13 +105,13 @@ CharacterSet >> asString [
 			[ :s | self do: [ :ch | s nextPut: ch]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterSet >> byteArrayMap [
 	"return a ByteArray mapping each ascii value to a 1 if that ascii value is in the set, and a 0 if it isn't.  Intended for use by primitives only"
 	^map
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CharacterSet >> byteComplement [
 	"return a character set containing precisely the single byte characters the receiver does not"
 
@@ -119,14 +121,14 @@ CharacterSet >> byteComplement [
 	^set
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CharacterSet >> complement [
 	"return a character set containing precisely the characters the receiver does not"
 
 	^CharacterSetComplement of: self copy
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CharacterSet >> do: aBlock [
 	"evaluate aBlock with each character in the set"
 
@@ -134,7 +136,7 @@ CharacterSet >> do: aBlock [
 		(self includes: c) ifTrue: [ aBlock value: c ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CharacterSet >> findFirstInByteString: aByteString startingAt: startIndex [
 	"Double dispatching: since we know this is a ByteString, we can use a superfast primitive using a ByteArray map with 0 slots for byte characters not included and 1 for byte characters included in the receiver."
 	^ByteString
@@ -143,17 +145,17 @@ CharacterSet >> findFirstInByteString: aByteString startingAt: startIndex [
 		startingAt: startIndex
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CharacterSet >> hasWideCharacters [
 	^false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CharacterSet >> hash [
 	^self byteArrayMap hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CharacterSet >> includes: aCharacter [
 	"Guard against wide characters"
 	^aCharacter asciiValue >= 256
@@ -161,19 +163,19 @@ CharacterSet >> includes: aCharacter [
 		ifFalse: [ (map at: aCharacter asciiValue + 1) > 0 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CharacterSet >> initialize [
 	super initialize.
 	map := ByteArray new: 256 withAll: 0
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 CharacterSet >> postCopy [
 	super postCopy.
 	map := map copy
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 CharacterSet >> remove: aCharacter [
 	aCharacter asciiValue >= 256
 		ifFalse: ["Guard against wide characters"
@@ -181,24 +183,24 @@ CharacterSet >> remove: aCharacter [
 	^aCharacter
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 CharacterSet >> remove: aCharacter ifAbsent: aBlock [
 	(self includes: aCharacter) ifFalse: [^aBlock value].
 	^self remove: aCharacter
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 CharacterSet >> removeAll [
 
 	map atAllPut: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CharacterSet >> size [
 	^map sum
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CharacterSet >> wideCharacterMap [
 	"used for comparing with WideCharacterSet"
 

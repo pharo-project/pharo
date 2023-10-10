@@ -1,28 +1,30 @@
 Class {
-	#name : #ClyMethodSourcesQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyMethodSourcesQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodSourcesQueryTest >> createQuery [
 	^ ClyMethodSourcesQuery
 		withString: self expectedSourceCodeSubstring
 		from: (ClyClassScope of: self class in: environment)
 ]
 
-{ #category : #'example methods' }
+{ #category : 'example methods' }
 ClyMethodSourcesQueryTest >> expectedSourceCodeSubstring [
 	^'it should be in the source code of ', #expectedMethod
 ]
 
-{ #category : #'example methods' }
+{ #category : 'example methods' }
 ClyMethodSourcesQueryTest >> methodWithExpectedStringInSources [
 	"it should be in the source code of expectedMethod"
 	^self printString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodSourcesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: self class in: environment).
 	self deny: query checkEmptyResult.
@@ -31,7 +33,7 @@ ClyMethodSourcesQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodSourcesQueryTest >> testComparison [
 	self assert: (ClyMethodSourcesQuery withString: 'test substring') equals: (ClyMethodSourcesQuery withString: 'test ' , 'substring').
 
@@ -40,14 +42,14 @@ ClyMethodSourcesQueryTest >> testComparison [
 	self deny: (ClyMethodSourcesQuery withString: 'test substring') equals: (ClyMethodSourcesQuery withString: 'another substring')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodSourcesQueryTest >> testExpectedMethodShouldIncludeExpectedString [
 
 	self assert: ((self class >> #methodWithExpectedStringInSources) sourceCode
 		includesSubstring: self expectedSourceCodeSubstring caseSensitive: false)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodSourcesQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyClassScope of: self class.

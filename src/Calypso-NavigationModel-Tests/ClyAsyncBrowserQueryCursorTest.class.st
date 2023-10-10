@@ -1,20 +1,21 @@
 Class {
-	#name : #ClyAsyncBrowserQueryCursorTest,
-	#superclass : #ClyBrowserItemCursorTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyAsyncBrowserQueryCursorTest',
+	#superclass : 'ClyBrowserItemCursorTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAsyncBrowserQueryCursorTest class >> shouldInheritSelectors [
 	^true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAsyncBrowserQueryCursorTest >> createQuery [
 	^super createQuery semiAsync
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncBrowserQueryCursorTest >> testHasQueryResult [
 
 	self assert: cursor queryResult class equals: ClyAsyncBrowserQueryResultAdapter.

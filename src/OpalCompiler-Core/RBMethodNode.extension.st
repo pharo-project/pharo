@@ -1,40 +1,62 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> bcToASTCache [
 	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForNode: self ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> compiledMethod [
-	compilationContext compiledMethod
-		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
-	^compilationContext compiledMethod
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> bcToASTCache: anObject [
+
+	bcToASTCache := anObject
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> compiledMethod [
+	"Retrieve the associated CompiledMethod (cached version).
+	If no CompiledMethod was generated, nil is returned.
+
+	When the AST is recompiled (see `generateMethod`), the cache is updated.
+	However, the cache is not reset if the AST is modified."
+
+	^ self propertyAt: #compiledMethod ifAbsent: [ nil ]
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> compiledMethod: aCompiledMethod [
+
+	self propertyAt: #compiledMethod put: aCompiledMethod
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> compiler [
+	"Return a compiler configured with self as the AST"
+
+	| class |
+	class := self methodClass ifNil: [ nil class ].
+	^ class compiler ast: self
+]
+
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysis [
 
-	self compilationContext ifNil: [ self methodClass: nil class ].
-
-	self
-		compilationContext semanticAnalyzerClass new
-			compilationContext: self compilationContext;
-			analyze: self
+	self compiler doSemanticAnalysis
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysisIn: behavior [
-	behavior ifNotNil: [self methodClass: behavior].
-	self doSemanticAnalysis
+
+	behavior compiler
+		ast: self
+		doSemanticAnalysis
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> ensureCachedArgumentNames [
 	^self methodPropertyAt: #argumentNames put: self argumentNames
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	| message |
 	message := RBMessageNode
@@ -47,98 +69,82 @@ RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 		body: (RBSequenceNode statements: {message})
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> firstPcForNode: aNode [
 
 	^ self bcToASTCache firstBcOffsetForNode: aNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generate [
-	"The receiver is the root of a parse tree. Answer a CompiledMethod. The
-	argument, trailer, is the references to the source code that is stored with
-	every CompiledMethod."
 
-	^ self generate: CompiledMethodTrailer empty
+	self deprecated: 'Use generateMethod. Beware that there are limitations so read the comments.' transformWith: '`@receiver generate' -> '`@receiver generateMethod'.
+
+	^ self generateMethod
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generate: trailer [
-	"if the bytecode is regenerated, we need to reset the cache"
-	bcToASTCache := nil.
-	^ self generateIR compiledMethodWith: trailer
+	self
+		deprecated: 'Use generateMethod'
+		transformWith: '`@receiver generate: `@argument'
+			-> '`@receiver generateMethod'.
+	^ self generateMethod
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
-	| ir |
-	scope ifNil: [self doSemanticAnalysis].
+	"Generate an IRMethod. See `ir` for the cached version."
 
-	self pragmaNamed: #opalBytecodeMethod ifPresent: [ :pragma | | copy |
-		"We need to copy the AST node to avoid the recursive `generateIR` call from re-entering this condition"
-		copy := self copy.
-		copy removePragmaNamed: pragma selector.
-		ir := copy generateIR compiledMethod valueWithReceiver: nil arguments: (Array new: copy arguments size).
-		ir sourceNode: self.
-		^ ir
-	].
-
- 	ir := (self compilationContext astTranslatorClass new
-			visitNode: self)
-			ir.
-	^ self ir: ir
+	^ self compiler generateIR
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generateMethod [
-	| methodTrailer |
-	methodTrailer := self compilationContext optionEmbeddSources
-			ifTrue: [ CompiledMethodTrailer new sourceCode: source ]
-			ifFalse: [self compilationContext compiledMethodTrailer ].
-	^self generate: methodTrailer
+	"Generate a CompiledMethod (uncached, see `compiledMethod` for the cached version).
+	Important: the current state of the AST is not cheched, and specific controls or steps done
+	by OpalCompiler in a full compilation chain might be missing.
+	So use this method if you know what you are doing."
+
+	^ self compiler compile
 ]
 
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> generateWithSource [
-	"Answer a CompiledMethod with source encoded in trailer."
-	^self generate: (CompiledMethodTrailer new sourceCode: source)
-]
-
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> ir [
+	"Retrieve or generate an IRMethod (cached version)"
 
-	^ self propertyAt: #ir ifAbsent: [self generateIR]
+	^ self propertyAt: #ir ifAbsentPut: [ self generateIR ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> ir: aIRMethodNode [
 
 	^ self propertyAt: #ir put: aIRMethodNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> irInstruction [
 	^ self ir
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> lastPcForNode: aNode [
 
 	^ self bcToASTCache lastBcOffsetForNode: aNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodProperties [
 	^self propertyAt: #methodProperties ifAbsent: nil
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey [
 
 	^self methodPropertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey ifAbsent: absentBlock [
 	| existingProperties |
 	existingProperties := self propertyAt: #methodProperties ifAbsent: absentBlock.
@@ -146,7 +152,7 @@ RBMethodNode >> methodPropertyAt: aKey ifAbsent: absentBlock [
 	^existingProperties propertyAt: aKey ifAbsent: absentBlock
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey put: anObject [
 	| existingProperties newProperties |
 	existingProperties := self propertyAt: #methodProperties ifAbsentPut: [
@@ -160,18 +166,18 @@ RBMethodNode >> methodPropertyAt: aKey put: anObject [
 	self propertyAt: #methodProperties put: newProperties
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> owningScope [
 	^ self scope
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> pcsForNode: aNode [
 
 	^ self bcToASTCache pcsForNode: aNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> primitiveFromPragma [
 	^ pragmas
 		detect: [ :each | each isPrimitive ]
@@ -179,17 +185,7 @@ RBMethodNode >> primitiveFromPragma [
 		ifNone: [ IRPrimitive null ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> sourceText: aString [
-	self source: aString
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> startWithoutParentheses [
-	^ 1
 ]

@@ -2,39 +2,41 @@
 Reader for an MCZ format
 "
 Class {
-	#name : #MCMczReader,
-	#superclass : #MCVersionReader,
+	#name : 'MCMczReader',
+	#superclass : 'MCVersionReader',
 	#instVars : [
 		'zip',
 		'infoCache',
 		'filename'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczReader class >> extension [
 	^ 'mcz'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczReader class >> on: s fileName: f [
 	^ (self on: s)
 		filename: f;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMczReader class >> supportsDependencies [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMczReader class >> supportsVersions [
 	^ true
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCMczReader >> associate: tokens [
 	| result |
 	result := Dictionary new.
@@ -47,7 +49,7 @@ MCMczReader >> associate: tokens [
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCMczReader >> contentStreamForMember: member [
 	^[(member contentStreamFromEncoding: 'utf8') text] on: ZnInvalidUTF8
 		do: [:exc | 
@@ -60,7 +62,7 @@ MCMczReader >> contentStreamForMember: member [
 			exc return: str]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MCMczReader >> contentsForMember: member [
 	^[(member contentStreamFromEncoding: 'utf8') contents] on: ZnInvalidUTF8
 		do: [:exc | 
@@ -73,7 +75,7 @@ MCMczReader >> contentsForMember: member [
 				ifFalse: [str contents])]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MCMczReader >> extractDefinitionsFrom: member [
 	| reader |
 	(MCSnapshotReader readerClassForFileNamed: member fileName)
@@ -83,34 +85,34 @@ MCMczReader >> extractDefinitionsFrom: member [
 
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MCMczReader >> extractDependencyFrom: zipMember [
 	^ MCVersionDependency
 		package: (MCPackage named: (zipMember fileName copyAfterLast: $/))
 		info: (self extractInfoFrom: (self parseMember: zipMember))
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCMczReader >> extractInfoFrom: dict [
 	^MCWorkingCopy infoFromDictionary: dict cache: self infoCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczReader >> filename [
 	^ filename
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczReader >> filename: aString [
 	filename := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczReader >> infoCache [
 	^ infoCache ifNil: [infoCache := Dictionary new]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCMczReader >> loadDefinitions [
 	definitions := OrderedCollection new.
 	(self zip memberNamed: 'snapshot.bin') ifNotNil:
@@ -122,27 +124,27 @@ MCMczReader >> loadDefinitions [
 
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCMczReader >> loadDependencies [
 	dependencies := (self zip membersMatching: 'dependencies/*') collect: [:m | self extractDependencyFrom: m].
 	dependencies := dependencies asArray.
 
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCMczReader >> loadPackage [
 	| dict |
 	dict := self parseMember: 'package'.
 	package := MCPackage named: (dict at: #name)
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MCMczReader >> loadVersionInfo [
 
 	info := self extractInfoFrom: (self parseMember: 'version')
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MCMczReader >> parseMember: memberOrName [
 	| member tokens |
 	member := self zip member: memberOrName.
@@ -150,12 +152,12 @@ MCMczReader >> parseMember: memberOrName [
 	^ self associate: tokens
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczReader >> scanner [
 	^ MCScanner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMczReader >> zip [
 	stream closed ifTrue: [
 		zip := nil].

@@ -1,6 +1,6 @@
-Extension { #name : #Win32WideString }
+Extension { #name : 'Win32WideString' }
 
-{ #category : #'*System-OSEnvironments' }
+{ #category : '*System-OSEnvironments' }
 Win32WideString class >> asExternalTypeOn: generator [
 	^ FFIExternalObjectType objectClass: self
 ]

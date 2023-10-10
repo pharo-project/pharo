@@ -1,11 +1,11 @@
-Extension { #name : #UndefinedObject }
+Extension { #name : 'UndefinedObject' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 UndefinedObject >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 UndefinedObject >> stonOn: stonWriter [
 	stonWriter writeNull
 ]

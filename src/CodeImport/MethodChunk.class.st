@@ -4,16 +4,18 @@ I represent the declaration of a method.  My contents are the source code to imp
 Sending me the message #import makes me install the method into the class.
 "
 Class {
-	#name : #MethodChunk,
-	#superclass : #BehaviorOwnedChunk,
+	#name : 'MethodChunk',
+	#superclass : 'BehaviorOwnedChunk',
 	#instVars : [
 		'categoryName',
 		'stamp'
 	],
-	#category : #'CodeImport-Chunks'
+	#category : 'CodeImport-Chunks',
+	#package : 'CodeImport',
+	#tag : 'Chunks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MethodChunk class >> contents: someContents behaviorName: behaviorName isMeta: isMeta category: categoryName stamp: stamp [
 	^self new
 			contents: someContents;
@@ -24,34 +26,34 @@ MethodChunk class >> contents: someContents behaviorName: behaviorName isMeta: i
 			yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MethodChunk >> accept: aVisitor [
 
 	^ aVisitor visitMethodChunk: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChunk >> category [
 	^ categoryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChunk >> category: aCategoryName [
 	categoryName := aCategoryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChunk >> description [
 
 	^ 'Method ( ', behaviorName , ' >> ' , (contents first: (20 min: contents size)), ' )' , stamp asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MethodChunk >> displayStringOn: stream [
 	stream nextPutAll: self description
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 MethodChunk >> handleMissingBehavior [
 	"self error: ('Cannot install method in unexistent behavior {1}' format: {(behaviorName asString)})"
 
@@ -60,45 +62,36 @@ MethodChunk >> handleMissingBehavior [
 		signal: 'Cannot install method in non-existent behavior ', behaviorName asString
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 MethodChunk >> importFor: requestor logSource: logSource [
 	self existsBehavior
 		ifFalse: [ self handleMissingBehavior ].
-	^ self targetClass
-		compile: contents
-		classified: categoryName
-		withStamp: stamp
-		notifying: (self methodCompileRequestorFor: requestor)
-		logSource: logSource
+	^ (self targetClass compiler
+		permitUndeclared: true;
+		protocol: categoryName;
+		changeStamp: stamp;
+		logged: logSource;
+		install: contents) selector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MethodChunk >> isMethodDeclaration [
 
 	^ true
 ]
 
-{ #category : #importing }
-MethodChunk >> methodCompileRequestorFor: aRequestor [
-	aRequestor ifNotNil: [ aRequestor contents ifNil: [ aRequestor contents: contents ] ].
-	^ MethodChunkCompilerRequestor new
-		methodChunk: self;
-		fileCompileRequestor: aRequestor;
-		yourself
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChunk >> methodSelector [
 
 	^ RBParser parseMethodPattern: self contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChunk >> stamp [
 	^ stamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodChunk >> stamp: aMethodStamp [
 	stamp := aMethodStamp
 ]

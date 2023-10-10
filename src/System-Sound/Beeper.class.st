@@ -17,15 +17,16 @@ This way we can register instances of AbstractSound as playable entities, for ex
 Then ""Beeper beep"" will play the coffeeCup sound.
 "
 Class {
-	#name : #Beeper,
-	#superclass : #Object,
+	#name : 'Beeper',
+	#superclass : 'Object',
 	#classInstVars : [
 		'default'
 	],
-	#category : #'System-Sound'
+	#category : 'System-Sound',
+	#package : 'System-Sound'
 }
 
-{ #category : #beeping }
+{ #category : 'beeping' }
 Beeper class >> beep [
 	"The preferred way of producing an audible feedback.
 	The default playable entity (an instance of Beeper)
@@ -38,7 +39,7 @@ Beeper class >> beep [
 		ifNotNil: [: def | def play]
 ]
 
-{ #category : #beeping }
+{ #category : 'beeping' }
 Beeper class >> beepPrimitive [
 	"Make a primitive beep. Only use this if
 	you want to force this to be a primitive beep.
@@ -50,7 +51,7 @@ Beeper class >> beepPrimitive [
 		ifTrue: [self primitiveBeep]
 ]
 
-{ #category : #customize }
+{ #category : 'customize' }
 Beeper class >> clearDefault [
 	"Clear the default playable.
 	Will be lazily initialized in Beeper class >>default."
@@ -58,7 +59,7 @@ Beeper class >> clearDefault [
 	default := nil
 ]
 
-{ #category : #customize }
+{ #category : 'customize' }
 Beeper class >> default [
 	"When the default is not defined it is
 	initialized using #newDefault."
@@ -66,7 +67,7 @@ Beeper class >> default [
 	^ default ifNil: [default := self newDefault ]
 ]
 
-{ #category : #customize }
+{ #category : 'customize' }
 Beeper class >> newDefault [
 	"Subclasses may override me to provide a default beep.
 	This base implementation returns an instance of Beeper
@@ -75,7 +76,7 @@ Beeper class >> newDefault [
 	^ self new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Beeper class >> primitiveBeep [
 	"Make a primitive beep. Not to be called directly.
 	It is much better to use Beeper class>>beep
@@ -88,7 +89,7 @@ Beeper class >> primitiveBeep [
 	self primitiveFailed
 ]
 
-{ #category : #customize }
+{ #category : 'customize' }
 Beeper class >> setDefault: aPlayableEntity [
 	"Set the playable entity used when making a beep.
 	The playable entity should implement the message #play."
@@ -96,7 +97,7 @@ Beeper class >> setDefault: aPlayableEntity [
 	default := aPlayableEntity
 ]
 
-{ #category : #'play interface' }
+{ #category : 'play interface' }
 Beeper >> play [
 	"This is how the default Beeper makes a beep,
 	by sending beep to the default sound service.

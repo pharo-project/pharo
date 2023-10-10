@@ -12,37 +12,39 @@ somethingCommandline
 			(self with: args) execute ]
 "
 Class {
-	#name : #ClapApplication,
-	#superclass : #Object,
+	#name : 'ClapApplication',
+	#superclass : 'Object',
 	#instVars : [
 		'arguments'
 	],
-	#category : #'Clap-Core-Specification'
+	#category : 'Clap-Core-Specification',
+	#package : 'Clap-Core',
+	#tag : 'Specification'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClapApplication class >> with: arguments [
 	^ self new
 		setArguments: arguments;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapApplication >> context [
 	^ arguments context
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClapApplication >> execute [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClapApplication >> outputStreamDo: aBlock [
 	aBlock value: self context stdout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapApplication >> setArguments: args [
 	arguments := args
 ]

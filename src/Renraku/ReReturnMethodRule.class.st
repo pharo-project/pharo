@@ -5,36 +5,38 @@ Currently (2019-12-09) there is no methods in Pharo 8 which use #shouldReturn
 
 "
 Class {
-	#name : #ReReturnMethodRule,
-	#superclass : #ReAbstractRule,
-	#category : #'Renraku-Rules'
+	#name : 'ReReturnMethodRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'Renraku-Rules',
+	#package : 'Renraku',
+	#tag : 'Rules'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReReturnMethodRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReReturnMethodRule >> basicCheck: aMethod [
 	(aMethod overriddenMethods anySatisfy: [ :method | method hasPragmaNamed: #shouldReturn ]) ifFalse: [ ^ false ].
 
 	^ aMethod ast lastIsReturn not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnMethodRule >> group [
 
 	^ 'Bugs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnMethodRule >> name [
 
 	^ 'Method should explicitly return a value'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReturnMethodRule >> severity [
 
 	^ #error

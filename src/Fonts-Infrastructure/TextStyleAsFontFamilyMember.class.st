@@ -2,12 +2,14 @@
 TextStyleAsFont Family members
 "
 Class {
-	#name : #TextStyleAsFontFamilyMember,
-	#superclass : #AbstractFontFamilyMember,
-	#category : #'Fonts-Infrastructure-Derived'
+	#name : 'TextStyleAsFontFamilyMember',
+	#superclass : 'AbstractFontFamilyMember',
+	#category : 'Fonts-Infrastructure-Derived',
+	#package : 'Fonts-Infrastructure',
+	#tag : 'Derived'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextStyleAsFontFamilyMember >> <= aTextStyleAsFontFamilyMember [
 
 	| orderedItems |
@@ -18,7 +20,7 @@ TextStyleAsFontFamilyMember >> <= aTextStyleAsFontFamilyMember [
 	  <= (orderedItems indexOf: aTextStyleAsFontFamilyMember styleName)
 ]
 
-{ #category : #'squeak emphasis' }
+{ #category : 'squeak emphasis' }
 TextStyleAsFontFamilyMember >> emphasisCode [
 	"Answer the squeak emphasis code (1=bold, 2=italic, 3=boldItalic etc"
 
@@ -33,7 +35,7 @@ TextStyleAsFontFamilyMember >> emphasisCode [
 	^ answer
 ]
 
-{ #category : #'LogicalFont emphasis' }
+{ #category : 'LogicalFont emphasis' }
 TextStyleAsFontFamilyMember >> slantValue [
 
 	^ (styleName includesSubstring: 'Italic')
@@ -41,7 +43,7 @@ TextStyleAsFontFamilyMember >> slantValue [
 		  ifFalse: [ LogicalFont slantRegular ]
 ]
 
-{ #category : #'LogicalFont emphasis' }
+{ #category : 'LogicalFont emphasis' }
 TextStyleAsFontFamilyMember >> stretchValue [
 
 	^ (styleName includesSubstring: 'Condensed')
@@ -49,7 +51,7 @@ TextStyleAsFontFamilyMember >> stretchValue [
 		  ifFalse: [ LogicalFont stretchRegular ]
 ]
 
-{ #category : #'LogicalFont emphasis' }
+{ #category : 'LogicalFont emphasis' }
 TextStyleAsFontFamilyMember >> weightValue [
 
 	^ (styleName includesSubstring: 'Bold')

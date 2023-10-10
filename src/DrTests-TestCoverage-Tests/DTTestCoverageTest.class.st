@@ -1,26 +1,26 @@
 Class {
-	#name : #DTTestCoverageTest,
-	#superclass : #TestCase,
+	#name : 'DTTestCoverageTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'plugin',
 		'package',
 		'pluginConfiguration'
 	],
-	#category : #'DrTests-TestCoverage-Tests'
+	#category : 'DrTests-TestCoverage-Tests',
+	#package : 'DrTests-TestCoverage-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> setUp [
 
 	super setUp.
-	package := RPackage organizer
-		packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
+	package := self packageOrganizer packageNamed: 'DrTests-TestCoverage-Tests-Mocks'.
 	"The test classes are in the same package as classes under test."
-	pluginConfiguration := DTPluginConfiguration items: {package} packages: {package}.
+	pluginConfiguration := DTPluginConfiguration items: { package } packages: { package }.
 	plugin := DTTestCoveragePlugin new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testCoveragePercentForMock [
 
 	| result |
@@ -28,7 +28,7 @@ DTTestCoverageTest >> testCoveragePercentForMock [
 	self assert: result percent class equals: ScaledDecimal
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testCoverageResultIsAnInstanceOfDTTestCoverageResult [
 
 	| result |
@@ -36,7 +36,7 @@ DTTestCoverageTest >> testCoverageResultIsAnInstanceOfDTTestCoverageResult [
 	self assert: result class equals: DTTestCoverageResult
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testDTTestCoverageResultAsResultForDrTests [
 	"the packages contains at least one test class"
 
@@ -48,7 +48,7 @@ DTTestCoverageTest >> testDTTestCoverageResultAsResultForDrTests [
 				allSatisfy: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase ] ])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testDTTestCoverageResultBuildTreeForUIContainsNodes [
 
 	| resultTree |
@@ -59,15 +59,24 @@ DTTestCoverageTest >> testDTTestCoverageResultBuildTreeForUIContainsNodes [
 				allSatisfy: [ :subResult | subResult class = DTTreeNode ])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testDTTestCoverageResultHas2Nodes [
 
 	| resultTree |
 	resultTree := (plugin runForConfiguration: pluginConfiguration) buildTreeForUI.
-	self assert: resultTree subResults size equals: 2
+	self assert: resultTree subResults size equals: 3
 ]
 
-{ #category : #running }
+{ #category : 'improvements' }
+DTTestCoverageTest >> testDTTestCoverageResultHasCovered_Uncovered_PartiallyCoveredMethods [
+
+	| result |
+	result := plugin runForConfiguration: pluginConfiguration.
+	self assert: result methodList size equals: 1.
+	self assert: result partiallyCoveredMethods size equals: 1 .
+]
+
+{ #category : 'running' }
 DTTestCoverageTest >> testDTTestCoverageResultTheFirstNodeIsPercent [
 
 	| resultTree |
@@ -78,7 +87,7 @@ DTTestCoverageTest >> testDTTestCoverageResultTheFirstNodeIsPercent [
 				includesSubstring: '% Code Coverage')
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testDTTestCoverageResultTheSecondNodeSubResultsAreLeafs [
 
 	| resultTree leafs |
@@ -88,7 +97,7 @@ DTTestCoverageTest >> testDTTestCoverageResultTheSecondNodeSubResultsAreLeafs [
 		assert: (leafs subResults allSatisfy: #isLeaf )
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testItemsAvailableInTestCoveragePlugin [
 	| items |
 	items := plugin itemsToBeAnalysedFor: package.
@@ -98,7 +107,7 @@ DTTestCoverageTest >> testItemsAvailableInTestCoveragePlugin [
 				allSatisfy: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testNotExecutedMethodList [
 
 	| result notExecutedMethodList |
@@ -114,7 +123,7 @@ DTTestCoverageTest >> testNotExecutedMethodList [
 								and: [ anyMethod selector = expectedNotExecutedMethod selector ] ] ])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DTTestCoverageTest >> testPackagesAvailableInTestCoveragePlugin [
 	| items |
 	items := plugin packagesAvailableForAnalysis.

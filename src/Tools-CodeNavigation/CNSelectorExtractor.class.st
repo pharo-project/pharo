@@ -33,12 +33,13 @@ Selecting both `aVariable` or the message `cascade2` will yield a message node `
 However, in the first case, the cursor is closer to `cascade1`, so we want cascade1 while in the latter case we want cascade2.
 "
 Class {
-	#name : #CNSelectorExtractor,
-	#superclass : #Object,
-	#category : #'Tools-CodeNavigation'
+	#name : 'CNSelectorExtractor',
+	#superclass : 'Object',
+	#category : 'Tools-CodeNavigation',
+	#package : 'Tools-CodeNavigation'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 
 	| bestNodeAtPosition |
@@ -46,7 +47,7 @@ CNSelectorExtractor >> extractSelectorFromAST: ast atPosition: aPosition [
 	^ self extractSelectorFromNode: bestNodeAtPosition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CNSelectorExtractor >> extractSelectorFromNode: aNode [
 
 	| node originalNode |
@@ -90,7 +91,7 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 	^ node selector
 ]
 
-{ #category : #'public - extraction' }
+{ #category : 'public - extraction' }
 CNSelectorExtractor >> extractSelectorFromSelection: aString [
    "Extract a selector from the given string in isolation, regardless of the context around it"
 
@@ -109,7 +110,7 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
 	^ aString asSymbol
 ]
 
-{ #category : #'public - extraction' }
+{ #category : 'public - extraction' }
 CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition [
 	"Receives a string with the source code, and a number which indicates the position (of the caret) where the selectors will be extracted."
 

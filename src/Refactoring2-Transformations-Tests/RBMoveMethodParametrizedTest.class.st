@@ -1,10 +1,12 @@
 Class {
-	#name : #RBMoveMethodParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-Parametrized'
+	#name : 'RBMoveMethodParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-Parametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Parametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBMoveMethodRefactoring };
@@ -12,12 +14,28 @@ RBMoveMethodParametrizedTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMoveMethodParametrizedTest >> constructor [
 	^ #selector:class:variable:
 ]
 
-{ #category : #tests }
+{ #category : 'failure tests' }
+RBMoveMethodParametrizedTest >> testFailureMovePrimitiveMethod [
+
+	| refactoring |
+	(model classNamed: #Object)
+		compile: 'foo <primitive: 100> ^#() primitiveFailed'
+		classified: #( #accessing ).
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               #foo.
+				               Object.
+				               'OrderedCollection' }.
+	self shouldFail: refactoring
+]
+
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	| refactoring class |
 	self proceedThroughWarning:
@@ -53,7 +71,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoArgument [
 	self assert: (class parseTreeForSelector: #rewriteRule:) equals: (self parseMethod: 'rewriteRule: anObject rewriteRule := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
 	| refactoring class |
 	(model classFor: Object) compile: 'aTestMethodName ^ OrderedCollection new addAll: (1 to: 100); yourself' classified: #test.
@@ -76,7 +94,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClass [
 		equals: (self parseMethod: 'oneToOneHundred ^ self new addAll: (1 to: 100); yourself')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 	| refactoring class |
 	self proceedThroughWarning:
@@ -111,7 +129,7 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoClassVariable [
 	self assert: (class parseTreeForSelector: #rewriteRule:) equals: (self parseMethod: 'rewriteRule: anObject rewriteRule := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 	| refactoring class |
 	self proceedThroughWarning:
@@ -146,36 +164,25 @@ RBMoveMethodParametrizedTest >> testMoveMethodIntoInstanceVariable [
 	self assert: (class parseTreeForSelector: #builder:) equals: (self parseMethod: 'builder: anObject builder := anObject')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBMoveMethodParametrizedTest >> testMoveMethodThatReferencesPoolDictionary [
 	| refactoring class |
 	self proceedThroughWarning:
 		[ refactoring := self createRefactoringWithArguments:
-			  { #junk . RBLintRuleTestData . 'RefactoryTestDataApp' }.
+			  { #junk . RBLintRuleTestData . RBClassDataForRefactoringTest name }.
 		self
 			setupSelfArgumentNameFor: refactoring
 			toReturn: 'transformationRule'.
 		self
 			setupVariableTypesFor: refactoring
-			toReturn: (Array with: (refactoring model classNamed: 'RBRefactoryTestDataApp class' asSymbol)).
+			toReturn: (Array with: (refactoring model classNamed: RBClassDataForRefactoringTest class name asSymbol)).
 		self
 			setupMethodNameFor: refactoring
 			toReturn: #junk1.
 		self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBLintRuleTestData.
-	self assert: (class parseTreeForSelector: #junk) equals: (self parseMethod: 'junk ^RefactoryTestDataApp junk1').
-	self assert: ((refactoring model metaclassNamed: #RBRefactoryTestDataApp) parseTreeForSelector: #junk1) equals: (self parseMethod: 'junk1
-	^RBRefactoryTestDataApp printString copyFrom: 1 to: CR').
+	self assert: (class parseTreeForSelector: #junk) equals: (self parseMethod: 'junk ^RBClassDataForRefactoringTest junk1').
+	self assert: ((refactoring model metaclassNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #junk1) equals: (self parseMethod: 'junk1
+	^self printString copyFrom: 1 to: CR').
 	self assert: (class directlyDefinesPoolDictionary: 'TextConstants' asSymbol)
-]
-
-{ #category : #'failure tests' }
-RBMoveMethodParametrizedTest >> testMovePrimitiveMethod [
-	| refactoring |
-	(model classNamed: #Object)
-		compile: 'foo <primitive: 100> ^#() primitiveFailed'
-		classified: #(#accessing).
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { #foo . Object . 'OrderedCollection' }.
-	self shouldFail: refactoring
 ]

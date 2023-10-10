@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-SUnit-Browser' }
+Package { #name : 'Calypso-SystemPlugins-SUnit-Browser' }

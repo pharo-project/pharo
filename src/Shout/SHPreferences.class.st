@@ -2,8 +2,8 @@
 Preferences for Shout
 "
 Class {
-	#name : #SHPreferences,
-	#superclass : #Object,
+	#name : 'SHPreferences',
+	#superclass : 'Object',
 	#classVars : [
 		'CustomStyleTable',
 		'Groups'
@@ -11,94 +11,96 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #'Shout-Styling'
+	#category : 'Shout-Styling',
+	#package : 'Shout',
+	#tag : 'Styling'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 SHPreferences class >> applyStyle [
 	| table |
 	table := Groups values flatCollect: [:group | group styleForTable].
 	SHRBTextStyler styleTable: table
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> argsStyle [
 	^ Groups at: #args
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> argsStyle: aGroupStyle [
 	^ Groups at: #args put: aGroupStyle
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> commentStyle [
 	^ Groups at: #comment
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> commentStyle: aGroupStyle [
 	^ Groups at: #comment put: aGroupStyle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHPreferences class >> customStyleTable [
 	^ CustomStyleTable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHPreferences class >> customStyleTable: anArray [
 	CustomStyleTable := anArray.
 	self initializeGroups
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> defaultStyle [
 	^ Groups at: #default
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> defaultStyle: aGroupStyle [
 	^ Groups at: #default put: aGroupStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHPreferences class >> enabled [
 	^ enabled
 		ifNil: [enabled := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHPreferences class >> enabled: aBoolean [
 	enabled := aBoolean
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> errorStyle [
 	^ Groups at: #error
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> errorStyle: aGroupStyle [
 	^ Groups at: #error put: aGroupStyle
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> globalVarStyle [
 	^ Groups at: #globalVar
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> globalVarStyle: aGroupStyle [
 	^ Groups at: #globalVar put: aGroupStyle
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SHPreferences class >> initialize [
 	self customStyleTable: SHRBTextStyler defaultStyleTable
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 SHPreferences class >> initializeGroups [
 	Groups := Dictionary new.
 	#(#default #(#default ) #reservedWords #(#self #super #true #false #nil #thisContext ) #primitiveTypes #(#character #number #symbol #string ) #selectorPatterns #(#patternSelector) #messageSends #(selector #incompleteSelector ) #args #(#patternArg #blockPatternArg #blockArg #argument ) #variable #(#blockTempVar #blockPatternTempVar #tempVar #patternTempVar #incompleteIdentifier ) #instanceVar #(#instVar #classVar ) #globalVar #(#globalVar #poolConstant ) #comment #(#comment ) #error #(#invalid #undefinedSelector #undefinedIdentifier ) #syntax #(#return #blockArgColon #parenthesis #parenthesis1 #parenthesis2 #parenthesis3 #parenthesis4 #parenthesis5 #parenthesis6 #parenthesis7 #block #block1 #block2 #block3 #block4 #block5 #block6 #block7 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #brace #brace1 #brace2 #brace3 #brace4 #brace5 #brace6 #brace7 #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar ) )
@@ -107,71 +109,68 @@ SHPreferences class >> initializeGroups [
 				put: (SHStyleElement withTokens: tokens)]
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> instanceVarStyle [
 	^ Groups at: #instanceVar
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> instanceVarStyle: aGroupStyle [
 	^ Groups at: #instanceVar put: aGroupStyle
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> messageSendsStyle [
 	^ Groups at: #messageSends
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> messageSendsStyle: aGroupStyle [
 	^ Groups at: #messageSends put: aGroupStyle
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> primitiveTypesStyle [
 	^ Groups at: #primitiveTypes
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> primitiveTypesStyle: aGroupStyle [
 	^ Groups at: #primitiveTypes put: aGroupStyle
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> reservedWordsStyle [
 	^ Groups at: #reservedWords
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> reservedWordsStyle: aGroupStyle [
 	^ Groups at: #reservedWords put: aGroupStyle
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> selectorPatternsStyle [
 	^ Groups at: #selectorPatterns
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> selectorPatternsStyle: aGroupStyle [
 	^ Groups at: #selectorPatterns put: aGroupStyle
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SHPreferences class >> setStyleTable: anArray [
 	SHRBTextStyler styleTable: anArray
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SHPreferences class >> setStyleTableNamed: aString [
-	self setStyleTable: (((Pragma allNamed: #styleTable: in: SHRBTextStyler class)
-		detect: [ :each | (each argumentAt: 1) = aString ])
-		method
-			valueWithReceiver: SHRBTextStyler class
-			arguments: #())
+
+	self setStyleTable: (SHRBTextStyler styleTableNamed: aString)
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SHPreferences class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #'Syntax Highlighting')
@@ -233,7 +232,7 @@ SHPreferences class >> settingsOn: aBuilder [
 				description: 'Temporary variable'  ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SHPreferences class >> styleTableRow [
 	| allStyles |
 
@@ -256,22 +255,22 @@ SHPreferences class >> styleTableRow [
 						yourself ] ))
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> syntaxStyle [
 	^ Groups at: #syntax
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> syntaxStyle: aGroupStyle [
 	^ Groups at: #syntax put: aGroupStyle
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> variableStyle [
 	^ Groups at: #variable
 ]
 
-{ #category : #'accessing - styles' }
+{ #category : 'accessing - styles' }
 SHPreferences class >> variableStyle: aGroupStyle [
 	^ Groups at: #variable put: aGroupStyle
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #RBAddReturnStatementTransformationTest,
-	#superclass : #RBTransformationTest,
-	#category : #'Refactoring2-Transformations-Tests-Test'
+	#name : 'RBAddReturnStatementTransformationTest',
+	#superclass : 'RBAbstractTransformationTest',
+	#category : 'Refactoring2-Transformations-Tests-Test',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'Test'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddReturnStatementTransformationTest >> methodAfter [
 
 	| variable |
@@ -12,83 +14,81 @@ RBAddReturnStatementTransformationTest >> methodAfter [
 	^ variable
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBAddReturnStatementTransformationTest >> methodBefore [
 
 	| variable |
 	variable := 'String'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testAccessIsNotDefined [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-							return: '^ variable2'
-							inMethod: #methodBefore
-							inClass: #RBAddReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable2'
+			 inMethod: #methodBefore
+			 inClass: #RBAddReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testAlreadyDefinesReturn [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #methodAfter
-							inClass: #RBAddReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #methodAfter
+			 inClass: #RBAddReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testClassDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #methodBefore
-							inClass: #RBReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #methodBefore
+			 inClass: #RBReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBAddReturnStatementTransformation
-							return: '^ variable'
-							inMethod: #method
-							inClass: #RBAddReturnStatementTransformationTest)
-							asRefactoring
+			 return: '^ variable'
+			 inMethod: #method
+			 inClass: #RBAddReturnStatementTransformationTest)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddReturnStatementTransformation
-						return: '^ variable'
-						inMethod: #methodBefore
-						inClass: #RBAddReturnStatementTransformationTest)
-						asRefactoring transform.
+		                return: '^ variable'
+		                inMethod: #methodBefore
+		                inClass: #RBAddReturnStatementTransformationTest)
+		               generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
-	class := refactoring model classNamed: #RBAddReturnStatementTransformationTest.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	class := refactoring model classNamed:
+		         #RBAddReturnStatementTransformationTest.
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddReturnStatementTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddReturnStatementTransformation new
-		return: '^ variable'
-		inMethod: #methodBefore
-		inClass: self class name)
-		transform.
+		                   return: '^ variable'
+		                   inMethod: #methodBefore
+		                   inClass: self class name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model classNamed: self class name.
-	self assert: (class parseTreeForSelector: #methodBefore) body
-			equals: (class parseTreeForSelector: #methodAfter) body
+	self
+		assert: (class parseTreeForSelector: #methodBefore) body
+		equals: (class parseTreeForSelector: #methodAfter) body
 ]

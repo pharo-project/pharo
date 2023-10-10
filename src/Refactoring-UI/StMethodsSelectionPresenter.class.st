@@ -1,10 +1,12 @@
 Class {
-	#name : #StMethodsSelectionPresenter,
-	#superclass : #StItemsSelectionPresenter,
-	#category : #'Refactoring-UI'
+	#name : 'StMethodsSelectionPresenter',
+	#superclass : 'StItemsSelectionPresenter',
+	#category : 'Refactoring-UI-UI',
+	#package : 'Refactoring-UI',
+	#tag : 'UI'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 StMethodsSelectionPresenter class >> example [
 	<script>
 	^ (self label: 'example ...'
@@ -12,17 +14,17 @@ StMethodsSelectionPresenter class >> example [
 		selecting: {} )
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StMethodsSelectionPresenter class >> title [
 	^ 'Methods'
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 StMethodsSelectionPresenter >> columnName [
 	^ 'Methods'
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 StMethodsSelectionPresenter >> columnSelector [
 	^ #selector
 ]

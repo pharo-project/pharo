@@ -11,16 +11,18 @@ Example
 	(RBRenameClassRefactoring rename: 'RBRenameClassRefactoring' to: 'RBRenameClassRefactoring2') execute
 "
 Class {
-	#name : #RBRenameClassRefactoring,
-	#superclass : #RBClassRefactoring,
+	#name : 'RBRenameClassRefactoring',
+	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'newName',
 		'class'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewName [
 	^ self new
 		model: aRBSmalltalk;
@@ -28,45 +30,84 @@ RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewNam
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
 	^ self new
 		className: aClassName
 		newName: aNewName
 ]
 
-{ #category : #initialization }
+{ #category : 'preconditions' }
+RBRenameClassRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition withBlock: [
+		   class notNil and: [ class isMeta not ] ])
+	  & self isValidClassName & self isNotGlobal
+]
+
+{ #category : 'initialization' }
 RBRenameClassRefactoring >> className: aName newName: aNewName [
+
 	className := aName asSymbol.
 	class := self model classNamed: className.
 	newName := aNewName asSymbol
 ]
 
-{ #category : #preconditions }
-RBRenameClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [class notNil and: [class isMeta not]])
-			& (RBCondition isValidClassName: newName)
-			& (RBCondition isGlobal: newName in: self model) not) |
-			(RBCondition withBlock: [ self refactoringFailure: newName , ' is not a valid class name'])
+{ #category : 'preconditions' }
+RBRenameClassRefactoring >> isNotGlobal [
+
+	^ (RBCondition isGlobal: newName in: self model) not
 ]
 
-{ #category : #transforming }
+{ #category : 'preconditions' }
+RBRenameClassRefactoring >> isValidClassName [
+
+	^ RBCondition isValidClassName: newName
+]
+
+{ #category : 'preconditions' }
+RBRenameClassRefactoring >> preconditions [
+
+	self prepareForExecution.
+	^ self applicabilityPreconditions 
+]
+
+{ #category : 'preconditions' }
+RBRenameClassRefactoring >> prepareForExecution [
+
+	class := self model classNamed: className
+]
+
+{ #category : 'transforming' }
+RBRenameClassRefactoring >> privateTransform [
+
+	self model
+		renameClass: class
+		to: newName
+		around: [ self renameReferences ]
+]
+
+{ #category : 'transforming' }
 RBRenameClassRefactoring >> renameReferences [
 
 	| replacer |
-	replacer := (self parseTreeRewriterClass replaceLiteral: className with: newName)
+	replacer := (self parseTreeRewriterClass
+		             replaceLiteral: className
+		             with: newName)
 		            replace: className with: newName;
-		            replaceArgument: newName withValueFrom: [ :aNode | self refactoringFailure: newName , ' already exists within the reference scope' ];
+		            replaceArgument: newName withValueFrom: [ :aNode |
+			            self refactoringError:
+					            newName , ' already exists within the reference scope' ];
 		            yourself.
 	self model allReferencesToClass: class do: [ :method |
 		(method modelClass hierarchyDefinesVariable: newName) ifTrue: [
-			self refactoringFailure: newName , ' is already defined in hierarchy of ' , method modelClass printString ].
+			self refactoringError: newName , ' is already defined in hierarchy of ' , method modelClass printString ].
 		(method method
 			 ifNil: [ false ]
-			 ifNotNil: #isFromTrait) ifFalse: [ self convertMethod: method selector for: method modelClass using: replacer ] ]
+			 ifNotNil: [ :m | m isFromTrait]) ifFalse: [ self convertMethod: method selector for: method modelClass using: replacer ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -76,12 +117,4 @@ RBRenameClassRefactoring >> storeOn: aStream [
 		nextPutAll: ' to: #';
 		nextPutAll: newName;
 		nextPut: $)
-]
-
-{ #category : #transforming }
-RBRenameClassRefactoring >> transform [
-	self model
-		renameClass: class
-		to: newName
-		around: [self renameReferences]
 ]

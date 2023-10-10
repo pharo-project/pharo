@@ -1,10 +1,12 @@
 Class {
-	#name : #CoverageCollectorTest,
-	#superclass : #TestCase,
-	#category : #'Coverage-Tests'
+	#name : 'CoverageCollectorTest',
+	#superclass : 'TestCase',
+	#category : 'Coverage-Tests',
+	#package : 'Coverage',
+	#tag : 'Tests'
 }
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodCallMethods [
 
 	self methodEmpty.
@@ -13,15 +15,15 @@ CoverageCollectorTest >> methodCallMethods [
 	self methodManyBlocks
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodCallee [
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodEmpty [
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodManyBlocks [
 
 	| i |
@@ -42,7 +44,7 @@ CoverageCollectorTest >> methodManyBlocks [
 		j ]
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodNotCalled [
 
 	"Not expected to be called"
@@ -50,13 +52,13 @@ CoverageCollectorTest >> methodNotCalled [
 	self methodCallee.
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodOnlyReturn [
 
 	^1
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodTwoPaths: aBoolean [
 
 	aBoolean ifTrue: [ 1 ].
@@ -64,19 +66,19 @@ CoverageCollectorTest >> methodTwoPaths: aBoolean [
 	^4.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testBasicCoverage [
 
 	| cov res |
 	cov := CoverageCollector new.
-	cov methods: { Rectangle>>#width. Rectangle>>#area. Rectangle>>#intersect: }.
-	res := cov runOn: [ (1@1 corner: 2@2) area ].
-	self assert: cov metalink hasNodes not. "metaliks where removed"
-	self assert: res methods asSet equals: {Rectangle>>#width. Rectangle>>#area} asSet.
-	self assert: res uncoveredMethods asArray equals: { Rectangle>>#intersect: }
+	cov methods: { (Rectangle >> #width) . (Rectangle >> #area) . (Rectangle >> #intersect:) }.
+	res := cov runOn: [ (1 @ 1 corner: 2 @ 2) area ].
+	self deny: cov metalink hasNodes. "metaliks where removed"
+	self assertCollection: res methods hasSameElements: { (Rectangle >> #width) . (Rectangle >> #area) }.
+	self assert: res uncoveredMethods asArray equals: { (Rectangle >> #intersect:) }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testCallgraph [
 
 	| cov graph |
@@ -86,29 +88,34 @@ CoverageCollectorTest >> testCallgraph [
 	self assert: graph size equals: 21
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testExample [
 
 	| collector coverage |
 	collector := CoverageCollector new. "Instantiate"
-	collector methods: Point methods, Rectangle methods.  "Configure with the methods to watch."	
-	coverage := collector runOn: [ (1@1 corner: 2@2) center ].  "Setup, execute and teardown."
-	self assert: (coverage methods includes: Point>>#x).  "Inspect the results"
-	self assert: (coverage nodes size > 10). "Covered paths are also available"
+	"We skip the method with special selectors because them might not be detected by the coverage collector in case they are optimized by the VM."
+	collector methods: (Point methods , Rectangle methods reject: [ :method | BytecodeEncoder specialSelectors includes: method selector ]). "Configure with the methods to watch."
+	coverage := collector runOn: [ (1 @ 1 corner: 2 @ 2) center ]. "Setup, execute and teardown."
+	self
+		assertCollection: (coverage methods collect: [ :method | method name ])
+		hasSameElements:
+			#( 'Point>>#corner:' 'Point>>#isPoint' 'Rectangle>>#setPoint:point:' 'Rectangle>>#topLeft'
+			   'Rectangle>>#bottomRight' 'Rectangle>>#center' ). "Inspect the results"
+	self assert: coverage nodes size equals: 6 "Covered paths are also available"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNoCoverage [
 
 	| cov res |
 	cov := CoverageCollector new.
-	cov methods add: Rectangle>>#closeTo:.
-	res := cov runOn: [ (1@1 corner: 2@2) area ].
-	self assert: res methods size equals: 0.
-	self assert: res percentage equals: 0.
+	cov methods add: Rectangle >> #closeTo:.
+	res := cov runOn: [ (1 @ 1 corner: 2 @ 2) area ].
+	self assertEmpty: res methods.
+	self assert: res percentage equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeCoverage [
 
 	| cov res |
@@ -116,7 +123,7 @@ CoverageCollectorTest >> testNodeCoverage [
 	cov methods add: self class>>#methodTwoPaths:.
 
 	res := cov runOn: [ self methodTwoPaths: false. self methodTwoPaths: false. ].
-	self assert: cov metalink hasNodes not. "metaliks where removed"
+	self deny: cov metalink hasNodes. "metaliks where removed"
 	self assert: cov methods size equals: 1.
 	self assert: cov nodes size equals: 4.
 
@@ -138,11 +145,11 @@ CoverageCollectorTest >> testNodeCoverage [
 	self assert: res methods size equals: 1.
 	self assert: res nodes size equals: 4.
 	self assert: res percentage asInteger equals: 100.
-	self assert: res uncoveredNodes size equals: 0.
+	self assertEmpty: res uncoveredNodes
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeCoverage2 [
 
 	| cov res |
@@ -150,7 +157,7 @@ CoverageCollectorTest >> testNodeCoverage2 [
 	cov methods: (self class methods select: [ :m | 'method*' match: m selector ]).
 
 	res := cov runOn: [ self methodCallMethods ].
-	self assert: cov metalink hasNodes not. "metaliks where removed"
+	self deny: cov metalink hasNodes. "metaliks where removed"
 	self assert: cov methods size equals: 7.
 	self assert: cov nodes size equals: 21.
 
@@ -160,7 +167,7 @@ CoverageCollectorTest >> testNodeCoverage2 [
 	self assert: res uncoveredNodes size equals: 6.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeDistancesFrom [
 
 	| cov graph target distances |
@@ -173,7 +180,7 @@ CoverageCollectorTest >> testNodeDistancesFrom [
 	self assert: (distances values sorted) equals: { 0. 1. 1. 1. 1. 1. 2. 2. 2. 2. 2. 2. 2}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeDistancesTo [
 
 	| cov graph target distances |
@@ -186,12 +193,12 @@ CoverageCollectorTest >> testNodeDistancesTo [
 	self assert: (distances values sorted) equals: { 0. 1. 1. 1. 2. 3}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNothingToCover [
 
 	| cov res |
 	cov := CoverageCollector new.
-	res := cov runOn: [ (1@1 corner: 2@2) area ].
-	self assert: res methods size equals: 0.
-	self assert: res percentage isNaN.
+	res := cov runOn: [ (1 @ 1 corner: 2 @ 2) area ].
+	self assertEmpty: res methods.
+	self assert: res percentage isNaN
 ]

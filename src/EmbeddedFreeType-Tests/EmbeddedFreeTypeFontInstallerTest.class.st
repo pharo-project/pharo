@@ -2,12 +2,14 @@
 An EmbeddedFreeTypeFontInstallerTest is a test class for testing the behavior of EmbeddedFreeTypeFontInstaller
 "
 Class {
-	#name : #EmbeddedFreeTypeFontInstallerTest,
-	#superclass : #TestCase,
-	#category : #'EmbeddedFreeType-Tests-Installation'
+	#name : 'EmbeddedFreeTypeFontInstallerTest',
+	#superclass : 'TestCase',
+	#category : 'EmbeddedFreeType-Tests-Installation',
+	#package : 'EmbeddedFreeType-Tests',
+	#tag : 'Installation'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedFreeTypeFontInstallerTest >> currentInstallerOrError [
 	| installer |
 	installer := EmbeddedFreeTypeFontInstaller readSlotNamed: #current.
@@ -15,7 +17,7 @@ EmbeddedFreeTypeFontInstallerTest >> currentInstallerOrError [
 	^ installer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedFreeTypeFontInstallerTest >> currentProviderOrError [
 	| provider |
 	provider := FreeTypeFontProvider readSlotNamed: #current.
@@ -23,7 +25,7 @@ EmbeddedFreeTypeFontInstallerTest >> currentProviderOrError [
 	^ provider
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EmbeddedFreeTypeFontInstallerTest >> testIsRegistred [
 	| installer provider |
 	installer := self currentInstallerOrError.
@@ -31,7 +33,7 @@ EmbeddedFreeTypeFontInstallerTest >> testIsRegistred [
 	self assert: (provider includesInstaller: installer)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EmbeddedFreeTypeFontInstallerTest >> testinstallAllFontsIn [
 
 	| provider fileInfos families |

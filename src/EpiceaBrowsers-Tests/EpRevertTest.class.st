@@ -1,10 +1,12 @@
 Class {
-	#name : #EpRevertTest,
-	#superclass : #EpLogBrowserOperationFactoryTest,
-	#category : #'EpiceaBrowsers-Tests-Integration'
+	#name : 'EpRevertTest',
+	#superclass : 'EpLogBrowserOperationFactoryTest',
+	#category : 'EpiceaBrowsers-Tests-Integration',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EpRevertTest >> revertInputEntry [
 
 	EpLogBrowserOperationFactory new
@@ -14,37 +16,21 @@ EpRevertTest >> revertInputEntry [
 		revertCodeChanges
 ]
 
-{ #category : #tests }
-EpRevertTest >> testBehaviorCategoryChange [
-
-	| aClass aCategory anotherCategory |
-	aClass := classFactory newClass.
-	aCategory := aClass category.
-	anotherCategory := aCategory, '2'.
-	aClass category: anotherCategory.
-	self setHeadAsInputEntry.
-
-	self assert: (inputEntry content isKindOf: EpBehaviorCategoryChange).
-	self assert: aClass category equals: anotherCategory.
-	self revertInputEntry.
-	self assert: aClass category equals: aCategory
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testBehaviorCommentChange [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass classComment: 'before'.
-	aClass classComment: 'after'.
+	aClass comment: 'before'.
+	aClass comment: 'after'.
 	self setHeadAsInputEntry.
 
 	self revertInputEntry.
 
-	self assert: aClass organization classComment equals: 'before'
+	self assert: aClass comment equals: 'before'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testBehaviorNameChange [
 
 	| aClass className |
@@ -58,55 +44,28 @@ EpRevertTest >> testBehaviorNameChange [
 	self assert: aClass name equals: className
 ]
 
-{ #category : #tests }
-EpRevertTest >> testCategoryAdditionWithCategoryRemoved [
+{ #category : 'tests' }
+EpRevertTest >> testBehaviorRepackagedChange [
 
-	| organization aCategory |
-	organization := self class environment organization.
-	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
+	| aClass package tag newPackage newTag |
+	aClass := classFactory newClass.
+	package := aClass package name.
+	tag := aClass packageTag name.
+	newPackage := package , '2'.
+	newTag := tag , '2'.
+	aClass package: newPackage tag: newTag.
 	self setHeadAsInputEntry.
 
-	self assert: (organization includesCategory: aCategory).
+	self assert: (inputEntry content isKindOf: EpBehaviorRepackagedChange).
+	self assert: aClass package name equals: newPackage.
+	self assert: aClass packageTag name equals: newTag.
 	self revertInputEntry.
-	self deny: (organization includesCategory: aCategory)
+
+	self assert: aClass package name equals: package.
+	self assert: aClass packageTag name equals: tag
 ]
 
-{ #category : #tests }
-EpRevertTest >> testCategoryRemovalWithCategoryAdded [
-
-	| organization aCategory |
-	organization := self class environment organization.
-	aCategory := classFactory defaultCategory.
-	organization addCategory: aCategory.
-	organization removeCategory: aCategory.
-	self setHeadAsInputEntry.
-
-	self deny: (organization includesCategory: aCategory).
-	self revertInputEntry.
-	self assert: (organization includesCategory: aCategory)
-]
-
-{ #category : #tests }
-EpRevertTest >> testCategoryRename [
-
-	| organization aCategory anotherCategory |
-	organization := self class environment organization.
-	aCategory := classFactory defaultCategory.
-	anotherCategory := aCategory, '2'.
-	organization addCategory: aCategory.
-	organization renameCategory: aCategory toBe: anotherCategory.
-	self setHeadAsInputEntry.
-
-	self assert: inputEntry content class equals: EpCategoryRename.
-	self deny: (organization includesCategory: aCategory).
-	self assert: (organization includesCategory: anotherCategory).
-	self revertInputEntry.
-	self assert: (organization includesCategory: aCategory).
-	self deny: (organization includesCategory: anotherCategory)
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testClassAddition [
 
 	| aClass className |
@@ -119,7 +78,7 @@ EpRevertTest >> testClassAddition [
 	self deny: (self class environment hasClassNamed: className)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testClassAdditionWithClassAlreadyRemoved [
 
 	| aClass className |
@@ -134,7 +93,7 @@ EpRevertTest >> testClassAdditionWithClassAlreadyRemoved [
 	self deny: (self class environment hasClassNamed: className)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testClassModificationWithClassRemoved [
 
 	| aClass className |
@@ -156,14 +115,15 @@ EpRevertTest >> testClassModificationWithClassRemoved [
 		description: 'The old class of the modification had no instance variables'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testClassRemoval [
 
-	| aClass className category |
+	| aClass className package tag |
 	aClass := classFactory newClass.
 	aClass classSide instanceVariableNames: 'hey'.
 	className := aClass name.
-	category := aClass category.
+	package := aClass package name.
+	tag := aClass packageTag name.
 	aClass removeFromSystem.
 	self setHeadAsInputEntry.
 
@@ -171,11 +131,12 @@ EpRevertTest >> testClassRemoval [
 	self deny: (self class environment hasClassNamed: className).
 	self revertInputEntry.
 	self assert: (self class environment hasClassNamed: className).
-	self assert: (self class environment classNamed: className) category equals: category.
-	self assert: (self class environment classNamed: className) classSide instVarNames equals: #('hey')
+	self assert: (self class environment classNamed: className) package name equals: package.
+	self assert: (self class environment classNamed: className) packageTag name equals: tag.
+	self assert: (self class environment classNamed: className) classSide instVarNames equals: #( 'hey' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testClassRemovalWithClassAlreadyAdded [
 
 	| aClass className |
@@ -193,7 +154,7 @@ EpRevertTest >> testClassRemovalWithClassAlreadyAdded [
 	self assert: (self class environment hasClassNamed: className)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testMethodAddition [
 
 	| aClass |
@@ -207,7 +168,7 @@ EpRevertTest >> testMethodAddition [
 	self deny: (aClass includesSelector: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testMethodAdditionWithMethodAlreadyRemoved [
 
 	| aClass |
@@ -223,7 +184,7 @@ EpRevertTest >> testMethodAdditionWithMethodAlreadyRemoved [
 	self deny: (aClass includesSelector: #fortyTwo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testMethodModification [
 
 	| aClass |
@@ -237,7 +198,7 @@ EpRevertTest >> testMethodModification [
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testMethodModificationWithProtocolChanged [
 
 	| aClass |
@@ -248,12 +209,12 @@ EpRevertTest >> testMethodModificationWithProtocolChanged [
 
 	(aClass>>#fortyTwo) protocol: 'three'.
 
-	self assert: (aClass>>#fortyTwo) protocol equals: 'three'.
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'three'.
 	self revertInputEntry.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'one'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'one'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testMethodRemoval [
 
 	| aClass |
@@ -267,10 +228,10 @@ EpRevertTest >> testMethodRemoval [
 	self revertInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 
 	| aClass |
@@ -286,39 +247,78 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 	self revertInputEntry.
 	self assert: (aClass includesSelector: #fortyTwo).
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.
-	self assert: (aClass>>#fortyTwo) protocol equals: 'number'
+	self assert: (aClass>>#fortyTwo) protocolName equals: 'number'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+EpRevertTest >> testPackageTagAdditionWithPackageTagRemoval [
+
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self revertInputEntry.
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
+]
+
+{ #category : 'tests' }
+EpRevertTest >> testPackageTagRemovalWithPackageTagAddition [
+
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
+	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self revertInputEntry.
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
+]
+
+{ #category : 'tests' }
+EpRevertTest >> testPackageTagRename [
+
+	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
+	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
+	self setHeadAsInputEntry.
+
+	self assert: inputEntry content class equals: EpPackageTagRename.
+
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName).
+	self revertInputEntry.
+	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName)
+]
+
+{ #category : 'tests' }
 EpRevertTest >> testProtocolAddition [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocolNamed: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolAddition.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self assert: (aClass hasProtocol: 'protocol').
 	self revertInputEntry.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self deny: (aClass hasProtocol: 'protocol')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testProtocolRemoval [
 
 	| aClass |
 	aClass := classFactory newClass.
-	aClass organization addProtocolNamed: 'protocol'.
+	aClass addProtocol: 'protocol'.
 	aClass removeProtocol: 'protocol'.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpProtocolRemoval.
-	self deny: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol').
+	self deny: (aClass hasProtocol: 'protocol').
 	self revertInputEntry.
-	self assert: (aClass organization protocolOrganizer hasProtocolNamed: 'protocol')
+	self assert: (aClass hasProtocol: 'protocol')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testTraitAddition [
 
 	| aTrait traitName |
@@ -331,7 +331,7 @@ EpRevertTest >> testTraitAddition [
 	self deny: (self class environment includesKey: traitName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testTraitAdditionWithTraitAlreadyRemoved [
 
 	| aTrait traitName |
@@ -346,7 +346,7 @@ EpRevertTest >> testTraitAdditionWithTraitAlreadyRemoved [
 	self deny: (self class environment includesKey: traitName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testTraitRemoval [
 
 	| aTrait traitName |
@@ -357,11 +357,10 @@ EpRevertTest >> testTraitRemoval [
 
 	self deny: (self class environment includesKey: traitName).
 	self revertInputEntry.
-	self assert: (self class environment includesKey: traitName).
-	"---> Fails to create trait with Unclassified category"
+	self assert: (self class environment includesKey: traitName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpRevertTest >> testTraitRemovalWithTraitAlreadyAdded [
 
 	| aTrait traitName |

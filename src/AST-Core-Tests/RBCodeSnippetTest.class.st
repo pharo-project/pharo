@@ -5,15 +5,17 @@ Parametrized matrix test class to run various test on code snippets.
 The only parameter is the instance variable `snippet` that is the current code snippet <RBCodeSnippet>.
 "
 Class {
-	#name : #RBCodeSnippetTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'RBCodeSnippetTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'snippet'
 	],
-	#category : #'AST-Core-Tests-Snippets'
+	#category : 'AST-Core-Tests-Snippets',
+	#package : 'AST-Core-Tests',
+	#tag : 'Snippets'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 RBCodeSnippetTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -21,44 +23,44 @@ RBCodeSnippetTest class >> testParameters [
 		  yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBCodeSnippetTest >> performTest [
 
 	self skipIf: testSelector asSymbol.
 	^ super performTest
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RBCodeSnippetTest >> skipIf: aSymbol [
 
 	snippet ifSkip: aSymbol then: [ self skip ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippetTest >> snippet [
 
 	^ snippet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippetTest >> snippet: anObject [
 
 	snippet := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testCodeImporter [
 
-	| string importer class runBlock value |
+	| string importer class runBlock |
 	"Code importer meed a plain expression or use a custom format"
 	snippet source isAllSeparators ifTrue: [ ^ self skip ].
-	string := snippet isMethod
-		          ifTrue: [
+	string := snippet isScripting
+		          ifFalse: [
 			          class := ChunkImportTestCase new importAClass.
 			          '!{1} methodsFor: ''some protocol''!{2}' format: {
 					          class name asString.
 					          snippet source } ]
-		          ifFalse: [ snippet source ].
+		          ifTrue: [ snippet source ].
 
 	"Note: it might be possible that the snipped messes with the chuck format... to investigate"
 	importer := CodeImporter fromString: string.
@@ -69,14 +71,15 @@ RBCodeSnippetTest >> testCodeImporter [
 	"Importer should fail when faulty"
 	snippet isFaulty ifTrue: [
 		self should: [ importer evaluate ] raise: CodeError.
-		snippet isMethod ifTrue: [ class removeFromSystem ].
+		snippet isScripting ifFalse: [ class removeFromSystem ].
 		^ self ].
 
 	"When not faulty, it's more complicated..."
 	runBlock := [
+	            | value |
 	            value := importer evaluate.
 
-	            snippet isMethod ifTrue: [
+	            snippet isScripting ifFalse: [
 		            | method phonyArgs |
 		            self assert: value isSymbol.
 		            "Need to call the method, the importer added it to `class`, so retrieve it"
@@ -85,23 +88,12 @@ RBCodeSnippetTest >> testCodeImporter [
 		            phonyArgs := (1 to: method numArgs) asArray.
 		            value := nil withArgs: phonyArgs executeMethod: method ].
 
-	            "Need to execute the block (see testExecute for rationale)"
-	            value isBlock ifTrue: [
-		            | phonyBlockArgs |
-		            phonyBlockArgs := (1 to: value numArgs) asArray.
-		            value := value valueWithArguments: phonyBlockArgs ] ].
+	            value ].
 
-	snippet messageNotUnderstood ifNotNil: [ :mnu |
-		runBlock onDNU: mnu do: [ ^ self ].
-		^ self signalFailure: 'Should have raised MNU ' , mnu ].
-
-	snippet raise ifNotNil: [ :r | ^ self should: runBlock raise: r ].
-
-	self shouldnt: runBlock raise: CodeError.
-	self assert: value equals: snippet value
+	self testExecuteBlock: runBlock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testDump [
 
 	| ast dump ast2 dump2 |
@@ -113,7 +105,7 @@ RBCodeSnippetTest >> testDump [
 	self assert: dump2 equals: dump
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testFormattedCode [
 
 	| ast |
@@ -121,7 +113,7 @@ RBCodeSnippetTest >> testFormattedCode [
 	self assert: ast formattedCode withSeparatorsCompacted equals: snippet formattedCode withSeparatorsCompacted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testMonticello [
 
 	| definition |
@@ -129,7 +121,7 @@ RBCodeSnippetTest >> testMonticello [
 	self flag: 'Should be an extention method in Monticello-Test, but package dependency is garbage.'.
 
 	"Force non method to be inside a method"
-	snippet isMethod ifFalse: [
+	snippet isScripting ifTrue: [
 		snippet := snippet copy.
 		snippet source: 'foo ' , snippet source ].
 
@@ -145,7 +137,7 @@ RBCodeSnippetTest >> testMonticello [
 	MCMockClassE methods copy do: [ :m | MCMockClassE removeSelector: m selector ].
 	self assert: MCMockClassE methods size equals: 0.
 
-	snippet isFaulty ifTrue: [
+	snippet isFaultyMinusUndeclared ifTrue: [
 			self should: [ 	[ definition load ] on: Warning do: [ :e | e resume ]. "Ignore Selector missmatches" ] raise: CodeError.
 			self assert: MCMockClassE methods size equals: 0.
 			^ self ].
@@ -154,13 +146,13 @@ RBCodeSnippetTest >> testMonticello [
 	self assert: MCMockClassE methods size equals: 1.
 
 	"forced methods cannot be executed, because no return (pharo language is weird)"
-	snippet isMethod ifTrue: [ self testExecute: MCMockClassE >> definition selector ].
+	snippet isScripting ifFalse: [ self testExecute: MCMockClassE >> definition selector ].
 
 	definition unload.
 	self assert: MCMockClassE methods size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testParse [
 
 	| ast |
@@ -172,6 +164,9 @@ RBCodeSnippetTest >> testParse [
 
 	"Smoke test on the method node"
 	self assert: ast methodNode reformatSource isString.
+
+	snippet nodePositions ifNotNil: [
+		self assert: ast asPositionDebugString equals: snippet nodePositions ].
 
 	"Smoke test on each AST node (in alphabetic order of selectors)"
 	ast nodesDo: [ :node |
@@ -186,12 +181,12 @@ RBCodeSnippetTest >> testParse [
 		node start to: node stop do: [ :i | self assert: ((node nodeForOffset: i) isKindOf: RBProgramNode) ].
 		self assert: node printString isString.
 		self assert: node selfMessages isCollection.
-		self assert: node methodNode = ast equals: snippet isMethod.
+		self assert: node methodNode = ast equals: snippet isScripting not.
 		self assert: (node methodOrBlockNode isKindOf: RBProgramNode).
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testParseOnError [
 
 	| ast error |
@@ -206,7 +201,7 @@ RBCodeSnippetTest >> testParseOnError [
 			self deny: ast isFaulty ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBCodeSnippetTest >> testSimpleFormattedCode [
 
 	| ast fast east |

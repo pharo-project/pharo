@@ -1,14 +1,16 @@
 Class {
-	#name : #HaloMorphTest,
-	#superclass : #TestCase,
+	#name : 'HaloMorphTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'outerMorph',
 		'innerMorph'
 	],
-	#category : #'Morphic-Tests-Widgets'
+	#category : 'Morphic-Tests-Widgets',
+	#package : 'Morphic-Tests',
+	#tag : 'Widgets'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 HaloMorphTest >> setUp [
 
 	super setUp.
@@ -26,7 +28,7 @@ HaloMorphTest >> setUp [
 	innerMorph position: 10@10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaloMorphTest >> simulateSpecialGesture: aPoint [
 
 	| buttons hand evt |
@@ -54,7 +56,7 @@ HaloMorphTest >> simulateSpecialGesture: aPoint [
 	hand handleEvent: evt
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HaloMorphTest >> tearDown [
 
 	innerMorph ifNotNil: [ innerMorph removeHalo; delete ].
@@ -65,7 +67,7 @@ HaloMorphTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaloMorphTest >> testSpecialGestureOnInnerMorphPutsHaloInInnerMorph [
 
 	outerMorph openInWorld.
@@ -74,7 +76,7 @@ HaloMorphTest >> testSpecialGestureOnInnerMorphPutsHaloInInnerMorph [
 	self assert: self currentWorld hands first halo target equals: innerMorph
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaloMorphTest >> testSpecialGestureOnInnerMorphTwiceGoesToOuterMorph [
 
 	outerMorph openInWorld.
@@ -87,7 +89,7 @@ HaloMorphTest >> testSpecialGestureOnInnerMorphTwiceGoesToOuterMorph [
 	self assert: self currentWorld hands first halo target equals: outerMorph
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaloMorphTest >> testSpecialGestureOnOuterMorphPutsHaloInOuterMorph [
 
 	outerMorph openInWorld.

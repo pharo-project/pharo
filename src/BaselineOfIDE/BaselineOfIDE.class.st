@@ -25,15 +25,16 @@ Installs:
  
 "
 Class {
-	#name : #BaselineOfIDE,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfIDE',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfIDE
+	#category : 'BaselineOfIDE',
+	#package : 'BaselineOfIDE'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> additionalInitialization [
 
 	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
@@ -80,10 +81,6 @@ BaselineOfIDE >> additionalInitialization [
 	SDL_Event initialize.
 	
 	HiRulerBuilderTest initialize.
-		
-	3 timesRepeat: [
-		Smalltalk garbageCollect.
-		Undeclared removeUnreferencedKeys.].
 	
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
@@ -93,7 +90,7 @@ BaselineOfIDE >> additionalInitialization [
 	self makeCalypsoDefaultBrowser.
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> baseline: spec [
 	<baseline>
 	| repository |
@@ -200,6 +197,7 @@ BaselineOfIDE >> baseline: spec [
 		self microdown: spec.
 		self beautifulComments: spec.
 		self documentBrowserCore: spec.
+		self welcomeBrowser: spec.
 		self roassal3: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
@@ -210,14 +208,14 @@ BaselineOfIDE >> baseline: spec [
 	]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> beautifulComments: spec [ 
 
 	spec baseline: 'BeautifulComments' with: [ 
 		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> documentBrowserCore: spec [
 
 	spec baseline: 'NewToolsDocumentBrowser' with: [
@@ -226,7 +224,7 @@ BaselineOfIDE >> documentBrowserCore: spec [
 			loads: 'Core+Tests' ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> drTests: spec [
 
 	spec 
@@ -234,7 +232,7 @@ BaselineOfIDE >> drTests: spec [
 		with: [ spec repository: self packageRepositoryURL ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> loadExtraTools [
 	"Load NewTools-DocumentBrowser-GitHubResource packages depending on Iceberg GitHub plugin"
 
@@ -255,7 +253,7 @@ BaselineOfIDE >> loadExtraTools [
 		IceRepository unregisterRepository: repository ifAbsent: [ "ignore" ] ].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> loadIceberg [
 
 	Metacello new
@@ -265,6 +263,20 @@ BaselineOfIDE >> loadIceberg [
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 
+	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
+		| credentials |
+		credentials := (Smalltalk classNamed: #IceTokenCredentials) new
+			               username:
+				               (Smalltalk os environment
+					                at: #GITHUB_USER
+					                ifAbsent: [ self error: 'Github token was found but not the github user associated to this token.' ]);
+			               token: token;
+			               host: 'github.com';
+			               yourself.
+
+		(Smalltalk classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
+		'Using authentification for Github API' traceCr ].
+
 	self registerPharo.
 	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
 	self registerProject: 'NewTools'.
@@ -272,16 +284,17 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'Microdown'.
 	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
+	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> makeCalypsoDefaultBrowser [
 
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> microdown: spec [ 
 
 	spec baseline: 'Microdown' with: [ 
@@ -290,7 +303,7 @@ BaselineOfIDE >> microdown: spec [
 			loads: #('RichText' 'Tests') ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> newTools: spec [ 
 
 	spec baseline: 'NewTools' with: [
@@ -299,13 +312,13 @@ BaselineOfIDE >> newTools: spec [
 			loads: #('default') ].
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> pharoPluginClass [
 	
 	^ Smalltalk classNamed: #IcePharoPlugin
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> postload: loader package: packageSpec [
 
 	| initializersEnabled repo gofer |
@@ -331,8 +344,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	gofer load.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	Smalltalk cleanOutUndeclared. 
+
 
 	Stdio stdout 
 		nextPutAll: ' ------------ Obsolete ------------';
@@ -355,7 +367,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Initialized := true.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> registerIceberg [
 	
 	self pharoPluginClass addIcebergProjectToIceberg.
@@ -365,13 +377,13 @@ BaselineOfIDE >> registerIceberg [
 	Metacello new baseline: 'Iceberg'; register
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> registerPharo [
 	
 	self pharoPluginClass addPharoProjectToIceberg
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName [
 
 	^ self 
@@ -380,7 +392,7 @@ BaselineOfIDE >> registerProject: projectName [
 		otherBaselines: #()
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName baseline: baselineName [
 
 	^ self 
@@ -389,7 +401,7 @@ BaselineOfIDE >> registerProject: projectName baseline: baselineName [
 		otherBaselines: #()
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName baseline: baselineName otherBaselines: anArray [
 
 	^ self 
@@ -399,7 +411,7 @@ BaselineOfIDE >> registerProject: projectName baseline: baselineName otherBaseli
 		otherBaselines: anArray
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName externalProject: externalProject [
 
 	^ self 
@@ -409,7 +421,7 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject [
 		otherBaselines: #()
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName externalProject: externalProject baseline: baselineName otherBaselines: anArray [
 	| baselineClass className |
 
@@ -427,7 +439,7 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 		Metacello new baseline: each; register ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> roassal3: spec [
 
 	spec 
@@ -438,7 +450,7 @@ BaselineOfIDE >> roassal3: spec [
     			loads: #( 'Core' 'Tests') ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
@@ -446,4 +458,11 @@ BaselineOfIDE >> specCode: spec [
 			repository: (self class environment at: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
+]
+
+{ #category : 'baselines' }
+BaselineOfIDE >> welcomeBrowser: spec [
+
+	spec baseline: 'WelcomeBrowser' with: [
+		spec repository: (self class environment at: #BaselineOfPharo) welcomeBrowserRepository ]
 ]

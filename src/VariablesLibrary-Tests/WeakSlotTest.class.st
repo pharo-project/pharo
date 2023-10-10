@@ -1,12 +1,15 @@
 Class {
-	#name : #WeakSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'WeakSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSlotTest >> testReadWeakSlotCompiled [
 	| object slot |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).
@@ -18,7 +21,7 @@ WeakSlotTest >> testReadWeakSlotCompiled [
 	self assert: object slot1 equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSlotTest >> testReadWriteWeakSlotReflective [
 	| slot object |
 	slot := #slot1 => WeakSlot.
@@ -30,7 +33,7 @@ WeakSlotTest >> testReadWriteWeakSlotReflective [
 	self assert: (slot read: object) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSlotTest >> testWeakSlotIsWeak [
 	| slot object |
 	slot := #slot1 => WeakSlot.
@@ -44,9 +47,10 @@ WeakSlotTest >> testWeakSlotIsWeak [
 	self assert: (slot read: object) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSlotTest >> testWriteWeakSlotCompiled [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	slot := #slot1 => WeakSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 	self assert: (aClass hasSlotNamed: #slot1).

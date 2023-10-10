@@ -6,8 +6,8 @@ A match start optimizer, handy for searching a string. Takes a regex syntax tree
 Used by RxMatcher, but can be used by other matchers (if implemented) as well.
 "
 Class {
-	#name : #RxMatchOptimizer,
-	#superclass : #Object,
+	#name : 'RxMatchOptimizer',
+	#superclass : 'Object',
 	#instVars : [
 		'ignoreCase',
 		'prefixes',
@@ -20,10 +20,12 @@ Class {
 		'nonPredicates',
 		'lookarounds'
 	],
-	#category : #'Regex-Core-Utilities'
+	#category : 'Regex-Core-Utilities',
+	#package : 'Regex-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxMatchOptimizer >> canStartMatch: aCharacter in: aMatcher [
 
 	"Answer whether a match could commence at the given lookahead
@@ -35,7 +37,7 @@ RxMatchOptimizer >> canStartMatch: aCharacter in: aMatcher [
 	^ testBlock == nil or: [ testBlock value: aCharacter value: aMatcher ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxMatchOptimizer >> conditionTester [
 	"#any condition is filtered at the higher level;
 	it cannot appear among the conditions here."
@@ -60,7 +62,7 @@ RxMatchOptimizer >> conditionTester [
 			matcher perform: conditionSelector]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxMatchOptimizer >> determineTestMethod [
 	"Answer a block closure that will work as a can-match predicate.
 	Answer nil if no viable optimization is possible (too many chars would
@@ -81,7 +83,7 @@ RxMatchOptimizer >> determineTestMethod [
 	^[:char :matcher | testers contains: [:t | t value: char value: matcher]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxMatchOptimizer >> initialize: aRegex ignoreCase: aBoolean [
 	"Set `testMethod' variable to a can-match predicate block:
 	two-argument block which accepts a lookahead character
@@ -104,7 +106,7 @@ RxMatchOptimizer >> initialize: aRegex ignoreCase: aBoolean [
 	testBlock := self determineTestMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxMatchOptimizer >> methodPredicateTester [
 	| p selector |
 	methodPredicates isEmpty ifTrue: [^nil].
@@ -122,7 +124,7 @@ RxMatchOptimizer >> methodPredicateTester [
 				[p contains: [:sel | char perform: sel]]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxMatchOptimizer >> nonMethodPredicateTester [
 	| p selector |
 	nonMethodPredicates isEmpty ifTrue: [^nil].
@@ -139,7 +141,7 @@ RxMatchOptimizer >> nonMethodPredicateTester [
 				[p contains: [:sel | (char perform: sel) not]]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxMatchOptimizer >> nonPredicateTester [
 
 	| p pred |
@@ -153,7 +155,7 @@ RxMatchOptimizer >> nonPredicateTester [
 			[[:char :m | p contains: [:some | (some value: char) not]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxMatchOptimizer >> nonPrefixTester [
 
 	| np nonPrefixChar |
@@ -166,7 +168,7 @@ RxMatchOptimizer >> nonPrefixTester [
 		ifFalse: [[:char : matcher | (np includes: char) not]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxMatchOptimizer >> optimizeSet: aSet [
 	"If a set is small, convert it to array to speed up lookup
 	(Array has no hashing overhead, beats Set on small number
@@ -175,7 +177,7 @@ RxMatchOptimizer >> optimizeSet: aSet [
 	^aSet size < 10 ifTrue: [aSet asArray] ifFalse: [aSet]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxMatchOptimizer >> predicateTester [
 
 	| p pred |
@@ -191,7 +193,7 @@ RxMatchOptimizer >> predicateTester [
 				p contains: [:some | some value: char ]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxMatchOptimizer >> prefixTester [
 
 	| p prefixChar |
@@ -210,28 +212,28 @@ RxMatchOptimizer >> prefixTester [
 				ifFalse: [[:char :matcher | p includes: char]]]
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxAny [
 	"Any special char is among the prefixes."
 
 	conditions add: #any
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxBeginningOfLine [
 	"Beginning of line is among the prefixes."
 
 	conditions add: #atBeginningOfLine
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxBeginningOfWord [
 	"Beginning of line is among the prefixes."
 
 	conditions add: #atBeginningOfWord
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxBranch: branchNode [
 	"If the head piece of the branch is transparent (allows 0 matches),
 	we must recurse down the branch. Otherwise, just the head atom
@@ -242,7 +244,7 @@ RxMatchOptimizer >> syntaxBranch: branchNode [
 	branchNode piece dispatchTo: self
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxCharSet: charSetNode [
 	"All these (or none of these) characters is the prefix."
 
@@ -255,65 +257,65 @@ RxMatchOptimizer >> syntaxCharSet: charSetNode [
 				ifFalse: [predicates addAll: charSetNode predicates]]
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxCharacter: charNode [
 	"This character is the prefix, of one of them."
 
 	prefixes add: charNode character
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxEndOfLine [
 	"Beginning of line is among the prefixes."
 
 	conditions add: #atEndOfLine
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxEndOfWord [
 
 	conditions add: #atEndOfWord
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxEpsilon [
 	"Empty string, terminate the recursion (do nothing)."
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxLookaround: lookaroundNode [
 
 
 	lookarounds add: lookaroundNode
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxMessagePredicate: messagePredicateNode [
 	messagePredicateNode negated
 		ifTrue: [nonMethodPredicates add: messagePredicateNode selector]
 		ifFalse: [methodPredicates add: messagePredicateNode selector]
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxNonWordBoundary [
 
 	conditions add: #notAtWordBoundary
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxPiece: pieceNode [
 	"Pass on to the atom."
 
 	pieceNode atom dispatchTo: self
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxPredicate: predicateNode [
 
 	predicates add: predicateNode predicate
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxRegex: regexNode [
 	"All prefixes of the regex's branches should be combined.
 	Therefore, just recurse."
@@ -323,7 +325,7 @@ RxMatchOptimizer >> syntaxRegex: regexNode [
 		ifTrue: [regexNode regex dispatchTo: self]
 ]
 
-{ #category : #'double dispatch' }
+{ #category : 'double dispatch' }
 RxMatchOptimizer >> syntaxWordBoundary [
 
 	conditions add: #atWordBoundary

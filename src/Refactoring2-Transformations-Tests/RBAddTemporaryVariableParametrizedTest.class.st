@@ -1,22 +1,24 @@
 Class {
-	#name : #RBAddTemporaryVariableParametrizedTest,
-	#superclass : #RBAbstractRefactoringTest,
-	#category : #'Refactoring2-Transformations-Tests-SingleParametrized'
+	#name : 'RBAddTemporaryVariableParametrizedTest',
+	#superclass : 'RBAbstractRefactoringTest',
+	#category : 'Refactoring2-Transformations-Tests-SingleParametrized',
+	#package : 'Refactoring2-Transformations-Tests',
+	#tag : 'SingleParametrized'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddTemporaryVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBAddTemporaryVariableTransformation };
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddTemporaryVariableParametrizedTest >> constructor [
 	^ #variable:inMethod:inClass:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBAddTemporaryVariableParametrizedTest >> testAddTemporaryRefactoring [
 
 	| refactoring class |
@@ -31,23 +33,16 @@ RBAddTemporaryVariableParametrizedTest >> testAddTemporaryRefactoring [
 	self assert: (class parseTreeForSelector: #methodBefore) temporaries size equals: 2
 ]
 
-{ #category : #'failure tests' }
-RBAddTemporaryVariableParametrizedTest >> testClassDoesNotExist [
+{ #category : 'failure tests' }
+RBAddTemporaryVariableParametrizedTest >> testFailureClassDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments:
-		{ 'variable2' . #methodBefore . #RBReturnStatementTransformationTest })
+			 { 'variable2'. #methodBefore. #RBReturnStatementTransformationTest })
 ]
 
-{ #category : #'failure tests' }
-RBAddTemporaryVariableParametrizedTest >> testMethodDoesNotExist [
+{ #category : 'failure tests' }
+RBAddTemporaryVariableParametrizedTest >> testFailureMethodDoesNotExist [
 
 	self shouldFail: (self createRefactoringWithArguments:
-		{ 'variable2' . #method . #RBAddReturnStatementTransformationTest })
-]
-
-{ #category : #'failure tests' }
-RBAddTemporaryVariableParametrizedTest >> testVariableAlreadyExists [
-
-	self shouldFail: (self createRefactoringWithArguments:
-		{'variable' . #methodBefore . #RBAddReturnStatementTransformationTest })
+			 { 'variable2'. #method. #RBAddReturnStatementTransformationTest })
 ]

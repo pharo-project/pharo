@@ -2,22 +2,24 @@
 A MCDependencySorter computes the dependencies to a set of entities.
 "
 Class {
-	#name : #MCDependencySorter,
-	#superclass : #Object,
+	#name : 'MCDependencySorter',
+	#superclass : 'Object',
 	#instVars : [
 		'required',
 		'provided',
 		'orderedItems'
 	],
-	#category : #'Monticello-Loading'
+	#category : 'Monticello-Loading',
+	#package : 'Monticello',
+	#tag : 'Loading'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCDependencySorter class >> items: aCollection [
 	^ self new addAll: aCollection
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCDependencySorter class >> sortItems: aCollection [
 	| sorter |
 	sorter := self items: aCollection.
@@ -25,7 +27,7 @@ MCDependencySorter class >> sortItems: aCollection [
 	^ sorter orderedItems.
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCDependencySorter >> add: anItem [
 	| requirements |
 	requirements := self unresolvedRequirementsFor: anItem.
@@ -35,18 +37,18 @@ MCDependencySorter >> add: anItem [
 	^ anItem
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCDependencySorter >> addAll: aCollection [
 	aCollection asArray sort do: [:ea | self add: ea]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCDependencySorter >> addExternalProvisions: aCollection [
 	(aCollection intersection: self externalRequirements)
 		do: [:ea | self addProvision: ea]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCDependencySorter >> addProvision: anObject [
 	| newlySatisfied |
 	provided add: anObject.
@@ -54,23 +56,23 @@ MCDependencySorter >> addProvision: anObject [
 	self addAll: newlySatisfied.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCDependencySorter >> addRequirement: reqObject for: itemObject [
 	(self itemsRequiring: reqObject) add: itemObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCDependencySorter >> addRequirements: aCollection for: anObject [
 	aCollection do: [:ea | self addRequirement: ea for: anObject]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCDependencySorter >> addToOrder: anItem [
 	orderedItems add: anItem.
 	anItem provisions do: [:ea | self addProvision: ea].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDependencySorter >> externalRequirements [
 	| unloaded providedByUnloaded |
 	unloaded := self itemsWithMissingRequirements.
@@ -78,7 +80,7 @@ MCDependencySorter >> externalRequirements [
 	^ required keys reject: [:ea | providedByUnloaded includes: ea ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCDependencySorter >> initialize [
 	super initialize.
 	provided := Set new.
@@ -86,12 +88,12 @@ MCDependencySorter >> initialize [
 	orderedItems := OrderedCollection new.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCDependencySorter >> itemsRequiring: anObject [
 	^ required at: anObject ifAbsentPut: [Set new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDependencySorter >> itemsWithMissingRequirements [
 	| items |
 	items := Set new.
@@ -100,12 +102,12 @@ MCDependencySorter >> itemsWithMissingRequirements [
 
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 MCDependencySorter >> orderedItems [
 	^ orderedItems
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCDependencySorter >> unresolvedRequirementsFor: anItem [
 	^ anItem requirements difference: provided
 ]

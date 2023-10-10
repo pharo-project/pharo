@@ -4,52 +4,53 @@ This smell arises when a method is equivalent to its superclass method. The meth
 Furthermore, the methods #new and #initialize are ignored once they are often overridden for compatilbity with other platforms. The ignored methods can be edited in RBEquivalentSuperclassMethodsRule>>ignoredSelectors
 "
 Class {
-	#name : #ReEquivalentSuperclassMethodsRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReEquivalentSuperclassMethodsRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReEquivalentSuperclassMethodsRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'EquivalentSuperclassMethodsRule'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
+
 	(self ignoredSelectors includes: aMethod selector) ifTrue: [ ^ false ].
 
-	^ aMethod methodClass superclass
-		ifNotNil: [ :superclass | (superclass lookupSelector: aMethod selector)
-			ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
-			ifNil: [ false ] ]
-		ifNil: [ false ]
+	^ aMethod overriddenMethod
+		  ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
+		  ifNil: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule >> ignoredSelectors [
 	"These methods are often overridden for compatilbity with other platforms."
 
 	^ #(new initialize)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule >> name [
 	^ 'Methods equivalently defined in superclass'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule >> rationale [
 	^ 'Check for methods that are equivalent to their superclass methods.'
 ]

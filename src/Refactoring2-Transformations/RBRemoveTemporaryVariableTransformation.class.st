@@ -17,15 +17,17 @@ Observations about the transformation:
 - The transformation looks for the variable inside blocks too
 "
 Class {
-	#name : #RBRemoveTemporaryVariableTransformation,
-	#superclass : #RBMethodTransformation,
+	#name : 'RBRemoveTemporaryVariableTransformation',
+	#superclass : 'RBMethodTransformation',
 	#instVars : [
 		'variableName'
 	],
-	#category : #'Refactoring2-Transformations-Model-Unused'
+	#category : 'Refactoring2-Transformations-Model-Unused',
+	#package : 'Refactoring2-Transformations',
+	#tag : 'Model-Unused'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveTemporaryVariableTransformation class >> model: aRBModel variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -36,7 +38,7 @@ RBRemoveTemporaryVariableTransformation class >> model: aRBModel variable: aStri
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSelector inClass: aClass [
 
 	^ self new
@@ -46,22 +48,33 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 		yourself
 ]
 
-{ #category : #preconditions }
-RBRemoveTemporaryVariableTransformation >> preconditions [
+{ #category : 'preconditions' }
+RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', className asString)
-		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
-			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
-			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
+	^ self classExist
+	  & (RBCondition definesSelector: selector in: self definingClass)
+	  & (RBCondition
+			   withBlock: [
+			   self definingMethod allTemporaryVariables includes: variableName ]
+			   errorString: 'Method named ' , selector
+				   , ' does not define a temporary variable named ' , variableName)
+	  & (RBCondition
+			   withBlock: [
+				   (self definingMethod allArgumentVariables includes:
+					    variableName) not ]
+			   errorString: 'Variable named ' , variableName
+				   , ' cannot be removed because it is an argument in this method')
 ]
 
-{ #category : #executing }
+{ #category : 'preconditions' }
+RBRemoveTemporaryVariableTransformation >> classExist [
+
+	^ RBCondition
+		  withBlock: [ self definingClass isNotNil ]
+		  errorString: 'No such class or trait named ' , className asString
+]
+
+{ #category : 'executing' }
 RBRemoveTemporaryVariableTransformation >> privateTransform [
 
 	| methodTree modifiedNode |
@@ -76,7 +89,7 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -91,7 +104,7 @@ RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RBRemoveTemporaryVariableTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	self className: aClass.

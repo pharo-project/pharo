@@ -2,88 +2,82 @@
 I visit IRMethod instructions, sending the appropriate bytecode messages to my BytecodeGenerator (gen). 
 "
 Class {
-	#name : #IRTranslator,
-	#superclass : #IRVisitor,
+	#name : 'IRTranslator',
+	#superclass : 'IRVisitor',
 	#instVars : [
 		'gen',
 		'currentScope',
-		'trailer',
 		'tempVectorStack',
 		'compilationContext'
 	],
-	#category : #'OpalCompiler-Core-IR-Manipulation'
+	#category : 'OpalCompiler-Core-IR-Manipulation',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Manipulation'
 }
 
-{ #category : #'instance creation' }
-IRTranslator class >> context: aCompilationContext trailer: aCompiledMethodTrailer [
+{ #category : 'instance creation' }
+IRTranslator class >> context: aCompilationContext [
 	^self basicNew
 		initialize;
-		compilationContext: aCompilationContext;
-		trailer: aCompiledMethodTrailer
+		compilationContext: aCompilationContext
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRTranslator class >> new [
-	^self context: CompilationContext default trailer: CompiledMethodTrailer empty
+	^self context: CompilationContext default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRTranslator >> compilationContext [
 	^ compilationContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRTranslator >> compilationContext: aContext [
 	compilationContext := aContext.
 	gen := compilationContext bytecodeGeneratorClass newWithEncoderClass: compilationContext encoderClass.
 	gen compilationContext: aContext
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRTranslator >> compiledBlock [
-	^ gen compiledBlockWith: trailer
+	^ gen compiledBlock
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRTranslator >> compiledMethod [
-	^ gen compiledMethodWith: trailer
+	^ gen compiledMethod
 ]
 
-{ #category : #results }
-IRTranslator >> compiledMethodWith: aTrailer [
-
-	^ gen compiledMethodWith: aTrailer
-]
-
-{ #category : #private }
+{ #category : 'private' }
 IRTranslator >> currentScope [
 	^currentScope top
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRTranslator >> initialize [
 	currentScope := Stack new.
 	tempVectorStack := Stack new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRTranslator >> label: seqNum [
 
 	gen label: seqNum
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRTranslator >> popScope [
 
 	currentScope size = 1 ifFalse: [currentScope pop]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRTranslator >> pragmas: aCollection [
 	gen pragmas: aCollection
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRTranslator >> pushOuterVectors: scope [
 	| scopesWithVector sc |
 	scopesWithVector := OrderedCollection new.
@@ -98,37 +92,31 @@ IRTranslator >> pushOuterVectors: scope [
 	gen inBlock: true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRTranslator >> pushScope: anIRBlockOrMethod [
 
 	currentScope push: anIRBlockOrMethod
 ]
 
-{ #category : #accessing }
-IRTranslator >> trailer: aTrailer [
-
-	trailer := aTrailer
-]
-
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitBlockReturnTop: blockReturnTop [
 
 	gen blockReturnTop
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitInstruction: instr [
 	gen mapBytesTo: instr.
 	self visitNode: instr
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitJump: jump [
 
 	gen goto: jump destination orderNumber
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitJumpIf: jumpIf [
 
 	gen
@@ -137,7 +125,7 @@ IRTranslator >> visitJumpIf: jumpIf [
 		otherwise: jumpIf otherwise orderNumber
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitMethod: anIr [
 	IRFix new visitNode: anIr.
 	self pushScope: anIr.
@@ -145,7 +133,7 @@ IRTranslator >> visitMethod: anIr [
 	gen numArgs: anIr numArgs.
 	gen properties: anIr properties.
 	gen numTemps: (anIr tempMap size).
-	gen forceLongForm: anIr forceLongForm.
+	gen forceLongForm: self compilationContext optionLongIvarAccessBytecodes.
 	self visitSequences: anIr allSequences.
 	"Literals for sends and pushLiteral: are added later, here we
 	add all the additionalLiterals from e.g. optimized constructs like #ifTrue:.
@@ -154,24 +142,24 @@ IRTranslator >> visitMethod: anIr [
 	anIr additionalLiterals do: [ :each | gen addLiteral: each ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPop: pop [
 
 	gen popTop
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPopIntoInstVar: instVar [
 	gen storePopInstVar: instVar index
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPopIntoLiteralVariable: var [
 
 	gen storePopIntoLiteralVariable: var association
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPopIntoRemoteTemp: remoteTemp [
 	| tempIndex tempVectorIndex tempVector |
 
@@ -182,13 +170,13 @@ IRTranslator >> visitPopIntoRemoteTemp: remoteTemp [
 	gen storePopRemoteTemp: tempVectorIndex inVectorAt: tempIndex
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPopIntoTemp: tmp [
 
    	gen storePopTemp: (self currentScope indexForVarNamed: tmp name)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushArray: array [
 
 	array cons
@@ -198,13 +186,13 @@ IRTranslator >> visitPushArray: array [
 			gen pushNewArray: array size ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushDup: dup [
 
 	gen pushDup
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushFullClosure: fullBlock [
 
 	fullBlock copiedValues do: [:name |
@@ -213,30 +201,30 @@ IRTranslator >> visitPushFullClosure: fullBlock [
 	gen pushFullBlockClosure: fullBlock
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushInstVar: instVar [
 
 	gen pushInstVar: instVar index
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushLiteral: lit [
 	^ gen pushLiteral: lit literal beReadOnlyLiteral
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushLiteralVariable: var [
 
 	gen pushLiteralVariable: var association
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushReceiver: receiver [
 
 	gen pushReceiver
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushRemoteTemp: remoteTemp [
 	| tempIndex tempVectorIndex tempVector |
 
@@ -247,48 +235,48 @@ IRTranslator >> visitPushRemoteTemp: remoteTemp [
 	gen pushRemoteTemp: tempVectorIndex inVectorAt: tempIndex
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushTemp: tmp [
 
 	gen pushTemp: (self currentScope indexForVarNamed: tmp name)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushThisContext: ctxt [
 
 	gen pushThisContext
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitPushThisProcess: pushThisProcess [
 	gen pushThisProcess
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitReturn: ret [
 
 	gen returnTop
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitReturnInstVar: instVar [
 
 	gen returnInstVar: instVar index
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitReturnLiteral: lit [
 
 	gen returnConstant: lit literal
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitReturnReceiver: rec [
 
 	gen returnReceiver
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitSend: send [
 
 	send superOf
@@ -296,30 +284,30 @@ IRTranslator >> visitSend: send [
 		ifNotNil: [ :behavior |  gen send: send selector toSuperOf: behavior ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitSequence: instructionSequence [
 	self label: instructionSequence orderNumber.
 	super visitSequence: instructionSequence
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitSequences:  irSequences [
 	irSequences withIndexDo: [ :seq :i | seq orderNumber: i].
 	self visitNodes: irSequences
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitStoreInstVar: instVar [
 	gen storeInstVar: instVar index
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitStoreLiteralVariable: var [
 
 	gen storeIntoLiteralVariable: var association
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitStoreRemoteTemp: remoteTemp [
 	| tempIndex tempVectorIndex tempVector |
 
@@ -330,13 +318,13 @@ IRTranslator >> visitStoreRemoteTemp: remoteTemp [
 	gen storeRemoteTemp: tempVectorIndex inVectorAt: tempIndex
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitStoreTemp: tmp [
 
    	gen storeTemp: (self currentScope indexForVarNamed: tmp name)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRTranslator >> visitTempVector: tempVector [
 
 	tempVectorStack push: tempVector.

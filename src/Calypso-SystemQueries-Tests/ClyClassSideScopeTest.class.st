@@ -1,26 +1,28 @@
 Class {
-	#name : #ClyClassSideScopeTest,
-	#superclass : #ClyLocalClassScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyClassSideScopeTest',
+	#superclass : 'ClyLocalClassScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassSideScopeTest >> extraBasisSample [
 	^super extraBasisSample classSide
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassSideScopeTest >> scopeClass [
 
 	^ClyClassSideScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassSideScopeTest >> singleBasisSample [
 	^super singleBasisSample classSide
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassSideScopeTest >> testClassEnumeration [
 	scope := ClyClassSideScope ofAll: {ClyClass1FromP1Mock classSide. ClyClass2FromP1Mock}.
 
@@ -31,7 +33,7 @@ ClyClassSideScopeTest >> testClassEnumeration [
 		hasSameElements: {ClyClass1FromP1Mock classSide. ClyClass2FromP1Mock classSide}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassSideScopeTest >> testConvertingToIncreasedScopeByExtraClassScope [
 	| convertedScope extraClassScope |
 	scope := self singleScopeSample.
@@ -43,7 +45,7 @@ ClyClassSideScopeTest >> testConvertingToIncreasedScopeByExtraClassScope [
 	self assert: convertedScope basisObjects equals: scope basisObjects, extraClassScope collectAllClasses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 
 	| expected |
@@ -53,7 +55,7 @@ ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 	self assertCollection: result sorted asArray equals: expected sorted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 
 	| expected |
@@ -63,7 +65,7 @@ ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClass [
 	| expected |
 	scope := ClyClassSideScope of: ClyClassWithTraits.
@@ -74,7 +76,7 @@ ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClass [
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClassClassSide [
 	| expected |
 	scope := ClyClassSideScope of: ClyClassWithTraits classSide.

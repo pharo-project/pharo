@@ -9,69 +9,67 @@ announcer
 
 "
 Class {
-	#name : #AnnouncerTest,
-	#superclass : #TestCase,
+	#name : 'AnnouncerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'announcer'
 	],
-	#category : #'Announcements-Core-Tests-Tests'
+	#category : 'Announcements-Core-Tests-Tests',
+	#package : 'Announcements-Core-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AnnouncerTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AnnouncerTest >> newAnnouncer [
 	^ Announcer new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AnnouncerTest >> setUp [
 	super setUp.
 	announcer := self newAnnouncer
 ]
 
-{ #category : #'tests - subscribers' }
+{ #category : 'tests - subscribers' }
 AnnouncerTest >> testAccessingSubscribers [
+
 	| subscribers |
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0.
 
-	"we do not use constant blocks here, instead use a clean block.
-
-	Using Constant blocks with announcements makes no senese, as they do nothing.
-
-   For Clean Blocks, we have to the Announcments API as they  require to access the receiver of the home context, for clean blocks this has to be fixed, see https://github.com/pharo-project/pharo/issues/11220"
-	announcer when: AnnouncementMockA do: [ nil yourself ]."1"
-	announcer when: AnnouncementMockB do: [ nil yourself ]."2"
+	announcer when: AnnouncementMockA do: [ nil ] for: self.
+	announcer when: AnnouncementMockB do: [ nil ] for: self.
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 2.
 
-	subscribers do: [ :subscriber |	announcer unsubscribe: subscriber ].
+	subscribers do: [ :subscriber | announcer unsubscribe: subscriber ].
 
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testAnnounceClass [
 	self assert: (announcer announce: AnnouncementMockA) class equals: AnnouncementMockA
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testAnnounceInstance [
 	| instance |
 	instance := AnnouncementMockA new.
 	self assert: (announcer announce: instance) equals: instance
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testAnnounceWorkWithinExceptionHandlerBlocks [
 	|  found |
 
-	announcer when: Announcement do: [ found := true ].
+	announcer when: Announcement do: [ found := true ] for: self.
 
 	[ NotFound signal ]
 		on: NotFound
@@ -80,7 +78,7 @@ AnnouncerTest >> testAnnounceWorkWithinExceptionHandlerBlocks [
 	self assert: found
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testAnnouncingReentrant [
 	"Test that it is safe to announce when handling announcement,
 	so announcer are reentrant"
@@ -93,36 +91,33 @@ AnnouncerTest >> testAnnouncingReentrant [
 			bool := true.
 		announcer announce:  Announcement new. ]
 		ifTrue: [ ok := true ]
-	].
+	] for: self.
 
 	self should: [ announcer announce: Announcement new. ] notTakeMoreThan: 1 second.
 	self assert: ok
 ]
 
-{ #category : #'tests - subscribers' }
+{ #category : 'tests - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
-	"we do not use constant blocks here, instead use a clean block.
 
-	Using Constant blocks with announcements makes no senese, as they do nothing.
+	announcer when: AnnouncementMockA do: [ nil ] for: self.
 
-   For Clean Blocks, we have to the Announcments API as they  require to access the receiver of the home context, for clean blocks this has to be fixed, see https://github.com/pharo-project/pharo/issues/11220"
-	announcer when: AnnouncementMockA do: [ nil yourself ].
 	self assert: (announcer handleSubscriberClass: self class).
 	self deny: (announcer handleSubscriberClass: AnnouncementMockA)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testNoArgBlock [
 	"we are supposed to accept zero-argument blocks as actions "
 
 	| counter |
 	counter := nil.
-	announcer when: AnnouncementMockA do: [ counter := 1 ].
+	announcer when: AnnouncementMockA do: [ counter := 1 ] for: self.
 	announcer announce: AnnouncementMockA new.
 	self assert: counter equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testPreparationAnnouncementDelivery [
 	| announcement |
 
@@ -138,7 +133,7 @@ AnnouncerTest >> testPreparationAnnouncementDelivery [
 	self assert: announcement announcingCounter equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testPreparationAnnouncementDeliveryWhenNoSubscriptions [
 
 	| instance |
@@ -149,10 +144,23 @@ AnnouncerTest >> testPreparationAnnouncementDeliveryWhenNoSubscriptions [
 	self assert: instance announcingCounter equals: 0
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
+AnnouncerTest >> testPreventDuring [
+
+	| announcement instance |
+	announcer when: AnnouncementMockA do: [ self fail ] for: self.
+	announcer when: AnnouncementMockB do: [ :ann | announcement := ann ] for: self.
+
+	announcer prevent: AnnouncementMockA during: [
+		announcer announce: AnnouncementMockA.
+		instance := announcer announce: AnnouncementMockB ].
+	self assert: announcement equals: instance
+]
+
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeBlock [
 	| announcement instance |
-	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ].
+	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ] for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
@@ -161,12 +169,13 @@ AnnouncerTest >> testSubscribeBlock [
 	self assert: announcement isNil
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeClassWithExclusion [
 	| announcement instance |
 	announcer
 		when: AnnouncementMockB - AnnouncementMockC
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
 	self assert: announcement equals: instance.
@@ -175,12 +184,13 @@ AnnouncerTest >> testSubscribeClassWithExclusion [
 	self assert: announcement isNil
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 	| announcement instance |
 	announcer
 		when: (AnnouncementMockB where: [ :ann | ann parameter = #expectedParam ])
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: nil.
@@ -200,7 +210,7 @@ AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 	self assert: announcement equals: instance
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeSend [
 	| announcement instance |
 	announcer when: AnnouncementMockA send: #value: to: [ :ann | announcement := ann ].
@@ -214,12 +224,13 @@ AnnouncerTest >> testSubscribeSend [
 	self assert: announcement isNil
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeSet [
 	| announcement instance |
 	announcer
 		when: AnnouncementMockA , AnnouncementMockC
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
@@ -231,12 +242,13 @@ AnnouncerTest >> testSubscribeSet [
 	self assert: announcement equals: instance
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeSetWithExclusion [
 	| announcement instance |
 	announcer
 		when: (AnnouncementMockA , AnnouncementMockB) - AnnouncementMockC
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement equals: instance.
@@ -248,14 +260,15 @@ AnnouncerTest >> testSubscribeSetWithExclusion [
 	self assert: announcement isNil
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeSetWithExclusionOfMultipleAnnouncements [
 	| announcement instance |
 	announcer
 		when:
 			(AnnouncementMockA , AnnouncementMockB) - AnnouncementMockC
 				- AnnouncementMockA
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
@@ -267,12 +280,13 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfMultipleAnnouncements [
 	self assert: announcement isNil
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 	| announcement instance |
 	announcer
 		when: (AnnouncementMockA , AnnouncementMockC) - AnnouncementMockA
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
@@ -281,10 +295,10 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 	self assert: announcement equals: instance
 ]
 
-{ #category : #'tests - subscribing' }
+{ #category : 'tests - subscribing' }
 AnnouncerTest >> testSubscribeSubclass [
 	| announcement instance |
-	announcer when: AnnouncementMockB do: [ :ann | announcement := ann ].
+	announcer when: AnnouncementMockB do: [ :ann | announcement := ann ] for: self.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
 	self assert: announcement isNil.
@@ -296,7 +310,7 @@ AnnouncerTest >> testSubscribeSubclass [
 	self assert: announcement equals: instance
 ]
 
-{ #category : #'tests - subscribers' }
+{ #category : 'tests - subscribers' }
 AnnouncerTest >> testSubscribersForClass [
 	| subscribers mockA mockB |
 	self assert: announcer numberOfSubscriptions equals: 0.
@@ -310,15 +324,15 @@ AnnouncerTest >> testSubscribersForClass [
 
 	self assert: announcer numberOfSubscriptions > 0.
 	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockA.
-	self assert: subscribers size equals: 2.
 	"AnnouncerSubscriberMockB inherits AnnouncerSubscriberMockA"
+	self assert: subscribers size equals: 2.
 	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockB.
 	self assert: subscribers size equals: 1.
 	subscribers := announcer subscriptionsForClass: self class.
 	self assert: subscribers size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testSymbolIdentifier [
 	| passed |
 	passed := false.
@@ -332,7 +346,7 @@ AnnouncerTest >> testSymbolIdentifier [
 	self assert: passed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AnnouncerTest >> testTwoArgBlock [
 	"we are supposed to accept two-argument blocks as actions "
 
@@ -340,22 +354,23 @@ AnnouncerTest >> testTwoArgBlock [
 	flag := false.
 	announcer
 		when: AnnouncementMockA
-		do: [ :ann :announcer2 | flag := announcer2 == announcer ].
+		do: [ :ann :announcer2 | flag := announcer2 == announcer ]
+		for: self.
 	announcer announce: AnnouncementMockA new.
 	self assert: flag
 ]
 
-{ #category : #'tests - unsubscribing' }
+{ #category : 'tests - unsubscribing' }
 AnnouncerTest >> testUnsubscribeBlock [
 	| announcement |
-	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ].
+	announcer when: AnnouncementMockA do: [ :ann | announcement := ann ] for: self.
 	announcer unsubscribe: self.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
 	self assert: announcement isNil
 ]
 
-{ #category : #'tests - unsubscribing' }
+{ #category : 'tests - unsubscribing' }
 AnnouncerTest >> testUnsubscribeSend [
 	| announcement receiver |
 	announcer when: AnnouncementMockA send: #value: to: (receiver := [ :ann | announcement := ann ]).
@@ -366,12 +381,13 @@ AnnouncerTest >> testUnsubscribeSend [
 	self assert: announcement isNil
 ]
 
-{ #category : #'tests - unsubscribing' }
+{ #category : 'tests - unsubscribing' }
 AnnouncerTest >> testUnsubscribeSet [
 	| announcement |
 	announcer
 		when: AnnouncementMockA , AnnouncementMockB
-		do: [ :ann | announcement := ann ].
+		do: [ :ann | announcement := ann ]
+		for: self.
 	announcer unsubscribe: self.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.

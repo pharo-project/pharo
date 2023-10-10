@@ -1,19 +1,21 @@
 Class {
-	#name : #ClassHierarchyPrinterTest,
-	#superclass : #TestCase,
+	#name : 'ClassHierarchyPrinterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'printer'
 	],
-	#category : #'Kernel-ExtraUtils-ForPharo'
+	#category : 'Kernel-ExtraUtils-ForPharo',
+	#package : 'Kernel-ExtraUtils',
+	#tag : 'ForPharo'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClassHierarchyPrinterTest >> setUp [
 	super setUp.
 	printer := ClassHierarchyPrinter new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testOnlyFreeText [
 
 	printer
@@ -30,7 +32,7 @@ ClassHierarchyPrinterTest >> testOnlyFreeText [
 End'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 
 	printer
@@ -49,6 +51,7 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 		RBReturnNode
 		RBSequenceNode
 		RBValueNode
+			RBAnnotationMarkNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
@@ -75,7 +78,7 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintClassNamesOnly [
 
 	printer
@@ -90,7 +93,7 @@ ClassHierarchyPrinterTest >> testPrintClassNamesOnly [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintFullHierarchyOfRectangle [
 
 	printer forClass: Rectangle.
@@ -104,7 +107,7 @@ ClassHierarchyPrinterTest >> testPrintFullHierarchyOfRectangle [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPoint [
 
 	printer forClass: Point.
@@ -118,7 +121,7 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPoint [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoState [
 
 	printer
@@ -134,7 +137,7 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoState [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoSuperclasses [
 
 	printer
@@ -146,7 +149,7 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfPointNoSuperclasses [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangle [
 
 	printer forClass: Rectangle.
@@ -161,7 +164,7 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangle [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleNoSuperclasses [
 
 	printer
@@ -175,7 +178,7 @@ ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleNoSuperclasses [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testPrintHierarchyOfRectangleWithFilteredClasses [
 
 	printer forClass: Rectangle.

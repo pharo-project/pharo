@@ -2,16 +2,18 @@
 SUnit tests for class  RecursionStopper
 "
 Class {
-	#name : #RecursionStopperTest,
-	#superclass : #TestCase,
+	#name : 'RecursionStopperTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'fork',
 		'value'
 	],
-	#category : #'Kernel-Tests-Processes'
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RecursionStopperTest class >> defaultTimeLimit [
 	"Those tests are supposed to be fast.
 	But with broken RecursionStopper they will hang the image.
@@ -19,7 +21,7 @@ RecursionStopperTest class >> defaultTimeLimit [
 	^100 milliSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RecursionStopperTest >> mixedMethod [
 
 	RecursionStopper during: [
@@ -42,26 +44,26 @@ RecursionStopperTest >> mixedMethod [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RecursionStopperTest >> recursion [
 
 	RecursionStopper during: [ self recursion ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RecursionStopperTest >> setUp [
 	super setUp.
 	value := 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RecursionStopperTest >> tearDown [
 
 	fork ifNotNil: [ fork terminate. fork := nil ].
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RecursionStopperTest >> testMixedMethod [
 
 	| result |
@@ -71,7 +73,7 @@ RecursionStopperTest >> testMixedMethod [
 	self assert: result equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RecursionStopperTest >> testNoRecursion [
 
 	RecursionStopper during: [ value := value + 1 ].
@@ -79,13 +81,13 @@ RecursionStopperTest >> testNoRecursion [
 	self assert: value equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RecursionStopperTest >> testWithRecursion [
 
 	self recursion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RecursionStopperTest >> threadSafe [
 
 	| sema |

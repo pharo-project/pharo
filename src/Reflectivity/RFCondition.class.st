@@ -8,26 +8,28 @@ on #value, I evaluate my condition and after that the orginal link condition.
 With this feature, we can thus reflectively controll links while not actually changing the condition of the link itself. 
 "
 Class {
-	#name : #RFCondition,
-	#superclass : #Object,
+	#name : 'RFCondition',
+	#superclass : 'Object',
 	#instVars : [
 		'condition',
 		'originalLinkCondition'
 	],
-	#category : #'Reflectivity-Core'
+	#category : 'Reflectivity-Core',
+	#package : 'Reflectivity',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RFCondition class >> for: aCondition [
 	^self new originalLinkCondition: aCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFCondition >> condition: aBlockOrBoolean [
 	condition := aBlockOrBoolean
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RFCondition >> cull: arguments [
 	"in case of my wrapped link expects arguments"
 
@@ -35,48 +37,48 @@ RFCondition >> cull: arguments [
 		and: [ self linkCondition perform: self linkCondition valueSelector withArguments: {arguments} ]
 ]
 
-{ #category : #'enable/disable' }
+{ #category : 'enable/disable' }
 RFCondition >> disable [
 	condition := false
 ]
 
-{ #category : #'enable/disable' }
+{ #category : 'enable/disable' }
 RFCondition >> enable [
 	condition := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RFCondition >> initialize [
 	condition := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFCondition >> linkCondition [
 	^ self originalLinkCondition ifNil: [ [ true ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFCondition >> originalLinkCondition [
 	^ originalLinkCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFCondition >> originalLinkCondition: aCondition [
 	originalLinkCondition := aCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFCondition >> reifications [
 	(condition isKindOf: Boolean) ifTrue: [ ^#() ].
 	^condition argumentNames
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RFCondition >> value [
 	^condition and: [ self linkCondition value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFCondition >> valueSelector [
 	"If the condition is a block with 1+ arguments, it must be sent #cull: to be evaluated. Otherwise, it's a block with no argument or directly true or false, so we send it #value to evaluate it"
 	^ (self linkCondition isBlock and: [ self linkCondition numArgs isZero not ] )

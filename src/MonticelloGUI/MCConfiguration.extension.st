@@ -1,6 +1,6 @@
-Extension { #name : #MCConfiguration }
+Extension { #name : 'MCConfiguration' }
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCConfiguration >> browse [
 
 	^ (MCConfigurationBrowser new configuration: self) show

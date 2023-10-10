@@ -1,17 +1,18 @@
 Class {
-	#name : #RGStampParserTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGStampParserTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGStampParserTest >> testAuthor [
 
 	"TODO: improve"
 	self assert: (RGStampParser parseAuthorAliasFrom: 'StephaneDucasse 11/10/2015 18:13') equals: 'StephaneDucasse'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGStampParserTest >> testTime [
 
 	"TODO: improve"

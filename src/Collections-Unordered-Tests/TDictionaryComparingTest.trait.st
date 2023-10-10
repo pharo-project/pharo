@@ -2,11 +2,13 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryComparingTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryComparingTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #'tests - comparing' }
+{ #category : 'tests - comparing' }
 TDictionaryComparingTest >> testEquality [
 	| nonEmptyDict2 |
 	nonEmptyDict2 := self nonEmpty class new.

@@ -7,67 +7,69 @@ Internal Representation and Key Implementation Points.
 	testCase:		<TestCase>
 "
 Class {
-	#name : #ClyTestCaseRan,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClyTestCaseRan',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'testCase'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTestCaseRan class >> testCase: aClass [
 	^self new
 		testCase: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTestCaseRan >> affectsCritiques [
 	"It should be packages in critic plugin package
 	but for such simple message we can not do it"
 	^false
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyTestCaseRan >> affectsMethods [
 	^true
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyTestCaseRan >> affectsMethodsDefinedInClass: aClass [
 
 	^testCase == aClass
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyTestCaseRan >> affectsMethodsDefinedInPackage: aPackage [
 
 	^testCase package == aPackage or: [ aPackage extendsClass: testCase ]
 ]
 
-{ #category : #'event processing' }
-ClyTestCaseRan >> affectsMethodsTaggedWith: tagName [
-	^testCase tagsForMethods includes: tagName
+{ #category : 'testing' }
+ClyTestCaseRan >> affectsMethodsInProtocol: protocol [
+
+	^ testCase protocolNames includes: protocol
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyTestCaseRan >> affectsPackages [
 	"we do not want update packages after every test case run"
 	^false
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyTestCaseRan >> canAffectResultOfMethodQuery: aMethodQuery [
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestCaseRan >> classAffected [
 	^testCase
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyTestCaseRan >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -75,12 +77,12 @@ ClyTestCaseRan >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestCaseRan >> testCase [
 	^ testCase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestCaseRan >> testCase: anObject [
 	testCase := anObject
 ]

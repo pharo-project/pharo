@@ -12,21 +12,23 @@ Internal Representation and Key Implementation Points.
 	radioButton:		<Morph>
 "
 Class {
-	#name : #ClyBrowserModeSwitchMorph,
-	#superclass : #ClyBrowserToolbarItemMorph,
+	#name : 'ClyBrowserModeSwitchMorph',
+	#superclass : 'ClyBrowserToolbarItemMorph',
 	#instVars : [
 		'radioButton'
 	],
-	#category : #'Calypso-Browser-Toolbar'
+	#category : 'Calypso-Browser-Toolbar',
+	#package : 'Calypso-Browser',
+	#tag : 'Toolbar'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserModeSwitchMorph >> addIcon: anIcon [
 
 	"do not supported for now"
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserModeSwitchMorph >> beBoldIfActive [
 
 	self isModeActive
@@ -34,7 +36,7 @@ ClyBrowserModeSwitchMorph >> beBoldIfActive [
 		ifFalse: [ radioButton labelMorph emphasis: TextEmphasis normal emphasisCode]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserModeSwitchMorph >> build [
 	radioButton := self theme
 		newRadioButtonIn: self
@@ -48,12 +50,12 @@ ClyBrowserModeSwitchMorph >> build [
 	self addMorph: radioButton
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserModeSwitchMorph >> isModeActive [
 	^activator isCommandAppliedToBrowser
 ]
 
-{ #category : #controling }
+{ #category : 'controlling' }
 ClyBrowserModeSwitchMorph >> toggleMode: aBool [
 
 	self executeCommand

@@ -2,15 +2,17 @@
 The class represents a strategy for dispatching events to some immediate child of a morph. It is used by morphs to delegate the somewhat complex action of dispatching events accurately. 
 "
 Class {
-	#name : #MorphicEventDispatcher,
-	#superclass : #Object,
+	#name : 'MorphicEventDispatcher',
+	#superclass : 'Object',
 	#instVars : [
 		'morph'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 MorphicEventDispatcher >> dispatchDefault: anEvent with: aMorph [
 	"Dispatch the given event. The event will be passed to the front-most visible submorph that contains the position wrt. to the event."
 	| localEvt index child morphs inside |
@@ -38,7 +40,7 @@ MorphicEventDispatcher >> dispatchDefault: anEvent with: aMorph [
 	^#rejected
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 MorphicEventDispatcher >> dispatchDropEvent: anEvent with: aMorph [
 	"Find the appropriate receiver for the event and let it handle it. The dispatch is similar to the default dispatch with one difference: Morphs are given the chance to reject an entire drop operation. If the operation is rejected, no drop will be executed."
 	| inside index morphs child localEvt |
@@ -68,7 +70,7 @@ MorphicEventDispatcher >> dispatchDropEvent: anEvent with: aMorph [
 	^#rejected
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 MorphicEventDispatcher >> dispatchEvent: anEvent with: aMorph [
 	"Dispatch the given event for a morph that has chosen the receiver to dispatch its events. "
 	morph := aMorph.
@@ -76,7 +78,7 @@ MorphicEventDispatcher >> dispatchEvent: anEvent with: aMorph [
 	ensure: [ morph := nil ]
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 MorphicEventDispatcher >> dispatchMouseDown: anEvent with: aMorph [
 	"Find the appropriate receiver for the event and let it handle it. Default rules:
 	* The top-most chain of visible, unlocked morphs containing the event position will get a chance to handle the event.
@@ -120,7 +122,7 @@ MorphicEventDispatcher >> dispatchMouseDown: anEvent with: aMorph [
 	^#rejected
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 MorphicEventDispatcher >> dispatchWindowEvent: anEvent with: aMorph [
 	"Host window events do not have a position and are only dispatched to the World"
 	aMorph isWorldMorph ifFalse: [^#rejected].
@@ -128,93 +130,93 @@ MorphicEventDispatcher >> dispatchWindowEvent: anEvent with: aMorph [
 	^aMorph handleEvent: anEvent
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleDropFiles: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleDropMorph: anEvent [
 
 	^ self dispatchDropEvent: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleKeyDown: anEvent [
 
 		^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleKeyUp: anEvent [
 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleKeystroke: anEvent [
 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseDown: anEvent [
 
 	^ self dispatchMouseDown: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseEnter: anEvent [
 
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseLeave: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseMove: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseOver: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseUp: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleMouseWheel: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleStep: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleTextEditionEvent: aTextEditionEvent [
 	^ self dispatchDefault: aTextEditionEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleTextInputEvent: aTextInputEvent [
 	^ self dispatchDefault: aTextInputEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleUnknownEvent: anEvent [
 	^ self dispatchDefault: anEvent with: morph
 ]
 
-{ #category : #'dispatching - callback' }
+{ #category : 'dispatching - callback' }
 MorphicEventDispatcher >> handleWindowEvent: anEvent [
 
 	^ self dispatchWindowEvent: anEvent with: morph

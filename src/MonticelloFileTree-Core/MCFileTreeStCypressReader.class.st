@@ -4,22 +4,23 @@ Reader for Cypress format
 see https://github.com/CampSmalltalk/Cypress
 "
 Class {
-	#name : #MCFileTreeStCypressReader,
-	#superclass : #MCFileTreeStSnapshotReader,
-	#category : #'MonticelloFileTree-Core'
+	#name : 'MCFileTreeStCypressReader',
+	#superclass : 'MCFileTreeStSnapshotReader',
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader class >> extension [
     ^ 'package'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader class >> monticelloMetaDirName [
     ^ MCFileTreeStCypressWriter monticelloMetaDirName
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromDirectory: aDirectory [
     aDirectory entries
         do: [ :entry | 
@@ -31,7 +32,7 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromDirectory: aDirecto
                 ifTrue: [ self addExtensionClassAndMethodDefinitionsFromEntry: entry ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 	| classDirectory classPropertiesDict classComment entries methodPropertiesDict |
 	classDirectory := self fileUtils directoryFromEntry: classEntry.
@@ -62,35 +63,31 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 		in: entries
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment: classComment [
-  | categoryName className |
-  className := classPropertiesDict at: 'name'.
-  categoryName := classPropertiesDict
-    at: 'category'
-    ifAbsent: [ self packageNameFromPackageDirectory ].
-  self validateClassCategory: categoryName for: className.
-  definitions
-    add:
-      (MCClassDefinition
-        name: className
-        superclassName: (classPropertiesDict at: 'super')
-        traitComposition: (classPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-        classTraitComposition: (classPropertiesDict at: 'classtraitcomposition' ifAbsent: [ '{}' ])
-        category: categoryName
-        instVarNames: (classPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-        classVarNames: (classPropertiesDict at: 'classvars' ifAbsent: [ #() ])
-        poolDictionaryNames: (classPropertiesDict at: 'pools' ifAbsent: [ #() ])
-        classInstVarNames:
-          (classPropertiesDict at: 'classinstvars' ifAbsent: [ #() ])
-        type: (classPropertiesDict at: 'type' ifAbsent: [ 'normal' ]) asSymbol
-        comment: classComment
-        commentStamp: (classPropertiesDict at: 'commentStamp' ifAbsent: [ '' ]))
 
+	| definition |
+	definition := (MCClassDefinition named: (classPropertiesDict at: 'name'))
+		              superclassName: (classPropertiesDict at: 'super');
+		              packageName: self packageNameFromPackageDirectory;
+		              comment: classComment;
+		              yourself.
 
+	classPropertiesDict
+		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
+		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'classtraitcomposition' ifPresent: [ :composition | definition classTraitComposition: composition ];
+		at: 'instvars' ifPresent: [ :instVars | definition instVarNames: instVars ];
+		at: 'classvars' ifPresent: [ :classVars | definition classVarNames: classVars ];
+		at: 'pools' ifPresent: [ :pools | definition poolDictionaryNames: pools ];
+		at: 'classinstvars' ifPresent: [ :classInstVars | definition classInstVarNames: classInstVars ];
+		at: 'type' ifPresent: [ :type | definition type: type ];
+		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addExtensionClassAndMethodDefinitionsFromEntry: classEntry [
 	| classDirectory classPropertiesDict methodPropertiesDict entries |
 	classDirectory := self fileUtils directoryFromEntry: classEntry.
@@ -114,7 +111,7 @@ MCFileTreeStCypressReader >> addExtensionClassAndMethodDefinitionsFromEntry: cla
 		extensionMethod: true
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodProperties: methodProperties in: entries [
   ^ self
     addMethodDefinitionsForClass: className
@@ -123,7 +120,7 @@ MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodPrope
     extensionMethod: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodProperties: methodProperties in: entries extensionMethod: extensionMethod [
 	entries
 		do: [ :entry | 
@@ -153,7 +150,7 @@ MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodPrope
 												source: source) ] ] ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 	| classDirectory classPropertiesDict classComment entries methodPropertiesDict |
 	classDirectory := self fileUtils directoryFromEntry: classEntry.
@@ -185,28 +182,26 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 		in: entries
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> addTraitDefinitionFrom: traitPropertiesDict comment: traitComment [
-    definitions
-        add:
-            (MCTraitDefinition
-                name: (traitPropertiesDict at: 'name')
-                traitComposition: (traitPropertiesDict at: 'traitcomposition' ifAbsent: [ '{}' ])
-                category: (traitPropertiesDict at: 'category' ifAbsent: [ self packageNameFromPackageDirectory ])
-					instVarNames: (traitPropertiesDict at: 'instvars' ifAbsent: [ #() ])
-					classInstVarNames: ''
-					classTraitComposition: nil
-					comment: traitComment
-					commentStamp: (traitPropertiesDict at: 'commentStamp' ifAbsent: [ '' ])).
-    traitPropertiesDict at: 'classtraitcomposition' ifPresent: [:classTraitComposition |
-        definitions
-             add:
-                (MCClassTraitDefinition
-                    baseTraitName: (traitPropertiesDict at: 'name')
-                    classTraitComposition: classTraitComposition)].
+
+	| definition |
+	definition := (MCTraitDefinition named: (traitPropertiesDict at: 'name'))
+		              packageName: self packageNameFromPackageDirectory;
+		              comment: traitComment;
+		              yourself.
+
+	traitPropertiesDict
+		at: 'category' ifPresent: [ :category | self setPackageTagIn: definition fromCategory: category ];
+		at: 'traitcomposition' ifPresent: [ :composition | definition traitComposition: composition ];
+		at: 'classtraitcomposition' ifPresent: [ :classTraitComposition | definition classTraitComposition: classTraitComposition ];
+		at: 'instvars' ifPresent: [ :ivars | definition instVarNames: ivars ];
+		at: 'commentStamp' ifPresent: [ :stamp | definition commentStamp: stamp ].
+
+	definitions add: definition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> basicVersion [
     self hasMonticelloMetadata
         ifTrue: [ ^ super basicVersion ].
@@ -218,44 +213,48 @@ MCFileTreeStCypressReader >> basicVersion [
         yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressReader >> isMethodPropertyFile: entry [
 	^ entry name = 'methodProperties.ston' or: [ entry name = 'methodProperties.json']
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressReader >> isPropertyFile: entry [
 	^ entry name = 'properties.ston' or: [ entry name = 'properties.json']
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> loadDefinitions [
-    | entries directory |
-    definitions := OrderedCollection new.
-    directory := self fileUtils directoryFromPath: self monticelloMetaDirName relativeTo: packageDirectory.
-    (self fileUtils directoryExists: directory)
-        ifTrue: [ 
-            		entries := directory entries.
-            		self
-                			addDefinitionFromFile: (entries detect: [ :entry | entry name beginsWith: 'categories' ] ifNone: [  ])
-                			inDirectory: directory ]
-	ifFalse: [definitions add: (MCOrganizationDefinition categories: {self packageNameFromPackageDirectory }) ].
-    self addClassAndMethodDefinitionsFromDirectory: packageDirectory.
-    (self fileUtils directoryExists: directory)
-        ifTrue: [ 
-            self
-                addDefinitionFromFile: (entries detect: [ :entry | entry name beginsWith: 'initializers' ] ifNone: [  ])
-                inDirectory: directory ]
+
+	| entries directory |
+	definitions := OrderedCollection new.
+	directory := self fileUtils directoryFromPath: self monticelloMetaDirName relativeTo: packageDirectory.
+	(self fileUtils directoryExists: directory)
+		ifTrue: [
+			entries := directory entries.
+			self
+				addDefinitionFromFile: (entries
+						 detect: [ :entry | entry name beginsWith: 'categories' ]
+						 ifNone: [  ])
+				inDirectory: directory ]
+		ifFalse: [ definitions add: (MCOrganizationDefinition packageName: self packageNameFromPackageDirectory) ].
+	self addClassAndMethodDefinitionsFromDirectory: packageDirectory.
+	(self fileUtils directoryExists: directory) ifTrue: [
+		self
+			addDefinitionFromFile: (entries
+					 detect: [ :entry | entry name beginsWith: 'initializers' ]
+					 ifNone: [  ])
+			inDirectory: directory ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> loadPackage [
     self hasMonticelloMetadata
         ifTrue: [ ^ super loadPackage ].
     package := MCPackage named: self packageNameFromPackageDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> loadVersionInfo [
   self hasMonticelloMetadata
     ifTrue: [ ^ info := self extractInfoFrom: (self parseMember: 'version') ].
@@ -271,37 +270,32 @@ MCFileTreeStCypressReader >> loadVersionInfo [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStCypressReader >> methodSelectorFor: source [
     ^ Object compilerClass new parseSelector: source
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressReader >> packageNameFromPackageDirectory [
     | filename2 |
     filename2 := self fileUtils directoryName: packageDirectory.
     ^ filename2 copyFrom: 1 to: (filename2 lastIndexOf: $.) - 1
 ]
 
-{ #category : #validation }
-MCFileTreeStCypressReader >> validateClassCategory: categoryName for: className [
-  "https://github.com/dalehenrich/filetree/issues/136"
+{ #category : 'utilities' }
+MCFileTreeStCypressReader >> setPackageTagIn: definition fromCategory: category [
 
-  "class category must match the package name ... guard against manual editing mistakes"
+	| packageName |
+	packageName := definition packageName.
+	(self verifyCategory: category matches: packageName) ifFalse: [
+		self error: 'Class category name ' , category , ' for the class ' , definition name , ' is inconsistent with the package name ' , packageName ].
 
-  | prefix |
-  prefix := self packageNameFromPackageDirectory.
-  (self verifyCategory: categoryName matches: prefix)
-    ifTrue: [ ^ self ].
-  self
-    error:
-      'Class category name ' , categoryName printString , ' for the class '
-        , className printString , ' is inconsistent with the package name '
-        , prefix printString
+	"If the category is the package name then it means that there is not tag"
+	category = packageName ifFalse: [ definition tagName: (category withoutPrefix: packageName , '-') ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MCFileTreeStCypressReader >> validateExtensionMethodCategory: categoryName for: className selector: selector [
   "https://github.com/dalehenrich/filetree/issues/136"
 
@@ -328,7 +322,7 @@ MCFileTreeStCypressReader >> validateExtensionMethodCategory: categoryName for: 
 
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MCFileTreeStCypressReader >> verifyCategory: categoryName matches: basicPackageName [
   "https://github.com/dalehenrich/filetree/issues/136"
 

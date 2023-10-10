@@ -5,29 +5,37 @@ I am not active for abstract classes.
 By default tool is abstract if it has subclasses. So for the cases when it is not true the tool class should override class side method #isAbstract
 "
 Class {
-	#name : #ClyTabActivationStrategyAnnotation,
-	#superclass : #ClassAnnotation,
-	#category : #'Calypso-Browser-Tabs'
+	#name : 'ClyTabActivationStrategyAnnotation',
+	#superclass : 'ClassAnnotation',
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #operations }
+{ #category : 'class initialization' }
+ClyTabActivationStrategyAnnotation class >> initialize [
+
+	self deprecatedAliases: { #ClyTabActivationStrategy }
+]
+
+{ #category : 'operations' }
 ClyTabActivationStrategyAnnotation >> createToolFor: aBrowser inContext: aBrowserContext [
 
 	^self toolClass for: aBrowser inContext: aBrowserContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTabActivationStrategyAnnotation >> isActiveInContext: aBrowserContext [
 	^(super isActiveInContext: aBrowserContext)
 		and: [ self toolClass shouldBeActivatedInContext: aBrowserContext ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTabActivationStrategyAnnotation >> isForbidden [
 	^self toolClass isAbstract
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTabActivationStrategyAnnotation >> toolClass [
 	^annotatedClass
 ]

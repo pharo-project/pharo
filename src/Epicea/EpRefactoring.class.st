@@ -2,29 +2,31 @@
 I represent a refactoring performed in the system. 
 "
 Class {
-	#name : #EpRefactoring,
-	#superclass : #EpEvent,
-	#category : #'Epicea-Model'
+	#name : 'EpRefactoring',
+	#superclass : 'EpEvent',
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpRefactoring >> accept: aChangeVisitor [
 	^ aChangeVisitor visitRefactoring: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EpRefactoring >> asRBRefactoring [
 	"Answer the RBRefactoring corresponding to myself."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpRefactoring >> canBuildRBRefactoring [
 	^ false "should be true but this function is currently broken so let's not expose it to the users"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpRefactoring >> isEpRefactoring [
 
 	^ true

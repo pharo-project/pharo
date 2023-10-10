@@ -2,31 +2,33 @@
 I know how to handle the booleans when stored in a int8
 "
 Class {
-	#name : #TFBooleanType,
-	#superclass : #TFDerivedType,
-	#category : #'ThreadedFFI-Types'
+	#name : 'TFBooleanType',
+	#superclass : 'TFDerivedType',
+	#category : 'ThreadedFFI-Types',
+	#package : 'ThreadedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFBooleanType >> basicType [
 
 	^ TFBasicType uint8
 ]
 
-{ #category : #'reading-writing' }
+{ #category : 'reading-writing' }
 TFBooleanType >> callbackReadValue: anExternalAddress [
 
 	^ (self readValue: anExternalAddress) ~= 0
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFBooleanType >> emitMarshallFromPrimitive: anIRBuilder [
 
 	anIRBuilder pushLiteral: 0.
 	anIRBuilder send: #~=
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFBooleanType >> emitMarshallToPrimitive: builder [
 
 	builder pushLiteral: true.
@@ -39,13 +41,13 @@ TFBooleanType >> emitMarshallToPrimitive: builder [
 	builder jumpAheadTarget: #endLabel
 ]
 
-{ #category : #'reading-writing' }
+{ #category : 'reading-writing' }
 TFBooleanType >> readValue: anExternalAddress [
 	" Returns 0 or 1, the conversion to false or true is done in the generated method"
 	^ self basicType readValue: anExternalAddress
 ]
 
-{ #category : #'reading-writing' }
+{ #category : 'reading-writing' }
 TFBooleanType >> write: aBoolean into: aCollection [
 
 	self basicType

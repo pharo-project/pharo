@@ -8,15 +8,16 @@ Each group has in adition the total execution time for each test.
 I am used in DrTestsUI to show the results in a orderly manner.
 "
 Class {
-	#name : #DTTestsProfilingResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTTestsProfilingResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'testsResult'
 	],
-	#category : #'DrTests-TestsProfiling'
+	#category : 'DrTests-TestsProfiling',
+	#package : 'DrTests-TestsProfiling'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsProfilingResult >> buildTreeForUI [
 	<dtTestsProfilingResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
@@ -68,7 +69,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsProfilingResult >> buildTreeGroupedByClass [
 	<dtTestsProfilingResultTreeNamed: 'Grouped by class' order: 2>
 	^ self buildTreeNode
@@ -80,7 +81,7 @@ DTTestsProfilingResult >> buildTreeGroupedByClass [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DTTestsProfilingResult >> buildTreeNode [
 	"Returns a node with the sub-results aggregator initialized in a way that it sum the durations of sub results."
 
@@ -92,12 +93,12 @@ DTTestsProfilingResult >> buildTreeNode [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsProfilingResult >> testResults [
 	^ testsResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsProfilingResult >> testResults: anObject [
 	testsResult := anObject
 ]

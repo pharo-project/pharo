@@ -4,23 +4,25 @@ On startup, isImageStarting indicates whether the image is starting or just resu
 On shutdown, isQuitting indicates if we save and quit the image  or if we just save  the image.  
 "
 Class {
-	#name : #AbstractSessionHandler,
-	#superclass : #Object,
-	#category : #'System-SessionManager-Handlers'
+	#name : 'AbstractSessionHandler',
+	#superclass : 'Object',
+	#category : 'System-SessionManager-Handlers',
+	#package : 'System-SessionManager',
+	#tag : 'Handlers'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractSessionHandler class >> isAbstract [
 
 	^self == AbstractSessionHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractSessionHandler >> handledId [
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractSessionHandler >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -29,12 +31,12 @@ AbstractSessionHandler >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 AbstractSessionHandler >> shutdown: isImageQuitting [
 	self subclassResponsibility
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 AbstractSessionHandler >> startup: isImageStarting [
 	self subclassResponsibility
 ]

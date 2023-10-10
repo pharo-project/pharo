@@ -13,8 +13,8 @@ Instance Variables
 
 "
 Class {
-	#name : #MCMethodDefinition,
-	#superclass : #MCDefinition,
+	#name : 'MCMethodDefinition',
+	#superclass : 'MCDefinition',
 	#instVars : [
 		'classIsMeta',
 		'source',
@@ -28,16 +28,18 @@ Class {
 		'Definitions',
 		'InitializersEnabled'
 	],
-	#category : #'Monticello-Modeling'
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCMethodDefinition class >> cachedDefinitions [
 	^ Definitions 
 		ifNil: [ Definitions := WeakIdentityKeyDictionary new ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: catString timeStamp: timeString source: sourceString [
 	^ self new
 		initializeWithClassName: classString
@@ -48,7 +50,7 @@ MCMethodDefinition class >> className: classString classIsMeta: metaBoolean sele
 		source: sourceString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCMethodDefinition class >> className: classString
 selector: selectorString
 category: catString
@@ -62,56 +64,56 @@ source: sourceString [
 			source: sourceString
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 MCMethodDefinition class >> cleanUp [
 	"Flush caches"
 
 	self shutDown.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCMethodDefinition class >> flushMethodCache [
 	"We do not named this method flushCache because it would override an important class methods."
 	Definitions := nil.
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCMethodDefinition class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
+
+	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MCMethodDefinition class >> initializersEnabled [
 
 	^ InitializersEnabled ifNil: [true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MCMethodDefinition class >> initializersEnabled: aBoolean [
 
 	InitializersEnabled := aBoolean
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 MCMethodDefinition class >> shutDown [
 	"Free up all cached monticello method definitions"
 	self flushMethodCache 
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMethodDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ aDefinition category = self category
 		and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCMethodDefinition >> accept: aVisitor [
 	^ aVisitor visitMethodDefinition: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> actualClass [
 	^ Smalltalk globals
 		at: className
@@ -121,14 +123,13 @@ MCMethodDefinition >> actualClass [
 				ifFalse: [ class ] ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> addMethodAdditionTo: aCollection [
 	| methodAddition |
 	methodAddition := MethodAddition new
 		compile: source
 		classified: category
 		withStamp: timeStamp
-		notifying: nil
 		logSource: true
 		inClass: self actualClass.
 	"This might raise an exception and never return"
@@ -137,23 +138,23 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 
 ]
 
-{ #category : #'accessing - backward' }
+{ #category : 'accessing - backward' }
 MCMethodDefinition >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 	^ category
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> classIsMeta [
 	^ classIsMeta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> className [
 	^className
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCMethodDefinition >> description [
 	^ Array	
 		with: className
@@ -161,13 +162,13 @@ MCMethodDefinition >> description [
 		with: classIsMeta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> diffSource [
 	^'"protocol: ', self protocol,'"
 ', self source.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCMethodDefinition >> fullClassName [
 	"Using #class selector for classes for backwards compatibility"
 
@@ -179,12 +180,12 @@ MCMethodDefinition >> fullClassName [
 				ifTrue: [self className, ' classSide']]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> fullTimeStamp [
 	^ DateAndTime fromMethodTimeStamp: timeStamp
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMethodDefinition >> hash [
 	| hash |
 	hash := String stringHash: classIsMeta asString initialHash: 0.
@@ -194,34 +195,28 @@ MCMethodDefinition >> hash [
 	^ hash
 ]
 
-{ #category : #serializing }
-MCMethodDefinition >> initializeWithClassName: classString
-classIsMeta: metaBoolean
-selector: selectorString
-category: catString
-timeStamp: timeString
-source: sourceString [
+{ #category : 'serializing' }
+MCMethodDefinition >> initializeWithClassName: classString classIsMeta: metaBoolean selector: selectorString category: protocolName timeStamp: timeString source: sourceString [
+
 	className := classString asSymbol.
 	selector := selectorString asSymbol.
-	category := catString
-		ifNil: [ #'as yet unclassified']
-		ifNotNil: [ (catString asSymbol) ifEmpty: [#'as yet unclassified']].
+	category := protocolName isEmptyOrNil ifTrue: [ Protocol unclassified ] ifFalse: [ protocolName asSymbol ].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withInternalLineEndings
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinition >> isCodeDefinition [
 	^ true
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> isExtensionMethod [
 	^ category beginsWith: '*'
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> isExternalStructureFieldDefinition [
 	"Really belongs in the FFI package, for now, include in base even if FFI is not loaded due to the dire consequences if its not here and an FFI package is loaded (incorrect field compilation can cause VM crashes).
 	
@@ -234,36 +229,36 @@ MCMethodDefinition >> isExternalStructureFieldDefinition [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinition >> isInitializer [
 	^ selector = #initialize and: [classIsMeta]
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinition >> isLoadable [
 	^self actualClass notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMethodDefinition >> isMethodDefinition [
 	^true
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> isOverrideMethod [
 	"this oughta check the package"
 	^ self isExtensionMethod and: [category endsWith: '-override']
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> load [
 	| sel |
-	sel := self actualClass
-		compile: source
-		classified: category
-		withStamp: timeStamp
-		notifying: nil.
+	sel := (self actualClass compiler
+		protocol: category;
+		changeStamp: timeStamp;
+		permitUndeclared: true;
+		install: source) selector.
 	sel = selector ifTrue: [ ^ self ].
 	Warning signal: (
 		'Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.'
@@ -271,7 +266,7 @@ MCMethodDefinition >> load [
 	selector := sel
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> overridenMethodOrNil [
 	"Answer the method that I've overriden on load. 
 
@@ -285,11 +280,11 @@ MCMethodDefinition >> overridenMethodOrNil [
 		ifAbsent: [ ^ nil ].
 		
 	^ SourceFiles
-		changeRecordsFor: realMethod asRingDefinition
+		changeRecordsFor: realMethod
 		detect: [ :protocol | protocol ~= category ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> postloadOver: aDefinition [
 	super postloadOver: aDefinition.
 	self class initializersEnabled ifTrue: [
@@ -302,7 +297,7 @@ MCMethodDefinition >> postloadOver: aDefinition [
 		ifTrue: [self actualClass instanceSide compileFields].
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 MCMethodDefinition >> printAnnotations: requests on: aStream [
 	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
 	
@@ -315,44 +310,46 @@ MCMethodDefinition >> printAnnotations: requests on: aStream [
 	] separatedBy: [ aStream space ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
 	^ category
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> removeSelector: aSelector fromClass: aClass [
 	"Safely remove the given selector from the target class.
 	Be careful not to remove the selector when it has wandered
 	to another package, but remove the category if it is empty."
 
-	| newProtocol |
-	newProtocol := aClass organization protocolNameOfElement: aSelector.
-	newProtocol ifNotNil: [ "If moved to and fro extension, ignore removal"
-		(category beginsWith: '*') = (newProtocol beginsWith: '*') ifFalse: [ ^ self ]. "Check if moved between different extension categories"
-		((category beginsWith: '*') and: [ category ~= newProtocol ]) ifTrue: [ ^ self ] ].
-	aClass removeSelector: aSelector.
-	aClass organization removeProtocolIfEmpty: category
+	(aClass protocolOfSelector: aSelector) ifNotNil: [ :newProtocol |
+		"If moved to and from extension, ignore removal"
+		(category beginsWith: '*') = newProtocol isExtensionProtocol ifFalse: [ ^ self ].
+		"Check if moved between different extension protocol"
+		((category beginsWith: '*') and: [ category ~= newProtocol name ]) ifTrue: [ ^ self ] ].
+
+	aClass
+		removeSelector: aSelector;
+		removeProtocolIfEmpty: category
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMethodDefinition >> requirements [
-	^ Array with: className
+	^ { className }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> selector [
 	^selector
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCMethodDefinition >> shortSummaryPrefix [
 
 	^ self definition selector asString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMethodDefinition >> sortKey [
 	^ sortKey
 		ifNil: [ sortKey := self className , '.'
@@ -362,23 +359,23 @@ MCMethodDefinition >> sortKey [
 						ifFalse: [ 'nonmeta' ]) , '.' , self selector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> source [
 	^ source
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCMethodDefinition >> summary [
 
 	^ className asString , '>>' , selector printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMethodDefinition >> timeStamp [
 	^ timeStamp
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCMethodDefinition >> unload [
 	"Unload me. If I represent an override method, then restore the overriden version. If not, just remove the selector from the class."
 

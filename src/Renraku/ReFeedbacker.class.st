@@ -2,15 +2,17 @@
 I am reporting complaints about critics. No one should use me dirrectly. Use ReCritic>>#reportUselessness instead
 "
 Class {
-	#name : #ReFeedbacker,
-	#superclass : #Object,
+	#name : 'ReFeedbacker',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uuid'
 	],
-	#category : #'Renraku-Utility'
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReFeedbacker class >> feedback: aComment positive: aBoolean about: aReCritic [
 	[
 	ZnClient new
@@ -33,19 +35,19 @@ ReFeedbacker class >> feedback: aComment positive: aBoolean about: aReCritic [
 	^ true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReFeedbacker class >> negativeFeedback: aComment about: aReCritic [
 
 	^ self feedback: aComment positive: false about: aReCritic
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReFeedbacker class >> positiveFeedback: aComment about: aReCritic [
 
 	^ self feedback: aComment positive: true about: aReCritic
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 ReFeedbacker class >> uuid [
 	^ uuid ifNil: [ uuid := UUID new ]
 ]

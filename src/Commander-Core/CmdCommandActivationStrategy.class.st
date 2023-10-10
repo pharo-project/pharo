@@ -49,12 +49,13 @@ Internal Representation and Key Implementation Points.
 	contextDefinition:		<CmdContextDefinition>	definition of the context where command can be activated
 "
 Class {
-	#name : #CmdCommandActivationStrategy,
-	#superclass : #ClassAnnotation,
-	#category : #'Commander-Core'
+	#name : 'CmdCommandActivationStrategy',
+	#superclass : 'ClassAnnotation',
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandActivationStrategy class >> activateAllInContext: aToolContext by: blockWithActivator [
 
 	self
@@ -63,7 +64,7 @@ CmdCommandActivationStrategy class >> activateAllInContext: aToolContext by: blo
 			blockWithActivator value: (activationStrategy newActivatorFor: aToolContext)]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandActivationStrategy class >> createActivatorsExecutableInContext: aToolContext [
 	| result |
 	result := OrderedCollection new.
@@ -75,28 +76,28 @@ CmdCommandActivationStrategy class >> createActivatorsExecutableInContext: aTool
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivationStrategy >> commandClass [
 	^annotatedClass
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandActivationStrategy >> defaultActivatorClass [
 	^CmdCommandActivator
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandActivationStrategy >> isActiveInContext: aToolContext [
 	^(super isActiveInContext: aToolContext)
 		and: [ aToolContext allowsExecutionOf: self commandClass]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandActivationStrategy >> isForbidden [
 	^self commandClass isAbstract
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandActivationStrategy >> newActivatorFor: aToolContext [
 
 	^self defaultActivatorClass

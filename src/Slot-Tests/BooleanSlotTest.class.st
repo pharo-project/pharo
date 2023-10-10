@@ -2,14 +2,17 @@
 Tests for BooleanSlot
 "
 Class {
-	#name : #BooleanSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'BooleanSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BooleanSlotTest >> testExampleBooleanSlot [
 	| object slot |
+	<ignoreNotImplementedSelectors: #(slot1: slot1)>
 	slot := #slot1 => BooleanSlot.
 	aClass := self make: [ :builder | builder slots: {slot} ].
 
@@ -28,7 +31,7 @@ BooleanSlotTest >> testExampleBooleanSlot [
 	self assert: object slot1 identicalTo: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BooleanSlotTest >> testExampleTwoBooleanSlots [
 	| object slot1 slot2 |
 	slot1 := #slot1 => BooleanSlot.
@@ -54,7 +57,7 @@ BooleanSlotTest >> testExampleTwoBooleanSlots [
 	self assert: (slot2 read: object) equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BooleanSlotTest >> testExampleTwoBooleanSlotsRemoveOne [
 	| object slot1 slot2 |
 	slot1 := #slot1 => BooleanSlot.

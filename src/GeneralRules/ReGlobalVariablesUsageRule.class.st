@@ -4,23 +4,25 @@ Global Variables are a known design smell.
 Specially in Pharo, we do not want to keep global bindings because their usage can a will produce undesirable implicit coupling, avoiding out language to evolve into the usage of powerful modules. 
 "
 Class {
-	#name : #ReGlobalVariablesUsageRule,
-	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#name : 'ReGlobalVariablesUsageRule',
+	#superclass : 'ReAbstractRule',
+	#category : 'GeneralRules-Migrated',
+	#package : 'GeneralRules',
+	#tag : 'Migrated'
 }
 
-{ #category : #'testing-interest' }
+{ #category : 'testing-interest' }
 ReGlobalVariablesUsageRule class >> checksMethod [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	aMethod ast allChildren
 		select: [ :node |
 				node isGlobalVariable and: [
 					node variable isGlobalClassNameBinding not and: [
-					(self isKnownGlobal: node name) not ] ] ]
+					(self isKnownGlobal: node name) not and: [	node variable isDeprecated not ] ] ] ]
 		thenDo: [ :node |
 			aCriticBlock cull: (self
 				createTrivialCritiqueOn: aMethod
@@ -28,12 +30,12 @@ ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				hint: node name) ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReGlobalVariablesUsageRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 	^ #(
 			ActiveEvent
@@ -43,19 +45,18 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			Processor
 			Smalltalk
 			SourceFiles
-			SystemOrganization
 			Transcript
 			Undeclared
 			World
 		) includes: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReGlobalVariablesUsageRule >> name [
 	^ 'Global variable usage'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReGlobalVariablesUsageRule >> rationale [
 	^ 'http://wiki.c2.com/?GlobalVariablesAreBad
 

@@ -1,6 +1,6 @@
-Extension { #name : #VariableLayout }
+Extension { #name : 'VariableLayout' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 VariableLayout class >> mcTypeSymbol [ 
 	^ #variable
 ]

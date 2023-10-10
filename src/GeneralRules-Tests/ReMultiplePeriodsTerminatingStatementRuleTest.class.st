@@ -2,12 +2,14 @@
 A RBMultiplePeriodsTerminatingStatementRuleTest is a test class for testing the behavior of RBMultiplePeriodsTerminatingStatementRule
 "
 Class {
-	#name : #ReMultiplePeriodsTerminatingStatementRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
-	#category : #'GeneralRules-Tests-Migrated'
+	#name : 'ReMultiplePeriodsTerminatingStatementRuleTest',
+	#superclass : 'ReAbstractRuleTestCase',
+	#category : 'GeneralRules-Tests-Migrated',
+	#package : 'GeneralRules-Tests',
+	#tag : 'Migrated'
 }
 
-{ #category : #sample }
+{ #category : 'sample' }
 ReMultiplePeriodsTerminatingStatementRuleTest >> sampleMethod [
 	"I have two periods between statements"
 	2+3.  .
@@ -16,7 +18,7 @@ ReMultiplePeriodsTerminatingStatementRuleTest >> sampleMethod [
 .
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReMultiplePeriodsTerminatingStatementRuleTest >> testRule [
 	| critiques |
 	critiques := self myCritiques .

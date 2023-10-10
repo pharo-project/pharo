@@ -1,26 +1,28 @@
 Class {
-	#name : #OCBytecodeDecompilerTest,
-	#superclass : #TestCase,
+	#name : 'OCBytecodeDecompilerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'currentCompiler'
 	],
-	#category : #'OpalCompiler-Tests-Bytecode'
+	#category : 'OpalCompiler-Tests-Bytecode',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Bytecode'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OCBytecodeDecompilerTest >> setUp [
 	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
 	SmalltalkImage compilerClass: OpalCompiler
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCBytecodeDecompilerTest >> tearDown [
 	SmalltalkImage compilerClass: currentCompiler.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testBugOffset [
 	| iRMethod aCompiledMethod ir method |
 	iRMethod := IRBuilder new
@@ -35,7 +37,7 @@ OCBytecodeDecompilerTest >> testBugOffset [
 	self assert: aCompiledMethod symbolic equals: method symbolic
 ]
 
-{ #category : #'tests - examples' }
+{ #category : 'tests - examples' }
 OCBytecodeDecompilerTest >> testDecompileBytecodeDecompilerTestClass [
 	| decompiledIR aCompiledMethod |
 	self class methods
@@ -44,7 +46,7 @@ OCBytecodeDecompilerTest >> testDecompileBytecodeDecompilerTestClass [
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
 
-{ #category : #'tests - examples' }
+{ #category : 'tests - examples' }
 OCBytecodeDecompilerTest >> testDecompileBytecodeGeneratorTest [
 	| decompiledIR aCompiledMethod |
 	OCBytecodeGeneratorTest methods
@@ -53,7 +55,7 @@ OCBytecodeDecompilerTest >> testDecompileBytecodeGeneratorTest [
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
 
-{ #category : #'tests - examples' }
+{ #category : 'tests - examples' }
 OCBytecodeDecompilerTest >> testDecompileIRBuilderTestClass [
 	| decompiledIR aCompiledMethod |
 	IRBuilderTest methods
@@ -62,7 +64,7 @@ OCBytecodeDecompilerTest >> testDecompileIRBuilderTestClass [
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
 
-{ #category : #'tests - examples' }
+{ #category : 'tests - examples' }
 OCBytecodeDecompilerTest >> testDecompilerOrderedCollectionDo [
 	| cm decompiledIR |
 	cm := OrderedCollection >> #do:.
@@ -70,7 +72,7 @@ OCBytecodeDecompilerTest >> testDecompilerOrderedCollectionDo [
 	decompiledIR compiledMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testDup [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testDup.
@@ -80,7 +82,7 @@ OCBytecodeDecompilerTest >> testDup [
 	self assert: ir2 compiledMethod symbolic equals: method symbolic
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testInstVar [
 	| ir1 ir2 method method2 |
 	ir1 := IRBuilderTest new testInstVar.
@@ -92,7 +94,7 @@ OCBytecodeDecompilerTest >> testInstVar [
 	self assert: method2 equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testJumpAheadTo [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testJumpAheadTo.
@@ -102,7 +104,7 @@ OCBytecodeDecompilerTest >> testJumpAheadTo [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testJumpAheadToIf [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testJumpAheadToIf.
@@ -113,7 +115,7 @@ OCBytecodeDecompilerTest >> testJumpAheadToIf [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testJumpBackTo [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testJumpBackTo.
@@ -124,7 +126,7 @@ OCBytecodeDecompilerTest >> testJumpBackTo [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralArray [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralArray.
@@ -135,7 +137,7 @@ OCBytecodeDecompilerTest >> testLiteralArray [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralBoolean [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralBoolean.
@@ -146,7 +148,7 @@ OCBytecodeDecompilerTest >> testLiteralBoolean [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralCharacter [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralCharacter.
@@ -157,7 +159,7 @@ OCBytecodeDecompilerTest >> testLiteralCharacter [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralFloat [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralFloat.
@@ -168,7 +170,7 @@ OCBytecodeDecompilerTest >> testLiteralFloat [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralInteger [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralInteger.
@@ -179,7 +181,7 @@ OCBytecodeDecompilerTest >> testLiteralInteger [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralNil [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralNil.
@@ -190,7 +192,7 @@ OCBytecodeDecompilerTest >> testLiteralNil [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralString [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralString.
@@ -201,7 +203,7 @@ OCBytecodeDecompilerTest >> testLiteralString [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralSymbol [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralSymbol.
@@ -212,7 +214,7 @@ OCBytecodeDecompilerTest >> testLiteralSymbol [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralVariableClass [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralVariableClass.
@@ -223,7 +225,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableClass [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralVariableClassVariable.
@@ -234,7 +236,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testLiteralVariableGlobale [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new setUp; testLiteralVariableGlobale.
@@ -245,7 +247,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableGlobale [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testPopTop [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPopTop.
@@ -256,7 +258,7 @@ OCBytecodeDecompilerTest >> testPopTop [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testPushConsArray [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushConsArray.
@@ -267,7 +269,7 @@ OCBytecodeDecompilerTest >> testPushConsArray [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testPushConsArray2 [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushConsArray2.
@@ -278,7 +280,7 @@ OCBytecodeDecompilerTest >> testPushConsArray2 [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testPushSelf [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushSelf.
@@ -289,7 +291,7 @@ OCBytecodeDecompilerTest >> testPushSelf [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testPushTempArgument [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushTempArgument.
@@ -300,7 +302,7 @@ OCBytecodeDecompilerTest >> testPushTempArgument [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testPushTempTemp [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushTempTemp.
@@ -311,7 +313,7 @@ OCBytecodeDecompilerTest >> testPushTempTemp [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testPushThisContext [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushThisContext.
@@ -322,7 +324,7 @@ OCBytecodeDecompilerTest >> testPushThisContext [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testReturnTop [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testReturnTop.
@@ -333,7 +335,7 @@ OCBytecodeDecompilerTest >> testReturnTop [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testSendSuper [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testSendSuper.
@@ -344,7 +346,7 @@ OCBytecodeDecompilerTest >> testSendSuper [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testStoreIntoVariable [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testStoreIntoVariable.
@@ -355,7 +357,7 @@ OCBytecodeDecompilerTest >> testStoreIntoVariable [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeDecompilerTest >> testStoreTemp [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testStoreTemp.
@@ -366,7 +368,7 @@ OCBytecodeDecompilerTest >> testStoreTemp [
 	self assert: ir2 compiledMethod equals: method
 ]
 
-{ #category : #'tests - examples' }
+{ #category : 'tests - examples' }
 OCBytecodeDecompilerTest >> testWhileTrue [
 	| cm decompiledIR aCompiledMethod |
 	cm := self class >> #testWhileTrue.

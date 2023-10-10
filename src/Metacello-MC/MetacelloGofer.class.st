@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloGofer,
-	#superclass : #Gofer,
-	#category : #'Metacello-MC-Gofer'
+	#name : 'MetacelloGofer',
+	#superclass : 'Gofer',
+	#category : 'Metacello-MC-Gofer',
+	#package : 'Metacello-MC',
+	#tag : 'Gofer'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGofer >> basicReferencesIn: aRepository [
 	((aRepository isKindOf: MCDictionaryRepository) or: [aRepository isKindOf: MCDirectoryRepository])
 		ifTrue: [ 
@@ -20,7 +22,7 @@ MetacelloGofer >> basicReferencesIn: aRepository [
 			^ cache at: aRepository put: (super basicReferencesIn: aRepository) ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloGofer >> interactiveCommit [
 
 	^ self execute: MetacelloGoferCommit

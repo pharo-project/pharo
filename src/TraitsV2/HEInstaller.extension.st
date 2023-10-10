@@ -1,6 +1,6 @@
-Extension { #name : #HEInstaller }
+Extension { #name : 'HEInstaller' }
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 HEInstaller >> buildTrait: aTraitDefinition [
 	| newTrait traitComposition traitClass|
 
@@ -21,15 +21,8 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	^ newTrait
 ]
 
-{ #category : #'*TraitsV2' }
+{ #category : '*TraitsV2' }
 HEInstaller >> buildTraitCompositionFor: traitComposition [
 
-	| aLiteral |
-
-	aLiteral := (traitComposition asLiteralIn: environment).
-	^ aLiteral isArray
-		ifTrue: [ aLiteral
-							ifEmpty: [ TaEmptyComposition new ]
-							ifNotEmpty: [ TaSequence withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
-		ifFalse: [ aLiteral asTraitComposition ]
+	^ (traitComposition asLiteralIn: environment) asTraitComposition
 ]

@@ -2,31 +2,34 @@
 SUnit tests for Process termination
 "
 Class {
-	#name : #ProcessTerminateBugTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Processes'
+	#name : 'ProcessTerminateBugTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testSchedulerTermination [
+
 	| process sema gotHere sema2 |
 	gotHere := false.
 	sema := Semaphore new.
 	sema2 := Semaphore new.
 	process := [
-		sema signal.
-		sema2 wait.
-		"will be suspended here"
-		gotHere := true. "e.g., we must *never* get here" ] forkAt: Processor activeProcess priority.
+	           sema signal.
+	           sema2 wait.
+	           "will be suspended here"
+	           gotHere := true "e.g., we must *never* get here" ] forkAt: Processor activeProcess priority.
 	sema wait. "until process gets scheduled"
- 	process terminate.
+	process terminate.
 	sema2 signal.
 	Processor yield. "will give process a chance to continue and
 horribly screw up"
-	self assert: gotHere not
+	self deny: gotHere
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB1 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway 	through their execution should be completed."
@@ -55,7 +58,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB1 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB2 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway 	through their execution should be completed."
@@ -85,7 +88,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindB2 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR1 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway through their execution should be completed."
@@ -113,7 +116,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR1 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR2 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway 	through their execution should be completed."
@@ -142,7 +145,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindR2 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS1 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway through their execution should be completed."
@@ -169,7 +172,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS1 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS2 [
 	"Test all nested unwind blocks are correctly unwound;
 	all unwind blocks halfway through their execution should be completed."
@@ -198,6 +201,73 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS2 [
 ]
 
 { #category : #tests }
+ProcessTerminateBugTest >> testTerminationDuringNestedUnwindWithReturn1 [
+	"Terminate suspended process.
+	Test all nested unwind blocks are correctly unwound; 
+	all unwind blocks halfway through their execution should be completed."
+
+	| p x1 x2 x3 x4 |
+	x1 := x2 := x3 := x4 := false.
+	p := 
+	[
+		[:return | 
+			[
+				[ ] ensure: [
+					[Processor activeProcess suspend] ensure: [
+						x1 := true. return value]. 
+					x2 := true]
+			] ensure: [
+				x3 := true].
+			x4 := true.
+		] valueWithExit
+	] newProcess.
+	p resume.
+	Processor yield.
+	"make sure p is suspended and none of the unwind blocks has finished yet"
+	self assert: p isSuspended.
+	self deny: x1 | x2 | x3 | x4.
+	"now terminate the process and make sure all unwind blocks have finished"
+	[p terminate] forkAt: Processor activePriority + 1.
+	self assert: p isTerminated.
+	self assert: x1 & x3.
+	self deny: x2 & x4.
+]
+
+{ #category : #tests }
+ProcessTerminateBugTest >> testTerminationDuringNestedUnwindWithReturn2 [
+	"Terminate suspended process.
+	Test all nested unwind blocks are correctly unwound; 
+	all unwind blocks halfway through their execution should be completed."
+
+	| p x1 x2 x3 x4 |
+	x1 := x2 := x3 := x4 := false.
+	p := 
+	[
+		[:return | 
+			[
+				[ ] ensure: [
+					[] ensure: [
+						Processor activeProcess suspend.
+						x1 := true. return value]. 
+					x2 := true]
+			] ensure: [
+				x3 := true].
+			x4 := true.
+		] valueWithExit
+	] newProcess.
+	p resume.
+	Processor yield.
+	"make sure p is suspended and none of the unwind blocks has finished yet"
+	self assert: p isSuspended.
+	self deny: x1 | x2 | x3 | x4.
+	"now terminate the process and make sure all unwind blocks have finished"
+	[p terminate] forkAt: Processor activePriority + 1.
+	self assert: p isTerminated.
+	self assert: x1 & x3.
+	self deny: x2 & x4.
+]
+
+{ #category : #tests }
 ProcessTerminateBugTest >> testTerminationDuringUnwind [
 	"An illustration of the issue of process termination during unwind.
 	This uses a well-behaved unwind block that we should allow to complete
@@ -216,7 +286,7 @@ ProcessTerminateBugTest >> testTerminationDuringUnwind [
 	self assert: unwindFinished
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testUnwindFromActiveProcess [
 	| sema |
 	sema := Semaphore forMutualExclusion.
@@ -228,7 +298,7 @@ ProcessTerminateBugTest >> testUnwindFromActiveProcess [
 	self assert: sema isSignaled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testUnwindFromForeignProcess [
 
 	| sema process |

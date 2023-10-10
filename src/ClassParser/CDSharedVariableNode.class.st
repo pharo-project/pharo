@@ -2,12 +2,14 @@
 This class models definiton of Class Variables
 "
 Class {
-	#name : #CDSharedVariableNode,
-	#superclass : #CDVariableNode,
-	#category : #'ClassParser-Model'
+	#name : 'CDSharedVariableNode',
+	#superclass : 'CDVariableNode',
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CDSharedVariableNode class >> slot: aSlot node: aNode [
 
 	^ self new
@@ -16,20 +18,20 @@ CDSharedVariableNode class >> slot: aSlot node: aNode [
 		yourself
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 CDSharedVariableNode >> asClassVariable [
 	"for not this only supports ClassVariables.
 	We need to create a ClassVariable here using the Variable Definition"
 	^ ClassVariable named: self name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSharedVariableNode >> isClassVariable [
 	"To be polymorphic to RB method nodes"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSharedVariableNode >> isGlobalClassNameBinding [
 	"To be polymorphic to RB method nodes. This is a bit odd as this is just called due to
 	#binding returning self, normally this should be called on LiteralVariable"
@@ -37,19 +39,19 @@ CDSharedVariableNode >> isGlobalClassNameBinding [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSharedVariableNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSharedVariableNode >> isLiteralVariable [
 	"To be polymorphic to RB method nodes"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSharedVariableNode >> isVariable [
 	"To be polymorphic to RB method nodes"
 	| existingClass |

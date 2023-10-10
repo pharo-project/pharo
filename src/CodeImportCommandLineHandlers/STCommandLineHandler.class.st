@@ -18,25 +18,27 @@ Example:
 
 "
 Class {
-	#name : #STCommandLineHandler,
-	#superclass : #CommandLineHandler,
+	#name : 'STCommandLineHandler',
+	#superclass : 'CommandLineHandler',
 	#instVars : [
 		'sourceFiles'
 	],
-	#category : #'CodeImportCommandLineHandlers-Base'
+	#category : 'CodeImportCommandLineHandlers-Base',
+	#package : 'CodeImportCommandLineHandlers',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STCommandLineHandler class >> commandName [
 	^ 'st'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STCommandLineHandler class >> description [
 	^ 'Loads and executes .st source files'
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 STCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	"This handler is reponsible only for .st files"
 	(aCommandLine hasFileWithExtension: '.st')
@@ -44,13 +46,13 @@ STCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	^ super isResponsibleFor: aCommandLine
 ]
 
-{ #category : #printing }
-STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
+{ #category : 'printing' }
+STCommandLineHandler class >> printCodeError: aCodeError [
 	| stderr position contents errorLine errorMessage maxLineNumberSize lineNumber |
 
 	"format the error"
-	position := aSyntaxErrorNotification location.
-	contents := aSyntaxErrorNotification sourceCode.
+	position := aCodeError position.
+	contents := aCodeError sourceCode.
 	errorLine := contents lineNumberCorrespondingToIndex: position.
 	stderr := VTermOutputDriver stderr.
 
@@ -58,7 +60,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 	errorMessage := String streamContents: [ :s|
 		s nextPutAll: 'Syntax Error on line ';
 			print: errorLine; nextPutAll: ': ';
-			print: aSyntaxErrorNotification messageText].
+			print: aCodeError messageText].
 
 	 stderr red;
 		nextPutAll: errorMessage; lf;
@@ -86,7 +88,7 @@ STCommandLineHandler class >> printCompilerWarning: aSyntaxErrorNotification [
 	]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 STCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
@@ -97,7 +99,7 @@ STCommandLineHandler >> activate [
 	self end
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STCommandLineHandler >> end [
 	| quit  |
 
@@ -110,48 +112,39 @@ STCommandLineHandler >> end [
 		ifTrue: [ self exitSuccess ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STCommandLineHandler >> handleError: error [
+	"for syntax errors we print more detailed error informations"
 
-	"for syntax errors we can used the default action"	"otherwise resignal it"
-	(error isKindOf: SyntaxErrorNotification)
-		ifTrue: [ error defaultAction ]
-		ifFalse: [ error pass ]
+	(error isKindOf: CodeError) ifTrue: [
+		self class printCodeError: error ].
+
+	error pass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STCommandLineHandler >> handleError: error reference: aReference [
 	"Print a header before failing on an errro / syntax notification from the the script loaded by the given request"
 
-	"We ignore warnings for now"
-	(error isKindOf: OCSemanticWarning)
-		ifTrue: [ ^ error pass ].
+	"Display CodeError nicely"
+	(error isKindOf: CodeError)
+		ifTrue: [ self class printCodeError: error ].
 
 	"spit out a warning if in headless mode, otherwise a debugger will popup"
 	Smalltalk isHeadless
 		ifTrue: [ self inform: 'Errors in script loaded from ', aReference name ].
 
-	"for syntax errors we can use the default action"
-	(error isKindOf: SyntaxErrorNotification)
-		ifTrue: [ ^ error defaultAction ].
-
-	(error isKindOf: OCSemanticError)
-		ifTrue: [
-			self class printCompilerWarning: error.
-			^ error resume: error defaultAction ].
-
-	"otherwise resignal it"
 	error pass
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> handleErrorsDuring: aBlock reference: aReference [
 	aBlock
-		on: Error, OCSemanticWarning, OCSemanticError
+		on: Error
 		do: [ :e | self handleError: e reference: aReference ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> installSourceFile: aReference [
 	"Install the source file given by aFileReference"
 	| codeImporter |
@@ -173,7 +166,7 @@ STCommandLineHandler >> installSourceFile: aReference [
 		reference: aReference
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> installSourceFiles [
 	"Install the previously loaded source files"
 
@@ -183,19 +176,19 @@ STCommandLineHandler >> installSourceFiles [
 	] ensure: [ sourceFiles := nil ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 STCommandLineHandler >> loadSourceFiles: anArray [
 	"Load all the source files in the given array."
 
 	sourceFiles := anArray collect: [ :each | File named: each ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 STCommandLineHandler >> selectSourceFiles [
 	self loadSourceFiles: (self commandLine allFilesWithExtension: '.st')
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> skipShebangFrom: readStream [
 	"Skip the shebang sequnce #! at the beginning of a bash file"
 

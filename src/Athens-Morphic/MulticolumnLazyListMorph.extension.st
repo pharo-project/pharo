@@ -1,6 +1,6 @@
-Extension { #name : #MulticolumnLazyListMorph }
+Extension { #name : 'MulticolumnLazyListMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MulticolumnLazyListMorph >> athensDisplay: items atRow: row on: anAthensCanvas [
 	| drawBounds |
 	drawBounds := self drawBoundsForRow: row.
@@ -21,7 +21,7 @@ MulticolumnLazyListMorph >> athensDisplay: items atRow: row on: anAthensCanvas [
 				color: color ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MulticolumnLazyListMorph >> drawOnAthensCanvas: anAthensCanvas [
 	self getListSize = 0 ifTrue:[ ^self ].
 
