@@ -198,13 +198,9 @@ ImageCleaner >> packagesForCleanUpInProduction [
 
 { #category : 'cleaning' }
 ImageCleaner >> removeEmptyCategories [
-	"Remove empty categories, which are not in MC packages, because MC does
-	not do this (this script does not make packages dirty)"
-
-	self packageOrganizer removeEmptyPackagesAndTags.
-	Smalltalk allClassesAndTraitsDo: [ :class |
-		class removeEmptyProtocols.
-		class class removeEmptyProtocols ]
+	"Remove empty categories"
+	
+	Smalltalk image removeEmptyMessageCategories
 ]
 
 { #category : 'literal sharing' }

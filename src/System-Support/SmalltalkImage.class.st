@@ -1521,9 +1521,8 @@ SmalltalkImage >> removeClassNamed: aName [
 
 { #category : 'housekeeping' }
 SmalltalkImage >> removeEmptyMessageCategories [
-	"Smalltalk removeEmptyMessageCategories"
-
-	self garbageCollect.
+	<script>
+	
 	SystemNavigation default allBehaviorsDo: [ :class | class removeEmptyProtocols ].
 	self packageOrganizer removeEmptyPackagesAndTags
 ]
