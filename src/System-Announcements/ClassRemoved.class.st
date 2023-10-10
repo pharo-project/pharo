@@ -96,11 +96,6 @@ ClassRemoved >> classRemoved: aClass [
 ]
 
 { #category : 'accessing' }
-ClassRemoved >> classTagAffected [
-	^affectedPackage toTagName: categoryName
-]
-
-{ #category : 'accessing' }
 ClassRemoved >> packageAffected [
 	^affectedPackage
 ]
@@ -109,4 +104,10 @@ ClassRemoved >> packageAffected [
 ClassRemoved >> packageAffected: aPackage [
 
 	affectedPackage := aPackage
+]
+
+{ #category : 'accessing' }
+ClassRemoved >> packageTagAffected [
+
+	^ affectedPackage toTagName: categoryName
 ]
