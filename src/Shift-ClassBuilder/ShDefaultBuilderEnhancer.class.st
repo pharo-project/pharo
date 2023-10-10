@@ -103,10 +103,10 @@ ShDefaultBuilderEnhancer >> newMetaclass: builder [
 ]
 
 { #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolsString [
+ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolNames [
 	newClass
 		declareClassVariables: sharedVariables;
-		sharing: sharedPoolsString
+		sharing:sharedPoolNames
 ]
 
 { #category : 'class modifications' }
