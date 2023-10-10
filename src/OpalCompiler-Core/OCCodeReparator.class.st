@@ -90,10 +90,10 @@ OCCodeReparator >> defineClassOrTrait: aSymbol definitionString: aString [
 		multiLineRequest: 'Edit definition:'
 		initialAnswer: aString
 		answerHeight: 200.
-	aString isEmptyOrNil
+	definitionString isEmptyOrNil
 		ifTrue: [ ^ Abort signal ].
 	result := self class compiler
-		source: aString;
+		source: definitionString;
 		logged: true;
 		evaluate.
 	"Because some class definition syntax the (fuild one) does not evaluate to a
