@@ -1133,13 +1133,13 @@ Class >> sharedPoolsDo: aBlockClosure [
 ]
 
 { #category : 'initialization' }
-Class >> sharing: poolString [
+Class >> sharing: sharedPoolNames [
 	"Set up sharedPools. Answer whether recompilation is advisable."
 
 	| oldPools |
 	oldPools := self sharedPools.
 	self sharedPools: OrderedCollection new.
-	(poolString substrings: ' ') do: [ :poolName |
+	sharedPoolNames do: [ :poolName |
 		self sharedPools add: (self environment at: poolName asSymbol ifAbsent: [
 				 (self confirm: 'The pool dictionary ' , poolName , ' does not exist.' , '\Do you want it automatically created?' withCRs)
 					 ifTrue: [
@@ -1147,7 +1147,8 @@ Class >> sharing: poolString [
 							 builder
 								 superclass: SharedPool;
 								 name: poolName;
-								 category: self category ] ]
+								 package: self package name;
+								 tag: self packageTag name ] ]
 					 ifFalse: [ ^ self inform: poolName , ' does not exist' ] ]) ].
 	self sharedPools ifEmpty: [ self sharedPools: nil ].
 	oldPools do: [ :pool |

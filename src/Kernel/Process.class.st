@@ -213,7 +213,7 @@ Process >> debugWithTitle: title [
 		inContext: context
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Process >> doTerminationFromAnotherProcess [ 
 	"Stop this process forever from another process.
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
@@ -704,7 +704,7 @@ Process >> suspendingList [
 	^myList
 ]
 
-{ #category : #'changing process state' }
+{ #category : 'changing process state' }
 Process >> terminate [ 
 	"Stop the process that the receiver represents forever. Unwind to execute pending ensure: and
 	ifCurtailed: blocks before terminating; allow all unwind blocks to run; if they are currently in
