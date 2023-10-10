@@ -56,6 +56,9 @@ else
     VM="${BOOTSTRAP_VMTARGET} --headless"
 fi
 
+#This is the VM to use during the bootstrap (initialization of the small image)
+VM_BOOTSTRAP="${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo --headless"
+
 # Flags to run the image
 IMAGE_FLAGS="--no-default-preferences"
 
