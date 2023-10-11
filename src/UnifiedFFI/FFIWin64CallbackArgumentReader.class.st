@@ -51,23 +51,11 @@ FFIWin64CallbackArgumentReader >> extractStructType: type [
 	self addArgument: (type handle: pointer at: 1)
 ]
 
-{ #category : 'accessing' }
-FFIWin64CallbackArgumentReader >> floatRegisterPointer [
-
-	^ callbackContext floatregargsp
-]
-
 { #category : 'initialization' }
 FFIWin64CallbackArgumentReader >> initialize [
 
 	super initialize.
 	currentParameterIndex := 1
-]
-
-{ #category : 'accessing' }
-FFIWin64CallbackArgumentReader >> integerRegisterPointer [
-
-	^ callbackContext intregargsp
 ]
 
 { #category : 'calculating-offsets' }
