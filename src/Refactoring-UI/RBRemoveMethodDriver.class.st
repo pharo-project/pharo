@@ -41,12 +41,6 @@ RBRemoveMethodDriver >> configureRefactoring [
 							refactorings: refactorings 
 ]
 
-{ #category : 'accessing' }
-RBRemoveMethodDriver >> refactoring [
-
-	^ refactoring
-]
-
 { #category : 'execution' }
 RBRemoveMethodDriver >> removeMethodChanges [ 
 
