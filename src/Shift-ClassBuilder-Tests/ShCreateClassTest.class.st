@@ -62,6 +62,24 @@ ShCreateClassTest >> testClassWithSlots [
 ]
 
 { #category : 'tests' }
+ShCreateClassTest >> testClassWithSuperclassNameAsString [
+	builder
+		name: #SHTestClassWithInheritedSlots;
+		superclassName: 'ShCBClassWithInstanceVariables';
+		slots: #(anSlot anotherSlot).
+
+	result := builder build.
+
+	self validateResult.
+	self validateSuperclass: ShCBClassWithInstanceVariables.
+	self
+		validateSlots:
+			{#inheritedSlot => InstanceVariableSlot.
+			#anSlot => InstanceVariableSlot.
+			#anotherSlot => InstanceVariableSlot}
+]
+
+{ #category : 'tests' }
 ShCreateClassTest >> testEmptyClass [
 	builder name: #SHTestEmptyClass.
 	result := builder build.

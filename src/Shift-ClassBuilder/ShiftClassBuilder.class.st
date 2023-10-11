@@ -648,7 +648,8 @@ ShiftClassBuilder >> superclassName [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> superclassName: anObject [
-	superclassName := anObject
+
+	superclassName := anObject ifNotNil: [ anObject asSymbol ]
 ]
 
 { #category : 'accessing' }
