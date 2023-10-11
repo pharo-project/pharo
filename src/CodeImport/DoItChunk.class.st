@@ -8,6 +8,9 @@ Be careful, my #import method also handles ChangeSet interaction so far, handlin
 Class {
 	#name : 'DoItChunk',
 	#superclass : 'CodeChunk',
+	#instVars : [
+		'importer'
+	],
 	#category : 'CodeImport-Chunks',
 	#package : 'CodeImport',
 	#tag : 'Chunks'
@@ -150,11 +153,13 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 	(#( CompiledBlock CompiledCode CompiledMethod ) includes: subclassName) ifTrue: [ layoutClass := CompiledMethodLayout ].
 
 	^ self class classInstaller make: [ :aBuilder |
-		  | superclass |
-		  superclass := self class environment at: superclassName asSymbol.
-		  aBuilder
-			  superclass: superclass;
-			  environment: superclass environment;
+		  
+			importer enableUndefinedClass 
+				ifTrue: [ aBuilder useUndefinedClass ]
+				ifFalse: [ aBuilder useStrictSuperclass ].
+		  
+		aBuilder
+			  superclassName: superclassName;
 			  name: subclassName;
 			  layoutClass: layoutClass.
 		  instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
@@ -181,11 +186,11 @@ DoItChunk >> if: selectorParts in: ast includes: aSymbol do: aBlock [
 ]
 
 { #category : 'importing' }
-DoItChunk >> importFor: requestor logSource: logSource [
+DoItChunk >> importFor: import logSource: logSource [
 
 	| ast |
 	(contents beginsWith: '----') ifTrue: [ ^ self ].
-
+	importer := import.
 	SystemAnnouncer announce: (DoItChunkImported new
 			 contents: contents;
 			 logSource: logSource;
@@ -198,7 +203,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 
 	^ self class compiler class new
 		  source: contents;
-		  requestor: requestor;
+		  requestor: import;
 		  logged: logSource;
 		  evaluate
 ]

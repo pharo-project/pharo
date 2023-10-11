@@ -10,6 +10,6 @@ Class {
 
 { #category : 'resolving' }
 ClassResolverStrictResolve >> resolve: aClassName [
-	"^Error new:'You''re superclass doesn''t exist'."
+
 	^ self error: 'Superclass ', aClassName,' doesn''t exist'
 ]
