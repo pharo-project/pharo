@@ -191,12 +191,6 @@ UndefinedClassTest >> testUnknowSuperclassShouldInheritFromUndefinedClass [
 ]
 
 { #category : 'accessing' }
-UndefinedClassTest >> tokens [
-
-	^ self undefinedDefinition splitOn: ' '
-]
-
-{ #category : 'accessing' }
 UndefinedClassTest >> undefinedDefinition [
 
 	^ 'Foo subclass: #ColoredFoo
