@@ -267,7 +267,8 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 { #category : 'accessing - variable lookup' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
-	^self pseudoVariables at: name ifAbsent: [self bindingOf: name]
+
+	^ self bindingOf: name
 ]
 
 { #category : 'accessing - system attributes' }
