@@ -27,7 +27,7 @@ SycAddPackagesScopeCommand >> execute [
 	| scope |
 	scope := RBBrowserEnvironment new forPackages: packages.
 	ScopesManager singleInstance addScope: scope.
-	ScopesPresenter open
+	ScopesPresenter refreshAllInstances 
 ]
 
 { #category : 'accessing' }

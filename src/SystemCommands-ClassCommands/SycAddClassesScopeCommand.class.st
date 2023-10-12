@@ -25,5 +25,5 @@ SycAddClassesScopeCommand >> execute [
 	| scope |
 	scope := RBBrowserEnvironment new forClasses: classes.
 	ScopesManager singleInstance addScope: scope.
-	ScopesPresenter open
+	ScopesPresenter refreshAllInstances 
 ]

@@ -24,5 +24,5 @@ SycAddHierarchyScopeCommand >> execute [
 	| scope |
 	scope :=  RBBrowserEnvironment new forClassHierarchy: targetClass.
 	ScopesManager singleInstance addScope: scope.
-	ScopesPresenter open
+	ScopesPresenter refreshAllInstances 
 ]

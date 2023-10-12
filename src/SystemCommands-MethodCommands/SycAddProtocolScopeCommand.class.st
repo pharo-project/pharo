@@ -21,7 +21,7 @@ SycAddProtocolScopeCommand >> execute [
 		             thenCollect: [ :methodsInProtocolGroup | methodsInProtocolGroup protocol ].
 	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
 	ScopesManager singleInstance addScope: scope.
-	ScopesPresenter open
+	ScopesPresenter refreshAllInstances 
 ]
 
 { #category : 'accessing' }
