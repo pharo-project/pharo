@@ -82,5 +82,8 @@ WeakAnnouncementSubscription >> subscriber: anObject [
 { #category : 'finalization' }
 WeakAnnouncementSubscription >> unregister [
 
-	self subscriber ifNotNil: [:sub |  self finalizationRegistry remove: sub ]
+	self subscriber ifNotNil: [:sub | 
+		self finalizationRegistry 
+			remove: sub 
+			ifAbsent: ["I will ignore if the subscription has been already removed"]]
 ]
