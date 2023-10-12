@@ -321,8 +321,6 @@ BaselineOfIDE >> pharoPluginClass [
 { #category : 'actions' }
 BaselineOfIDE >> postload: loader package: packageSpec [
 
-	| initializersEnabled repo gofer |
-
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
@@ -330,21 +328,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	
 	"collect and process the standard tools registrations"
 	Smalltalk tools initDefaultToolSet.
-	
-	initializersEnabled := MCMethodDefinition initializersEnabled.
-
-	MCMethodDefinition initializersEnabled: false.
-	
-	repo := TonelRepository new
-		directory: self packageRepository directory;
-		yourself.
-		
-	gofer := Gofer it repository: repo.
-	gofer package: #'RPackage-Tests'.
-	gofer load.
-	
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-
 
 	Stdio stdout 
 		nextPutAll: ' ------------ Obsolete ------------';
@@ -359,8 +342,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	EpMonitor current enable.
 		
 	Author reset.
-
-	MCMethodDefinition initializersEnabled: initializersEnabled.
 	
 	self additionalInitialization.
 
