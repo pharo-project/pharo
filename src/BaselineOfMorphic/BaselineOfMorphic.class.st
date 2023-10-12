@@ -275,8 +275,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Stdio stdout nextPutAll: Smalltalk ui asString; lf.
 
-	SparseLargeTable recompile. 
-	
 	PNGReadWriter initialize.
 	self loadBitmapDejaVuSans.
 	self loadBitmapSourcePro.

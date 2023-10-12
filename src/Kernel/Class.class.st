@@ -286,7 +286,7 @@ Class >> category: aString [
 	self basicCategory: aString asSymbol.
 
 	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: self inCategory: self category ]
+		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: self) ]
 		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
 ]
 
@@ -897,24 +897,23 @@ Class >> removeFromSystem: logged [
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
 	Tell class to deactivate and unload itself-- two separate events in the module system"
 
-	| myCategory package |
+	| packageTag |
 	self release.
 	self unload.
 
 	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
-	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed
-	if this class is loaded again. We do not check if references exist as it is too slow"
+	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
 	Undeclared declare: self name asSymbol from: Smalltalk globals.
-	myCategory := self category.
-	package := self package.
+	self flag: #package. "For now the class cannot return its package tag after been removed. In the future the class should keep a reference to its package tag so we should not need that."
+	packageTag := self packageTag.
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
 	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
 	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self package: package category: myCategory) ]
+	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self packageTag: packageTag) ]
 ]
 
 { #category : 'initialization' }
@@ -1035,13 +1034,13 @@ Class >> sharedPoolsDo: aBlockClosure [
 ]
 
 { #category : 'initialization' }
-Class >> sharing: poolString [
+Class >> sharing: sharedPoolNames [
 	"Set up sharedPools. Answer whether recompilation is advisable."
 
 	| oldPools |
 	oldPools := self sharedPools.
 	self sharedPools: OrderedCollection new.
-	(poolString substrings: ' ') do: [ :poolName |
+	sharedPoolNames do: [ :poolName |
 		self sharedPools add: (self environment at: poolName asSymbol ifAbsent: [
 				 (self confirm: 'The pool dictionary ' , poolName , ' does not exist.' , '\Do you want it automatically created?' withCRs)
 					 ifTrue: [
@@ -1049,7 +1048,8 @@ Class >> sharing: poolString [
 							 builder
 								 superclass: SharedPool;
 								 name: poolName;
-								 category: self category ] ]
+								 package: self package name;
+								 tag: self packageTag name ] ]
 					 ifFalse: [ ^ self inform: poolName , ' does not exist' ] ]) ].
 	self sharedPools ifEmpty: [ self sharedPools: nil ].
 	oldPools do: [ :pool |

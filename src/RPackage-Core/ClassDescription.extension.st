@@ -45,7 +45,7 @@ ClassDescription >> package [
 { #category : '*RPackage-Core' }
 ClassDescription >> package: aPackage [
 
-	^ aPackage addClass: self
+	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
 ]
 
 { #category : '*RPackage-Core' }

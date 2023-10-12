@@ -56,7 +56,7 @@ RPackageSynchronisationTest >> testRecategorizeClassRaisesClassRepackagedEvent [
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	class category: 'YYYYY'.
+	class package: yPackage.
 
 	self assert: ann isNotNil.
 	self assert: ann classRepackaged equals: class.

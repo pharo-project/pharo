@@ -173,10 +173,11 @@ RGAnnouncementsTest >> testBehaviorParentRenamed [
 
 { #category : 'tests' }
 RGAnnouncementsTest >> testDirectAnnouncement [
+
 	| def announcements |
 	def := RGBehavior new.
-	announcements := self installAnnouncementsIn: def when: ClassAdded. 
-	def announce: (ClassAdded class: def category: nil).
+	announcements := self installAnnouncementsIn: def when: ClassAdded.
+	def announce: (ClassAdded class: def).
 
 	self assert: announcements size equals: 1.
 	self assert: announcements first classAffected identicalTo: def

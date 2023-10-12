@@ -25,8 +25,3 @@ RBClassCondition >> class: aRBClass [
 RBClassCondition >> classNamed: aString [ 
 	aClass := model classNamed: aString
 ]
-
-{ #category : 'accessing' }
-RBClassCondition >> model: aModel [ 
-	model := aModel
-]

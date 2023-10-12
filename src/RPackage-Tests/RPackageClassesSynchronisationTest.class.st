@@ -22,7 +22,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMetho
 	self createMethodNamed: 'method2' inClass: class inCategory: '*zzzzz'.
 	self createMethodNamed: 'method3' inClass: class inCategory: '*yyyyy'.
 
-	class category: 'YYYYY'.
+	class package: yPackage.
 
 	self assert: (yPackage includesDefinedSelector: #method1 ofClass: class).
 	self deny: (xPackage includesSelector: #method1 ofClass: class).
@@ -51,7 +51,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassMet
 	self createMethodNamed: 'method2' inClass: class inCategory: '*zzzzz'.
 	self createMethodNamed: 'method3' inClass: class inCategory: '*yyyyy'.
 
-	class category: 'YYYYY'.
+	class package: yPackage.
 	self deny: (xPackage includesSelector: #method1 ofClass: class).
 	self deny: (xPackage includesSelector: #method2 ofClass: class).
 	self deny: (xPackage includesSelector: #method3 ofClass: class)
@@ -72,7 +72,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 	self createMethodNamed: 'method2' inClass: class class inCategory: '*yyyyy'.
 	self createMethodNamed: 'method3' inClass: class class inCategory: '*zzzzz'.
 
-	class category: 'YYYYY'.
+	class package: yPackage.
 
 	"lets check metaclass methods"
 	self assert: (yPackage includesDefinedSelector: #method1 ofClass: class class).
