@@ -2,15 +2,16 @@
 I am a command to add protocol scope to listScopes
 "
 Class {
-	#name : #SycAddProtocolScopeCommand,
-	#superclass : #SycProtocolCmCommand,
+	#name : 'SycAddProtocolScopeCommand',
+	#superclass : 'SycProtocolCmCommand',
 	#instVars : [
 		'class'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddProtocolScopeCommand >> execute [
 
 	| scope protocols |
@@ -22,17 +23,17 @@ SycAddProtocolScopeCommand >> execute [
 	RefactoringSettings addScope: scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddProtocolScopeCommand >> icon [
 	^ self iconNamed: #add
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddProtocolScopeCommand >> name [
 	^ 'Add protocols to scope list'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddProtocolScopeCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	class := context lastSelectedClass

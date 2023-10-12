@@ -1,38 +1,39 @@
 Class {
-	#name : #SycRemoveMethod2Command,
-	#superclass : #SycMethodCommand,
+	#name : 'SycRemoveMethod2Command',
+	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'removeStrategy',
 		'toolContext'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycRemoveMethod2Command class >> methodMenuActivation [
 	<classAnnotation>
 
 	^ CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycRemoveMethod2Command class >> methodShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation removalFor: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethod2Command >> defaultMenuIconName [
 	^#removeIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethod2Command >> defaultMenuItemName [
 	^'Remove refactoring'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMethod2Command >> execute [
 	
 	(RBRemoveMethodDriver new
@@ -41,7 +42,7 @@ SycRemoveMethod2Command >> execute [
 				 for: methods first methodClass ) runRefactoring
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycRemoveMethod2Command >> initialize [
 	
 	super initialize.
@@ -49,13 +50,13 @@ SycRemoveMethod2Command >> initialize [
 	removeStrategy := SycSilentlyRemoveMethodStrategy new
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMethod2Command >> isComplexRefactoring [ 
 
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveMethod2Command >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext.
@@ -63,12 +64,12 @@ SycRemoveMethod2Command >> prepareFullExecutionInContext: aToolContext [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethod2Command >> removeStrategy [
 	^ removeStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveMethod2Command >> removeStrategy: anObject [
 	removeStrategy := anObject
 ]
