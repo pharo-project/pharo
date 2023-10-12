@@ -101,6 +101,16 @@ OCASTVariableTranslatorTest >> testPushSelf [
 ]
 
 { #category : 'tests - variables' }
+OCASTVariableTranslatorTest >> testPushSelfRedefined [
+
+	self assert: instance result equals: nil.
+	instance class addClassVarNamed: #self.
+
+	self testExample: #exampleSelf.
+	self assert: instance result equals: instance
+]
+
+{ #category : 'tests - variables' }
 OCASTVariableTranslatorTest >> testPushSuper [
 
 	self assert: instance result equals: nil.
