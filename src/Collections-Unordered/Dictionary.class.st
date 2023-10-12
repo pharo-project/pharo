@@ -870,9 +870,11 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 { #category : 'undeclared' }
 Dictionary >> removeUnreferencedKeys [
 	"This is private code for the Undeclared handling, not a general API."
-	"Undeclared removeUnreferencedKeys"
 
-	^ self unreferencedKeys do: [ :key | self removeKey: key ]
+	self
+		deprecated: 'Use "Smalltalk image cleanOutUndeclared" instead'
+		transformWith: '`@rcv removeUnreferencedKeys' -> 'Smalltalk image cleanOutUndeclared'.
+	Smalltalk image cleanOutUndeclared
 ]
 
 { #category : 'private' }
@@ -929,27 +931,6 @@ Dictionary >> storeOn: aStream [
 			aStream store: each].
 	noneYet ifFalse: [aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : 'undeclared' }
-Dictionary >> unreferencedKeys [
-	"This is private code for the Undeclared handling.
-	Optimize for performance--examine each literal only once.
-	Since we know these are variable bindings, they cannot be
-	optimized selectors nor be elements of Arrays, but we do need
-	to traverse nested blocks."
-
-	| unreferenced |
-	unreferenced := self keys asSet.
-	self systemNavigation allBehaviorsDo: [ :class |
-		class methodsDo: [ :method |
-			method withAllNestedLiteralsDo: [ :lit |
-				(lit isKindOf: UndeclaredVariable) ifTrue: [
-					unreferenced
-						remove: lit key
-						ifAbsent: [ "Sanity check--a binding with more than one reference may already be gone from the unreferenced set, but should be present in Undeclared itself"
-							self at: lit key ] ] ] ] ].
-	^ unreferenced
 ]
 
 { #category : 'private' }
