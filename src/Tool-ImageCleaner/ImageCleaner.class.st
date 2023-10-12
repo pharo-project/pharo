@@ -48,13 +48,6 @@ ImageCleaner class >> examplePackages [
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
 ]
 
-{ #category : 'accessing' }
-ImageCleaner class >> helpPackages [
-	<script: 'self helpPackages inspect'>
-
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
-]
-
 { #category : 'instance creation' }
 ImageCleaner class >> shareLiterals [
 	<script>
@@ -78,7 +71,6 @@ ImageCleaner >> cleanUpForProduction [
 
 	unloading := [ :each | (MCPackage named: each) unload ].
 	self packagesForCleanUpInProduction do: unloading.
-	self class helpPackages do: unloading.
 	self class testPackages do: unloading.
 	self class examplePackages do: unloading.
 
@@ -168,12 +160,6 @@ ImageCleaner >> detroyLiteralTable [
 ImageCleaner >> examplePackages [
 
 	^ self class examplePackages
-]
-
-{ #category : 'cleaning' }
-ImageCleaner >> helpPackages [
-
-	^ self class helpPackages
 ]
 
 { #category : 'literal sharing' }
