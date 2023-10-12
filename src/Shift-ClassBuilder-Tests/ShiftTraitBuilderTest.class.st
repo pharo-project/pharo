@@ -2,22 +2,23 @@
 This class contains tests for `FluidTraitBuilder`
 "
 Class {
-	#name : 'FluidTraitBuilderTest',
-	#superclass : 'FluidClassBuilderAbstractTest',
-	#category : 'FluidClassBuilder-Tests-Base',
-	#package : 'FluidClassBuilder-Tests',
-	#tag : 'Base'
+	#name : 'ShiftTraitBuilderTest',
+	#superclass : 'ShiftClassBuilderAbstractTest',
+	#category : 'Shift-ClassBuilder-Tests',
+	#package : 'Shift-ClassBuilder-Tests'
 }
 
 { #category : 'running' }
-FluidTraitBuilderTest >> setUp [
+ShiftTraitBuilderTest >> setUp [
 
 	super setUp.
-	builder := FluidTraitBuilder new
+	builder := ShiftClassBuilder new
+		           beTrait;
+		           yourself
 ]
 
 { #category : 'running' }
-FluidTraitBuilderTest >> tearDown [
+ShiftTraitBuilderTest >> tearDown [
 
 	"self class environment
 		at: #TTestTrait
@@ -26,7 +27,7 @@ FluidTraitBuilderTest >> tearDown [
 ]
 
 { #category : 'tests - classBuilder generation' }
-FluidTraitBuilderTest >> testBuildSimplePoint2 [
+ShiftTraitBuilderTest >> testBuildSimplePoint2 [
 
 	| trait |
 	builder := Trait << #TPoint2
@@ -39,14 +40,14 @@ FluidTraitBuilderTest >> testBuildSimplePoint2 [
 ]
 
 { #category : 'class side' }
-FluidTraitBuilderTest >> testClassSlots [
+ShiftTraitBuilderTest >> testClassSlots [
 
 	builder classSlots: {#string . #runs}.
-	self assert: builder classSlotsToBuild equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
+	self assert: builder classSlots equals: {#string => InstanceVariableSlot. #runs => InstanceVariableSlot}
 ]
 
 { #category : 'tests - class creation' }
-FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
+ShiftTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 
 	| instBuilder newTrait |
 	instBuilder := Trait << #TTestTrait package: self packageNameForTest.
@@ -65,7 +66,7 @@ FluidTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 ]
 
 { #category : 'tests - class creation' }
-FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
+ShiftTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 
 	| instBuilder newTrait |
 	self categoryHack.
@@ -89,7 +90,7 @@ FluidTraitBuilderTest >> testCreatingFullTraitHasAllElements [
 ]
 
 { #category : 'tests - class creation' }
-FluidTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingInstanceSide [
+ShiftTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingInstanceSide [
 
 	| instBuilder newTrait |
 	instBuilder := (Trait << #TTestTrait)
@@ -111,7 +112,7 @@ FluidTraitBuilderTest >> testExistingTraitWithClassSlotsArePreservedIfChangingIn
 ]
 
 { #category : 'tests - class creation' }
-FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSide [
+ShiftTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSide [
 
 	| instBuilder newTrait classBuilder |
 	instBuilder := (Trait << #TTestTrait)
@@ -134,34 +135,31 @@ FluidTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSi
 ]
 
 { #category : 'tests - classBuilder generation' }
-FluidTraitBuilderTest >> testFillShiftClassBuilder [
+ShiftTraitBuilderTest >> testFillShiftClassBuilder [
 
-	| shift |
 	self categoryHack.
 	builder := (Trait << #TPoint2)
 		           slots: { #x. #y };
 		           traits: { TViewModelMock };
 		           tag: 'Mafia';
 		           package: self packageNameForTest;
-		           fillShiftClassBuilder;
 		           yourself.
-	shift := builder shiftClassBuilder.
-	self assert: shift name equals: #TPoint2.
-	self assert: shift slots size equals: 2.
-	self assert: shift category equals: self packageNameForTest , '-Mafia'
+	self assert: builder name equals: #TPoint2.
+	self assert: builder slots size equals: 2.
+	self assert: builder package equals: self packageNameForTest.
+	self assert: builder tag equals: 'Mafia'
 ]
 
 { #category : 'tests - install' }
-FluidTraitBuilderTest >> testInstallMinimalMockClass [
+ShiftTraitBuilderTest >> testInstallMinimalMockClass [
 
-	| shiftClassBuilder installedClass |
+	| installedClass |
 	builder := self class compilerClass new evaluate: 'Trait << #TMyClass
 	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''' , self packageNameForTest , ''''.
-	shiftClassBuilder := builder shiftClassBuilder.
-	ShiftClassInstaller new makeWithBuilder: shiftClassBuilder.
+	ShiftClassInstaller new makeWithBuilder: builder.
 
 	installedClass := self class environment at: #TMyClass ifAbsent: [ self fail ].
 
@@ -172,7 +170,7 @@ FluidTraitBuilderTest >> testInstallMinimalMockClass [
 ]
 
 { #category : 'tests - install' }
-FluidTraitBuilderTest >> testInstallSimplePoint2 [
+ShiftTraitBuilderTest >> testInstallSimplePoint2 [
 
 	| trait |
 	self class environment at: #TPoint2 ifPresent: [ self fail ].
@@ -187,7 +185,7 @@ FluidTraitBuilderTest >> testInstallSimplePoint2 [
 ]
 
 { #category : 'tests' }
-FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
+ShiftTraitBuilderTest >> testTraitNoSlotsNoUse [
 
 	| trait |
 	builder := Trait << #TPoint3 package: 'Fake'.
@@ -199,7 +197,7 @@ FluidTraitBuilderTest >> testTraitNoSlotsNoUse [
 ]
 
 { #category : 'tests' }
-FluidTraitBuilderTest >> testTraitUse [
+ShiftTraitBuilderTest >> testTraitUse [
 
 	| trait |
 	builder := (Trait << #TPoint3)

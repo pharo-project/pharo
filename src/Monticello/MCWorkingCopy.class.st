@@ -479,36 +479,6 @@ MCWorkingCopy >> loaded: aVersion [
 ]
 
 { #category : 'operations' }
-MCWorkingCopy >> merge: targetVersion [
-	| ancestorInfo merger ancestorSnapshot packageSnapshot |
-	targetVersion dependencies do: [:ea | ea resolve merge].
-	ancestorInfo := targetVersion info commonAncestorWith: ancestry.
-	
-	ancestorInfo = targetVersion info ifTrue: [^ MCNoChangesException signal].
-	
-	packageSnapshot := package snapshot.
-	ancestorSnapshot := ancestorInfo
-							ifNotNil: [(self findSnapshotWithVersionInfo: ancestorInfo)]
-							ifNil: [self notifyNoCommonAncestorWith: targetVersion.  MCSnapshot empty].
-	
-	(ancestry ancestors size = 1
-		and: [ancestry ancestors first = ancestorInfo
-				and: [(packageSnapshot patchRelativeToBase: ancestorSnapshot) isEmpty]])
-				ifTrue: [^ targetVersion load].
-	
-	merger := MCThreeWayMerger 
-				base: packageSnapshot
-				target: targetVersion snapshot
-				ancestor: ancestorSnapshot.
-	((MCMergeResolutionRequest new merger: merger)
-		signal: 'Merging ', targetVersion info name) = true 
-			ifTrue:[
-				merger loadWithNameLike: targetVersion info name.
-				ancestry addAncestor: targetVersion info ].
-	self changed
-]
-
-{ #category : 'operations' }
 MCWorkingCopy >> merged: aVersion [
 	ancestry addAncestor: aVersion info.
 	aVersion dependencies do: [:ea | self requirePackage: ea package].
@@ -612,16 +582,6 @@ MCWorkingCopy >> nextVersionName [
 	counter := counter + 1.
 	author := Author fullName collect: [ :each | each isAlphaNumeric ifTrue: [ each ] ifFalse: [ $_ ] ].
 	^ base , '-' , author , branch , '.' , counter asString
-]
-
-{ #category : 'operations' }
-MCWorkingCopy >> notifyNoCommonAncestorWith: aVersion [
-	self notify:
-'Could not find a common ancestor between (',
-aVersion info name,
-') and (',
-ancestry ancestorString, ').
-Proceeding with this merge may cause spurious conflicts.'
 ]
 
 { #category : 'accessing' }

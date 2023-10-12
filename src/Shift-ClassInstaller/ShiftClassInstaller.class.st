@@ -38,7 +38,8 @@ ShiftClassInstaller class >> example [
 			superclass: Object;
 			name: #MyClass;
 			slots: #(varA varB);
-			category: 'My-Category' ]
+			tag: 'ATag';
+			package: 'My-Package' ]
 ]
 
 { #category : 'building' }
@@ -67,11 +68,6 @@ ShiftClassInstaller >> builder [
 { #category : 'accessing' }
 ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass comment: builder comment stamp: builder commentStamp ]
-]
-
-{ #category : 'building' }
-ShiftClassInstaller >> copyClassSlotsFromExistingClass [
-	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
 ]
 
 { #category : 'copying' }
@@ -176,7 +172,6 @@ ShiftClassInstaller >> make [
 
 	[
 		builder oldClass: oldClass.
-		self copyClassSlotsFromExistingClass.
 		newClass := builder build.
 
 		self installInEnvironment: newClass.
@@ -208,7 +203,6 @@ ShiftClassInstaller >> make [
 ShiftClassInstaller >> make: aBlock [
 
 	aBlock value: builder.
-
 	^self make
 ]
 

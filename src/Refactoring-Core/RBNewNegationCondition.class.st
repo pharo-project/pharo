@@ -32,6 +32,6 @@ RBNewNegationCondition >> errorString [
 
 { #category : 'accessing' }
 RBNewNegationCondition >> violators [
-	
+	"This is probably wrong because of the negation"
 	^ condition violators
 ]

@@ -30,7 +30,7 @@ RGEnvironmentAnnouncer >> announce: anAnnouncement [
 { #category : 'triggering' }
 RGEnvironmentAnnouncer >> behaviorAdded: anRGBehavior [
 
-	self announce: (ClassAdded class: anRGBehavior category: nil)
+	self announce: (ClassAdded class: anRGBehavior)
 ]
 
 { #category : 'triggering' }
@@ -80,8 +80,7 @@ RGEnvironmentAnnouncer >> behaviorRecategorized: anRGBehavior [
 { #category : 'triggering' }
 RGEnvironmentAnnouncer >> behaviorRemoved: anRGBehavior [
 
-	self announce: (ClassRemoved
-		class: anRGBehavior category: anRGBehavior category)
+	self announce: (ClassRemoved class: anRGBehavior packageTag: anRGBehavior packageTag)
 ]
 
 { #category : 'triggering' }

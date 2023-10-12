@@ -214,60 +214,25 @@ Process >> debugWithTitle: title [
 ]
 
 { #category : 'private' }
-Process >> doTerminationFromAnotherProcess [
-
-  "Stop this process forever from another process.
+Process >> doTerminationFromAnotherProcess [ 
+	"Stop this process forever from another process.
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
-	It assumes that self is not the active process
-	and the termination is requested from another process"
+	It assumes that self is not the active process and the termination is requested from another process.
+	It assumes the terminator process won't resume before the process represented by self is terminated."	
 
-	| ctxt oldList outerMost unwindBlock |
-
-	self isTerminating ifTrue: [ ProcessAlreadyTerminating signal. ^self ].
-	terminating := true.
-
-	"Always suspend the process first so it doesn't accidentally get woken up"
-	oldList := self suspend.
-	suspendedContext ifNil: [^self].
-
-	"Figure out if we are terminating the process while waiting inside special object like
-	in Semaphore>>critical:. So if waiting object is interesting on this situation we will ask it to handle it. In case of Semaphore>>critical, Semaphore will pop the suspendedContext so that we leave the ensure: block inside	Semaphore>>critical: without signaling the semaphore.
-	This methods allow to not be restricted only on Semaphore case."
-	suspendedContext := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
-
-	"If terminating a process halfways through an unwind, try to complete that unwind block first;
-	if there are multiple such nested unwind blocks, try to complete the outer-most one; the inner
-	blocks will be completed in the process."
-	ctxt := suspendedContext.
-	[(ctxt := ctxt findNextUnwindContextUpTo: nil) isNil] whileFalse:
-		"Contexts under evaluation have already set their complete (tempAt: 2) to true."
-		[ctxt unwindComplete ifNotNil: [outerMost := ctxt]].
-	outerMost ifNotNil: [
-		"This is the outer-most unwind context currently under evaluation;
-		let's find an inner context executing outerMost's argument block (tempAt: 1)"
-		(suspendedContext findContextSuchThat: [:ctx |
-			ctx closure == outerMost unwindBlock]) ifNotNil: [:inner |
-				"Let's finish the unfinished unwind context only (i.e. up to inner) and return here"
-				outerMost := (suspendedContext runUntilErrorOrReturnFrom: inner) first.
-				"Update the receiver's suspendedContext (the previous step reset its sender to nil);
-				return, if the execution stack reached its bottom (e.g. in case of non-local returns)."
-				(suspendedContext := outerMost sender) ifNil: [^self]]].
-
-	"Now all unwind blocks caught halfway through have been completed;
-	let's execute the ones still pending. Note: #findNextUnwindContextUpTo: starts
-	searching from the receiver's sender but the receiver itself may be an unwind context."
-	ctxt := suspendedContext.
-	ctxt isUnwindContext ifFalse: [ctxt := ctxt findNextUnwindContextUpTo: nil].
-	[ctxt isNil] whileFalse: [
-		ctxt unwindComplete ifNil: [
-			ctxt unwindComplete: true.
-			unwindBlock := ctxt unwindBlock.
-			unwindBlock valueUnwindInContext: ctxt ].
-		ctxt := ctxt findNextUnwindContextUpTo: nil].
-
-	"Mark the context as terminated"
-	suspendedContext terminateTo: nil.
-	suspendedContext setSender: nil receiver: self method: (Process>>#endProcess) arguments: {}
+	[ ] ensure: [ | oldList context terminator |
+		terminating := true.
+		oldList := self suspend.
+		suspendedContext ifNil: [^self].
+		context := oldList handleProcessTerminationOfWaitingContext: suspendedContext.
+		terminator := Semaphore new.
+		context bottomContext insertSender: 
+			(Context contextOn: UnhandledException do: [:ex | terminator signal. ex pass]).
+		context bottomContext insertSender: (Context contextEnsure: [terminator signal]).
+		suspendedContext := context unwindAndStop: self.
+		self priority: Processor activePriority; resume.
+		terminator wait
+	]
 ]
 
 { #category : 'private' }
@@ -275,9 +240,11 @@ Process >> doTerminationFromYourself [
 	"Stop this process forever from the process itself.
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is the active process. "
+	
+	| context |
 	terminating := true.
-	thisContext unwindForTermination.
-	^self endProcess
+	context := thisContext.
+	^[[] ensure: [context unwindTo: nil]. self endProcess] asContext jump
 ]
 
 { #category : 'accessing' }
@@ -738,10 +705,29 @@ Process >> suspendingList [
 ]
 
 { #category : 'changing process state' }
-Process >> terminate [
-	"Stop the process that the receiver represents forever.  Unwind to execute pending ensure:/ifCurtailed: blocks before terminating."
+Process >> terminate [ 
+	"Stop the process that the receiver represents forever. Unwind to execute pending ensure: and
+	ifCurtailed: blocks before terminating; allow all unwind blocks to run; if they are currently in
+	progress, let them finish. If the process is in the middle of a #critical: section, release it properly."
+	
+	"If terminating the active process, create a parallel stack and run unwinds from there;
+	if terminating a suspended process, create a parallel stack for the process being terminated
+	and resume the suspended process to complete its termination from the parallel stack. Use
+	a priority higher than the active priority to make the process that invoked the termination
+	wait for its completion."
 
-	self isActiveProcess
-		ifTrue: [ self doTerminationFromYourself ]
-		ifFalse: [ self doTerminationFromAnotherProcess]
+	"If terminating a suspended process (including runnable or blocked), always suspend the 
+	terminating process first so it doesn't accidentally get woken up. Equally important is the
+	side effect of the suspension. In 2022 a new suspend semantics has been introduced:
+	the revised #suspend backs up a process waiting on a conditional variable to the send that
+	invoked the wait state, while the pre-2022 #suspend simply removed the process from
+	the conditional variable's list it was previously waiting on; figure out if we are terminating
+	the process while waiting in Semaphore>>critical:. In this case, pop the suspendedContext
+	so that we leave the ensure: block inside Semaphore>>critical: without signaling the semaphore.
+	Execute termination wrapped in #ensure to ensure it completes even if the terminator
+	process itself gets terminated before it's finished; see testTerminateInTerminate."
+	
+	self isActiveProcess 
+		ifTrue: [self doTerminationFromYourself]
+		ifFalse: [self doTerminationFromAnotherProcess]
 ]

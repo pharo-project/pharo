@@ -73,7 +73,8 @@ MCClassDefinition >> actualClass [
 
 { #category : 'initialization' }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
-	variables addAll: (aCollection collect: [:var | aClass name: var asString]).
+
+	variables addAll: (aCollection collect: [ :var | aClass name: var asString ])
 ]
 
 { #category : 'accessing' }

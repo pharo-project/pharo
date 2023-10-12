@@ -6,9 +6,8 @@ Trait {
 	#classInstVars : [
 		'a'
 	],
-	#category : 'FluidClassBuilder-Tests-Mocks',
-	#package : 'FluidClassBuilder-Tests',
-	#tag : 'Mocks'
+	#category : 'Shift-ClassBuilder-Tests',
+	#package : 'Shift-ClassBuilder-Tests'
 }
 
 { #category : 'accessing' }

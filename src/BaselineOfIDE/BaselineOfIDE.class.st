@@ -81,10 +81,6 @@ BaselineOfIDE >> additionalInitialization [
 	SDL_Event initialize.
 	
 	HiRulerBuilderTest initialize.
-		
-	3 timesRepeat: [
-		Smalltalk garbageCollect.
-		Undeclared removeUnreferencedKeys.].
 	
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
@@ -348,8 +344,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	gofer load.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	Smalltalk cleanOutUndeclared. 
+
 
 	Stdio stdout 
 		nextPutAll: ' ------------ Obsolete ------------';
