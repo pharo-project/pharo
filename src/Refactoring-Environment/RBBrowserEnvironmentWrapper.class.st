@@ -33,6 +33,12 @@ RBBrowserEnvironmentWrapper >> acceptVisitor: aProgramNodeVisitor [
 	self subclassResponsibility
 ]
 
+{ #category : 'converting' }
+RBBrowserEnvironmentWrapper >> asScopeNode [
+
+	self subclassResponsibility
+]
+
 { #category : 'accessing' }
 RBBrowserEnvironmentWrapper >> basisObjects [
 
@@ -112,6 +118,11 @@ RBBrowserEnvironmentWrapper >> isNotEmpty [
 { #category : 'testing' }
 RBBrowserEnvironmentWrapper >> isSystem [
 	^false
+]
+
+{ #category : 'accessing' }
+RBBrowserEnvironmentWrapper >> name [
+	^ self label
 ]
 
 { #category : 'initialization' }

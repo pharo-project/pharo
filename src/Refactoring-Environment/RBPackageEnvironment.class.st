@@ -70,6 +70,12 @@ RBPackageEnvironment >> addPackage: aSymbol [
 	packages add: aSymbol
 ]
 
+{ #category : 'converting' }
+RBPackageEnvironment >> asScopeNode [
+
+	^ ScopePackageNode on: self
+]
+
 { #category : 'accessing' }
 RBPackageEnvironment >> asSelectorEnvironment [
 	| result |

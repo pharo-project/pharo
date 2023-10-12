@@ -8,6 +8,12 @@ Class {
 	#package : 'Refactoring-Environment'
 }
 
+{ #category : 'converting' }
+RBCompositeEnvironment >> asScopeNode [
+
+	^ ScopeScopeNode on: self
+]
+
 { #category : 'accessing' }
 RBCompositeEnvironment >> description [
 	^ (environment descriptionUntil: 15),

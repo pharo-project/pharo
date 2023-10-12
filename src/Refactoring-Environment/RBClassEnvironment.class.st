@@ -62,6 +62,12 @@ RBClassEnvironment >> addClassAndMetaClassFor: aClassOrMetaClass [
 		addClass: aClassOrMetaClass instanceSide
 ]
 
+{ #category : 'converting' }
+RBClassEnvironment >> asScopeNode [
+
+	^ ScopeClassNode on: self
+]
+
 { #category : 'accessing' }
 RBClassEnvironment >> asSelectorEnvironment [
 
