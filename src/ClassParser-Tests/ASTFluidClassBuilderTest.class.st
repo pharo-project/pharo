@@ -1,31 +1,27 @@
-"
-I am testing the creation of Classes from an AST
-"
 Class {
-	#name : 'ASTClassBuilderTest',
+	#name : 'ASTFluidClassBuilderTest',
 	#superclass : 'TestCase',
 	#category : 'ClassParser-Tests',
 	#package : 'ClassParser-Tests'
 }
 
 { #category : 'environmentSetUp' }
-ASTClassBuilderTest >> environment [
+ASTFluidClassBuilderTest >> environment [
 
 	^ self class environment
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> parserClass [
+ASTFluidClassBuilderTest >> parserClass [
 
-	^ CDClassDefinitionParser
+	^ CDFluidClassDefinitionParser
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateEphemeronClassNamed [
+ASTFluidClassBuilderTest >> testCreateEphemeronClassNamed [
 
 	| ast class |
-	ast := self parserClass parse:
-		       'Class ephemeronSubclass: #TestSubClass'.
+	ast := self parserClass parse: 'Class << #TestSubClass layout: EphemeronLayout'.
 
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
@@ -37,16 +33,16 @@ ASTClassBuilderTest >> testCreateEphemeronClassNamed [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateEphemeronClassWithAll [
+ASTFluidClassBuilderTest >> testCreateEphemeronClassWithAll [
 
 	| ast class |
-	ast := self parserClass parse:
-		       'Class ephemeronSubclass: #TestSubClass
-															uses:   TAddForUniquenessTest + TIncludesWithIdentityCheckTest
-															instanceVariableNames: ''cat env''
-															classVariableNames: ''var classVar pouet''
-															poolDictionaries: ''TestSharedPool ShTestSharedPool''
-															package: ''Kernel-Classes'''.
+	ast := self parserClass parse: 'Class << #TestSubClass
+		layout: EphemeronLayout;
+		traits: TAddForUniquenessTest + TIncludesWithIdentityCheckTest;
+		slots: { #cat. #env };
+		sharedVariables: { #var. #classVar. #pouet };
+		sharedPools: ''TestSharedPool ShTestSharedPool'';
+		package: ''Kernel-Classes'''.
 
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
@@ -60,10 +56,10 @@ ASTClassBuilderTest >> testCreateEphemeronClassWithAll [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateImmediateClassNamed [
+ASTFluidClassBuilderTest >> testCreateImmediateClassNamed [
 
 	| ast class |
-	ast := self parserClass parse: 'Class immediateSubclass: #TestSubClass'.
+	ast := self parserClass parse: 'Class << #TestSubClass layout: ImmediateLayout'.
 
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
@@ -75,16 +71,17 @@ ASTClassBuilderTest >> testCreateImmediateClassNamed [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateImmediateClassWithAll [
+ASTFluidClassBuilderTest >> testCreateImmediateClassWithAll [
 
 	| ast class |
 	ast := self parserClass parse:
-		       'Class immediateSubclass: #TestSubClass
-															uses:   TAddForUniquenessTest + TIncludesWithIdentityCheckTest
-															instanceVariableNames: ''cat env''
-															classVariableNames: ''var classVar pouet''
-															poolDictionaries: ''TestSharedPool ShTestSharedPool''
-															package: ''Kernel-Classes'''.
+		      'Class << #TestSubClass
+		layout: ImmediateLayout;
+		traits: TAddForUniquenessTest + TIncludesWithIdentityCheckTest;
+		slots: { #cat. #env };
+		sharedVariables: { #var. #classVar. #pouet };
+		sharedPools: ''TestSharedPool ShTestSharedPool'';
+		package: ''Kernel-Classes'''.
 
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
@@ -96,11 +93,26 @@ ASTClassBuilderTest >> testCreateImmediateClassWithAll [
 	self assert: class classVarNames equals: #( #classVar #pouet #var )
 ]
 
-{ #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassNamed [
+{ #category : 'running' }
+ASTFluidClassBuilderTest >> testCreateNilSubclass [
 
 	| ast class |
-	ast := self parserClass parse: 'Object subclass: #TestClass'.
+	ast := self parserClass parse: 'nil << #TestSubClass'.
+
+	class := ShiftClassBuilder new
+		         buildEnvironment: self environment;
+		         buildFromAST: ast;
+		         build.
+
+	self assert: class name equals: #TestSubClass.
+	self assert: class superclass isNil
+]
+
+{ #category : 'tests' }
+ASTFluidClassBuilderTest >> testCreateNormalClassNamed [
+
+	| ast class |
+	ast := self parserClass parse: 'Object << #TestClass'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -109,10 +121,10 @@ ASTClassBuilderTest >> testCreateNormalClassNamed [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassSuperClass [
+ASTFluidClassBuilderTest >> testCreateNormalClassSuperClass [
 
 	| ast class |
-	ast := self parserClass parse: 'Xcrd subclass: #TestSubClass'.
+	ast := self parserClass parse: 'Xcrd << #TestSubClass'.
 	[
 	class := ShiftClassBuilder new
 		         useUndefinedClass;
@@ -124,11 +136,10 @@ ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassWithClassVariable [
+ASTFluidClassBuilderTest >> testCreateNormalClassWithClassVariable [
 
 	| ast class |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															classVariableNames: ''var classVar pouet'' '.
+	ast := self parserClass parse: 'Class << #TestSubClass sharedVariables: { #var. #classVar. #pouet}'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -138,11 +149,10 @@ ASTClassBuilderTest >> testCreateNormalClassWithClassVariable [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassWithIV [
+ASTFluidClassBuilderTest >> testCreateNormalClassWithIV [
 
 	| ast class |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															instanceVariableNames: '''''.
+	ast := self parserClass parse: 'Class << #TestSubClass slots: { }'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -151,11 +161,10 @@ ASTClassBuilderTest >> testCreateNormalClassWithIV [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassWithPackage [
+ASTFluidClassBuilderTest >> testCreateNormalClassWithPackage [
 
 	| ast class |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															package: ''Kernel-Classes'''.
+	ast := self parserClass parse: 'Class << #TestSubClass package: ''Kernel-Classes'''.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -164,11 +173,10 @@ ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
+ASTFluidClassBuilderTest >> testCreateNormalClassWithSharedPools [
 
 	| ast class resTest |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															poolDictionaries: ''TestSharedPool ShTestSharedPool'''.
+	ast := self parserClass parse: 'Class << #TestSubClass sharedPools: #( #TestSharedPool #ShTestSharedPool )'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -180,11 +188,10 @@ ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassWithTrait [
+ASTFluidClassBuilderTest >> testCreateNormalClassWithTrait [
 
 	| ast class |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															uses: TOccurrencesTest'.
+	ast := self parserClass parse: 'Class << #TestSubClass traits: TOccurrencesTest'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -193,11 +200,10 @@ ASTClassBuilderTest >> testCreateNormalClassWithTrait [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateNormalClassWithTraitComposition [
+ASTFluidClassBuilderTest >> testCreateNormalClassWithTraitComposition [
 
 	| ast class |
-	ast := self parserClass parse: 'Class subclass: #TestSubClass
-															uses:   TAddForUniquenessTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TRemoveTest + TGrowableTest + TStructuralEqualityTest + TPrintTest + TAsStringCommaAndDelimiterTest + TConvertTest + TConvertAsSortedTest + TConcatenationEqualElementsRemovedTest + TOccurrencesTest + (TCreationWithTest - {#testOfSize. #collectionClass}) + (TSetArithmetic - {#collectionClass})'.
+	ast := self parserClass parse: 'Class << #TestSubClass traits: TAddForUniquenessTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TRemoveTest + TGrowableTest + TStructuralEqualityTest + TPrintTest + TAsStringCommaAndDelimiterTest + TConvertTest + TConvertAsSortedTest + TConcatenationEqualElementsRemovedTest + TOccurrencesTest + (TCreationWithTest - {#testOfSize. #collectionClass}) + (TSetArithmetic - {#collectionClass})'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -207,11 +213,10 @@ ASTClassBuilderTest >> testCreateNormalClassWithTraitComposition [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
+ASTFluidClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
 
 	| ast class |
-	ast := self parserClass parse: 'Trait named: #TTestTrait
-															uses: TOccurrencesTest'.
+	ast := self parserClass parse: 'Trait << #TTestTrait traits: TOccurrencesTest'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -220,11 +225,10 @@ ASTClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
+ASTFluidClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
 
 	| ast class |
-	ast := self parserClass parse: 'Trait named: #TTestTrait
-															uses: TOccurrencesTest + TAddForUniquenessTest'.
+	ast := self parserClass parse: 'Trait << #TTestTrait traits: TOccurrencesTest + TAddForUniquenessTest'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -234,11 +238,10 @@ ASTClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
 ]
 
 { #category : 'tests' }
-ASTClassBuilderTest >> testCreateTraitWithoutOtherTraits [
+ASTFluidClassBuilderTest >> testCreateTraitWithoutOtherTraits [
 
 	| ast class |
-	ast := self parserClass parse: 'Trait named: #TTestTrait
-															uses: {}'.
+	ast := self parserClass parse: 'Trait << #TTestTrait traits: { }'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -247,11 +250,10 @@ ASTClassBuilderTest >> testCreateTraitWithoutOtherTraits [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateVariableByteClassNamed [
+ASTFluidClassBuilderTest >> testCreateVariableByteClassNamed [
 
 	| ast class |
-	ast := self parserClass parse:
-		       'Object variableByteSubclass: #TestSubClass'.
+	ast := self parserClass parse: 'Object << #TestSubClass layout: ByteLayout'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -261,16 +263,16 @@ ASTClassBuilderTest >> testCreateVariableByteClassNamed [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateVariableByteClassWithAll [
+ASTFluidClassBuilderTest >> testCreateVariableByteClassWithAll [
 
 	| ast class |
-	ast := self parserClass parse:
-		       'Object variableByteSubclass: #TestSubClass
-															uses:   TAddForUniquenessTest + TIncludesWithIdentityCheckTest
-															instanceVariableNames: ''cat env''
-															classVariableNames: ''var classVar pouet''
-															poolDictionaries: ''TestSharedPool ShTestSharedPool''
-															package: ''Kernel-Classes'''.
+	ast := self parserClass parse: 'Object << #TestSubClass
+		layout: ByteLayout;
+		traits: TAddForUniquenessTest + TIncludesWithIdentityCheckTest;
+		slots: { #cat. #env };
+		sharedVariables: { #var. #classVar. #pouet };
+		sharedPools: ''TestSharedPool ShTestSharedPool'';
+		package: ''Kernel-Classes'''.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -281,11 +283,10 @@ ASTClassBuilderTest >> testCreateVariableByteClassWithAll [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateVariableClassNamed [
+ASTFluidClassBuilderTest >> testCreateVariableClassNamed [
 
 	| ast class |
-	ast := self parserClass parse:
-		       'Class variableSubclass: #TestSubClass'.
+	ast := self parserClass parse: 'Class << #TestSubClass layout: VariableLayout'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -295,16 +296,16 @@ ASTClassBuilderTest >> testCreateVariableClassNamed [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateVariableClassWithAll [
+ASTFluidClassBuilderTest >> testCreateVariableClassWithAll [
 
 	| ast class |
-	ast := self parserClass parse:
-		       'Class variableSubclass: #TestSubClass
-															uses:   TAddForUniquenessTest + TIncludesWithIdentityCheckTest
-															instanceVariableNames: ''cat env''
-															classVariableNames: ''var classVar pouet''
-															poolDictionaries: ''TestSharedPool ShTestSharedPool''
-															package: ''Kernel-Classes'''.
+	ast := self parserClass parse: 'Class << #TestSubClass
+		layout: VariableLayout;
+		traits: TAddForUniquenessTest + TIncludesWithIdentityCheckTest;
+		slots: { #cat. #env };
+		sharedVariables: { #var. #classVar. #pouet };
+		sharedPools: ''TestSharedPool ShTestSharedPool'';
+		package: ''Kernel-Classes'''.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -316,11 +317,10 @@ ASTClassBuilderTest >> testCreateVariableClassWithAll [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateVariableWordClassNamed [
+ASTFluidClassBuilderTest >> testCreateVariableWordClassNamed [
 
 	| ast class |
-	ast := self parserClass parse:
-		       'Object variableWordSubclass: #TestSubClass'.
+	ast := self parserClass parse: 'Object << #TestSubClass layout: WordLayout'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -330,16 +330,17 @@ ASTClassBuilderTest >> testCreateVariableWordClassNamed [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
+ASTFluidClassBuilderTest >> testCreateVariableWordClassWithAll [
 
 	| ast class |
 	ast := self parserClass parse:
-		       'Object variableWordSubclass: #TestSubClass
-															uses:   TAddForUniquenessTest + TIncludesWithIdentityCheckTest
-															instanceVariableNames: ''cat env''
-															classVariableNames: ''var classVar pouet''
-															poolDictionaries: ''TestSharedPool ShTestSharedPool''
-															package: ''Kernel-Classes'''.
+		       'Object << #TestSubClass
+		layout: WordLayout;
+		traits: TAddForUniquenessTest + TIncludesWithIdentityCheckTest;
+		slots: { #cat. #env };
+		sharedVariables: { #var. #classVar. #pouet };
+		sharedPools: ''TestSharedPool ShTestSharedPool'';
+		package: ''Kernel-Classes'''.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -351,10 +352,10 @@ ASTClassBuilderTest >> testCreateVariableWordClassWithAll [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateWeakClassNamed [
+ASTFluidClassBuilderTest >> testCreateWeakClassNamed [
 
 	| ast class |
-	ast := self parserClass parse: 'Class weakSubclass: #TestSubClass'.
+	ast := self parserClass parse: 'Class << #TestSubClass layout: WeakLayout'.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -365,15 +366,16 @@ ASTClassBuilderTest >> testCreateWeakClassNamed [
 ]
 
 { #category : 'running' }
-ASTClassBuilderTest >> testCreateWeakClassWithAll [
+ASTFluidClassBuilderTest >> testCreateWeakClassWithAll [
 
 	| ast class |
-	ast := self parserClass parse: 'Class weakSubclass: #TestSubClass
-															uses:   TAddForUniquenessTest + TIncludesWithIdentityCheckTest
-															instanceVariableNames: ''cat env''
-															classVariableNames: ''var classVar pouet''
-															poolDictionaries: ''TestSharedPool ShTestSharedPool''
-															package: ''Kernel-Classes'''.
+	ast := self parserClass parse: 'Class << #TestSubClass
+		layout: WeakLayout;
+		traits: TAddForUniquenessTest + TIncludesWithIdentityCheckTest;
+		slots: { #cat. #env };
+		sharedVariables: { #var. #classVar. #pouet };
+		sharedPools: ''TestSharedPool ShTestSharedPool'';
+		package: ''Kernel-Classes'''.
 	class := ShiftClassBuilder new
 		         buildEnvironment: self environment;
 		         buildFromAST: ast;
@@ -385,11 +387,10 @@ ASTClassBuilderTest >> testCreateWeakClassWithAll [
 ]
 
 { #category : 'resolveSuperclass' }
-ASTClassBuilderTest >> testDefaultResolve [
+ASTFluidClassBuilderTest >> testDefaultResolve [
 
 	| ast |
-	ast := self parserClass parse: 'cdfgdf subclass: #TestSubClass
-															uses: TOccurrencesTest'.
+	ast := self parserClass parse: 'cdfgdf << #TestSubClass traits: TOccurrencesTest'.
 	self
 		should: [
 			ShiftClassBuilder new
@@ -400,15 +401,15 @@ ASTClassBuilderTest >> testDefaultResolve [
 ]
 
 { #category : 'resolveSuperclass' }
-ASTClassBuilderTest >> testUseUndefinedClass [
+ASTFluidClassBuilderTest >> testUseUndefinedClass [
 
 	| ast |
-	ast := self parserClass parse: 'PoPouet subclass: #TestClass'.
+	ast := self parserClass parse: 'PoPouet << #TestClass'.
 	[
 	ShiftClassInstaller new make: [ :builder |
 		builder
 			useUndefinedClass;
 			buildEnvironment: self environment;
 			buildFromAST: ast ].
-	self assert: [ (self environment at: #PoPouet) isUndefined ] ] ensure: [ (self environment at: #PoPouet) ifNotNil: #removeFromSystem ]
+	self assert: [ (self environment at: #PoPouet) isUndefined ] ] ensure: [ self environment at: #PoPouet ifPresent: [ :class | class removeFromSystem ] ]
 ]

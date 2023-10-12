@@ -116,9 +116,9 @@ CDFluidClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 		collect: [ :aPoolNode |
 			self sharedPoolNodeClass
 				node: aPoolNode
-				name: aPoolNode name
+				name: aPoolNode value
 				start: aPoolNode start
-				stop: aPoolNode start + aPoolNode name size
+				stop: aPoolNode start + aPoolNode value size
 			].
 	classDefinition sharedPools: sharedPoolNodes
 ]
@@ -284,7 +284,7 @@ CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 
 	aSuperclassName := aSuperclassNode isLiteralNode
 		ifTrue: [ nil ]
-		ifFalse: [ aSuperclassNode binding value asString asSymbol ].
+		ifFalse: [aSuperclassNode name asSymbol ].
 	newSuperclassNode := self classNameNodeClass new
 		originalNode: aSuperclassNode;
 		className: aSuperclassName.
@@ -325,17 +325,23 @@ CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	| searcher |
 	searcher := RBParseTreeSearcher new.
 	searcher
-		matches: 'Trait << `#name' do: [:aNode :answer |
+		matches: 'Trait << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
-			self beTraitDefinition ];
-		matches: 'Trait << `name classTrait' do: [:aNode :answer |
+			self beTraitDefinition.
+			classDefinition superclassName: #Trait ];
+		matches: 'Trait << `name classTrait' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`name'.
-			self beClassSideTraitDefinition ];
-		matches: '`superclass << `#name' do: [:aNode :answer |
+			self beClassSideTraitDefinition.
+			classDefinition superclassName: #Trait ];
+		matches: '`superclass << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
 			superclassNode := searcher variableNamed: '`superclass'.
 			self beClassDefinition ];
-		matches: '`superclass class << `name class' do: [:aNode :answer |
+		matches: 'nil << `#name' do: [ :aNode :answer |
+			classNameNode := searcher variableNamed: '`#name'.
+			self beClassDefinition.
+			classDefinition superclassName: #nil ];
+		matches: '`superclass class << `name class' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`name'.
 			self beMetaclassDefinition ].
 
