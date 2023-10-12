@@ -180,13 +180,6 @@ RBClassEnvironment >> printBasisObject: aClass on: aStream [
 	^ aStream nextPutAll: aClass
 ]
 
-{ #category : 'printing' }
-RBClassEnvironment >> printOn: aStream [
-
-	aStream nextPutAll: 'Cls: '.
-	classes do: [ :cls | aStream nextPutAll: cls, ', ']
-]
-
 { #category : 'accessing' }
 RBClassEnvironment >> problemCount [
 	^self numberClasses

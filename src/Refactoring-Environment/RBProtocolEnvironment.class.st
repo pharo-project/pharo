@@ -113,13 +113,6 @@ RBProtocolEnvironment >> postCopy [
 	protocols := protocols copy
 ]
 
-{ #category : 'printing' }
-RBProtocolEnvironment >> printOn: aStream [
-
-	aStream nextPutAll: class name, ' protocols: '.
-	protocols do: [ :cls | aStream nextPutAll: cls, ', ']
-]
-
 { #category : 'accessing' }
 RBProtocolEnvironment >> protocols [
 

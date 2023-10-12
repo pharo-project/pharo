@@ -83,13 +83,6 @@ RBAndEnvironment >> operator [
 	^ ' & '
 ]
 
-{ #category : 'printing' }
-RBAndEnvironment >> printOn: aStream [
-	environment printOn: aStream.
-	aStream nextPutAll: self operator.
-	self andedEnvironment printOn: aStream
-]
-
 { #category : 'accessing' }
 RBAndEnvironment >> problemCount [
 	^environment isClassEnvironment

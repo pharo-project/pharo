@@ -105,6 +105,11 @@ RBBrowserEnvironmentWrapper >> isEmpty [
 ]
 
 { #category : 'testing' }
+RBBrowserEnvironmentWrapper >> isNotEmpty [ 
+	^ self isEmpty not
+]
+
+{ #category : 'testing' }
 RBBrowserEnvironmentWrapper >> isSystem [
 	^false
 ]
@@ -123,6 +128,21 @@ RBBrowserEnvironmentWrapper >> packageNames [
 RBBrowserEnvironmentWrapper >> printBasisObject: anObject on: aStream [
 
 	^ anObject printOn: aStream
+]
+
+{ #category : 'printing' }
+RBBrowserEnvironmentWrapper >> printOn: aStream [
+
+	label
+		ifNil: [
+			aStream
+				nextPutAll: super description;
+				nextPutAll: self descriptionBasis ]
+		ifNotNil: [
+			aStream
+				nextPutAll: 'CScope (';
+				nextPutAll: label;
+				nextPutAll: ')' ]
 ]
 
 { #category : 'private' }
