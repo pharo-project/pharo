@@ -20,7 +20,8 @@ SycAddProtocolScopeCommand >> execute [
 		             select: [ :methodGroup | methodGroup isKindOf: ClyMethodsInProtocolGroup ]
 		             thenCollect: [ :methodsInProtocolGroup | methodsInProtocolGroup protocol ].
 	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
-	RefactoringSettings addScope: scope
+	ScopesManager singleInstance addScope: scope.
+	ScopesPresenter open
 ]
 
 { #category : 'accessing' }
