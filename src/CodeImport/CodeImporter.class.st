@@ -117,6 +117,11 @@ CodeImporter >> codeDeclarations [
 	^codeDeclarations
 ]
 
+{ #category : 'testing' }
+CodeImporter >> enableUndefinedClass [
+	^ enableUndefinedClass
+]
+
 { #category : 'public access' }
 CodeImporter >> evaluate [
 	" stripped down version of evaluateDeclarations"
@@ -152,7 +157,8 @@ CodeImporter >> flushChangesFile [
 CodeImporter >> initialize [
 	codeDeclarations := OrderedCollection new.
 	parserClass := ChunkFileFormatParser.
-	logSource := true
+	logSource := true.
+	enableUndefinedClass := false
 ]
 
 { #category : 'accessing' }
