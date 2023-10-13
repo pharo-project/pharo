@@ -143,7 +143,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 ASTClassBuilderTest >> testCreateNormalClassWithSharedPools [
 
 	| class resTest |
-	class := self buildClassFromDefinition: 'Class << #TestSubClass sharedPools: #( #TestSharedPool #ShTestSharedPool )'.
+	class := self buildClassFromDefinition: 'Class << #TestSubClass sharedPools: { TestSharedPool . ShTestSharedPool }'.
 
 	resTest := OrderedCollection new.
 	resTest add: 'TestSharedPool' asSymbol.

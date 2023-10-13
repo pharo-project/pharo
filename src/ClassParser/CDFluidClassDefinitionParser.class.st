@@ -116,7 +116,7 @@ CDFluidClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 		collect: [ :aPoolNode |
 			self sharedPoolNodeClass
 				node: aPoolNode
-				name: aPoolNode value
+				name: aPoolNode value name
 				start: aPoolNode start
 				stop: aPoolNode start + aPoolNode value size
 			].
@@ -331,8 +331,7 @@ CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 			classDefinition superclassName: #Trait ];
 		matches: 'Trait << `name classTrait' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`name'.
-			self beClassSideTraitDefinition.
-			classDefinition superclassName: #Trait ];
+			self beClassSideTraitDefinition ];
 		matches: '`superclass << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
 			superclassNode := searcher variableNamed: '`superclass'.
