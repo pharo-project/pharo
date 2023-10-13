@@ -143,10 +143,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	ExternalDropHandler resetRegisteredHandlers.
 	ScrollBarMorph initializeImagesCache.
 
-	Smalltalk garbageCollect.
-	HashedCollection rehashAll.
-	Symbol rehash.
-
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Author reset
