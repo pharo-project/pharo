@@ -131,7 +131,7 @@ BaselineOfPharo class >> roassal [
 ]
 
 { #category : 'repository urls' }
-BaselineOfPharo class >> roassal3Repository [
+BaselineOfPharo class >> roassalRepository [
 
 	^ (self externalProjectNamed: 'Roassal') repository
 ]
