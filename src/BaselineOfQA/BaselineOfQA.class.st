@@ -7,31 +7,29 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfQA >> baseline: spec [
-	<baseline>
-	
-	| repository | 
-	
-	repository := self packageRepositoryURL.	
-	
-		spec for: #'common' do: [
-			spec package: 'NautilusRefactoring'.
-				
-			spec package: 'Refactoring-Critics'.
-			spec baseline: 'Manifest' with: [ spec repository: repository ].
-			
-			spec baseline: 'QualityAssistant' with: [ spec repository: repository ].
-			spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository ].
 
-			spec 
-				package: 'GeneralRules';
-				package: 'GeneralRules-Tests';
-				package: 'Kernel-Rules';
-				package: 'ReleaseTests';
-				package: 'NautilusRefactoring-Tests'.
-			
-			spec baseline: 'Reflectivity' with: [ 
-				spec
-					repository: repository;
-					loads: #( 'tools' ) ]
-			]
+	<baseline>
+	| repository |
+	repository := self packageRepositoryURL.
+
+	spec for: #common do: [
+		spec package: 'NautilusRefactoring'.
+
+		spec package: 'Refactoring-Critics'.
+		spec baseline: 'Manifest' with: [ spec repository: repository ].
+
+		spec baseline: 'QualityAssistant' with: [ spec repository: repository ].
+		spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository ].
+
+		spec
+			package: 'GeneralRules';
+			package: 'GeneralRules-Tests' with: [ spec requires: #( 'GeneralRules' ) ];
+			package: 'Kernel-Rules';
+			package: 'ReleaseTests';
+			package: 'NautilusRefactoring-Tests'.
+
+		spec baseline: 'Reflectivity' with: [
+			spec
+				repository: repository;
+				loads: #( 'tools' ) ] ]
 ]

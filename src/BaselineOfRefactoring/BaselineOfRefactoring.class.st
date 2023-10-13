@@ -17,7 +17,6 @@ BaselineOfRefactoring >> baseline: spec [
 			package: 'Kernel-Tests-Rules';
 			package: 'Polymorph-Widgets-Rules';
 			package: 'System-Settings-Rules';
-			package: 'GeneralRules';
 			package: 'Rubric-Rules';
 			package: 'Refactoring-DataForTesting';
 			package: 'Refactoring-UI-Tests' with: [ spec requires: #( 'Refactoring-DataForTesting' ) ];
