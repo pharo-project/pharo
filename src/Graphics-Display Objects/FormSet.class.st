@@ -70,6 +70,12 @@ FormSet >> forms [
 	^ forms
 ]
 
+{ #category : 'file in/out' }
+FormSet >> hibernate [
+
+	forms do: [ :form | form hibernate ]
+]
+
 { #category : 'initialization' }
 FormSet >> initializeWithExtent: initialExtent depth: initialDepth forms: initialForms [
 
@@ -77,4 +83,10 @@ FormSet >> initializeWithExtent: initialExtent depth: initialDepth forms: initia
 	extent := initialExtent.
 	depth := initialDepth.
 	forms := initialForms.
+]
+
+{ #category : 'copying' }
+FormSet >> veryDeepCopyWith: deepCopier [
+	"Return self.  I am immutable in the Morphic world.  Do not record me."
+	^ self
 ]
