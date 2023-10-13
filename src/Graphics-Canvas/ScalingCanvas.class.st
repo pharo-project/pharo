@@ -109,7 +109,7 @@ ScalingCanvas class >> exampleFrameAndFillRectangle2 [
 ]
 
 { #category : 'examples' }
-ScalingCanvas class >> exampleImageMorph [
+ScalingCanvas class >> exampleImageMorph1 [
 
 	^ self privateExampleWithMorph: (Morph new
 		color: Color veryVeryLightGray;
@@ -121,6 +121,34 @@ ScalingCanvas class >> exampleImageMorph [
 			yourself);
 		extent: 44@24;
 		yourself)
+]
+
+{ #category : 'examples' }
+ScalingCanvas class >> exampleImageMorph2 [
+
+	| forms imageMorph |
+	
+	forms := (1 to: 2) collect: [ :scale |
+		(FormCanvas extent: 100 asPoint * scale depth: 1)
+			fillOval: ((0 asPoint extent: 100 asPoint * scale) insetBy: 5 * scale) fillStyle: Color green;
+			form ].
+	(imageMorph := ImageMorph withFormSet: (FormSet forms: forms))
+		color: Color blue.
+	^ self privateExampleWithMorph: imageMorph
+]
+
+{ #category : 'examples' }
+ScalingCanvas class >> exampleImageMorph3 [
+
+	| forms imageMorph |
+	
+	forms := (1 to: 2) collect: [ :scale |
+		(FormCanvas extent: 10 asPoint * scale)
+			fillOval: ((0 asPoint extent: 10 asPoint * scale) insetBy: 1 * scale) fillStyle: Color black;
+			form ].
+	(imageMorph := ImageMorph withFormSet: (FormSet forms: forms))
+		resize: 200@100.
+	^ self privateExampleWithMorph: imageMorph
 ]
 
 { #category : 'examples' }
@@ -280,6 +308,18 @@ ScalingCanvas >> copyClipRect: newClipRect [
 ScalingCanvas >> depth [
 
 	^ formCanvas depth
+]
+
+{ #category : 'drawing - images' }
+ScalingCanvas >> drawFormSet: formSet at: point [
+
+	| form scaledForm |
+
+	form := formSet asForm.
+	scaledForm := (scale = 2 and: [ FormMapping includesKey: form ])
+		ifTrue: [ FormMapping at: form ]
+		ifFalse: [ formSet asFormAtScale: scale ].
+	formCanvas drawImage: scaledForm at: point * scale
 ]
 
 { #category : 'drawing - polygons' }
@@ -498,4 +538,16 @@ ScalingCanvas >> translateBy: delta during: aBlock [
 
 	formCanvas translateBy: delta * scale during: [ :transformedFormCanvas |
 		aBlock value: (self class formCanvas: transformedFormCanvas scale: scale) ]
+]
+
+{ #category : 'drawing - images' }
+ScalingCanvas >> translucentFormSet: formSet at: point [
+
+	| form scaledForm |
+
+	form := formSet asForm.
+	scaledForm := (scale = 2 and: [ FormMapping includesKey: form ])
+		ifTrue: [ FormMapping at: form ]
+		ifFalse: [ formSet asFormAtScale: scale ].
+	formCanvas translucentImage: scaledForm at: point * scale
 ]
