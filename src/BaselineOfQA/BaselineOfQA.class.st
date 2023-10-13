@@ -22,9 +22,12 @@ BaselineOfQA >> baseline: spec [
 		spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository ].
 
 		spec
-			package: 'GeneralRules';
-			package: 'GeneralRules-Tests' with: [ spec requires: #( 'GeneralRules' ) ];
-			package: 'Kernel-Rules';
+			package: 'General-Rules' with: [ spec requires: #( 'QualityAssistant' ) ];
+			package: 'General-Rules-Tests' with: [ spec requires: #( 'General-Rules' ) ];
+			package: 'Specific-Rules' with: [ spec requires: #( 'QualityAssistant' ) ];
+			package: 'Specific-Rules-Tests' with: [ spec requires: #( 'Specific-Rules' ) ];
+			package: 'SUnit-Rules' with: [ spec requires: #( 'QualityAssistant' ) ];
+			package: 'SUnit-Rules-Tests' with: [ spec requires: #( 'SUnit-Rules' ) ];
 			package: 'ReleaseTests';
 			package: 'NautilusRefactoring-Tests'.
 
