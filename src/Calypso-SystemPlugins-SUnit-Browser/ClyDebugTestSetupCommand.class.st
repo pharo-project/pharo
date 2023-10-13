@@ -1,9 +1,9 @@
 "
-I am a command to debug selected test method.
+I am a command that debug the setup method of the selected test, then I executed the selected test method.
 I install breakpoint to the start of method which opens debugger during following test run
 "
 Class {
-	#name : 'ClyDebugTestCommand',
+	#name : 'ClyDebugTestSetupCommand',
 	#superclass : 'ClyRunTestsFromMethodsCommand',
 	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
 	#package : 'Calypso-SystemPlugins-SUnit-Browser',
@@ -11,33 +11,33 @@ Class {
 }
 
 { #category : 'activation' }
-ClyDebugTestCommand class >> fullBrowserShortcutActivation [
+ClyDebugTestSetupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $d meta for: self contextClass
+	^CmdShortcutActivation by: $d shift meta for: self contextClass
 ]
 
 { #category : 'activation' }
-ClyDebugTestCommand class >> fullBrowserTableIconActivation [
+ClyDebugTestSetupCommand class >> fullBrowserTableIconActivation [
 	"It should not be as icon in table"
 ]
 
 { #category : 'execution' }
-ClyDebugTestCommand >> defaultMenuIcon [
+ClyDebugTestSetupCommand >> defaultMenuIcon [
 	^Smalltalk ui iconNamed: #smallDebug
 ]
 
 { #category : 'accessing' }
-ClyDebugTestCommand >> defaultMenuItemName [
-	^'Debug tests'
+ClyDebugTestSetupCommand >> defaultMenuItemName [
+	^'Debug test setup'
 ]
 
 { #category : 'execution' }
-ClyDebugTestCommand >> runTest: testSelector of: testClass [
+ClyDebugTestSetupCommand >> runTest: testSelector of: testClass [
 
 	| breakpoint |
 	breakpoint := Breakpoint new
-		              node: (testClass lookupSelector: testSelector) ast;
+		              node: (testClass lookupSelector: #setUp) ast;
 		              install.
 	[ super runTest: testSelector of: testClass ] ensure: [
 		[ breakpoint remove ]
