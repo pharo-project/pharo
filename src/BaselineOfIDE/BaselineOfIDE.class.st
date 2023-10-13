@@ -322,7 +322,7 @@ BaselineOfIDE >> pharoPluginClass [
 BaselineOfIDE >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
-	Initialized = true ifTrue: [ self error: 'We should not execute this multiple times' ].
+	Initialized = true ifTrue: [ ^ self ].
 
 	Author fullName: self class name.
 	
