@@ -145,8 +145,8 @@ RPackageTag >> privateAddClass: aClass [
 	classes add: aClass.
 	self organizer registerPackage: self package forClass: aClass.
 
-	self flag: #package. "Next line should first use #basicCategory: to not start a ping pong then be totally removed once we will not need the category"
-	aClass category: self categoryName
+	self flag: #package. "Next line should be removed once we will not need the category"
+	aClass basicCategory: self categoryName
 ]
 
 { #category : 'converting' }
