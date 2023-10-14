@@ -25,7 +25,12 @@ T2AbstractTest >> newClass: aName [
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aComposition [
 
-	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses'
+	^ self
+		  newClass: aName
+		  superclass: aSuperclass
+		  with: slots
+		  uses: aComposition
+		  category: self packageNameForTests
 ]
 
 { #category : 'instance creation' }
@@ -49,7 +54,12 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aCo
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition [
 
-	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses'
+	^ self
+		  newClass: aName
+		  superclass: aSuperclass
+		  with: slots
+		  uses: aComposition
+		  category: self packageNameForTests
 ]
 
 { #category : 'instance creation' }
@@ -87,7 +97,12 @@ T2AbstractTest >> newTrait: aName with: slots [
 
 { #category : 'instance creation' }
 T2AbstractTest >> newTrait: aName with: slots trait: aComposition [
-	^ self newTrait: aName with: slots trait: aComposition category: 'TraitsV2-Tests-TestClasses'
+
+	^ self
+		  newTrait: aName
+		  with: slots
+		  trait: aComposition
+		  category: self packageNameForTests
 ]
 
 { #category : 'instance creation' }
@@ -108,7 +123,12 @@ T2AbstractTest >> newTrait: aName with: slots trait: aComposition category: cate
 
 { #category : 'instance creation' }
 T2AbstractTest >> newTrait: aName with: slots uses: aComposition [
-	^ self newTrait: aName with: slots trait: aComposition category: 'TraitsV2-Tests-TestClasses'
+
+	^ self
+		  newTrait: aName
+		  with: slots
+		  trait: aComposition
+		  category: self packageNameForTests
 ]
 
 { #category : 'instance creation' }
@@ -125,6 +145,12 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: categ
 	createdClasses add:class.
 
 	^class
+]
+
+{ #category : 'instance creation' }
+T2AbstractTest >> packageNameForTests [
+
+	^ 'TraitsV2-Tests-TestClasses'
 ]
 
 { #category : 'running' }

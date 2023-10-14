@@ -191,29 +191,30 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
 
 { #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPools [
-	| t1 c1 c2 t2 x1 |
-	t1 := self newTrait: #T1 with: #() uses: {}.
-	t2 := self newTrait: #T2 with: #() uses: {}.
 
-	c1 := self newClass: #C1 with: #(aSlot) uses: t1.
+	| t1 c1 c2 t2 x1 |
+	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
+	t2 := self newTrait: #T2 with: #(  ) uses: {  }.
+
+	c1 := self newClass: #C1 with: #( aSlot ) uses: t1.
 	c2 := self
-		newClass: #C2
-		superclass: c1
-		with: #(otherSlot)
-		uses: t2.
+		      newClass: #C2
+		      superclass: c1
+		      with: #( otherSlot )
+		      uses: t2.
 
 	x1 := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: #X1;
-			superclass: SharedPool ].
+		      aClassBuilder
+			      name: #X1;
+			      superclass: SharedPool ].
 
 
 	c1 := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: #C1;
-			traitComposition: t1;
-			sharedPools: 'X1';
-			package: 'TraitsV2-Tests-TestClasses' ].
+		      aClassBuilder
+			      name: #C1;
+			      traitComposition: t1;
+			      sharedPools: 'X1';
+			      package: self packageNameForTests ].
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
@@ -221,25 +222,26 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 
 { #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvariables [
-	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() uses: {}.
-	t2 := self newTrait: #T2 with: #() uses: {}.
 
-	c1 := self newClass: #C1 with: #(aSlot) uses: t1.
+	| t1 c1 c2 t2 |
+	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
+	t2 := self newTrait: #T2 with: #(  ) uses: {  }.
+
+	c1 := self newClass: #C1 with: #( aSlot ) uses: t1.
 	c2 := self
-		newClass: #C2
-		superclass: c1
-		with: #(otherSlot)
-		uses: t2.
+		      newClass: #C2
+		      superclass: c1
+		      with: #( otherSlot )
+		      uses: t2.
 
 	c1 := self class classInstaller make: [ :builder |
-		  builder
-			  name: #C1;
-			  superclass: Object;
-			  slots: #(aSlot);
-			  sharedVariables: #(ClassVar);
-			  traitComposition: t1;
-			  package: 'TraitsV2-Tests-TestClasses' ].
+		      builder
+			      name: #C1;
+			      superclass: Object;
+			      slots: #( aSlot );
+			      sharedVariables: #( ClassVar );
+			      traitComposition: t1;
+			      package: self packageNameForTests ].
 	createdClasses add: c1.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
