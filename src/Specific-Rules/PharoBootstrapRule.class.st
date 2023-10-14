@@ -26,8 +26,9 @@ PharoBootstrapRule >> basicCheck: aPackage [
 
 { #category : 'accessing' }
 PharoBootstrapRule >> bootstrapPackages [
+	"This should probably be improved"
 
-	       ^ BaselineOfPharoBootstrap kernelPackageNames
+	^ BaselineOfPharoBootstrap kernelPackageNames , #( 'AST-Core' )
 ]
 
 { #category : 'helpers' }
@@ -58,8 +59,5 @@ PharoBootstrapRule >> name [
 PharoBootstrapRule >> newExternalDependencyExistFor: aPackage [
 	"Check if there are new dependencies to a package outside this layer"
 
-	| dependencies newDependencies |
-	dependencies := self dependencyChecker dependenciesOf: aPackage name.
-	newDependencies := dependencies difference: self bootstrapPackages.
-	^ newDependencies notEmpty
+	^ ((self dependencyChecker dependenciesOf: aPackage name) difference: self bootstrapPackages) isNotEmpty
 ]
