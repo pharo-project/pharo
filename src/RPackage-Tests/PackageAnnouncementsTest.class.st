@@ -23,16 +23,18 @@ PackageAnnouncementsTest >> tearDown [
 ]
 
 { #category : 'tests' }
-PackageAnnouncementsTest >> testAddClassAnnounceClassRecategorized [
+PackageAnnouncementsTest >> testAddClassAnnounceClassRepackaged [
 
 	| xPackage yPackage class |
-	self flag: #package. "This announcement should be removed in the future."
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 
 	class := self newClassNamed: #NewClass in: xPackage.
 
-	self when: ClassRecategorized do: [ :ann | self assert: ann classRecategorized name equals: #NewClass ].
+	self when: ClassRepackaged do: [ :ann |
+		self assert: ann classRepackaged name equals: #NewClass.
+		self assert: ann newPackage identicalTo: yPackage.
+		self assert: ann oldPackage identicalTo: xPackage ].
 
 	yPackage addClass: class.
 

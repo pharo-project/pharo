@@ -158,9 +158,9 @@ def bootstrapImage(architectures){
           if( isDevelopmentBranch() ) {
             stage("Upload to files.pharo.org-${architecture}") {
               dir("build/bootstrap-cache") {
-                  shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
+                  shell "BUILD_NUMBER=${env.BUILD_ID} bash ../../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
                 sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
-                  shell "bash ../bootstrap/scripts/upload_to_files.pharo.org.sh"
+                  shell "bash ../../bootstrap/scripts/upload_to_files.pharo.org.sh"
                 }
               }
             }
