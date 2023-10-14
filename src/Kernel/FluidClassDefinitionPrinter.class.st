@@ -141,7 +141,12 @@ FluidClassDefinitionPrinter >> expandedDefinitionString [
 		  self slotsOn: s.
 		  self sharedVariablesOn: s.
 		  self sharedPoolsOn: s.
-		  self tagOn: s.
+		  forClass packageTag isRoot
+			  ifTrue: [
+				  s
+					  crtab;
+					  nextPutAll: 'tag: '''';' ]
+			  ifFalse: [ self tagOn: s ].
 		  self packageOn: s ]
 ]
 
@@ -395,14 +400,14 @@ FluidClassDefinitionPrinter >> slotsOn: s [
 
 { #category : 'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> tagOn: aStream [
+	"We don't print if the tag is the root tag."
+	forClass packageTag isRoot ifTrue: [ ^ self ].
 
 	aStream
 		crtab;
-		nextPutAll: 'tag: '''.
-
-	forClass packageTag isRoot ifFalse: [ aStream nextPutAll: forClass packageTag name asString ].
-
-	aStream nextPutAll: ''';'
+		nextPutAll: 'tag: ''';
+		nextPutAll: forClass packageTag name asString;
+		nextPutAll: ''';'
 ]
 
 { #category : 'printing' }
