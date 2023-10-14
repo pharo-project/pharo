@@ -29,16 +29,17 @@ Class {
 	#package : 'BaselineOfBasicTools'
 }
 
-{ #category : 'baseline' }
+{ #category : 'baselines' }
 BaselineOfBasicTools >> baseline: spec [
+
 	<baseline>
 	| repository |
 	repository := self packageRepositoryURL.
-	spec for: #common do: [ 
+	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 
 		"Load first SUnit core"
-		spec baseline: 'SUnitCore' with: [ 
+		spec baseline: 'SUnitCore' with: [
 			spec
 				loads: 'Core';
 				className: 'BaselineOfSUnit';
@@ -46,26 +47,20 @@ BaselineOfBasicTools >> baseline: spec [
 		spec
 			baseline: 'UI' with: [ spec repository: repository ];
 			baseline: 'Reflectivity' with: [ spec repository: repository ];
-			baseline: 'Athens' with: [ 
+			baseline: 'Athens' with: [
 				spec
 					loads: 'Cairo-core';
 					repository: repository ];
-			baseline: 'SUnit' with: [ 
+			baseline: 'SUnit' with: [
 			spec
 				loads: #( 'UI' 'JenkinsSupport' );
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
-		spec 
-			baseline: 'EnlumineurFormatter' with: [ 
-				spec
-					loads: 'Core';
-					repository: repository ].
-				
-		spec baseline: 'Refactoring' with: [
+		spec baseline: 'EnlumineurFormatter' with: [
 			spec
-				repository: repository;
-				loads: #( 'Core') ].
-		
+				loads: 'Core';
+				repository: repository ].
+
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
 		spec package: 'NECompletion'.
@@ -76,7 +71,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Metacello-Reference'.
 		spec package: 'Metacello-Tutorial'.
 		spec package: 'MonticelloGUI'.
-		spec package: 'Monticello-GUI-Diff' with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI') ].
+		spec package: 'Monticello-GUI-Diff' with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI' ) ].
 		spec package: 'System-Changes-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Announcements-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
@@ -86,11 +81,17 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'ProfStef-Core'.
+
+		spec baseline: 'Refactoring' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
+
 		spec package: 'Monticello-BackwardCompatibility'.
 		spec package: 'MonticelloFileServices'.
-		
+
 		self specRefactoring: spec.
-		
+
 		spec package: 'Tools-CodeNavigation'.
 		spec package: 'Tool-Diff'.
 		spec package: 'Tool-FileList'.

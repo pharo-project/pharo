@@ -11,7 +11,6 @@ BaselineOfRefactoring >> baseline: spec [
 
 	<baseline>
 	spec
-	
 		package: 'Refactoring-Environment';
 		package: 'Refactoring-Changes' with: [ spec requires: #( 'Refactoring-Environment' ) ];
 		package: 'Refactoring-Core' with: [ spec requires: #( 'Refactoring-Changes' ) ];
