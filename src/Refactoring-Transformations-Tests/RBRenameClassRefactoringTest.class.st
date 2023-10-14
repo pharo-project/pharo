@@ -62,7 +62,7 @@ RBRenameClassRefactoringTest >> testRefactoring [
 			superclass: Object;
 			name: #Foo;
 			slots: { #a };
-			package: #'Refactoring2-Refactorings-Tests' ].
+			package: #'Refactoring-Refactorings-Tests' ].
 
 	class := model classNamed: #Foo.
 	class
