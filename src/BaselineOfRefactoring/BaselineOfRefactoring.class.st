@@ -24,8 +24,8 @@ BaselineOfRefactoring >> baseline: spec [
 		package: 'Refactoring-Tests-Changes' with: [ spec requires: #( 'Refactoring-Changes' ) ];
 		package: 'Refactoring-Tests-Critics';
 		package: 'Refactoring-Tests-Environment' with: [ spec requires: #( 'Refactoring-Environment' ) ];
-		package: 'Refactoring2-Transformations-Tests' with: [ spec requires: #( 'Refactoring2-Transformation' ) ];
+		package: 'Refactoring-Transformations-Tests' with: [ spec requires: #( 'Refactoring-Transformation' ) ];
 		
-		group: 'Core' with: #('Refactoring-Changes' 'Refactoring-Core' 'Refactoring-UI' 'Refactoring-Environment' 'Refactoring2-Transformations');
-		group: 'Tests' with: #( 'Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment' 'Refactoring-UI-Tests'  'Refactoring2-Transformations-Tests')
+		group: 'Core' with: #('Refactoring-Changes' 'Refactoring-Core' 'Refactoring-UI' 'Refactoring-Environment' 'Refactoring-Transformations');
+		group: 'Tests' with: #( 'Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment' 'Refactoring-UI-Tests'  'Refactoring-Transformations-Tests')
 ]
