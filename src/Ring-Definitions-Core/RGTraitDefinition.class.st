@@ -18,15 +18,12 @@ Class {
 
 { #category : 'accessing' }
 RGTraitDefinition >> category [
-	"Retrieves the tag-package associated to the receiver"
 
 	^ category ifNil: [
-		  (self packageTag isNotNil and: [ self package isNotNil ])
-			  ifFalse: [ nil ]
-			  ifTrue: [
-				  self packageTag = self package
-					  ifTrue: [ self package ]
-					  ifFalse: [ self package , '-' , self packageTag ] ] ]
+		  self package ifNotNil: [ :aPackage |
+			  self packageTag
+				  ifNil: [ aPackage ]
+				  ifNotNil: [ :tag | aPackage , '-' , tag ] ] ]
 ]
 
 { #category : 'accessing' }

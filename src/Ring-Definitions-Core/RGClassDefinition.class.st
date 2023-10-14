@@ -115,15 +115,12 @@ RGClassDefinition >> allSharedPools [
 
 { #category : 'accessing' }
 RGClassDefinition >> category [
-	"retrieves a tag for its package"
 
 	^ category ifNil: [
-		  (self packageTag isNotNil and: [ self package isNotNil ])
-			  ifFalse: [ nil ]
-			  ifTrue: [
-				  self packageTag = self package
-					  ifTrue: [ self package ]
-					  ifFalse: [ self package , '-' , self packageTag ] ] ]
+		  self package ifNotNil: [ :aPackage |
+			  self packageTag
+				  ifNil: [ aPackage ]
+				  ifNotNil: [ :tag | aPackage , '-' , tag ] ] ]
 ]
 
 { #category : 'accessing' }
