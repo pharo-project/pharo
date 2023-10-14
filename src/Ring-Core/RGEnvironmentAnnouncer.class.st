@@ -69,15 +69,6 @@ RGEnvironmentAnnouncer >> behaviorParentRenamed: anRGBehavior from: oldName [
 ]
 
 { #category : 'triggering' }
-RGEnvironmentAnnouncer >> behaviorRecategorized: anRGBehavior [
-
-	self announce: (ClassRecategorized
-		class: anRGBehavior
-		recategorizedFrom: nil
-		to: anRGBehavior category)
-]
-
-{ #category : 'triggering' }
 RGEnvironmentAnnouncer >> behaviorRemoved: anRGBehavior [
 
 	self announce: (ClassRemoved class: anRGBehavior packageTag: anRGBehavior packageTag)
