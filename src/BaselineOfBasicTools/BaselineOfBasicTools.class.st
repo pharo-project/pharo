@@ -60,6 +60,11 @@ BaselineOfBasicTools >> baseline: spec [
 				spec
 					loads: 'Core';
 					repository: repository ].
+				
+		spec baseline: 'Refactoring' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core') ].
 		
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
@@ -81,10 +86,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'ProfStef-Core'.
-		spec package: 'Refactoring-Changes'.
-		spec package: 'Refactoring-Core'.
-		spec package: 'Refactoring-UI'.
-		spec package: 'Refactoring-Environment'.
 		spec package: 'Monticello-BackwardCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		

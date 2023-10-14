@@ -79,7 +79,11 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'tests' ) ].
-
+			
+		spec baseline: 'Refactoring' with: [
+			spec
+				repository: repository;
+				loads: #( 'Tests') ].
 
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
@@ -103,7 +107,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'EmergencyDebugger' with: [ spec repository: repository ].
-		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'Fuel' with: [
@@ -126,7 +129,6 @@ BaselineOfIDE >> baseline: spec [
 		spec
 			baseline: 'ReferenceFinder'
 			with: [ spec repository: repository ].
-		spec baseline: 'Refactoring2' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 		spec baseline: 'Calypso' with: [
 			spec
