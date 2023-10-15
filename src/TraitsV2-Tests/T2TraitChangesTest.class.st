@@ -9,7 +9,10 @@ Class {
 T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
-	t1 := self makeTrait: [ :aClassBuilder | aClassBuilder name: #T1 ].
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      traitComposition: TEmpty ].
 
 	builder := ShiftClassBuilder new
 		           name: #T1;
@@ -31,7 +34,10 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
-	t1 := self makeTrait: [ :aClassBuilder | aClassBuilder name: #T1 ].
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      traitComposition: TEmpty ].
 
 	builder := ShiftClassBuilder new
 		           name: #T1;
