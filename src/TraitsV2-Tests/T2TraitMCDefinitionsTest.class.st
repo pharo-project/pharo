@@ -182,9 +182,14 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitWithSlots [
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClass [
+
 	| c1 definition t1 |
-	t1 := self newTrait: #T1 with: #(x y z).
-	c1 := self newClass: #C1 with: #(a b c) uses: t1.
+	t1 := self newTrait: #T1 with: #( x y z ).
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( a b c );
+			      traits: t1 ].
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: 'a b c'.
@@ -195,9 +200,18 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClass [
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClassWithSlots [
+
 	| c1 definition t1 |
-	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }.
-	c1 := self newClass: #C1 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
+	t1 := self newTrait: #T1 with: {
+			      (#x => PropertySlot).
+			      (#y => PropertySlot) }.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: {
+					      (#a => PropertySlot).
+					      (#b => PropertySlot) };
+			      traits: t1 ].
 
 	definition := c1 asClassDefinition.
 

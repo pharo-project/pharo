@@ -177,20 +177,28 @@ T2TraitTest >> testEmptyCompositionManagesTEmpty [
 
 { #category : 'tests' }
 T2TraitTest >> testIndirectSequence [
-	| t1 t2 t3 c1 obj |
-	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2)>
 
+	<ignoreNotImplementedSelectors: #( setValues setValues2 getValues getValues2 )>
+	| t1 t2 t3 c1 obj |
 	t1 := self createT1.
 	t2 := self createT2.
-	t3 := self newTrait: #T3 with: #() uses: t1 + t2.
+	t3 := self newTrait: #T3 with: #(  ) uses: t1 + t2.
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t3.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t3 ].
 
 	obj := c1 new.
 	obj setValues.
 	obj setValues2.
 
-	self assert: (TraitedClass basicUsers includesAll:  { t1 class. t2 class. t3 class. c1 class}).
+	self assert: (TraitedClass basicUsers includesAll: {
+				 t1 class.
+				 t2 class.
+				 t3 class.
+				 c1 class }).
 
 	self assert: obj getValues equals: 6.
 	self assert: obj getValues2 equals: 12
@@ -198,23 +206,35 @@ T2TraitTest >> testIndirectSequence [
 
 { #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclass [
-	| t1 c1 |
 
+	| t1 c1 |
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 ].
 
 	self assertCollection: c1 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
 { #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
+
 	| t1 c1 c2 |
-
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
-	c2 := self newClass: #C2 superclass: c1 with: #() uses: {}.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 ].
+	c2 := self
+		      newClass: #C2
+		      superclass: c1
+		      with: #(  )
+		      uses: {  }.
 
-	self assertCollection: c2 class selectors sorted equals: #()
+	self assertCollection: c2 class selectors sorted equals: #(  )
 ]
 
 { #category : 'tests' }
@@ -224,7 +244,11 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperc
 	t1 := self createT1.
 	t2 := self createT2.
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 ].
 	c2 := self
 		      newClass: #C2
 		      superclass: c1
@@ -247,7 +271,11 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 	t1 := self createT1.
 	t2 := self createT2.
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 ].
 	c2 := self
 		      newClass: #C2
 		      superclass: c1
@@ -280,7 +308,11 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 	| t1 t2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 + t2 ].
 
 	self assert: (c1 class includesSelector: #traits).
 
@@ -298,7 +330,11 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 	| t1 t2 c2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 ].
 	c2 := self
 		      newClass: #C2
 		      superclass: c1
@@ -323,7 +359,11 @@ T2TraitTest >> testRemovingTraitsUpdatesCategories [
 	| t1 t2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 + t2 ].
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
 			      name: #C1;
@@ -363,19 +403,26 @@ T2TraitTest >> testSelectorsWithExplicitOriginNoTrait [
 
 { #category : 'tests' }
 T2TraitTest >> testSequence [
-	| t1 t2 c1 obj |
-	<ignoreNotImplementedSelectors: #(setValues setValues2 getValues getValues2 )>
 
+	<ignoreNotImplementedSelectors: #( setValues setValues2 getValues getValues2 )>
+	| t1 t2 c1 obj |
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection;
+			      traits: t1 + t2 ].
 
 	obj := c1 new.
 	obj setValues.
 	obj setValues2.
 
 
-	self assert: (TraitedClass basicUsers includesAll:  { t1 class. t2 class. c1 class}).
+	self assert: (TraitedClass basicUsers includesAll: {
+				 t1 class.
+				 t2 class.
+				 c1 class }).
 
 	self assert: obj getValues equals: 6.
 	self assert: obj getValues2 equals: 12

@@ -18,7 +18,11 @@ T2TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
 
 	t1 compile: 'm1 ^42'.
 
-	c1 := self newClass: #C1 with: #( aSlot ) uses: t2 + t1.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot );
+			      traits: t2 + t1 ].
 
 	self assert: c1 new m1 equals: 42
 ]
@@ -37,7 +41,11 @@ T2TraitWithConflictsTest >> testComplexDependencyIsNotConflict [
 
 	t1 compile: 'm1 ^42'.
 
-	c1 := self newClass: #C1 with: #( aSlot ) uses: t6 + t1.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot );
+			      traits: t6 + t1 ].
 
 	self assert: c1 new m1 equals: 42
 ]
@@ -52,7 +60,11 @@ T2TraitWithConflictsTest >> testDiamonProblemIsNotConflict [
 
 	t1 compile: 'm1 ^42'.
 
-	c1 := self newClass: #C1 with: #( aSlot ) uses: t2 + t3.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot );
+			      traits: t2 + t3 ].
 
 	self assert: (c1 new perform: #m1) equals: 42
 ]
@@ -68,7 +80,11 @@ T2TraitWithConflictsTest >> testDifferentMethodsAreConflict [
 	t1 compile: 'm1 ^42'.
 	t2 compile: 'm1 ^43'.
 
-	c1 := self newClass: #C1 with: #( aSlot ) uses: t1 + t2.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot );
+			      traits: t1 + t2 ].
 
 	self should: [ c1 new m1 ] raise: Error
 ]
@@ -83,7 +99,11 @@ T2TraitWithConflictsTest >> testNonConflictingTraitsAreNotConflict [
 	t1 compile: 'm1 ^42'.
 	t2 compile: 'm2 ^43'.
 
-	c1 := self newClass: #C1 with: #( aSlot ) uses: t1 + t2.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot );
+			      traits: t1 + t2 ].
 
 	self assert: (c1 new perform: #m1) equals: 42.
 	self assert: (c1 new perform: #m2) equals: 43
@@ -100,7 +120,11 @@ T2TraitWithConflictsTest >> testSameSourceButDifferentMethodsAreConflict [
 	t1 compile: 'm1 ^42'.
 	t2 compile: 'm1 ^42'.
 
-	c1 := self newClass: #C1 with: #( aSlot ) uses: t1 + t2.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot );
+			      traits: t1 + t2 ].
 
 	self should: [ c1 new m1 ] raise: Error
 ]

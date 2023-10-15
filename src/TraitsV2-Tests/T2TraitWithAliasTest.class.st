@@ -92,18 +92,21 @@ T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 T2TraitWithAliasTest >> testChangingDeleteSlotAddVar [
 
 	| t1 c1 |
-
-	t1 := self newTrait: #T1 with: #(ivar).
+	t1 := self newTrait: #T1 with: #( ivar ).
 	t1 compile: 'ivar ^ ivar'.
 
-	c1 := self newClass: #C1 with: #(ivar) uses: t1 -- {#ivar}.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( ivar );
+			      traits: t1 -- { #ivar } ].
 
 	"we got the method #ivar from the Trait"
 	self assert: (c1 includesSelector: #ivar).
 	"the slot that we got from the trait is now removed"
-	self assert: c1 slotNames equals: #(ivar).
+	self assert: c1 slotNames equals: #( ivar ).
 	"make sure to not modify the Trait"
-	self assert: t1 slotNames equals: #(ivar)
+	self assert: t1 slotNames equals: #( ivar )
 ]
 
 { #category : 'tests' }
