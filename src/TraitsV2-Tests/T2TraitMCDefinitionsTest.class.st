@@ -10,27 +10,40 @@ Class {
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionHasCorrectString [
+
 	| t2 definition t1 definitionString |
-	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }.
-	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
+	t1 := self newTrait: #T1 with: {
+			      (#x => PropertySlot).
+			      (#y => PropertySlot) }.
+	t2 := self
+		      newTrait: #T2
+		      with: {
+				      (#a => PropertySlot).
+				      (#b => PropertySlot) }
+		      uses: t1.
 
 	definition := t2 asClassDefinition.
 	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
 
- 	self assert: (definitionString reject: [ :each | each isSeparator]) equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''#a=>PropertySlot#b=>PropertySlot''package:''TraitsV2-Tests-TestClasses'''
+	self
+		assert: (definitionString reject: [ :each | each isSeparator ])
+		equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''#a=>PropertySlot#b=>PropertySlot''package:''' , self packageNameForTests , ''''
 	"We cannot use the class printer because this is a mix between instancevariableNames and complex slot."
 ]
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionHasCorrectStringWithoutSlots [
+
 	| t2 definition t1 definitionString |
-	t1 := self newTrait: #T1 with: {}.
-	t2 := self newTrait: #T2 with: {#a. #b } uses: t1.
+	t1 := self newTrait: #T1 with: {  }.
+	t2 := self newTrait: #T2 with: { #a. #b } uses: t1.
 
 	definition := t2 asClassDefinition.
 	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
 
-	self assert: (definitionString reject: [ :each | each isSeparator ]) equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''ab''package:''TraitsV2-Tests-TestClasses'''
+	self
+		assert: (definitionString reject: [ :each | each isSeparator ])
+		equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''ab''package:''' , self packageNameForTests , ''''
 
 
 	"We cannot use ((ClassDefinitionPrinter oldPharo for: t2) definitionString reject: [ :each | each isSeparator ])

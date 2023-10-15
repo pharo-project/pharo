@@ -150,7 +150,7 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: categ
 { #category : 'instance creation' }
 T2AbstractTest >> packageNameForTests [
 
-	^ 'TraitsV2-Tests-TestClasses'
+	^ #'Generated-Trait-Test-Package'
 ]
 
 { #category : 'running' }
@@ -162,7 +162,7 @@ T2AbstractTest >> setUp [
 { #category : 'running' }
 T2AbstractTest >> tearDown [
 	createdClasses reverseDo: #removeFromSystem.
-	createdClasses := nil.
+	self packageOrganizer removePackage: self packageNameForTests.
 
 	super tearDown
 ]
