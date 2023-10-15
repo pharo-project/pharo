@@ -142,7 +142,7 @@ BaselineOfIDE >> baseline: spec [
 		self beautifulComments: spec.
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
-		self roassal3: spec.
+		self roassal: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
@@ -224,7 +224,7 @@ BaselineOfIDE >> loadIceberg [
 	self registerPharo.
 	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
 	self registerProject: 'NewTools'.
-	self registerProject: 'Roassal3'.
+	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
 	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
@@ -401,13 +401,13 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 ]
 
 { #category : 'baselines' }
-BaselineOfIDE >> roassal3: spec [
+BaselineOfIDE >> roassal: spec [
 
 	spec 
-		baseline: 'Roassal3' 
+		baseline: 'Roassal' 
  		with: [ 
 			spec 
-				repository: (self class environment at: #BaselineOfPharo) roassal3Repository;
+				repository: (self class environment at: #BaselineOfPharo) roassalRepository;
     			loads: #( 'Core' 'Tests') ]
 ]
 
