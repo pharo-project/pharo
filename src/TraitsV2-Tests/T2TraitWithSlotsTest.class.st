@@ -32,7 +32,10 @@ T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 
 	| t1 c1 obj |
 	t1 := self newTrait: #T1 with: #( aSlot ).
-	c1 := self newClass: #C1 with: #( anotherSlot ).
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( anotherSlot ) ].
 
 	obj := c1 new.
 

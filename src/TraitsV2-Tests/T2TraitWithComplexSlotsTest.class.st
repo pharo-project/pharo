@@ -34,9 +34,12 @@ T2TraitWithComplexSlotsTest >> testNormalClassWithComplexSlot [
 	<ignoreNotImplementedSelectors: #( associatedSlotName: )>
 	| c1 obj |
 	self createSlotClass.
-	c1 := self newClass: #C1 with: {
-			      #aSlot.
-			      (#otherSlot => (slotClass associatedSlotName: #aSlot)) }.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: {
+					      #aSlot.
+					      (#otherSlot => (slotClass associatedSlotName: #aSlot)) } ].
 	c1 compile: 'initialize
 		aSlot := 0'.
 	c1 compile: 'doSomething

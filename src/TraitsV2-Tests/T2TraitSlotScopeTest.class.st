@@ -39,7 +39,10 @@ T2TraitSlotScopeTest >> testSubClassAndAddComplexTraitAfter [
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 
-	c1 := self newClass: #C1 with: #( aSlot ).
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot ) ].
 	c2 := self
 		      newClass: #C2
 		      superclass: c1
@@ -61,7 +64,10 @@ T2TraitSlotScopeTest >> testSubClassAndAddTraitAfter [
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 
-	c1 := self newClass: #C1 with: #( aSlot ).
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( aSlot ) ].
 	c2 := self
 		      newClass: #C2
 		      superclass: c1

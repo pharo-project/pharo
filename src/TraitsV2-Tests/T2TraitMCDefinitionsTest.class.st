@@ -93,7 +93,10 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorr
 T2TraitMCDefinitionsTest >> testDefinitionOfNormalClass [
 
 	| c1 definition |
-	c1 := self newClass: #C1 with: #( a b c ).
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: #( a b c ) ].
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: 'a b c'.
@@ -106,9 +109,12 @@ T2TraitMCDefinitionsTest >> testDefinitionOfNormalClass [
 T2TraitMCDefinitionsTest >> testDefinitionOfNormalClassWithSlots [
 
 	| c1 definition |
-	c1 := self newClass: #C1 with: {
-			      (#a => PropertySlot).
-			      (#b => PropertySlot) }.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: {
+					      (#a => PropertySlot).
+					      (#b => PropertySlot) } ].
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: '#a => PropertySlot #b => PropertySlot'.
@@ -160,9 +166,12 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTraitWithSlots [
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitWithSlots [
 
 	| t1 definition |
-	t1 := self newClass: #C1 with: {
-			      (#a => PropertySlot).
-			      (#b => PropertySlot) }.
+	t1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: {
+					      (#a => PropertySlot).
+					      (#b => PropertySlot) } ].
 
 	definition := t1 asClassDefinition.
 

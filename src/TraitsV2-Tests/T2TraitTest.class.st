@@ -232,7 +232,10 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperc
 		      uses: { t2 }.
 
 	self assertCollection: c2 class selectors sorted equals: #(  ).
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection ].
 
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
 ]
@@ -281,7 +284,10 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 
 	self assert: (c1 class includesSelector: #traits).
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection ].
 
 	self deny: (c1 class includesSelector: #traits)
 ]
@@ -302,7 +308,10 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 	self assert: (c1 class includesSelector: #traits).
 	self deny: (c2 class includesSelector: #traits).
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection ].
 
 	self deny: (c1 class includesSelector: #traits).
 	self assert: (c2 class includesSelector: #traits)
@@ -315,7 +324,10 @@ T2TraitTest >> testRemovingTraitsUpdatesCategories [
 	t1 := self createT1.
 	t2 := self createT2.
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      slots: 'g h' asSlotCollection ].
 
 	c1 selectors do: [ :selector | self assert: (c1 includesSelector: selector) ].
 	c1 class selectors do: [ :selector | self assert: (c1 class includesSelector: selector) ]
