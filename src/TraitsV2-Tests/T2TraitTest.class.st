@@ -29,18 +29,15 @@ T2TraitTest >> createT1 [
 
 { #category : 'tests' }
 T2TraitTest >> createT2 [
+
 	| t2 |
 	t2 := self newTrait: #T2 with: 'd e f' asSlotCollection.
-	t2
-		compile:
-			'setValues2
+	t2 compile: 'setValues2
 		d := 1.
 		e := 2.
 		f := 3.
 	'.
-	t2
-		compile:
-			'getValues2
+	t2 compile: 'getValues2
 		^ d + e + f + self getValues
 	'.
 	^ t2
@@ -48,21 +45,17 @@ T2TraitTest >> createT2 [
 
 { #category : 'tests' }
 T2TraitTest >> createT3 [
-	| t3 |
 
+	| t3 |
 	"This is a trait with a method with a pragma"
-	t3 := self newTrait: #T3 with: #().
-	t3
-		compile:
-			'aMethod
+	t3 := self makeTrait: [ :builder | builder name: #T3 ].
+	t3 compile: 'aMethod
 			<aPragma>
 
 			^ 42
 				'.
 
-	t3 class
-		compile:
-			'aClassMethod
+	t3 class compile: 'aClassMethod
 			<aPragma>
 
 			^ 42
@@ -104,8 +97,8 @@ T2TraitTest >> testClassTraits [
 
 	<ignoreNotImplementedSelectors: #( otherSelector otherSelector2 anAlias aSelector )>
 	| t1 t2 aClass |
-	t1 := self newTrait: #T1 with: #(  ).
-	t2 := self newTrait: #T2 with: #(  ).
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 
 	t1 classTrait compile: 'aSelector ^ 21'.
 	t1 classTrait compile: 'otherSelector ^ 42'.
@@ -134,10 +127,15 @@ T2TraitTest >> testClassTraits [
 
 { #category : 'tests' }
 T2TraitTest >> testClassUsesTrait [
+
 	| t1 superclass subclass |
-	t1 := self newTrait: #T1 with: {}.
-	superclass := self newClass: #Superclass with:#() uses: t1.
-	subclass := self newClass: #Subclass superclass: superclass with: #() uses: {}.
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	superclass := self newClass: #Superclass with: #(  ) uses: t1.
+	subclass := self
+		            newClass: #Subclass
+		            superclass: superclass
+		            with: #(  )
+		            uses: {  }.
 
 	self assert: (superclass usesTrait: t1).
 	self assert: (superclass usesTraitLocally: t1).
@@ -147,20 +145,23 @@ T2TraitTest >> testClassUsesTrait [
 
 { #category : 'tests' }
 T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
+
 	| t1 aClass |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 
-	t1 := self newTrait: #T1 with: #().
+	aClass := self newClass: #C1 with: #(  ) uses: { t1 }.
 
-	aClass := self newClass: #C1 with: #() uses: {t1}.
-
-	self assert: (aClass class allSlots noneSatisfy: [:e | e name = #users])
+	self assert: (aClass class allSlots noneSatisfy: [ :e | e name = #users ])
 ]
 
 { #category : 'tests - empty' }
 T2TraitTest >> testEmptyCompositionManagesTEmpty [
 
 	| t1 |
-	t1 := self newTrait: #T1 with: {} uses: TEmpty.
+	t1 := self makeTrait: [ :builder |
+		      builder
+			      name: #T1;
+			      traits: TEmpty ].
 
 	self assert: t1 hasEmptyComposition
 ]
@@ -243,13 +244,13 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 T2TraitTest >> testRedefiningAClassAsTraitShouldRaiseError [
 
 	self make: [ :aClassBuilder | aClassBuilder name: #C1 ].
-	self should: [ self newTrait: #C1 with: #(  ) ] raise: Error
+	self should: [ self makeTrait: [ :builder | builder name: #C1 ] ] raise: Error
 ]
 
 { #category : 'tests' }
 T2TraitTest >> testRedefiningATraitAsAClassShouldRaiseError [
 
-	self newTrait: #C1 with: #(  ).
+	self makeTrait: [ :builder | builder name: #C1 ].
 	self should: [ self make: [ :aClassBuilder | aClassBuilder name: #C1 ] ] raise: Error
 ]
 
@@ -302,14 +303,14 @@ T2TraitTest >> testRemovingTraitsUpdatesCategories [
 { #category : 'tests' }
 T2TraitTest >> testSelectorsWithExplicitOrigin [
 	"Obtain the subset of selectors that are defined either locally or inherited from traits. But, exclude selectors of methods from implicit traits such as TraitedClass"
-	| t1 c1 |
 
-	t1 := self newTrait: #T1 with: #().
+	| t1 c1 |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 compile: 'instanceSideMethod'.
 	t1 class compile: 'classSideMethod'.
-	c1 := self newClass: #C1 with: #() uses: t1.
-	self assertCollection: c1 selectorsWithExplicitOrigin hasSameElements: #(instanceSideMethod).
-	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #(classSideMethod)
+	c1 := self newClass: #C1 with: #(  ) uses: t1.
+	self assertCollection: c1 selectorsWithExplicitOrigin hasSameElements: #( instanceSideMethod ).
+	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #( classSideMethod )
 ]
 
 { #category : 'tests' }
@@ -412,18 +413,17 @@ T2TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 
 { #category : 'tests' }
 T2TraitTest >> testUsingTraitInAnonymousSubClassAndRedefiningIt [
-	| t1 aClass |
 
-	t1 := self newTrait: #T1 with: #().
+	| t1 aClass |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 
 	aClass := Smalltalk anonymousClassInstaller make: [ :builder |
-		builder superclass: Object.
-		builder traitComposition: t1.
-	].
+		          builder superclass: Object.
+		          builder traitComposition: t1 ].
 
 	self deny: (Object subclasses includes: aClass).
 
-	t1 := self newTrait: #T1 with: #(aSlot).
+	t1 := self newTrait: #T1 with: #( aSlot ).
 	self assert: (aClass hasSlotNamed: #aSlot).
 
 	self deny: (Object subclasses includes: aClass)

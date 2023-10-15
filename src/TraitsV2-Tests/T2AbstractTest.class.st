@@ -23,6 +23,14 @@ T2AbstractTest >> make: aBlock [
 ]
 
 { #category : 'instance creation' }
+T2AbstractTest >> makeTrait: aBlock [
+
+	^ self make: [ :aBuilder |
+		  aBuilder beTrait.
+		  aBlock value: aBuilder ]
+]
+
+{ #category : 'instance creation' }
 T2AbstractTest >> newClass: aName [
 
 	^ self make: [ :aClassBuilder | aClassBuilder name: aName ]

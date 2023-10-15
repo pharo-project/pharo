@@ -12,11 +12,14 @@ Class {
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
-
-	t1 := self newTrait: #T1 with: #() uses: TEmpty.
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 class compile: 'msg ^ 1'.
 
-	c1 := self newClass: #C1 superclass: Object with: #() uses: t1.
+	c1 := self
+		      newClass: #C1
+		      superclass: Object
+		      with: #(  )
+		      uses: t1.
 	c1 class compile: 'msg ^ 12'.
 
 	self assert: self packageNameForTests asPackage methods size equals: 2.
@@ -28,7 +31,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
 	| c1 t1 |
-	t1 := self newTrait: #T1 with: #(  ) uses: #(  ).
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 compile: 'msg ^ 1'.
 
 	c1 := self newClass: #C1 with: #(  ) uses: t1.

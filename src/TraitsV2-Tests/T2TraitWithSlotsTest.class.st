@@ -161,10 +161,9 @@ T2TraitWithSlotsTest >> testRedefiningSuperclass [
 { #category : 'tests' }
 T2TraitWithSlotsTest >> testRedefiningTrait [
 
-| t1 |
+	| t1 |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t1 := self newTrait: #T1 with: #( aSlot ).
 
-t1 := self newTrait: #T1 with: #().
-t1 := self newTrait: #T1 with: #(aSlot).
-
-self deny: t1 slots isEmpty
+	self denyEmpty: t1 slots
 ]

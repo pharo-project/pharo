@@ -9,11 +9,10 @@ Class {
 T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 
 	| t1 c1 |
-
-	t1 := self newTrait: #T1 with: #().
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 compile: 'm1 ^ 1'.
 
-	c1 := self newClass: #C1 with: #() uses: t1 @ { #m2 -> #m1 }.
+	c1 := self newClass: #C1 with: #(  ) uses: t1 @ { (#m2 -> #m1) }.
 
 	self assert: (c1 includesSelector: #m1).
 	self assert: (c1 includesSelector: #m2)
@@ -22,12 +21,12 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 { #category : 'tests' }
 T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 
+	<ignoreNotImplementedSelectors: #( m1 m2 )>
 	| t1 c1 obj |
-	<ignoreNotImplementedSelectors: #(m1 m2)>
-	t1 := self newTrait: #T1 with: #().
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 compile: 'm1 ^ 1'.
 
-	c1 := self newClass: #C1 with: #() uses: t1 @ { #m2 -> #m1 }.
+	c1 := self newClass: #C1 with: #(  ) uses: t1 @ { (#m2 -> #m1) }.
 	obj := c1 new.
 
 	self assert: obj m1 equals: 1.

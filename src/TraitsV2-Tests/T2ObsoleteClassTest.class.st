@@ -12,8 +12,8 @@ Class {
 T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsers [
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
-	t2 := self newTrait: #T2 with: #(  ) uses: {  }.
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 
 	c1 := self newClass: #C1 with: #(  ) uses: t1 + t2.
 
@@ -30,8 +30,8 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsers [
 T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
-	t2 := self newTrait: #T2 with: #(  ) uses: {  }.
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 
 	c1 := self make: [ :aClassBuilder | aClassBuilder name: #C1 ].
 	c1 class setTraitComposition: t1 + t2.
@@ -49,8 +49,8 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 T2ObsoleteClassTest >> testObsoleteTraitIsRemovedFromUsers [
 
 	| t1 t2 t3 |
-	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
-	t2 := self newTrait: #T2 with: #(  ) uses: {  }.
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 
 	t3 := self newTrait: #T3 with: #(  ) uses: t1 + t2.
 

@@ -10,10 +10,10 @@ T2PrecedenceCompositionTest >> testClassCompositionOnPrecedenceKeepsPreference [
 
 	| t1 t2 original copy |
 
-	t1 := self newTrait: #T1 with: #() uses: #().
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() uses: #().
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 	t2 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.
@@ -31,17 +31,16 @@ T2PrecedenceCompositionTest >> testClassCompositionOnPrecedenceKeepsPreference [
 T2PrecedenceCompositionTest >> testCopyingAPrecedenceKeepsPreference [
 
 	| t1 t2 original copy |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t1 classTrait uses: {  } slots: #(  ).
 
-	t1 := self newTrait: #T1 with: #() uses: #().
-	t1 classTrait uses: {} slots: #().
-
-	t2 := self newTrait: #T2 with: #() uses: #().
-	t2 classTrait uses: {} slots: #().
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
+	t2 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	original := (t2 + t1) withPrecedenceOf: t2.
+	original := t2 + t1 withPrecedenceOf: t2.
 	copy := original copyTraitExpression.
 
 	self assert: original preferedTrait equals: copy preferedTrait
@@ -51,13 +50,13 @@ T2PrecedenceCompositionTest >> testCopyingAPrecedenceKeepsPreference [
 T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 
 	| t1 t2 t3 c1 |
-	t1 := self newTrait: #T1 with: #(  ) uses: #(  ).
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 classTrait uses: {  } slots: #(  ).
 
-	t2 := self newTrait: #T2 with: #(  ) uses: #(  ).
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 	t2 classTrait uses: {  } slots: #(  ).
 
-	t3 := self newTrait: #T3 with: #(  ) uses: #(  ).
+	t3 := self makeTrait: [ :builder | builder name: #T3 ].
 	t3 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
@@ -77,13 +76,13 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithAlias [
 
 	| t1 t2 t3 c1 |
-	t1 := self newTrait: #T1 with: #(  ) uses: #(  ).
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 classTrait uses: {  } slots: #(  ).
 
-	t2 := self newTrait: #T2 with: #(  ) uses: #(  ).
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 	t2 classTrait uses: {  } slots: #(  ).
 
-	t3 := self newTrait: #T3 with: #(  ) uses: #(  ).
+	t3 := self makeTrait: [ :builder | builder name: #T3 ].
 	t3 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
@@ -102,64 +101,63 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithA
 { #category : 'tests' }
 T2PrecedenceCompositionTest >> testPrecedencesCanBeCombined [
 
+	<ignoreNotImplementedSelectors: #( m1 m2 )>
 	| t1 t2 t3 c1 |
-	<ignoreNotImplementedSelectors: #(m1 m2)>
-	t1 := self newTrait: #T1 with: #() uses: #().
-	t1 classTrait uses: {} slots: #().
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t1 classTrait uses: {  } slots: #(  ).
 
-	t2 := self newTrait: #T2 with: #() uses: #().
-	t2 classTrait uses: {} slots: #().
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
+	t2 classTrait uses: {  } slots: #(  ).
 
-	t3 := self newTrait: #T3 with: #() uses: #().
-	t3 classTrait uses: {} slots: #().
+	t3 := self makeTrait: [ :builder | builder name: #T3 ].
+	t3 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
 	t3 compile: 'm2 ^ 11'.
 
-	c1 := self newClass: #C1 with: #() uses: (((t2 + t1) withPrecedenceOf: t2) + t3).
+	c1 := self newClass: #C1 with: #(  ) uses: (t2 + t1 withPrecedenceOf: t2) + t3.
 
-	self assert: (c1 new m1) equals: 33.
-	self assert: (c1 new m2) equals: 11
+	self assert: c1 new m1 equals: 33.
+	self assert: c1 new m2 equals: 11
 ]
 
 { #category : 'tests' }
 T2PrecedenceCompositionTest >> testWithPrecedenceIsNonAConflict [
 
 	| t1 t2 c1 |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t1 classTrait uses: {  } slots: #(  ).
 
-	t1 := self newTrait: #T1 with: #() uses: #().
-	t1 classTrait uses: {} slots: #().
-
-	t2 := self newTrait: #T2 with: #() uses: #().
-	t2 classTrait uses: {} slots: #().
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
+	t2 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	c1 := self newClass: #C1 with: #() uses: ((t1 + t2) withPrecedenceOf: t2).
+	c1 := self newClass: #C1 with: #(  ) uses: (t1 + t2 withPrecedenceOf: t2).
 
 	self deny: (c1 >> #m1) isConflict
 ]
 
 { #category : 'tests' }
 T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOne [
-	<ignoreNotImplementedSelectors: #(m1)>
+
+	<ignoreNotImplementedSelectors: #( m1 )>
 	| t1 t2 c1 |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t1 classTrait uses: {  } slots: #(  ).
 
-	t1 := self newTrait: #T1 with: #() uses: #().
-	t1 classTrait uses: {} slots: #().
-
-	t2 := self newTrait: #T2 with: #() uses: #().
-	t2 classTrait uses: {} slots: #().
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
+	t2 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	c1 := self newClass: #C1 with: #() uses: ((t1 + t2) withPrecedenceOf: t2).
+	c1 := self newClass: #C1 with: #(  ) uses: (t1 + t2 withPrecedenceOf: t2).
 
-	self assert: (c1 new m1) equals: 33
+	self assert: c1 new m1 equals: 33
 ]
 
 { #category : 'tests' }
@@ -167,10 +165,10 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOneWithoutCaring
 	<ignoreNotImplementedSelectors: #(m1)>
 	| t1 t2 c1 |
 
-	t1 := self newTrait: #T1 with: #() uses: #().
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() uses: #().
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 	t2 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.
@@ -185,17 +183,16 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOneWithoutCaring
 T2PrecedenceCompositionTest >> testWithoutPrecedenceIsAConflict [
 
 	| t1 t2 c1 |
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t1 classTrait uses: {  } slots: #(  ).
 
-	t1 := self newTrait: #T1 with: #() uses: #().
-	t1 classTrait uses: {} slots: #().
-
-	t2 := self newTrait: #T2 with: #() uses: #().
-	t2 classTrait uses: {} slots: #().
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
+	t2 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	c1 := self newClass: #C1 with: #() uses: t1 + t2.
+	c1 := self newClass: #C1 with: #(  ) uses: t1 + t2.
 
 	self assert: (c1 >> #m1) isConflict
 ]

@@ -7,40 +7,29 @@ Class {
 
 { #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> createT1 [
+
 	| t1 |
-	t1 := self newTrait: #T1 with: '' asSlotCollection.
-	t1 classTrait
-		compile:
-			'isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
+	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	t1 classTrait compile: 'isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 		"Should be removed at the end of the test"
 		^true
 	'.
-	TraitedClass
-		compile:
-			'isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
+	TraitedClass compile: 'isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 		"Should be removed at the end of the test"
 		^false
 	'.
-	Behavior
-		compile:
-			'isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
+	Behavior compile: 'isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 		"Should be removed at the end of the test"
 		^false
 	'.
 	^ t1
 ]
 
-{ #category : 'tests' }
-T2OverloadingOfMethodsInTraitedClassTest >> createT2 [
-	^ self newTrait: #T2 with: '' asSlotCollection
-]
-
 { #category : 'running' }
 T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
-	TraitedClass
-		removeSelector: #isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
-	Behavior
-		removeSelector: #isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
+
+	TraitedClass removeSelector: #isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
+	Behavior removeSelector: #isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
 	super tearDown
 ]
 
@@ -57,26 +46,19 @@ T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 
 { #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
-	<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
+
+	<ignoreNotImplementedSelectors:
+	#( isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest )>
 	| t1 t2 superclass subclass |
 	t1 := self createT1.
-	t2 := self createT2.
-	superclass := self
-		newClass: #C2Superclass
-		with: '' asSlotCollection
-		uses: t2.
+	t2 := self makeTrait: [ :builder | builder name: #T2 ].
+	superclass := self newClass: #C2Superclass with: '' asSlotCollection uses: t2.
 
 	subclass := self
-		newClass: #C1Subclass
-		superclass: superclass
-		with: '' asSlotCollection
-		uses: t1.
-	self
-		deny:
-			superclass
-				isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
-	self
-		assert:
-			subclass
-				isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
+		            newClass: #C1Subclass
+		            superclass: superclass
+		            with: '' asSlotCollection
+		            uses: t1.
+	self deny: superclass isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
+	self assert: subclass isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 ]
