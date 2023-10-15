@@ -195,12 +195,12 @@ T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
 	t2 removeFromSystem.
 
 	self assert: (self packageOrganizer packageOfClassNamed: #T1) equals: self packageForTest.
-	self assert: (self packageOrganizer packageOfClassNamed: #T2) equals: self packageOrganizer undefinedPackage.
+	self assert: (self packageOrganizer packageOfClassNamed: #T2) isUndefined.
 
 	t1 removeFromSystem.
 
-	self assert: (self packageOrganizer packageOfClassNamed: #T1) equals: self packageOrganizer undefinedPackage.
-	self assert: (self packageOrganizer packageOfClassNamed: #T2) equals: self packageOrganizer undefinedPackage
+	self assert: (self packageOrganizer packageOfClassNamed: #T1) isUndefined.
+	self assert: (self packageOrganizer packageOfClassNamed: #T2) isUndefined
 ]
 
 { #category : 'tests' }
