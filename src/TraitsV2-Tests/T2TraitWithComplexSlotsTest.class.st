@@ -30,10 +30,13 @@ T2TraitWithComplexSlotsTest >> createSlotClass [
 
 { #category : 'instance creation' }
 T2TraitWithComplexSlotsTest >> testNormalClassWithComplexSlot [
+
+	<ignoreNotImplementedSelectors: #( associatedSlotName: )>
 	| c1 obj |
-	<ignoreNotImplementedSelectors: #(associatedSlotName:)>
 	self createSlotClass.
-	c1 := self newClass: #C1 with: { #aSlot. #otherSlot => (slotClass associatedSlotName: #aSlot) } uses: #().
+	c1 := self newClass: #C1 with: {
+			      #aSlot.
+			      (#otherSlot => (slotClass associatedSlotName: #aSlot)) }.
 	c1 compile: 'initialize
 		aSlot := 0'.
 	c1 compile: 'doSomething

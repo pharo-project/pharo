@@ -15,11 +15,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 class compile: 'msg ^ 1'.
 
-	c1 := self
-		      newClass: #C1
-		      superclass: Object
-		      with: #(  )
-		      uses: t1.
+	c1 := self newClass: #C1 uses: t1.
 	c1 class compile: 'msg ^ 12'.
 
 	self assert: self packageNameForTests asPackage methods size equals: 2.
@@ -34,7 +30,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 compile: 'msg ^ 1'.
 
-	c1 := self newClass: #C1 with: #(  ) uses: t1.
+	c1 := self newClass: #C1 uses: t1.
 	c1 compile: 'msg ^ 12'.
 
 	self assert: (c1 >> #msg) origin equals: c1.

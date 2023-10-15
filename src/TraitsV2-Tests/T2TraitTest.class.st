@@ -79,11 +79,11 @@ T2TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
 
 { #category : 'tests' }
 T2TraitTest >> testClassTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
-	| t3 aClass |
 
+	| t3 aClass |
 	t3 := self createT3.
 
-	aClass := self newClass: #C1 superclass: Object with: #() uses: {t3}.
+	aClass := self newClass: #C1 uses: { t3 }.
 
 	self assert: (aClass class >> #aClassMethod) traitSource equals: t3 class asTraitComposition.
 
@@ -130,7 +130,7 @@ T2TraitTest >> testClassUsesTrait [
 
 	| t1 superclass subclass |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-	superclass := self newClass: #Superclass with: #(  ) uses: t1.
+	superclass := self newClass: #Superclass uses: t1.
 	subclass := self
 		            newClass: #Subclass
 		            superclass: superclass
@@ -149,7 +149,7 @@ T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 	| t1 aClass |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 
-	aClass := self newClass: #C1 with: #(  ) uses: { t1 }.
+	aClass := self newClass: #C1 uses: { t1 }.
 
 	self assert: (aClass class allSlots noneSatisfy: [ :e | e name = #users ])
 ]
@@ -210,31 +210,39 @@ T2TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
 
 { #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperclass [
-	| t1 c1 c2 t2 |
 
+	| t1 c1 c2 t2 |
 	t1 := self createT1.
 	t2 := self createT2.
 
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
-	c2 := self newClass: #C2 superclass: c1 with: #() uses: {t2}.
+	c2 := self
+		      newClass: #C2
+		      superclass: c1
+		      with: #(  )
+		      uses: { t2 }.
 
-	self assertCollection: c2 class selectors sorted equals: #().
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.
+	self assertCollection: c2 class selectors sorted equals: #(  ).
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
 
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
 { #category : 'tests' }
 T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperclass [
-	| t1 c1 c2 t2 |
 
+	| t1 c1 c2 t2 |
 	t1 := self createT1.
 	t2 := self createT2.
 
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
-	c2 := self newClass: #C2 superclass: c1 with: #() uses: {t2}.
+	c2 := self
+		      newClass: #C2
+		      superclass: c1
+		      with: #(  )
+		      uses: { t2 }.
 
-	self assertCollection: c2 class selectors sorted equals: #().
+	self assertEmpty: c2 class selectors.
 	c1 removeFromSystem.
 
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
@@ -256,32 +264,36 @@ T2TraitTest >> testRedefiningATraitAsAClassShouldRaiseError [
 
 { #category : 'tests' }
 T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
-	| t1 t2 c1 |
 
+	| t1 t2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
 
 	self assert: (c1 class includesSelector: #traits).
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
 
 	self deny: (c1 class includesSelector: #traits)
 ]
 
 { #category : 'tests' }
 T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
-	| t1 t2 c2 c1 |
 
+	| t1 t2 c2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1.
-	c2 := self newClass: #C2 superclass: c1 with: '' asSlotCollection uses: t2.
+	c2 := self
+		      newClass: #C2
+		      superclass: c1
+		      with: '' asSlotCollection
+		      uses: t2.
 
 	self assert: (c1 class includesSelector: #traits).
 	self deny: (c2 class includesSelector: #traits).
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
 
 	self deny: (c1 class includesSelector: #traits).
 	self assert: (c2 class includesSelector: #traits)
@@ -294,7 +306,7 @@ T2TraitTest >> testRemovingTraitsUpdatesCategories [
 	t1 := self createT1.
 	t2 := self createT2.
 	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {  }.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection.
 
 	c1 selectors do: [ :selector | self assert: (c1 includesSelector: selector) ].
 	c1 class selectors do: [ :selector | self assert: (c1 class includesSelector: selector) ]
@@ -308,7 +320,7 @@ T2TraitTest >> testSelectorsWithExplicitOrigin [
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 compile: 'instanceSideMethod'.
 	t1 class compile: 'classSideMethod'.
-	c1 := self newClass: #C1 with: #(  ) uses: t1.
+	c1 := self newClass: #C1 uses: t1.
 	self assertCollection: c1 selectorsWithExplicitOrigin hasSameElements: #( instanceSideMethod ).
 	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #( classSideMethod )
 ]
@@ -358,10 +370,11 @@ T2TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 
 { #category : 'tests' }
 T2TraitTest >> testSlotsAreNotDuplicated [
+
 	| t1 t2 c1 |
-	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
-	t2 :=  self newTrait: #T2 with: '' asSlotCollection uses: t1.
-	c1 := self newClass: #C1 with: '' asSlotCollection uses: t1 + t2.
+	t1 := self newTrait: #T1 with: 'a' asSlotCollection.
+	t2 := self newTrait: #T2 with: '' asSlotCollection uses: t1.
+	c1 := self newClass: #C1 uses: t1 + t2.
 
 	self assert: c1 traitComposition slots size equals: c1 traitComposition slots asSet size.
 	self assert: c1 traitComposition slots size equals: 1
@@ -386,23 +399,23 @@ T2TraitTest >> testSubclasses [
 
 { #category : 'tests' }
 T2TraitTest >> testTraitHaveUsersInstanceVariable [
+
 	| t1 aClass |
+	t1 := self newTrait: #T1 with: #( users ).
 
-	t1 := self newTrait: #T1 with: #(users).
+	aClass := self newClass: #C1 uses: { t1 }.
 
-	aClass := self newClass: #C1 with: #() uses: {t1}.
-
-	self assert: (aClass allSlots anySatisfy: [:e | e name = #users]).
+	self assert: (aClass allSlots anySatisfy: [ :e | e name = #users ]).
 	self assert: (aClass slotNamed: #users) definingClass equals: t1
 ]
 
 { #category : 'tests' }
 T2TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
-	| t3 aClass |
 
+	| t3 aClass |
 	t3 := self createT3.
 
-	aClass := self newClass: #C1 with: #() uses: {t3}.
+	aClass := self newClass: #C1 uses: { t3 }.
 
 	self assert: (aClass >> #aMethod) traitSource equals: t3 asTraitComposition.
 

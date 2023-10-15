@@ -35,13 +35,12 @@ T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
 
 { #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
-		<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
+
+	<ignoreNotImplementedSelectors: #( isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest )>
 	| t1 c1 |
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: '' asSlotCollection uses: t1.
-	self
-		assert:
-			c1 isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
+	c1 := self newClass: #C1 uses: t1.
+	self assert: c1 isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 ]
 
 { #category : 'tests' }
@@ -52,7 +51,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
 	| t1 t2 superclass subclass |
 	t1 := self createT1.
 	t2 := self makeTrait: [ :builder | builder name: #T2 ].
-	superclass := self newClass: #C2Superclass with: '' asSlotCollection uses: t2.
+	superclass := self newClass: #C2Superclass asSlotCollection uses: t2.
 
 	subclass := self
 		            newClass: #C1Subclass

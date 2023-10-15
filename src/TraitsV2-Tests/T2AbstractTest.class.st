@@ -31,37 +31,42 @@ T2AbstractTest >> makeTrait: aBlock [
 ]
 
 { #category : 'instance creation' }
-T2AbstractTest >> newClass: aName [
-
-	^ self make: [ :aClassBuilder | aClassBuilder name: aName ]
-]
-
-{ #category : 'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition [
 
-	^ self class classInstaller make: [ :aClassBuilder |
+	^ self make: [ :aClassBuilder |
 		  aClassBuilder
 			  name: aName;
 			  superclass: aSuperclass;
 			  slots: slots;
-			  traitComposition: aComposition;
-			  package: self packageNameForTests ]
+			  traitComposition: aComposition ]
 ]
 
 { #category : 'instance creation' }
-T2AbstractTest >> newClass: aName with: slots trait: aComposition [
+T2AbstractTest >> newClass: aName uses: aComposition [
 
-	^ self class classInstaller make: [ :aClassBuilder |
+	^ self make: [ :aClassBuilder |
 		  aClassBuilder
 			  name: aName;
-			  slots: slots;
-			  traitComposition: aComposition;
-			  package: self packageNameForTests ]
+			  traitComposition: aComposition ]
+]
+
+{ #category : 'instance creation' }
+T2AbstractTest >> newClass: aName with: slots [
+
+	^ self make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  slots: slots ]
 ]
 
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName with: slots uses: aComposition [
-	^ self newClass: aName superclass: Object with: slots uses: aComposition
+
+	^ self make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  slots: slots;
+			  traitComposition: aComposition ]
 ]
 
 { #category : 'instance creation' }

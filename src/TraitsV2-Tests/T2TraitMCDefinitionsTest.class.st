@@ -91,8 +91,9 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorr
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfNormalClass [
+
 	| c1 definition |
-	c1 := self newClass: #C1 with: #(a b c) uses: {}.
+	c1 := self newClass: #C1 with: #( a b c ).
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: 'a b c'.
@@ -103,8 +104,11 @@ T2TraitMCDefinitionsTest >> testDefinitionOfNormalClass [
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfNormalClassWithSlots [
+
 	| c1 definition |
-	c1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } uses: {}.
+	c1 := self newClass: #C1 with: {
+			      (#a => PropertySlot).
+			      (#b => PropertySlot) }.
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: '#a => PropertySlot #b => PropertySlot'.
@@ -154,8 +158,11 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTraitWithSlots [
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitWithSlots [
-	| t1  definition |
-	t1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } uses: {}.
+
+	| t1 definition |
+	t1 := self newClass: #C1 with: {
+			      (#a => PropertySlot).
+			      (#b => PropertySlot) }.
 
 	definition := t1 asClassDefinition.
 
