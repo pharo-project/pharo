@@ -31,11 +31,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 	t1 := self newTrait: #T1 with: #(  ) uses: #(  ).
 	t1 compile: 'msg ^ 1'.
 
-	c1 := self
-		      newClass: #C1
-		      superclass: Object
-		      with: #(  )
-		      uses: t1.
+	c1 := self newClass: #C1 with: #(  ) uses: t1.
 	c1 compile: 'msg ^ 12'.
 
 	self assert: (c1 >> #msg) origin equals: c1.

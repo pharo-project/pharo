@@ -33,7 +33,7 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
 	t2 := self newTrait: #T2 with: #(  ) uses: {  }.
 
-	c1 := self newClass: #C1 with: #(  ) uses: {  }.
+	c1 := self make: [ :aClassBuilder | aClassBuilder name: #C1 ].
 	c1 class setTraitComposition: t1 + t2.
 
 	self assert: (t1 users includes: c1 class).

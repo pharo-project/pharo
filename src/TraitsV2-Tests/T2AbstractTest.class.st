@@ -15,8 +15,17 @@ T2AbstractTest class >> isAbstract [
 ]
 
 { #category : 'instance creation' }
+T2AbstractTest >> make: aBlock [
+
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder package: self packageNameForTests.
+		  aBlock value: aBuilder ]
+]
+
+{ #category : 'instance creation' }
 T2AbstractTest >> newClass: aName [
-	^self newClass: aName with: #() trait: TEmpty
+
+	^ self make: [ :aClassBuilder | aClassBuilder name: aName ]
 ]
 
 { #category : 'instance creation' }
@@ -33,7 +42,13 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aCom
 
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName with: slots trait: aComposition [
-	^ self newClass: aName superclass: Object with: slots uses: aComposition
+
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  slots: slots;
+			  traitComposition: aComposition;
+			  package: self packageNameForTests ]
 ]
 
 { #category : 'instance creation' }

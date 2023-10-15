@@ -29,7 +29,7 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass [
 T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass2 [
 
 	| t1 c1 c2 |
-	c1 := self newClass: #C1 with: #(  ) uses: {  }.
+	c1 := self make: [ :aClassBuilder | aClassBuilder name: #C1 ].
 	c2 := self
 		      newClass: #C2
 		      superclass: c1
