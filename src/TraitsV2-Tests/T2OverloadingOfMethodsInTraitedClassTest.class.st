@@ -51,7 +51,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
 	| t1 t2 superclass subclass |
 	t1 := self createT1.
 	t2 := self makeTrait: [ :builder | builder name: #T2 ].
-	superclass := self newClass: #C2Superclass asSlotCollection uses: t2.
+	superclass := self newClass: #C2Superclass uses: t2.
 
 	subclass := self
 		            newClass: #C1Subclass
