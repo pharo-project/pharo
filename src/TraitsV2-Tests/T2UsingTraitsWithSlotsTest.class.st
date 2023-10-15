@@ -11,7 +11,10 @@ T2UsingTraitsWithSlotsTest >> testRedefinitionKeepsSlots [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #( a b c ).
 	t1 classTrait slots: #( aSlot ).
-	c1 := self newClass: #C1 uses: { t1 }.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      traits: { t1 } ].
 
 	self assertEmpty: c1 localSlots.
 	self assertEmpty: c1 class localSlots.

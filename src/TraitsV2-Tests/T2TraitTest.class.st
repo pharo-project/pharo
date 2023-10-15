@@ -83,7 +83,10 @@ T2TraitTest >> testClassTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	| t3 aClass |
 	t3 := self createT3.
 
-	aClass := self newClass: #C1 uses: { t3 }.
+	aClass := self make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #C1;
+			          traits: { t3 } ].
 
 	self assert: (aClass class >> #aClassMethod) traitSource equals: t3 class asTraitComposition.
 
@@ -130,7 +133,10 @@ T2TraitTest >> testClassUsesTrait [
 
 	| t1 superclass subclass |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-	superclass := self newClass: #Superclass uses: t1.
+	superclass := self make: [ :aClassBuilder |
+		              aClassBuilder
+			              name: #Superclass;
+			              traits: t1 ].
 	subclass := self
 		            newClass: #Subclass
 		            superclass: superclass
@@ -149,7 +155,10 @@ T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 	| t1 aClass |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 
-	aClass := self newClass: #C1 uses: { t1 }.
+	aClass := self make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #C1;
+			          traits: { t1 } ].
 
 	self assert: (aClass class allSlots noneSatisfy: [ :e | e name = #users ])
 ]
@@ -320,7 +329,10 @@ T2TraitTest >> testSelectorsWithExplicitOrigin [
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t1 compile: 'instanceSideMethod'.
 	t1 class compile: 'classSideMethod'.
-	c1 := self newClass: #C1 uses: t1.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      traits: t1 ].
 	self assertCollection: c1 selectorsWithExplicitOrigin hasSameElements: #( instanceSideMethod ).
 	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #( classSideMethod )
 ]
@@ -374,7 +386,10 @@ T2TraitTest >> testSlotsAreNotDuplicated [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: 'a' asSlotCollection.
 	t2 := self newTrait: #T2 with: '' asSlotCollection uses: t1.
-	c1 := self newClass: #C1 uses: t1 + t2.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      traits: t1 + t2 ].
 
 	self assert: c1 traitComposition slots size equals: c1 traitComposition slots asSet size.
 	self assert: c1 traitComposition slots size equals: 1
@@ -403,7 +418,10 @@ T2TraitTest >> testTraitHaveUsersInstanceVariable [
 	| t1 aClass |
 	t1 := self newTrait: #T1 with: #( users ).
 
-	aClass := self newClass: #C1 uses: { t1 }.
+	aClass := self make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #C1;
+			          traits: { t1 } ].
 
 	self assert: (aClass allSlots anySatisfy: [ :e | e name = #users ]).
 	self assert: (aClass slotNamed: #users) definingClass equals: t1
@@ -415,7 +433,10 @@ T2TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	| t3 aClass |
 	t3 := self createT3.
 
-	aClass := self newClass: #C1 uses: { t3 }.
+	aClass := self make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #C1;
+			          traits: { t3 } ].
 
 	self assert: (aClass >> #aMethod) traitSource equals: t3 asTraitComposition.
 

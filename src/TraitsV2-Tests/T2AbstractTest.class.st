@@ -44,6 +44,10 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aCom
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName uses: aComposition [
 
+	self deprecated: '' transformWith: '`@rcv newClass: `@name uses: `@traits' -> '`@rcv make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: `@name;
+			  traits: `@traits ]'.
 	^ self make: [ :aClassBuilder |
 		  aClassBuilder
 			  name: aName;

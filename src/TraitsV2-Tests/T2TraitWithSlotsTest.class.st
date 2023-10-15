@@ -48,7 +48,10 @@ T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #( aSlot ).
-	c1 := self newClass: #C1 uses: { t1 }.
+	c1 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C1;
+			      traits: { t1 } ].
 
 	self assertCollection: c1 slots hasSameElements: { (c1 slotNamed: #aSlot) }
 ]
