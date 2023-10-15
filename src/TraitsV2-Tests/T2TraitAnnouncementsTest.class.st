@@ -13,7 +13,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
 
-	t1 := self newTrait: #T1 with: #() trait: TEmpty category: self packageNameForTests.
+	t1 := self newTrait: #T1 with: #() uses: TEmpty.
 	t1 class compile: 'msg ^ 1'.
 
 	c1 := self newClass: #C1 superclass: Object with: #() uses: t1.

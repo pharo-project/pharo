@@ -159,7 +159,7 @@ T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 T2TraitTest >> testEmptyCompositionManagesTEmpty [
 
 	| t1 |
-	t1 := self newTrait: #T1 with: {} trait: TEmpty.
+	t1 := self newTrait: #T1 with: {} uses: TEmpty.
 
 	self assert: t1 hasEmptyComposition
 ]
