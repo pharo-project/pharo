@@ -4,6 +4,9 @@ Unit test for trait packaging
 Class {
 	#name : 'T2TraitWithPackagesTest',
 	#superclass : 'T2AbstractTest',
+	#instVars : [
+		't1'
+	],
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
@@ -25,6 +28,14 @@ T2TraitWithPackagesTest >> packageNameForTest2 [
 	^ 'TestPackage2'
 ]
 
+{ #category : 'tests' }
+T2TraitWithPackagesTest >> setUp [
+
+	super setUp.
+
+	t1 := self makeTrait: [ :builder | builder name: #T1 ]
+]
+
 { #category : 'running' }
 T2TraitWithPackagesTest >> tearDown [
 
@@ -37,9 +48,7 @@ T2TraitWithPackagesTest >> tearDown [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraits [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-
+	| t2 |
 	t1 compile: 'm1 ^42.'.
 
 	t2 := self
@@ -55,8 +64,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraits [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreation [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	| t2 |
 	t2 := self
 		      newTrait: #T2
 		      with: #(  )
@@ -72,8 +80,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreation [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreationOverriden [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	| t2 |
 	t2 := self
 		      newTrait: #T2
 		      with: #(  )
@@ -94,9 +101,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreationOverriden [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverriden [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-
+	| t2 |
 	t1 compile: 'm1 ^42.'.
 
 	t2 := self
@@ -117,9 +122,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverriden [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenAndRemoved [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-
+	| t2 |
 	t1 compile: 'm1 ^42.'.
 
 	t2 := self
@@ -145,9 +148,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenAndRemoved [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenModifiedKeepPackage [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-
+	| t2 |
 	t1 compile: 'm1 ^42.'.
 
 	t2 := self
@@ -173,9 +174,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenModifiedKeepPac
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-
+	| t2 |
 	t1 compile: 'm1 ^42.'.
 
 	t2 := self
@@ -202,8 +201,7 @@ T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
 
-	| t1 t2 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
+	| t2 |
 	t2 := self
 		      newTrait: #T2
 		      with: #(  )
@@ -230,9 +228,6 @@ T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testTraitMethodPackage [
 
-	| t1 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-
 	t1 compile: 'm1 ^42.'.
 
 	self assert: (t1 >> #m1) package equals: self packageForTest
@@ -240,9 +235,6 @@ T2TraitWithPackagesTest >> testTraitMethodPackage [
 
 { #category : 'tests' }
 T2TraitWithPackagesTest >> testTraitPackage [
-
-	| t1 |
-	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 
 	self assert: t1 package equals: self packageForTest
 ]
