@@ -59,11 +59,11 @@ T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
 			              name: #C2Superclass;
 			              traits: t2 ].
 
-	subclass := self
-		            newClass: #C1Subclass
-		            superclass: superclass
-		            with: '' asSlotCollection
-		            uses: t1.
+	subclass := self make: [ :aClassBuilder |
+		            aClassBuilder
+			            name: #C1Subclass;
+			            superclass: superclass;
+			            traits: t1 ].
 	self deny: superclass isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
 	self assert: subclass isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 ]

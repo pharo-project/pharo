@@ -15,11 +15,10 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass [
 			      name: #C1;
 			      traits: t1 ].
 
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #(  )
-		      uses: {  }.
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1 ].
 
 	c2 compile: 'asd'.
 
@@ -33,11 +32,10 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass2 [
 
 	| t1 c1 c2 |
 	c1 := self make: [ :aClassBuilder | aClassBuilder name: #C1 ].
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #(  )
-		      uses: {  }.
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1 ].
 
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	c1 := self make: [ :aClassBuilder |

@@ -174,11 +174,12 @@ T2TraitWithSlotsTest >> testRedefiningSuperclass [
 			      name: #C1;
 			      slots: #( c d );
 			      traits: t1 ].
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #( e )
-		      uses: t2.
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1;
+			      slots: #( e );
+			      traits: t2 ].
 
 	self assert: (c2 localSlots collect: [ :each | each name ]) equals: #( e ).
 	self assert: (c1 localSlots collect: [ :each | each name ]) equals: #( c d ).

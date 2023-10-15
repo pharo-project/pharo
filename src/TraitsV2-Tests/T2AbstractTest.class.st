@@ -31,8 +31,56 @@ T2AbstractTest >> makeTrait: aBlock [
 ]
 
 { #category : 'instance creation' }
+T2AbstractTest >> newClass: aName superclass: aSuperclass [
+
+	self deprecated: '' transformWith: '`@rcv newClass: `@name superclass: `@sup' -> '`@rcv make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: `@name;
+			  superclass: `@sup ]'.
+	^ self make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  superclass: aSuperclass ]
+]
+
+{ #category : 'instance creation' }
+T2AbstractTest >> newClass: aName superclass: aSuperclass uses: aComposition [
+	self deprecated: '' transformWith: '`@rcv newClass: `@name superclass: `@sup uses: `@traits' -> '`@rcv make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: `@name;
+			  superclass: `@sup;
+			  traits: `@traits ]'.
+	^ self make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  superclass: aSuperclass;
+			  traitComposition: aComposition ]
+]
+
+{ #category : 'instance creation' }
+T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots [
+
+	self deprecated: '' transformWith: '`@rcv newClass: `@name superclass: `@sup with: `@slots' -> '`@rcv make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: `@name;
+			  superclass: `@sup;
+			  slots: `@slots ]'.
+	^ self make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  superclass: aSuperclass;
+			  slots: slots ]
+]
+
+{ #category : 'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition [
 
+	self deprecated: '' transformWith: '`@rcv newClass: `@name superclass: `@sup with: `@slots uses: `@traits' -> '`@rcv make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: `@name;
+			  superclass: `@sup;
+			  slots: `@slots;
+			  traits: `@traits ]'.
 	^ self make: [ :aClassBuilder |
 		  aClassBuilder
 			  name: aName;

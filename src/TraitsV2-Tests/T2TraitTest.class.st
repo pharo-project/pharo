@@ -137,11 +137,10 @@ T2TraitTest >> testClassUsesTrait [
 		              aClassBuilder
 			              name: #Superclass;
 			              traits: t1 ].
-	subclass := self
-		            newClass: #Subclass
-		            superclass: superclass
-		            with: #(  )
-		            uses: {  }.
+	subclass := self make: [ :aClassBuilder |
+		            aClassBuilder
+			            name: #Subclass;
+			            superclass: superclass ].
 
 	self assert: (superclass usesTrait: t1).
 	self assert: (superclass usesTraitLocally: t1).
@@ -228,13 +227,12 @@ T2TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
 			      name: #C1;
 			      slots: 'g h' asSlotCollection;
 			      traits: t1 ].
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #(  )
-		      uses: {  }.
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1 ].
 
-	self assertCollection: c2 class selectors sorted equals: #(  )
+	self assertEmpty: c2 class selectors
 ]
 
 { #category : 'tests' }
@@ -249,11 +247,11 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSuperc
 			      name: #C1;
 			      slots: 'g h' asSlotCollection;
 			      traits: t1 ].
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #(  )
-		      uses: { t2 }.
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1;
+			      traits: { t2 } ].
 
 	self assertCollection: c2 class selectors sorted equals: #(  ).
 	c1 := self make: [ :aClassBuilder |
@@ -276,11 +274,11 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 			      name: #C1;
 			      slots: 'g h' asSlotCollection;
 			      traits: t1 ].
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #(  )
-		      uses: { t2 }.
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1;
+			      traits: { t2 } ].
 
 	self assertEmpty: c2 class selectors.
 	c1 removeFromSystem.
@@ -335,11 +333,11 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 			      name: #C1;
 			      slots: 'g h' asSlotCollection;
 			      traits: t1 ].
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: '' asSlotCollection
-		      uses: t2.
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1;
+			      traits: t2 ].
 
 	self assert: (c1 class includesSelector: #traits).
 	self deny: (c2 class includesSelector: #traits).

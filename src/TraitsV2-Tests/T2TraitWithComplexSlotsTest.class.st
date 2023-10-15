@@ -13,7 +13,12 @@ Class {
 
 { #category : 'instance creation' }
 T2TraitWithComplexSlotsTest >> createSlotClass [
-	slotClass := self newClass: #TestSlot superclass: IndexedSlot with: #(associatedSlotName) uses: #().
+
+	slotClass := self make: [ :aClassBuilder |
+		             aClassBuilder
+			             name: #TestSlot;
+			             superclass: IndexedSlot;
+			             slots: #( associatedSlotName ) ].
 	slotClass class compile: 'associatedSlotName: aName
 		^ self new
 			associatedSlotName: aName;
@@ -149,11 +154,10 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotInSuperclass [
 			      name: #C1;
 			      slots: { #aSlot };
 			      traits: { t1 } ].
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #(  )
-		      uses: #(  ).
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1 ].
 
 	c1 compile: 'initialize
 		aSlot := 0'.
@@ -242,11 +246,10 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotInSupercla
 	t2 compile: 'doSomething
 		otherSlot := ''a'''.
 
-	c2 := self
-		      newClass: #C2
-		      superclass: c1
-		      with: #(  )
-		      uses: #(  ).
+	c2 := self make: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #C2;
+			      superclass: c1 ].
 
 	obj := c2 new.
 	self assert: (obj instVarNamed: #aSlot) equals: 0.
