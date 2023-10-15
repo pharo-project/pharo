@@ -49,8 +49,7 @@ T2TraitWithPackagesTest >> setUp [
 { #category : 'running' }
 T2TraitWithPackagesTest >> tearDown [
 
-	(self packageNameForTests asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
-	(self packageNameForTest2 asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self packageNameForTest2.
 
 	super tearDown
 ]
