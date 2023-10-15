@@ -23,66 +23,25 @@ T2AbstractTest >> newClass: aName [
 ]
 
 { #category : 'instance creation' }
-T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aComposition [
-
-	^ self
-		  newClass: aName
-		  superclass: aSuperclass
-		  with: slots
-		  uses: aComposition
-		  category: self packageNameForTests
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aComposition category: category [
-
-	| class |
-
-	class := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: aName;
-			superclass: aSuperclass;
-			slots: slots;
-			traitComposition: aComposition;
-			package: category ].
-
-	createdClasses add:class.
-
-	^class
-]
-
-{ #category : 'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition [
 
-	^ self
-		  newClass: aName
-		  superclass: aSuperclass
-		  with: slots
-		  uses: aComposition
-		  category: self packageNameForTests
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition category: category [
-
 	| class |
-
 	class := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: aName;
-			superclass: aSuperclass;
-			slots: slots;
-			traitComposition: aComposition;
-			package: category ].
+		         aClassBuilder
+			         name: aName;
+			         superclass: aSuperclass;
+			         slots: slots;
+			         traitComposition: aComposition;
+			         package: self packageNameForTests ].
 
-	createdClasses add:class.
+	createdClasses add: class.
 
-	^class
+	^ class
 ]
 
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName with: slots trait: aComposition [
-	^ self newClass: aName superclass: Object with: slots trait: aComposition
+	^ self newClass: aName superclass: Object with: slots uses: aComposition
 ]
 
 { #category : 'instance creation' }
