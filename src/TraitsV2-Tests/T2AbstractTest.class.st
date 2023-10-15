@@ -148,18 +148,6 @@ T2AbstractTest >> newTrait: aName with: slots uses: aComposition [
 ]
 
 { #category : 'instance creation' }
-T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: category [
-
-	^ self class classInstaller make: [ :aBuilder |
-		  aBuilder
-			  name: aName;
-			  traitComposition: aComposition;
-			  slots: slots;
-			  package: category;
-			  beTrait ]
-]
-
-{ #category : 'instance creation' }
 T2AbstractTest >> packageNameForTests [
 
 	^ #'Generated-Trait-Test-Package'
