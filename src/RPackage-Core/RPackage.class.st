@@ -117,6 +117,12 @@ RPackage class >> organizer: aPackageOrganizer [
 	PackageGlobalOrganizer := aPackageOrganizer
 ]
 
+{ #category : 'accessing' }
+RPackage class >> rootTagName [
+
+	^ #Uncategorized
+]
+
 { #category : 'protected only for tests' }
 RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
 	"Perform an action locally to aNewOrganizer. Does not impact any other organizers."
@@ -793,8 +799,7 @@ RPackage >> rootTag [
 { #category : 'accessing' }
 RPackage >> rootTagName [
 
-	self flag: #package. "In the future we should not use the name of the package because it causes bugs."
-	^ self name
+	^ self class rootTagName
 ]
 
 { #category : 'accessing' }

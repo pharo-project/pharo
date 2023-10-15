@@ -80,10 +80,9 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 { #category : 'accessing' }
 MCClassDefinition >> category [
 
-	^ self packageName ifNotNil: [ :package |
-		  (self tagName isNil or: [ self tagName = package ])
-			  ifTrue: [ package ]
-			  ifFalse: [ package , '-' , self tagName ] ]
+	^ self tagName
+		  ifNil: [ self packageName ]
+		  ifNotNil: [ :tag | self packageName , '-' , tag ]
 ]
 
 { #category : 'accessing' }
@@ -598,7 +597,9 @@ MCClassDefinition >> tagName [
 { #category : 'accessing' }
 MCClassDefinition >> tagName: aString [
 
-	tagName := aString ifNotNil: [ :tag | tag asSymbol ]
+	tagName := aString = RPackage rootTagName
+		           ifTrue: [ nil ]
+		           ifFalse: [ aString asSymbol ]
 ]
 
 { #category : 'accessing' }
