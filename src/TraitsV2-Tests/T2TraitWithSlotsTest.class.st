@@ -10,18 +10,18 @@ Class {
 
 { #category : 'tests' }
 T2TraitWithSlotsTest >> createT1 [
+
 	| t1 |
-	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
-	t1
-		compile:
-			'setValues
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: 'a b c' asSlotCollection ].
+	t1 compile: 'setValues
 		a := 1.
 		b := 2.
 		c := 3.
 	'.
-	t1
-		compile:
-			'getValues
+	t1 compile: 'getValues
 		^ a + b + c
 	'.
 	^ t1
@@ -31,7 +31,10 @@ T2TraitWithSlotsTest >> createT1 [
 T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 
 	| t1 c1 obj |
-	t1 := self newTrait: #T1 with: #( aSlot ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( aSlot ) ].
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
 			      name: #C1;
@@ -54,7 +57,10 @@ T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( aSlot ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( aSlot ) ].
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
 			      name: #C1;
@@ -67,7 +73,10 @@ T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( aSlot ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( aSlot ) ].
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
 			      name: #C1;
@@ -105,10 +114,25 @@ T2TraitWithSlotsTest >> testDefiningClass [
 T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 
 	| t1 t2 c1 t3 t4 |
-	t1 := self newTrait: #T1 with: #( anSlot ) uses: {  }.
-	t2 := self newTrait: #T2 with: #( s2 ) uses: { t1 }.
-	t3 := self newTrait: #T3 with: #( s3 ) uses: { t1 }.
-	t4 := self newTrait: #T4 with: #( s4 ) uses: { t1 }.
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( anSlot ) ].
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      slots: #( s2 );
+			      traits: { t1 } ].
+	t3 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T3;
+			      slots: #( s3 );
+			      traits: { t1 } ].
+	t4 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T4;
+			      slots: #( s4 );
+			      traits: { t1 } ].
 
 	t1 compile: 'm1 ^ anSlot:=42'.
 
@@ -126,8 +150,15 @@ T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 T2TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #( anSlot ) uses: {  }.
-	t2 := self newTrait: #T2 with: #( s2 ) uses: { t1 }.
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( anSlot ) ].
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      slots: #( s2 );
+			      traits: { t1 } ].
 
 	t1 compile: 'm1 ^ anSlot:=42'.
 
@@ -166,8 +197,14 @@ T2TraitWithSlotsTest >> testOwningClass [
 T2TraitWithSlotsTest >> testRedefiningSuperclass [
 
 	| t1 c1 t2 c2 |
-	t1 := self newTrait: #T1 with: #( a b ).
-	t2 := self newTrait: #T2 with: #( g h ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( a b ) ].
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      slots: #( g h ) ].
 
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
@@ -203,7 +240,10 @@ T2TraitWithSlotsTest >> testRedefiningTrait [
 
 	| t1 |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-	t1 := self newTrait: #T1 with: #( aSlot ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( aSlot ) ].
 
 	self denyEmpty: t1 slots
 ]

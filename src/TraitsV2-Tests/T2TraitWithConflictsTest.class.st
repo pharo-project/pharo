@@ -14,7 +14,10 @@ T2TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
 	<ignoreNotImplementedSelectors: #( m1 )>
 	| t1 t2 c1 |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-	t2 := self newTrait: #T2 with: #(  ) uses: { t1 }.
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      traits: { t1 } ].
 
 	t1 compile: 'm1 ^42'.
 
@@ -33,11 +36,26 @@ T2TraitWithConflictsTest >> testComplexDependencyIsNotConflict [
 	<ignoreNotImplementedSelectors: #( m1 )>
 	| t1 t2 c1 t3 t4 t5 t6 |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-	t2 := self newTrait: #T2 with: #(  ) uses: { t1 }.
-	t3 := self newTrait: #T3 with: #(  ) uses: { t1 }.
-	t4 := self newTrait: #T4 with: #(  ) uses: { (t2 + t3) }.
-	t5 := self newTrait: #T5 with: #(  ) uses: { t3 }.
-	t6 := self newTrait: #T6 with: #(  ) uses: { (t5 + t4) }.
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      traits: { t1 } ].
+	t3 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T3;
+			      traits: { t1 } ].
+	t4 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T4;
+			      traits: { (t2 + t3) } ].
+	t5 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T5;
+			      traits: { t3 } ].
+	t6 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T6;
+			      traits: { (t5 + t4) } ].
 
 	t1 compile: 'm1 ^42'.
 
@@ -55,8 +73,14 @@ T2TraitWithConflictsTest >> testDiamonProblemIsNotConflict [
 
 	| t1 t2 c1 t3 |
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
-	t2 := self newTrait: #T2 with: #(  ) uses: { t1 }.
-	t3 := self newTrait: #T3 with: #(  ) uses: { t1 }.
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      traits: { t1 } ].
+	t3 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T3;
+			      traits: { t1 } ].
 
 	t1 compile: 'm1 ^42'.
 

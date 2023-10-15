@@ -22,7 +22,10 @@ T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope.
 	self assertEmpty: c1 slots.
 
-	t1 := self newTrait: #T1 with: #( aSlot ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( aSlot ) ].
 
 	self assert: c1 classLayout slotScope parentScope identicalTo: c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope.
@@ -33,7 +36,10 @@ T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 T2TraitPropagatingSlotChangesTest >> testRemovingSlotToTrait [
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( aSlot ) uses: {  }.
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( aSlot ) ].
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
 			      name: #C1;

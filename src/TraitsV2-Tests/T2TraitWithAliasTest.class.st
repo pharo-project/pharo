@@ -48,7 +48,10 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 T2TraitWithAliasTest >> testChangingDeleteSlot [
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( ivar ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( ivar ) ].
 	t1 compile: 'ivar ^ ivar'.
 
 	c1 := self make: [ :aClassBuilder |
@@ -69,7 +72,10 @@ T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 	"we can add a slot in the class that we removed from the trait"
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( ivar1 ivar2 ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( ivar1 ivar2 ) ].
 	t1 compile: 'ivar2 ^ ivar2'.
 	t1 compile: 'ivar1 ^ ivar1'.
 
@@ -92,7 +98,10 @@ T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 T2TraitWithAliasTest >> testChangingDeleteSlotAddVar [
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( ivar ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( ivar ) ].
 	t1 compile: 'ivar ^ ivar'.
 
 	c1 := self make: [ :aClassBuilder |
@@ -114,8 +123,14 @@ T2TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
 	"we can remove a slot from one trait, then rename from the other trait and the class has one var"
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #( name ).
-	t2 := self newTrait: #T2 with: #( personName ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( name ) ].
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      slots: #( personName ) ].
 
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
@@ -133,7 +148,10 @@ T2TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
 T2TraitWithAliasTest >> testChangingRenamedSlot [
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( ivar ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( ivar ) ].
 	t1 compile: 'ivar ^ ivar'.
 
 	c1 := self make: [ :aClassBuilder |
@@ -158,7 +176,10 @@ T2TraitWithAliasTest >> testChangingRenamedSlot [
 T2TraitWithAliasTest >> testChangingRenamedSlot2Slots [
 
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #( ivar1 ivar2 ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( ivar1 ivar2 ) ].
 	t1 compile: 'ivar2 ^ ivar2'.
 	t1 compile: 'ivar1 ^ ivar1'.
 

@@ -55,7 +55,10 @@ T2ObsoleteClassTest >> testObsoleteTraitIsRemovedFromUsers [
 	t1 := self makeTrait: [ :builder | builder name: #T1 ].
 	t2 := self makeTrait: [ :builder | builder name: #T2 ].
 
-	t3 := self newTrait: #T3 with: #(  ) uses: t1 + t2.
+	t3 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T3;
+			      traits: t1 + t2 ].
 
 	self assert: (t1 users includes: t3).
 	self assert: (t2 users includes: t3).

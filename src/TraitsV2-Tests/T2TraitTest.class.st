@@ -10,18 +10,18 @@ Class {
 
 { #category : 'tests' }
 T2TraitTest >> createT1 [
+
 	| t1 |
-	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
-	t1
-		compile:
-			'setValues
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: 'a b c' asSlotCollection ].
+	t1 compile: 'setValues
 		a := 1.
 		b := 2.
 		c := 3.
 	'.
-	t1
-		compile:
-			'getValues
+	t1 compile: 'getValues
 		^ a + b + c
 	'.
 	^ t1
@@ -31,7 +31,10 @@ T2TraitTest >> createT1 [
 T2TraitTest >> createT2 [
 
 	| t2 |
-	t2 := self newTrait: #T2 with: 'd e f' asSlotCollection.
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      slots: 'd e f' asSlotCollection ].
 	t2 compile: 'setValues2
 		d := 1.
 		e := 2.
@@ -68,7 +71,10 @@ T2TraitTest >> createT3 [
 T2TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
 
 	| t1 aClass |
-	t1 := self newTrait: #T1 with: #( users ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( users ) ].
 
 	aClass := self make: [ :aClassBuilder | aClassBuilder name: #C1 ].
 	aClass class setTraitComposition: { t1 }.
@@ -181,7 +187,10 @@ T2TraitTest >> testIndirectSequence [
 	| t1 t2 t3 c1 obj |
 	t1 := self createT1.
 	t2 := self createT2.
-	t3 := self newTrait: #T3 with: #(  ) uses: t1 + t2.
+	t3 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T3;
+			      traits: t1 + t2 ].
 
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
@@ -430,19 +439,28 @@ T2TraitTest >> testSequence [
 T2TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 
 	| t1 c1 |
-	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: 'a' asSlotCollection ].
 	c1 := self make: [ :aClassBuilder | aClassBuilder name: #C1 ].
 
 	self should: [ t1 traitComposition: c1 ] raise: Error.
-	self should: [ t1 classTrait traitComposition: c1 ] raise: Error.
+	self should: [ t1 classTrait traitComposition: c1 ] raise: Error
 ]
 
 { #category : 'tests' }
 T2TraitTest >> testSlotsAreNotDuplicated [
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: 'a' asSlotCollection.
-	t2 := self newTrait: #T2 with: '' asSlotCollection uses: t1.
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: 'a' asSlotCollection ].
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      traits: t1 ].
 	c1 := self make: [ :aClassBuilder |
 		      aClassBuilder
 			      name: #C1;
@@ -454,10 +472,14 @@ T2TraitTest >> testSlotsAreNotDuplicated [
 
 { #category : 'tests' }
 T2TraitTest >> testSubclasses [
-	| t1 t2 |
 
+	| t1 t2 |
 	t1 := self createT1.
-	t2 := self newTrait: #T2 with: #(aa bb) uses: t1.
+	t2 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T2;
+			      slots: #( aa bb );
+			      traits: t1 ].
 
 	self deny: t1 hasSubclasses.
 	self deny: t2 hasSubclasses.
@@ -466,14 +488,17 @@ T2TraitTest >> testSubclasses [
 	self assert: t2 subclasses isEmpty.
 
 	self deny: t1 hasSubclasses.
-	self deny: t2 hasSubclasses.
+	self deny: t2 hasSubclasses
 ]
 
 { #category : 'tests' }
 T2TraitTest >> testTraitHaveUsersInstanceVariable [
 
 	| t1 aClass |
-	t1 := self newTrait: #T1 with: #( users ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( users ) ].
 
 	aClass := self make: [ :aClassBuilder |
 		          aClassBuilder
@@ -514,7 +539,10 @@ T2TraitTest >> testUsingTraitInAnonymousSubClassAndRedefiningIt [
 
 	self deny: (Object subclasses includes: aClass).
 
-	t1 := self newTrait: #T1 with: #( aSlot ).
+	t1 := self makeTrait: [ :aClassBuilder |
+		      aClassBuilder
+			      name: #T1;
+			      slots: #( aSlot ) ].
 	self assert: (aClass hasSlotNamed: #aSlot).
 
 	self deny: (Object subclasses includes: aClass)
