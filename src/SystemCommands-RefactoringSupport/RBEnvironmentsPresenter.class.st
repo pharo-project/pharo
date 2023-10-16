@@ -116,7 +116,7 @@ RBEnvironmentsPresenter >> inspect: anItem [
 RBEnvironmentsPresenter >> notWithScope: anItem [
 
 	[ | newScope |
-	newScope := anItem not.
+	newScope := anItem value not.
 	(self confirm: 'Do you want store this result in the list?')
 		ifTrue: [
 			ScopesManager singleInstance addScope: newScope.
