@@ -25,7 +25,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'environment',
-		'originalUndeclareds'
+		'originalUndeclareds',
+		'hasTraits'
 	],
 	#category : 'Hermes-ClassInstaller',
 	#package : 'Hermes',
@@ -49,8 +50,9 @@ HEInstaller >> build: aHEClass [
 			            slots: aHEClass instanceVariables asSlotCollection;
 			            sharedVariablesFromString: aHEClass classVariables;
 			            sharedPools: aHEClass sharedPools;
-			            category: aHEClass category;
+			            package: aHEClass packageName;
 			            classSlots: aHEClass classInstancevariables asSlotCollection.
+		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
 		            self supportsTraits ifTrue: [
 			            builder
 				            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
@@ -60,36 +62,27 @@ HEInstaller >> build: aHEClass [
 
 { #category : 'creating traits' }
 HEInstaller >> buildTrait: aTraitDefinition [
-	| newTrait traitComposition traitClass|
-	
-	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
-	
-	traitClass := Smalltalk globals at: #Trait ifAbsent: [ self error: 'Trait support is not installed' ].
-	
-	traitComposition := self buildTraitCompositionFor: aTraitDefinition traitComposition.	
-	
-	newTrait := traitClass
-		named: aTraitDefinition traitName
-		uses: traitComposition
-		package: aTraitDefinition category
-		env: environment.
 
-	newTrait classTrait traitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition).
+	(self existingTrait: aTraitDefinition) ifNotNil: [ :x | ^ x ].
 
-	^ newTrait
+	self supportsTraits ifFalse: [ self error: 'Trait support is not installed' ].
+
+	^ self class classInstaller make: [ :builder |
+		  builder
+			  beTrait;
+			  name: aTraitDefinition traitName;
+			  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
+			  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
+			  package: aTraitDefinition packageName;
+			  environment: environment.
+
+		  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
 ]
 
 { #category : 'creating traits' }
 HEInstaller >> buildTraitCompositionFor: traitComposition [
 
-	| aLiteral |
-	
-	aLiteral := (traitComposition asLiteralIn: environment).
-	aLiteral isArray 
-		ifTrue: [ ^ aLiteral 
-							ifEmpty: [ TaEmptyComposition new ]
-							ifNotEmpty: [ TaSequence withAll: (aLiteral collect: [:each | each asTraitComposition]) ]  ]
-		ifFalse: [ ^ aLiteral asTraitComposition ]
+	^ (traitComposition asLiteralIn: environment) asTraitComposition
 ]
 
 { #category : 'accessing' }
@@ -163,7 +156,9 @@ HEInstaller >> existingTrait: aHETrait [
 HEInstaller >> initialize [
 
 	environment := self class environment.
-	originalUndeclareds := Undeclared copy
+	originalUndeclareds := Undeclared copy.
+	"We need to set it at the initialization and we cannot ask this later during the building because it will cause trouble if the class we are building is Trait."
+	hasTraits := Smalltalk globals hasClassNamed: #Trait
 ]
 
 { #category : 'installing methods' }
@@ -257,7 +252,7 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 { #category : 'testing' }
 HEInstaller >> supportsTraits [
 
-	^ Smalltalk globals hasClassNamed: #Trait
+	^ hasTraits
 ]
 
 { #category : 'reporting undeclared' }
