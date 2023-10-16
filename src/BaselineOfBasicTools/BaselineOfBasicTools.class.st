@@ -22,9 +22,6 @@ Installs:
 Class {
 	#name : 'BaselineOfBasicTools',
 	#superclass : 'BaselineOf',
-	#classVars : [
-		'Initialized'
-	],
 	#category : 'BaselineOfBasicTools',
 	#package : 'BaselineOfBasicTools'
 }
@@ -104,17 +101,12 @@ BaselineOfBasicTools >> baseline: spec [
 { #category : 'actions' }
 BaselineOfBasicTools >> postload: loader package: packageSpec [
 
-	"Ignore pre and post loads if already executed"
-	Initialized = true ifTrue: [ ^ self ].
-	
 	RBRefactoryChangeManager nuke.
-	
+
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.
-	
-	Author reset.
 
-	Initialized := true.
+	Author reset
 ]
 
 { #category : 'baseline' }
