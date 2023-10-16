@@ -225,7 +225,7 @@ Class >> basicDeclareClassVariable: aClassVariable [
 	- Undeclared case requires much more clever logic. Now in that case the class variable will be shared between all classes previously referencing undeclared variable despite on the fact that they do no see a class variables from other classes"
 	self flag: #todo.
 
-	classPool ifNil: [ classPool := Dictionary new ].
+	classPool ifNil: [ classPool := OrderedDictionary new ].
 	aClassVariable owningClass: self.
 
 	self classPool associationAt: aClassVariable name ifPresent:  [:existingVar |
@@ -339,7 +339,7 @@ Class >> classPool [
 	"Answer the dictionary of class variables.
 	We initialize in basicDeclareClassVariable: to not allocate unused empty dictionaries"
 	<reflection: 'Class structural inspection - Shared pool inspection'>
-	^classPool ifNil: [ Dictionary new ]
+	^classPool ifNil: [ OrderedDictionary new ]
 ]
 
 { #category : 'accessing' }
@@ -375,7 +375,7 @@ Class >> classVarNamed: aString put: anObject [
 Class >> classVarNames [
 	"Answer a collection of the receiver's class variable names."
 	<reflection: 'Class structural inspection - Class variable inspection'>
-	^self classPool keys sort
+	^self classPool keys
 ]
 
 { #category : 'class variables' }

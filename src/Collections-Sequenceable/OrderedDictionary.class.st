@@ -535,6 +535,11 @@ OrderedDictionary >> printElementsOn: aStream [
 	aStream nextPut: $)
 ]
 
+{ #category : 'private' }
+OrderedDictionary >> rehash [
+	dictionary rehash
+]
+
 { #category : 'removing' }
 OrderedDictionary >> remove: anObject ifAbsent: aBlock [
 	self shouldNotImplement
