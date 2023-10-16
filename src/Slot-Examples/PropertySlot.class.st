@@ -20,7 +20,7 @@ PropertySlot >> addAdditionalSlotsTo: slots [
 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
 
 	slots
-		detect: [ :slot | slots anySatisfy: [ :aSlot | aSlot name = #_propertyBaseSlot ] ]
+		detect: [ :slot | slot name = #_propertyBaseSlot ]
 		ifFound: [ :slot | baseSlot := slot ]
 		ifNone: [ slots add: (baseSlot := #_propertyBaseSlot => BaseSlot default: Dictionary new) ]
 ]
