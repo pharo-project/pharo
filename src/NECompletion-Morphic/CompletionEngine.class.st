@@ -51,7 +51,7 @@ CompletionEngine class >> isCompletionEnabled [
 { #category : 'private' }
 CompletionEngine >> browse [
 
-	menuMorph ifNil: [ ^ false ] ifNotNil: [ ^ menuMorph browse ]
+	^ menuMorph ifNil: [ false ] ifNotNil: [ menuMorph browse ]
 ]
 
 { #category : 'menu morph' }

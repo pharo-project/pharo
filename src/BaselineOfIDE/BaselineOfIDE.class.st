@@ -34,62 +34,6 @@ Class {
 	#package : 'BaselineOfIDE'
 }
 
-{ #category : 'actions' }
-BaselineOfIDE >> additionalInitialization [
-
-	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
-	Smalltalk tools register: FileList as: #fileList.
-	Smalltalk tools register: Finder as: #finder.
-	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: TimeProfiler as: #timeProfiler.
-
-	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
-	MorphicCoreUIManager classPool at: #UIProcess put: nil.
-
-	PolymorphSystemSettings desktopColor:  Color veryVeryLightGray lighter.
-	SourceCodeFonts setSourceCodeFonts: 10.
-	FreeTypeSystemSettings loadFt2Library: true.
-	FreeTypeSettings current monitorType: #LCD.
-	FreeTypeSettings current glyphContrast: 55.
-	
-	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
-	GrowlMorph position: #bottomLeft.
-	ShortcutReminder enabled: true.
-
-	KMRepository reset.
-	Morph shortcutsHandler: KMShortcutHandler new.
-
-	MCSaveVersionDialog previousMessages add: String new.
-
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [RBSimpleFormatter]).
-
-	Color flushCache.
-	
-	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
-	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
-
-	ASTTransformExamplePluginActive recompile.
-	PharoCommandLineHandler recompile.
-	SmalltalkImage recompile.
-	
-	RubCharacterScanner initialize.
-	
-	RubAbstractTextArea highlightMessageSend: true.
-	
-	PharoLightTheme beCurrent.
-	
-	SDL_Event initialize.
-	
-	HiRulerBuilderTest initialize.
-	
-	"Making HeuristicCompletion the default completion engine"
-	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
-	
-	self loadIceberg.	
-	self loadExtraTools.	
-	self makeCalypsoDefaultBrowser.
-]
-
 { #category : 'baselines' }
 BaselineOfIDE >> baseline: spec [
 	<baseline>
@@ -135,7 +79,11 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'tests' ) ].
-
+			
+		spec baseline: 'Refactoring' with: [
+			spec
+				repository: repository;
+				loads: #( 'Tests') ].
 
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
@@ -159,7 +107,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'EmergencyDebugger' with: [ spec repository: repository ].
-		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'Fuel' with: [
@@ -182,7 +129,6 @@ BaselineOfIDE >> baseline: spec [
 		spec
 			baseline: 'ReferenceFinder'
 			with: [ spec repository: repository ].
-		spec baseline: 'Refactoring2' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 		spec baseline: 'Calypso' with: [
 			spec
@@ -320,51 +266,68 @@ BaselineOfIDE >> pharoPluginClass [
 
 { #category : 'actions' }
 BaselineOfIDE >> postload: loader package: packageSpec [
-
-	| initializersEnabled repo gofer |
-
 	"Ignore pre and post loads if already executed"
+
 	Initialized = true ifTrue: [ ^ self ].
 
-	Author fullName: self class name.
-	
 	"collect and process the standard tools registrations"
 	Smalltalk tools initDefaultToolSet.
-	
-	initializersEnabled := MCMethodDefinition initializersEnabled.
 
-	MCMethodDefinition initializersEnabled: false.
-	
-	repo := TonelRepository new
-		directory: self packageRepository directory;
-		yourself.
-		
-	gofer := Gofer it repository: repo.
-	gofer package: #'RPackage-Tests'.
-	gofer load.
-	
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-
-
-	Stdio stdout 
-		nextPutAll: ' ------------ Obsolete ------------';
-		lf;
-		nextPutAll: SystemNavigation default obsoleteClasses asString;
-		lf;
-		nextPutAll: ' ............ Obsolete ............';
-		lf.
-
-	Smalltalk fixObsoleteReferences.
-	
 	EpMonitor current enable.
-		
-	Author reset.
 
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	self additionalInitialization.
+	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
+	Smalltalk tools register: FileList as: #fileList.
+	Smalltalk tools register: Finder as: #finder.
+	Smalltalk tools register: ProcessBrowser as: #processBrowser.
+	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
-	Initialized := true.
+	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
+	MorphicCoreUIManager classPool at: #UIProcess put: nil.
+
+	PolymorphSystemSettings desktopColor: Color veryVeryLightGray lighter.
+	SourceCodeFonts setSourceCodeFonts: 10.
+	FreeTypeSystemSettings loadFt2Library: true.
+	FreeTypeSettings current monitorType: #LCD.
+	FreeTypeSettings current glyphContrast: 55.
+
+	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
+	GrowlMorph position: #bottomLeft.
+	ShortcutReminder enabled: true.
+
+	KMRepository reset.
+	Morph shortcutsHandler: KMShortcutHandler new.
+
+	MCSaveVersionDialog previousMessages add: String new.
+
+	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+
+	Color flushCache.
+
+	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
+	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
+
+	ASTTransformExamplePluginActive recompile.
+	PharoCommandLineHandler recompile.
+	SmalltalkImage recompile.
+
+	RubCharacterScanner initialize.
+
+	RubAbstractTextArea highlightMessageSend: true.
+
+	PharoLightTheme beCurrent.
+
+	SDL_Event initialize.
+
+	HiRulerBuilderTest initialize.
+
+	"Making HeuristicCompletion the default completion engine"
+	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
+
+	self loadIceberg.
+	self loadExtraTools.
+	self makeCalypsoDefaultBrowser.
+
+	Initialized := true
 ]
 
 { #category : 'actions' }

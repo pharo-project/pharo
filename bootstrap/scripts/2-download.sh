@@ -72,11 +72,13 @@ fi
 
 # bootstrap image
 if [ ! -e "./Pharo.image" ]; then
+    cd ${BOOTSTRAP_CACHE}
 	unzip -u ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip -d .
 fi
 
 # PharoV6 sources
 if [ ! -e "${BOOTSTRAP_CACHE}/PharoV60.sources" ]; then
+    cd ${BOOTSTRAP_CACHE}
 	unzip -u ${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip -d ${BOOTSTRAP_CACHE}
 fi
 

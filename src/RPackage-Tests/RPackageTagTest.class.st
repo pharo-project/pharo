@@ -101,6 +101,17 @@ RPackageTagTest >> testAddTraitSettingPackageTag [
 ]
 
 { #category : 'tests' }
+RPackageTagTest >> testCanHaveTagOfTheSameNameAsThePackage [
+
+	| xPackage xTag |
+	xPackage := self ensureXPackage.
+	xTag := xPackage ensureTag: xPackage name.
+
+	self assert: xTag package identicalTo: xPackage.
+	self deny: xTag isRoot
+]
+
+{ #category : 'tests' }
 RPackageTagTest >> testIncludesClass [
 
 	| package class tag |

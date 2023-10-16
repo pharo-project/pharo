@@ -66,9 +66,9 @@ MCClassTraitDefinition >> category [
 				  ifNotNil: [ :bTrait | bTrait category ]
 				  ifNil: [ self error: 'Can''t detect the category' ] ]
 		  ifNotNil: [ :package |
-			  (self tagName isNil or: [ self tagName = package ])
-				  ifTrue: [ package ]
-				  ifFalse: [ package , '-' , self tagName ] ]
+			  self tagName
+				  ifNil: [ package ]
+				  ifNotNil: [ :tag | package , '-' , tag ] ]
 ]
 
 { #category : 'initialization' }
@@ -195,12 +195,9 @@ MCClassTraitDefinition >> tagName [
 ]
 
 { #category : 'accessing' }
-MCClassTraitDefinition >> tagName: anObject [
+MCClassTraitDefinition >> tagName: aString [
 
-	tagName := anObject
-]
-
-{ #category : 'accessing' }
-MCClassTraitDefinition >> traitComposition [
-	^ self classTraitComposition 
+	tagName := aString = RPackage rootTagName
+		           ifTrue: [ nil ]
+		           ifFalse: [ aString asSymbol ]
 ]

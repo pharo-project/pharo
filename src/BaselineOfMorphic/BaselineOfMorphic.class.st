@@ -143,10 +143,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	ExternalDropHandler resetRegisteredHandlers.
 	ScrollBarMorph initializeImagesCache.
 
-	Smalltalk garbageCollect.
-	HashedCollection rehashAll.
-	Symbol rehash.
-
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Author reset
@@ -275,8 +271,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Stdio stdout nextPutAll: Smalltalk ui asString; lf.
 
-	SparseLargeTable recompile. 
-	
 	PNGReadWriter initialize.
 	self loadBitmapDejaVuSans.
 	self loadBitmapSourcePro.

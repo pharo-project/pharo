@@ -73,16 +73,16 @@ MCClassDefinition >> actualClass [
 
 { #category : 'initialization' }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
-	variables addAll: (aCollection collect: [:var | aClass name: var asString]).
+
+	variables addAll: (aCollection collect: [ :var | aClass name: var asString ])
 ]
 
 { #category : 'accessing' }
 MCClassDefinition >> category [
 
-	^ self packageName ifNotNil: [ :package |
-		  (self tagName isNil or: [ self tagName = package ])
-			  ifTrue: [ package ]
-			  ifFalse: [ package , '-' , self tagName ] ]
+	^ self tagName
+		  ifNil: [ self packageName ]
+		  ifNotNil: [ :tag | self packageName , '-' , tag ]
 ]
 
 { #category : 'accessing' }
@@ -597,7 +597,9 @@ MCClassDefinition >> tagName [
 { #category : 'accessing' }
 MCClassDefinition >> tagName: aString [
 
-	tagName := aString ifNotNil: [ :tag | tag asSymbol ]
+	tagName := aString = RPackage rootTagName
+		           ifTrue: [ nil ]
+		           ifFalse: [ aString asSymbol ]
 ]
 
 { #category : 'accessing' }

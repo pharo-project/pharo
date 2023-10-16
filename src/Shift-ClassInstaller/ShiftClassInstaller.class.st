@@ -38,7 +38,8 @@ ShiftClassInstaller class >> example [
 			superclass: Object;
 			name: #MyClass;
 			slots: #(varA varB);
-			category: 'My-Category' ]
+			tag: 'ATag';
+			package: 'My-Package' ]
 ]
 
 { #category : 'building' }
@@ -202,7 +203,6 @@ ShiftClassInstaller >> make [
 ShiftClassInstaller >> make: aBlock [
 
 	aBlock value: builder.
-
 	^self make
 ]
 

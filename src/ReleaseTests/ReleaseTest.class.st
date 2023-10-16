@@ -296,8 +296,6 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	| found validExceptions remaining |
 	found := SystemNavigation default methods select: [ :m |
 		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
-	"Make sure to not waste memory with all the ASTs"
-	ASTCache reset.
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.

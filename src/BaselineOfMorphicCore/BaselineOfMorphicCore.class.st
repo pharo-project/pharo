@@ -101,8 +101,6 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	ExternalDropHandler initialize.
 	PasteUpMorph initialize.
 	DefaultExternalDropHandler initialize.
-	
-	WorldMorph recompile.
 
 	Initialized := true.
 ]

@@ -83,7 +83,7 @@ ClyMoveClassToGroupCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyMoveClassToGroupCommand >> execute [
 
-	classGroup importClasses: classes
+	classes do: [ :class | classGroup addClass: class ]
 ]
 
 { #category : 'execution' }

@@ -117,6 +117,12 @@ RPackage class >> organizer: aPackageOrganizer [
 	PackageGlobalOrganizer := aPackageOrganizer
 ]
 
+{ #category : 'accessing' }
+RPackage class >> rootTagName [
+
+	^ #Uncategorized
+]
+
 { #category : 'protected only for tests' }
 RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
 	"Perform an action locally to aNewOrganizer. Does not impact any other organizers."
@@ -673,8 +679,9 @@ RPackage >> removeEmptyTags [
 
 { #category : 'removing' }
 RPackage >> removeFromSystem [
+	"Copy to not remove collection over which we are iterating."
 
-	self classTags do: [ :tag | tag removeFromSystem ].
+	self classTags copy do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 
 	self organizer unregisterPackage: self
@@ -793,8 +800,7 @@ RPackage >> rootTag [
 { #category : 'accessing' }
 RPackage >> rootTagName [
 
-	self flag: #package. "In the future we should not use the name of the package because it causes bugs."
-	^ self name
+	^ self class rootTagName
 ]
 
 { #category : 'accessing' }

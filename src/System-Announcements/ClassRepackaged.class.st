@@ -67,14 +67,6 @@ ClassRepackaged >> classRepackaged: anObject [
 ]
 
 { #category : 'accessing' }
-ClassRepackaged >> classTagsAffected [
-
-	^ {
-		  self newTag.
-		  self oldTag }
-]
-
-{ #category : 'accessing' }
 ClassRepackaged >> newPackage [
 
 	^ self newTag package
@@ -108,6 +100,14 @@ ClassRepackaged >> oldTag [
 ClassRepackaged >> oldTag: anObject [
 
 	oldTag := anObject
+]
+
+{ #category : 'accessing' }
+ClassRepackaged >> packageTagsAffected [
+
+	^ {
+		  self newTag.
+		  self oldTag }
 ]
 
 { #category : 'testing' }

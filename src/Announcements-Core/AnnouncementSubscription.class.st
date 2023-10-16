@@ -35,6 +35,7 @@ AnnouncementSubscription >> makeWeak [
 			announcementClass: announcementClass)
 ]
 
+
 { #category : 'accessing' }
 AnnouncementSubscription >> subscriber [
 
@@ -45,4 +46,10 @@ AnnouncementSubscription >> subscriber [
 AnnouncementSubscription >> subscriber: aSubscriber [
 
 	subscriber := aSubscriber
+]
+
+{ #category : 'finalization' }
+AnnouncementSubscription >> unregister [
+
+	"Nothing, for compatibility with weak subscriptions"
 ]

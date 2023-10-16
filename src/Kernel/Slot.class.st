@@ -67,6 +67,13 @@ Slot >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
 ]
 
+{ #category : 'private' }
+Slot >> addAdditionalSlotsTo: slots [
+	"Some slots internal behavior are relying one other slots. This method should add them in order to build the class with them."
+
+	^ #(  )
+]
+
 { #category : 'class building' }
 Slot >> asClassVariable [
 	self
