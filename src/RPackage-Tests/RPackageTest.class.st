@@ -404,6 +404,27 @@ RPackageTest >> testRemoveEmptyTags [
 ]
 
 { #category : 'tests' }
+RPackageTest >> testRemoveFromSystemRemoveAllTags [
+	"Regression test because #removeFromSystem was removing the tags while iterating on them and that caused troubles."
+
+	| xPackage tag1 tag2 tag3 |
+	xPackage := self ensureXPackage.
+	tag1 := xPackage ensureTag: #Tag1.
+	tag2 := xPackage ensureTag: #Tag2.
+	tag3 := xPackage ensureTag: #Tag3.
+
+	self assert: (xPackage hasTag: tag1).
+	self assert: (xPackage hasTag: tag2).
+	self assert: (xPackage hasTag: tag3).
+
+	xPackage removeFromSystem.
+
+	self deny: (xPackage hasTag: tag1).
+	self deny: (xPackage hasTag: tag2).
+	self deny: (xPackage hasTag: tag3)
+]
+
+{ #category : 'tests' }
 RPackageTest >> testRemoveTag [
 
 	| p1 a1 b1 |

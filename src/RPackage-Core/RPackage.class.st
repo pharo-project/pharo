@@ -679,8 +679,9 @@ RPackage >> removeEmptyTags [
 
 { #category : 'removing' }
 RPackage >> removeFromSystem [
+	"Copy to not remove collection over which we are iterating."
 
-	self classTags do: [ :tag | tag removeFromSystem ].
+	self classTags copy do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 
 	self organizer unregisterPackage: self
