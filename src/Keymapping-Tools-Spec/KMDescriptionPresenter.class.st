@@ -22,10 +22,43 @@ KMDescriptionPresenter class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+KMDescriptionPresenter class >> descriptionText [
+
+	^ 'Show the description of shortcuts for the system'
+]
+
 { #category : 'examples' }
 KMDescriptionPresenter class >> example [
 	self new
 		categories: #(GlobalShortcuts MonticelloShortcuts TextEditor);
+		open
+]
+
+{ #category : 'accessing' }
+KMDescriptionPresenter class >> icon [
+
+	^ self iconNamed: #keymapBrowser
+]
+
+{ #category : 'instance creation' }
+KMDescriptionPresenter class >> menuCommandOn: aBuilder [
+	<worldMenu>
+
+	(aBuilder item: 'Keymap Descriptions')
+		action: [ self open ];
+		order: 34;
+		parent: #Tools;
+		icon: self icon;
+		help: self descriptionText
+]
+
+{ #category : 'instance creation' }
+KMDescriptionPresenter class >> open [
+	"Open the receiver's on all the system keymap categories"
+	
+	^ self new
+		categories: KMRepository default categories keys;
 		open
 ]
 
