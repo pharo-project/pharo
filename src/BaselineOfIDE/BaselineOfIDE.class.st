@@ -306,7 +306,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
 	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
 
-	ASTTransformExamplePluginActive recompile.
 	PharoCommandLineHandler recompile.
 	SmalltalkImage recompile.
 
