@@ -160,7 +160,9 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 		  
 		aBuilder
 			  superclassName: superclassName asSymbol;
-			  environment: self class environment; "This is probably bad because it installs all chunks in the global environment but the bootstrap does not work without this for now"
+			  "This is probably bad because it installs all chunks in the global environment but the bootstrap does not work without this for now"
+			  buildEnvironment: self class environment;
+			  installingEnvironment: self class environment;
 			  name: subclassName;
 			  layoutClass: layoutClass.
 		  instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
