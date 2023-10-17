@@ -209,33 +209,6 @@ WorldState class >> systemStartupFolderMenuOn: aBuilder [
 ]
 
 { #category : '*Morphic-Base' }
-WorldState class >> systemStartupFoldersOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #SystemFolders)
-		label: 'Folders';
-		parent: #Startup;
-		order: 2;
-		help: 'System folder related.';
-		iconName: #scriptManager;
-		with: [ 
-		
-	(aBuilder item: #SystemImageFolder)
-				action: [ Smalltalk imageDirectory openInOSFileBrowser ];
-				label: 'Open Image folder';
-				order: 1; 
-				help: 'Open the image folder.';
-				iconName: #smallOpen.
-
-	(aBuilder item: #SystemVMFolder)
-				action: [ Smalltalk imageDirectory openInOSFileBrowser ];
-				label: 'Open VM folder';
-				order: 1;
-				help: 'Open the VM folder.';
-				iconName: #smallOpen
-	 ]
-]
-
-{ #category : '*Morphic-Base' }
 WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Windows)
