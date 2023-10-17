@@ -36,8 +36,9 @@ MCGitHubRepository class >> cacheDirectory: aDirectory [
 ]
 
 { #category : 'instance creation' }
-MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createGithubRepository: aRepositorySpec
+MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	^ self location: aRepositorySpec description
 ]
 
 { #category : 'accessing' }

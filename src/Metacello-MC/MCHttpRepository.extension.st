@@ -10,8 +10,9 @@ MCHttpRepository >> asRepositorySpecFor: aMetacelloMCProject [
 ]
 
 { #category : '*Metacello-MC' }
-MCHttpRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createHttpRepository: aRepositorySpec
+MCHttpRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	^ self location: aRepositorySpec description user: aRepositorySpec username password: aRepositorySpec password
 ]
 
 { #category : '*Metacello-MC' }
