@@ -44,9 +44,13 @@ Behavior >> compileAll [
 { #category : '*OpalCompiler-Core' }
 Behavior >> compileAllFrom: oldClass [
 	"Compile all the methods in the receiver's method dictionary.
-	This validates sourceCode and variable references and forces
-	all methods to use the current bytecode set"
-	oldClass localSelectors do: [:sel | self recompile: sel from: oldClass]
+	This validates sourceCode and variable references and forces all methods to use the current bytecode set"
+
+	"If the slots changed, we need to recompile the methods. Ideally only the methods that changed, but for now we recompile everything. Else we can just use the old methods."
+
+	oldClass allSlots = self allSlots
+		ifTrue: [ oldClass localSelectors do: [ :selector | self addSelectorSilently: selector withMethod: (oldClass compiledMethodAt: selector) ] ]
+		ifFalse: [ oldClass localSelectors do: [ :selector | self recompile: selector from: oldClass ] ]
 ]
 
 { #category : '*OpalCompiler-Core' }
