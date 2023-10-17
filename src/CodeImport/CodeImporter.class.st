@@ -46,7 +46,8 @@ Class {
 		'readStream',
 		'codeDeclarations',
 		'parserClass',
-		'logSource'
+		'logSource',
+		'enableUndefinedClass'
 	],
 	#category : 'CodeImport-Base',
 	#package : 'CodeImport',
@@ -116,12 +117,17 @@ CodeImporter >> codeDeclarations [
 	^codeDeclarations
 ]
 
+{ #category : 'testing' }
+CodeImporter >> enableUndefinedClass [
+	^ enableUndefinedClass
+]
+
 { #category : 'public access' }
 CodeImporter >> evaluate [
 	" stripped down version of evaluateDeclarations"
 	| value |
 	self codeDeclarations do: [ :declaration |
-		value := declaration importFor: nil logSource: logSource  ].
+		value := declaration importFor: self  logSource: logSource  ].
 	self flushChangesFile.
 
 	^value
@@ -151,7 +157,8 @@ CodeImporter >> flushChangesFile [
 CodeImporter >> initialize [
 	codeDeclarations := OrderedCollection new.
 	parserClass := ChunkFileFormatParser.
-	logSource := true
+	logSource := true.
+	enableUndefinedClass := false
 ]
 
 { #category : 'accessing' }
@@ -168,4 +175,14 @@ CodeImporter >> parseChunks [
 { #category : 'accessing' }
 CodeImporter >> readStream: aReadStream [
 	readStream := aReadStream
+]
+
+{ #category : 'accessing' }
+CodeImporter >> setStrictSuperclass [
+	enableUndefinedClass := false
+]
+
+{ #category : 'accessing' }
+CodeImporter >> setUndefinedClass [
+	enableUndefinedClass := true
 ]

@@ -184,6 +184,45 @@ ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
 ]
 
 { #category : 'importing-code' }
+ChunkImportTestCase >> testImportAClassWithUndefinedSuperclass [
+	| class |
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
+		class := (CodeImporter fromString:
+				 'FGH subclass: #CodeImportTestCaseTestClass
+				instanceVariableNames: ''var1 var2 var3''
+				classVariableNames: ''''
+				poolDictionaries: ''''
+				category: ''CodeImport-Tests-Garbage''!')
+				setUndefinedClass;
+				evaluateDeclarations.
+		self assert: class isUndefined.	
+		self assert: class superclass isUndefined.	
+		self assert: class superclass name equals: #FGH.
+		self assert: #CodeImportTestCaseTestClass equals: class name.
+		self assert: (class instVarNames includes: 'var1').
+		self assert: (class instVarNames includes: 'var2').
+		self assert: (class instVarNames includes: 'var3').
+		self assert: class category equals: 'CodeImport-Tests-Garbage'.
+
+	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+]
+
+{ #category : 'importing-code' }
+ChunkImportTestCase >> testImportAClassWithoutUndefinedSuperclass [
+	
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+	 	
+		self should: [ (CodeImporter fromString:
+				 'FGH subclass: #CodeImportTestCaseTestClass
+				instanceVariableNames: ''var1 var2 var3''
+				classVariableNames: ''''
+				poolDictionaries: ''''
+				category: ''CodeImport-Tests-Garbage''!') evaluateDeclarations ] 
+				raise: Error
+]
+]
+
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethod [
 	| class |
 	SystemAnnouncer uniqueInstance
