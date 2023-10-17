@@ -217,7 +217,7 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 
 	self flag: #pharo11. "If Pharo12 the management of the method trailer changed and the way to create a new method changed too."
 	newMethod := CompiledMethod
-		             newMethod: (SystemVersion current major > 12
+		             newMethod: (SystemVersion current major >= 12
 				              ifTrue: [ aMethod bytecode size + CompiledMethod trailerSize ]
 				              ifFalse: [ aMethod bytecode size ])
 		             header: (aMethod headerFor: extendedEnvironment).
