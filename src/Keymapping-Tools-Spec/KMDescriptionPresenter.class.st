@@ -35,19 +35,20 @@ KMDescriptionPresenter >> categories: aCollectionOfSymbols [
 ]
 
 { #category : 'initialization' }
-KMDescriptionPresenter >> initializePresenter [
+KMDescriptionPresenter >> connectPresenters [
+
 	categoryList
 		transmitTo: shortcutList
-		transform: [ :category | (category entriesAt: #all) keymaps sorted: [ :keymap | keymap shortcut asString ] ascending ]
+		transform: [ :category | (category model entriesAt: #all) keymaps sorted: [ :keymap | keymap shortcut asString ] ascending ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialization - deprecated' }
 KMDescriptionPresenter >> initializeWidgets [
 	categoryList := self newDropList.
 	shortcutList := self newTable.
 	actionBar := self newActionBar.
 
-	categoryList displayBlock: [ :category | category name ].
+	categoryList display: [ :category | category name ].
 
 	shortcutList
 		addColumn: (SpStringTableColumn title: 'Shortcut' evaluated: #shortcut);
