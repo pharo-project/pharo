@@ -287,7 +287,7 @@ Class >> category: aString [
 
 	oldCategory = Class unclassifiedCategory
 		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: self) ]
-		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
+		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRecategorized class: self recategorizedFrom: oldCategory to: self category) ]
 ]
 
 { #category : 'subclass creation - variableByte' }

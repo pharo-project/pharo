@@ -52,7 +52,7 @@ RBNamespaceTest >> testAllReferencesToClassDo [
 	| model packageenv count |
 	packageenv := RBPackageEnvironment packageNames: {
 			           RBFooDummyLintRuleTest1 packageName.
-			           'Refactoring2-Transformations-Tests' }.
+			           'Refactoring-Transformations-Tests' }.
 	"The second package has references to the leaf subclass we want to remove and this is part of the test."
 	model := RBNamespace onEnvironment: packageenv.
 	
@@ -69,7 +69,7 @@ RBNamespaceTest >> testAllReferencesToClassDoMore [
 	| model packageenv selectors |
 	packageenv := RBPackageEnvironment packageNames: {
 			           RBFooDummyLintRuleTest1 packageName.
-			           'Refactoring2-Transformations-Tests' }.
+			           'Refactoring-Transformations-Tests' }.
 	"The second package has references to the leaf subclass we want to remove and this is part of the test."
 	model := RBNamespace onEnvironment: packageenv.
 	
@@ -138,7 +138,7 @@ RBNamespaceTest >> testClassesReferencingClass [
 	| model packageenv classes |
 	packageenv := RBPackageEnvironment packageNames: {
 			           RBFooDummyLintRuleTest1 packageName.
-			           'Refactoring2-Transformations-Tests' }.
+			           'Refactoring-Transformations-Tests' }.
 	"The second package has references to the leaf subclass we want to remove and this is part of the test."
 	model := RBNamespace onEnvironment: packageenv.
 	

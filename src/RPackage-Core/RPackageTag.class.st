@@ -39,9 +39,12 @@ RPackageTag >> basicRenameTo: aString [
 
 { #category : 'accessing' }
 RPackageTag >> categoryName [
-	"Answer this tag as a SystemCategory.
-    That would be RPackage, '-', RPackageTag, unless tag is root (same name as RPackage)"
-	^ self toCategoryName: self name
+	"Answer this tag as a SystemCategory. This should be use the less possible ideally.
+    That would be Package, '-', PackageTag, unless tag is root (same name as Package)"
+
+	^ self isRoot
+		  ifTrue: [ self packageName ]
+		  ifFalse: [ self packageName , '-' , self name ]
 ]
 
 { #category : 'accessing' }
@@ -145,8 +148,8 @@ RPackageTag >> privateAddClass: aClass [
 	classes add: aClass.
 	self organizer registerPackage: self package forClass: aClass.
 
-	self flag: #package. "Next line should first use #basicCategory: to not start a ping pong then be totally removed once we will not need the category"
-	aClass category: self categoryName
+	self flag: #package. "Next line should be removed once we will not need the category"
+	aClass basicCategory: self categoryName
 ]
 
 { #category : 'converting' }
@@ -188,17 +191,15 @@ RPackageTag >> removeFromSystem [
 { #category : 'accessing' }
 RPackageTag >> renameTo: newTagName [
 
-	| oldCategoryName newCategoryName oldTagName |
+	| oldTagName |
 	oldTagName := self name.
-	oldCategoryName := self toCategoryName: oldTagName.
-	newCategoryName := self toCategoryName: newTagName.
 
 	oldTagName = newTagName ifTrue: [ ^ self ].
 
 	self basicRenameTo: newTagName.
 
 	self flag: #package. "This should be removed later when the class will know its tag."
-	self classes do: [ :class | class basicCategory: newCategoryName ].
+	self classes do: [ :class | class basicCategory: self categoryName ].
 	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 
@@ -206,11 +207,4 @@ RPackageTag >> renameTo: newTagName [
 RPackageTag >> rootTagName [
 
 	^ self package rootTagName
-]
-
-{ #category : 'private' }
-RPackageTag >> toCategoryName: aString [
-	^ aString = self packageName
-		ifTrue: [ aString ]
-		ifFalse: [ self packageName, '-', aString ]
 ]

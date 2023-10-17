@@ -264,7 +264,7 @@ ShiftClassBuilder >> createClass [
 		configureClass: newClass
 		superclass: self superclass
 		withLayoutType: self layoutClass
-		slots: self layoutDefinition slots.
+		slots: (self withAdditionalSlots: self slots).
 
 	newClass environment: self installingEnvironment.
 
@@ -273,13 +273,14 @@ ShiftClassBuilder >> createClass [
 
 { #category : 'building' }
 ShiftClassBuilder >> createMetaclass [
+
 	newMetaclass := self builderEnhancer newMetaclass: self.
 
 	self builderEnhancer
 		configureMetaclass: newMetaclass
 		superclass: self metaSuperclass
 		withLayoutType: FixedLayout
-		slots: self classSlots.
+		slots: (self withAdditionalSlots: self classSlots).
 
 	self builderEnhancer metaclassCreated: self
 ]
@@ -709,4 +710,16 @@ ShiftClassBuilder >> validateSuperclass [
 	self superclass withAllSuperclassesDo: [ :aSuperclass |
 		aSuperclass = oldClass ifTrue:[
 			CircularHierarchyError signalFor: oldClass ]]
+]
+
+{ #category : 'private' }
+ShiftClassBuilder >> withAdditionalSlots: aSlotCollection [
+	"Some slots are relying on additional slots for internal behavior. This method adds them to the list of slots of the class."
+
+	| slots |
+	slots := aSlotCollection asOrderedCollection.
+
+	aSlotCollection do: [ :slot | slot addAdditionalSlotsTo: slots ].
+
+	^ slots asArray
 ]
