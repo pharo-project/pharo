@@ -28,6 +28,14 @@ ClyBrowserToolValidityTest >> mockPackageName [
 	^ 'MockPackageForTestingCalypso'.
 ]
 
+{ #category : 'running' }
+ClyBrowserToolValidityTest >> tearDown [
+
+	self packageOrganizer removePackage: self mockPackageName.
+
+	super tearDown
+]
+
 { #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCommentToolIsNotValidWhenNotAClassContext [
 
