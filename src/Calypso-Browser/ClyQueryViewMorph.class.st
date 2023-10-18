@@ -780,11 +780,12 @@ ClyQueryViewMorph >> showQueries: queries as: aQueryResult [
 { #category : 'queries' }
 ClyQueryViewMorph >> showQuery: aQuery [
 
-	| dataSource |
 	self initiateUIChangeBy: [
-		dataSource := self dataSourceClass on: aQuery.
-		self dataSource: dataSource.
-		self ensureSelectedItemIfNeeded]
+		| oldDataSource |
+		oldDataSource := self dataSource.
+		self dataSource: (self dataSourceClass on: aQuery).
+		self transferExpansionStateFrom: oldDataSource.
+		self ensureSelectedItemIfNeeded ]
 ]
 
 { #category : 'testing' }
@@ -842,6 +843,24 @@ ClyQueryViewMorph >> targetDropItem [
 ClyQueryViewMorph >> targetDropItem: anObject [
 
 	targetDropItem := anObject
+]
+
+{ #category : #queries }
+ClyQueryViewMorph >> transferExpansionStateFrom: oldDataSource [
+
+	| itemsSelector actionSelector newItems |
+	(oldDataSource isKindOf: ClyExpandedDataSource) ifTrue: [
+		itemsSelector := #collapsedItems.
+		actionSelector := #collapse ].
+	(oldDataSource isKindOf: ClyCollapsedDataSource) ifTrue: [
+		itemsSelector := #expandedItems.
+		actionSelector := #expand ].
+	itemsSelector ifNil: [ ^ self ].
+	newItems := self dataSource itemCursor findItemsSimilarTo:
+		            ((oldDataSource perform: itemsSelector) collect: [ :each |
+			             each browserItem ]).
+	newItems do: [ :each |
+		(self dataSource createElementWith: each) perform: actionSelector ]
 ]
 
 { #category : 'accessing' }
