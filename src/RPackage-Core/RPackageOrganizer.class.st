@@ -199,6 +199,35 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
+	self packages do: [ :package |
+		Stdio stdout
+			nextPutAll: 'Package : ';
+			nextPutAll: package name;
+			lf;
+			nextPutAll: 'Tags:';
+			lf.
+		package classTags
+			do: [ :tag |
+				Stdio stdout
+					nextPutAll: '- ';
+					nextPutAll: tag name;
+					nextPutAll: ' with ';
+					nextPutAll: ($, join: (tag class collect: #name)) ]
+			separatedBy: [ Stdio stdout lf ].
+		Stdio stdout
+			lf;
+			lf ].
+
+	Smalltalk allClassesAndTraits do: [ :behavior |
+		Stdio stdout
+			nextPutAll: 'Behavior : ';
+			nextPutAll: behavior name;
+			nextPutAll: ' Package : ';
+			nextPutAll: behavior package name;
+			nextPutAll: ' category: ';
+			nextPutAll: behavior category;
+			lf ].
+
 	"Smalltalk allClassesAndTraits
 		do: [ :behavior |
 			| package |
