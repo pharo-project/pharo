@@ -40,7 +40,7 @@ CDBehaviorParserTest >> nodeFor: aString [
 { #category : 'helpers' }
 CDBehaviorParserTest >> parserClass [
 
-	^ CDClassDefinitionParser
+	^ CDFluidClassDefinitionParser
 ]
 
 { #category : 'helpers' }
