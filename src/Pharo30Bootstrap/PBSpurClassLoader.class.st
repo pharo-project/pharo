@@ -35,10 +35,9 @@ PBSpurClassLoader >> classDefinitionFor: aClass [
 			sharedVariablesFromString: ''{classVariablesString}'';
 			sharedPools: ''{sharedPoolsString}'';
 			package: ''{package}'';
+			tag: {tag};
 			environment: {superClass} environment;
-			classSlots: ''{classInstanceVariablesString}'' asSlotCollection.
-			
-			''{tag}'' ifNotEmpty: [ :aTag | builder tag: aTag ] ].
+			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
 	"newClass setTraitComposition: {aTraitComposition} asTraitComposition."
 	newClass'
 		format: { 
@@ -49,7 +48,7 @@ PBSpurClassLoader >> classDefinitionFor: aClass [
 			'classVariablesString' -> aClass classVariablesString.
 			'sharedPoolsString' -> aClass sharedPoolsString.
 			'package' -> aClass package name asString.
-			'tag' -> (aClass tags ifEmpty: [ '' ] ifNotEmpty: [ :tags | tags anyOne ]).
+			'tag' -> (aClass tags ifEmpty: [ 'nil' ] ifNotEmpty: [ :tags | tags anyOne printString ]).
 			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames).
 			'aTraitComposition' -> aClass traitCompositionString } asDictionary.
 ]

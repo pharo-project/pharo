@@ -50,10 +50,9 @@ PBClassLoader >> classDefinitionFor: aClass [
 			sharedVariablesFromString: ''{classVariablesString}'';
 			sharedPools: ''{sharedPoolsString}'';
 			package: ''{package}'';
+			tag: {tag};
 			environment: {superClass} environment;
-			classSlots: ''{classInstanceVariablesString}'' asSlotCollection.
-			
-			''{tag}'' ifNotEmpty: [ :aTag | builder tag: aTag ] ].
+			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
 	newClass layout compactClassIndex: {compactIndex}.
 	newClass'
 		format: { 
@@ -64,7 +63,7 @@ PBClassLoader >> classDefinitionFor: aClass [
 			'classVariablesString' -> aClass classVariablesString.
 			'sharedPoolsString' -> aClass sharedPoolsString.
 			'package' -> aClass package name asString.
-			'tag' -> (aClass tags ifEmpty: [ '' ] ifNotEmpty: [ :tags | tags anyOne ]).
+			'tag' -> (aClass tags ifEmpty: [ 'nil' ] ifNotEmpty: [ :tags | tags anyOne printString ]).
 			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames).
 			'compactIndex' -> (self compactClassIndexForClass: aClass) } asDictionary.
 ]
@@ -174,14 +173,16 @@ PBClassLoader >> environment: anEnvironment [
 { #category : 'class-loading' }
 PBClassLoader >> executeDefinitionFor: aRFiDefinition [
 
-	| definition |
+	| definition result |
 	definition := aRFiDefinition isBehavior ifTrue: [ 
 		self classDefinitionFor: aRFiDefinition.
 	] ifFalse: [
 		aRFiDefinition definition.
 	].
 
-	^ builder bootstrapInterpreter evaluateCode: definition.
+	result := builder bootstrapInterpreter evaluateCode: definition.
+	result packageTag ifNil: [ self error ].
+	^ result
 ]
 
 { #category : 'stubs' }
