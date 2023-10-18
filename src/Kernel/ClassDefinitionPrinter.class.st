@@ -162,7 +162,7 @@ Object << #Faked
 
 { #category : 'configure' }
 ClassDefinitionPrinter class >> showFluidClassDefinition [
-
+self flag: #fluid.
 	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := true ]
 ]
 

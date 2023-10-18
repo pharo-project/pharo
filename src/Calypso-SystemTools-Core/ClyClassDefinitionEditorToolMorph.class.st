@@ -15,8 +15,16 @@ Class {
 { #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
-	| code |
+	| code ast |
 	code := self pendingText.
+
+	"The next line are here for the compatibility with the old class definition."
+	ast := RBParser parseExpression: code.
+	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [
+		Warning signal:
+			'The class definition used is the old Pharo class definition. Now the Fluid class definition should be used. Check the comment of ShiftClassBuilder to know the syntax.'.
+		^ self applyChangesAsOldClassDefinition: ast ].
+
 	^ (code asString lines first includesSubstring: '<<')
 		  ifTrue: [ self applyChangesAsClassDefinition ]
 		  ifFalse: [
@@ -58,6 +66,19 @@ ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
  	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
  	browser selectMethod: newMethod.
  	^ true
+]
+
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsOldClassDefinition: ast [
+
+	| newClass |
+	newClass := OldClassDefinitionBuilder buildFromAST: ast.
+
+	newClass ifNil: [ ^ false ].
+
+	editingClass == newClass ifFalse: [ self removeFromBrowser ].
+	browser selectClass: newClass.
+	^ true
 ]
 
 { #category : 'to sort' }
