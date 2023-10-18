@@ -13,8 +13,15 @@ MCDictionaryRepository >> asRepositorySpecFor: aMetacelloMCProject [
 ]
 
 { #category : '*Metacello-MC' }
-MCDictionaryRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createDictionaryRepository: aRepositorySpec
+MCDictionaryRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	| globalName |
+	globalName := (aRepositorySpec description copyFrom: 'dictionary://' size + 1 to: aRepositorySpec description size) asSymbol.
+
+	^ Smalltalk at: globalName ifAbsentPut: [
+		  self new
+			  description: aRepositorySpec description;
+			  yourself ]
 ]
 
 { #category : '*Metacello-MC' }

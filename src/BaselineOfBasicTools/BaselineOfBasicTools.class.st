@@ -107,8 +107,6 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 	
-	RBRefactoryChangeManager nuke.
-	
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.
 	

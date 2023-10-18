@@ -111,69 +111,6 @@ MetacelloPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName
 ]
 
 { #category : 'repository creation' }
-MetacelloPlatform >> createBitbucketRepository: aRepositorySpec [
-	| cl |
-	
-	cl := Smalltalk at: #'MCBitbucketRepository'.
- 	^ cl location: aRepositorySpec description
-]
-
-{ #category : 'repository creation' }
-MetacelloPlatform >> createDictionaryRepository: aRepositorySpec [
-	| description headerSize globalName |
- 
-	description := aRepositorySpec description.
-	headerSize := 'dictionary://' size.
-	globalName := (description copyFrom: headerSize + 1 to: description size) asSymbol.
-   
-	^ Smalltalk
- 		at: globalName
- 		ifAbsent: [ 
-          Smalltalk
-            at: globalName
-            put: (MCDictionaryRepository new
-					description: description;
-					yourself) ]
-]
-
-{ #category : 'repository creation' }
-MetacelloPlatform >> createDirectoryRepository: aRepositorySpec [
-	^ MCDirectoryRepository new
-		directory: (self fileHandleOn: aRepositorySpec description);
-		yourself
-]
-
-{ #category : 'repository creation' }
-MetacelloPlatform >> createFiletreeRepository: aRepositorySpec [
-	| cl description headerSize |
-	
-	cl := Smalltalk at: #'MCFileTreeRepository'.
-	description := aRepositorySpec description.
- 	headerSize := 'filetree://' size.
-	^ cl new 
-		directory: (self fileHandleOn: (aRepositorySpec description 
-			copyFrom: headerSize + 1 
-			to: description size));
-		yourself
-]
-
-{ #category : 'repository creation' }
-MetacelloPlatform >> createGithubRepository: aRepositorySpec [
-	| cl |
-	
-	cl := Smalltalk at: #'MCGitHubRepository'.
-	^ cl location: aRepositorySpec description
-]
-
-{ #category : 'repository creation' }
-MetacelloPlatform >> createHttpRepository: aRepositorySpec [
-	^ MCHttpRepository
-        location: aRepositorySpec description
-        user: aRepositorySpec username
-        password: aRepositorySpec password
-]
-
-{ #category : 'repository creation' }
 MetacelloPlatform >> createRepository: aRepositorySpec [
 
 	^ MCRepository 
@@ -309,23 +246,16 @@ MetacelloPlatform >> extractRepositoryFrom: zipFile to: directory [
 
 { #category : 'repository creation' }
 MetacelloPlatform >> extractTypeFromDescription: description [
-  description == nil
-    ifTrue: [ ^ nil ].
-  ((description beginsWith: '/') or: [ description second = $: ])
-    ifTrue: [ ^ 'directory' ].
-  (description beginsWith: 'dictionary://')
-    ifTrue: [ ^ 'dictionary' ].
-  (description beginsWith: 'filetree://')
-    ifTrue: [ ^ 'filetree' ].
-  (description beginsWith: 'tonel://')
-    ifTrue: [ ^ 'tonel' ].
-  (description beginsWith: 'github://')
-    ifTrue: [ ^ 'github' ].
-  (description beginsWith: 'gitorious://')
-    ifTrue: [ ^ 'gitorious' ].
-  (description beginsWith: 'bitbucket://')
-    ifTrue: [ ^ 'bitbucket' ].
-  ^ 'http'
+
+	description ifNil: [ ^ nil ].
+	((description beginsWith: '/') or: [ description second = $: ]) ifTrue: [ ^ 'directory' ].
+	(description beginsWith: 'dictionary://') ifTrue: [ ^ 'dictionary' ].
+	(description beginsWith: 'filetree://') ifTrue: [ ^ 'filetree' ].
+	(description beginsWith: 'tonel://') ifTrue: [ ^ 'tonel' ].
+	(description beginsWith: 'github://') ifTrue: [ ^ 'github' ].
+	(description beginsWith: 'gitorious://') ifTrue: [ ^ 'gitorious' ].
+	(description beginsWith: 'bitbucket://') ifTrue: [ ^ 'bitbucket' ].
+	^ 'http'
 ]
 
 { #category : 'github/bitbucket support' }

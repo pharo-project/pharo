@@ -8,8 +8,11 @@ MCDirectoryRepository >> asRepositorySpecFor: aMetacelloMCProject [
 ]
 
 { #category : '*Metacello-MC' }
-MCDirectoryRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createDirectoryRepository: aRepositorySpec
+MCDirectoryRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	^ self new
+		  directory: aRepositorySpec description asFileReference;
+		  yourself
 ]
 
 { #category : '*Metacello-MC' }

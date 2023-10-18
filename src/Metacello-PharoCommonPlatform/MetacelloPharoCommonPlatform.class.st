@@ -65,33 +65,6 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 	^ class
 ]
 
-{ #category : 'repository creation' }
-MetacelloPharoCommonPlatform >> createFiletreeRepository: aRepositorySpec [
-	MCRepository 
-		findFiletreeAlternateFormat: aRepositorySpec
-		ifFound: [ :repository | 
-			^ repository createRepositoryFromSpec: aRepositorySpec on: self ].
-
-	^ super createFiletreeRepository: aRepositorySpec
-]
-
-{ #category : 'repository creation' }
-MetacelloPharoCommonPlatform >> createFtpRepository: aRepositorySpec [
- 	| description headerSize index host directory |
-	
-	description := aRepositorySpec description.
-	headerSize := 'ftp://' size.
-	index := description indexOf: $/ startingAt: headerSize + 1.
-	host := description copyFrom: headerSize + 1 to: index - 1.
-	directory := description copyFrom: index + 1 to: description size.
-	
-	^ MCFtpRepository
-		host: host 
-		directory: directory 
-		user: aRepositorySpec username
-		password: aRepositorySpec password
-]
-
 { #category : 'file system' }
 MetacelloPharoCommonPlatform >> defaultDirectory [
 	"Get the image default directory"
