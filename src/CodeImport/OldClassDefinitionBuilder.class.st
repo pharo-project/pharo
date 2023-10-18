@@ -79,7 +79,7 @@ OldClassDefinitionBuilder class >> allowedSelectors [
 )
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'building' }
 OldClassDefinitionBuilder class >> buildFromAST: ast [
 
 	^ self new
