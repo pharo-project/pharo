@@ -121,9 +121,7 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 { #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
 
-	self editingClass needsSlotClassDefinition
-		ifTrue: [ ^ ClassDefinitionPrinter fluid classDefinitionParserClass parse: self editingText].
-	^ ClassDefinitionPrinter new classDefinitionParserClass parse: self editingText
+	^ ClassDefinitionPrinter fluid classDefinitionParserClass parse: self editingText
 ]
 
 { #category : 'selecting text' }

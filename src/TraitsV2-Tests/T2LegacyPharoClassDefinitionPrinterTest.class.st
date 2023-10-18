@@ -10,13 +10,6 @@ T2LegacyPharoClassDefinitionPrinterTest >> forClass: aClass [
 	^ (ClassDefinitionPrinter legacy for: aClass) definitionString
 ]
 
-{ #category : 'running' }
-T2LegacyPharoClassDefinitionPrinterTest >> setUp [
-
-	super setUp.
-	ClassDefinitionPrinter showFluidClassDefinition: false
-]
-
 { #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 

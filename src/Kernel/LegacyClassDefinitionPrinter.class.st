@@ -75,12 +75,6 @@ LegacyClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString named:
 			  nextPutAll: '''' ]
 ]
 
-{ #category : 'delegating' }
-LegacyClassDefinitionPrinter >> expandedDefinitionString [
-	"We do not support expansion on legacy syntax so we shortcut the double dispatch call."
-	^ self definitionString
-]
-
 { #category : 'public API' }
 LegacyClassDefinitionPrinter >> metaclassDefinitionString [
 
