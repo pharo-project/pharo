@@ -199,12 +199,12 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
-	Smalltalk allClassesAndTraits
+	"Smalltalk allClassesAndTraits
 		do: [ :behavior |
 			| package |
 			package := self ensurePackageMatching: behavior category.
 			package moveClass: behavior toTag: (package toTagName: behavior category) ]
-		displayingProgress: 'Importing behaviors'.
+		displayingProgress: 'Importing behaviors'."
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
