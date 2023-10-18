@@ -212,7 +212,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 					nextPutAll: '- ';
 					nextPutAll: tag name;
 					nextPutAll: ' with ';
-					nextPutAll: ($, join: (tag class collect: #name)) ]
+					nextPutAll: ($, join: (tag classes collect: #name)) ]
 			separatedBy: [ Stdio stdout lf ].
 		Stdio stdout
 			lf;
