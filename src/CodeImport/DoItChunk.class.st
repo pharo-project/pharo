@@ -156,7 +156,7 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 		
 		  packageName ifNotNil: [
 		  "Since before the category included the package name and the tags name, we are trying to find the right one here."
-		  realPackageName := (superclass environments organization packageMatchingExtensionName: packageName) ifNil: [ packageName ] ifNotNil: [ :package | package name ].
+		  realPackageName := (superclass environment organization packageMatchingExtensionName: packageName) ifNil: [ packageName ] ifNotNil: [ :package | package name ].
 		  aBuilder package: realPackageName ].
 	
 		  realPackageName = packageName ifFalse: [ aBuilder tag: (packageName withoutPrefix: (realPackageName , '-')) ]. 
