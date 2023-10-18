@@ -7,11 +7,12 @@ Class {
 
 { #category : 'helpers' }
 CDNilSubclassParserTest >> classDefinitionString [
+
 	^ 'ProtoObject subclass: #ProtoObject
-	instanceVariableNames: ''first second''
+		slots: {slots};
 	classVariableNames: ''firstClass secondClass''
 	package: #MyPackage.
-ProtoObject superclass: nil'
+ProtoObject superclass: nil' format: { 'slots' -> self slotsArray } asDictionary
 ]
 
 { #category : 'helpers' }

@@ -11,8 +11,6 @@ CDCompiledBlockClassParserTest >> classDefinitionString [
 
 	^ 'CompiledCode << #CompiledBlock
 	layout: CompiledMethodLayout;
-	slots: {  };
-	sharedVariables: {  };
 	package: #MyPackage'
 ]
 

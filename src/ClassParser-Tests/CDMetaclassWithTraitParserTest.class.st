@@ -10,11 +10,10 @@ CDMetaclassWithTraitParserTest >> classDefinitionString [
 
 	^ '{className} class
 		uses: {classTraitName} classTrait
-		instanceVariableNames: ''{instvar1} {instvar2}'''
+		slots: {slots}'
 			format: {
 				'className' -> self className.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
+				'slots' -> self slotsArray.
 				'classTraitName' -> self classTraitName
 			 } asDictionary
 ]

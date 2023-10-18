@@ -26,6 +26,12 @@ CDBehaviorParserTest >> className [
 ]
 
 { #category : 'helpers' }
+CDBehaviorParserTest >> firstClassVariableName [
+
+	^ 'firstClass'
+]
+
+{ #category : 'helpers' }
 CDBehaviorParserTest >> firstInstanceVariableName [
 
 	^ 'first'
@@ -41,6 +47,12 @@ CDBehaviorParserTest >> nodeFor: aString [
 CDBehaviorParserTest >> parserClass [
 
 	^ CDFluidClassDefinitionParser
+]
+
+{ #category : 'helpers' }
+CDBehaviorParserTest >> secondClassVariableName [
+
+	^ 'secondClass'
 ]
 
 { #category : 'helpers' }
@@ -62,6 +74,14 @@ CDBehaviorParserTest >> setUp [
 
 	super setUp.
 	classDefinition := self parserClass parse: self classDefinitionString
+]
+
+{ #category : 'helpers' }
+CDBehaviorParserTest >> slotsArray [
+
+	^ '\{ #{instvar1} . #{instvar2} }' format: {
+			  ('instvar1' -> self firstInstanceVariableName).
+			  ('instvar2' -> self secondInstanceVariableName) } asDictionary
 ]
 
 { #category : 'tests' }

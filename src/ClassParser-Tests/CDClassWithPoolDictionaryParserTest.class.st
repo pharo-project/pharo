@@ -9,17 +9,16 @@ Class {
 CDClassWithPoolDictionaryParserTest >> classDefinitionString [
 
 	^ '{superclassName} << #{classname}
-		slots: \{ #{instvar1} . #{instvar2} };
+		slots: {slots};
 		sharedVariables: \{ #{classvar1} . #{classvar2} };
 		sharedPools: {sharedPoolName}
 		package: #MyPackage' format: {
-			  ('classname' -> self className).
-			  ('superclassName' -> self superclassName).
-			  ('instvar1' -> self firstInstanceVariableName).
-			  ('instvar2' -> self secondInstanceVariableName).
-			  ('classvar1' -> self firstClassVariableName).
-			  ('classvar2' -> self secondClassVariableName).
-			  ('sharedPoolName' -> self sharedPools) } asDictionary
+			  'classname' -> self className.
+			  'superclassName' -> self superclassName.
+			  'slots' -> self slotsArray.
+			  'classvar1' -> self firstClassVariableName.
+			  'classvar2' -> self secondClassVariableName.
+			  'sharedPoolName' -> self sharedPools } asDictionary
 ]
 
 { #category : 'helpers' }
