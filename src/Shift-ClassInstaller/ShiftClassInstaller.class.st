@@ -290,6 +290,14 @@ ShiftClassInstaller >> oldClass: anObject [
 { #category : 'notifications' }
 ShiftClassInstaller >> recategorize: aClass [
 
+	Stdio stdout
+		nextPutAll: 'Puttin ';
+		nextPutAll: aClass name;
+		nextPutAll: ' in package ';
+		nextPutAll: builder package;
+		nextPutAll: ' tag ';
+		nextPutAll: builder tag asString;
+		lf.
 	aClass package: builder package tag: builder tag
 ]
 
