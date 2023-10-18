@@ -39,6 +39,7 @@ PBSpurClassLoader >> classDefinitionFor: aClass [
 			environment: {superClass} environment;
 			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
 	"newClass setTraitComposition: {aTraitComposition} asTraitComposition."
+	newClass packageTag ifNil: [ self error ].
 	newClass'
 		format: { 
 			'superClass' -> (aClass superclass ifNil: ['nil'] ifNotNil: [ :superclass | superclass name ]).

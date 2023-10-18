@@ -173,16 +173,14 @@ PBClassLoader >> environment: anEnvironment [
 { #category : 'class-loading' }
 PBClassLoader >> executeDefinitionFor: aRFiDefinition [
 
-	| definition result |
+	| definition |
 	definition := aRFiDefinition isBehavior ifTrue: [ 
 		self classDefinitionFor: aRFiDefinition.
 	] ifFalse: [
 		aRFiDefinition definition.
 	].
 
-	result := builder bootstrapInterpreter evaluateCode: definition.
-	result packageTag ifNil: [ self error ].
-	^ result
+	^ builder bootstrapInterpreter evaluateCode: definition.
 ]
 
 { #category : 'stubs' }
