@@ -1841,6 +1841,30 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	]
 ]
 
+{ #category : 'private' }
+Context >> runUntilReturnFrom: aContext [
+	"Run the receiver (which must be its stack top context) until aContext returns. Avoid a context that cannot return.
+	Note: to avoid infinite recursion of MNU error inside unwind blocks, implement e.g. a wrapper around the message
+	sentTo: receiver in #doesNotUnderstand:. Note: This method is a trivialized version of #runUntilErrorOrReturnFrom:
+	and was intended to be used by #unwindTo as a helper method to unwind non-local returns inside unwind blocks."
+
+	| here unwindBottom newTop |
+	here := thisContext.
+	"Avoid a context that cannot return between self and aContext (see Note 1 below)"
+	unwindBottom := self findContextSuchThat: [:ctx | ctx == aContext or: [ctx selector = #cannotReturn:]].
+	newTop := unwindBottom sender.
+	"Insert ensure context under unwindBottom in self's stack (see Note 2 below)"
+	unwindBottom insertSender: (Context contextEnsure: [here jump]).
+	self jump.  "Control jumps to self (see Note 2 below)"
+	"Control resumes here once the above inserted ensure block is executed"
+	^newTop   "Return the new top context (see Note 3 below)"
+
+	"Note 1: returning from #cannotReturn's sender would crash the VM so we install a guard ensure context right above it and after returning to #terminate the unwind will continue safely. Try running and debugging this example (avoid Proceeding the BCR error though; it would indeed crash the image):
+	[[[] ensure: [^2]] ensure: [^42]] fork"
+	"Note 2: self is run by jumping directly to it (the active process abandons thisContext and executes self on aProcess's stack; self is its top context). However, before jumping to self we insert an ensure block under unwindBottom context that jumps back to thisContext when evaluated. The inserted guard ensure context is removed once control jumps back to thisContext."
+	"Note 3: it doesn't matter newTop is not a proper stack top context because #terminate will use it only as a starting point in the search for the next unwind context and the computation will never return here. Cf. the pattern in #runUntilErrorOrReturnFrom:: removing the inserted ensure context by stepping until popped when executing non-local returns is not applicable here and would fail the tests testTerminationDuringNestedUnwindWithReturn1 and 2."
+]
+
 { #category : 'debugger access' }
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
@@ -2270,6 +2294,16 @@ Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 	^ self doPrimitive: primIndex method: aMethod receiver: aReceiver args: arguments
 ]
 
+{ #category : 'private' }
+Context >> unwindAndStop: aProcess [
+	"I'm a helper method to #terminate; I create and answer
+	 a helper stack for a terminating process to unwind itself from."
+
+	^(Context contextEnsure: [self unwindTo: nil]) 
+		privSender: [aProcess endProcess] asContext
+
+]
+
 { #category : 'special context access' }
 Context >> unwindBlock [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
@@ -2312,14 +2346,39 @@ Context >> unwindForTermination [
 
 { #category : 'private - exceptions' }
 Context >> unwindTo: aContext [
+	"Unwind self to aContext to execute pending #ensure:/#ifCurtailed: argument blocks between self
+	and aContext. Complete all pending unwind blocks including those currently in the middle of their
+	execution; these blocks will just finish their execution. Run all unwinds on their original stack
+	using #runUntilReturnFrom:."
 
-	| context unwindBlock |
-	context := self.
-	[ (context := context findNextUnwindContextUpTo: aContext) isNil ] whileFalse: [
-		(context unwindComplete) ifNil: [
-			context unwindComplete: true.
-			unwindBlock := context unwindBlock.
-			unwindBlock value ]]
+	| top ctx outerMost |
+	"If the receiver represents a block already halfways through an unwind, complete that unwind block
+	first; if there are multiple such nested unwind blocks, try to complete the outer-most one; all nested 
+	unwind blocks will be completed in the process; see tests in UnwindTest, testTerminationDuringUnwind. 
+	Note: Halfway-through blocks have already set the complete variable (tempAt: 2) in their defining
+	#ensure:/#ifCurtailed contexts from nil to true; we'll search for the bottom-most one.
+	Note: #findNextUnwindContextUpTo: starts searching from the receiver's sender so we must check 
+	whether the receiver itself is an unwind context as well; see testTerminateEnsureAsStackTop."
+	ctx := top := self.
+	ctx isUnwindContext ifFalse: [ctx := ctx findNextUnwindContextUpTo: aContext].
+	[ctx isNil] whileFalse: [
+		ctx unwindComplete ifNotNil: [
+			outerMost := ctx].
+		ctx := ctx findNextUnwindContextUpTo: aContext].
+	outerMost ifNotNil: [top := top runUntilReturnFrom: outerMost].
+	"By now no halfway-through unwind blocks are on the stack. Create a new top context for each 
+	pending unwind block (tempAt: 1) and execute it on the unwind block's stack to execute non-local 
+	returns correctly. Cf. the unwind pattern in #resume:through:. In #unwindTo, using #value instead of 
+	#runUntilReturnFrom: would lead to an incorrect evaluation of non-local returns on the wrong stack. 
+	Note: top points to the former outerMost sender now, i.e. to the next unexplored context."
+	ctx := top ifNil: [^self].
+	ctx isUnwindContext ifFalse: [ctx := ctx findNextUnwindContextUpTo: aContext].
+	[ctx isNil] whileFalse: [
+		ctx unwindComplete ifNil: [
+			ctx unwindComplete: true.
+			top := ctx unwindBlock asContextWithSender: ctx.
+			top runUntilReturnFrom: top].
+		ctx := ctx findNextUnwindContextUpTo: aContext]
 ]
 
 { #category : 'private' }

@@ -53,12 +53,6 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 ShClassInstallerTest >> tearDown [
 
 	self packageOrganizer removePackage: self generatedClassesPackageName.
-	{
-		newClass.
-		superClass.
-		subClass.
-		newClass2.
-		superClass2 } do: [ :class | class ifNotNil: [ class removeFromSystem ] ].
 	super tearDown
 ]
 

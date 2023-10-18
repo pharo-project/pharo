@@ -1,8 +1,14 @@
 Extension { #name : 'MCRepository' }
 
 { #category : '*Metacello-Core' }
-MCRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
+MCRepository class >> createRepositoryFromSpec: aRepositorySpec [
 	self subclassResponsibility
+]
+
+{ #category : '*Metacello-Core' }
+MCRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
+
+	^ self createRepositoryFromSpec: aRepositorySpec
 ]
 
 { #category : '*Metacello-Core' }

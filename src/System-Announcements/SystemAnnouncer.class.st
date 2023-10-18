@@ -104,14 +104,6 @@ SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
-	self announce: (ClassRepackaged
-						classRepackaged: aClass
-						oldPackage: aPackage
-						newPackage: anotherPackage)
-]
-
-{ #category : 'triggering' }
 SystemAnnouncer >> evaluated: textOrStream [
 	^ self evaluated: textOrStream context: nil
 ]

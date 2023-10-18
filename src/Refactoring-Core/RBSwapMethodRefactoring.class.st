@@ -53,7 +53,10 @@ RBSwapMethodRefactoring >> privateTransform [
 			sourceCode: (class sourceCodeFor: selector)
 			in: target
 			withProtocol: (class protocolsFor: selector)).
-	class removeMethod: selector
+	self generateChangesFor:
+		(RBRemoveMethodTransformation
+			selector: selector
+			from: class)
 ]
 
 { #category : 'initialization' }

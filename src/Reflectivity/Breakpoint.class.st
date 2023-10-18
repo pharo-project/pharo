@@ -151,7 +151,7 @@ Breakpoint class >> isInstalledIn: aMethod [
 	^ false
 ]
 
-{ #category : 'observers - experimental' }
+{ #category : 'notifications' }
 Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 
 	| announcement |
@@ -161,7 +161,7 @@ Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 	SystemAnnouncer announce: announcement
 ]
 
-{ #category : 'observers - experimental' }
+{ #category : 'notifications' }
 Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
 
 	| announcement |
@@ -171,7 +171,7 @@ Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: n
 	SystemAnnouncer announce: announcement
 ]
 
-{ #category : 'observers - experimental' }
+{ #category : 'notifications' }
 Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
 
 	| announcement |
@@ -220,6 +220,14 @@ Breakpoint class >> removeFromMethod: aMethod [
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
 			ifFound: [ breakpoint removeFromMethod: aMethod ] ]
+]
+
+{ #category : 'api' }
+Breakpoint >> addToGroup: aBreakpointGroup [
+	"puts the breakpoint in a new group and sets the group variable to that group"
+	group removeBreakpoint: self.
+	aBreakpointGroup addBreakpoint: self.
+	^ group := aBreakpointGroup
 ]
 
 { #category : 'api' }
@@ -309,16 +317,13 @@ Breakpoint >> count [
 { #category : 'accessing' }
 Breakpoint >> count: anInteger [
 
-	^count := anInteger
+	count := anInteger
 ]
 
 { #category : 'api' }
 Breakpoint >> createCondition [
 
-	self condition: self requestConditionBlock .
-
-	"condition := aCondition.
-	self link: self breakLinkConditional"
+	self condition: self requestConditionBlock
 ]
 
 { #category : 'api' }
@@ -348,14 +353,6 @@ Breakpoint >> generateConditionBlockFrom: aString [
 Breakpoint >> group [
 	"returns the group of the breakpoint"
 	^ group
-]
-
-{ #category : 'api' }
-Breakpoint >> group: aBreakpointGroup [
-	"puts the breakpoint in a new group and sets the group variable to that group"
-	group removeBreakpoint: self.
-	aBreakpointGroup addBreakpoint: self.
-	^ group := aBreakpointGroup
 ]
 
 { #category : 'private' }
@@ -494,9 +491,6 @@ Breakpoint >> removeFromBreakpointGroups [
 	"just in case the breakpoint is not removed correctly this will remove the reference to the group"
  	group := nil.
 
-	"old code needed when groups are not using weak sets"
-	"self group removeBreakpoint: self.
-	BreakpointGroup allBreakpointsGroup removeBreakpoint: self."
 ]
 
 { #category : 'removing' }

@@ -822,7 +822,7 @@ FileReferenceTest >> testNextNameForExtensionNegativeTesting [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testNextVersion [
+FileReferenceTest >> testNextVersionAlphabeticFilename [
 
 	| fs file versions |
 
@@ -833,7 +833,34 @@ FileReferenceTest >> testNextVersion [
 			file createFile.
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
-	self assert: versions equals: #('file.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+	self 
+		assert: versions 
+		equals: #('file.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testNextVersionAlphabeticVersionedFilename [
+
+	| fs file versions |
+
+	fs := FileSystem memory.
+	file := fs / 'file.000.name'.
+	versions := Array streamContents: [ :stream |
+		5 timesRepeat: [
+			file createFile.
+			stream nextPut: file basename.
+			file := file nextVersion. ] ].
+	self 
+		assert: versions 
+		equals: #('file.000.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testNextVersionAlphanumericFilename [
+
+	| fs file versions |
 
 	fs := FileSystem memory.
 	file := fs / 'file123.name.ext'.
@@ -842,7 +869,19 @@ FileReferenceTest >> testNextVersion [
 			file createFile.
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
-	self assert: versions equals: #('file123.name.ext' 'file123.name.1.ext' 'file123.name.2.ext' 'file123.name.3.ext' 'file123.name.4.ext').
+
+	self 
+		assert: versions 
+		equals: #('file123.name.ext' 'file123.name.1.ext' 'file123.name.2.ext' 'file123.name.3.ext' 'file123.name.4.ext').
+
+
+
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testNextVersionNumericFilename [
+
+	| fs file versions |
 
 	fs := FileSystem memory.
 	file := fs / '123.ext'.
@@ -851,7 +890,13 @@ FileReferenceTest >> testNextVersion [
 			file createFile.
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
-	self assert: versions equals: #('123.ext' '123.1.ext' '123.2.ext' '123.3.ext' '123.4.ext')
+	
+	self
+		assert: versions 
+		equals: #('123.ext' '123.1.ext' '123.2.ext' '123.3.ext' '123.4.ext')
+
+
+
 ]
 
 { #category : 'tests' }

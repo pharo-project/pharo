@@ -33,6 +33,12 @@ Class {
 	#tag : 'Utilities'
 }
 
+{ #category : 'cleanup' }
+SystemDictionary class >> cleanUp [
+
+	Smalltalk globals flushClassNameCache
+]
+
 { #category : 'accessing - classes and traits' }
 SystemDictionary >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"

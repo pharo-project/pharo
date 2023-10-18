@@ -11,48 +11,108 @@ Class {
 { #category : 'tests' }
 RPackageTagTest >> testAddClass [
 
-	| package1 package2 tag class |
-	package1 := self ensurePackage: #Test1.
-	class := self newClassNamed: 'TestClass' in: package1.
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: #NewClass in: xPackage tag: #TAG.
 
-	self assert: (package1 includesClass: class).
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
 
-	package2 := self ensurePackage: #Test2.
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	yTag addClass: class.
 
-	tag := package2 ensureTag: #TAG.
-
-	tag addClass: class.
-
-	self assert: class packageTag equals: tag.
-	self deny: (package1 includesClass: class).
-	self assert: (package2 includesClass: class).
-	self assert: (package2 hasTag: #TAG).
-	self assert: ((package2 classTagNamed: #TAG) includesClass: class)
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testAddClassFromTag [
+RPackageTagTest >> testAddClassSettingPackageTag [
 
-	| package1 package2 class |
-	package1 := self ensurePackage: #Test1.
-	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG1'.
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: #NewClass in: xPackage tag: #TAG.
 
-	self assert: (package1 includesClass: class).
-	self assert: (package1 hasTag: #TAG1).
-	self assert: ((package1 classTagNamed: #TAG1) includesClass: class).
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
 
-	package2 := self ensurePackage: #Test2.
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	class packageTag: yTag.
 
-	(package2 ensureTag: #TAG2) addClass: class.
-
-	self deny: (package1 includesClass: class).
-	self assert: (package2 includesClass: class).
-	self assert: (package2 hasTag: #TAG2).
-	self assert: ((package2 classTagNamed: #TAG2) includesClass: class)
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testHasClass [
+RPackageTagTest >> testAddTrait [
+
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newTraitNamed: #NewClass in: xPackage tag: #TAG.
+
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	yTag addClass: class.
+
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
+]
+
+{ #category : 'tests' }
+RPackageTagTest >> testAddTraitSettingPackageTag [
+
+	| xPackage yPackage yTag class |
+	xPackage := self ensureXPackage.
+	class := self newTraitNamed: #NewClass in: xPackage tag: #TAG.
+
+	self assert: (xPackage includesClass: class).
+	self assert: (xPackage hasTag: #TAG).
+	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+
+	yPackage := self ensureYPackage.
+	yTag := yPackage ensureTag: #YTag.
+	class packageTag: yTag.
+
+	self deny: (xPackage includesClass: class).
+	self assert: (yPackage includesClass: class).
+	self assert: (yTag includesClass: class).
+	self assert: class package equals: yPackage.
+	self assert: class packageTag equals: yTag.
+	self assert: class packageTag package equals: yPackage
+]
+
+{ #category : 'tests' }
+RPackageTagTest >> testCanHaveTagOfTheSameNameAsThePackage [
+
+	| xPackage xTag |
+	xPackage := self ensureXPackage.
+	xTag := xPackage ensureTag: xPackage name.
+
+	self assert: xTag package identicalTo: xPackage.
+	self deny: xTag isRoot
+]
+
+{ #category : 'tests' }
+RPackageTagTest >> testIncludesClass [
 
 	| package class tag |
 	package := self ensurePackage: #Test1.
@@ -63,9 +123,9 @@ RPackageTagTest >> testHasClass [
 	self assert: (package hasTag: tag).
 	self assert: tag name equals: 'TAG'.
 
-	self assert: (tag hasClass: class).
-	self assert: (tag hasClass: class class). "We want it to work with class side too"
-	self deny: (tag hasClass: self class)
+	self assert: (tag includesClass: class).
+	self assert: (tag includesClass: class class). "We want it to work with class side too"
+	self deny: (tag includesClass: self class)
 ]
 
 { #category : 'tests' }

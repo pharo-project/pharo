@@ -141,23 +141,10 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
-	Undeclared removeUnreferencedKeys.
-	Smalltalk globals flushClassNameCache.
 	ScrollBarMorph initializeImagesCache.
-
-	Smalltalk garbageCollect.
-	HashedCollection rehashAll.
-	Symbol rehash.
-
-	"Remove empty packages and protocols"
-	self packageOrganizer removeEmptyPackagesAndTags.
-	Smalltalk allClassesAndTraitsDo: [ :class |
-		class removeEmptyProtocols.
-		class class removeEmptyProtocols ].
 
 	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
 	ChangeSet resetCurrentToNewUnnamedChangeSet.
-	Smalltalk garbageCollect.
 	Author reset
 ]
 
@@ -273,7 +260,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SystemNotification signal: 'Starting postload action'.
 
-	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
 
 	TextConstants initialize.
@@ -285,8 +271,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Stdio stdout nextPutAll: Smalltalk ui asString; lf.
 
-	SparseLargeTable recompile. 
-	
 	PNGReadWriter initialize.
 	self loadBitmapDejaVuSans.
 	self loadBitmapSourcePro.
@@ -334,8 +318,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
-
-	Smalltalk cleanOutUndeclared.
 
 	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].

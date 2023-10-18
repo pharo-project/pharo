@@ -31,7 +31,7 @@ UndefinedClassTest >> createClassFromDefinitionString: aString [
 	^ ShiftClassInstaller make: [ :builder |
 		  builder
 			  useUndefinedClass;
-			  buildFromAST: (CDClassDefinitionParser parse: aString) ]
+			  buildFromAST: (CDFluidClassDefinitionParser parse: aString) ]
 ]
 
 { #category : 'asserting' }
@@ -67,10 +67,7 @@ UndefinedClassTest >> testCreateSubclassOfArbitraryExpressionReturningNilThrowsE
 
 	self
 		should: [
-			self createClassFromDefinitionString: '(Array new: 1) first subclass: #Box2
-			instanceVariableNames: ''''
-			classVariableNames:''''
-			package: ''' , self packageNameForTest , '''' ]
+			self createClassFromDefinitionString: '(Array new: 1) first << #Box2 package: ''' , self packageNameForTest , '''' ]
 		raise: Error.
 
 	self assertClassDoesNotExist: #ColoredFoo
@@ -81,10 +78,7 @@ UndefinedClassTest >> testCreateSubclassOfNilCreatesSubclassOfNil [
 
 	self assertClassDoesNotExist: #ColoredFoo.
 
-	self createClassFromDefinitionString: 'nil subclass: #ColoredFoo
-		instanceVariableNames: ''''
-		classVariableNames:''''
-		package: ''' , self packageNameForTest , ''''.
+	self createClassFromDefinitionString: 'nil << #ColoredFoo package: ''' , self packageNameForTest , ''''.
 
 	self assertClassExist: #ColoredFoo.
 	self assert: (self class environment at: #ColoredFoo) superclass equals: nil
@@ -199,8 +193,5 @@ UndefinedClassTest >> tokens [
 { #category : 'accessing' }
 UndefinedClassTest >> undefinedDefinition [
 
-	^ 'Foo subclass: #ColoredFoo
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''' , self packageNameForTest , ''''
+	^ 'Foo << #ColoredFoo package: ''' , self packageNameForTest , ''''
 ]

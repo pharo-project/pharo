@@ -99,6 +99,12 @@ Delay class >> nextWakeUpTime [
 ]
 
 { #category : 'timer process' }
+Delay class >> restartMethods [
+
+	self restartTimerEventLoop
+]
+
+{ #category : 'timer process' }
 Delay class >> restartTimerEventLoop [
 	self stopTimerEventLoop.
 	self startTimerEventLoop

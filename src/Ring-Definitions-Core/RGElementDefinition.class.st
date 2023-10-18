@@ -297,8 +297,10 @@ RGElementDefinition >> isMeta: aBoolean [
 
 { #category : 'accessing' }
 RGElementDefinition >> isMetaSide [
-	
-	^self isMeta
+	self
+		deprecated: 'Use isMeta instead'
+		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
+	^ self isMeta
 ]
 
 { #category : 'accessing' }

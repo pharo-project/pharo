@@ -48,13 +48,6 @@ ImageCleaner class >> examplePackages [
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
 ]
 
-{ #category : 'accessing' }
-ImageCleaner class >> helpPackages [
-	<script: 'self helpPackages inspect'>
-
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
-]
-
 { #category : 'instance creation' }
 ImageCleaner class >> shareLiterals [
 	<script>
@@ -78,7 +71,6 @@ ImageCleaner >> cleanUpForProduction [
 
 	unloading := [ :each | (MCPackage named: each) unload ].
 	self packagesForCleanUpInProduction do: unloading.
-	self class helpPackages do: unloading.
 	self class testPackages do: unloading.
 	self class examplePackages do: unloading.
 
@@ -96,14 +88,12 @@ ImageCleaner >> cleanUpForRelease [
 		allObjectsDo: [ :each |
 			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
 				ifTrue: [ each releaseCachedState ] ].
-
-	self removeEmptyCategories.
-	self packageOrganizer removeEmptyPackagesAndTags.
-
+	
 	Smalltalk
 		garbageCollect;
 		cleanOutUndeclared;
 		fixObsoleteReferences;
+		removeEmptyMessageCategories;
 		cleanUp: true except: #() confirming: false.
 
 	FreeTypeFontProvider current prepareForRelease.
@@ -117,15 +107,6 @@ ImageCleaner >> cleanUpForRelease [
 ImageCleaner >> cleanUpMethods [
 	"Make sure that all methods in use are restarted"
 	<script: 'self new cleanUpMethods'>
-	WeakArray restartFinalizationProcess.
-	ToolRegistry allSubInstances do: [:each | each resetAnnouncer].
-
-	WorldState
-		allInstancesDo: [ :ws | ws convertAlarms; cleanStepList].
-
-	ProcessBrowser initialize.
-	Delay restartTimerEventLoop.
-	"We are moving all the restart code to the classes"
 	Smalltalk restartMethods
 ]
 
@@ -181,12 +162,6 @@ ImageCleaner >> examplePackages [
 	^ self class examplePackages
 ]
 
-{ #category : 'cleaning' }
-ImageCleaner >> helpPackages [
-
-	^ self class helpPackages
-]
-
 { #category : 'literal sharing' }
 ImageCleaner >> literalsDo: aBlock [
 
@@ -203,17 +178,6 @@ ImageCleaner >> packagesForCleanUpInProduction [
 	 WARNING, ORDER IS IMPORTANT"
 
 	^#('MonticelloMocks')
-]
-
-{ #category : 'cleaning' }
-ImageCleaner >> removeEmptyCategories [
-	"Remove empty categories, which are not in MC packages, because MC does
-	not do this (this script does not make packages dirty)"
-
-	self packageOrganizer removeEmptyPackagesAndTags.
-	Smalltalk allClassesAndTraitsDo: [ :class |
-		class removeEmptyProtocols.
-		class class removeEmptyProtocols ]
 ]
 
 { #category : 'literal sharing' }

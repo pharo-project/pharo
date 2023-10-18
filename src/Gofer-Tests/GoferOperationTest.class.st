@@ -81,7 +81,7 @@ GoferOperationTest >> testCleanup [
 		package: 'GoferFoo';
 		load.
 	class := environment classNamed: #GoferFoo.
-	environment organization ensureTagNamed: #Empty inPackageNamed: #GoferFoo.
+	environment organization ensureTag: #Empty inPackage: #GoferFoo.
 	class addProtocol: #empty.
 	class class addProtocol: #empty.
 	gofer cleanup.
@@ -211,10 +211,10 @@ GoferOperationTest >> testRevert [
 		package: 'GoferFoo';
 		package: 'GoferBar';
 		load.
-	(environment classNamed: #GoferBar) category: 'GoferFoo'.
+	(environment classNamed: #GoferBar) package: 'GoferFoo'.
 	gofer revert.
-	self assert: (environment classNamed: #GoferFoo) category asSymbol equals: #GoferFoo.
-	self assert: (environment classNamed: #GoferBar) category asSymbol equals: #GoferBar
+	self assert: (environment classNamed: #GoferFoo) package name equals: #GoferFoo.
+	self assert: (environment classNamed: #GoferBar) package name equals: #GoferBar
 ]
 
 { #category : 'tests' }

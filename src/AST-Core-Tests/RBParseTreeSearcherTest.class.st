@@ -125,7 +125,7 @@ RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 	self assert: (contextDictionary at: (RBPatternVariableNode named: '`.@stmts')) size equals: 3
 ]
 
-{ #category : 'test-argument' }
+{ #category : 'tests - arguments' }
 RBParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 
 	"Here we can see the difference between matchesArgument: and matches:.

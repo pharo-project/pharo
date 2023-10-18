@@ -336,6 +336,7 @@ Dictionary >> associationsSelect: aBlock [
 { #category : 'accessing' }
 Dictionary >> at: key [
 	"Answer the value associated with the key."
+	 <compilerOptions: #(+ optionBlockClosureOptionalOuter)>
 	^ self at: key ifAbsent: [self errorKeyNotFound: key]
 ]
 
@@ -870,9 +871,11 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 { #category : 'undeclared' }
 Dictionary >> removeUnreferencedKeys [
 	"This is private code for the Undeclared handling, not a general API."
-	"Undeclared removeUnreferencedKeys"
 
-	^ self unreferencedKeys do: [ :key | self removeKey: key ]
+	self
+		deprecated: 'Use "Smalltalk image cleanOutUndeclared" instead'
+		transformWith: '`@rcv removeUnreferencedKeys' -> 'Smalltalk image cleanOutUndeclared'.
+	Smalltalk image cleanOutUndeclared
 ]
 
 { #category : 'private' }
@@ -929,14 +932,6 @@ Dictionary >> storeOn: aStream [
 			aStream store: each].
 	noneYet ifFalse: [aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : 'undeclared' }
-Dictionary >> unreferencedKeys [
-	"This is private code for the Undeclared handling"
-
-	^self keys select: [ :key |
-			(self systemNavigation allReferencesTo: (self associationAt: key)) isEmpty ]
 ]
 
 { #category : 'private' }

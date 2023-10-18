@@ -147,7 +147,7 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 		            logged: true;
 		            evaluate. 
 	"mild ugly hack for fluid classes"
-	(newClass isKindOf: FluidBuilder) ifTrue: [ newClass := newClass fluidInstall ].
+	(newClass isKindOf: ShiftClassBuilder) ifTrue: [ newClass := newClass fluidInstall ].
 
 	"evaluation can lead to anything (just put a literal in the class defintion pane and accept), these are ignored"
 	^ (newClass isBehavior or: [ newClass isTrait ])

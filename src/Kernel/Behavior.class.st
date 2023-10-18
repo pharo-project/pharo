@@ -1716,13 +1716,20 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 
 { #category : 'testing - method dictionary' }
 Behavior >> whichMethodsReferTo: aLiteral [
-	"Answer methods whose methods directly refers to the argument as a literal"
+	"Answer methods whose methods directly refers to the argument as a literal.
+	Note that a literal can be a symbol, a number... (see #isLiteral) but also a binding in case for example of shared variable or class.
+	In such case a typical use is 
+		aClass whichMethodsReferTo: (aClass bindingOf: #SharedVariable)"
 	<reflection: 'Structural queries on methods - Method element references'>
 	^ self methods select: [ :method | method hasLiteral: aLiteral ]
 ]
 
 { #category : 'testing - method dictionary' }
 Behavior >> whichSelectorsReferTo: literal [
+	"Answer methods whose methods directly refers to the argument as a literal.
+	Note that a literal can be a symbol, a number... (see #isLiteral) but also a binding in case for example of shared variable or class.
+	In such case a typical use is 
+		aClass whichMethodsReferTo: (aClass bindingOf: #SharedVariable)"
 	<reflection: 'Structural queries on methods - Method element references'>
 	^ (self whichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]

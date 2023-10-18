@@ -162,6 +162,59 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableAccessing [
 ]
 
 { #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesSharedVariableFromClassSide [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root definesClassVariable: #Shared2).
+	self assert: (sub definesClassVariable: #Shared2).
+							
+	self assert: (RBSharedVariableHasReferences new
+			 				hierarchyOf: root
+			 				referencesSharedVariable: #SharedOnlyInClassSideSubclass) check.
+	self assert: (RBSharedVariableHasReferences new
+			 				hierarchyOf: root classSide
+			 				referencesSharedVariable: #SharedOnlyInClassSideSubclass) check.
+]
+
+{ #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesSharedVariableFromSubclass [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root definesClassVariable: #Shared2).
+
+	"We access the class var from the superclass only from a subclass."	
+	self assert: (RBSharedVariableHasReferences new
+			 				hierarchyOf: root
+			 				referencesSharedVariable: #Shared2) check.
+
+]
+
+{ #category : 'tests - references' }
+RBConditionTest >> testHierarchyOfReferencesSharedVariableInDefiningClass [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	
+	self assert: (RBSharedVariableHasReferences new
+			 				hierarchyOf: root
+			 				referencesSharedVariable: #Shared1) check
+]
+
+{ #category : 'tests - references' }
 RBConditionTest >> testHierarchyOfReferencesSharedVariableNotAccessing [
 
 	| testClass |

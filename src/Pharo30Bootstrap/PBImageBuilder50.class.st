@@ -313,7 +313,7 @@ PBImageBuilder50 >> createInitialObjects [
 
 	PBSubStepFinishedSignal emit: 'Initializing String Ascii and CaseInsensitive Table'.
 	self bootstrapInterpreter evaluateCode:
-		'| asciiOrder caseInsesitiveOrder |
+			'| asciiOrder caseInsesitiveOrder |
 		asciiOrder := ((0 to: 255) as: ByteArray).
 	caseInsesitiveOrder := asciiOrder copy.
     (0 to: 255) do:[ :v |

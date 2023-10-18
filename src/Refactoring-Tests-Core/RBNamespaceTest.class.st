@@ -52,7 +52,7 @@ RBNamespaceTest >> testAllReferencesToClassDo [
 	| model packageenv count |
 	packageenv := RBPackageEnvironment packageNames: {
 			           RBFooDummyLintRuleTest1 packageName.
-			           'Refactoring2-Transformations-Tests' }.
+			           'Refactoring-Transformations-Tests' }.
 	"The second package has references to the leaf subclass we want to remove and this is part of the test."
 	model := RBNamespace onEnvironment: packageenv.
 	
@@ -69,7 +69,7 @@ RBNamespaceTest >> testAllReferencesToClassDoMore [
 	| model packageenv selectors |
 	packageenv := RBPackageEnvironment packageNames: {
 			           RBFooDummyLintRuleTest1 packageName.
-			           'Refactoring2-Transformations-Tests' }.
+			           'Refactoring-Transformations-Tests' }.
 	"The second package has references to the leaf subclass we want to remove and this is part of the test."
 	model := RBNamespace onEnvironment: packageenv.
 	
@@ -138,7 +138,7 @@ RBNamespaceTest >> testClassesReferencingClass [
 	| model packageenv classes |
 	packageenv := RBPackageEnvironment packageNames: {
 			           RBFooDummyLintRuleTest1 packageName.
-			           'Refactoring2-Transformations-Tests' }.
+			           'Refactoring-Transformations-Tests' }.
 	"The second package has references to the leaf subclass we want to remove and this is part of the test."
 	model := RBNamespace onEnvironment: packageenv.
 	
@@ -223,7 +223,7 @@ RBNamespaceTest >> testModelImplementorsSenders [
 			name: #Asdf;
 			package: #'Refactory-Testing' ].
 	class := model classNamed: #Asdf.
-	class compile: 'storeOn: aStream ^super storeOn: aStream' classified: #( #printing ).
+	class compile: 'storeOn: aStream ^super storeOn: aStream' classified: 'printing'.
 	modelImps := model allImplementorsOf: #storeOn:.
 	self assert: (modelImps includes: class).
 	self assert: modelImps size - 1 equals: (RBBrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
@@ -295,10 +295,10 @@ RBNamespaceTest >> testReferencesPrintOnAfterAddition [
 	smalltalk := modelFactory rbNamespace new.
 	(smalltalk classNamed: #Object)
 		compile: 'someTestReference self printOn: nil'
-		classified: #(testing).
+		classified: 'testing'.
 	(smalltalk classNamed: self class name)
 		compile: 'someTestReference ^ #printOn:'
-		classified: #(testing).
+		classified: 'testing'.
 	smalltalk allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
 			or: [ each selector = #someTestReference

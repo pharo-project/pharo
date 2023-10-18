@@ -200,11 +200,11 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 		             ifTrue: [ 'package: ' , '_UnpackagedPackage' printString ]
 		             ifFalse: [ 'package: ' , 'Unclassified' printString ].
 
-	classRemoved definitionSource: (classRemoved definitionSource copyReplaceAll: toReplace with: 'package: ' , aClassRemovedAnnouncement categoryName printString).
+	classRemoved definitionSource: (classRemoved definitionSource copyReplaceAll: toReplace with: 'package: ' , aClassRemovedAnnouncement packageTagAffected categoryName printString).
 
 	classRemoved name: aClassRemovedAnnouncement classRemoved originalName.
-	classRemoved category: aClassRemovedAnnouncement categoryName.
 	classRemoved package: aClassRemovedAnnouncement packageAffected name.
+	classRemoved packageTag: aClassRemovedAnnouncement packageTagAffected name.
 
 	aClassRemovedAnnouncement classRemoved methods , aClassRemovedAnnouncement classRemoved classSide methods do: [ :each |
 		self behaviorRemovedImpliesMethodRemoved: each defaultPackageName: classRemoved package ].
@@ -252,17 +252,6 @@ EpMonitor >> classModified: aClassModifiedAnnouncement [
 ]
 
 { #category : 'announcement handling' }
-EpMonitor >> classRecategorized: aClassRecategorizedAnnouncement [
-
-	aClassRecategorizedAnnouncement newCategory = aClassRecategorizedAnnouncement oldCategory ifTrue: [ ^ self ].
-
-	self addEvent: (EpBehaviorCategoryChange
-			 oldCategory: aClassRecategorizedAnnouncement oldCategory
-			 newCategory: aClassRecategorizedAnnouncement newCategory
-			 class: aClassRecategorizedAnnouncement classAffected)
-]
-
-{ #category : 'announcement handling' }
 EpMonitor >> classRemoved: classRemoved [
 
 	self addEvent: (EpClassRemoval class: classRemoved)
@@ -272,6 +261,17 @@ EpMonitor >> classRemoved: classRemoved [
 EpMonitor >> classRenamed: aClassRenamed [
 
 	self addEvent: (EpBehaviorNameChange oldName: aClassRenamed oldName newName: aClassRenamed newName class: aClassRenamed classAffected)
+]
+
+{ #category : 'announcement handling' }
+EpMonitor >> classRepackaged: aClassRepackagedAnnouncement [
+
+	self addEvent: (EpBehaviorRepackagedChange
+			 oldPackage: aClassRepackagedAnnouncement oldPackage name
+			 oldTag: aClassRepackagedAnnouncement oldTag name
+			 newPackage: aClassRepackagedAnnouncement newPackage name
+			 newTag: aClassRepackagedAnnouncement newTag name
+			 class: aClassRepackagedAnnouncement classAffected)
 ]
 
 { #category : 'private' }
@@ -537,7 +537,7 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		(ProtocolRemoved -> #protocolRemoved:).
 		(ClassModifiedClassDefinition -> #behaviorModified:).
 		(MethodModified -> #methodModified:).
-		(ClassRecategorized -> #classRecategorized:).
+		(ClassRepackaged -> #classRepackaged:).
 		(ClassRenamed -> #classRenamed:).
 		(ClassCommented -> #classCommented:).
 		(MethodRecategorized -> #methodRecategorized:) } do: [ :pair | systemAnnouncer weak when: pair key send: pair value to: self ]
