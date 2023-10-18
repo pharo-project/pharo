@@ -88,7 +88,7 @@ DoItChunk >> allowedSelectors [
 { #category : 'importing' }
 DoItChunk >> buildClassFromOldDefinition: ast [
 
-	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName tag poolDictionariesNames traitsDefinition isTrait |
+	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait |
 	superclassName := ast receiver formattedCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
@@ -124,15 +124,7 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 
 	self if: selectorParts in: ast includes: #classVariableNames do: [ :argument | classVariableNames := argument value ].
 
-	self if: selectorParts in: ast includes: #category do: [ :argument |
-			"This is not right but we cannot rely on categories anymore and this is for backward compatibility."
-			| aString |
-			aString := argument value.
-			(aString includes: $-)
-				ifTrue: [
-					packageName := aString copyUpToLast: $-.
-					tag := aString copyAfterLast: $- ]
-				ifFalse: [ packageName := aString ] ].
+	self if: selectorParts in: ast includes: #category do: [ :argument | packageName := argument value ].
 
 	self if: selectorParts in: ast includes: #package do: [ :argument | packageName := argument value ].
 
@@ -150,8 +142,10 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 	(#( CompiledBlock CompiledCode CompiledMethod ) includes: subclassName) ifTrue: [ layoutClass := CompiledMethodLayout ].
 
 	^ self class classInstaller make: [ :aBuilder |
-		  | superclass |
+		  | superclass realPackageName tag |
 		  superclass := self class environment at: superclassName asSymbol.
+		
+		  
 		  aBuilder
 			  superclass: superclass;
 			  environment: superclass environment;
@@ -159,8 +153,14 @@ DoItChunk >> buildClassFromOldDefinition: ast [
 			  layoutClass: layoutClass.
 		  instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
 		  classVariableNames ifNotNil: [ aBuilder sharedVariablesFromString: classVariableNames ].
-		  packageName ifNotNil: [ aBuilder package: packageName ].
-		  tag ifNotNil: [ aBuilder tag: tag ].
+		
+		  packageName ifNotNil: [
+		  "Since before the category included the package name and the tags name, we are trying to find the right one here."
+		  realPackageName := (superclass environments organization packageMatchingExtensionName: packageName) ifNil: [ packageName ] ifNotNil: [ :package | package name ].
+		  aBuilder package: realPackageName ].
+	
+		  realPackageName = packageName ifFalse: [ aBuilder tag: (packageName withoutPrefix: (realPackageName , '-')) ]. 
+		
 		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
 		  isTrait ifTrue: [ aBuilder beTrait ].
 		  traitsDefinition ifNotNil: [ aBuilder traitComposition: (self class compiler evaluate: traitsDefinition) ] ]
