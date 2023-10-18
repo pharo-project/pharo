@@ -88,13 +88,6 @@ ClyClassCreationToolMorph >> editingText [
 	^self classTemplate
 ]
 
-{ #category : 'building' }
-ClyClassCreationToolMorph >> fillStatusBar [
-	super fillStatusBar.
-
-	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
-]
-
 { #category : 'testing' }
 ClyClassCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].

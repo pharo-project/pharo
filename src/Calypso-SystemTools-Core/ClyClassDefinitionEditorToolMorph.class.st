@@ -112,12 +112,6 @@ ClyClassDefinitionEditorToolMorph >> editingText [
 	^ editingClass definitionString
 ]
 
-{ #category : 'building' }
-ClyClassDefinitionEditorToolMorph >> fillStatusBar [
-	super fillStatusBar.
-	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
-]
-
 { #category : 'testing' }
 ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 
