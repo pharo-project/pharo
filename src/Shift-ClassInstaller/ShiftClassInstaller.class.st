@@ -191,7 +191,7 @@ ShiftClassInstaller >> make [
 		newClass := oldClass.
 	].
 
-	self recategorize: newClass to: builder category asSymbol.
+	self recategorize: newClass.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -288,9 +288,9 @@ ShiftClassInstaller >> oldClass: anObject [
 ]
 
 { #category : 'notifications' }
-ShiftClassInstaller >> recategorize: aClass to: newCategory [
+ShiftClassInstaller >> recategorize: aClass [
 
-	aClass category: newCategory
+	aClass package: builder package tag: builder tag
 ]
 
 { #category : 'building' }
