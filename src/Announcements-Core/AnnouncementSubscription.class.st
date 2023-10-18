@@ -35,7 +35,6 @@ AnnouncementSubscription >> makeWeak [
 			announcementClass: announcementClass)
 ]
 
-
 { #category : 'accessing' }
 AnnouncementSubscription >> subscriber [
 

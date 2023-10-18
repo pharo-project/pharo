@@ -74,7 +74,7 @@ WeakAnnouncementSubscription >> subscriber [
 { #category : 'accessing' }
 WeakAnnouncementSubscription >> subscriber: anObject [
 
-	self subscriber ifNotNil: [ self error: 'subscriber already set' ].
+	self subscriber ifNotNil: [ self error: 'subscriber is already set' ].
 	self basicAt: 1 put: anObject.
 	self register
 ]
