@@ -49,9 +49,11 @@ PBClassLoader >> classDefinitionFor: aClass [
 			slots: ''{instanceVariablesString}'' asSlotCollection;
 			sharedVariablesFromString: ''{classVariablesString}'';
 			sharedPools: ''{sharedPoolsString}'';
-			category: ''{category}'';
+			package: ''{package}'';
 			environment: {superClass} environment;
-			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
+			classSlots: ''{classInstanceVariablesString}'' asSlotCollection.
+			
+			''{tag}'' ifNotEmpty: [ :aTag | builder tag: aTag ] ].
 	newClass layout compactClassIndex: {compactIndex}.
 	newClass'
 		format: { 
@@ -61,7 +63,8 @@ PBClassLoader >> classDefinitionFor: aClass [
 			'instanceVariablesString' -> (' ' join: aClass instVarNames).
 			'classVariablesString' -> aClass classVariablesString.
 			'sharedPoolsString' -> aClass sharedPoolsString.
-			'category' -> aClass category asString.
+			'package' -> aClass package name asString.
+			'tag' -> (aClass tags ifEmpty: [ '' ] ifNotEmpty: [ :tags | tags anyOne ]).
 			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames).
 			'compactIndex' -> (self compactClassIndexForClass: aClass) } asDictionary.
 ]
