@@ -197,6 +197,7 @@ RPackageOrganizer >> announcer [
 { #category : 'initialization - data' }
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
+	| allBehaviors |
 	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
 	self packages do: [ :package |
@@ -227,6 +228,13 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 			nextPutAll: ' category: ';
 			nextPutAll: behavior category;
 			lf ].
+
+	allBehaviors := Smalltalk allClassesAndTraits.
+
+	self packages do: [ :package |
+		package tags do: [ :tag | tag instVarNamed: #classes put: (tag classes collect: [ :class | allBehaviors detect: [ :aClass | aClass name = class name ] ]) ] ].
+
+
 
 	"Smalltalk allClassesAndTraits
 		do: [ :behavior |
