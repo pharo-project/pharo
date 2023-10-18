@@ -232,7 +232,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	allBehaviors := Smalltalk allClassesAndTraits.
 
 	self packages do: [ :package |
-		package tags do: [ :tag | tag instVarNamed: #classes put: (tag classes collect: [ :class | allBehaviors detect: [ :aClass | aClass name = class name ] ]) ] ].
+		package classTags do: [ :tag | tag instVarNamed: #classes put: (tag classes collect: [ :class | allBehaviors detect: [ :aClass | aClass name = class name ] ]) ] ].
 
 
 
