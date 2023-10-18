@@ -122,9 +122,6 @@ EpMonitor >> addEvent: anEvent newEntryDo: aBlock [
 EpMonitor >> addEvent: anEvent newEntryDo: aBlock triggerReference: triggerReference [
 
 	| newEntry |
-
-	"During the tests, we should only log with Epicea if the test case declare it wants logging."
-	(CurrentExecutionEnvironment value isTest and: [ CurrentExecutionEnvironment value testCase shouldLogWithEpicea not ]) ifTrue: [ ^ self ].
 	newEntry := log addEntryWith: anEvent tags: [ :tags |
 		            triggerReference isNull ifFalse: [ tags at: EpLog triggererReferenceKey put: triggerReference ].
 
@@ -523,24 +520,29 @@ EpMonitor >> subscribeToJobAnnouncer [
 EpMonitor >> subscribeToSystemAnnouncer [
 
 	{
-		(PackageAdded -> #packageAdded:).
-		(PackageRenamed -> #packageRenamed:).
-		(PackageRemoved -> #packageRemoved:).
-		(PackageTagAdded -> #packageTagAdded:).
-		(PackageTagRemoved -> #packageTagRemoved:).
-		(PackageTagRenamed -> #packageTagRenamed:).
-		(ClassAdded -> #behaviorAdded:).
-		(ClassRemoved -> #behaviorRemoved:).
-		(MethodAdded -> #methodAdded:).
-		(MethodRemoved -> #methodRemoved:).
-		(ProtocolAdded -> #protocolAdded:).
-		(ProtocolRemoved -> #protocolRemoved:).
-		(ClassModifiedClassDefinition -> #behaviorModified:).
-		(MethodModified -> #methodModified:).
-		(ClassRepackaged -> #classRepackaged:).
-		(ClassRenamed -> #classRenamed:).
-		(ClassCommented -> #classCommented:).
-		(MethodRecategorized -> #methodRecategorized:) } do: [ :pair | systemAnnouncer weak when: pair key send: pair value to: self ]
+		(PackageAdded -> [ :ann | self packageAdded: ann ]).
+		(PackageRenamed -> [ :ann | self packageRenamed: ann ]).
+		(PackageRemoved -> [ :ann | self packageRemoved: ann ]).
+		(PackageTagAdded -> [ :ann | self packageTagAdded: ann ]).
+		(PackageTagRemoved -> [ :ann | self packageTagRemoved: ann ]).
+		(PackageTagRenamed -> [ :ann | self packageTagRenamed: ann ]).
+		(ClassAdded -> [ :ann | self behaviorAdded: ann ]).
+		(ClassRemoved -> [ :ann | self behaviorRemoved: ann ]).
+		(MethodAdded -> [ :ann | self methodAdded: ann ]).
+		(MethodRemoved -> [ :ann | self methodRemoved: ann ]).
+		(ProtocolAdded -> [ :ann | self protocolAdded: ann ]).
+		(ProtocolRemoved -> [ :ann | self protocolRemoved: ann ]).
+		(ClassModifiedClassDefinition -> [ :ann | self behaviorModified: ann ]).
+		(MethodModified -> [ :ann | self methodModified: ann ]).
+		(ClassRepackaged -> [ :ann | self classRepackaged: ann ]).
+		(ClassRenamed -> [ :ann | self classRenamed: ann ]).
+		(ClassCommented -> [ :ann | self classCommented: ann ]).
+		(MethodRecategorized -> [ :ann | self methodRecategorized: ann ]) } asDictionary keysAndValuesDo: [ :announcement :block |
+		systemAnnouncer weak
+			when: announcement
+			do: [ :ann | "During the tests, we should only log with Epicea if the test case declare it wants logging."
+				(CurrentExecutionEnvironment value isTest and: [ CurrentExecutionEnvironment value testCase shouldLogWithEpicea not ]) ifFalse: [ block value: ann ] ]
+			for: self ]
 ]
 
 { #category : 'private' }
