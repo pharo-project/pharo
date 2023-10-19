@@ -8,7 +8,8 @@ Class {
 { #category : 'helpers' }
 CDVariableWordClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} variableWordSubclass: #{classname}
+	^ '{superclassName} << #{classname}
+		layout: WordLayout;
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage'

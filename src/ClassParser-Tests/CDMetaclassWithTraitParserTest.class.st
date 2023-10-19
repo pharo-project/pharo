@@ -8,11 +8,12 @@ Class {
 { #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> classDefinitionString [
 
-	^ '{className} class
-		uses: {classTraitName} classTrait
+	^ '{superclassName} class << {className} class
+		traits: {classTraitName} classTrait;
 		slots: {slots}'
 			format: {
 				'className' -> self className.
+				'superclassName' -> self superclassName.
 				'slots' -> self slotsArray.
 				'classTraitName' -> self classTraitName
 			 } asDictionary

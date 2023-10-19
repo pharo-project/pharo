@@ -8,7 +8,8 @@ Class {
 { #category : 'helpers' }
 CDWeakClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} weakSubclass: #{classname}
+	^ '{superclassName} << #{classname}
+		layout: WeakLayout;
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage'

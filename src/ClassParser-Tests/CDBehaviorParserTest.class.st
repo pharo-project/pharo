@@ -92,6 +92,12 @@ CDBehaviorParserTest >> slotsArray [
 			  ('instvar2' -> self secondInstanceVariableName) } asDictionary
 ]
 
+{ #category : 'helpers' }
+CDBehaviorParserTest >> superclassName [
+
+	^ 'TheSuperClass'
+]
+
 { #category : 'tests' }
 CDBehaviorParserTest >> testBestNodeForClassNameSelectionShouldBeClassNameNode [
 

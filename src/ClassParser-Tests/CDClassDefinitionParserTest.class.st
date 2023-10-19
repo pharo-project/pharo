@@ -21,12 +21,6 @@ CDClassDefinitionParserTest >> packageName [
 	^  #MyPackage
 ]
 
-{ #category : 'helpers' }
-CDClassDefinitionParserTest >> superclassName [
-
-	^ 'TheSuperClass'
-]
-
 { #category : 'tests' }
 CDClassDefinitionParserTest >> testBestNodeForClassVariableSelectionShouldBeClassSlotNode [
 

@@ -8,11 +8,12 @@ Class {
 { #category : 'helpers' }
 CDNormalMetaclassParserTest >> classDefinitionString [
 
-	^ '{className} class
-		uses: {classTraitName} classTrait
-		instanceVariableNames: ''{instvar1} {instvar2}'''
+	^ '{superclassName} class << {className} class
+		traits: {classTraitName} classTrait;
+		slots: {slots}'
 			format: {
 				'className' -> self className.
+				'superclassName' -> self superclassName.
 				'slots' -> self slotsArray.
 				'classTraitName' -> self classTraitName
 			 } asDictionary
