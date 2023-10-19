@@ -124,16 +124,16 @@ BaselineOfPharo class >> roassal [
 	<externalProject>	
 
 	^ PharoExternalProject 
-		newName: 'Roassal3' 
-		owner: 'ObjectProfile' 
-		project: 'Roassal3' 
-		version: 'v1.03'
+		newName: 'Roassal' 
+		owner: 'pharo-graphics' 
+		project: 'Roassal' 
+		version: 'v1.04b'
 ]
 
 { #category : 'repository urls' }
-BaselineOfPharo class >> roassal3Repository [
+BaselineOfPharo class >> roassalRepository [
 
-	^ (self externalProjectNamed: 'Roassal3') repository
+	^ (self externalProjectNamed: 'Roassal') repository
 ]
 
 { #category : 'external projects' }
