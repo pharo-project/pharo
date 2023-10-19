@@ -218,6 +218,19 @@ SystemNavigation >> allSendersOf: selector [
 ]
 
 { #category : 'query' }
+SystemNavigation >> allSentButNotImplementedSelectors [
+
+	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
+
+	^ self allMethods select: [ :method |
+		  | ignored |
+		  ignored := method allIgnoredNotImplementedSelectors.
+
+		  method messages anySatisfy: [ :m |
+			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
+]
+
+{ #category : 'query' }
 SystemNavigation >> allSentMessages [
 	"Answer the set of selectors which are sent somewhere in the system."
 	| sent |
@@ -239,19 +252,6 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : 'query' }
-SystemNavigation >> allSentNotImplementedSelectors [
-
-	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
-
-	^ self allMethods select: [ :method |
-		  | ignored |
-		  ignored := method allIgnoredNotImplementedSelectors.
-
-		  method messages anySatisfy: [ :m |
-			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
-]
-
-{ #category : 'query' }
 SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
 
 	Symbol allSymbolTablesDo: [ :e |
@@ -264,8 +264,8 @@ SystemNavigation >> allUnimplementedCalls [
 	"call is not a good term here, these are selectors"
 	self
 		deprecated: 'Changed selector for coherency'
-		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentNotImplementedSelectors'.
-	^self allSentNotImplementedSelectors
+		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentButNotImplementedSelectors'.
+	^ self allSentButNotImplementedSelectors
 ]
 
 { #category : 'query' }

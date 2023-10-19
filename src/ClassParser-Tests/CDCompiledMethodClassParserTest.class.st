@@ -8,9 +8,8 @@ Class {
 { #category : 'helpers' }
 CDCompiledMethodClassParserTest >> classDefinitionString [
 	"we just test the definition as it appears in the image"
-	^ 'CompiledCode variableByteSubclass: #CompiledMethod
-	instanceVariableNames: ''''
-	classVariableNames: ''''
+	^ 'CompiledCode << #CompiledMethod
+	layout: CompiledMethodLayout;
 	package: #MyPackage'
 ]
 

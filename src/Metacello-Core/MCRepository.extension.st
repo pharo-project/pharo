@@ -6,12 +6,6 @@ MCRepository class >> createRepositoryFromSpec: aRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
-MCRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-
-	^ self createRepositoryFromSpec: aRepositorySpec
-]
-
-{ #category : '*Metacello-Core' }
 MCRepository class >> findFiletreeAlternateFormat: aRepositorySpec ifFound: aBlock [
 	| repositoryClass |
 	repositoryClass := self allSubclasses detect: [ :each | each isFiletreeAlternateFormat: aRepositorySpec ] ifNone: [ nil ].
@@ -35,15 +29,12 @@ MCRepository class >> isFiletreeAlternateFormat: aRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
-MCRepository class >> newRepositoryFromSpec: aRepositorySpec on: aPlatform [
+MCRepository class >> newRepositoryFromSpec: aRepositorySpec [
 
 	^ self allSubclasses
-		detect: [ :each | each isAvailableFor: aRepositorySpec type ]
-		ifFound: [ :repositoryClass | 
-			repositoryClass
-				createRepositoryFromSpec: aRepositorySpec
-				on: aPlatform ]
-		ifNone: [ self error: 'Unknown repository type: ' , aRepositorySpec description ]
+		  detect: [ :each | each isAvailableFor: aRepositorySpec type ]
+		  ifFound: [ :repositoryClass | repositoryClass createRepositoryFromSpec: aRepositorySpec ]
+		  ifNone: [ self error: 'Unknown repository type: ' , aRepositorySpec description ]
 ]
 
 { #category : '*Metacello-Core' }

@@ -283,11 +283,11 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 ]
 
 { #category : 'tests - methods' }
-ReleaseTest >> testNoSentNotImplementedSelectors [
+ReleaseTest >> testNoSentButNotImplementedSelectors [
 	"There is a long term cleanup to fix 'selectors send but not implemented'.
 	 This test makes sure that we do not introduce new cases until we are down to zero"
 
-	self assert: SystemNavigation default allSentNotImplementedSelectors size < 315
+	self assert: SystemNavigation default allSentButNotImplementedSelectors size < 132
 ]
 
 { #category : 'tests - variables' }
