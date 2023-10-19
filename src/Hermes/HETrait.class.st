@@ -30,6 +30,15 @@ HETrait >> name [
 	^ self traitName
 ]
 
+{ #category : 'printing' }
+HETrait >> printOn: aStream [
+
+	aStream
+		nextPutAll: 'HETrait ( ';
+		print: traitName;
+		nextPutAll: ' )'
+]
+
 { #category : 'accessing' }
 HETrait >> traitName [
 	^ traitName
