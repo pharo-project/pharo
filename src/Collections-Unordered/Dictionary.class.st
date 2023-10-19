@@ -336,7 +336,6 @@ Dictionary >> associationsSelect: aBlock [
 { #category : 'accessing' }
 Dictionary >> at: key [
 	"Answer the value associated with the key."
-	 <compilerOptions: #(+ optionBlockClosureOptionalOuter)>
 	^ self at: key ifAbsent: [self errorKeyNotFound: key]
 ]
 
