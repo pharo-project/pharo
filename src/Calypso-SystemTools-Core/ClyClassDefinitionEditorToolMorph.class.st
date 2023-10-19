@@ -121,7 +121,7 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 { #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
 
-	^ ClassDefinitionPrinter fluid classDefinitionParserClass parse: self editingText
+	^ CDFluidClassDefinitionParser parse: self editingText
 ]
 
 { #category : 'selecting text' }
