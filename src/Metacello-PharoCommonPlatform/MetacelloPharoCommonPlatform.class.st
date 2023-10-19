@@ -18,12 +18,6 @@ MetacelloPharoCommonPlatform >> authorName [
 	^ Author fullName
 ]
 
-{ #category : 'utilities' }
-MetacelloPharoCommonPlatform >> authorName: aString [
-
-	Author fullName: aString
-]
-
 { #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
 	
@@ -226,12 +220,6 @@ MetacelloPharoCommonPlatform >> string: aString includesSubstring: aSubstring [
 	"abstract String>>includesSubstring: to have the same message on all supported platforms."
 
 	^aString includesSubstring: aSubstring
-]
-
-{ #category : 'system' }
-MetacelloPharoCommonPlatform >> suspendSystemUpdateEventsDuring: aBlock [
-	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
-	SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
 ]
 
 { #category : 'file system' }

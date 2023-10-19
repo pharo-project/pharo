@@ -42,13 +42,6 @@ MetacelloPlatform >> authorName [
 	^'no developer initials'
 ]
 
-{ #category : 'utilities' }
-MetacelloPlatform >> authorName: aString [
-	"Used by SmalltalkCI"
-
-	self subclassResponsibility
-]
-
 { #category : 'accessing' }
 MetacelloPlatform >> bypassProgressBars [
 
@@ -64,22 +57,6 @@ MetacelloPlatform >> bypassProgressBars: anObject [
 { #category : 'caching' }
 MetacelloPlatform >> clearCurrentVersionCache [
 	MetacelloClearStackCacheNotification signal: #(#currentVersion #currentVersionAgainst: #currentVersionInfo)
-]
-
-{ #category : 'package cache' }
-MetacelloPlatform >> clearPackageCache [
-  "make sure that the package cache is empty, by hook or by crook"
-
-  | cache dir |
-  cache := self defaultPackageCache.
-  cache flushCache.	"GemStone and Pharo1.4"
-  dir := cache directory.
-  dir ~~ nil
-    ifTrue: [ 
-      "delete directory - Squeak and Pharo"
-      [ self recursiveDelete: dir ]
-        on: Error
-        do: [ :ignore |  ] ]
 ]
 
 { #category : 'github/bitbucket support' }
@@ -169,25 +146,10 @@ MetacelloPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirect
 	^ anotherDirectoryPath directoryNamed: adirectoryPath
 ]
 
-{ #category : 'tests' }
-MetacelloPlatform >> disableUndefinedSybolUpdates [
-  "noop for most platforms - needed for GemStone"
-
-  ^ nil
-]
-
 { #category : 'notification' }
 MetacelloPlatform >> do: aBlock displaying: aString [
 
 	aBlock value
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> downloadErrorFileNameFor: zipFileName [
-  | pid |
-  pid := self processPID.
-  ^ '/tmp/curl-' , pid , '-' , (zipFileName select: [ :c | c isAlphaNumeric ])
-    , '.err'
 ]
 
 { #category : 'github/bitbucket support' }
@@ -316,11 +278,6 @@ MetacelloPlatform >> recursiveDelete: aDirectory [
 	^  aDirectory recursiveDelete
 ]
 
-{ #category : 'tests' }
-MetacelloPlatform >> reenableUndefinedSybolUpdates: undefinedSymbols [
-  "noop for most platforms - needed for GemStone"
-]
-
 { #category : 'repository creation' }
 MetacelloPlatform >> registerPackageNamed: packageName [
 	<ignoreNotImplementedSelectors: #(registerPackageName:)>
@@ -365,13 +322,6 @@ MetacelloPlatform >> string: aString includesSubstring: aSubstring [
 	^aString includesSubString: aSubstring
 ]
 
-{ #category : 'system' }
-MetacelloPlatform >> suspendSystemUpdateEventsDuring: aBlock [
-	<ignoreNotImplementedSelectors: #(doSilently:)>
-	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
-	(Smalltalk at: #SystemChangeNotifier) uniqueInstance doSilently: aBlock
-]
-
 { #category : 'file system' }
 MetacelloPlatform >> tempFileFor: aName suffix: aSuffixString [
 	^ '/tmp/' , aName , aSuffixString
@@ -381,15 +331,6 @@ MetacelloPlatform >> tempFileFor: aName suffix: aSuffixString [
 MetacelloPlatform >> timestamp [
 
 	^DateAndTime now printString
-]
-
-{ #category : 'transactions' }
-MetacelloPlatform >> transact: aBlock [
-	"On GemStone, we want to optionally abort before command execution and commit after 
-	 common execution. Other plaforms don't need to do anything special.
-	 Returning out of block, skips commit."
-	
-	aBlock value
 ]
 
 { #category : 'caching' }
