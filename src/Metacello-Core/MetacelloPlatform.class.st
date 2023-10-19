@@ -113,23 +113,7 @@ MetacelloPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName
 { #category : 'repository creation' }
 MetacelloPlatform >> createRepository: aRepositorySpec [
 
-	^ MCRepository 
-		newRepositoryFromSpec: aRepositorySpec
-		on: self
-]
-
-{ #category : 'repository creation' }
-MetacelloPlatform >> createTonelRepository: aRepositorySpec [
-	| cl description headerSize |
-	
-	cl := Smalltalk at: #'TonelRepository'.
-	description := aRepositorySpec description.
-	headerSize := (aRepositorySpec type, '://') size.
- 	^ cl new 
-		directory: (self fileHandleOn: (aRepositorySpec description 
-			copyFrom: headerSize + 1 
-			to: description size));
-		yourself
+	^ MCRepository newRepositoryFromSpec: aRepositorySpec
 ]
 
 { #category : 'file system' }
