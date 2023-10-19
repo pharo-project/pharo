@@ -594,7 +594,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			[^aReceiver simulateValueWithArguments: arguments first caller: self]].
 
 	((primitiveIndex between: 207 and: 209) "FullBlockClosure primitives"
-	  and: [(self objectClass: aReceiver) includesBehavior: FullBlockClosure]) ifTrue:
+	  and: [(self objectClass: aReceiver) includesBehavior: BlockClosure]) ifTrue:
 		[^primitiveIndex = 208
 			ifTrue: [aReceiver simulateValueWithArguments: arguments first caller: self]
 			ifFalse: [aReceiver simulateValueWithArguments: arguments caller: self]].

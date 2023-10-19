@@ -7,11 +7,13 @@ Class {
 
 { #category : 'helpers' }
 CDNilSubclassParserTest >> classDefinitionString [
-	^ 'ProtoObject subclass: #ProtoObject
-	instanceVariableNames: ''first second''
-	classVariableNames: ''firstClass secondClass''
-	package: #MyPackage.
-ProtoObject superclass: nil'
+
+	^ 'nil << #ProtoObject
+		slots: {slots};
+		sharedVariables: {sharedVariables};
+		package: #MyPackage' format: {
+			  'slots' -> self slotsArray.
+			  'sharedVariables' -> self sharedVariablesArray } asDictionary
 ]
 
 { #category : 'helpers' }
@@ -31,5 +33,5 @@ CDNilSubclassParserTest >> testBestNodeForClassNameSelectionShouldBeClassNameNod
 	| selectedNode selection |
 	selection := self selectionOf: 'ProtoObject'.
 	selectedNode := classDefinition bestNodeFor: selection.
-	self assert: selectedNode equals: classDefinition
+	self assert: selectedNode equals: classDefinition classNameNode
 ]

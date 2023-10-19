@@ -51,14 +51,14 @@ SubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex 
 	startIndex to: subs size do: [ :index| | subscription |
 		subscription := subs at: index.
 		[ subscription deliver: anAnnouncement ]
-			"Ensure delivery to remaining announcements"
+			"Ensure delivery of remaining announcements"
 			ifCurtailed: [
 				self deliver: anAnnouncement to: subs startingAt: index + 1 ]]
 ]
 
 { #category : 'testing' }
 SubscriptionRegistry >> handleSubscriberClass: eventClass [
-	"Return true if the receiver has a callback subscripbed for the event class"
+	"Return true if the receiver has a callback subscribed for the event class"
 
 	^ subscriptions anySatisfy: [ :sub |
 		(sub subscriber class == eventClass) or:
