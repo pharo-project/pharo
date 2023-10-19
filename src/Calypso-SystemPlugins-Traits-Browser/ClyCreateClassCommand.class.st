@@ -38,7 +38,7 @@ ClyCreateClassCommand >> execute [
 	| classDefinition p resultTrait |
 	p := package name.
 	classTag ifNotNil: [ p := p , '-' , classTag ].
-	classDefinition := ClassDefinitionPrinter new classDefinitionTemplateInPackage: p.
+	classDefinition := ClassDefinitionPrinter fluid classDefinitionTemplateInPackage: p.
 	classDefinition := UIManager default
 		                   multiLineRequest: 'Define class definition:'
 		                   initialAnswer: classDefinition

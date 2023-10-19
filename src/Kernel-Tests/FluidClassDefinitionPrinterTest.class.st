@@ -14,14 +14,8 @@ FluidClassDefinitionPrinterTest >> expandedForClass: aClass [
 
 { #category : 'helpers' }
 FluidClassDefinitionPrinterTest >> forClass: aClass [
-	^ (FluidClassDefinitionPrinter for: aClass) definitionString
-]
 
-{ #category : 'running' }
-FluidClassDefinitionPrinterTest >> setUp [
-
-	super setUp.
-	ClassDefinitionPrinter showFluidClassDefinition: true
+	^ (ClassDefinitionPrinter fluid for: aClass) definitionString
 ]
 
 { #category : 'tests - classes' }
@@ -71,20 +65,6 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	sharedVariables: { #SqueakEpoch . #SecondsInDay . #DayNames . #MonthNames . #SecondsInHour . #MicrosecondsInDay . #NanosInSecond . #SecondsInMinute . #NanosInMillisecond . #DaysInMonth . #NanosInMicroSecond . #HoursInDay . #MinutesInHour };
 	tag: ''Chronology'';
 	package: ''Kernel'''
-]
-
-{ #category : 'tests - complex slots' }
-FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDisplayedAsFluid [
-
-	ClassDefinitionPrinter showFluidClassDefinition: false.
-	self assert: MockWithComplexSlot needsSlotClassDefinition.
-
-	self
-		assert: (self forClass: MockWithComplexSlot)
-		equals: 'Object << #MockWithComplexSlot
-	slots: { #aComplexSlot => ObservableSlot };
-	tag: ''Fluid'';
-	package: ''Kernel-Tests'''
 ]
 
 { #category : 'tests - template' }

@@ -81,8 +81,8 @@ OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [
 OldPharoClassDefinitionPrinter >> classDefinitionString [
 
 	^ forClass needsSlotClassDefinition
-		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
-		ifFalse: [ self basicClassDefinitionString ]
+		  ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
+		  ifFalse: [ self basicClassDefinitionString ]
 ]
 
 { #category : 'template' }
@@ -126,13 +126,6 @@ OldPharoClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aStri
 OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aString [
 
 	^ self traitDefinitionTemplateInPackage: aString
-]
-
-{ #category : 'expanded double dispatch API' }
-OldPharoClassDefinitionPrinter >> expandedDefinitionString [
-	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
-
-	^ self definitionString
 ]
 
 { #category : 'low-level elements' }
