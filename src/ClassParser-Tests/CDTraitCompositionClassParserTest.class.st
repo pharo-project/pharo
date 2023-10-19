@@ -13,8 +13,8 @@ CDTraitCompositionClassParserTest class >> isAbstract [
 { #category : 'helpers' }
 CDTraitCompositionClassParserTest >> classDefinitionString [
 
-^ '{superclassName} subclass: #{classname}
-		uses: {traitDefinition}
+^ '{superclassName} << #{classname}
+		traits: {traitDefinition};
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage'

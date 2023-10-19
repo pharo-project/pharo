@@ -8,10 +8,10 @@ Class {
 { #category : 'helpers' }
 CDNormalClassCategoryParserTest >> classDefinitionString [
 
-	^ '{superclassName} subclass: #{classname}
+	^ '{superclassName} << #{classname}
 		slots: {slots};
 		sharedVariables: {sharedVariables};
-		category: #MyPackage'
+		package: #MyPackage'
 			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.

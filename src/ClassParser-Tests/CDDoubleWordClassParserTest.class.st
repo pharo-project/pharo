@@ -8,7 +8,8 @@ Class {
 { #category : 'helpers' }
 CDDoubleWordClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} variableDoubleWordSubclass: #{classname}
+	^ '{superclassName} << #{classname}
+		layout: DoubleWordLayout;
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage'

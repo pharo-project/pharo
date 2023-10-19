@@ -8,7 +8,8 @@ Class {
 { #category : 'helpers' }
 CDImmediateClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} immediateSubclass: #{classname}
+	^ '{superclassName} << #{classname}
+		layout: ImmediateLayout;
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage'

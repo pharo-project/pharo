@@ -8,7 +8,7 @@ Class {
 { #category : 'helpers' }
 CDNilSubclassParserTest >> classDefinitionString [
 
-	^ 'ProtoObject subclass: #ProtoObject
+	^ 'ProtoObject << #ProtoObject
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage.

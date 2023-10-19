@@ -8,7 +8,7 @@ Class {
 { #category : 'helpers' }
 CDNormalClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} subclass: #{classname}
+	^ '{superclassName} << #{classname}
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage'

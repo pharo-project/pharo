@@ -8,7 +8,8 @@ Class {
 { #category : 'helpers' }
 CDEphemeronClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} ephemeronSubclass: #{classname}
+	^ '{superclassName} << #{classname}
+		layout: EphemeronLayout;
 		slots: {slots};
 		sharedVariables: {sharedVariables};
 		package: #MyPackage'
