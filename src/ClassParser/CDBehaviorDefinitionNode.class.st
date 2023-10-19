@@ -84,8 +84,10 @@ CDBehaviorDefinitionNode >> hasTraitComposition [
 
 { #category : 'initialization' }
 CDBehaviorDefinitionNode >> initialize [
+
 	super initialize.
-	slotNodes := OrderedCollection new
+	slotNodes := OrderedCollection new.
+	layoutClass := FixedLayout
 ]
 
 { #category : 'testing' }
