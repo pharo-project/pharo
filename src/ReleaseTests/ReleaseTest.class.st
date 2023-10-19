@@ -287,7 +287,140 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	"There is a long term cleanup to fix 'selectors send but not implemented'.
 	 This test makes sure that we do not introduce new cases until we are down to zero"
 
-	self assert: SystemNavigation default allSentButNotImplementedSelectors size < 132
+	| knownFailures |
+	knownFailures := {
+		                 (AthensCCWArcSegment >> #accept:).
+		                 (AthensCWArcSegment >> #accept:).
+		                 (AthensCairoCanvas >> #visitCubicSegment:).
+		                 (AthensCairoCanvas >> #visitQuadSegment:).
+		                 (AthensCloseSegment >> #accept:).
+		                 (AthensCubicSegment >> #accept:).
+		                 (AthensEllipticalArcSegment >> #accept:).
+		                 (AthensInteractiveScene >> #eventHandledByScene:).
+		                 (AthensLineSegment >> #accept:).
+		                 (AthensMoveSegment >> #accept:).
+		                 (AthensParagraph >> #compose:style:from:in:).
+		                 (AthensPolygon >> #paintFillsUsing:on:).
+		                 (BalloonEdgeData >> #stepToNextScanLine).
+		                 (BalloonEdgeData >> #stepToFirstScanLine).
+		                 (BalloonEngine >> #registerFills:).
+		                 (BalloonFillData >> #computeFill).
+		                 (ClyFullBrowserMorph >> #extendClassScopeForMethods:).
+		                 (ComplexBorderStyle >> #drawLineFrom:to:on:).
+		                 (ComplexBorderStyle >> #drawPolyPatchFrom:to:on:usingEnds:).
+		                 (Context >> #failPrimitiveWith:).
+		                 (Context >> #doPrimitive:method:receiver:args:).
+		                 (Context >> #simulatePrimitive:in:receiver:arguments:).
+		                 (DAGraphVizGenerator >> #buildGraphViz).
+		                 (DAGraphVizGenerator >> #saveDotFileAndGenerateForType:).
+		                 (DAGraphVizGenerator >> #openWith:).
+		                 (DAPackageAnalyzerDiffTreePresenter >> #buildRoots).
+		                 (DTReRunConfiguration >> #items).
+		                 (DebugSession >> #shouldDisplayContext:basedOnFilters:).
+		                 (DiskDirectoryEntry class >> #store:path:node:).
+		                 (EDEmergencyDebugger >> #resetDisplay).
+		                 (EDTest >> #prepareMethodVersionTest).
+		                 (ExternalDropHandler class >> #defaultHandler).
+		                 (FFICallbackArgumentReader >> #stackPointer).
+		                 (FFIFloat32 >> #callbackReturnOn:for:).
+		                 (FFIFloatType >> #callbackReturnOn:for:).
+		                 (FFIIndirectFunctionResolution >> #resolveFunction:).
+		                 (FFILibrary >> #win32LibraryName).
+		                 (FFILibrary >> #macLibraryName).
+		                 (FileDialogWindow >> #saveForcedSelectedFile).
+		                 (FileList class >> #morphicViewOnFile:contents:fileList:).
+		                 (GLMOSWindowWorldMorph >> #delete).
+		                 (IRReconstructor >> #fixPushNilsForTemps).
+		                 (IceLibgitCommitWalk >> #shouldInclude:).
+		                 (IcePackage >> #outgoingCommits).
+		                 (IceRemote >> #upstreamForBranch:backend:).
+		                 (IceTag >> #lastCommit).
+		                 (IceTipHiedraAltComponentHistoryBrowser >> #newCommitRow:commit:).
+		                 (IceTipHiedraAltHistoryBrowser >> #newCommitRow:commit:).
+		                 (IceTipHiedraAltHistoryBrowser >> #initializeCommitList).
+		                 (InstructionStream >> #interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:).
+		                 (KMDispatcher >> #spotterForKeysFor:).
+		                 (KMMetaModifier >> #printOsRepresentationOn:).
+		                 (LGitDiff >> #includesFileNamed:).
+		                 (LGitRepository >> #cloneRemote:signature:branch:checkoutOptions:).
+		                 (LazyListMorph >> #drawOnAthensCanvas:).
+		                 (MCAddition >> #myVersionOn:).
+		                 (MCConfigurationBrowser >> #addRepository).
+		                 (MCConfigurationBrowser >> #changedList).
+		                 (MCFileTreeAbstractReader >> #packageProperties).
+		                 (MCModification >> #myVersionOn:).
+		                 (MCOrganizationDefinition >> #addAnalysisToPackageChangeSet:change:).
+		                 (MicrodownSpecComponentForTest class >> #open).
+		                 (MockLessonView >> #showTutorialNode:).
+		                 (MorphTreeMorph >> #selectItemsRequest:).
+		                 (MorphTreeMorph >> #nodeExpandRequest:).
+		                 (PSMCClassChangeWrapper >> #remoteChosen).
+		                 (PolygonMorph >> #intersects:).
+		                 (RBBasicDummyLintRuleTest class >> #onlyReadOrWritten).
+		                 (RBBasicDummyLintRuleTest class >> #canCall:in:from:).
+		                 (RBBasicDummyLintRuleTest class >> #unreferencedVariables).
+		                 (RBBasicDummyLintRuleTest class >> #usesAdd).
+		                 (RBBasicDummyLintRuleTest class >> #tempVarOverridesInstVar).
+		                 (RBBasicDummyLintRuleTest class >> #createMatcherFor:method:).
+		                 (RBBasicDummyLintRuleTest class >> #sentNotImplementedInApplication).
+		                 (RBBasicDummyLintRuleTest class >> #usesTrue).
+		                 (RBBasicDummyLintRuleTest class >> #utilityMethods).
+		                 (RBBasicDummyLintRuleTest class >> #classNotReferenced).
+		                 (RBBasicDummyLintRuleTest class >> #variableAssignedLiteral).
+		                 (RBBasicDummyLintRuleTest class >> #tempsReadBeforeWritten).
+		                 (RBBasicDummyLintRuleTest class >> #instVarInSubclasses).
+		                 (RBBasicLintRuleTestData class >> #createMatcherFor:method:).
+		                 (RBBasicLintRuleTestData class >> #canCall:in:from:).
+		                 (RBBasicLintRuleTestData class >> #sentNotImplementedInApplication).
+		                 (RBBasicLintRuleTestData class >> #utilityMethods).
+		                 (RBClassDataForRefactoringTest >> #inlineComponent).
+		                 (RBClassDataForRefactoringTest >> #textInput:name:symbol:).
+		                 (RBClassDataForRefactoringTest >> #renderContentOn:).
+		                 (RBClassDataForRefactoringTest >> #inlineFailed).
+		                 (RBEnvironmentVisitor >> #visitPackageEnv:).
+		                 (RBEnvironmentVisitor >> #visitProtocolEnv:).
+		                 (RBEnvironmentVisitor >> #visitClassEnv:).
+		                 (RBFindAndReplacePreviewPresenter >> #initializeDialogWindow:).
+		                 (RBLintRuleTestData >> #runOnEnvironment:).
+		                 (RBRemoveClassRefactoring >> #senders).
+		                 (RBTransformationDummyRuleTest class >> #rewrite:methods:name:).
+		                 (RBTransformationDummyRuleTest class >> #initializeAfterLoad1).
+		                 (RBTransformationRuleTestData class >> #rewrite:methods:name:).
+		                 (RBTransformationRuleTestData class >> #initializeAfterLoad1).
+		                 (RGChunkImporter >> #visitDoItChunk:).
+		                 (RPackageOrganizer >> #categoryOfElement:).
+		                 (RSAbstractPlot >> #addedIn:).
+		                 (RSCoOccurrenceMatrixBuilder >> #exportToFile:).
+		                 (ReSentNotImplementedRuleTest >> #sampleMethod).
+		                 (Rectangle >> #newRectButtonPressedDo:inWorld:).
+		                 (RubSegmentMorph >> #intersects:).
+		                 (RubTextSegmentMorph >> #displayIconAt:onAthensCanvas:).
+		                 (SindarinDebuggerTest >> #testContext).
+		                 (SindarinDebuggerTest >> #testMoveToNodeRaisesErrorWhenNodeIsNotInMethod).
+		                 (SindarinDebuggerTest >> #testStatementNodeContainingReturnsStatementNodeThatContainsTheIdenticalSubtree).
+		                 (SindarinDebuggerTest >> #testChangingPcRaisesErrorWhenPcIsGreaterThanEndPC).
+		                 (SindarinDebuggerTest >> #testMoveToNodeKeepsStackWhenAimedNodeIsMethodNodeThatDoesNotHaveAssociatedPC).
+		                 (SindarinDebuggerTest >> #testStatementNodeContainingWhenNodeIsNotInAST).
+		                 (SindarinDebuggerTest >> #testMoveToNodeRaisesErrorWhenNodeIsNotIdenticalToANodeInMethod).
+		                 (SindarinDebuggerTest >> #testChangingPcRaisesErrorWhenPcIsLowerThanInitialPC).
+		                 (SpApplication >> #ensureConfiguration).
+		                 (SpApplicationBackend >> #notify:).
+		                 (SpChangeSorterPresenter >> #createRingMethodForRemovedSelector:inClass:).
+		                 (SpRenameDefaultSpecToDefaultLayoutRefactoring >> #preconditions).
+		                 (SpRenameDefaultSpecToDefaultLayoutRefactoring >> #initialize).
+		                 (SpTransmission >> #from:port:to:transform:postTransmission:).
+		                 (SpTreeColumn >> #rowMorphFor:).
+		                 (SpUIThemeDecoratorTest >> #testDoesNotUnderstand).
+		                 (SpWindowPresenter >> #notify:).
+		                 (StSpotterPragmaBasedProcessor >> #installKeymappingsOn:).
+		                 (StringMorph >> #launchEditor:).
+		                 (SycRemoveKeepingSubclassesClassStrategy >> #execute:).
+		                 (TextEditor >> #findAndSelectPreviousOccurrenceOf:).
+		                 (TextEditor >> #startDrag:).
+		                 (TransferMorph >> #delete).
+		                 (TransferMorph >> #justDroppedInto:event:).
+		                 (ZnConstants class >> #frameworkMCVersion) }.
+	self assertEmpty: (SystemNavigation default allSentButNotImplementedSelectors difference: knownFailures)
 ]
 
 { #category : 'tests - variables' }
