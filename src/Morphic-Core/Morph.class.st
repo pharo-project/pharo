@@ -1921,12 +1921,15 @@ Morph >> computeBounds [
 
 { #category : 'layout' }
 Morph >> computeFullBounds [
+	"turn off error handler to track down https://github.com/pharo-project/pharo/issues/12502"
+	self doLayoutIn: self layoutBounds
+	"
 	[ self doLayoutIn: self layoutBounds ]
 		on: Error
 		do: [ :ex |
-			"This should do it unless you don't screw up the bounds"
+			This should do it unless you don't screw up the bounds
 			fullBounds := bounds.
-			ex pass ]
+			ex pass ]"
 ]
 
 { #category : 'geometry testing' }

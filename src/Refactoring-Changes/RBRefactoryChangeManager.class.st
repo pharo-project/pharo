@@ -76,7 +76,9 @@ RBRefactoryChangeManager class >> nextCounter [
 { #category : 'public' }
 RBRefactoryChangeManager class >> nuke [
 
-	Instance notNil ifTrue: [ Instance release ].
+	Instance ifNil: [ ^ self ].
+
+	Instance release.
 	Instance := nil
 ]
 

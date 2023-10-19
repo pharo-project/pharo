@@ -44,27 +44,27 @@ PBClassLoader >> classDefinitionFor: aClass [
 	newClass := ShiftClassInstaller make: [ :builder |
 		builder
 			superclass: {superClass};
-			name: ''{name}'';
+			name: {name};
 			layoutClass: {type};
-			slots: ''{instanceVariablesString}'' asSlotCollection;
-			sharedVariablesFromString: ''{classVariablesString}'';
-			sharedPools: ''{sharedPoolsString}'';
-			package: ''{package}'';
+			slots: {instanceVariablesString} asSlotCollection;
+			sharedVariablesFromString: {classVariablesString};
+			sharedPools: {sharedPoolsString};
+			package: {package};
 			tag: {tag};
 			environment: {superClass} environment;
-			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
+			classSlots: {classInstanceVariablesString} asSlotCollection ].
 	newClass layout compactClassIndex: {compactIndex}.
 	newClass'
 		format: { 
 			'superClass' -> aClass superclass name.
-			'name' -> aClass name.
+			'name' -> aClass name printString.
 			'type' -> type.
-			'instanceVariablesString' -> (' ' join: aClass instVarNames).
-			'classVariablesString' -> aClass classVariablesString.
-			'sharedPoolsString' -> aClass sharedPoolsString.
-			'package' -> aClass package name asString.
+			'instanceVariablesString' -> (' ' join: aClass instVarNames) printString.
+			'classVariablesString' -> aClass classVariablesString printString.
+			'sharedPoolsString' -> aClass sharedPoolsString printString.
+			'package' -> aClass package name printString.
 			'tag' -> (aClass tags ifEmpty: [ 'nil' ] ifNotEmpty: [ :tags | tags anyOne printString ]).
-			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames).
+			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames) printString.
 			'compactIndex' -> (self compactClassIndexForClass: aClass) } asDictionary.
 ]
 

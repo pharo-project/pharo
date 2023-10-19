@@ -64,12 +64,11 @@ RBTransformationsTest >> testAddMethodTransform [
 { #category : 'tests' }
 RBTransformationsTest >> testAddProtocolTransform [
 
+	[
 	| transformation |
-	transformation := (RBAddProtocolTransformation new
-		                   protocol: 'transforming'
-		                   inClass: #RBDummyEmptyClass) generateChanges.
+	transformation := (RBAddProtocolTransformation new protocol: #transforming inClass: #RBDummyEmptyClass) generateChanges.
 
-	self assert: transformation model changes changes size equals: 1
+	self assert: transformation model changes changes size equals: 1 ] ensure: [ RBDummyEmptyClass removeProtocolIfEmpty: #transforming ]
 ]
 
 { #category : 'tests' }
