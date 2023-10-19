@@ -10,14 +10,13 @@ CDDoubleWordClassParserTest >> classDefinitionString [
 
 	^ '{superclassName} variableDoubleWordSubclass: #{classname}
 		slots: {slots};
-		classVariableNames: ''{classvar1} {classvar2}''
+		sharedVariables: {sharedVariables};
 		package: #MyPackage'
 			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
 				'slots' -> self slotsArray.
-				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName. } asDictionary
+				'sharedVariables' -> self sharedVariablesArray } asDictionary
 ]
 
 { #category : 'helpers' }

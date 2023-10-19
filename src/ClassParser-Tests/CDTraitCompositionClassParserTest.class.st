@@ -15,16 +15,14 @@ CDTraitCompositionClassParserTest >> classDefinitionString [
 
 ^ '{superclassName} subclass: #{classname}
 		uses: {traitDefinition}
-		instanceVariableNames: ''{instvar1} {instvar2}''
-		classVariableNames: ''{classvar1} {classvar2}''
+		slots: {slots};
+		sharedVariables: {sharedVariables};
 		package: #MyPackage'
 			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
-				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName.
+				'slots' -> self slotsArray.
+				'sharedVariables' -> self sharedVariablesArray.
 				'traitDefinition' -> self traitDefinition } asDictionary
 ]
 

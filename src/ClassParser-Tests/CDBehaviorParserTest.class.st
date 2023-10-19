@@ -77,6 +77,14 @@ CDBehaviorParserTest >> setUp [
 ]
 
 { #category : 'helpers' }
+CDBehaviorParserTest >> sharedVariablesArray [
+
+	^ '\{ #{classvar1} . #{classvar2} }' format: {
+			  ('classvar1' -> self firstClassVariableName).
+			  ('classvar2' -> self secondClassVariableName) } asDictionary
+]
+
+{ #category : 'helpers' }
 CDBehaviorParserTest >> slotsArray [
 
 	^ '\{ #{instvar1} . #{instvar2} }' format: {

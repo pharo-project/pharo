@@ -10,14 +10,13 @@ CDClassWithPoolDictionaryParserTest >> classDefinitionString [
 
 	^ '{superclassName} << #{classname}
 		slots: {slots};
-		sharedVariables: \{ #{classvar1} . #{classvar2} };
+		sharedVariables: {sharedVariables};
 		sharedPools: {sharedPoolName}
 		package: #MyPackage' format: {
 			  'classname' -> self className.
 			  'superclassName' -> self superclassName.
 			  'slots' -> self slotsArray.
-			  'classvar1' -> self firstClassVariableName.
-			  'classvar2' -> self secondClassVariableName.
+			  'sharedVariables' -> self sharedVariablesArray.
 			  'sharedPoolName' -> self sharedPools } asDictionary
 ]
 

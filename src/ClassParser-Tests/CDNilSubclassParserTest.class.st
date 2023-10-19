@@ -10,9 +10,11 @@ CDNilSubclassParserTest >> classDefinitionString [
 
 	^ 'ProtoObject subclass: #ProtoObject
 		slots: {slots};
-	classVariableNames: ''firstClass secondClass''
-	package: #MyPackage.
-ProtoObject superclass: nil' format: { 'slots' -> self slotsArray } asDictionary
+		sharedVariables: {sharedVariables};
+		package: #MyPackage.
+ProtoObject superclass: nil' format: {
+			  'slots' -> self slotsArray.
+			  'sharedVariables' -> self sharedVariablesArray } asDictionary
 ]
 
 { #category : 'helpers' }

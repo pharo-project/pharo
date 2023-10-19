@@ -11,13 +11,12 @@ CDDoubleByteClassParserTest >> classDefinitionString [
 	^ '{superclassName} << #{classname}
 		layout: DoubleByteLayout;
 		slots: {slots};
-		sharedVariables: \{ #{classvar1} . #{classvar2} };
+		sharedVariables: {sharedVariables};
 		package: #MyPackage' format: {
-			  ('classname' -> self className).
-			  ('superclassName' -> self superclassName).
-			  ('slots' -> self slotsArray).
-			  ('classvar1' -> self firstClassVariableName).
-			  ('classvar2' -> self secondClassVariableName) } asDictionary
+			  'classname' -> self className.
+			  'superclassName' -> self superclassName.
+			  'slots' -> self slotsArray.
+			  'sharedVariables' -> self sharedVariablesArray } asDictionary
 ]
 
 { #category : 'helpers' }
