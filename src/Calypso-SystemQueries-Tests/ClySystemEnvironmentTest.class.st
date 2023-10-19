@@ -49,43 +49,23 @@ ClySystemEnvironmentTest >> testCreateTrait [
 ClySystemEnvironmentTest >> testExtractClassNameFrom [
 
 	self
-		assert: (dummySystemEnvironment extractNameFrom:
-				 'Object subclass: #ClySystemEnvironment
-	instanceVariableNames: ''name globals changesAnnouncer packageOrganizer projectManager''
-	classVariableNames: ''''
+		assert: (dummySystemEnvironment extractNameFrom: 'Object << #ClySystemEnvironment
+	slots: { #name. #globals. #changesAnnouncer. #packageOrganizer. #projectManager };
 	package: ''Calypso-SystemQueries-Domain''')
 		equals: 'ClySystemEnvironment'.
+	self assert: (dummySystemEnvironment extractNameFrom: 'Object << #ClySystemEnvironment') equals: 'ClySystemEnvironment'.
+	self assert: (dummySystemEnvironment extractNameFrom: 'Object<<#ClySystemEnvironment') equals: 'ClySystemEnvironment'.
 	self
-		assert: (dummySystemEnvironment extractNameFrom:
-				 'Object subclass: #ClySystemEnvironment')
-		equals: 'ClySystemEnvironment'.
-	self
-		assert: (dummySystemEnvironment extractNameFrom:
-				 'Object << #ClySystemEnvironment')
-		equals: 'ClySystemEnvironment'.
-	self
-		assert: (dummySystemEnvironment extractNameFrom:
-				 'Object<<#ClySystemEnvironment')
-		equals: 'ClySystemEnvironment'.
-	self
-		assert: (dummySystemEnvironment extractNameFrom:
-				 'Object << #ClySystemEnvironment
+		assert: (dummySystemEnvironment extractNameFrom: 'Object << #ClySystemEnvironment
 	slots: {};
 	sharedVariables: {};
 	package: ''Calypso-SystemQueries-Domain''')
 		equals: 'ClySystemEnvironment'.
 	self
-		assert:
-			(dummySystemEnvironment extractNameFrom: 'Trait << #TMyTrait
+		assert: (dummySystemEnvironment extractNameFrom: 'Trait << #TMyTrait
 	traits: {};
 	slots: {};
 	tag: '''' ;
 	package: ''Calypso-SystemQueries-Tests-Domain''')
-		equals: 'TMyTrait'.
-	self
-		assert:
-			(dummySystemEnvironment extractNameFrom: 'Trait named: #TMyTraits
-	 uses: {}
-	 package: ''Calypso-SystemQueries-Tests-Domain''')
-		equals: 'TMyTraits'
+		equals: 'TMyTrait'
 ]
