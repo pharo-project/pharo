@@ -1,3 +1,6 @@
+"
+I am some kind of Utility to centralize some behavior such as the display of progress bar but also a hook to let some other projects such as Iceberg extend Metacello behaviors.
+"
 Class {
 	#name : 'MetacelloPlatform',
 	#superclass : 'Object',
@@ -21,7 +24,7 @@ MetacelloPlatform class >> current [
 
 { #category : 'class initialization' }
 MetacelloPlatform class >> initialize [
-  "noop ... use #select"
+  self select
 ]
 
 { #category : 'initialize-release' }

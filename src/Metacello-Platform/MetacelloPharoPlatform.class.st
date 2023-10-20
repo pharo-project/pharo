@@ -4,7 +4,7 @@ Class used to abstract specific code for the Pharo platform.
 "
 Class {
 	#name : 'MetacelloPharoPlatform',
-	#superclass : 'MetacelloPharoCommonPlatform',
+	#superclass : 'MetacelloPlatform',
 	#category : 'Metacello-Platform',
 	#package : 'Metacello-Platform'
 }
