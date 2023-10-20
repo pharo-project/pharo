@@ -332,7 +332,7 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 							author: Author fullName;
 							description: aString;
 							blessing: #development;
-							timestamp: MetacelloPlatform current timestamp ].
+							timestamp: self timestamp ].
 				true ];
 		commitMethod.
 	toolbox
@@ -381,7 +381,7 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 							author: Author fullName;
 							blessing: #development;
 							description: aString;
-							timestamp: MetacelloPlatform current timestamp ].
+							timestamp: self timestamp ].
 				true ];
 		commitMethod.
 	toolbox
@@ -733,7 +733,7 @@ MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString fo
 							author: Author fullName;
 							description: earlyAccessDescription;
 							blessing: #development;
-							timestamp: MetacelloPlatform current timestamp ].
+							timestamp: self timestamp ].
 				true ];
 		commitMethod.
 	toolbox
@@ -748,7 +748,7 @@ MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString fo
 							"update the author, description and timeStamp"
 							versionSpec
 								author: Author fullName;
-								timestamp: MetacelloPlatform current timestamp.
+								timestamp: self timestamp.
 							self appendDescription: '---' , earlyAccessVersionString , '---' to: versionSpec ].
 					true ];
 		commitMethod.
@@ -843,12 +843,11 @@ MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionStr
                       '. Cancel and manually merge if you want to pick up the changes from the later version.' ].
           repositoryGroup addRepository: repo ].
       modifiedPackages at: packageSpec name put: repositoryGroup ].
-  cacheRepository := MetacelloPlatform current defaultPackageCache.
-  modifiedPackages isEmpty
-    ifTrue: [ self notify: 'Empty modified packages list'	"actually here for debugging purposes" ].
+  cacheRepository := MCCacheRepository default.
+  modifiedPackages ifEmpty: [ self notify: 'Empty modified packages list'	"actually here for debugging purposes" ].
   modifiedPackages
     keysAndValuesDo: [ :packageName :repositoryGroup | 
-      | gofer repositoryList packageSpec |
+      | gofer |
       gofer := Gofer new.
       gofer disablePackageCache.
       (repositoryGroup repositories reject: [ :repo | repo = cacheRepository ])
@@ -910,6 +909,12 @@ MetacelloToolBox class >> stripVersionStringForSelector: versionString [
 		copyReplaceAll: 'baseline' with: ''
 ]
 
+{ #category : 'private' }
+MetacelloToolBox class >> timestamp [
+
+	^ Date today mmddyyyy , ' ' , ((String streamContents: [ :s | Time now print24: true on: s ]) copyFrom: 1 to: 5)
+]
+
 { #category : 'scripts' }
 MetacelloToolBox class >> updateDescription: developmentVersionString for: configurationBasename description: message [
 	"Update description"
@@ -925,7 +930,7 @@ MetacelloToolBox class >> updateDescription: developmentVersionString for: confi
 						"update the author, description and timeStamp"
 						versionSpec
 							author: Author fullName;
-							timestamp: MetacelloPlatform current timestamp.
+							timestamp: self timestamp.
 						self appendDescription: message to: versionSpec ].
 				true ];
 		commitMethod
@@ -948,7 +953,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 					"update the author, description and timeStamp"
 					versionSpec
 						author: Author fullName;
-						timestamp: MetacelloPlatform current timestamp.
+						timestamp: self timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].
 	updatedSpecs notEmpty
@@ -973,7 +978,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 					"update the author, description and timeStamp"
 					versionSpec
 						author: Author fullName;
-						timestamp: MetacelloPlatform current timestamp.
+						timestamp: self timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].
 	updatedSpecs notEmpty

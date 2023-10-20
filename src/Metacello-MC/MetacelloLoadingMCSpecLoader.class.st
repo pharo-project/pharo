@@ -232,7 +232,7 @@ MetacelloLoadingMCSpecLoader >> savePackageUsing: repositorySpecs [
 			[
 				repo := (self resolveSpec: self spec from: repoSpecs) repository.
 				(wc possiblyNewerVersionsIn: repo) ifNotEmpty: [ :newer |
-						(MetacelloPlatform current confirm: 'CAUTION! These versions in the repository may be newer:', 
+						(self confirm: 'CAUTION! These versions in the repository may be newer:', 
 							String cr, newer printString, String cr,
 							'Do you really want to save this version?') ifFalse: [ ^false ]] ] 
 				on: Error 

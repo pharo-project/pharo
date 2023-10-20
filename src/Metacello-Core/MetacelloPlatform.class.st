@@ -50,13 +50,27 @@ MetacelloPlatform >> bypassProgressBars: anObject [
 { #category : 'notification' }
 MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
 
-	aCollection do: aBlock
+	self bypassProgressBars ifTrue: [ ^ aCollection do: aBlock ].
+	aCollection do: aBlock displayingProgress: aString
 ]
 
 { #category : 'reflection' }
 MetacelloPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName [
 
-	self subclassResponsibility
+	| copysName class newDefinition |
+	copysName := newName asSymbol.
+	copysName = oldClass name ifTrue: [ ^ oldClass ].
+	(Smalltalk globals includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
+	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
+	newDefinition := newDefinition copyReplaceAll: 'category: ' , oldClass category asString printString with: 'category: ' , newCategoryName printString.
+	class := self class compiler
+		         logged: true;
+		         evaluate: newDefinition.
+	class class instanceVariableNames: oldClass class instanceVariablesString.
+	class copyAllMethodsFrom: oldClass.
+	class class copyAllMethodsFrom: oldClass class.
+	class category: newCategoryName.
+	^ class
 ]
 
 { #category : 'repository creation' }
@@ -68,7 +82,12 @@ MetacelloPlatform >> createRepository: aRepositorySpec [
 { #category : 'notification' }
 MetacelloPlatform >> do: aBlock displaying: aString [
 
-	aBlock value
+	self bypassProgressBars ifTrue: [ ^ aBlock value ].
+
+	aString displayProgressFrom: 0 to: 2 during: [ :bar |
+		bar value: 1.
+		aBlock value.
+		bar value: 2 ]
 ]
 
 { #category : 'repository creation' }
@@ -117,43 +136,25 @@ MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doi
 		defaultDictionary: nil
 ]
 
-{ #category : 'file system' }
-MetacelloPlatform >> tempFileFor: aName suffix: aSuffixString [
-	^ '/tmp/' , aName , aSuffixString
-]
-
-{ #category : 'utilities' }
-MetacelloPlatform >> timestamp [
-
-	^DateAndTime now printString
-]
-
 { #category : 'caching' }
 MetacelloPlatform >> useStackCacheDuring: aBlock defaultDictionary: defaultDictionary [
+
 	| dict |
-	dict := MetacelloStackCacheNotification signal.
-	dict == nil
-		ifTrue: [ 
-			dict := defaultDictionary == nil
-				ifTrue: [ Dictionary new ]
-				ifFalse: [ defaultDictionary ] ].
+	dict := MetacelloStackCacheNotification signal ifNil: [ defaultDictionary ifNil: [ Dictionary new ] ].
+
+	[
 	[ ^ aBlock value: dict ]
-		on: MetacelloStackCacheNotification , MetacelloClearStackCacheNotification
-		do: [ :ex | 
-			(ex isKindOf: MetacelloStackCacheNotification)
-				ifTrue: [ ex resume: dict ].
-			(ex isKindOf: MetacelloClearStackCacheNotification)
-				ifTrue: [ 
-					| keys |
-					keys := ex cacheNames.
-					keys ifNil: [ keys := dict keys ].
-					keys
-						do: [ :k | 
-							(dict includesKey: k)
-								ifTrue: [ 
-									| c |
-									c := dict at: k.
-									c keys do: [ :ck | c removeKey: ck ].
-									dict removeKey: k ] ].
-					ex resume ] ]
+		on: MetacelloStackCacheNotification
+		do: [ :ex | ex resume: dict ] ]
+		on: MetacelloClearStackCacheNotification
+		do: [ :ex |
+			| keys |
+			keys := ex cacheNames ifNil: [ dict keys ].
+			keys do: [ :k |
+				(dict includesKey: k) ifTrue: [
+					| c |
+					c := dict at: k.
+					c keys do: [ :ck | c removeKey: ck ].
+					dict removeKey: k ] ].
+			ex resume ]
 ]

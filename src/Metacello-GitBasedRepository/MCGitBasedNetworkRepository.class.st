@@ -238,10 +238,8 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 			url := self
 				projectZipUrlFor: projectPath
 				versionString: versionString.
-			zipFileName := MetacelloPlatform current
-				tempFileFor:
-					self basicDescription , '--'
-						, (downloadCacheKey select: [ :c | c isAlphaNumeric ])
+			zipFileName := self
+				tempFileFor: self basicDescription , '--' , (downloadCacheKey select: [ :c | c isAlphaNumeric ])
 				suffix: '.zip'.
 			archive := self downloadZipArchive: url to: zipFileName.
 			directory := theCacheDirectory resolveString: (cachePath := archive members first fileName).
@@ -319,6 +317,12 @@ MCGitBasedNetworkRepository class >> startUp: resuming [
 
     resuming
         ifTrue: [ self flushDownloadCache ]
+]
+
+{ #category : 'utilities' }
+MCGitBasedNetworkRepository class >> tempFileFor: aName suffix: aSuffixString [
+
+	^ (FileLocator temp asFileReference / (FileReference newTempFilePrefix: aName suffix: aSuffixString) basename) fullName
 ]
 
 { #category : 'accessing' }
