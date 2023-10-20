@@ -97,7 +97,6 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'add predecessor' selector: #addPredecessor:.
 	aCustomMenu add: 'add successor' selector: #addSuccessor:.
 	aCustomMenu add: 'code pane menu...' selector: #yellowButtonActivity.
-	aCustomMenu add: 'code pane shift menu...' selector: #shiftedYellowButtonActivity.
 
 	outer := self owner.
 	outer
@@ -1607,14 +1606,6 @@ TextMorph >> setTextStyle: aTextStyle [
 { #category : 'find-replace' }
 TextMorph >> sharesFindReplace [
 	^ false
-]
-
-{ #category : 'menu' }
-TextMorph >> shiftedYellowButtonActivity [
-	"Supply the normal 'code pane' menu to use its text editing commands from a menu."
-
-	self editor pluggableYellowButtonActivity: true.
-	self changed
 ]
 
 { #category : 'event handling' }
