@@ -90,22 +90,6 @@ MetacelloPlatform >> do: aBlock displaying: aString [
 	aBlock value
 ]
 
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> downloadJSON: url eTagsCache: eTagsCache eTagsKey: eTagsKey username: username pass: pass [
-  "return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
-
-  "To minimize GitHub rate limiting problems, we are caching the ETags for the tag request: https://developer.github.com/v3/#conditional-requests"
-
-  ^ self downloadJSON: url username: username pass: pass
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> downloadJSON: url username: username pass: pass [
-  "return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
-
-  self subclassResponsibility
-]
-
 { #category : 'repository creation' }
 MetacelloPlatform >> extractTypeFromDescription: description [
 
@@ -118,12 +102,6 @@ MetacelloPlatform >> extractTypeFromDescription: description [
 	(description beginsWith: 'gitorious://') ifTrue: [ ^ 'gitorious' ].
 	(description beginsWith: 'bitbucket://') ifTrue: [ ^ 'bitbucket' ].
 	^ 'http'
-]
-
-{ #category : 'monticello' }
-MetacelloPlatform >> newVersionForWorkingCopy: aWorkingCopy [
-	<ignoreNotImplementedSelectors: #(newVersion)>
-  ^ aWorkingCopy newVersion
 ]
 
 { #category : 'caching' }

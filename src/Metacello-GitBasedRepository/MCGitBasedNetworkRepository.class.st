@@ -377,14 +377,26 @@ MCGitBasedNetworkRepository >> directory [
 ]
 
 { #category : 'private' }
+MCGitBasedNetworkRepository >> downloadJSON: url username: username pass: pass [
+	"return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
+
+	| client json |
+	client := ZnClient new
+		          url: url;
+		          yourself.
+	username ifNotNil: [ client username: username password: pass ].
+	client get.
+	json := client contents.
+	^ STON fromString: json
+]
+
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> downloadJSONTags [
-  | tagsUrl jsonObject |
-  tagsUrl := self projectTagsUrlFor: self projectPath.
-  jsonObject := MetacelloPlatform current
-    downloadJSON: tagsUrl
-    username: self class siteUsername
-    pass: self class sitePassword.
-  ^ self normalizeTagsData: jsonObject
+
+	| tagsUrl jsonObject |
+	tagsUrl := self projectTagsUrlFor: self projectPath.
+	jsonObject := self downloadJSON: tagsUrl username: self class siteUsername pass: self class sitePassword.
+	^ self normalizeTagsData: jsonObject
 ]
 
 { #category : 'private' }
