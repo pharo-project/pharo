@@ -46,7 +46,6 @@ MCFileTreeStCypressWriter initialize.
 MCFileTreeFileSystemUtils initialize.
 
 MetacelloPlatform initialize.
-MetacelloPharoCommonPlatform initialize.
 
 STONWriter initialize.
 
