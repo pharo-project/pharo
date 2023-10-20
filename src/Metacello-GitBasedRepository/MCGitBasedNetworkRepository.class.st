@@ -39,12 +39,10 @@ MCGitBasedNetworkRepository class >> cacheDirectory: aDirectory [
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> cacheDirectoryFor: projectPath [
-	| cacheDirectory projectDirectory |
-	
-	cacheDirectory := self cacheDirectory.
-	projectDirectory := MetacelloPlatform current directoryFromPath: projectPath relativeTo: cacheDirectory.
-	MetacelloPlatform current ensureDirectoryExists: projectDirectory.
-	^ projectDirectory
+
+	^ (self cacheDirectory resolveString: projectPath)
+		  ensureCreateDirectory;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -206,7 +204,7 @@ MCGitBasedNetworkRepository class >> parseProjectVersionField: parseBlock desc: 
 
 { #category : 'utilities' }
 MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: versionString [
-	| mcPlatform theCacheDirectory projectDirectory downloadCacheKey cachePath pid |
+	| mcPlatform theCacheDirectory projectDirectory downloadCacheKey cachePath |
 	downloadCacheKey := self
 		downloadCacheKey: projectPath
 		version: versionString.
@@ -224,14 +222,13 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 				projectPath: projectPath;
 				versionString: versionString;
 				signal.	"for testing purposes"
-			mcPlatform ensureDirectoryExists: theCacheDirectory.
+			theCacheDirectory projectPath.
 			url := self
 				projectZipUrlFor: projectPath
 				versionString: versionString.
-			pid := mcPlatform processPID.
 			zipFileName := mcPlatform
 				tempFileFor:
-					self basicDescription , '-' , pid , '-'
+					self basicDescription , '--'
 						, (downloadCacheKey select: [ :c | c isAlphaNumeric ])
 				suffix: '.zip'.
 			archive := mcPlatform
@@ -240,7 +237,7 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 			directory := mcPlatform
 				directoryFromPath: (cachePath := archive members first fileName)
 				relativeTo: theCacheDirectory.
-			mcPlatform closeZipArchive: archive.
+			archive close.
 			directory
 				ifExists: [ zipFileName asFileReference delete ]
 				ifAbsent: [ mcPlatform extractRepositoryFrom: zipFileName to: theCacheDirectory fullName ].

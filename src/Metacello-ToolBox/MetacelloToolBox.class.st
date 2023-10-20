@@ -1439,26 +1439,22 @@ MetacelloToolBox >> baselineNameFrom: baseName [
 
 { #category : 'api-configuration' }
 MetacelloToolBox >> baselineNamed: baseName [
-  | baselineName |
-  "Check if the class does not exist"
-  baselineName := self baselineNameFrom: baseName.
-  (Smalltalk includesKey: baselineName asSymbol)
-    ifFalse: [ 
-      "Create the configuration class"
-      self ensureMetacello.
 
-		self class classInstaller make: [ :aBuilder | 
-			aBuilder 
+	| baselineName |
+	"Check if the class does not exist"
+	baselineName := self baselineNameFrom: baseName.
+	(Smalltalk includesKey: baselineName asSymbol) ifFalse: [ "Create the configuration class"
+		self ensureMetacello.
+
+		self class classInstaller make: [ :aBuilder |
+			aBuilder
 				name: baselineName asSymbol;
 				superclass: BaselineOf;
-				package: baselineName].
+				package: baselineName ].
 
-      MetacelloPlatform current registerPackageNamed: baselineName.
-      (MetacelloPlatform current globalNamed: baselineName asSymbol)
-        compile: 'baseline: spec <baseline>'
-        classified: 'baseline'	"a bit of a hack here to create an initial null basline method" ].
-  project := (MetacelloPlatform current globalNamed: baselineName asSymbol)
-    project
+		MetacelloPlatform current registerPackageNamed: baselineName.
+		(self class environment at: baselineName asSymbol) compile: 'baseline: spec <baseline>' classified: 'baseline' "a bit of a hack here to create an initial null basline method" ].
+	project := (self class environment at: baselineName asSymbol) project
 ]
 
 { #category : 'private' }
@@ -1477,29 +1473,23 @@ MetacelloToolBox >> buildMapFrom: mapList for: packageList [
 
 { #category : 'spec creation' }
 MetacelloToolBox >> classicCreateProjectReferenceSpec: projectBaseName [
-  | configurationName projectReferenceProject versionString |
-  configurationName := self configurationNameFrom: projectBaseName.
-  projectReferenceProject := (MetacelloPlatform current
-    globalNamed: configurationName asSymbol
-    ifAbsent: [ 
-      self
-        error:
-          'The project with configuration ' , configurationName printString
-            , ' for the project ' , projectBaseName printString
-            , ' is not currently loaded into the image.' ])
-    project.
-  versionString := (projectReferenceProject hasVersion: #'stable')
-    ifTrue: [ #'stable' ]
-    ifFalse: [ #'bleedingEdge' ].
-  ^ project projectReferenceSpec
-    name: projectBaseName;
-    projectReference:
-        (project projectSpec
-            name: projectBaseName;
-            className: configurationName;
-            versionString: versionString;
-            yourself);
-    yourself
+
+	| configurationName projectReferenceProject versionString |
+	configurationName := self configurationNameFrom: projectBaseName.
+	projectReferenceProject := (self class environment at: configurationName asSymbol ifAbsent: [
+		                            self error: 'The project with configuration ' , configurationName printString , ' for the project ' , projectBaseName printString
+			                            , ' is not currently loaded into the image.' ]) project.
+	versionString := (projectReferenceProject hasVersion: #stable)
+		                 ifTrue: [ #stable ]
+		                 ifFalse: [ #bleedingEdge ].
+	^ project projectReferenceSpec
+		  name: projectBaseName;
+		  projectReference: (project projectSpec
+				   name: projectBaseName;
+				   className: configurationName;
+				   versionString: versionString;
+				   yourself);
+		  yourself
 ]
 
 { #category : 'private' }
@@ -1567,20 +1557,15 @@ MetacelloToolBox >> configurationNameFrom: baseName [
 
 { #category : 'api-configuration' }
 MetacelloToolBox >> configurationNamed: baseName [
-  | configurationName |
-  "Check if the class does not exist"
-  configurationName := self configurationNameFrom: baseName.
-  (Smalltalk includesKey: configurationName asSymbol)
-    ifFalse: [ 
-      self ensureMetacello.	"Create the configuration class"
-      MetacelloPlatform current
-        copyClass:
-          (MetacelloPlatform current globalNamed: #'MetacelloConfigTemplate')
-        as: configurationName asSymbol
-        inCategory: configurationName asString.	"Create the package that has the same name"
-      MetacelloPlatform current registerPackageNamed: configurationName ].
-  project := (MetacelloPlatform current globalNamed: configurationName asSymbol)
-    project
+
+	| configurationName |
+	"Check if the class does not exist"
+	configurationName := self configurationNameFrom: baseName.
+	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
+		self ensureMetacello. "Create the configuration class"
+		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
+		MetacelloPlatform current registerPackageNamed: configurationName ].
+	project := (self class environment at: configurationName asSymbol) project
 ]
 
 { #category : 'accessing' }
@@ -1603,21 +1588,17 @@ MetacelloToolBox >> createBaselineOfMethod: selector inCategory: category [
 
 { #category : 'spec creation' }
 MetacelloToolBox >> createConfiguration: baseName [
-  | configurationName |
-  "Check if the class does not exist"
-  configurationName := (baseName beginsWith: 'ConfigurationOf')
-    ifTrue: [ baseName ]
-    ifFalse: [ 'ConfigurationOf' , baseName ].
-  (Smalltalk includesKey: configurationName asSymbol)
-    ifFalse: [ 
-      self ensureMetacello.	"Create the configuration class"
-      MetacelloPlatform current
-        copyClass:
-          (MetacelloPlatform current globalNamed: #'MetacelloConfigTemplate')
-        as: configurationName asSymbol
-        inCategory: configurationName asString.	"Create the package that has the same name"
-      MetacelloPlatform current registerPackageNamed: configurationName ].
-  ^ (MetacelloPlatform current globalNamed: configurationName asSymbol) project
+
+	| configurationName |
+	"Check if the class does not exist"
+	configurationName := (baseName beginsWith: 'ConfigurationOf')
+		                     ifTrue: [ baseName ]
+		                     ifFalse: [ 'ConfigurationOf' , baseName ].
+	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
+		self ensureMetacello. "Create the configuration class"
+		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
+		MetacelloPlatform current registerPackageNamed: configurationName ].
+	^ (self class environment at: configurationName asSymbol) project
 ]
 
 { #category : 'spec creation' }

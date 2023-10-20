@@ -128,7 +128,7 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 			goferLoad := MetacelloGoferLoad on: MetacelloGofer new.
 			goferLoad addResolved: resolvedReference.
 			goferLoad execute.
-			MetacelloPlatform current clearCurrentVersionCache.
+			self clearCurrentVersionCache.
 			self postLoad: packageSpec ].
 			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]

@@ -13,12 +13,6 @@ MetacelloPharoCommonPlatform class >> initialize [
   self select
 ]
 
-{ #category : 'github/bitbucket support' }
-MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
-	
-	anArchive close
-]
-
 { #category : 'notification' }
 MetacelloPharoCommonPlatform >> collection: aCollection do: aBlock displaying: aString [
 
@@ -82,11 +76,6 @@ MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	^ attributes
 ]
 
-{ #category : 'scripting' }
-MetacelloPharoCommonPlatform >> defaultRepositoryDescription [
-  ^ 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main'
-]
-
 { #category : 'file system' }
 MetacelloPharoCommonPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
 	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
@@ -137,13 +126,6 @@ MetacelloPharoCommonPlatform >> downloadZipArchive: url to: outputFileName [
 				ifFalse: [ bar current: progress percentage ].
 			progress resume ] ] asJob run.
 	^ ZipArchive new readFrom: outputFileName asFileReference
-]
-
-{ #category : 'file system' }
-MetacelloPharoCommonPlatform >> ensureDirectoryExists: aDirectoryHandle [
-	"Ensure the directory exists."
-
-	^ aDirectoryHandle ensureCreateDirectory ; yourself
 ]
 
 { #category : 'github/bitbucket support' }

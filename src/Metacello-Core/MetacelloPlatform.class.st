@@ -47,31 +47,10 @@ MetacelloPlatform >> bypassProgressBars: anObject [
 	bypassProgressBars := anObject
 ]
 
-{ #category : 'caching' }
-MetacelloPlatform >> clearCurrentVersionCache [
-	MetacelloClearStackCacheNotification signal: #(#currentVersion #currentVersionAgainst: #currentVersionInfo)
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> closeZipArchive: anArchive [
-	"do nothing"
-]
-
 { #category : 'notification' }
 MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
 
 	aCollection do: aBlock
-]
-
-{ #category : 'user interaction' }
-MetacelloPlatform >> confirm: aString [
-	
-	^(Smalltalk hasClassNamed: #UIManager)
-		ifTrue: [ (Smalltalk classNamed: #UIManager) default perform: #confirm: with: aString ]
-		ifFalse: [
-			"throw warning and answer true, if no way to announce"
-			Warning signal: aString.
-			true ]
 ]
 
 { #category : 'reflection' }
@@ -112,11 +91,6 @@ MetacelloPlatform >> defaultPlatformAttributes [
   ^ #(#'gemstone')
 ]
 
-{ #category : 'scripting' }
-MetacelloPlatform >> defaultRepositoryDescription [
-    ^ 'http://www.squeaksource.com/MetacelloRepository'
-]
-
 { #category : 'file system' }
 MetacelloPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
 	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
@@ -154,14 +128,6 @@ MetacelloPlatform >> downloadZipArchive: url to: outputFileName [
   self subclassResponsibility
 ]
 
-{ #category : 'file system' }
-MetacelloPlatform >> ensureDirectoryExists: aDirectoryHandle [
-	"Ensure the directory exists."
-	<ignoreNotImplementedSelectors: #(assureExistence)>
-
-	^ aDirectoryHandle assureExistence ; yourself
-]
-
 { #category : 'github/bitbucket support' }
 MetacelloPlatform >> extractRepositoryFrom: zipFile to: directory [
     "unzip <zipFile> into <directory>"
@@ -181,32 +147,6 @@ MetacelloPlatform >> extractTypeFromDescription: description [
 	(description beginsWith: 'gitorious://') ifTrue: [ ^ 'gitorious' ].
 	(description beginsWith: 'bitbucket://') ifTrue: [ ^ 'bitbucket' ].
 	^ 'http'
-]
-
-{ #category : 'git support' }
-MetacelloPlatform >> gitBranchNameFor: aDirectory [
-  "return current branch for git repository located at <aDirectory>, if <aDirectory> is not a git repository, return nil"
-
-  ^ nil
-]
-
-{ #category : 'git support' }
-MetacelloPlatform >> gitCommitShaFor: aDirectory [
-  "return SHA for git repository located at <aDirectory>, if <aDirectory> is not a git repository, return nil"
-
-  ^ nil
-]
-
-{ #category : 'reflection' }
-MetacelloPlatform >> globalNamed: globalName [
-
-	^Smalltalk at: globalName
-]
-
-{ #category : 'reflection' }
-MetacelloPlatform >> globalNamed: globalName ifAbsent: absentBlock [
-
-	^Smalltalk at: globalName ifAbsent: absentBlock
 ]
 
 { #category : 'monticello' }
@@ -229,13 +169,6 @@ MetacelloPlatform >> primeStackCacheWith: aDictionary doing: noArgBlock [
 	self 
 		useStackCacheDuring: [:dict | ^noArgBlock value ] 
 		defaultDictionary: aDictionary
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> processPID [
-  "return pid of process as string if available"
-
-  ^ ''
 ]
 
 { #category : 'file system' }
