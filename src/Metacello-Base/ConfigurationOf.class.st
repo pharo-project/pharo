@@ -73,40 +73,13 @@ ConfigurationOf class >> project [
 	^self new project
 ]
 
-{ #category : 'private' }
-ConfigurationOf class >> retry: aBlock [
-    self retry: aBlock retryCount: 3
-]
-
-{ #category : 'private' }
-ConfigurationOf class >> retry: aBlock retryCount: retryCount [
-	| count |
-	count := 1.
-	[ true ]
-		whileTrue: [ [ aBlock value.
-			^ self ]
-				on: Error
-				do: [ :ex | 
-					count < retryCount
-						ifTrue: [ MetacelloNotification signal: 'RETRYING AFTER: ', String cr, ex description.
-							(Delay forSeconds: 5) wait ]
-						ifFalse: [ MetacelloNotification signal: 'FAILED RETRYING:', String cr, ex description.
-							ex pass ] ].
-			count := count + 1 ]
-]
-
 { #category : 'unloading Metacello' }
 ConfigurationOf class >> unloadMetacello [
 	"Unload the classes that implement Metacello. Metacello is not needed once a project has been loaded, so it can safely be unloaded."
 
-	"self unloadMetacello"
-
+	<script>
 	<apiDocumentation>
-	| gofer |
-	gofer := Gofer new.
-	MCWorkingCopy allWorkingCopies do: [ :wc |
-		((wc packageName beginsWith: 'Metacello') or: [ wc packageName beginsWith: 'OB-Metacello' ]) ifTrue: [ gofer package: wc packageName ] ].
-	gofer unload
+	(self packageOrganizer packages select: [ :package | package name beginsWith: 'Metacello' ]) do: [ :package | package removeFromSystem ]
 ]
 
 { #category : 'accessing' }
@@ -116,8 +89,7 @@ ConfigurationOf class >> validate [
 	Critical Warnings identify specification issues that may result in unexpected behavior when you load the configuration.
 	Warnings identify specification issues that are technically correct, but are worth take a look at."
 
-	"self validate"
-
+	<script>
 	<apiDocumentation>
 	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #(  ) recurse: false) inspect
 ]
@@ -145,10 +117,9 @@ ConfigurationOf >> customProjectAttributes [
 { #category : 'defaults' }
 ConfigurationOf >> defaultBleedingEdgeVersion [
 
-	| bleedingEdgeVersion |
-	bleedingEdgeVersion := (self project map values select: [ :version | version blessing == #baseline ]) detectMax: [ :version | version ].
-	bleedingEdgeVersion ifNil: [ ^ #notDefined ].
-	^ bleedingEdgeVersion versionString
+	^ ((self project map values select: [ :version | version blessing == #baseline ]) detectMax: [ :version | version ])
+		  ifNotNil: [ :bleedingEdgeVersion | bleedingEdgeVersion versionString ]
+		  ifNil: [ #notDefined ]
 ]
 
 { #category : 'accessing' }

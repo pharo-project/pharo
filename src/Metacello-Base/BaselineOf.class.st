@@ -79,8 +79,7 @@ BaselineOf class >> validate [
 	Critical Warnings identify specification issues that may result in unexpected behavior when you load the configuration.
 	Warnings identify specification issues that are technically correct, but are worth take a look at."
 
-	"self validate"
-
+	<script>
 	<apiDocumentation>
 	^ ((self environment at: #MetacelloToolBox) validateBaseline: self debug: #(  ) recurse: false) inspect
 ]
