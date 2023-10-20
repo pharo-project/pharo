@@ -329,7 +329,7 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 					ifTrue: [ 
 						"update the author, blessing, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
+							author: Author fullName;
 							description: aString;
 							blessing: #development;
 							timestamp: MetacelloPlatform current timestamp ].
@@ -378,7 +378,7 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 					ifTrue: [ 
 						"update the author, blessing, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
+							author: Author fullName;
 							blessing: #development;
 							description: aString;
 							timestamp: MetacelloPlatform current timestamp ].
@@ -729,7 +729,7 @@ MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString fo
 					ifTrue: [ 
 						"update the author, blessing, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
+							author: Author fullName;
 							description: earlyAccessDescription;
 							blessing: #development;
 							timestamp: MetacelloPlatform current timestamp ].
@@ -746,7 +746,7 @@ MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString fo
 						ifTrue: [ 
 							"update the author, description and timeStamp"
 							versionSpec
-								author: MetacelloPlatform current authorName;
+								author: Author fullName;
 								timestamp: MetacelloPlatform current timestamp.
 							self appendDescription: '---' , earlyAccessVersionString , '---' to: versionSpec ].
 					true ];
@@ -924,7 +924,7 @@ MetacelloToolBox class >> updateDescription: developmentVersionString for: confi
 					ifTrue: [ 
 						"update the author, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
+							author: Author fullName;
 							timestamp: MetacelloPlatform current timestamp.
 						self appendDescription: message to: versionSpec ].
 				true ];
@@ -947,7 +947,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 				ifTrue: [ 
 					"update the author, description and timeStamp"
 					versionSpec
-						author: MetacelloPlatform current authorName;
+						author: Author fullName;
 						timestamp: MetacelloPlatform current timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].
@@ -972,7 +972,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 				ifTrue: [ 
 					"update the author, description and timeStamp"
 					versionSpec
-						author: MetacelloPlatform current authorName;
+						author: Author fullName;
 						timestamp: MetacelloPlatform current timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].

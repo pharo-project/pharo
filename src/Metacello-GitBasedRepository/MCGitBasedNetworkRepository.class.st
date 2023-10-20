@@ -54,22 +54,16 @@ MCGitBasedNetworkRepository class >> cacheDirectoryPath [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository class >> cacheDirectoryPath: aString [
-  self
-    cacheDirectory:
-      (aString
-        ifEmpty: [  ]
-        ifNotEmpty: [ MetacelloPlatform current fileHandleOn: aString ])
+
+	self cacheDirectory: (aString ifNotEmpty: [ aString asFileReference ])
 ]
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> defaultCacheDirectory [
-  | defaultDirectory cacheDirectory |
-  defaultDirectory := MetacelloPlatform current defaultDirectory.
-  cacheDirectory := MetacelloPlatform current
-    directoryFromPath: self basicDescription , '-cache'
-    relativeTo: defaultDirectory.
-  MetacelloPlatform current ensureDirectoryExists: cacheDirectory.
-  ^ cacheDirectory
+
+	^ (FileLocator imageDirectory asFileReference resolveString: self basicDescription , '-cache')
+		  ensureCreateDirectory;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -247,11 +241,9 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 				directoryFromPath: (cachePath := archive members first fileName)
 				relativeTo: theCacheDirectory.
 			mcPlatform closeZipArchive: archive.
-			directory exists
-				ifTrue: [ mcPlatform deleteFileNamed: zipFileName ]
-				ifFalse: [ mcPlatform
-						extractRepositoryFrom: zipFileName
-						to: theCacheDirectory fullName ].
+			directory
+				ifExists: [ zipFileName asFileReference delete ]
+				ifAbsent: [ mcPlatform extractRepositoryFrom: zipFileName to: theCacheDirectory fullName ].
 			self downloadCache at: downloadCacheKey put: cachePath.
 			projectDirectory := mcPlatform
 				directoryFromPath: cachePath

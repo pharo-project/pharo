@@ -35,13 +35,6 @@ MetacelloPlatform class >> unselect [
     ifTrue: [ Current := nil ]
 ]
 
-{ #category : 'utilities' }
-MetacelloPlatform >> authorName [
-
-	Smalltalk at: #Author ifPresent: [:cl | ^cl perform: #initials ].
-	^'no developer initials'
-]
-
 { #category : 'accessing' }
 MetacelloPlatform >> bypassProgressBars [
 
@@ -93,13 +86,6 @@ MetacelloPlatform >> createRepository: aRepositorySpec [
 	^ MCRepository newRepositoryFromSpec: aRepositorySpec
 ]
 
-{ #category : 'file system' }
-MetacelloPlatform >> defaultDirectory [
-	"Get the image default directory"
-	
-	^self fileDirectoryClass default
-]
-
 { #category : 'package cache' }
 MetacelloPlatform >> defaultPackageCache [
   "Apparently the MCCacheRepository api is changing in Pharo"
@@ -129,13 +115,6 @@ MetacelloPlatform >> defaultPlatformAttributes [
 { #category : 'scripting' }
 MetacelloPlatform >> defaultRepositoryDescription [
     ^ 'http://www.squeaksource.com/MetacelloRepository'
-]
-
-{ #category : 'file system' }
-MetacelloPlatform >> deleteFileNamed: filePath [
-	<ignoreNotImplementedSelectors: #(containingDirectory localNameFor:)>
-
-	(self fileDirectoryClass on: filePath) containingDirectory deleteFileNamed: (self fileDirectoryClass localNameFor: filePath)
 ]
 
 { #category : 'file system' }
@@ -202,18 +181,6 @@ MetacelloPlatform >> extractTypeFromDescription: description [
 	(description beginsWith: 'gitorious://') ifTrue: [ ^ 'gitorious' ].
 	(description beginsWith: 'bitbucket://') ifTrue: [ ^ 'bitbucket' ].
 	^ 'http'
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> fileDirectoryClass [
-	^ Smalltalk at: #FileDirectory
-]
-
-{ #category : 'file system' }
-MetacelloPlatform >> fileHandleOn: aPath [
-	"Get an handle on a file."
-
-	^ self fileDirectoryClass on: aPath
 ]
 
 { #category : 'git support' }

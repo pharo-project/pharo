@@ -13,11 +13,6 @@ MetacelloPharoCommonPlatform class >> initialize [
   self select
 ]
 
-{ #category : 'utilities' }
-MetacelloPharoCommonPlatform >> authorName [
-	^ Author fullName
-]
-
 { #category : 'github/bitbucket support' }
 MetacelloPharoCommonPlatform >> closeZipArchive: anArchive [
 	
@@ -59,13 +54,6 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 	^ class
 ]
 
-{ #category : 'file system' }
-MetacelloPharoCommonPlatform >> defaultDirectory [
-	"Get the image default directory"
-	
-	^FileLocator imageDirectory asFileReference
-]
-
 { #category : 'attributes' }
 MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	| attributes versionString |
@@ -97,11 +85,6 @@ MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 { #category : 'scripting' }
 MetacelloPharoCommonPlatform >> defaultRepositoryDescription [
   ^ 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main'
-]
-
-{ #category : 'file system' }
-MetacelloPharoCommonPlatform >> deleteFileNamed: filePath [
-	filePath asFileReference delete
 ]
 
 { #category : 'file system' }
@@ -170,18 +153,6 @@ MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
 		readFrom:  zipFile;
 		extractAllTo: directory asFileReference.
 	zipFile asFileReference delete.
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPharoCommonPlatform >> fileDirectoryClass [
-	^FileSystem
-]
-
-{ #category : 'file system' }
-MetacelloPharoCommonPlatform >> fileHandleOn: aPath [
-	"Get an handle on a file."
-
-	^ aPath asFileReference
 ]
 
 { #category : 'monticello' }
