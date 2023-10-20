@@ -225,8 +225,8 @@ Class {
 	#name : 'Metacello',
 	#superclass : 'Object',
 	#instVars : [
-		'executorSpec',
-		'statements'
+		'statements',
+		'scriptExecutor'
 	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'
@@ -251,9 +251,10 @@ Metacello class >> classic [
 
 { #category : 'instance creation' }
 Metacello class >> image [
-    ^ self new
-        executorSpec: #'MetacelloScriptImageExecutor' -> 'batch';
-        yourself
+
+	^ self new
+		  scriptExecutor: MetacelloScriptImageExecutor;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -263,20 +264,16 @@ Metacello class >> registrations [
 
 { #category : 'instance creation' }
 Metacello class >> registry [
-    ^ self new
-        executorSpec: #'MetacelloScriptRegistryExecutor' -> 'batch';
-        yourself
+
+	^ self new
+		  scriptExecutor: MetacelloScriptRegistryExecutor;
+		  yourself
 ]
 
 { #category : 'private' }
 Metacello class >> scriptExecutorClass [
-    ^ self scriptExecutorClass: {(#'MetacelloScriptApiExecutor' -> 'batch')}
-]
 
-{ #category : 'private' }
-Metacello class >> scriptExecutorClass: anExecutorSpec [
-    self environment at: anExecutorSpec key ifAbsent: [ ConfigurationOf ensureMetacello: anExecutorSpec value ].
-    ^ self environment at: anExecutorSpec key
+	^ MetacelloScriptApiExecutor
 ]
 
 { #category : 'private' }
@@ -291,14 +288,8 @@ Metacello >> baseline: projectName [
 
 { #category : 'api repository shortcuts' }
 Metacello >> bitbucketUser: userName project: projectName commitish: commitish path: path [
-  | branchOrCommitOrTag |
-  branchOrCommitOrTag := commitish.
-  branchOrCommitOrTag isEmpty
-    ifTrue: [ branchOrCommitOrTag := 'master' ].
-  self
-    repository:
-      'bitbucket://' , userName , '/' , projectName , ':' , branchOrCommitOrTag , '/'
-        , path
+
+	self repository: 'bitbucket://' , userName , '/' , projectName , ':' , (commitish ifEmpty: [ 'master' ]) , '/' , path
 ]
 
 { #category : 'api repository shortcuts' }
@@ -334,17 +325,6 @@ Metacello >> execute: selector args: args [
   ^ self scriptExecutor execute: script
 ]
 
-{ #category : 'accessing' }
-Metacello >> executorSpec [
-    executorSpec ifNil: [ executorSpec := #'MetacelloScriptApiExecutor' -> 'batch' ].
-    ^ executorSpec
-]
-
-{ #category : 'accessing' }
-Metacello >> executorSpec: anAssoc [
-    executorSpec := anAssoc
-]
-
 { #category : 'api actions' }
 Metacello >> fetch [
   ^ self execute: #'fetch:' args: #(#())
@@ -374,14 +354,8 @@ Metacello >> get [
 
 { #category : 'api repository shortcuts' }
 Metacello >> githubUser: userName project: projectName commitish: commitish path: path [
-  | branchOrCommitOrTag |
-  branchOrCommitOrTag := commitish.
-  branchOrCommitOrTag isEmpty
-    ifTrue: [ branchOrCommitOrTag := 'master' ].
-  self
-    repository:
-      'github://' , userName , '/' , projectName , ':' , branchOrCommitOrTag , '/'
-        , path
+
+	self repository: 'github://' , userName , '/' , projectName , ':' , (commitish ifEmpty: [ 'master' ]) , '/' , path
 ]
 
 { #category : 'api options' }
@@ -565,7 +539,14 @@ Metacello >> repositoryOverrides: aRepositoryDescriptionCollection [
 
 { #category : 'accessing' }
 Metacello >> scriptExecutor [
-    ^ (self class scriptExecutorClass: self executorSpec) new
+
+	^ scriptExecutor ifNil: [ scriptExecutor := MetacelloScriptApiExecutor ]
+]
+
+{ #category : 'accessing' }
+Metacello >> scriptExecutor: anObject [
+
+	scriptExecutor := anObject
 ]
 
 { #category : 'api options' }
@@ -577,9 +558,8 @@ Metacello >> silently [
 
 { #category : 'api repository shortcuts' }
 Metacello >> smalltalkhubUser: userName project: projectName [
-  self
-    repository:
-      'http://smalltalkhub.com/mc/' , userName , '/' , projectName , '/main'
+
+	self repository: 'http://smalltalkhub.com/mc/' , userName , '/' , projectName , '/main'
 ]
 
 { #category : 'api repository shortcuts' }
@@ -604,8 +584,8 @@ Metacello >> ss3: projectName [
 
 { #category : 'accessing' }
 Metacello >> statements [
-    statements ifNil: [ statements := OrderedCollection new ].
-    ^ statements
+
+	^ statements ifNil: [ statements := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }

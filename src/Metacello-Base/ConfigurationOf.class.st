@@ -67,134 +67,6 @@ Class {
 	#package : 'Metacello-Base'
 }
 
-{ #category : 'private' }
-ConfigurationOf class >> bootstrapMetacelloFrom: repositoryUrl [
-  "Corresponds to version 1.0.0-beta.32.6"
-
-  "KEEP MetacelloConfigTemplate class>>ensureMetacelloBaseConfiguration in synch!"
-
-  | platformPkg |
-  self ensureGoferVersion: 'Gofer-Core-lr.115' repositoryUrl: repositoryUrl.
-  #('Metacello-Core-dkh.678' 'Metacello-MC-dkh.674')
-    do: [ :pkg | self bootstrapPackage: pkg from: repositoryUrl ].
-  platformPkg := self environment
-    at: #'SystemVersion'
-    ifPresent: [ :cl | 
-      | versionString |
-      versionString := cl current version.
-      (versionString beginsWith: 'Squeak')
-        ifTrue: [ 
-          (versionString beginsWith: 'Squeak3')
-            ifTrue: [ 'Metacello-Platform.squeak-dkh.5' ]
-            ifFalse: [ 'Metacello-Platform.squeak-dkh.22' ] ]
-        ifFalse: [ 
-          (versionString beginsWith: 'Pharo')
-            ifTrue: [ 
-              self bootstrapPackage: 'Metacello-PharoCommonPlatform-dkh.2' from: repositoryUrl.
-              (versionString beginsWith: 'Pharo2')
-                ifTrue: [ 'Metacello-Platform.pharo20-dkh.33' ]
-                ifFalse: [ 'Metacello-Platform.pharo-dkh.34' ] ] ] ].
-  self bootstrapPackage: platformPkg from: repositoryUrl
-]
-
-{ #category : 'private' }
-ConfigurationOf class >> bootstrapPackage: aString from: aPath [
-    | repository version |
-    repository := (MCCacheRepository default includesVersionNamed: aString)
-        ifTrue: [ MCCacheRepository default ]
-        ifFalse: [ MCHttpRepository location: aPath user: '' password: '' ].
-    self
-        retry: [ 
-            repository
-                versionReaderForFileNamed: aString , '.mcz'
-                do: [ :reader | 
-                    version := reader version.
-                    version load.
-                    version workingCopy repositoryGroup addRepository: repository ] ]
-]
-
-{ #category : 'private' }
-ConfigurationOf class >> ensureGoferVersion: goferVersion repositoryUrl: repositoryUrl [
-	"load the p=file goferVersion if Gofer isn't loaded or an earlier version of Gofer is currently loaded"
-
-	| goferVersionNumber wc pName env |
-	env := self environment.
-	(env at: #Gofer ifAbsent: [  ]) == nil
-		ifTrue: [ ^ self bootstrapPackage: goferVersion from: repositoryUrl ].
-	goferVersionNumber := (goferVersion copyAfterLast: $.) asNumber.
-	wc := [ ((env at: #GoferPackageReference) name: 'Gofer') workingCopy ]
-		on: Error
-		do: [ :ex | 
-			ex
-				return: ((env at: #GoferPackageReference) name: 'Gofer-Core') workingCopy ].
-	pName := wc ancestry ancestors first name.
-	(pName copyAfterLast: $.) asNumber <= goferVersionNumber
-		ifTrue: [ self bootstrapPackage: goferVersion from: repositoryUrl ]
-]
-
-{ #category : 'private' }
-ConfigurationOf class >> ensureMetacello [
-    "Bootstrap Metacello and load the 'bootstrap' group"
-
-    self ensureMetacello: #('batch')
-]
-
-{ #category : 'private' }
-ConfigurationOf class >> ensureMetacello: loadList [
-	"Bootstrap Metacello, retry using alternate repository, if primary repository is not accessible"
-
-	| env |
-	env := self environment.
-	env
-		at: #MetacelloProject
-		ifAbsent: [ | version error gofer |
-			(Array
-				with: 'http://smalltalkhub.com/mc/dkh/metacello/main'
-				with: 'http://seaside.gemtalksystems.com/ss/metacello')
-				do: [ :repositoryUrl | 
-					"bootstrap Metacello"
-					[ self bootstrapMetacelloFrom: repositoryUrl.
-					env
-						at: #ConfigurationOfMetacello
-						ifAbsent: [ self
-								retry: [ gofer := (env at: #Gofer) new.
-									gofer
-										perform: #url: with: repositoryUrl;
-										perform: #package: with: 'ConfigurationOfMetacello';
-										perform: #load ] ].
-					version := (env at: #ConfigurationOfMetacello)
-						project version: #previewBootstrap.
-					version load: loadList.
-					self
-						retry: [ gofer := (env at: #Gofer) new.
-							env
-								at: #ConfigurationOfMetacelloPreview
-								ifAbsent: [ gofer
-										perform: #url: with: repositoryUrl;
-										perform: #package: with: 'ConfigurationOfMetacelloPreview';
-										perform: #load ] ].
-					version := (env at: #ConfigurationOfMetacelloPreview)
-						project version: #stable.	"load latest from GitHub"
-					version load: loadList.
-					^ self ]
-						on: Error
-						do: [ :ex | 
-							error := ex.
-							MetacelloNotification signal:
-									(String
-										streamContents: [ :stream | 
-											stream nextPutAll: 'failed ensureMetacello using '.
-											repositoryUrl printOn: stream.
-											stream nextPutAll: ' : '.
-											ex description printOn: stream.
-											stream nextPutAll: '...retrying' ]).	"try again"
-							ex return: nil ] ].	"shouldn't get here unless the load failed ... throw an error"
-			self
-				error:
-					'retry with alternate repository failed: '
-						, error description printString ]
-]
-
 { #category : 'accessing' }
 ConfigurationOf class >> project [
 
@@ -247,8 +119,7 @@ ConfigurationOf class >> validate [
 	"self validate"
 
 	<apiDocumentation>
-	self ensureMetacello.
-	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
+	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #(  ) recurse: false) inspect
 ]
 
 { #category : 'defaults' }
@@ -273,30 +144,27 @@ ConfigurationOf >> customProjectAttributes [
 
 { #category : 'defaults' }
 ConfigurationOf >> defaultBleedingEdgeVersion [
+
 	| bleedingEdgeVersion |
-	bleedingEdgeVersion := (self project map values select: [ :version | version blessing == #baseline ])
-		detectMax: [ :version | version ].
-	bleedingEdgeVersion ifNil: [ ^#'notDefined' ].
+	bleedingEdgeVersion := (self project map values select: [ :version | version blessing == #baseline ]) detectMax: [ :version | version ].
+	bleedingEdgeVersion ifNil: [ ^ #notDefined ].
 	^ bleedingEdgeVersion versionString
 ]
 
 { #category : 'accessing' }
 ConfigurationOf >> project [
-    ^ project
-        ifNil: [ 
-            "Bootstrap Metacello if it is not already loaded"
-            self class ensureMetacello.
-            project := self projectClass new projectAttributes: self customProjectAttributes.	"Create the Metacello project"
-            project versionNumberClass: self versionNumberClass.
-            project class versionConstructorClass on: self project: project.	"Construct the project"
-            project loadType: #'linear'.	"change to #atomic if desired"
-            project ]
+
+	^ project ifNil: [
+		  project := self projectClass new projectAttributes: self customProjectAttributes. "Create the Metacello project"
+		  project versionNumberClass: self versionNumberClass.
+		  project class versionConstructorClass on: self project: project. "Construct the project"
+		  project loadType: #linear. "change to #atomic if desired"
+		  project ]
 ]
 
 { #category : 'accessing' }
 ConfigurationOf >> project: aProject [
 
-	project ifNil: [ self class ensureMetacello ].
 	project := aProject
 ]
 
@@ -308,7 +176,7 @@ ConfigurationOf >> projectClass [
 { #category : 'private' }
 ConfigurationOf >> versionDoesNotExistError: versionStringOrSymbol [
 
-	((Smalltalk at: #MetacelloSymbolicVersionDoesNotExistError) project: self project versionString: versionStringOrSymbol) signal
+	(MetacelloSymbolicVersionDoesNotExistError project: self project versionString: versionStringOrSymbol) signal
 ]
 
 { #category : 'accessing' }

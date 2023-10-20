@@ -44,38 +44,6 @@ MetacelloConfigTemplateExample class >> DevelopmentSupport [
 	<apiDocumentation>
 ]
 
-{ #category : 'private' }
-MetacelloConfigTemplateExample class >> baseConfigurationClassIfAbsent: aBlock [
-
-	^self environment 
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			self ensureMetacelloBaseConfiguration.
-			self environment at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
-]
-
-{ #category : 'private' }
-MetacelloConfigTemplateExample class >> ensureMetacello [
-
-	(self baseConfigurationClassIfAbsent: []) ensureMetacello
-]
-
-{ #category : 'private' }
-MetacelloConfigTemplateExample class >> ensureMetacelloBaseConfiguration [
-
-	self environment 
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			| repository version |
-			repository := MCHttpRepository location: 'http://seaside.gemstone.com/ss/metacello' user: '' password: ''.
-			repository
-				versionReaderForFileNamed: 'Metacello-Base-DaleHenrichs.2.mcz'
-				do: [ :reader | 
-					version := reader version.
-					version load.
-					version workingCopy repositoryGroup addRepository: repository ] ]
-]
-
 { #category : 'metacello tool support' }
 MetacelloConfigTemplateExample class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
@@ -129,8 +97,7 @@ MetacelloConfigTemplateExample class >> validate [
 	"self validate"
 
 	<apiDocumentation>
-	self ensureMetacello.
-	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
+	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #(  ) recurse: false) inspect
 ]
 
 { #category : 'baselines' }
@@ -215,14 +182,11 @@ MetacelloConfigTemplateExample >> fuelMetalevel: spec [
 { #category : 'accessing' }
 MetacelloConfigTemplateExample >> project [
 
-	^ project ifNil: [ 
-		"Bootstrap Metacello if it is not already loaded"
-		(self class baseConfigurationClassIfAbsent: []) ensureMetacello.
-		"Construct Metacello project"
-		project := MetacelloMCProject new projectAttributes: self customProjectAttributes. 
-		(Smalltalk at: #MetacelloVersionConstructor) on: self project: project.
-		project loadType: #linear. "change to #atomic if desired"
-		project ]
+	^ project ifNil: [ "Construct Metacello project"
+		  project := MetacelloMCProject new projectAttributes: self customProjectAttributes.
+		  (Smalltalk at: #MetacelloVersionConstructor) on: self project: project.
+		  project loadType: #linear. "change to #atomic if desired"
+		  project ]
 ]
 
 { #category : 'tags' }

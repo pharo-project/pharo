@@ -1443,9 +1443,7 @@ MetacelloToolBox >> baselineNamed: baseName [
   "Check if the class does not exist"
   baselineName := self baselineNameFrom: baseName.
   (Smalltalk includesKey: baselineName asSymbol)
-    ifFalse: [ 
-      "Create the configuration class"
-      self ensureMetacello.
+    ifFalse: [
 
 		self class classInstaller make: [ :aBuilder | 
 			aBuilder 
@@ -1572,7 +1570,6 @@ MetacelloToolBox >> configurationNamed: baseName [
   configurationName := self configurationNameFrom: baseName.
   (Smalltalk includesKey: configurationName asSymbol)
     ifFalse: [ 
-      self ensureMetacello.	"Create the configuration class"
       MetacelloPlatform current
         copyClass:
           (MetacelloPlatform current globalNamed: #'MetacelloConfigTemplate')
@@ -1610,7 +1607,6 @@ MetacelloToolBox >> createConfiguration: baseName [
     ifFalse: [ 'ConfigurationOf' , baseName ].
   (Smalltalk includesKey: configurationName asSymbol)
     ifFalse: [ 
-      self ensureMetacello.	"Create the configuration class"
       MetacelloPlatform current
         copyClass:
           (MetacelloPlatform current globalNamed: #'MetacelloConfigTemplate')
@@ -1758,11 +1754,6 @@ MetacelloToolBox >> editVersionSpecsForImport: constructor projectAttributes: pr
                         fullVersionSpec: fullVersionSpec
                         updateProjects: updateProjects
                         updatePackages: updatePackages ] ]
-]
-
-{ #category : 'private' }
-MetacelloToolBox >> ensureMetacello [
-	"noop for now"
 ]
 
 { #category : 'testing' }
