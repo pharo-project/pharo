@@ -684,8 +684,9 @@ MetacelloToolBox class >> modifyVersion: sourceVersionString section: sectionAtt
 { #category : 'utilities' }
 MetacelloToolBox class >> platformAttributes [
 	"Answer the list of platform attributes for the current platform"
+
 	<apiDocumentation>
-	^MetacelloPlatform current defaultPlatformAttributes
+	^ Smalltalk image metacelloPlatformAttributes
 ]
 
 { #category : 'development support' }
