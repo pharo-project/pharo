@@ -234,7 +234,7 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 				projectPath: projectPath;
 				versionString: versionString;
 				signal.	"for testing purposes"
-			theCacheDirectory projectPath.
+			theCacheDirectory ensureCreateDirectory.
 			url := self
 				projectZipUrlFor: projectPath
 				versionString: versionString.
