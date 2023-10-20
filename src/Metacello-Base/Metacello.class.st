@@ -226,7 +226,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'statements',
-		'scriptExecutor'
+		'scriptExecutorClass'
 	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'
@@ -253,7 +253,7 @@ Metacello class >> classic [
 Metacello class >> image [
 
 	^ self new
-		  scriptExecutor: MetacelloScriptImageExecutor;
+		  scriptExecutorClass: MetacelloScriptImageExecutor;
 		  yourself
 ]
 
@@ -266,7 +266,7 @@ Metacello class >> registrations [
 Metacello class >> registry [
 
 	^ self new
-		  scriptExecutor: MetacelloScriptRegistryExecutor;
+		  scriptExecutorClass: MetacelloScriptRegistryExecutor;
 		  yourself
 ]
 
@@ -540,13 +540,19 @@ Metacello >> repositoryOverrides: aRepositoryDescriptionCollection [
 { #category : 'accessing' }
 Metacello >> scriptExecutor [
 
-	^ scriptExecutor ifNil: [ scriptExecutor := MetacelloScriptApiExecutor ]
+	^ self scriptExecutorClass new
 ]
 
 { #category : 'accessing' }
-Metacello >> scriptExecutor: anObject [
+Metacello >> scriptExecutorClass [
 
-	scriptExecutor := anObject
+	^ scriptExecutorClass ifNil: [ scriptExecutorClass := MetacelloScriptApiExecutor ]
+]
+
+{ #category : 'accessing' }
+Metacello >> scriptExecutorClass: anObject [
+
+	scriptExecutorClass := anObject
 ]
 
 { #category : 'api options' }
