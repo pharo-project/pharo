@@ -826,10 +826,9 @@ MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionStr
             ifTrue: [ 
               repositories := repositories
                 select: [ :repo | wcRepositoryGroup includes: repo ] ].
-          repositories isEmpty
-            ifTrue: [ 
+          repositories ifEmpty: [ 
               repositories := monticelloWorkingCopy repositoryGroup repositories
-                reject: [ :repo | repo = MetacelloPlatform current defaultPackageCache ] ] ].
+                reject: [ :repo | repo = MCCacheRepository default ] ] ].
       repositories
         do: [ :repo | 
           (monticelloWorkingCopy possiblyNewerVersionsIn: repo) notEmpty
@@ -1452,7 +1451,7 @@ MetacelloToolBox >> baselineNamed: baseName [
 				superclass: BaselineOf;
 				package: baselineName ].
 
-		MetacelloPlatform current registerPackageNamed: baselineName.
+		self packageOrganizer ensurePackage: baselineName.
 		(self class environment at: baselineName asSymbol) compile: 'baseline: spec <baseline>' classified: 'baseline' "a bit of a hack here to create an initial null basline method" ].
 	project := (self class environment at: baselineName asSymbol) project
 ]
@@ -1564,7 +1563,7 @@ MetacelloToolBox >> configurationNamed: baseName [
 	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
 		self ensureMetacello. "Create the configuration class"
 		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
-		MetacelloPlatform current registerPackageNamed: configurationName ].
+		self packageOrganizer ensurePackage: configurationName ].
 	project := (self class environment at: configurationName asSymbol) project
 ]
 
@@ -1597,7 +1596,7 @@ MetacelloToolBox >> createConfiguration: baseName [
 	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
 		self ensureMetacello. "Create the configuration class"
 		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
-		MetacelloPlatform current registerPackageNamed: configurationName ].
+		self packageOrganizer ensurePackage: configurationName ].
 	^ (self class environment at: configurationName asSymbol) project
 ]
 
@@ -1868,8 +1867,8 @@ MetacelloToolBox >> modifyBaselineOf [
   constructor extractMethodSectionsForClass: baselineClass.
   methodSpec := MetacelloBaselineOfMethodSpec new
     project: project;
-    selector: (MetacelloPlatform current selectorForPragma: pragma);
-    category: (baselineClass protocolNameOfSelector: (MetacelloPlatform current selectorForPragma: pragma));
+    selector: pragma methodSelector;
+    category: (baselineClass protocolNameOfSelector: pragma methodSelector);
     yourself.
   constructor methodSections
     do: [ :methodSection | self methodSpec methodSections add: methodSection ]
@@ -2007,8 +2006,8 @@ MetacelloToolBox >> modifySymbolicVersionMethodFor: versionSymbol symbolicVersio
     pragma := coll at: 1.
     methodSpec := MetacelloSymbolicVersionMethodSpec new
         project: project;
-        selector: (MetacelloPlatform current selectorForPragma: pragma);
-        category: (project configuration class protocolNameOfSelector: (MetacelloPlatform current selectorForPragma: pragma));
+        selector: pragma methodSelector;
+        category: (project configuration class protocolNameOfSelector: pragma methodSelector);
         versionString: versionSymbol;
         yourself.
     (constructor extractSymbolicVersionSpecsFor: versionSymbol)
@@ -2076,8 +2075,8 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol pr
         ifFalse: [ #() ].
     methodSpec := MetacelloVersionMethodSpec new
         project: project;
-        selector: (MetacelloPlatform current selectorForPragma: pragma);
-        category: (project configuration class protocolNameOfSelector: (MetacelloPlatform current selectorForPragma:  pragma));
+        selector: pragma methodSelector;
+        category: (project configuration class protocolNameOfSelector: pragma methodSelector);
         versionString: sourceVersionString;
         imports: imports;
         yourself.

@@ -80,6 +80,25 @@ MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: vers
   ^ projectPath , ':::' , versionString
 ]
 
+{ #category : 'utilities' }
+MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName [
+	"download zip archive from <url> into <outputFileName>"
+
+	outputFileName asFileReference ensureDelete.
+	[ :bar |
+	bar title: 'Download: ' , url asString , ' to ' , outputFileName.
+	[
+	ZnClient new
+		url: url;
+		signalProgress: true;
+		downloadTo: outputFileName ]
+		on: HTTPProgress
+		do: [ :progress |
+			progress isEmpty ifFalse: [ bar current: progress percentage ].
+			progress resume ] ] asJob run.
+	^ ZipArchive new readFrom: outputFileName asFileReference
+]
+
 { #category : 'class initialization' }
 MCGitBasedNetworkRepository class >> flushDownloadCache [
 
@@ -204,19 +223,12 @@ MCGitBasedNetworkRepository class >> parseProjectVersionField: parseBlock desc: 
 
 { #category : 'utilities' }
 MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: versionString [
-	| mcPlatform theCacheDirectory projectDirectory downloadCacheKey cachePath |
-	downloadCacheKey := self
-		downloadCacheKey: projectPath
-		version: versionString.
-	mcPlatform := MetacelloPlatform current.
-	theCacheDirectory := mcPlatform
-		directoryFromPath: versionString
-		relativeTo: (self cacheDirectoryFor: projectPath).
+	| theCacheDirectory projectDirectory downloadCacheKey cachePath |
+	downloadCacheKey := self downloadCacheKey: projectPath version: versionString.
+	theCacheDirectory := (self cacheDirectoryFor: projectPath) resolveString: versionString.
 	cachePath := self downloadCache at: downloadCacheKey ifAbsent: [  ].
 	(cachePath isNil
-		or: [ (projectDirectory := mcPlatform
-				directoryFromPath: cachePath
-				relativeTo: theCacheDirectory) exists not ])
+		or: [ (projectDirectory := theCacheDirectory resolveString: cachePath) exists not ])
 		ifTrue: [ | url archive directory zipFileName |
 			MetacelloScriptGitBasedDownloadNotification new
 				projectPath: projectPath;
@@ -226,25 +238,21 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 			url := self
 				projectZipUrlFor: projectPath
 				versionString: versionString.
-			zipFileName := mcPlatform
+			zipFileName := MetacelloPlatform current
 				tempFileFor:
 					self basicDescription , '--'
 						, (downloadCacheKey select: [ :c | c isAlphaNumeric ])
 				suffix: '.zip'.
-			archive := mcPlatform
-				downloadZipArchive: url
-				to: zipFileName.
-			directory := mcPlatform
-				directoryFromPath: (cachePath := archive members first fileName)
-				relativeTo: theCacheDirectory.
+			archive := self downloadZipArchive: url to: zipFileName.
+			directory := theCacheDirectory resolveString: (cachePath := archive members first fileName).
 			archive close.
 			directory
 				ifExists: [ zipFileName asFileReference delete ]
-				ifAbsent: [ mcPlatform extractRepositoryFrom: zipFileName to: theCacheDirectory fullName ].
+				ifAbsent: [ 
+					ZipArchive extractFrom: zipFileName to: theCacheDirectory fullName.
+					zipFileName asFileReference delete ].
 			self downloadCache at: downloadCacheKey put: cachePath.
-			projectDirectory := mcPlatform
-				directoryFromPath: cachePath
-				relativeTo: theCacheDirectory ].
+			projectDirectory := theCacheDirectory resolveString: cachePath ].
 	^ projectDirectory
 ]
 
@@ -331,16 +339,10 @@ MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
-	 | directory |
-	
-	directory := self class
-		projectDirectoryFrom: self projectPath
-		version: self projectVersion.
-	self repoPath isEmpty ifFalse: [
-		directory := MetacelloPlatform current
-			directoryFromPath: self repoPath
- 			relativeTo: directory ].
-		
+
+	| directory |
+	directory := self class projectDirectoryFrom: self projectPath version: self projectVersion.
+	self repoPath ifNotEmpty: [ directory := directory resolveString: self repoPath ].
 	^ directory
 ]
 

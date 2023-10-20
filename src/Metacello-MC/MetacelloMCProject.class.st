@@ -129,10 +129,10 @@ MetacelloMCProject >> projectPackage [
       workingCopy ancestors notEmpty
         ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
       repo := workingCopy repositoryGroup repositories
-        detect: [ :each | each ~~ MetacelloPlatform current defaultPackageCache ]
+        detect: [ :each | each ~~ MCCacheRepository default ]
         ifNone: [ 
           MetacelloNotification signal: ('Using cache repository for ' , self label , ' project package').
-          MetacelloPlatform current defaultPackageCache ].
+          MCCacheRepository default ].
       pkgSpec repository: (repo asRepositorySpecFor: self).
       ^ pkgSpec ].
   ^ nil

@@ -65,13 +65,6 @@ MetacelloPlatform >> createRepository: aRepositorySpec [
 	^ MCRepository newRepositoryFromSpec: aRepositorySpec
 ]
 
-{ #category : 'package cache' }
-MetacelloPlatform >> defaultPackageCache [
-  "Apparently the MCCacheRepository api is changing in Pharo"
-
-  ^ MCCacheRepository default
-]
-
 { #category : 'attributes' }
 MetacelloPlatform >> defaultPlatformAttributes [
   | versionString |
@@ -83,20 +76,12 @@ MetacelloPlatform >> defaultPlatformAttributes [
         ifTrue: [ ^ #(#'squeakCommon' #'pharo') ].
       (versionString beginsWith: 'Squeak')
         ifTrue: [ ^ #(#'squeakCommon' #'squeak') ].	"see http://code.google.com/p/metacello/issues/detail?id=146"
-      (self string: versionString includesSubstring: 'Pharo')
+      (versionString includesSubstring: 'Pharo')
         ifTrue: [ ^ #(#'squeakCommon' #'pharo') ].
-      (self string: versionString includesSubstring: 'Squeak')
+      (versionString includesSubstring: 'Squeak')
         ifTrue: [ ^ #(#'squeakCommon' #'squeak') ].
       self error: 'Unrecognized version of Squeak/Pharo: ' , versionString ].
   ^ #(#'gemstone')
-]
-
-{ #category : 'file system' }
-MetacelloPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
-	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
-	<ignoreNotImplementedSelectors: #(directoryNamed:)>
-
-	^ anotherDirectoryPath directoryNamed: adirectoryPath
 ]
 
 { #category : 'notification' }
@@ -121,20 +106,6 @@ MetacelloPlatform >> downloadJSON: url username: username pass: pass [
   self subclassResponsibility
 ]
 
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> downloadZipArchive: url to: outputFileName [
-  "download zip archive from <url> into <outputFileName>"
-
-  self subclassResponsibility
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPlatform >> extractRepositoryFrom: zipFile to: directory [
-    "unzip <zipFile> into <directory>"
-
-    self subclassResponsibility
-]
-
 { #category : 'repository creation' }
 MetacelloPlatform >> extractTypeFromDescription: description [
 
@@ -155,38 +126,12 @@ MetacelloPlatform >> newVersionForWorkingCopy: aWorkingCopy [
   ^ aWorkingCopy newVersion
 ]
 
-{ #category : 'file system' }
-MetacelloPlatform >> parentDirectoryOf: aFileHandler [
-	"Get the parent directory of this file."
-	<ignoreNotImplementedSelectors: #(containingDirectory)>
-
-	^ aFileHandler containingDirectory
-]
-
 { #category : 'caching' }
 MetacelloPlatform >> primeStackCacheWith: aDictionary doing: noArgBlock [
 
 	self 
 		useStackCacheDuring: [:dict | ^noArgBlock value ] 
 		defaultDictionary: aDictionary
-]
-
-{ #category : 'file system' }
-MetacelloPlatform >> recursiveDelete: aDirectory [
-	"delete this directory and all children of it"
-
-	^  aDirectory recursiveDelete
-]
-
-{ #category : 'repository creation' }
-MetacelloPlatform >> registerPackageNamed: packageName [
-	<ignoreNotImplementedSelectors: #(registerPackageName:)>
-  ^ (Smalltalk at: #'PackageInfo') registerPackageName: packageName
-]
-
-{ #category : 'system' }
-MetacelloPlatform >> selectorForPragma: aPragma [
-	^ aPragma selector
 ]
 
 { #category : 'caching' }
@@ -211,15 +156,6 @@ MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doi
 					dict at: cacheName put: cache ].
 			^aBlock value: cache ] 
 		defaultDictionary: nil
-]
-
-{ #category : 'utilities' }
-MetacelloPlatform >> string: aString includesSubstring: aSubstring [
-	<ignoreNotImplementedSelectors: #(includesSubString:)>
-
-	"abstract String>>includesSubstring: to have the same message on all supported platforms."
-
-	^aString includesSubString: aSubstring
 ]
 
 { #category : 'file system' }

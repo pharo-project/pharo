@@ -76,12 +76,6 @@ MetacelloPharoCommonPlatform >> defaultPlatformAttributes [
 	^ attributes
 ]
 
-{ #category : 'file system' }
-MetacelloPharoCommonPlatform >> directoryFromPath: adirectoryPath relativeTo: anotherDirectoryPath [
-	"Get a handle on the following path: anotherDirectoryPath/adirectoryPath"
-	^ anotherDirectoryPath resolveString: adirectoryPath
-]
-
 { #category : 'notification' }
 MetacelloPharoCommonPlatform >> do: aBlock displaying: aString [
 
@@ -109,70 +103,9 @@ MetacelloPharoCommonPlatform >> downloadJSON: url username: username pass: pass 
   ^ STON fromString: json
 ]
 
-{ #category : 'github/bitbucket support' }
-MetacelloPharoCommonPlatform >> downloadZipArchive: url to: outputFileName [
-	"download zip archive from <url> into <outputFileName>"
-
-	outputFileName asFileReference ensureDelete.
-	[ :bar | 
-	bar title: 'Download: ' , url asString , ' to ' , outputFileName.
-	[ ZnClient new
-		url: url;
-		signalProgress: true;
-		downloadTo: outputFileName ]
-		on: HTTPProgress
-		do: [ :progress | 
-			progress isEmpty
-				ifFalse: [ bar current: progress percentage ].
-			progress resume ] ] asJob run.
-	^ ZipArchive new readFrom: outputFileName asFileReference
-]
-
-{ #category : 'github/bitbucket support' }
-MetacelloPharoCommonPlatform >> extractRepositoryFrom: zipFile to: directory [
-    "unzip <zipFile> into <directory>"
-	ZipArchive new 
-		readFrom:  zipFile;
-		extractAllTo: directory asFileReference.
-	zipFile asFileReference delete.
-]
-
 { #category : 'monticello' }
 MetacelloPharoCommonPlatform >> newVersionForWorkingCopy: aWorkingCopy [
 	^aWorkingCopy newVersionIn: aWorkingCopy repositoryGroup
-]
-
-{ #category : 'file system' }
-MetacelloPharoCommonPlatform >> parentDirectoryOf: aFileHandler [
-	"Get the parent directory of this file."
-	
-	^ aFileHandler parent
-]
-
-{ #category : 'file system' }
-MetacelloPharoCommonPlatform >> recursiveDelete: aDirectory [
-	"delete this directory and all children of it"
-
-	^  aDirectory deleteAll
-]
-
-{ #category : 'repository creation' }
-MetacelloPharoCommonPlatform >> registerPackageNamed: packageName [
-  "PackageInfo deprecated in Pharo3.0"
-
-  ^RPackageSet named: packageName
-]
-
-{ #category : 'system' }
-MetacelloPharoCommonPlatform >> selectorForPragma: aPragma [
-	^ aPragma methodSelector
-]
-
-{ #category : 'utilities' }
-MetacelloPharoCommonPlatform >> string: aString includesSubstring: aSubstring [
-	"abstract String>>includesSubstring: to have the same message on all supported platforms."
-
-	^aString includesSubstring: aSubstring
 ]
 
 { #category : 'file system' }
