@@ -82,18 +82,6 @@ ConfigurationOf class >> unloadMetacello [
 	(self packageOrganizer packages select: [ :package | package name beginsWith: 'Metacello' ]) do: [ :package | package removeFromSystem ]
 ]
 
-{ #category : 'accessing' }
-ConfigurationOf class >> validate [
-	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
-	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
-	Critical Warnings identify specification issues that may result in unexpected behavior when you load the configuration.
-	Warnings identify specification issues that are technically correct, but are worth take a look at."
-
-	<script>
-	<apiDocumentation>
-	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #(  ) recurse: false) inspect
-]
-
 { #category : 'defaults' }
 ConfigurationOf >> bleedingEdge [ 
 	"override if different behavior desired.
