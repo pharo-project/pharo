@@ -200,7 +200,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindS2 [
 	self assert: x1 & x2 & x3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindWithReturn1 [
 	"Terminate suspended process.
 	Test all nested unwind blocks are correctly unwound; 
@@ -233,7 +233,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindWithReturn1 [
 	self deny: x2 & x4.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringNestedUnwindWithReturn2 [
 	"Terminate suspended process.
 	Test all nested unwind blocks are correctly unwound; 
@@ -267,7 +267,7 @@ ProcessTerminateBugTest >> testTerminationDuringNestedUnwindWithReturn2 [
 	self deny: x2 & x4.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTerminateBugTest >> testTerminationDuringUnwind [
 	"An illustration of the issue of process termination during unwind.
 	This uses a well-behaved unwind block that we should allow to complete

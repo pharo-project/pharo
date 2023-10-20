@@ -90,7 +90,11 @@ EditingState >> exploreUndoManager: aKeyboardEvent [
 { #category : 'events' }
 EditingState >> focused: aBoolean from: aTextMorph [
 	(aBoolean and: [aTextMorph sharesFindReplace])
-		ifTrue: [[(EditorFindReplaceDialogWindow on: aTextMorph) comeToFront] on: Error do: []]
+		ifTrue: [ 
+			[ 
+				(SpRubFindReplaceService new findText: aTextMorph text) openDialog
+			] on: Error do: [ ] 
+		]
 ]
 
 { #category : 'events' }
