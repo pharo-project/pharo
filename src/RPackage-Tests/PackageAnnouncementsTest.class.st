@@ -42,6 +42,25 @@ PackageAnnouncementsTest >> testAddClassAnnounceClassRepackaged [
 ]
 
 { #category : 'tests' }
+PackageAnnouncementsTest >> testAddExtensionMethodHasTheRightPackage [
+
+	| xPackage yPackage class |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+
+	class := self newClassNamed: #NewClass1 in: xPackage.
+
+	self when: MethodAdded do: [ :ann |
+		self assert: ann methodAdded selector equals: #testMethod.
+		self assert: ann methodClass identicalTo: class.
+		self assert: ann methodPackage identicalTo: yPackage ].
+
+	class compile: 'testMethod ^ #kheego' classified: '*' , yPackage name.
+	
+	self assert: numberOfAnnouncements equals: 1
+]
+
+{ #category : 'tests' }
 PackageAnnouncementsTest >> testClassRepackagedNotFiredAtAClassAddition [
 
 	| xPackage class |

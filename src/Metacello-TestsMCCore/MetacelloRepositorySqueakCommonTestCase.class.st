@@ -1,8 +1,8 @@
 Class {
 	#name : 'MetacelloRepositorySqueakCommonTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
-	#category : 'Metacello-TestsPlatform',
-	#package : 'Metacello-TestsPlatform'
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
 { #category : 'baselines' }
@@ -82,13 +82,12 @@ MetacelloRepositorySqueakCommonTestCase >> baseline16: spec [
 ]
 
 { #category : 'accessing' }
-MetacelloRepositorySqueakCommonTestCase >> directoryForPlatform [ 
+MetacelloRepositorySqueakCommonTestCase >> directoryForPlatform [
+
 	| dir |
 	"I don't know how to do this in other platforms (not Pharo)"
 	dir := '/opt/mcexamples'.
-	(Smalltalk classNamed: #OSPlatform) ifNotNil: [ :c | 
-		c current isWindows
-			ifTrue: [ dir := 'c:\opt\mcexamples' ] ].
+	OSPlatform current isWindows ifTrue: [ dir := 'c:\opt\mcexamples' ].
 	^ dir
 ]
 
@@ -117,8 +116,8 @@ MetacelloRepositorySqueakCommonTestCase >> setUp [
 
 { #category : 'running' }
 MetacelloRepositorySqueakCommonTestCase >> tearDown [
-    
-    testingEnvironment removeKey: #'Metacello_Platform_Test_GlobalDictionary' ifAbsent: [  ].
+
+	testingEnvironment removeKey: #Metacello_Platform_Test_GlobalDictionary ifAbsent: [  ].
 	super tearDown
 ]
 

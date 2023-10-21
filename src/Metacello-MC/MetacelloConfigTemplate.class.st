@@ -44,40 +44,6 @@ MetacelloConfigTemplate class >> DevelopmentSupport [
 	<apiDocumentation>
 ]
 
-{ #category : 'private' }
-MetacelloConfigTemplate class >> baseConfigurationClassIfAbsent: aBlock [
-
-	^self environment 
-		at: #'ConfigurationOf'
-		ifAbsent: [ 
-			self ensureMetacelloBaseConfiguration.
-			self environment  at: #'ConfigurationOf' ifAbsent: aBlock ].
-]
-
-{ #category : 'private' }
-MetacelloConfigTemplate class >> ensureMetacello [
-
-	(self baseConfigurationClassIfAbsent: []) ensureMetacello
-]
-
-{ #category : 'private' }
-MetacelloConfigTemplate class >> ensureMetacelloBaseConfiguration [
-  self environment 
-    at: #'ConfigurationOf'
-    ifAbsent: [ 
-      | repository version |
-      repository := MCHttpRepository
-        location: 'http://smalltalkhub.com/mc/dkh/metacello/main'
-        user: ''
-        password: ''.
-      repository
-        versionReaderForFileNamed: 'Metacello-Base-dkh.107'
-        do: [ :reader | 
-          version := reader version.
-          version load.
-          version workingCopy repositoryGroup addRepository: repository ] ]
-]
-
 { #category : 'metacello tool support' }
 MetacelloConfigTemplate class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
@@ -131,8 +97,7 @@ MetacelloConfigTemplate class >> validate [
 	"self validate"
 
 	<apiDocumentation>
-	self ensureMetacello.
-	^ ((self environment  at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
+	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #(  ) recurse: false) inspect
 ]
 
 { #category : 'accessing' }
@@ -147,8 +112,6 @@ MetacelloConfigTemplate >> customProjectAttributes [
 MetacelloConfigTemplate >> project [
     ^ project
         ifNil: [ 
-            "Bootstrap Metacello if it is not already loaded"
-            self class ensureMetacello.
             project := MetacelloMCProject new projectAttributes: self customProjectAttributes.	"Create the Metacello project"
             (Smalltalk at: #'MetacelloVersionConstructor') on: self project: project.	"Construct the project"
             project loadType: #'linear'.	"change to #atomic if desired"
