@@ -214,7 +214,7 @@ MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock: receiver [
 	(pragma argumentAt: 1) = symbolicVrsn
 		ifTrue: [ 
 			self symbolicVersion: symbolicVrsn.
-			result := [ receiver perform: (MetacelloPlatform current selectorForPragma: pragma) ] 
+			result := [ receiver perform: pragma methodSelector ] 
 				on: MetacelloVersionDoesNotExistError 
 				do: [ :ex | ex return: nil ] ].
 	result ]
@@ -323,7 +323,7 @@ MetacelloVersionConstructor >> verifyVersionImportPragmas: pragmaDict definedIn:
                                             ^ self
                                                 error:
                                                     'The imported version:' , importedVersion printString , ' for version: ' , versionString
-                                                        , ' referenced from the method: ' , (MetacelloPlatform current selectorForPragma: pragma) printString
+                                                        , ' referenced from the method: ' , pragma methodSelector printString
                                                         , ' in configuration ' , configuration class printString
                                                         , ' has not been defined.' ] ] ] ] ]
                 on: Error

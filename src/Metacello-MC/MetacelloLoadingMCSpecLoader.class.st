@@ -128,7 +128,7 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 			goferLoad := MetacelloGoferLoad on: MetacelloGofer new.
 			goferLoad addResolved: resolvedReference.
 			goferLoad execute.
-			MetacelloPlatform current clearCurrentVersionCache.
+			self clearCurrentVersionCache.
 			self postLoad: packageSpec ].
 			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
@@ -220,26 +220,24 @@ MetacelloLoadingMCSpecLoader >> resolveSpec: pkgSpec with: gofer [
 MetacelloLoadingMCSpecLoader >> savePackageUsing: repositorySpecs [
 
 	| wc repo repoSpecs newVersion |
-	(wc := self spec workingCopy) == nil ifTrue: [ ^false ].
+	(wc := self spec workingCopy) ifNil: [ ^false ].
 	(wc ancestry ancestors notEmpty and: [ wc modified not])
 		ifTrue: [ ^false ].
 	repoSpecs := self spec repositorySpecs notEmpty
 				ifTrue: [ self spec repositorySpecs ]
 				ifFalse: [ repositorySpecs ].
-	(self spec getFile == nil or: [ wc ancestry ancestors isEmpty ])
+	(self spec getFile isNil or: [ wc ancestry ancestors isEmpty ])
 		ifTrue: [ repo := (self repositoriesFrom: repoSpecs ignoreOverrides: true) first ]
 		ifFalse: [
-			[ 	| newer |
+			[
 				repo := (self resolveSpec: self spec from: repoSpecs) repository.
-				newer := wc possiblyNewerVersionsIn: repo.
-				newer isEmpty not 
-					ifTrue: [
-						(MetacelloPlatform current confirm: 'CAUTION! These versions in the repository may be newer:', 
+				(wc possiblyNewerVersionsIn: repo) ifNotEmpty: [ :newer |
+						(self confirm: 'CAUTION! These versions in the repository may be newer:', 
 							String cr, newer printString, String cr,
 							'Do you really want to save this version?') ifFalse: [ ^false ]] ] 
 				on: Error 
 				do: [:ignored | ^false ] ].
-	(newVersion :=  MetacelloPlatform current newVersionForWorkingCopy: wc) == nil ifTrue: [ ^false ].
+	(newVersion :=  wc newVersionIn: wc repositoryGroup) ifNil: [ ^false ].
 	repo storeVersion: newVersion.
 	^true
 ]

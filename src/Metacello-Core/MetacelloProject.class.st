@@ -160,7 +160,7 @@ MetacelloProject >> defaultLoaderClass [
 { #category : 'private' }
 MetacelloProject >> defaultPlatformAttributes [
 
-	^ MetacelloPlatform current defaultPlatformAttributes
+	^ Smalltalk image metacelloPlatformAttributes
 ]
 
 { #category : 'versions' }

@@ -25,7 +25,6 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'Metacello-Core';
 			package: 'MonticelloFileTree-Core';
 			package: 'Metacello-MC';
-			package: 'Metacello-PharoCommonPlatform';
 			package: 'MonticelloFileTree-FileSystem-Utilities';
 			package: 'STON-Core';
 			package: 'Metacello-GitBasedRepository';
@@ -40,12 +39,11 @@ BaselineOfMetacello >> baseline: spec [
 		spec
 			package: 'Metacello-TestsCore';
 			package: 'Metacello-TestsMCCore';	"standalone"
-			package: 'Metacello-TestsPlatform';	"standalone"
 			package: 'Metacello-TestsReference';	"standalone"
 			package: 'Metacello-Gitlab-Tests'.
 
 		spec 
-			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'ConfigurationCommandLineHandler-Core' 'PragmaCollector' 'System-FileRegistry' 'MonticelloConfigurations' 'Gofer-Core' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Metacello-MC' 'Metacello-PharoCommonPlatform' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-Platform' 'Metacello-ToolBox' 'Metacello-PharoExtensions' 'MetacelloCommandLineHandler-Core');
-			group: 'Tests' with: #( 'Metacello-TestsCore' 'Metacello-TestsMCCore' 'Metacello-TestsPlatform' 'Metacello-TestsReference' 'Metacello-Gitlab-Tests');
+			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'ConfigurationCommandLineHandler-Core' 'PragmaCollector' 'System-FileRegistry' 'MonticelloConfigurations' 'Gofer-Core' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Metacello-MC' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-Platform' 'Metacello-ToolBox' 'Metacello-PharoExtensions' 'MetacelloCommandLineHandler-Core');
+			group: 'Tests' with: #( 'Metacello-TestsCore' 'Metacello-TestsMCCore' 'Metacello-TestsReference' 'Metacello-Gitlab-Tests');
 			group: 'default' with: #('Core') ]
 ]

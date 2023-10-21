@@ -15,7 +15,6 @@ mcPackages := #(
  'Metacello-Core'
  'MonticelloFileTree-Core'
  'Metacello-MC'
- 'Metacello-PharoCommonPlatform'
  'MonticelloFileTree-FileSystem-Utilities'
  'STON-Core'
  'Metacello-GitBasedRepository'
@@ -46,7 +45,6 @@ MCFileTreeStCypressWriter initialize.
 MCFileTreeFileSystemUtils initialize.
 
 MetacelloPlatform initialize.
-MetacelloPharoCommonPlatform initialize.
 
 STONWriter initialize.
 

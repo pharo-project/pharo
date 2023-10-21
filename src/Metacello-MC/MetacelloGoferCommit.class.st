@@ -9,7 +9,7 @@ Class {
 { #category : 'running' }
 MetacelloGoferCommit >> execute: aWorkingCopy [
 	| version |
-	version := MetacelloPlatform current newVersionForWorkingCopy: aWorkingCopy.
+	version := aWorkingCopy newVersionIn: aWorkingCopy repositoryGroup.
 	self gofer repositories
 		do: [ :repository | repository storeVersion: version ]
 ]
