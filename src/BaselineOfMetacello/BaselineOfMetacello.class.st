@@ -14,7 +14,6 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'ScriptingExtensions';
 			package: 'System-FileRegistry';
 			package: 'FileSystem-Memory';
-			package: 'Regex-Core';
 			package: 'StartupPreferences';
 			package: 'ConfigurationCommandLineHandler-Core';
 			package: 'PragmaCollector';
