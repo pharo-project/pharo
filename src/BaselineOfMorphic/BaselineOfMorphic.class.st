@@ -72,6 +72,8 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Native-Browser'.
 		
+		spec package: 'Regex-Core'.
+		
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.

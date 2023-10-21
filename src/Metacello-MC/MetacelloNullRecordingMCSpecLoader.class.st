@@ -159,20 +159,17 @@ MetacelloNullRecordingMCSpecLoader >> recordingSpecLoader [
 { #category : 'private' }
 MetacelloNullRecordingMCSpecLoader >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
   | externalPackageReference |
-  externalPackageReference := packageSpec file == nil
-    ifTrue: [ GoferPackageReference name: packageSpec name ]
-    ifFalse: [ GoferResolvedReference name: packageSpec file repository: nil ].
+  externalPackageReference := packageSpec file
+	ifNil: [ GoferPackageReference name: packageSpec name ]
+    ifNotNil: [ :file | GoferResolvedReference name: file repository: nil ].
   packageSpec repositorySpecs isEmpty
     ifTrue: [ 
       self repositoryMap
         at: externalPackageReference packageName
-        put:
-          (gofer repositories
-            reject: [ :repo | repo = MetacelloPlatform current defaultPackageCache ]) ]
+        put: (gofer repositories reject: [ :repo | repo = MCCacheRepository default ]) ]
     ifFalse: [ 
       self repositoryMap
         at: externalPackageReference packageName
-        put:
-          (packageSpec repositorySpecs collect: [ :repoSpec | repoSpec createRepository ]) ].
+        put: (packageSpec repositorySpecs collect: [ :repoSpec | repoSpec createRepository ]) ].
   ^ externalPackageReference
 ]
