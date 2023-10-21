@@ -51,7 +51,10 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
+		ifTrue: [
+			"I am not sure this check is required but let's check that another time"
+			compiledMethod origin = self ifTrue: [ self packageOrganizer addMethod: compiledMethod ].
+			SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
