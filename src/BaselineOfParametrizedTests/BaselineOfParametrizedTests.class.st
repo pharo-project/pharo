@@ -12,38 +12,6 @@ BaselineOfParametrizedTests class >> DevelopmentSupport [
 	<apiDocumentation>
 ]
 
-{ #category : 'private' }
-BaselineOfParametrizedTests class >> baseConfigurationClassIfAbsent: aBlock [
-
-	^self environment
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			self ensureMetacelloBaseConfiguration.
-			self environment at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
-]
-
-{ #category : 'private' }
-BaselineOfParametrizedTests class >> ensureMetacello [
-
-	(self baseConfigurationClassIfAbsent: []) ensureMetacello
-]
-
-{ #category : 'private' }
-BaselineOfParametrizedTests class >> ensureMetacelloBaseConfiguration [
-
-	self environment
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			| repository version |
-			repository := MCHttpRepository location: 'http://seaside.gemstone.com/ss/metacello' user: '' password: ''.
-			repository
-				versionReaderForFileNamed: 'Metacello-Base-DaleHenrichs.2.mcz'
-				do: [ :reader | 
-					version := reader version.
-					version load.
-					version workingCopy repositoryGroup addRepository: repository ] ]
-]
-
 { #category : 'metacello tool support' }
 BaselineOfParametrizedTests class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
@@ -79,20 +47,6 @@ BaselineOfParametrizedTests class >> loadDevelopment [
 
 	<apiDocumentation>
 	^(self project version: #development) load
-]
-
-{ #category : 'development support' }
-BaselineOfParametrizedTests class >> validate [
-	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
-	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
-	Critical Warnings identify specification issues that may result in unexpected behavior when you load the configuration.
-	Warnings identify specification issues that are technically correct, but are worth take a look at."
-
-	"self validate"
-
-	<apiDocumentation>
-	self ensureMetacello.
-	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
 ]
 
 { #category : 'baselines' }
