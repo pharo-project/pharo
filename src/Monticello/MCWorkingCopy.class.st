@@ -90,7 +90,8 @@ MCWorkingCopy class >> classMoved: anEvent [
 
 	Stdio stdout
 		nextPutAll: 'Class ' , anEvent classRepackaged name , ' got repackages from ' , anEvent oldPackage name , ' to ' , anEvent newPackage name;
-		lf.
+		lf;
+		nextPutAll: thisContext longStack; lf;lf.
 	self workingCopiesForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
 	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ]
 ]

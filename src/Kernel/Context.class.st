@@ -1089,7 +1089,7 @@ Context >> longStack [
 
 	^ String streamContents: [ :stream |
 		(self stackOfSize: 100) do: [ :item |
-			stream print: item; cr ]]
+			stream print: item; lf ]]
 ]
 
 { #category : 'accessing' }
