@@ -1162,17 +1162,9 @@ TextMorph >> mouseLeave: evt [
 
 { #category : 'event handling' }
 TextMorph >> mouseMove: event [
+	event redButtonPressed ifFalse: [ ^ self ].
 	"editing for now disabled"
-	"event redButtonPressed ifFalse: [ ^ self ].
-	self handleInteraction: [ editor mouseMove: event ]"
-]
-
-{ #category : 'accessing' }
-TextMorph >> mouseUp: evt [
-	"editing for now disabled"
- 	"self handleInteraction: [editor mouseUp: evt].
-	(self boundsInWorld containsPoint: self currentHand position)
-		ifFalse: [self hideOverEditableTextCursor]"
+	"self handleInteraction: [ editor mouseMove: event ]"
 ]
 
 { #category : 'editing helpers' }
