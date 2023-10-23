@@ -24,11 +24,15 @@ MCSystemCategoryParser >> addDefinitionsTo: aCollection [
 	category := self category.
 
 	"Let's find the package and the tag from the category."
-	definition packageName
-		ifNil: [ definition packageName: (self packageOrganizer packageMatchingExtensionName: category) name ]
-		ifNotNil: [ :packageName | (category = packageName or: [ category beginsWith: packageName , '-' ]) ifFalse: [ self error: 'wrong category.' ] ].
+	definition packageName ifNil: [
+		definition packageName: ((self packageOrganizer packageMatchingExtensionName: category)
+				 ifNil: [ category ]
+				 ifNotNil: [ :package | package name ]) ].
 
-	category = definition packageName ifFalse: [ definition tagNames: (definition tagNames copyWith: (category withoutPrefix: definition packageName , '-')) ]
+	category = definition packageName ifFalse: [
+		definition tagNames: (definition tagNames copyWith: ((category beginsWith: definition packageName , '-')
+					  ifTrue: [ category withoutPrefix: definition packageName , '-' ]
+					  ifFalse: [ category ])) ]
 ]
 
 { #category : 'accessing' }
