@@ -32,12 +32,10 @@ MCRepositoryGroup class >> withRepositories: aCollection [
 
 { #category : 'adding' }
 MCRepositoryGroup >> addBasicRepository: aRepository [
-	((repositories includes: aRepository) 
-	or: [ aRepository == MCCacheRepository uniqueInstance ])
-		ifFalse: [
-			repositories add: aRepository.
-			self announceRepositoryAdded: aRepository.
-			self class default addRepository: aRepository ].
+
+	((repositories includes: aRepository) or: [ aRepository == MCCacheRepository uniqueInstance ]) ifFalse: [
+		repositories add: aRepository.
+		self class default addRepository: aRepository ].
 	^ aRepository
 ]
 
@@ -56,24 +54,6 @@ MCRepositoryGroup >> addRepositoryGroup: aRepositoryGroup [
 { #category : 'adding' }
 MCRepositoryGroup >> addTo: aRepository [
 	^ aRepository addRepositoryGroup: self
-]
-
-{ #category : 'private' }
-MCRepositoryGroup >> announceRepositoryAdded: aRepository [
-	SystemAnnouncer uniqueInstance
-		announce:
-			(MCRepositoryAdded new
-				repository: aRepository;
-				yourself)
-]
-
-{ #category : 'private' }
-MCRepositoryGroup >> announceRepositoryRemoved: aRepository [
-	SystemAnnouncer uniqueInstance
-		announce:
-			(MCRepositoryRemoved new
-				repository: aRepository;
-				yourself)
 ]
 
 { #category : 'accessing' }
@@ -111,8 +91,8 @@ MCRepositoryGroup >> initialize [
 
 { #category : 'accessing' }
 MCRepositoryGroup >> removeRepository: aRepository [
-	repositories remove: aRepository ifAbsent: [ ^ self ].
-	self announceRepositoryRemoved: aRepository
+
+	repositories remove: aRepository ifAbsent: [  ]
 ]
 
 { #category : 'accessing' }
