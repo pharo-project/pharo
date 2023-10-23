@@ -843,7 +843,7 @@ CompiledMethod >> removeProperty: propName [
 	 Do _not_ raise an error if the property is missing."
 	| value |
 	value := self propertyAt: propName ifAbsent: [^nil].
-	self penultimateLiteral: (self penultimateLiteral copyWithout:
+	self penultimateLiteral: (self penultimateLiteral copyWithoutNoShallowCopy:
 									(Association
 										key: propName
 										value: value)).
@@ -859,7 +859,7 @@ CompiledMethod >> removeProperty: propName ifAbsent: aBlock [
 	 Answer the evaluation of aBlock if the property is missing."
 	| value |
 	value := self propertyAt: propName ifAbsent: [^aBlock value].
-	self penultimateLiteral: (self penultimateLiteral copyWithout:
+	self penultimateLiteral: (self penultimateLiteral copyWithoutNoShallowCopy:
 									(Association
 										key: propName
 										value: value)).
