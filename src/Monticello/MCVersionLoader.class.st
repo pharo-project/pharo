@@ -39,20 +39,8 @@ MCVersionLoader >> addVersion: aVersion [
 
 { #category : 'private' }
 MCVersionLoader >> announceLoad: aString do: aBlock [
-	| returnValue |
-	returnValue := nil.
-	[ self announceLoadStart: aString ] ensure: [ 
-		[ returnValue := aBlock value ] ensure: [ 
-			self announceLoadStop: aString ] ].
-	^ returnValue
-]
 
-{ #category : 'private' }
-MCVersionLoader >> announceLoadStart: aString [
-	SystemAnnouncer announce: (MCVersionLoaderStarted new
-		versionLoader: self;
-		label: aString; 
-		yourself)
+	^ [ aBlock value ] ensure: [ self announceLoadStop: aString ]
 ]
 
 { #category : 'private' }
