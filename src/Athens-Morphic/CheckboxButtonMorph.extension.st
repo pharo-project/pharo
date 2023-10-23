@@ -9,12 +9,12 @@ CheckboxButtonMorph >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas drawShape: self bounds.
 	anAthensCanvas setPaint: self borderStyle.
 	anAthensCanvas drawShape: self bounds.
-	img := self imageToUse.
+	img := self formSetToUse ifNotNil: [ :formSetToUse | formSetToUse asForm ].
 	img
 		ifNotNil: [
 			anAthensCanvas setPaint: img.
 			anAthensCanvas drawShape: (self innerBounds center - (img extent // 2) extent: img extent) ].
-	((self state == #pressed or: [ self state == #repressed ]) and: [ image isNil ])
+	((self state == #pressed or: [ self state == #repressed ]) and: [ formSet isNil ])
 		ifTrue: [
 			anAthensCanvas setPaint: (self paneColor alpha: 0.3).
 			anAthensCanvas drawShape: self innerBounds ].

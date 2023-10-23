@@ -189,7 +189,7 @@ AlphaImageMorph >> image: aForm size: aPoint [
 	f := f scaledToSize: aPoint.
 	self autoSize
 		ifTrue: [super image: f]
-		ifFalse: [image := f.
+		ifFalse: [formSet := FormSet form: f.
 				self changed].
 	self cachedForm: nil.
 	self changed: #imageExtent
