@@ -541,7 +541,7 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 	| method |
-	method := ann method ifNil: [ ^ self ].
+	method := ann method.
 
 	method origin = ann methodClass ifFalse: [ ^ self ]. "Methods from traits are not treated"
 
