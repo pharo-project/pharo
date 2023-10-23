@@ -31,6 +31,15 @@ Class {
 
 { #category : 'testing' }
 ClyJumpToTestMethodCommand class >> canBeExecutedInContext: aBrowserContext [
+
+	aBrowserContext isQueryBrowserContext
+		ifTrue: [ ^ false ].
+	^ self hasInstanceSelectedItemsIn: aBrowserContext.
+]
+
+{ #category : 'testing' }
+ClyJumpToTestMethodCommand class >> hasInstanceSelectedItemsIn: aBrowserContext [
+
 	^ aBrowserContext isInstanceSideMethodSelected and: [ aBrowserContext selectedItems anySatisfy: [ :each | (each hasProperty: ClyTestResultProperty) not ] ]
 ]
 
