@@ -97,7 +97,6 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'add predecessor' selector: #addPredecessor:.
 	aCustomMenu add: 'add successor' selector: #addSuccessor:.
 	aCustomMenu add: 'code pane menu...' selector: #yellowButtonActivity.
-	aCustomMenu add: 'code pane shift menu...' selector: #shiftedYellowButtonActivity.
 
 	outer := self owner.
 	outer
@@ -403,8 +402,9 @@ TextMorph >> chooseFont [
 
 { #category : 'editing' }
 TextMorph >> chooseStyle [
-	self editor changeStyle.
-	self updateFromParagraph
+	"editor for now disabled"
+	"self editor changeStyle.
+	self updateFromParagraph"
 ]
 
 { #category : 'private' }
@@ -844,9 +844,10 @@ TextMorph >> getLastCharacter [
 
 { #category : 'event handling' }
 TextMorph >> getMenu: shiftKeyState [
-	^ shiftKeyState not
+	"editor for now disabled"
+	"^ shiftKeyState not
 		ifTrue: [editor yellowButtonMenu]
-		ifFalse: [editor shiftedYellowButtonMenu]
+		ifFalse: [editor shiftedYellowButtonMenu]"
 ]
 
 { #category : 'submorphs - add/remove' }
@@ -983,10 +984,7 @@ TextMorph >> installEditorToReplace: priorEditor [
 	If priorEditor is not nil, then initialize the new editor from its state.
 	We may want to rework this so it actually uses the prior editor."
 
-	| stateArray |
-	priorEditor ifNotNil: [stateArray := priorEditor stateArray].
 	editor := self editorClass forTextArea: (RubEditingArea new setTextWith: self contents; yourself).
-	priorEditor ifNotNil: [editor stateArrayPut: stateArray].
 	self selectionChanged.
 	^ editor
 ]
@@ -1141,7 +1139,8 @@ TextMorph >> mouseDown: evt [
 		ifTrue: ["First check for option (menu) click"
 			(self yellowButtonActivity: evt shiftPressed)
 				ifTrue: [ ^ self ]].
-	self handleInteraction: [editor mouseDown: evt].
+	"editing for now disabled"
+	"self handleInteraction: [editor mouseDown: evt]."
 	self hasKeyboardFocus
 		ifFalse: [self takeKeyboardFocus].
 	super mouseDown: evt
@@ -1163,16 +1162,9 @@ TextMorph >> mouseLeave: evt [
 
 { #category : 'event handling' }
 TextMorph >> mouseMove: event [
-
 	event redButtonPressed ifFalse: [ ^ self ].
-	self handleInteraction: [ editor mouseMove: event ]
-]
-
-{ #category : 'accessing' }
-TextMorph >> mouseUp: evt [
-	self handleInteraction: [editor mouseUp: evt].
-	(self boundsInWorld containsPoint: self currentHand position)
-		ifFalse: [self hideOverEditableTextCursor]
+	"editing for now disabled"
+	"self handleInteraction: [ editor mouseMove: event ]"
 ]
 
 { #category : 'editing helpers' }
@@ -1607,14 +1599,6 @@ TextMorph >> setTextStyle: aTextStyle [
 { #category : 'find-replace' }
 TextMorph >> sharesFindReplace [
 	^ false
-]
-
-{ #category : 'menu' }
-TextMorph >> shiftedYellowButtonActivity [
-	"Supply the normal 'code pane' menu to use its text editing commands from a menu."
-
-	self editor pluggableYellowButtonActivity: true.
-	self changed
 ]
 
 { #category : 'event handling' }
