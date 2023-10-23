@@ -68,7 +68,7 @@ MethodAddition >> notifyObservers [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
+		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
 			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
