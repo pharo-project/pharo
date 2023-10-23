@@ -148,21 +148,19 @@ ExternalType class >> initializeAtomicTypes [
 { #category : 'class initialization' }
 ExternalType class >> initializeDefaultTypes [
 	"ExternalType initialize"
+
 	| type pointerType |
-	AtomicTypes = nil ifTrue:[
-		"Create new atomic types and setup the dictionaries"
+	AtomicTypes ifNil: [ "Create new atomic types and setup the dictionaries"
 		AtomicTypes := Dictionary new.
 		StructTypes := WeakValueDictionary new.
-		AtomicTypeNames valuesDo:[:k|
+		AtomicTypeNames valuesDo: [ :k |
 			type := self basicNew.
 			pointerType := self basicNew.
 			AtomicTypes at: k put: type.
 			type setReferencedType: pointerType.
-			pointerType setReferencedType: type.
-		].
-	].
+			pointerType setReferencedType: type ] ].
 	self initializeAtomicTypes.
-	self initializeStructureTypes.
+	self initializeStructureTypes
 	"AtomicTypes := nil"
 ]
 
