@@ -219,7 +219,8 @@ MCClassDefinition >> createClass [
 			  traitComposition: self traitCompositionCompiled;
 			  classTraitComposition: self classTraitCompositionCompiled;
 			  comment: comment stamp: self commentStamp;
-			  category: self category;
+			  package: self packageName;
+			  tag: self tagName;
 			  environment: superClass environment ] ]
 		  on: Warning , DuplicatedVariableError
 		  do: [ :ex | ex resume ]

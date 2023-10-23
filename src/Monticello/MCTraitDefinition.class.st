@@ -69,7 +69,8 @@ MCTraitDefinition >> createClass [
 			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
 			  slots: self instanceVariables;
 			  classSlots: self classInstanceVariables;
-			  package: self category;
+			  package: self packageName;
+			  tag: self tagName;
 			  comment: comment stamp: commentStamp;
 			  beTrait ] ]
 		  on: Warning , DuplicatedVariableError
