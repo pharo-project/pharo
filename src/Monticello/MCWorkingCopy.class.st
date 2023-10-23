@@ -81,20 +81,13 @@ MCWorkingCopy class >> announcer: anAnnouncer [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> classModified: anEvent [
-Stdio stdout
-		nextPutAll: 'Class ' , anEvent classAffected name , ' modified from ' , anEvent packageAffected name;
-		lf;
-		nextPutAll: thisContext longStack; lf;lf.
+
 	self workingCopiesForClass: anEvent classAffected do: [ :wc | wc modified: true ]
 ]
 
 { #category : 'system changes' }
 MCWorkingCopy class >> classMoved: anEvent [
 
-	Stdio stdout
-		nextPutAll: 'Class ' , anEvent classRepackaged name , ' got repackages from ' , anEvent oldPackage name , ' to ' , anEvent newPackage name;
-		lf;
-		nextPutAll: thisContext longStack; lf;lf.
 	self workingCopiesForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
 	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ]
 ]
@@ -199,10 +192,7 @@ MCWorkingCopy class >> methodMoved: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> methodRemoved: anEvent [
-Stdio stdout
-		nextPutAll: 'Method ' , anEvent method name , ' got removed from ' , anEvent methodPackage name;
-		lf;
-		nextPutAll: thisContext longStack; lf;lf.
+
 	self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
 ]
 
@@ -504,7 +494,7 @@ MCWorkingCopy >> modified: aBoolean [
 	Stdio stdout
 		nextPutAll: 'Marking ' , self packageName , ' as dirty: ' , aBoolean asString , '. Stack:';
 		lf;
-		nextPutAll: thisContext shortStack;
+		nextPutAll: thisContext longStack;
 		lf;
 		lf.
 	
