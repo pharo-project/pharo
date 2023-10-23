@@ -518,7 +518,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 	newPackage moveClass: announcement classAffected toTag: (newPackage toTagName: announcement classAffected category)
 ]
 
-{ #category : #'system integration' }
+{ #category : 'system integration' }
 RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 
 	| method |
