@@ -2033,7 +2033,7 @@ Context >> shortStack [
 	<reflection: 'Stack Manipulation - Context'>
 	^ String streamContents: [ :stream |
 		(self stackOfSize: 10) do: [ :item |
-			stream print: item; cr]]
+			stream print: item; lf]]
 ]
 
 { #category : 'debugger access' }
