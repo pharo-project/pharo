@@ -160,6 +160,34 @@ RubAbstractTextArea class >> defaultMaxExtent [
 ]
 
 { #category : 'settings' }
+RubAbstractTextArea class >> editingSettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder group: #codeEditing)
+		label: 'Text Editing';
+		noOrdering;
+		description: 'All settings concerned with text editing' ;
+		with: [
+			(aBuilder setting: #selectionColor)
+				target: UITheme;
+				default: (Color r: 0.6862170087976539 g: 0.8347996089931574 b: 0.9794721407624634 alpha: 1.0);
+				targetSelector: #currentSettings;
+				label: 'Selection color'.
+			(aBuilder setting: #unfocusedSelectionColor)
+				target: UITheme;
+				targetSelector: #currentSettings;
+				description: 'The color of the selection for unfocused windows' ;
+				default: (Color r: 0.729227761485826 g: 0.8318670576735093 b: 0.9335288367546432 alpha: 1.0);
+				label: 'Unfocused selection color'.
+			(aBuilder setting: #selectionTextColor)
+				target: UITheme;
+				targetSelector: #currentSettings;
+				default: Color black;
+				label: 'Selection text color';
+				description: 'The color of the selection text'.
+		]
+]
+
+{ #category : 'settings' }
 RubAbstractTextArea class >> editorFont [
 	^ StandardFonts defaultFont
 ]

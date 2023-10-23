@@ -31,7 +31,7 @@ KMDescriptionPresenter class >> descriptionText [
 { #category : 'examples' }
 KMDescriptionPresenter class >> example [
 	self new
-		categories: #(GlobalShortcuts MonticelloShortcuts TextEditor);
+		categories: #(GlobalShortcuts MonticelloShortcuts);
 		open
 ]
 

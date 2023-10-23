@@ -14,9 +14,9 @@ Class {
 		'findStartIndex',
 		'isRegex'
 	],
-	#category : 'Text-Edition-Services',
-	#package : 'Text-Edition',
-	#tag : 'Services'
+	#category : 'Rubric-Editing-FindReplaceService',
+	#package : 'Rubric',
+	#tag : 'Editing-FindReplaceService'
 }
 
 { #category : 'instance creation' }
