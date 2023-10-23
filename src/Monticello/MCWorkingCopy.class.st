@@ -493,6 +493,14 @@ MCWorkingCopy >> modified [
 MCWorkingCopy >> modified: aBoolean [
 
 	modified = aBoolean ifTrue: [ ^ self ].
+	
+	Stdio stdout
+		nextPutAll: 'Marking ' , self packageName , ' as dirty: ' , aBoolean asString , '. Stack:';
+		lf;
+		nextPutAll: thisContext shortStack;
+		lf;
+		lf.
+	
 	modified := aBoolean.
 	self changed: #modified.
 	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
