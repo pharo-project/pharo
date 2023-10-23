@@ -843,26 +843,6 @@ RPackage >> tagOf: aClass [
 	^ self classTags
 		  detect: [ :tag | tag includesClass: aClass ]
 		  ifNone: [
-			  Stdio stdout
-				  nextPutAll: 'No tag containing ';
-				  nextPutAll: aClass name;
-				  nextPutAll: ' found in : ';
-				  nextPutAll: self name;
-				  lf;
-				  nextPutAll: 'Currrent tags:';
-				  lf.
-			  self classTags
-				  do: [ :tag |
-					  Stdio stdout
-						  nextPutAll: '- ';
-						  nextPutAll: tag name;
-						  nextPutAll: ' with ';
-						  nextPutAll: ($, join: (tag classes collect: #name)) ]
-				  separatedBy: [ Stdio stdout lf ].
-			  Stdio stdout
-				  lf;
-				  lf.
-
 			  self error: ('No tag containing {1} found in package {2}' format: {
 						   aClass name.
 						   self name }) ]

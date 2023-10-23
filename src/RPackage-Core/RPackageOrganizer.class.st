@@ -200,48 +200,10 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	| allBehaviors |
 	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
-	self packages do: [ :package |
-		Stdio stdout
-			nextPutAll: 'Package : ';
-			nextPutAll: package name;
-			lf;
-			nextPutAll: 'Tags:';
-			lf.
-		package classTags
-			do: [ :tag |
-				Stdio stdout
-					nextPutAll: '- ';
-					nextPutAll: tag name;
-					nextPutAll: ' with ';
-					nextPutAll: ($, join: (tag classes collect: #name)) ]
-			separatedBy: [ Stdio stdout lf ].
-		Stdio stdout
-			lf;
-			lf ].
-
-	Smalltalk allClassesAndTraits do: [ :behavior |
-		Stdio stdout
-			nextPutAll: 'Behavior : ';
-			nextPutAll: behavior name;
-			nextPutAll: ' Package : ';
-			nextPutAll: behavior package name;
-			nextPutAll: ' category: ';
-			nextPutAll: behavior category;
-			lf ].
-
 	allBehaviors := Smalltalk allClassesAndTraits.
 
-	self packages do: [ :package |
-		package classTags do: [ :tag | tag instVarNamed: #classes put: (tag classes collect: [ :class | allBehaviors detect: [ :aClass | aClass name = class name ] ]) ] ].
-
-
-
-	"Smalltalk allClassesAndTraits
-		do: [ :behavior |
-			| package |
-			package := self ensurePackageMatching: behavior category.
-			package moveClass: behavior toTag: (package toTagName: behavior category) ]
-		displayingProgress: 'Importing behaviors'."
+	"This is a hack because of a weird behavior produced by the bootstrap were the package tags end up containing classes that are not the same instances than we have in the system dictionary.. To be investigated."
+	self packages do: [ :package | package classTags do: [ :tag | tag instVarNamed: #classes put: (tag classes collect: [ :class | allBehaviors detect: [ :aClass | aClass name = class name ] ]) ] ].
 
 	Smalltalk allClassesAndTraits
 		do: [ :behavior |
