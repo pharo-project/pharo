@@ -124,8 +124,7 @@ MetacelloRepositorySpec >> name [
 { #category : 'querying' }
 MetacelloRepositorySpec >> password [
 
-	password == nil ifTrue: [ password := '' ].
-	^password
+	^ password ifNil: [ password := '' ]
 ]
 
 { #category : 'accessing' }
@@ -147,8 +146,7 @@ MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositori
 { #category : 'querying' }
 MetacelloRepositorySpec >> type [
 
-	type == nil ifTrue: [ type := self extractTypeFromDescription ].
-	^type
+	^ type ifNil: [ type := self extractTypeFromDescription ]
 ]
 
 { #category : 'accessing' }
@@ -160,8 +158,7 @@ MetacelloRepositorySpec >> type: aString [
 { #category : 'querying' }
 MetacelloRepositorySpec >> username [
 
-	username == nil ifTrue: [ username := '' ].
-	^username
+	^ username ifNil: [ username := '' ]
 ]
 
 { #category : 'accessing' }

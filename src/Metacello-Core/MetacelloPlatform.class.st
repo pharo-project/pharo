@@ -41,8 +41,7 @@ MetacelloPlatform class >> unselect [
 { #category : 'accessing' }
 MetacelloPlatform >> bypassProgressBars [
 
-	bypassProgressBars == nil ifTrue: [ bypassProgressBars := false ].
-	^ bypassProgressBars
+	^ bypassProgressBars ifNil: [ bypassProgressBars := false ]
 ]
 
 { #category : 'accessing' }

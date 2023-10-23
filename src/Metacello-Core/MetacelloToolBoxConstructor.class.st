@@ -78,8 +78,7 @@ MetacelloToolBoxConstructor >> methodSectionAttributes [
 { #category : 'private' }
 MetacelloToolBoxConstructor >> methodSections [
 
-	methodSections == nil ifTrue: [ methodSections := OrderedCollection new ].
-	^methodSections
+	^ methodSections ifNil: [ methodSections := OrderedCollection new ]
 ]
 
 { #category : 'enumeration' }

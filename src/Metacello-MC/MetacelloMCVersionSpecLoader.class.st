@@ -56,12 +56,11 @@ MetacelloMCVersionSpecLoader >> load [
 { #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> loader [
 
-	loader == nil 
-		ifTrue: [
-			loader := self versionSpec loader copy.
-			loader spec: self.
-			loaderPolicy notNil ifTrue: [ loader loaderPolicy: loaderPolicy] ].
-	^loader
+	^ loader ifNil: [
+		  loader := self versionSpec loader copy.
+		  loader spec: self.
+		  loaderPolicy ifNotNil: [ loader loaderPolicy: loaderPolicy ].
+		  loader ]
 ]
 
 { #category : 'accessing' }
@@ -122,8 +121,7 @@ MetacelloMCVersionSpecLoader >> repositorySpecs [
 { #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> required [
 
-	required == nil ifTrue: [ ^#() ].
-	^ required
+	^ required ifNil: [ #(  ) ]
 ]
 
 { #category : 'accessing' }

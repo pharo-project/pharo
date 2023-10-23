@@ -176,8 +176,7 @@ MetacelloVersionValidator >> criticalWarningReasonCodes [
 { #category : 'accessing' }
 MetacelloVersionValidator >> debug [
 
-	debug == nil ifTrue: [ debug := #() ].
-	^ debug
+	^ debug ifNil: [ debug := #(  ) ]
 ]
 
 { #category : 'accessing' }
@@ -195,8 +194,7 @@ MetacelloVersionValidator >> errorReasonCodes [
 { #category : 'accessing' }
 MetacelloVersionValidator >> exludededValidations [
 
-	exludededValidations == nil ifTrue: [ exludededValidations := self extractExcludedValidations ].
-	^exludededValidations
+	^ exludededValidations ifNil: [ exludededValidations := self extractExcludedValidations ]
 ]
 
 { #category : 'pragma extraction' }
@@ -322,8 +320,8 @@ MetacelloVersionValidator >> recordValidationWarning: aString versionString: ver
 
 { #category : 'accessing' }
 MetacelloVersionValidator >> recurse [
-	recurse == nil ifTrue: [ recurse := false ].
-	^ recurse
+
+	^ recurse ifNil: [ recurse := false ]
 ]
 
 { #category : 'accessing' }
@@ -666,9 +664,8 @@ MetacelloVersionValidator >> validateVersionSpecForSymbolicVersion: versionSpec 
 
 { #category : 'accessing' }
 MetacelloVersionValidator >> validationReport [
-	
-	validationReport == nil ifTrue: [ validationReport := OrderedCollection new ].
-	^ validationReport
+
+	^ validationReport ifNil: [ validationReport := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }

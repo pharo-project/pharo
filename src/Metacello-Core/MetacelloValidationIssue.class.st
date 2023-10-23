@@ -121,8 +121,7 @@ MetacelloValidationIssue >> printOn: aStream [
 { #category : 'accessing' }
 MetacelloValidationIssue >> reasonCode [
 
-	reasonCode == nil ifTrue: [ reasonCode := #none ].
-	^ reasonCode
+	^ reasonCode ifNil: [ reasonCode := #none ]
 ]
 
 { #category : 'accessing' }

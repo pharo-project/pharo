@@ -346,8 +346,9 @@ ExternalType class >> string [
 
 { #category : 'private' }
 ExternalType class >> structTypeNamed: aSymbol [
-	aSymbol == nil ifTrue:[^nil].
-	^self newTypeNamed: aSymbol force: false
+
+	aSymbol ifNil: [ ^ nil ].
+	^ self newTypeNamed: aSymbol force: false
 ]
 
 { #category : 'private' }

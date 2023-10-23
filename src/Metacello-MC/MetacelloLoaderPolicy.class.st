@@ -26,20 +26,17 @@ MetacelloLoaderPolicy class >> overrideRepositories: aCollection [
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> cacheGofer [
 
-	cacheGofer == nil 
-		ifTrue: [ 
-			"don't use a caching Gofer here, since we expect the contents to change during a fetch operation"
-			cacheGofer := Gofer new. 
-			cacheGofer disablePackageCache.
-			cacheGofer repository: self cacheRepository. ].
-	^ cacheGofer
+	^ cacheGofer ifNil: [ "don't use a caching Gofer here, since we expect the contents to change during a fetch operation"
+		  cacheGofer := Gofer new
+			                disablePackageCache;
+			                repository: self cacheRepository;
+			                yourself ]
 ]
 
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> cacheRepository [
 
-	cacheRepository == nil ifTrue: [ cacheRepository := MCDictionaryRepository new ].
-	^ cacheRepository
+	^ cacheRepository ifNil: [ cacheRepository := MCDictionaryRepository new ]
 ]
 
 { #category : 'accessing' }
@@ -53,8 +50,7 @@ MetacelloLoaderPolicy >> cacheRepository: anMCRepository [
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> ensuredMap [
 
-	ensuredMap == nil ifTrue: [ ensuredMap := Dictionary new ].
-	^ensuredMap
+	^ ensuredMap ifNil: [ ensuredMap := Dictionary new ]
 ]
 
 { #category : 'accessing' }
@@ -98,15 +94,13 @@ MetacelloLoaderPolicy >> load [
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> loadData [
 
- 	loadData == nil ifTrue: [ loadData := MetacelloLoadData new ].
-	^loadData
+	^ loadData ifNil: [ loadData := MetacelloLoadData new ]
 ]
 
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> loadDirective [
 
-	loadDirective == nil ifTrue: [ loadDirective := MetacelloLinearLoadDirective new ].
-	^ loadDirective
+	^ loadDirective ifNil: [ loadDirective := MetacelloLinearLoadDirective new ]
 ]
 
 { #category : 'accessing' }
@@ -153,8 +147,7 @@ MetacelloLoaderPolicy >> pushLoadDirective: aLoaderDirective during: aBlock [
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> repositoryMap [
 
-	repositoryMap == nil ifTrue: [ repositoryMap := Dictionary new ].
-	^repositoryMap
+	^ repositoryMap ifNil: [ repositoryMap := Dictionary new ]
 ]
 
 { #category : 'accessing' }
@@ -171,8 +164,7 @@ MetacelloLoaderPolicy >> resetCacheGofer [
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> silently [
 
-	silently == nil ifTrue: [ silently := false ].
-	^ silently
+	^ silently ifNil: [ silently := false ]
 ]
 
 { #category : 'accessing' }

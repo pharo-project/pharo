@@ -1498,21 +1498,15 @@ MetacelloToolBox >> classicCreateProjectReferenceSpec: projectBaseName [
 
 { #category : 'private' }
 MetacelloToolBox >> clearVersionSpec: versionSpec fullVersionSpec: fullVersionSpec updateProjects: updateProjects updatePackages: updatePackages [
+
 	versionSpec
-		specListProjectDo: [ :spec | 
-			updateProjects
-				ifTrue: [ 
-					| fullProjectReferenceSpec fullProjectSpec |
-					(fullProjectReferenceSpec := fullVersionSpec packageNamed: spec name) ~~ nil
-						ifTrue: [ 
-							fullProjectSpec := fullProjectReferenceSpec projectReference.
-							fullProjectSpec versionString == nil
-								ifTrue: [ spec projectReference versionString: '' ] ] ] ]
-		packageDo: [ :spec | 
-			updatePackages
-				ifTrue: [ 
-					spec getFile ~~ nil
-						ifTrue: [ spec file: '' ] ] ]
+		specListProjectDo: [ :spec |
+			updateProjects ifTrue: [
+				| fullProjectReferenceSpec fullProjectSpec |
+				(fullProjectReferenceSpec := fullVersionSpec packageNamed: spec name) ~~ nil ifTrue: [
+					fullProjectSpec := fullProjectReferenceSpec projectReference.
+					fullProjectSpec versionString ifNil: [ spec projectReference versionString: '' ] ] ] ]
+		packageDo: [ :spec | updatePackages ifTrue: [ spec getFile ~~ nil ifTrue: [ spec file: '' ] ] ]
 		groupDo: [ :ignored |  ]
 ]
 
@@ -1646,17 +1640,17 @@ MetacelloToolBox >> createSymbolicVersionMethod: selector inCategory: category f
 
 { #category : 'spec creation' }
 MetacelloToolBox >> createVersion: versionString [
-	| version  |
+
+	| version |
 	[ version := project version: versionString ]
 		on: MetacelloVersionDoesNotExistError
-		do: [ :ex | 
+		do: [ :ex |
 			| versionSpec |
 			versionSpec := self createVersionSpec: versionString.
 			version := versionSpec createVersion.
-			project map == nil
-				ifTrue: [ project map: Dictionary new ].
+			project map ifNil: [ project map: Dictionary new ].
 			project map at: versionString put: version ].
-	^version
+	^ version
 ]
 
 { #category : 'api-configuration' }

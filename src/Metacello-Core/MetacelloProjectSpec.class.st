@@ -32,27 +32,18 @@ MetacelloProjectSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> canDowngradeTo: aMetacelloProjectSpec [
-  (self className = aMetacelloProjectSpec className
-    and: [ self operator == aMetacelloProjectSpec operator ])
-    ifFalse: [ ^ false ].
-  self versionOrNil == nil
-    ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458"
-      ^ true ].
-  ^ (self compareVersions: aMetacelloProjectSpec usingOperator: self operator)
-    not
+
+	(self className = aMetacelloProjectSpec className and: [ self operator == aMetacelloProjectSpec operator ]) ifFalse: [ ^ false ].
+	self versionOrNil ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458" ^ true ].
+	^ (self compareVersions: aMetacelloProjectSpec usingOperator: self operator) not
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> canUpgradeTo: aMetacelloProjectSpec [
-  (self className = aMetacelloProjectSpec className
-    and: [ self operator == aMetacelloProjectSpec operator ])
-    ifFalse: [ ^ false ].
-  self versionOrNil == nil
-    ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458"
-      ^ true ].
-  ^ self compareVersions: aMetacelloProjectSpec usingOperator: self operator
+
+	(self className = aMetacelloProjectSpec className and: [ self operator == aMetacelloProjectSpec operator ]) ifFalse: [ ^ false ].
+	self versionOrNil ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458" ^ true ].
+	^ self compareVersions: aMetacelloProjectSpec usingOperator: self operator
 ]
 
 { #category : 'querying' }
@@ -513,8 +504,7 @@ MetacelloProjectSpec >> name: aString constructor: aVersionConstructor [
 { #category : 'querying' }
 MetacelloProjectSpec >> operator [
 
-	operator == nil ifTrue: [ ^#>= ].
-	^ operator
+	^ operator ifNil: [ #'>=' ]
 ]
 
 { #category : 'accessing' }
