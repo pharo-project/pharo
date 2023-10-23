@@ -80,15 +80,12 @@ RGClassDefinitionTest >> testAsClassDefinition2 [
 
 { #category : 'testing' }
 RGClassDefinitionTest >> testAsClassDefinitionSourceDefinition [
+
 	| newClass |
 	newClass := MOPTestClassC asRingDefinition.
-	self
-		assert: newClass definitionSource
-		equals: (ClassDefinitionPrinter new for: MOPTestClassC) definitionString.
+	self assert: newClass definitionSource equals: (ClassDefinitionPrinter fluid for: MOPTestClassC) definitionString.
 
-	self
-		assert: newClass classSide definitionSource
-		equals: (ClassDefinitionPrinter new for: MOPTestClassC class) definitionString
+	self assert: newClass classSide definitionSource equals: (ClassDefinitionPrinter fluid for: MOPTestClassC class) definitionString
 ]
 
 { #category : 'testing' }

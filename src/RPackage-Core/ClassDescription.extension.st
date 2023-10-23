@@ -94,9 +94,9 @@ ClassDescription >> packages [
 
 { #category : '*RPackage-Core' }
 ClassDescription >> removePackageTag [
+	"Removing a package tag is the same as moving it to the root tag that is the uncategorized tag."
 
-	self packageTag isRoot ifTrue: [ "Cannot remove root tag" ^ self ].
-
-	self packageTag removeClass: self.
-	self package addClass: self
+	| package |
+	package := self package.
+	package moveClass: self toTag: package rootTag
 ]

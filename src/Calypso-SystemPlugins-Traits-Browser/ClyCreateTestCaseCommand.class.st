@@ -38,7 +38,7 @@ ClyCreateTestCaseCommand >> execute [
 	| classDefinition p resultClass |
 	p := package name.
 	classTag ifNotNil: [ p := p , '-' , classTag ].
-	classDefinition := ClassDefinitionPrinter new testClassDefinitionTemplateInPackage: p.
+	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: p.
 	classDefinition := UIManager default
 		                   multiLineRequest: 'Define test class:'
 		                   initialAnswer: classDefinition

@@ -434,7 +434,7 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer weak
 		when: ClassAdded send: #systemClassAddedActionFrom: to: self;
 		when: ClassRecategorized send: #systemClassRecategorizedActionFrom: to: self;
-		when: ProtocolAnnouncement send: #systemClassReorganizedActionFrom: to: self;
+		when: ProtocolAdded send: #systemProtocolAddedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
@@ -520,13 +520,6 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: announcement [
 ]
 
 { #category : 'system integration' }
-RPackageOrganizer >> systemClassReorganizedActionFrom: ann [
-	"when a class is reorganized, we have to check if an extension has not been added"
-
-	ann classReorganized extensionProtocols do: [ :protocol | self ensurePackageOfExtensionProtocol: protocol ]
-]
-
-{ #category : 'system integration' }
 RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 
 	| method |
@@ -541,7 +534,7 @@ RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 	| method |
-	method := ann method ifNil: [ ^ self ].
+	method := ann method.
 
 	method origin = ann methodClass ifFalse: [ ^ self ]. "Methods from traits are not treated"
 
@@ -562,6 +555,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		newPackage addMethod: method.
 
 		SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage ]
+]
+
+{ #category : 'system integration' }
+RPackageOrganizer >> systemProtocolAddedActionFrom: ann [
+	"When a protocol is added we should ensure extensions protocols have their matching package."
+
+	ann protocol isExtensionProtocol ifTrue: [ self ensurePackageOfExtensionProtocol: ann protocol ]
 ]
 
 { #category : 'accessing' }

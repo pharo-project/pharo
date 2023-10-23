@@ -784,11 +784,6 @@ ScrollPane >> shiftedTextPaneMenuRequest [
 	^ self yellowButtonActivity: true
 ]
 
-{ #category : 'scroll bar events' }
-ScrollPane >> shiftedYellowButtonActivity [
-	^ self yellowButtonActivity: true
-]
-
 { #category : 'accessing - options' }
 ScrollPane >> showHScrollBarOnlyWhenNeeded: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."

@@ -70,7 +70,7 @@ ClyClassCreationToolMorph >> classTag: anObject [
 { #category : 'template' }
 ClyClassCreationToolMorph >> classTemplate [
 
-	^ ClassDefinitionPrinter new compactClassDefinitionTemplateInPackage:  self packageName
+	^ ClassDefinitionPrinter fluid compactClassDefinitionTemplateInPackage:  self packageName
 ]
 
 { #category : 'initialization' }
@@ -86,13 +86,6 @@ ClyClassCreationToolMorph >> defaultTitle [
 { #category : 'building' }
 ClyClassCreationToolMorph >> editingText [
 	^self classTemplate
-]
-
-{ #category : 'building' }
-ClyClassCreationToolMorph >> fillStatusBar [
-	super fillStatusBar.
-
-	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
 { #category : 'testing' }

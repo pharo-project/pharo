@@ -8,52 +8,6 @@ Class {
 	#package : 'Metacello-Tutorial'
 }
 
-{ #category : 'private' }
-MetacelloTutorialConfig class >> bootstrapPackage: aString from: aPath [ 
-	| repository version |
-	repository := MCHttpRepository
-				location: aPath
-				user: ''
-				password: ''.
-	repository
-		versionReaderForFileNamed: aString , '.mcz'
-		do: [:reader | 
-			version := reader version.
-			version load.
-			version workingCopy repositoryGroup addRepository: repository]
-]
-
-{ #category : 'private' }
-MetacelloTutorialConfig class >> ensureMetacello [
-	"Bootstrap Gofer (if necessary), bootstrap ConfigurationOfMetacello (using old Gofer API), then load the latest 
-	version of Metacello itself."
-
-	| env |
-	env := self environment.
-	env
-		at: #MetacelloProject
-		ifAbsent: [ env
-				at: #Gofer
-				ifAbsent:
-					[ "Current version of Gofer from which to bootstrap - as of 1.0-beta.15"
-					self
-						bootstrapPackage: 'Gofer-lr.83'
-						from: 'http://seaside.gemstone.com/ss/metacello' ].
-			env
-				at: #Gofer
-				ifPresent: [ :goferClass | 
-					| gofer |
-					gofer := goferClass new
-						url: 'http://seaside.gemstone.com/ss/metacello';
-						yourself.
-					[ gofer addPackage: 'ConfigurationOfMetacello' ]
-						on: Warning
-						do: [ :ex | ex resume ].
-					gofer load ].
-			"load 'default' group of Metacello"
-			(env at: #ConfigurationOfMetacello) perform: #load ]
-]
-
 { #category : 'metacello tool support' }
 MetacelloTutorialConfig class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"

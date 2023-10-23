@@ -73,7 +73,7 @@ OCCodeReparator >> defineClass: classSymbol [
 
 	| systemCategory classDefinition |
 	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
-	classDefinition := ClassDefinitionPrinter new
+	classDefinition := ClassDefinitionPrinter fluid
 		                   classDefinitionTemplateInPackage: systemCategory
 		                   named: classSymbol.
 	^ self
@@ -114,7 +114,7 @@ OCCodeReparator >> defineTrait: traitName [
 	traitSymbol := traitName asSymbol.
 	
 	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
-	traitDefinition := ClassDefinitionPrinter new
+	traitDefinition := ClassDefinitionPrinter fluid
 		                   traitDefinitionTemplateInPackage: systemCategory
 		                   named: traitSymbol.
 	^ self

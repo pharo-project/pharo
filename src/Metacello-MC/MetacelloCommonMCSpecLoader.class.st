@@ -64,6 +64,11 @@ MetacelloCommonMCSpecLoader >> ancestorsFor: packageSpec [
 			cache at: cacheKey put: vi ].
 ]
 
+{ #category : 'caching' }
+MetacelloCommonMCSpecLoader >> clearCurrentVersionCache [
+	MetacelloClearStackCacheNotification signal: #(#currentVersion #currentVersionAgainst: #currentVersionInfo)
+]
+
 { #category : 'versionInfo' }
 MetacelloCommonMCSpecLoader >> currentVersionInfoFor: packageSpec [
 
@@ -165,7 +170,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 			goferLoad := MetacelloGoferLoad on: aGofer.
 			goferLoad addResolved: resolvedReference.
 			goferLoad execute.
-			MetacelloPlatform current clearCurrentVersionCache	"mcLoader postLoad: packageSpec"
+			self clearCurrentVersionCache	"mcLoader postLoad: packageSpec"
 			].
 			MetacelloNotification signal:
 					'Loading -> ' , resolvedReference name , ' --- '
@@ -218,7 +223,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
                           packageLoadDirective resolvedReference repository description) level: 2.
               packageLoadDirective resolvedReference workingCopy repositoryGroup
                 addRepository: packageLoadDirective repository ] ].
-      MetacelloPlatform current clearCurrentVersionCache	"pkgLoads do: [:packageLoadDirective | 
+      self clearCurrentVersionCache	"pkgLoads do: [:packageLoadDirective | 
 					packageLoadDirective resolvedReference ~~ nil
 						ifTrue: [mcLoader postLoad: packageLoadDirective spec ]]" ].
       answers notEmpty

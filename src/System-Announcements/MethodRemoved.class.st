@@ -8,7 +8,8 @@ Class {
 	#superclass : 'MethodAnnouncement',
 	#instVars : [
 		'protocol',
-		'methodOrigin'
+		'methodOrigin',
+		'methodPackage'
 	],
 	#category : 'System-Announcements-System-Methods',
 	#package : 'System-Announcements',
@@ -40,6 +41,12 @@ MethodRemoved >> methodOrigin [
 { #category : 'accessing' }
 MethodRemoved >> methodOrigin: anObject [
 	methodOrigin := anObject
+]
+
+{ #category : 'accessing' }
+MethodRemoved >> methodPackage [
+
+	^ methodPackage
 ]
 
 { #category : 'accessing' }

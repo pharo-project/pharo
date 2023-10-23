@@ -329,10 +329,10 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 					ifTrue: [ 
 						"update the author, blessing, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
+							author: Author fullName;
 							description: aString;
 							blessing: #development;
-							timestamp: MetacelloPlatform current timestamp ].
+							timestamp: self timestamp ].
 				true ];
 		commitMethod.
 	toolbox
@@ -378,10 +378,10 @@ MetacelloToolBox class >> createDevelopment: developmentVersionString for: confi
 					ifTrue: [ 
 						"update the author, blessing, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
+							author: Author fullName;
 							blessing: #development;
 							description: aString;
-							timestamp: MetacelloPlatform current timestamp ].
+							timestamp: self timestamp ].
 				true ];
 		commitMethod.
 	toolbox
@@ -684,8 +684,9 @@ MetacelloToolBox class >> modifyVersion: sourceVersionString section: sectionAtt
 { #category : 'utilities' }
 MetacelloToolBox class >> platformAttributes [
 	"Answer the list of platform attributes for the current platform"
+
 	<apiDocumentation>
-	^MetacelloPlatform current defaultPlatformAttributes
+	^ Smalltalk image metacelloPlatformAttributes
 ]
 
 { #category : 'development support' }
@@ -729,10 +730,10 @@ MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString fo
 					ifTrue: [ 
 						"update the author, blessing, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
+							author: Author fullName;
 							description: earlyAccessDescription;
 							blessing: #development;
-							timestamp: MetacelloPlatform current timestamp ].
+							timestamp: self timestamp ].
 				true ];
 		commitMethod.
 	toolbox
@@ -746,8 +747,8 @@ MetacelloToolBox class >> releaseEarlyAccessVersion: earlyAccessVersionString fo
 						ifTrue: [ 
 							"update the author, description and timeStamp"
 							versionSpec
-								author: MetacelloPlatform current authorName;
-								timestamp: MetacelloPlatform current timestamp.
+								author: Author fullName;
+								timestamp: self timestamp.
 							self appendDescription: '---' , earlyAccessVersionString , '---' to: versionSpec ].
 					true ];
 		commitMethod.
@@ -826,10 +827,9 @@ MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionStr
             ifTrue: [ 
               repositories := repositories
                 select: [ :repo | wcRepositoryGroup includes: repo ] ].
-          repositories isEmpty
-            ifTrue: [ 
+          repositories ifEmpty: [ 
               repositories := monticelloWorkingCopy repositoryGroup repositories
-                reject: [ :repo | repo = MetacelloPlatform current defaultPackageCache ] ] ].
+                reject: [ :repo | repo = MCCacheRepository default ] ] ].
       repositories
         do: [ :repo | 
           (monticelloWorkingCopy possiblyNewerVersionsIn: repo) notEmpty
@@ -843,12 +843,11 @@ MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionStr
                       '. Cancel and manually merge if you want to pick up the changes from the later version.' ].
           repositoryGroup addRepository: repo ].
       modifiedPackages at: packageSpec name put: repositoryGroup ].
-  cacheRepository := MetacelloPlatform current defaultPackageCache.
-  modifiedPackages isEmpty
-    ifTrue: [ self notify: 'Empty modified packages list'	"actually here for debugging purposes" ].
+  cacheRepository := MCCacheRepository default.
+  modifiedPackages ifEmpty: [ self notify: 'Empty modified packages list'	"actually here for debugging purposes" ].
   modifiedPackages
     keysAndValuesDo: [ :packageName :repositoryGroup | 
-      | gofer repositoryList packageSpec |
+      | gofer |
       gofer := Gofer new.
       gofer disablePackageCache.
       (repositoryGroup repositories reject: [ :repo | repo = cacheRepository ])
@@ -910,6 +909,12 @@ MetacelloToolBox class >> stripVersionStringForSelector: versionString [
 		copyReplaceAll: 'baseline' with: ''
 ]
 
+{ #category : 'private' }
+MetacelloToolBox class >> timestamp [
+
+	^ Date today mmddyyyy , ' ' , ((String streamContents: [ :s | Time now print24: true on: s ]) copyFrom: 1 to: 5)
+]
+
 { #category : 'scripts' }
 MetacelloToolBox class >> updateDescription: developmentVersionString for: configurationBasename description: message [
 	"Update description"
@@ -924,8 +929,8 @@ MetacelloToolBox class >> updateDescription: developmentVersionString for: confi
 					ifTrue: [ 
 						"update the author, description and timeStamp"
 						versionSpec
-							author: MetacelloPlatform current authorName;
-							timestamp: MetacelloPlatform current timestamp.
+							author: Author fullName;
+							timestamp: self timestamp.
 						self appendDescription: message to: versionSpec ].
 				true ];
 		commitMethod
@@ -947,8 +952,8 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 				ifTrue: [ 
 					"update the author, description and timeStamp"
 					versionSpec
-						author: MetacelloPlatform current authorName;
-						timestamp: MetacelloPlatform current timestamp.
+						author: Author fullName;
+						timestamp: self timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].
 	updatedSpecs notEmpty
@@ -972,8 +977,8 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 				ifTrue: [ 
 					"update the author, description and timeStamp"
 					versionSpec
-						author: MetacelloPlatform current authorName;
-						timestamp: MetacelloPlatform current timestamp.
+						author: Author fullName;
+						timestamp: self timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].
 	updatedSpecs notEmpty
@@ -1439,26 +1444,21 @@ MetacelloToolBox >> baselineNameFrom: baseName [
 
 { #category : 'api-configuration' }
 MetacelloToolBox >> baselineNamed: baseName [
-  | baselineName |
-  "Check if the class does not exist"
-  baselineName := self baselineNameFrom: baseName.
-  (Smalltalk includesKey: baselineName asSymbol)
-    ifFalse: [ 
-      "Create the configuration class"
-      self ensureMetacello.
 
-		self class classInstaller make: [ :aBuilder | 
-			aBuilder 
+	| baselineName |
+	"Check if the class does not exist"
+	baselineName := self baselineNameFrom: baseName.
+	(Smalltalk includesKey: baselineName asSymbol) ifFalse: [ "Create the configuration class"
+
+		self class classInstaller make: [ :aBuilder |
+			aBuilder
 				name: baselineName asSymbol;
 				superclass: BaselineOf;
-				package: baselineName].
+				package: baselineName ].
 
-      MetacelloPlatform current registerPackageNamed: baselineName.
-      (MetacelloPlatform current globalNamed: baselineName asSymbol)
-        compile: 'baseline: spec <baseline>'
-        classified: 'baseline'	"a bit of a hack here to create an initial null basline method" ].
-  project := (MetacelloPlatform current globalNamed: baselineName asSymbol)
-    project
+		self packageOrganizer ensurePackage: baselineName.
+		(self class environment at: baselineName asSymbol) compile: 'baseline: spec <baseline>' classified: 'baseline' "a bit of a hack here to create an initial null basline method" ].
+	project := (self class environment at: baselineName asSymbol) project
 ]
 
 { #category : 'private' }
@@ -1477,29 +1477,23 @@ MetacelloToolBox >> buildMapFrom: mapList for: packageList [
 
 { #category : 'spec creation' }
 MetacelloToolBox >> classicCreateProjectReferenceSpec: projectBaseName [
-  | configurationName projectReferenceProject versionString |
-  configurationName := self configurationNameFrom: projectBaseName.
-  projectReferenceProject := (MetacelloPlatform current
-    globalNamed: configurationName asSymbol
-    ifAbsent: [ 
-      self
-        error:
-          'The project with configuration ' , configurationName printString
-            , ' for the project ' , projectBaseName printString
-            , ' is not currently loaded into the image.' ])
-    project.
-  versionString := (projectReferenceProject hasVersion: #'stable')
-    ifTrue: [ #'stable' ]
-    ifFalse: [ #'bleedingEdge' ].
-  ^ project projectReferenceSpec
-    name: projectBaseName;
-    projectReference:
-        (project projectSpec
-            name: projectBaseName;
-            className: configurationName;
-            versionString: versionString;
-            yourself);
-    yourself
+
+	| configurationName projectReferenceProject versionString |
+	configurationName := self configurationNameFrom: projectBaseName.
+	projectReferenceProject := (self class environment at: configurationName asSymbol ifAbsent: [
+		                            self error: 'The project with configuration ' , configurationName printString , ' for the project ' , projectBaseName printString
+			                            , ' is not currently loaded into the image.' ]) project.
+	versionString := (projectReferenceProject hasVersion: #stable)
+		                 ifTrue: [ #stable ]
+		                 ifFalse: [ #bleedingEdge ].
+	^ project projectReferenceSpec
+		  name: projectBaseName;
+		  projectReference: (project projectSpec
+				   name: projectBaseName;
+				   className: configurationName;
+				   versionString: versionString;
+				   yourself);
+		  yourself
 ]
 
 { #category : 'private' }
@@ -1567,20 +1561,14 @@ MetacelloToolBox >> configurationNameFrom: baseName [
 
 { #category : 'api-configuration' }
 MetacelloToolBox >> configurationNamed: baseName [
-  | configurationName |
-  "Check if the class does not exist"
-  configurationName := self configurationNameFrom: baseName.
-  (Smalltalk includesKey: configurationName asSymbol)
-    ifFalse: [ 
-      self ensureMetacello.	"Create the configuration class"
-      MetacelloPlatform current
-        copyClass:
-          (MetacelloPlatform current globalNamed: #'MetacelloConfigTemplate')
-        as: configurationName asSymbol
-        inCategory: configurationName asString.	"Create the package that has the same name"
-      MetacelloPlatform current registerPackageNamed: configurationName ].
-  project := (MetacelloPlatform current globalNamed: configurationName asSymbol)
-    project
+
+	| configurationName |
+	"Check if the class does not exist"
+	configurationName := self configurationNameFrom: baseName.
+	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
+		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
+		self packageOrganizer ensurePackage: configurationName ].
+	project := (self class environment at: configurationName asSymbol) project
 ]
 
 { #category : 'accessing' }
@@ -1603,21 +1591,16 @@ MetacelloToolBox >> createBaselineOfMethod: selector inCategory: category [
 
 { #category : 'spec creation' }
 MetacelloToolBox >> createConfiguration: baseName [
-  | configurationName |
-  "Check if the class does not exist"
-  configurationName := (baseName beginsWith: 'ConfigurationOf')
-    ifTrue: [ baseName ]
-    ifFalse: [ 'ConfigurationOf' , baseName ].
-  (Smalltalk includesKey: configurationName asSymbol)
-    ifFalse: [ 
-      self ensureMetacello.	"Create the configuration class"
-      MetacelloPlatform current
-        copyClass:
-          (MetacelloPlatform current globalNamed: #'MetacelloConfigTemplate')
-        as: configurationName asSymbol
-        inCategory: configurationName asString.	"Create the package that has the same name"
-      MetacelloPlatform current registerPackageNamed: configurationName ].
-  ^ (MetacelloPlatform current globalNamed: configurationName asSymbol) project
+
+	| configurationName |
+	"Check if the class does not exist"
+	configurationName := (baseName beginsWith: 'ConfigurationOf')
+		                     ifTrue: [ baseName ]
+		                     ifFalse: [ 'ConfigurationOf' , baseName ].
+	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
+		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
+		self packageOrganizer ensurePackage: configurationName ].
+	^ (self class environment at: configurationName asSymbol) project
 ]
 
 { #category : 'spec creation' }
@@ -1760,11 +1743,6 @@ MetacelloToolBox >> editVersionSpecsForImport: constructor projectAttributes: pr
                         updatePackages: updatePackages ] ]
 ]
 
-{ #category : 'private' }
-MetacelloToolBox >> ensureMetacello [
-	"noop for now"
-]
-
 { #category : 'testing' }
 MetacelloToolBox >> hasMethodForSymbolicVersion: versionSymbol [
 
@@ -1887,8 +1865,8 @@ MetacelloToolBox >> modifyBaselineOf [
   constructor extractMethodSectionsForClass: baselineClass.
   methodSpec := MetacelloBaselineOfMethodSpec new
     project: project;
-    selector: (MetacelloPlatform current selectorForPragma: pragma);
-    category: (baselineClass protocolNameOfSelector: (MetacelloPlatform current selectorForPragma: pragma));
+    selector: pragma methodSelector;
+    category: (baselineClass protocolNameOfSelector: pragma methodSelector);
     yourself.
   constructor methodSections
     do: [ :methodSection | self methodSpec methodSections add: methodSection ]
@@ -2026,8 +2004,8 @@ MetacelloToolBox >> modifySymbolicVersionMethodFor: versionSymbol symbolicVersio
     pragma := coll at: 1.
     methodSpec := MetacelloSymbolicVersionMethodSpec new
         project: project;
-        selector: (MetacelloPlatform current selectorForPragma: pragma);
-        category: (project configuration class protocolNameOfSelector: (MetacelloPlatform current selectorForPragma: pragma));
+        selector: pragma methodSelector;
+        category: (project configuration class protocolNameOfSelector: pragma methodSelector);
         versionString: versionSymbol;
         yourself.
     (constructor extractSymbolicVersionSpecsFor: versionSymbol)
@@ -2095,8 +2073,8 @@ MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol pr
         ifFalse: [ #() ].
     methodSpec := MetacelloVersionMethodSpec new
         project: project;
-        selector: (MetacelloPlatform current selectorForPragma: pragma);
-        category: (project configuration class protocolNameOfSelector: (MetacelloPlatform current selectorForPragma:  pragma));
+        selector: pragma methodSelector;
+        category: (project configuration class protocolNameOfSelector: pragma methodSelector);
         versionString: sourceVersionString;
         imports: imports;
         yourself.

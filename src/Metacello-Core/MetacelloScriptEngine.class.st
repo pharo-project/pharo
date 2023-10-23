@@ -48,9 +48,9 @@ MetacelloScriptEngine class >> configurationNameFrom: baseName [
 
 { #category : 'defaults' }
 MetacelloScriptEngine class >> defaultRepositoryDescription [
-    DefaultRepositoryDescription
-        ifNil: [ DefaultRepositoryDescription := MetacelloPlatform current defaultRepositoryDescription ].
-    ^ DefaultRepositoryDescription
+
+	DefaultRepositoryDescription ifNil: [ DefaultRepositoryDescription := 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main' ].
+	^ DefaultRepositoryDescription
 ]
 
 { #category : 'defaults' }

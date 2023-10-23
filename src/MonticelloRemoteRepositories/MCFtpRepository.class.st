@@ -73,8 +73,20 @@ MCFtpRepository >> description [
 ]
 
 { #category : 'accessing' }
+MCFtpRepository >> directory [
+
+	^directory
+]
+
+{ #category : 'accessing' }
 MCFtpRepository >> directory: dirPath [
 	directory := dirPath
+]
+
+{ #category : 'accessing' }
+MCFtpRepository >> host [
+
+	^host
 ]
 
 { #category : 'accessing' }

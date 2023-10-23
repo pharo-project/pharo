@@ -16,13 +16,6 @@ T2FluidClassDefinitionPrinterTest >> forClass: aClass [
 	^ (FluidClassDefinitionPrinter for: aClass) definitionString
 ]
 
-{ #category : 'running' }
-T2FluidClassDefinitionPrinterTest >> setUp [
-
-	super setUp.
-	ClassDefinitionPrinter showFluidClassDefinition: true
-]
-
 { #category : 'tests - traits' }
 T2FluidClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
@@ -30,19 +23,6 @@ T2FluidClassDefinitionPrinterTest >> testAlignmentMorphClass [
 		assert: (self forClass: AlignmentMorph class)
 		equals: 'BorderedMorph class << AlignmentMorph class
 	traits: {TAbleToRotate classTrait}'
-]
-
-{ #category : 'tests - complex slots' }
-T2FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDisplayedAsFluid [
-
-	ClassDefinitionPrinter showFluidClassDefinition: false.
-	self assert: TMockWithComplexSlot needsSlotClassDefinition.
-
-	self
-		assert: (self forClass: TMockWithComplexSlot)
-		equals: 'Trait << #TMockWithComplexSlot
-	slots: { #complexSlot => ObservableSlot };
-	package: ''TraitsV2-Tests'''
 ]
 
 { #category : 'tests - metaclasses' }
