@@ -8,20 +8,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'activation' }
-SycRemoveClassCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassContext
-]
-
-{ #category : 'activation' }
-SycRemoveClassCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^CmdShortcutActivation removalFor: ClyFullBrowserClassContext
-]
-
 { #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuIconName [
 	^#removeIcon
