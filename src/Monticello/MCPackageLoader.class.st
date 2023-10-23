@@ -88,6 +88,7 @@ MCPackageLoader >> basicLoadDefinitions [
 
 	additions do: [ :each | self loadClassDefinition: each ] displayingProgress: 'Loading classes...'.
 	additions do: [ :each | self tryToLoad: each           ] displayingProgress: 'Compiling methods...'.
+	removals ifNotEmpty: [ Stdio stdout nextPutAll: 'Removals: ', removals printString; lf ].
 	removals  do: [ :each | each unload                    ] displayingProgress: 'Cleaning up...'.
 	
 	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
