@@ -81,7 +81,10 @@ MCWorkingCopy class >> announcer: anAnnouncer [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> classModified: anEvent [
-
+Stdio stdout
+		nextPutAll: 'Class ' , anEvent classAffected name , ' modified from ' , anEvent packageAffected name;
+		lf;
+		nextPutAll: thisContext longStack; lf;lf.
 	self workingCopiesForClass: anEvent classAffected do: [ :wc | wc modified: true ]
 ]
 
@@ -196,7 +199,10 @@ MCWorkingCopy class >> methodMoved: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> methodRemoved: anEvent [
-
+Stdio stdout
+		nextPutAll: 'Method ' , anEvent method name , ' got removed from ' , anEvent methodPackage name;
+		lf;
+		nextPutAll: thisContext longStack; lf;lf.
 	self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
 ]
 
