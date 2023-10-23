@@ -1,6 +1,6 @@
-Extension { #name : #MessageSend }
+Extension { #name : 'MessageSend' }
 
-{ #category : #'*TaskIt' }
+{ #category : '*TaskIt' }
 MessageSend >> asTask [
 	^ TKTTask valuable: self
 ]

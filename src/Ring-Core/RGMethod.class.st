@@ -74,8 +74,8 @@ Example:
 
 "
 Class {
-	#name : #RGMethod,
-	#superclass : #RGElement,
+	#name : 'RGMethod',
+	#superclass : 'RGElement',
 	#instVars : [
 		'sourceCode',
 		'package',
@@ -83,10 +83,12 @@ Class {
 		'time',
 		'tags'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGMethod >> addoptToParentStub [
 
 	super addoptToParentStub.
@@ -94,44 +96,44 @@ RGMethod >> addoptToParentStub [
 	self parent pvtAddLocalMethod: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> argumentNames [
 
 	^ self ast argumentNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> ast [
 	"Answer my AST with semantic analysis. See #parseTree."
 
 	^ self propertyNamed: #ast ifAbsentPut: [ self parseTree doSemanticAnalysisIn: self methodClass ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGMethod >> astFromSource [
 
 	^ RBParser parseMethod: self sourceCode
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> author [
 
 	^ self backend forBehavior authorFor: self
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> author: aString [
 
 	self backend forBehavior setAuthorFor: self to: aString
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 RGMethod >> category [
 
 	^ self protocol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGMethod >> changeProtocolDuring: aBlock [
 
 	| oldProtocol |
@@ -141,68 +143,68 @@ RGMethod >> changeProtocolDuring: aBlock [
 	self announce: (MethodRecategorized method: self oldProtocol: oldProtocol)
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> cleanTags [
 
 	self changeProtocolDuring: [
 		self cleanTagsWithoutAnnouncemnt ]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> cleanTagsWithoutAnnouncemnt [
 
 	self backend forMethod cleanMethodTagsFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> compiledMethod [
 	^ self
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGMethod >> defaultAuthor [
 
 	^ ''
 ]
 
-{ #category : #'managing container' }
+{ #category : 'managing container' }
 RGMethod >> defaultParentStub [
 
 	^ self defaultClassStub
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGMethod >> defaultSourceCode [
 
 	^ self sourceCodeForNoSelector
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGMethod >> defaultTags [
 
 	^ Set new
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGMethod >> defaultTime [
 
 	^ DateAndTime new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> fullName [
 	"Keeps a unique description for the receiver. As annotation to avoid converting each time is invoked"
 
 	^ (self parent name, '>>#', self selector) asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> hasSourceCode [
 
 	^ self backend forMethod hasSourceCodeFor: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGMethod >> initialize [
 
 	super initialize.
@@ -214,7 +216,7 @@ RGMethod >> initialize [
 	time := self unresolvedValue: self defaultTime
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGMethod >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -226,43 +228,51 @@ RGMethod >> initializeUnresolved [
 	time := self unresolvedValue: self defaultTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> isExtension [
 	"The receiver is an extension when is defined in a different package to the one of its parent"
 
 	^ self parent package ~= self package
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMethod >> isFromTrait [
 	^ self parent isTrait
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMethod >> isLiteralMethod [
 	"Ring methods does not know how to detect if they are literal"
 	^ false
 ]
 
-{ #category : #testing }
-RGMethod >> isMetaSide [
+{ #category : 'testing' }
+RGMethod >> isMeta [
 
 	^ self parent isMeta
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+RGMethod >> isMetaSide [
+	self
+		deprecated: 'Use isMeta instead'
+		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
+	^ self isMeta
+]
+
+{ #category : 'testing' }
 RGMethod >> isMethod [
 
 	^true
 ]
 
-{ #category : #'queries - tags' }
+{ #category : 'queries - tags' }
 RGMethod >> isTaggedWith: aSymbol [
 
 	^self tags includes: aSymbol
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGMethod >> makeResolved [
 
 	super makeResolved.
@@ -274,24 +284,24 @@ RGMethod >> makeResolved [
 	tags := self tags markAsRingResolved
 ]
 
-{ #category : #'queries - class' }
+{ #category : 'queries - class' }
 RGMethod >> methodClass [
 
 	^ self parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> numArgs [
 	^ self selector asString numArgs
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> package [
 
 	^ self backend forMethod methodPackageFor: self
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> package: anRGPackage [
 
 	self backend forMethod setMethodPackageFor: self to: anRGPackage.
@@ -300,7 +310,7 @@ RGMethod >> package: anRGPackage [
 		ifFalse: [ self package addExtensionMethod: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> parseTree [
 	| tree |
 	tree := RBParser
@@ -310,7 +320,7 @@ RGMethod >> parseTree [
 	^ tree
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGMethod >> printOn: aStream [
 
 	self parent name ifNotNil: [
@@ -319,7 +329,7 @@ RGMethod >> printOn: aStream [
 	aStream print: self selector
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> protocol [
 
 	| methodTags |
@@ -330,26 +340,26 @@ RGMethod >> protocol [
 		ifNotEmpty: [ methodTags sorted first ]
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> protocol: aSymbol [
 
 	self cleanTagsWithoutAnnouncemnt.
 	self tagWith: aSymbol
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtAuthor [
 
 	^ author value
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtAuthor: aString [
 
 	^ author := aString
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtCleanTags [
 
 	tags := self defaultTags.
@@ -357,13 +367,13 @@ RGMethod >> pvtCleanTags [
 	"TODO:Announce if not empty"
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtPackage [
 
 	^ package value
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtPackage: anRGPackageDefinition [
 
 	self environment verifyOwnership: anRGPackageDefinition.
@@ -371,7 +381,7 @@ RGMethod >> pvtPackage: anRGPackageDefinition [
 	^ package := anRGPackageDefinition
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -383,7 +393,7 @@ RGMethod >> pvtResolvableProperties [
 	}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGMethod >> pvtSafeSourceCode [
 
 	| aStringOrUnresolved |
@@ -396,19 +406,19 @@ RGMethod >> pvtSafeSourceCode [
 		ifTrue: [ aStringOrUnresolved value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGMethod >> pvtSourceCode [
 
 	^ sourceCode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGMethod >> pvtSourceCode: anObject [
 
 	sourceCode := anObject
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtTagWith: aSymbol [
 
 	tags isRingResolved ifFalse: [
@@ -417,25 +427,25 @@ RGMethod >> pvtTagWith: aSymbol [
 	tags add: aSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGMethod >> pvtTagsDo: aBlock [
 
 	^ tags value do: aBlock
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtTime [
 
 	^ time value
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtTime: aDateAndTime [
 
 	^ time := aDateAndTime
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGMethod >> pvtUntagFrom: aSymbol [
 
 	(tags value includes: aSymbol)
@@ -444,26 +454,26 @@ RGMethod >> pvtUntagFrom: aSymbol [
 	"TODO:Announce"
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RGMethod >> removeFromSystem [
 
 	^ self parent removeLocalMethod: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> selector [
 	"Retrieves the name of the method"
 
 	^ self name asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> sourceCode [
 
 	^ self backend forMethod sourceCodeFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> sourceCode: anObject [
 
 	"ATTENTION: There is no check here if the selector is changed!"
@@ -472,19 +482,19 @@ RGMethod >> sourceCode: anObject [
 	"TODO: announcements"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> sourceCodeForNoSelector [
 
 	^ 'unresolvedMessage', String cr, String tab, '"source code for the method model not set"'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMethod >> sourceCodeForNoSource [
 
 	^ self selector asMethodPreamble, String cr, String tab, '"source code for the method model not set"'
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> tagWith: aSymbol [
 
 	self changeProtocolDuring: [
@@ -492,7 +502,7 @@ RGMethod >> tagWith: aSymbol [
 		self parent addProtocol: aSymbol ]
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 RGMethod >> tags [
 
 	| allTags |
@@ -501,25 +511,25 @@ RGMethod >> tags [
 	^ allTags asArray
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> tagsDo: aBlock [
 
 	self backend forMethod tagsForMethod: self do: aBlock
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> time [
 
 	^ self backend forBehavior timeFor: self
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> time: aDateAndTime [
 
 	self backend forBehavior setTimeFor: self to: aDateAndTime
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGMethod >> untagFrom: aSymbol [
 
 	self backend forMethod untagMethod: self from: aSymbol

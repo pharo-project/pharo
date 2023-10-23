@@ -14,47 +14,74 @@ fillBlt
 
 "
 Class {
-	#name : #BitBltDisplayScanner,
-	#superclass : #DisplayScanner,
+	#name : 'BitBltDisplayScanner',
+	#superclass : 'DisplayScanner',
 	#instVars : [
-		'bitBlt'
+		'bitBlt',
+		'scale'
 	],
-	#category : #'Text-Scanning-Base'
+	#category : 'Text-Scanning-Base',
+	#package : 'Text-Scanning',
+	#tag : 'Base'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 BitBltDisplayScanner >> displayEmbeddedForm: aForm [
 
-	aForm
+	| scaledForm |
+
+	scaledForm := self scale = 1 ifTrue: [ aForm ] ifFalse: [ aForm scaledToSize: aForm extent * self scale ].
+	scaledForm
 		displayOn: bitBlt destForm
-		at: destX @ (lineY + line baseline - aForm height)
+		at: destX @ (lineY + (line baseline * self scale) - scaledForm height)
 		clippingBox: bitBlt clipRect
 		rule: Form blend
 		fillColor: Color white
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 BitBltDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
     | endPoint top |
-   top := aPoint translateBy: 0@ font ascent.
+   top := aPoint translateBy: 0@ (font ascent * self scale).
 	endPoint := font displayString: string on: bitBlt
 		from: startIndex
 		to: stopIndex
-		at: aPoint kern: kern.
+		at: aPoint kern: kern
+		baselineY: aPoint y + (font ascent * self scale)
+		scale: self scale.
 
     (emphasisCode allMask: 4)
-        ifTrue: [ font displayUnderlineOn: bitBlt from: top to: endPoint ].
+        ifTrue: [ font displayUnderlineOn: bitBlt from: top to: endPoint scale: self scale ].
     (emphasisCode allMask: 16)
-        ifTrue: [ font displayStrikeoutOn: bitBlt from: top to: endPoint ]
+        ifTrue: [ font displayStrikeoutOn: bitBlt from: top to: endPoint scale: self scale ]
 ]
 
-{ #category : #private }
+{ #category : 'initialization' }
+BitBltDisplayScanner >> initialize [
+
+	super initialize.
+	scale := 1
+]
+
+{ #category : 'accessing' }
+BitBltDisplayScanner >> scale [
+
+	^ scale
+]
+
+{ #category : 'accessing' }
+BitBltDisplayScanner >> scale: newScale [
+
+	scale := newScale
+]
+
+{ #category : 'private' }
 BitBltDisplayScanner >> setFont [
 	super setFont.  "Sets font and emphasis bits, and maybe foregroundColor"
-	font installOn: bitBlt foregroundColor: foregroundColor backgroundColor: Color transparent
+	font installOn: bitBlt foregroundColor: foregroundColor backgroundColor: Color transparent scale: self scale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBltDisplayScanner >> setPort: aBitBlt [
 	"Install the BitBlt to use"
 	bitBlt := aBitBlt.

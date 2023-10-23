@@ -24,24 +24,26 @@ If launched as a desktop app (not from the console), Pharo.exe will not be linke
 	use a memory stream (execute #useMemoryStreams).
 "
 Class {
-	#name : #Stdio,
-	#superclass : #Object,
+	#name : 'Stdio',
+	#superclass : 'Object',
 	#classVars : [
 		'CreateWriteStreamBlock',
 		'Stderr',
 		'Stdin',
 		'Stdout'
 	],
-	#category : #'Files-Core'
+	#category : 'Files-Core',
+	#package : 'Files',
+	#tag : 'Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 Stdio class >> cleanStdioHandles [
 
 	Stderr := Stdin := Stdout := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Stdio class >> createStdioFileFor: moniker [
 
 	^ [
@@ -53,7 +55,7 @@ Stdio class >> createStdioFileFor: moniker [
 		  do: [ NullStream new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stdio class >> createWriteStreamBlock [
 
 	^ CreateWriteStreamBlock
@@ -61,7 +63,7 @@ Stdio class >> createWriteStreamBlock [
 			CreateWriteStreamBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stdio class >> createWriteStreamBlock: aBlock [
 	"Can be changed to any block that returns a writeStream"
 
@@ -69,7 +71,7 @@ Stdio class >> createWriteStreamBlock: aBlock [
 	self cleanStdioHandles
 ]
 
-{ #category : #stdio }
+{ #category : 'stdio' }
 Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	"Create the requested stdio (#stdin, #stdout, #stderr) if possible.
 	On Windows, if stdio is not available, create a regular file instead."
@@ -86,36 +88,36 @@ Stdio class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	^ StdioStream handle: handle file: (File named: moniker) forWrite: forWrite
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Stdio class >> startUp: resuming [
 
 	resuming ifTrue: [ self cleanStdioHandles ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stdio class >> stderr [
 	^ Stderr ifNil: [ Stderr := self standardIOStreamNamed: #stderr forWrite: true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stdio class >> stdin [
 
 	^ Stdin ifNil: [ Stdin := self standardIOStreamNamed: #stdin forWrite: false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stdio class >> stdout [
 
 	^ Stdout ifNil: [ Stdout := self standardIOStreamNamed: #stdout forWrite: true ]
 ]
 
-{ #category : #stdio }
+{ #category : 'stdio' }
 Stdio class >> useDefaultStreams [
 	<script>
 	self createWriteStreamBlock: [ :aName | (File named: aName asString) writeStream ]
 ]
 
-{ #category : #stdio }
+{ #category : 'stdio' }
 Stdio class >> useNullStreams [
 	<script>
 	self createWriteStreamBlock: [ NullStream new ]

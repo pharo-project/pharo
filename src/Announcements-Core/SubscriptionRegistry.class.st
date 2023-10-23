@@ -6,23 +6,25 @@ This is because Announcer does not provide public access to its registery for en
 (We do not want access to the announcer from action blocks to break encapsulation to other subscribers)
 "
 Class {
-	#name : #SubscriptionRegistry,
-	#superclass : #Object,
+	#name : 'SubscriptionRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'subscriptions',
 		'monitor'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : 'Announcements-Core-Subscription',
+	#package : 'Announcements-Core',
+	#tag : 'Subscription'
 }
 
-{ #category : #'add/remove' }
+{ #category : 'add/remove' }
 SubscriptionRegistry >> add: subscription [
 
 	^ self protected: [
 		subscriptions add: subscription ]
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 SubscriptionRegistry >> deliver: anAnnouncement [
 
 	| interestedSubscriptions |
@@ -37,33 +39,33 @@ SubscriptionRegistry >> deliver: anAnnouncement [
 	self deliver: anAnnouncement to: interestedSubscriptions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SubscriptionRegistry >> deliver: anAnnouncement to: subs [
 
 	^ self deliver: anAnnouncement to: subs startingAt: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex [
 
 	startIndex to: subs size do: [ :index| | subscription |
 		subscription := subs at: index.
 		[ subscription deliver: anAnnouncement ]
-			"Ensure delivery to remaining announcements"
+			"Ensure delivery of remaining announcements"
 			ifCurtailed: [
 				self deliver: anAnnouncement to: subs startingAt: index + 1 ]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SubscriptionRegistry >> handleSubscriberClass: eventClass [
-	"Return true if the receiver has a callback subscripbed for the event class"
+	"Return true if the receiver has a callback subscribed for the event class"
 
 	^ subscriptions anySatisfy: [ :sub |
 		(sub subscriber class == eventClass) or:
 			[ sub subscriber class includesBehavior: eventClass ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SubscriptionRegistry >> initialize [
 
 	super initialize.
@@ -71,33 +73,35 @@ SubscriptionRegistry >> initialize [
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubscriptionRegistry >> numberOfSubscriptions [
 
 	^ subscriptions size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SubscriptionRegistry >> protected: aBlock [
 
 	^ monitor critical: [ aBlock value ]
 ]
 
-{ #category : #'add/remove' }
+{ #category : 'add/remove' }
 SubscriptionRegistry >> remove: subscription [
 
 	^ self protected: [
 		subscriptions remove: subscription ifAbsent: nil ]
 ]
 
-{ #category : #'add/remove' }
+{ #category : 'add/remove' }
 SubscriptionRegistry >> removeSubscriber: subscriber [
 
-	^ self protected: [
-		subscriptions removeAllSuchThat: [:subscription | subscription subscriber == subscriber ]]
+	^ self protected: [ | toRemove |
+		toRemove := subscriptions select: [ :subscription | subscription subscriber == subscriber ].
+		toRemove do: [ :e | e unregister ].
+		subscriptions removeAll: toRemove ]
 ]
 
-{ #category : #'add/remove' }
+{ #category : 'add/remove' }
 SubscriptionRegistry >> replace: subscription with: newOne [
 
 	" Note that it will signal an error if subscription is not there "
@@ -108,20 +112,20 @@ SubscriptionRegistry >> replace: subscription with: newOne [
 	^ newOne
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SubscriptionRegistry >> reset [
 	"subscriber -> subscriptions"
 
 	subscriptions := IdentitySet new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubscriptionRegistry >> subscriptions [
 
 	^ subscriptions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
 	"Return the list of subscription for a given class"
 
@@ -132,7 +136,7 @@ SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
 					ifTrue: [ s nextPut: each subscriber ]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubscriptionRegistry >> subscriptionsHandling: anAnnouncement [
 
 	^ Array streamContents: [ :s|
@@ -141,7 +145,7 @@ SubscriptionRegistry >> subscriptionsHandling: anAnnouncement [
 					ifTrue: [ s nextPut: each ]]]
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 SubscriptionRegistry >> subscriptionsOf: aSubscriber do: aBlock [
 	| copy |
 

@@ -1,18 +1,19 @@
 Class {
-	#name : #RGMetaclassTraitTest,
-	#superclass : #RGTest,
+	#name : 'RGMetaclassTraitTest',
+	#superclass : 'RGTest',
 	#traits : 'TRGBehaviorTest',
 	#classTraits : 'TRGBehaviorTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetaclassTraitTest >> behaviorClass [
 
 	^ RGMetaclassTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testEnsureProtocol [
 
 	| behavior |
@@ -23,7 +24,7 @@ RGMetaclassTraitTest >> testEnsureProtocol [
 	self assert: behavior protocols first equals: #SomeProtocol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testImplicitConversionFromClass [
 
 	| env |
@@ -40,7 +41,7 @@ RGMetaclassTraitTest >> testImplicitConversionFromClass [
 	env
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testImplicitConversionFromClassProperties [
 
 	| env entity |
@@ -52,7 +53,7 @@ RGMetaclassTraitTest >> testImplicitConversionFromClassProperties [
 	self assert: entity classTrait baseTrait equals: entity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testMetaclassTraitImplicitEnvironment [
 
 	| trait |
@@ -62,7 +63,7 @@ RGMetaclassTraitTest >> testMetaclassTraitImplicitEnvironment [
 	self checkImplicitSingleTraitEnvironmentOf: trait baseTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitTest >> testNewMetaclassTrait [
 	| trait baseTrait |
 	trait := RGMetaclassTrait unnamed.

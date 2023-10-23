@@ -22,8 +22,8 @@ Please direct questions or comments about this implementation to Ron Teitelbaum:
 This code was extensively copied from SHA1 by Luciano Notarfrancesco lnotarfrancesco@yahoo.com
 "
 Class {
-	#name : #SHA256,
-	#superclass : #HashFunction,
+	#name : 'SHA256',
+	#superclass : 'HashFunction',
 	#instVars : [
 		'totalA',
 		'totalB',
@@ -35,83 +35,85 @@ Class {
 		'totalH',
 		'totals'
 	],
-	#category : #'System-Hashing-SHA256'
+	#category : 'System-Hashing-SHA256',
+	#package : 'System-Hashing',
+	#tag : 'SHA256'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA256 class >> blockSize [
 	^ 64
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h0 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16r6A09E667
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h1 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16rBB67AE85
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h2 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16r3C6EF372
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h3 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16rA54FF53A
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h4 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16r510E527F
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h5 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16r9B05688C
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h6 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16r1F83D9AB
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> h7 [
 	"2 raisedTo: 32 times the square root of the first 8 primes 2..19"
 	"#(2 3 5 7 11 13 17 19) collect: [:x | ((x sqrt) * (2.0 raisedTo: 32)) truncated hex] // 32 bits"
 	^16r5BE0CD19
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA256 class >> hashSize [
 	^ 32
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SHA256 class >> roundConstants [
 	"2 raisedTo: 32 times the cube root of the first 64 primes 2..311"
 	"(Integer primesUpTo: 311) collect: [:x | ((x raisedTo: 1/3) * (2.0 raisedTo: 32)) truncated hex] \\ 32 bits"
 	^#(16r428A2F98 16r71374491 16rB5C0FBCF 16rE9B5DBA5 16r3956C25B 16r59F111F1 16r923F82A4 16rAB1C5ED5 16rD807AA98 16r12835B01 16r243185BE 16r550C7DC3 16r72BE5D74 16r80DEB1FE 16r9BDC06A7 16rC19BF174 16rE49B69C1 16rEFBE4786 16r0FC19DC6 16r240CA1CC 16r2DE92C6F 16r4A7484AA 16r5CB0A9DC 16r76F988DA 16r983E5152 16rA831C66D 16rB00327C8 16rBF597FC7 16rC6E00BF3 16rD5A79147 16r06CA6351 16r14292967 16r27B70A85 16r2E1B2138 16r4D2C6DFC 16r53380D13 16r650A7354 16r766A0ABB 16r81C2C92E 16r92722C85 16rA2BFE8A1 16rA81A664B 16rC24B8B70 16rC76C51A3 16rD192E819 16rD6990624 16rF40E3585 16r106AA070 16r19A4C116 16r1E376C08 16r2748774C 16r34B0BCB5 16r391C0CB3 16r4ED8AA4A 16r5B9CCA4F 16r682E6FF3 16r748F82EE 16r78A5636F 16r84C87814 16r8CC70208 16r90BEFFFA 16rA4506CEB 16rBEF9A3F7 16rC67178F2)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA256 >> expandedBlock: aByteArray [
 	"Convert the given 64 byte buffer into 80 32-bit registers and answer the result."
 	| out src |
@@ -137,7 +139,7 @@ SHA256 >> expandedBlock: aByteArray [
 	^ out
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA256 >> finalHash [
 	"Concatenate the final totals to build the 256-bit integer result."
 	"Details: If the primitives are supported, the results are in the totals array. Otherwise, they are in the instance variables totalA through totalE."
@@ -152,7 +154,7 @@ SHA256 >> finalHash [
 		  (totalH asInteger)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA256 >> hashStream: aPositionableStream [
 	"Hash the contents of the given stream from the current position to the end using SHA-256, the 256-bit variant of SHA-2. The SHA-2 family of algorithms are defined in FIPS PUB 180-4."
 	"SHA256 new hashStream: (ReadStream on: 'foo')"
@@ -174,7 +176,7 @@ SHA256 >> hashStream: aPositionableStream [
 	^self finalHash asByteArrayOfSize: 32
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA256 >> initializeTotals [
 	"Initialize totalA through totalE to their seed values."
 
@@ -190,7 +192,7 @@ SHA256 >> initializeTotals [
 	self initializeTotalsArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA256 >> initializeTotalsArray [
 	"Initialize the totals array from the registers for use with the primitives."
 
@@ -205,7 +207,7 @@ SHA256 >> initializeTotalsArray [
 	totals at: 8 put: totalH asInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA256 >> processBuffer: aByteArray [
 	"Process given 64-byte buffer, accumulating the results in totalA through totalE."
 
@@ -260,7 +262,7 @@ SHA256 >> processBuffer: aByteArray [
 	totalH += h
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA256 >> processFinalBuffer: buffer bitLength: bitLength [
 	"Process given buffer, whose length may be <= 64 bytes, accumulating the results in totalA through totalE. Also process the final padding bits and length."
 
@@ -287,7 +289,7 @@ SHA256 >> processFinalBuffer: buffer bitLength: bitLength [
 	self processBuffer: out
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA256 >> storeLength: bitLength in: aByteArray [
 	"Fill in the final 8 bytes of the given ByteArray with a 64-bit big-endian representation of the original message length in bits."
 

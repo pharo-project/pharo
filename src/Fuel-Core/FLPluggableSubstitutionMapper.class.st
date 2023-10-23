@@ -5,16 +5,18 @@ For example, suppose you want to substitute instances of WriteStream by nil. In 
 
 "
 Class {
-	#name : #FLPluggableSubstitutionMapper,
-	#superclass : #FLMapper,
+	#name : 'FLPluggableSubstitutionMapper',
+	#superclass : 'FLMapper',
 	#instVars : [
 		'condition',
 		'substitutionFactory'
 	],
-	#category : #'Fuel-Core-Mappers'
+	#category : 'Fuel-Core-Mappers',
+	#package : 'Fuel-Core',
+	#tag : 'Mappers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLPluggableSubstitutionMapper class >> when: aCondition substituteBy: aFactory [
 
 	^self basicNew
@@ -23,7 +25,7 @@ FLPluggableSubstitutionMapper class >> when: aCondition substituteBy: aFactory [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLPluggableSubstitutionMapper >> initializeWith: aCondition substitutionFactory: aBlock [
 
 	self initialize.
@@ -31,7 +33,7 @@ FLPluggableSubstitutionMapper >> initializeWith: aCondition substitutionFactory:
 	substitutionFactory := aBlock.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLPluggableSubstitutionMapper >> mapAndTrace: anObject [
 	"Uses the Chain of Responsibility pattern to answer the cluster which maps with the received object."
 
@@ -40,7 +42,7 @@ FLPluggableSubstitutionMapper >> mapAndTrace: anObject [
 		ifFalse: [ next mapAndTrace: anObject ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLPluggableSubstitutionMapper >> mapAndTraceSubstitutionIfNotRecursive: anObject [
 		
 	| cluster |

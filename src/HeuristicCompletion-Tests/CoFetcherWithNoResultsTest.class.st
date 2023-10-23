@@ -1,10 +1,12 @@
 Class {
-	#name : #CoFetcherWithNoResultsTest,
-	#superclass : #CoBasicFetcherTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoFetcherWithNoResultsTest',
+	#superclass : 'CoBasicFetcherTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoFetcherWithNoResultsTest >> setUp [
 
 	super setUp.
@@ -13,7 +15,7 @@ CoFetcherWithNoResultsTest >> setUp [
 	fetcher := fetcher filter: (CoCaseSensitiveBeginsWithFilter filterString: '*Non¨_exiuting')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFetcherWithNoResultsTest >> testCompletionWithNoResultsShouldBeAtEnd [
 
 	self assert: self fetcher atEnd

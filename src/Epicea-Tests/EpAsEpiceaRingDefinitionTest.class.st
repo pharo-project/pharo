@@ -1,16 +1,18 @@
 Class {
-	#name : #EpAsEpiceaRingDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Epicea-Tests-Model'
+	#name : 'EpAsEpiceaRingDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Epicea-Tests-Model',
+	#package : 'Epicea-Tests',
+	#tag : 'Model'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 EpAsEpiceaRingDefinitionTest class >> shouldLogWithEpicea [
 
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpAsEpiceaRingDefinitionTest >> definitions [
 	"FIX: it should not have this external dependency to Fuel code entities."
 
@@ -23,7 +25,7 @@ EpAsEpiceaRingDefinitionTest >> definitions [
 		} collect: [:each | each asEpiceaRingDefinition]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAsEpiceaRingDefinitionTest >> testPackageIsString [
 
 	self definitions do: [ :each |

@@ -1,10 +1,12 @@
 Class {
-	#name : #CoASTResultSetBuilderTest,
-	#superclass : #CoBasicCompletionTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoASTResultSetBuilderTest',
+	#superclass : 'CoBasicCompletionTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> newCompletionContext [
 
 	^ CoCompletionContext new
@@ -12,7 +14,7 @@ CoASTResultSetBuilderTest >> newCompletionContext [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildArrayHeuristic [
 
 	| builder |
@@ -25,7 +27,7 @@ CoASTResultSetBuilderTest >> testBuildArrayHeuristic [
 	self assert: builder heuristic equals: #array
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildAssignmentHeuristic [
 
 	| builder |
@@ -38,7 +40,7 @@ CoASTResultSetBuilderTest >> testBuildAssignmentHeuristic [
 	self assert: builder heuristic equals: #assignment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildBlockHeuristic [
 
 	| builder |
@@ -51,7 +53,7 @@ CoASTResultSetBuilderTest >> testBuildBlockHeuristic [
 	self assert: builder heuristic equals: #block
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildCascadeHeuristic [
 
 	| builder |
@@ -64,7 +66,7 @@ CoASTResultSetBuilderTest >> testBuildCascadeHeuristic [
 	self assert: builder heuristic equals: #cascade
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildLiteralArrayHeuristic [
 
 	| builder |
@@ -77,7 +79,7 @@ CoASTResultSetBuilderTest >> testBuildLiteralArrayHeuristic [
 	self assert: builder heuristic equals: #literalArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildLiteralHeuristic [
 
 	| builder |
@@ -90,7 +92,7 @@ CoASTResultSetBuilderTest >> testBuildLiteralHeuristic [
 	self assert: builder heuristic equals: #literal
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildMessageHeuristic [
 
 	| builder |
@@ -103,7 +105,7 @@ CoASTResultSetBuilderTest >> testBuildMessageHeuristic [
 	self assert: builder heuristic equals: #message
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildMethodHeuristic [
 
 	| builder |
@@ -116,7 +118,7 @@ CoASTResultSetBuilderTest >> testBuildMethodHeuristic [
 	self assert: builder heuristic equals: #method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildParseErrorHeuristic [
 
 	| builder |
@@ -129,7 +131,7 @@ CoASTResultSetBuilderTest >> testBuildParseErrorHeuristic [
 	self assert: builder heuristic equals: #error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildPragmaHeuristic [
 
 	| builder |
@@ -142,7 +144,7 @@ CoASTResultSetBuilderTest >> testBuildPragmaHeuristic [
 	self assert: builder heuristic equals: #pragma
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildReturnHeuristic [
 
 	| builder |
@@ -155,7 +157,7 @@ CoASTResultSetBuilderTest >> testBuildReturnHeuristic [
 	self assert: builder heuristic equals: #return
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildSequenceHeuristic [
 
 	| builder |
@@ -168,7 +170,7 @@ CoASTResultSetBuilderTest >> testBuildSequenceHeuristic [
 	self assert: builder heuristic equals: #sequence
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildThisContextHeuristic [
 
 	| builder |
@@ -181,7 +183,7 @@ CoASTResultSetBuilderTest >> testBuildThisContextHeuristic [
 	self assert: builder heuristic equals: #thisContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableClassVariableHeuristic [
 
 	| builder |
@@ -194,7 +196,7 @@ CoASTResultSetBuilderTest >> testBuildVariableClassVariableHeuristic [
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableGlobalHeuristic [
 
 	| builder |
@@ -207,7 +209,7 @@ CoASTResultSetBuilderTest >> testBuildVariableGlobalHeuristic [
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableHeuristic [
 
 	| builder |
@@ -220,7 +222,7 @@ CoASTResultSetBuilderTest >> testBuildVariableHeuristic [
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableInstanceVariableHeuristic [
 
 	| builder |
@@ -233,7 +235,7 @@ CoASTResultSetBuilderTest >> testBuildVariableInstanceVariableHeuristic [
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableTempVariableHeuristic [
 
 	| builder |
@@ -246,7 +248,7 @@ CoASTResultSetBuilderTest >> testBuildVariableTempVariableHeuristic [
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableUndeclaredHeuristic [
 
 	| builder |

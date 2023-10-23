@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyWrapQueryTest,
-	#superclass : #ClyCompositeQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyWrapQueryTest',
+	#superclass : 'ClyCompositeQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyWrapQueryTest class >> isAbstract [
 	^self = ClyWrapQueryTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testConvertingWithNewRequiredResultShouldConvertActualQueryToo [
 	| newResult convertedQuery |
 	newResult := ClyRawQueryResult new.
@@ -18,7 +19,7 @@ ClyWrapQueryTest >> testConvertingWithNewRequiredResultShouldConvertActualQueryT
 	self assert: convertedQuery actualQuery requiredResult identicalTo: newResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testHasCompositeScopeFromSubqueries [
 	<expectedFailure>
 	"Async query must be created on single subquery.
@@ -26,13 +27,13 @@ ClyWrapQueryTest >> testHasCompositeScopeFromSubqueries [
 	super testHasCompositeScopeFromSubqueries
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testHasScopeFromSubquery [
 
 	self assert: query scope equals: query subqueries anyOne scope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testIsExecutedFromMultipleScopeWhenSubqueriesAreFromScopesOfDifferentObjects [
 	<expectedFailure>
 	"Async query forbid creation on several subqueries.
@@ -40,7 +41,7 @@ ClyWrapQueryTest >> testIsExecutedFromMultipleScopeWhenSubqueriesAreFromScopesOf
 	super testIsExecutedFromMultipleScopeWhenSubqueriesAreFromScopesOfDifferentObjects
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testIsExecutedFromSingleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject [
 	<expectedFailure>
 	"Async query forbid creation on several subqueries.
@@ -48,7 +49,7 @@ ClyWrapQueryTest >> testIsExecutedFromSingleScopeWhenSubqueriesAreFromDifferentS
 	super testIsExecutedFromSingleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testNotExecutedFromMultipleScopeWhenAllSubqueriesAreFromEmptyScope [
 	<expectedFailure>
 	"Async query forbid creation on several subqueries.
@@ -56,7 +57,7 @@ ClyWrapQueryTest >> testNotExecutedFromMultipleScopeWhenAllSubqueriesAreFromEmpt
 	super testNotExecutedFromMultipleScopeWhenAllSubqueriesAreFromEmptyScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testNotExecutedFromMultipleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject [
 	<expectedFailure>
 	"Async query forbid creation on several subqueries.
@@ -64,7 +65,7 @@ ClyWrapQueryTest >> testNotExecutedFromMultipleScopeWhenSubqueriesAreFromDiffere
 	super testNotExecutedFromMultipleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testNotExecutedFromSingleScopeWhenAllSubqueriesAreFromEmptyScope [
 	<expectedFailure>
 	"Async query forbid creation on several subqueries.
@@ -72,7 +73,7 @@ ClyWrapQueryTest >> testNotExecutedFromSingleScopeWhenAllSubqueriesAreFromEmptyS
 	super testNotExecutedFromSingleScopeWhenAllSubqueriesAreFromEmptyScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyWrapQueryTest >> testNotExecutedFromSingleScopeWhenSubqueriesAreFromScopesOfDifferentObjects [
 	<expectedFailure>
 	"Async query forbid creation on several subqueries.

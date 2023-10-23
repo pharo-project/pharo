@@ -3,19 +3,21 @@ I am a refactory change for a instance variable renaming. The RBRefactory api is
 the concrete ""instance variable"" renaming.
 "
 Class {
-	#name : #RBRenameInstanceVariableChange,
-	#superclass : #RBRenameVariableChange,
-	#category : #'Refactoring-Changes-Changes-Variables'
+	#name : 'RBRenameInstanceVariableChange',
+	#superclass : 'RBRenameVariableChange',
+	#category : 'Refactoring-Changes-Changes-Variables',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Variables'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameInstanceVariableChange >> addNewVariable [
 
 	(self changeClass allInstVarNames includes: newName)
 		ifFalse: [ (changeFactory addInstanceVariable: newName to: self changeClass) execute ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameInstanceVariableChange >> copyOldValuesToNewVariable [
 
 	self changeClass withAllSubclasses do: [ :class |
@@ -23,7 +25,7 @@ RBRenameInstanceVariableChange >> copyOldValuesToNewVariable [
 			do: [ :each | each instVarNamed: newName asString put: (each instVarNamed: oldName asString) ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameInstanceVariableChange >> printOn: aStream [
 
 	aStream
@@ -39,7 +41,7 @@ RBRenameInstanceVariableChange >> printOn: aStream [
 		nextPut: $!
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameInstanceVariableChange >> removeOldVariable [
 
 	(self changeClass allInstVarNames includes: oldName) ifTrue: [

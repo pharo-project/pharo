@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfFreeType }
+Package { #name : 'BaselineOfFreeType' }

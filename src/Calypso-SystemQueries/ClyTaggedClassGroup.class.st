@@ -16,49 +16,38 @@ For the #removeWithClasses operation I remove empty class tag from registrered t
 My class query is ClyTaggedClasses
 "
 Class {
-	#name : #ClyTaggedClassGroup,
-	#superclass : #ClyClassGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyTaggedClassGroup',
+	#superclass : 'ClyClassGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTaggedClassGroup class >> isBasedOnClassTag [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTaggedClassGroup class >> isEditableGroup [
 	^true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTaggedClassGroup class >> withClassesFrom: aPackageScope taggedBy: tagName [
 	| classQuery |
 	classQuery := ClyTaggedClassesQuery by: tagName from: aPackageScope.
 	^ClyTaggedClassGroup named: tagName on: classQuery
 ]
 
-{ #category : #operations }
-ClyTaggedClassGroup >> importClass: aClass [
-	| newPackages |
-	super importClass: aClass.
-
-	newPackages := OrderedCollection new.
-	classQuery scope packagesDo: [ :each |
-		each = aClass package ifFalse: [ newPackages add: each ]].
-	newPackages size > 1 ifTrue: [ ^self error: 'You should select single package for import!' ].
-	newPackages ifNotEmpty: [ newPackages first addClass: aClass].
-	aClass packageTag: self tag
-]
-
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTaggedClassGroup >> removeWithClasses [
 
 	super removeWithClasses.
 	classQuery scope packagesDo: [ :each | each removeTag: self tag ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTaggedClassGroup >> renameClassTagTo: newTag [
 
 	self classes do: [ :class | class packageTag: newTag ].
@@ -68,7 +57,7 @@ ClyTaggedClassGroup >> renameClassTagTo: newTag [
 		package removeTag: self tag ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTaggedClassGroup >> tag [
 	^ classQuery tag
 ]

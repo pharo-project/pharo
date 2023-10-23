@@ -1,6 +1,6 @@
-Extension { #name : #ProtoObject }
+Extension { #name : 'ProtoObject' }
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 ProtoObject >> insIsEqual: anObject [
 	"I am a redefinition of the ProtoObject>>#== method. I have the same implementation of
 	ProtoObject>>#== except for the instrumentation pragmas. I re-implement the method because

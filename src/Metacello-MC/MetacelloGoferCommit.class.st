@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloGoferCommit,
-	#superclass : #GoferCommit,
-	#category : #'Metacello-MC-Gofer'
+	#name : 'MetacelloGoferCommit',
+	#superclass : 'GoferCommit',
+	#category : 'Metacello-MC-Gofer',
+	#package : 'Metacello-MC',
+	#tag : 'Gofer'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MetacelloGoferCommit >> execute: aWorkingCopy [
 	| version |
-	version := MetacelloPlatform current newVersionForWorkingCopy: aWorkingCopy.
+	version := aWorkingCopy newVersionIn: aWorkingCopy repositoryGroup.
 	self gofer repositories
 		do: [ :repository | repository storeVersion: version ]
 ]

@@ -3,26 +3,28 @@ ZnClientRetryingEvent signals a client is retrying is main operation. The number
 
 "
 Class {
-	#name : #ZnClientRetryingEvent,
-	#superclass : #ZnClientLogEvent,
+	#name : 'ZnClientRetryingEvent',
+	#superclass : 'ZnClientLogEvent',
 	#instVars : [
 		'exception'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientRetryingEvent >> exception [
 	^ exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientRetryingEvent >> exception: anObject [
 	exception := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnClientRetryingEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Retrying '; print: exception
+	stream << 'Retrying '; print: exception
 ]

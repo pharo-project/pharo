@@ -17,18 +17,20 @@ Internal Representation and Key Implementation Points.
 	project:		<Object>
 "
 Class {
-	#name : #ClyManagedProject,
-	#superclass : #ClyProjectChildItem,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyManagedProject',
+	#superclass : 'ClyProjectChildItem',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyManagedProject class >> checkCalypsoItem: aProject isSameAs: aProject2 [
 	^(super checkCalypsoItem: aProject isSameAs: aProject2)
 		or: [ aProject = aProject2 ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyManagedProject class >> for: aProject named: aString managedBy: aPackageManager [
 	^self new
 		name: aString;
@@ -36,7 +38,7 @@ ClyManagedProject class >> for: aProject named: aString managedBy: aPackageManag
 		project: aProject
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyManagedProject class >> prepareClassQueriesFrom: projects in: aNavigationEnvironment [
 	^{ClyAllClassesQuery from: ClyProjectScope ofAll: projects in: aNavigationEnvironment }
 ]

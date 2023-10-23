@@ -3,8 +3,8 @@ I am UI manager for a headless setup.
 I block all UI manager API that uses Morphs and will trow an error instead.
 "
 Class {
-	#name : #CommandLineUIManager,
-	#superclass : #UIManager,
+	#name : 'CommandLineUIManager',
+	#superclass : 'UIManager',
 	#instVars : [
 		'doNotQuitOnRestart',
 		'uiManager'
@@ -12,16 +12,18 @@ Class {
 	#classVars : [
 		'SnapshotErrorImage'
 	],
-	#category : #'UIManager-Base'
+	#category : 'UIManager-Base',
+	#package : 'UIManager',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CommandLineUIManager class >> isValidForCurrentSystemConfiguration [
 
 	^ Smalltalk isHeadless and: [ Smalltalk isInteractive ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CommandLineUIManager class >> replacing: aUIManager [
 
 	"Replace the current UI manager with instance of myself.
@@ -30,17 +32,17 @@ CommandLineUIManager class >> replacing: aUIManager [
 	^ self new replacing: aUIManager
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineUIManager class >> snapshotErrorImage [
 	^ SnapshotErrorImage == true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineUIManager class >> snapshotErrorImage: aBoolean [
 	SnapshotErrorImage := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CommandLineUIManager class >> uiSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #nonInteractive)
@@ -55,47 +57,47 @@ CommandLineUIManager class >> uiSettingsOn: aBuilder [
 				description: 'On unhandled exception, save a new version of the image before quitting']
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> abort: aStringOrText [
 
 	self abort: aStringOrText title: 'Error'
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> abort: aStringOrText title: aString [
 
 	self logTitle: aString andDescription: aStringOrText to: self stderr
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CommandLineUIManager >> activate [
 	NonInteractiveTranscript stdout install
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> alert: aStringOrText [
 
 	self abort: aStringOrText title: 'Alert'
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> alert: aStringOrText title: aString [
 
 	self logTitle: aString andDescription: aStringOrText to: self stdout
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> alert: aStringOrText title: aString configure: aBlock [
 	"Ignore the block, because we don't create a dialog, so there is nothing to configure."
 
 	self alert: aStringOrText title: aString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> choose: questionsAnswerDict title: queryString [
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> chooseFrom: aList lines: linesArray title: aString [
 	| maxPad |
 	maxPad := aList size asString size.
@@ -109,7 +111,7 @@ CommandLineUIManager >> chooseFrom: aList lines: linesArray title: aString [
 	^ aList at: (self stdin upToAnyOf: String crlf do: [ :chr| ]) asInteger
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> confirm: queryString label: title trueChoice: trueLabel falseChoice: falseLabel cancelChoice: cancelLabel default: trueFalseNil [
 	| questions |
 	questions := Dictionary new.
@@ -119,7 +121,7 @@ CommandLineUIManager >> confirm: queryString label: title trueChoice: trueLabel 
 	^ self choose: questions title: title, ' ', queryString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: falseLabel [
 	^self
 		confirm: queryString
@@ -129,7 +131,7 @@ CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: 
 		default: nil
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: falseLabel cancelChoice: cancelLabel default: trueFalseNil [
 	| questions |
 	questions := Dictionary new.
@@ -139,7 +141,7 @@ CommandLineUIManager >> confirm: queryString trueChoice: trueLabel falseChoice: 
 	^ self choose: questions title: queryString
 ]
 
-{ #category : #debug }
+{ #category : 'debug' }
 CommandLineUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
 	| description |
 	description := String streamContents: [ :stream |
@@ -157,17 +159,17 @@ CommandLineUIManager >> debugProcess: process context: context label: title full
 		to: self stderr
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> deny: aStringOrText [
 	"Open a denial dialog."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> deny: aStringOrText title: aString [
 	"Open a denial dialog."
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineUIManager >> exitFailure [
 	[
 		self class snapshotErrorImage ifTrue: [
@@ -180,7 +182,7 @@ CommandLineUIManager >> exitFailure [
 	]
 ]
 
-{ #category : #'handle debug requests' }
+{ #category : 'handle debug requests' }
 CommandLineUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 
 	anOupsDebuggerSystem
@@ -188,13 +190,13 @@ CommandLineUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: an
 		withUIManager: self
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 CommandLineUIManager >> handleError: anError log: shouldLog [
 
 	shouldLog ifTrue: [ self logError: anError ]
 ]
 
-{ #category : #'handle debug requests' }
+{ #category : 'handle debug requests' }
 CommandLineUIManager >> handleWarningDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 
 	anOupsDebuggerSystem
@@ -202,7 +204,7 @@ CommandLineUIManager >> handleWarningDebugRequest: aDebugRequest fromDebuggerSys
 		withUIManager: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineUIManager >> headlessManager [
 	self class == CommandLineUIManager
 		ifFalse: [ ^ self ].
@@ -210,7 +212,7 @@ CommandLineUIManager >> headlessManager [
 	^ CommandLineUIManager replacing: uiManager
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> inform: aString [
 
 	| logBlock |
@@ -228,12 +230,12 @@ CommandLineUIManager >> inform: aString [
 	Smalltalk logDuring: logBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CommandLineUIManager >> initialize [
 	doNotQuitOnRestart := false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineUIManager >> logColored: anAnsiiColorCode during: aBlock [
 
 	Smalltalk logStdErrorDuring: [:stderr |
@@ -247,25 +249,25 @@ CommandLineUIManager >> logColored: anAnsiiColorCode during: aBlock [
 	]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineUIManager >> logDuring: aBlock [
 
 	Smalltalk logStdErrorDuring: [ :stderr | aBlock value: stderr ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineUIManager >> logGreenDuring: aBlock [
 
 	^ self logColored: '32' during: aBlock
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineUIManager >> logRedDuring: aBlock [
 
 	^ self logColored: '31' during: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CommandLineUIManager >> logTitle: aString andDescription: aStringOrText to: aStream [
 
 	aStream
@@ -275,64 +277,64 @@ CommandLineUIManager >> logTitle: aString andDescription: aStringOrText to: aStr
 		cr
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineUIManager >> logYellowDuring: aBlock [
 
 	^ self logColored: '33' during: aBlock
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 CommandLineUIManager >> newDisplayDepthNoRestore: pixelSize [
 	"do nothing"
 ]
 
-{ #category : #'non-interactive' }
+{ #category : 'non-interactive' }
 CommandLineUIManager >> nonInteractiveManager [
 	" Answer an instance of non-interactive manager, which will be used when image runs headless.
 	  We put it here, so subclasses can override it. "
 	^ NonInteractiveUIManager replacing: uiManager
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 CommandLineUIManager >> onPrimitiveError: aString [
 
 	" log error and quit "
 	^ self quitFrom: thisContext sender withMessage: aString
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> proceed: aStringOrText [
 	"Open a proceed dialog."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> proceed: aStringOrText title: aString [
 	"Open a proceed dialog and answer true if not cancelled, false otherwise."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> question: aStringOrText [
 	"Open a question dialog."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> question: aStringOrText title: aString [
 	"Open a question dialog and answer true if yes,
 	false if no and nil if cancelled."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> questionWithoutCancel: aStringOrText [
 	"Open a question dialog."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> questionWithoutCancel: aStringOrText title: aString [
 	"Open a question dialog and answer true if yes,
 	false if no and nil if cancelled."
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineUIManager >> quitFrom: aContext withMessage: aString [
 
 	" log error and quit "
@@ -356,7 +358,7 @@ CommandLineUIManager >> quitFrom: aContext withMessage: aString [
 	] ensure: [ self exitFailure ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CommandLineUIManager >> replacing: aUIManager [
 
 	" save the aUIManager to restore it later, when we become interactive again "
@@ -366,35 +368,35 @@ CommandLineUIManager >> replacing: aUIManager [
 	self beDefault
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 CommandLineUIManager >> restoreDisplay [
 	"do nothing"
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 CommandLineUIManager >> restoreDisplayAfter: aBlock [
 	"do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineUIManager >> stderr [
 
 	^ Stdio stderr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineUIManager >> stdin [
 
 	^ Stdio stdin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineUIManager >> stdout [
 
 	^ Stdio stdout
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
 
 	Smalltalk logStdOutDuring: [:logger |
@@ -406,29 +408,29 @@ CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
 	aNotification resume
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> textEntry: aStringOrText [
 	"Open a text entry dialog."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> textEntry: aStringOrText title: aString [
 	"Open a text entry dialog."
 ]
 
-{ #category : #'ui TEasilyThemed' }
+{ #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> textEntry: aStringOrText title: aString entryText: defaultEntryText [
 	"Open a text entry dialog."
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> uiProcess [
 	" receiver don't have a ui process, associated with it,
 	client should check explicitly if #uiProcess answers nil or not"
 	^ nil
 ]
 
-{ #category : #'default actions' }
+{ #category : 'default actions' }
 CommandLineUIManager >> unhandledErrorDefaultAction: anException [
 
 	self quitFrom: anException signalerContext  withMessage: anException description.
@@ -438,7 +440,7 @@ CommandLineUIManager >> unhandledErrorDefaultAction: anException [
 		]
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CommandLineUIManager >> warningDefaultAction: aWarning [
 	| logBlock |
 	"Pass all warnings, but log them"

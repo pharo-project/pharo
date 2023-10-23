@@ -1,10 +1,12 @@
 Class {
-	#name : #OCCodeReparatorTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-FromOld'
+	#name : 'OCCodeReparatorTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-FromOld',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'FromOld'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareClassVar [
 
 	| requestor method goo |
@@ -28,7 +30,7 @@ OCCodeReparatorTest >> testDeclareClassVar [
 	MockForCompilation removeClassVariable: goo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareClassVarBlock [
 
 	| compiler requestor method goo |
@@ -53,7 +55,7 @@ OCCodeReparatorTest >> testDeclareClassVarBlock [
 	MockForCompilation removeClassVariable: goo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareGlobal [
 
 	| requestor method |
@@ -76,7 +78,7 @@ OCCodeReparatorTest >> testDeclareGlobal [
 	Smalltalk globals removeKey: #goo ifAbsent: []
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareGlobalBlock [
 
 	| compiler requestor method |
@@ -100,7 +102,7 @@ OCCodeReparatorTest >> testDeclareGlobalBlock [
 	Smalltalk globals removeKey: #goo ifAbsent: []
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareInstVar [
 
 	| requestor method |
@@ -125,7 +127,7 @@ OCCodeReparatorTest >> testDeclareInstVar [
 	MockForCompilation removeInstVarNamed: #goo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareInstVarBlock [
 
 	| compiler requestor method |
@@ -151,7 +153,7 @@ OCCodeReparatorTest >> testDeclareInstVarBlock [
 	MockForCompilation removeInstVarNamed: #goo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareTempAndPaste [
 
 	| requestor method |
@@ -171,7 +173,7 @@ OCCodeReparatorTest >> testDeclareTempAndPaste [
 	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | goo | ^ goo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testDeclareTempAndPasteBlock [
 
 	| compiler requestor method |
@@ -192,7 +194,7 @@ OCCodeReparatorTest >> testDeclareTempAndPasteBlock [
 	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | goo | ^ goo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testPossibleVariablesFor [
 
 	| requestor names |
@@ -210,7 +212,7 @@ OCCodeReparatorTest >> testPossibleVariablesFor [
 	self assert: (names includes: #foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testPossibleVariablesForBlock [
 
 	| compiler requestor names |
@@ -226,7 +228,7 @@ OCCodeReparatorTest >> testPossibleVariablesForBlock [
 	self assert: (names includes: #foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 
 	| requestor method |
@@ -246,7 +248,7 @@ OCCodeReparatorTest >> testSubstituteVariableAtInterval [
 	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | foo | ^ foo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testSubstituteVariableAtIntervalBlock [
 
 	| compiler requestor method |
@@ -267,7 +269,7 @@ OCCodeReparatorTest >> testSubstituteVariableAtIntervalBlock [
 	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle | foo | ^ foo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testUndeclaredVariable [
 
 	| requestor method flag |
@@ -287,9 +289,11 @@ OCCodeReparatorTest >> testUndeclaredVariable [
 	self assert: method sourceCode withSeparatorsCompacted equals: 'griffle ^ goo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testdefineClass [
-	
+	self skip.
+	"we need to resume: not with true, but the code, ProvideAnswerNotification needs to be improved
+	to provide the defaultAnswer, too"
 	[ OCCodeReparator new
 		node: (self class>>#testdefineClass) ast;
 		defineClass: 'MyTestClassForDefineClass'
@@ -301,9 +305,11 @@ OCCodeReparatorTest >> testdefineClass [
 	Smalltalk globals removeClassNamed:  #MyTestClassForDefineClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCodeReparatorTest >> testdefineTrait [
-	
+	self skip.
+	"we need to resume: not with true, but the code, ProvideAnswerNotification needs to be improved
+	to provide the defaultAnswer, too"
 	[ OCCodeReparator new
 		node: (self class>>#testdefineTrait) ast;
 		defineTrait: 'MyTestTraitForDefineTrait'

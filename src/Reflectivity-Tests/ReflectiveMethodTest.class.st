@@ -1,13 +1,15 @@
 Class {
-	#name : #ReflectiveMethodTest,
-	#superclass : #ReflectivityTestCase,
+	#name : 'ReflectiveMethodTest',
+	#superclass : 'ReflectivityTestCase',
 	#instVars : [
 		'selector'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReflectiveMethodTest >> testASTCacheIsCleanedAfterMetaLinkRemoval [
 	| method bcToASTCache |
 	selector := #exampleBlock.
@@ -21,7 +23,7 @@ ReflectiveMethodTest >> testASTCacheIsCleanedAfterMetaLinkRemoval [
 	self deny: method ast blockNodes first bcToASTCache identicalTo: bcToASTCache
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ReflectiveMethodTest >> testCreateReflectiveMethod [
 	| compiledMethod reflectiveMethod |
 	compiledMethod := ReflectivityExamples >> #exampleMethod.
@@ -29,7 +31,7 @@ ReflectiveMethodTest >> testCreateReflectiveMethod [
 	self assert: reflectiveMethod class equals: ReflectiveMethod
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ReflectiveMethodTest >> testCreateReflectiveMethodAndInvalidate [
 	| compiledMethod reflectiveMethod |
 	selector := #exampleMethod.
@@ -45,7 +47,7 @@ ReflectiveMethodTest >> testCreateReflectiveMethodAndInvalidate [
 	ReflectivityExamples >> #exampleMethod reflectiveMethod: nil
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ReflectiveMethodTest >> testInvalidate [
 	selector := #exampleMethod.
 	(ReflectivityExamples >> #exampleMethod) createTwin.
@@ -56,7 +58,7 @@ ReflectiveMethodTest >> testInvalidate [
 	ReflectivityExamples >> #exampleMethod reflectiveMethod: nil
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ReflectiveMethodTest >> testInvalidateNoJit [
 	(ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) createTwin.
 	(ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) invalidate.
@@ -67,7 +69,7 @@ ReflectiveMethodTest >> testInvalidateNoJit [
 	ReflectivityExamples class recompile: #exampleMethodWithMetaLinkOptionsViaClass
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ReflectiveMethodTest >> testInvalidateWithLinkCount [
 	selector := #exampleMethod.
 	(ReflectivityExamples >> #exampleMethod) createTwin.
@@ -80,7 +82,7 @@ ReflectiveMethodTest >> testInvalidateWithLinkCount [
 	ReflectivityExamples >> #exampleMethod reflectiveMethod: nil
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testLinkCountTwoLinks [
 	| sendNode link1 link2 |
 	selector := #exampleMethod.
@@ -98,7 +100,7 @@ ReflectiveMethodTest >> testLinkCountTwoLinks [
 	self assert: (ReflectivityExamples >> #exampleMethod) reflectiveMethod isNil
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLink [
 	| sendNode link |
 	selector := #exampleMethod.
@@ -113,7 +115,7 @@ ReflectiveMethodTest >> testSetLink [
 	self assert: (ReflectivityExamples >> #exampleMethod) reflectiveMethod isNil
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLinkInPrimitive [
 	| sendNode link |
 	selector := #examplePrimitiveMethod.
@@ -129,7 +131,7 @@ ReflectiveMethodTest >> testSetLinkInPrimitive [
 	(ReflectivityExamples >> #examplePrimitiveMethod) recompile
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReflectiveMethodTest >> testSetLinkOnClassVariable [
 	| classVar link |
 	selector := #exampleClassVarRead.
@@ -144,7 +146,7 @@ ReflectiveMethodTest >> testSetLinkOnClassVariable [
 
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReflectiveMethodTest >> testSetLinkOnClassVariableAndUninstall [
 	| classVar link |
 	selector := #exampleClassVarRead.
@@ -160,7 +162,7 @@ ReflectiveMethodTest >> testSetLinkOnClassVariableAndUninstall [
 	self assert: (ReflectivityExamples >> #exampleClassVarRead) class equals: CompiledMethod
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLinkOnDynamicArrayArgument [
 
  	| link |
@@ -186,7 +188,7 @@ ReflectiveMethodTest >> testSetLinkOnDynamicArrayArgument [
  				self assert: (n propertyAt: #tagExecuted) ]]
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReflectiveMethodTest >> testSetLinkOnGlobalVariable [
 	| globalVar link |
 	selector := #exampleGlobalRead.
@@ -199,7 +201,7 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariable [
 	globalVar removeProperty: #links
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReflectiveMethodTest >> testSetLinkOnGlobalVariableAndUninstall [
 	| global link |
 	selector := #exampleGlobalRead.
@@ -214,7 +216,7 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariableAndUninstall [
 	global removeProperty: #links
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReflectiveMethodTest >> testSetLinkOnInstanceVariable [
 	| ivar link |
 	selector := #exampleIvarRead.
@@ -226,7 +228,7 @@ ReflectiveMethodTest >> testSetLinkOnInstanceVariable [
 	link uninstall
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReflectiveMethodTest >> testSetLinkOnInstanceVariableAndUninstall [
 	| ivar link |
 	selector := #exampleIvarRead.
@@ -241,7 +243,7 @@ ReflectiveMethodTest >> testSetLinkOnInstanceVariableAndUninstall [
 	self assertEmpty: ivar links
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLinkOnPragma [
 
  	| link a b |
@@ -264,7 +266,7 @@ ReflectiveMethodTest >> testSetLinkOnPragma [
  		n isPragma ifTrue: [ self assert: (n propertyAt: #tagExecuted) ] ]
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLinkOnPrimitive [
 	| methodNode link |
 	selector := #examplePrimitiveMethod.
@@ -282,7 +284,7 @@ ReflectiveMethodTest >> testSetLinkOnPrimitive [
 	self assert: (ReflectivityExamples>>#examplePrimitiveMethod) reflectiveMethod isNil
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLinkWithPragmaOptions [
 	| sendNode link |
 	selector := #exampleMethodWithMetaLinkOptions.
@@ -297,7 +299,7 @@ ReflectiveMethodTest >> testSetLinkWithPragmaOptions [
 	self assert: (ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) reflectiveMethod isNil
 ]
 
-{ #category : #'tests - links' }
+{ #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLinkWithPragmaOptionsPerClass [
 	| sendNode link |
 	link := MetaLink new.

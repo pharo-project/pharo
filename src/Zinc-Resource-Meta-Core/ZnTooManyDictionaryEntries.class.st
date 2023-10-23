@@ -6,34 +6,35 @@ This is a resumable exception
 Part of Zinc HTTP Components. 
 "
 Class {
-	#name : #ZnTooManyDictionaryEntries,
-	#superclass : #Error,
+	#name : 'ZnTooManyDictionaryEntries',
+	#superclass : 'Error',
 	#instVars : [
 		'limit'
 	],
-	#category : #'Zinc-Resource-Meta-Core'
+	#category : 'Zinc-Resource-Meta-Core',
+	#package : 'Zinc-Resource-Meta-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnTooManyDictionaryEntries class >> limit: limit [
 	^ self new
 		limit: limit;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnTooManyDictionaryEntries >> isResumable [
 	"Determine whether an exception is resumable."
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnTooManyDictionaryEntries >> limit [
 	^ limit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnTooManyDictionaryEntries >> limit: anObject [
 	limit := anObject
 ]

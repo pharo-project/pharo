@@ -17,28 +17,30 @@ The fifth and following parameters are passed in the stack.
 If any of the four first parameters does not fit in the registers are passed in the stack.
 "
 Class {
-	#name : #FFIWin64CallbackArgumentReader,
-	#superclass : #FFIAbstract64BitsArgumentReader,
+	#name : 'FFIWin64CallbackArgumentReader',
+	#superclass : 'FFIAbstract64BitsArgumentReader',
 	#instVars : [
 		'currentParameterIndex'
 	],
-	#category : #'UnifiedFFI-Callbacks'
+	#category : 'UnifiedFFI-Callbacks',
+	#package : 'UnifiedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWin64CallbackArgumentReader >> currentParameterIndex [
 
 	^ currentParameterIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIWin64CallbackArgumentReader >> extractNext: aType [
 
 	super extractNext: aType.
 	currentParameterIndex := currentParameterIndex + 1
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFIWin64CallbackArgumentReader >> extractStructType: type [
 
 	| pointer |
@@ -49,26 +51,14 @@ FFIWin64CallbackArgumentReader >> extractStructType: type [
 	self addArgument: (type handle: pointer at: 1)
 ]
 
-{ #category : #accessing }
-FFIWin64CallbackArgumentReader >> floatRegisterPointer [
-
-	^ callbackContext floatregargsp
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIWin64CallbackArgumentReader >> initialize [
 
 	super initialize.
 	currentParameterIndex := 1
 ]
 
-{ #category : #accessing }
-FFIWin64CallbackArgumentReader >> integerRegisterPointer [
-
-	^ callbackContext intregargsp
-]
-
-{ #category : #'calculating-offsets' }
+{ #category : 'calculating-offsets' }
 FFIWin64CallbackArgumentReader >> nextBaseAddressFor: type [
 
 	| baseAddressToRead offsetOfBaseAddress |
@@ -83,26 +73,26 @@ FFIWin64CallbackArgumentReader >> nextBaseAddressFor: type [
 		ifFalse:[ super nextBaseAddressFor: type ]
 ]
 
-{ #category : #'calculating-offsets' }
+{ #category : 'calculating-offsets' }
 FFIWin64CallbackArgumentReader >> nextBaseAddressForStructure: type [
 
 	self error: 'The structures all always pointers'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWin64CallbackArgumentReader >> numberOfRegisters [
 
 	"Win64 only uses 4 registers (integer or float), but never more"
 	^ 4
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFIWin64CallbackArgumentReader >> stackIntegerType [
 
 	^ FFIInt64 new
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFIWin64CallbackArgumentReader >> stackUnsignedIntegerType [
 
 	^ FFIUInt64 new

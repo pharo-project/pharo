@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfDisplay }
+Package { #name : 'BaselineOfDisplay' }

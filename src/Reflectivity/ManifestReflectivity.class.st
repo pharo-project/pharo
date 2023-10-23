@@ -2,7 +2,9 @@
 Extensions to the standard reflection features of Smalltalk like MetaLinks and other
 "
 Class {
-	#name : #ManifestReflectivity,
-	#superclass : #PackageManifest,
-	#category : #'Reflectivity-Manifest'
+	#name : 'ManifestReflectivity',
+	#superclass : 'PackageManifest',
+	#category : 'Reflectivity-Manifest',
+	#package : 'Reflectivity',
+	#tag : 'Manifest'
 }

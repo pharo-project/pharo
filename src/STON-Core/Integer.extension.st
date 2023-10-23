@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Integer >> stonOn: stonWriter [
 	stonWriter writeInteger: self
 ]

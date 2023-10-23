@@ -2,44 +2,46 @@
 I am a command to add packages scope to listScopes
 "
 Class {
-	#name : #SycAddPackagesScopeCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycAddPackagesScopeCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'packages'
 	],
-	#category : #'SystemCommands-PackageCommands-Scope'
+	#category : 'SystemCommands-PackageCommands-Scope',
+	#package : 'SystemCommands-PackageCommands',
+	#tag : 'Scope'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddPackagesScopeCommand >> defaultMenuIconName [
 	^ #add
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddPackagesScopeCommand >> defaultMenuItemName [
 	^ 'Add to scope list'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddPackagesScopeCommand >> execute [
 	| scope |
 	scope := RBBrowserEnvironment new forPackages: packages.
 	RefactoringSettings addScope: scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddPackagesScopeCommand >> packages [
 
 	^ packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddPackagesScopeCommand >> packages: anObject [
 
 	packages := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddPackagesScopeCommand >> prepareFullExecutionInContext: aBrowserContext [
 
 	super prepareFullExecutionInContext: aBrowserContext.

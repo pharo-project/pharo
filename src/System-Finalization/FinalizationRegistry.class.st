@@ -44,8 +44,8 @@ When the GC detects an object of interest is going to be collected, the `Finaliz
 I procceed to send #finalize to the finalizer, and remove the entry from myself.
 "
 Class {
-	#name : #FinalizationRegistry,
-	#superclass : #Object,
+	#name : 'FinalizationRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'semaphore',
 		'errorHandler',
@@ -54,22 +54,24 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'System-Finalization-Registry'
+	#category : 'System-Finalization-Registry',
+	#package : 'System-Finalization',
+	#tag : 'Registry'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry class >> default [
 
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> add: anObject [
 
 	^ self add: anObject finalizer: anObject finalizer
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> add: anObject executor: finalizer [
 
 	self
@@ -79,7 +81,7 @@ FinalizationRegistry >> add: anObject executor: finalizer [
 	^ self add: anObject finalizer: finalizer
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> add: anObject finalizer: finalizer [
 
 	self protected: [ | newEntry |
@@ -89,7 +91,7 @@ FinalizationRegistry >> add: anObject finalizer: finalizer [
 	^ anObject
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> ephemeronAtKey: aKey [
 	| current |
 	current := ephemeronListHead.
@@ -102,18 +104,18 @@ FinalizationRegistry >> ephemeronAtKey: aKey [
 	^ nil
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FinalizationRegistry >> errorHandler [
 	
 	^ errorHandler ifNil: [ self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry >> errorHandler: anErrorHandler [ 
 	errorHandler := anErrorHandler
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FinalizationRegistry >> finalizeEphemeron: anEphemeron [
 
 	"Finalize the ephemeron finalizer and remove it from myself.
@@ -124,19 +126,19 @@ FinalizationRegistry >> finalizeEphemeron: anEphemeron [
 		anEphemeron value finalize ]
 ]
 
-{ #category : #'private - synchronization' }
+{ #category : 'private - synchronization' }
 FinalizationRegistry >> handleErrorsDuring: aBlock [
 
 	aBlock on: Error fork: [ :e | e pass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinalizationRegistry >> includes: anObject [
 
     ^ ephemeronListHead includes: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FinalizationRegistry >> initialize [
 
 	super initialize.
@@ -148,19 +150,19 @@ FinalizationRegistry >> initialize [
 	errorHandler := self.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinalizationRegistry >> isEmpty [
 		
 	^ ephemeronListHead next isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry >> keys [
 
 	^ ephemeronListHead keys
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FinalizationRegistry >> postCopy [
 	"should we prohibit any attempts to copy the receiver?"
 	self protected: [
@@ -169,7 +171,7 @@ FinalizationRegistry >> postCopy [
 	]
 ]
 
-{ #category : #'private - synchronization' }
+{ #category : 'private - synchronization' }
 FinalizationRegistry >> protected: aBlock [
 	"Execute aBlock protected by the accessLock"
 
@@ -178,7 +180,13 @@ FinalizationRegistry >> protected: aBlock [
 		ifError: [ :err | err signal ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
+FinalizationRegistry >> remove: aKey [
+
+	^ self remove: aKey ifAbsent: [ NotFound signalFor: aKey ]
+]
+
+{ #category : 'adding' }
 FinalizationRegistry >> remove: aKey ifAbsent: aBlock [
 	| ephemeron |
 	ephemeron := self ephemeronAtKey: aKey.
@@ -186,26 +194,26 @@ FinalizationRegistry >> remove: aKey ifAbsent: aBlock [
 	^ self removeEphemeron: ephemeron
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> removeEphemeron: anEphemeron [
 
 	self protected: [ 
 		anEphemeron removeFromChain ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry >> size [
 
 	^ ephemeronListHead size - 1 "The head does not count"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistry >> values [
 
 	^ ephemeronListHead values
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FinalizationRegistry >> valuesDo: aBlock [
 
 	^ self values do: aBlock

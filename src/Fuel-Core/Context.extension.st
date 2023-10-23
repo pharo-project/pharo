@@ -1,6 +1,6 @@
-Extension { #name : #Context }
+Extension { #name : 'Context' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Context >> cleanCopy [ 
 
 	^ self class 
@@ -10,13 +10,13 @@ Context >> cleanCopy [
 		arguments: #()
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Context >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitMethodContext: self
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Context class >> newFromFrameSize: aFrameSize [
 	
 	^ super basicNew: aFrameSize

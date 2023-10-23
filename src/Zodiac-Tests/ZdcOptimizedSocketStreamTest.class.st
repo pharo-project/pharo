@@ -2,17 +2,18 @@
 ZdcOptimizedSocketStreamTests tests ZdcOptimizedSocketStream
 "
 Class {
-	#name : #ZdcOptimizedSocketStreamTest,
-	#superclass : #ZdcAbstractSocketStreamTest,
-	#category : #'Zodiac-Tests'
+	#name : 'ZdcOptimizedSocketStreamTest',
+	#superclass : 'ZdcAbstractSocketStreamTest',
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcOptimizedSocketStreamTest class >> isAbstract [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcOptimizedSocketStreamTest >> socketStreamClass [
 	^ ZdcOptimizedSocketStream
 ]

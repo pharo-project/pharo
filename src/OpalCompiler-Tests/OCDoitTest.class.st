@@ -1,40 +1,42 @@
 Class {
-	#name : #OCDoitTest,
-	#superclass : #TestCase,
+	#name : 'OCDoitTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'ivarForTesting'
 	],
-	#category : #'OpalCompiler-Tests-Misc'
+	#category : 'OpalCompiler-Tests-Misc',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Misc'
 }
 
-{ #category : #binding }
+{ #category : 'binding' }
 OCDoitTest >> bindingOf: aSelector [
 	^(aSelector == #requestorVarForTesting)
 		ifTrue: [WorkspaceVariable key: aSelector value: 5 ]
 		ifFalse:  [nil]
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 OCDoitTest >> canAddBindingOf: aSymbol [
 	^ true
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 OCDoitTest >> hasBindingOf: aSelector [
 	^aSelector == #requestorVarForTesting
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 OCDoitTest >> needRequestorScope [
 	^true
 ]
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 OCDoitTest >> notify: aString at: anInteger in: aString3 [
 	"we ignore"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItContextReadGlobal [
 	"we can read a global from a doit when executing against a context"
 
@@ -43,7 +45,7 @@ OCDoitTest >> testDoItContextReadGlobal [
 	self assert: value equals: Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItContextReadIvar [
 
 	| value method |
@@ -55,7 +57,7 @@ OCDoitTest >> testDoItContextReadIvar [
 	self assert: value equals: #someValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItContextReadIvarSubclass [
 
 	| ctx value method |
@@ -71,7 +73,7 @@ OCDoitTest >> testDoItContextReadIvarSubclass [
 	self assert: ivarForTesting equals: #someOtherValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItContextReadTemp [
 	| tempForTesting value |
 	"we can read this temp from a doit when executing against thisContext"
@@ -82,7 +84,7 @@ OCDoitTest >> testDoItContextReadTemp [
 	self assert: value equals: #someValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItExtraBindings [
 	"We can use extra bindings in a DoIt"
 
@@ -93,14 +95,14 @@ OCDoitTest >> testDoItExtraBindings [
 	self assert: result equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItHalt [
 
 	self should: [OpalCompiler new
 			evaluate: 'self halt'] raise: Halt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItHaltBinding [
 	"We can evaluate with a halt and extra bindings"
 
@@ -109,7 +111,7 @@ OCDoitTest >> testDoItHaltBinding [
 			evaluate: 'self halt'] raise: Halt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItRequestorEvalError [
 	| value |
 	value  := OpalCompiler new
@@ -119,7 +121,7 @@ OCDoitTest >> testDoItRequestorEvalError [
 	self assert: value isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItRequestorOptimized [
 
 	| value  |
@@ -135,7 +137,7 @@ OCDoitTest >> testDoItRequestorOptimized [
 	self assert: value equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItRequestorReadRequestorVar [
 
 	| value  |
@@ -147,7 +149,7 @@ OCDoitTest >> testDoItRequestorReadRequestorVar [
 	self assert: value equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoItRequestorShadow [
 
 	| value  |
@@ -159,7 +161,7 @@ OCDoitTest >> testDoItRequestorShadow [
 	self assert: value equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDoitTest >> testDoitContextCheckClass [
 	"if we create a parse tree for a doit in a context, the class should be correctly set"
 

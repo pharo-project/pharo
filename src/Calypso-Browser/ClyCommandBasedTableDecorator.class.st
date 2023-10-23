@@ -4,12 +4,14 @@ I allow extend table cell with command based iconic buttons.
 Any command class which is annotated with ClyTableIconCommandActivation will be represented by clickable icon in main table cell
 "
 Class {
-	#name : #ClyCommandBasedTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-Browser-Table'
+	#name : 'ClyCommandBasedTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
 	ClyTableIconCommandActivation
@@ -18,18 +20,18 @@ ClyCommandBasedTableDecorator class >> decorateMainTableCell: anItemCellMorph in
 			commandActivator decorateTableCell: anItemCellMorph ]
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 
 	^ClyTableDecorationStrategyAnnotation for: ClyBrowserContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCommandBasedTableDecorator class >> priority [
 	"command based decoration should be in most priority then anything else"
 	^1000

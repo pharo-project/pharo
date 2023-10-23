@@ -1,12 +1,12 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 String >> asDraggableMorph [
 
 	^ self asStringMorph
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 String >> asMorph [
 	"Answer the receiver as a StringMorph"
 
@@ -15,7 +15,7 @@ String >> asMorph [
 "'bugs black blood' asMorph openInHand"
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 String >> asStringMorph [
 	"Answer the receiver as a StringMorph"
 
@@ -24,19 +24,19 @@ String >> asStringMorph [
 "'bugs black blood' asStringMorph openInHand"
 ]
 
-{ #category : #'*Morphic-Base-Pluggable Widgets' }
+{ #category : '*Morphic-Base-Pluggable Widgets' }
 String >> beginsWith: aString fromList: aMorph [
 
 	^ self trimBoth asLowercase beginsWith: aString
 ]
 
-{ #category : #'*Morphic-Base-Widgets' }
+{ #category : '*Morphic-Base-Widgets' }
 String >> heightToDisplayInList: aList [
 
 	^ aList font height
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 String >> indentationIfBlank: aBlock [
 	"Answer the number of leading tabs in the receiver.  If there are
 	 no visible characters, pass the number of tabs to aBlock and return its value."
@@ -54,7 +54,7 @@ String >> indentationIfBlank: aBlock [
 	^ leadingTabs
 ]
 
-{ #category : #'*Morphic-Base-Widgets' }
+{ #category : '*Morphic-Base-Widgets' }
 String >> listRenderOn: aCanvas atRow: aRow bounds: bounds color: color backgroundColor: backgroundColor from: aMorph [
 
 	aCanvas
@@ -64,7 +64,7 @@ String >> listRenderOn: aCanvas atRow: aRow bounds: bounds color: color backgrou
 		color: color
 ]
 
-{ #category : #'*Morphic-Base-Widgets' }
+{ #category : '*Morphic-Base-Widgets' }
 String >> widthToDisplayInList: aList [
 
 	^ aList font widthOfStringOrText: self contents

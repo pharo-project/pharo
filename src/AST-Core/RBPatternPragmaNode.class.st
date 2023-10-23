@@ -7,22 +7,24 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBPatternPragmaNode,
-	#superclass : #RBPragmaNode,
+	#name : 'RBPatternPragmaNode',
+	#superclass : 'RBPragmaNode',
 	#instVars : [
 		'isList'
 	],
-	#category : #'AST-Core-Pattern'
+	#category : 'AST-Core-Pattern',
+	#package : 'AST-Core',
+	#tag : 'Pattern'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBPatternPragmaNode class >> selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	^(aSelector isPatternVariable)
 		ifTrue: [ super selector: aSelector keywordsPositions: positionList arguments: valueNodes ]
 		ifFalse: [ RBPragmaNode selector: aSelector keywordsPositions: positionList arguments: valueNodes ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternPragmaNode >> copyInContext: aDictionary [
 	| keywordSelector |
 	keywordSelector := self isSelectorList
@@ -33,17 +35,17 @@ RBPatternPragmaNode >> copyInContext: aDictionary [
 		arguments: (self copyList: self arguments inContext: aDictionary)
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternPragmaNode >> isPatternNode [
 	^ true
 ]
 
-{ #category : #'testing - matching' }
+{ #category : 'testing - matching' }
 RBPatternPragmaNode >> isSelectorList [
 	^ isList
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternPragmaNode >> match: aNode inContext: aDictionary [
 	aNode class = self matchingClass
 		ifFalse: [ ^ false ].
@@ -53,7 +55,7 @@ RBPatternPragmaNode >> match: aNode inContext: aDictionary [
 	^ self matchArgumentsAgainst: aNode inContext: aDictionary
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternPragmaNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	self arguments size = aNode arguments size
 		ifFalse: [ ^ false ].
@@ -65,7 +67,7 @@ RBPatternPragmaNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	^ true
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	self selectorParts with: aNode selectorParts do: [ :first :second |
 		| keyword |
@@ -80,12 +82,12 @@ RBPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBPatternPragmaNode >> matchingClass [
 	^ RBPragmaNode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBPatternPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	self
 		arguments: valueNodes;
@@ -94,7 +96,7 @@ RBPatternPragmaNode >> selector: aSymbol keywordsPositions: positionList argumen
 	isList := (aSymbol keywords first value at: 2) == self listCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternPragmaNode >> sentMessages [
 	^ super sentMessages
 		remove: self selector ifAbsent: [ ];

@@ -2,23 +2,25 @@
 I model the fact that a test generated an error.
 "
 Class {
-	#name : #DTErrorResultType,
-	#superclass : #DTTestResultType,
-	#category : #'DrTests-TestsRunner-Results'
+	#name : 'DTErrorResultType',
+	#superclass : 'DTTestResultType',
+	#category : 'DrTests-TestsRunner-Results',
+	#package : 'DrTests-TestsRunner',
+	#tag : 'Results'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 DTErrorResultType class >> backgroundColorStyle [
 
 	^ 'testError'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTErrorResultType >> isError [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTErrorResultType >> name [
 	^ 'Error'
 ]

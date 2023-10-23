@@ -2,12 +2,14 @@
 An utility class for exporting code to changesets (*.cs) or Smalltalk source (*.st) files
 "
 Class {
-	#name : #CodeExporter,
-	#superclass : #Object,
-	#category : #'CodeExport-Base'
+	#name : 'CodeExporter',
+	#superclass : 'Object',
+	#category : 'CodeExport-Base',
+	#package : 'CodeExport',
+	#tag : 'Base'
 }
 
-{ #category : #'file-out' }
+{ #category : 'file-out' }
 CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOrCsFlag [
 
 	| extension targetFile |
@@ -17,7 +19,7 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 	self writeSourceCodeFrom: aStream toFileReference: targetFile
 ]
 
-{ #category : #'file-out' }
+{ #category : 'file-out' }
 CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReference [
 	"Write the supplied changes to aFileReference"
 

@@ -5,7 +5,8 @@ Currently this bar is known as #textSegmentIcons ruler in the Rubric editor. It 
 I provide context menu by cmd+click or right click on this Rubric area: I build normal context menu with commands annotated by me.
 "
 Class {
-	#name : #CmdTextLeftBarMenuActivation,
-	#superclass : #CmdMenuCommandActivationStrategy,
-	#category : #'Commander-Activators-TextView'
+	#name : 'CmdTextLeftBarMenuActivation',
+	#superclass : 'CmdMenuCommandActivationStrategy',
+	#category : 'Commander-Activators-TextView',
+	#package : 'Commander-Activators-TextView'
 }

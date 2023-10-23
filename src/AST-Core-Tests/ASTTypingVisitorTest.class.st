@@ -2,12 +2,14 @@
 An ASTTypingVisitorTest is a test class for testing the behavior of ASTTypingVisitor
 "
 Class {
-	#name : #ASTTypingVisitorTest,
-	#superclass : #TestCase,
-	#category : #'AST-Core-Tests-Type'
+	#name : 'ASTTypingVisitorTest',
+	#superclass : 'TestCase',
+	#category : 'AST-Core-Tests-Type',
+	#package : 'AST-Core-Tests',
+	#tag : 'Type'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ASTTypingVisitorTest >> assertTypedTree: aNode [
 
 	aNode nodesDo: [ :node |
@@ -17,7 +19,7 @@ ASTTypingVisitorTest >> assertTypedTree: aNode [
 				equals: type ] ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ASTTypingVisitorTest >> exampleCHA [
 	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
 
@@ -30,7 +32,7 @@ ASTTypingVisitorTest >> exampleCHA [
 	bool not "<Boolean>" "Without CHA, type is nil as Boolean>>#not is subclass responsibility"
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ASTTypingVisitorTest >> exampleKernel: arg1 and: arg2 [
 	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
 	"List of special kernel method"
@@ -59,7 +61,7 @@ ASTTypingVisitorTest >> exampleKernel: arg1 and: arg2 [
 	(Object at: 1) "<>" "not special"
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ASTTypingVisitorTest >> exampleLoop [
 	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
 
@@ -71,7 +73,7 @@ ASTTypingVisitorTest >> exampleLoop [
 	^ tmp "<Boolean>"
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ASTTypingVisitorTest >> exampleMethod [
 	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
 
@@ -93,7 +95,7 @@ ASTTypingVisitorTest >> exampleMethod [
 	^ ((self "<ASTTypingVisitorTest>") class "<ASTTypingVisitorTest class>") isNil "<Boolean>"
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ASTTypingVisitorTest >> exampleMethod2 [
 	"DO NOT REFORMAT, or type expectations (in special comments) will be lost"
 
@@ -107,7 +109,7 @@ ASTTypingVisitorTest >> exampleMethod2 [
 	self exampleMethod "<Boolean>" "Can handle simple inter-procedural calls"
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ASTTypingVisitorTest >> expectedNodeType: aNode [
 	"Check that all node with a comment ""<SomeType>"" have the correct corresponding `#type` property."
 
@@ -121,7 +123,7 @@ ASTTypingVisitorTest >> expectedNodeType: aNode [
 	^ nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTTypingVisitorTest >> testExampleCHA [
 
 	| typeVisitor ast methods |
@@ -138,7 +140,7 @@ ASTTypingVisitorTest >> testExampleCHA [
 	self assertTypedTree: ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTTypingVisitorTest >> testExampleKernel [
 
 	| typeVisitor ast |
@@ -148,7 +150,7 @@ ASTTypingVisitorTest >> testExampleKernel [
 	self assertTypedTree: ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTTypingVisitorTest >> testExampleLoop [
 
 	| typeVisitor ast |
@@ -158,7 +160,7 @@ ASTTypingVisitorTest >> testExampleLoop [
 	self assertTypedTree: ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTTypingVisitorTest >> testExampleMethod [
 
 	| typeVisitor ast |
@@ -168,7 +170,7 @@ ASTTypingVisitorTest >> testExampleMethod [
 	self assertTypedTree: ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTTypingVisitorTest >> testExampleMethod2 [
 
 	| typeVisitor ast |

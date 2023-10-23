@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 String >> lastIndexOfPKSignature: aSignature [
 	"Answer the last index in me where aSignature (4 bytes long) occurs, or 0 if not found"
 	| a b c d |
@@ -18,7 +18,7 @@ String >> lastIndexOfPKSignature: aSignature [
 	^0
 ]
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 String >> unzipped [
 	| magic1 magic2 |
 	magic1 := (self at: 1) asInteger.
@@ -27,7 +27,7 @@ String >> unzipped [
 	^(GZipReadStream on: self) upToEnd
 ]
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 String >> zipped [
 	| gzstream |
 

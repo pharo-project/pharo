@@ -26,26 +26,28 @@ and used many times during the life time of surface.
 
 "
 Class {
-	#name : #GradientPaint,
-	#superclass : #AthensAbstractPaint,
+	#name : 'GradientPaint',
+	#superclass : 'AthensAbstractPaint',
 	#instVars : [
 		'colorRamp'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientPaint >> atStop: anOffset put: aColor [
 
 	colorRamp add: (anOffset -> aColor)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientPaint >> colorRamp [
 	^ colorRamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientPaint >> colorRamp: aRamp [
 	"The color ramp is a collection of associations with keys - floating point values between 0 and 1
 	 and values with Colors, for example:
@@ -55,7 +57,7 @@ GradientPaint >> colorRamp: aRamp [
 	colorRamp := aRamp copy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GradientPaint >> initialize [
 	super initialize.
 	colorRamp := OrderedCollection new

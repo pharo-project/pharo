@@ -2,34 +2,36 @@
 Example for abstract package nodes
 "
 Class {
-	#name : #PackageAbstractNodeExample,
-	#superclass : #MorphTreeNodeModel,
+	#name : 'PackageAbstractNodeExample',
+	#superclass : 'MorphTreeNodeModel',
 	#instVars : [
 		'contents'
 	],
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> browseItem [
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 PackageAbstractNodeExample >> contents [
 	^ contents ifNil: [contents := super contents]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> doubleClick [
 	self browseItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> inspectItem [
 	self inspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
@@ -40,7 +42,7 @@ PackageAbstractNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageAbstractNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Expand all'

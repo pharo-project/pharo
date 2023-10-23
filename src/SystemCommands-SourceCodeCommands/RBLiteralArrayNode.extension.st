@@ -1,6 +1,6 @@
-Extension { #name : #RBLiteralArrayNode }
+Extension { #name : 'RBLiteralArrayNode' }
 
-{ #category : #'*SystemCommands-SourceCodeCommands' }
+{ #category : '*SystemCommands-SourceCodeCommands' }
 RBLiteralArrayNode >> displaySourceCode [
 	| code |
 	code := super displaySourceCode.

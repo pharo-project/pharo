@@ -13,18 +13,20 @@ To achieve this, this subclass has 4 new attributes: sourceCodePanel, coveredNod
 4) `DTCoveragePluginPresenter>>#addHighlightingOf:withColor:` applies the highlighting to the source code panel for each attribute (coveredNodes, uncoveredNodes, and yellowNodes).
 "
 Class {
-	#name : #DTCoveragePluginPresenter,
-	#superclass : #DTDefaultPluginPresenter,
+	#name : 'DTCoveragePluginPresenter',
+	#superclass : 'DTDefaultPluginPresenter',
 	#instVars : [
 		'sourceCodePanel',
 		'coveredNodes',
 		'uncoveredNodes',
 		'yellowNodes'
 	],
-	#category : #'DrTests-Spec'
+	#category : 'DrTests-Spec',
+	#package : 'DrTests',
+	#tag : 'Spec'
 }
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 DTCoveragePluginPresenter >> addHighlightingOf: nodesCollection withColor: aColor [
 
 	nodesCollection do: [ :node |
@@ -35,7 +37,7 @@ DTCoveragePluginPresenter >> addHighlightingOf: nodesCollection withColor: aColo
 				 highlightColor: aColor) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTCoveragePluginPresenter >> cleanAttributesForHighlighting [
 	" Clean the attributes to store new value to display on Source Code panel "
 
@@ -44,7 +46,7 @@ DTCoveragePluginPresenter >> cleanAttributesForHighlighting [
 	coveredNodes := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTCoveragePluginPresenter >> connectPresenters [
 
 	super connectPresenters.
@@ -62,7 +64,7 @@ DTCoveragePluginPresenter >> connectPresenters [
 				self updateSourceCodePanel: item content ] ] ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DTCoveragePluginPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -83,7 +85,7 @@ DTCoveragePluginPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 DTCoveragePluginPresenter >> defineColorCoverage: aMethod [
 
 	aMethod ast nodesDo: [ :node |
@@ -97,7 +99,7 @@ DTCoveragePluginPresenter >> defineColorCoverage: aMethod [
 		node isMessage ifTrue: [ self defineColorMessageNode: node ] ]
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 DTCoveragePluginPresenter >> defineColorMessageNode: aRBMessageNode [
 	"handle arguments of a RBMessageNode"
 
@@ -109,14 +111,14 @@ DTCoveragePluginPresenter >> defineColorMessageNode: aRBMessageNode [
 			ifFalse: [ yellowNodes add: aRBMessageNode . ] ]
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 DTCoveragePluginPresenter >> hasRBSequenceNodeInside: aSequenceNode [
 
 	^ aSequenceNode statements anySatisfy: [ :statement |
 		  statement allChildren anySatisfy: [ :node | node isSequence ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTCoveragePluginPresenter >> initializeResultsTreeAndLabel [
 
 	resultLabel := self newLabel label: 'Results:'.
@@ -133,7 +135,7 @@ DTCoveragePluginPresenter >> initializeResultsTreeAndLabel [
 	sourceCodePanel := self instantiate: SpCodePresenter .
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DTCoveragePluginPresenter >> updateSourceCodePanel: compiledMethod [
 	" The colors overlap and paint in descending order"
 

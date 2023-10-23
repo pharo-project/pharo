@@ -4,12 +4,14 @@ I provide tagged class groups.
 I collect all class tags from the package scope and create ClyTaggedClassGroup instances for each of them
 "
 Class {
-	#name : #ClyTaggedClassGroupProvider,
-	#superclass : #ClyClassGroupProvider,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyTaggedClassGroupProvider',
+	#superclass : 'ClyClassGroupProvider',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClyTaggedClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
 	| classGroups group |
 	classGroups := Dictionary new.

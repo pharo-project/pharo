@@ -12,17 +12,19 @@ PaSelectedCasesExampleTest class >> testParameters
 ```
 "
 Class {
-	#name : #PaSelectedCasesExampleTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'PaSelectedCasesExampleTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'number1',
 		'number2',
 		'result'
 	],
-	#category : #'ParametrizedTests-Examples'
+	#category : 'ParametrizedTests-Examples',
+	#package : 'ParametrizedTests',
+	#tag : 'Examples'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 PaSelectedCasesExampleTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -31,37 +33,37 @@ PaSelectedCasesExampleTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSelectedCasesExampleTest >> number1 [
 	^ number1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSelectedCasesExampleTest >> number1: anObject [
 	number1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSelectedCasesExampleTest >> number2 [
 	^ number2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSelectedCasesExampleTest >> number2: anObject [
 	number2 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSelectedCasesExampleTest >> result [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSelectedCasesExampleTest >> result: anObject [
 	result := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSelectedCasesExampleTest >> testSum [
 
 	self assert: number1 + number2 equals: result

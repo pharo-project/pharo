@@ -1,11 +1,11 @@
-Extension { #name : #ClyMethodCodeEditorToolMorph }
+Extension { #name : 'ClyMethodCodeEditorToolMorph' }
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Browser' }
+{ #category : '*Calypso-SystemPlugins-Critic-Browser' }
 ClyMethodCodeEditorToolMorph >> criticAnalysisScope [
 	^ ClyMethodScope of: editingMethod in: browser navigationEnvironment
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Browser' }
+{ #category : '*Calypso-SystemPlugins-Critic-Browser' }
 ClyMethodCodeEditorToolMorph >> decorateByCritic: aCriticTool [
 	| segments |
 	(textMorph segments select: [ :each | each class = ClyCriticalTextSegmentMorph ])
@@ -15,7 +15,7 @@ ClyMethodCodeEditorToolMorph >> decorateByCritic: aCriticTool [
 	segments do: [ :each | textMorph addSegment: each]
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Browser' }
+{ #category : '*Calypso-SystemPlugins-Critic-Browser' }
 ClyMethodCodeEditorToolMorph >> supportsCriticDecoration [
 	^true
 ]

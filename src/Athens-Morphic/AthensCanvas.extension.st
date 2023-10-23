@@ -1,12 +1,12 @@
-Extension { #name : #AthensCanvas }
+Extension { #name : 'AthensCanvas' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensCanvas >> asCanvasWrapper [
 
 	^AthensCanvasWrapper on: self
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensCanvas >> fullDrawMorph: aMorph [
 
 "Hook method for potential other canvases. In the core, this method looks supefluous but PostscriptCanvases and other canvases can specialized it for Morph rendering. Therefore it should not be merged with fullDraw:."
@@ -14,7 +14,7 @@ AthensCanvas >> fullDrawMorph: aMorph [
 	aMorph fullDrawOnAthensCanvas: self
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensCanvas >> morphicDrawString: string at: position font: aFont color: aColor [
 
 	self pathTransform restoreAfter: [
@@ -26,7 +26,7 @@ AthensCanvas >> morphicDrawString: string at: position font: aFont color: aColor
 	]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensCanvas >> morphicDrawString: string in: rect font: aFont color: aColor [
 	self
 		clipBy: rect

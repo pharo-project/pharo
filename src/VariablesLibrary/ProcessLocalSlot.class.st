@@ -24,12 +24,14 @@ obj local. “nil” <—— Now we don’t
 
 "
 Class {
-	#name : #ProcessLocalSlot,
-	#superclass : #IndexedSlot,
-	#category : #'VariablesLibrary-Slots'
+	#name : 'ProcessLocalSlot',
+	#superclass : 'IndexedSlot',
+	#category : 'VariablesLibrary-Slots',
+	#package : 'VariablesLibrary',
+	#tag : 'Slots'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ProcessLocalSlot >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varname value: <stackTop>'"
 	| temp |
@@ -45,33 +47,33 @@ ProcessLocalSlot >> emitStore: aMethodBuilder [
 	aMethodBuilder send: #value:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ProcessLocalSlot >> emitValue: aMethodBuilder [
 	"Push the process local variable into the stack"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder send: #value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessLocalSlot >> initialize: anObject [
 	super write: ProcessLocalVariable new to: anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ProcessLocalSlot >> read: anObject [
-
+	<reflection: 'Object Inspection - State inspection'>
 	^ (super read: anObject) value
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ProcessLocalSlot >> wantsInitialization [
 
 	^ true
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ProcessLocalSlot >> write: aValue to: anObject [
-
+	<reflection: 'Object Modification - State modification'>
 	(super read: anObject) value: aValue.
 	^ aValue
 ]

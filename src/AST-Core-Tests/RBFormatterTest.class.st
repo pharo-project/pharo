@@ -2,18 +2,20 @@
 SUnit tests for BISimpleFormatter
 "
 Class {
-	#name : #RBFormatterTest,
-	#superclass : #RBParseTreeTest,
-	#category : #'AST-Core-Tests-Formatter'
+	#name : 'RBFormatterTest',
+	#superclass : 'RBParseTreeTest',
+	#category : 'AST-Core-Tests-Formatter',
+	#package : 'AST-Core-Tests',
+	#tag : 'Formatter'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBFormatterTest >> formatClass: aClass [
 	aClass selectors
 		do: [ :each | self formatClass: aClass selector: each ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBFormatterTest >> formatClass: aClass selector: aSymbol [
 	| source tree1 tree2 |
 	source := aClass sourceCodeAt: aSymbol.
@@ -24,12 +26,12 @@ RBFormatterTest >> formatClass: aClass selector: aSymbol [
 	self assert: tree1 equals: tree2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBFormatterTest >> formatterClass [
   ^RBSimpleFormatter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFormatterTest >> testCoreSystem [
 	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
 		do: [ :each |
@@ -40,7 +42,7 @@ RBFormatterTest >> testCoreSystem [
 				formatClass: class class ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	| inputSource tree outputSource |
 	"formatter should not create invalid code by removing whitespace between #= and >"
@@ -62,7 +64,7 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	self shouldnt: [self parseMethod: outputSource] raise: CodeError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFormatterTest >> testLiteralDynamicArray [
 	| source tree1 |
 	source := 'foo ^ { ''film'' . ''FILM''} '.
@@ -70,7 +72,7 @@ RBFormatterTest >> testLiteralDynamicArray [
 	self assert: ((self formatterClass new format: tree1) occurrencesOf: $.) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFormatterTest >> testParseError [
 
 	| source node |
@@ -79,7 +81,7 @@ RBFormatterTest >> testParseError [
 	self assert: node formattedCode equals: source
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFormatterTest >> testPreserveLiteralArrayFormat [
 	| inputSource literalArrayNode |
 	"symbols within a literal array can omit the # character, if it is used that way,
@@ -89,7 +91,7 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 	self assert: literalArrayNode source equals: literalArrayNode formattedCode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBFormatterTest >> testPreserveLiteralNumberFormat [
 	| inputSource numbersNode |
 	"Literal numbers can be written in different ways, integer, integer with

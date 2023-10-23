@@ -12,20 +12,22 @@ Object subclass: #TT
 	package: 'TT'
 "
 Class {
-	#name : #ComputedSlot,
-	#superclass : #Slot,
+	#name : 'ComputedSlot',
+	#superclass : 'Slot',
 	#instVars : [
 		'block'
 	],
-	#category : #'VariablesLibrary-Slots'
+	#category : 'VariablesLibrary-Slots',
+	#package : 'VariablesLibrary',
+	#tag : 'Slots'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ComputedSlot >> = other [
 	^ super = other and: [block = other block]
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ComputedSlot >> emitValue: methodBuilder [
 	"generate the bytecode for 'block cull: self'"
 	methodBuilder
@@ -34,19 +36,19 @@ ComputedSlot >> emitValue: methodBuilder [
 		send: #cull:
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ComputedSlot >> hasSameDefinitionAs: otherSlot [
 	"other then #=, we use string comparision for the blocks here"
 	^ (super hasSameDefinitionAs: otherSlot)
 		and: [ block printString = otherSlot block printString ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ComputedSlot >> hash [
 	^super hash bitXor: block hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ComputedSlot >> printOn: aStream [
 	aStream
 		store: self name;
@@ -56,18 +58,19 @@ ComputedSlot >> printOn: aStream [
 		print: block
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ComputedSlot >> read: anObject [
 	"we use #cull: to support both 0-arg and 1-arg blocks"
+	<reflection: 'Object Inspection - State inspection'>
 	^block cull: anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ComputedSlot >> with: aBlock [
 	block := aBlock
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ComputedSlot >> write: aValue to: anObject [
 	"ignored, as the slot returns the computed value on read"
 ]

@@ -2,28 +2,29 @@
 SUnit tests for registration on the Pharo session manager
 "
 Class {
-	#name : #SessionManagerRegistrationTest,
-	#superclass : #TestCase,
+	#name : 'SessionManagerRegistrationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'manager'
 	],
-	#category : #'System-SessionManager-Tests'
+	#category : 'System-SessionManager-Tests',
+	#package : 'System-SessionManager-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SessionManagerRegistrationTest >> setUp [
 	super setUp.
 	manager := SessionManager new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenARegisteredClassHandlerShouldHasRegisteredReturnsTrue [
 	manager registerSystemClassNamed: #Foo.
 
 	self assert: (manager hasRegistered: #Foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandlerIsUpdated [
 
 	manager registerSystemClassNamed: #Foo.
@@ -33,7 +34,7 @@ SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandler
 		equals: #( Bar )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategoriesShoudlLastClassRegistrationBeTheOnlyOccurrenceInStartupList [
 
 	manager registerSystemClassNamed: #Foo.
@@ -45,7 +46,7 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategorie
 		equals: #( Bar Foo )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryAtDifferentPriorityShoudlAClassBePresentOnlyOnceInStartupList [
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Bar atPriority: 15.
@@ -56,7 +57,7 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryAtDiff
 		equals: #( Bar Foo )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryShoudlAClassBePresentOnlyOnceInStartupList [
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Bar.
@@ -67,7 +68,7 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryShoudl
 		equals: #( Bar Foo )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenUnknonwnHandledIdShouldHasRegisteredReturnsFalse [
 	self deny: (manager hasRegistered: #Foo)
 ]

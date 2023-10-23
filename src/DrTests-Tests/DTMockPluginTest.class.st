@@ -2,12 +2,13 @@
 A DTMockPluginTest is a test class for testing the behavior of DTMockPlugin
 "
 Class {
-	#name : #DTMockPluginTest,
-	#superclass : #TestCase,
-	#category : #'DrTests-Tests'
+	#name : 'DTMockPluginTest',
+	#superclass : 'TestCase',
+	#category : 'DrTests-Tests',
+	#package : 'DrTests-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTMockPluginTest >> testResultTreeViews [
 	| plugin treeViews |
 	plugin := DTMockPlugin new.

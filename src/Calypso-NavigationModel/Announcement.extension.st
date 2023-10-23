@@ -1,6 +1,6 @@
-Extension { #name : #Announcement }
+Extension { #name : 'Announcement' }
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 Announcement >> shouldBeConsideredByCalypsoEnvironment [
 	^true
 ]

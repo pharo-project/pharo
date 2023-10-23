@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Traits-Queries-Tests-PExtendingTrait' }
+Package { #name : 'Calypso-SystemPlugins-Traits-Queries-Tests-PExtendingTrait' }

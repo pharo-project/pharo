@@ -2,16 +2,17 @@
 I can compare an old class and a builder to detect if the layout kind changed and if there is need to propagate it.
 "
 Class {
-	#name : #ShBitLayoutChangeDetector,
-	#superclass : #ShAbstractChangeDetector,
-	#category : #'Shift-Changes'
+	#name : 'ShBitLayoutChangeDetector',
+	#superclass : 'ShAbstractChangeDetector',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ShBitLayoutChangeDetector >> compareClass [
 	| oldLayout newLayout bitLayoutNames |
 	oldLayout := builder oldClass classLayout class name.
-	newLayout := builder layoutDefinition layoutClass name.
+	newLayout := builder layoutClass name.
 
 	oldLayout = newLayout ifTrue: [ ^ #() ].
 	bitLayoutNames := BitsLayout allSubclasses collect: [ :e | e name ].

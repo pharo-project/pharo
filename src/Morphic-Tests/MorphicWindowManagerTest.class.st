@@ -2,12 +2,13 @@
 A MorphicWindowManagerTest is a test class for testing the behavior of MorphicWindowManager
 "
 Class {
-	#name : #MorphicWindowManagerTest,
-	#superclass : #AbstractWindowManagerTest,
-	#category : #'Morphic-Tests'
+	#name : 'MorphicWindowManagerTest',
+	#superclass : 'AbstractWindowManagerTest',
+	#category : 'Morphic-Tests',
+	#package : 'Morphic-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteANonOpenWindowFails [
 
 	| newWindow |
@@ -23,7 +24,7 @@ MorphicWindowManagerTest >> testDeleteANonOpenWindowFails [
 				equals: 'Cannot delete non open window' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteAWindow [
 
 	| newWindow |
@@ -35,7 +36,7 @@ MorphicWindowManagerTest >> testDeleteAWindow [
 	self assert: manager numberOfOpenWindows equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteAWindowAndTaskBarActualized [
 
 	| newWindow |
@@ -56,7 +57,7 @@ MorphicWindowManagerTest >> testDeleteAWindowAndTaskBarActualized [
 	self assert: manager taskBar submorphs size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteAllWindow [
 
 	manager newWindowWithRoot: Morph new.
@@ -69,7 +70,7 @@ MorphicWindowManagerTest >> testDeleteAllWindow [
 	self assert: manager numberOfOpenWindows equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteAllWindowToLeftOfAWindow [
 
 	| newWindow |
@@ -89,7 +90,7 @@ MorphicWindowManagerTest >> testDeleteAllWindowToLeftOfAWindow [
 	self assert: manager numberOfOpenWindows equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteAllWindowToLeftOfAWindowWhenDontHaveWindowOnLeft [
 
 	| newWindow |
@@ -100,7 +101,7 @@ MorphicWindowManagerTest >> testDeleteAllWindowToLeftOfAWindowWhenDontHaveWindow
 	self assert: manager numberOfOpenWindows equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteAllWindowToRightOfAWindow [
 
 	| newWindow |
@@ -120,7 +121,7 @@ MorphicWindowManagerTest >> testDeleteAllWindowToRightOfAWindow [
 	self assert: manager numberOfOpenWindows equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testDeleteAllWindowToRightOfAWindowWhenDontHaveWindowOnRight [
 
 	| newWindow |
@@ -131,7 +132,7 @@ MorphicWindowManagerTest >> testDeleteAllWindowToRightOfAWindowWhenDontHaveWindo
 	self assert: manager numberOfOpenWindows equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testNewWindowShouldBeSave [
 
 	| newWindow |
@@ -140,7 +141,7 @@ MorphicWindowManagerTest >> testNewWindowShouldBeSave [
 	self assert: manager numberOfWindows equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testWindowShouldBeOpenAfterStartupWithGoodMorphWhenNoMorphIsSave [
 
 	manager saveAllRoot.
@@ -152,7 +153,7 @@ MorphicWindowManagerTest >> testWindowShouldBeOpenAfterStartupWithGoodMorphWhenN
 	self assert: manager numberOfWindows equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testWindowShouldBeSaveBeforeShutDownSaveAttributesButNoRoot [
 
 	manager saveAllAttributes.
@@ -160,7 +161,7 @@ MorphicWindowManagerTest >> testWindowShouldBeSaveBeforeShutDownSaveAttributesBu
 	self assert: manager numberOfAttributesSave equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testWindowShouldBeSaveBeforeShutDownSaveRoot [
 
 	manager newWindowWithRoot: Morph new.
@@ -171,7 +172,7 @@ MorphicWindowManagerTest >> testWindowShouldBeSaveBeforeShutDownSaveRoot [
 	self assert: manager numberOfRootSave equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphicWindowManagerTest >> testWindowShouldBeSaveBeforeShutDownSaveRootButHaveNotRoot [
 
 	manager saveAllRoot.

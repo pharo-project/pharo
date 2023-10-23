@@ -1,71 +1,52 @@
-"
-I am a command to remove all given classes
-"
 Class {
-	#name : #SycRemoveClassCommand,
-	#superclass : #SycClassCommand,
+	#name : 'SycRemoveClassCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
-		'removeStrategy'
+		'toolContext'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #execution }
-SycRemoveClassCommand >> asRefactorings [
-	^self asRefactoringsOfClass: RBRemoveClassTransformation
+{ #category : 'activation' }
+SycRemoveClassCommand class >> fullBrowserMenuActivation [
+	<classAnnotation>
+
+	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassContext
 ]
 
-{ #category : #execution }
-SycRemoveClassCommand >> asRefactoringsOfClass: aRefactoring [
-	"No idea why we are returning a list of a single refactoring"
-	
-	^ { aRefactoring classNames: (classes collect: [:each | each name])}
+{ #category : 'activation' }
+SycRemoveClassCommand class >> fullBrowserShortcutActivation [
+	<classAnnotation>
+
+	^CmdShortcutActivation removalFor: ClyFullBrowserClassContext
 ]
 
-{ #category : #execution }
-SycRemoveClassCommand >> confirmRefactoringInContext: aToolContext by: aCommandActivator [
-	"All refactoring errors here are related to existance of removed class users.
-	All these cases are handled on the level of #confirmUnusedClasses
-	and here we need to ignore RB signals.
-	Notice that existing logic of RB engine for class removal
-	does not allow correctly handle class users like show them in browser
-	because there is no information about kind of users in #openBrowser option"
-
-	[super confirmRefactoringInContext: aToolContext by: aCommandActivator ]
-		on: RBRefactoringWarning do: [ :err | err resume: true ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuIconName [
 	^#removeIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuItemName [
-	^'Remove'
+	^'Remove Class'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveClassCommand >> execute [
 
-	removeStrategy execute: self
+	(RBRemoveClassDriver new
+				 scopes: toolContext refactoringScopes
+				 classes:  classes) runRefactoring
 ]
 
-{ #category : #execution }
-SycRemoveClassCommand >> executeRefactoringsAs: aClass [
-
-	(self asRefactoringsOfClass: aClass) do: [ :each | each execute ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveClassCommand >> isComplexRefactoring [
-	^removeStrategy isComplexRefactoring
+	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveClassCommand >> prepareFullExecutionInContext: aToolContext [
-
 	super prepareFullExecutionInContext: aToolContext.
-
-	removeStrategy := aToolContext requestRemoveClassStrategyFor: classes
+	toolContext := aToolContext.
 ]

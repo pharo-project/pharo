@@ -13,12 +13,13 @@ However  I have the following groups to describe the dependencies:
 - traits-tests: adding the tests for TraitsV2.
 "
 Class {
-	#name : #BaselineOfTraits,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfTraits
+	#name : 'BaselineOfTraits',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfTraits',
+	#package : 'BaselineOfTraits'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTraits class >> corePackages [
 	| groups |
 
@@ -26,13 +27,13 @@ BaselineOfTraits class >> corePackages [
 	^ groups flatCollect: [ :e | self packagesOfGroupNamed: e ].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTraits class >> packagesToExportWithHermes [
 
 	^ self allPackageNames reject: [ :aPackageName | aPackageName = 'TraitsV2-Tests'].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTraits >> baseline: spec [
 	<baseline>
 

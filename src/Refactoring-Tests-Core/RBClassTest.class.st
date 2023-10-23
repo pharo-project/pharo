@@ -1,30 +1,50 @@
 Class {
-	#name : #RBClassTest,
-	#superclass : #RBRefactoringBrowserTest,
+	#name : 'RBClassTest',
+	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
 		'rbNamespace',
 		'objectClass',
 		'newClass',
 		'messageNodeClass'
 	],
-	#category : #'Refactoring-Tests-Core'
+	#category : 'Refactoring-Tests-Core',
+	#package : 'Refactoring-Tests-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RBClassTest >> setUp [
+
 	super setUp.
 	rbNamespace := RBClassModelFactory rbNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
-	rbNamespace defineClass: 'Object << #SomeClassName
-	slots: { #instanceVariable1 . #instanceVariable2};
-	sharedVariables: { #ClassVariable1};
-	sharedPools: {TextConstants};
-	package: #''Refactory-Testing'''.
+	rbNamespace defineClass: [ :aBuilder |
+		aBuilder
+			name: #SomeClassName;
+			superclass: Object;
+			slots: { #instanceVariable1. #instanceVariable2 };
+			sharedVariables: { #ClassVariable1 };
+			sharedPools: 'TextConstants';
+			package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - definition' }
+RBClassTest >> testBindingOf [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {Delay . DelayWaitTimeout }).
+	root := rbNamespace classNamed: #Delay.
+	sub := rbNamespace classNamed: #DelayWaitTimeout.
+	
+	self assert: (root bindingOf: #Scheduler) equals: (Delay bindingOf: #Scheduler).
+	self assert: (sub bindingOf: #Scheduler) equals: (DelayWaitTimeout bindingOf: #Scheduler).
+	
+	self assert: (root classSide bindingOf: #Scheduler) equals: (Delay class bindingOf: #Scheduler).
+	self assert: (sub classSide bindingOf: #Scheduler) equals: (DelayWaitTimeout class bindingOf: #Scheduler).
+]
+
+{ #category : 'tests - navigation' }
 RBClassTest >> testClassSide [
 
 	| meta |
@@ -34,7 +54,7 @@ RBClassTest >> testClassSide [
 	self deny: objectClass isMeta.
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesClassVariable [
 	self deny: (objectClass definesClassVariable: #ClassVariable1).
 	self assert: (objectClass definesClassVariable: self objectClassVariable).
@@ -44,7 +64,7 @@ RBClassTest >> testDefinesClassVariable [
 		assert: (messageNodeClass definesClassVariable: self objectClassVariable)
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesInstanceVariable [
 	self deny: (objectClass definesInstanceVariable: 'instanceVariable1').
 	self assert: (newClass definesInstanceVariable: 'instanceVariable1').
@@ -53,14 +73,14 @@ RBClassTest >> testDefinesInstanceVariable [
 	self assert: (messageNodeClass definesInstanceVariable: 'selector')
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesMethod [
 	self assert: (objectClass definesMethod: #printString).
 	self assert: (newClass definesMethod: #printString).
 	self assert: (messageNodeClass definesMethod: #printString)
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesPoolDictionary [
 	self deny: (objectClass definesPoolDictionary: #OpcodePool).
 	self assert: (newClass definesPoolDictionary: #TextConstants).
@@ -69,7 +89,22 @@ RBClassTest >> testDefinesPoolDictionary [
 				definesPoolDictionary: #TextConstants)
 ]
 
-{ #category : #'tests - definition' }
+{ #category : 'tests - definition' }
+RBClassTest >> testDefinesSharedVariable2 [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root definesClassVariable: #Shared2).
+	
+	"a subclass is considered defining a variable even if it is defined by the superclass."
+	self assert: (sub definesClassVariable: #Shared2).
+]
+
+{ #category : 'tests - definition' }
 RBClassTest >> testDefinesTraitMethod [
 	| user trait |
 	user := rbNamespace classNamed: #MOPTestClassD.
@@ -84,7 +119,37 @@ RBClassTest >> testDefinesTraitMethod [
 	self assert: (user methodFor: #c) modelClass equals: trait
 ]
 
-{ #category : #'method tests' }
+{ #category : 'tests - definition' }
+RBClassTest >> testDirectlyDefinesSharedVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root directlyDefinesClassVariable: #Shared2).
+	
+	self assert: (sub definesClassVariable: #Shared2).
+	self deny: (sub directlyDefinesClassVariable: #Shared2).
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testDirectlyDefinesSharedVariable2 [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	self assert: (root subclasses includes: sub).
+	self assert: (root definesClassVariable: #Shared2).
+	
+	"a subclass is considered defining a variable even if it is defined by the superclass."
+	self assert: (sub definesClassVariable: #Shared2).
+]
+
+{ #category : 'method tests' }
 RBClassTest >> testHierarchy [
 	| meta |
 	meta := objectClass classSide.
@@ -92,14 +157,14 @@ RBClassTest >> testHierarchy [
 	self assert: (meta withAllSuperclasses includes: objectClass)
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 RBClassTest >> testIsEmptyClass [
 	
 	self deny: objectClass isEmptyClass.
 	self assert: (rbNamespace classNamed: #MyClassB) isEmptyClass
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 RBClassTest >> testIsInstanceSide [
 
 	self deny: objectClass instanceSide isMeta.
@@ -108,20 +173,20 @@ RBClassTest >> testIsInstanceSide [
 	
 ]
 
-{ #category : #'tests - navigation' }
+{ #category : 'tests - navigation' }
 RBClassTest >> testIsMeta [
 
 	self assert: objectClass classSide isMeta.
 	self deny: objectClass isMeta
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBClassTest >> testObjectIsNotAbstract [
 	self deny: objectClass isAbstract.
 	self deny: objectClass classSide isAbstract
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhichClassIncludesSelectorDefinedInTheClass [
 
 	self
@@ -129,7 +194,7 @@ RBClassTest >> testWhichClassIncludesSelectorDefinedInTheClass [
 		equals: objectClass
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhichClassIncludesSelectorDoNotFind [
 
 	self
@@ -137,7 +202,7 @@ RBClassTest >> testWhichClassIncludesSelectorDoNotFind [
 		equals: nil
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhichClassIncludesSelectorDoesNotExist [
 
 	self
@@ -145,7 +210,7 @@ RBClassTest >> testWhichClassIncludesSelectorDoesNotExist [
 		equals: nil
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhichClassIncludesSelectorGoingUp [
 
 	self
@@ -155,7 +220,7 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUp [
 		equals: objectClass
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
 
 	self
@@ -165,7 +230,43 @@ RBClassTest >> testWhichClassIncludesSelectorGoingUpAndDoNotFind [
 		equals: nil
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - definition' }
+RBClassTest >> testWhichMethodsReferToClassVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	
+	self assert: (root whichMethodsReferToSharedVariable:  #Shared1) isNotEmpty.
+	self assert: (sub whichMethodsReferToSharedVariable: #Shared1) isNotEmpty.
+	
+	self assert: (root classSide whichMethodsReferToSharedVariable: #Shared1) isNotEmpty.
+	self assert: (sub classSide whichMethodsReferToSharedVariable: #Shared1) isEmpty.
+	self assert: (sub classSide whichMethodsReferToSharedVariable: #Shared2) isNotEmpty.
+	
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testWhichSelectorsReferToClassVariable [
+
+	| root sub |
+	rbNamespace := RBNamespace onEnvironment: 	(RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState }).
+		
+	root := rbNamespace classNamed: #MyClassARoot.
+	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
+	
+	self assert: (root whichSelectorsReferToSharedVariable:  #Shared1) isNotEmpty.
+	self assert: (sub whichSelectorsReferToSharedVariable: #Shared1) isNotEmpty.
+	
+	self assert: (root classSide whichSelectorsReferToSharedVariable: #Shared1) isNotEmpty.
+	self assert: (sub classSide whichSelectorsReferToSharedVariable: #Shared1) isEmpty.
+	self assert: (sub classSide whichSelectorsReferToSharedVariable: #Shared2) isNotEmpty.
+	
+]
+
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhoDefinesMethodDefinedInTheClass [
 
 	self
@@ -173,7 +274,7 @@ RBClassTest >> testWhoDefinesMethodDefinedInTheClass [
 		equals: objectClass
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhoDefinesMethodDoesNotExist [
 
 	self
@@ -181,7 +282,7 @@ RBClassTest >> testWhoDefinesMethodDoesNotExist [
 		equals: nil
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhoDefinesMethodGoingUp [
 
 	self
@@ -190,7 +291,7 @@ RBClassTest >> testWhoDefinesMethodGoingUp [
 		equals: objectClass
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhoDefinesMethodGoingUpAndDoNotFind [
 
 	self
@@ -200,7 +301,7 @@ RBClassTest >> testWhoDefinesMethodGoingUpAndDoNotFind [
 		equals: nil
 ]
 
-{ #category : #'tests - defining methods' }
+{ #category : 'tests - defining methods' }
 RBClassTest >> testWhoDefinesMethodSelectorDoNotFind [
 
 	self

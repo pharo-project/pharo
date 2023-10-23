@@ -2,15 +2,17 @@
 I represent the rename of a category in a package.
 "
 Class {
-	#name : #EpPackageTagRename,
-	#superclass : #EpPackageTagChange,
+	#name : 'EpPackageTagRename',
+	#superclass : 'EpPackageTagChange',
 	#instVars : [
 		'oldTagName'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpPackageTagRename class >> oldName: oldName newName: newName packageName: packageName [
 
 	^ (self tagName: newName packageName: packageName)
@@ -18,24 +20,24 @@ EpPackageTagRename class >> oldName: oldName newName: newName packageName: packa
 		  yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpPackageTagRename >> accept: aVisitor [
 	^ aVisitor visitPackageTagRename: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpPackageTagRename >> newTagName [
 
 	^ self tagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpPackageTagRename >> oldTagName [
 
 	^ oldTagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpPackageTagRename >> oldTagName: anObject [
 
 	oldTagName := anObject

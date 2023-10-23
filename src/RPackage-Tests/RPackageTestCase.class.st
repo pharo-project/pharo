@@ -2,115 +2,143 @@
 Common superclass for RPackage related tests
 "
 Class {
-	#name : #RPackageTestCase,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'RPackageTestCase',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
-		'createdClasses',
-		'createdPackages',
 		'testEnvironment'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #accessing }
-RPackageTestCase >> allWorkingCopies [
+{ #category : 'private' }
+RPackageTestCase >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
 
-	^ MCWorkingCopy allWorkingCopies
+	^ aClass compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createMockTestPackages [
+{ #category : 'private' }
+RPackageTestCase >> createMethodNamed: methodName inClassSideOfClass: aClass inCategory: aCategoryName [ 
 
-	^ self namesOfMockTestPackages collect: [:pName | self createNewPackageNamed: pName]
+	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName [
-	^ self createNewClassNamed: aName inCategory: 'RPackageTest'
+{ #category : 'utilities' }
+RPackageTestCase >> ensurePackage: aName [
+
+	^ self organizer ensurePackage: aName
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
+{ #category : 'utilities' }
+RPackageTestCase >> ensureTagYinX [
 
-	| cls |
-	cls := self class classInstaller make: [ :aClassBuilder |
-		       aClassBuilder
-			       name: aName;
-			       installingEnvironment: testEnvironment;
-			       package: cat ].
-
-	createdClasses add: cls.
-	createdPackages add: cls package.
-	^ cls
+	^ self organizer ensureTag: #YYYY inPackage: #XXXXX
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createNewClassNamed: aName inPackage: p [
+{ #category : 'utilities' }
+RPackageTestCase >> ensureXPackage [
 
-	| cls |
-	cls := self createNewClassNamed: aName inCategory: p name.
-	p importClass: cls.
-	^ cls
+	^ self organizer ensurePackage: #XXXXX
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createNewPackageNamed: aName [
+{ #category : 'utilities' }
+RPackageTestCase >> ensureYPackage [
 
-	| pack |
-	pack := self organizer ensurePackage: aName.
-	createdPackages add: pack.
-	^ pack
+	^ self organizer ensurePackage: #YYYYY
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName [
-	^ self createNewTraitNamed: aName inCategory: 'RPackageTest'
+{ #category : 'utilities' }
+RPackageTestCase >> ensureZPackage [
+
+	^ self organizer ensurePackage: #ZZZZZ
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName inCategory: cat [
+{ #category : 'utilities' }
+RPackageTestCase >> newClassNamed: aName in: aPackage [
 
-	| cls |
-	cls := self class classInstaller make: [ :aBuilder |
-		       aBuilder
-			       name: aName;
-			       package: cat;
-			       installingEnvironment: testEnvironment;
-			       beTrait ].
-
-	createdClasses add: cls.
-	createdPackages add: cls package.
-	^ cls
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]) ]
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> createNewTraitNamed: aName inPackage: p [
+{ #category : 'utilities' }
+RPackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
 
-	| cls |
-	cls := self createNewTraitNamed: aName.
-	p importClass: cls.
-	^ cls
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
+			  tag: (aTag isString
+					   ifTrue: [ aTag ]
+					   ifFalse: [ aTag name ]) ]
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> namesOfMockTestPackages [
+{ #category : 'utilities' }
+RPackageTestCase >> newClassNamed: aName inTag: aTag [
 
-	^ #( 'MockPackage-Tests' 'MockPackage-tests' 'MockPackage' 'MockPackage-Tests-Package')
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  package: aTag package name;
+			  tag: aTag name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'utilities' }
+RPackageTestCase >> newTraitNamed: aName in: aPackage [
+
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
+			  installingEnvironment: testEnvironment;
+			  beTrait ]
+]
+
+{ #category : 'utilities' }
+RPackageTestCase >> newTraitNamed: aName in: aPackage tag: aTag [
+
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  installingEnvironment: testEnvironment;
+			  beTrait;
+			  package: (aPackage isString
+					   ifTrue: [ aPackage ]
+					   ifFalse: [ aPackage name ]);
+			  tag: (aTag isString
+					   ifTrue: [ aTag ]
+					   ifFalse: [ aTag name ]) ]
+]
+
+{ #category : 'utilities' }
+RPackageTestCase >> newTraitNamed: aName inTag: aTag [
+
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  package: aTag package name;
+			  tag: aTag name;
+			  installingEnvironment: testEnvironment;
+			  beTrait ]
+]
+
+{ #category : 'accessing' }
 RPackageTestCase >> organizer [
 
 	^ testEnvironment organization
 ]
 
-{ #category : #utilities }
-RPackageTestCase >> removePackage: aName [
-
-	self organizer basicUnregisterPackageNamed: aName
-]
-
-{ #category : #running }
+{ #category : 'running' }
 RPackageTestCase >> runCase [
 
 	testEnvironment := self class environment class new.
@@ -123,18 +151,11 @@ RPackageTestCase >> runCase [
 		self cleanUpInstanceVariables ]
 ]
 
-{ #category : #running }
-RPackageTestCase >> setUp [
-
-	super setUp.
-	createdClasses := Set new.
-	createdPackages := Set new
-]
-
-{ #category : #running }
+{ #category : 'running' }
 RPackageTestCase >> tearDown [
 
-	createdClasses do: [ :cls | cls removeFromSystem ].
+	self organizer environment allClasses do: [ :cls | cls removeFromSystem ].
+	self organizer packages do: [ :package | package removeFromSystem ].
 
 	super tearDown
 ]

@@ -5,17 +5,19 @@ This class absorb the difference of internal and external representation of the 
 
 "
 Class {
-	#name : #FilePathEncoder,
-	#superclass : #Object,
-	#category : #'Files-Directories'
+	#name : 'FilePathEncoder',
+	#superclass : 'Object',
+	#category : 'Files-Directories',
+	#package : 'Files',
+	#tag : 'Directories'
 }
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FilePathEncoder class >> decode: aString [
 	^ aString utf8Decoded
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FilePathEncoder class >> encode: pathString [
 	^ pathString utf8Encoded
 ]

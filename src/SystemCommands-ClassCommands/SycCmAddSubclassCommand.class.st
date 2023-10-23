@@ -2,40 +2,40 @@
 I am a command to create new subclass og given class (my targetClass)
 "
 Class {
-	#name : #SycCmAddSubclassCommand,
-	#superclass : #SycCmNewClassCreationCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycCmAddSubclassCommand',
+	#superclass : 'SycCmNewClassCreationCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycCmAddSubclassCommand >> executeRefactoring [
 
-	| refactoring |
-	refactoring := RBInsertNewClassRefactoring
-		addClass: newClassName
-		superclass: targetClass asString
-		subclasses:  #()
-		category: targetClass category.
-	refactoring execute.
+	self flag: #package. "Remove ifNotNil: when undefined tag will be here."
+	(RBInsertNewClassRefactoring className: newClassName)
+		superclass: targetClass asString;
+		packageName: targetClass package name;
+		tagName: (targetClass packageTag ifNotNil: [ :tag | tag name ]);
+		execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> icon [
 	^self iconNamed:#add
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmAddSubclassCommand >> isApplicable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> name [
 	^'New subclass'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmAddSubclassCommand >> order [
 	^ 10100.1
 ]

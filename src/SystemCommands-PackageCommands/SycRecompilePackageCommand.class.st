@@ -1,15 +1,16 @@
 Class {
-	#name : #SycRecompilePackageCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'SystemCommands-PackageCommands'
+	#name : 'SycRecompilePackageCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRecompilePackageCommand >> defaultMenuItemName [
 	^'Recompile'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRecompilePackageCommand >> execute [
 	packages
 		do: [ :eachPackage |

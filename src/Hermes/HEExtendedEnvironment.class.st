@@ -7,8 +7,8 @@ I provide access to all the elements in the environment and also to:
 - The selector of the method being deserialized.
 "
 Class {
-	#name : #HEExtendedEnvironment,
-	#superclass : #Object,
+	#name : 'HEExtendedEnvironment',
+	#superclass : 'Object',
 	#instVars : [
 		'inner',
 		'newMethod',
@@ -16,64 +16,66 @@ Class {
 		'newSelector',
 		'newBlock'
 	],
-	#category : #'Hermes-ClassInstaller'
+	#category : 'Hermes-ClassInstaller',
+	#package : 'Hermes',
+	#tag : 'ClassInstaller'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> classNamed: aClassName [
 	^ newClass name = aClassName
 		ifTrue: [ newClass ]
 		ifFalse: [ inner classNamed: aClassName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> inner [
 	^ inner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> inner: anObject [
 	inner := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newBlock [
 
 	^ newBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newBlock: anObject [
 
 	newBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newClass [
 	^ newClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newClass: anObject [
 	newClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newMethod [
 	^ newMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newMethod: anObject [
 	newMethod := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newSelector [
 	^ newSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExtendedEnvironment >> newSelector: anObject [
 	newSelector := anObject
 ]

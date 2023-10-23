@@ -9,27 +9,26 @@ I use ISO 8601 for formatting Date, Time and DateTime
 https://en.wikipedia.org/wiki/ISO_8601
 "
 Class {
-	#name : #BasicDatePrinter,
-	#superclass : #Object,
-	#category : #'Kernel-Chronology'
+	#name : 'BasicDatePrinter',
+	#superclass : 'Object',
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BasicDatePrinter class >> default [
-	" I prefer to use any of my subclasses than myself.
-	I am a really basic implementation."
-	self subclassesDo: [ :subClass | subClass isAbstract ifFalse: [ ^ subClass new ]].
-	^ self new
+	^ ExtendedDatePrinter new
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BasicDatePrinter >> printDate: aDate format: formatArray on: aStream [
 	"I print a basic representation of the date in ISO 8601 ex: 	2018-03-08"
 
 	self printYMD: aDate withLeadingSpace: false on: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BasicDatePrinter >> printDateAndTime: aDateTime withLeadingSpace: printLeadingSpaceToo on: aStream [
 	"Print as per ISO 8601 sections 5.3.3 and 5.4.1.
 	If printLeadingSpaceToo is false, prints either:
@@ -78,7 +77,7 @@ BasicDatePrinter >> printDateAndTime: aDateTime withLeadingSpace: printLeadingSp
 				print: aDateTime offset seconds abs truncated ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BasicDatePrinter >> printHMS: aTime separatedBy: aSeparator on: aStream [
 	"Print just hh<aSep>mm<aSep>ss"
 
@@ -89,7 +88,7 @@ BasicDatePrinter >> printHMS: aTime separatedBy: aSeparator on: aStream [
 	aTime second printOn: aStream base: 10 length: 2 padded: true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BasicDatePrinter >> printYMD: aDateTime withLeadingSpace: printLeadingSpaceToo on: aStream [
 	"Print just the year, month, and day on aStream.
 

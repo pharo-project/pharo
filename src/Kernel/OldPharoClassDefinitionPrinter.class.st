@@ -5,12 +5,14 @@ This prints the class definition as it was till Pharo9: ST80 style, but with ext
 - support for traits
 "
 Class {
-	#name : #OldPharoClassDefinitionPrinter,
-	#superclass : #ClassDefinitionPrinter,
-	#category : #'Kernel-ClassDefinitionPrinter'
+	#name : 'OldPharoClassDefinitionPrinter',
+	#superclass : 'ClassDefinitionPrinter',
+	#category : 'Kernel-ClassDefinitionPrinter',
+	#package : 'Kernel',
+	#tag : 'ClassDefinitionPrinter'
 }
 
-{ #category : #internal }
+{ #category : 'internal' }
 OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 
 	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
@@ -39,7 +41,7 @@ OldPharoClassDefinitionPrinter >> basicClassDefinitionString [
 	^ stream contents
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 OldPharoClassDefinitionPrinter >> basicMetaclassDefinitionString [
 
 	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
@@ -49,7 +51,7 @@ OldPharoClassDefinitionPrinter >> basicMetaclassDefinitionString [
 		  self instanceVariablesOn: stream ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
 
 	"Pay attention this definition is fragile in presence of complex slots. Use the public API i.e., classDefinitionString"
@@ -66,7 +68,7 @@ OldPharoClassDefinitionPrinter >> basicTraitDefinitionString [
 		  self packageOn: s ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [
 
 	^ String streamContents: [:strm |
@@ -75,15 +77,15 @@ OldPharoClassDefinitionPrinter >> basicTraitedMetaclassDefinitionString [
 			self instanceVariablesOn: strm ]
 ]
 
-{ #category : #'public API' }
+{ #category : 'public API' }
 OldPharoClassDefinitionPrinter >> classDefinitionString [
 
 	^ forClass needsSlotClassDefinition
-		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
-		ifFalse: [ self basicClassDefinitionString ]
+		  ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
+		  ifFalse: [ self basicClassDefinitionString ]
 ]
 
-{ #category : #template }
+{ #category : 'template' }
 OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString named: aClassName [
 
 	^ String streamContents: [ :s |
@@ -103,7 +105,7 @@ OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString name
 			  nextPutAll: '''' ]
 ]
 
-{ #category : #'low-level elements' }
+{ #category : 'low-level elements' }
 OldPharoClassDefinitionPrinter >> classVariablesOn: stream [
 
 	stream
@@ -113,27 +115,20 @@ OldPharoClassDefinitionPrinter >> classVariablesOn: stream [
 	stream nextPut: $'
 ]
 
-{ #category : #template }
+{ #category : 'template' }
 OldPharoClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aString [
 	"there is not compact version..."
 
 	^ self classDefinitionTemplateInPackage: aString
 ]
 
-{ #category : #template }
+{ #category : 'template' }
 OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aString [
 
 	^ self traitDefinitionTemplateInPackage: aString
 ]
 
-{ #category : #'expanded double dispatch API' }
-OldPharoClassDefinitionPrinter >> expandedDefinitionString [
-	"We do not support expanded on old Pharo syntax so we shortcut the double dispatch call."
-
-	^ self definitionString
-]
-
-{ #category : #'low-level elements' }
+{ #category : 'low-level elements' }
 OldPharoClassDefinitionPrinter >> instanceVariablesOn: stream [
 
 	stream
@@ -143,7 +138,7 @@ OldPharoClassDefinitionPrinter >> instanceVariablesOn: stream [
 	stream nextPut: $'
 ]
 
-{ #category : #'public API' }
+{ #category : 'public API' }
 OldPharoClassDefinitionPrinter >> metaclassDefinitionString [
 
 	^ forClass needsSlotClassDefinition
@@ -151,7 +146,7 @@ OldPharoClassDefinitionPrinter >> metaclassDefinitionString [
 		ifFalse: [ self basicMetaclassDefinitionString ]
 ]
 
-{ #category : #'low-level elements' }
+{ #category : 'low-level elements' }
 OldPharoClassDefinitionPrinter >> packageOn: stream [
 
 	stream
@@ -160,7 +155,7 @@ OldPharoClassDefinitionPrinter >> packageOn: stream [
 		store: forClass category asString
 ]
 
-{ #category : #'low-level elements' }
+{ #category : 'low-level elements' }
 OldPharoClassDefinitionPrinter >> poolOn: stream [
 
 	| poolString |
@@ -172,7 +167,7 @@ OldPharoClassDefinitionPrinter >> poolOn: stream [
 			store: poolString ]
 ]
 
-{ #category : #template }
+{ #category : 'template' }
 OldPharoClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
 
 	^ String streamContents: [ :s |
@@ -182,7 +177,7 @@ OldPharoClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString 
 			s nextPutAll: 'package: ''', aString, '''' ]
 ]
 
-{ #category : #'low-level elements' }
+{ #category : 'low-level elements' }
 OldPharoClassDefinitionPrinter >> traitCompositionOn: stream [
 
 	forClass hasTraitComposition ifTrue: [
@@ -192,7 +187,7 @@ OldPharoClassDefinitionPrinter >> traitCompositionOn: stream [
 			nextPutAll: forClass traitCompositionString ]
 ]
 
-{ #category : #'public API' }
+{ #category : 'public API' }
 OldPharoClassDefinitionPrinter >> traitDefinitionString [
 
 	^ forClass needsSlotClassDefinition
@@ -200,7 +195,7 @@ OldPharoClassDefinitionPrinter >> traitDefinitionString [
 		ifFalse: [ self basicTraitDefinitionString ]
 ]
 
-{ #category : #template }
+{ #category : 'template' }
 OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString named: aTraitName [
 
 	^ String streamContents: [ :s |
@@ -214,7 +209,7 @@ OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString name
 			  nextPut: $' ]
 ]
 
-{ #category : #'public API' }
+{ #category : 'public API' }
 OldPharoClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 
 	^ forClass needsSlotClassDefinition

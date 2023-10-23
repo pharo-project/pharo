@@ -3,27 +3,27 @@ I do not test the factory logic of ClassDefinitionPrinter because it is done in 
 Here I'm just a way to share code between all the tests.
 "
 Class {
-	#name : #CommonClassDefinitionPrinterTest,
-	#superclass : #TestCase,
+	#name : 'CommonClassDefinitionPrinterTest',
+	#superclass : 'TestCase',
 	#instVars : [
-		'slotDisplay',
-		'slotUse'
+		'slotDisplay'
 	],
-	#category : #'Kernel-Tests-Fluid'
+	#category : 'Kernel-Tests-Fluid',
+	#package : 'Kernel-Tests',
+	#tag : 'Fluid'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CommonClassDefinitionPrinterTest >> setUp [
+
 	super setUp.
-	slotUse := ClassDefinitionPrinter showFluidClassDefinition.
 	slotDisplay := ClassDefinitionPrinter displayEmptySlots.
 	ClassDefinitionPrinter displayEmptySlots: false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CommonClassDefinitionPrinterTest >> tearDown [
 
-	ClassDefinitionPrinter showFluidClassDefinition: slotUse.
 	ClassDefinitionPrinter displayEmptySlots: slotDisplay.
 	super tearDown
 ]

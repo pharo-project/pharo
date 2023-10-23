@@ -2,22 +2,23 @@
 SUnit tests on string extensions used for packages
 "
 Class {
-	#name : #RPackageStringExtensionTest,
-	#superclass : #TestCase,
-	#category : #'RPackage-Tests'
+	#name : 'RPackageStringExtensionTest',
+	#superclass : 'TestCase',
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageStringExtensionTest >> testAsPackage [
 	self assert: self class package name asPackage notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageStringExtensionTest >> testAsPackageIfAbsent [
 	self assert: ('___inexistent___package___' asPackageIfAbsent: [ true ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageStringExtensionTest >> testAsPackageWithError [
 	self
 		should: ['___inexistent___package___' asPackage]

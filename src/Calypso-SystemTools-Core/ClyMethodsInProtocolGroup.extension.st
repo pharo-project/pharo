@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodsInProtocolGroup }
+Extension { #name : 'ClyMethodsInProtocolGroup' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyMethodsInProtocolGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	| myName |
 	super decorateTableCell: anItemCellMorph of: groupItem.

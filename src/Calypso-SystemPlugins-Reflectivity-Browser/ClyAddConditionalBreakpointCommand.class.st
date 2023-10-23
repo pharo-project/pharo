@@ -8,22 +8,24 @@ Internal Representation and Key Implementation Points.
 	conditionBlock:		<BlockClosure>
 "
 Class {
-	#name : #ClyAddConditionalBreakpointCommand,
-	#superclass : #ClyAddBreakpointCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
+	#name : 'ClyAddConditionalBreakpointCommand',
+	#superclass : 'ClyAddBreakpointCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyAddConditionalBreakpointCommand class >> contextMenuOrder [
 	^1.2
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAddConditionalBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
 	aBreakpoint createCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAddConditionalBreakpointCommand >> defaultMenuItemName [
 	^'Break on  ', sourceNode displaySourceCode, '  when ...'
 ]

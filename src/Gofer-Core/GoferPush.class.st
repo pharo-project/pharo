@@ -2,18 +2,20 @@
 Push a version
 "
 Class {
-	#name : #GoferPush,
-	#superclass : #GoferSynchronize,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferPush',
+	#superclass : 'GoferSynchronize',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GoferPush >> defaultModel [
 
 	^ OrderedCollection new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferPush >> execute [
 
 	self model
@@ -21,7 +23,7 @@ GoferPush >> execute [
 		displayingProgress: 'Pushing Versions'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferPush >> initializeOn: aGofer [
 
 	super initializeOn: aGofer.

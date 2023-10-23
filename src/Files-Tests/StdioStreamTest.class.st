@@ -11,12 +11,14 @@ Internal Representation and Key Implementation Points.
 StdioStreamTest relies on a test stream constructed by StdioStreamTestResource.
 "
 Class {
-	#name : #StdioStreamTest,
-	#superclass : #TestCase,
-	#category : #'Files-Tests-Streams'
+	#name : 'StdioStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Files-Tests-Streams',
+	#package : 'Files-Tests',
+	#tag : 'Streams'
 }
 
-{ #category : #'tests - manual' }
+{ #category : 'tests - manual' }
 StdioStreamTest class >> manualStdinTest [
 	"This test can be run headless to manually to check actual stdin.
 	It reads the input and confirms that #atEnd answers as expected and the number of characters read.
@@ -54,20 +56,20 @@ StdioStreamTest class >> manualStdinTest [
 	SmalltalkImage current snapshot: false andQuit: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStreamTest class >> resources [
 
 	^{ StdioStreamTestResource }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStreamTest >> resource [
 	"Answer the receiver's resource object"
 
 	^StdioStreamTestResource current
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StdioStreamTest >> setUp [
 	"A stream is shared amongst all the tests to reduce file create, write, delete cycles.
 	Ensure the stream is in the expected state."
@@ -76,20 +78,20 @@ StdioStreamTest >> setUp [
 	self resource stdioStream position: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStreamTest >> stdioStream [
 
 	^self resource stdioStream
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdioStreamTest >> testAtEnd [
 	"Test that #atEnd isn't incorrectly answering true"
 
 	self deny: self stdioStream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdioStreamTest >> testChangePosition [
 	"The shared stream should be put back to the start for each test"
 
@@ -101,13 +103,13 @@ StdioStreamTest >> testChangePosition [
 	self assert: stream next equals: $5 asciiValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdioStreamTest >> testContents [
 
 	self assert: self stdioStream contents equals: self resource contents asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdioStreamTest >> testPeek [
 
 	| stream |
@@ -117,20 +119,20 @@ StdioStreamTest >> testPeek [
 	self assert: stream peek equals: stream next
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdioStreamTest >> testPosition [
 	"The shared stream should be put back to the start for each test"
 
 	self assert: self stdioStream position equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdioStreamTest >> testSize [
 
 	self assert: self stdioStream size equals: self resource contents size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StdioStreamTest >> testUpToEnd [
 
 	| stream contents |

@@ -2,26 +2,28 @@
 A MutexSet helps with aquiring a set of mutexes.
 "
 Class {
-	#name : #MutexSet,
-	#superclass : #Object,
+	#name : 'MutexSet',
+	#superclass : 'Object',
 	#instVars : [
 		'array'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MutexSet class >> withAll: mutexList [
 	^self new withAll: mutexList
 ]
 
-{ #category : #'mutual exclusion' }
+{ #category : 'mutual exclusion' }
 MutexSet >> critical: aBlock [
 	"Evaluate aBlock aquiring all mutexes"
 	^self pvtCritical: aBlock startingAt: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MutexSet >> pvtCritical: aBlock startingAt: index [
 	| mutex |
 	index > array size ifTrue:[^aBlock value].
@@ -29,7 +31,7 @@ MutexSet >> pvtCritical: aBlock startingAt: index [
 	^mutex critical:[self pvtCritical: aBlock startingAt: index+1]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 MutexSet >> withAll: mutexList [
 	array := mutexList
 ]

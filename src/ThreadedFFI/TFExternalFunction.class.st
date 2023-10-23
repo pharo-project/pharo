@@ -22,18 +22,20 @@ These will create an async function call and block the current pharo process whi
 		executeWithArguments: { ExternalAddress fromString: 'HOME' utf8Encoded }) readString asByteArray utf8Decoded.
 "
 Class {
-	#name : #TFExternalFunction,
-	#superclass : #Object,
+	#name : 'TFExternalFunction',
+	#superclass : 'Object',
 	#instVars : [
 		'handle',
 		'definition',
 		'functionName',
 		'moduleName'
 	],
-	#category : #'ThreadedFFI-Base'
+	#category : 'ThreadedFFI-Base',
+	#package : 'ThreadedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFExternalFunction class >> fromAddress: anExternalAddress definition: aFunctionDefinition [
 
 	^ self new
@@ -42,7 +44,7 @@ TFExternalFunction class >> fromAddress: anExternalAddress definition: aFunction
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFExternalFunction class >> name: aName moduleName: aModuleName definition: aFunctionDefinition [
 
 	^ self new
@@ -53,7 +55,7 @@ TFExternalFunction class >> name: aName moduleName: aModuleName definition: aFun
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType [
 
 	^ self
@@ -65,7 +67,7 @@ TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: 
 		  abi: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType fixedArgumentCount: fixedArgumentCount abi: abiType [
 
 	| definition |
@@ -89,7 +91,7 @@ TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: 
 		definition: definition
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType type: aFunctionCallType [
 
 	^ (self name: aName moduleName: aModuleName parameterTypes: parameterTypes returnType: returnType)
@@ -97,47 +99,47 @@ TFExternalFunction class >> name: aName moduleName: aModuleName parameterTypes: 
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> address [
 	^ handle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> address: anObject [
 	handle := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> definition [
 	^ definition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> definition: anObject [
 	definition := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> functionName [
 	^ functionName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> functionName: anObject [
 	functionName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> moduleName [
 	^ moduleName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFExternalFunction >> moduleName: anObject [
 	moduleName := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TFExternalFunction >> validate [
 	definition validate.
 	handle isNull

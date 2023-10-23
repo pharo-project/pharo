@@ -2,12 +2,14 @@
 A DrTestsUITest is a test class for testing the behavior of DrTests-CommentsToTestsTest 
 "
 Class {
-	#name : #CommentsToTestsTest,
-	#superclass : #TestCase,
-	#category : #'DrTests-CommentsToTests-Tests-Base'
+	#name : 'CommentsToTestsTest',
+	#superclass : 'TestCase',
+	#category : 'DrTests-CommentsToTests-Tests-Base',
+	#package : 'DrTests-CommentsToTests-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommentsToTestsTest >> testCommentWithFailure [
 	"(1+3)>>>5"
 
@@ -19,7 +21,7 @@ CommentsToTestsTest >> testCommentWithFailure [
 	self should: [commentTestCase testIt] raise: TestFailure
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommentsToTestsTest >> testCommentWithSyntaxError [
 	"(1+)>>>5"
 
@@ -31,7 +33,7 @@ CommentsToTestsTest >> testCommentWithSyntaxError [
 	self should: [commentTestCase testIt] raise: CodeError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommentsToTestsTest >> testErrorComment [
 	"(1+3)+6/0>>>4"
 
@@ -43,7 +45,7 @@ CommentsToTestsTest >> testErrorComment [
 	self should: [commentTestCase testIt] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CommentsToTestsTest >> testSimpleComment [
 	"(1+3)>>>4"
 

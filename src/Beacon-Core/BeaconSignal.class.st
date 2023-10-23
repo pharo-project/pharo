@@ -18,23 +18,25 @@ BeaconSignal >> level: aLevel
 ```	
 "
 Class {
-	#name : #BeaconSignal,
-	#superclass : #Announcement,
+	#name : 'BeaconSignal',
+	#superclass : 'Announcement',
 	#instVars : [
 		'timestamp',
 		'processId',
 		'properties'
 	],
-	#category : #'Beacon-Core-Signals'
+	#category : 'Beacon-Core-Signals',
+	#package : 'Beacon-Core',
+	#tag : 'Signals'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BeaconSignal >> asBeaconSignal [
 
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BeaconSignal >> initialize [
 
 	super initialize.
@@ -43,24 +45,24 @@ BeaconSignal >> initialize [
 	properties := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BeaconSignal >> name [
 
 	^ self class name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BeaconSignal >> printOn: stream [
 
 	self printOneLineOn: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BeaconSignal >> printOneLineContentsOn: stream [
 	"Hook to be overriden by subclasses"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BeaconSignal >> printOneLineOn: stream [
 
 	stream
@@ -72,25 +74,25 @@ BeaconSignal >> printOneLineOn: stream [
 	self printOneLineContentsOn: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BeaconSignal >> printOneLineString [
 
 	^ String streamContents: [ :stream | self printOneLineOn: stream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BeaconSignal >> processId [
 
 	^ processId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BeaconSignal >> properties [
 
 	^ properties
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BeaconSignal >> timestamp [
 
 	^ timestamp

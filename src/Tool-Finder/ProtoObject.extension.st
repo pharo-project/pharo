@@ -1,6 +1,6 @@
-Extension { #name : #ProtoObject }
+Extension { #name : 'ProtoObject' }
 
-{ #category : #'*Tool-Finder' }
+{ #category : '*Tool-Finder' }
 ProtoObject >> allSelectorsToTestInMethodFinder [
 
 	^ #()

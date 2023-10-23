@@ -2,30 +2,32 @@
 You can move the circle by scrolling and change his size by pinching
 "
 Class {
-	#name : #SDL2TouchGestureExample,
-	#superclass : #SDL2TouchExample,
+	#name : 'SDL2TouchGestureExample',
+	#superclass : 'SDL2TouchExample',
 	#instVars : [
 		'circleCenter',
 		'circleSize'
 	],
-	#category : #'OSWindow-SDL2-Examples-Gesture'
+	#category : 'OSWindow-SDL2-Examples-Gesture',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Gesture'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2TouchGestureExample class >> example [
-	<sampleInstance>
-	^ self new open
+	<script>
+	^ super example
 ]
 
-{ #category : #'manage pinch' }
+{ #category : 'manage pinch' }
 SDL2TouchGestureExample >> beginPinch: anEvent [
 ]
 
-{ #category : #'manage scrolling' }
+{ #category : 'manage scrolling' }
 SDL2TouchGestureExample >> beginScroll: anEvent [
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SDL2TouchGestureExample >> createEventHandler [
 	^OSWindowGestureEventHandler new
 				touchExample: self;
@@ -34,7 +36,7 @@ SDL2TouchGestureExample >> createEventHandler [
 				yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample >> drawCircle [
 	renderer athensSurface
 		drawDuring: [ :canvas |
@@ -48,15 +50,15 @@ SDL2TouchGestureExample >> drawCircle [
 				draw ]
 ]
 
-{ #category : #'manage pinch' }
+{ #category : 'manage pinch' }
 SDL2TouchGestureExample >> endPinch: anEvent [
 ]
 
-{ #category : #'manage scrolling' }
+{ #category : 'manage scrolling' }
 SDL2TouchGestureExample >> endScroll: anEvent [
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample >> generateCircleOfSize: anInteger [
 	^ renderer athensSurface
 		createPath: [ :builder |
@@ -69,25 +71,25 @@ SDL2TouchGestureExample >> generateCircleOfSize: anInteger [
 				ccwArcTo: anInteger negated @ 0 angle: 90 degreesToRadians ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TouchGestureExample >> initialize [
 	super initialize.
 	circleCenter := (self defaultExtent x / 2) asFloat @ (self defaultExtent y / 2) asFloat.
 	circleSize := 10.0
 ]
 
-{ #category : #'manage pinch' }
+{ #category : 'manage pinch' }
 SDL2TouchGestureExample >> pinch: anEvent [
 	circleSize := circleSize + (anEvent dDist * (self defaultExtent distanceTo: 0@0))
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample >> redraw [
 	super redraw.
 	self drawCircle
 ]
 
-{ #category : #'manage scrolling' }
+{ #category : 'manage scrolling' }
 SDL2TouchGestureExample >> scroll: anEvent [
 	circleCenter := circleCenter
 		+ (anEvent direction * (anEvent dDist abs * (self defaultExtent distanceTo: 0 @ 0)))

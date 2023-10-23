@@ -1,10 +1,11 @@
 Class {
-	#name : #FinalizationRegistryEntryTest,
-	#superclass : #TestCase,
-	#category : #'System-Finalization-Tests'
+	#name : 'FinalizationRegistryEntryTest',
+	#superclass : 'TestCase',
+	#category : 'System-Finalization-Tests',
+	#package : 'System-Finalization-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryEntryTest >> testAdd [
 
 	| entry1 entry2 |
@@ -17,7 +18,7 @@ FinalizationRegistryEntryTest >> testAdd [
 	self assert: entry2 previous equals: entry1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryEntryTest >> testAddFirstTwice [
 
 	| entry1 entry2 entry3 |
@@ -36,7 +37,7 @@ FinalizationRegistryEntryTest >> testAddFirstTwice [
 	self assert: entry2 previous equals: entry3.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryEntryTest >> testAddMiddle [
 
 	| head tail middle |
@@ -54,7 +55,7 @@ FinalizationRegistryEntryTest >> testAddMiddle [
 	self assert: tail previous equals: middle.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryEntryTest >> testRemoveFromMiddle [
 
 	| head middle tail |
@@ -70,7 +71,7 @@ FinalizationRegistryEntryTest >> testRemoveFromMiddle [
 	self assert: tail previous equals: head.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FinalizationRegistryEntryTest >> testRemoveFromTail [
 
 	| head middle tail |

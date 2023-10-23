@@ -2,27 +2,29 @@
 I use binary read and write streams atop a memory filesystem.
 "
 Class {
-	#name : #FLFileReferenceStreamStrategy,
-	#superclass : #FLStreamStrategy,
+	#name : 'FLFileReferenceStreamStrategy',
+	#superclass : 'FLStreamStrategy',
 	#instVars : [
 		'fileReference'
 	],
-	#category : #'Fuel-Core-Tests-Support-StreamStrategies'
+	#category : 'Fuel-Core-Tests-Support-StreamStrategies',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Support-StreamStrategies'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLFileReferenceStreamStrategy >> initialize [
 	super initialize.
 	
 	fileReference := FileSystem memory / 'aFile'
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 FLFileReferenceStreamStrategy >> readStream [
 	^ fileReference binaryReadStream
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 FLFileReferenceStreamStrategy >> writeStream [
 	^ fileReference binaryWriteStream
 ]

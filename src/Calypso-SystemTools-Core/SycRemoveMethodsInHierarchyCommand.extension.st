@@ -1,6 +1,6 @@
-Extension { #name : #SycRemoveMethodsInHierarchyCommand }
+Extension { #name : 'SycRemoveMethodsInHierarchyCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycRemoveMethodsInHierarchyCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

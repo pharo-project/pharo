@@ -2,15 +2,17 @@
 I am used to convert gradient fill style(s) to appropriate paint(s) in Athens.
 "
 Class {
-	#name : #AthensGradientPaint,
-	#superclass : #AthensPaint,
+	#name : 'AthensGradientPaint',
+	#superclass : 'AthensPaint',
 	#instVars : [
 		'gradient'
 	],
-	#category : #'Athens-Balloon-Paint'
+	#category : 'Athens-Balloon-Paint',
+	#package : 'Athens-Balloon',
+	#tag : 'Paint'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensGradientPaint >> athensFillPath: aPath on: canvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -20,7 +22,7 @@ AthensGradientPaint >> athensFillPath: aPath on: canvas [
 	fill athensFillPath: aPath on: canvas
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensGradientPaint >> athensFillRectangle: aRect on: canvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -30,7 +32,7 @@ AthensGradientPaint >> athensFillRectangle: aRect on: canvas [
 	fill athensFillRectangle: aRect on: canvas
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensGradientPaint >> convertGradientToPaintOn: aCanvas [
 
 	"This is a terminal method in rendering dispatch scheme
@@ -51,7 +53,7 @@ AthensGradientPaint >> convertGradientToPaintOn: aCanvas [
 						   gradient origin + gradient direction) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensGradientPaint >> gradient: aGradient [
 
 	gradient := aGradient

@@ -26,8 +26,8 @@ Internal Representation and Key Implementation Points.
 	methodGroupQuery:		<ClyQuery>
 "
 Class {
-	#name : #ClyFullBrowserMorph,
-	#superclass : #ClyBrowserMorph,
+	#name : 'ClyFullBrowserMorph',
+	#superclass : 'ClyBrowserMorph',
 	#instVars : [
 		'packageView',
 		'classView',
@@ -39,16 +39,18 @@ Class {
 	#classVars : [
 		'DefaultPackageFilter'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-UI'
+	#category : 'Calypso-SystemTools-FullBrowser-UI',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'UI'
 }
 
-{ #category : #'tools registration' }
+{ #category : 'tools registration' }
 ClyFullBrowserMorph class >> beDefaultBrowser [
 	<script>
 	self registerToolsOn: Smalltalk tools
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> onDefaultEnvironment [
 	<script>
 	^ (self on: ClyNavigationEnvironment currentImage)
@@ -56,13 +58,13 @@ ClyFullBrowserMorph class >> onDefaultEnvironment [
 			yourself
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> open [
 	<script>
 	^ self openOn: ClyNavigationEnvironment currentImage
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openOn: aNavigationEnvironment [
 
 	| browser |
@@ -71,7 +73,7 @@ ClyFullBrowserMorph class >> openOn: aNavigationEnvironment [
 	^browser
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openOn: aNavigationEnvironment withState: navigationBlock [
 
 	| browser |
@@ -81,13 +83,13 @@ ClyFullBrowserMorph class >> openOn: aNavigationEnvironment withState: navigatio
 	^browser
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openOnClass: aClass [
 
 	^self openWithState: [:browser | browser selectClass: aClass]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openOnClass: aClass selector: aSymbol [
 
 	^(aClass lookupSelector: aSymbol)
@@ -95,7 +97,7 @@ ClyFullBrowserMorph class >> openOnClass: aClass selector: aSymbol [
 		ifNotNil: [:method | self openOnMethod: method]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openOnClass: aClass selector: aSymbol highlight: aString [
 
 	| browser |
@@ -105,31 +107,31 @@ ClyFullBrowserMorph class >> openOnClass: aClass selector: aSymbol highlight: aS
 	^browser
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openOnMethod: aMethod [
 
 	^self openWithState: [:browser | browser selectMethod: aMethod]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openOnPackage: aPackage [
 
 	^self openWithState: [:browser | browser selectPackage: aPackage]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyFullBrowserMorph class >> openWithState: navigationBlock [
 
 	^ self openOn: ClyNavigationEnvironment currentImage withState: navigationBlock
 ]
 
-{ #category : #'tools registration' }
+{ #category : 'tools registration' }
 ClyFullBrowserMorph class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #browser
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyFullBrowserMorph class >> settingsGroupOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #Calypso)
@@ -138,12 +140,12 @@ ClyFullBrowserMorph class >> settingsGroupOn: aBuilder [
 		description: 'Settings related to the browser'
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 ClyFullBrowserMorph class >> taskbarIconName [
 	^#smallSystemBrowser
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyFullBrowserMorph >> adoptForExtendedClass [
 	| extendingPackages extraGroups |
 	self classSelection isEmpty ifTrue: [ ^self ].
@@ -161,7 +163,7 @@ ClyFullBrowserMorph >> adoptForExtendedClass [
 	methodGroupQuery := methodGroupQuery , extraGroups
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> allNavigationScopes [
 
 	| classLocalScope |
@@ -173,7 +175,7 @@ ClyFullBrowserMorph >> allNavigationScopes [
 		classLocalScope }, RefactoringSettings availableScopes
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyFullBrowserMorph >> buildTitleFromSelections [
 	| newTitle mainItem |
 	self projectSelection isEmpty ifFalse: [
@@ -196,7 +198,7 @@ ClyFullBrowserMorph >> buildTitleFromSelections [
 	^newTitle
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> changeMethodGroupQueryBy: aBlock [
 
 	self changeStateBy: [
@@ -208,7 +210,7 @@ ClyFullBrowserMorph >> changeMethodGroupQueryBy: aBlock [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> chooseClassForEditorOfMethod: aMethod [
 
 	| selectedClass |
@@ -219,14 +221,14 @@ ClyFullBrowserMorph >> chooseClassForEditorOfMethod: aMethod [
 	^aMethod origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> chooseClassesForNewMethod [
 
 	^self classSelection actualObjects collect: [ :each |
 		metaLevelScope metaLevelOf: each]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> chooseClassesForNewMethod: aMethod [
 
 	| methodClass selectedClasses |
@@ -237,12 +239,12 @@ ClyFullBrowserMorph >> chooseClassesForNewMethod: aMethod [
 	^selectedClasses, {methodClass}
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> classGroupSelection [
 	^packageView selection asSelectedItemsOf: ClyClassGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> classScopeForMethods [
 	| currentClassScope |
 	currentClassScope := methodGroupQuery scope asScope: metaLevelScope.
@@ -250,12 +252,12 @@ ClyFullBrowserMorph >> classScopeForMethods [
 	^self extendClassScopeForMethods: currentClassScope
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> classSelection [
 	^classView selection
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> classSelectionChanged [
 
 	self changeStateBy: [
@@ -270,34 +272,34 @@ ClyFullBrowserMorph >> classSelectionChanged [
 	]
 ]
 
-{ #category : #'accessing - view' }
+{ #category : 'accessing - view' }
 ClyFullBrowserMorph >> classView [
 	^ classView
 ]
 
-{ #category : #'class compilation' }
+{ #category : 'class compilation' }
 ClyFullBrowserMorph >> compileANewClassFrom: aString notifying: aController startingFrom: aClass [
 
 	^ self system compileANewClassFrom: aString notifying: aController startingFrom: aClass
 ]
 
-{ #category : #'accessing - context' }
+{ #category : 'accessing - context' }
 ClyFullBrowserMorph >> createCommandContext [
 	^ClyFullBrowserGlobalContext for: self
 ]
 
-{ #category : #'accessing - context' }
+{ #category : 'accessing - context' }
 ClyFullBrowserMorph >> currentMetaLevelOf: aClass [
 	^metaLevelScope metaLevelOf: aClass
 ]
 
-{ #category : #'tools support' }
+{ #category : 'tools support' }
 ClyFullBrowserMorph >> decorateMethodEditor: aMethodEditor [
 
 	methodView query decorateResultMethodEditor: aMethodEditor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> defaultClassScopeForMethods [
 
 	| selectedClassScope |
@@ -306,7 +308,7 @@ ClyFullBrowserMorph >> defaultClassScopeForMethods [
 	^self extendClassScopeForMethods: selectedClassScope
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> defaultNavigationScope [
 
 	^self isScopedModeEnabled
@@ -314,13 +316,13 @@ ClyFullBrowserMorph >> defaultNavigationScope [
 		ifTrue: [ packageView query scope]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> defaultPackageFilter [
 	^DefaultPackageFilter ifNil: [
 		DefaultPackageFilter := ClyTableFilterFactory of: ClyItemNameFilter using: ClyRegexPattern new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> extendClassScopeForMethods: aClassScope [
 	| resultScope |
 
@@ -333,13 +335,13 @@ ClyFullBrowserMorph >> extendClassScopeForMethods: aClassScope [
 	^resultScope
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> initialize [
 	super initialize.
 	metaLevelScope := ClyInstanceSideScope
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> initializeNavigationViews [
 	"Initialize all panes (navigation views) of the browser.
 	 Regular browsers have four panes: package, class, protocol and method."
@@ -350,7 +352,7 @@ ClyFullBrowserMorph >> initializeNavigationViews [
 	methodView := self newMethodView
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserMorph >> isClassSelected: aClass [
 	"It is the logic to return true when metaclass is selected but given aClass is its instance side.
 	In future this complexity should be addressed with first class ClassBrowserItem"
@@ -359,13 +361,13 @@ ClyFullBrowserMorph >> isClassSelected: aClass [
 			each systemDefinition definingClass == aClass ]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserMorph >> isInProjectView [
 
 	^ self packageView showsItemsFromQuery: (systemScope projectQueryFor: self systemScope) class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserMorph >> isPackagePartOfSelection: aPackage [
 
 	(self isPackageSelected: aPackage) ifTrue: [ ^true ].
@@ -374,43 +376,43 @@ ClyFullBrowserMorph >> isPackagePartOfSelection: aPackage [
 		anySatisfy: [ :project | project includesPackage: aPackage ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserMorph >> isPackageSelected: aPackage [
 
 	^self packageSelection includesActualObject: aPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserMorph >> isScopedModeEnabled [
 	^packageView showsItemsFromScope: ClyPackageScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> metaLevelScope [
 	^metaLevelScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> metaLevelScope: aMetaLevelScopeClass [
 	metaLevelScope := aMetaLevelScopeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> methodGroupQuery [
 	^methodGroupQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> methodGroupQuery: aQuery [
 	methodGroupQuery := aQuery
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> methodGroupSelection [
 	^methodGroupView selection
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> methodGroupSelectionChanged [
 
 	| methodQueries |
@@ -425,17 +427,17 @@ ClyFullBrowserMorph >> methodGroupSelectionChanged [
 		showQueries: methodQueries as: (ClySortedQueryResult using: ClySortMethodBySelectorFunction ascending)
 ]
 
-{ #category : #'accessing - view' }
+{ #category : 'accessing - view' }
 ClyFullBrowserMorph >> methodGroupView [
 	^ methodGroupView
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> methodSelection [
 	^methodView selection
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> methodSelectionChanged [
 	| actualMethods |
 
@@ -445,12 +447,12 @@ ClyFullBrowserMorph >> methodSelectionChanged [
 			eachGroup actualObject includesMethod: eachMethod ] ]
 ]
 
-{ #category : #'accessing - view' }
+{ #category : 'accessing - view' }
 ClyFullBrowserMorph >> methodView [
 	^ methodView
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> navigateSpawnedFullBrowser: aFullBrowser [
 	self isScopedModeEnabled ifTrue: [
 		aFullBrowser switchToPackageScopeOf: packageView query scope basisObjects].
@@ -465,7 +467,7 @@ ClyFullBrowserMorph >> navigateSpawnedFullBrowser: aFullBrowser [
 		^aFullBrowser selectPackage: self packageSelection lastSelectedItem actualObject]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> newClassView [
 	"Creates the class pane"
 
@@ -478,7 +480,7 @@ ClyFullBrowserMorph >> newClassView [
 		requestNavigationBy: #classSelectionChanged
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> newMethodGroupView [
 	"Creates the 'method group' pane (formerly the 'protocol' pane)"
 
@@ -489,7 +491,7 @@ ClyFullBrowserMorph >> newMethodGroupView [
 		neverRestoreSelection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> newMethodView [
 	"Creates the method pane"
 
@@ -499,7 +501,7 @@ ClyFullBrowserMorph >> newMethodView [
 		requestNavigationBy: #methodSelectionChanged
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> newPackageView [
 	"Creates the package pane"
 	| newPackageView |
@@ -518,7 +520,7 @@ ClyFullBrowserMorph >> newPackageView [
 	^ newPackageView
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyFullBrowserMorph >> newWindowTitle [
 	| newTitle |
 
@@ -531,23 +533,23 @@ ClyFullBrowserMorph >> newWindowTitle [
 	^newTitle
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> packageSelection [
 	^packageView selection asSelectedParentsOf: RPackage
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> packageSelectionChanged [
 
 	self switchToFlatClasses
 ]
 
-{ #category : #'accessing - view' }
+{ #category : 'accessing - view' }
 ClyFullBrowserMorph >> packageView [
 	^ packageView
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> prepareDefaultState [
 	super prepareDefaultState.
 
@@ -557,7 +559,7 @@ ClyFullBrowserMorph >> prepareDefaultState [
 	UIManager default defer: [packageView takeKeyboardFocus]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFullBrowserMorph >> prepareInitialState [
 
 	methodGroupQuery := ClyAllMethodGroupsQuery sortedFrom: (metaLevelScope emptyIn: navigationEnvironment).
@@ -565,30 +567,30 @@ ClyFullBrowserMorph >> prepareInitialState [
 	self switchToPackages
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> projectChildrenSelection [
 	^packageView selection asSelectedParentsOf: ClyProjectChildItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserMorph >> projectClass [
 
 	^ ClyManagedProject
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 ClyFullBrowserMorph >> projectSelection [
 	^packageView selection asSelectedParentsOf: self projectClass
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> restrictMethodVisibilityBy: aClassScope [
 
 	self changeMethodGroupQueryBy: [
 		methodGroupQuery restrictedByScope: aClassScope]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> selectClass: aClass [
 
 	| foundItems classDefinition |
@@ -610,7 +612,7 @@ ClyFullBrowserMorph >> selectClass: aClass [
 		self classSelection selectItemsWith: { aClass instanceSide } ]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> selectCurrentExtensionMethodGroup [
 
 	self classSelection isEmpty ifTrue: [ ^self ].
@@ -622,7 +624,7 @@ ClyFullBrowserMorph >> selectCurrentExtensionMethodGroup [
 	self selectMethodGroupNamed: self packageSelection lastSelectedItem name
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> selectMethod: aMethod [
 
 	| foundItems |
@@ -637,7 +639,7 @@ ClyFullBrowserMorph >> selectMethod: aMethod [
 	]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> selectMethodGroupNamed: tagName [
 
 	self changeStateBy: [
@@ -645,7 +647,7 @@ ClyFullBrowserMorph >> selectMethodGroupNamed: tagName [
 	]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> selectPackage: aPackage [
 
 	self changeStateBy: [
@@ -655,7 +657,7 @@ ClyFullBrowserMorph >> selectPackage: aPackage [
 	]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> selectPackage: aPackage atClassTag: tagName [
 
 	| packageItem targetClassGroup foundPackages |
@@ -673,13 +675,13 @@ ClyFullBrowserMorph >> selectPackage: aPackage atClassTag: tagName [
 	]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> selectVariableNamed: varName [
 
 	self selectMethodGroupNamed: varName
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> setUpScopedModeWith: aScope [
 
 	(aScope isKindOf: ClyPackageScope) ifFalse: [ ^self ].
@@ -687,7 +689,7 @@ ClyFullBrowserMorph >> setUpScopedModeWith: aScope [
 	self switchToPackageScopeOf: aScope basisObjects
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyFullBrowserMorph >> setWindowTitle: aString in: aWindow [
 	| emphasis |
 	super setWindowTitle: aString in: aWindow.
@@ -698,7 +700,7 @@ ClyFullBrowserMorph >> setWindowTitle: aString in: aWindow [
 		label emphasis: emphasis emphasisCode]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> showAllMethods [
 
 	| methodQuery |
@@ -707,18 +709,18 @@ ClyFullBrowserMorph >> showAllMethods [
 	methodView showQuery: methodQuery
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserMorph >> showsFlatClasses [
 	^self packageSelection isEmpty not
 		and: [ (classView showsItemsFromScope: ClyClassHierarchyScope) not]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserMorph >> showsFullClassHierarchy [
 	^classView showsItemsFromScope: ClySuperclassScope
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> silentlySelectPackageOfSelectedClass [
 
 	| selectedClass |
@@ -732,13 +734,13 @@ ClyFullBrowserMorph >> silentlySelectPackageOfSelectedClass [
 			ifFalse: [ self selectPackage: selectedClass package atClassTag: selectedClass packageTagName ] ]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> snapshotState [
 
 	^ClyFullBrowserState of: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyFullBrowserMorph >> specifyClassItemNameOn: nameMorph for: classItem [
 	| definition |
 	nameMorph contents: classItem name.
@@ -751,7 +753,7 @@ ClyFullBrowserMorph >> specifyClassItemNameOn: nameMorph for: classItem [
 		ifFalse: [nameMorph color: self theme classExtensionColor]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyFullBrowserMorph >> specifyMethodItemNameOn: nameMorph for: methodItem [
 	| definition |
 	nameMorph contents: methodItem name.
@@ -769,7 +771,7 @@ ClyFullBrowserMorph >> specifyMethodItemNameOn: nameMorph for: methodItem [
 	nameMorph contents: (definition printFullNameOf: methodItem)
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchClassViewTo: aQueryResult inScope: aScope [
 	| classes |
 	classes := ClyAllClassesQuery from: aScope as: aQueryResult.
@@ -777,7 +779,7 @@ ClyFullBrowserMorph >> switchClassViewTo: aQueryResult inScope: aScope [
 	classView showQuery: classes
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToFlatClasses [
 
 	| classQueries |
@@ -788,7 +790,7 @@ ClyFullBrowserMorph >> switchToFlatClasses [
 	classView showQueries: classQueries as: ClyExtensionLastSortedClassResult hierarchical
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToFullClassHierarchy [
 
 	| classScope |
@@ -799,7 +801,7 @@ ClyFullBrowserMorph >> switchToFullClassHierarchy [
 		inScope: classScope asFullHierarchyScope
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToFullClassHierarchyOf: aClass [
 
 	| classScope |
@@ -810,7 +812,7 @@ ClyFullBrowserMorph >> switchToFullClassHierarchyOf: aClass [
 		inScope: classScope asFullHierarchyScope
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToMetaLevelScope: aMetaLevelScopeClass [
 	metaLevelScope = aMetaLevelScopeClass ifTrue: [ ^self ].
 
@@ -820,7 +822,7 @@ ClyFullBrowserMorph >> switchToMetaLevelScope: aMetaLevelScopeClass [
 	]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToMethodGroups [
 
 	self changeMethodGroupQueryBy: [
@@ -828,7 +830,7 @@ ClyFullBrowserMorph >> switchToMethodGroups [
 	]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToPackageScopeOf: packages [
 
 	| query scope |
@@ -839,7 +841,7 @@ ClyFullBrowserMorph >> switchToPackageScopeOf: packages [
 	packageView showQuery: query
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToPackages [
 	| packages |
 	packages := ClyAllPackagesQuery sortedFrom: self systemScope.
@@ -847,12 +849,12 @@ ClyFullBrowserMorph >> switchToPackages [
 	packageView showQuery: packages
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToProjects [
 	packageView showQuery: (systemScope projectQueryFor: self systemScope)
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyFullBrowserMorph >> switchToVariables [
 	| classScope |
 
@@ -864,13 +866,13 @@ ClyFullBrowserMorph >> switchToVariables [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyFullBrowserMorph >> updateDefaultPackageFilter [
 
 	DefaultPackageFilter := packageView filterField getText ifEmpty: [ nil ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyFullBrowserMorph >> updateMethodEditorAfterPackageRemoval [
 	"A package was removed from the receiver, update the method editor accordingly"
 	

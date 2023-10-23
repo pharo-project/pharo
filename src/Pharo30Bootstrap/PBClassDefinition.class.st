@@ -1,14 +1,15 @@
 Class {
-	#name : #PBClassDefinition,
-	#superclass : #Object,
+	#name : 'PBClassDefinition',
+	#superclass : 'Object',
 	#instVars : [
 		'classDefinition',
 		'bootstrapEnvironment'
 	],
-	#category : #Pharo30Bootstrap
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 PBClassDefinition class >> on: classDefinition environment: aBootstrapEnvironment [ 
 	
 	^ self new
@@ -16,26 +17,26 @@ PBClassDefinition class >> on: classDefinition environment: aBootstrapEnvironmen
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassDefinition >> allSlots [
 	
 	^ classDefinition allSlots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassDefinition >> definesClassVariable: aString [ 
 	
 	^ classDefinition instanceSide classVarNames includes: aString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 PBClassDefinition >> initializeOn: aClassDefinition environment: aBootstrapEnvironment [
 
 	classDefinition := aClassDefinition.
 	bootstrapEnvironment := aBootstrapEnvironment.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassDefinition >> innerBindingOf: aString [
 
 	(self definesClassVariable: aString asSymbol)
@@ -57,7 +58,7 @@ PBClassDefinition >> innerBindingOf: aString [
 	^ nil
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 PBClassDefinition >> lookupVar: aName declare: aBoolean [
 
 	self allSlots detect: [ :e | e name = aName ] ifFound: [ :e | ^ e ].
@@ -69,27 +70,27 @@ PBClassDefinition >> lookupVar: aName declare: aBoolean [
 	^ bootstrapEnvironment bindingOf: aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassDefinition >> name [
 
 	^ classDefinition instanceSide name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassDefinition >> sharedPools [
 
 	^ classDefinition instanceSide sharedPools collect: [ :pool | 
 		PBClassDefinition on: pool environment: bootstrapEnvironment ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassDefinition >> superclass [
 	
 	classDefinition superclass ifNil: [ ^ nil ].
 	^ PBClassDefinition on: classDefinition superclass environment: bootstrapEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassDefinition >> usesClassVariable: aString [ 
 	
 	^ classDefinition instanceSide allClassVarNames includes: aString

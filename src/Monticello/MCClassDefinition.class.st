@@ -2,25 +2,28 @@
 A MCClassDefinition represents a class.
 "
 Class {
-	#name : #MCClassDefinition,
-	#superclass : #MCDefinition,
+	#name : 'MCClassDefinition',
+	#superclass : 'MCDefinition',
 	#instVars : [
 		'name',
 		'superclassName',
 		'variables',
-		'category',
+		'packageName',
 		'type',
 		'comment',
 		'commentStamp',
+		'tagName',
 		'traitComposition',
 		'classTraitComposition'
 	],
-	#category : #'Monticello-Modeling'
+	#category : 'Monticello-Modeling',
+	#package : 'Monticello',
+	#tag : 'Modeling'
 }
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
-	"Do not use this method! This method will be deprecated one Tonel will not use it anymore."
+	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
 
 	^ (self named: nameString)
 		  category: categoryString;
@@ -37,7 +40,7 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCClassDefinition class >> named: nameString [
 
 	^ self new
@@ -45,17 +48,17 @@ MCClassDefinition class >> named: nameString [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCClassDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ category = aDefinition category
+		and: [ self category = aDefinition category
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCClassDefinition >> accept: aVisitor [
 	aVisitor visitClassDefinition: self.
 	(self hasClassInstanceVariables or: [self hasClassTraitComposition])
@@ -63,46 +66,50 @@ MCClassDefinition >> accept: aVisitor [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> actualClass [
 	^ Smalltalk globals classNamed: self className
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
-	variables addAll: (aCollection collect: [:var | aClass name: var asString]).
+
+	variables addAll: (aCollection collect: [ :var | aClass name: var asString ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> category [
-	^ category
+
+	^ self tagName
+		  ifNil: [ self packageName ]
+		  ifNotNil: [ :tag | self packageName , '-' , tag ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> category: categoryString [
 
-	category := categoryString
+	self packageName: categoryString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classDefinitionString [
 	"Answer a string describing the class-side definition."
 	
 	^String streamContents: [:stream | self printClassDefinitionOn: stream]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classInstVarNames [
 	^ self selectVariables: #isClassInstanceVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classInstVarNames: civarArray [
 
 	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> classInstanceVariables [
 
 	variables ifNil: [ ^ #() ].
@@ -112,50 +119,50 @@ MCClassDefinition >> classInstanceVariables [
 		ifFalse: [self classInstanceVariablesString asSlotCollection]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> classInstanceVariablesString [
 
 	^ self stringForVariablesOfType: #isClassInstanceVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> className [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classTraitComposition [
 	^classTraitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classTraitComposition: classTraitCompositionString [
 
 	classTraitComposition := classTraitCompositionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classTraitCompositionCompiled [
 		^(Smalltalk compiler evaluate: self classTraitCompositionString) asTraitComposition 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classTraitCompositionString [
 	^self classTraitComposition ifNil: ['{}'].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classVarNames [
 	^(self selectVariables: #isClassVariable) asArray sort
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> classVarNames: cvarArray [
 
 	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> classVariables [
 	^self needsSlotClassDefinition 
 		ifTrue: [self sortedVariablesOfType: #isClassVariable ]
@@ -163,63 +170,62 @@ MCClassDefinition >> classVariables [
 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> classVariablesString [
 	^ self stringForSortedVariablesOfType: #isClassVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> comment [
 	^ comment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> comment: aString [
 
 	comment := aString withInternalLineEndings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> commentStamp [
 	^ commentStamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> commentStamp: anObject [
 	commentStamp := anObject
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> createClass [
+
 	| superClass |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
-	name = #Context
-		ifTrue: [ Context comment = comment 
-						ifFalse: [ Context comment: comment stamp: self commentStamp ].
-					^ self ].
+	name = #Context ifTrue: [
+		Context comment = comment ifFalse: [ Context comment: comment stamp: self commentStamp ].
+		^ self ].
 
-	superClass := superclassName = #nil
-		ifFalse: [ Smalltalk globals at: superclassName ].
-	^ [ Smalltalk classInstaller
-		make: [ :builder | 
-			builder
-				superclass: superClass;
-				name: name;
-				layoutClass: (ObjectLayout layoutForType: type);
-				slots: self instanceVariables;
-				sharedVariables: self classVariables;
-				sharedPools: self sharedPoolsString;
-				classSlots: self classInstanceVariables;
-				traitComposition: self traitCompositionCompiled;
-				classTraitComposition: self classTraitCompositionCompiled;
-				comment: comment stamp: self commentStamp;
-				category: category;
-				environment: superClass environment ] ]
-		on: Warning , DuplicatedVariableError
-		do: [ :ex | ex resume ]
+	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
+	^ [
+	  self class classInstaller make: [ :builder |
+		  builder
+			  superclass: superClass;
+			  name: name;
+			  layoutClass: (ObjectLayout layoutForType: type);
+			  slots: self instanceVariables;
+			  sharedVariables: self classVariables;
+			  sharedPools: self sharedPoolsString;
+			  classSlots: self classInstanceVariables;
+			  traitComposition: self traitCompositionCompiled;
+			  classTraitComposition: self classTraitCompositionCompiled;
+			  comment: comment stamp: self commentStamp;
+			  category: self category;
+			  environment: superClass environment ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> createVariableFromString: aString [
 	^[ Smalltalk compiler evaluate: aString ] 
 		on: Error 
@@ -232,7 +238,7 @@ MCClassDefinition >> createVariableFromString: aString [
 			UndefinedSlot named: slotName ast: ast  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> defaultCommentStamp [
 	^ String new
 
@@ -244,58 +250,48 @@ MCClassDefinition >> defaultCommentStamp [
 
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> definitionString [
 	^ String streamContents: [:stream | self printDefinitionOn: stream]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> description [
 	^ { name }
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassDefinition >> hasClassInstanceVariables [
 	^ (self selectVariables: #isClassInstanceVariable) isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassDefinition >> hasClassTraitComposition [
 	^self classTraitCompositionString ~= '{}'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassDefinition >> hasComment [
 	^ comment isEmptyOrNil not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassDefinition >> hasTraitComposition [
 	^self traitCompositionString ~= '{}'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCClassDefinition >> hash [
-	| hash |
-	hash := String stringHash: name initialHash: 0.
-	hash := String stringHash: superclassName initialHash: hash.
-	hash := String stringHash: self traitCompositionString initialHash: hash.
-	hash := String stringHash: self classTraitComposition asString initialHash: hash.
-	hash := String stringHash: (category ifNil: ['']) initialHash: hash.
-	hash := String stringHash: type initialHash: hash.
-	variables do: [
-		:v |
-		hash := String stringHash: v name initialHash: hash.
-	].
-	^ hash
+
+	^ (((((name hash bitXor: superclassName hash) bitXor: traitComposition hash) bitXor: classTraitComposition hash) bitXor: self category hash) bitXor: type hash)
+		  bitXor: variables hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCClassDefinition >> initialize [
 
 	super initialize.
-	category := ''.
 	superclassName := #Object.
 	traitComposition := '{}'.
 	classTraitComposition := '{}'.
@@ -305,40 +301,51 @@ MCClassDefinition >> initialize [
 	variables := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'introspection' }
+MCClassDefinition >> instVarNamed: aString put: aValue [
+
+	self flag: #package. "temporary hack until Tonel is fixed"
+	super
+		instVarNamed: (aString = 'category'
+				 ifTrue: [ 'packageName' ]
+				 ifFalse: [ aString ])
+		put: aValue
+]
+
+{ #category : 'accessing' }
 MCClassDefinition >> instVarNames [
 	^ self selectVariables: #isInstanceVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> instVarNames: ivarArray [
 
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> instanceVariables [
 	^self needsSlotClassDefinition 
 		ifTrue: [self variablesOfType: #isInstanceVariable]
 		ifFalse: [self instanceVariablesString asSlotCollection]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> instanceVariablesString [
 	^ self stringForVariablesOfType: #isInstanceVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassDefinition >> isClassDefinition [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCClassDefinition >> isCodeDefinition [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> kindOfSubclass [
 	type = #normal ifTrue: [^ ' subclass: '].
 	type = #words ifTrue: [^ ' variableWordSubclass: '].
@@ -354,19 +361,19 @@ MCClassDefinition >> kindOfSubclass [
 	^ ' subclass: '
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> load [
 	self createClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> name: anObject [
 
 	name := anObject asSymbol.
 	self type: type
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> needsSlotClassDefinition [
 	"this checks if any ivar or class var is using more than just standard definitions.
 	Complex vars are encoded with a string that starts with a # or one that has a space"
@@ -374,25 +381,37 @@ MCClassDefinition >> needsSlotClassDefinition [
 	^self variables anySatisfy: [:var | (var name beginsWith:'#') or: [ var name includes: Character space ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MCClassDefinition >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+MCClassDefinition >> packageName: aString [
+
+	packageName := aString ifNotNil: [ :package | package asSymbol ]
+]
+
+{ #category : 'accessing' }
 MCClassDefinition >> poolDictionaries [
 	^ self selectVariables: #isPoolImport
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> poolDictionaryNames: poolArray [
 
 	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MCClassDefinition >> postCopy [
 
 	super postCopy.
 	variables := variables copy
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 MCClassDefinition >> printAnnotations: requests on: aStream [
 	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests"
 
@@ -402,7 +421,7 @@ MCClassDefinition >> printAnnotations: requests on: aStream [
 	] separatedBy: [ aStream space ].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> printClassDefinitionOn: stream [
 	"Print a class-side definition of the receiver on the given stream.
 	Class instance variables and class traits."
@@ -421,7 +440,7 @@ MCClassDefinition >> printClassDefinitionOn: stream [
 			store: self classInstanceVariablesString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> printDefinitionBodyOn: stream [
 
 	self hasClassTraitComposition ifTrue: [
@@ -434,7 +453,7 @@ MCClassDefinition >> printDefinitionBodyOn: stream [
 		store: self classInstanceVariablesString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> printDefinitionOn: stream [
 		stream 
 			nextPutAll: self superclassName;
@@ -461,7 +480,7 @@ MCClassDefinition >> printDefinitionOn: stream [
 			store: self category asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> printMetaDefinitionOn: stream [
 	stream 
 		nextPutAll: self className;
@@ -469,12 +488,12 @@ MCClassDefinition >> printMetaDefinitionOn: stream [
 	self printDefinitionBodyOn: stream
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCClassDefinition >> provisions [
 	^ { name }
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCClassDefinition >> requirements [
 
 	^ (superclassName = #nil or: [ superclassName asString beginsWith: 'AnObsolete' ])
@@ -482,22 +501,22 @@ MCClassDefinition >> requirements [
 		  ifFalse: [ { superclassName } , self poolDictionaries ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> selectVariables: aSelector [
 	^ variables select: [:v | v perform: aSelector] thenCollect: [:v | v name]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> sharedPoolsString [
 	^ self stringForSortedVariablesOfType: #isPoolImport
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> sortKey [
 	^ self className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> sortedVariables [
 	"sort variables for comparison purposes"
 
@@ -508,19 +527,19 @@ MCClassDefinition >> sortedVariables [
 	^sorted
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> sortedVariablesOfType: aSymbol [
 	"version for complex vars, { definition . definition }"
 	^(((self selectVariables: aSymbol) asSortedCollection collect: [:each | Smalltalk compiler evaluate: each])) asArray.
 		
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> source [
 	^ self definitionString
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCClassDefinition >> storeDataOn: aDataStream [
 	| instVarSize |
 	instVarSize := (self hasTraitComposition or: [ self hasClassTraitComposition ])
@@ -533,7 +552,7 @@ MCClassDefinition >> storeDataOn: aDataStream [
 		aDataStream nextPut: (self instVarAt: index) ].
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> stringForSortedVariablesOfType: aSymbol [
 	^ String streamContents:
 		[:stream |
@@ -542,7 +561,7 @@ MCClassDefinition >> stringForSortedVariablesOfType: aSymbol [
 			separatedBy: [stream space]]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> stringForVariablesOfType: aSymbol [
 	^ String streamContents:
 		[:stream |
@@ -551,17 +570,17 @@ MCClassDefinition >> stringForVariablesOfType: aSymbol [
 			separatedBy: [stream space]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCClassDefinition >> summary [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> superclassName [
 	^ superclassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> superclassName: superclassString [
 
 	superclassName := superclassString
@@ -569,33 +588,47 @@ MCClassDefinition >> superclassName: superclassString [
 		                  ifNotNil: [ superclassString asSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MCClassDefinition >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+MCClassDefinition >> tagName: aString [
+
+	tagName := aString = RPackage rootTagName
+		           ifTrue: [ nil ]
+		           ifFalse: [ aString asSymbol ]
+]
+
+{ #category : 'accessing' }
 MCClassDefinition >> traitComposition [
 	^traitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> traitComposition: traitCompositionString [
 
 	traitComposition := traitCompositionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> traitCompositionCompiled [
 	^(Smalltalk compiler evaluate: self traitCompositionString) asTraitComposition 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> traitCompositionString [
 	^self traitComposition ifNil: ['{}'].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> type [
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> type: aSymbol [
 
 	type := (#( #CompiledMethod #CompiledBlock #CompiledCode ) includes: name)
@@ -603,17 +636,17 @@ MCClassDefinition >> type: aSymbol [
 		        ifFalse: [ aSymbol ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> unload [
 	Smalltalk globals removeClassNamed: name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCClassDefinition >> variables [
 	^ variables ifNil: [ variables := OrderedCollection  new ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 MCClassDefinition >> variablesOfType: aSymbol [
 	"version for complex vars, { definition . definition }"
 	^(self selectVariables: aSymbol) 

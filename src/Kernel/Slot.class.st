@@ -23,21 +23,23 @@ the Trait I am coming from (that defined me) is stored here.
 
 "
 Class {
-	#name : #Slot,
-	#superclass : #Variable,
+	#name : 'Slot',
+	#superclass : 'Variable',
 	#instVars : [
 		'owningClass',
 		'definingClass'
 	],
-	#category : #'Kernel-Variables'
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Slot class >> asSlot [
 	^ self new
 ]
 
-{ #category : #validating }
+{ #category : 'validating' }
 Slot class >> checkValidName: aSymbol [
 
 	aSymbol startsWithDigit ifTrue: [
@@ -47,58 +49,66 @@ Slot class >> checkValidName: aSymbol [
 		^ InvalidSlotName signalFor: aSymbol ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot class >> isUsed [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"
 	^self environment allBehaviors
 		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 Slot >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitInstanceVariableNode: aNode
 ]
 
-{ #category : #'class building' }
+{ #category : 'private' }
+Slot >> addAdditionalSlotsTo: slots [
+	"Some slots internal behavior are relying one other slots. This method should add them in order to build the class with them."
+
+	^ #(  )
+]
+
+{ #category : 'class building' }
 Slot >> asClassVariable [
 	self
 		error:
 			'Slots can not be used to define Class Variables, you need to create a LiteralVariable subclass instead'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Slot >> asSlot [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> baseSlot [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> definingClass [
 	"if a Slot from a Trait is installed in a class, we store the orginal class of the trait here"
 	^ definingClass ifNil: [ self owningClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> definingClass: aClass [
 	definingClass := aClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Slot >> definitionString [
 	"Every subclass that adds state must redefine either this method or #printOn:"
 	^ String streamContents: [:s | self definitionOn: s]
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 Slot >> emitStore: aMethodBuilder [
 	"generate bytecode to call the reflective write method of the Slot"
 	| tempName |
@@ -113,7 +123,7 @@ Slot >> emitStore: aMethodBuilder [
 		send: #writeSlot:value:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 Slot >> emitValue: aMethodBuilder [
 	aMethodBuilder
 		pushLiteral: self;
@@ -121,7 +131,7 @@ Slot >> emitValue: aMethodBuilder [
 		send: #read:
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Slot >> ensureInitalizeMethodExists: aClass [
 	(aClass includesSelector: #initialize) ifTrue: [ ^ self ].
 
@@ -134,7 +144,7 @@ Slot >> ensureInitalizeMethodExists: aClass [
 				classified: 'initialization' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Slot >> ensureSlotInitializationFor: aClass [
 	| source |
 	(self sendsInitializeSlots: aClass) ifTrue: [ ^ self ].
@@ -149,7 +159,7 @@ Slot >> ensureSlotInitializationFor: aClass [
 	Author useAuthor: 'Generated' during: [ aClass compile: source classified: 'initialization' ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Slot >> hasSameDefinitionAs: otherSlot [
 
 	"equal definition. Slots an have additional state that is not part of the definitoon
@@ -158,41 +168,43 @@ Slot >> hasSameDefinitionAs: otherSlot [
 	^self = otherSlot
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Slot >> initialize: instance [
 	"nothing to do for the default slot"
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 Slot >> installingIn: aClass [
 	"I am called by the class builder. This way a Slot can change the class it is installed in"
 	self wantsInitialization ifTrue: [ self ensureSlotInitializationFor: aClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isAccessedIn: aCompiledCode [
-	^aCompiledCode ast instanceVariableNodes
+	"Return whether the receiver is accessed in the arg. Pay attention that the compiler is free to remove unused variable so the access is only garanteed for used instance variables e.g. part of return, expression, assignment..."
+	
+	^ aCompiledCode ast instanceVariableNodes
 		anySatisfy: [ :node | node binding == self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isDefinedByOwningClass [
 
 	^ self owningClass = self definingClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isInstanceVariable [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isReadIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableReadNodes
 		 anySatisfy: [ :node | node binding == self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isReferenced [
 	^ self owningClass
 		ifNil: [ false ]
@@ -200,46 +212,46 @@ Slot >> isReferenced [
 		  class withAllSubclasses anySatisfy: [ :subclass | subclass hasMethodAccessingVariable: self ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isSelfEvaluating [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isVirtual [
 	"virtual slots do not take up space in the object and have size = 0"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isVisible [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Slot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableWriteNodes
 		anySatisfy: [ :node | node binding == self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> named: aSymbol [
 	"to be polymorhic with slot class"
 	self name: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> owningClass [
 	"the class that the slot is installed in"
 	^owningClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> owningClass: aClass [
 	owningClass := aClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Slot >> printOn: aStream [
 	"Every subclass that adds state must redefine either this method or #definitionString"
 	aStream
@@ -248,27 +260,28 @@ Slot >> printOn: aStream [
 		nextPutAll: self class name
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 Slot >> read: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ self subclassResponsibility
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 Slot >> readInContext: aContext [
 	^self read: aContext receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> scope [
 	^ self owningClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Slot >> sendsInitializeSlots: aClass [
 	(aClass isTrait or: [ aClass includesSelector: #initialize ])
 		ifFalse: [ ^ self sendsInitializeSlots: aClass superclass ].
@@ -286,38 +299,40 @@ Slot >> sendsInitializeSlots: aClass [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Slot >> size [
 	"normally a slot takes one ivar. Virtual slots do not take space.
 	 We could even have Slots that map to multiple ivars"
 	^self isVirtual ifTrue: [0] ifFalse: [1]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Slot >> storeOn: aStream [
 	^self printOn: aStream
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 Slot >> usingMethods [
 	"All methods that read or write the slot"
+	<reflection: 'Structural queries on methods - Method element references'>
 	^self owningClass
 		ifNil: [ #() ]
 		ifNotNil: [:class | class allMethodsAccessingSlot: self]
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 Slot >> wantsInitialization [
 	"if a slot wants to enable instance initalization, return true here"
 	^false
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 Slot >> write: aValue inContext: aContext [
 	^self write: aValue to: aContext receiver
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 Slot >> write: aValue to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	^self subclassResponsibility
 ]

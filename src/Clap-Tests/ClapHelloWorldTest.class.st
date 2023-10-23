@@ -1,13 +1,15 @@
 Class {
-	#name : #ClapHelloWorldTest,
-	#superclass : #TestCase,
+	#name : 'ClapHelloWorldTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'hello'
 	],
-	#category : #'Clap-Tests-Integration'
+	#category : 'Clap-Tests-Integration',
+	#package : 'Clap-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClapHelloWorldTest >> setUp [
 	super setUp.
 	hello := (ClapCommand id: #hello)
@@ -15,7 +17,7 @@ ClapHelloWorldTest >> setUp [
 		add: (ClapPositional id: #who)
 ]
 
-{ #category : #'tests - matching' }
+{ #category : 'tests - matching' }
 ClapHelloWorldTest >> testHello [
 	| match |
 	match := hello match: #('hello').
@@ -25,7 +27,7 @@ ClapHelloWorldTest >> testHello [
 	self deny: (match includesMatchOf: #who)
 ]
 
-{ #category : #'tests - matching' }
+{ #category : 'tests - matching' }
 ClapHelloWorldTest >> testHelloWorld [
 	| match |
 	match := hello match: #('hello' 'world').
@@ -41,7 +43,7 @@ ClapHelloWorldTest >> testHelloWorld [
 		identicalTo: match
 ]
 
-{ #category : #'tests - matching' }
+{ #category : 'tests - matching' }
 ClapHelloWorldTest >> testLanguageFlag [
 	| match lang |
 	lang := ClapPositional id: #language.
@@ -65,7 +67,7 @@ ClapHelloWorldTest >> testLanguageFlag [
 	self flag: 'needs a context'. "((match atName: 'lang') at: lang) context should be: match."
 ]
 
-{ #category : #'tests - matching' }
+{ #category : 'tests - matching' }
 ClapHelloWorldTest >> testShouting [
 	| match |
 	match := hello match: #('hello' '--shout').
@@ -75,7 +77,7 @@ ClapHelloWorldTest >> testShouting [
 	self deny: (match includesMatchOf: #who)
 ]
 
-{ #category : #'tests - matching' }
+{ #category : 'tests - matching' }
 ClapHelloWorldTest >> testShoutingAfterthought [
 	| match |
 	match := hello match: #('hello' 'world' '-s').
@@ -85,7 +87,7 @@ ClapHelloWorldTest >> testShoutingAfterthought [
 	self assert: (match includesMatchOf: #who)
 ]
 
-{ #category : #'tests - matching' }
+{ #category : 'tests - matching' }
 ClapHelloWorldTest >> testShoutingWorld [
 	| match |
 	match := hello match: #('hello' '--shout' 'world').

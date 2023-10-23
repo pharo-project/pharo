@@ -4,29 +4,30 @@ I am a command to move methods to their defining class.
 I am used to convert extension method to normal one
 "
 Class {
-	#name : #SycMoveMethodsToTheDefiningClassCommand,
-	#superclass : #SycMethodRepackagingCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycMoveMethodsToTheDefiningClassCommand',
+	#superclass : 'SycMethodRepackagingCommand',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMoveMethodsToTheDefiningClassCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isExtensionMethodSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToTheDefiningClassCommand >> defaultMenuIconName [
 
 	^ #smallRedo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToTheDefiningClassCommand >> defaultMenuItemName [
 
 	^ 'Move to defining class'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToTheDefiningClassCommand >> execute [
 
 	methods

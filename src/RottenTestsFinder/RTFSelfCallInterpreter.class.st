@@ -7,8 +7,8 @@ See:
 	self example
 "
 Class {
-	#name : #RTFSelfCallInterpreter,
-	#superclass : #Object,
+	#name : 'RTFSelfCallInterpreter',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'selfClass',
 		'selfSentMethods',
@@ -16,10 +16,12 @@ Class {
 		'callStack',
 		'rootSelfCall'
 	],
-	#category : #'RottenTestsFinder-SelfInterpreter'
+	#category : 'RottenTestsFinder-SelfInterpreter',
+	#package : 'RottenTestsFinder',
+	#tag : 'SelfInterpreter'
 }
 
-{ #category : #example }
+{ #category : 'example' }
 RTFSelfCallInterpreter class >> example [
 	^ RTFSelfCallInterpreter new
 		considerClassesThat: [ :class | class inheritsFrom: Collection ];
@@ -27,39 +29,39 @@ RTFSelfCallInterpreter class >> example [
 		rootSelfCall
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallInterpreter >> considerClassesThat [
 	^ considerClassesThat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallInterpreter >> considerClassesThat: anObject [
 	considerClassesThat := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RTFSelfCallInterpreter >> initialize [
 	super initialize.
 	selfSentMethods := OrderedCollection new.
 	callStack := Stack new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallInterpreter >> rootSelfCall [
 	^ rootSelfCall
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallInterpreter >> rootSelfCall: anObject [
 	rootSelfCall := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallInterpreter >> selfSentMethods [
 	^ selfSentMethods
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RTFSelfCallInterpreter >> send: aSelector fromClass: aClass [
 
 	| method |
@@ -71,74 +73,7 @@ RTFSelfCallInterpreter >> send: aSelector fromClass: aClass [
 	rootSelfCall := callStack pop
 ]
 
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitArgumentVariableNode: aRBArgumentNode [
-
-	self visitVariableNode: aRBArgumentNode
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitArrayNode: aRBArrayNode [
-	aRBArrayNode statements do: [ :statement | statement acceptVisitor: self ]
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitAssignmentNode: aRBAssignmentNode [
-
-	aRBAssignmentNode value acceptVisitor: self
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitBlockNode: aRBBlockNode [
-
-	aRBBlockNode statements do: [ :each |
-		each acceptVisitor: self ]
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitCascadeNode: aRBCascadeNode [
-	aRBCascadeNode messages do: [ :message |
-		message acceptVisitor: self ]
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitClassVariableNode: aRBVariableNode [
-	self visitVariableNode: aRBVariableNode.
-	^ self
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitGlobalVariableNode: aRBGlobalNode [
-
-	self visitVariableNode: aRBGlobalNode
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitInstanceVariableNode: aRBInstanceVariableNode [
-	self visitVariableNode: aRBInstanceVariableNode.
-	^ self
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	"Does nothing."
-	^ self
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitLiteralNode: aRBLiteralValueNode [
-
-	"Do nothing with literals"
-	^ self
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitLiteralValueNode: aRBLiteralValueNode [
-	"Do nothing with literals"
-	^ self
-]
-
-{ #category : #visiting }
+{ #category : 'visiting' }
 RTFSelfCallInterpreter >> visitMessageNode: aRBMessageNode [
 	| selfSentMethod callNode |
 	aRBMessageNode receiver acceptVisitor: self.
@@ -175,46 +110,4 @@ RTFSelfCallInterpreter >> visitMessageNode: aRBMessageNode [
 	callStack push: callNode.
 	selfSentMethod ast acceptVisitor: self.
 	callStack pop
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitMethodNode: aRBMethodNode [
-	aRBMethodNode statements do: [ :each |
-		each acceptVisitor: self ]
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitReturnNode: aRBReturnNode [
-
-	aRBReturnNode value acceptVisitor: self
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitSelfNode: aRBSelfNode [
-
-	self visitVariableNode: aRBSelfNode
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitSuperNode: aRBSuperNode [
-	self visitVariableNode: aRBSuperNode
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitTemporaryVariableNode: aRBTemporaryNode [
-
-	self visitVariableNode: aRBTemporaryNode
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitThisContextNode: aRBThisContextNode [
-
-	self visitVariableNode: aRBThisContextNode
-]
-
-{ #category : #visiting }
-RTFSelfCallInterpreter >> visitVariableNode: aRBArgumentNode [
-
-	"Do nothing with variables"
-	^ self
 ]

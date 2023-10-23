@@ -8,47 +8,49 @@ Handy guide to the kinds of Integer division:
 - quo:  truncated division, rounded towards zero.
 "
 Class {
-	#name : #SmallInteger,
-	#superclass : #Integer,
-	#type : #immediate,
+	#name : 'SmallInteger',
+	#superclass : 'Integer',
+	#type : 'immediate',
 	#classInstVars : [
 		'minVal',
 		'maxVal'
 	],
-	#category : #'Kernel-Numbers'
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SmallInteger class >> basicNew [
 
 	self error: 'SmallIntegers can only be created by performing arithmetic'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SmallInteger class >> initialize [
 
 	self startUp: true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SmallInteger class >> maxVal [
 	"Answer the maximum value for a SmallInteger."
 	^ maxVal
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SmallInteger class >> minVal [
 	"Answer the minimum value for a SmallInteger."
 	^ minVal
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SmallInteger class >> new [
 
 	self basicNew	"generates an error"
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 SmallInteger class >> startUp: isImageStarting [
 	"The image is either being newly started (isImageStarting is true), or it's just been snapshotted.
 	 If this has just been a snapshot, skip all the startup stuff."
@@ -62,7 +64,7 @@ SmallInteger class >> startUp: isImageStarting [
 	maxVal := -1 - val
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallInteger >> * aNumber [
 	"Primitive. Multiply the receiver by the argument and answer with the
 	result if it is a SmallInteger. Fail if the argument or the result is not a
@@ -72,7 +74,7 @@ SmallInteger >> * aNumber [
 	^ super * aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallInteger >> + aNumber [
 	"Primitive. Add the receiver to the argument and answer with the result
 	if it is a SmallInteger. Fail if the argument or the result is not a
@@ -82,7 +84,7 @@ SmallInteger >> + aNumber [
 	^ super + aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallInteger >> - aNumber [
 	"Primitive. Subtract the argument from the receiver and answer with the
 	result if it is a SmallInteger. Fail if the argument or the result is not a
@@ -93,7 +95,7 @@ SmallInteger >> - aNumber [
 	^super - aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallInteger >> / aNumber [
 	"Primitive. This primitive (for /) divides the receiver by the argument
 	and returns the result if the division is exact. Fail if the result is not a
@@ -114,7 +116,7 @@ SmallInteger >> / aNumber [
 		ifFalse: [super / aNumber]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallInteger >> // aNumber [
 	"Primitive. Divide the receiver by the argument and answer with the
 	result. Round the result down towards negative infinity to make it a
@@ -125,7 +127,7 @@ SmallInteger >> // aNumber [
 	^ super // aNumber 	"Do with quo: if primitive fails"
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> < aNumber [
 	"Primitive. Compare the receiver with the argument and answer with
 	true if the receiver is less than the argument. Otherwise answer false.
@@ -136,7 +138,7 @@ SmallInteger >> < aNumber [
 	^super < aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> <= aNumber [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is less than or equal to the argument. Otherwise answer
@@ -147,7 +149,7 @@ SmallInteger >> <= aNumber [
 	^super <= aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> = aNumber [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is equal to the argument. Otherwise answer false. Fail if the
@@ -158,7 +160,7 @@ SmallInteger >> = aNumber [
 	^super = aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> > aNumber [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is greater than the argument. Otherwise answer false. Fail if
@@ -169,7 +171,7 @@ SmallInteger >> > aNumber [
 	^super > aNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> >= aNumber [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is greater than or equal to the argument. Otherwise answer
@@ -180,7 +182,7 @@ SmallInteger >> >= aNumber [
 	^super >= aNumber
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallInteger >> \\ aNumber [
 	"Primitive. Take the receiver modulo the argument. The result is the
 	remainder rounded towards negative infinity, of the receiver divided by
@@ -191,13 +193,13 @@ SmallInteger >> \\ aNumber [
 	^ super \\ aNumber 	"will use // to compute it if primitive fails"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SmallInteger >> asCharacter [
 	<primitive: 170>
 	^self primitiveFailed
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SmallInteger >> asFloat [
 	"Primitive. Answer a Float that represents the value of the receiver.
 	Essential. See Object documentation whatIsAPrimitive."
@@ -206,14 +208,15 @@ SmallInteger >> asFloat [
 	self primitiveFailed
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 SmallInteger >> basicIdentityHash [
 	"The value answered is signed, within the full
 	 SmallInteger range, on the contrary to normal objects."
+	<reflection: 'Object Inspection - Accessing object identity'>
 	^self
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> bitAnd: arg [
 	"Primitive. Answer an Integer whose bits are the logical AND of the
 	receiver's bits and those of the argument, arg.
@@ -225,7 +228,7 @@ SmallInteger >> bitAnd: arg [
 	^ (self bitInvert bitOr: arg bitInvert) bitInvert
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> bitOr: arg [
 	"Primitive. Answer an Integer whose bits are the logical OR of the
 	receiver's bits and those of the argument, arg.
@@ -239,7 +242,7 @@ SmallInteger >> bitOr: arg [
 		ifFalse: [(self bitInvert bitClear: arg) bitInvert]
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> bitShift: arg [
 	"Primitive. Answer an Integer whose value is the receiver's value shifted
 	left by the number of bits indicated by the argument. Negative arguments
@@ -253,14 +256,14 @@ SmallInteger >> bitShift: arg [
 		ifFalse: [(self bitInvert bitShift: arg) bitInvert]
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> bitStringLength [
       "Always use as many bits as the native format to represent a SmallInteger"
 
       ^self class maxVal highBit + 1
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> bitXor: arg [
 	"Primitive. Answer an Integer whose bits are the logical XOR of the
 	receiver's bits and those of the argument, arg.
@@ -274,7 +277,7 @@ SmallInteger >> bitXor: arg [
 		ifFalse: [(self bitInvert bitXor: arg) bitInvert]
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 SmallInteger >> byteAt: n [
 	"Answer the value of an apparent byte-indexable field in the receiver,
 	 analogous to the large integers, which are organized as bytes."
@@ -290,14 +293,14 @@ SmallInteger >> byteAt: n [
 		ifFalse: [ (self bitShift: 8 - (n bitShift: 3)) bitAnd: 255 ]
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 SmallInteger >> byteAt: n put: value [
 	"Fails. The digits of a small integer can not be modified."
 
 	self error: 'You can''t store in a SmallInteger'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 SmallInteger >> bytesCount [
 	"Answer the number of indexable fields in the receiver. This value is the
 	 same as the largest legal subscript. Included so that a SmallInteger can
@@ -324,7 +327,7 @@ SmallInteger >> bytesCount [
 	^length
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> decimalDigitLength [
 	"Answer the number of digits printed out in base 10.
 	 Note that this only works for positive SmallIntegers up to 64-bits."
@@ -363,11 +366,11 @@ SmallInteger >> decimalDigitLength [
 										ifFalse: [self < 10000000000000000000 ifTrue: [19] ifFalse: [20]]]]]]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallInteger >> deepCopy [
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SmallInteger >> even [
 	" 0 even >>> true"
 	" 2 even >>> true"
@@ -378,7 +381,7 @@ SmallInteger >> even [
 	^(self bitAnd: 1) = 0
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 SmallInteger >> gcd: anInteger [
 	"See SmallInteger (Integer) | gcd:"
 	| n m |
@@ -390,7 +393,7 @@ SmallInteger >> gcd: anInteger [
 	^ m abs
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> hash [
 
     "Spread consecutive integers or integers related by some other pattern
@@ -399,7 +402,7 @@ SmallInteger >> hash [
     ^ self hashMultiply
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> hashMultiply [
 	"This is a multiplication of hashes by 1664525 mod 2^28 written to avoid overflowing into large integers.
 	 The primitive is able to perform the operation with modulo arihmetic.
@@ -417,7 +420,7 @@ SmallInteger >> hashMultiply [
 			bitAnd: 16r0FFFFFFF
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> highBit [
 	"Answer the index of the high order bit of the receiver, or zero if the
 	receiver is zero. Raise an error if the receiver is negative, since
@@ -431,7 +434,7 @@ SmallInteger >> highBit [
 	^ self highBitOfPositiveReceiver
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> highBitOfMagnitude [
 	"Answer the index of the high order bit of the receiver, or zero if the
 	receiver is zero. This method is used for negative SmallIntegers as well,
@@ -447,7 +450,7 @@ SmallInteger >> highBitOfMagnitude [
 	^self highBitOfPositiveReceiver
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SmallInteger >> highBitOfPositiveReceiver [
 	| shifted bitNo |
 	"Answer the index of the high order bit of the receiver, or zero if the
@@ -468,32 +471,33 @@ SmallInteger >> highBitOfPositiveReceiver [
 	^bitNo + ( #[0 1 2 2 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8] at: shifted + 1)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> identityHash [
 	"Answer a SmallInteger whose value is related to the receiver's identity.
 	 Specific override here to decrease the number of conflicts"
+	<reflection: 'Object Inspection - Accessing object identity'>
 	^ self hashMultiply
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SmallInteger >> isImmediateObject [
 	"This is needed for the bootstrap"
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SmallInteger >> isLarge [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SmallInteger >> isPinnedInMemory [
 	"Immediate instances can't be pinned"
 
 	^ false
 ]
 
-{ #category : #'bit manipulation' }
+{ #category : 'bit manipulation' }
 SmallInteger >> lowBit [
 	" Answer the index of the low order one bit.
 	  First we skip bits in groups of 8, then do a lookup in a table.
@@ -515,23 +519,25 @@ SmallInteger >> lowBit [
 	^result + ( #[1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 7 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 8 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 7 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 6 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1 5 1 2 1 3 1 2 1 4 1 2 1 3 1 2 1] at: lastByte)
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 SmallInteger >> nextInstance [
 	"SmallIntegers can't be enumerated this way.  There are a finite number of them from from (SmallInteger minVal) to (SmallInteger maxVal), but you'll have to enumerate them yourself with:
 	(SmallInteger minVal) to: (SmallInteger maxVal) do: [:integer | <your code here>].
 	"
 
+	<reflection: 'Memory Scanning - Instances of a class'>
 	self shouldNotImplement
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 SmallInteger >> nextObject [
 	"SmallIntegers are immediate objects, and, as such, do not have successors in object memory."
 
+	<reflection: 'Memory Scanning'>
 	self shouldNotImplement
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> numberOfDigitsInBase: b [
 	"Return how many digits are necessary to print this number in base b.
 	Mostly same as super but an optimized version for base 10 case"
@@ -541,7 +547,7 @@ SmallInteger >> numberOfDigitsInBase: b [
 	^self decimalDigitLength
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SmallInteger >> odd [
 	" 0 odd >>> false"
 	" 2 odd >>> false"
@@ -551,20 +557,21 @@ SmallInteger >> odd [
 	^(self bitAnd: 1) = 1
 ]
 
-{ #category : #pointers }
+{ #category : 'pointers' }
 SmallInteger >> pointsTo: anObject [
 	"Answers true if I hold a reference to anObject, or false otherwise. But since SmallIntegers do not have pointers, it always answers false"
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	^false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> printOn: stream base: base [
 	"Append a representation of this number in base b on aStream."
 
 	self printOn: stream base: base length: 0 padded: false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> printOn: stream base: base length: minimumLength padded: padWithZeroes [
 	"Return a String representation of this number in base b with a minimum length and padded by 0 if zeroFlag is set"
 
@@ -599,7 +606,7 @@ SmallInteger >> printOn: stream base: base length: minimumLength padded: padWith
 		divisor := divisor // base ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> printOn: aStream base: b nDigits: n [
 	"Append a representation of this number in base b on aStream using nDigits.
 	self must be positive."
@@ -607,7 +614,7 @@ SmallInteger >> printOn: aStream base: b nDigits: n [
 	self printOn: aStream base: b length: n padded: true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> printString [
 	"Highly optimized version for base 10
 	and that we know it is a SmallInteger.
@@ -627,7 +634,7 @@ SmallInteger >> printString [
 	^result
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> printStringBase: b [
 	"Return a String representation of this number in base b.
 	For SmallIntegers, it is more efficient to print directly in a String,
@@ -647,7 +654,7 @@ SmallInteger >> printStringBase: b [
 	^ self printStringBase: b nDigits: (self numberOfDigitsInBase: b)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SmallInteger >> printStringBase: b nDigits: n [
 	"Return a string representation of this number in base b with n digits (left padded with 0).
 	Should be invoked with: 0 <= self < (b raisedToInteger: n)."
@@ -662,7 +669,7 @@ SmallInteger >> printStringBase: b nDigits: n [
 	^result
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallInteger >> quo: aNumber [
 	"Primitive. Divide the receiver by the argument and answer with the
 	result. Round the result down towards zero to make it a whole integer.
@@ -678,16 +685,16 @@ SmallInteger >> quo: aNumber [
 	self primitiveFailed
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallInteger >> shallowCopy [
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallInteger >> veryDeepCopyWith: deepCopier [
 	"Return self.  I can't be copied.  Do not record me."
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallInteger >> ~= aNumber [
 	"Primitive. Compare the receiver with the argument and answer true if
 	the receiver is not equal to the argument. Otherwise answer false. Fail if

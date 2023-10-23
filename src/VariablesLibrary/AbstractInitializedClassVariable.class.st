@@ -6,26 +6,28 @@ The default parameter can be literal or a block.
 There are two subclasses: setting the default value on class creation and lazy initialization on read.
 "
 Class {
-	#name : #AbstractInitializedClassVariable,
-	#superclass : #ClassVariable,
+	#name : 'AbstractInitializedClassVariable',
+	#superclass : 'ClassVariable',
 	#instVars : [
 		'default'
 	],
-	#category : #'VariablesLibrary-ClassVariables'
+	#category : 'VariablesLibrary-ClassVariables',
+	#package : 'VariablesLibrary',
+	#tag : 'ClassVariables'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractInitializedClassVariable class >> isAbstract [
 
 	^self == AbstractInitializedClassVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractInitializedClassVariable >> default: anObject [
 	default := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractInitializedClassVariable >> printOn: aStream [
 	aStream
 		store: self name;

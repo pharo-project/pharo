@@ -1,6 +1,6 @@
-Extension { #name : #SmallInteger }
+Extension { #name : 'SmallInteger' }
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 SmallInteger >> insMinus: aNumber [
 	"I am a re-implementation of the method SmallInteger>>#- and I have the same code except
 	for the instrumentation pragmas. I re-implemented the method just to be able to use it
@@ -14,7 +14,7 @@ SmallInteger >> insMinus: aNumber [
 	^ super - aNumber
 ]
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 SmallInteger >> insPlus: aNumber [
 	"I am a re-implementation of the method SmallInteger>>#+ and I have the same code except
 	for the instrumentation pragmas. I re-implemented the method just to be able to use it

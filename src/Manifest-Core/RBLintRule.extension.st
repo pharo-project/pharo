@@ -1,6 +1,6 @@
-Extension { #name : #RBLintRule }
+Extension { #name : 'RBLintRule' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBLintRule >> critics [
 	^ self result smallLintCritics
 ]

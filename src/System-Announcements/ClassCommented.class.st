@@ -2,8 +2,8 @@
 This announcement will be emitted when a class or a trait comment changes
 "
 Class {
-	#name : #ClassCommented,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClassCommented',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'newStamp',
 		'newComment',
@@ -11,10 +11,12 @@ Class {
 		'oldComment',
 		'oldStamp'
 	],
-	#category : #'System-Announcements-System-Classes'
+	#category : 'System-Announcements-System-Classes',
+	#package : 'System-Announcements',
+	#tag : 'System-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassCommented class >> class: aClass oldComment: oldComment newComment: newComment oldStamp: oldStamp newStamp: newStamp [
 	^self new
 			classCommented: aClass;
@@ -25,63 +27,63 @@ ClassCommented class >> class: aClass oldComment: oldComment newComment: newComm
 			yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassCommented class >> classCommented: aClass [
 	self flag: #pharoFixMe. "nils? no way! "
 	^self class: aClass oldComment: nil newComment: nil oldStamp: nil newStamp: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> classAffected [
 	^self classCommented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> classCommented [
 	^classCommented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> classCommented: aClass [
 	classCommented := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> newComment [
 	^newComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> newComment: aNewComment [
 	newComment := aNewComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> newStamp [
 	^newStamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> newStamp: aNewStamp [
 	newStamp := aNewStamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> oldComment [
 	^ oldComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> oldComment: andOldComment [
 	oldComment := andOldComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> oldStamp [
 	^ oldStamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommented >> oldStamp: anOldStamp [
 	oldStamp := anOldStamp
 ]

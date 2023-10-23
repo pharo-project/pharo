@@ -1,6 +1,6 @@
 Class {
-	#name : #MCGitBasedNetworkRepository,
-	#superclass : #MCRepository,
+	#name : 'MCGitBasedNetworkRepository',
+	#superclass : 'MCRepository',
 	#instVars : [
 		'projectPath',
 		'projectVersion',
@@ -14,91 +14,103 @@ Class {
 		'siteUsername',
 		'sitePassword'
 	],
-	#category : #'Metacello-GitBasedRepository'
+	#category : 'Metacello-GitBasedRepository',
+	#package : 'Metacello-GitBasedRepository'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository class >> basicDescription [
   ^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> cacheDirectory [
   self resetCacheDirectoryIfInvalid.
   repoCacheDirectory ifNil: [ repoCacheDirectory := self defaultCacheDirectory ].
   ^ repoCacheDirectory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> cacheDirectory: aDirectory [
   "explicitly set repoCacheDirectory"
 
   repoCacheDirectory := aDirectory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> cacheDirectoryFor: projectPath [
-	| cacheDirectory projectDirectory |
-	
-	cacheDirectory := self cacheDirectory.
-	projectDirectory := MetacelloPlatform current directoryFromPath: projectPath relativeTo: cacheDirectory.
-	MetacelloPlatform current ensureDirectoryExists: projectDirectory.
-	^ projectDirectory
+
+	^ (self cacheDirectory resolveString: projectPath)
+		  ensureCreateDirectory;
+		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository class >> cacheDirectoryPath [
   ^ MCFileTreeFileUtils current directoryPathString: self cacheDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository class >> cacheDirectoryPath: aString [
-  self
-    cacheDirectory:
-      (aString
-        ifEmpty: [  ]
-        ifNotEmpty: [ MetacelloPlatform current fileHandleOn: aString ])
+
+	self cacheDirectory: (aString ifNotEmpty: [ aString asFileReference ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> defaultCacheDirectory [
-  | defaultDirectory cacheDirectory |
-  defaultDirectory := MetacelloPlatform current defaultDirectory.
-  cacheDirectory := MetacelloPlatform current
-    directoryFromPath: self basicDescription , '-cache'
-    relativeTo: defaultDirectory.
-  MetacelloPlatform current ensureDirectoryExists: cacheDirectory.
-  ^ cacheDirectory
+
+	^ (FileLocator imageDirectory asFileReference resolveString: self basicDescription , '-cache')
+		  ensureCreateDirectory;
+		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository class >> description [
   ^ self basicDescription , '://'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository class >> downloadCache [
   repoDownloadCache ifNil: [ repoDownloadCache := Dictionary new ].
   ^ repoDownloadCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: versionString [
   ^ projectPath , ':::' , versionString
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'utilities' }
+MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName [
+	"download zip archive from <url> into <outputFileName>"
+
+	outputFileName asFileReference ensureDelete.
+	[ :bar |
+	bar title: 'Download: ' , url asString , ' to ' , outputFileName.
+	[
+	ZnClient new
+		url: url;
+		signalProgress: true;
+		downloadTo: outputFileName ]
+		on: HTTPProgress
+		do: [ :progress |
+			progress isEmpty ifFalse: [ bar current: progress percentage ].
+			progress resume ] ] asJob run.
+	^ ZipArchive new readFrom: outputFileName asFileReference
+]
+
+{ #category : 'class initialization' }
 MCGitBasedNetworkRepository class >> flushDownloadCache [
 
 	repoDownloadCache := nil
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCGitBasedNetworkRepository class >> flushProjectEntry: projectPath version: versionString [
     self downloadCache removeKey: (self downloadCacheKey: projectPath version: versionString) ifAbsent: [  ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCGitBasedNetworkRepository class >> initialize [
 
 	(Smalltalk classNamed: #SessionManager)
@@ -108,30 +120,30 @@ MCGitBasedNetworkRepository class >> initialize [
   self resetCacheDirectoryIfInvalid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository class >> isAbstract [
     "abstract as far as creating new repositories interactively? yes"
 
     ^ self == MCGitBasedNetworkRepository
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCGitBasedNetworkRepository class >> isEnabled [
 
 	^false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCGitBasedNetworkRepository class >> location: locationUrl [
     ^ self location: locationUrl version: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCGitBasedNetworkRepository class >> location: locationUrl version: versionString [
     ^ self parseLocation: locationUrl version: versionString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> parseLocation: locationUrl version: versionString [
   "self 
 	parseLocation: 'github://dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'
@@ -172,7 +184,7 @@ MCGitBasedNetworkRepository class >> parseLocation: locationUrl version: version
     repoPath: repoPath
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> parseProjectVersionField: parseBlock desc: desc versionDelim: versionDelim [
   "Issue #234: have to allow for commitish containing slashes"
 
@@ -209,56 +221,40 @@ MCGitBasedNetworkRepository class >> parseProjectVersionField: parseBlock desc: 
     value: (desc copyFrom: repoDelim + 1 to: desc size)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: versionString [
-	| mcPlatform theCacheDirectory projectDirectory downloadCacheKey cachePath pid |
-	downloadCacheKey := self
-		downloadCacheKey: projectPath
-		version: versionString.
-	mcPlatform := MetacelloPlatform current.
-	theCacheDirectory := mcPlatform
-		directoryFromPath: versionString
-		relativeTo: (self cacheDirectoryFor: projectPath).
+	| theCacheDirectory projectDirectory downloadCacheKey cachePath |
+	downloadCacheKey := self downloadCacheKey: projectPath version: versionString.
+	theCacheDirectory := (self cacheDirectoryFor: projectPath) resolveString: versionString.
 	cachePath := self downloadCache at: downloadCacheKey ifAbsent: [  ].
 	(cachePath isNil
-		or: [ (projectDirectory := mcPlatform
-				directoryFromPath: cachePath
-				relativeTo: theCacheDirectory) exists not ])
+		or: [ (projectDirectory := theCacheDirectory resolveString: cachePath) exists not ])
 		ifTrue: [ | url archive directory zipFileName |
 			MetacelloScriptGitBasedDownloadNotification new
 				projectPath: projectPath;
 				versionString: versionString;
 				signal.	"for testing purposes"
-			mcPlatform ensureDirectoryExists: theCacheDirectory.
+			theCacheDirectory ensureCreateDirectory.
 			url := self
 				projectZipUrlFor: projectPath
 				versionString: versionString.
-			pid := mcPlatform processPID.
-			zipFileName := mcPlatform
-				tempFileFor:
-					self basicDescription , '-' , pid , '-'
-						, (downloadCacheKey select: [ :c | c isAlphaNumeric ])
+			zipFileName := self
+				tempFileFor: self basicDescription , '--' , (downloadCacheKey select: [ :c | c isAlphaNumeric ])
 				suffix: '.zip'.
-			archive := mcPlatform
-				downloadZipArchive: url
-				to: zipFileName.
-			directory := mcPlatform
-				directoryFromPath: (cachePath := archive members first fileName)
-				relativeTo: theCacheDirectory.
-			mcPlatform closeZipArchive: archive.
-			directory exists
-				ifTrue: [ mcPlatform deleteFileNamed: zipFileName ]
-				ifFalse: [ mcPlatform
-						extractRepositoryFrom: zipFileName
-						to: theCacheDirectory fullName ].
+			archive := self downloadZipArchive: url to: zipFileName.
+			directory := theCacheDirectory resolveString: (cachePath := archive members first fileName).
+			archive close.
+			directory
+				ifExists: [ zipFileName asFileReference delete ]
+				ifAbsent: [ 
+					ZipArchive extractFrom: zipFileName to: theCacheDirectory fullName.
+					zipFileName asFileReference delete ].
 			self downloadCache at: downloadCacheKey put: cachePath.
-			projectDirectory := mcPlatform
-				directoryFromPath: cachePath
-				relativeTo: theCacheDirectory ].
+			projectDirectory := theCacheDirectory resolveString: cachePath ].
 	^ projectDirectory
 ]
 
-{ #category : #'version patterns' }
+{ #category : 'version patterns' }
 MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
   "strip leading $v if present and return an instance of MetacelloVersionNumber"
 
@@ -269,12 +265,12 @@ MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
   ^ MetacelloVersionNumber fromString: versionString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
   "Reset if invalid"
 
@@ -284,27 +280,27 @@ MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
         ifFalse: [ repoCacheDirectory := nil ] ]
 ]
 
-{ #category : #'site credentials' }
+{ #category : 'site credentials' }
 MCGitBasedNetworkRepository class >> sitePassword [
   ^ sitePassword
 ]
 
-{ #category : #'site credentials' }
+{ #category : 'site credentials' }
 MCGitBasedNetworkRepository class >> sitePassword: aString [
   sitePassword := aString
 ]
 
-{ #category : #'site credentials' }
+{ #category : 'site credentials' }
 MCGitBasedNetworkRepository class >> siteUsername [
   ^ siteUsername
 ]
 
-{ #category : #'site credentials' }
+{ #category : 'site credentials' }
 MCGitBasedNetworkRepository class >> siteUsername: aString [
   siteUsername := aString
 ]
 
-{ #category : #'site credentials' }
+{ #category : 'site credentials' }
 MCGitBasedNetworkRepository class >> siteUsername: username sitePassword: pass [
   "MCBitbucketRepository siteUsername: '' sitePassword: ''"
 
@@ -315,7 +311,7 @@ MCGitBasedNetworkRepository class >> siteUsername: username sitePassword: pass [
     sitePassword: pass
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 MCGitBasedNetworkRepository class >> startUp: resuming [
     "Flush the GitHub download cache"
 
@@ -323,7 +319,13 @@ MCGitBasedNetworkRepository class >> startUp: resuming [
         ifTrue: [ self flushDownloadCache ]
 ]
 
-{ #category : #accessing }
+{ #category : 'utilities' }
+MCGitBasedNetworkRepository class >> tempFileFor: aName suffix: aSuffixString [
+
+	^ (FileLocator temp asFileReference / (FileReference newTempFilePrefix: aName suffix: aSuffixString) basename) fullName
+]
+
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> allFileNames [
 	self flag: #review. "This will fail in non filtree(cypress) formats, but I need to 
 	 implement it to make the tests pass. A better approach maybe to look at those tests 
@@ -331,7 +333,7 @@ MCGitBasedNetworkRepository >> allFileNames [
 	^ self localRepository allFileNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
   ^ aMetacelloMCProject repositorySpec
     description: self description;
@@ -339,22 +341,16 @@ MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
     yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
-	 | directory |
-	
-	directory := self class
-		projectDirectoryFrom: self projectPath
-		version: self projectVersion.
-	self repoPath isEmpty ifFalse: [
-		directory := MetacelloPlatform current
-			directoryFromPath: self repoPath
- 			relativeTo: directory ].
-		
+
+	| directory |
+	directory := self class projectDirectoryFrom: self projectPath version: self projectVersion.
+	self repoPath ifNotEmpty: [ directory := directory resolveString: self repoPath ].
 	^ directory
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].
@@ -362,14 +358,14 @@ MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
     and: [ self repoPath = anMCGitBasedRepository repoPath ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
 	^ self localRepository 
 		closestAncestorVersionFor: anAncestry 
 		ifNone: errorBlock
 ]
 
-{ #category : #descriptions }
+{ #category : 'descriptions' }
 MCGitBasedNetworkRepository >> description [
   | desc |
   desc := self class description , self projectPath , ':'
@@ -379,29 +375,41 @@ MCGitBasedNetworkRepository >> description [
   ^ desc , '/' , self repoPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> directory [
   ^ self localRepository directory
 ]
 
-{ #category : #private }
-MCGitBasedNetworkRepository >> downloadJSONTags [
-  | tagsUrl jsonObject |
-  tagsUrl := self projectTagsUrlFor: self projectPath.
-  jsonObject := MetacelloPlatform current
-    downloadJSON: tagsUrl
-    username: self class siteUsername
-    pass: self class sitePassword.
-  ^ self normalizeTagsData: jsonObject
+{ #category : 'private' }
+MCGitBasedNetworkRepository >> downloadJSON: url username: username pass: pass [
+	"return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
+
+	| client json |
+	client := ZnClient new
+		          url: url;
+		          yourself.
+	username ifNotNil: [ client username: username password: pass ].
+	client get.
+	json := client contents.
+	^ STON fromString: json
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+MCGitBasedNetworkRepository >> downloadJSONTags [
+
+	| tagsUrl jsonObject |
+	tagsUrl := self projectTagsUrlFor: self projectPath.
+	jsonObject := self downloadJSON: tagsUrl username: self class siteUsername pass: self class sitePassword.
+	^ self normalizeTagsData: jsonObject
+]
+
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> ensureLocalRepository [
 	localRepository ifNotNil: [ ^ self ].
 	self resolveLocalRespository
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCGitBasedNetworkRepository >> flushCache [
   "the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
 	| directory |
@@ -418,7 +426,7 @@ MCGitBasedNetworkRepository >> flushCache [
 		ifFalse: [ localRepository resetDirectory ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCGitBasedNetworkRepository >> flushForScriptGet [
 
 	self class 
@@ -427,7 +435,7 @@ MCGitBasedNetworkRepository >> flushForScriptGet [
     self localRepository flushForScriptGet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> goferReferences [
 	"delegate collection to local repository, but change them to be from *this* repository."
 
@@ -438,7 +446,7 @@ MCGitBasedNetworkRepository >> goferReferences [
 				repository: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> goferVersionFrom: aVersionReference [
 	self flag: #review. "This will fail in non filtree(cypress) formats, but I need to 
 	 implement it to make the tests pass. A better approach maybe to look at those tests 
@@ -446,7 +454,7 @@ MCGitBasedNetworkRepository >> goferVersionFrom: aVersionReference [
 	^ self localRepository goferVersionFrom: aVersionReference
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].
@@ -456,73 +464,73 @@ MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
         and: [ self projectVersion = anMCGitBasedRepository projectVersion ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCGitBasedNetworkRepository >> hash [
     ^ self description hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCGitBasedNetworkRepository >> includesVersionNamed: aString [
 	^ self localRepository includesVersionNamed: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCGitBasedNetworkRepository >> isValid [
     ^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> localRepository [
 	self ensureLocalRepository.
 	self validateLocalRepository.
 	^ localRepository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> metacelloProjectClassFor: aScriptEngine [
     ^ MetacelloMCBaselineProject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
   ^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
 	^ self localRepository possiblyNewerVersionsOfAnyOf: someVersions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectPath [
     ^ projectPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectPath: anObject [
     projectPath := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCGitBasedNetworkRepository >> projectPath: aProjectPath projectVersion: aProjectVersion repoPath: aRepoPath [
   self projectPath: aProjectPath.
   self projectVersion: aProjectVersion.	"Important that projectVersion be set AFTER projectPath"
   self repoPath: aRepoPath
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> projectTagsUrlFor: aProjectPath [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersion [
     (projectVersion == nil or: [ projectVersion isEmpty ])
         ifTrue: [ projectVersion := 'master' ].
     ^ projectVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersion: aString [
   "Important that projectVersion be set AFTER projectPath, as projectPath needed for resolving projectVersionPattern"
 
@@ -541,7 +549,7 @@ MCGitBasedNetworkRepository >> projectVersion: aString [
     ifFalse: [ projectVersion := aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersionEscaped [
   | pv |
   pv := self projectVersion.
@@ -550,7 +558,7 @@ MCGitBasedNetworkRepository >> projectVersionEscaped [
   ^ pv
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersionPattern [
   "do not set projectVersionPattern unless it _is_ a pattern: includes $#, %*, or $?"
 
@@ -558,32 +566,32 @@ MCGitBasedNetworkRepository >> projectVersionPattern [
   ^ projectVersionPattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersionPattern: aString [
   "do not set projectVersionPattern unless it _is_ a pattern: includes $#, %*, or $?"
 
   projectVersionPattern := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> repoPath [
   repoPath ifNil: [ repoPath := '' ].
   ^ repoPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> repoPath: anObject [
     repoPath := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> repositoryBranchName [
   "for git-based network repos, answer the value of the projectVersion field"
 
   ^ self projectVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> repositoryVersionString [
   "for git-based network repos, answer the SHA associated with the download: a commit SHA or tag SHA"
 
@@ -605,7 +613,7 @@ MCGitBasedNetworkRepository >> repositoryVersionString [
   ^ versionComponents last
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> resolveLocalRespository [
 	| directory directoryPath |
   
@@ -617,7 +625,7 @@ MCGitBasedNetworkRepository >> resolveLocalRespository [
 		yourself)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> resolveProjectVersionPattern: aString [
   "aString must conform to the syntax for MetacelloVersionNumber with the exception that aString may have a leading $v which is stripped before conversion to a MetacelloVersionNumber patterm"
 
@@ -646,12 +654,12 @@ MCGitBasedNetworkRepository >> resolveProjectVersionPattern: aString [
   projectVersion := theTag value
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCGitBasedNetworkRepository >> storeVersion: aVersion [
 	^ self localRepository storeVersion: aVersion
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> validateLocalRepository [
 	| dir |
 
@@ -663,12 +671,12 @@ MCGitBasedNetworkRepository >> validateLocalRepository [
  	self resolveLocalRespository.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> versionFrom: aVersionReferenceString [
 	^ self localRepository versionFrom: aVersionReferenceString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	^ self localRepository 
 		versionWithInfo: aVersionInfo 

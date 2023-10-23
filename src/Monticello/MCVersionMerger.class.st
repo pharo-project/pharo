@@ -2,23 +2,25 @@
 Merge versions
 "
 Class {
-	#name : #MCVersionMerger,
-	#superclass : #Object,
+	#name : 'MCVersionMerger',
+	#superclass : 'Object',
 	#instVars : [
 		'records',
 		'merger'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #action }
+{ #category : 'action' }
 MCVersionMerger class >> mergeVersion: aVersion [
 	self new
 		addVersion: aVersion;
 		mergeWithNameLike: aVersion info name
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCVersionMerger >> addVersion: aVersion [
 	
 	records add: (MCMergeRecord version: aVersion).
@@ -30,26 +32,26 @@ MCVersionMerger >> addVersion: aVersion [
 		displayingProgress: [ :ea| 'Searching dependency: ', ea package name]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCVersionMerger >> addVersions: aCollection [
 	aCollection do: [ :version|
 		self addVersion: version].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionMerger >> gatherChanges [
 	records do: [:ea | merger addBaseSnapshot: ea packageSnapshot].
 	records do: [:ea | merger applyPatch: ea mergePatch].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCVersionMerger >> initialize [
 	super initialize.
 	records := OrderedCollection new.
 	merger := MCThreeWayMerger new.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionMerger >> merge [
 
 	self gatherChanges.
@@ -62,7 +64,7 @@ MCVersionMerger >> merge [
 	^ false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionMerger >> mergeWithNameLike: baseName [
 
 	self gatherChanges.
@@ -72,7 +74,7 @@ MCVersionMerger >> mergeWithNameLike: baseName [
 		records do: [:ea | ea updateWorkingCopy]].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCVersionMerger >> resolveConflicts [
 	(records allSatisfy: [:ea | ea isAncestorMerge]) 
 		ifTrue: [

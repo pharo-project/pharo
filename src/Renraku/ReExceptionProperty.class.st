@@ -2,16 +2,18 @@
 This property represents exceptions that occured during other properties computation. This way tools can work witout interuptions, but users will be aware the there were some exceptions.
 "
 Class {
-	#name : #ReExceptionProperty,
-	#superclass : #ReProperty,
+	#name : 'ReExceptionProperty',
+	#superclass : 'ReProperty',
 	#instVars : [
 		'stack',
 		'message'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReExceptionProperty class >> for: anEntity with: anException [
 
 	^ self new
@@ -22,7 +24,7 @@ ReExceptionProperty class >> for: anEntity with: anException [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReExceptionProperty >> actions [
 
 	^ { (RePropertyAction new
@@ -35,32 +37,32 @@ ReExceptionProperty >> actions [
 		   yourself) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionProperty >> icon [
 	^ self iconNamed: #exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionProperty >> message [
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionProperty >> message: anObject [
 	message := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionProperty >> stack [
 	^ stack
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionProperty >> stack: anObject [
 	stack := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReExceptionProperty >> title [
 	^ '~Exception: [', message, ']'
 ]

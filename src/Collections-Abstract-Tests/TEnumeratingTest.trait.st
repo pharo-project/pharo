@@ -3,31 +3,33 @@ Test of basic functions in Collections that are in the protocol enumerating
 
 "
 Trait {
-	#name : #TEnumeratingTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TEnumeratingTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TEnumeratingTest >> collectionOfCollectionsOfInts [
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TEnumeratingTest >> collectionOfCollectionsOfStrings [
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TEnumeratingTest >> collectionWithCharacters [
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TEnumeratingTest >> simpleCollection [
 	^self explicitRequirement
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testCartesianProductDo [
 
    | collection index elements |
@@ -41,7 +43,7 @@ TEnumeratingTest >> testCartesianProductDo [
 			index := index + 1 ]
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testCartesianProductDo3Elements [
 
    | collection index elements |
@@ -55,7 +57,7 @@ TEnumeratingTest >> testCartesianProductDo3Elements [
 		index := index + 1 ]
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testCartesianProductOfSize [
 
    | collection result |
@@ -65,7 +67,7 @@ TEnumeratingTest >> testCartesianProductOfSize [
    self assert: (result includesAll: #(#(1 1) #(1 2) #(1 3) #(2 1) #(2 2) #(2 3) #(3 1) #(3 2) #(3 3))).
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testFlatCollect [
 
 	self assert: (self simpleCollection flatCollect: [ :x | { x } ]) equals: self simpleCollection.
@@ -82,7 +84,7 @@ TEnumeratingTest >> testFlatCollect [
 		equals: self collectionOfCollectionsOfStrings
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testFlatCollectAs [
 
 	self
@@ -96,7 +98,7 @@ TEnumeratingTest >> testFlatCollectAs [
 		equals: #(1 2 4 3)
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testFlatCollectAsSet [
 
 	self
@@ -104,7 +106,7 @@ TEnumeratingTest >> testFlatCollectAsSet [
 		equals: self simpleCollection asSet
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testFlatCollectAsWithEmptyCollection [
 
 	self
@@ -112,7 +114,7 @@ TEnumeratingTest >> testFlatCollectAsWithEmptyCollection [
 		equals: self empty asIdentitySet
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 TEnumeratingTest >> testFlattened [
 
 	self assert: self simpleCollection flattened equals: #(1 8 3).

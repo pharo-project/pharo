@@ -7,22 +7,24 @@ I use FTDataSource>>#searchTable:text: as input for my searchs.
 In general, my entry point is through #keyStroke:, because I intend to react to keyboard inputs in the owner table.
 "
 Class {
-	#name : #FTSearchFunction,
-	#superclass : #FTFieldFunction,
+	#name : 'FTSearchFunction',
+	#superclass : 'FTFieldFunction',
 	#instVars : [
 		'currentSelIndex',
 		'currentHighlightedIndexes',
 		'pattern'
 	],
-	#category : #'Morphic-Widgets-FastTable-Functions'
+	#category : 'Morphic-Widgets-FastTable-Functions',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Functions'
 }
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 FTSearchFunction >> ghostText [
 	^ 'Search...'
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTSearchFunction >> keyStroke: anEvent [
 
 	anEvent keyCharacter isAlphaNumeric ifFalse: [ ^ false ].
@@ -32,7 +34,7 @@ FTSearchFunction >> keyStroke: anEvent [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSearchFunction >> realSearch [
 	| founds |
 	founds := self table dataSource searchText: pattern.
@@ -43,18 +45,18 @@ FTSearchFunction >> realSearch [
 	^ founds notEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTSearchFunction >> reset [
 	"self search"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSearchFunction >> searchFor: aStringOrText [
 	pattern := aStringOrText asString trim.
 	^ self realSearch
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTSearchFunction >> showSearchFieldFromKeystrokeEvent: anEvent [
 	| s ed founds |
 	s := anEvent keyCharacter asString asText.
@@ -88,7 +90,7 @@ FTSearchFunction >> showSearchFieldFromKeystrokeEvent: anEvent [
 	ed openEditorWithContents: s
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTSearchFunction >> textUpdated: anAnnouncement [
 	self searchFor: field getTextFromModel
 ]

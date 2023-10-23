@@ -1,22 +1,16 @@
 Class {
-	#name : #T2LegacyPharoClassDefinitionPrinterTest,
-	#superclass : #T2CommonClassDefinitionPrinterTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2LegacyPharoClassDefinitionPrinterTest',
+	#superclass : 'T2CommonClassDefinitionPrinterTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 T2LegacyPharoClassDefinitionPrinterTest >> forClass: aClass [
 	^ (ClassDefinitionPrinter legacy for: aClass) definitionString
 ]
 
-{ #category : #running }
-T2LegacyPharoClassDefinitionPrinterTest >> setUp [
-
-	super setUp.
-	ClassDefinitionPrinter showFluidClassDefinition: false
-]
-
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
 	self
@@ -24,7 +18,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testClassUsingComplexTrait [
 
 	self assert: (self forClass: MOPTestClassD) equals: 'Object subclass: #MOPTestClassD
@@ -35,7 +29,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testClassUsingComplexTrait [
 	category: ' , self packageTagOfMOP
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testComplexTrait [
 
 	self assert: (self forClass: Trait4) equals: 'Trait named: #Trait4
@@ -43,7 +37,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testComplexTrait [
 	 package: ' , self packageTagOfMOP
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testMultiPools [
 
 	self
@@ -55,7 +49,7 @@ T2LegacyPharoClassDefinitionPrinterTest >> testMultiPools [
 	category: ''Kernel-Tests-Classes'''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTBehavior [
 	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
 	self
@@ -64,28 +58,28 @@ T2LegacyPharoClassDefinitionPrinterTest >> testTBehavior [
 	 package: ''TraitsV2-Compatibility-Traits'''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
 
 	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 
 	self assert: (self forClass: EpTEventVisitor classTrait) equals: 'EpTEventVisitor classTrait
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTSortable [
 
 	self assert: (self forClass: TSortable classTrait) equals: 'TSortable classTrait
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTrait [
 
 	self assert: (self forClass: RubScrolledTextModel) equals: 'Object subclass: #RubScrolledTextModel
@@ -96,14 +90,14 @@ T2LegacyPharoClassDefinitionPrinterTest >> testTrait [
 	category: ''Rubric-Editing-Widgets'''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTrait3 [
 
 	self assert: (self forClass: Trait3 classTrait) equals: 'Trait3 classTrait
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - traits' }
+{ #category : 'tests - traits' }
 T2LegacyPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self assert: (self forClass: Trait3) equals: 'Trait named: #Trait3

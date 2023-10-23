@@ -1,6 +1,6 @@
-Extension { #name : #MCVersionHistoryBrowser }
+Extension { #name : 'MCVersionHistoryBrowser' }
 
-{ #category : #'*Monticello-GUI-Diff' }
+{ #category : '*Monticello-GUI-Diff' }
 MCVersionHistoryBrowser >> viewChanges [
 	"View the changes between a prior version and this version."
 
@@ -10,7 +10,7 @@ MCVersionHistoryBrowser >> viewChanges [
 		to: ancestry name
 ]
 
-{ #category : #'*Monticello-GUI-Diff' }
+{ #category : '*Monticello-GUI-Diff' }
 MCVersionHistoryBrowser >> viewChanges: otherInfo [
 	"View the changes between a prior version and this version."
 
@@ -20,7 +20,7 @@ MCVersionHistoryBrowser >> viewChanges: otherInfo [
 		to: self selectedInfo name
 ]
 
-{ #category : #'*Monticello-GUI-Diff' }
+{ #category : '*Monticello-GUI-Diff' }
 MCVersionHistoryBrowser >> viewChanges: patch from: fromDescription to: toDescription [
 	"Open a browser on the patch."
 

@@ -2,11 +2,13 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TConvertAsSetForMultiplinessTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TConvertAsSetForMultiplinessTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TConvertAsSetForMultiplinessTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	"a collection  with equal elements:"
 
@@ -17,7 +19,7 @@ TConvertAsSetForMultiplinessTest >> test0FixtureTConvertAsSetForMultiplinessTest
 	self assert: res = true
 ]
 
-{ #category : #'tests - as set tests' }
+{ #category : 'tests - as set tests' }
 TConvertAsSetForMultiplinessTest >> testAsIdentitySetWithEqualsElements [
 	| result collection |
 	collection := self withEqualElements .
@@ -26,7 +28,7 @@ TConvertAsSetForMultiplinessTest >> testAsIdentitySetWithEqualsElements [
 	self assert: result class = IdentitySet
 ]
 
-{ #category : #'tests - as set tests' }
+{ #category : 'tests - as set tests' }
 TConvertAsSetForMultiplinessTest >> testAsSetWithEqualsElements [
 	| result |
 	result := self withEqualElements asSet.
@@ -34,7 +36,7 @@ TConvertAsSetForMultiplinessTest >> testAsSetWithEqualsElements [
 	self assert: result class = Set
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertAsSetForMultiplinessTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
 	^ self explicitRequirement

@@ -1,6 +1,6 @@
-Extension { #name : #DummyUIManager }
+Extension { #name : 'DummyUIManager' }
 
-{ #category : #'*Graphics-Display Objects' }
+{ #category : '*Graphics-Display Objects' }
 DummyUIManager >> newDisplayDepthNoRestore: pixelSize [
 
 	"Change depths.  Check if there is enough space!  , di"

@@ -2,20 +2,21 @@
 An AthensDisplayScanner displays the paragraphs text on an AthensCanvas.
 "
 Class {
-	#name : #AthensDisplayScanner,
-	#superclass : #DisplayScanner,
+	#name : 'AthensDisplayScanner',
+	#superclass : 'DisplayScanner',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensDisplayScanner class >> for: aParagraph on: anAthensCanvas [
 	^ self new initWithParagraph: aParagraph andCanvas: anAthensCanvas; yourself
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 AthensDisplayScanner >> displayString: string from: startIndex to: stopIndex at: aPoint [
 	canvas pathTransform
 		restoreAfter: [
@@ -23,13 +24,19 @@ AthensDisplayScanner >> displayString: string from: startIndex to: stopIndex at:
 			canvas drawString: string from: startIndex to: stopIndex ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensDisplayScanner >> initWithParagraph: aParagraph andCanvas: anAthensCanvas [
 	self text: aParagraph text textStyle: aParagraph textStyle.
 	canvas := anAthensCanvas
 ]
 
-{ #category : #displaying }
+{ #category : 'accessing' }
+AthensDisplayScanner >> scale [
+
+	^ 1
+]
+
+{ #category : 'displaying' }
 AthensDisplayScanner >> setFont [
 	super setFont.
 	canvas setFont:font.

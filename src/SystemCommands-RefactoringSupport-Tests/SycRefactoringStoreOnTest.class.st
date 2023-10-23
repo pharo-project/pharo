@@ -1,10 +1,11 @@
 Class {
-	#name : #SycRefactoringStoreOnTest,
-	#superclass : #TestCase,
-	#category : #'SystemCommands-RefactoringSupport-Tests'
+	#name : 'SycRefactoringStoreOnTest',
+	#superclass : 'TestCase',
+	#category : 'SystemCommands-RefactoringSupport-Tests',
+	#package : 'SystemCommands-RefactoringSupport-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringStoreOnTest >> testRemoveMessageArgumentCommandIsProperlyStoreOn [
 
 	| refactorings |
@@ -19,7 +20,7 @@ SycRefactoringStoreOnTest >> testRemoveMessageArgumentCommandIsProperlyStoreOn [
 		equals: '(RBRemoveParameterRefactoring removeParameter: ''anObject'' in: MockTreeTableItem selector: #title:)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn2 [
 
 	| refactorings node |
@@ -37,7 +38,7 @@ SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn2 [
 		equals: '((Array new: 1) at: 1 put: (RBRenameMethodRefactoring renameMethod: #title: in: MockTreeTableItem to: #title: permutation: (1 to: 1)); yourself)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 
 	| refactorings node newSelector |

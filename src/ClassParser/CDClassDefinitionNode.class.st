@@ -1,6 +1,6 @@
 Class {
-	#name : #CDClassDefinitionNode,
-	#superclass : #CDBehaviorDefinitionNode,
+	#name : 'CDClassDefinitionNode',
+	#superclass : 'CDBehaviorDefinitionNode',
 	#instVars : [
 		'superclassNameNode',
 		'packageNameNode',
@@ -9,104 +9,114 @@ Class {
 		'tag',
 		'sharedVariableNodes'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 CDClassDefinitionNode >> addSharedVariable: aCDSharedVariableNode [
 
 	self sharedVariables add: aCDSharedVariableNode.
 	self addChild: aCDSharedVariableNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> binding [
 	self trace: '.'.
 	^ self class environment associationAt: self className ifAbsent: [LiteralVariable key: nil value: self]
 ]
 
-{ #category : #testing }
+{ #category : 'initialization' }
+CDClassDefinitionNode >> initialize [
+
+	super initialize.
+	sharedVariableNodes := OrderedCollection new
+]
+
+{ #category : 'testing' }
 CDClassDefinitionNode >> isClassDefinition [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassDefinitionNode >> isClassSide [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassDefinitionNode >> isInstanceSide [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> packageName [
 
 	^ packageNameNode ifNotNil: [packageNameNode value asSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> packageNameNode [
 
 	^ packageNameNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> packageNameNode: aNode astNode: astNode [
 
 	packageNameNode := aNode.
 	self addChild: aNode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassDefinitionNode >> selector [
 
 	^ tokens at: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> sharedPools [
 	sharedPools ifNil: [ self sharedPools: OrderedCollection new. ].
 	^sharedPools
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> sharedPools: aCollection [
 	sharedPools := aCollection.
 	aCollection do: [ :each | self addChild: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> sharedVariableNodes [
 
 	^ sharedVariableNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> sharedVariables [
-	^ sharedVariableNodes ifNil:[ sharedVariableNodes := OrderedCollection new ]
+
+	^ sharedVariableNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> sharedVariables: aCollection [
 	sharedVariableNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> superclassName [
 
 	^ superclassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> superclassName: aString [
 	superclassName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> superclassName: aName astNode: astNode [
 
 	superclassName := aName.
@@ -114,24 +124,24 @@ CDClassDefinitionNode >> superclassName: aName astNode: astNode [
 	self addChild: astNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> superclassNameNode [
 
 	^ superclassNameNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> superclassNameNode: anObject [
 	superclassNameNode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> tag [
 
 	^ tag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassDefinitionNode >> tag: aString [
 
 	tag := aString

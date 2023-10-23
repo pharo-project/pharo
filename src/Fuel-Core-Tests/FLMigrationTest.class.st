@@ -2,12 +2,19 @@
 SUnit tests for migrations
 "
 Class {
-	#name : #FLMigrationTest,
-	#superclass : #FLClassSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLMigrationTest',
+	#superclass : 'FLClassSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'accessing' }
+FLMigrationTest class >> resources [
+	^ super resources copyWith: FLSystemGlobalsTestResource
+]
+
+{ #category : 'running' }
 FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 
 	^ self classFactory make: [ :aBuilder |
@@ -16,7 +23,14 @@ FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 			  slotsFromString: instanceVariableNames ]
 ]
 
-{ #category : #'tests-manual' }
+{ #category : 'running' }
+FLMigrationTest >> setUpEnvironment [
+	super setUpEnvironment.
+	
+	self testingEnvironment: FLSystemGlobalsTestResource current globals
+]
+
+{ #category : 'tests-manual' }
 FLMigrationTest >> testBadDestinationVariableRename [
 
 	| pointClass aPoint pointClassName |
@@ -34,7 +48,7 @@ FLMigrationTest >> testBadDestinationVariableRename [
 	self flag: #pharoTodo "Assert an specific materialization error"
 ]
 
-{ #category : #'tests-automatic' }
+{ #category : 'tests-automatic' }
 FLMigrationTest >> testChangeInSuperclass [
 	"Tests that serializer tolarates when there is a change in the superclass between serialization and materialization"
 
@@ -68,7 +82,7 @@ FLMigrationTest >> testChangeInSuperclass [
 	self assert: (materializedInstance instVarNamed: 'x') isNil
 ]
 
-{ #category : #'tests-manual' }
+{ #category : 'tests-manual' }
 FLMigrationTest >> testClassAndVariableRename [
 
 	| pointClass aPoint resultPoint pointClassName |
@@ -93,7 +107,7 @@ FLMigrationTest >> testClassAndVariableRename [
 	self assert: (resultPoint instVarNamed: 'posY') equals: 11
 ]
 
-{ #category : #'tests-manual' }
+{ #category : 'tests-manual' }
 FLMigrationTest >> testClassRename [
 
 	| pointClass aPoint resultPoint pointClassName |
@@ -114,7 +128,7 @@ FLMigrationTest >> testClassRename [
 	self assert: (resultPoint instVarNamed: 'y') equals: 11
 ]
 
-{ #category : #'tests-automatic' }
+{ #category : 'tests-automatic' }
 FLMigrationTest >> testFormatFixedToVariable [
 	"Tests that serializer can tolerate a format change from a *fixed* class to *weak/variable*.
 	Notice, however, that the other way around (variable to fixed) doesn't work so far"
@@ -132,7 +146,7 @@ FLMigrationTest >> testFormatFixedToVariable [
 	self assert: self materialized size equals: 0
 ]
 
-{ #category : #'tests-automatic' }
+{ #category : 'tests-automatic' }
 FLMigrationTest >> testSuperclassChange [
 	"Tests that serializer tolarates when the superclass changed between serialization and materialization"
 
@@ -163,7 +177,7 @@ FLMigrationTest >> testSuperclassChange [
 	self assert: (materializedInstance instVarNamed: 'x') isNil
 ]
 
-{ #category : #'tests-automatic' }
+{ #category : 'tests-automatic' }
 FLMigrationTest >> testVariableInsertion [
 	"Tests that serializer tolarates when there is a new instance variable on materialization"
 
@@ -182,7 +196,7 @@ FLMigrationTest >> testVariableInsertion [
 	self assert: $B equals: (resultPair instVarAt: 3)
 ]
 
-{ #category : #'tests-automatic' }
+{ #category : 'tests-automatic' }
 FLMigrationTest >> testVariableOrderChange [
 	"Tests that serializer tolarates when the order in the instance variables changed between serialization and materialization"
 
@@ -200,7 +214,7 @@ FLMigrationTest >> testVariableOrderChange [
 	self assert: $A equals: (resultPair instVarAt: 2)
 ]
 
-{ #category : #'tests-automatic' }
+{ #category : 'tests-automatic' }
 FLMigrationTest >> testVariableRemoved [
 	"Tests that serializer tolarates when an instance variable is missing on materialization"
 
@@ -217,7 +231,7 @@ FLMigrationTest >> testVariableRemoved [
 	self assert: $B equals: (resultPair instVarAt: 1)
 ]
 
-{ #category : #'tests-manual' }
+{ #category : 'tests-manual' }
 FLMigrationTest >> testVariableRename [
 
 	| pointClass aPoint resultPoint pointClassName |

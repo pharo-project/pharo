@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Text-Scanning' }
+{ #category : '*Text-Scanning' }
 String >> encodedCharSetAt: index [
 	"return the character encoding in place at index; the actual EncodedCharSet, not just a number. A bad index is an Error"
 	^EncodedCharSet charsetAt: 0 "previous leadingChar"

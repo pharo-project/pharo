@@ -3,12 +3,14 @@ This announcement is emitted when the top window switches from ""this"" window t
 The new window will announce WindowActivated, while the old will announce this annoucnement.
 "
 Class {
-	#name : #WindowDeActivated,
-	#superclass : #WindowAnnouncement,
-	#category : #'Morphic-Widgets-Windows-Announcements'
+	#name : 'WindowDeActivated',
+	#superclass : 'WindowAnnouncement',
+	#category : 'Morphic-Widgets-Windows-Announcements',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Announcements'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowDeActivated >> isDeActivated [
 
 	^true

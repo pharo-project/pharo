@@ -4,8 +4,8 @@ My purpose is to provide a bridge between monticello and system packages, to all
 
 "
 Class {
-	#name : #RPackageSet,
-	#superclass : #Object,
+	#name : 'RPackageSet',
+	#superclass : 'Object',
 	#instVars : [
 		'packageName',
 		'packages',
@@ -18,22 +18,24 @@ Class {
 		'cacheActive',
 		'cachePackages'
 	],
-	#category : #'RPackage-Core-Base'
+	#category : 'RPackage-Core-Base',
+	#package : 'RPackage-Core',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageSet class >> basicNamed: aString [
 	^ self basicNew
 		initialize: aString;
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageSet class >> cacheActive: aBoolean [
 	cacheActive := aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageSet class >> cachePackageAt: aString ifAbsentPut: aBlock [
 	"self addCount: aString."
 	^ self cachePackages
@@ -41,17 +43,17 @@ RPackageSet class >> cachePackageAt: aString ifAbsentPut: aBlock [
 		ifAbsentPut: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageSet class >> cachePackages [
 	^ cachePackages ifNil: [ cachePackages := IdentityDictionary new ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageSet class >> isCacheActive [
 	^ cacheActive ifNil: [ cacheActive := false ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RPackageSet class >> named: aString [
 
 	^ self isCacheActive
@@ -62,12 +64,12 @@ RPackageSet class >> named: aString [
 		ifFalse: [ self basicNamed: aString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RPackageSet class >> resetCache [
 	cachePackages := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageSet class >> withCacheDo: aBlock [
 	| oldActive |
 
@@ -78,55 +80,34 @@ RPackageSet class >> withCacheDo: aBlock [
 		self isCacheActive ifFalse: [ self resetCache ] ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> asRPackageSet [
-	^self
-]
-
-{ #category : #accessing }
-RPackageSet >> categoryNames [
-	^  self packages
-		inject:  #()
-		into: [ :all :each | all, (each classTagCategoryNames asArray) ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageSet >> classes [
 	^classes ifNil: [ classes := self packages flatCollect: #definedClasses ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageSet >> definedClasses [
 	^definedClasses ifNil: [ definedClasses := self packages flatCollect: #definedClasses ]
 ]
 
-{ #category : #'system compatibility' }
+{ #category : 'system compatibility' }
 RPackageSet >> extendedClasses [
 	^ self packages flatCollect: #extendedClasses
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> extensionCategoriesForClass: aClass [
-
-	self
-		deprecated: 'Use #extensionProtocolsForClass: instead.'
-		transformWith: '`@rcv extensionCategoriesForClass: `@arg' -> '`@rcv extensionProtocolsForClass: `@arg'.
-	^ self extensionProtocolsForClass: aClass
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageSet >> extensionMethods [
 	^ extensionMethods ifNil: [
 		extensionMethods :=
 		(self packages flatCollect: [ :p | p extensionMethods ] as: Set) asArray ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RPackageSet >> includesClass: aClass [
 	^self packages anySatisfy: [ :each | each includesClass: aClass ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RPackageSet >> initialize: aString [
 
 	self initialize.
@@ -136,12 +117,12 @@ RPackageSet >> initialize: aString [
 		            ifNil: [ {  } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageSet >> methods [
 	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RPackageSet >> organizer [
 
 	(self packages isNil or: [ self package isEmpty ]) ifTrue: [ ^ self packageOrganizer ].
@@ -149,17 +130,18 @@ RPackageSet >> organizer [
 	^ self packages anyOne organizer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageSet >> packageName [
 	^packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RPackageSet >> packages [
 	^packages
 ]
 
-{ #category : #accessing }
-RPackageSet >> unregister [
-	self packages do: #unregister
+{ #category : 'accessing' }
+RPackageSet >> removeFromSystem [
+
+	self packages do: [ :package | package removeFromSystem ]
 ]

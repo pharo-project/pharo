@@ -1,13 +1,15 @@
 Class {
-	#name : #CoResultSetTest,
-	#superclass : #CoBasicCompletionTest,
+	#name : 'CoResultSetTest',
+	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
 		'completion'
 	],
-	#category : #'HeuristicCompletion-Tests-Core'
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoResultSetTest >> setUp [
 
 	super setUp.
@@ -18,7 +20,7 @@ CoResultSetTest >> setUp [
 			yourself)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResults [
 
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
@@ -28,7 +30,7 @@ CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResults [
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResultsWhenCaseInsensitve [
 
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'BA').
@@ -40,7 +42,7 @@ CoResultSetTest >> testBroadenFilterAfterFetchCompletionShouldBroadenResultsWhen
 		equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResults [
 
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
@@ -49,7 +51,7 @@ CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResults [
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResultsWhenCaseInsensitive [
 
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'ba').
@@ -58,13 +60,13 @@ CoResultSetTest >> testBroaderFilterCompletionShouldBroadenResultsWhenCaseInsens
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testCompletionWithElementsToFetchShouldHaveMore [
 
 	self assert: completion hasMoreElements
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testCompletionWithNoElementsToFetchShouldNotHaveMore [
 
 	| c |
@@ -74,13 +76,13 @@ CoResultSetTest >> testCompletionWithNoElementsToFetchShouldNotHaveMore [
 	self deny: c hasMoreElements
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testEnumerateShouldFetch [
 
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'a' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testFilterCompletionAfterFetchingShouldNarrowResults [
 
 	completion fetch: 1.
@@ -89,7 +91,7 @@ CoResultSetTest >> testFilterCompletionAfterFetchingShouldNarrowResults [
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'b' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testFilterTwiceWithSameCompletionShouldReturnSameResults [
 
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'ba').
@@ -99,7 +101,7 @@ CoResultSetTest >> testFilterTwiceWithSameCompletionShouldReturnSameResults [
 	self assertCollectionOfEntry: (completion first: 2) equals: { NECInstVarEntry contents: 'ba' node: nil }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testNarrowFilterAfterFetchCompletionShouldNarrowResults [
 
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
@@ -109,7 +111,7 @@ CoResultSetTest >> testNarrowFilterAfterFetchCompletionShouldNarrowResults [
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'ba' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testNarrowerFilterCompletionShouldNarrowResults [
 
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
@@ -118,7 +120,7 @@ CoResultSetTest >> testNarrowerFilterCompletionShouldNarrowResults [
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'ba' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testResetFilterShouldRetrievePreviousResults [
 
 	completion replaceFilterWith: (CoCaseSensitiveBeginsWithFilter filterString: 'b').
@@ -128,7 +130,7 @@ CoResultSetTest >> testResetFilterShouldRetrievePreviousResults [
 	self assertEntry: completion first equals: (NECInstVarEntry contents: 'a' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetTest >> testResetFilterWithNoFilterSetShouldNotAlterResults [
 
 	completion resetFilter.

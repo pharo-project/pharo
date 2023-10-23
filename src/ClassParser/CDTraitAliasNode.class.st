@@ -2,38 +2,40 @@
 MyTrait @ {#aliasName -> #existingSelectorName}
 "
 Class {
-	#name : #CDTraitAliasNode,
-	#superclass : #CDTraitCompositionNode,
+	#name : 'CDTraitAliasNode',
+	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
 		'aliases',
 		'aliasName'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitAliasNode >> aliasName [
 
 	^ aliasName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitAliasNode >> aliases [
 	^ aliases
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitAliasNode >> aliases: aCollection [
 	aliases := aCollection asDictionary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDTraitAliasNode >> isTraitAliasNode [
 
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CDTraitAliasNode >> toString [
 	"should replace aliasName"
 	^ subject name, ' -> ', aliasName

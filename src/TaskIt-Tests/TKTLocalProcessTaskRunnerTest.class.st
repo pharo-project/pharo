@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTLocalProcessTaskRunnerTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTLocalProcessTaskRunnerTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTLocalProcessTaskRunnerTest >> testLocalProcessTaskRunnerExceptionIsHandledByExceptionHandler [
 
 	| runner error |
@@ -17,7 +19,7 @@ TKTLocalProcessTaskRunnerTest >> testLocalProcessTaskRunnerExceptionIsHandledByE
 	self assert: runner exceptionHandler error equals: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTLocalProcessTaskRunnerTest >> testLocalProcessTaskRunnerRunsInLocalProcess [
 
 	| runner future got |

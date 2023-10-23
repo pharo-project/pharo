@@ -1,22 +1,23 @@
 Class {
-	#name : #ClyUnionQueryTest,
-	#superclass : #ClyCompositeQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyUnionQueryTest',
+	#superclass : 'ClyCompositeQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUnionQueryTest >> createQuery [
 	^ClyUnionQuery with: {
 		ClyReturningScopeBasisExampleQuery from: ClyExampleScope of: self class in: environment.
 		ClyReturningScopeBasis2ExampleQuery from: ClyExample2Scope of: self class superclass in: environment}
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUnionQueryTest >> queryClass [
 	^ClyUnionQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testConvertingWithNewScopeWhenAllSubqueriesAreSameKind [
 	| newScope convertedQuery |
 	query subqueries: {(self subqueryFromScope: ClyExampleScope of: Array) . (self subqueryFromScope: ClyExample2Scope of: String)}.
@@ -27,7 +28,7 @@ ClyUnionQueryTest >> testConvertingWithNewScopeWhenAllSubqueriesAreSameKind [
 	self assert: convertedQuery requiredResult identicalTo: query requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndNewDifferentSubquery [
 
 	| subquery1 subquery2 subquery3 |
@@ -42,7 +43,7 @@ ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndNewDifferentSubquer
 	self assert: query requiredResult equals: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndSimilarQuery [
 
 	| subquery1 subquery2 subquery3 |
@@ -58,7 +59,7 @@ ClyUnionQueryTest >> testCreationFromAnotherCompositeQueryAndSimilarQuery [
 	self assert: query requiredResult equals: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromTwoDifferentTypedQueries [
 	| subquery1 subquery2 |
 	subquery1 := ClyReturningScopeBasisExampleQuery from: ClyExampleScope of: Array in: environment.
@@ -71,7 +72,7 @@ ClyUnionQueryTest >> testCreationFromTwoDifferentTypedQueries [
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeAndScopeButWithDifferentParameter [
 	| subquery1 subquery2 |
 	subquery1 := self subqueryFromScopeOf: Array.
@@ -85,7 +86,7 @@ ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeAndScopeButWithDifferen
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeButDifferentScope [
 	| subquery1 subquery2 |
 	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
@@ -98,7 +99,7 @@ ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeButDifferentScope [
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeSimilarScope [
 	| subquery1 subquery2 |
 	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
@@ -112,7 +113,7 @@ ClyUnionQueryTest >> testCreationFromTwoQueriesOfSameTypeSimilarScope [
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromTwoSameQueriesOfSameScopeButWithDifferentParameter [
 	| subquery1 subquery2 |
 	subquery1 := self subqueryFromScopeOf: Array.
@@ -126,7 +127,7 @@ ClyUnionQueryTest >> testCreationFromTwoSameQueriesOfSameScopeButWithDifferentPa
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationFromTwoUnionQueries [
 	| subquery1 subquery2 subquery3 subquery4 unionQuery1 unionQuery2 scopes |
 	subquery1 := self subqueryFromScope: ClyExampleScope of: Array.
@@ -146,7 +147,7 @@ ClyUnionQueryTest >> testCreationFromTwoUnionQueries [
 	self assert: query requiredResult identicalTo: subquery1 requiredResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationWithSingleSubquery [
 	| subquery |
 	subquery := self subqueryFromScopeOf: Array.
@@ -157,7 +158,7 @@ ClyUnionQueryTest >> testCreationWithSingleSubquery [
 	self deny: query identicalTo: subquery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testCreationWithSingleSubqueryButAnotherResult [
 	| subquery |
 	subquery := self subqueryFromScopeOf: Array.
@@ -170,14 +171,14 @@ ClyUnionQueryTest >> testCreationWithSingleSubqueryButAnotherResult [
 	self deny: subquery requiredResult equals: #specialResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testEmptySubqueriesAreForbidden [
 
 	[query subqueries: {}.
 	self assert: false description: 'empty subqueries should be forbidden'] onErrorDo: []
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testExecution [
 
 	query subqueries: {
@@ -190,7 +191,7 @@ ClyUnionQueryTest >> testExecution [
 	self assert: resultItems asSet equals: {self class. self class superclass} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testExecutionShouldRemoveDuplication [
 
 	query subqueries: {
@@ -202,7 +203,7 @@ ClyUnionQueryTest >> testExecutionShouldRemoveDuplication [
 	self assert: resultItems asArray equals: {self class }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testIsEmptyWhenAllSubqueriesAreEmpty [
 	query subqueries: {
 		(self subqueryFromScope: ClyExampleScope empty).
@@ -212,7 +213,7 @@ ClyUnionQueryTest >> testIsEmptyWhenAllSubqueriesAreEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnionQueryTest >> testNotEmptyWhenThereIsNotEmptySubquery [
 	query subqueries: {
 		(self subqueryFromScope: ClyExampleScope empty).

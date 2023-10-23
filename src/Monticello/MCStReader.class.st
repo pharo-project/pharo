@@ -14,24 +14,26 @@ source := String streamContents: [:aStream| |writer|
 (MCStReader on: source readStream) definitions explore.
 "
 Class {
-	#name : #MCStReader,
-	#superclass : #MCSnapshotReader,
-	#category : #'Monticello-Storing'
+	#name : 'MCStReader',
+	#superclass : 'MCSnapshotReader',
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCStReader class >> extension [
 	^ 'st'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCStReader >> addDefinitionsFromDoit: aString [
 	(MCDoItParser forDoit: aString) ifNotNil:
 		[:parser |
 		parser addDefinitionsTo: definitions]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCStReader >> categoryFromDoIt: aString [
 	| tokens  |
 	tokens := aString parseLiterals.
@@ -39,7 +41,7 @@ MCStReader >> categoryFromDoIt: aString [
 	^ tokens at: 3
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCStReader >> classDefinitionFrom: aRingClass [
 
 	| tokens traitCompositionString lastIndex classTraitCompositionString |
@@ -50,14 +52,14 @@ MCStReader >> classDefinitionFrom: aRingClass [
 	classTraitCompositionString := (aRingClass classSide definitionSource asString readStream
 		                                match: 'uses:';
 		                                upToAll: 'instanceVariableNames:') trimBoth.
-	traitCompositionString isEmpty ifTrue: [ traitCompositionString := '{}' ].
-	classTraitCompositionString isEmpty ifTrue: [ classTraitCompositionString := '{}' ].
+	traitCompositionString ifEmpty: [ traitCompositionString := '{}' ].
+	classTraitCompositionString ifEmpty: [ classTraitCompositionString := '{}' ].
 	lastIndex := tokens size.
 	^ (MCClassDefinition named: (tokens at: 3))
 		  superclassName: (tokens at: 1);
 		  traitComposition: traitCompositionString;
 		  classTraitComposition: classTraitCompositionString;
-		  category: (tokens at: lastIndex);
+		  packageName: (tokens at: lastIndex);
 		  instVarNames: ((tokens at: lastIndex - 6) findTokens: ' ');
 		  classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ');
 		  poolDictionaryNames: ((tokens at: lastIndex - 2) findTokens: ' ');
@@ -68,7 +70,7 @@ MCStReader >> classDefinitionFrom: aRingClass [
 		  yourself
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCStReader >> classInstVarNamesFor: aRingClass [
 	| tokens |
 	
@@ -79,7 +81,7 @@ MCStReader >> classInstVarNamesFor: aRingClass [
 	^ tokens last findTokens: ' '
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCStReader >> commentFor: aRingClass [
 
 	^ aRingClass hasComment
@@ -87,14 +89,14 @@ MCStReader >> commentFor: aRingClass [
 		ifFalse: [ '' ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCStReader >> commentStampFor: aRingClass [
 	^ aRingClass hasComment
 		ifTrue: [ aRingClass comment stamp ]
 		ifFalse: [ nil ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 MCStReader >> loadDefinitions [
 	| filePackage |
 	filePackage := RingChunkImporter fromStream: self readStream.
@@ -111,21 +113,21 @@ MCStReader >> loadDefinitions [
 	
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCStReader >> methodDefinitionsFor: aRingClass [
 
 	^ aRingClass methods collect: 
 		[ :each | each asMCMethodDefinition ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 MCStReader >> readStream [
 	^ ('!!
 
 ', stream contents) readStream
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 MCStReader >> typeOfSubclass: aSymbol [
 	| layoutClass |
 	layoutClass := ObjectLayout layoutForSubclassDefiningSymbol: aSymbol.

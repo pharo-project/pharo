@@ -2,15 +2,17 @@
 SUnit tests for RBParseTreeSearcher
 "
 Class {
-	#name : #RBParseTreeSearcherTest,
-	#superclass : #TestCase,
+	#name : 'RBParseTreeSearcherTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'searcher'
 	],
-	#category : #'AST-Core-Tests-Matching'
+	#category : 'AST-Core-Tests-Matching',
+	#package : 'AST-Core-Tests',
+	#tag : 'Matching'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionary equals: expectedCode [
 
 	^self
@@ -18,7 +20,7 @@ RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionar
 		equals: expectedCode
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RBParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDictionary equals: expectedCode [
 
 	^ self
@@ -26,30 +28,30 @@ RBParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDic
 		  equals: expectedCode
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBParseTreeSearcherTest >> parseExpression: aString [
 
 	^ RBParser parseExpression: aString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBParseTreeSearcherTest >> parseMethod: aString [
 
 	^ RBParser parseMethod: aString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 RBParseTreeSearcherTest >> parseTreeSearcher [
 	^ RBParseTreeSearcher new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBParseTreeSearcherTest >> setUp [
 	super setUp.
 	searcher := self parseTreeSearcher
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMismatch [
 	"Using `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."
@@ -67,7 +69,7 @@ RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMis
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMismatch2 [
 	"Using `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."
@@ -84,7 +86,7 @@ RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMis
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testAListMatchesComposedMessages [
 	"Using `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."
@@ -100,7 +102,7 @@ RBParseTreeSearcherTest >> testAListMatchesComposedMessages [
 	self assertCodeForVariableNodeNamed: '`@arg' in: contextDictionary equals: 'reader storedSettings first realValue'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testDoesNotMultipleKeywordsWithoutAList [
 	"this test shows that to match a multi keyword message, you need to have a list (@) in the pattern"
 	| contextDictionary |
@@ -113,7 +115,7 @@ RBParseTreeSearcherTest >> testDoesNotMultipleKeywordsWithoutAList [
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 	"pattern with statementlist in a dynamic array, to match all dynamic array expressions"
 
@@ -123,7 +125,7 @@ RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 	self assert: (contextDictionary at: (RBPatternVariableNode named: '`.@stmts')) size equals: 3
 ]
 
-{ #category : #'test-argument' }
+{ #category : 'tests - arguments' }
 RBParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 
 	"Here we can see the difference between matchesArgument: and matches:.
@@ -156,7 +158,7 @@ RBParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 	search executeTree: tree
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchesDoDoesNotMatchAllElementsOfDynamicArray [
 	"Matches in context for arraynodes wrongly matched all array statements against the last variable, if all variables are pattern-list-variables"
 
@@ -171,7 +173,7 @@ RBParseTreeSearcherTest >> testMatchesDoDoesNotMatchAllElementsOfDynamicArray [
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchesDoIsMatchingAllElementsOfDynamicArray [
 	"Matches in context for arraynodes wrongly matched all array statements against the last variable, if all variables are pattern-list-variables"
 
@@ -187,7 +189,7 @@ RBParseTreeSearcherTest >> testMatchesDoIsMatchingAllElementsOfDynamicArray [
 	self assertCodeForVariableNodeNamed: '`@third' in: contextDictionary equals: '3'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchesDoIsMatchingPatternedExpressionWithLiterals [
 	""
 
@@ -202,7 +204,7 @@ RBParseTreeSearcherTest >> testMatchesDoIsMatchingPatternedExpressionWithLiteral
 	self assertCodeForVariableNodeNamed: '`@arg' in: contextDictionary equals: 'each isReadOnlyObject'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchesDoIsNotMatchingPatternedExpressionWithLiterals [
 
 	| contextDictionary |
@@ -215,7 +217,7 @@ RBParseTreeSearcherTest >> testMatchesDoIsNotMatchingPatternedExpressionWithLite
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingAnyNodeWithoutConstrainingThePattern [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString)."
 
@@ -230,7 +232,7 @@ RBParseTreeSearcherTest >> testMatchingAnyNodeWithoutConstrainingThePattern [
 	self assertCodeForVariableNodeNamed: '`@rcv' in: contextDictionary equals: '(self + 1) put'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingReceiver [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put."
 
@@ -243,7 +245,7 @@ RBParseTreeSearcherTest >> testMatchingReceiver [
 	self assertCodeForVariableNodeNamed: '`@rcv' in: contextDictionary equals: 'self'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingReceiver2 [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put."
 
@@ -256,7 +258,7 @@ RBParseTreeSearcherTest >> testMatchingReceiver2 [
 	self assertCodeForVariableNodeNamed: '`@rcv' in: contextDictionary equals: '(self + 1)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector [
 
 	| contextDictionary |
@@ -269,7 +271,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector [
 	self assertCodeForSymbolAt: '`@sel:' in: contextDictionary equals: 'newRequestTo:with:'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector2 [
 
 	| contextDictionary |
@@ -288,7 +290,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector2 [
 		  equals: #( 2 55) asArray "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingReceiverAndSelector [
 
 	| contextDictionary |
@@ -306,7 +308,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndSelector [
 		equals: 'newRequestTo:'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingReceiverAndSelector2 [
 
 	| contextDictionary |
@@ -320,7 +322,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndSelector2 [
  	self assertCodeForSymbolAt: '`sel:' in: contextDictionary equals: 'newRequestTo:'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testMatchingReceiverComposite [
 
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put."
@@ -339,7 +341,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverComposite [
 	self assertCodeForVariableNodeNamed: '`@rcv' in: contextDictionary equals: 'self httpClient'
 ]
 
-{ #category : #'tests - to de refined' }
+{ #category : 'tests - to de refined' }
 RBParseTreeSearcherTest >> testSearchListComplex [
 
 	"Here we are looking for multiple lists in one match pattern at the same time.
@@ -364,7 +366,7 @@ RBParseTreeSearcherTest >> testSearchListComplex [
 		equals: 'each isReadOnlyObject'
 ]
 
-{ #category : #'tests - to de refined' }
+{ #category : 'tests - to de refined' }
 RBParseTreeSearcherTest >> testSearchListComplexNotMatching [
 
 	"Here we are looking for multiple lists in one match pattern at the same time.
@@ -378,7 +380,7 @@ RBParseTreeSearcherTest >> testSearchListComplexNotMatching [
 		(self parseExpression: 'self assert: token isLiteralToken.')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchListReceiverNotMatching [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put. "
 
@@ -393,7 +395,7 @@ RBParseTreeSearcherTest >> testSearchListReceiverNotMatching [
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchListTempVars [
 
 	"Here we are looking for a method that contains a list of temporary vars followed by myVar1 and then a receiver followed by message messageTofind"
@@ -416,7 +418,7 @@ RBParseTreeSearcherTest >> testSearchListTempVars [
 	self assertCodeForVariableNodeNamed: '`rcv' in: contextDictionary equals: 'self'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchListTempVarsNotMatching [
 
 	"here we are looking for a method that containns a list of temporary vars followed by myVar1 and then a receiver followed by message messageTofind"
@@ -433,7 +435,7 @@ RBParseTreeSearcherTest >> testSearchListTempVarsNotMatching [
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchLiteralArray [
 
 	"so here we are looking for any literal with message size
@@ -453,7 +455,7 @@ RBParseTreeSearcherTest >> testSearchLiteralArray [
 		equals:   #( 1 2 3)."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchLiteralCollectNotWorking [
 
 	"so here we are looking for any literal with message size; Ordered Collection is not a literal. "
@@ -467,7 +469,7 @@ RBParseTreeSearcherTest >> testSearchLiteralCollectNotWorking [
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchLiteralNumber [
 
 	"so here we are looking for any literal with message size; Litteral can be a number."
@@ -481,7 +483,7 @@ RBParseTreeSearcherTest >> testSearchLiteralNumber [
 	self assertCodeForVariableNodeNamed: '`#lit' in: contextDictionary equals: '3'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchLiteralString [
 
 	"so here we are looking for any literal with message size; Litteral can be a string"
@@ -495,7 +497,7 @@ RBParseTreeSearcherTest >> testSearchLiteralString [
 	self assertCodeForVariableNodeNamed: '`#lit' in: contextDictionary equals: '''foo'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchRecurseInto [
 	"Here we are testing the recurse into, which looks inside @vars for pattern that matches @vars + 1"
 
@@ -511,7 +513,7 @@ RBParseTreeSearcherTest >> testSearchRecurseInto [
 		equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchRecurseIntoNotMatching [
 	"Here we are testing the recurse into, which looks inside @vars for pattern that matches @vars + 1"
 
@@ -524,7 +526,7 @@ RBParseTreeSearcherTest >> testSearchRecurseIntoNotMatching [
 		equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchSelectors [
 	"So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args"
 
@@ -540,7 +542,7 @@ RBParseTreeSearcherTest >> testSearchSelectors [
 	self assertCodeForVariableNodeNamed: '`@arg1' in: contextDictionary equals: '[ each ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchSelectorsMultiArgs [
 
 	"So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args"
@@ -556,7 +558,7 @@ RBParseTreeSearcherTest >> testSearchSelectorsMultiArgs [
 	self assertCodeForVariableNodeNamed: '`@arg1' in: contextDictionary equals: 'object'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchSelectorsNotMatching [
 
 	"So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args"
@@ -570,7 +572,7 @@ RBParseTreeSearcherTest >> testSearchSelectorsNotMatching [
 	self assert: contextDictionary isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchStatements [
 
 	"No comment yet ..."
@@ -586,7 +588,7 @@ RBParseTreeSearcherTest >> testSearchStatements [
 		equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearching [
 	searcher
 		matches: '``@rcv at: `#arg `sel: ``@arg1'
@@ -628,7 +630,7 @@ RBParseTreeSearcherTest >> testSearching [
 				initialAnswer: false)"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchingComposedMessage [
 
 	searcher
@@ -642,7 +644,7 @@ RBParseTreeSearcherTest >> testSearchingComposedMessage [
 		equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testSearchingComposedSelector [
 
 	searcher
@@ -657,7 +659,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector [
 					initialAnswer: 0) equals: 2
 ]
 
-{ #category : #'tests - selectors' }
+{ #category : 'tests - selectors' }
 RBParseTreeSearcherTest >> testSearchingComposedSelector2 [
 
 	searcher
@@ -671,7 +673,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector2 [
 		equals: 2
 ]
 
-{ #category : #'tests - selectors' }
+{ #category : 'tests - selectors' }
 RBParseTreeSearcherTest >> testSearchingComposedSelectorWithCascade [
 
 	searcher
@@ -692,7 +694,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelectorWithCascade [
 					initialAnswer: 0) equals: 2
 ]
 
-{ #category : #'tests - selectors' }
+{ #category : 'tests - selectors' }
 RBParseTreeSearcherTest >> testSearchingComposedSelectorWithListIsNotWorking [
 
 	searcher
@@ -710,7 +712,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelectorWithListIsNotWorking [
 					initialAnswer: 0) equals: 0
 ]
 
-{ #category : #'tests - selectors' }
+{ #category : 'tests - selectors' }
 RBParseTreeSearcherTest >> testSearchingComposedSelectorwithinCascade [
 
 	searcher
@@ -724,7 +726,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelectorwithinCascade [
 		equals: 2
 ]
 
-{ #category : #'tests - selectors' }
+{ #category : 'tests - selectors' }
 RBParseTreeSearcherTest >> testSearchingKeywordsPartWithOptionInTheMiddleIsBogus [
 
 	searcher
@@ -747,7 +749,7 @@ RBParseTreeSearcherTest >> testSearchingKeywordsPartWithOptionInTheMiddleIsBogus
 	"The previous assert should pass with 1 sel should be foo:bar:"
 ]
 
-{ #category : #'tests - selectors' }
+{ #category : 'tests - selectors' }
 RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector [
 
 	searcher
@@ -769,7 +771,7 @@ RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector [
 					initialAnswer: 0) equals: 1
 ]
 
-{ #category : #'tests - selectors' }
+{ #category : 'tests - selectors' }
 RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector2 [
 	"we do not understand why it is green. I should not because the second expression does not contain at:."
 	searcher
@@ -791,7 +793,7 @@ RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector2 [
 					initialAnswer: 0) equals: 1
 ]
 
-{ #category : #'tests - add search' }
+{ #category : 'tests - add search' }
 RBParseTreeSearcherTest >> testSimpleAddSearch [
 
 	| res |
@@ -800,7 +802,7 @@ RBParseTreeSearcherTest >> testSimpleAddSearch [
 	self assert: res equals: #class
 ]
 
-{ #category : #'tests - add search' }
+{ #category : 'tests - add search' }
 RBParseTreeSearcherTest >> testSimpleAddSearches [
 
 	| res |
@@ -809,7 +811,7 @@ RBParseTreeSearcherTest >> testSimpleAddSearches [
 	self assert: res equals: #class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBParseTreeSearcherTest >> testWithoutAListDoesNotMatchComposedMessages [
 	"Using `arg, and not `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."

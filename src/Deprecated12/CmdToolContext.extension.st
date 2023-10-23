@@ -1,13 +1,13 @@
-Extension { #name : #CmdToolContext }
+Extension { #name : 'CmdToolContext' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 CmdToolContext >> requestSingleMethodTag: queryTitle [
 
 	self deprecated: 'Use #requestProtocol: instead' transformWith: '`@rcv requestSingleMethodTag: `@arg' -> '`@rcv requestProtocol: `@arg'.
 	^ self requestProtocol: queryTitle
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 CmdToolContext >> requestSingleMethodTag: queryTitle suggesting: suggestedTag [
 
 	self

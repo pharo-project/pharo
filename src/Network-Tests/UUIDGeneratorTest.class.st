@@ -2,21 +2,23 @@
 I test the UUID Generator
 "
 Class {
-	#name : #UUIDGeneratorTest,
-	#superclass : #TestCase,
+	#name : 'UUIDGeneratorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'generator'
 	],
-	#category : #'Network-Tests-UUID'
+	#category : 'Network-Tests-UUID',
+	#package : 'Network-Tests',
+	#tag : 'UUID'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 UUIDGeneratorTest >> setUp [
 	super setUp.
 	generator := UUIDGenerator new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDGeneratorTest >> testCounterRollover [
 
 	| previousUuid uuid |
@@ -31,13 +33,13 @@ UUIDGeneratorTest >> testCounterRollover [
 		previousUuid := uuid ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDGeneratorTest >> testDefault [
 
 	self assert: UUIDGenerator default equals: UUIDGenerator default.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDGeneratorTest >> testSpeed [
 
 	self
@@ -45,7 +47,7 @@ UUIDGeneratorTest >> testSpeed [
 		notTakeMoreThan: 1 second
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDGeneratorTest >> testTwoDifferentGenerator [
 
 	| generator1 generator2 uuid1 uuid2 time1 time2 |
@@ -64,7 +66,7 @@ UUIDGeneratorTest >> testTwoDifferentGenerator [
 	time2 := self timeFromUUID: uuid2.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDGeneratorTest >> testTwoSameGenerator [
 
 	| uuid1 uuid2 time1 time2 |
@@ -86,7 +88,7 @@ UUIDGeneratorTest >> testTwoSameGenerator [
 	self assert: (time2 - time1) abs < (100 * 1000)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDGeneratorTest >> testUniqueness [
 
 	| uuids count |
@@ -96,7 +98,7 @@ UUIDGeneratorTest >> testUniqueness [
 	self assert: uuids size equals: count
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGeneratorTest >> timeFromUUID: uuid [
 	| bytes in |
 	in := uuid uuidData readStream.

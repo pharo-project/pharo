@@ -2,25 +2,27 @@
 Example for class tree nodes
 "
 Class {
-	#name : #ClassTreeNodeExample,
-	#superclass : #MorphTreeNodeModel,
+	#name : 'ClassTreeNodeExample',
+	#superclass : 'MorphTreeNodeModel',
 	#instVars : [
 		'contents'
 	],
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeNodeExample >> browseItem [
 	Smalltalk tools browser openOnClass: self item
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClassTreeNodeExample >> childrenItems [
 	^ (self item subclasses asArray sort: [:a :b | a name < b name]) asOrderedCollection
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClassTreeNodeExample >> classButton [
 	^ (self theme
 			newButtonIn: self
@@ -35,7 +37,7 @@ ClassTreeNodeExample >> classButton [
 				yourself
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClassTreeNodeExample >> commentText [
 
 	^ (self theme newTextIn: self text: self item comment)
@@ -44,22 +46,22 @@ ClassTreeNodeExample >> commentText [
 		yourself
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClassTreeNodeExample >> contents [
 	^ contents ifNil: [contents := super contents]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClassTreeNodeExample >> icon [
 	^ self iconNamed: #smallExpertIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeNodeExample >> inspectItem [
 	self inspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	| c  |
 	c := anEvent keyCharacter.
@@ -70,7 +72,7 @@ ClassTreeNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassTreeNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Browse (b)'

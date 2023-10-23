@@ -2,12 +2,14 @@
 SUnit test case for import of chunk format
 "
 Class {
-	#name : #ChunkImportTestCase,
-	#superclass : #TestCase,
-	#category : #'CodeImport-Tests-Chunks'
+	#name : 'ChunkImportTestCase',
+	#superclass : 'TestCase',
+	#category : 'CodeImport-Tests-Chunks',
+	#package : 'CodeImport-Tests',
+	#tag : 'Chunks'
 }
 
-{ #category : #auxiliar }
+{ #category : 'auxiliar' }
 ChunkImportTestCase >> importAClass [
 
 	^CodeImporter evaluateString: 'Object subclass: #CodeImportTestCaseTestClass
@@ -17,7 +19,7 @@ ChunkImportTestCase >> importAClass [
 			category: ''CodeImport-Tests-Garbage''!'
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testExportAMethodWithLangTag [
 	|  stream chunkWriteStream |
 	stream := String new writeStream.
@@ -121,11 +123,12 @@ ChunkImportTestCase >> testExportAMethodWithLangTag [
 		yourself!'
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClass [
 	| class |
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
 		class := self importAClass.
+		self assert: class superclass equals: Object.
 		self assert: #CodeImportTestCaseTestClass equals: class name.
 		self assert: (class instVarNames includes: 'var1').
 		self assert: (class instVarNames includes: 'var2').
@@ -135,7 +138,7 @@ ChunkImportTestCase >> testImportAClass [
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClassCategory [
 
 	| class classOrganizationString chunk |
@@ -157,7 +160,7 @@ ChunkImportTestCase >> testImportAClassCategory [
 				 (classOrganizationString trimBoth findTokens: String cr , ' ()')) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClassComment [
 	| class comment |
 	comment := 'I''m a nice comment, treat me well :).'.
@@ -168,7 +171,7 @@ ChunkImportTestCase >> testImportAClassComment [
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
 	| class comment commentToWrite |
 	comment := 'I''m a nice comment!, treat me well :).'.
@@ -180,7 +183,7 @@ ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
 	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethod [
 	| class |
 	SystemAnnouncer uniqueInstance
@@ -195,7 +198,7 @@ ChunkImportTestCase >> testImportAMethod [
 				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethodWithLangTag [
 	| class |
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
@@ -254,7 +257,7 @@ ChunkImportTestCase >> testImportAMethodWithLangTag [
 				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethodWithNoTimestamp [
 	| class |
 	SystemAnnouncer uniqueInstance
@@ -269,7 +272,7 @@ ChunkImportTestCase >> testImportAMethodWithNoTimestamp [
 				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-code' }
+{ #category : 'importing-code' }
 ChunkImportTestCase >> testImportAMethodWithSpacesInItsCategory [
 
 	| class |
@@ -286,12 +289,12 @@ ChunkImportTestCase >> testImportAMethodWithSpacesInItsCategory [
 			class ifNotNil: [ class removeFromSystem ] ] ]
 ]
 
-{ #category : #'importing-methods' }
+{ #category : 'importing-methods' }
 ChunkImportTestCase >> testImportFromReadStream [
 	self assert: 4 equals: (CodeImporter evaluateReadStream: '2+2!' readStream)
 ]
 
-{ #category : #'importing-methods' }
+{ #category : 'importing-methods' }
 ChunkImportTestCase >> testImportString [
 	self assert: 4 equals: (CodeImporter evaluateString: '2+2!')
 ]

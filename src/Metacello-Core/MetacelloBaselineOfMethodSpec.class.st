@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloBaselineOfMethodSpec,
-	#superclass : #MetacelloVersionMethodSpec,
-	#category : #'Metacello-Core-Constructors'
+	#name : 'MetacelloBaselineOfMethodSpec',
+	#superclass : 'MetacelloVersionMethodSpec',
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloBaselineOfMethodSpec >> methodSelectorAndPragma: aSelector imports: importList on: strm [
   strm
     nextPutAll: aSelector asString , ' spec';
@@ -13,7 +15,7 @@ MetacelloBaselineOfMethodSpec >> methodSelectorAndPragma: aSelector imports: imp
     nextPutAll: '<baseline>'
 ]
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloBaselineOfMethodSpec >> methodSource [
   | strm |
   strm := WriteStream on: String new.
@@ -40,7 +42,7 @@ MetacelloBaselineOfMethodSpec >> methodSource [
   ^ strm contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloBaselineOfMethodSpec >> versionString [
   ^ MetacelloMCBaselineProject singletonVersionName
 ]

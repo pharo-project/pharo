@@ -1,6 +1,6 @@
-Extension { #name : #CmdCommand }
+Extension { #name : 'CmdCommand' }
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdCommand >> doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 	| item itemOrder |
 	itemOrder := aCommandItem order.
@@ -18,7 +18,7 @@ CmdCommand >> doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder 
 	self setUpIconForMenuItem: item
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	| item |
 
@@ -32,20 +32,20 @@ CmdCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	self description ifNotNil: [:d | item setBalloonText: d]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 
 	^ self doRegisterContextMenuItemsFor: aCommandItem withBuilder: aBuilder
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdCommand >> setUpIconForMenuItem: aMenuItemMorph [
 
 	self defaultMenuIcon ifNotNil: [:icon |
 		aMenuItemMorph icon: icon ]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdCommand >> setUpIconNamed: aString forMenuItem: aMenuItemMorph [
 
 	aMenuItemMorph icon: (aMenuItemMorph iconNamed: aString)

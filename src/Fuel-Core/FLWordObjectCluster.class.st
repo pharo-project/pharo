@@ -16,12 +16,14 @@ Future work: maybe we can modify and use the Bitmap hackBits:   not only for mat
 
 "
 Class {
-	#name : #FLWordObjectCluster,
-	#superclass : #FLBitsObjectCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLWordObjectCluster',
+	#superclass : 'FLBitsObjectCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 	| inst wideSize |
 	wideSize := aDecoder nextEncodedUint32.
@@ -34,14 +36,14 @@ FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 	  ifFalse: [ self swapBytesOf: inst ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLWordObjectCluster >> serializeInstance: aWordObject with: anEncoder [
 	anEncoder
 		encodeUint32: aWordObject basicSize;
 		encodeWords: aWordObject
 ]
 
-{ #category : #endianness }
+{ #category : 'endianness' }
 FLWordObjectCluster >> swapBytesOf: aWordObject [
 	Bitmap
                 swapBytesIn: aWordObject

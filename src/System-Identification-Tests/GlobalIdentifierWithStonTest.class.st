@@ -2,17 +2,18 @@
 SUnit tests for GlobalIdentifier with STON
 "
 Class {
-	#name : #GlobalIdentifierWithStonTest,
-	#superclass : #GlobalIdentifierTest,
-	#category : #'System-Identification-Tests'
+	#name : 'GlobalIdentifierWithStonTest',
+	#superclass : 'GlobalIdentifierTest',
+	#category : 'System-Identification-Tests',
+	#package : 'System-Identification-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierWithStonTest >> actualPreferencesFileName [
 	^ 'preferences.ston'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierWithStonTest >> setUpPersistenceStrategyAndChecker [
 	preferences := FileLocator workingDirectory / self folderName / 'pharoX' / self actualPreferencesFileName.
 	preferences ensureDelete.

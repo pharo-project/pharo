@@ -45,12 +45,14 @@ SYSTEM-API
 	Required by Delay-class>>#shutdown
 "
 Class {
-	#name : #DelayNullScheduler,
-	#superclass : #Object,
-	#category : #'Kernel-Delays'
+	#name : 'DelayNullScheduler',
+	#superclass : 'Object',
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #'user-api' }
+{ #category : 'user-api' }
 DelayNullScheduler >> schedule: aDelay [
 	"Invoked from user code Delay>>schedule:
 	 DelayNullScheduler does not schedule delays, but need to avoid user code blocking.
@@ -60,29 +62,29 @@ DelayNullScheduler >> schedule: aDelay [
 	aDelay delaySemaphore signal
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayNullScheduler >> shutDown [
 	"Nothing to do for DelayNullScheduler"
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayNullScheduler >> startTimerEventLoop [
 	"Nothing to do for DelayNullScheduler"
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayNullScheduler >> startUp [
 	Warning signal: 'Delay scheduler is NOT RUNNING!'.
 
 	"To get delays working again, go to System > Settings > System > Delay scheduler. "
 ]
 
-{ #category : #'system-api' }
+{ #category : 'system-api' }
 DelayNullScheduler >> stopTimerEventLoop [
 	"Nothing to do for DelayNullScheduler"
 ]
 
-{ #category : #'user-api' }
+{ #category : 'user-api' }
 DelayNullScheduler >> unschedule: aDelay [
 	"Nothing to do for DelayNullScheduler"
 ]

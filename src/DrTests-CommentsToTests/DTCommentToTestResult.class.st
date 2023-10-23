@@ -6,15 +6,17 @@ I build a tree with the testsResult created by comments listed in groups:
 I am used in DrTestsUI to show the results in a orderly manner.
 "
 Class {
-	#name : #DTCommentToTestResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTCommentToTestResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'testsResult'
 	],
-	#category : #'DrTests-CommentsToTests-Base'
+	#category : 'DrTests-CommentsToTests-Base',
+	#package : 'DrTests-CommentsToTests',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCommentToTestResult >> buildTreeForUI [
 	<dtCommentToTestResultTreeNamed: 'Grouped by type of result' order: 1>
 
@@ -42,12 +44,12 @@ DTCommentToTestResult >> buildTreeForUI [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCommentToTestResult >> testResults [
 	^ testsResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCommentToTestResult >> testResults: anObject [
 	testsResult := anObject
 ]

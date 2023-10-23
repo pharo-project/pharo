@@ -32,18 +32,20 @@ You can read the associated paper to understand better the semantics of ephemero
 Ephemerons: A New Finalization Mechanism. Barry Hayes. OOPSLA '97
 "
 Class {
-	#name : #FinalizationRegistryEntry,
-	#superclass : #Association,
-	#type : #ephemeron,
+	#name : 'FinalizationRegistryEntry',
+	#superclass : 'Association',
+	#type : 'ephemeron',
 	#instVars : [
 		'container',
 		'next',
 		'previous'
 	],
-	#category : #'System-Finalization-Registry'
+	#category : 'System-Finalization-Registry',
+	#package : 'System-Finalization',
+	#tag : 'Registry'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 
 	^ self new
@@ -53,7 +55,7 @@ FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> chainNext: aNode [
 	"Insert a node in the middle of myself and my next node.
 	Assume the argument is a valid node with has no next or previous."
@@ -67,25 +69,25 @@ FinalizationRegistryEntry >> chainNext: aNode [
 	aNode previous: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> check [
 
 	^ self next previous == self and: [ self previous next == self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> container [
 
 	^ container
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> container: anEphemeronContainer [
 
 	container := anEphemeronContainer
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinalizationRegistryEntry >> includes: anObject [
 
 	key = anObject ifTrue: [ ^ true ].
@@ -93,7 +95,7 @@ FinalizationRegistryEntry >> includes: anObject [
 	^ next includes: anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FinalizationRegistryEntry >> keys [
 
 	"Base case, last entry in the list"
@@ -106,7 +108,7 @@ FinalizationRegistryEntry >> keys [
 	^ { key }, next keys
 ]
 
-{ #category : #mourning }
+{ #category : 'mourning' }
 FinalizationRegistryEntry >> mourn [
 	"The key is only referenced by myself.
 	This Ephemeron instance is not ephemeric anymore: it cannot be reused.
@@ -116,31 +118,31 @@ FinalizationRegistryEntry >> mourn [
 	container finalizeEphemeron: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> next [
 
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> next: anObject [
 
 	next := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> previous [
 
 	^ previous
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> previous: anObject [
 
 	previous := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> removeFromChain [
 
 	| previousNext |
@@ -153,14 +155,14 @@ FinalizationRegistryEntry >> removeFromChain [
 	previousNext previous: previous.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> size [
 
 	next ifNil: [ ^ 1 ].
 	^ 1 + next size
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FinalizationRegistryEntry >> values [
 
 	"Base case, last entry in the list"

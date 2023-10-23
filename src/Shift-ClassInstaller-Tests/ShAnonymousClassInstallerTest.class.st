@@ -1,10 +1,11 @@
 Class {
-	#name : #ShAnonymousClassInstallerTest,
-	#superclass : #TestCase,
-	#category : #'Shift-ClassInstaller-Tests'
+	#name : 'ShAnonymousClassInstallerTest',
+	#superclass : 'TestCase',
+	#category : 'Shift-ClassInstaller-Tests',
+	#package : 'Shift-ClassInstaller-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShAnonymousClassInstallerTest >> testSubclasses [
 
 	| aSubClass |
@@ -16,5 +17,5 @@ ShAnonymousClassInstallerTest >> testSubclasses [
 	self assert: aSubClass superclass equals: Point.
 	self deny: (Smalltalk hasClassNamed: #AnotherPoint).
 
-	self assert: (self packageOrganizer packageOfClassNamed: aSubClass name) isNil
+	self assert: (self packageOrganizer packageOfClassNamed: aSubClass name) equals: self packageOrganizer undefinedPackage
 ]

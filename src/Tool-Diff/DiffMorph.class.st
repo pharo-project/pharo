@@ -4,8 +4,8 @@ I am a morph useful for visualising differences between two strings.
 When a classContext: is setted, the strings are highlighted using such contextual information.
 "
 Class {
-	#name : #DiffMorph,
-	#superclass : #ComposableMorph,
+	#name : 'DiffMorph',
+	#superclass : 'ComposableMorph',
 	#instVars : [
 		'prettyPrint',
 		'contextClass',
@@ -32,10 +32,12 @@ Class {
 		'selected',
 		'beNavigable'
 	],
-	#category : #'Tool-Diff-Morphs'
+	#category : 'Tool-Diff-Morphs',
+	#package : 'Tool-Diff',
+	#tag : 'Morphs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph class >> from: old to: new [
 	"Answer a new instance of the receiver with the given
 	old and new text."
@@ -45,7 +47,7 @@ DiffMorph class >> from: old to: new [
 		to: new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph class >> from: old to: new contextClass: aClass [
 	"Answer a new instance of the receiver with the given
 	old and new text."
@@ -56,7 +58,7 @@ DiffMorph class >> from: old to: new contextClass: aClass [
 		contextClass: aClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMorph >> addMainMorphsWith: initialOffset [
 	| halfWidth leftFraction leftOffset rightFraction rightOffset topOffset |
 
@@ -120,7 +122,7 @@ DiffMorph >> addMainMorphsWith: initialOffset [
 			topOffset: topOffset)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMorph >> addMorphsWithOptions [
 
 	self createOptionsPanel.
@@ -135,12 +137,12 @@ DiffMorph >> addMorphsWithOptions [
 			bottomOffset: optionsPanel height)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMorph >> addMorphsWithoutOptions [
 	self addMainMorphsWith: 0
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 DiffMorph >> addOptionsPanel [
 
 	showOptions := true.
@@ -148,7 +150,7 @@ DiffMorph >> addOptionsPanel [
 	self addMorphsWithOptions
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMorph >> addTitlePanel: initialOffset [
 
 	"Add the title panel and returns the top offset for the rest of the window."
@@ -191,20 +193,20 @@ DiffMorph >> addTitlePanel: initialOffset [
 	^ initialOffset + titlePanel height
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> additionColor [
 	"Answer the color used to show additions."
 
 	^ self theme diffAdditionalLineBackgroundColor
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> additionHighlightColor [
 	"Answer the color used to show addition highlights."
 	^ self theme diffAdditionalTextInLineBackgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> adoptPaneColor: paneColor [
 	"Change our border color too."
 
@@ -213,14 +215,14 @@ DiffMorph >> adoptPaneColor: paneColor [
 	self borderStyle baseColor: paneColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> allDifferences [
 
 	^ allDifferences ifNil: [
 		  allDifferences := self calculateAllDifferences ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> applyHighlights [
 	"Apply the relevant highlights to src and dst."
 
@@ -228,21 +230,21 @@ DiffMorph >> applyHighlights [
 	self dstMorph highlights: (self joinMappings flatCollect: [:j | j dst highlights])
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> applyJoin [
 	"Apply the join mappings to the join morph."
 
 	self joinMorph mappings: self joinMappings
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> applyMap [
 	"Apply the join mappings to the map morph."
 
 	self mapMorph mappings: self joinMappings
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> applyPrettyPrinter [
 	"Apply pretty printer if check box is on"
 
@@ -254,13 +256,13 @@ DiffMorph >> applyPrettyPrinter [
 				ifFalse: [ self destTextModel formatSourceCodeInView ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> beNavigable [
 
 	^ beNavigable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> beNavigable: aBoolean [
 
 	beNavigable = aBoolean ifTrue: [ ^ self ].
@@ -268,13 +270,13 @@ DiffMorph >> beNavigable: aBoolean [
 	self updateMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> beWrapped [
 
 	^ beWrapped
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> beWrapped: aBoolean [
 
 	beWrapped = aBoolean ifTrue: [ ^ self ].
@@ -284,7 +286,7 @@ DiffMorph >> beWrapped: aBoolean [
 		ifFalse: [ self dstMorph beNotWrapped. self srcMorph beNotWrapped ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> buttonNext [
 
 	^ self
@@ -294,7 +296,7 @@ DiffMorph >> buttonNext [
 		  help: 'Go to next difference'
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> buttonPrev [
 
 	^ self
@@ -304,7 +306,7 @@ DiffMorph >> buttonPrev [
 		  help: 'Go to previous difference'
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> buttonTop [
 
 	^ self
@@ -314,7 +316,7 @@ DiffMorph >> buttonTop [
 		  help: 'Go to the top'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> buttons [
 
 	^ (self newRow:
@@ -323,7 +325,7 @@ DiffMorph >> buttons [
 		  yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> calculateAllDifferences [
 
 	| differences srcDiffStart dstDiffStart |
@@ -346,7 +348,7 @@ DiffMorph >> calculateAllDifferences [
 	^ differences
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> calculateDifference [
 	"Calculate the difference of the src and dst.
 	Use src/dest morphs text, because we may want to compare the pretty printed text"
@@ -356,7 +358,7 @@ DiffMorph >> calculateDifference [
 			buildPatchSequence)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> calculateJoinMappings [
 	"Calculate the join parameters between src and dst
 	and store in joinMappings."
@@ -364,7 +366,7 @@ DiffMorph >> calculateJoinMappings [
 	self joinMappings: self calculatedJoinMappings
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> calculatedJoinMappings [
 	"Calculate the join parameters between src and dst and answer"
 
@@ -452,7 +454,7 @@ DiffMorph >> calculatedJoinMappings [
 	^ joins
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> calibrateScrollbar [
 	"Set the scrollbar parameters to match the texts."
 
@@ -476,7 +478,7 @@ DiffMorph >> calibrateScrollbar [
 				min: 1.0) asFloat
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> colorForType: type [
 	"Anwser the color to use for the given change type."
 
@@ -484,21 +486,21 @@ DiffMorph >> colorForType: type [
 		at: (#(match addition removal modification) indexOf: type)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> contextClass [
 	"Answer the value of contextClass"
 
 	^ contextClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> contextClass: aClass [
 	"Set the value of contextClass"
 
 	contextClass := aClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMorph >> createOptionsPanel [
 
 	| ppCheckbox |
@@ -512,39 +514,39 @@ DiffMorph >> createOptionsPanel [
 	optionsPanel extent: optionsPanel minExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
 	^'Diff' translated
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> destTextModel [
 	^ destTextModel ifNil: [ destTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> diffMapColor [
 	"Answer the color used for the mapping bar on the left side."
 	^ self theme diffMapColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> difference [
 	"Answer the value of difference"
 
 	^ difference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> difference: anObject [
 	"Set the value of difference"
 
 	difference := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitialDiffStart patchSequence: patchSequence [
 
 	| patchSequenceGroupedByMatch srcDiffStart dstDiffStart differences |
@@ -575,38 +577,38 @@ DiffMorph >> differencesStartingOnSrcAt: srcInitialDiffStart onDstAt: dstInitial
 	^ differences
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> doItContext [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> doItReceiver [
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> dstMorph [
 	"Answer the value of dstMorph"
 
 	^ dstMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> dstMorph: anObject [
 	"Set the value of dstMorph"
 
 	dstMorph := anObject
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> edgeColor [
 	"Answer the color used to show the border of the changes."
 	^ self theme diffEdgeColor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> from: old to: new [
 	"Set the old (src) and new (dst) text."
 
@@ -622,7 +624,7 @@ DiffMorph >> from: old to: new [
 		applyMap
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> from: old to: new contextClass: aClass [
 	"Set the old (src) and new (dst) text."
 
@@ -639,41 +641,41 @@ DiffMorph >> from: old to: new contextClass: aClass [
 		applyMap
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiffMorph >> hasNext [
 
 	^ self selected < self allDifferences size
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiffMorph >> hasPrev [
 
 	^ self selected > 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiffMorph >> hideOrShowScrollBar [
 	"Do nothing"
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DiffMorph >> horizontalDestScroll: anAnnouncement [
 	self srcMorph scrollPane hScrollbarValueWithoutAnnouncement: anAnnouncement scrollValue
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DiffMorph >> horizontalSourceScroll: anAnnouncement [
 	self dstMorph scrollPane hScrollbarValueWithoutAnnouncement: anAnnouncement scrollValue
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> initialExtent [
 	"Answer the initial extent for the receiver."
 
 	^RealEstateAgent standardWindowExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMorph >> initialize [
 	"Initialize the receiver."
 
@@ -703,7 +705,7 @@ DiffMorph >> initialize [
 		extent: self initialExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffMorph >> instanciateButtons [
 
 	buttonTop := self buttonTop.
@@ -711,7 +713,7 @@ DiffMorph >> instanciateButtons [
 	buttonNext := self buttonNext
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> join: aJoin selected: aBoolean [
 	"Set the selection for the given join and update the
 		src dst and join morphs."
@@ -722,20 +724,20 @@ DiffMorph >> join: aJoin selected: aBoolean [
 	self dstMorph changed
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> joinColor [
 	"Answer the color used for the join bar."
 	^ self theme diffJoinColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> joinMappings [
 	"Answer the join parameters between src and dst."
 
 	^joinMappings ifNil: [self calculateJoinMappings]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> joinMappings: aCollection [
 	"Set the join parameters between src and dst."
 
@@ -743,34 +745,34 @@ DiffMorph >> joinMappings: aCollection [
 	allDifferences := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> joinMorph [
 	"Answer the value of joinMorph"
 
 	^ joinMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> joinMorph: anObject [
 	"Set the value of joinMorph"
 
 	joinMorph := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> joinSectionClass [
 	"Answer the class to use for a new join section."
 
 	^JoinSection
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> leftLabel [
 
 	^ self newLabel: (leftCaption ifNil: [ '' ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> leftLabel: aLeftLabel rightLabel: aRigthLabel [
 
 	leftCaption := aLeftLabel.
@@ -779,41 +781,41 @@ DiffMorph >> leftLabel: aLeftLabel rightLabel: aRigthLabel [
 	self updateMorphs
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DiffMorph >> mapClicked: aFloat [
 	"Update the scrollbar value to match a click in the map."
 
 	self scrollbarMorph setValue: aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> mapMorph [
 	"Answer the value of mapMorph"
 
 	^ mapMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> mapMorph: anObject [
 	"Set the value of mapMorph"
 
 	mapMorph := anObject
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> matchColor [
 	"Answer the color used to show matches."
 
 	^ Color transparent
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> modificationColor [
 	"Answer the color used to show changes."
 	^ self theme diffModificatedLineBackgroundColor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newDstMorph [
 	"Answer a new dst text morph."
 
@@ -825,7 +827,7 @@ DiffMorph >> newDstMorph [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newHighlight [
 	"Anewser a new highlight."
 
@@ -835,7 +837,7 @@ DiffMorph >> newHighlight [
 		borderColor: self edgeColor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newHighlight: type [
 	"Anewser a new highlight."
 
@@ -846,7 +848,7 @@ DiffMorph >> newHighlight: type [
 		fillWidth: true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newJoinMorph [
 	"Answer a new join morph."
 
@@ -860,7 +862,7 @@ DiffMorph >> newJoinMorph [
 		color: self joinColor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newJoinSection [
 	"Answer a new join section."
 
@@ -875,7 +877,7 @@ DiffMorph >> newJoinSection [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newJoinSectionFrom: srcRange to: dstRange [
 	"Answer a new join section."
 
@@ -916,7 +918,7 @@ DiffMorph >> newJoinSectionFrom: srcRange to: dstRange [
 		to: self dstMorph textMorph paragraph
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newMapMorph [
 	"Answer a new map morph."
 
@@ -931,7 +933,7 @@ DiffMorph >> newMapMorph [
 			to: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newMatchJoinSectionFrom: srcRange to: dstRange [
 	"Answer a new match join section."
 
@@ -955,7 +957,7 @@ DiffMorph >> newMatchJoinSectionFrom: srcRange to: dstRange [
 		createHighlightsFrom: self srcMorph textMorph paragraph to: self dstMorph textMorph paragraph
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newPrettyPrintCheckboxMorph [
 	"Answer a new checkbox for specifying whether to use
 	pretty printing for the diff texts."
@@ -969,7 +971,7 @@ DiffMorph >> newPrettyPrintCheckboxMorph [
 		help: 'If selected, pretty print will be applied to any displayed method source (eliminates trivial formatting changes)' translated
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newScrollbarMorph [
 	"Answer a new scrollbar morph."
 
@@ -980,7 +982,7 @@ DiffMorph >> newScrollbarMorph [
 		width: self theme scrollbarThickness
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> newSrcMorph [
 	"Answer a new src text morph."
 
@@ -992,13 +994,13 @@ DiffMorph >> newSrcMorph [
 		yourself
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 DiffMorph >> on: aModel [
 
 	aModel addDependent: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> patchSequenceFromJoinMapping: joinMapping [
 
 	^ (InlineTextDiffBuilder
@@ -1006,14 +1008,14 @@ DiffMorph >> patchSequenceFromJoinMapping: joinMapping [
 		   to: joinMapping dst text) buildPatchSequence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> prettyPrint [
 	"Answer the value of prettyPrint"
 
 	^ prettyPrint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> prettyPrint: aBoolean [
 	"Set the value of prettyPrint"
 
@@ -1022,19 +1024,19 @@ DiffMorph >> prettyPrint: aBoolean [
 	self updateText
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> removalColor [
 	"Answer the color used to show removals."
 	^ self theme diffRemovedLinesBackgroundColor
 ]
 
-{ #category : #'accessing - colors' }
+{ #category : 'accessing - colors' }
 DiffMorph >> removalHighlightColor [
 	"Answer the color used to show removal highligths."
 	^ self theme diffRemovalHighlightColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 DiffMorph >> removeOptionsPanel [
 
 	showOptions := false.
@@ -1042,7 +1044,7 @@ DiffMorph >> removeOptionsPanel [
 	self addMorphsWithoutOptions
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> rightLabel [
 
 	^ (self newRow:
@@ -1051,42 +1053,42 @@ DiffMorph >> rightLabel [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> scrollbarMorph [
 	"Answer the value of scrollbarMorph"
 
 	^ scrollbarMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> scrollbarMorph: anObject [
 	"Set the value of scrollbarMorph"
 
 	scrollbarMorph := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> selectDiff: aDiff [
 
 	srcMorph selectFrom: aDiff key first to: aDiff key stop.
 	dstMorph selectFrom: aDiff value first to: aDiff value stop
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> selectNext [
 
 	self selected: self selected + 1.
 	self selectDiff: (self allDifferences at: self selected)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> selectPrev [
 
 	self selected: self selected - 1.
 	self selectDiff: (self allDifferences at: self selected)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffMorph >> selectTop [
 
 	srcMorph selectFrom: 1 to: 0.
@@ -1094,38 +1096,38 @@ DiffMorph >> selectTop [
 	self selected: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> selected [
 
 	^ selected ifNil: [ selected := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> selected: aInteger [
 
 	selected := aInteger.
 	self updateButtons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> selectedClassOrMetaClass [
 	^ self contextClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiffMorph >> setOptionsPanel: aBoolean [
 	"This is a private method. The implementation is based on the fact the options are set by default"
 
 	aBoolean ifFalse: [ self removeOptionsPanel ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	aPluggableShoutMorphOrView classOrMetaClass: self contextClass.
 	^ self contextClass notNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> showBoth [
 
 	showOnlyDestination ifTrue: [ showOnlyDestination := false ].
@@ -1134,13 +1136,13 @@ DiffMorph >> showBoth [
 	self updateMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> showOnlyDestination [
 
 	^ showOnlyDestination
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> showOnlyDestination: aBoolean [
 
 	showOnlyDestination = aBoolean ifTrue: [ ^ self ].
@@ -1149,13 +1151,13 @@ DiffMorph >> showOnlyDestination: aBoolean [
 	self updateMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> showOnlySource [
 
 	^ showOnlySource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> showOnlySource: aBoolean [
 
 	showOnlySource = aBoolean ifTrue: [ ^ self ].
@@ -1164,13 +1166,13 @@ DiffMorph >> showOnlySource: aBoolean [
 	self updateMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> showOptions [
 
 	^ showOptions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> showOptions: aBoolean [
 
 	showOptions = aBoolean ifTrue: [ ^ self ].
@@ -1180,26 +1182,26 @@ DiffMorph >> showOptions: aBoolean [
 		ifFalse: [ self removeOptionsPanel ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffMorph >> sourceTextModel [
 	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> srcMorph [
 	"Answer the value of srcMorph"
 
 	^ srcMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffMorph >> srcMorph: anObject [
 	"Set the value of srcMorph"
 
 	srcMorph := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DiffMorph >> themeChanged [
 	"Update the scrollbar width/frame."
 
@@ -1211,7 +1213,7 @@ DiffMorph >> themeChanged [
 	self dstMorph layoutFrame rightOffset: offset
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DiffMorph >> update: aSymbol [
 
 	aSymbol == #addOptions
@@ -1222,7 +1224,7 @@ DiffMorph >> update: aSymbol [
 	^ super update: aSymbol
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DiffMorph >> update: aSymbol with: aValue [
 
 	aSymbol == #showOnlyDestination
@@ -1233,14 +1235,14 @@ DiffMorph >> update: aSymbol with: aValue [
 	^ super update: aSymbol with: aValue
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DiffMorph >> updateButtons [
 
 	buttonNext enabled: self hasNext.
 	buttonPrev enabled: self hasPrev
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DiffMorph >> updateJoinOffsets [
 	"Update the src and dst offsets in the join morph
 	to match the src and dst tex scroll offsets."
@@ -1251,7 +1253,7 @@ DiffMorph >> updateJoinOffsets [
 		changed
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 DiffMorph >> updateMorphs [
 
 	self removeAllMorphs.
@@ -1261,7 +1263,7 @@ DiffMorph >> updateMorphs [
 		ifFalse: [ self addMorphsWithoutOptions ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffMorph >> updateText [
 	"Reset the text if we have some."
 
@@ -1269,7 +1271,7 @@ DiffMorph >> updateText [
 		ifTrue: [ self from: self sourceTextModel getString to: self destTextModel getString ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DiffMorph >> vScroll: scrollValue [
 	"Called from standalone scroolbar.
 	Scroll the srcMorph and redo the join."
@@ -1279,7 +1281,7 @@ DiffMorph >> vScroll: scrollValue [
 	self updateJoinOffsets
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DiffMorph >> verticalScroll: anAnnouncement [
 	"Called from src when scrolled by keyboard etc.."
 

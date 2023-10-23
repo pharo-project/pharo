@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloAllowProjectUpgrade,
-	#superclass : #MetacelloResolveProjectUpgrade,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloAllowProjectUpgrade',
+	#superclass : 'MetacelloResolveProjectUpgrade',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloAllowProjectUpgrade >> defaultAction [
     "Default for Upgrade is to allow"
 
@@ -12,17 +14,17 @@ MetacelloAllowProjectUpgrade >> defaultAction [
     ^ self newProjectRegistration
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloAllowProjectUpgrade >> handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock [
     ^ onUpgradeBlock cull: self cull: self existingProjectRegistration cull: self newProjectRegistration
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloAllowProjectUpgrade >> handleResolutionFor: aScriptEngine [
     ^ aScriptEngine handleUpgrade: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAllowProjectUpgrade >> operationString [
   ^ 'upgrade to'
 ]

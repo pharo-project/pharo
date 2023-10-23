@@ -2,33 +2,35 @@
 I represent x86_64 architectures.
 "
 Class {
-	#name : #'FFI_x86_64',
-	#superclass : #FFIArchitecture,
-	#category : #'UnifiedFFI-Architecture'
+	#name : 'FFI_x86_64',
+	#superclass : 'FFIArchitecture',
+	#category : 'UnifiedFFI-Architecture',
+	#package : 'UnifiedFFI',
+	#tag : 'Architecture'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFI_x86_64 class >> isAbstract [
 
 	^self name = #FFI_x86_64
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64 >> externalLongType [
 	^ ExternalType signedLongLong
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64 >> externalSizeTType [
 	^ ExternalType unsignedLongLong
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64 >> externalULongType [
 	^ ExternalType unsignedLongLong
 ]
 
-{ #category : #'default abi' }
+{ #category : 'default abi' }
 FFI_x86_64 >> returnSingleFloatsAsDoubles [
 	^ false
 ]

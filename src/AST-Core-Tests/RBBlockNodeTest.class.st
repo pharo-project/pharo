@@ -1,10 +1,12 @@
 Class {
-	#name : #RBBlockNodeTest,
-	#superclass : #RBParseTreeTest,
-	#category : #'AST-Core-Tests-Nodes'
+	#name : 'RBBlockNodeTest',
+	#superclass : 'RBParseTreeTest',
+	#category : 'AST-Core-Tests-Nodes',
+	#package : 'AST-Core-Tests',
+	#tag : 'Nodes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBBlockNodeTest >> testConstantValue [
 
 	self assert: [  ] sourceNode constantValue equals: nil.
@@ -12,7 +14,7 @@ RBBlockNodeTest >> testConstantValue [
 	self should: [[ ^1 ] sourceNode constantValue] raise: TestResult error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBBlockNodeTest >> testHasNonLocalReturn [
 
 	self deny: [  ] sourceNode hasNonLocalReturn.
@@ -26,7 +28,7 @@ RBBlockNodeTest >> testHasNonLocalReturn [
 	self deny: (Object>>#halt) ast hasNonLocalReturn
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBBlockNodeTest >> testIsClean [
 	| escpWrite escpRead |
 	escpRead := escpWrite := 1.
@@ -56,7 +58,7 @@ RBBlockNodeTest >> testIsClean [
 	self deny: [ true ifTrue: [escpWrite := 1 ] ] isClean. "But not if we have a real escape"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBBlockNodeTest >> testIsConstant [
 
 	self assert: [  ] sourceNode isConstant.
@@ -65,7 +67,7 @@ RBBlockNodeTest >> testIsConstant [
 	self deny: [ 1 sin. 1 ] sourceNode isConstant
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBBlockNodeTest >> testNumArgs [
 	self assert: [  ] sourceNode numArgs equals: 0.
 	self assert: [:a  |  ] sourceNode numArgs equals: 1.

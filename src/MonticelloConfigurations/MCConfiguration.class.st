@@ -5,8 +5,8 @@ An MCConfiguration may be filed out for storage as an array specification, and n
 
 "
 Class {
-	#name : #MCConfiguration,
-	#superclass : #Object,
+	#name : 'MCConfiguration',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'dependencies',
@@ -17,10 +17,11 @@ Class {
 		'DefaultLog',
 		'UpgradeIsMerge'
 	],
-	#category : #MonticelloConfigurations
+	#category : 'MonticelloConfigurations',
+	#package : 'MonticelloConfigurations'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCConfiguration class >> changesIn: aPackage from: oldInfo to: newInfo on: aStream [
 	
 	| printBlock newVersion |
@@ -52,19 +53,19 @@ MCConfiguration class >> changesIn: aPackage from: oldInfo to: newInfo on: aStre
 	aStream flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration class >> defaultLog [
 	"Answer the default configuration log"
 	^DefaultLog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration class >> defaultLog: aStream [
 	"Set the default configuration log"
 	DefaultLog := aStream.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCConfiguration class >> dependencyFromArray: anArray [
 	^MCVersionDependency
 		package: (MCPackage named: anArray first)
@@ -79,7 +80,7 @@ MCConfiguration class >> dependencyFromArray: anArray [
 			ancestors: nil)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCConfiguration class >> dependencyToArray: aDependency [
 	^ {
 		aDependency package name . 
@@ -87,7 +88,7 @@ MCConfiguration class >> dependencyToArray: aDependency [
 		aDependency versionInfo id asString }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCConfiguration class >> fromArray: anArray [
 	| configuration |
 	configuration := self new.
@@ -100,7 +101,7 @@ MCConfiguration class >> fromArray: anArray [
 	^configuration
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCConfiguration class >> repositoryFromArray: anArray [
 	^ MCRepositoryGroup default repositories
 		detect: [:repo | repo description = anArray first]
@@ -111,22 +112,22 @@ MCConfiguration class >> repositoryFromArray: anArray [
 				password: '']
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCConfiguration class >> repositoryToArray: aRepository [
 	^ {aRepository description}
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MCConfiguration class >> upgradeIsMerge [
 	^ UpgradeIsMerge ifNil: [UpgradeIsMerge := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 MCConfiguration class >> upgradeIsMerge: aBoolean [
 	UpgradeIsMerge := aBoolean
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCConfiguration class >> whatChangedFrom: oldConfig to: newConfig [
 	"MCConfiguration
 		whatChangedFrom: ReleaseBuilderPloppDeveloper config20060201PloppBeta
@@ -138,7 +139,7 @@ MCConfiguration class >> whatChangedFrom: oldConfig to: newConfig [
 		on: Smalltalk tools transcript
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCConfiguration class >> whatChangedFrom: oldConfig to: newConfig on: aStream [
 	"MCConfiguration
 		whatChangedFrom:  ReleaseBuilderPloppDeveloper config20060201PloppBeta
@@ -160,22 +161,22 @@ MCConfiguration class >> whatChangedFrom: oldConfig to: newConfig on: aStream [
 
 ]
 
-{ #category : #faking }
+{ #category : 'faking' }
 MCConfiguration >> changes [
 	^MCPatch operations: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> dependencies [
 	^dependencies ifNil: [dependencies := OrderedCollection new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> dependencies: aCollection [
 	dependencies := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> depsSatisfying: selectBlock versionDo: verBlock displayingProgress: progressString [
 	| repoMap count |
 	repoMap := Dictionary new.
@@ -212,7 +213,7 @@ MCConfiguration >> depsSatisfying: selectBlock versionDo: verBlock displayingPro
 	^count
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> diffBaseFor: aDependency [
 	| wc |
 	aDependency package hasWorkingCopy ifFalse: [^nil].
@@ -221,34 +222,34 @@ MCConfiguration >> diffBaseFor: aDependency [
 	^wc ancestors first name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> fileName [
 	^ self name, '.', self writerClass extension
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfiguration >> fileOutOn: aStream [
 	self writerClass fileOut: self on: aStream
 ]
 
-{ #category : #faking }
+{ #category : 'faking' }
 MCConfiguration >> info [
 	^MCVersionInfo new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCConfiguration >> initialize [
 	super initialize.
 	log := DefaultLog.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCConfiguration >> isCacheable [
 	^false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfiguration >> load [
 	"install all the versions in this configuration, even if this means to downgrade a package"
 
@@ -262,7 +263,7 @@ MCConfiguration >> load [
 	^self loadVersions: versions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> loadVersions: aCollection [
 
 	| loader |
@@ -273,17 +274,18 @@ MCConfiguration >> loadVersions: aCollection [
 	^ aCollection size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> log [
-	^log ifNil: [Transcript]
+
+	^ log ifNil: [ Smalltalk tools transcript ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> log: aStream [
 	log := aStream.
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 MCConfiguration >> logError: aString [
 	self log
 		cr; nextPutAll: 'ERROR: ';
@@ -292,7 +294,7 @@ MCConfiguration >> logError: aString [
 
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 MCConfiguration >> logUpdate: aPackage with: aVersion [
 	self log
 		cr; nextPutAll: ('========== <1s> ==========' expandMacrosWith:aVersion info name); cr;
@@ -308,7 +310,7 @@ MCConfiguration >> logUpdate: aPackage with: aVersion [
 							nextPutAll: ver message; cr; flush]]]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 MCConfiguration >> logWarning: aString [
 	self log
 		cr; nextPutAll: 'WARNING: ';
@@ -317,7 +319,7 @@ MCConfiguration >> logWarning: aString [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfiguration >> merge [
 	"merge in all the versions in this configuration"
 
@@ -331,7 +333,7 @@ MCConfiguration >> merge [
 	^self mergeVersions: versions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> mergeVersions: aCollection [
 
 	| merger |
@@ -342,13 +344,13 @@ MCConfiguration >> mergeVersions: aCollection [
 	^ aCollection size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> mergeVersionsSilently: aCollection [
 
 	^self suppressMergeDialogWhile: [self mergeVersions: aCollection]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> mustMerge: aVersion [
 	"answer true if we have to do a full merge and false if we can simply load instead"
 	
@@ -362,52 +364,52 @@ MCConfiguration >> mustMerge: aVersion [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> name [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> name: aString [
 	name := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> nameForChangeset [
 	^self name ifNil: [self class name]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MCConfiguration >> postCopy [
 	dependencies := dependencies shallowCopy.
 	repositories := repositories shallowCopy.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> repositories [
 	^repositories ifNil: [repositories := OrderedCollection new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> repositories: aCollection [
 	repositories := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> summary [
 	^String streamContents: [:stream |
 		self dependencies
 			do: [:ea | stream nextPutAll: ea versionInfo name; cr ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> suppressMergeDialogWhile: aBlock [
 	^aBlock 
 		on: MCMergeResolutionRequest
 		do: [:request | request autoMerge ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MCConfiguration >> updateFromImage [
 	self dependencies: (self dependencies collect: [:dep |
 		dep package hasWorkingCopy
@@ -420,7 +422,7 @@ MCConfiguration >> updateFromImage [
 
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MCConfiguration >> updateFromRepositories [
 	| oldInfos newNames sortedNames newDeps |
 	oldInfos := self dependencies collect: [:dep | dep versionInfo].
@@ -456,14 +458,14 @@ MCConfiguration >> updateFromRepositories [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfiguration >> upgrade [
 	^self class upgradeIsMerge
 		ifTrue: [self upgradeByMerging]
 		ifFalse: [self upgradeByLoading]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfiguration >> upgradeByLoading [
 	"this differs from #load only in that newer versions in the image are not downgraded"
 
@@ -478,7 +480,7 @@ MCConfiguration >> upgradeByLoading [
 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCConfiguration >> upgradeByMerging [
 	| versions |
 	versions := OrderedCollection new.
@@ -493,7 +495,7 @@ MCConfiguration >> upgradeByMerging [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCConfiguration >> versionNamed: verName for: aDependency from: repo [
 
 	| baseName fileName ver |
@@ -514,7 +516,7 @@ MCConfiguration >> versionNamed: verName for: aDependency from: repo [
 	^ver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCConfiguration >> writerClass [
 	^ MCMcmWriter 
 ]

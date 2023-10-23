@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 Class >> asClassDefinition [
 	"we use a very ugly hack to encode complex slots as string with MC... later MC should model Slots directly"
 
@@ -16,12 +16,17 @@ Class >> asClassDefinition [
 		              superclassName: (self superclass ifNotNil: [ self superclass name ]);
 		              traitComposition: self traitCompositionString;
 		              classTraitComposition: self class traitCompositionString;
-		              category: self category;
+		              packageName: self package name;
 		              poolDictionaryNames: self sharedPoolNames;
 		              type: self mcType;
 		              comment: self comment;
 		              commentStamp: self commentStamp;
 		              yourself.
+
+	"We do not export the tag if this is the root."
+	self packageTag ifNotNil: [ :tag | tag isRoot ifFalse: [ definition tagName: tag name ] ].
+
+
 	self needsSlotClassDefinition
 		ifTrue: [
 			definition
@@ -37,7 +42,7 @@ Class >> asClassDefinition [
 	^ definition
 ]
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 Class >> classDefinitions [
 	^ { self asClassDefinition }
 ]

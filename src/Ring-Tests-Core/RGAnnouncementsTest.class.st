@@ -1,10 +1,11 @@
 Class {
-	#name : #RGAnnouncementsTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGAnnouncementsTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 RGAnnouncementsTest >> installAnnouncementsFor: aRGClass in: aRGEnvironment when: anEvent [
 
 	| announcements |
@@ -18,7 +19,7 @@ RGAnnouncementsTest >> installAnnouncementsFor: aRGClass in: aRGEnvironment when
 	^ announcements
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 RGAnnouncementsTest >> installAnnouncementsIn: aRGEnvironment when: anEvent [
 
 	| announcements |
@@ -30,7 +31,7 @@ RGAnnouncementsTest >> installAnnouncementsIn: aRGEnvironment when: anEvent [
 	^ announcements
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testAnnouncementTimestamps [
 
 	| env announcements start end |
@@ -54,7 +55,7 @@ RGAnnouncementsTest >> testAnnouncementTimestamps [
 	self assert: announcements first timeStamp equals: end
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testAnnouncerSuspending [
 
 	| env announcements behavior |
@@ -68,7 +69,7 @@ RGAnnouncementsTest >> testAnnouncerSuspending [
 	self assert: announcements isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testAnnouncerSuspendingWithStoring [
 
 	| env announcements behavior stored |
@@ -84,7 +85,7 @@ RGAnnouncementsTest >> testAnnouncerSuspendingWithStoring [
 	"TODO: more detailed check"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testBehaviorAdded [
 	| env announcements behavior |
 	env := RGEnvironment new.
@@ -97,7 +98,7 @@ RGAnnouncementsTest >> testBehaviorAdded [
 	self assert: (announcements select: [ :each | each classAffected isRingResolved ]) size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testBehaviorCommentModified [
 
 	| env announcements behavior |
@@ -115,7 +116,7 @@ RGAnnouncementsTest >> testBehaviorCommentModified [
 	self assert: (announcements allSatisfy: [:each | each classCommented == behavior ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testBehaviorDefinitionModifiedForCategory [
 
 	| env announcements class |
@@ -129,7 +130,7 @@ RGAnnouncementsTest >> testBehaviorDefinitionModifiedForCategory [
 	self assert: announcements size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testBehaviorDefinitionModifiedForSuperclass [
 
 	| env announcements class superclass1 superclass2 |
@@ -151,7 +152,7 @@ RGAnnouncementsTest >> testBehaviorDefinitionModifiedForSuperclass [
 	self assert: announcements size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testBehaviorParentRenamed [
 
 	| env announcements class superclass |
@@ -170,18 +171,19 @@ RGAnnouncementsTest >> testBehaviorParentRenamed [
 	self assert: announcements size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testDirectAnnouncement [
+
 	| def announcements |
 	def := RGBehavior new.
-	announcements := self installAnnouncementsIn: def when: ClassAdded. 
-	def announce: (ClassAdded class: def category: nil).
+	announcements := self installAnnouncementsIn: def when: ClassAdded.
+	def announce: (ClassAdded class: def).
 
 	self assert: announcements size equals: 1.
 	self assert: announcements first classAffected identicalTo: def
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGAnnouncementsTest >> testUnsubscribe [
 
 	| env announcements behavior |

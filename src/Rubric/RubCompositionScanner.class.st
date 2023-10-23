@@ -2,8 +2,8 @@
 I scan a paragraph
 "
 Class {
-	#name : #RubCompositionScanner,
-	#superclass : #RubCharacterScanner,
+	#name : 'RubCompositionScanner',
+	#superclass : 'RubCharacterScanner',
 	#instVars : [
 		'spaceX',
 		'lineHeight',
@@ -13,10 +13,12 @@ Class {
 		'baselineAtBreak',
 		'breakAtSpace'
 	],
-	#category : #'Rubric-TextScanning'
+	#category : 'Rubric-TextScanning',
+	#package : 'Rubric',
+	#tag : 'TextScanning'
 }
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle firstLine: firstLine leftSide: leftSide rightSide: rightSide [
 	"Answer an instance of TextLineInterval that represents the next line in the paragraph."
 	| runLength stopCondition |
@@ -53,7 +55,7 @@ RubCompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle firs
 				ifTrue: [^ line lineHeight: lineHeight + textStyle leading baseline: baseline + textStyle leading]]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> cr [
 	"Answer true. Set up values for the text line interval currently being
 	composed."
@@ -66,7 +68,7 @@ RubCompositionScanner >> cr [
 	^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> crossedX [
 	"There is a word that has fallen across the right edge of the composition
 	rectangle. This signals the need for wrapping which is done to the last
@@ -121,7 +123,7 @@ RubCompositionScanner >> crossedX [
 	^ true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> endOfRun [
 	"Answer true if scanning has reached the end of the paragraph.
 	Otherwise step conditions (mostly install potential new font) and answer
@@ -140,7 +142,7 @@ RubCompositionScanner >> endOfRun [
 			false ]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	| descent |
 	"Workaround: The following should really use #textAnchorType"
@@ -157,7 +159,7 @@ RubCompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 RubCompositionScanner >> registerBreakableIndex [
 
 	"Record left x and character index of the line-wrappable point.
@@ -181,7 +183,7 @@ RubCompositionScanner >> registerBreakableIndex [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCompositionScanner >> rightX [
 	"Meaningful only when a line has just been composed -- refers to the
 	line most recently composed. This is a subtrefuge to allow for easy
@@ -194,7 +196,13 @@ RubCompositionScanner >> rightX [
 	^ destX
 ]
 
-{ #category : #scanning }
+{ #category : 'accessing' }
+RubCompositionScanner >> scale [
+
+	^ 1
+]
+
+{ #category : 'scanning' }
 RubCompositionScanner >> setActualFont: aFont [
 	"Keep track of max height and ascent for auto lineheight"
 	| descent |
@@ -209,20 +217,20 @@ RubCompositionScanner >> setActualFont: aFont [
 				lineHeight := lineHeight max: baseline + descent]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> setFont [
 	super setFont.
 	breakAtSpace := false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
 
 	self setFont
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 RubCompositionScanner >> tab [
 	"Advance destination x according to tab settings in the paragraph's
 	textStyle. Answer whether the character has crossed the right edge of

@@ -1,23 +1,25 @@
 Class {
-	#name : #HiExamplesTest,
-	#superclass : #TestCase,
+	#name : 'HiExamplesTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'example'
 	],
-	#category : #'Hiedra-Tests-Model'
+	#category : 'Hiedra-Tests-Model',
+	#package : 'Hiedra-Tests',
+	#tag : 'Model'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiExamplesTest class >> classWithExamplesToTest [
 	^ self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HiExamplesTest class >> isAbstract [
 	^ self = HiExamplesTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiExamplesTest class >> testSelectors [
 
 	^ self classWithExamplesToTest classSide methods
@@ -25,17 +27,17 @@ HiExamplesTest class >> testSelectors [
 			thenCollect: [ :each | each selector ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HiExamplesTest class >> whichClassIncludesTestSelector: aSymbol [
 	^self classWithExamplesToTest classSide whichClassIncludesSelector: aSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HiExamplesTest >> performTest [
 	example := self class classWithExamplesToTest perform: testSelector asSymbol
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HiExamplesTest >> tearDown [
 
 	example ifNotNil: [ example close ].

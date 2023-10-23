@@ -45,67 +45,69 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTColumn,
-	#superclass : #Object,
+	#name : 'FTColumn',
+	#superclass : 'Object',
 	#instVars : [
 		'id',
 		'width',
 		'sortingStrategy'
 	],
-	#category : #'Morphic-Widgets-FastTable-Model'
+	#category : 'Morphic-Widgets-FastTable-Model',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTColumn class >> id: anObject [
 	^ self new
 		id: anObject;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn class >> undefinedColumnWidth [
 	"This is a contant that defines a column width is undefined, then the layout will try to arrange
 	 it by itself."
 	^ 0
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 FTColumn >> acquireWidth: anOwnerWidth [
 	^ self widthOrUndefined min: anOwnerWidth
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTColumn >> disableSort [
 	self sortingStrategy: (FTNullColumnSortingStrategy column: self)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> id [
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTColumn >> initialize [
 	super initialize.
 	self disableSort
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTColumn >> isSortEnabled [
 	^ self sortingStrategy isSortingEnabled
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTColumn >> resetSorting [
 	self sortingStrategy reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> sortDataSource: aDataSource [
 
 	"If other columns are already sorted, we need to reset them."
@@ -113,47 +115,47 @@ FTColumn >> sortDataSource: aDataSource [
 	self sortingStrategy sortDataSource: aDataSource
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTColumn >> sortableOnProperty: aProperty [
 	self sortingStrategy: (FTPropertyColumnSortingStrategy column: self property: aProperty)
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTColumn >> sortableUsing: aSortFunction [
 	self sortingStrategy: (FTSortFunctionColumnSortingStrategy column: self sortFunction: aSortFunction)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> sortingIcon [
 	^ self sortingStrategy sortingIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> sortingStrategy [
 	^ sortingStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> sortingStrategy: anObject [
 	sortingStrategy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> transform: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> width: anObject [
 	width := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumn >> widthOrUndefined [
 	^ self width ifNil: [ self class undefinedColumnWidth ]
 ]

@@ -5,7 +5,9 @@ I prevent the test to complete successfully when there was no errors from the ma
 In practice I ensure no green tests which ""spawn background debuggers""
 "
 Class {
-	#name : #TestFailedByForkedProcess,
-	#superclass : #DirtyTestError,
-	#category : #'SUnit-Core-Kernel'
+	#name : 'TestFailedByForkedProcess',
+	#superclass : 'DirtyTestError',
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }

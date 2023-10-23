@@ -2,24 +2,26 @@
 I am an animated window who interacts with the OSWindowRenderThread
 "
 Class {
-	#name : #OSWindowAnimated,
-	#superclass : #OSWindow,
-	#category : #'OSWindow-Core-Extras'
+	#name : 'OSWindowAnimated',
+	#superclass : 'OSWindow',
+	#category : 'OSWindow-Core-Extras',
+	#package : 'OSWindow-Core',
+	#tag : 'Extras'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindowAnimated >> destroy [
 	OSWindowRenderThread destroyedWindow: self.
 	super destroy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowAnimated >> initWithAttributes: attributes eventHandler: anEventHandle [
 	super initWithAttributes: attributes eventHandler: anEventHandle.
 	self registerWindow
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindowAnimated >> registerWindow [
 	OSWindowRenderThread createdWindow: self
 ]

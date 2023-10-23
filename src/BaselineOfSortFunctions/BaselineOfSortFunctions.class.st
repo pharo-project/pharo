@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfSortFunctions,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSortFunctions
+	#name : 'BaselineOfSortFunctions',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSortFunctions',
+	#package : 'BaselineOfSortFunctions'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfSortFunctions >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

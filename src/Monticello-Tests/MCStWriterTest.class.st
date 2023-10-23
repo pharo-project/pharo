@@ -1,20 +1,22 @@
 Class {
-	#name : #MCStWriterTest,
-	#superclass : #MCTestCase,
+	#name : 'MCStWriterTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'stream',
 		'writer'
 	],
-	#category : #'Monticello-Tests-IO'
+	#category : 'Monticello-Tests-IO',
+	#package : 'Monticello-Tests',
+	#tag : 'IO'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCStWriterTest >> assertAllChunksAreWellFormed [
 	stream := ChunkReadStream on: stream contents readStream.
 	self assertChunkIsWellFormed: stream next.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCStWriterTest >> assertChunkIsWellFormed: chunk [
 	self class compiler
 		source: chunk;
@@ -23,7 +25,7 @@ MCStWriterTest >> assertChunkIsWellFormed: chunk [
 		compile
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCStWriterTest >> assertContentsOf: strm match: expected [
 	| actual |
 	actual := strm contents.
@@ -31,7 +33,7 @@ MCStWriterTest >> assertContentsOf: strm match: expected [
 	actual with: expected do: [ :a :e | self assert: a equals: e ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCStWriterTest >> assertMethodChunkIsWellFormed: chunk [
 	self class compiler
 		source: chunk;
@@ -40,7 +42,7 @@ MCStWriterTest >> assertMethodChunkIsWellFormed: chunk [
 	
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 MCStWriterTest >> expectedClassDefinitionA [
  ^ '
 MCMock subclass: #MCMockClassA
@@ -49,12 +51,12 @@ MCMock subclass: #MCMockClassA
 	poolDictionaries: ''''
 	category: ''MonticelloMocks''!
 
-!MCMockClassA commentStamp: ''<historical>'' prior: 0!
+!MCMockClassA commentStamp: '''' prior: 0!
 This is a mock class. The Monticello tests manipulated it to simulate a developer modifying code in the image.!
 '
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 MCStWriterTest >> expectedClassDefinitionB [
  ^ '
 MCMock subclass: #MCMockClassB
@@ -66,33 +68,33 @@ MCMock subclass: #MCMockClassB
 MCMockClassB class
 	instanceVariableNames: ''ciVar''!
 
-!MCMockClassB commentStamp: ''<historical>'' prior: 0!
+!MCMockClassB commentStamp: '''' prior: 0!
 This comment has a bang!! Bang!! Bang!!!
 '
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 MCStWriterTest >> expectedClassMethodDefinition [
 
 	^ '\s*!MCMockClassA class methodsFor\: ''as yet unclassified'' stamp\: ''[/:\s\w]*''!\s*one\s*\^ 1! !\s*'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> expectedInitializerA [
 	^ 'MCMockClassA initialize'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> expectedInitializerASubclass [
 	^ 'MCMockASubclass initialize'
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 MCStWriterTest >> expectedMethodDefinition [
 	^ '\s*!MCMockClassA methodsFor\: ''numeric'' stamp\: ''[/:\s\w]*''!\s*one\s*\^ 1! !\s*'
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 MCStWriterTest >> expectedMethodDefinitionWithBangs [
 	^ '
 !MCStWriterTest methodsFor: ''testing'' stamp: ''''!
@@ -120,13 +122,7 @@ MCMethodDeclaration className: #MCMockClassD selector: #one category: #''''as ye
 '
 ]
 
-{ #category : #data }
-MCStWriterTest >> expectedOrganizationDefinition [
-	^ 'SystemOrganization addCategory: #MonticelloMocks!
-'
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> methodWithBangs [
 	^ '
 	^ ReadStream on: 
@@ -150,7 +146,7 @@ MCMethodDeclaration className: #MCMockClassD selector: #one category: #''as yet 
 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCStWriterTest >> setUp [
 	super setUp.
 	stream := String new writeStream.
@@ -158,7 +154,7 @@ MCStWriterTest >> setUp [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testClassDefinitionA [
 
 	writer visitClassDefinition: self mockClassA asClassDefinition.
@@ -168,7 +164,7 @@ MCStWriterTest >> testClassDefinitionA [
 	2 timesRepeat: [ self assertChunkIsWellFormed: stream next ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testClassDefinitionB [
 
 	writer visitClassDefinition: self mockClassB asClassDefinition.
@@ -176,7 +172,7 @@ MCStWriterTest >> testClassDefinitionB [
 	self assertContentsOf: stream match: self expectedClassDefinitionB
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testClassMethodDefinition [
 	writer visitMethodDefinition: (RGMethodDefinition realClass: self mockClassA class selector: #one) asMCMethodDefinition.
 	self assert: (stream contents matchesRegex: self expectedClassMethodDefinition).
@@ -189,7 +185,7 @@ MCStWriterTest >> testClassMethodDefinition [
 	self assert: stream next isAllSeparators 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testInitializerDefinition [
 	|chunk lastChunk penultChunk|
 	writer writeSnapshot: self mockSnapshot.
@@ -204,7 +200,7 @@ MCStWriterTest >> testInitializerDefinition [
 	self assertContentsOf: lastChunk readStream match: self expectedInitializerASubclass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testMethodDefinition [
 	writer visitMethodDefinition: (RGMethodDefinition realClass: self mockClassA selector: #one) asMCMethodDefinition.
 	self assert: (stream contents matchesRegex: self expectedMethodDefinition).
@@ -217,7 +213,7 @@ MCStWriterTest >> testMethodDefinition [
 	self assert: stream next isAllSeparators 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testMethodDefinitionWithBangs [
 
 	| methodDefinition |
@@ -238,7 +234,7 @@ MCStWriterTest >> testMethodDefinitionWithBangs [
 	self assert: stream next isAllSeparators 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testNotLoadedClassMethod [
 	"Check that the chunk header is correct for a class method of a class that isn't part of the running system"
 	| definition methodStream methodWriter |
@@ -263,12 +259,24 @@ MCStWriterTest >> testNotLoadedClassMethod [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCStWriterTest >> testOrganizationDefinition [
 
 	| definition |
 	definition := self mockPackage systemPackage asMCOrganizationDefinition.
 	writer visitOrganizationDefinition: definition.
-	self assertContentsOf: stream match: self expectedOrganizationDefinition.
+	self assertContentsOf: stream match: 'self packageOrganizer ensurePackage: #MonticelloMocks withTags: #()!
+'.
+	self assertAllChunksAreWellFormed
+]
+
+{ #category : 'testing' }
+MCStWriterTest >> testOrganizationDefinition2 [
+
+	| definition |
+	definition := MCOrganizationDefinition packageName: #'Package-With-Dashes' tagNames: #( #Tag #'Tag-With-Dashes' ).
+	writer visitOrganizationDefinition: definition.
+	self assertContentsOf: stream match: 'self packageOrganizer ensurePackage: #''Package-With-Dashes'' withTags: #(#Tag #''Tag-With-Dashes'')!
+'.
 	self assertAllChunksAreWellFormed
 ]

@@ -12,15 +12,17 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : #RBPushDownMethodInSomeClassesDriver,
-	#superclass : #RBPushDownMethodDriver,
+	#name : 'RBPushDownMethodInSomeClassesDriver',
+	#superclass : 'RBPushDownMethodDriver',
 	#instVars : [
 		'classes'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
@@ -30,7 +32,7 @@ RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
 		in: classes.
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 RBPushDownMethodInSomeClassesDriver >> refactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
@@ -40,7 +42,7 @@ RBPushDownMethodInSomeClassesDriver >> refactoring [
 		in: classes.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 
 	| changes  |
@@ -63,7 +65,7 @@ RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 	self openPreviewWithChanges: changes
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBPushDownMethodInSomeClassesDriver >> selectClasses [
 
 	| dialog |

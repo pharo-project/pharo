@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloValidationIssue,
-	#superclass : #Object,
+	#name : 'MetacelloValidationIssue',
+	#superclass : 'Object',
 	#instVars : [
 		'configurationClass',
 		'explanation',
 		'reasonCode',
 		'callSite'
 	],
-	#category : #'Metacello-Core-Validation'
+	#category : 'Metacello-Core-Validation',
+	#package : 'Metacello-Core',
+	#tag : 'Validation'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloValidationIssue class >> configurationClass: aClass reasonCode: aSymbol callSite: aCallSite explanation: aString [
 
 	^(self new)
@@ -21,67 +23,67 @@ MetacelloValidationIssue class >> configurationClass: aClass reasonCode: aSymbol
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> callSite [
 	^ callSite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> callSite: anObject [
 	callSite := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> configurationClass [
 	^ configurationClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> configurationClass: aClass [
 	configurationClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> explanation [
 	^ explanation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> explanation: aString [
 	explanation := aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloValidationIssue >> isCritical [
 
 	^self isError or: [ self isCriticalWarning ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloValidationIssue >> isCriticalWarning [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloValidationIssue >> isError [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloValidationIssue >> isWarning [
 
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> label [
 
 	^''
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloValidationIssue >> printOn: aStream [
 	aStream
 		nextPutAll: self label;
@@ -116,14 +118,14 @@ MetacelloValidationIssue >> printOn: aStream [
 			aStream nextPut: $] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> reasonCode [
 
 	reasonCode == nil ifTrue: [ reasonCode := #none ].
 	^ reasonCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationIssue >> reasonCode: anObject [
 	reasonCode := anObject
 ]

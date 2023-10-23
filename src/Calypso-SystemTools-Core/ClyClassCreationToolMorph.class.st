@@ -10,26 +10,28 @@ Internal Representation and Key Implementation Points.
 	package:		<RPackage>
 "
 Class {
-	#name : #ClyClassCreationToolMorph,
-	#superclass : #ClyTextEditorToolMorph,
+	#name : 'ClyClassCreationToolMorph',
+	#superclass : 'ClyTextEditorToolMorph',
 	#instVars : [
 		'package',
 		'classTag'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Classes'
+	#category : 'Calypso-SystemTools-Core-Editors-Classes',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Classes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassCreationToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext isClassSelected not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCreationToolMorph class >> tabOrder [
 	^1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyClassCreationToolMorph >> applyChanges [
 
 	| newClass |
@@ -44,7 +46,7 @@ ClyClassCreationToolMorph >> applyChanges [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassCreationToolMorph >> belongsToCurrentBrowserContext [
 
 	| packageSelection |
@@ -55,45 +57,38 @@ ClyClassCreationToolMorph >> belongsToCurrentBrowserContext [
 	^packageSelection includesActualObject: package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCreationToolMorph >> classTag [
 	^ classTag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCreationToolMorph >> classTag: anObject [
 	classTag := anObject
 ]
 
-{ #category : #template }
+{ #category : 'template' }
 ClyClassCreationToolMorph >> classTemplate [
 
-	^ ClassDefinitionPrinter new compactClassDefinitionTemplateInPackage:  self packageName
+	^ ClassDefinitionPrinter fluid compactClassDefinitionTemplateInPackage:  self packageName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassCreationToolMorph >> defaultIconName [
 	^#add
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassCreationToolMorph >> defaultTitle [
 	^'New class'
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassCreationToolMorph >> editingText [
 	^self classTemplate
 ]
 
-{ #category : #building }
-ClyClassCreationToolMorph >> fillStatusBar [
-	super fillStatusBar.
-
-	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 
@@ -101,7 +96,7 @@ ClyClassCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 		and: [ classTag = anotherBrowserTool classTag ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassCreationToolMorph >> isValidInContext: aClyFullBrowserContext [
 	| isValid |
 
@@ -117,17 +112,17 @@ ClyClassCreationToolMorph >> isValidInContext: aClyFullBrowserContext [
 		ifFalse: [ classTag isNil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCreationToolMorph >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCreationToolMorph >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassCreationToolMorph >> packageName [
 
 	package ifNil: [ ^'' ].
@@ -137,14 +132,14 @@ ClyClassCreationToolMorph >> packageName [
 	^package name , '-' , classTag
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassCreationToolMorph >> printContext [
 	package ifNil: [^super printContext].
 	classTag ifNil: [ ^package name ].
 	^package name, ' / ' , classTag
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassCreationToolMorph >> resetStateForRemoval [
 	" A package was removed from the receiver's browser, update the receiver's text "
 
@@ -155,7 +150,7 @@ ClyClassCreationToolMorph >> resetStateForRemoval [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassCreationToolMorph >> setUpModelFromContext [
 	super setUpModelFromContext.
 

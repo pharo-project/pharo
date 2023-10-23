@@ -1,14 +1,16 @@
 Class {
-	#name : #MetacelloErrorInProjectConstructionNotification,
-	#superclass : #Notification,
+	#name : 'MetacelloErrorInProjectConstructionNotification',
+	#superclass : 'Notification',
 	#instVars : [
 		'versionString',
 		'exception'
 	],
-	#category : #'Metacello-Core-Exceptions-Notifications'
+	#category : 'Metacello-Core-Exceptions-Notifications',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Notifications'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloErrorInProjectConstructionNotification class >> versionString: aString exception: anException [
     ^ self new
         versionString: aString;
@@ -16,7 +18,7 @@ MetacelloErrorInProjectConstructionNotification class >> versionString: aString 
         signal
 ]
 
-{ #category : #'exception description' }
+{ #category : 'exception description' }
 MetacelloErrorInProjectConstructionNotification >> defaultAction [
     "Answer false if you want the version recorded in the errorMap.
 	Answer true if you want to go ahead and throw the error"
@@ -24,22 +26,22 @@ MetacelloErrorInProjectConstructionNotification >> defaultAction [
     ^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloErrorInProjectConstructionNotification >> exception [
 	^ exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloErrorInProjectConstructionNotification >> exception: anObject [
 	exception := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloErrorInProjectConstructionNotification >> versionString [
 	^ versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloErrorInProjectConstructionNotification >> versionString: anObject [
 	versionString := anObject
 ]

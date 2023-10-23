@@ -1,32 +1,34 @@
 Class {
-	#name : #EpCodeChangeIntegrationTest,
-	#superclass : #EpEnabledIntegrationTest,
+	#name : 'EpCodeChangeIntegrationTest',
+	#superclass : 'EpEnabledIntegrationTest',
 	#instVars : [
 		'aClass'
 	],
-	#category : #'Epicea-Tests-Integration'
+	#category : 'Epicea-Tests-Integration',
+	#package : 'Epicea-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> packageNameForTesting [
 
 	^ #'EpiceaTestingWith-A-Really-WeirdPackageName'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> packageTagNameForTesting [
 
-	^ 'WeirdCategoryName'
+	^ 'WeirdPackageTagName'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpCodeChangeIntegrationTest >> tearDown [
 
 	(self packageNameForTesting asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 
 	aClass := classFactory newClass.
@@ -36,7 +38,7 @@ EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassAddition [
 
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 0.
@@ -45,7 +47,7 @@ EpCodeChangeIntegrationTest >> testClassAddition [
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassInstanceVariableAddition [
 
 	aClass := classFactory newClass.
@@ -56,7 +58,7 @@ EpCodeChangeIntegrationTest >> testClassInstanceVariableAddition [
 	self assert: (self allLogEventsWith: EpClassModification) first hasMetaclassChanges
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassInstanceVariableRemoval [
 
 	aClass := classFactory newClass.
@@ -68,7 +70,7 @@ EpCodeChangeIntegrationTest >> testClassInstanceVariableRemoval [
 	self assert: ((self allLogEventsWith: EpClassModification) allSatisfy: #hasMetaclassChanges)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassModificationOfTraitComposition [
 
 	| aTrait |
@@ -81,7 +83,7 @@ EpCodeChangeIntegrationTest >> testClassModificationOfTraitComposition [
 	self assert: (self countLogEventsWith: EpMethodModification) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
 
 	| modifications |
@@ -94,7 +96,7 @@ EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
 	self assert: modifications first behaviorAffectedName equals: aClass name
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassRemoval [
 
 	| className events |
@@ -108,23 +110,23 @@ EpCodeChangeIntegrationTest >> testClassRemoval [
 	self assert: events anyOne behaviorAffectedName equals: className
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassRemovalWithMethods [
 
-	| events category |
+	| events package |
 	aClass := classFactory newClass.
-	category := aClass category.
-	1 to: 7 do: [:index |
-		aClass compile: 'inst', index asString.
-		aClass classSide compile: 'class', index asString ].
+	package := aClass package name.
+	1 to: 7 do: [ :index |
+		aClass compile: 'inst' , index asString.
+		aClass classSide compile: 'class' , index asString ].
 	aClass removeFromSystem.
 
 	events := self allLogEventsWith: EpMethodRemoval.
 	self assert: events size equals: 14.
-	self assert: (events allSatisfy: [ :each | each affectedPackageName = category ])
+	self assert: (events allSatisfy: [ :each | each affectedPackageName = package ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testInstanceVariableAddition [
 
 	aClass := classFactory newClass.
@@ -135,7 +137,7 @@ EpCodeChangeIntegrationTest >> testInstanceVariableAddition [
 	self assert: (self allLogEventsWith: EpClassModification) first hasNonMetaclassChanges
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testInstanceVariableRemoval [
 
 	aClass := classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
@@ -147,7 +149,7 @@ EpCodeChangeIntegrationTest >> testInstanceVariableRemoval [
 	self assert: (self allLogEventsWith: EpClassModification) first hasNonMetaclassChanges
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAddition [
 
 	aClass := classFactory newClass.
@@ -157,7 +159,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAddition [
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAdditionWithTrait [
 
 	| aTrait |
@@ -169,7 +171,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAdditionWithTrait [
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMethodAddition [
 
 	aClass := classFactory newClass.
@@ -178,7 +180,7 @@ EpCodeChangeIntegrationTest >> testMethodAddition [
 	self assert: (self countLogEventsWith: EpMethodAddition) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMethodModificationOfProtocol [
 
 	| events event |
@@ -193,7 +195,7 @@ EpCodeChangeIntegrationTest >> testMethodModificationOfProtocol [
 	self assert: event newMethod protocol equals: 'new'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMethodModificationOfSourceCode [
 
 	| events event |
@@ -208,7 +210,7 @@ EpCodeChangeIntegrationTest >> testMethodModificationOfSourceCode [
 	self assert: event newMethod sourceCode equals: 'fortyTwo ^nil'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMethodModificationWithWideString [
 
 	aClass := classFactory newClass.
@@ -218,7 +220,7 @@ EpCodeChangeIntegrationTest >> testMethodModificationWithWideString [
 	self assert: (self countLogEventsWith: EpMethodModification) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMethodProtocolChange [
 
 	aClass := classFactory newClass.
@@ -228,7 +230,7 @@ EpCodeChangeIntegrationTest >> testMethodProtocolChange [
 	self assert: (self countLogEventsWith: EpMethodModification) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 
 	| headBeforeRecompiling |
@@ -240,21 +242,21 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 	self assert: monitor log head identicalTo: headBeforeRecompiling
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testPackageAddition [
 
 	self assert: (self countLogEventsWith: EpPackageAddition) equals: 0.
 
-	self packageOrganizer createPackageNamed: self packageNameForTesting.
+	self packageOrganizer addPackage: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageAddition) equals: 1.
 	self assert: (self allLogEventsWith: EpPackageAddition) first packageName equals: self packageNameForTesting
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testPackageRemoval [
 
-	self packageOrganizer createPackageNamed: self packageNameForTesting.
+	self packageOrganizer addPackage: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageRemoval) equals: 0.
 
@@ -264,22 +266,22 @@ EpCodeChangeIntegrationTest >> testPackageRemoval [
 	self assert: (self allLogEventsWith: EpPackageRemoval) first packageName equals: self packageNameForTesting
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testPackageTagAddition [
 
 	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 0.
 
-	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
+	self packageOrganizer ensureTag: self packageTagNameForTesting inPackage: self packageNameForTesting.
 
 	self assert: (self countLogEventsWith: EpPackageTagAddition) equals: 1.
 	self assert: (self allLogEventsWith: EpPackageTagAddition) first packageName equals: self packageNameForTesting.
 	self assert: (self allLogEventsWith: EpPackageTagAddition) first tagName equals: self packageTagNameForTesting
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testPackageTagRemoval [
 
-	self packageOrganizer ensureTagNamed: self packageTagNameForTesting inPackageNamed: self packageNameForTesting.
+	self packageOrganizer ensureTag: self packageTagNameForTesting inPackage: self packageNameForTesting.
 	self assert: (self countLogEventsWith: EpPackageTagRemoval) equals: 0.
 
 	self packageOrganizer removeTag: self packageTagNameForTesting fromPackage: self packageNameForTesting.
@@ -289,7 +291,7 @@ EpCodeChangeIntegrationTest >> testPackageTagRemoval [
 	self assert: (self allLogEventsWith: EpPackageTagRemoval) first tagName equals: self packageTagNameForTesting
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testProtocolAddition [
 
 	aClass := classFactory newClass.
@@ -298,7 +300,7 @@ EpCodeChangeIntegrationTest >> testProtocolAddition [
 	self assert: (self countLogEventsWith: EpProtocolAddition) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testProtocolRemoval [
 
 	aClass := classFactory newClass.
@@ -308,7 +310,7 @@ EpCodeChangeIntegrationTest >> testProtocolRemoval [
 	self assert: (self countLogEventsWith: EpProtocolRemoval) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testProtocolRemovalOfUnclassifiedProtocol [
 	"This protocol is not relevant then it's not logged."
 
@@ -319,7 +321,7 @@ EpCodeChangeIntegrationTest >> testProtocolRemovalOfUnclassifiedProtocol [
 	self assert: (self countLogEventsWith: EpProtocolRemoval) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 
 	aClass := classFactory newClass.
@@ -332,7 +334,7 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 
 	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: TSizeTest ].
@@ -346,20 +348,20 @@ EpCodeChangeIntegrationTest >> testRemoveTraitFromComposition [
 		raise: MessageNotUnderstood
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testTraitAddition [
 
-	| trait category events event |
+	| trait events event package |
 	trait := classFactory newTrait.
-	category := trait category.
+	package := trait package name.
 
 	events := self allLogEventsWith: EpTraitAddition.
 	self assert: events size equals: 1.
 	event := events anyOne.
-	self assert: event behaviorAffected category equals: category
+	self assert: event behaviorAffected package equals: package
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testTraitModificationOfTraitComposition [
 
 	| aTrait |
@@ -372,21 +374,21 @@ EpCodeChangeIntegrationTest >> testTraitModificationOfTraitComposition [
 	self assert: (self countLogEventsWith: EpMethodModification) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testTraitRemoval [
 
-	| trait category events event |
+	| trait package events event |
 	trait := classFactory newTrait.
-	category := trait category.
+	package := trait package name.
 	trait removeFromSystem.
 
 	events := self allLogEventsWith: EpTraitRemoval.
 	self assert: events size equals: 1.
 	event := events anyOne.
-	self assert: event behaviorAffected category equals: category
+	self assert: event behaviorAffected package equals: package
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpCodeChangeIntegrationTest >> wideStringSourceCode [
 
 	^

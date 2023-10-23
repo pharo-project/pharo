@@ -2,12 +2,14 @@
 SUnit tests for fuels pluggable substitutions
 "
 Class {
-	#name : #FLPluggableSubstitutionTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLPluggableSubstitutionTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testAvoidRecursion [
 	| result |
 	self serializer when: [ :x | x < 10 ] substituteBy: [ :x | x + 1 ].
@@ -17,7 +19,7 @@ FLPluggableSubstitutionTest >> testAvoidRecursion [
 	self assert: result equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testLowercaseSomeSymbols [
 	| result |
 	self serializer
@@ -29,7 +31,7 @@ FLPluggableSubstitutionTest >> testLowercaseSomeSymbols [
 	self assert: #(a b C) equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testPrivateExcluded [
 	| result |
 	self serializer
@@ -42,7 +44,7 @@ FLPluggableSubstitutionTest >> testPrivateExcluded [
 	self assert: result second identicalTo: FLWeakClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testPrivateExcludedAndWithConflicts [
 	"Tests issue #209"
 
@@ -57,7 +59,7 @@ FLPluggableSubstitutionTest >> testPrivateExcludedAndWithConflicts [
 	self assert: result second identicalTo: FLWeakClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testSimple [
 	| result |
 	self serializer
@@ -69,7 +71,7 @@ FLPluggableSubstitutionTest >> testSimple [
 	self assert: result equals: 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLPluggableSubstitutionTest >> testSubstitute: anObject inPresenceOf: anotherObject [
 
 	| result |
@@ -83,7 +85,7 @@ FLPluggableSubstitutionTest >> testSubstitute: anObject inPresenceOf: anotherObj
 	self assert: result second equals: anotherObject.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testSubstituteByItself [
 	| result |
 	self serializer
@@ -95,28 +97,28 @@ FLPluggableSubstitutionTest >> testSubstituteByItself [
 	self assert: result equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testSubstituteCharacterInPresenceOfSomeCharacter [
 	"See issues #209 and #217"
 
 	self testSubstitute: Character inPresenceOf: $c
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testSubstituteTrueInPresenceOfTheTrueInstance [
 	"See issues #209 and #217"
 
 	self testSubstitute: True inPresenceOf: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testSubstituteUndefinedObjectInPresenceOfNil [
 	"See issues #209 and #217"
 
 	self testSubstitute: UndefinedObject inPresenceOf: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testTransientPair [
 
 	| result |
@@ -129,7 +131,7 @@ FLPluggableSubstitutionTest >> testTransientPair [
 	self assert: result isNil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testTransientPairLeft [
 
 	| result |
@@ -142,7 +144,7 @@ FLPluggableSubstitutionTest >> testTransientPairLeft [
 	self assert: result left isNil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLPluggableSubstitutionTest >> testUniqueSubstitution [
 	"Tests that an object with two occurrences in the graph is substituted to the *same* object."
 

@@ -2,39 +2,41 @@
 My subclasses used internally in balloon backend for Athens to represent gradient paints.
 "
 Class {
-	#name : #AthensBalloonGradientPaint,
-	#superclass : #AthensBalloonPaint,
+	#name : 'AthensBalloonGradientPaint',
+	#superclass : 'AthensBalloonPaint',
 	#instVars : [
 		'colorRamp'
 	],
-	#category : #'Athens-Balloon-Paint'
+	#category : 'Athens-Balloon-Paint',
+	#package : 'Athens-Balloon',
+	#tag : 'Paint'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensBalloonGradientPaint class >> isAbstract [
 
 	^ self == AthensBalloonGradientPaint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonGradientPaint >> colorRamp [
 
 	^ colorRamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonGradientPaint >> colorRamp: anObject [
 
 	colorRamp := anObject
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBalloonGradientPaint >> strokeRect: aRectangle on: anAthensCanvas stroke: anAthensBalloonStrokePaint [
 
 	self shouldBeImplemented
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBalloonGradientPaint >> strokeRect: aRectangle on: anAthensCanvas strokeWidth: strokeWidth [
 
 	self shouldBeImplemented
