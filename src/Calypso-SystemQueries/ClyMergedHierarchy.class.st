@@ -27,21 +27,23 @@ Internal Representation and Key Implementation Points.
 	mergedParts:		<Collection of<ClyClassHierarchy>>
 "
 Class {
-	#name : #ClyMergedHierarchy,
-	#superclass : #ClyClassHierarchy,
+	#name : 'ClyMergedHierarchy',
+	#superclass : 'ClyClassHierarchy',
 	#instVars : [
 		'mergedParts'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMergedHierarchy class >> merge: hierarchies [
 	^self new
 		mergedParts: hierarchies
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMergedHierarchy >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -50,7 +52,7 @@ ClyMergedHierarchy >> = anObject [
 	^ mergedParts = anObject mergedParts
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMergedHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 
 	mergedParts do: [ :each |
@@ -60,30 +62,30 @@ ClyMergedHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 	aHierarchyMap hierarchy: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMergedHierarchy >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: mergedParts hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMergedHierarchy >> initialize [
 	super initialize.
 	mergedParts := #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMergedHierarchy >> mergedParts [
 	^ mergedParts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMergedHierarchy >> mergedParts: anObject [
 	mergedParts := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMergedHierarchy >> sortFunction: aSortFunction [
 	super sortFunction: aSortFunction.
 	mergedParts do: [:each | each sortFunction: aSortFunction]

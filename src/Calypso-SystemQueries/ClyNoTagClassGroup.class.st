@@ -10,36 +10,32 @@ It is polymorphic to ClyTaggedClassGroup which performs actual tag renaming.
 My class query is ClyRestUntaggedClasses 
 "
 Class {
-	#name : #ClyNoTagClassGroup,
-	#superclass : #ClyClassGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyNoTagClassGroup',
+	#superclass : 'ClyClassGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNoTagClassGroup class >> isBasedOnClassTag [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNoTagClassGroup class >> priority [
 	^10
 ]
 
-{ #category : #operations }
-ClyNoTagClassGroup >> importClass: aClass [
-	| newPackages |
-	super importClass: aClass.
-	newPackages := OrderedCollection new.
-	classQuery scope packagesDo: [ :each |
-		each = aClass package ifFalse: [ newPackages add: each ]].
-	newPackages size > 1 ifTrue: [ ^self error: 'You should select single package for import!' ].
-
-	newPackages ifNotEmpty: [ ^newPackages first addClass: aClass ].
-	aClass tags do: [:eachTag | aClass untagFrom: eachTag ]
-]
-
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNoTagClassGroup >> renameClassTagTo: newTag [
 
-	self classes do: [ :class | class tagWith: newTag ]
+	self classes do: [ :class | class packageTag: newTag ]
+]
+
+{ #category : 'accessing' }
+ClyNoTagClassGroup >> tag [
+	"Uncategorized classes are going to the root tag."
+
+	^ RPackage rootTagName
 ]

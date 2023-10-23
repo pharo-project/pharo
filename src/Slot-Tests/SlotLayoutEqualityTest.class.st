@@ -1,10 +1,12 @@
 Class {
-	#name : #SlotLayoutEqualityTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-ClassBuilder'
+	#name : 'SlotLayoutEqualityTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isEqualToClassBuiltWith: blockToBuildAnotherClass [
 
 	aClass := self make: [ :builder |
@@ -22,7 +24,7 @@ SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isEqualToClas
 	self assert: aClass classLayout hash equals: anotherClass classLayout hash
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isNotEqualToClassBuiltWith: blockToBuildAnotherClass [
 
 	aClass := self make: [ :builder |
@@ -39,7 +41,7 @@ SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isNotEqualToC
 	self assert: aClass classLayout hash ~= anotherClass classLayout hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotLayoutEqualityTest >> testLayoutEquals [
 
 	self layoutClasses do: [:aLayoutClass |
@@ -48,7 +50,7 @@ SlotLayoutEqualityTest >> testLayoutEquals [
 			isEqualToClassBuiltWith: [:builder | builder layoutClass: aLayoutClass ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotLayoutEqualityTest >> testLayoutNotEquals [
 
 	self layoutClasses do: [:aLayoutClass |
@@ -58,7 +60,7 @@ SlotLayoutEqualityTest >> testLayoutNotEquals [
 				isNotEqualToClassBuiltWith: [:builder | builder layoutClass: anotherLayoutClass ]]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotLayoutEqualityTest >> testLayoutWithSlotsEquals [
 
 	self layoutClassesWithSlots do: [:aLayoutClass |
@@ -73,7 +75,7 @@ SlotLayoutEqualityTest >> testLayoutWithSlotsEquals [
 					slots: { #field1}  ]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotLayoutEqualityTest >> testLayoutWithSlotsNotEquals [
 
 	self layoutClassesWithSlots do: [:aLayoutClass |

@@ -2,33 +2,35 @@
 I contain tests that validate the integrity of the system.
 "
 Class {
-	#name : #ReleaseTest,
-	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'ReleaseTests-Release'
+	#name : 'ReleaseTest',
+	#superclass : 'AbstractEnvironmentTestCase',
+	#category : 'ReleaseTests-Release',
+	#package : 'ReleaseTests',
+	#tag : 'Release'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest class >> actualProcesses [
 	^ Process allSubInstances reject: [ :each | each isTerminated ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest class >> defaultTimeLimit [
 
 	^ 2 minutes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReleaseTest >> assertValidLintRule: aLintRule [
 	self assertValidLintRule: aLintRule withExceptions: {}
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 	| runner results |
 	runner := ReSmalllintChecker new.
@@ -56,7 +58,7 @@ ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
 						separatedBy: [ s lf ] ] ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 	| keySelectors |
 	keySelectors := #(#startUp #startUp: #shutDown #shutDown:).
@@ -64,7 +66,7 @@ ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 		or: [ aClass class selectors includesAny: keySelectors ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReleaseTest >> knownProcesses [
 	"Return a dynamic list of know processes"
 
@@ -83,7 +85,7 @@ ReleaseTest >> knownProcesses [
 		TFCallbackQueue uniqueInstance callbackProcess } asSet
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
@@ -91,7 +93,7 @@ ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	self assertEmpty: wrong
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
 	| wrong |
 	wrong := OrderedCollection new.
@@ -99,14 +101,14 @@ ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
 	self assertEmpty: wrong
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
 	wrong := testingEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
 	self assertEmpty: wrong
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllInstanceVariablesStartLowercase [
 	"Make sure that all class instance variable names start with a lowercase letter"
 	| violating |
@@ -119,7 +121,7 @@ ReleaseTest >> testAllInstanceVariablesStartLowercase [
 		description: 'Instance variable names must start with a lowercase letter: ', violating asArray asString
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testClassesShadow [
 
 	| classes |
@@ -130,14 +132,14 @@ ReleaseTest >> testClassesShadow [
 	self assert: classes isEmpty description: classes asArray asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 
 	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	| instanceSideMethodsWithNilKeyInLastLiteral |
 
@@ -151,7 +153,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 				print: instanceSideMethodsWithNilKeyInLastLiteral ]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
 	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
@@ -165,7 +167,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	self assert: (registeredHandlers includes: #UIManagerSessionHandler)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testLayoutIntegrity [
 
 	SystemNavigation default allClassesDo: [ :class |
@@ -173,14 +175,14 @@ ReleaseTest >> testLayoutIntegrity [
 		class classSide classLayout checkIntegrity ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 
 	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testManifestNamesAccordingToPackageNames [
 	"Make sure package name and manifest name are in synch"
 
@@ -197,7 +199,7 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 		 self assert: (expectedManifestNames includes: each)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testMethodsContainNoHalt [
 
 	| methods |
@@ -217,24 +219,7 @@ ReleaseTest >> testMethodsContainNoHalt [
 				print: methods ] ]
 ]
 
-{ #category : #'tests - variables' }
-ReleaseTest >> testMethodsWithUnboundGlobals [
-	| methodsWithUnboundGlobals |
-	"Ensure the environment is clean"
-	3 timesRepeat: [ Smalltalk garbageCollect ].
-
-	Smalltalk cleanOutUndeclared.
-	methodsWithUnboundGlobals := SystemNavigation new methodsWithUnboundGlobals.
-
-	self
-		assert: methodsWithUnboundGlobals isEmpty
-		description: [ String streamContents: [ :s |
-			s
-				nextPutAll: 'Found methods with unbound globals: ';
-				print: methodsWithUnboundGlobals ]]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testNoEmptyPackages [
 	"Test that we have no empty packages left"
 
@@ -243,32 +228,21 @@ ReleaseTest >> testNoEmptyPackages [
 	self assertEmpty: violating
 ]
 
-{ #category : #'tests - methods' }
+{ #category : 'tests - methods' }
 ReleaseTest >> testNoEquivalentSuperclassMethods [
 
 	| methods |
 	"we do not care about methods that are installed from traits"
-	methods := SystemNavigation new allMethods reject: [:method | method isFromTrait].
+	methods := SystemNavigation new allMethods reject: [ :method | method isFromTrait ].
 
-	methods := methods select: [:method |
-	method methodClass superclass
-		ifNotNil: [ :superclass | (superclass lookupSelector: method selector)
-			ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
-			ifNil: [ false ] ]
-		ifNil: [ false ]
-	].
-	self assert: methods size <= 369.
-
-
-	"there should be no method left"
-	"self assert: methods isEmpty description: [
-		String streamContents: [ :stream |
-			stream
-				nextPutAll: 'Found methods that are the same as in a superclass';
-				print: methods ] ]"
+	methods := methods select: [ :method |
+		           method overriddenMethod
+			           ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
+			           ifNil: [ false ] ].
+	self assert: methods size <= 326
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testNoLiteralIsPinnedInMemory [
 	| methodsWithPinnedLiterals |
 
@@ -280,13 +254,13 @@ ReleaseTest >> testNoLiteralIsPinnedInMemory [
 	self assertEmpty: methodsWithPinnedLiterals
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testNoNilAssignmentInInitializeMethod [
 
 	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
 ]
 
-{ #category : #'tests - source' }
+{ #category : 'tests - source' }
 ReleaseTest >> testNoNullCharacter [
 	"Check that we do not have NULL in sources - see https://github.com/pharo-project/pharo/issues/9631"
 
@@ -295,7 +269,7 @@ ReleaseTest >> testNoNullCharacter [
 	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
 ]
 
-{ #category : #'tests - source' }
+{ #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
 	methods := SystemNavigation new allMethods select: [ :method |
@@ -308,25 +282,77 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 				print: methods ] ]
 ]
 
-{ #category : #'tests - methods' }
-ReleaseTest >> testNoSentNotImplementedSelectors [
+{ #category : 'tests - methods' }
+ReleaseTest >> testNoSentButNotImplementedSelectors [
 	"There is a long term cleanup to fix 'selectors send but not implemented'.
 	 This test makes sure that we do not introduce new cases until we are down to zero"
 
-	self assert: SystemNavigation default allSentNotImplementedSelectors size < 315
+	| knownFailures |
+	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
+	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitQuadSegment:'
+	                    'AthensCairoCanvas>>#visitCubicSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
+	                    'AthensInteractiveScene>>#eventHandledByScene:' 'AthensLineSegment>>#accept:' 'AthensMoveSegment>>#accept:' 'AthensParagraph>>#compose:style:from:in:'
+	                    'AthensPolygon>>#paintFillsUsing:on:' 'BalloonEdgeData>>#stepToNextScanLine' 'BalloonEdgeData>>#stepToFirstScanLine'
+	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
+	                    'ComplexBorderStyle>>#drawLineFrom:to:on:' 'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:'
+	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#failPrimitiveWith:' 'Context>>#doPrimitive:method:receiver:args:'
+	                    'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
+	                    'DAGraphVizGenerator>>#openWith:' 'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items'
+	                    'DebugSession>>#shouldDisplayContext:basedOnFilters:' 'DiskDirectoryEntry class>>#store:path:node:'
+	                    'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest' 'ExternalDropHandler class>>#defaultHandler'
+	                    'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:' 'FFIFloatType>>#callbackReturnOn:for:'
+	                    'FFIIndirectFunctionResolution>>#resolveFunction:' 'FFILibrary>>#win32LibraryName' 'FFILibrary>>#macLibraryName'
+	                    'FileDialogWindow>>#saveForcedSelectedFile' 'FileList class>>#morphicViewOnFile:contents:fileList:'
+	                    'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps' 'IceLibgitCommitWalk>>#shouldInclude:'
+	                    'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:' 'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
+	                    'IceTipHiedraAltHistoryBrowser>>#initializeCommitList' 'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:'
+	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
+	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
+	                    'LGitRepository>>#cloneRemote:signature:branch:checkoutOptions:' 'LazyListMorph>>#drawOnAthensCanvas:'
+	                    'MCAddition>>#myVersionOn:' 'MCConfigurationBrowser>>#changedList' 'MCConfigurationBrowser>>#addRepository'
+	                    'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
+	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
+	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
+	                    'RBBasicDummyLintRuleTest class>>#tempVarOverridesInstVar' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
+	                    'RBBasicDummyLintRuleTest class>>#instVarInSubclasses' 'RBBasicDummyLintRuleTest class>>#sentNotImplementedInApplication'
+	                    'RBBasicDummyLintRuleTest class>>#utilityMethods' 'RBBasicDummyLintRuleTest class>>#usesTrue' 'RBBasicDummyLintRuleTest class>>#tempsReadBeforeWritten'
+	                    'RBBasicDummyLintRuleTest class>>#variableAssignedLiteral' 'RBBasicDummyLintRuleTest class>>#classNotReferenced'
+	                    'RBBasicDummyLintRuleTest class>>#onlyReadOrWritten' 'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#canCall:in:from:'
+	                    'RBBasicLintRuleTestData class>>#sentNotImplementedInApplication' 'RBBasicLintRuleTestData class>>#utilityMethods'
+	                    'RBBasicLintRuleTestData class>>#canCall:in:from:' 'RBBasicLintRuleTestData class>>#createMatcherFor:method:'
+	                    'RBClassDataForRefactoringTest>>#inlineComponent' 'RBClassDataForRefactoringTest>>#textInput:name:symbol:'
+	                    'RBClassDataForRefactoringTest>>#inlineFailed' 'RBClassDataForRefactoringTest>>#renderContentOn:'
+	                    'RBEnvironmentVisitor>>#visitProtocolEnv:' 'RBEnvironmentVisitor>>#visitPackageEnv:' 'RBEnvironmentVisitor>>#visitClassEnv:'
+	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
+	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#rewrite:methods:name:'
+	                    'RBTransformationDummyRuleTest class>>#initializeAfterLoad1' 'RBTransformationRuleTestData class>>#rewrite:methods:name:'
+	                    'RBTransformationRuleTestData class>>#initializeAfterLoad1' 'RGChunkImporter>>#visitDoItChunk:' 'RPackageOrganizer>>#categoryOfElement:'
+	                    'RSAbstractPlot>>#addedIn:' 'RSCoOccurrenceMatrixBuilder>>#exportToFile:' 'ReSentNotImplementedRuleTest>>#sampleMethod'
+	                    'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:' 'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:'
+	                    'SindarinDebuggerTest>>#testStatementNodeContainingReturnsStatementNodeThatContainsTheIdenticalSubtree'
+	                    'SindarinDebuggerTest>>#testContext' 'SindarinDebuggerTest>>#testStatementNodeContainingWhenNodeIsNotInAST'
+	                    'SindarinDebuggerTest>>#testMoveToNodeRaisesErrorWhenNodeIsNotInMethod'
+	                    'SindarinDebuggerTest>>#testChangingPcRaisesErrorWhenPcIsGreaterThanEndPC'
+	                    'SindarinDebuggerTest>>#testMoveToNodeKeepsStackWhenAimedNodeIsMethodNodeThatDoesNotHaveAssociatedPC'
+	                    'SindarinDebuggerTest>>#testChangingPcRaisesErrorWhenPcIsLowerThanInitialPC'
+	                    'SindarinDebuggerTest>>#testMoveToNodeRaisesErrorWhenNodeIsNotIdenticalToANodeInMethod'
+	                    'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:' 'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
+	                    'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#initialize' 'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#preconditions'
+	                    'SpTransmission>>#from:port:to:transform:postTransmission:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
+	                    'SpWindowPresenter>>#notify:' 'StSpotterPragmaBasedProcessor>>#installKeymappingsOn:'
+	                    'StringMorph>>#launchEditor:' 'SycRemoveKeepingSubclassesClassStrategy>>#execute:' 'TextEditor>>#findAndSelectPreviousOccurrenceOf:'
+	                    'TextEditor>>#startDrag:' 'TransferMorph>>#justDroppedInto:event:' 'TransferMorph>>#delete' 'ZnConstants class>>#frameworkMCVersion' ).
+	self assertEmpty: ((SystemNavigation default allSentButNotImplementedSelectors collect: [ :method | method printString ]) difference: knownFailures)
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
 	| found validExceptions remaining |
 	found := SystemNavigation default methods select: [ :m |
 		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
-	"Make sure to not waste memory with all the ASTs"
-	ASTCache reset.
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
-		RBClassDataForRefactoringTest>>#tempVarOverridesInstVar.
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.
 		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.
 
@@ -339,7 +365,7 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 
@@ -357,7 +383,7 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testPharoVersionFileExists [
 
 	"Test there is a pharo.version file next to this image containing the short version of this pharo image.
@@ -371,7 +397,7 @@ ReleaseTest >> testPharoVersionFileExists [
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
-{ #category : #'tests - packages - manifests' }
+{ #category : 'tests - packages - manifests' }
 ReleaseTest >> testProperManifestClasses [
 
 	|manifests|
@@ -380,7 +406,7 @@ ReleaseTest >> testProperManifestClasses [
 	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ])
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testRPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"
 
@@ -396,7 +422,7 @@ ReleaseTest >> testRPackageOrganizer [
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testRatioOfCommentedClasses [
 
 	| stereotypes violating |
@@ -412,7 +438,7 @@ ReleaseTest >> testRatioOfCommentedClasses [
 	self assert: violating size <= 876
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
 
@@ -423,7 +449,7 @@ ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupLi
 		ifTrue: [ self should: [ (startupList indexOf: #FileLocator) < (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17834"
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
@@ -434,12 +460,12 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
 	self assertValidLintRule: ReTestClassNameShouldEndWithTestRule new
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testThatAllMethodsArePackaged [
 	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
 	classes := Smalltalk allClassesAndTraits.
@@ -450,7 +476,7 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 	self assertEmpty: methodsWithoutPackageInfo
 ]
 
-{ #category : #'tests - variables' }
+{ #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
 	| undeclaredVariables validExceptions remaining description |
 
@@ -481,7 +507,7 @@ ReleaseTest >> testUndeclared [
 	self assert: remaining isEmpty description: description
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testUnknownProcesses [
 	"Make sure that there are no other processes running except the known processes"
 
@@ -500,26 +526,26 @@ ReleaseTest >> testUnknownProcesses [
 				separatedBy: [ out << String crlf ] ])
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) packageName = RPackage defaultPackageName ].
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) name = UndefinedPackage undefinedPackageName ].
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
 ]
 
-{ #category : #'tests - rpackage' }
+{ #category : 'tests - rpackage' }
 ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 
 	| unpackagePackage |
-	unpackagePackage := self packageOrganizer packageNamed: RPackage defaultPackageName.
+	unpackagePackage := self packageOrganizer packageNamed: UndefinedPackage undefinedPackageName.
 	"The unpackage package should not have any defined class or extended classes"
 	self assertEmpty: unpackagePackage classes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testVersionInImageHeaderIsCorrect [
 
 	| currentVersion |
@@ -530,7 +556,7 @@ ReleaseTest >> testVersionInImageHeaderIsCorrect [
 		equals: currentVersion major * 10 + currentVersion minor
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReleaseTest >> testWorldMenuHasHelpForAllEntries [
 	"In this test we check that at least every terminal menu entry of the world menu has an help."
 

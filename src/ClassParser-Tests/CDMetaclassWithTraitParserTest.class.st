@@ -1,41 +1,42 @@
 Class {
-	#name : #CDMetaclassWithTraitParserTest,
-	#superclass : #CDMetaclassParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDMetaclassWithTraitParserTest',
+	#superclass : 'CDMetaclassParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> classDefinitionString [
 
-	^ '{className} class
-		uses: {classTraitName} classTrait
-		instanceVariableNames: ''{instvar1} {instvar2}'''
+	^ '{superclassName} class << {className} class
+		traits: {classTraitName} classTrait;
+		slots: {slots}'
 			format: {
 				'className' -> self className.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
+				'superclassName' -> self superclassName.
+				'slots' -> self slotsArray.
 				'classTraitName' -> self classTraitName
 			 } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> classTraitName [
 	^ 'TApplyingOnClassSide'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> testTraitDefinitionNodeIsTraitNode [
 
 	self assert: self traitCompositionNode isTraitNode
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> traitCompositionNode [
 
 	^ self nodeFor: self traitDefinition
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> traitDefinition [
 
 	^ self classTraitName

@@ -2,12 +2,13 @@
 RBRefactoryProtocolChange is responsible for removing a protocol in classes in a RB model
 "
 Class {
-	#name : #RBRemoveProtocolChange,
-	#superclass : #RBRefactoryProtocolChange,
-	#category : #'Refactoring-Changes'
+	#name : 'RBRemoveProtocolChange',
+	#superclass : 'RBRefactoryProtocolChange',
+	#category : 'Refactoring-Changes',
+	#package : 'Refactoring-Changes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRemoveProtocolChange class >> removeProtocolNamed: aString in: aClass [
 
 	^ self new
@@ -16,25 +17,25 @@ RBRemoveProtocolChange class >> removeProtocolNamed: aString in: aClass [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBRemoveProtocolChange >> asUndoOperation [
 
 	^ RBAddProtocolChange addProtocolNamed: protocol in: self changeClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveProtocolChange >> changeString [
 
 	^ 'Remove protocol named ', self displayProtocolName, ' in ', self displayClassName
 ]
 
-{ #category : #private }
-RBRemoveProtocolChange >> primitiveExecute [
+{ #category : 'private' }
+RBRemoveProtocolChange >> generateChanges [
 
 	self changeClass removeProtocolIfEmpty: protocol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRemoveProtocolChange >> printOn: aStream [
 
 	aStream

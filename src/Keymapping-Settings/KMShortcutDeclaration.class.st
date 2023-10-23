@@ -2,32 +2,33 @@
 I represent a shortcut declaration for the settings pharo framework.
 "
 Class {
-	#name : #KMShortcutDeclaration,
-	#superclass : #SettingDeclaration,
+	#name : 'KMShortcutDeclaration',
+	#superclass : 'SettingDeclaration',
 	#instVars : [
 		'categoryName',
 		'declaration',
 		'shortcutName'
 	],
-	#category : #'Keymapping-Settings'
+	#category : 'Keymapping-Settings',
+	#package : 'Keymapping-Settings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutDeclaration >> categoryName [
 	^categoryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutDeclaration >> categoryName: aCategoryName [
 	categoryName := aCategoryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutDeclaration >> defaultValue [
 	^self realValue defaultShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutDeclaration >> realValue [
 	"Answer the value of realValue"
 
@@ -36,17 +37,17 @@ KMShortcutDeclaration >> realValue [
 			declaration := KMShortcutSetting for: self shortcutName in: self categoryName]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutDeclaration >> realValue: aShortcut [
 	self realValue accept: aShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutDeclaration >> shortcutName [
 	^shortcutName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutDeclaration >> shortcutName: aShortcutName [
 	shortcutName := aShortcutName
 ]

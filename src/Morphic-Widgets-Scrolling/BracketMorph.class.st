@@ -2,15 +2,16 @@
 Morph displaying opposing arrows.
 "
 Class {
-	#name : #BracketMorph,
-	#superclass : #Morph,
+	#name : 'BracketMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'orientation'
 	],
-	#category : #'Morphic-Widgets-Scrolling'
+	#category : 'Morphic-Widgets-Scrolling',
+	#package : 'Morphic-Widgets-Scrolling'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BracketMorph >> drawOn: aCanvas [
 	"Draw triangles at the edges."
 
@@ -29,21 +30,21 @@ BracketMorph >> drawOn: aCanvas [
 		fillStyle: self fillStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BracketMorph >> horizontal [
 	"Answer whether horizontal or vertical."
 
 	^self orientation == #horizontal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BracketMorph >> horizontal: aBoolean [
 	"Set whether horizontal or vertical."
 
 	^self orientation: (aBoolean ifTrue: [#horizontal] ifFalse: [#vertical])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BracketMorph >> initialize [
 	"Initialize the receiver."
 
@@ -52,7 +53,7 @@ BracketMorph >> initialize [
 		orientation: #horizontal
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 BracketMorph >> leftOrTopVertices: r [
 	"Answer the vertices for a left or top bracket in the given rectangle."
 
@@ -63,14 +64,14 @@ BracketMorph >> leftOrTopVertices: r [
 				r center x@(r top + (r width // 2 + (r width \\ 2))). r topRight}]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BracketMorph >> orientation [
 	"Answer the value of orientation"
 
 	^ orientation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BracketMorph >> orientation: anObject [
 	"Set the value of orientation"
 
@@ -78,7 +79,7 @@ BracketMorph >> orientation: anObject [
 	self changed
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 BracketMorph >> rightOrBottomVertices: r [
 	"Answer the vertices for a right or bottom bracket in the given rectangle."
 

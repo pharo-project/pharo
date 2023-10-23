@@ -2,28 +2,30 @@
 SUnit tests for weak key dictionaries
 "
 Class {
-	#name : #WeakKeyDictionaryTest,
-	#superclass : #DictionaryTest,
+	#name : 'WeakKeyDictionaryTest',
+	#superclass : 'DictionaryTest',
 	#instVars : [
 		'keys',
 		'dict'
 	],
-	#category : #'Collections-Weak-Tests-Dictionaries'
+	#category : 'Collections-Weak-Tests-Dictionaries',
+	#package : 'Collections-Weak-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 WeakKeyDictionaryTest class >> shouldInheritSelectors [
 
 ^true
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeakKeyDictionaryTest >> classToBeTested [
 
 	^ WeakKeyDictionary
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 WeakKeyDictionaryTest >> setUp [
 	super setUp.
 	keys := (1 to: 1000) collect:[:n| 'key', n asString].
@@ -32,13 +34,13 @@ WeakKeyDictionaryTest >> setUp [
 	super setUp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakKeyDictionaryTest >> size [
 	"Answer the number of keys that should be used in testing."
 	^1000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakKeyDictionaryTest >> testClearing [
 	keys := nil.
 	dict at: self put: nil.
@@ -54,7 +56,7 @@ WeakKeyDictionaryTest >> testClearing [
 	self assert: dict size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakKeyDictionaryTest >> testGrow [
 	keys := nil.
 	dict at: self put: nil.

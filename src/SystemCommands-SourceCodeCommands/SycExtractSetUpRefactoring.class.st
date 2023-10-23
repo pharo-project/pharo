@@ -2,15 +2,16 @@
 I am a command to extract setUp method and then replaces its occurrences
 "
 Class {
-	#name : #SycExtractSetUpRefactoring,
-	#superclass : #SycSourceCodeRefactoringCommand,
+	#name : 'SycExtractSetUpRefactoring',
+	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
 		'selectedTextInterval'
 	],
-	#category : #'SystemCommands-SourceCodeCommands'
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycExtractSetUpRefactoring class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [
@@ -18,7 +19,7 @@ SycExtractSetUpRefactoring class >> canBeExecutedInContext: aToolContext [
 			  aToolContext lastSelectedMethod selector isTestSelector ] ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycExtractSetUpRefactoring >> asRefactorings [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [
@@ -31,17 +32,17 @@ SycExtractSetUpRefactoring >> asRefactorings [
 	^ { refactoring }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycExtractSetUpRefactoring >> defaultMenuIconName [
 	^ #glamorousRestart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycExtractSetUpRefactoring >> defaultMenuItemName [
 	^ 'Extract setUp'
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycExtractSetUpRefactoring >> executeRefactoring [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [
@@ -54,7 +55,7 @@ SycExtractSetUpRefactoring >> executeRefactoring [
 	refactoring execute
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 SycExtractSetUpRefactoring >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 

@@ -1,27 +1,28 @@
 Class {
-	#name : #AbstractWindowManagerTest,
-	#superclass : #TestCase,
+	#name : 'AbstractWindowManagerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'manager'
 	],
-	#category : #'Morphic-Tests'
+	#category : 'Morphic-Tests',
+	#package : 'Morphic-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractWindowManagerTest >> runCaseManaged [
 
 	super runCaseManaged .
 	self runCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AbstractWindowManagerTest >> setUp [
 
 	super setUp.
 	manager := MorphicWindowManager new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AbstractWindowManagerTest >> tearDown [ 
 
 	manager ensureDeleteAll.

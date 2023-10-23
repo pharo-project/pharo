@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 String >> writeLeadingCharRunsOn: stream [
 
 	self isEmpty ifTrue: [^ self].

@@ -10,17 +10,19 @@ example: FBDOptimizedMessagesRewriter rewriteAST: (Object >> #asString ) ast.
 I only rewrite nodes with ""reconstructed"" property to ensure that I reoptimize only the messages that were optimized in the non-decompiled method.
 "
 Class {
-	#name : #FBDOptimizedMessagesRewriter,
-	#superclass : #RBProgramNodeVisitor,
-	#category : #'Flashback-Decompiler-Utilities'
+	#name : 'FBDOptimizedMessagesRewriter',
+	#superclass : 'RBProgramNodeVisitor',
+	#category : 'Flashback-Decompiler-Utilities',
+	#package : 'Flashback-Decompiler',
+	#tag : 'Utilities'
 }
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 FBDOptimizedMessagesRewriter class >> rewriteAST: ast [
 	self new rewriteAST: ast
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FBDOptimizedMessagesRewriter >> analyseSeq: seq [
 	"Checks if consecutive messages have the same receiver. If not, creates a cascade"
 
@@ -39,54 +41,54 @@ FBDOptimizedMessagesRewriter >> analyseSeq: seq [
 	self rewriteSeq: seq with: currentCascade
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> areArgumentsBlocks: msgNode [
 	^ msgNode arguments allSatisfy: [ :arg | arg isBlock ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToAnd: msgNode [
 	msgNode selector: #and:.
 	msgNode arguments: {msgNode arguments first}
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfFalse: msgNode [
 	msgNode selector: #ifFalse:.
 	msgNode arguments: {msgNode arguments second}
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfNil: msgNode [
 	msgNode selector: #ifNil:.
 	msgNode arguments: {msgNode arguments first}
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfNilIfNotNil: msgNode [
 	msgNode receiver: msgNode receiver receiver.
 	msgNode selector: #ifNil:ifNotNil:
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfNotNil: msgNode [
 	msgNode selector: #ifNotNil:.
 	msgNode arguments: {msgNode arguments last}
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToIfTrue: msgNode [
 	msgNode selector: #ifTrue:.
 	msgNode arguments: {msgNode arguments first}
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertToOr: msgNode [
 	msgNode selector: #or:.
 	msgNode arguments: {msgNode arguments second}
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FBDOptimizedMessagesRewriter >> convertWhileTrueToToByDo: msgNode start: start end: end by: incrValue incrVariable: incrVar assignement: assignement [
 	| selector arguments loopBlock |
 	loopBlock := msgNode arguments last.
@@ -107,7 +109,7 @@ FBDOptimizedMessagesRewriter >> convertWhileTrueToToByDo: msgNode start: start e
 	msgNode parent removeNode: assignement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FBDOptimizedMessagesRewriter >> extractStartValue: msgNode startTemp: startTemp [
 	| assignement indexOfMsg |
 	indexOfMsg := msgNode parent statements indexOf: msgNode.
@@ -119,16 +121,7 @@ FBDOptimizedMessagesRewriter >> extractStartValue: msgNode startTemp: startTemp 
 	^ assignement value
 ]
 
-{ #category : #handling }
-FBDOptimizedMessagesRewriter >> handleBigArray: msgNode [
-	| seq cascade |
-	seq := msgNode parent parent.
-	cascade := seq statements at: (seq statements indexOf: msgNode parent) +1 .
-	seq removeNode: msgNode parent.
-	seq replaceNode: cascade withNode: (RBArrayNode statements: (cascade  messages removeLast; collect: [ :msg | msg arguments first ]))
-]
-
-{ #category : #handling }
+{ #category : 'handling' }
 FBDOptimizedMessagesRewriter >> handleIfFalse: msgNode [
 	(self isIfNilIfNotNil: msgNode)
 		ifTrue: [
@@ -136,7 +129,7 @@ FBDOptimizedMessagesRewriter >> handleIfFalse: msgNode [
 			msgNode selector: #ifNotNil: ]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 FBDOptimizedMessagesRewriter >> handleIfNilIfNotNil: msgNode [
 	(self isIfNil: msgNode)
 		ifTrue: [ ^ self convertToIfNil: msgNode ].
@@ -144,7 +137,7 @@ FBDOptimizedMessagesRewriter >> handleIfNilIfNotNil: msgNode [
 		ifTrue: [ ^ self convertToIfNotNil: msgNode ]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 FBDOptimizedMessagesRewriter >> handleIfTrue: msgNode [
 	(self isIfNilIfNotNil: msgNode)
 		ifTrue: [
@@ -152,7 +145,7 @@ FBDOptimizedMessagesRewriter >> handleIfTrue: msgNode [
 			msgNode selector: #ifNil: ]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 FBDOptimizedMessagesRewriter >> handleIfTrueIfFalse: msgNode [
 	(self areArgumentsBlocks: msgNode) ifFalse: [ ^ self ].
 	(self isIfFalse: msgNode) ifTrue: [ ^ self convertToIfFalse: msgNode ].
@@ -162,7 +155,7 @@ FBDOptimizedMessagesRewriter >> handleIfTrueIfFalse: msgNode [
 	(self isIfNilIfNotNil: msgNode) ifTrue: [ ^ self convertToIfNilIfNotNil: msgNode ]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 FBDOptimizedMessagesRewriter >> handleWhileTrue: msgNode [
 	| startTemp start end incrValue rcvr |
 	(self isReceiverCorrectCondition: msgNode)
@@ -186,7 +179,7 @@ FBDOptimizedMessagesRewriter >> handleWhileTrue: msgNode [
 		assignement: (msgNode parent statements at: (msgNode parent statements indexOf: msgNode) - 1)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> hasCorrectIncrInstruction: msgNode startTemp: startTemp isPositiveLoop: isPositiveLoop [
 	| incrInstruction |
 	incrInstruction := msgNode arguments first body statements last.
@@ -205,29 +198,24 @@ FBDOptimizedMessagesRewriter >> hasCorrectIncrInstruction: msgNode startTemp: st
 	^ incrInstruction value arguments first value positive = isPositiveLoop
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isAnd: msgNode [
 	| stmts |
 	stmts := msgNode arguments second body statements.
 	^ stmts size = 1 and: [ stmts first value = false ]
 ]
 
-{ #category : #testing }
-FBDOptimizedMessagesRewriter >> isBigArray: msgNode [
-	^ (msgNode selector = #braceStream:) and: [ msgNode receiver isVariable and: [ msgNode receiver name = #Array ] ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isIfFalse: msgNode [
 	^ msgNode arguments first body statements isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isIfNil: msgNode [
 	^ msgNode arguments second = msgNode receiver
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isIfNilIfNotNil: msgNode [
 	msgNode receiver isMessage
 		ifFalse: [ ^ false ].
@@ -236,31 +224,31 @@ FBDOptimizedMessagesRewriter >> isIfNilIfNotNil: msgNode [
 	^ msgNode receiver arguments first value isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isIfNotNil: msgNode [
 	| stmts |
 	stmts := msgNode arguments first body statements.
 	^ stmts size = 1 and: [ stmts first = msgNode receiver ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isIfTrue: msgNode [
 	^ msgNode arguments second body statements isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isLastStatementReturnSelf: seq [
 	^ seq parent isMethod and: [ seq statements last isReturn and: [ seq statements last value isSelfVariable ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isOr: msgNode [
 	| stmts |
 	stmts := msgNode arguments first body statements.
 	^ stmts size = 1 and: [ stmts first value = true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isPositiveLoopOrNil: rcvr [
 	rcvr selector = #<=
 		ifTrue: [ ^ true ].
@@ -269,14 +257,14 @@ FBDOptimizedMessagesRewriter >> isPositiveLoopOrNil: rcvr [
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isReceiver1StatementBlock: msgNode [
 	msgNode receiver isBlock
 		ifFalse: [ ^ false ].
 	^ msgNode receiver body statements size = 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isReceiverCorrectCondition: msgNode [
 	| condition |
 	(self isReceiver1StatementBlock: msgNode ) ifFalse: [ ^ false ].
@@ -284,12 +272,12 @@ FBDOptimizedMessagesRewriter >> isReceiverCorrectCondition: msgNode [
 	^ condition isMessage and: [ condition isBinary ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDOptimizedMessagesRewriter >> isReconstructed: msg [
 	^ msg hasProperty: #reconstructed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FBDOptimizedMessagesRewriter >> removeTempFromSequence: seq temp: temp [
 	| temps |
 	seq ifNil: [ ^self "2 to:do: in the same method, temp has already  been removed" ].
@@ -300,20 +288,20 @@ FBDOptimizedMessagesRewriter >> removeTempFromSequence: seq temp: temp [
 		ifFalse: [ seq temporaries: temps ]
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 FBDOptimizedMessagesRewriter >> rewriteAST: aMethodNode [
 	self visitNode: aMethodNode.
 	^ aMethodNode
 ]
 
-{ #category : #rewriting }
+{ #category : 'rewriting' }
 FBDOptimizedMessagesRewriter >> rewriteSeq: seq with: currentCascade [
 	currentCascade size > 1
 		ifTrue: [ self rewriteStatements: currentCascade in: seq ].
 		currentCascade removeAll
 ]
 
-{ #category : #rewriting }
+{ #category : 'rewriting' }
 FBDOptimizedMessagesRewriter >> rewriteStatements: statements in: seq [
 "You have to remove the first statement from the collection before removing all nodes in the sequence.
 RemoveNode first uses == to detect the node , then =
@@ -325,7 +313,7 @@ So if you have the same node twice in the sequence, and this node is the first m
 		yourself) do: [ :each | seq removeNode: each ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FBDOptimizedMessagesRewriter >> visitBlockNode: block [
 	super visitBlockNode: block.
 	block body statements ifEmpty: [  ^ self ].
@@ -334,7 +322,7 @@ FBDOptimizedMessagesRewriter >> visitBlockNode: block [
 	block body statements removeLast
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FBDOptimizedMessagesRewriter >> visitMessageNode: msgNode [
 	"Do not add return statements.
 	ifTrue:ifFalse: handling may change the current message node into an ifTrue: , an ifFalse: or an ifNil:ifNotNil: message.
@@ -352,12 +340,10 @@ FBDOptimizedMessagesRewriter >> visitMessageNode: msgNode [
 	msgNode selector = #ifFalse:
 		ifTrue: [ self handleIfFalse: msgNode ].
 	msgNode selector = #whileTrue:
-		ifTrue: [ self handleWhileTrue: msgNode ].
-	(self isBigArray: msgNode)
-		ifTrue: [ self handleBigArray: msgNode ]
+		ifTrue: [ self handleWhileTrue: msgNode ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FBDOptimizedMessagesRewriter >> visitSequenceNode: seq [
 	self analyseSeq: seq .
 	super visitSequenceNode: seq.

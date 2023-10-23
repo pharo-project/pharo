@@ -1,6 +1,6 @@
-Extension { #name : #ClyFullBrowserVariableContext }
+Extension { #name : 'ClyFullBrowserVariableContext' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyFullBrowserVariableContext >> simpleNameForSpotterMenu [
 	^'Variables'
 ]

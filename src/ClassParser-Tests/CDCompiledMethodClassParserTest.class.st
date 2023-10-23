@@ -1,65 +1,65 @@
 Class {
-	#name : #CDCompiledMethodClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDCompiledMethodClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDCompiledMethodClassParserTest >> classDefinitionString [
 	"we just test the definition as it appears in the image"
-	^ 'CompiledCode variableByteSubclass: #CompiledMethod
-	instanceVariableNames: ''''
-	classVariableNames: ''''
+	^ 'CompiledCode << #CompiledMethod
+	layout: CompiledMethodLayout;
 	package: #MyPackage'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDCompiledMethodClassParserTest >> className [
 	^#CompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDCompiledMethodClassParserTest >> superclassName [
 	^#CompiledCode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDCompiledMethodClassParserTest >> testBestNodeForClassVariableSelectionShouldBeClassSlotNode [
 	"no Class Variables in CompileMethod"
 	self assert: classDefinition sharedVariableNodes isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDCompiledMethodClassParserTest >> testBestNodeForInstanceVariableSelectionShouldBeSlotNode [
 	"no slots for CompileMethod"
 	self assert: classDefinition slots isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDCompiledMethodClassParserTest >> testBestNodeForSecondInstanceVariableSelectionShouldBeSecondSlotNode [
 	"no slots for CompileMethod"
 	self assert: classDefinition slots isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDCompiledMethodClassParserTest >> testClassDefFromLegacyStringHasSharedSlots [
 	"no Class Variables in CompileMethod"
 	self assert: classDefinition sharedVariableNodes isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDCompiledMethodClassParserTest >> testClassDefFromLegacyStringHasSlots [
 	"no slots for CompileMethod"
 	self assert: classDefinition slots isEmpty
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDCompiledMethodClassParserTest >> testCompiledMethodClass [
 
 	self assert: classDefinition layoutClass equals: CompiledMethodLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDCompiledMethodClassParserTest >> testSlotNodesHaveParentReference [
 	"no slots for CompileMethod"
 	self assert: classDefinition slots isEmpty

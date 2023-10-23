@@ -2,24 +2,26 @@
 I am an abstract class that represents an accessor for a sequence of objects. This sequence is referred to as my ""contents"".
 "
 Class {
-	#name : #Stream,
-	#superclass : #Object,
-	#category : #'Collections-Streams-Base'
+	#name : 'Stream',
+	#superclass : 'Object',
+	#category : 'Collections-Streams-Base',
+	#package : 'Collections-Streams',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Stream class >> isAbstract [
 
 	^ self == Stream
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Stream class >> new [
 
 	self error: 'Streams are created with on: and with:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
 	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
@@ -30,44 +32,44 @@ Stream >> << anObject [
  	anObject putOn: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Stream >> atEnd [
 	"Answer whether the receiver can access any more objects."
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Stream >> basicNext [
 
 	^ self next
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Stream >> basicNext: anAmount putAll: aCollection startingAt: startIndex [
 
 	^ self next: anAmount putAll: aCollection startingAt: startIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Stream >> basicNextPut: anObject [
 
 	^ self nextPut: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Stream >> basicNextPutAll: aCollection [
 
 	^ self nextPutAll: aCollection
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 Stream >> binary [
 	"do nothing"
 	^self
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 Stream >> close [
 	"Presumably sets the status of the receiver to be closed. This message does
 	nothing at this level, but is included for FileStream compatibility."
@@ -75,19 +77,19 @@ Stream >> close [
 	^self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Stream >> closed [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> contents [
 	"Answer all of the contents of the receiver."
 
 	self subclassResponsibility
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Stream >> do: aBlock [
 	"Evaluate aBlock for each of the objects accessible by receiver."
 
@@ -95,35 +97,35 @@ Stream >> do: aBlock [
 		whileFalse: [aBlock value: self next]
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 Stream >> flush [
 	"Do nothing by default"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Stream >> isBinary [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Stream >> isStream [
 	"Return true if the receiver responds to the stream protocol"
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> localName [
 	^'a stream'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> next [
 	"Answer the next object accessible by the receiver."
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> next: anInteger [
 	"Answer the next anInteger number of objects accessible by the receiver."
 
@@ -133,7 +135,7 @@ Stream >> next: anInteger [
 	^aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> next: anInteger put: anObject [
 	"Make anObject be the next anInteger number of objects accessible by the
 	receiver. Answer anObject."
@@ -142,7 +144,7 @@ Stream >> next: anInteger put: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> next: anInteger putAll: aCollection startingAt: startIndex [
 	"Store the next anInteger elements from the given collection."
 	(startIndex = 1 and:[anInteger = aCollection size])
@@ -150,7 +152,7 @@ Stream >> next: anInteger putAll: aCollection startingAt: startIndex [
 	^self nextPutAll: (aCollection copyFrom: startIndex to: startIndex+anInteger-1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> nextMatchAll: aColl [
     "Answer true if next N objects are the ones in aColl,
      else false.  Advance stream of true, leave as was if false."
@@ -164,7 +166,7 @@ Stream >> nextMatchAll: aColl [
     ^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> nextMatchFor: anObject [
 	"Gobble the next object and answer whether it is equal to the argument,
 	anObject."
@@ -172,7 +174,7 @@ Stream >> nextMatchFor: anObject [
 	^anObject = self next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> nextPut: anObject [
 	"Insert the argument, anObject, as the next object accessible by the
 	receiver. Answer anObject."
@@ -180,7 +182,7 @@ Stream >> nextPut: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> nextPutAll: aCollection [
 	"Append the elements of aCollection to the sequence of objects accessible
 	by the receiver. Answer aCollection."
@@ -189,7 +191,7 @@ Stream >> nextPutAll: aCollection [
 	^aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Stream >> nextWordsPutAll: aCollection [
 	"Write the argument a word-like object in big endian format on the receiver.
 	May be used to write other than plain word-like objects (such as ColorArray)."
@@ -201,25 +203,25 @@ Stream >> nextWordsPutAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 Stream >> openReadOnly [
 	^self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Stream >> print: anObject [
 	"Have anObject print itself on the receiver."
 
 	anObject printOn: self
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 Stream >> readOnly [
 	"do nothing"
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stream >> upToEnd [
 	"answer the remaining elements in the string"
 	| elements |

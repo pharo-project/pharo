@@ -3,12 +3,14 @@ I'm like TextDiffBuilder, but I split the input text by Character >> #separators
 I'm probably ment to create diffs of class definitions.
 "
 Class {
-	#name : #ClassDiffBuilder,
-	#superclass : #TextDiffBuilder,
-	#category : #'Text-Diff-Building'
+	#name : 'ClassDiffBuilder',
+	#superclass : 'TextDiffBuilder',
+	#category : 'Text-Diff-Building',
+	#package : 'Text-Diff',
+	#tag : 'Building'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ClassDiffBuilder >> print: aString withAttributes: attributes on: stream [
 
 	stream
@@ -16,7 +18,7 @@ ClassDiffBuilder >> print: aString withAttributes: attributes on: stream [
 		do: [ stream nextPutAll: aString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassDiffBuilder >> split: aString [
 	"I return an array with aString splitted by Character >> #separators."
 

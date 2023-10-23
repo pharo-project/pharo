@@ -2,25 +2,27 @@
 I'm represent an entry in the spaceTally.
 "
 Class {
-	#name : #SpaceTallyItem,
-	#superclass : #Object,
+	#name : 'SpaceTallyItem',
+	#superclass : 'Object',
 	#instVars : [
 		'analyzedClassName',
 		'codeSize',
 		'instanceCount',
 		'spaceForInstances'
 	],
-	#category : #'Tool-Profilers-Space'
+	#category : 'Tool-Profilers-Space',
+	#package : 'Tool-Profilers',
+	#tag : 'Space'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpaceTallyItem class >> analyzedClassName: aClassName [
 
 	^ self new
 		analyzedClassName: aClassName ; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpaceTallyItem class >> analyzedClassName: aClassName codeSize: codeSize instanceCount: instanceCount spaceForInstances: spaceForInstances [
 
 	^ self new
@@ -30,43 +32,43 @@ SpaceTallyItem class >> analyzedClassName: aClassName codeSize: codeSize instanc
 		spaceForInstances: spaceForInstances ; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> analyzedClassName [
 
 	^ analyzedClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> analyzedClassName: aClassName [
 
 	analyzedClassName := aClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> codeSize [
 
 	^ codeSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> codeSize: aNumber [
 
 	codeSize := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> instanceCount [
 
 	^ instanceCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> instanceCount: aNumber [
 
 	instanceCount := aNumber
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SpaceTallyItem >> printOn: aStream [
 
 	analyzedClassName ifNotNil: [ aStream print: analyzedClassName ].
@@ -89,13 +91,13 @@ SpaceTallyItem >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> spaceForInstances [
 
 	^ spaceForInstances
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyItem >> spaceForInstances: aNumber [
 
 	spaceForInstances := aNumber

@@ -3,8 +3,8 @@ A SystemProgressItemMorph is 'bar' in a SystemProgressMorph.
 
 "
 Class {
-	#name : #SystemProgressItemMorph,
-	#superclass : #Morph,
+	#name : 'SystemProgressItemMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'bar',
 		'labelMorph',
@@ -15,22 +15,24 @@ Class {
 		'endValue',
 		'lastRefresh'
 	],
-	#category : #'Morphic-Base-ProgressBar'
+	#category : 'Morphic-Base-ProgressBar',
+	#package : 'Morphic-Base',
+	#tag : 'ProgressBar'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SystemProgressItemMorph class >> labeled: aString from: startValue to: endValue [
 
 	^ self new initializeLabel: aString start: startValue end: endValue
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> beComplete [
 
 	self close
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> changed [
 
 	| msRefreshRate isTimeForRefresh |
@@ -40,51 +42,51 @@ SystemProgressItemMorph >> changed [
 	(self isInWorld and: [ isTimeForRefresh ]) ifTrue: [ self refresh ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> close [
 
 	SystemProgressMorph uniqueInstance close: self
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> current [
 
 	^ bar value
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> current: aNumber [
 
 	bar value: aNumber.
 	self changed
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> decrement [
 
 	bar decrement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> do: aBlock [
 
 	self changed. "We may be in the UI thread, so this will give us a change to dsiplay ourselves before the block starts"
 	^ [ aBlock value: self ] ensure: [ self close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> forceRefreshOnNextChange [
 
 	lastRefresh := 0
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> increment [
 
 	bar increment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> initializeLabel: aString start: startNumber end: endNumber [
 
 	lock := Semaphore forMutualExclusion.
@@ -108,13 +110,13 @@ SystemProgressItemMorph >> initializeLabel: aString start: startNumber end: endN
 	self addMorphBack: bar
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> label [
 
 	^ self labelMorph contents
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 SystemProgressItemMorph >> label: aString [
 
 	self label isEmpty ifTrue: [ self forceRefreshOnNextChange ].
@@ -122,19 +124,19 @@ SystemProgressItemMorph >> label: aString [
 	self changed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> labelMorph [
 
 	^ labelMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> max: aNumber [
 
 	endValue := aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> refresh [
 
 	lastRefresh := Time millisecondClockValue.
@@ -142,13 +144,13 @@ SystemProgressItemMorph >> refresh [
 		ifTrue: [ self currentWorld doOneCycleNow ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> result [
 
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> result: anObject [
 
 	lock critical: [
@@ -156,13 +158,13 @@ SystemProgressItemMorph >> result: anObject [
 		result := anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> start: aNumber [
 
 	startValue := aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemProgressItemMorph >> startAt: aNumber [
 
 	startValue := aNumber

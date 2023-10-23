@@ -1,43 +1,44 @@
 Class {
-	#name : #ClyCreateTestCaseCommand,
-	#superclass : #ClyBrowserCommand,
+	#name : 'ClyCreateTestCaseCommand',
+	#superclass : 'ClyBrowserCommand',
 	#instVars : [
 		'package',
 		'classTag'
 	],
-	#category : #'Calypso-SystemPlugins-Traits-Browser'
+	#category : 'Calypso-SystemPlugins-Traits-Browser',
+	#package : 'Calypso-SystemPlugins-Traits-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCreateTestCaseCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
 
 	^aBrowserContext isPackageSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCreateTestCaseCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCreateTestCaseCommand >> defaultMenuIconName [
 	^#testGreen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCreateTestCaseCommand >> defaultMenuItemName [
 	^'New test class'
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 ClyCreateTestCaseCommand >> execute [
 	| classDefinition p resultClass |
 	p := package name.
 	classTag ifNotNil: [ p := p , '-' , classTag ].
-	classDefinition := ClassDefinitionPrinter new testClassDefinitionTemplateInPackage: p.
+	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: p.
 	classDefinition := UIManager default
 		                   multiLineRequest: 'Define test class:'
 		                   initialAnswer: classDefinition
@@ -50,7 +51,7 @@ ClyCreateTestCaseCommand >> execute [
 	resultClass ifNotNil: [ browser selectClass: resultClass ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyCreateTestCaseCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
 

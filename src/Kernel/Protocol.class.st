@@ -5,23 +5,25 @@ A class holds my instances (for now through ClassOrganization but we want to rem
 I have a name that is used in browsers to display the different protocols.
 "
 Class {
-	#name : #Protocol,
-	#superclass : #Object,
+	#name : 'Protocol',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'methodSelectors'
 	],
-	#category : #'Kernel-Classes'
+	#category : 'Kernel-Classes',
+	#package : 'Kernel',
+	#tag : 'Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Protocol class >> name: aString [
 
 	self deprecated: 'Use #named: instead' transformWith: '`@rcv name: `@arg' -> '`@rcv named: `@arg'.
 	^ self named: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Protocol class >> name: aString methodSelectors: methods [
 
 	^ (self named: aString)
@@ -29,7 +31,7 @@ Protocol class >> name: aString methodSelectors: methods [
 		  yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Protocol class >> named: aStrings [
 
 	^ self new
@@ -37,30 +39,30 @@ Protocol class >> named: aStrings [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Protocol class >> unclassified [
 	^ #'as yet unclassified'
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 Protocol >> addAllMethodsFrom: aProtocol [
 	aProtocol methodSelectors do: [ :each | self addMethodSelector: each ]
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 Protocol >> addMethodSelector: aSymbol [
 	(methodSelectors includes: aSymbol) ifTrue: [ ^ self ].
 	
 	methodSelectors := methodSelectors copyWith: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Protocol >> includesSelector: selector [
 
 	^ self methodSelectors includes: selector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Protocol >> initialize [
 
 	super initialize.
@@ -69,12 +71,12 @@ Protocol >> initialize [
 	name := self class unclassified
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Protocol >> isEmpty [
 	^ self methodSelectors isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Protocol >> isExtensionProtocol [
 	"For now, extension methods are managed via protocols. 
 	
@@ -83,34 +85,41 @@ Protocol >> isExtensionProtocol [
 	^ self name first = $*
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+Protocol >> isExtensionProtocolMatching: aPackage [
+	"Return true if I am an extension protocol linked to the package as parameter"
+
+	^ (aPackage organizer packageForProtocol: self) = aPackage
+]
+
+{ #category : 'testing' }
 Protocol >> isUnclassifiedProtocol [
 
 	^ self name = self class unclassified
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Protocol >> methodSelectors [
 	^ methodSelectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Protocol >> methodSelectors: anObject [
 	methodSelectors := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Protocol >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Protocol >> name: anObject [
 	name := anObject asSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Protocol >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
@@ -121,18 +130,18 @@ Protocol >> printOn: aStream [
 		nextPutAll: ' selector(s)'
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 Protocol >> removeMethodSelector: aSymbol [
 	methodSelectors := methodSelectors copyWithout: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Protocol >> rename: newName [
 
 	self name: newName
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 Protocol >> resetMethodSelectors [
 	methodSelectors := Array empty
 ]

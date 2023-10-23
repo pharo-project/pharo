@@ -1,10 +1,12 @@
 Class {
-	#name : #RBFooDummyLintRuleTest,
-	#superclass : #RBDummyLintRuleTest,
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#name : 'RBFooDummyLintRuleTest',
+	#superclass : 'RBDummyLintRuleTest',
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBFooDummyLintRuleTest >> foo [
 	^ 6
 ]

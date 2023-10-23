@@ -2,22 +2,23 @@
 I am a stream decorator that knows how to read and write little endian numbers from my underlying stream.
 "
 Class {
-	#name : #ZnEndianessReadWriteStream,
-	#superclass : #Object,
+	#name : 'ZnEndianessReadWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEndianessReadWriteStream class >> on: writeStream [
 	^ self basicNew
 		on: writeStream;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEndianessReadWriteStream class >> on: writeStream do: block [
 	"Execute block with as argument a ZnBufferedWriteStream on writeStream,
 	making sure #flush is called at the end. Return the value of block."
@@ -29,7 +30,7 @@ ZnEndianessReadWriteStream class >> on: writeStream do: block [
 	^ result
 ]
 
-{ #category : #endianess }
+{ #category : 'endianess' }
 ZnEndianessReadWriteStream >> nextLittleEndianNumber: n [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 
@@ -40,7 +41,7 @@ ZnEndianessReadWriteStream >> nextLittleEndianNumber: n [
 	^ s
 ]
 
-{ #category : #endianess }
+{ #category : 'endianess' }
 ZnEndianessReadWriteStream >> nextLittleEndianNumber: n put: value [
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
 	| bytes |
@@ -49,7 +50,7 @@ ZnEndianessReadWriteStream >> nextLittleEndianNumber: n put: value [
 	stream nextPutAll: bytes
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnEndianessReadWriteStream >> on: aStream [
 
 	stream := aStream

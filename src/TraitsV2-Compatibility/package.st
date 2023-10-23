@@ -1,1 +1,1 @@
-Package { #name : #'TraitsV2-Compatibility' }
+Package { #name : 'TraitsV2-Compatibility' }

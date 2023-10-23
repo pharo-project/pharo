@@ -2,63 +2,64 @@
 Text display command for changing the background color
 "
 Class {
-	#name : #AthensBackgroundChange,
-	#superclass : #AthensTextDisplayCommand,
+	#name : 'AthensBackgroundChange',
+	#superclass : 'AthensTextDisplayCommand',
 	#instVars : [
 		'color',
 		'start',
 		'width'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 AthensBackgroundChange >> addWidth: aWidth [
 	width := width + aWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBackgroundChange >> color [
 
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBackgroundChange >> color: anObject [
 
 	color := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensBackgroundChange >> initialize [
 	width :=0.
 	color := Color transparent
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBackgroundChange >> renderOn: renderer [
 	color isTransparent ifFalse: [
 		renderer renderBackground: self
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBackgroundChange >> start [
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBackgroundChange >> start: aStart [
 	start := aStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBackgroundChange >> width [
 
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBackgroundChange >> width: anObject [
 
 	width := anObject

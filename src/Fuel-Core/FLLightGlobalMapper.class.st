@@ -4,22 +4,24 @@ I map classes, traits, and global objects that belong to Smalltalk dictionary. I
 For example, the global Transcript as well as any class in the image, are mapped by me.
 "
 Class {
-	#name : #FLLightGlobalMapper,
-	#superclass : #FLMapper,
+	#name : 'FLLightGlobalMapper',
+	#superclass : 'FLMapper',
 	#instVars : [
 		'globals'
 	],
-	#category : #'Fuel-Core-Mappers'
+	#category : 'Fuel-Core-Mappers',
+	#package : 'Fuel-Core',
+	#tag : 'Mappers'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLLightGlobalMapper >> initialize [
 	super initialize.
 	
 	globals := self configuration globals values asIdentitySet
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLLightGlobalMapper >> mapAndTrace: anObject [
 	"Uses the Chain of Responsibility pattern to answer the cluster which maps with the received object."
 

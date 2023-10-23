@@ -1,32 +1,33 @@
 Trait {
-	#name : #TRefactoringCommandSupport,
+	#name : 'TRefactoringCommandSupport',
 	#instVars : [
 		'model'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
 
 	| invalidArgNames |
 	invalidArgNames := Set new.
 	(model allImplementorsOf: aSymbol) do: [ :e |
-		| method |
-		method := e realClass >> aSymbol.
+		| mth |
+		mth := e realClass >> aSymbol.
 		invalidArgNames
-			addAll: method argumentNames;
-			addAll: method origin instVarNames ].
+			addAll: mth argumentNames;
+			addAll: mth origin instVarNames ].
 	^ invalidArgNames
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TRefactoringCommandSupport >> initializeDefaultOptionsOf: refactoring [
 
 	NautilusRefactoring new refactoringOptions: refactoring
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TRefactoringCommandSupport >> setUpModelFromContext: aContext [
 	| browser scope |
 	browser := aContext browser.

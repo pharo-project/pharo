@@ -2,12 +2,13 @@
 Unit test for trait related slot scopes
 "
 Class {
-	#name : #T2TraitSlotScopeTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2TraitSlotScopeTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testClassWithComplexTraits [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -19,7 +20,7 @@ T2TraitSlotScopeTest >> testClassWithComplexTraits [
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testClassWithTraits [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -29,7 +30,7 @@ T2TraitSlotScopeTest >> testClassWithTraits [
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassAndAddComplexTraitAfter [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -50,7 +51,7 @@ T2TraitSlotScopeTest >> testSubClassAndAddComplexTraitAfter [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassAndAddTraitAfter [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -69,7 +70,7 @@ T2TraitSlotScopeTest >> testSubClassAndAddTraitAfter [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithComplexTraits [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -86,7 +87,7 @@ T2TraitSlotScopeTest >> testSubClassWithComplexTraits [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModification [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -111,7 +112,7 @@ T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModification [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModificationOfParent [
 	| t1 c1 c2 t2 t3 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -129,7 +130,7 @@ T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModificationOfParent [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithTraits [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -146,7 +147,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraits [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModification [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -171,7 +172,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModification [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -188,7 +189,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPools [
 	| t1 c1 c2 t2 x1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -218,7 +219,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvariables [
 	| t1 c1 c2 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -238,7 +239,7 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvar
 			  slots: #(aSlot);
 			  sharedVariables: #(ClassVar);
 			  traitComposition: t1;
-			  category: 'TraitsV2-Tests-TestClasses' ].
+			  package: 'TraitsV2-Tests-TestClasses' ].
 	createdClasses add: c1.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.

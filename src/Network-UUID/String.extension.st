@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Network-UUID' }
+{ #category : '*Network-UUID' }
 String >> asAlphaNumeric: totalSize extraChars: additionallyAllowed mergeUID: minimalSizeOfRandomPart [
 	"Generates a String with unique identifier ( UID ) qualities, the difference to a
 	 UUID is that its beginning is derived from the receiver, so that it has a meaning

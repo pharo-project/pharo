@@ -1,11 +1,11 @@
-Extension { #name : #Boolean }
+Extension { #name : 'Boolean' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Boolean >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Boolean >> stonOn: stonWriter [
 	stonWriter writeBoolean: self
 ]

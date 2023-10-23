@@ -1,13 +1,14 @@
 Class {
-	#name : #PBSpurClassLoader,
-	#superclass : #PBClassLoader,
+	#name : 'PBSpurClassLoader',
+	#superclass : 'PBClassLoader',
 	#instVars : [
 		'nextClassIndex'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> classDefinitionFor: aClass [
 	"Answer a String that defines the receiver."
 
@@ -28,29 +29,31 @@ PBSpurClassLoader >> classDefinitionFor: aClass [
 	newClass := ShiftClassInstaller make: [ :builder |
 		builder
 			superclass: {superClass};
-			name: ''{name}'';
+			name: {name};
 			layoutClass: {type};
-			slots: ''{instanceVariablesString}'' asSlotCollection;
-			sharedVariablesFromString: ''{classVariablesString}'';
-			sharedPools: ''{sharedPoolsString}'';
-			category: ''{category}'';
+			slots: {instanceVariablesString} asSlotCollection;
+			sharedVariablesFromString: {classVariablesString};
+			sharedPools: {sharedPoolsString};
+			package: {package};
+			tag: {tag};
 			environment: {superClass} environment;
-			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
+			classSlots: {classInstanceVariablesString} asSlotCollection ].
 	"newClass setTraitComposition: {aTraitComposition} asTraitComposition."
 	newClass'
 		format: { 
 			'superClass' -> (aClass superclass ifNil: ['nil'] ifNotNil: [ :superclass | superclass name ]).
-			'name' -> aClass name.
+			'name' -> aClass name printString.
 			'type' -> type.
-			'instanceVariablesString' -> (' ' join: aClass instVarNames).
-			'classVariablesString' -> aClass classVariablesString.
-			'sharedPoolsString' -> aClass sharedPoolsString.
-			'category' -> aClass category asString.
-			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames).
+			'instanceVariablesString' -> (' ' join: aClass instVarNames) printString.
+			'classVariablesString' -> aClass classVariablesString printString.
+			'sharedPoolsString' -> aClass sharedPoolsString printString.
+			'package' -> aClass package name printString.
+			'tag' -> (aClass tags ifEmpty: [ 'nil' ] ifNotEmpty: [ :tags | tags anyOne printString ]).
+			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames) printString.
 			'aTraitComposition' -> aClass traitCompositionString } asDictionary.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> map: aClassMirror with: aDefinition [
 
 	"We create a mapping between the real classes and their definitions for later"
@@ -74,14 +77,14 @@ PBSpurClassLoader >> map: aClassMirror with: aDefinition [
 	definitionMirrorMap at: aDefinition classSide put: classSideMirror.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> newClassIndex [
 	
 	nextClassIndex ifNil: [ nextClassIndex := 1024 ].
 	^ nextClassIndex := nextClassIndex + 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PBSpurClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean [
 
 	"If it existed before, we migrate its state"

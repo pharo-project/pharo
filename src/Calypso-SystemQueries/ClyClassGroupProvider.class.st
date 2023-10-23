@@ -10,17 +10,19 @@ It should create class group instances and pass them into the block.
 Look at ClyClassGroup comment to see how create groups.
 "
 Class {
-	#name : #ClyClassGroupProvider,
-	#superclass : #Object,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyClassGroupProvider',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClyClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyClassGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aPackageScope [
 	aPackageScope packagesDo: [ :each |
 		(aSystemAnnouncement affectsPackage: each) ifTrue: [^true]].

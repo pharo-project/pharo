@@ -1,17 +1,19 @@
 Class {
-	#name : #ClyTaggedClassesQueryTest,
-	#superclass : #ClyClassQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyTaggedClassesQueryTest',
+	#superclass : 'ClyClassQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyTaggedClassesQueryTest >> createQuery [
 	^ ClyTaggedClassesQuery
 		by: #Tag1
 		from: (ClyClassScope of: Object in: environment)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTaggedClassesQueryTest >> testCheckIfEmpty [
 	query tag: #Tag1.
 	query scope: (ClyClassScope of: ClyClass7WithTag1FromP5Mock in: environment).
@@ -21,7 +23,7 @@ ClyTaggedClassesQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTaggedClassesQueryTest >> testComparisonToSimilarQueryWithDifferentTag [
 	| query2 |
 	query2 := self createQuery.
@@ -30,7 +32,7 @@ ClyTaggedClassesQueryTest >> testComparisonToSimilarQueryWithDifferentTag [
 	self deny: query equals: query2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTaggedClassesQueryTest >> testFromThreeClasses [
 	query tag: #Tag1.
 

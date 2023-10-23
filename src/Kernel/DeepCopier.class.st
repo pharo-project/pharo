@@ -29,15 +29,17 @@ Dependents are now fixed up.  Suppose a model has a dependent view.  In the Depe
 
 "
 Class {
-	#name : #DeepCopier,
-	#superclass : #Object,
+	#name : 'DeepCopier',
+	#superclass : 'Object',
 	#instVars : [
 		'references'
 	],
-	#category : #'Kernel-Copying'
+	#category : 'Kernel-Copying',
+	#package : 'Kernel',
+	#tag : 'Copying'
 }
 
-{ #category : #checking }
+{ #category : 'checking' }
 DeepCopier >> basicCheckClass: aClass [
 	"Every class that implements veryDeepInner: or veryDeepCopyWith: must copy all its inst vars.
 	The danger is that a user will add a new instance variable and forget to copy it.
@@ -65,7 +67,7 @@ DeepCopier >> basicCheckClass: aClass [
 	^ warnings
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 DeepCopier >> checkAllClasses [
 
 	| warnings |
@@ -76,7 +78,7 @@ DeepCopier >> checkAllClasses [
 	self raiseWarningsIfAny: warnings
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 DeepCopier >> checkClass: aClass [
 	(self basicCheckClass: aClass)
 		ifNotEmpty: [ :warnings |
@@ -87,7 +89,7 @@ DeepCopier >> checkClass: aClass [
 				signal ]
 ]
 
-{ #category : #'like fullCopy' }
+{ #category : 'like fullCopy' }
 DeepCopier >> checkDeep [
 	"Write exceptions in the Transcript.  Every class that implements veryDeepInner: must copy all its inst vars.  Danger is that a user will add a new instance variable and forget to copy it.  This check is only run by hand once in a while to make sure nothing was forgotten.
 (Please do not remove this method.)
@@ -111,7 +113,7 @@ DeepCopier >> checkDeep [
 												(aClass allInstVarNames at: index) printOn: stream ] ] ] ] ])
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 DeepCopier >> doesMethod: aSelector writeAllInstanceVariablesOfClass: aClass [
 
 	"This method returns true if the method of the given selector writes all instance variables of the given class.
@@ -125,7 +127,7 @@ DeepCopier >> doesMethod: aSelector writeAllInstanceVariablesOfClass: aClass [
 	^ hasNoInstanceVariables or: [ method writesField: lastFieldIndex ]
 ]
 
-{ #category : #'like fullCopy' }
+{ #category : 'like fullCopy' }
 DeepCopier >> fixDependents [
 	"They are not used much, but need to be right"
 
@@ -139,20 +141,20 @@ DeepCopier >> fixDependents [
 				newModel addDependent: newDep]]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DeepCopier >> initialize [
 
 	super initialize.
 	self initialize: 4096
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DeepCopier >> initialize: size [
 
 	references := IdentityDictionary new: size
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 DeepCopier >> raiseWarningsIfAny: warnings [
 
 	warnings ifNotEmpty: [
@@ -162,7 +164,7 @@ DeepCopier >> raiseWarningsIfAny: warnings [
 			signal ]
 ]
 
-{ #category : #'like fullCopy' }
+{ #category : 'like fullCopy' }
 DeepCopier >> references [
 	^ references
 ]

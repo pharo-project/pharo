@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	| spec |
@@ -15,19 +15,19 @@ String >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 			yourself)
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
 
 	^aMetacelloMCVersion doFetchRequiredFromArray: (Array with: self).
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> loadRequiredForMetacelloMCVersion: aMetacelloMCVersion [
 
 	^aMetacelloMCVersion doLoadRequiredFromArray: (Array with: self).
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	| spec |
@@ -42,7 +42,7 @@ String >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 			yourself)
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> packageFileSpecFor: aMetacelloPackagesSpec [
 
 	^(aMetacelloPackagesSpec project packageSpec)
@@ -50,13 +50,13 @@ String >> packageFileSpecFor: aMetacelloPackagesSpec [
 			yourself
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> recordRequiredForMetacelloMCVersion: aMetacelloMCVersion [
 
 	^aMetacelloMCVersion doRecordRequiredFromArray: (Array with: self).
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	aMetacelloRepositoriesSpec addMember: 
@@ -65,7 +65,7 @@ String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 			yourself)
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 String >> resolvePackageSpecsNamedForMetacelloMCVersion: aMetacelloMCVersion visited: visited ifAbsent: aBlock [
     ^ aMetacelloMCVersion
         allPackagesForSpecs: {(aMetacelloMCVersion packageNamed: self ifAbsent: aBlock)}

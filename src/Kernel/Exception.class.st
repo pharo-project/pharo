@@ -17,8 +17,8 @@ Context>>answer:
 Thanks, Craig!
 "
 Class {
-	#name : #Exception,
-	#superclass : #Object,
+	#name : 'Exception',
+	#superclass : 'Object',
 	#instVars : [
 		'messageText',
 		'tag',
@@ -27,10 +27,12 @@ Class {
 		'handlerContext',
 		'outerContext'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #exceptionselector }
+{ #category : 'exceptionselector' }
 Exception class >> , anotherException [
 	"Create an exception set containing the receiver and anotherException"
 
@@ -40,7 +42,7 @@ Exception class >> , anotherException [
 		yourself
 ]
 
-{ #category : #exceptionselector }
+{ #category : 'exceptionselector' }
 Exception class >> - anotherException [
 	"Create an exception set containing the receiver and anotherException as exclusion."
 
@@ -50,33 +52,33 @@ Exception class >> - anotherException [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Exception class >> captureIfSignalledWhenStepping [
 	^false
 ]
 
-{ #category : #exceptionselector }
+{ #category : 'exceptionselector' }
 Exception class >> handles: exception [
 	"Determine whether an exception handler will accept a signaled exception."
 
 	^ exception isKindOf: self
 ]
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 Exception class >> signal [
 	"Signal the occurrence of an exceptional condition."
 
 	^ self new signal
 ]
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 Exception class >> signal: message [
 	"Signal the occurrence of an exceptional condition with a specified textual description."
 
 	^ self new signal: message
 ]
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 Exception class >> signal: message in: context [
 	"Signal the occurrence of an exceptional condition with a specified textual description in the given context."
 
@@ -85,7 +87,7 @@ Exception class >> signal: message in: context [
 		signalIn: context
 ]
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 Exception class >> signal: message withTag: aTag [
 	"Signal the occurrence of an exceptional condition with a specified textual description including a tag for the exception."
 
@@ -95,14 +97,14 @@ Exception class >> signal: message withTag: aTag [
 		signal
 ]
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 Exception class >> signalIn: context [
 	"Signal the occurrence of an exceptional condition in the given context."
 
 	^ self new signalIn: context
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Exception >> completeProcess: aProcess with: aContext [
 	"I am a hook during process completion in case one of my subclass wants to plug a special behavior.
 
@@ -111,7 +113,7 @@ Exception >> completeProcess: aProcess with: aContext [
 	^ self signalContext
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> debug [
 
 	"requests a debugger on myself"
@@ -120,7 +122,7 @@ Exception >> debug [
 	UIManager default requestDebuggerOpeningFor: self
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.
 	If none handles this either then open debugger (see UnhandedError-defaultAction).
@@ -131,7 +133,7 @@ Exception >> defaultAction [
 	^ self raiseUnhandledError
 ]
 
-{ #category : #default }
+{ #category : 'default' }
 Exception >> defaultDescription [
 	"Return a textual description of the exception."
 
@@ -141,21 +143,21 @@ Exception >> defaultDescription [
 			ifFalse: [ stream << ': ' << mt ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Exception >> defaultResumeValue [
 	"Answer the value that by default should be returned if the exception is resumed"
 
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Exception >> defaultReturnValue [
 	"Answer the value that by default should be returned if the exception is returned"
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> description [
 
 	"Returns a textual description of the exception."
@@ -165,64 +167,64 @@ Exception >> description [
 	^ self defaultDescription
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> freeze [
 	"Freeze the context stack to keep the exception usable outside the catch blocks"
 
 	self freezeUpTo: thisContext
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> freezeUpTo:  aContext [
 	"Freeze the signal context up to the given context so the exception is usable outside the catch block"
 
 	signalContext := signalContext copyTo: aContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Exception >> isDebuggerFailure [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Exception >> isHandleableBy: aDebugger [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Exception >> isNested [
 	"Determine whether the current exception handler is within the scope of another handler for the same exception."
 
 	^ handlerContext nextHandlerContext canHandleSignal: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Exception >> isResumable [
 	"Determine whether an exception is resumable."
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> messageText [
 	"Return an exception's message text."
 
 	^ messageText ifNil: [ String empty ]
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 Exception >> messageText: signalerText [
 	"Set an exception's message text."
 
 	messageText := signalerText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> originException [
 	^ self
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> outer [
 	"Evaluate the enclosing exception action and return to here instead of signal if it resumes (see #resumeUnchecked:)."
 	| prevOuterContext currentHandler |
@@ -234,7 +236,7 @@ Exception >> outer [
 	[self pass] ensure: [handlerContext := currentHandler]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> pass [
 	"Yield control to the enclosing exception action for the receiver."
 
@@ -244,50 +246,50 @@ Exception >> pass [
 	nextHandler handleSignal: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Exception >> printOn: stream [
 
 	stream nextPutAll: self description
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Exception >> privHandlerContext [
 
 	^handlerContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Exception >> privHandlerContext: aContextTag [
 
 	handlerContext := aContextTag
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> raiseUnhandledError [
 	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError>>#defaultAction)"
 
 	^ UnhandledError signalForException: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> receiver [
 	^ self signalerContext receiver
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> resignalAs: replacementException [
 	"Signal an alternative exception in place of the receiver."
 	signalContext resumeEvaluating: [replacementException signal]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> resume [
 	"Return from the message that signaled the receiver."
 
 	self resume: self defaultResumeValue
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> resume: resumptionValue [
 	"Return resumptionValue as the value of the signal message."
 
@@ -295,7 +297,7 @@ Exception >> resume: resumptionValue [
 	self resumeUnchecked: resumptionValue
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> resumeUnchecked: resumptionValue [
 	"Return resumptionValue as the value of #signal, unless this was called after an #outer message, then return resumptionValue as the value of #outer."
 
@@ -309,28 +311,28 @@ Exception >> resumeUnchecked: resumptionValue [
 			ctxt return: resumptionValue ]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> return [
 	"Return nil as the value of the block protected by the active exception handler."
 
 	self return: self defaultReturnValue
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> return: returnValue [
 	"Return the argument as the value of the block protected by the active exception handler."
 
 	handlerContext return: returnValue
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> searchFrom: aContext [
 	"Set the context where the handler search will start. "
 
 	signalContext := aContext contextTag
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 Exception >> signal [
 	"Ask ContextHandlers in the sender chain to handle this signal.  The default is to execute and return my defaultAction."
 	<debuggerCompleteToSender>
@@ -339,7 +341,7 @@ Exception >> signal [
 	^ signalContext nextHandlerContext handleSignal: self
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 Exception >> signal: signalerText [
 	"Signal the occurrence of an exceptional condition with a specified textual description."
 
@@ -347,7 +349,7 @@ Exception >> signal: signalerText [
 	^ self signal
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 Exception >> signalIn: context [
 	"Ask ContextHandlers in the sender chain starting at the given context to handle this signal.
 	The default is to execute and return my defaultAction."
@@ -357,7 +359,7 @@ Exception >> signalIn: context [
 	^ signalContext nextHandlerContext handleSignal: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> signaler [
 	"Return the object that is the subject involving me.
 	This is set automatically to my #receiver during #signal
@@ -366,7 +368,7 @@ Exception >> signaler [
 	^ signaler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> signaler: anObject [
 	"Set the object that is the subject involving me.
 	This is set automatically to my #receiver during #signal
@@ -375,7 +377,7 @@ Exception >> signaler: anObject [
 	signaler := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> signalerContext [
 	"Find the first sender of signal(:), the first context which is neither for an instance method nor for a class side method of Exception (or subclass).
 	This will make sure that the same context is found for both, `Error signal` and `Error new signal`"
@@ -385,7 +387,7 @@ Exception >> signalerContext [
 		or: [ context receiver == self class ]) not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> tag [
 	"Return an exception's tag value."
 
@@ -394,14 +396,14 @@ Exception >> tag [
 		ifNotNil: [ tag ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exception >> tag: t [
 	"This message is not specified in the ANSI protocol, but that looks like an oversight because #tag is specified, and the spec states that the signaler may store the tag value."
 
 	tag := t
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Exception >> unhandledErrorAction [
 	"No one has handled this error, then I gave them a chance to decide how to debug it and I raise an UnhandledError. But it was not handled by anybody so that we are here (see nhandedError-defaultAction).
 	It is the final action an exception can do which is normally a debugger in interactive image"

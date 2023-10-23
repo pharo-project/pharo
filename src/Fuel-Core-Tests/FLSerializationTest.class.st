@@ -2,28 +2,31 @@
 Superclass for serialization tests
 "
 Class {
-	#name : #FLSerializationTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'FLSerializationTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'streamStrategy',
 		'classFactory',
 		'materializer',
-		'serializer'
+		'serializer',
+		'addedGlobals'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializationTest class >> packageNamesUnderTest [
 	^ #('Fuel')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializationTest class >> resources [
 	^ { FLFilePoolTestResource }
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> assertSerializationEqualityOf: anObject [
 	"Asserts that the original object and the materialized one are equal (but not the same)"
 
@@ -33,7 +36,7 @@ FLSerializationTest >> assertSerializationEqualityOf: anObject [
 	self assert: anObject = materialized description: 'The materialized object should be equal to serialized one'.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> assertSerializationEqualityOrIdentityOf: anObject [
 	"Asserts that the original object and the materialized one are equal (may be the same)"
 
@@ -42,7 +45,7 @@ FLSerializationTest >> assertSerializationEqualityOrIdentityOf: anObject [
 	self assert: anObject = materialized description: 'The materialized object should be equal to serialized one'.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> assertSerializationIdentityOf: anObject [
 	"Asserts that the original object and the materialized one are the same"
 
@@ -53,17 +56,17 @@ FLSerializationTest >> assertSerializationIdentityOf: anObject [
 		description: 'The materialized object is not the same as the serialized one'.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializationTest >> classFactory [
 	^classFactory
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 FLSerializationTest >> deleteFilePath: aFilename [
 	(File named: aFilename) delete
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLSerializationTest >> expectedFailures [
 	"Global values are expected to be of type String. We'd need to modify string
 	encoding to support String and WideString or treat the value as an arbitrary
@@ -71,73 +74,73 @@ FLSerializationTest >> expectedFailures [
 	^ #(testWideStringGlobal testConsiderCustomWideSymbolGlobal testWideStringClassName)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> materialized [
 	^ self materializedObjects root
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> materializedObjects [
 	^ self materializer materialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializationTest >> materializer [
 	^ materializer
 ]
 
-{ #category : #'class-factory' }
+{ #category : 'class-factory' }
 FLSerializationTest >> newClassOrTrait [
 	^ self classFactory silentlyNewClass
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> resultOfSerializeAndMaterialize: anObject [
 	^ self
 		serialize: anObject;
 		materialized
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> resultOfSerializeAndMaterializeCompiledMethod: aCompiledMethod [
 	| materialized |
 	materialized := self resultOfSerializeAndMaterialize: aCompiledMethod.
 	self assert: (materialized isEqualRegardlessTrailerTo: aCompiledMethod)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> resultOfSerializeAndMaterializeMethod: aCompiledMethod [
 	self serializer fullySerializeMethod: aCompiledMethod. 
 	self serialize: aCompiledMethod.
 	^ self materialized
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> resultOfSerializeAndMaterializeMethodDictionary: aMethodDictionary [
 	| materialized |
 	materialized := self resultOfSerializeAndMaterialize: aMethodDictionary.
 	self assert: (materialized isEqualRegardlessMethodsTrailerTo: aMethodDictionary)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> serializationOf: anObject includes: anotherObject [ 
 	self serialize: anObject.
 	^ self materializedObjects objects includes: anotherObject
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLSerializationTest >> serialize: anObject [
 	self serializer
 		object: anObject;
 		serialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLSerializationTest >> serializer [
 	^ serializer
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> setUp [
 	super setUp.
 	
@@ -149,17 +152,18 @@ FLSerializationTest >> setUp [
 		setUpMaterializer
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> setUpClassFactory [
-	classFactory := FLClassFactoryForTestCase forEnvironment: self environmentOfTest
+
+	classFactory := ClassFactoryForTestCase environment: self environmentOfTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> setUpEnvironment [
-	self testingEnvironment: (FLEnvironmentProtectingWrapper on: Smalltalk globals)
+	addedGlobals := OrderedCollection new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> setUpMaterializer [
 	materializer := FLMaterializerMock new
 		environment: self environmentOfTest;
@@ -167,7 +171,7 @@ FLSerializationTest >> setUpMaterializer [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> setUpSerializer [
 	serializer := FLSerializerMock new
 		environment: self environmentOfTest;
@@ -175,19 +179,29 @@ FLSerializationTest >> setUpSerializer [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> setUpStreamStrategy [
 	streamStrategy := FLFileReferenceStreamStrategy new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> tearDown [
-	self tearDownClassFactory.
+	self
+		tearDownClassFactory;
+		tearDownEnvironment.
 	
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLSerializationTest >> tearDownClassFactory [
 	self classFactory cleanUp
+]
+
+{ #category : 'running' }
+FLSerializationTest >> tearDownEnvironment [
+	addedGlobals do: [ :key |
+		self environmentOfTest
+			removeKey: key
+			ifAbsent: [] ]
 ]

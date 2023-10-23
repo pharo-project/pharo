@@ -1,6 +1,6 @@
-Extension { #name : #SycRemoveMethodStrategy }
+Extension { #name : 'SycRemoveMethodStrategy' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycRemoveMethodStrategy class >> createAllForBrowser: aBrowser [
 
 	| result |
@@ -13,13 +13,13 @@ SycRemoveMethodStrategy class >> createAllForBrowser: aBrowser [
 	^result
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycRemoveMethodStrategy class >> newForBrowser: aBrowser [
 
 	^self new
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycRemoveMethodStrategy >> orderForBrowser [
 	"by default any new strategy will be at the end"
 	^1000

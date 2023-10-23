@@ -3,12 +3,13 @@ A FinderExampleClassNode is a node used by the FinderUI's tree representing the 
 from an examples (by MethodFinder)
 "
 Class {
-	#name : #FinderExampleClassNode,
-	#superclass : #FinderClassNode,
-	#category : #'Tool-Finder-UI'
+	#name : 'FinderExampleClassNode',
+	#superclass : 'FinderClassNode',
+	#category : 'Tool-Finder-UI',
+	#package : 'Tool-Finder-UI'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 FinderExampleClassNode >> displayString [
 	(self parentNode receiver isKindOf: self item)
 		ifTrue: [ ^ '*' , super displayString ].

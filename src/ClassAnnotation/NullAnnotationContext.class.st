@@ -6,20 +6,21 @@ Annotations with undefined contexts (unspecified context) are never returned fro
 I has singleton #instance on class side which is used by annotations as default context value
 "
 Class {
-	#name : #NullAnnotationContext,
-	#superclass : #AnnotationContext,
+	#name : 'NullAnnotationContext',
+	#superclass : 'AnnotationContext',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #ClassAnnotation
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NullAnnotationContext class >> instance [
 	^instance ifNil: [instance := self new]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NullAnnotationContext >> describes: anAnnotationUser [
 
 	^false

@@ -2,13 +2,15 @@
 I am announced when existing package tag is removed from package
 "
 Class {
-	#name : #PackageTagRemoved,
-	#superclass : #PackageTagAnnouncement,
-	#category : #'System-Announcements-System-Packages'
+	#name : 'PackageTagRemoved',
+	#superclass : 'PackageTagAnnouncement',
+	#category : 'System-Announcements-System-Packages',
+	#package : 'System-Announcements',
+	#tag : 'System-Packages'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 PackageTagRemoved class >> initialize [
 
-	self deprecatedAliases: { 'ClassTagRemoved' }
+	self deprecatedAliases: { #ClassTagRemoved . #CategoryRemoved }
 ]

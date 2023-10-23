@@ -1,16 +1,17 @@
 Class {
-	#name : #BaselineOfUnifiedFFI,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfUnifiedFFI',
+	#superclass : 'BaselineOf',
 	#instVars : [
 		'initializersEnabled'
 	],
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfUnifiedFFI
+	#category : 'BaselineOfUnifiedFFI',
+	#package : 'BaselineOfUnifiedFFI'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfUnifiedFFI >> baseline: spec [
 	<baseline>
 	
@@ -31,7 +32,7 @@ BaselineOfUnifiedFFI >> baseline: spec [
 			group: 'legacy' with: #('UnifiedFFI-Legacy') ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
@@ -40,7 +41,7 @@ BaselineOfUnifiedFFI >> postload: loader package: packageSpec [
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfUnifiedFFI >> preload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"

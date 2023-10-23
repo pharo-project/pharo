@@ -1,6 +1,6 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : 'RGMethodDefinition' }
 
-{ #category : #'*Ring-Definitions-Monticello' }
+{ #category : '*Ring-Definitions-Monticello' }
 RGMethodDefinition >> sameAsMCDefinition: anMCMethodDefinition [
 	^ anMCMethodDefinition selector = self selector
 		and:
@@ -8,7 +8,7 @@ RGMethodDefinition >> sameAsMCDefinition: anMCMethodDefinition [
 			anMCMethodDefinition className = self className
 				and:
 					[
-					anMCMethodDefinition classIsMeta = self isMetaSide
+					anMCMethodDefinition classIsMeta = self isMeta
 						and:
 							[
 							anMCMethodDefinition category = self protocol

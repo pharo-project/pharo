@@ -1,42 +1,42 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> assignmentNodes [
 	^self ast assignmentNodes
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> blockNodes [
 	^self ast blockNodes
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> compiledMethod [
 	^self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> createTwin [
 	self reflectiveMethod: (ReflectiveMethod on: self)
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> destroyTwin [
 	self reflectiveMethod: nil
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> hasBreakpoint [
 	^ Breakpoint isInstalledIn: self
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
 	^self reflectiveMethod hasMetaLinks
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> installLink: aMetaLink [
 	self reflectiveMethod ifNil: [ self createTwin ].
 	self reflectiveMethod increaseLinkCount.
@@ -45,17 +45,17 @@ CompiledMethod >> installLink: aMetaLink [
 		ifFalse: [ self invalidate ]
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> instanceVariableReadNodes [
 	^self ast instanceVariableReadNodes
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> instanceVariableWriteNodes [
 	^self ast instanceVariableWriteNodes
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> invalidate [
 	| reflectiveMethod |
 	self reflectivityDisabled ifTrue: [ ^self ].
@@ -67,7 +67,7 @@ CompiledMethod >> invalidate [
 					ifFalse: [reflectiveMethod installReflectiveMethod]
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> link: aMetaLink toVariableNamed: vName option: accessStrategy [
 	^aMetaLink
 		installOnVariable: (self lookupVar: vName)
@@ -76,7 +76,7 @@ CompiledMethod >> link: aMetaLink toVariableNamed: vName option: accessStrategy 
 		instanceSpecific: false
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> metaLinkOptions [
 	^{
 	#penultimateLiteral -> #( + optionCompileOnLinkInstallation).
@@ -89,7 +89,7 @@ CompiledMethod >> metaLinkOptions [
 	}
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> newBreakpointForVariable: aVariableName [
 	^ (self tempNames includes: aVariableName)
 		ifTrue: [ VariableBreakpoint
@@ -100,43 +100,43 @@ CompiledMethod >> newBreakpointForVariable: aVariableName [
 				inClass: self methodClass ]
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> reflectiveMethod [
 	^self propertyAt: #reflectiveMethod ifAbsent: nil
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> reflectiveMethod: aReflectiveMethod [
 	self propertyAt: #reflectiveMethod put: aReflectiveMethod
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> reflectivityDisabled [
 	^self hasPragmaNamed: #disableReflectivity
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> removeLink: aLink [
 
 	self reflectiveMethod ifNotNil: [:rm | rm removeLink: aLink]
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> sendNodes [
 	^self ast sendNodes
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> variableNodes [
 	^self ast variableNodes
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> variableReadNodes [
 	^self ast variableReadNodes
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 CompiledMethod >> variableWriteNodes [
 	^self ast variableWriteNodes
 ]

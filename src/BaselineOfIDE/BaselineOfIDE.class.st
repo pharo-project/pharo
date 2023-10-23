@@ -25,75 +25,16 @@ Installs:
  
 "
 Class {
-	#name : #BaselineOfIDE,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfIDE',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfIDE
+	#category : 'BaselineOfIDE',
+	#package : 'BaselineOfIDE'
 }
 
-{ #category : #actions }
-BaselineOfIDE >> additionalInitialization [
-
-	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
-	Smalltalk tools register: FileList as: #fileList.
-	Smalltalk tools register: Finder as: #finder.
-	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: TimeProfiler as: #timeProfiler.
-
-	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
-	MorphicCoreUIManager classPool at: #UIProcess put: nil.
-
-	PolymorphSystemSettings desktopColor:  Color veryVeryLightGray lighter.
-	SourceCodeFonts setSourceCodeFonts: 10.
-	FreeTypeSystemSettings loadFt2Library: true.
-	FreeTypeSettings current monitorType: #LCD.
-	FreeTypeSettings current glyphContrast: 55.
-	
-	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
-	GrowlMorph position: #bottomLeft.
-	ShortcutReminder enabled: true.
-
-	KMRepository reset.
-	Morph shortcutsHandler: KMShortcutHandler new.
-
-	MCSaveVersionDialog previousMessages add: String new.
-
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [RBSimpleFormatter]).
-
-	Color flushCache.
-	
-	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
-	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
-
-	ASTTransformExamplePluginActive recompile.
-	PharoCommandLineHandler recompile.
-	SmalltalkImage recompile.
-	
-	RubCharacterScanner initialize.
-	
-	RubAbstractTextArea highlightMessageSend: true.
-	
-	PharoLightTheme beCurrent.
-	
-	SDL_Event initialize.
-	
-	HiRulerBuilderTest initialize.
-		
-	3 timesRepeat: [
-		Smalltalk garbageCollect.
-		Undeclared removeUnreferencedKeys.].
-	
-	"Making HeuristicCompletion the default completion engine"
-	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
-	
-	self loadIceberg.	
-	self loadExtraTools.	
-	self makeCalypsoDefaultBrowser.
-]
-
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> baseline: spec [
 	<baseline>
 	| repository |
@@ -138,7 +79,11 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'tests' ) ].
-
+			
+		spec baseline: 'Refactoring' with: [
+			spec
+				repository: repository;
+				loads: #( 'Tests') ].
 
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
@@ -162,7 +107,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'EmergencyDebugger' with: [ spec repository: repository ].
-		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'Fuel' with: [
@@ -185,7 +129,6 @@ BaselineOfIDE >> baseline: spec [
 		spec
 			baseline: 'ReferenceFinder'
 			with: [ spec repository: repository ].
-		spec baseline: 'Refactoring2' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 		spec baseline: 'Calypso' with: [
 			spec
@@ -201,7 +144,7 @@ BaselineOfIDE >> baseline: spec [
 		self beautifulComments: spec.
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
-		self roassal3: spec.
+		self roassal: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
@@ -211,14 +154,14 @@ BaselineOfIDE >> baseline: spec [
 	]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> beautifulComments: spec [ 
 
 	spec baseline: 'BeautifulComments' with: [ 
 		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> documentBrowserCore: spec [
 
 	spec baseline: 'NewToolsDocumentBrowser' with: [
@@ -227,7 +170,7 @@ BaselineOfIDE >> documentBrowserCore: spec [
 			loads: 'Core+Tests' ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> drTests: spec [
 
 	spec 
@@ -235,7 +178,7 @@ BaselineOfIDE >> drTests: spec [
 		with: [ spec repository: self packageRepositoryURL ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> loadExtraTools [
 	"Load NewTools-DocumentBrowser-GitHubResource packages depending on Iceberg GitHub plugin"
 
@@ -256,7 +199,7 @@ BaselineOfIDE >> loadExtraTools [
 		IceRepository unregisterRepository: repository ifAbsent: [ "ignore" ] ].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> loadIceberg [
 
 	Metacello new
@@ -283,7 +226,7 @@ BaselineOfIDE >> loadIceberg [
 	self registerPharo.
 	self registerProject: 'Spec2' baseline: 'Spec2' otherBaselines: #('SpecCore').
 	self registerProject: 'NewTools'.
-	self registerProject: 'Roassal3'.
+	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
 	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
@@ -291,13 +234,13 @@ BaselineOfIDE >> loadIceberg [
 	self registerIceberg
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> makeCalypsoDefaultBrowser [
 
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> microdown: spec [ 
 
 	spec baseline: 'Microdown' with: [ 
@@ -306,7 +249,7 @@ BaselineOfIDE >> microdown: spec [
 			loads: #('RichText' 'Tests') ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> newTools: spec [ 
 
 	spec baseline: 'NewTools' with: [
@@ -315,63 +258,79 @@ BaselineOfIDE >> newTools: spec [
 			loads: #('default') ].
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> pharoPluginClass [
 	
 	^ Smalltalk classNamed: #IcePharoPlugin
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> postload: loader package: packageSpec [
-
-	| initializersEnabled repo gofer |
-
 	"Ignore pre and post loads if already executed"
+
 	Initialized = true ifTrue: [ ^ self ].
 
-	Author fullName: self class name.
-	
 	"collect and process the standard tools registrations"
 	Smalltalk tools initDefaultToolSet.
-	
-	initializersEnabled := MCMethodDefinition initializersEnabled.
 
-	MCMethodDefinition initializersEnabled: false.
-	
-	repo := TonelRepository new
-		directory: self packageRepository directory;
-		yourself.
-		
-	gofer := Gofer it repository: repo.
-	gofer package: #'RPackage-Tests'.
-	gofer load.
-	
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	Smalltalk cleanOutUndeclared. 
-
-	Stdio stdout 
-		nextPutAll: ' ------------ Obsolete ------------';
-		lf;
-		nextPutAll: SystemNavigation default obsoleteClasses asString;
-		lf;
-		nextPutAll: ' ............ Obsolete ............';
-		lf.
-
-	Smalltalk fixObsoleteReferences.
-	
 	EpMonitor current enable.
-		
-	Author reset.
 
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	self additionalInitialization.
+	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
+	Smalltalk tools register: FileList as: #fileList.
+	Smalltalk tools register: Finder as: #finder.
+	Smalltalk tools register: ProcessBrowser as: #processBrowser.
+	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
-	Initialized := true.
+	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
+	MorphicCoreUIManager classPool at: #UIProcess put: nil.
+
+	PolymorphSystemSettings desktopColor: Color veryVeryLightGray lighter.
+	SourceCodeFonts setSourceCodeFonts: 10.
+	FreeTypeSystemSettings loadFt2Library: true.
+	FreeTypeSettings current monitorType: #LCD.
+	FreeTypeSettings current glyphContrast: 55.
+
+	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
+	GrowlMorph position: #bottomLeft.
+	ShortcutReminder enabled: true.
+
+	KMRepository reset.
+	Morph shortcutsHandler: KMShortcutHandler new.
+
+	MCSaveVersionDialog previousMessages add: String new.
+
+	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+
+	Color flushCache.
+
+	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
+	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
+
+	ASTTransformExamplePluginActive recompile.
+	PharoCommandLineHandler recompile.
+	SmalltalkImage recompile.
+
+	RubCharacterScanner initialize.
+
+	RubAbstractTextArea highlightMessageSend: true.
+
+	PharoLightTheme beCurrent.
+
+	SDL_Event initialize.
+
+	HiRulerBuilderTest initialize.
+
+	"Making HeuristicCompletion the default completion engine"
+	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
+
+	self loadIceberg.
+	self loadExtraTools.
+	self makeCalypsoDefaultBrowser.
+
+	Initialized := true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> registerIceberg [
 	
 	self pharoPluginClass addIcebergProjectToIceberg.
@@ -381,13 +340,13 @@ BaselineOfIDE >> registerIceberg [
 	Metacello new baseline: 'Iceberg'; register
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfIDE >> registerPharo [
 	
 	self pharoPluginClass addPharoProjectToIceberg
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName [
 
 	^ self 
@@ -396,7 +355,7 @@ BaselineOfIDE >> registerProject: projectName [
 		otherBaselines: #()
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName baseline: baselineName [
 
 	^ self 
@@ -405,7 +364,7 @@ BaselineOfIDE >> registerProject: projectName baseline: baselineName [
 		otherBaselines: #()
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName baseline: baselineName otherBaselines: anArray [
 
 	^ self 
@@ -415,7 +374,7 @@ BaselineOfIDE >> registerProject: projectName baseline: baselineName otherBaseli
 		otherBaselines: anArray
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName externalProject: externalProject [
 
 	^ self 
@@ -425,7 +384,7 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject [
 		otherBaselines: #()
 ]
 
-{ #category : #'private - register' }
+{ #category : 'private - register' }
 BaselineOfIDE >> registerProject: projectName externalProject: externalProject baseline: baselineName otherBaselines: anArray [
 	| baselineClass className |
 
@@ -443,18 +402,18 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 		Metacello new baseline: each; register ]
 ]
 
-{ #category : #baselines }
-BaselineOfIDE >> roassal3: spec [
+{ #category : 'baselines' }
+BaselineOfIDE >> roassal: spec [
 
 	spec 
-		baseline: 'Roassal3' 
+		baseline: 'Roassal' 
  		with: [ 
 			spec 
-				repository: (self class environment at: #BaselineOfPharo) roassal3Repository;
+				repository: (self class environment at: #BaselineOfPharo) roassalRepository;
     			loads: #( 'Core' 'Tests') ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
@@ -464,7 +423,7 @@ BaselineOfIDE >> specCode: spec [
 			loads: #('Code' 'CodeTests') ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfIDE >> welcomeBrowser: spec [
 
 	spec baseline: 'WelcomeBrowser' with: [

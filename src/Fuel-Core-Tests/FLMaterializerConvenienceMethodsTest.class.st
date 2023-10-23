@@ -1,10 +1,12 @@
 Class {
-	#name : #FLMaterializerConvenienceMethodsTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Configuration'
+	#name : 'FLMaterializerConvenienceMethodsTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Configuration',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Configuration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLMaterializerConvenienceMethodsTest >> testMaterializeFrom [
 	| object byteArray materialized |
 	object := FLPair new
@@ -21,7 +23,7 @@ FLMaterializerConvenienceMethodsTest >> testMaterializeFrom [
 	self assert: object equals: materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLMaterializerConvenienceMethodsTest >> testMaterializeFromByteArray [
 	| object byteArray materialized |
 	object := FLPair new
@@ -38,7 +40,7 @@ FLMaterializerConvenienceMethodsTest >> testMaterializeFromByteArray [
 	self assert: object equals: materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLMaterializerConvenienceMethodsTest >> testMaterializeFromFileNamed [
 	| filePath object materialized |
 	filePath := FLFilePoolTestResource current filePathString: 'afile.fuel'.
@@ -55,7 +57,7 @@ FLMaterializerConvenienceMethodsTest >> testMaterializeFromFileNamed [
 	self assert: object equals: materialized
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLMaterializerConvenienceMethodsTest >> testMaterializeHeaderFrom [
 	| object byteArray materialized |
 	object := FLPair new
@@ -74,7 +76,7 @@ FLMaterializerConvenienceMethodsTest >> testMaterializeHeaderFrom [
 	self assert: (materialized additionalObjectAt: #homer) equals: 'simpson'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLMaterializerConvenienceMethodsTest >> testMaterializeHeaderFromByteArray [
 	| object byteArray materialized |
 	object := FLPair new
@@ -93,7 +95,7 @@ FLMaterializerConvenienceMethodsTest >> testMaterializeHeaderFromByteArray [
 	self assert: (materialized additionalObjectAt: #homer) equals: 'simpson'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLMaterializerConvenienceMethodsTest >> testMaterializeHeaderFromFileNamed [
 	| filePath object materialized |
 	filePath := FLFilePoolTestResource current filePathString: 'afile.fuel'.

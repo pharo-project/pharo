@@ -1,10 +1,12 @@
 Class {
-	#name : #RelationSlotTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-Examples - Associations'
+	#name : 'RelationSlotTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-Examples - Associations',
+	#package : 'Slot-Tests',
+	#tag : 'Examples - Associations'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSlotTest >> testDefinition [
 
 	| s1 s2 |
@@ -16,7 +18,7 @@ RelationSlotTest >> testDefinition [
 	self assert: s1 hasInverse
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSlotTest >> testDefinitionWithClass [
 
 	| s1 s2 |
@@ -28,7 +30,7 @@ RelationSlotTest >> testDefinitionWithClass [
 	self assert: s1 hasInverse
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSlotTest >> testDefinitionWithoutInverse [
 
 	| slot |
@@ -37,7 +39,7 @@ RelationSlotTest >> testDefinitionWithoutInverse [
 	self deny: slot hasInverse
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSlotTest >> testEquals [
 
 	| s1 s2 |
@@ -49,7 +51,7 @@ RelationSlotTest >> testEquals [
 	self assert: s1 hash equals: s2 hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RelationSlotTest >> testNotEquals [
 	| s1 s2 |
 	s1 := ToManyRelationSlot named: #slot inverse: #x inClass: #SlotExamplePerson.

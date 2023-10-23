@@ -2,17 +2,19 @@
 SUnit tests for small identity dictionaries
 "
 Class {
-	#name : #SmallIdentityDictionaryTest,
-	#superclass : #SmallDictionaryTest,
-	#category : #'Collections-Unordered-Tests-Dictionaries'
+	#name : 'SmallIdentityDictionaryTest',
+	#superclass : 'SmallDictionaryTest',
+	#category : 'Collections-Unordered-Tests-Dictionaries',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SmallIdentityDictionaryTest >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 SmallIdentityDictionaryTest >> classToBeTested [
 
 	^ SmallIdentityDictionary

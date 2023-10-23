@@ -1,6 +1,6 @@
-Extension { #name : #GoferVersionReference }
+Extension { #name : 'GoferVersionReference' }
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 GoferVersionReference >> compare: aLoadableReference using: aComparisonOperator [
 	"Compare versions using <aComparisonOperator>. package names #= then compare based upon version number
 	Branches and Author names are used in the case of a version number tie, because we need to avoid seesaw loading."
@@ -14,7 +14,7 @@ GoferVersionReference >> compare: aLoadableReference using: aComparisonOperator 
 	^ self author perform: aComparisonOperator with: aLoadableReference author
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 GoferVersionReference >> matchesMetacelloGoferPackage: aMetacelloGoferPackage [
   | ref |
   (super matchesMetacelloGoferPackage: aMetacelloGoferPackage)
@@ -25,7 +25,7 @@ GoferVersionReference >> matchesMetacelloGoferPackage: aMetacelloGoferPackage [
   ^ self versionNumber = ref versionNumber
 ]
 
-{ #category : #'*Metacello-MC' }
+{ #category : '*Metacello-MC' }
 GoferVersionReference >> metacelloPackageNameWithBranch [
 	"answer array with package name and package name with branch name"
 	self branch isEmpty

@@ -2,67 +2,68 @@
 Snapshot writer
 "
 Class {
-	#name : #MCFileTreeStSnapshotWriter,
-	#superclass : #MCFileTreeAbstractStWriter,
+	#name : 'MCFileTreeStSnapshotWriter',
+	#superclass : 'MCFileTreeAbstractStWriter',
 	#instVars : [
 		'classDefinitions',
 		'traitDefinitions',
 		'classTraitDefinitions',
 		'methodDefinitions'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStSnapshotWriter >> classDefinitions [
     ^ classDefinitions ifNil: [ classDefinitions := Dictionary new ]
    
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStSnapshotWriter >> classTraitDefinitions [
     classTraitDefinitions ifNil: [ classTraitDefinitions := Dictionary new ].
     ^ classTraitDefinitions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStSnapshotWriter >> methodDefinitions [
     methodDefinitions ifNil: [ methodDefinitions := Dictionary new ].
     ^ methodDefinitions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStSnapshotWriter >> traitDefinitions [
     traitDefinitions ifNil: [ traitDefinitions := Dictionary new ].
     ^ traitDefinitions
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStSnapshotWriter >> visitClassDefinition: definition [
     orderedClassNames add: definition className.
     self classDefinitions at: definition className put: definition
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStSnapshotWriter >> visitClassTraitDefinition: definition [
     orderedTraitNames add: definition className, ' classTrait'.
     self classTraitDefinitions at: definition className put: definition
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStSnapshotWriter >> visitMethodDefinition: definition [
     (self methodDefinitions
         at: definition className
         ifAbsent: [ self methodDefinitions at: definition className put: OrderedCollection new ]) add: definition
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeStSnapshotWriter >> visitTraitDefinition: definition [
     orderedTraitNames add: definition className.
     self traitDefinitions at: definition className put: definition
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStSnapshotWriter >> writeClassDefinition: definition to: classPath [
     self
         writeInDirectoryName: classPath
@@ -71,7 +72,7 @@ MCFileTreeStSnapshotWriter >> writeClassDefinition: definition to: classPath [
         visit: [ self writeClassDefinition: definition ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStSnapshotWriter >> writeClassTraitDefinition: definition to: traitPath [
     self
         writeInDirectoryName: traitPath
@@ -80,7 +81,7 @@ MCFileTreeStSnapshotWriter >> writeClassTraitDefinition: definition to: traitPat
         visit: [ self writeClassTraitDefinition: definition ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCFileTreeStSnapshotWriter >> writeDefinitions: aCollection [
   | basePath extensionClasses extensionMethodDefinitions methodHolders |
   self writeBasicDefinitions: aCollection.
@@ -123,7 +124,7 @@ MCFileTreeStSnapshotWriter >> writeDefinitions: aCollection [
 
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStSnapshotWriter >> writeMethodDefinition: methodDefinition to: methodPath [
     | filename |
     filename := self fileNameForSelector: methodDefinition selector.
@@ -134,7 +135,7 @@ MCFileTreeStSnapshotWriter >> writeMethodDefinition: methodDefinition to: method
         visit: [ self writeMethodDefinition: methodDefinition ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStSnapshotWriter >> writeMethodHolderDefinitions: aCollection extension: extension to: basePath do: aBlock [
   aCollection
     keysAndValuesDo: [ :className :definition | 
@@ -169,7 +170,7 @@ MCFileTreeStSnapshotWriter >> writeMethodHolderDefinitions: aCollection extensio
 
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStSnapshotWriter >> writeTraitDefinition: definition to: traitPath [
     self
         writeInDirectoryName: traitPath

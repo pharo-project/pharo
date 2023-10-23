@@ -1,10 +1,12 @@
 Class {
-	#name : #FLFullHeaderSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-FullSerialization'
+	#name : 'FLFullHeaderSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-FullSerialization',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'FullSerialization'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullHeaderSerializationTest >> testAdditionalObjects [
 
 	self serializer
@@ -17,7 +19,7 @@ FLFullHeaderSerializationTest >> testAdditionalObjects [
 	self assert: (self materializedObjects header additionalObjectAt: 42) equals: 68
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullHeaderSerializationTest >> testJustMaterializeHeader [
 	| header |
 	self serializer
@@ -31,12 +33,13 @@ FLFullHeaderSerializationTest >> testJustMaterializeHeader [
 	self assert: (header additionalObjectAt: 42) equals: 68
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullHeaderSerializationTest >> testPostMaterializationActions [
+
 	| aClass |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
-	aClass := self classFactory silentlyNewClassWithClassVariableNames: 'TestClassVariable TestClassVariable2'.
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'TestClassVariable TestClassVariable2' ].
 	self classFactory
 		silentlyCompile: 'postLoadMethod TestClassVariable := 1' in: aClass class;
 		silentlyCompile: 'postLoadMethod2 TestClassVariable := 2' in: aClass class;
@@ -55,7 +58,7 @@ FLFullHeaderSerializationTest >> testPostMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullHeaderSerializationTest >> testPostMaterializationActionsMustBeClean [
 	self
 		should: [ self serializer addPostMaterializationAction: [ self ] ]
@@ -63,12 +66,13 @@ FLFullHeaderSerializationTest >> testPostMaterializationActionsMustBeClean [
 		description: 'Post materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullHeaderSerializationTest >> testPreMaterializationActions [
+
 	| aClass |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
-	aClass := self classFactory silentlyNewClassWithClassVariableNames: 'TestClassVariable TestClassVariable2'.
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'TestClassVariable TestClassVariable2' ].
 	self classFactory
 		silentlyCompile: 'postLoadMethod TestClassVariable := 1' in: aClass class;
 		silentlyCompile: 'postLoadMethod2 TestClassVariable := 2' in: aClass class;
@@ -78,15 +82,14 @@ FLFullHeaderSerializationTest >> testPreMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 1.
 	self serializer
 		at: #className putAdditionalObject: aClass name;
-		addPreMaterializationAction: [ :header :environment |
-			(environment at: (header additionalObjectAt: #className)) perform: #postLoadMethod2 ].
+		addPreMaterializationAction: [ :header :environment | (environment at: (header additionalObjectAt: #className)) perform: #postLoadMethod2 ].
 	self serialize: aClass.
 	self assert: (aClass perform: #classVariable) equals: 1.
 	self materialized.
 	self assert: (aClass perform: #classVariable) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLFullHeaderSerializationTest >> testPreMaterializationActionsMustBeClean [
 	self
 		should: [ self serializer addPreMaterializationAction: [ self ] ]

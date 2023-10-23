@@ -22,70 +22,84 @@ My preconditions also verify that `RBAddMethodTransformRefactoring` precondition
 
 "
 Class {
-	#name : #RBAddMethodRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBAddMethodRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'transformation',
-		'protocols',
-		'source'
+		'source',
+		'protocol'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
-RBAddMethodRefactoring class >> addMethod: aString toClass: aClass inProtocols: protocolList [
-	^ self new
-		addMethod: aString
-		toClass: aClass
-		inProtocols: protocolList
-]
-
-{ #category : #'instance creation' }
-RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: aClass inProtocols: protocolList [
+{ #category : 'instance creation' }
+RBAddMethodRefactoring class >> model: aRBSmalltalk sourceCode: aString in: aClass withProtocol: aProtocol [
 	^ self new
 		model: aRBSmalltalk;
-		addMethod: aString
-			toClass: aClass
-			inProtocols: protocolList;
+		sourceCode: aString
+			in: aClass
+			withProtocol: aProtocol;
 		yourself
 ]
 
-{ #category : #initialization }
-RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protocolList [
-	class := self classObjectFor: aClass.
-	source := aString.
-	protocols := protocolList.
-	transformation := RBAddMethodTransformRefactoring
-								model: model
-								addMethod: aString
-								toClass: aClass
-								inProtocols: protocolList 
+{ #category : 'instance creation' }
+RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aProtocol [
+	^ self new
+		sourceCode: aString
+		in: aClass
+		withProtocol: aProtocol
 ]
 
-{ #category : #preconditions }
-RBAddMethodRefactoring >> preconditions [
+{ #category : 'preconditions' }
+RBAddMethodRefactoring >> checkPreconditions [
+	"We should have same preconditions checking API for all refactorings.
+	Some of them do it like: 
+	preconditions
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+	
+	and refactorings that are decorators do it like this method:
+	"
 
 	transformation checkPreconditions.
-	
+	super checkPreconditions 
+]
+
+{ #category : 'preconditions' }
+RBAddMethodRefactoring >> preconditions [
+
 	^ (RBCondition canUnderstand: transformation selector in: class) not
 ]
 
-{ #category : #printing }
+{ #category : 'transforming' }
+RBAddMethodRefactoring >> privateTransform [
+
+	transformation privateTransform
+]
+
+{ #category : 'initialization' }
+RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol [
+	class := self classObjectFor: aClass.
+	source := aString.
+	protocol := aProtocol.
+	transformation := RBAddMethodTransformation
+								model: model
+								sourceCode: aString
+								in: aClass
+								withProtocol: aProtocol 
+]
+
+{ #category : 'printing' }
 RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' addMethod: ''';
+		nextPutAll: ' sourceCode: ''';
 		nextPutAll: source;
-		nextPutAll: ''' toClass: '.
+		nextPutAll: ''' in: '.
 	class storeOn: aStream.
-	aStream nextPutAll: ' inProtocols: '.
-	protocols storeOn: aStream.
+	aStream nextPutAll: ' withProtocol: '.
+	protocol storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBAddMethodRefactoring >> transform [
-
-	transformation transform
 ]

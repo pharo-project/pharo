@@ -6,16 +6,18 @@ new variable name. See my subclasses for the concrete implementation of renaming
 Executing this refactory change will change the variable name of the (global) class.
 "
 Class {
-	#name : #RBRenameVariableChange,
-	#superclass : #RBCompositeRefactoryChange,
+	#name : 'RBRenameVariableChange',
+	#superclass : 'RBCompositeRefactoryChange',
 	#instVars : [
 		'className',
 		'isMeta'
 	],
-	#category : #'Refactoring-Changes-Changes-Variables'
+	#category : 'Refactoring-Changes-Changes-Variables',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Variables'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRenameVariableChange class >> rename: oldName to: newName in: aClass [
 	^ self new
 		oldName: oldName;
@@ -24,7 +26,7 @@ RBRenameVariableChange class >> rename: oldName to: newName in: aClass [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRenameVariableChange >> = aRenameVariableChange [
 
 	self class = aRenameVariableChange class
@@ -35,13 +37,13 @@ RBRenameVariableChange >> = aRenameVariableChange [
 		and: [ newName = aRenameVariableChange newName ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableChange >> addNewVariable [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> changeClass [
 
 	| class |
@@ -51,7 +53,7 @@ RBRenameVariableChange >> changeClass [
 		  ifFalse: [ class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> changeClass: aBehavior [
 
 	isMeta := aBehavior isMeta.
@@ -60,32 +62,32 @@ RBRenameVariableChange >> changeClass: aBehavior [
 		             ifFalse: [ aBehavior name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> changeClassName [
 
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> changeClassName: aSymbol [
 
 	className := aSymbol.
 	isMeta ifNil: [ isMeta := false ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameVariableChange >> changeString [
 
 	^ 'Rename ' , oldName , ' to ' , newName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableChange >> copyOldValuesToNewVariable [
 
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameVariableChange >> displayClassName [
 
 	^ isMeta
@@ -93,7 +95,7 @@ RBRenameVariableChange >> displayClassName [
 		ifFalse: [ self changeClassName asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableChange >> executeNotifying: aBlock [
 
 	| undo |
@@ -107,67 +109,67 @@ RBRenameVariableChange >> executeNotifying: aBlock [
 	^ undo
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRenameVariableChange >> hash [
 
 	^ (self class hash bitXor: self oldName hash) bitXor: self newName hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableChange >> isMeta [
 
 	^ isMeta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> nameToDisplay [
 
 	^ 'Rename ', self oldName, ' into ', self newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> newName [
 
 	^ newName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableChange >> newName: aString [
 
 	newName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> oldName [
 
 	^ oldName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameVariableChange >> oldName: aString [
 
 	oldName := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameVariableChange >> printOn: aStream [
 
 	aStream nextPutAll: self displayString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> removeOldVariable [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> textToDisplay [
 
 	self printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRenameVariableChange >> whatToDisplayIn: aChangeBrowser [
 
 	| result |

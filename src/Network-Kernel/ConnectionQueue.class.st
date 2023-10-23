@@ -3,8 +3,8 @@ A ConnectionQueue listens on a given port number and collects a queue of client 
 
 "
 Class {
-	#name : #ConnectionQueue,
-	#superclass : #Object,
+	#name : 'ConnectionQueue',
+	#superclass : 'Object',
 	#instVars : [
 		'portNumber',
 		'maxQueueLength',
@@ -13,16 +13,18 @@ Class {
 		'socket',
 		'process'
 	],
-	#category : #'Network-Kernel-Utilities'
+	#category : 'Network-Kernel-Utilities',
+	#package : 'Network-Kernel',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ConnectionQueue class >> portNumber: anInteger queueLength: queueLength [
 
 	^ self new initPortNumber: anInteger queueLength: queueLength
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ConnectionQueue >> connectionCount [
 	"Return an estimate of the number of currently queued connections. This is only an estimate since a new connection could be made, or an existing one aborted, at any moment."
 
@@ -30,7 +32,7 @@ ConnectionQueue >> connectionCount [
 	^accessSema critical: [connections size]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ConnectionQueue >> destroy [
 	"Terminate the listener process and destroy all sockets in my possesion."
 
@@ -44,7 +46,7 @@ ConnectionQueue >> destroy [
 	connections := OrderedCollection new
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ConnectionQueue >> getConnectionOrNil [
 	"Return a connected socket, or nil if no connection has been established."
 
@@ -60,7 +62,7 @@ ConnectionQueue >> getConnectionOrNil [
 		result]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ConnectionQueue >> getConnectionOrNilLenient [
 	"Return a connected socket, or nil if no connection has been established."
 
@@ -80,7 +82,7 @@ ConnectionQueue >> getConnectionOrNilLenient [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConnectionQueue >> initPortNumber: anInteger queueLength: queueLength [
 	"Private! Initialize the receiver to listen on the given port number. Up to queueLength connections will be queued."
 
@@ -94,12 +96,12 @@ ConnectionQueue >> initPortNumber: anInteger queueLength: queueLength [
 	process resume
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ConnectionQueue >> isValid [
 	^process notNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConnectionQueue >> listenLoop [
 	"Private! This loop is run in a separate process. It will establish up to maxQueueLength connections on the given port."
 	"Details: When out of sockets or queue is full, retry more frequently, since a socket may become available, space may open in the queue, or a previously queued connection may be aborted by the client, making it available for a fresh connection."
@@ -136,7 +138,7 @@ ConnectionQueue >> listenLoop [
 		self pruneStaleConnections]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConnectionQueue >> oldStyleListenLoop [
 	"Private! This loop is run in a separate process. It will establish up to maxQueueLength connections on the given port."
 	"Details: When out of sockets or queue is full, retry more frequently, since a socket may become available, space may open in the queue, or a previously queued connection may be aborted by the client, making it available for a fresh connection."
@@ -164,7 +166,7 @@ ConnectionQueue >> oldStyleListenLoop [
 		self pruneStaleConnections]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ConnectionQueue >> pruneStaleConnections [
 	"Private! The client may establish a connection and then disconnect while it is still in the connection queue. This method is called periodically to prune such sockets out of the connection queue and make room for fresh connections."
 

@@ -1,6 +1,6 @@
-Extension { #name : #PasteUpMorph }
+Extension { #name : 'PasteUpMorph' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 PasteUpMorph >> dragThroughOnDesktop: evt [
 	"Draw out a selection rectangle"
 	| selection |

@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosureTest }
+Extension { #name : 'BlockClosureTest' }
 
-{ #category : #'*System-Caching-Tests' }
+{ #category : '*System-Caching-Tests' }
 BlockClosureTest >> testMemoizedDictionary [
 
 	| cache factorial result |
@@ -22,7 +22,7 @@ BlockClosureTest >> testMemoizedDictionary [
 			(5 -> 120) } asSet
 ]
 
-{ #category : #'*System-Caching-Tests' }
+{ #category : '*System-Caching-Tests' }
 BlockClosureTest >> testMemoizedLRUCache [
 	| cache factorial result |
 	cache := LRUCache new maximumWeight: 3.

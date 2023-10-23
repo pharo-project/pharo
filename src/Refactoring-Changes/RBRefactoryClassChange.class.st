@@ -5,22 +5,24 @@ class(name) whether it is a change for for the meta or the instance side.
 I keep track of the undo and redo operation, but the concrete class change operation is implement by my subclasses.
 "
 Class {
-	#name : #RBRefactoryClassChange,
-	#superclass : #RBRefactoryChange,
+	#name : 'RBRefactoryClassChange',
+	#superclass : 'RBRefactoryChange',
 	#instVars : [
 		'className',
 		'isMeta'
 	],
-	#category : #'Refactoring-Changes-Changes-Classes'
+	#category : 'Refactoring-Changes-Changes-Classes',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Classes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRefactoryClassChange class >> isAbstract [
 
 	^ self name = #RBRefactoryClassChange
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBRefactoryClassChange >> = aRefactoryClassChange [
 
 	self class = aRefactoryClassChange class ifFalse: [ ^ false ].
@@ -28,13 +30,13 @@ RBRefactoryClassChange >> = aRefactoryClassChange [
 		  isMeta = aRefactoryClassChange isMeta ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBRefactoryClassChange >> asUndoOperation [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryClassChange >> changeClass [
 
 	| class |
@@ -46,33 +48,33 @@ RBRefactoryClassChange >> changeClass [
 		  ifFalse: [ class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryClassChange >> changeClass: aBehavior [
 
 	isMeta := aBehavior isMeta.
 	className := aBehavior instanceSide name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryClassChange >> changeClassName [
 
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryClassChange >> changeClassName: aSymbol [
 
 	className := aSymbol.
 	isMeta ifNil: [ isMeta := false ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRefactoryClassChange >> changeString [
 
 	^ self displayClassName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRefactoryClassChange >> displayClassName [
 
 	^ isMeta
@@ -80,55 +82,55 @@ RBRefactoryClassChange >> displayClassName [
 		  ifFalse: [ self changeClassName asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryClassChange >> executeNotifying: aBlock [
 
 	| undo |
 	undo := self asUndoOperation.
 	undo name: self name.
-	self primitiveExecute.
+	self generateChanges.
 	aBlock value.
 	^ undo
 ]
 
-{ #category : #comparing }
+{ #category : 'private' }
+RBRefactoryClassChange >> generateChanges [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'comparing' }
 RBRefactoryClassChange >> hash [
 
 	^ self changeClassName hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryClassChange >> isMeta [
 
 	^ isMeta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryClassChange >> methodSourceFor: aSymbol [
 
 	^ (self changeClass includesSelector: aSymbol) ifTrue: [
 		  self changeClass sourceCodeAt: aSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryClassChange >> parserClass [
 
 	^ RBParser
 ]
 
-{ #category : #private }
-RBRefactoryClassChange >> primitiveExecute [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 RBRefactoryClassChange >> printOn: aStream [
 
 	aStream nextPutAll: self displayString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryClassChange >> renameChangesForClass: oldClassName to: newClassName [
 
 	^ self changeClassName = oldClassName

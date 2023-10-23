@@ -2,12 +2,14 @@
 SUnit tests for class  DosTimeStamp
 "
 Class {
-	#name : #DosTimestampTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#name : 'DosTimestampTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DosTimestampTest >> testAsDateAndTime [
 
 	| timestamp |
@@ -15,7 +17,7 @@ DosTimestampTest >> testAsDateAndTime [
 	self assert: timestamp asDateAndTime equals: '21 May 2012 3:02:44 pm' asDateAndTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DosTimestampTest >> testFromDateAndTime [
 
 	| timestamp |
@@ -24,7 +26,7 @@ DosTimestampTest >> testFromDateAndTime [
 	self assert: timestamp value equals: 16r40B57856
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DosTimestampTest >> testTimesAreLocal [
 
 	| remoteDateAndTime remoteTimestamp localTimestamp |

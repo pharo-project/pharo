@@ -2,17 +2,27 @@
 I am a refactoring for moving a class variable up to the superclass.
 "
 Class {
-	#name : #RBPullUpClassVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBPullUpClassVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBPullUpClassVariableRefactoring >> preconditions [
 	^(RBCondition isMetaclass: class) not
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'transforming' }
+RBPullUpClassVariableRefactoring >> privateTransform [
+	| subclass |
+	subclass := self subclassDefiningVariable.
+	subclass removeClassVariable: variableName.
+	class addClassVariable: variableName
+]
+
+{ #category : 'private - accessing' }
 RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
 	| subclasses |
 	subclasses := class allSubclasses
@@ -21,12 +31,4 @@ RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
 	subclasses size > 1
 		ifTrue: [ self refactoringError: 'Multiple subclasses define ' , variableName ].
 	^ subclasses asArray first
-]
-
-{ #category : #transforming }
-RBPullUpClassVariableRefactoring >> transform [
-	| subclass |
-	subclass := self subclassDefiningVariable.
-	subclass removeClassVariable: variableName.
-	class addClassVariable: variableName
 ]

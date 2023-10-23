@@ -2,21 +2,23 @@
 I represent a package change in the system.
 "
 Class {
-	#name : #EpPackageChange,
-	#superclass : #EpCodeChange,
+	#name : 'EpPackageChange',
+	#superclass : 'EpCodeChange',
 	#instVars : [
 		'packageName'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpPackageChange class >> isAbstract [
 
 	^ self == EpPackageChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpPackageChange class >> packageName: aPackageName [
 
 	^ self new
@@ -24,31 +26,31 @@ EpPackageChange class >> packageName: aPackageName [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpPackageChange >> affectedPackageName [
 
 	^ self packageName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpPackageChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange isEpPackageChange and: [ aCodeChange packageName = self packageName ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpPackageChange >> isEpPackageChange [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpPackageChange >> packageName [
 
 	^ packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpPackageChange >> packageName: anObject [
 
 	packageName := anObject

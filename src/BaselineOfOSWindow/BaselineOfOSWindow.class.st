@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfOSWindow,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfOSWindow
+	#name : 'BaselineOfOSWindow',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfOSWindow',
+	#package : 'BaselineOfOSWindow'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfOSWindow >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

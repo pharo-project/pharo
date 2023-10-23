@@ -1,1 +1,1 @@
-Package { #name : #MonticelloFileServices }
+Package { #name : 'MonticelloFileServices' }

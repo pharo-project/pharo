@@ -1,15 +1,17 @@
 Class {
-	#name : #MetacelloVisitedPackages,
-	#superclass : #Object,
+	#name : 'MetacelloVisitedPackages',
+	#superclass : 'Object',
 	#instVars : [
 		'groups',
 		'packages',
 		'projects'
 	],
-	#category : #'Metacello-MC-Specs'
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloVisitedPackages >> initialize [
 
 	groups := Set new.
@@ -17,7 +19,7 @@ MetacelloVisitedPackages >> initialize [
 	projects := Set new.
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloVisitedPackages >> pushProject: aBlock [
 
 	| oldGroups oldPackages oldProjects |
@@ -32,7 +34,7 @@ MetacelloVisitedPackages >> pushProject: aBlock [
 		projects := oldProjects ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloVisitedPackages >> visit: aSpec doing: aBlock [
 
 	aSpec

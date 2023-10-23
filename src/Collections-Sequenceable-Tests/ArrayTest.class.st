@@ -5,8 +5,8 @@ This is the unit test for the class Array. Unit tests are a good way to exercise
 	- the sunit class category
 "
 Class {
-	#name : #ArrayTest,
-	#superclass : #CollectionRootTest,
+	#name : 'ArrayTest',
+	#superclass : 'CollectionRootTest',
 	#traits : 'TEmptySequenceableTest + TSequencedElementAccessTest + TCloneTest + TIncludesWithIdentityCheckTest + TCopyTest + TCreationWithTest + TPutBasicTest + TConvertTest + TOccurrencesForMultiplinessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TReplacementSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TBeginsEndsWith + TPrintOnSequencedTest + TIndexAccess + TSubCollectionAccess + TConvertAsSetForMultiplinessIdentityTest + TCopyPartOfSequenceable + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TIndexAccessForMultipliness + TCopyPartOfSequenceableForMultipliness + TConvertAsSortedTest + TPutTest + TSequencedStructuralEqualityTest + TSortTest + TSetArithmetic + TEnumeratingTest + TSequenceableTruncatedToSize',
 	#classTraits : 'TEmptySequenceableTest classTrait + TSequencedElementAccessTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCopyTest classTrait + TCreationWithTest classTrait + TPutBasicTest classTrait + TConvertTest classTrait + TOccurrencesForMultiplinessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TReplacementSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TBeginsEndsWith classTrait + TPrintOnSequencedTest classTrait + TIndexAccess classTrait + TSubCollectionAccess classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TIndexAccessForMultipliness classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TConvertAsSortedTest classTrait + TPutTest classTrait + TSequencedStructuralEqualityTest classTrait + TSortTest classTrait + TSetArithmetic classTrait + TEnumeratingTest classTrait + TSequenceableTruncatedToSize classTrait',
 	#instVars : [
@@ -50,51 +50,53 @@ Class {
 		'collectionOfFloat',
 		'recursiveArray'
 	],
-	#category : #'Collections-Sequenceable-Tests-Base'
+	#category : 'Collections-Sequenceable-Tests-Base',
+	#package : 'Collections-Sequenceable-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ArrayTest >> aValue [
 
 	^ 33
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> accessCollection [
 
 	^ example1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ArrayTest >> anIndex [
 
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> anotherElementNotIn [
 	^ elementNotInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> anotherElementOrAssociationIn [
 	" return an element (or an association for Dictionary ) present  in 'collection' "
 	^ self collection anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
 	^ elementNotInForCopy
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ArrayTest >> anotherValue [
 
 	^ 66
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
@@ -103,354 +105,354 @@ ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 	self assert: result size equals: aCollection size
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ArrayTest >> classToBeTested [
 
 	^ Array
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ArrayTest >> collection [
 
 	^ collectionWith4Elements
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 ArrayTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
 
 	^ Array
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionInForIncluding [
 	^ self nonEmpty copyWithoutFirst
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
 	^ withoutEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 
 	^ collection5Elements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionNotIncluded [
 	^ collectionNotIncluded
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionOfCollectionsOfInts [
 	^collectionOfCollectionsOfInts
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionOfCollectionsOfStrings [
 	^ collectionOfCollectionsOfStrings
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionOfFloat [
 	^ collectionOfFloat
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWith1TimeSubcollection [
 	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst)
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWith2TimeSubcollection [
 	^ (self oldSubCollection copyWithoutFirst),self oldSubCollection,(self oldSubCollection copyWithoutFirst),self oldSubCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWith5Elements [
 
 	^ collection5Elements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithCharacters [
 	^ withCharacters
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
 	^ collectionOfCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithElementsToRemove [
 	^ removedCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithEqualElements [
 	^ withEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithNonIdentitySameAtEndAndBegining [
 	" return a collection with elements at end and begining equals only with classic equality (they are not the same object).
 (others elements of the collection are not equal to those elements)"
 	^ stringCollectionWithSameBeginingAnEnd
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
 	^ stringCollectionWithSameBeginingAnEnd
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
 	^ withoutEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithoutEqualElements [
 	^ withoutEqualElements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	^ collectionWithoutNil
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInCollectionOfFloat [
 	^ collectionOfFloat atRandom
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInForCopy [
 	^ elementInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInForElementAccessing [
 " return an element inculded in 'accessCollection '"
 	^ self accessCollection anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInForIncludesTest [
 
 	^ elementInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInForIndexAccess [
 	^ elementInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInForIndexAccessing [
 
 	^ withoutEqualElements anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInForOccurrences [
 	^ elementInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementInForReplacement [
 	^ elementInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
 	^ elementNotInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementNotInForCopy [
 	^ elementNotInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
 	^ elementNotInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementNotInForIndexAccessing [
 
 	^elementNotInForCopy
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementNotInForOccurrences [
 	^ elementNotInForCopy
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 ArrayTest >> elementToAdd [
 	^ 55
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
 ^ duplicateElement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> elementsCopyNonIdenticalWithoutEqualElements [
 	" return a collection that does niot include equal elements ( classic equality )"
 	^ collectionOfCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ArrayTest >> empty [
 
 	^ empty
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 ArrayTest >> expectedSizeAfterReject [
 	^1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> firstCollection [
 	^example1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> firstEven [
 	"Returns the first even number of #collection"
 	^ -2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> firstIndex [
 	^ firstIndex
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> firstOdd [
 	"Returns the first odd number of #collection"
 	^ 1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> indexArray [
 	^ indexArray
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> indexInForCollectionWithoutDuplicates [
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
 
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> integerCollection [
 	^example1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> integerCollectionWithoutEqualElements [
 	^{1. 2. 6. 5.}
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
 	^ example1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
 	^ example1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> newElement [
 	^999
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ArrayTest >> nonEmpty [
 
 	^ example1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> nonEmpty1Element [
 
 	^ nonEmpty1Element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> nonEmptyMoreThan1Element [
 	^nonEmptyMoreThan1Element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> oldSubCollection [
 	^oldSubCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> replacementCollection [
 	^replacementCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> replacementCollectionSameSize [
 	^replacementCollectionSameSize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ArrayTest >> result [
 
 	^ collectResult
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> secondCollection [
 	^example2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> secondIndex [
 	^ secondIndex
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 ArrayTest >> selectorToAccessValuePutIn [
 	"return the selector of the method that should be invoked to access an element"
 
 	^ #second
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ArrayTest >> setUp [
 
 	super setUp.
@@ -498,40 +500,40 @@ ArrayTest >> setUp [
 	recursiveArray at: 5 put: recursiveArray
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> simpleCollection [
 	^simpleCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> sizeCollection [
 
 	^ self collection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> smallerIndex [
 	^ firstIndex -1
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> sortedInAscendingOrderCollection [
 	^sortedInAscendingOrderCollection
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 ArrayTest >> speciesClass [
 
 	^ Array
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> subCollectionNotIn [
 
 	^subCollectionNotIn
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 ArrayTest >> test0FixtureIncludeTest [
 	| anElementIn |
 	self nonEmpty.
@@ -555,7 +557,7 @@ ArrayTest >> test0FixtureIncludeTest [
 	self assert: anElementIn
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 ArrayTest >> test0FixtureOccurrencesTest [
 	self empty.
 	self assertEmpty: self empty.
@@ -567,7 +569,7 @@ ArrayTest >> test0FixtureOccurrencesTest [
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences)
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 ArrayTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	"a collection ofFloat with equal elements:"
 
@@ -584,14 +586,14 @@ ArrayTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	self deny: res
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 ArrayTest >> testAnySatisfy [
 
 	self assert: ( self collection anySatisfy: [:each | each = -2]).
 	self deny: (self collection anySatisfy: [:each | each isString])
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 ArrayTest >> testAsArrayKeepsIdentity [
 	| x y |
 	x := #(1 2 3 4 5).
@@ -599,7 +601,7 @@ ArrayTest >> testAsArrayKeepsIdentity [
 	self assert: y identityHash equals: x identityHash
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 ArrayTest >> testAtWrap2 [
 	| tabTest |
 	tabTest := #(5 6 8).
@@ -611,20 +613,20 @@ ArrayTest >> testAtWrap2 [
 	self assert: (tabTest atWrap: -2) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testBeReadOnlyLiteral [
 	self assert: Array new beReadOnlyLiteral isReadOnlyObject.
 	self assert: (Array with: String new) beReadOnlyLiteral first isReadOnlyObject.
 	self deny: (Array with: Object new) first isReadOnlyObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testCombinations [
 	self assert: #(1 2 3) combinations equals: #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3)).
 	self assert: (1 to: 3) combinations equals: #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testCombinationsTaken [
 
 	self
@@ -635,11 +637,11 @@ ArrayTest >> testCombinationsTaken [
 		hasSameElements: #( #( 1 2 3 ) #( 1 2 4 ) #( 1 3 4 ) #( 2 3 4 ) )
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 ArrayTest >> testCopyNonEmptyWithoutAllNotIncluded [
 ]
 
-{ #category : #'tests - enumerating' }
+{ #category : 'tests - enumerating' }
 ArrayTest >> testDifferencePreservesOrder [
 	| n even odd odd2 |
 	n := #(5 3 4).
@@ -649,7 +651,7 @@ ArrayTest >> testDifferencePreservesOrder [
 	self assert: odd equals: odd2
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 ArrayTest >> testDo [
 	| res |
 	res := OrderedCollection new.
@@ -657,7 +659,7 @@ ArrayTest >> testDo [
 	self assert: res asArray equals: self result
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 ArrayTest >> testDo2 [
 	| res |
 	res := OrderedCollection new.
@@ -665,7 +667,7 @@ ArrayTest >> testDo2 [
 	self assert: res asArray equals: self result
 ]
 
-{ #category : #'tests - find binary' }
+{ #category : 'tests - find binary' }
 ArrayTest >> testFindBinary [
 	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 1 - arg ]) equals: 1.
 	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 23 - arg ]) equals: 23.
@@ -673,13 +675,13 @@ ArrayTest >> testFindBinary [
 	self should: [ #(1 3 5 7 11 15 23) findBinary: [ :arg | 8 - arg ] ] raise: NotFound
 ]
 
-{ #category : #'tests - find binary' }
+{ #category : 'tests - find binary' }
 ArrayTest >> testFindBinaryIfNone [
 	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 11 - arg ] ifNone: [ #none ]) equals: 11.
 	self should: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 8 - arg ] ifNone: [ #none ]) = #none
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 ArrayTest >> testIdentityIncludes [
 	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
 
@@ -692,7 +694,7 @@ ArrayTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
-{ #category : #'tests - index access' }
+{ #category : 'tests - index access' }
 ArrayTest >> testIdentityIndexOf [
 	| collection element |
 	element := self collectionWithCopyNonIdentical anyOne copy.
@@ -701,13 +703,13 @@ ArrayTest >> testIdentityIndexOf [
 	self assert: (collection identityIndexOf: element) equals: collection size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testIsArray [
 
 	self assert: example1 isArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testIsLiteral [
 	"We work with a copy of literalArray, to avoid corrupting the code."
 
@@ -720,7 +722,7 @@ ArrayTest >> testIsLiteral [
 	self deny: recursiveArray isLiteral
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testIsSelfEvaluating [
 
 	self assert: selfEvaluatingArray isSelfEvaluating.
@@ -731,13 +733,13 @@ ArrayTest >> testIsSelfEvaluating [
 	self deny: recursiveArray isSelfEvaluating
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testLiteralEqual [
 
 	self deny: (example1 literalEqual: example1 asIntegerArray)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testNewWithSize [
 	| array |
 	array := Array new: 5.
@@ -745,7 +747,7 @@ ArrayTest >> testNewWithSize [
 	1 to: 5 do: [ :index | self assert: (array at: index) isNil ]
 ]
 
-{ #category : #'tests - occurrencesOf' }
+{ #category : 'tests - occurrencesOf' }
 ArrayTest >> testOccurrencesOf [
 	| result expected |
 	result := self nonEmpty occurrencesOf: self elementInForOccurrences.
@@ -754,14 +756,14 @@ ArrayTest >> testOccurrencesOf [
 	self assert: result equals: expected
 ]
 
-{ #category : #'tests - occurrencesOf' }
+{ #category : 'tests - occurrencesOf' }
 ArrayTest >> testOccurrencesOfEmpty [
 	| result |
 	result := self empty occurrencesOf: self elementInForOccurrences.
 	self assert: result equals: 0
 ]
 
-{ #category : #'tests - occurrencesOf' }
+{ #category : 'tests - occurrencesOf' }
 ArrayTest >> testOccurrencesOfNotIn [
 
 	| result |
@@ -769,12 +771,12 @@ ArrayTest >> testOccurrencesOfNotIn [
 	self assert: result equals: 0
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 ArrayTest >> testPremultiply [
 	self assert: example1 +* #(2) equals: #(2 4 6 8 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testPrintOn [
 
 	| printed allElementsAsString |
@@ -792,7 +794,7 @@ ArrayTest >> testPrintOn [
 		, ')' asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testPrinting [
 
 	self assert: literalArray printString equals: '#(1 true 3 #four)'.
@@ -801,7 +803,7 @@ ArrayTest >> testPrinting [
 	self assert: nonSEArray1 printString equals: 'an Array(1 a Set(1))'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testPrintingRecursive [
 
 	| printStringLimit |
@@ -815,7 +817,7 @@ ArrayTest >> testPrintingRecursive [
 	self assert: recursiveArray printString size equals: printStringLimit
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testSelfEvaluating [
 
 	self assert: selfEvaluatingArray isSelfEvaluating.
@@ -826,7 +828,7 @@ ArrayTest >> testSelfEvaluating [
 	self deny: nonSEArray1 isSelfEvaluating
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testSelfEvaluatingComplexCase [
 
 	| complexArray restoredArray |
@@ -855,7 +857,7 @@ ArrayTest >> testSelfEvaluatingComplexCase [
 	self assert: restoredArray equals: complexArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArrayTest >> testShouldBePrintedAsLiteral [
 
 	self assert: empty shouldBePrintedAsLiteral.
@@ -865,18 +867,18 @@ ArrayTest >> testShouldBePrintedAsLiteral [
 	self deny: recursiveArray shouldBePrintedAsLiteral
 ]
 
-{ #category : #'tests - shuffling' }
+{ #category : 'tests - shuffling' }
 ArrayTest >> testShuffleBy [
 
 	| base random shuffleByResult |
 	base := #(1 2 3 4 5) copy.
 	random := (Random seed: 42).
-	shuffleByResult := #(2 5 4 3 1) copy.
+	shuffleByResult := #(1 2 5 4 3) copy.
 
 	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult)
 ]
 
-{ #category : #'tests - shuffling' }
+{ #category : 'tests - shuffling' }
 ArrayTest >> testShuffleChangeOrder [
 
 	| array shuffled |
@@ -885,7 +887,7 @@ ArrayTest >> testShuffleChangeOrder [
 	array do: [ :e | self assert: (shuffled includes: e) ]
 ]
 
-{ #category : #'tests - shuffling' }
+{ #category : 'tests - shuffling' }
 ArrayTest >> testShuffleModifyTheReceiver [
 
 	| array shuffled |
@@ -894,7 +896,7 @@ ArrayTest >> testShuffleModifyTheReceiver [
 	self assert: array == shuffled
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 ArrayTest >> testSumNumberItemsWithoutBlock [
 
 	self assert: #() sumNumbers equals: 0.
@@ -902,19 +904,19 @@ ArrayTest >> testSumNumberItemsWithoutBlock [
 	self assert: #(1 2 3) sumNumbers equals: 6
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> unsortedCollection [
 	^unsortedCollection
 ]
 
-{ #category : #parameters }
+{ #category : 'parameters' }
 ArrayTest >> valuePutIn [
 	"the value that we will put in the non empty collection"
 
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 ArrayTest >> withEqualElements [
 	" return a collection of float including equal elements (classic equality)"
 	^ collectionOfFloatWithEqualElements

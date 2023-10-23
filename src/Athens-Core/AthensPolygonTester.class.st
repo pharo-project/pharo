@@ -5,15 +5,17 @@ lies withing a polygon or not.
 A polygon is a collection of points 1...size.
 "
 Class {
-	#name : #AthensPolygonTester,
-	#superclass : #Object,
+	#name : 'AthensPolygonTester',
+	#superclass : 'Object',
 	#instVars : [
 		'polygon'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensPolygonTester >> includesPoint: aPoint [
 "
 Thanks to Google and Randolph Franklin i don't have to reinvent this very simple algorithm.
@@ -52,7 +54,7 @@ See [ 1 ] for details, copyrights etc.
 	^ inside
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensPolygonTester >> polygon: poly [
 
 	polygon := poly

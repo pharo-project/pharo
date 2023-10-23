@@ -8,19 +8,20 @@ Also I provide failed tests group to show all such tests together.
 When I am activated on environment I subscribe to test history announcer. And when tests run I ask environment to process results (I wrap SUnit event with my ClyTestCaseRan).
 "
 Class {
-	#name : #ClySUnitEnvironmentPlugin,
-	#superclass : #ClySystemEnvironmentPlugin,
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#name : 'ClySUnitEnvironmentPlugin',
+	#superclass : 'ClySystemEnvironmentPlugin',
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClySUnitEnvironmentPlugin >> attachToSystem [
 
 	TestCase historyAnnouncer
 		weak when: TestSuiteEnded send: #testRan: to: self
 ]
 
-{ #category : #'query metadata' }
+{ #category : 'query metadata' }
 ClySUnitEnvironmentPlugin >> collectMetadataOfMethods: aQueryResult [
 	| property |
 	property := 	ClyTestResultProperty new.
@@ -32,13 +33,13 @@ ClySUnitEnvironmentPlugin >> collectMetadataOfMethods: aQueryResult [
 	property allCount > 0 ifTrue: [ aQueryResult addMetaProperty: property ]
 ]
 
-{ #category : #'method groups' }
+{ #category : 'method groups' }
 ClySUnitEnvironmentPlugin >> collectMethodGroupProviders [
 
 	^{ClyFailedTestGroupProvider new. ClyExpectedFailureMethodGroupProvider new}
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 
 	(aClass isTestCase not or: [aClass isAbstract]) ifTrue: [ ^self ].
@@ -46,12 +47,12 @@ ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 	anItem addProperty: (ClyTestResultProperty ofTestCase: aClass)
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClassGroup: aClassGroup [
 	self decorateBrowserItem: anItem ofPackage: aClassGroup
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
 	(self isTestMethod: aMethod) ifFalse: [ ^self ].
@@ -59,7 +60,7 @@ ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 	anItem addProperty: (ClyTestResultProperty ofMethod: aMethod)
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
 	"this can be slow and proper implementation will require recomputing for every test run
 	which slow down running of big test suite.
@@ -72,13 +73,13 @@ ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
 	anItem addProperty: ClyTestResultProperty new
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClySUnitEnvironmentPlugin >> detachFromSystem [
 
 	TestCase historyAnnouncer unsubscribe: self
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySUnitEnvironmentPlugin >> isTestClass: aClass [
 
 	^aClass isTestCase or: [
@@ -87,7 +88,7 @@ ClySUnitEnvironmentPlugin >> isTestClass: aClass [
 		aClass users anySatisfy: [ :eachUser | self isTestClass: eachUser ] ]
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySUnitEnvironmentPlugin >> isTestMethod: aMethod [
 
 	aMethod numArgs isZero ifFalse: [ ^ false ].
@@ -98,7 +99,7 @@ ClySUnitEnvironmentPlugin >> isTestMethod: aMethod [
 	^self isTestClass: aMethod methodClass
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClySUnitEnvironmentPlugin >> testRan: aTestSuiteEnded [
 	| event |
 

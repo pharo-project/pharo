@@ -2,12 +2,13 @@
 SUnit tests for self evaluting objects 
 "
 Class {
-	#name : #SelfEvaluatingObjectTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-WithCompiler'
+	#name : 'SelfEvaluatingObjectTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-WithCompiler',
+	#package : 'Kernel-Tests-WithCompiler'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SelfEvaluatingObjectTest >> assertCode: code print: aString [
 
 	self
@@ -15,7 +16,7 @@ SelfEvaluatingObjectTest >> assertCode: code print: aString [
 		equals: aString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelfEvaluatingObjectTest >> testArray [
 
 	self assertCode: '#(1 2 3)' print: '#(1 2 3)'.
@@ -28,7 +29,7 @@ SelfEvaluatingObjectTest >> testArray [
 	self assertCode: '{10@10 corner: 20@20 . 100@100 corner: 200@200}' print: '{(10@10) corner: (20@20). (100@100) corner: (200@200)}'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SelfEvaluatingObjectTest >> testObjects [
 
 	self assert: 10 isSelfEvaluating.

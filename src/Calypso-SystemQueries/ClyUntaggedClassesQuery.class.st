@@ -2,18 +2,21 @@
 I return all classes without any tag
 "
 Class {
-	#name : #ClyUntaggedClassesQuery,
-	#superclass : #ClyClassQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyUntaggedClassesQuery',
+	#superclass : 'ClyClassQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyUntaggedClassesQuery >> description [
 
 	^'classes without tags'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUntaggedClassesQuery >> selectsClass: aClass [
-	^aClass tags isEmpty
+
+	^ aClass packageTag isRoot
 ]

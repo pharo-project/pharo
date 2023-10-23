@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*UIManager' }
+{ #category : '*UIManager' }
 String >> displayProgressFrom: minVal to: maxVal during: workBlock [
 	"Display this string as a caption over a progress bar while workBlock is evaluated.
 

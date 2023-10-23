@@ -1,6 +1,6 @@
-Extension { #name : #ChangeRecord }
+Extension { #name : 'ChangeRecord' }
 
-{ #category : #'*Monticello' }
+{ #category : '*Monticello' }
 ChangeRecord >> asMCMethodDefinition [
 	"Creates a MCMethodDefinition from the receiver when this was created for a method (type=#method)"
 	

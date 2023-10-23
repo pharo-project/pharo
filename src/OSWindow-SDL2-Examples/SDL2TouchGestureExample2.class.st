@@ -2,8 +2,8 @@
 Only one gesture at the time, you can scroll to move the circle, pinch to zoom, rotate to rotate, double tap to change the color of the circle and swipe to have a little surprise
 "
 Class {
-	#name : #SDL2TouchGestureExample2,
-	#superclass : #SDL2TouchExample,
+	#name : 'SDL2TouchGestureExample2',
+	#superclass : 'SDL2TouchExample',
 	#instVars : [
 		'circleSize',
 		'negativeColor',
@@ -18,45 +18,47 @@ Class {
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #'OSWindow-SDL2-Examples-Gesture'
+	#category : 'OSWindow-SDL2-Examples-Gesture',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Gesture'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2TouchGestureExample2 class >> example [
-	<sampleInstance>
-	^ self new open
+	<script>
+	^ super example
 ]
 
-{ #category : #'manage swipe' }
+{ #category : 'manage swipe' }
 SDL2TouchGestureExample2 >> abortedSwipe [
 	[ hasAbortedSwipe := true.
 	(DelayWaitTimeout forSeconds: 2) wait.
 	hasAbortedSwipe := false ] fork
 ]
 
-{ #category : #'manage pinch' }
+{ #category : 'manage pinch' }
 SDL2TouchGestureExample2 >> beginPinch: anEvent [
 ]
 
-{ #category : #'manage rotation' }
+{ #category : 'manage rotation' }
 SDL2TouchGestureExample2 >> beginRotation: anEvent [
 ]
 
-{ #category : #'manage scrolling' }
+{ #category : 'manage scrolling' }
 SDL2TouchGestureExample2 >> beginScroll: anEvent [
 ]
 
-{ #category : #'manage swipe' }
+{ #category : 'manage swipe' }
 SDL2TouchGestureExample2 >> beginSwipe: anEvent [
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> changeColors [
 	positiveColor := Color random.
 	negativeColor := Color random
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SDL2TouchGestureExample2 >> createEventHandler [
 	^ OSWindowGestureEventHandler new
 			touchExample: self;
@@ -69,7 +71,7 @@ SDL2TouchGestureExample2 >> createEventHandler [
 			yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> displayAbortMessage [
 	renderer athensSurface
 		drawDuring: [ :canvas |
@@ -82,7 +84,7 @@ SDL2TouchGestureExample2 >> displayAbortMessage [
 				draw ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> drawBlackBackground [
 	renderer athensSurface
 		drawDuring: [ :canvas |
@@ -90,7 +92,7 @@ SDL2TouchGestureExample2 >> drawBlackBackground [
 			canvas drawShape: (blackBackgroundPosition @ 0 extent: window extent) ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> drawCircle [
 	renderer athensSurface
 		drawDuring: [ :canvas |
@@ -104,19 +106,19 @@ SDL2TouchGestureExample2 >> drawCircle [
 				draw ]
 ]
 
-{ #category : #'manage pinch' }
+{ #category : 'manage pinch' }
 SDL2TouchGestureExample2 >> endPinch: anEvent [
 ]
 
-{ #category : #'manage rotation' }
+{ #category : 'manage rotation' }
 SDL2TouchGestureExample2 >> endRotation: anEvent [
 ]
 
-{ #category : #'manage scrolling' }
+{ #category : 'manage scrolling' }
 SDL2TouchGestureExample2 >> endScroll: anEvent [
 ]
 
-{ #category : #'manage swipe' }
+{ #category : 'manage swipe' }
 SDL2TouchGestureExample2 >> endSwipe: anEvent [
 	blackBackgroundPosition := blackBackgroundPosition abs
 		> (window extent x / 2)
@@ -124,7 +126,7 @@ SDL2TouchGestureExample2 >> endSwipe: anEvent [
 		ifFalse: [ window extent x ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> generateCircleOfSize: anInteger [
 	^ renderer athensSurface
 		createPath: [ :builder |
@@ -137,7 +139,7 @@ SDL2TouchGestureExample2 >> generateCircleOfSize: anInteger [
 				ccwArcTo: anInteger negated @ 0 angle: 90 degreesToRadians ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TouchGestureExample2 >> initialize [
 	super initialize.
 	circleCenter := self windowCenter.
@@ -149,24 +151,24 @@ SDL2TouchGestureExample2 >> initialize [
 	discoMode := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TouchGestureExample2 >> initializeFromSurface [
 	super initializeFromSurface.
 	blackBackground := renderer athensSurface createSolidColorPaint: Color black
 ]
 
-{ #category : #'manage pinch' }
+{ #category : 'manage pinch' }
 SDL2TouchGestureExample2 >> pinch: anEvent [
 	circleSize := circleSize + (anEvent dDist * (self defaultExtent distanceTo: 0@0))
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> randomizeCircleColor [
 	positiveColor := Color random.
 	negativeColor := Color random
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> redraw [
 	discoMode ifTrue:
 		[ self randomizeCircleColor ].
@@ -178,14 +180,14 @@ SDL2TouchGestureExample2 >> redraw [
 		ifTrue: [ self displayAbortMessage ]
 ]
 
-{ #category : #'manage rotation' }
+{ #category : 'manage rotation' }
 SDL2TouchGestureExample2 >> rotation: anEvent [
 	circleCenter := circleCenter
 		rotateBy: 2 * anEvent dTheta negated
 		about: self windowCenter
 ]
 
-{ #category : #'manage scrolling' }
+{ #category : 'manage scrolling' }
 SDL2TouchGestureExample2 >> scroll: anEvent [
 	| newCenter |
 	newCenter := circleCenter
@@ -194,17 +196,17 @@ SDL2TouchGestureExample2 >> scroll: anEvent [
 		ifTrue: [ circleCenter := newCenter ]
 ]
 
-{ #category : #'manage swipe' }
+{ #category : 'manage swipe' }
 SDL2TouchGestureExample2 >> swipe: anEvent [
 	blackBackgroundPosition := blackBackgroundPosition + (anEvent direction x * 1.5)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchGestureExample2 >> switchDiscoMode [
 	discoMode := discoMode not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TouchGestureExample2 >> windowCenter [
 	^ (self defaultExtent x / 2) asFloat @ (self defaultExtent y / 2) asFloat
 ]

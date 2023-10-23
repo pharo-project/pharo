@@ -1,13 +1,14 @@
 Class {
-	#name : #RenrakuGlobalBanningTest,
-	#superclass : #ReCodeBasedTestCase,
+	#name : 'RenrakuGlobalBanningTest',
+	#superclass : 'ReCodeBasedTestCase',
 	#instVars : [
 		'oldRulesSettings'
 	],
-	#category : #'Renraku-Tests'
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RenrakuGlobalBanningTest >> setUp [
 	super setUp.
 	oldRulesSettings := Dictionary new.
@@ -16,14 +17,14 @@ RenrakuGlobalBanningTest >> setUp [
 		oldRulesSettings at: rule put: rule enabled ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RenrakuGlobalBanningTest >> tearDown [
 	oldRulesSettings keysAndValuesDo: [ :rule :setting |
 		rule enabled: setting ].
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuGlobalBanningTest >> testForcedRuleOnClassWithGlobalBan [
 	| criticToSkip |
 
@@ -43,7 +44,7 @@ RenrakuGlobalBanningTest >> testForcedRuleOnClassWithGlobalBan [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuGlobalBanningTest >> testForcedRuleOnClassWithPackageBan [
 	| criticToSkip |
 
@@ -63,7 +64,7 @@ RenrakuGlobalBanningTest >> testForcedRuleOnClassWithPackageBan [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuGlobalBanningTest >> testForcedRuleOnMethodWithGlobalBan [
 	| criticToSkip |
 
@@ -83,7 +84,7 @@ RenrakuGlobalBanningTest >> testForcedRuleOnMethodWithGlobalBan [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuGlobalBanningTest >> testForcedRuleOnMethodWithPackageBan [
 	| criticToSkip |
 
@@ -103,7 +104,7 @@ RenrakuGlobalBanningTest >> testForcedRuleOnMethodWithPackageBan [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuGlobalBanningTest >> testGlobalBan [
 	| criticToSkip |
 

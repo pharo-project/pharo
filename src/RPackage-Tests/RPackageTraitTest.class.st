@@ -2,130 +2,112 @@
 SUnit tests for RPackage
 "
 Class {
-	#name : #RPackageTraitTest,
-	#superclass : #RPackageIncrementalTest,
+	#name : 'RPackageTraitTest',
+	#superclass : 'RPackageIncrementalTest',
 	#instVars : [
-		'p4',
-		'p5',
 		'a1',
 		't1',
 		't2',
-		'p6'
+		'p1',
+		'p2',
+		'p3'
 	],
-	#category : #'RPackage-Tests'
+	#category : 'RPackage-Tests',
+	#package : 'RPackage-Tests'
 }
 
-{ #category : #setup }
-RPackageTraitTest >> p4Name [
-
-	^ 'RPackageTestP4'
-]
-
-{ #category : #setup }
-RPackageTraitTest >> p5Name [
-
-	^ 'RPackageTestP5'
-]
-
-{ #category : #setup }
-RPackageTraitTest >> p6Name [
-
-	^ 'RPackageTestP6'
-]
-
-{ #category : #running }
+{ #category : 'running' }
 RPackageTraitTest >> setUp [
 
 	super setUp.
 
-	p4 := self createNewPackageNamed: self p4Name.
-	p5 := self createNewPackageNamed: self p5Name.
-	p6 := self createNewPackageNamed: self p6Name.
+	p1 := self ensurePackage: self p1Name.
+	p2 := self ensurePackage: self p2Name.
+	p3 := self ensurePackage: self p3Name.
 
-	a1 :=  self createNewClassNamed: #A1DefinedInP1 inPackage: p4.
+	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 
 	"a1 defines two normal = local methods"
-	a1 compileSilently: 'localMethodDefinedInP1 ^ #methodDefinedInP1'.
-	p4 addMethod: (a1>>#localMethodDefinedInP1).
-	a1 compileSilently: 'anotherLocalMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
-	p4 addMethod: (a1>>#anotherLocalMethodDefinedInP1).
+	a1 compile: 'localMethodDefinedInP1 ^ #methodDefinedInP1'.
+	a1 compile: 'anotherLocalMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	t1 := self createNewTraitNamed: #TraitInPackageP4 inPackage: p4.
-	t1 compileSilently: 'traitMethodDefinedInP4 ^ #traitMethodDefinedInP4'.
-	p4 addMethod: (t1>>#traitMethodDefinedInP4).
+	t1 := self newTraitNamed: #TraitInPackageP1 in: p1.
+	t1 compile: 'traitMethodDefinedInP1 ^ #traitMethodDefinedInP1'.
 
-	"P6 defines a new method extension on T1 (packaged in p4)"
-	t1 compileSilently: 'traitMethodExtendedFromP6 ^ #traitMethodExtendedFromP6' classified: ('*',self p6Name).
-	p6 addMethod: (t1>>#traitMethodExtendedFromP6).
+	"P3 defines a new method extension on T1 (packaged in p1)"
+	t1 compile: 'traitMethodExtendedFromP3 ^ #traitMethodExtendedFromP3' classified: '*' , self p3Name.
 
-	t2 := self createNewTraitNamed: #TraitInPackageP5 inPackage: p5.
-	t2 compileSilently: 'traitMethodDefinedInP5 ^ #traitMethodDefinedInP5'.
+	t2 := self newTraitNamed: #TraitInPackageP2 in: p2.
+	t2 compile: 'traitMethodDefinedInP2 ^ #traitMethodDefinedInP2'.
 
-	p5 addMethod: (t2 >> #traitMethodDefinedInP5).
+	"Here P1 extends T2 from P2 with a new method"
+	t2 compile: 'traitMethodExtendedFromP1 ^ #traitMethodExtendedFromP1' classified: '*' , self p1Name.
 
-	"Here P4 extends T2 from P5 with a new method"
-	t2 compileSilently: 'traitMethodExtendedFromP4 ^ #traitMethodExtendedFromP4' classified: ('*',self p4Name).
-	p4 addMethod: (t2 >> #traitMethodExtendedFromP4).
-
-	a1 setTraitComposition: (t1 + t2) asTraitComposition.
-
-	"a2 compileSilently: 'methodDefinedInP1 ^ #methodDefinedInP1'.
-	p1 addMethod: (a2>>#methodDefinedInP1).
-
-	a2 compileSilently: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	p2 addMethod: (a2>>#methodDefinedInP2).
-
-	a2 compileSilently: 'methodDefinedInP3 ^ #methodDefinedInP3'.
-	p3 addMethod: (a2>>#methodDefinedInP3).
-
-	a2 class compileSilently: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3'.
-	p3 addMethod: (a2 class>>#classSideMethodDefinedInP3)."
+	a1 setTraitComposition: (t1 + t2) asTraitComposition
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
+	"Regression test for a bug where adding a method to a class that overrides a method from a trait was not know by the package of the class"
+
+	| a2 |
+	a2 := self newClassNamed: #A2DefinedInP1 in: p1.
+
+	a2 setTraitComposition: t1 asTraitComposition.
+
+	self deny: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self assert: (a2 >> #traitMethodDefinedInP1) isFromTrait.
+
+	a2 compile: 'traitMethodDefinedInP1 "Override in the class"'.
+
+	self assert: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self deny: (a2 >> #traitMethodDefinedInP1) isFromTrait
+]
+
+{ #category : 'tests' }
 RPackageTraitTest >> testPackageOfClassMethodFromTraitExtensionIsExtendingPackage [
 	"The package of a method defined in atrait but package in another package than the extended trait is the
 	package containing the extension."
 
 	"The package of a method in A1 (which is coming from the trait T1 used by A1) is the package of T1"
 
-	self assert: (a1 >> #traitMethodExtendedFromP4 packageFromOrganizer: RPackage  organizer) equals: p4.
+	self assert: (a1 >> #traitMethodExtendedFromP1) package equals: p1.
 	"The package of a method in A1 (which is coming from the trait T1 used by A1 but extended in package T2) is the package of T2"
-	self assert: (a1 >> #traitMethodExtendedFromP6 packageFromOrganizer: RPackage  organizer) equals: p6
+	self assert: (a1 >> #traitMethodExtendedFromP3) package equals: p3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTraitTest >> testPackageOfClassMethodFromTraitIsTraitPackage [
 	"test that a class method coming from a trait is packaged in the trait package"
 
-	self assert: (a1 >> #traitMethodDefinedInP4 packageFromOrganizer: RPackage organizer) equals: p4.
-	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: self packageOrganizer) equals: p5
+	self assert: (a1 >> #traitMethodDefinedInP1) package equals: p1.
+	self assert: (a1 >> #traitMethodDefinedInP2) package equals: p2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTraitTest >> testPackageOfClassMethodIsClassPackage [
 	"The package of a local method (not defined in a trait) is the package of its class"
 
-	self assert: (a1 >> #localMethodDefinedInP1 packageFromOrganizer: RPackage organizer) equals: p4.
-	self assert: (a1 >> #anotherLocalMethodDefinedInP1 packageFromOrganizer: self packageOrganizer) equals: p4.
-	self assert: (a1 >> #anotherLocalMethodDefinedInP1 packageFromOrganizer: RPackage organizer) equals: p4
+	self assert: (a1 >> #localMethodDefinedInP1) package equals: p1.
+	self assert: (a1 >> #anotherLocalMethodDefinedInP1) package equals: p1.
+	self assert: (a1 >> #anotherLocalMethodDefinedInP1) package equals: p1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTraitTest >> testPackageOfTraitMethodIsTraitPackage [
 	"The package of a trait method is the package of its trait."
 
-	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: RPackage organizer) equals: p5.
-	self assert: (a1 >> #traitMethodDefinedInP5 packageFromOrganizer: self packageOrganizer) equals: p5.
-	self assert: (a1 >> #traitMethodDefinedInP4 packageFromOrganizer: RPackage organizer) equals: p4
+	self assert: (a1 >> #traitMethodDefinedInP2) package equals: p2.
+	self assert: (a1 >> #traitMethodDefinedInP2) package equals: p2.
+	self assert: (a1 >> #traitMethodDefinedInP1) package equals: p1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RPackageTraitTest >> testStartingSituation [
 
-	self deny: (p5 includesClass: a1).
-	self assert: (p4 includesClass: a1).
-	self assert: (p4 includesClass: t1).
-	self assert: (p4 definesOrExtendsClass: a1).
-	self assert: (p5 includesClass: t2)
+	self deny: (p2 includesClass: a1).
+	self assert: (p1 includesClass: a1).
+	self assert: (p1 includesClass: t1).
+	self assert: (p1 definesOrExtendsClass: a1).
+	self assert: (p2 includesClass: t2)
 ]

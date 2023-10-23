@@ -1,13 +1,14 @@
 Class {
-	#name : #BaselineOfPharo,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfPharo',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'ExternalProjects'
 	],
-	#category : #BaselineOfPharo
+	#category : 'BaselineOfPharo',
+	#package : 'BaselineOfPharo'
 }
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> beautifulComments [
 	<externalProject>
 
@@ -18,13 +19,13 @@ BaselineOfPharo class >> beautifulComments [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> beautifulCommentsRepository [
 
 	^ (self externalProjectNamed: 'BeautifulComments') repository
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BaselineOfPharo class >> declareExternalProjects [
 
 	^ (Pragma allNamed: #externalProject in: self class)
@@ -35,7 +36,7 @@ BaselineOfPharo class >> declareExternalProjects [
 		as: Array
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> documentBrowser [
 	<externalProject>
 	
@@ -46,27 +47,27 @@ BaselineOfPharo class >> documentBrowser [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> documentBrowserRepository [
 
 	^ (self externalProjectNamed: 'DocumentBrowser') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> externalProjectNamed: aName [
 
 	^ self externalProjects 
 		detect: [ :each | each name = aName ]
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> externalProjects [
 
 	^ ExternalProjects ifNil: [ 
 		ExternalProjects := self declareExternalProjects ]
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> iceberg [
 	<externalProject>
 
@@ -78,13 +79,13 @@ BaselineOfPharo class >> iceberg [
 		sourceDir: nil
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> icebergRepository [
 
 	^ (self externalProjectNamed: 'Iceberg') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> microdown [
 	<externalProject>
 	
@@ -95,13 +96,13 @@ BaselineOfPharo class >> microdown [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> microdownRepository [
 
 	^ (self externalProjectNamed: 'Microdown') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> newTools [
 	<externalProject>
 
@@ -112,30 +113,30 @@ BaselineOfPharo class >> newTools [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> newToolsRepository [
 
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> roassal [
 	<externalProject>	
 
 	^ PharoExternalProject 
-		newName: 'Roassal3' 
-		owner: 'ObjectProfile' 
-		project: 'Roassal3' 
-		version: 'v1.01'
+		newName: 'Roassal' 
+		owner: 'pharo-graphics' 
+		project: 'Roassal' 
+		version: 'v1.04b'
 ]
 
-{ #category : #'repository urls' }
-BaselineOfPharo class >> roassal3Repository [
+{ #category : 'repository urls' }
+BaselineOfPharo class >> roassalRepository [
 
-	^ (self externalProjectNamed: 'Roassal3') repository
+	^ (self externalProjectNamed: 'Roassal') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> spec [
 	<externalProject>
 
@@ -146,13 +147,13 @@ BaselineOfPharo class >> spec [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> specRepository [
 
 	^ (self externalProjectNamed: 'Spec2') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'external projects' }
 BaselineOfPharo class >> welcomeBrowser [
 	<externalProject>
 	
@@ -163,13 +164,13 @@ BaselineOfPharo class >> welcomeBrowser [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> welcomeBrowserRepository [
 
 	^ (self externalProjectNamed: 'WelcomeBrowser') repository
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfPharo >> baseline: spec [
 	<baseline>
 	| repository |
@@ -184,13 +185,10 @@ BaselineOfPharo >> baseline: spec [
 			spec repository: repository; loads: #('IcebergSupport'). ].
 		
 		spec package: 'Deprecated12'.
-		
-		spec package: 'FluidClassBuilder'.
-		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].
 	]
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfPharo >> postload: loader package: packageSpec [
 	"If we added a github token for the build, we remove it."
 

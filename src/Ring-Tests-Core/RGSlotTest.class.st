@@ -1,10 +1,11 @@
 Class {
-	#name : #RGSlotTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGSlotTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGSlotTest >> testNewSlot [
 
 	| slot |
@@ -14,7 +15,7 @@ RGSlotTest >> testNewSlot [
 	self assert: (slot isLayout)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGSlotTest >> testResolvingConsistency [
 
 	| anObject |
@@ -22,7 +23,7 @@ RGSlotTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGSlotTest >> testResolvingConsistencyUnknown [
 
 	| anObject |
@@ -30,7 +31,7 @@ RGSlotTest >> testResolvingConsistencyUnknown [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGSlotTest >> testSlotsImplicitEnvironment [
 
 	| layout |
@@ -41,7 +42,7 @@ RGSlotTest >> testSlotsImplicitEnvironment [
 	self checkImplicitSingleClassEnvironmentOf: layout parent parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGSlotTest >> testUnknownSlot [
 
 	| slot expression |

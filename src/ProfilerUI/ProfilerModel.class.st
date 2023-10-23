@@ -2,8 +2,8 @@
 I am a controller used by the ProfilerPresenter to interact with different kinds of profiler models
 "
 Class {
-	#name : #ProfilerModel,
-	#superclass : #MorphTreeModel,
+	#name : 'ProfilerModel',
+	#superclass : 'MorphTreeModel',
 	#instVars : [
 		'profilerClass',
 		'showLeavesOnly',
@@ -12,34 +12,36 @@ Class {
 		'tallyRoot',
 		'isProfiling'
 	],
-	#category : #'ProfilerUI-Model'
+	#category : 'ProfilerUI-Model',
+	#package : 'ProfilerUI',
+	#tag : 'Model'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 ProfilerModel >> allProfilerClasses [
 
 	^ { AndreasSystemProfiler . TimeProfiler ". PreciseProfiler" }
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 ProfilerModel >> announceProfilingFinished [
 
 	^ self announcer announce: ProfilingFinishedAnnouncement new
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 ProfilerModel >> announceProfilingStarted [
 	self announcer announce: ProfilingStartedAnnouncement new
 ]
 
-{ #category : #'accessing nodes' }
+{ #category : 'accessing nodes' }
 ProfilerModel >> announceRootChanged: aTallyModel [
 
 	self announcer announce:
 		(ProfilerResultsTreeRootChangedAnnouncement new item: aTallyModel)
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 ProfilerModel >> announceSelectionChanged: aTallyModel [
 
 	self announcer announce:
@@ -47,46 +49,46 @@ ProfilerModel >> announceSelectionChanged: aTallyModel [
 			 aTallyModel)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProfilerModel >> browseItem [
 	self selectedNode ifNotNil: [:current | current browseItem ]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ProfilerModel >> doItSelectorsPath [
 
 	^ profiler doItSelectorsPath
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ProfilerModel >> doItSourceCodeFrom: someCode [
 	^ 'self profileBlock: [',(profiler blockCodeFrom: someCode),' ]'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ProfilerModel >> hideNodesUnder: aNumber [
 	"minimum percentage a node must have to be shown"
 	showNodeThreshold := aNumber
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerModel >> initialize [
 	super initialize.
 	showLeavesOnly := false.
 	showNodeThreshold := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> isProfiling [
 	^ isProfiling ifNil: [ isProfiling := false ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProfilerModel >> keyDown: aKeyboardEvent from: aMorphTreeListManager [
 	self selectedNode ifNotNil: [:current | current keyDown: aKeyboardEvent from: aMorphTreeListManager ]
 ]
 
-{ #category : #'accessing nodes' }
+{ #category : 'accessing nodes' }
 ProfilerModel >> leaveItems [
 	| res  |
 	res := OrderedCollection new.
@@ -99,7 +101,7 @@ ProfilerModel >> leaveItems [
 	^ res
 ]
 
-{ #category : #'accessing nodes' }
+{ #category : 'accessing nodes' }
 ProfilerModel >> leaveItemsOver: perCent [
 
 	| leaveThreshold |
@@ -108,7 +110,7 @@ ProfilerModel >> leaveItemsOver: perCent [
 	^ self leaveItems select: [ :item | item tally > leaveThreshold ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> menu: menu shifted: b [
 	"Set up the menu to apply to the receiver's, honoring the #shifted boolean"
 
@@ -131,12 +133,12 @@ ProfilerModel >> menu: menu shifted: b [
 	^ menu
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 ProfilerModel >> newProfiler [
 	^ self profilerClass new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProfilerModel >> profileBlock: aBlock [
 
 	"Fork is used to get a more clean execution results tree"
@@ -147,7 +149,7 @@ ProfilerModel >> profileBlock: aBlock [
 		self announceProfilingFinished ]] fork
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ProfilerModel >> profileCode: someCode notifying: requestor [
 
 	| compiledMethod |
@@ -163,28 +165,28 @@ ProfilerModel >> profileCode: someCode notifying: requestor [
 	compiledMethod valueWithReceiver: self arguments: #(  )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> profilerClass [
 	^ profilerClass ifNil: [ profilerClass := self allProfilerClasses at: 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> profilerClass: aClass [
 	profilerClass := aClass
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 ProfilerModel >> report [
 
 	^ profiler report
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> rootItem [
 	^ self tallyRoot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> rootItems [
 	self tallyRoot ifNil: [ ^#() ].
 
@@ -195,26 +197,26 @@ ProfilerModel >> rootItems [
 			  							yourself} ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> rootNodeFromItem: anItem [
 
 	^ anItem asTallyModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> rootNodes [
 
 	profiler ifNil: [ ^ nil ].
 	^ super rootNodes
 ]
 
-{ #category : #'accessing nodes' }
+{ #category : 'accessing nodes' }
 ProfilerModel >> rootTallyItems [
 
 	^ self rootTallyItemsOver: 0
 ]
 
-{ #category : #'accessing nodes' }
+{ #category : 'accessing nodes' }
 ProfilerModel >> rootTallyItemsOver: perCent [
 	| minTally |
 	self tallyRoot ifNil: [ ^ #() ].
@@ -225,13 +227,13 @@ ProfilerModel >> rootTallyItemsOver: perCent [
 		ifNotEmpty: [:sons | sons asOrderedCollection sort reverse ]
 ]
 
-{ #category : #'private - running' }
+{ #category : 'private - running' }
 ProfilerModel >> runBlock: aBlock [
 
 	^ profiler runBlock: aBlock
 ]
 
-{ #category : #'accessing nodes' }
+{ #category : 'accessing nodes' }
 ProfilerModel >> setTallyRoot: aTallyModel [
 
 	tallyRoot = aTallyModel ifTrue: [ ^ self ].
@@ -239,25 +241,25 @@ ProfilerModel >> setTallyRoot: aTallyModel [
 	self announceRootChanged: tallyRoot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> showLeavesOnly [
 
 	^ showLeavesOnly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> showLeavesOnly: anObject [
 
 	showLeavesOnly := anObject.
 	self announceRootChanged: tallyRoot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> showNodeThreshold [
 	^ showNodeThreshold
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 ProfilerModel >> startProfiling [
 
 	isProfiling := true.
@@ -265,7 +267,7 @@ ProfilerModel >> startProfiling [
 	profiler startProfiling
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 ProfilerModel >> stopProfiling [
 
 	profiler stopProfiling.
@@ -275,22 +277,22 @@ ProfilerModel >> stopProfiling [
 	isProfiling := false
 ]
 
-{ #category : #'accessing nodes' }
+{ #category : 'accessing nodes' }
 ProfilerModel >> tallyRoot [
 	^ tallyRoot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> total [
 	^ self tallyRoot tally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> totalTally [
 	^ self tallyRoot tally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerModel >> totalTime [
 	^ profiler totalTime
 ]

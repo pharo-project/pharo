@@ -2,12 +2,14 @@
 SUnit tests for UUID
 "
 Class {
-	#name : #UUIDTest,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-UUID'
+	#name : 'UUIDTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-UUID',
+	#package : 'Network-Tests',
+	#tag : 'UUID'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDTest >> testBasic [
 	| uuid |
 	uuid := UUID new.
@@ -15,7 +17,7 @@ UUIDTest >> testBasic [
 	self deny: uuid equals: UUID new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDTest >> testComparison [
 	| a b |
 	a := UUID fromString: '0608b9dc-02e4-4dd0-9f8a-ea45160df641'.
@@ -33,10 +35,13 @@ UUIDTest >> testComparison [
 	self assert: b >= a.
 
 	self deny: a > b equals: b > a.
-	self deny: a >= b equals: b >= a
+	self deny: a >= b equals: b >= a.
+	
+	self deny: a equals: #nonUUIDObject.
+
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDTest >> testNilUUID [
 
 	| nilUUIDRepresentation |
@@ -49,7 +54,7 @@ UUIDTest >> testNilUUID [
 	self deny: UUID new isNilUUID
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDTest >> testSpeed [
 
 	self
@@ -57,7 +62,7 @@ UUIDTest >> testSpeed [
 		notTakeMoreThan: 1 second
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDTest >> testString [
 
 	| s1 s2 s3 |
@@ -74,7 +79,7 @@ UUIDTest >> testString [
 	self assert: UUID nilUUID asString equals: s3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UUIDTest >> testString36 [
 	| uuid |
 	uuid := UUID new.
@@ -85,7 +90,7 @@ UUIDTest >> testString36 [
 	self assert: (UUID fromString36: 0 asString) equals: UUID nilUUID
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDTest >> testUUIDVersion1 [
 
 	| uuid |
@@ -104,7 +109,7 @@ UUIDTest >> testUUIDVersion1 [
 	self assert: uuid clockSequence equals: 14056
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDTest >> testUUIDVersion3 [
 
 	| uuid |
@@ -113,7 +118,7 @@ UUIDTest >> testUUIDVersion3 [
 	self assert: uuid isMD5NameBased .
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDTest >> testUUIDVersion4 [
 
 	| uuid |
@@ -122,7 +127,7 @@ UUIDTest >> testUUIDVersion4 [
 	self assert: uuid isRandomBased.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDTest >> testUUIDVersion5 [
 
 	| uuid |

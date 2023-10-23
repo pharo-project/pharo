@@ -2,27 +2,29 @@
 SUnit tests for fuel serialization of block closures
 "
 Class {
-	#name : #FLBlockClosureSerializationTest,
-	#superclass : #FLSerializationTest,
+	#name : 'FLBlockClosureSerializationTest',
+	#superclass : 'FLSerializationTest',
 	#classVars : [
 		'ClassVariableForTesting'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'closures for testing' }
+{ #category : 'closures for testing' }
 FLBlockClosureSerializationTest class >> blockClosureWithSelfSend [
 	^ [ self printString ]
 ]
 
-{ #category : #'closures for testing' }
+{ #category : 'closures for testing' }
 FLBlockClosureSerializationTest class >> blockClosureWithTempVariableRead [
 	| string |
 	string := 'test'.
 	^ [ string asUppercase ].
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes [
 	"Raise an error when materializing a clean closure whose method has changed bytecodes.
 	Send #yourself to prevent ConstantBlockClosure optmization."
@@ -48,7 +50,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes [
 	self materialized
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesConstant [
 	"Tolerate materializing a clean closure whose method has changed but not the bytecodes."
 
@@ -71,7 +73,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesConst
 	self assert: materializedClosure value equals: 41
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 	"Tolerate materializing a clean closure whose method has changed but not the bytecodes.
 	Send #yourself to prevent ConstantBlockClosure optmization."
@@ -96,7 +98,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 	self assert: materializedClosure value equals: 42
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConstant [
 	"Tolerate materializing a clean closure whose method has changed but not the bytecodes.
 	In constant closure, the closure is replaced by the literal, so when
@@ -121,32 +123,25 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConstant [
 	self assert: materializedClosure value equals: 41
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureMaterializesClassVariablesCorrectly [
+
 	| class closure method |
-	class := self classFactory silentlyNewClassWithClassVariableNames: 'ClassVariableForTesting'.
-	self classFactory
-		silentlyCompile: 'methodWithClosure  ^ [ ClassVariableForTesting ]'
-		in: class.
-	
+	class := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'ClassVariableForTesting' ].
+	self classFactory silentlyCompile: 'methodWithClosure  ^ [ ClassVariableForTesting ]' in: class.
+
 	method := class methodNamed: #methodWithClosure.
 	"Make sure we don't use global clusters here, which would simply perform a lookup"
 	self serializer fullySerializeBehavior: method methodClass.
-	closure := method
-		valueWithReceiver: class new
-		arguments: #().
-	
+	closure := method valueWithReceiver: class new arguments: #(  ).
+
 	self serialize: closure.
-	
-	self
-		assert: (self materialized compiledBlock literalAt: 1)
-		equals: (class bindingOf: 'ClassVariableForTesting').
-	self
-		deny: (self materialized compiledBlock literalAt: 1)
-		identicalTo: (class bindingOf: 'ClassVariableForTesting')
+
+	self assert: (self materialized compiledBlock literalAt: 1) equals: (class bindingOf: 'ClassVariableForTesting').
+	self deny: (self materialized compiledBlock literalAt: 1) identicalTo: (class bindingOf: 'ClassVariableForTesting')
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureRemoved [
 	"Raise an error when materializing a clean closure whose method was removed.
 	Send #yourself to prevent ConstantBlockClosure optmization."
@@ -167,7 +162,7 @@ FLBlockClosureSerializationTest >> testBlockClosureRemoved [
 	self should: [ self materialized ] raise: FLMethodNotFound
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 	"Raise no error when materializing a constant closure whose method was removed."
 
@@ -186,7 +181,7 @@ FLBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 	self shouldnt: [ self materialized ] raise: FLMethodNotFound
 ]
 
-{ #category : #'tests-change' }
+{ #category : 'tests-change' }
 FLBlockClosureSerializationTest >> testBlockClosureRemovedNonClean [
 	"Raise an error when materializing a non-clean closure whose method was removed."
 
@@ -204,7 +199,7 @@ FLBlockClosureSerializationTest >> testBlockClosureRemovedNonClean [
 	self should: [ self materialized ] raise: FLMethodNotFound
 ]
 
-{ #category : #'tests-clean' }
+{ #category : 'tests-clean' }
 FLBlockClosureSerializationTest >> testBlockClosureWithClassVariableRead [
 	| closure materializedClosure |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
@@ -220,7 +215,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithClassVariableRead [
 	self deny: materializedClosure value
 ]
 
-{ #category : #'tests-clean' }
+{ #category : 'tests-clean' }
 FLBlockClosureSerializationTest >> testBlockClosureWithGlobalVariable [
 	| closure materializedClosure |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
@@ -231,7 +226,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithGlobalVariable [
 	self assert: materializedClosure value equals: Smalltalk
 ]
 
-{ #category : #'tests-unclean' }
+{ #category : 'tests-unclean' }
 FLBlockClosureSerializationTest >> testBlockClosureWithSelfSend [
 	| closure materializedClosure |
 	closure := self class blockClosureWithSelfSend.
@@ -240,7 +235,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithSelfSend [
 	self assert: materializedClosure value equals: closure value
 ]
 
-{ #category : #'tests-clean' }
+{ #category : 'tests-clean' }
 FLBlockClosureSerializationTest >> testBlockClosureWithTempVariableRead [
 	| closure materializedClosure |
 	closure := self class blockClosureWithTempVariableRead.
@@ -249,7 +244,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithTempVariableRead [
 	self assert: materializedClosure value equals: 'TEST'
 ]
 
-{ #category : #'tests-clean' }
+{ #category : 'tests-clean' }
 FLBlockClosureSerializationTest >> testBlockClosureWithThreeArguments [
 	| closure materializedClosure |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
@@ -260,7 +255,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithThreeArguments [
 	self assert: (materializedClosure value: 1 value: 2 value: 3) equals: 6
 ]
 
-{ #category : #'tests-clean' }
+{ #category : 'tests-clean' }
 FLBlockClosureSerializationTest >> testNestedBlockClosure [
 	| closure materializedClosure |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].

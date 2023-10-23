@@ -6,16 +6,18 @@ Note that some of my API deals with the elements that I hold, like any other col
 
 "
 Class {
-	#name : #DoubleLinkedList,
-	#superclass : #Object,
+	#name : 'DoubleLinkedList',
+	#superclass : 'Object',
 	#instVars : [
 		'head',
 		'tail'
 	],
-	#category : #'Collections-DoubleLinkedList-Base'
+	#category : 'Collections-DoubleLinkedList-Base',
+	#package : 'Collections-DoubleLinkedList',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DoubleLinkedList class >> newFrom: aCollection [
 
 	^ self new
@@ -23,7 +25,7 @@ DoubleLinkedList class >> newFrom: aCollection [
 			yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DoubleLinkedList >> add: anObjectOrLink [
 	"Add anObjectOrLink at the end of me.
 	Return the internal link object."
@@ -31,7 +33,7 @@ DoubleLinkedList >> add: anObjectOrLink [
 	^ self addLast: anObjectOrLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DoubleLinkedList >> add: anObjectOrLink afterLink: otherLink [
 	"Add anObjectOrLink right after otherLink in me.
 	When otherLink is not part of me, the result is undefined.
@@ -49,7 +51,7 @@ DoubleLinkedList >> add: anObjectOrLink afterLink: otherLink [
 	^ link
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DoubleLinkedList >> add: anObjectOrLink beforeLink: otherLink [
 	"Add anObjectOrLink right before otherLink in me.
 	When otherLink is not part of me, the result is undefined.
@@ -67,7 +69,7 @@ DoubleLinkedList >> add: anObjectOrLink beforeLink: otherLink [
 	^ link
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DoubleLinkedList >> addAll: collection [
 	"Add all elements of collection to me, in order.
 	Each can be either a value object or a link."
@@ -75,7 +77,7 @@ DoubleLinkedList >> addAll: collection [
 	collection do: [ :each | self add: each ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DoubleLinkedList >> addFirst: anObjectOrLink [
 	"Add anObjectOrLink to me, so that it becomes the first one.
 	Return the internal link object."
@@ -89,7 +91,7 @@ DoubleLinkedList >> addFirst: anObjectOrLink [
 	^ link
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DoubleLinkedList >> addLast: anObjectOrLink [
 	"Add anObjectOrLink to me, so that it becomes the last one.
 	Return the internal link object."
@@ -103,7 +105,7 @@ DoubleLinkedList >> addLast: anObjectOrLink [
 	^ link
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DoubleLinkedList >> asArray [
 	"Return a new Array containing my elements"
 
@@ -111,7 +113,7 @@ DoubleLinkedList >> asArray [
 		self do: [ :each | out nextPut: each ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DoubleLinkedList >> collect: block [
 	"Execute block for each of my elements and return a new instance of me containing the results."
 
@@ -122,28 +124,28 @@ DoubleLinkedList >> collect: block [
 	^ result
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DoubleLinkedList >> do: block [
 	"Execute block for each of my elements."
 
 	self linksDo: [ :each | block value: each value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DoubleLinkedList >> emptyCheck [
 
 	self isEmpty
 		ifTrue: [ CollectionIsEmpty signalWith: self ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DoubleLinkedList >> errorEmptyCollection [
 	"Signal a CollectionIsEmpty exception"
 
 	CollectionIsEmpty signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoubleLinkedList >> first [
 	"Return the first element that I hold, also known as my head value.
 	Signal a CollectionIsEmpty exception when I am empty."
@@ -152,7 +154,7 @@ DoubleLinkedList >> first [
 	^ head value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoubleLinkedList >> firstLink [
 	"Return the first link that I hold, also known as my head.
 	Signal a CollectionIsEmpty excpetion when I am empty."
@@ -161,7 +163,7 @@ DoubleLinkedList >> firstLink [
 	^ head
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoubleLinkedList >> includes: object [
 	"Return true when I hold object as a value, false otherwise."
 
@@ -170,21 +172,21 @@ DoubleLinkedList >> includes: object [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoubleLinkedList >> isEmpty [
 	"Return true when I contain no elements, false otherwise."
 
 	^ head isNil and: [ tail isNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DoubleLinkedList >> isNotEmpty [
 	"Answer whether the receiver contains any elements."
 
 	^ self isEmpty not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoubleLinkedList >> last [
 	"Return the last element that I hold, also known as my tail value.
 	Signal a CollectionIsEmpty excpetion when I am empty."
@@ -193,7 +195,7 @@ DoubleLinkedList >> last [
 	^ tail value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DoubleLinkedList >> lastLink [
 	"Return the last link that I hold, also known as my tail.
 	Signal a CollectionIsEmpty excpetion when I am empty."
@@ -202,7 +204,7 @@ DoubleLinkedList >> lastLink [
 	^ tail
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DoubleLinkedList >> linksDo: block [
 	"Execute block for each of the links that I hold internally."
 
@@ -214,7 +216,7 @@ DoubleLinkedList >> linksDo: block [
 			current := current nextLink ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DoubleLinkedList >> reject: block [
 	"Execute block for each of my elements and return a new instance of me
 	containing those elements for which the block returned false."
@@ -227,14 +229,14 @@ DoubleLinkedList >> reject: block [
 	^ result
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DoubleLinkedList >> removeAll [
 	"Remove all the elements that I hold."
 
 	head := tail := nil
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DoubleLinkedList >> removeFirst [
 	"Remove my first element.
 	Signal a CollectionIsEmpty exception when I am empty.
@@ -251,7 +253,7 @@ DoubleLinkedList >> removeFirst [
 	^ link
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DoubleLinkedList >> removeLast [
 	"Remove my last element.
 	Signal a CollectionIsEmpty exception when I am empty.
@@ -268,7 +270,7 @@ DoubleLinkedList >> removeLast [
 	^ link
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DoubleLinkedList >> removeLink: link [
 	"Remove the specified link.
 	When otherLink is not part of me, the result is undefined.
@@ -287,14 +289,14 @@ DoubleLinkedList >> removeLink: link [
 	^ link
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DoubleLinkedList >> reverseDo: block [
 	"Execute block for each of my elements, in reverse order."
 
 	self reverseLinksDo: [ :each | block value: each value ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DoubleLinkedList >> reverseLinksDo: block [
 	"Execute block for each of the links that I hold internally, in reverse order."
 
@@ -306,7 +308,7 @@ DoubleLinkedList >> reverseLinksDo: block [
 			current := current previousLink ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 DoubleLinkedList >> select: block [
 	"Execute block for each of my elements and return a new instance of me
 	containing those elements for which the block returned true."

@@ -19,59 +19,61 @@ pushed on the stack.
 For debugging, it does implement all needed machinary to read temps (via tempNamed:) just like a FullBlockClosure
 "
 Class {
-	#name : #CleanBlockClosure,
-	#superclass : #BlockClosure,
-	#type : #variable,
+	#name : 'CleanBlockClosure',
+	#superclass : 'BlockClosure',
+	#type : 'variable',
 	#instVars : [
 		'literal'
 	],
-	#category : #'Kernel-Methods'
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure class >> compiledBlock: aCompiledBlock [
 	^self new
 		numArgs: aCompiledBlock numArgs;
 		compiledBlock: aCompiledBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CleanBlockClosure >> doPrintOn: aStream [
 
 	aStream nextPutAll: self sourceNode value sourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> hasLiteralSuchThat: aLiteral [
 	^self compiledBlock hasLiteralSuchThat: aLiteral
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> innerCompiledBlocksAnySatisfy: aBlock [
 	^self compiledBlock innerCompiledBlocksAnySatisfy: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> innerCompiledBlocksDo: aBlock [
 	^self compiledBlock innerCompiledBlocksDo: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CleanBlockClosure >> isClean [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CleanBlockClosure >> isEmbeddedBlock [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> literal [
 	"The variable and accessor should be in the subclass ConstantBlockClosure.
 	It seems that the VM expects closures to have 4 ivars
@@ -79,73 +81,74 @@ CleanBlockClosure >> literal [
 	^literal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> literalsEvenTheOnesInTheInnerBlocks [
 	^self compiledBlock literalsEvenTheOnesInTheInnerBlocks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> messages [
 	^self compiledBlock messages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> outerCode [
 	^self compiledBlock outerCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CleanBlockClosure >> readsField: varIndex [
 	"Clean blocks by definition do not read fields"
 	^false
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CleanBlockClosure >> readsSelf [
 	"Clean blocks by definition do not access self"
 	^false
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CleanBlockClosure >> readsThisContext [
 	"Clean blocks can access thisContext, we have to forward to the compiled block to check"
 	^self compiledBlock readsThisContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> receiver [
 	"Clean blocks do not know the receiver"
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> refersToLiteral: aLiteral [
 	^self compiledBlock refersToLiteral: aLiteral
 ]
 
-{ #category : #'debugger access' }
+{ #category : 'debugger access' }
 CleanBlockClosure >> sender [
 	" clean blocks do not know the sender"
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 	^self compiledBlock sendsAnySelectorOf: aCollection
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CleanBlockClosure >> sendsToSuper [
 	"Clean blocks by definition do not access super"
 	^false
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CleanBlockClosure >> writesField: varIndex [
 	"Clean blocks by definition do not read fields"
 	^false

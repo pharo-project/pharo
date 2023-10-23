@@ -30,11 +30,10 @@ fi
 
 if [ -z ${BOOTSTRAP_REPOSITORY+x} ]
 then
-  ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P)"
-  export BOOTSTRAP_REPOSITORY="${ROOT_DIR}"
-else
-  ROOT_DIR="$(pwd -P)"
+  export BOOTSTRAP_REPOSITORY="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P)"
 fi
+
+ROOT_DIR="$(pwd -P)/build"
 
 if [ -z ${BOOTSTRAP_CACHE+x} ]
 then
@@ -49,13 +48,17 @@ then
 fi
 export BOOTSTRAP_DOWNLOADS
 
-# This is the VM used to bootstrap, i.e. the target VM
+# This is the VM used to load the code, i.e. the target VM
 if [ -z ${BOOTSTRAP_VMTARGET+x} ]
 then
     VM="${BOOTSTRAP_DOWNLOADS}/vmtarget/pharo --headless"
 else
     VM="${BOOTSTRAP_VMTARGET} --headless"
 fi
+
+#This is the VM to use during the bootstrap (initialization of the small image)
+VM_BOOTSTRAP="${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo --headless"
+
 
 # Flags to run the image
 IMAGE_FLAGS="--no-default-preferences"

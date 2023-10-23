@@ -15,79 +15,81 @@ By default I decorate cell with special color when it shows readonly groups.
 Any group is readonly by default. To mark editable group you should implement class side method #isEditableGroup by returning true
 "
 Class {
-	#name : #ClyItemGroup,
-	#superclass : #Object,
+	#name : 'ClyItemGroup',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'priority'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemGroup class >> checkCalypsoItem: aGroup isSameAs: aGroup2 [
 	^(super checkCalypsoItem: aGroup isSameAs: aGroup2)
 		or: [ aGroup = aGroup2 ]
 ]
 
-{ #category : #'browser item preparation' }
+{ #category : 'browser item preparation' }
 ClyItemGroup class >> convertToCalypsoBrowserItem: aGroup [
 
 	^ClyBrowserItem named: aGroup name with: aGroup
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyItemGroup class >> defaultSortFunctionForCalypso [
 	^ClySortItemGroupFunction ascending
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemGroup class >> isEditableGroup [
 	^false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemGroup class >> named: aString [
 	^self new
 		name: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemGroup class >> named: aString priority: aNumber [
 	^(self named: aString)
 			priority: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemGroup class >> priority [
 	^1
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyItemGroup >> decorateOwnBrowserItem: myItem [
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemGroup >> isEditableGroup [
 	^self class isEditableGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemGroup >> name [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemGroup >> name: aString [
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemGroup >> priority [
 	^priority ifNil: [ self class priority ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemGroup >> priority: anObject [
 	priority := anObject
 ]

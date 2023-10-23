@@ -2,21 +2,23 @@
 Border with customisable inner margin.
 "
 Class {
-	#name : #MarginBorderStyle,
-	#superclass : #SimpleBorderStyle,
+	#name : 'MarginBorderStyle',
+	#superclass : 'SimpleBorderStyle',
 	#instVars : [
 		'margin'
 	],
-	#category : #'Morphic-Base-Borders'
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MarginBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #MarginBorder }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MarginBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	"Reduce the width by the margin."
 
@@ -31,7 +33,7 @@ MarginBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 		color: lineColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MarginBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Reduce width by the margin."
 
@@ -42,7 +44,7 @@ MarginBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 		bottomRightColor: self bottomRightColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MarginBorderStyle >> initialize [
 	"Initialize the receiver."
 
@@ -51,14 +53,14 @@ MarginBorderStyle >> initialize [
 		margin: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MarginBorderStyle >> margin [
 	"Answer the value of margin"
 
 	^ margin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MarginBorderStyle >> margin: anObject [
 	"Set the value of margin"
 

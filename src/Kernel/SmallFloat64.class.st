@@ -2,23 +2,25 @@
 My instances represent 64-bit Floats whose exponent fits in 8 bits as immediate objects.  This representation is only available on 64-bit systems, not 32-bit systems.
 "
 Class {
-	#name : #SmallFloat64,
-	#superclass : #Float,
-	#type : #immediate,
-	#category : #'Kernel-Numbers'
+	#name : 'SmallFloat64',
+	#superclass : 'Float',
+	#type : 'immediate',
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SmallFloat64 class >> basicNew [
 	self error: 'SmallFloat64s can only be created by performing arithmetic'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SmallFloat64 class >> basicNew: anInteger [
 	^self basicNew
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallFloat64 >> * aNumber [
 	"Primitive. Answer the result of multiplying the receiver by aNumber.
 	Fail if the argument is not a Float. Essential. See Object documentation
@@ -28,7 +30,7 @@ SmallFloat64 >> * aNumber [
 	^ aNumber adaptToFloat: self andSend: #*
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallFloat64 >> + aNumber [
 	"Primitive. Answer the sum of the receiver and aNumber. Essential.
 	Fail if the argument is not a Float. See Object documentation
@@ -38,7 +40,7 @@ SmallFloat64 >> + aNumber [
 	^ aNumber adaptToFloat: self andSend: #+
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallFloat64 >> - aNumber [
 	"Primitive. Answer the difference between the receiver and aNumber.
 	Fail if the argument is not a Float. Essential. See Object documentation
@@ -48,7 +50,7 @@ SmallFloat64 >> - aNumber [
 	^ aNumber adaptToFloat: self andSend: #-
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 SmallFloat64 >> / aNumber [
 	"Primitive. Answer the result of dividing receiver by aNumber.
 	Fail if the argument is not a Float. Essential. See Object documentation
@@ -59,7 +61,7 @@ SmallFloat64 >> / aNumber [
 	^aNumber adaptToFloat: self andSend: #/
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> < aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is less than the argument. Otherwise return false.
@@ -70,7 +72,7 @@ SmallFloat64 >> < aNumber [
 	^ aNumber adaptToFloat: self andCompare: #<
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> <= aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is less than or equal to the argument. Otherwise return
@@ -81,7 +83,7 @@ SmallFloat64 >> <= aNumber [
 	^ aNumber adaptToFloat: self andCompare: #<=
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> = aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is equal to the argument. Otherwise return false.
@@ -93,7 +95,7 @@ SmallFloat64 >> = aNumber [
 	^ aNumber adaptToFloat: self andCompare: #=
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> > aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is greater than the argument. Otherwise return false.
@@ -104,7 +106,7 @@ SmallFloat64 >> > aNumber [
 	^ aNumber adaptToFloat: self andCompare: #>
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> >= aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is greater than or equal to the argument. Otherwise return
@@ -115,7 +117,7 @@ SmallFloat64 >> >= aNumber [
 	^ aNumber adaptToFloat: self andCompare: #>=
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> basicIdentityHash [
 	"Answer an integer unique to the receiver."
 	"primitive 171 is the primitiveImmediateAsInteger primitive that converts SmallIntegers to themselves, Characters to their integer codes, and SmallFloat64 to an integer representing their bits.  e.g.
@@ -126,29 +128,30 @@ SmallFloat64 >> basicIdentityHash [
  -1.0->'-16r810000000000000'->'16r1F7F0000000000000' .
   1.0->'16r7F0000000000000'->'16r7F0000000000000'}"
 
+	<reflection: 'Object Inspection - Accessing object identity'>
 	<primitive: 171>
 	^self primitiveFailed
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallFloat64 >> clone [
 	"Answer the receiver, because SmallFloat64s are unique."
 	^self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallFloat64 >> copy [
 	"Answer the receiver, because SmallFloat64s are unique."
 	^self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallFloat64 >> deepCopy [
 	"Answer the receiver, because SmallFloat64s are unique."
 	^self
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 SmallFloat64 >> exp [
 	"Answer E raised to the receiver power.
 	 Optional. See Object documentation whatIsAPrimitive."
@@ -182,7 +185,7 @@ SmallFloat64 >> exp [
 	^ base * correction
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 SmallFloat64 >> exponent [
 	"Primitive. Consider the receiver to be represented as a power of two
 	multiplied by a mantissa (between one and two). Answer with the
@@ -202,7 +205,7 @@ SmallFloat64 >> exponent [
 	^self negated exponent
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 SmallFloat64 >> fractionPart [
 	"Primitive. Answer a Float whose value is the difference between the
 	receiver and the receiver's asInteger value. Optional. See Object
@@ -212,27 +215,28 @@ SmallFloat64 >> fractionPart [
 	^self - self truncated asFloat
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> identityHash [
 	"We need the override since basicIdentityHash is already in SmallInteger range,
 	 the bitShift: 8 of the super implementation would lead to a LargeInteger"
+	<reflection: 'Object Inspection - Accessing object identity'>
 	^ self basicIdentityHash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SmallFloat64 >> isImmediateObject [
 	"This is needed for the bootstrap"
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SmallFloat64 >> isPinnedInMemory [
 	"Immediate instances can't be pinned"
 
 	^ false
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 SmallFloat64 >> ln [
 	"Answer the natural logarithm of the receiver.
 	 Optional. See Object documentation whatIsAPrimitive."
@@ -273,20 +277,21 @@ SmallFloat64 >> ln [
 	"2.718284 ln 1.0"
 ]
 
-{ #category : #'memory scanning' }
+{ #category : 'memory scanning' }
 SmallFloat64 >> nextObject [
 	"SmallFloat64 are immediate objects, and, as such, do not have successors in object memory."
 
+	<reflection: 'Memory Scanning'>
 	self shouldNotImplement
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallFloat64 >> shallowCopy [
 	"Answer the receiver, because SmallFloat64s are unique."
 	^self
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 SmallFloat64 >> timesTwoPower: anInteger [
 	"Primitive. Answer with the receiver multiplied by 2.0 raised
 	to the power of the argument.
@@ -300,7 +305,7 @@ SmallFloat64 >> timesTwoPower: anInteger [
 	^ self * (2.0 raisedToInteger: anInteger)
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 SmallFloat64 >> truncated [
 	"Answer with a SmallInteger equal to the value of the receiver without
 	its fractional part. The primitive fails if the truncated value cannot be
@@ -323,13 +328,13 @@ SmallFloat64 >> truncated [
 		ifFalse: [^ self asTrueFraction.  "Extract all bits of the mantissa and shift if necess"]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SmallFloat64 >> veryDeepCopyWith: deepCopier [
 	"Answer the receiver, because SmallFloat64s are unique."
 	^self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SmallFloat64 >> ~= aNumber [
 	"Primitive. Compare the receiver with the argument and return true
 	if the receiver is not equal to the argument. Otherwise return false.

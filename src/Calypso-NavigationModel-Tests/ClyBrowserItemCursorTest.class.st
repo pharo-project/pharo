@@ -1,20 +1,21 @@
 Class {
-	#name : #ClyBrowserItemCursorTest,
-	#superclass : #ClyBrowserQueryCursorTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyBrowserItemCursorTest',
+	#superclass : 'ClyBrowserQueryCursorTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserItemCursorTest >> createQueryResult [
 	^ClyBrowserQueryExampleResult new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserItemCursorTest >> rawResultItems [
 	^queryResult items collect: [ :each | each actualObject ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserItemCursorTest >> testAllItems [
 
 	| allItems unprepared |
@@ -26,7 +27,7 @@ ClyBrowserItemCursorTest >> testAllItems [
 	self assert: (allItems collect: [:each | each position]) asArray equals: (1 to: queryResult size) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserItemCursorTest >> testHasQueryResult [
 
 	self assert: cursor queryResult equals: queryResult

@@ -1,10 +1,11 @@
 Class {
-	#name : #ReCritiqueTest,
-	#superclass : #ReCodeBasedTestCase,
-	#category : #'Renraku-Tests'
+	#name : 'ReCritiqueTest',
+	#superclass : 'ReCodeBasedTestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testBan [
 	| criticToSkip |
 
@@ -17,7 +18,7 @@ ReCritiqueTest >> testBan [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testBan1 [
 	| criticToSkip |
 
@@ -31,7 +32,7 @@ ReCritiqueTest >> testBan1 [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testDescription [
 	| rule critic |
 
@@ -41,7 +42,7 @@ ReCritiqueTest >> testDescription [
 	self assert: critic description equals: rule rationale
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testRule [
 	| rule critic |
 
@@ -51,7 +52,7 @@ ReCritiqueTest >> testRule [
 	self assert: critic rule equals: rule
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testTarget [
 	| rule critic |
 
@@ -61,7 +62,7 @@ ReCritiqueTest >> testTarget [
 	self assert: critic sourceAnchor entity equals: thisContext method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReCritiqueTest >> testTitle [
 	| rule critic |
 

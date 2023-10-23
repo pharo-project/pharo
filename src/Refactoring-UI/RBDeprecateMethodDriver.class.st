@@ -7,33 +7,34 @@ When I gather all needed information I am calling and executing deprecate method
 You can create my instance and execute the refactoring by running:
 
 ```
-(RBDeprecateMethodDriver model: aRBNamespace deprecateMethod: aSelector in: aClass) execute
+(RBDeprecateMethodDriver model: aRBNamespace deprecateMethod: aSelector in: aClass) runRefactoring
 ```
 "
 Class {
-	#name : #RBDeprecateMethodDriver,
-	#superclass : #RBDriver,
+	#name : 'RBDeprecateMethodDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'refactoring',
 		'useInsteadSelector',
 		'selectorToDeprecate'
 	],
-	#category : #'Refactoring-UI-Drivers'
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBDeprecateMethodDriver class >> deprecateMethod: aString in: aClass scopes: aCollection [
 
 	^ self new deprecateMethod: aString in: aClass  scopes: aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollection [
 
 	scopes := aCollection.
 	model := self refactoringScopeOn: scopes first.
 
-	refactoring := RBDeprecateMethodRefactoring
+	refactoring := RBDeprecateMethodTransformation
 		               model: model
 		               deprecateMethod: aSelector
 		               in: aClass.
@@ -41,29 +42,22 @@ RBDeprecateMethodDriver >> deprecateMethod: aSelector in: aClass scopes: aCollec
 	self selectorToReplaceDeprecatedSelector.
 ]
 
-{ #category : #execution }
-RBDeprecateMethodDriver >> execute [
+{ #category : 'execution' }
+RBDeprecateMethodDriver >> runRefactoring [
 
 	| compositeChange |
 	compositeChange := [
-	                   [
 	                   [ 
 							[ | isValid |
 							"the user pressed cancel"
 							useInsteadSelector ifNil: [ ^ self ].
 							refactoring newSelector: useInsteadSelector.
-							isValid := refactoring inputValidation check.
+							isValid := refactoring applicabilityPreconditions check.
 							isValid ifFalse: [ self selectorToReplaceDeprecatedSelector ].
 							isValid ] whileFalse.
 							
 							refactoring generateChanges 
 							]
-		                   on: RBInputValidationFailedError
-		                   do: [ :err |
-									"normally this should not be needed"
-			                   self selectorToReplaceDeprecatedSelector.
-			                   refactoring newSelector: useInsteadSelector.
-			                   err resume ] ]
 		                   on: RBApplicabilityChecksFailedError
 		                   do: [ :err |
 		                   ^ RBRefactoringError signal: err messageText ] ]
@@ -75,27 +69,14 @@ RBDeprecateMethodDriver >> execute [
 	self openPreviewWithChanges: compositeChange
 ]
 
-{ #category : #utilities }
-RBDeprecateMethodDriver >> refactoringScopeOn: aScope [
-
-	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
-]
-
-{ #category : #'ui - requests' }
+{ #category : 'ui - requests' }
 RBDeprecateMethodDriver >> selectorToReplaceDeprecatedSelector [
-	"UIManager default
-		                      request:
-			                      'Method to replace ' , selectorToDeprecate
-			                      ,
-			                      '. The new selectors cannot be an empty string or same as the old selector.'
-		                      initialAnswer: selectorToDeprecate
-		                      title: 'New selector'"
 
 	useInsteadSelector := SpRequestDialog new
 		                      title:
 			                      'Selector to replace ' , selectorToDeprecate;
 		                      label:
-			                      'The new selectors cannot be an empty string or same as the old selector.';
+			                      'The new selector should not be empty or same as the deprecated one.';
 		                      text: selectorToDeprecate;
 		                      acceptLabel: 'Accept';
 		                      cancelLabel: 'Cancel';

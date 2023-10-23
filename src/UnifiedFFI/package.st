@@ -1,1 +1,1 @@
-Package { #name : #UnifiedFFI }
+Package { #name : 'UnifiedFFI' }

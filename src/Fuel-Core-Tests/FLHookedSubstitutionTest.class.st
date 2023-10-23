@@ -2,12 +2,14 @@
 SUnit tests for hooked serialization using fuel
 "
 Class {
-	#name : #FLHookedSubstitutionTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLHookedSubstitutionTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testAvoidRecursion [
 	| result original | 
 	original := FLClassWithRecursiveSubstitution new index: 1.
@@ -20,11 +22,11 @@ FLHookedSubstitutionTest >> testAvoidRecursion [
 	self assert: result index equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testClassWithCachedValueByNil [
 
-	| aClassWithCachedValue result original | 
-	aClassWithCachedValue := self classFactory silentlyNewClassWithInstanceVariableNames: 'cache'.
+	| aClassWithCachedValue result original |
+	aClassWithCachedValue := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'cache' ].
 	self classFactory
 		silentlyCompile: 'cache ^cache' in: aClassWithCachedValue;
 		silentlyCompile: 'cache: x cache := x' in: aClassWithCachedValue;
@@ -35,74 +37,80 @@ FLHookedSubstitutionTest >> testClassWithCachedValueByNil [
 					ifNotNil: [
 						aVisitor
 							visitSubstitution: self
-							by: (self copy cache: nil)]' in: aClassWithCachedValue.
+							by: (self copy cache: nil)]'
+		in: aClassWithCachedValue.
 
 	original := aClassWithCachedValue new
-		cache: 5;
-		yourself.
+		            cache: 5;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: original.
-	
+
 	self assert: result cache isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testObjectByProxyThatBecomesItsContent [
 	"Tests a substitution of an object by a proxy that becomes another object on materialization."
 
 	| aProxyClass result |
-	aProxyClass := self classFactory silentlyNewClassWithInstanceVariableNames: 'someState'.
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'someState' ].
 	self classFactory
 		silentlyCompile: 'initialize  someState := 5@1' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: (', FLProxyThatBecomesItsContent name, ' newWith: someState)' in: aProxyClass.
+				by: (' , FLProxyThatBecomesItsContent name , ' newWith: someState)'
+		in: aProxyClass.
 
 	result := self resultOfSerializeAndMaterialize: aProxyClass new.
 
 	self assert: 5 @ 1 equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyByTarget [
+
 	| aProxyClass result original |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	original := aProxyClass new
-		target: 5;
-		yourself.
+		            target: 5;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: original.
 
 	self assert: 5 equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
+
 	| aProxyClass result pair original |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	pair := FLPair new
-		left: 6;
-		right: 'foo';
-		yourself.
+		        left: 6;
+		        right: 'foo';
+		        yourself.
 
 	original := aProxyClass new
-		target: pair;
-		yourself.
+		            target: pair;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: original.
 
@@ -110,28 +118,30 @@ FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 	self assert: result right equals: 'foo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated [
+
 	| aProxyClass result original pair pairRoot |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
-		silentlyCompile:  'target: x  Target := x' in: aProxyClass;
+		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	pair := FLPair new
-		left: 6;
-		right: 'foo'.
+		        left: 6;
+		        right: 'foo'.
 
 	original := aProxyClass new
-		target: pair;
-		yourself.
+		            target: pair;
+		            yourself.
 
 	pairRoot := FLPair new
-		left: original;
-		yourself.
+		            left: original;
+		            yourself.
 
 	result := self resultOfSerializeAndMaterialize: pairRoot.
 
@@ -140,24 +150,26 @@ FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated
 	self assert: result right isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
+
 	| aProxyClass result original pair |
-	aProxyClass := self classFactory silentlyNewClassWithClassVariableNames: 'Target'.
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
 	self classFactory
-		silentlyCompile:  'target: x  Target := x' in: aProxyClass;
+		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
 			^ aVisitor
 				visitSubstitution: self
-				by: Target' in: aProxyClass.
+				by: Target'
+		in: aProxyClass.
 
 	original := aProxyClass new
-		target: 5;
-		yourself.
+		            target: 5;
+		            yourself.
 
 	pair := FLPair new
-		left: original;
-		right: 'foo'.
+		        left: original;
+		        right: 'foo'.
 
 	result := self resultOfSerializeAndMaterialize: pair.
 
@@ -165,7 +177,7 @@ FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
 	self assert: result right equals: 'foo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testSpecialObjectsArray [
 	| result |
 	result := self resultOfSerializeAndMaterialize: Smalltalk specialObjectsArray.
@@ -173,7 +185,7 @@ FLHookedSubstitutionTest >> testSpecialObjectsArray [
 	self assert: result isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testSubstituteByItself [
 	| aRecursiveClass result | 
 	aRecursiveClass := self classFactory silentlyNewClass .
@@ -193,7 +205,7 @@ FLHookedSubstitutionTest >> testSubstituteByItself [
 	self assert: result class identicalTo: aRecursiveClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHookedSubstitutionTest >> testTransientByNil [
 	| result aClassOfTransientObjects | 
 	aClassOfTransientObjects := self classFactory silentlyNewClass.

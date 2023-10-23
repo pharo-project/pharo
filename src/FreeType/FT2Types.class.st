@@ -2,8 +2,8 @@
 I am a shared pool with all the mapping to the types used from the FreeType library.
 "
 Class {
-	#name : #FT2Types,
-	#superclass : #SharedPool,
+	#name : 'FT2Types',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'FT_BBox',
 		'FT_Bitmap',
@@ -44,10 +44,12 @@ Class {
 		'IntHolder',
 		'PointerHolder'
 	],
-	#category : #'FreeType-Bindings'
+	#category : 'FreeType-Bindings',
+	#package : 'FreeType',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FT2Types class >> initialize [
 
 	IntHolder := FFIExternalValueHolder ofType: 'int'.

@@ -1,14 +1,16 @@
 Class {
-	#name : #FLEncoderTest,
-	#superclass : #TestCase,
+	#name : 'FLEncoderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'encoder',
 		'stream'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FLEncoderTest >> getResult [
 	| contents|
 	encoder flush.
@@ -17,7 +19,7 @@ FLEncoderTest >> getResult [
 	^ contents
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLEncoderTest >> setUp [
 	super setUp.
 	
@@ -27,7 +29,7 @@ FLEncoderTest >> setUp [
 		useDuring: [ encoder := FLEncoder new ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeInt24 [
 	encoder encodeInt24: 0.
 	self assert: self getResult equals: #[0 0 0].
@@ -48,7 +50,7 @@ FLEncoderTest >> testEncodeInt24 [
 	self assert: self getResult equals: #[64 0 0]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeInt24Truncated [
 	encoder encodeInt24: (2 raisedTo: 24).
 	self assert: self getResult equals: #[0 0 0].
@@ -57,7 +59,7 @@ FLEncoderTest >> testEncodeInt24Truncated [
 	self assert: self getResult equals: #[255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeInt32 [
 	"Note: SmallInteger in Pharo is 31 / 63 bits wide and stored in two's complement format.
 			 Hence, the largest positive values are 2^30 - 1 and 2^62 - 1, the smallest negative
@@ -81,7 +83,7 @@ FLEncoderTest >> testEncodeInt32 [
 	self assert: self getResult equals: #[64 0 0 0]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeInt32Truncated [
 	encoder encodeInt32: (2 raisedTo: 32).
 	self assert: self getResult equals: #[0 0 0 0].
@@ -90,7 +92,7 @@ FLEncoderTest >> testEncodeInt32Truncated [
 	self assert: self getResult equals: #[127 255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeInt64 [
 	"Note: SmallInteger in Pharo is 31 / 63 bits wide and stored in two's complement format.
 			 Hence, the largest positive values are 2^30 - 1 and 2^62 - 1, the smallest negative
@@ -114,7 +116,7 @@ FLEncoderTest >> testEncodeInt64 [
 	self assert: self getResult equals: #[16 0 0 0 0 0 0 0]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeInt64Truncated [
 	encoder encodeInt64: (2 raisedTo: 64).
 	self assert: self getResult equals: #[0 0 0 0 0 0 0 0].
@@ -123,7 +125,7 @@ FLEncoderTest >> testEncodeInt64Truncated [
 	self assert: self getResult equals: #[31 255 255 255 255 255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUInt8 [
 	encoder encodeUint8: 0.
 	self assert: self getResult equals: #[0].
@@ -136,7 +138,7 @@ FLEncoderTest >> testEncodeUInt8 [
 	self assert: self getResult equals: #[255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUInt8Truncated [
 	encoder encodeUint8: (2 raisedTo: 8).
 	self assert: self getResult equals: #[0].
@@ -145,7 +147,7 @@ FLEncoderTest >> testEncodeUInt8Truncated [
 	self assert: self getResult equals: #[255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint16 [
 	encoder encodeUint16: 0.
 	self assert: self getResult equals: #[0 0].
@@ -158,7 +160,7 @@ FLEncoderTest >> testEncodeUint16 [
 	self assert: self getResult equals: #[255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint16Truncated [
 	encoder encodeUint16: (2 raisedTo: 16).
 	self assert: self getResult equals: #[0 0].
@@ -167,7 +169,7 @@ FLEncoderTest >> testEncodeUint16Truncated [
 	self assert: self getResult equals: #[255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint24 [
 	encoder encodeUint24: 0.
 	self assert: self getResult equals: #[0 0 0].
@@ -180,7 +182,7 @@ FLEncoderTest >> testEncodeUint24 [
 	self assert: self getResult equals: #[255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint24Truncated [
 	encoder encodeUint24: (2 raisedTo: 24).
 	self assert: self getResult equals: #[0 0 0].
@@ -189,7 +191,7 @@ FLEncoderTest >> testEncodeUint24Truncated [
 	self assert: self getResult equals: #[255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint32 [
 	encoder encodeUint32: 0.
 	self assert: self getResult equals: #[0 0 0 0].
@@ -202,7 +204,7 @@ FLEncoderTest >> testEncodeUint32 [
 	self assert: self getResult equals: #[255 255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint32Truncated [
 	encoder encodeUint32: (2 raisedTo: 32).
 	self assert: self getResult equals: #[0 0 0 0].
@@ -211,7 +213,7 @@ FLEncoderTest >> testEncodeUint32Truncated [
 	self assert: self getResult equals: #[255 255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint64 [
 	encoder encodeUint64: 0.
 	self assert: self getResult equals: #[0 0 0 0 0 0 0 0].
@@ -224,7 +226,7 @@ FLEncoderTest >> testEncodeUint64 [
 	self assert: self getResult equals: #[127 255 255 255 255 255 255 255]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLEncoderTest >> testEncodeUint64Truncated [
 	encoder encodeUint64: (2 raisedTo: 64).
 	self assert: self getResult equals: #[0 0 0 0 0 0 0 0].

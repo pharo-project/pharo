@@ -1,10 +1,12 @@
 Class {
-	#name : #STONWriteAsciiOnlyReadTest,
-	#superclass : #STONWriteReadTest,
-	#category : #'STON-Tests-Write-Read'
+	#name : 'STONWriteAsciiOnlyReadTest',
+	#superclass : 'STONWriteReadTest',
+	#category : 'STON-Tests-Write-Read',
+	#package : 'STON-Tests',
+	#tag : 'Write-Read'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteAsciiOnlyReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		STON writer
@@ -13,7 +15,7 @@ STONWriteAsciiOnlyReadTest >> serialize: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteAsciiOnlyReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
 		STON jsonWriter

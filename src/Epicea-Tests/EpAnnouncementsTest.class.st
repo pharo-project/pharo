@@ -1,10 +1,12 @@
 Class {
-	#name : #EpAnnouncementsTest,
-	#superclass : #EpMonitorIntegrationTest,
-	#category : #'Epicea-Tests-Integration'
+	#name : 'EpAnnouncementsTest',
+	#superclass : 'EpMonitorIntegrationTest',
+	#category : 'Epicea-Tests-Integration',
+	#package : 'Epicea-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> assertMonitorAnnouncesUpdateWhen: aBlock [
 
 	| wasAnnounced |
@@ -17,26 +19,26 @@ EpAnnouncementsTest >> assertMonitorAnnouncesUpdateWhen: aBlock [
 	self assert: wasAnnounced
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenDisabled [
 
 	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenEnabled [
 
 	self assertMonitorAnnouncesUpdateWhen: [ monitor enable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenRedundantlyDisabled [
 
 	monitor disable.
 	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenRedundantlyEnabled [
 
 	monitor enable.

@@ -2,21 +2,23 @@
 I am a mock exception handler used for testing purposes
 "
 Class {
-	#name : #TKTTestExceptionHandler,
-	#superclass : #TKTExceptionHandler,
+	#name : 'TKTTestExceptionHandler',
+	#superclass : 'TKTExceptionHandler',
 	#instVars : [
 		'error'
 	],
-	#category : #'TaskIt-Tests-Kernel'
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #handling }
+{ #category : 'handling' }
 TKTTestExceptionHandler >> error [
 
 	^ error
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 TKTTestExceptionHandler >> handleException: anError [
 	error := anError
 ]

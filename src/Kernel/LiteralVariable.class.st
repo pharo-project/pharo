@@ -13,22 +13,24 @@ When moving binding from Undeclared, we change the class of that binding to eith
 ==> when we use Global subclasses, we will either need to restrict adding variables or add a slow path where we create a new binding and update all users. But this can be done later.
 "
 Class {
-	#name : #LiteralVariable,
-	#superclass : #Variable,
+	#name : 'LiteralVariable',
+	#superclass : 'Variable',
 	#instVars : [
 		'value'
 	],
-	#category : #'Kernel-Variables'
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LiteralVariable class >> key: aKey [
 	"Answer an instance of me with the argument as the lookup up."
 
 	^self basicNew key: aKey
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LiteralVariable class >> key: newKey value: newValue [
 	"Answer an instance of me with the arguments as the key and value of
 	the association."
@@ -36,40 +38,40 @@ LiteralVariable class >> key: newKey value: newValue [
 	^self basicNew key: newKey value: newValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LiteralVariable >> = anAssociation [
 
 	^ super = anAssociation and: [value = anAssociation value]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 LiteralVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitLiteralVariableNode: aNode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> analogousCodeTo: anAssociation [
 	^ self = anAssociation
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LiteralVariable >> asClassVariable [
 	^self
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 LiteralVariable >> definingClass [
 	"The class defining the variable. For Globals, return nil"
 	^Smalltalk globals allClasses detect: [ :class | class hasClassVariable: self ] ifNone: [ nil ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LiteralVariable >> definitionString [
 	"Every subclass that adds state must redefine either this method or #printOn:"
 	^ self printString
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 LiteralVariable >> emitStore: aMethodBuilder [
 	| tempName |
 	tempName := '0TempForStackManipulation'.
@@ -82,48 +84,48 @@ LiteralVariable >> emitStore: aMethodBuilder [
 		send: #write:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 LiteralVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
 		pushLiteral: self;
 		send: #read
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LiteralVariable >> hash [
 	"Hash is reimplemented because = is implemented."
 
 	^name hash
 ]
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 LiteralVariable >> installingIn: aClass [
 	"I am called by the class builder. This way a class variable can change the class it is installed in"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isAccessedIn: aMethod [
 
 	^aMethod accessesRef: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isGlobalClassNameBinding [
 	^ self value isClassOrTrait
 		and: [ (name == self value name) or: [ self value isObsolete ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isLiteralVariable [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isReadIn: aCompiledCode [
 	^aCompiledCode readsRef: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isReferenced [
 	"my subclasses override this if they know better"
 
@@ -131,18 +133,18 @@ LiteralVariable >> isReferenced [
 		  behavior hasMethodAccessingVariable: self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isSelfEvaluating [
 	^ self key isSelfEvaluating and: [self value isSelfEvaluating]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isVariableBinding [
 	"Maybe we should deprecate this and use isLiteralVariable instead"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isWritable [
 	"Literal variables are writable, if they aren't global bindings for class names, like
  #Object -> Object "
@@ -150,22 +152,22 @@ LiteralVariable >> isWritable [
 	^ (self isGlobalVariable and: [ self isGlobalClassNameBinding ]) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LiteralVariable >> isWrittenIn: aCompiledCode [
 	^aCompiledCode writesRef: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LiteralVariable >> key [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LiteralVariable >> key: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LiteralVariable >> key: aKey value: anObject [
 	"Store the arguments as the variables of the receiver."
 
@@ -173,7 +175,7 @@ LiteralVariable >> key: aKey value: anObject [
 	value := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LiteralVariable >> literalEqual: otherLiteral [
 	"Answer true if the receiver and otherLiteral represent the same literal.
 	Variable bindings are literally equals only if identical.
@@ -181,12 +183,12 @@ LiteralVariable >> literalEqual: otherLiteral [
 	^self == otherLiteral
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LiteralVariable >> name: aString [
 	self key: aString asSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LiteralVariable >> printOn: aStream [
 
 	name printOn: aStream.
@@ -194,38 +196,55 @@ LiteralVariable >> printOn: aStream [
 	value printOn: aStream
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 LiteralVariable >> read [
 	^self value
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 LiteralVariable >> readInContext: aContext [
 	^self value
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 LiteralVariable >> runtimeUndeclaredRead [
 	"This method is used internally to compile polymorphic read on undeclared variables.
 	Do not call it youself to not polute senders."
 
+	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
+	 When we reach here, the Variable is not undeclared.
+	 We force recompile to recompile without the #runtimeUndeclaredRead"
+	Smalltalk hasCompiler ifTrue: [
+		| method |
+		method := thisContext sender homeMethod.
+		method isInstalled ifTrue: [ method recompile]
+	].
+
 	^ self read
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 LiteralVariable >> runtimeUndeclaredWrite: anObject [
 	"This method is used internally to compile polymorphic write on undeclared variables.
 	Do not call it youself to not polute senders."
 
+	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
+	 When we reach here, the Variable is not undeclared.
+	 We force recompile to recompile without the runtimeUndeclaredWrite:"
+	Smalltalk hasCompiler ifTrue: [
+		| method |
+		method := thisContext sender homeMethod.
+		method isInstalled ifTrue: [ method recompile]
+	].
 	^ self write: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LiteralVariable >> scope [
 	^self definingClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LiteralVariable >> storeOn: aStream [
 	"Store in the format (key->value)"
 	aStream nextPut: $(.
@@ -235,28 +254,28 @@ LiteralVariable >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 LiteralVariable >> usingMethods [
 	^SystemNavigation new allReferencesToBinding: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LiteralVariable >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LiteralVariable >> value: anObject [
 	value := anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 LiteralVariable >> write: anObject [
 	self value: anObject.
 	^anObject
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 LiteralVariable >> write: aValue inContext: aContext [
 	self isWritable ifFalse: [
 		^self error: 'Variable ' , name, ' is read only'].

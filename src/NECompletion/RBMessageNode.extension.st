@@ -1,6 +1,6 @@
-Extension { #name : #RBMessageNode }
+Extension { #name : 'RBMessageNode' }
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBMessageNode >> completionEntries: offset [
 	| selectors |
 	selectors := (receiver hasProperty: #type)
@@ -12,7 +12,7 @@ RBMessageNode >> completionEntries: offset [
 		thenCollect: [ :each | NECSelectorEntry contents: each node: self ]
 ]
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBMessageNode >> completionToken: offset [
 
 	^ self selector

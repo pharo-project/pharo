@@ -17,15 +17,17 @@ Instance variables:
 	next		<RxmLink | RxmTerminator> The next link in the structure.
 "
 Class {
-	#name : #RxmLink,
-	#superclass : #Object,
+	#name : 'RxmLink',
+	#superclass : 'Object',
 	#instVars : [
 		'next'
 	],
-	#category : #'Regex-Core-Links'
+	#category : 'Regex-Core-Links',
+	#package : 'Regex-Core',
+	#tag : 'Links'
 }
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmLink >> matchAgainst: aMatcher [
 	"If a link does not match the contents of the matcher's stream,
 	answer false. Otherwise, let the next matcher in the chain match."
@@ -33,20 +35,20 @@ RxmLink >> matchAgainst: aMatcher [
 	^next matchAgainst: aMatcher
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxmLink >> next [
 
 	^next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxmLink >> next: aLink [
 	"Set the next link, either an RxmLink or an RxmTerminator."
 
 	next := aLink
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RxmLink >> pointTailTo: anRxmLink [
 	"Propagate this message along the chain of links.
 	Point `next' reference of the last link to <anRxmLink>.
@@ -57,13 +59,13 @@ RxmLink >> pointTailTo: anRxmLink [
 		ifFalse: [next pointTailTo: anRxmLink]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RxmLink >> postCopy [
 	super postCopy.
 	next := next copy
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RxmLink >> terminateWith: aTerminator [
 	"Propagate this message along the chain of links, and
 	make aTerminator the `next' link of the last link in the chain.

@@ -6,12 +6,13 @@ This is not a subclass of Error as the exception can lead to the user editing th
 TODO: unify with the OCSemanticWarning hierarchy
 "
 Class {
-	#name : #SyntaxErrorNotification,
-	#superclass : #CodeError,
-	#category : #Deprecated12
+	#name : 'SyntaxErrorNotification',
+	#superclass : 'CodeError',
+	#category : 'Deprecated12',
+	#package : 'Deprecated12'
 }
 
-{ #category : #exceptionInstantiator }
+{ #category : 'exceptionInstantiator' }
 SyntaxErrorNotification class >> inClass: aClass withCode: codeString doitFlag: doitFlag errorMessage: errorString location: location [
 	self new
 		sourceCode: codeString;

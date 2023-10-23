@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyTraitUsersHierarchyTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
+	#name : 'ClyTraitUsersHierarchyTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyTraitUsersHierarchyTest >> createQueryResult [
 	^ClyTraitUserHierarchy new asQueryResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUsersHierarchyTest >> testFillingWithClassInsteadOfTrait [
 
 	queryResult fillWith: {ClyClassWithoutTraits}.
@@ -17,7 +18,7 @@ ClyTraitUsersHierarchyTest >> testFillingWithClassInsteadOfTrait [
 	self assertItems: {ClyClassWithoutTraits. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUsersHierarchyTest >> testFillingWithOnlyTraitWithoutUsers [
 
 	queryResult fillWith: {ClyTraitRoot1}.
@@ -25,7 +26,7 @@ ClyTraitUsersHierarchyTest >> testFillingWithOnlyTraitWithoutUsers [
 	self assertItems: { ClyTraitRoot1. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUsersHierarchyTest >> testFillingWithTraitAndItsUsers [
 
 	queryResult fillWith: {
@@ -38,7 +39,7 @@ ClyTraitUsersHierarchyTest >> testFillingWithTraitAndItsUsers [
 		 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUsersHierarchyTest >> testFillingWithTraitAndItsUsersWhenSomeUserInMiddleIsMissing [
 
 	queryResult fillWith: {
@@ -51,7 +52,7 @@ ClyTraitUsersHierarchyTest >> testFillingWithTraitAndItsUsersWhenSomeUserInMiddl
 		 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUsersHierarchyTest >> testFillingWithUsersOfTraitWhenRootTraitIsMissingInGivenList [
 
 	queryResult fillWith: {

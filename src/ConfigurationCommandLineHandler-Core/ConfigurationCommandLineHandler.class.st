@@ -33,26 +33,27 @@ Examples:
 
 "
 Class {
-	#name : #ConfigurationCommandLineHandler,
-	#superclass : #CommandLineHandler,
+	#name : 'ConfigurationCommandLineHandler',
+	#superclass : 'CommandLineHandler',
 	#instVars : [
 		'repositoryURL',
 		'configurationName'
 	],
-	#category : #'ConfigurationCommandLineHandler-Core'
+	#category : 'ConfigurationCommandLineHandler-Core',
+	#package : 'ConfigurationCommandLineHandler-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler class >> commandName [
 	^ 'config'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler class >> description [
 	^ 'Install and inspect Metacello Configurations from the command line'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ConfigurationCommandLineHandler >> activate [
 	self activateHelpWithoutArguments
 		ifTrue: [ ^ self ].
@@ -65,7 +66,7 @@ ConfigurationCommandLineHandler >> activate [
 	self postConfiguration.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> configuration [
 	| gofer |
 	gofer := self gofer.
@@ -76,7 +77,7 @@ ConfigurationCommandLineHandler >> configuration [
 	^ Smalltalk globals at: self configurationName asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> configurationName [
 	^ configurationName ifNil: [
 			self hasConfiguration 
@@ -85,25 +86,25 @@ ConfigurationCommandLineHandler >> configurationName [
 		 configurationName := self argumentAt: 2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> configurationVersion [
 	^ (self hasOption: 'install')
 		ifFalse: [ #stable ]
 		ifTrue: [ self optionAt: 'install' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> defaultRepositoryUrl [
 	^ 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo', SystemVersion current major asString, SystemVersion current minor asString, '/main'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> errorNoConfigurationsFound [
 
 	self exitFailure: 'No Configurations found in ', repositoryURL asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> gofer [
 	| username password |
 	username := (self hasOption: 'username')
@@ -117,26 +118,26 @@ ConfigurationCommandLineHandler >> gofer [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> groups [
 	^ (self optionAt: 'group') substrings: {$,}
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> handleMergeConflictDuring: aLoadBlock [
 	[aLoadBlock 
 	on: MCMergeOrLoadWarning do: [ :mergeConflict | mergeConflict merge ]]
 	on: MCMergeResolutionRequest do: [ :request |  request autoMerge ].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConfigurationCommandLineHandler >> hasConfiguration [
 	self flag: 'TODO: should use proper cli parser Coral??'.
 	^ (self arguments size > 1) and: [
 		((self argumentAt: 2) beginsWith: '-') not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConfigurationCommandLineHandler >> hasRepositoryUrl [
 	^ self arguments size > 0 and: [ 
 		| possibleUrl |
@@ -145,12 +146,12 @@ ConfigurationCommandLineHandler >> hasRepositoryUrl [
 		(possibleUrl includesSubstring: '://') or: [ possibleUrl first = $. ]]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> installConfiguration [
 	self installVersion: self configurationVersion
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> installVersion: aVersionName [
 	| metacelloVersion |
 	self inform: 'Installing ', self configurationName, ' ', aVersionName.
@@ -163,14 +164,14 @@ ConfigurationCommandLineHandler >> installVersion: aVersionName [
 			ifFalse: [ metacelloVersion load ]].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> list [
 	(self hasConfiguration or: [ self hasRepositoryUrl ])
 		ifTrue: [ self listConfigurationDetails ]
 		ifFalse: [ self listConfigurations ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> listConfigurationDetails [
 	"List possible configurations of the given repository"
 	
@@ -179,7 +180,7 @@ ConfigurationCommandLineHandler >> listConfigurationDetails [
 	^ self exitSuccess
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> listConfigurations [
 	"List possible configurations of the given repository"
 	
@@ -194,7 +195,7 @@ ConfigurationCommandLineHandler >> listConfigurations [
 	^ self exitSuccess
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> loadConfigurationNames [
 	| references |
 	
@@ -207,7 +208,7 @@ ConfigurationCommandLineHandler >> loadConfigurationNames [
 	^ references asSet asSortedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> loadRepositoryUrl [
 	| possibleUrl |
 	possibleUrl := self argumentAt: 1.
@@ -216,7 +217,7 @@ ConfigurationCommandLineHandler >> loadRepositoryUrl [
 	^ possibleUrl asFileReference
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> metacelloVersion: aVersionName [
 	| project |
 	project := self project.
@@ -231,22 +232,22 @@ ConfigurationCommandLineHandler >> metacelloVersion: aVersionName [
 					project version: aVersionName asSymbol ]].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> noQuit [
 	^ self hasOption: 'no-quit'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> noSave [
 	^ self hasOption: 'no-save'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ConfigurationCommandLineHandler >> postConfiguration [
 	Smalltalk snapshot: (self noSave not) andQuit: (self noQuit not).
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ConfigurationCommandLineHandler >> printConfigurations: configurations [
 
 	self inform: (String streamContents:  [ :s|
@@ -261,7 +262,7 @@ ConfigurationCommandLineHandler >> printConfigurations: configurations [
 			self stdout lf ].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ConfigurationCommandLineHandler >> printMetacelloProjectDetails: metacelloProject [
 	| versions |
 	self inform: 'Available versions for ', self configurationName.
@@ -275,12 +276,12 @@ ConfigurationCommandLineHandler >> printMetacelloProjectDetails: metacelloProjec
 		self stdout nextPutAll: key; lf ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> project [
 	^ self configuration project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConfigurationCommandLineHandler >> repositoryUrl [
 	^ repositoryURL ifNil: [ 
 		self hasRepositoryUrl 

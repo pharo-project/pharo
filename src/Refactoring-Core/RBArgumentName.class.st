@@ -1,6 +1,6 @@
 Class {
-	#name : #RBArgumentName,
-	#superclass : #Object,
+	#name : 'RBArgumentName',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'newName',
@@ -8,93 +8,95 @@ Class {
 		'canBeRemoved',
 		'canBeRenamed'
 	],
-	#category : #'Refactoring-Core-Support'
+	#category : 'Refactoring-Core-Support',
+	#package : 'Refactoring-Core',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBArgumentName class >> name: aString [
 	^ self new
 		name: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBArgumentName class >> name: aString value: anObject [
 	^self new
 		name: aString;
 		value: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RBArgumentName >> argValue [
+
+	^ value
+]
+
+{ #category : 'accessing' }
 RBArgumentName >> canBeRemoved [
 
 	^ canBeRemoved ifNil: [ canBeRemoved := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> canBeRemoved: anObject [
 
 	canBeRemoved := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> canBeRenamed [
 
 	^ canBeRenamed ifNil: [ canBeRenamed := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> canBeRenamed: anObject [
 
 	canBeRenamed := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBArgumentName >> hasNewName [
 	^ self name ~= self newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> newName [
 
 	^ newName ifNil: [ newName := name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> newName: anObject [
 
 	newName := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBArgumentName >> printOn: aStream [
 
 	aStream nextPutAll: self newName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBArgumentName >> storeOn: aStream [
 	aStream
 ]
 
-{ #category : #accessing }
-RBArgumentName >> value1 [
-
-	^ value
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBArgumentName >> value: anObject [
 
 	value := anObject

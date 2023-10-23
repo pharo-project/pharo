@@ -1,6 +1,6 @@
-Extension { #name : #WorldState }
+Extension { #name : 'WorldState' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
 	"Add a new alarm with the given set of parameters"
 	self alarms add:
@@ -11,7 +11,7 @@ WorldState >> addAlarm: aSelector withArguments: argArray for: aTarget at: sched
 			arguments: argArray)
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState class >> browseWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Browse)
@@ -31,7 +31,7 @@ WorldState class >> browseWorldMenuOn: aBuilder [
 				order: 4]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState class >> debugWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Debug)
@@ -47,7 +47,7 @@ WorldState class >> debugWorldMenuOn: aBuilder [
 				order: 3]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState class >> libraryWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Tools)
@@ -56,7 +56,7 @@ WorldState class >> libraryWorldMenuOn: aBuilder [
 		help: 'Third party tools and applications'
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState >> menuBuilder [
 
 	^ (PragmaMenuBuilder
@@ -66,7 +66,7 @@ WorldState >> menuBuilder [
 		  yourself
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState class >> sourcesWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Sources)
@@ -86,13 +86,13 @@ WorldState class >> sourcesWorldMenuOn: aBuilder [
 				order: 4 ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState >> startMessageTally [
 
 	self class startMessageTally
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState class >> startMessageTally [
 
 	(self confirm: 'MessageTally will start now,
@@ -105,7 +105,7 @@ to the top of the screen' translated)
 			self currentWorld activeHand position y > 0 ] ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
 
@@ -120,13 +120,13 @@ WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector argume
 			arguments: args)
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState >> startThenBrowseMessageTally [
 
 	self class startThenBrowseMessageTally
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState class >> startThenBrowseMessageTally [
 	"Tally only the UI process"
 
@@ -139,7 +139,7 @@ mouse pointer goes to the top of the screen')
 			self currentWorld activeHand position y > 10 ] ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldState class >> systemOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #System)
@@ -181,7 +181,34 @@ WorldState class >> systemOn: aBuilder [
 					aBuilder withSeparatorAfter ] ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
+WorldState class >> systemStartupFolderMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #SystemFolders)
+		label: 'Folders';
+		parent: #Startup;
+		order: 2;
+		help: 'System folder related.';
+		iconName: #scriptManager;
+		with: [ 
+		
+	(aBuilder item: #SystemImageFolder)
+				action: [ Smalltalk imageDirectory openInOSFileBrowser ];
+				label: 'Open Image folder';
+				order: 1; 
+				help: 'Open the image folder.';
+				iconName: #smallOpen.
+
+	(aBuilder item: #SystemVMFolder)
+				action: [ Smalltalk imageDirectory openInOSFileBrowser ];
+				label: 'Open VM folder';
+				order: 1;
+				help: 'Open the VM folder.';
+				iconName: #smallOpen
+	 ]
+]
+
+{ #category : '*Morphic-Base' }
 WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Windows)

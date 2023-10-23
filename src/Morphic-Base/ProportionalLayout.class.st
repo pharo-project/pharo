@@ -2,23 +2,25 @@
 I represent a layout that places all children of some morph in their given LayoutFrame.
 "
 Class {
-	#name : #ProportionalLayout,
-	#superclass : #LayoutPolicy,
-	#category : #'Morphic-Base-Layouts'
+	#name : 'ProportionalLayout',
+	#superclass : 'LayoutPolicy',
+	#category : 'Morphic-Base-Layouts',
+	#package : 'Morphic-Base',
+	#tag : 'Layouts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProportionalLayout >> isProportionalLayout [
 	^true
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ProportionalLayout >> layout: aMorph in: newBounds [
 	"Compute the layout for the given morph based on the new bounds"
 	aMorph submorphsDo:[:m| m layoutProportionallyIn: newBounds]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ProportionalLayout >> minExtentOf: aMorph in: newBounds [
 	"Return the minimal size aMorph's children would require given the new bounds"
 	| min |

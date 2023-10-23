@@ -1,6 +1,6 @@
-Extension { #name : #Process }
+Extension { #name : 'Process' }
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 Process >> isActiveInMetaLevel: n [
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>
@@ -8,7 +8,7 @@ Process >> isActiveInMetaLevel: n [
 	^ level = n or: [ level == nil ]
 ]
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 Process >> isMeta [
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>
@@ -17,7 +17,7 @@ Process >> isMeta [
 	^ level ~= 0
 ]
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 Process >> level [
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>
@@ -25,7 +25,7 @@ Process >> level [
 	^ level ifNil: [ level := 0 ]
 ]
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 Process >> runInMetaLevel: aBlock [
 
 	<noInstrumentation>
@@ -34,7 +34,7 @@ Process >> runInMetaLevel: aBlock [
 	^ aBlock insEnsure: InstrumentationDeactivator new
 ]
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 Process >> shiftLevelDown [
 
 	<noInstrumentation>
@@ -45,7 +45,7 @@ Process >> shiftLevelDown [
 	level := level insMinus: 1
 ]
 
-{ #category : #'*Instrumentation' }
+{ #category : '*Instrumentation' }
 Process >> shiftLevelUp [
 
 	<metaLinkOptions: #( #+ optionDisabledLink )>

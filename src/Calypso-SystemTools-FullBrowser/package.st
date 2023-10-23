@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemTools-FullBrowser' }
+Package { #name : 'Calypso-SystemTools-FullBrowser' }

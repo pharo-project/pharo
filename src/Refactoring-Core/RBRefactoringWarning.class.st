@@ -3,28 +3,30 @@ The receiver is a warning that usually requires the user to validate. This is us
 The action block, if defined, might help the user to resolve the issue.
 "
 Class {
-	#name : #RBRefactoringWarning,
-	#superclass : #Notification,
+	#name : 'RBRefactoringWarning',
+	#superclass : 'Notification',
 	#instVars : [
 		'actionBlock'
 	],
-	#category : #'Refactoring-Core-Support'
+	#category : 'Refactoring-Core-Support',
+	#package : 'Refactoring-Core',
+	#tag : 'Support'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 RBRefactoringWarning class >> signal: aString with: aBlock [
 	^ self new
 		actionBlock: aBlock;
 		signal: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringWarning >> actionBlock [
 
 	^ actionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringWarning >> actionBlock: anObject [
 
 	actionBlock := anObject

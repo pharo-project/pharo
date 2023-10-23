@@ -2,44 +2,46 @@
 First class representation of a scanned comment
 "
 Class {
-	#name : #RBCommentToken,
-	#superclass : #RBValueToken,
+	#name : 'RBCommentToken',
+	#superclass : 'RBValueToken',
 	#instVars : [
 		'stopPosition'
 	],
-	#category : #'AST-Core-Tokens'
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCommentToken class >> value: aString start: aStartPosition stop: aStopPosition [
 	^self new value: aString;
 		   		 start: aStartPosition;
 				 stop: aStopPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCommentToken >> first [
 
 	^ self start
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCommentToken >> isComment [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCommentToken >> last [
 
 	^ self stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCommentToken >> stop [
 	^ stopPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCommentToken >> stop: aPosition [
 	stopPosition := aPosition
 ]

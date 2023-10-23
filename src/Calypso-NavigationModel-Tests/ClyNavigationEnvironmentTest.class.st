@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyNavigationEnvironmentTest,
-	#superclass : #ClyAbstractNavigationEnvironmentTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyNavigationEnvironmentTest',
+	#superclass : 'ClyAbstractNavigationEnvironmentTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyNavigationEnvironmentTest >> createQueryFromScope: aScope [
 	aScope bindTo: environment.
 	^ ClyReturningScopeBasisExampleQuery from: aScope
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyNavigationEnvironmentTest >> createQueryFromScopeOf: aBasisObject [
 	^ self createQueryFromScope: (ClyExampleScope of: aBasisObject)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsEmptyResult [
 
 	| query result |
@@ -26,7 +27,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsEmptyResult [
 	self assert: (environment isQueryEmpty: query)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNoResultButItWouldBeEmpty [
 
 	| query |
@@ -35,7 +36,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNoResultButItWould
 	self assert: (environment isQueryEmpty: query)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNoResultButItWouldNotBeEmpty [
 
 	| query |
@@ -44,7 +45,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNoResultButItWould
 	self deny: (environment isQueryEmpty: query)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNotEmptyResult [
 
 	| query result |
@@ -55,7 +56,7 @@ ClyNavigationEnvironmentTest >> testCheckEmptyQueryWhenThereIsNotEmptyResult [
 	self deny: (environment isQueryEmpty: query)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testMakeQueryOfResultAsReadOnlyObjectWhenItIsExecuted [
 
 	| query |
@@ -65,7 +66,7 @@ ClyNavigationEnvironmentTest >> testMakeQueryOfResultAsReadOnlyObjectWhenItIsExe
 	self assert: query isReadOnlyObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testMakeQueryScopeOfResultAsReadOnlyObjectWhenItIsExecuted [
 
 	| query |
@@ -75,7 +76,7 @@ ClyNavigationEnvironmentTest >> testMakeQueryScopeOfResultAsReadOnlyObjectWhenIt
 	self assert: query scope isReadOnlyObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testProcessingQueryCacheWhenSomeWasCollectedAsGarbage [
 
 	| evaluated |
@@ -88,7 +89,7 @@ ClyNavigationEnvironmentTest >> testProcessingQueryCacheWhenSomeWasCollectedAsGa
 	self deny: evaluated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testQueryCacheShouldBeWeak [
 
 	| cache query |
@@ -100,7 +101,7 @@ ClyNavigationEnvironmentTest >> testQueryCacheShouldBeWeak [
 	self assert: cache equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testQueryExecutionShouldRemoveOldWeaklyGarbagedCache [
 
 	| result query |
@@ -114,7 +115,7 @@ ClyNavigationEnvironmentTest >> testQueryExecutionShouldRemoveOldWeaklyGarbagedC
 	self deny: (environment queryCache includesKey: query)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testQueryExecutionWhenResultWasWeaklyCollectedAsGarbage [
 	| cache result result2 query |
 	query := self createQueryFromScopeOf: self class.
@@ -131,7 +132,7 @@ ClyNavigationEnvironmentTest >> testQueryExecutionWhenResultWasWeaklyCollectedAs
 	self assert: result identicalTo: result2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyNavigationEnvironmentTest >> testQueryResultShouldBeCached [
 	| result1 result2 |
 	result1 := environment query: (self createQueryFromScopeOf: self class).

@@ -2,12 +2,14 @@
 SUnit tests for header serialization in fuel
 "
 Class {
-	#name : #FLHeaderSerializationTest,
-	#superclass : #FLSerializationTest,
-	#category : #'Fuel-Core-Tests-Base'
+	#name : 'FLHeaderSerializationTest',
+	#superclass : 'FLSerializationTest',
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testAdditionalObjects [
 
 	self serializer
@@ -20,7 +22,7 @@ FLHeaderSerializationTest >> testAdditionalObjects [
 	self assert: (self materializedObjects additionalObjectAt: 42) equals: 68.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testJustMaterializeHeader [
 	| header |
 	self serializer
@@ -34,12 +36,13 @@ FLHeaderSerializationTest >> testJustMaterializeHeader [
 	self assert: (header additionalObjectAt: 42) equals: 68
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPostMaterializationActions [
+
 	| aClass |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
-	aClass := self classFactory silentlyNewClassWithClassVariableNames: 'TestClassVariable TestClassVariable2'.
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'TestClassVariable TestClassVariable2' ].
 	self classFactory
 		silentlyCompile: 'postLoadMethod TestClassVariable := 1' in: aClass class;
 		silentlyCompile: 'postLoadMethod2 TestClassVariable := 2' in: aClass class;
@@ -49,8 +52,7 @@ FLHeaderSerializationTest >> testPostMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 1.
 	self serializer
 		at: #class putAdditionalObject: aClass;
-		addPostMaterializationAction: [ :header |
-			"Can't use `self environmentOfTest` or `aClass name` here because the closure
+		addPostMaterializationAction: [ :header | "Can't use `self environmentOfTest` or `aClass name` here because the closure
 			must be clean."
 			(header additionalObjectAt: #class) perform: #postLoadMethod2 ].
 	self serialize: aClass.
@@ -59,7 +61,7 @@ FLHeaderSerializationTest >> testPostMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPostMaterializationActionsMustBeClean [
 	self
 		should: [ self serializer addPostMaterializationAction: [ self ] ]
@@ -67,12 +69,13 @@ FLHeaderSerializationTest >> testPostMaterializationActionsMustBeClean [
 		description: 'Post materializaton actions have to be clean closures. For more details see method BlocKClosure >> #isClean'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPreMaterializationActions [
+
 	| aClass |
 	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
-	aClass := self classFactory silentlyNewClassWithClassVariableNames: 'TestClassVariable TestClassVariable2'.
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'TestClassVariable TestClassVariable2' ].
 	self classFactory
 		silentlyCompile: 'postLoadMethod TestClassVariable := 1' in: aClass class;
 		silentlyCompile: 'postLoadMethod2 TestClassVariable := 2' in: aClass class;
@@ -82,8 +85,7 @@ FLHeaderSerializationTest >> testPreMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 1.
 	self serializer
 		at: #class putAdditionalObject: aClass;
-		addPreMaterializationAction: [ :header |
-			"Can't use `self environmentOfTest` or `aClass name` here because the closure
+		addPreMaterializationAction: [ :header | "Can't use `self environmentOfTest` or `aClass name` here because the closure
 			must be clean."
 			(header additionalObjectAt: #class) perform: #postLoadMethod2 ].
 	self serialize: aClass.
@@ -92,7 +94,7 @@ FLHeaderSerializationTest >> testPreMaterializationActions [
 	self assert: (aClass perform: #classVariable) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLHeaderSerializationTest >> testPreMaterializationActionsMustBeClean [
 	self
 		should: [ self serializer addPreMaterializationAction: [ self ] ]

@@ -2,17 +2,19 @@
 this class is subject of changes/removal. do not use it.
 "
 Class {
-	#name : #AthensPathSegmentConverter,
-	#superclass : #Object,
+	#name : 'AthensPathSegmentConverter',
+	#superclass : 'Object',
 	#instVars : [
 		'dest',
 		'endPoint',
 		'contourStartPt'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensPathSegmentConverter >> convert: aPath [
 	"pipe the path segments to destination, converting
 	segments on the way"
@@ -22,7 +24,7 @@ AthensPathSegmentConverter >> convert: aPath [
 	aPath sendCommandsTo: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensPathSegmentConverter >> dest: aDest [
 	dest := aDest
 ]

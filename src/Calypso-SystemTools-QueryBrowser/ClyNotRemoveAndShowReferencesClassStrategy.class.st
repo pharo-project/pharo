@@ -4,28 +4,30 @@ I am the strategy to be used when a class can't be removed due to the presence o
 I allow the user to browse those references.
 "
 Class {
-	#name : #ClyNotRemoveAndShowReferencesClassStrategy,
-	#superclass : #ClyInteractiveRemoveClassStrategy,
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Classes'
+	#name : 'ClyNotRemoveAndShowReferencesClassStrategy',
+	#superclass : 'ClyInteractiveRemoveClassStrategy',
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Classes',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Classes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNotRemoveAndShowReferencesClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
 	^hasReferences
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyNotRemoveAndShowReferencesClassStrategy >> execute: aSycRemoveClassCommand [
 
 	(ClyShowClassRefCommand forClasses: (aSycRemoveClassCommand classes flatCollect: [ :each | { each. each class } ]) by: browser) execute
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyNotRemoveAndShowReferencesClassStrategy >> orderForBrowser [
 	^5
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyNotRemoveAndShowReferencesClassStrategy >> userRequestString [
 	^'Don''t remove, but show me those references'
 ]

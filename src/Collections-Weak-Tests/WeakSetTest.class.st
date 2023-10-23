@@ -2,24 +2,26 @@
 A trait for test purposes
 "
 Class {
-	#name : #WeakSetTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Weak-Tests-Base'
+	#name : 'WeakSetTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Weak-Tests-Base',
+	#package : 'Collections-Weak-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 WeakSetTest class >> shouldInheritSelectors [
 
 ^true
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 WeakSetTest >> classToBeTested [
 
 	^ WeakSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testAddEqualElements [
 	| ws o2 o3 |
 	o2 := 1 / 2.
@@ -39,7 +41,7 @@ WeakSetTest >> testAddEqualElements [
 	self assert: ws size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testAddIncludesSizeReclaim [
 	| ws o2 o3 |
 	o2 := 1 / 2.
@@ -69,7 +71,7 @@ WeakSetTest >> testAddIncludesSizeReclaim [
 	self assert: ws slowSize equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testAddNil [
 	| ws |
 	ws := self classToBeTested new.
@@ -77,7 +79,7 @@ WeakSetTest >> testAddNil [
 	self assert: (ws includes: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testAnyOneWhenAllContentsWasGarbaged [
 	| ws o |
 	o := Object new.
@@ -87,7 +89,7 @@ WeakSetTest >> testAnyOneWhenAllContentsWasGarbaged [
 	self assert: ws anyOne equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testAsArray [
 	| item set |
 	set := self classToBeTested new.
@@ -105,7 +107,7 @@ WeakSetTest >> testAsArray [
 	self assert: set asArray equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testCollisions [
 
 	| ws o1 o2 o5 on remember forget |
@@ -155,7 +157,7 @@ WeakSetTest >> testCollisions [
 	remember do: [:m | self assert: (ws includes: m)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testDoAfter [
 	| input weakSet array |
 	input := (1 to: 11) collect: [ :each | each asString asSymbol ].	"Some symbols might be garbage collected without this variable"
@@ -168,7 +170,7 @@ WeakSetTest >> testDoAfter [
 		self assert: result sort equals: (array allButFirst: index) sort ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testDoDontIterateOnReclaimedObjects [
 	| ws o1 o2 size |
 	ws := self classToBeTested new.
@@ -192,7 +194,7 @@ WeakSetTest >> testDoDontIterateOnReclaimedObjects [
 	self assert: size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testDontGrowWhenUnecessary [
 	| ws objs initialSize |
 	objs := (2 to: 20) collect: [:i | 1 / i].
@@ -211,7 +213,7 @@ WeakSetTest >> testDontGrowWhenUnecessary [
 		description: 'The WeakSet did not have to grow because slots of reclaimed objects were recycled'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testGrowWhenNecessary [
 	| ws objs initialSize |
 	objs := (2 to: 20) collect: [:i | 1 / i].
@@ -222,7 +224,7 @@ WeakSetTest >> testGrowWhenNecessary [
 		description: 'The WeakSet grown because not enough room were preallocated'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testGrowWithNil [
 	"This test covers that grow take into account that nil are wrapped elements of sets"
 	| set |
@@ -232,7 +234,7 @@ WeakSetTest >> testGrowWithNil [
 	self assert: (set includes: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testIncludes [
 
 	| weakSet transientFakeNilObject |
@@ -251,7 +253,7 @@ WeakSetTest >> testIncludes [
 	self deny: (weakSet includes: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakSetTest >> testIncludesNil [
 
 	| ws |

@@ -1,16 +1,12 @@
 Class {
-	#name : #MetacelloGoferLoad,
-	#superclass : #GoferLoad,
-	#category : #'Metacello-MC-Gofer'
+	#name : 'MetacelloGoferLoad',
+	#superclass : 'GoferLoad',
+	#category : 'Metacello-MC-Gofer',
+	#package : 'Metacello-MC',
+	#tag : 'Gofer'
 }
 
-{ #category : #private }
-MetacelloGoferLoad >> updateCategories [
-	MetacelloPlatform current bypassGoferLoadUpdateCategories
-		ifFalse: [ super updateCategories ]
-]
-
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGoferLoad >> updateRepositories [
 	"Noop for Metacello...done by loader itself"
 ]

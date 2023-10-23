@@ -25,22 +25,23 @@ Examples:
 	pharo Pharo.image initializePackages --protocols=protocols.txt --packages=packages.txt --save
 "
 Class {
-	#name : #InitializePackagesCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #InitializePackagesCommandLineHandler
+	#name : 'InitializePackagesCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'InitializePackagesCommandLineHandler',
+	#package : 'InitializePackagesCommandLineHandler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> commandName [
 	^ 'initializePackages'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> description [
 	^ 'Initialize packages and protocols from a given lists'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 InitializePackagesCommandLineHandler >> activate [
 
 	self activateHelp
@@ -57,7 +58,7 @@ InitializePackagesCommandLineHandler >> activate [
 	self exitSuccess
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 InitializePackagesCommandLineHandler >> initializePackagesFrom: aFileName [
 
 	| packages |
@@ -72,7 +73,7 @@ InitializePackagesCommandLineHandler >> initializePackagesFrom: aFileName [
 	RPackageOrganizer registerInterestToSystemAnnouncement
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 
 	(File named: aFileName) readStreamDo: [ :binaryStream |

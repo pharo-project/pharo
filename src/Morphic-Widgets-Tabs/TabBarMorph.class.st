@@ -2,30 +2,32 @@
 I am a bar gathering tabs. I am the one managing the selected tab and related bahavior (unselecting the last one, updating the layout to make the selected tab on top of the other)
 "
 Class {
-	#name : #TabBarMorph,
-	#superclass : #PanelMorph,
+	#name : 'TabBarMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'tabs',
 		'selectionHistory',
 		'menuButton',
 		'numberOfSelectedTabs'
 	],
-	#category : #'Morphic-Widgets-Tabs-Morphs'
+	#category : 'Morphic-Widgets-Tabs-Morphs',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Morphs'
 }
 
-{ #category : #'private - constants' }
+{ #category : 'private - constants' }
 TabBarMorph >> actionOffset [
 	^ 4 * self displayScaleFactor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> actionsChanged: aTab [
 
 	self selectedTab = aTab ifFalse: [ ^ self ].
 	self adjustLayout
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> addActionsFor: aTab [
 	| rightOffset |
 
@@ -54,21 +56,21 @@ TabBarMorph >> addActionsFor: aTab [
 		rightOffset := rightOffset + each icon width + self actionOffset]
 ]
 
-{ #category : #'private - history' }
+{ #category : 'private - history' }
 TabBarMorph >> addFirstInHistory: aTab [
 
 	self removeFromHistory: aTab.
 	selectionHistory addFirst: aTab
 ]
 
-{ #category : #'private - history' }
+{ #category : 'private - history' }
 TabBarMorph >> addInHistory: aTab [
 
 	self removeFromHistory: aTab.
 	selectionHistory addLast: aTab
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabBarMorph >> addMenuButton [
 	| topOffset rightOffset |
 
@@ -86,7 +88,7 @@ TabBarMorph >> addMenuButton [
 				bottomOffset: topOffset + self menuButtonHeight)
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> addTab: aTab [
 
 	(tabs includes: aTab) ifTrue: [ ^ self ].
@@ -101,7 +103,7 @@ TabBarMorph >> addTab: aTab [
 	self triggerEvent: #tabAdded with: aTab
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabBarMorph >> adjustLayout [
 	| length overlap |
 
@@ -125,32 +127,32 @@ TabBarMorph >> adjustLayout [
 	self addActionsFor: self selectedTab
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabBarMorph >> borderColor [
 	"I do not use #borderColor because I want a light border"
 	^ self theme lightBackgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabBarMorph >> bounds: b [
 
 	super bounds: b.
 	self adjustLayout
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> canBeClosed [
 
 	^ tabs allSatisfy: [ :tab | tab closeable ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> closeAllTabs [
 
 	tabs copy do: [ :tab | tab close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> computeLength [
 	| width size length |
 
@@ -165,13 +167,13 @@ TabBarMorph >> computeLength [
 	^ length
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> createActionButtonFor: anAction [
 
 	^ TabActionButtonMorph forAction: anAction
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> createMenuButton [
 	"Answer a button for the window menu."
 	| form msb |
@@ -204,20 +206,20 @@ TabBarMorph >> createMenuButton [
 	^ msb
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> delete [
 
 	super delete.
 	self triggerEvent: #barDeleted with: self
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> deleteSelectedTabs [
 
 	self selectedTabs do: [:e | e close ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabBarMorph >> drawLinesOn: canvas [
 	"This method draws the line below the tab-label, to make it look as 'behind' (when there is one
 	 selected, it draws that line except on the corresponding selected tab."
@@ -226,13 +228,13 @@ TabBarMorph >> drawLinesOn: canvas [
 		ifNil: [ self drawWithoutSelectedOn: canvas ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabBarMorph >> drawSubmorphsOn: canvas [
 	super drawSubmorphsOn: canvas.
 	self drawLinesOn: canvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabBarMorph >> drawWithSelectionOn: canvas [
 	canvas
 		line: self bottomLeft + (0 @ -1)
@@ -251,7 +253,7 @@ TabBarMorph >> drawWithSelectionOn: canvas [
 		color: self borderColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabBarMorph >> drawWithoutSelectedOn: canvas [
 	canvas
 		line: self bottomLeft + (0 @ -1)
@@ -260,13 +262,13 @@ TabBarMorph >> drawWithoutSelectedOn: canvas [
 		color: self borderColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> extraSpace [
 
 	^ tabs max: [ :each | each extraSpaceForActions ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabBarMorph >> initialize [
 
 	super initialize.
@@ -280,23 +282,23 @@ TabBarMorph >> initialize [
 	self addMenuButton
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> isMultiSelection [
 
 	^ numberOfSelectedTabs > 1
 ]
 
-{ #category : #'private - constants' }
+{ #category : 'private - constants' }
 TabBarMorph >> menuButtonHeight [
 	^ 16 * self displayScaleFactor
 ]
 
-{ #category : #'private - constants' }
+{ #category : 'private - constants' }
 TabBarMorph >> menuButtonWidth [
 	^ 16 * self displayScaleFactor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> needSpaceForActions [
 	| tab |
 
@@ -306,26 +308,26 @@ TabBarMorph >> needSpaceForActions [
 	^ self selectedTab hasMenu or: [ self selectedTab hasActions ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> orderedSelectedTabs [
 
 	^ tabs select: [ :e | e selected ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> overlap [
 
 	^ 8 * self displayScaleFactor
 ]
 
-{ #category : #'change reporting' }
+{ #category : 'change reporting' }
 TabBarMorph >> ownerChanged [
 
 	super ownerChanged.
 	self adjustLayout
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 TabBarMorph >> popUpMenu [
 	| menu |
 
@@ -333,7 +335,7 @@ TabBarMorph >> popUpMenu [
 	menu popUpAt: menuButton bottomRight forHand: self activeHand in: self currentWorld
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabBarMorph >> registerActionsFor: aTab [
 
 	aTab
@@ -350,13 +352,13 @@ TabBarMorph >> registerActionsFor: aTab [
 		when: #tabEmptyContents send: #tabEmptyContents: to: self
 ]
 
-{ #category : #'private - history' }
+{ #category : 'private - history' }
 TabBarMorph >> removeFromHistory: aTab [
 
 	selectionHistory remove: aTab ifAbsent: [  ]
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> removeTab: aTab [
 	| nextSelection |
 
@@ -371,20 +373,20 @@ TabBarMorph >> removeTab: aTab [
 	self adjustLayout
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> reversedSelectedTabs [
 
 	^ selectionHistory last: numberOfSelectedTabs
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> selectLastTab [
 
 	tabs ifEmpty: [ ^self ].
 	tabs last selected: true
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> selectNext [
 	| index nextSelection |
 
@@ -394,7 +396,7 @@ TabBarMorph >> selectNext [
 	nextSelection selected: true
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> selectPrevious [
 	| index nextSelection |
 
@@ -404,7 +406,7 @@ TabBarMorph >> selectPrevious [
 	nextSelection selected: true
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> selectTabAt: index ifAbsent: aBlock [
 	| tab |
 
@@ -412,24 +414,24 @@ TabBarMorph >> selectTabAt: index ifAbsent: aBlock [
 	tab selected: true
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabBarMorph >> selectedColor [
 	^ self theme selectionColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabBarMorph >> selectedTab [
 
 	  ^selectionHistory ifEmpty: [ nil ] ifNotEmpty: [ selectionHistory last ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> selectedTabs [
 
 	^ (selectionHistory last: numberOfSelectedTabs) reversed
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabAddedToSelection: aTab [
 
 	aTab selected ifTrue: [ ^ self ].
@@ -441,13 +443,13 @@ TabBarMorph >> tabAddedToSelection: aTab [
 	self triggerEvent: #tabAddedToSelection with: aTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabDeleted: aTab [
 
 	self removeTab: aTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabEmptyContents: aTab [
 
 	self selectedTab = aTab ifFalse: [ ^ self ].
@@ -459,7 +461,7 @@ TabBarMorph >> tabEmptyContents: aTab [
 	self triggerEvent: #tabEmptyContents with: aTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabRefreshed: aTab [
 
 	self selectedTab = aTab ifFalse: [ ^ self ].
@@ -467,7 +469,7 @@ TabBarMorph >> tabRefreshed: aTab [
 	self triggerEvent: #tabRefreshed with: aTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabRemovedFromSelection: aTab [
 
 	numberOfSelectedTabs == 1 ifTrue: [ ^ self ].
@@ -483,7 +485,7 @@ TabBarMorph >> tabRemovedFromSelection: aTab [
 	self triggerEvent: #tabRemovedFromSelection with: aTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabResetSelection: aTab [
 	"Clicked on an already clicked tab, since it can happened after a multi selection, I have to clear the selection except for this tab"
 
@@ -498,7 +500,7 @@ TabBarMorph >> tabResetSelection: aTab [
 	self triggerEvent: #tabResetSelection with: aTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabSelectTo: aTab [
 	| index selectedIndex |
 
@@ -518,7 +520,7 @@ TabBarMorph >> tabSelectTo: aTab [
 	self adjustLayout
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabBarMorph >> tabSelected: aTab [
 
 	self isMultiSelection
@@ -530,12 +532,12 @@ TabBarMorph >> tabSelected: aTab [
 			self triggerEvent: #tabSelected with: aTab ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabBarMorph >> tabs [
 	^ tabs
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabBarMorph >> tabs: aCollection [
 
 	tabs do: [ :e | e silentlySelected: false ].
@@ -552,13 +554,13 @@ TabBarMorph >> tabs: aCollection [
 	self triggerEvent: #tabsChanged
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabBarMorph >> themeChanged [
 	super themeChanged.
 	tabs do:#themeChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabBarMorph >> useSortedTabsBy: sortBlock [
 	tabs := SortedCollection sortBlock: sortBlock
 ]

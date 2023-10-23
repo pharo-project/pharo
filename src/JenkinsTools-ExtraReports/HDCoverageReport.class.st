@@ -2,29 +2,28 @@
 Hudson report for test coverage
 "
 Class {
-	#name : #HDCoverageReport,
-	#superclass : #HDTestReport,
+	#name : 'HDCoverageReport',
+	#superclass : 'HDTestReport',
 	#instVars : [
 		'packages',
 		'wrappers',
 		'covered'
 	],
-	#category : #'JenkinsTools-ExtraReports'
+	#category : 'JenkinsTools-ExtraReports',
+	#package : 'JenkinsTools-ExtraReports'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 HDCoverageReport >> addTestsIn: aTestAsserter to: aSet [
-	(aTestAsserter isKindOf: TestSuite) ifTrue: [
-		aTestAsserter tests
-			do: [ :each | self addTestsIn: each to: aSet ] ].
+
+	(aTestAsserter isKindOf: TestSuite) ifTrue: [ aTestAsserter tests do: [ :each | self addTestsIn: each to: aSet ] ].
 	(aTestAsserter isKindOf: TestCase) ifTrue: [
 		(aTestAsserter class respondsTo: #packageNamesUnderTest) ifTrue: [
-			aTestAsserter class packageNamesUnderTest
-				do: [ :each | aSet add: (RPackage organizer packageNamed: each) ] ] ].
+			aTestAsserter class packageNamesUnderTest do: [ :each | aSet add: (self packageOrganizer packageNamed: each) ] ] ].
 	^ aSet
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generate [
 	| coverage |
 	covered := (wrappers select: [ :each | each hasRun ])
@@ -34,7 +33,7 @@ HDCoverageReport >> generate [
 		ensure: [ coverage close ]
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generateDataOn: aStream [
 	| items |
 	aStream tab; nextPutAll: '<data>'; nextPut: Character lf.
@@ -55,7 +54,7 @@ HDCoverageReport >> generateDataOn: aStream [
 	aStream tab; nextPutAll: '</data>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generateOn: aStream [
 	aStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'; nextPut: Character lf.
 	aStream nextPutAll: '<report>'; nextPut: Character lf.
@@ -64,7 +63,7 @@ HDCoverageReport >> generateOn: aStream [
 	aStream nextPutAll: '</report>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generatePackage: aPackage class: aClass on: aStream [
 	| items |
 	aStream tab: 4; nextPutAll: '<class name="'; nextPutAll: (self encode: aClass name); nextPutAll: '">'; nextPut: Character lf.
@@ -83,7 +82,7 @@ HDCoverageReport >> generatePackage: aPackage class: aClass on: aStream [
 	aStream tab: 4; nextPutAll: '</class>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generatePackage: aPackage method: aReference on: aStream [
  
 	aStream tab: 5; nextPutAll: '<method name="'; nextPutAll: (self encode: aReference selector); nextPutAll: '">'; nextPut: Character lf.
@@ -95,7 +94,7 @@ HDCoverageReport >> generatePackage: aPackage method: aReference on: aStream [
 	aStream tab: 5; nextPutAll: '</method>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generatePackage: aPackage on: aStream [
 	| items |
 	aStream tab: 3; nextPutAll: '<package name="'; nextPutAll: (self encode: (aPackage packageName copyReplaceAll: '-' with: '.')); nextPutAll: '">'; nextPut: Character lf.
@@ -115,7 +114,7 @@ HDCoverageReport >> generatePackage: aPackage on: aStream [
 	aStream tab: 3; nextPutAll: '</package>'; nextPut: Character lf
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generateStatsOn: aStream [
 	aStream tab; nextPutAll: '<stats>'; nextPut: Character lf.
 	aStream tab; tab; nextPutAll: '<packages value="'; print: (packages size); nextPutAll: '"/>'; nextPut: Character lf.
@@ -124,7 +123,7 @@ HDCoverageReport >> generateStatsOn: aStream [
 	aStream tab; nextPutAll: '</stats>'; nextPut: Character lf.
 ]
 
-{ #category : #generating }
+{ #category : 'generating' }
 HDCoverageReport >> generateType: aString indent: anInteger total: totalInteger actual: actualInteger on: aStream [
 	aStream tab: anInteger; 
 		nextPutAll: '<coverage type="'; nextPutAll: aString; 
@@ -133,12 +132,12 @@ HDCoverageReport >> generateType: aString indent: anInteger total: totalInteger 
 		nextPut: Character lf
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDCoverageReport >> ignoredSelectors [
 	^ #(packageNamesUnderTest classNamesNotUnderTest)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDCoverageReport >> methodsIn: aPackage [
 	aPackage ifNil: [ ^ #() ].
 	^ aPackage methods reject: [ :method | 
@@ -147,12 +146,12 @@ HDCoverageReport >> methodsIn: aPackage [
 			or: [ method compiledMethod hasPragmaNamed: #ignoreForCoverage ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HDCoverageReport >> packagesIn: aTestAsserter [
 	^ self addTestsIn: aTestAsserter to: Set new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDCoverageReport >> setUp [
 	super setUp.
 	wrappers := ((packages := self packagesIn: suite)
@@ -161,7 +160,7 @@ HDCoverageReport >> setUp [
 	wrappers do: [ :each | each install ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HDCoverageReport >> tearDown [
 	wrappers do: [ :each | each uninstall ].
 	super tearDown.

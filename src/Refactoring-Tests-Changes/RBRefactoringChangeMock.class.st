@@ -2,8 +2,8 @@
 This class is used to test refactoring changes.
 "
 Class {
-	#name : #RBRefactoringChangeMock,
-	#superclass : #Object,
+	#name : 'RBRefactoringChangeMock',
+	#superclass : 'Object',
 	#instVars : [
 		'instVar'
 	],
@@ -13,30 +13,31 @@ Class {
 	#classInstVars : [
 		'classInstVar'
 	],
-	#category : #'Refactoring-Tests-Changes'
+	#category : 'Refactoring-Tests-Changes',
+	#package : 'Refactoring-Tests-Changes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringChangeMock class >> classInsVar [
 
 	^ classInstVar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringChangeMock >> accessAll [ 
 	instVar := 0. 
 	SharedVar := 0.
 	^ instVar + SharedVar 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoringChangeMock >> initialize [
 
 	<ignoreUnusedVariables: #( #instVar )>
 	super initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringChangeMock >> one [
 
 	^ 1

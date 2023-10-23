@@ -1,6 +1,6 @@
-Extension { #name : #Announcement }
+Extension { #name : 'Announcement' }
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Announcement class >> systemIconName [
 
 	^ #announcement

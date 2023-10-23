@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-DependencyAnalyser-Browser' }
+Package { #name : 'Calypso-SystemPlugins-DependencyAnalyser-Browser' }

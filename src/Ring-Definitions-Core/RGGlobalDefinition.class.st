@@ -3,18 +3,20 @@ An RGGlobalDefinition is an abstract superclass for representing classes, global
 
 "
 Class {
-	#name : #RGGlobalDefinition,
-	#superclass : #RGDefinition,
-	#category : #'Ring-Definitions-Core-Base'
+	#name : 'RGGlobalDefinition',
+	#superclass : 'RGDefinition',
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGGlobalDefinition class >> isAbstract [
 
 	^ self == RGGlobalDefinition
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RGGlobalDefinition >> = aRGGlobalDefinition [
 	"This method look for equality of the properties of the receiver"
 	"Verifies the class and the name of the receiver"
@@ -23,14 +25,14 @@ RGGlobalDefinition >> = aRGGlobalDefinition [
 		and:[ self name == aRGGlobalDefinition name ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RGGlobalDefinition >> hash [
 	"Hash is re-implemented because #= is re-implemented"
 
 	^self class hash bitXor: (self name hash)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGGlobalDefinition >> parent [
 	"Retrieves the namespace in which the receiver is known"
 

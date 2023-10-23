@@ -1,6 +1,6 @@
-Extension { #name : #DisplayScreen }
+Extension { #name : 'DisplayScreen' }
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 DisplayScreen >> boundingBox [
 
 	self currentWorld ifNil: [ ^ 0@0 corner: 0@0 ].

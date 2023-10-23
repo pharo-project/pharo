@@ -2,12 +2,14 @@
 I represent string pattern using regex expression
 "
 Class {
-	#name : #ClyRegexPattern,
-	#superclass : #ClyStringPattern,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyRegexPattern',
+	#superclass : 'ClyStringPattern',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRegexPattern >> createFixedRegexMatcherIfFailed: errorBlock [
 
 	| fixedPattern |
@@ -18,7 +20,7 @@ ClyRegexPattern >> createFixedRegexMatcherIfFailed: errorBlock [
 		do: [ :ex | errorBlock value ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRegexPattern >> createRegexMatcherIfFailed: errorBlock [
 
 	value trimBoth ifEmpty: [^errorBlock value].
@@ -28,7 +30,7 @@ ClyRegexPattern >> createRegexMatcherIfFailed: errorBlock [
 		do: [ :ex | ^self createFixedRegexMatcherIfFailed: errorBlock ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRegexPattern >> matches: aString [
 	| matcher |
 	matcher := self createRegexMatcherIfFailed: [^true].

@@ -1,6 +1,6 @@
-Extension { #name : #RunArray }
+Extension { #name : 'RunArray' }
 
-{ #category : #'*STON-Text support' }
+{ #category : '*STON-Text support' }
 RunArray class >> fromSton: stonReader [
 	"Overwritten to get back the standard object behavior"
 
@@ -9,14 +9,14 @@ RunArray class >> fromSton: stonReader [
 		yourself
 ]
 
-{ #category : #'*STON-Text support' }
+{ #category : '*STON-Text support' }
 RunArray >> fromSton: stonReader [
 	"Overwritten to get back the standard object behavior"
 
 	stonReader parseNamedInstVarsFor: self
 ]
 
-{ #category : #'*STON-Text support' }
+{ #category : '*STON-Text support' }
 RunArray >> stonOn: stonWriter [
 	"Overwritten to get back the standard object behavior"
 

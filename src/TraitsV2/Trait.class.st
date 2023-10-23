@@ -16,15 +16,35 @@ Also a nice diagram can be seen evaluating:
 
 "
 Class {
-	#name : #Trait,
-	#superclass : #Class,
+	#name : 'Trait',
+	#superclass : 'Class',
 	#instVars : [
 		'users'
 	],
-	#category : #'TraitsV2-Base'
+	#category : 'TraitsV2-Base',
+	#package : 'TraitsV2',
+	#tag : 'Base'
 }
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'class building' }
+Trait class >> << aSymbolOrAClassSideTrait [
+	"Return a builder of class FluidTraitBuilder. To get a trait, this builder should be sent build. This way we can manipulate and test trait definition without be forced to get them added to the environment."
+
+	aSymbolOrAClassSideTrait isSymbol ifFalse: [
+		^ ShiftClassSideBuilder new
+			  beTrait;
+			  name: aSymbolOrAClassSideTrait soleInstance name;
+			  fillInstanceSideFromClass: aSymbolOrAClassSideTrait soleInstance;
+			  yourself ].
+
+	^ ShiftClassBuilder new
+		  beTrait;
+		  name: aSymbolOrAClassSideTrait;
+		  fillClassSideFromEnvironment: self environment;
+		  yourself
+]
+
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName [
 
 	^ self classInstaller make: [ :builder |
@@ -33,7 +53,7 @@ Trait class >> named: aName [
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName instanceVariableNames: aString package: aPackageName [
 
 	^ self classInstaller make: [ :builder |
@@ -44,7 +64,7 @@ Trait class >> named: aName instanceVariableNames: aString package: aPackageName
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName package: aString [
 
 	^ self classInstaller make: [ :builder |
@@ -54,7 +74,7 @@ Trait class >> named: aName package: aString [
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aCompositionOrArray [
 
 	^ self classInstaller make: [ :builder |
@@ -64,7 +84,7 @@ Trait class >> named: aName uses: aCompositionOrArray [
 			  beTrait ]
 ]
 
-{ #category : #deprecated }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName [
 
 	^ self classInstaller make: [ :builder |
@@ -75,7 +95,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPacka
 			  beTrait ]
 ]
 
-{ #category : #deprecated }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPackageName env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -86,7 +106,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection category: aPacka
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName [
 
 	^ self classInstaller make: [ :builder |
@@ -98,7 +118,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariable
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariableNames: aString package: aPackageName env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -110,7 +130,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection instanceVariable
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString [
 
 	^ self classInstaller make: [ :builder |
@@ -121,7 +141,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -132,7 +152,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection package: aString
 			  beTrait ]
 ]
 
-{ #category : #deprecated }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory [
 
 	^ self classInstaller make: [ :builder |
@@ -144,7 +164,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 			  beTrait ]
 ]
 
-{ #category : #deprecated }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots category: aCategory env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -156,7 +176,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName [
 
 	^ self classInstaller make: [ :builder |
@@ -168,7 +188,7 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 			  beTrait ]
 ]
 
-{ #category : #'old pharo 8 syntax' }
+{ #category : 'old pharo 8 syntax' }
 Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [
 
 	^ self classInstaller make: [ :builder |
@@ -180,44 +200,44 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 			  beTrait ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Trait >> + anotherTrait [
 	"I return my self in a sequence with anotherTrait"
 	^ self asTraitComposition + anotherTrait asTraitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Trait >> - anArray [
 	"I return myself with a removed method. Check TaAbstractComposition >> #- for more details"
 
 	^ self asTraitComposition - anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Trait >> -- aSlotNameCollection [
 
 	^ self asTraitComposition -- aSlotNameCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Trait >> @ anArray [
 	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
 	^ self asTraitComposition @ anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Trait >> @@ anArray [
 	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
 	^ self asTraitComposition @@ anArray
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 Trait >> addUser: aClass [
 
 	self users add: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Trait >> basicNew [
 	"Traits should never be instantiated.
 	They are naked object: superclass = nil.
@@ -227,43 +247,43 @@ Trait >> basicNew [
 	self error: 'Traits should not be instantiated!'
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 Trait >> classTrait [
 
 	^ self class
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 Trait >> definitionStringFor: aConfiguredPrinter [
 
 	^ aConfiguredPrinter traitDefinitionString
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 Trait >> expandedDefinitionStringFor: aPrinter [
 
 	^ aPrinter expandedTraitDefinitionString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isBaseTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isClass [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isClassTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isEmpty [
 	"Since we can have potential an empty array in the fluid definition (to be revisited)
 	when the trait composition is aTrait it received the message isEmpty and would break
@@ -273,28 +293,29 @@ Trait >> isEmpty [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isTrait [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isTraitAlias [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isTraitExclusion [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Trait >> isUsed [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ super isUsed or: [ self traitUsers notEmpty ]
 ]
 
-{ #category : #'organization updating' }
+{ #category : 'organization updating' }
 Trait >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
 
@@ -302,7 +323,7 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtoc
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 Trait >> rebuildMethodDictionary [
 	"I extend the behavior in TraitedMetaclass propagating the changes to my users"
 	self doRebuildMethodDictionary ifFalse: [ ^ false ].
@@ -310,7 +331,7 @@ Trait >> rebuildMethodDictionary [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Trait >> removeFromSystem: logged [
 
 	"When a trait is removed from the system it should:
@@ -327,23 +348,25 @@ Trait >> removeFromSystem: logged [
 	^ super removeFromSystem: logged
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Trait >> removeUser: aClass [
 
 	self users remove: aClass ifAbsent: [ ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Trait >> traitUsers [
+	<reflection: 'Class structural inspection - Traits'>
 	^ self users
 ]
 
-{ #category : #users }
+{ #category : 'users' }
 Trait >> users [
+	<reflection: 'Class structural inspection - Traits'>
 	^ users ifNil: [ users := IdentitySet new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Trait >> users: anObject [
 	users := anObject
 ]

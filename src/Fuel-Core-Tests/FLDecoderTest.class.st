@@ -1,14 +1,16 @@
 Class {
-	#name : #FLDecoderTest,
-	#superclass : #TestCase,
+	#name : 'FLDecoderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'stream',
 		'decoder'
 	],
-	#category : #'Fuel-Core-Tests-Base'
+	#category : 'Fuel-Core-Tests-Base',
+	#package : 'Fuel-Core-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FLDecoderTest >> setUp [
 	super setUp.
 	
@@ -18,7 +20,7 @@ FLDecoderTest >> setUp [
 		useDuring: [ decoder := FLDecoder new ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedInt24 [
 	stream 
 		nextPutAll: #[0 0 0];
@@ -53,7 +55,7 @@ FLDecoderTest >> testNextEncodedInt24 [
 	self assert: decoder nextEncodedInt24 equals: 0 - (2 raisedTo: 23)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedInt32 [
 	stream 
 		nextPutAll: #[0 0 0 0];
@@ -88,7 +90,7 @@ FLDecoderTest >> testNextEncodedInt32 [
 	self assert: decoder nextEncodedInt32 equals: 0 - (2 raisedTo: 30)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedInt64 [
 	stream 
 		nextPutAll: #[0 0 0 0 0 0 0 0];
@@ -123,7 +125,7 @@ FLDecoderTest >> testNextEncodedInt64 [
 	self assert: decoder nextEncodedInt64 equals: 0 - (2 raisedTo: 60)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedUint16 [
 	stream 
 		nextPutAll: #[0 0];
@@ -144,7 +146,7 @@ FLDecoderTest >> testNextEncodedUint16 [
 	self assert: decoder nextEncodedUint16 equals: (2 raisedTo: 16) - 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedUint24 [
 	stream 
 		nextPutAll: #[0 0 0];
@@ -165,7 +167,7 @@ FLDecoderTest >> testNextEncodedUint24 [
 	self assert: decoder nextEncodedUint24 equals: (2 raisedTo: 24) - 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedUint32 [
 	stream 
 		nextPutAll: #[0 0 0 0];
@@ -193,7 +195,7 @@ FLDecoderTest >> testNextEncodedUint32 [
 	self assert: decoder nextEncodedUint32 equals: (2 raisedTo: 30)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedUint64 [
 	stream 
 		nextPutAll: #[0 0 0 0 0 0 0 0];
@@ -221,7 +223,7 @@ FLDecoderTest >> testNextEncodedUint64 [
 	self assert: decoder nextEncodedUint64 equals: (2 raisedTo: 60)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FLDecoderTest >> testNextEncodedUint8 [
 	stream 
 		nextPutAll: #[0];

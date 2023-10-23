@@ -1,6 +1,6 @@
-Extension { #name : #InfiniteForm }
+Extension { #name : 'InfiniteForm' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 InfiniteForm >> asAthensPaintOn: canvas [
 	^ (canvas surface createFormPaint: self asForm)
 		repeat;

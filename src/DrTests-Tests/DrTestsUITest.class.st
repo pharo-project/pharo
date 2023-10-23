@@ -2,18 +2,19 @@
 A DrTestsUITest is a test class for testing the behavior of DrTestsUI
 "
 Class {
-	#name : #DrTestsUITest,
-	#superclass : #TestCase,
+	#name : 'DrTestsUITest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'drTestsUI',
 		'plugins',
 		'plugin1',
 		'plugin2'
 	],
-	#category : #'DrTests-Tests'
+	#category : 'DrTests-Tests',
+	#package : 'DrTests-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DrTestsUITest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 
@@ -24,14 +25,14 @@ DrTestsUITest >> setUp [
 	drTestsUI := DrTests on: plugins
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testClickButtonRunCallsPluginRun [
 	drTestsUI pluginsDropList selectItem: DTMockPlugin.
 	drTestsUI pluginPresenter startButton performAction.
 	self assert: drTestsUI currentPlugin hasBeenRun
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testCurrentPluginIsSelectedInDropDown [
 	| currentPluginSelected  |
 	currentPluginSelected := drTestsUI pluginsDropList selectedItem.
@@ -40,26 +41,26 @@ DrTestsUITest >> testCurrentPluginIsSelectedInDropDown [
 		equals: currentPluginSelected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testInitialPackagesAreInitialPluginPackages [
 	self
 		assertCollection: drTestsUI pluginPresenter packagesList items
 		hasSameElements: drTestsUI currentPlugin packagesAvailableForAnalysis
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testInitialResultListIsEmpty [
 
 	self assert: drTestsUI pluginPresenter resultsList roots isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testInitialSelectedPluginIsFirstPluginInList [
 
 	self assert: drTestsUI currentPlugin class equals: plugins first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testInitialStatusIsInitialStatusPluginName [
 	|status|
 	status:= (drTestsUI currentPlugin pluginName , ' plugin is ready to work!') translated.
@@ -69,7 +70,7 @@ DrTestsUITest >> testInitialStatusIsInitialStatusPluginName [
 		equals: ('{1}: {2}' format: { (drTestsUI  dateAndTimeString ). status })
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testInitialWindowTitleIsInitialPluginWindowTitle [
 
 	self
@@ -77,7 +78,7 @@ DrTestsUITest >> testInitialWindowTitleIsInitialPluginWindowTitle [
 		equals: 'Dr Tests - ' , drTestsUI currentPlugin pluginName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testMultipleSelectingPackagesWillUpdateTheClassesList [
 	| currentPluginSelected randomPackage newPackagesSelected classesList packageSelected |
 	currentPluginSelected := drTestsUI pluginsDropList selectedItem.
@@ -95,21 +96,21 @@ DrTestsUITest >> testMultipleSelectingPackagesWillUpdateTheClassesList [
 		hasSameElements: classesList flattened
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testNoPackageSelected [
 	self
 		assertCollection: drTestsUI pluginPresenter itemsList items
 		hasSameElements: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testPluginsAreConfiguredPluginsOnly [
 	self
 		assert: drTestsUI pluginsDropList listItems asArray
 		equals: plugins
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testSelectingPackageWillUpdateTheClassesList [
 	| newPackagesSelected |
 	newPackagesSelected := {drTestsUI pluginPresenter packagesList items
@@ -120,13 +121,13 @@ DrTestsUITest >> testSelectingPackageWillUpdateTheClassesList [
 		hasSameElements: (drTestsUI currentPlugin itemsToBeAnalysedFor: newPackagesSelected)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testSelectingPluginWillUpdateCurrentPluginInstanceVariable [
 	drTestsUI pluginsDropList selectItem: plugin2.
 	self assert: drTestsUI currentPlugin class equals: plugin2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testSelectingPluginWillUpdatePackagesList [
 
 	"this test do not has sense anymore (since we do not change package list all the time)"
@@ -139,7 +140,7 @@ DrTestsUITest >> testSelectingPluginWillUpdatePackagesList [
 		drTestsUI currentPlugin packagesAvailableForAnalysis
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testSelectingPluginWillUpdateWindowTitle [
 	drTestsUI pluginsDropList selectItem: plugin2.
 	self
@@ -147,7 +148,7 @@ DrTestsUITest >> testSelectingPluginWillUpdateWindowTitle [
 		equals: 'Dr Tests - ' , drTestsUI currentPlugin pluginName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testStartButtonHelpIsCurrentPluginStartButtonHelp [
 
 	self
@@ -155,7 +156,7 @@ DrTestsUITest >> testStartButtonHelpIsCurrentPluginStartButtonHelp [
 		equals: drTestsUI currentPlugin startButtonHelp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DrTestsUITest >> testStartButtonLabelIsCurrentPluginStartButtonLabel [
 
 	self

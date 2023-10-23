@@ -1,10 +1,12 @@
 Class {
-	#name : #RGStampParser,
-	#superclass : #Object,
-	#category : #'Ring-Core-Parsing'
+	#name : 'RGStampParser',
+	#superclass : 'Object',
+	#category : 'Ring-Core-Parsing',
+	#package : 'Ring-Core',
+	#tag : 'Parsing'
 }
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGStampParser class >> authorForStamp: aString [
 
 	^ aString isEmptyOrNil
@@ -12,31 +14,31 @@ RGStampParser class >> authorForStamp: aString [
 		ifFalse: [ self parseAuthorAliasFrom: aString ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGStampParser class >> historicalStamp [
 
 	^ '<historical>'
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGStampParser class >> parseAuthorAliasFrom: aString [
 
 	^ self new basicParseAuthorAliasFrom: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGStampParser class >> parseTimestampFrom: aString [
 
 	^ self new parseTimestampFrom: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGStampParser class >> timeForStamp: stamp [
 
 	^ self new timeForStamp: stamp
 ]
 
-{ #category : #'parsing stamp' }
+{ #category : 'parsing stamp' }
 RGStampParser >> basicParseAuthorAliasFrom: aString [
 	"Parse an alias/name of the author from a string that is extracted from a source file. If there is no alias/name we return emtpy string."
 
@@ -76,20 +78,20 @@ RGStampParser >> basicParseAuthorAliasFrom: aString [
 		do: [ :e | unknown ]
 ]
 
-{ #category : #'parsing stamp' }
+{ #category : 'parsing stamp' }
 RGStampParser >> parseAuthorAliasFrom: aString [
 	"Allows other applications  to treat a different empty alias by overriding this method"
 
 	^self basicParseAuthorAliasFrom: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGStampParser >> parseTimestampFrom: aString [
 
 	^self parseTimestampFrom: aString default: nil
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGStampParser >> parseTimestampFrom: aString default: anObject [
 	"Parse a date-time from a timestamp-string that is extracted from a source file. If there is no timestamp, or we cannot make sense of it, we return the default value."
 
@@ -121,7 +123,7 @@ RGStampParser >> parseTimestampFrom: aString default: anObject [
 		do: [ :e | unknown ]
 ]
 
-{ #category : #'parsing stamp' }
+{ #category : 'parsing stamp' }
 RGStampParser >> timeForStamp: stamp [
 
 	^ stamp

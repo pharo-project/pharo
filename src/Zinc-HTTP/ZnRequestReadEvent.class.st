@@ -4,37 +4,39 @@ ZnRequestReadEvent is signalled when an HTTP server reads a request in duration 
 Note that the duration can be misleading: when servicing multiple requests over a kept alive connection (the default for HTTP 1.1), the read time includes any wait time (as long as it is below the timeout). The first request read should not contain wait time.
 "
 Class {
-	#name : #ZnRequestReadEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnRequestReadEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'request',
 		'duration'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestReadEvent >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestReadEvent >> duration: anObject [
 	duration := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnRequestReadEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Request Read '; print: request; space; print: duration; << 'ms'
+	stream << 'Request Read '; print: request; space; print: duration; << 'ms'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestReadEvent >> request [
 	^ request
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestReadEvent >> request: anObject [
 	request := anObject
 ]

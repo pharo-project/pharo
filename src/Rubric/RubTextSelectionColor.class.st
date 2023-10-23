@@ -1,6 +1,6 @@
 Class {
-	#name : #RubTextSelectionColor,
-	#superclass : #TextAttribute,
+	#name : 'RubTextSelectionColor',
+	#superclass : 'TextAttribute',
 	#instVars : [
 		'colorBlock',
 		'backgroundColorBlock',
@@ -12,10 +12,12 @@ Class {
 		'PrimarySelection',
 		'SecondarySelection'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 RubTextSelectionColor class >> cleanUp [
 
 	FindReplaceSelection := nil.
@@ -24,7 +26,7 @@ RubTextSelectionColor class >> cleanUp [
 	SecondarySelection := nil
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 RubTextSelectionColor class >> findReplaceSelection [
 	^ FindReplaceSelection
 		ifNil: [
@@ -37,7 +39,7 @@ RubTextSelectionColor class >> findReplaceSelection [
 				yourself ]
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 RubTextSelectionColor class >> oppositeDelimiterSelection [
 	^ OppositeDelimiterSelection
 		ifNil: [
@@ -47,7 +49,7 @@ RubTextSelectionColor class >> oppositeDelimiterSelection [
 				yourself ]
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 RubTextSelectionColor class >> primarySelection [
 	^ PrimarySelection
 		ifNil: [
@@ -57,7 +59,7 @@ RubTextSelectionColor class >> primarySelection [
 				yourself ]
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 RubTextSelectionColor class >> secondarySelection [
 	^ SecondarySelection
 		ifNil: [
@@ -70,57 +72,57 @@ RubTextSelectionColor class >> secondarySelection [
 				yourself ]
 ]
 
-{ #category : #'default accessing' }
+{ #category : 'default accessing' }
 RubTextSelectionColor class >> theme [
 	^ UITheme current
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> backgroundColor [
 	^ self backgroundColorBlock ifNotNil: [:bcb | bcb value]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> backgroundColorBlock [
 
 	^ backgroundColorBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> backgroundColorBlock: aBlock [
 
 	 backgroundColorBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> colorBlock [
 
 	^ colorBlock ifNil: [colorBlock := [self theme currentSettings selectionTextColor]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> colorBlock: aBlock [
 	"aBlock value gives the text color"
 	colorBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> dominates: other [
 	"There can be only one..."
 	^self class == other class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> emphasisCode [
 	^ emphasisCode ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> emphasisCode: anInteger [
 	emphasisCode := anInteger
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 RubTextSelectionColor >> emphasizeScanner: scanner [
 	"Set the emphasis for text display"
 	"self backgroundColor ifNotNil: [ :bc | scanner backgroundColor: bc ]."
@@ -128,12 +130,12 @@ RubTextSelectionColor >> emphasizeScanner: scanner [
 	emphasisCode ifNotNil: [ scanner addEmphasis: emphasisCode ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> textColor [
 	^ self colorBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSelectionColor >> theme [
 	^ UITheme current
 ]

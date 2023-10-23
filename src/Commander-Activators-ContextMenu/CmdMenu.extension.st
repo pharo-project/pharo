@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenu }
+Extension { #name : 'CmdMenu' }
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenu >> buildContextMenuFor: aMorph [
 
 	| menu |
@@ -13,7 +13,7 @@ CmdMenu >> buildContextMenuFor: aMorph [
 	^menu
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenu >> registerContextMenuItemsWithBuilder: aBuilder [
 
 	rootGroup registerContextMenuItemsWithBuilder: aBuilder

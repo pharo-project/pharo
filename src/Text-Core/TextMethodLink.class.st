@@ -2,31 +2,33 @@
 An active link in a text linking to a method
 "
 Class {
-	#name : #TextMethodLink,
-	#superclass : #TextLink,
+	#name : 'TextMethodLink',
+	#superclass : 'TextLink',
 	#instVars : [
 		'selector',
 		'browseSenders',
 		'sourceNode'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextMethodLink class >> selector: aStringOrSymbol [
 	^ self new
 		selector: aStringOrSymbol;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextMethodLink class >> selector: aString senders: browseSenders [
 	^ (self selector: aString)
 		senders: browseSenders;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextMethodLink class >> sourceNode: aMessageNode [
 	^ self new
 		selector: aMessageNode selector;
@@ -34,7 +36,7 @@ TextMethodLink class >> sourceNode: aMessageNode [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextMethodLink >> = anotherObject [
 	^ super = anotherObject
 		and: [ selector = anotherObject selector
@@ -42,50 +44,50 @@ TextMethodLink >> = anotherObject [
 						and: [ self sourceNodeInterval = anotherObject sourceNodeInterval ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextMethodLink >> browseSenders [
 
 	^browseSenders
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextMethodLink >> hash [
 	^ (((super hash + selector hash) hashMultiply + browseSenders hash) hashMultiply
 		+ self sourceNodeInterval hash) hashMultiply
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TextMethodLink >> initialize [
 	super initialize.
 	browseSenders := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextMethodLink >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextMethodLink >> selector: aStringOrSymbol [
 	selector := aStringOrSymbol asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextMethodLink >> senders: aBoolean [
 	browseSenders := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextMethodLink >> sourceNode [
 	^ sourceNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextMethodLink >> sourceNode: anObject [
 	sourceNode := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextMethodLink >> sourceNodeInterval [
 	sourceNode ifNil: [ ^ 1 to: 0 ].
 	^ sourceNode keywordsPositions first to: sourceNode stop

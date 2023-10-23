@@ -1,32 +1,33 @@
 Class {
-	#name : #SycRemoveKeepingSubclassesClassStrategy,
-	#superclass : #SycRemoveClassStrategy,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycRemoveKeepingSubclassesClassStrategy',
+	#superclass : 'SycRemoveClassStrategy',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveKeepingSubclassesClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
 	^hasSubclasses & hasReferences not & hasUsers not
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveKeepingSubclassesClassStrategy >> execute: aSycRemoveClassCommand [
 
-	aSycRemoveClassCommand executeRefactoringsAs: RBRemoveClassKeepingSubclassesRefactoring
+	aSycRemoveClassCommand executeRefactoringsAs: RBRemoveClassPushingStateToSubclassesRefactoring
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveKeepingSubclassesClassStrategy >> isComplexRefactoring [
 	"Class removals are always complex refactorings"
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveKeepingSubclassesClassStrategy >> orderForBrowser [
 	^3
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveKeepingSubclassesClassStrategy >> userRequestString [
 	^'Remove it, keeping subclasses'
 ]

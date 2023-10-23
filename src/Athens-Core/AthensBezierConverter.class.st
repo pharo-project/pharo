@@ -4,8 +4,8 @@ I converting all bezier segments to a sequence of line segments, by approximatin
 This classs is used for generating strokes.
 "
 Class {
-	#name : #AthensBezierConverter,
-	#superclass : #AthensPathConverter,
+	#name : 'AthensBezierConverter',
+	#superclass : 'AthensPathConverter',
 	#instVars : [
 		'distanceTolerance',
 		'angleTolerance'
@@ -15,10 +15,12 @@ Class {
 		'CurveAngleTolerance',
 		'DistanceEps'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 AthensBezierConverter class >> initialize [
 
 	CollinearityEps := 1e-30.
@@ -26,7 +28,7 @@ AthensBezierConverter class >> initialize [
 	CurveAngleTolerance := 0.01
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 AthensBezierConverter >> angleBetween: p1 and: p2 ifDegenerate: aBlock [
 	"Calculate an angle (in radians) between two vectors.
 	 Evaluate a block, in case if calculation not possible because one of the vectors has zero length"
@@ -47,7 +49,7 @@ AthensBezierConverter >> angleBetween: p1 and: p2 ifDegenerate: aBlock [
 	^ (dot2 / n2) arcCos
 ]
 
-{ #category : #'converting path commands' }
+{ #category : 'converting path commands' }
 AthensBezierConverter >> curveVia: pt1 to: pt2 [
 
 	self recursiveBezier2_x1: endPoint x y1: endPoint y
@@ -55,14 +57,14 @@ AthensBezierConverter >> curveVia: pt1 to: pt2 [
 		x3: pt2 x y3: pt2 y
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensBezierConverter >> initialize [
 	super initialize.
 	distanceTolerance := 0.5.
 	angleTolerance := 0.1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensBezierConverter >> isFlatBezier2_x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 [
 
 	| dx dy d da angle |
@@ -115,7 +117,7 @@ AthensBezierConverter >> isFlatBezier2_x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3
 	^ false
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 AthensBezierConverter >> recursiveBezier2_x1: x1 y1: y1 x2: x2 y2: y2 x3: x3 y3: y3 [
 
 	"recursively subdive bezier curve as long as #isFlatBezier2.. answers false "
