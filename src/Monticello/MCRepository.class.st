@@ -150,9 +150,8 @@ MCRepository >> storeDependencies: aVersion [
 
 { #category : 'storing' }
 MCRepository >> storeVersion: aVersion [
-	self basicStoreVersion: aVersion.
-	SystemAnnouncer uniqueInstance
-		announce: (MCVersionSaved version: aVersion repository: self)
+
+	self basicStoreVersion: aVersion
 ]
 
 { #category : 'accessing' }

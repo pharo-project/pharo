@@ -261,7 +261,6 @@ MCWorkingCopy class >> registerPackage: aPackage packageOrganizer: aPackageOrgan
 	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package.
 	But we still check that the package does not exist because the working copy creation might be caused by the creation of the system package and we do not want to end up in a loop."
 	aPackageOrganizer packageNamed: aPackage name ifAbsent: [ aPackageOrganizer ensurePackage: aPackage name ].
-	self announcer announce: (MCWorkingCopyCreated workingCopy: workingCopy package: aPackage).
 	^ workingCopy
 ]
 
@@ -492,15 +491,11 @@ MCWorkingCopy >> modified [
 
 { #category : 'accessing' }
 MCWorkingCopy >> modified: aBoolean [
-	modified = aBoolean
-		ifTrue: [ ^ self ].
+
+	modified = aBoolean ifTrue: [ ^ self ].
 	modified := aBoolean.
 	self changed: #modified.
-	modified
-		ifFalse: [ 
-			ChangesLog default logChange: '"' , self packageName , '"' ].
-	self announcer announce: (MCPackageModified package: self package)
-	
+	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
 ]
 
 { #category : 'accessing' }
@@ -754,11 +749,9 @@ MCWorkingCopy >> unload [
 
 { #category : 'operations' }
 MCWorkingCopy >> unregister [
-	self class registry 
-		removeKey: package
-		ifAbsent: [ ^ self ].
-	self class changed: (Array with: #unregistered with: package).
-	self announcer announce: (MCWorkingCopyDeleted workingCopy: self package: package)
+
+	self class registry removeKey: package ifAbsent: [ ^ self ].
+	self class changed: (Array with: #unregistered with: package)
 ]
 
 { #category : 'accessing' }
