@@ -56,7 +56,7 @@ MonticelloBootstrap >> bootstrap [
 			lf.
 		package classes do: [ :class |
 			Stdio stdout
-				nextPutAll: '- ' , class name , ' package:' , class packages name;
+				nextPutAll: '- ' , class name , ' package:' , class package name;
 				lf ].
 		Stdio stdout
 			lf;
