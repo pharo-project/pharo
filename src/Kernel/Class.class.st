@@ -280,12 +280,14 @@ Class >> category: aString [
 	"Categorize the receiver under the system category, aString, removing it from
 	any previous categorization."
 
-	| oldCategory newPackage |
-	oldCategory := self category.
-	oldCategory = aString ifTrue: [ ^ self ].
+	| newPackage |
+
+	self flag: #package. "Should be deprecated"
+	self category = aString ifTrue: [ ^ self ].
+
 	self basicCategory: aString asSymbol.
 
-	self flag: #package. "In the future we should not depend on the category but on the package + tag"
+	self flag: #package. "#toTagName: should be inlined here."
 	newPackage := self packageOrganizer ensurePackageMatching: self category.
 	newPackage moveClass: self toTag: (newPackage toTagName: self category).
 
