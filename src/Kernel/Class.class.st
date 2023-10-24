@@ -287,7 +287,7 @@ Class >> category: aString [
 
 	self basicCategory: aString asSymbol.
 
-	self flag: #package. "#toTagName: should be inlined here."
+	self flag: #package. "#toTagName: should be inlined here."
 	newPackage := self packageOrganizer ensurePackageMatching: self category.
 	newPackage moveClass: self toTag: (newPackage toTagName: self category).
 
