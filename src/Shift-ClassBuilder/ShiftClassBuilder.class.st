@@ -179,7 +179,7 @@ ShiftClassBuilder >> category: aString [
 				ifFalse: [ self package: aString ] ]
 		ifNotNil: [ :aPackage |
 			self package: aPackage name.
-			aString = aPackage ifFalse: [ self tag: (aString withoutPrefix: aPackage , '-') ] ]
+			aString = aPackage name ifFalse: [ self tag: (aString withoutPrefix: aPackage name , '-') ] ]
 ]
 
 { #category : 'accessing' }
