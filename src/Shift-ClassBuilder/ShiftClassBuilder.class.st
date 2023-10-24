@@ -168,13 +168,18 @@ ShiftClassBuilder >> category [
 { #category : 'deprecated' }
 ShiftClassBuilder >> category: aString [
 
-	self flag: #package. "Category is an old concept mixing packages and tag. For now this is what is used by the system but in the future we should go away from it."
-	(aString includes: $-)
-		ifTrue: [
-			self
-				package: (aString copyUpToLast: $-);
-				tag: (aString copyAfterLast: $-) ]
-		ifFalse: [ self package: aString ]
+	self flag: #package. "To deprecate once it is not use in the bootstrap anymore."
+	(self installingEnvironment organization packageMatchingExtensionName: aString)
+		ifNil: [
+			(aString includes: $-)
+				ifTrue: [
+					self
+						package: (aString copyUpToLast: $-);
+						tag: (aString copyAfterLast: $-) ]
+				ifFalse: [ self package: aString ] ]
+		ifNotNil: [ :aPackage |
+			self package: aPackage name.
+			aString = aPackage name ifFalse: [ self tag: (aString withoutPrefix: aPackage name , '-') ] ]
 ]
 
 { #category : 'accessing' }
