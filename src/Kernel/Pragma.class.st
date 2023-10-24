@@ -124,14 +124,6 @@ Pragma class >> pragmaCache [
 	^ pragmaCache ifNil: [ pragmaCache := Dictionary new ]
 ]
 
-{ #category : 'instance creation' }
-Pragma class >> selector: aSymbol arguments: anArray [
-	^ self new
-		selector: aSymbol;
-		arguments: anArray;
-		yourself
-]
-
 { #category : 'comparing' }
 Pragma >> = aPragma [
 
@@ -179,19 +171,6 @@ Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
 		(self selector keywords
 			indexOf: aSymbol asMutator
 			ifAbsent: [ ^ aBlockClosure value])
-]
-
-{ #category : 'accessing' }
-Pragma >> arguments [
-	"Answer the arguments of the receiving pragma. For a pragma defined as <key1: val1 key2: val2> this will answer #(val1 val2)."
-	<reflection: 'Class structural inspection - Pragma'>
-	^ arguments
-]
-
-{ #category : 'accessing' }
-Pragma >> arguments: anArray [
-	<reflection: 'Class structural inspection - Pragma'>
-	arguments := anArray
 ]
 
 { #category : 'displaying' }
@@ -269,13 +248,6 @@ Pragma >> methodSelector [
 	^method selector
 ]
 
-{ #category : 'accessing' }
-Pragma >> numArgs [
-	"Answer the number of arguments in the pragma."
-	<reflection: 'Class structural inspection - Pragma'>
-	^ self arguments size
-]
-
 { #category : 'printing' }
 Pragma >> printOn: aStream [
 	aStream nextPut: $<.
@@ -292,20 +264,6 @@ Pragma >> printOn: aStream [
 Pragma >> refersToLiteral: aLiteral [
 	^self selector == aLiteral
 	   or: [arguments hasLiteral: aLiteral]
-]
-
-{ #category : 'accessing' }
-Pragma >> selector [
-	"Answer the selector of the pragma.
-	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
-	<reflection: 'Class structural inspection - Pragma'>
-	^ selector
-]
-
-{ #category : 'accessing' }
-Pragma >> selector: aSymbol [
-	<reflection: 'Class structural inspection - Pragma'>
-	selector := aSymbol
 ]
 
 { #category : 'sending' }
