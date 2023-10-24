@@ -289,9 +289,6 @@ Class >> category: aString [
 	newPackage := self packageOrganizer ensurePackageMatching: self category.
 	newPackage moveClass: self toTag: (newPackage toTagName: self category).
 
-	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: self) ]
-		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRecategorized class: self recategorizedFrom: oldCategory to: self category) ]
 ]
 
 { #category : 'subclass creation' }
