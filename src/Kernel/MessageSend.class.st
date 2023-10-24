@@ -31,7 +31,7 @@ MessageSend class >> receiver: anObject selector: aSymbol [
 
 { #category : 'instance creation' }
 MessageSend class >> receiver: anObject selector: aSymbol argument: aParameter [
-	^ self receiver: anObject selector: aSymbol arguments: (Array with: aParameter)
+	^ self receiver: anObject selector: aSymbol arguments: { aParameter }
 ]
 
 { #category : 'instance creation' }
