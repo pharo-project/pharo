@@ -144,18 +144,12 @@ RPackageTag >> printOn: aStream [
 { #category : 'private' }
 RPackageTag >> privateAddClass: aClass [
 	"This method adds the class to the tag but does not check is the class was already in the right package."
-	| oldCategory |
-	oldCategory := aClass category.
 
 	classes add: aClass.
 	self organizer registerPackage: self package forClass: aClass.
 
 	self flag: #package. "Next line should be removed once we will not need the category"
 	aClass basicCategory: self categoryName.
-
-	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: aClass) ]
-		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRecategorized class: aClass recategorizedFrom: oldCategory to: aClass category) ]
 
 ]
 
