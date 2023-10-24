@@ -963,9 +963,10 @@ Class >> removeSharedPool: aDictionary [
 { #category : 'accessing - class hierarchy' }
 Class >> removeSubclass: aSubclass [
 	"If the argument, aSubclass, is one of the receiver's subclasses, remove it."
+
 	<reflection: 'Class structural modification - Hierarchy modification'>
-	self subclasses == nil ifFalse: [
-		self subclasses: (self subclasses copyWithout: aSubclass).
+	self subclasses ifNotNil: [ :classes |
+		self subclasses: (classes copyWithout: aSubclass).
 		self subclasses ifEmpty: [ self subclasses: nil ] ]
 ]
 

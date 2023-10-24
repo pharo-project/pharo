@@ -330,10 +330,11 @@ Behavior >> allSuperclasses [
 { #category : 'enumerating' }
 Behavior >> allSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
+
 	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
-	self superclass == nil
-		ifFalse: [aBlock value: self superclass.
-				self superclass allSuperclassesDo: aBlock]
+	self superclass ifNotNil: [ :class |
+		aBlock value: class.
+		class allSuperclassesDo: aBlock ]
 ]
 
 { #category : 'accessing - class hierarchy' }
@@ -1794,8 +1795,8 @@ Behavior >> withAllSuperclasses [
 { #category : 'enumerating' }
 Behavior >> withAllSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
+
 	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	aBlock value: self.
-	self superclass == nil
-		ifFalse: [self superclass withAllSuperclassesDo: aBlock]
+	self superclass ifNotNil: [ :class | class withAllSuperclassesDo: aBlock ]
 ]

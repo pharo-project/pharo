@@ -202,11 +202,7 @@ Set >> grow [
 	oldElements := array.
 	array := Array new: (HashTableSizes atLeast: oldElements size * 2).
 	tally := 0.
-	oldElements
-		do:
-			[ :each |
-			each == nil
-				ifFalse: [ self noCheckAdd: each enclosedElement] ]
+	oldElements do: [ :element | element ifNotNil: [ self noCheckAdd: element enclosedElement ] ]
 ]
 
 { #category : 'testing' }
