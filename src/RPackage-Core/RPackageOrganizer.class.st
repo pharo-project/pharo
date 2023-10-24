@@ -430,7 +430,10 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 
 	anAnnouncer unsubscribe: self.
 
-	anAnnouncer weak when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
+	anAnnouncer weak
+		when: ProtocolAdded send: #systemProtocolAddedActionFrom: to: self;
+		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
+		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
 
 { #category : 'system integration' }
@@ -500,6 +503,17 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 ]
 
 { #category : 'system integration' }
+RPackageOrganizer >> systemMethodAddedActionFrom: ann [
+
+	| method |
+	"If the method origin is not the one of the event, we do not care about that method"
+	method := ann method.
+	method origin = ann methodClass ifFalse: [ ^ self ].
+
+	self addMethod: method
+]
+
+{ #category : 'system integration' }
 RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 	| method |
@@ -524,6 +538,13 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		newPackage addMethod: method.
 
 		SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage ]
+]
+
+{ #category : 'system integration' }
+RPackageOrganizer >> systemProtocolAddedActionFrom: ann [
+	"When a protocol is added we should ensure extensions protocols have their matching package."
+
+	ann protocol isExtensionProtocol ifTrue: [ self ensurePackageOfExtensionProtocol: ann protocol ]
 ]
 
 { #category : 'accessing' }

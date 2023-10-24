@@ -68,10 +68,7 @@ MethodAddition >> notifyObservers [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [
-			"I am not sure this check is required but let's check that another time"
-			compiledMethod origin = myClass ifTrue: [ myClass packageOrganizer addMethod: compiledMethod ].
-			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
+		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
 			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].

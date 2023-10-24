@@ -102,8 +102,6 @@ PBClassLoader >> createBehaviorFromDefinition: aRFiDefinition [
 		environment at: aRFiDefinition name ifAbsent: [ self createStubForClassNamed: aRFiDefinition name ] ].
 
 	newBehavior := self executeDefinitionFor: aRFiDefinition.
-	
-	builder bootstrapInterpreter evaluateCode: 'theBehavior packageTag ifNil: [ self error ]' withTemps: { ('theBehavior' -> newBehavior) }.
 
 	"Once the class is created we set a new method dictionary with a size that will make it grow less afterwards"
 	builder bootstrapInterpreter evaluateCode: 'theBehavior methodDictionary: (MethodDictionary new: capacity)' withTemps: {
