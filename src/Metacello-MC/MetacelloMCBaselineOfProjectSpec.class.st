@@ -180,9 +180,9 @@ MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVer
 
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> version [
-    self projectClass == nil
-        ifTrue: [ ^ nil ].
-    ^ self projectClassProject version
+
+	self projectClass ifNil: [ ^ nil ].
+	^ self projectClassProject version
 ]
 
 { #category : 'construction' }

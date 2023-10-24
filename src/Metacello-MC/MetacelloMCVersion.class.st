@@ -234,8 +234,7 @@ MetacelloMCVersion >> loader: aLoader [
 { #category : 'accessing' }
 MetacelloMCVersion >> loaderPolicy [
 
-	loaderPolicy == nil ifTrue: [ loaderPolicy := MetacelloLoaderPolicy new ].
-	^ loaderPolicy
+	^ loaderPolicy ifNil: [ loaderPolicy := MetacelloLoaderPolicy new ]
 ]
 
 { #category : 'accessing' }

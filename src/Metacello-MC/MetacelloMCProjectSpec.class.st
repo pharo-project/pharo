@@ -18,19 +18,13 @@ MetacelloMCProjectSpec class >> new [
 
 { #category : 'testing' }
 MetacelloMCProjectSpec >> allPackagesLoaded: aLoader [
-    "answer true if all of the packages (excluding projects) are loaded"
+	"answer true if all of the packages (excluding projects) are loaded"
 
-    | vrsn pkgs |
-    (vrsn := self versionOrNil) == nil
-        ifTrue: [ ^ false ].
-    pkgs := OrderedCollection new.
-    (self loadListForVersion: vrsn)
-        do: [ :nm | 
-            vrsn packages
-                do: [ :pkg | 
-                    (pkg isPackageLoaded: aLoader)
-                        ifFalse: [ ^ false ] ] ].
-    ^ true
+	| vrsn pkgs |
+	(vrsn := self versionOrNil) ifNil: [ ^ false ].
+	pkgs := OrderedCollection new.
+	(self loadListForVersion: vrsn) do: [ :nm | vrsn packages do: [ :pkg | (pkg isPackageLoaded: aLoader) ifFalse: [ ^ false ] ] ].
+	^ true
 ]
 
 { #category : 'scripting' }
@@ -106,11 +100,10 @@ MetacelloMCProjectSpec >> compareEqual: aMetacelloProjectSpec [
 MetacelloMCProjectSpec >> compareRelativeCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
 
 	| cv vrsn |
-	(vrsn := self versionOrNil) == nil ifTrue: [ ^false ].
-	(cv := self relativeCurrentVersion) == nil ifTrue: [ ^false ].
-	(targetVersionStatus includes: cv versionStatus)
-		ifTrue: [ ^cv perform: anOperator with: vrsn ].
-	^false
+	(vrsn := self versionOrNil) ifNil: [ ^ false ].
+	(cv := self relativeCurrentVersion) ifNil: [ ^ false ].
+	(targetVersionStatus includes: cv versionStatus) ifTrue: [ ^ cv perform: anOperator with: vrsn ].
+	^ false
 ]
 
 { #category : 'mutability' }
@@ -134,38 +127,25 @@ MetacelloMCProjectSpec >> copyForScriptingInto: aProjectSpec [
 
 { #category : 'loading' }
 MetacelloMCProjectSpec >> determineCurrentVersionForLoad [
-    "don't use self currentVersion, because we are interested in the currentVersion of the project as loaded in image, not the current version relative to our load list"
+	"don't use self currentVersion, because we are interested in the currentVersion of the project as loaded in image, not the current version relative to our load list"
 
-    | prjct version currentVersion cvs |
-    self projectClass == nil
-        ifTrue: [ ^ nil ].
-    (version := self versionOrNil) == nil
-        ifTrue: [ ^ nil ].
-    version blessing == #'baseline'
-        ifTrue: [ ^ version ].
-    self loader ignoreImage
-        ifTrue: [ ^ version ].
-    prjct := self projectClass new project.
-    prjct loader: self loader.
-    (currentVersion := prjct currentVersion) == nil
-        ifTrue: [ ^ nil ].
-    (cvs := currentVersion versionStatus) == #'somethingLoaded'
-        ifTrue: [ ^ nil ].
-    (#(#'allLoadedToSpec' #'loadedToSpec' #'loadedMatchConstraints') includes: (cvs := currentVersion versionStatus))
-        ifTrue: [ 
-            (currentVersion perform: self operator with: version)
-                ifTrue: [ 
-                    "load currentVersion"
-                    ^ currentVersion ].	"load version"
-            ^ nil ].
-    version = currentVersion
-        ifTrue: [ ^ currentVersion ].	"I don't believe that it is possible to reach this point in the method, so I will be interested if I run across a case that produces this error"
-    (MetacelloProjectSpecLoadConflict projectSpec: self)
-        signal:
-            'Project load conflict for' , prjct label printString , ' between current version ' , currentVersion printString , '('
-                , cvs asString , ') and specified version ' , version printString
-                , '. Press resume to continue with load anyway'.
-    ^ nil
+	| prjct version currentVersion cvs |
+	self projectClass ifNil: [ ^ nil ].
+	(version := self versionOrNil) ifNil: [ ^ nil ].
+	version blessing == #baseline ifTrue: [ ^ version ].
+	self loader ignoreImage ifTrue: [ ^ version ].
+	prjct := self projectClass new project.
+	prjct loader: self loader.
+	(currentVersion := prjct currentVersion) ifNil: [ ^ nil ].
+	(cvs := currentVersion versionStatus) == #somethingLoaded ifTrue: [ ^ nil ].
+	(#( #allLoadedToSpec #loadedToSpec #loadedMatchConstraints ) includes: (cvs := currentVersion versionStatus)) ifTrue: [
+		(currentVersion perform: self operator with: version) ifTrue: [ "load currentVersion" ^ currentVersion ]. "load version"
+		^ nil ].
+	version = currentVersion ifTrue: [ ^ currentVersion ]. "I don't believe that it is possible to reach this point in the method, so I will be interested if I run across a case that produces this error"
+	(MetacelloProjectSpecLoadConflict projectSpec: self) signal:
+		'Project load conflict for' , prjct label printString , ' between current version ' , currentVersion printString , '(' , cvs asString
+		, ') and specified version ' , version printString , '. Press resume to continue with load anyway'.
+	^ nil
 ]
 
 { #category : 'loading' }
@@ -344,32 +324,28 @@ MetacelloMCProjectSpec >> isConfigurationOfProjectSpec [
 MetacelloMCProjectSpec >> isPartiallyLoaded: aLoader [
 
 	| vrsn |
-	(vrsn := self versionOrNil) == nil ifTrue: [ ^false ].
-	(self loadListForVersion: vrsn) do: [:nm |
-		(vrsn packagesForSpecNamed: nm ) do: [:pkg |
-			(pkg isPackageLoaded: aLoader) ifTrue: [ ^true ]]].
-	^false
+	(vrsn := self versionOrNil) ifNil: [ ^ false ].
+	(self loadListForVersion: vrsn) do: [ :nm | (vrsn packagesForSpecNamed: nm) do: [ :pkg | (pkg isPackageLoaded: aLoader) ifTrue: [ ^ true ] ] ].
+	^ false
 ]
 
 { #category : 'testing' }
 MetacelloMCProjectSpec >> isPossibleBaseline [
 
 	| vrsn |
-	(vrsn := self versionOrNil) == nil ifTrue: [ ^false ].
-	(vrsn allPackagesForSpecNamed: (self loadListForVersion: vrsn)) do: [:pkg |
-		pkg workingCopy == nil ifTrue: [ ^false ]].
-	^true
+	(vrsn := self versionOrNil) ifNil: [ ^ false ].
+	(vrsn allPackagesForSpecNamed: (self loadListForVersion: vrsn)) do: [ :pkg | pkg workingCopy ifNil: [ ^ false ] ].
+	^ true
 ]
 
 { #category : 'accessing' }
 MetacelloMCProjectSpec >> loadPackageList [
 
 	| vrsn pkgs |
-	(vrsn := self versionOrNil) == nil ifTrue: [ ^#() ].
+	(vrsn := self versionOrNil) ifNil: [ ^ #(  ) ].
 	pkgs := OrderedCollection new.
-	(self loadListForVersion: vrsn) do: [:nm |
-		pkgs addAll: ((vrsn packagesForSpecNamed: nm ) collect: [:each | each name ])].
-	^pkgs
+	(self loadListForVersion: vrsn) do: [ :nm | pkgs addAll: ((vrsn packagesForSpecNamed: nm) collect: [ :each | each name ]) ].
+	^ pkgs
 ]
 
 { #category : 'private - loading' }
@@ -388,43 +364,33 @@ MetacelloMCProjectSpec >> loadVersion: aVersionOrNil [
 	| vrsn mcLoader list |
 	self ensureProjectLoaded.
 	vrsn := aVersionOrNil.
-	vrsn == nil
-		ifTrue: [ [ vrsn := self version ]
-				on: MetacelloVersionDoesNotExistError
-				do: [ :ex | 
-					^ (MetacelloProjectSpecLoadError projectSpec: self)
-						versionDoesNotExistException: ex;
-						signal:
-							'No version found for ' , self versionString printString , ' of '
-								, self className asString , ' because: ' , ex description ] ].
+	vrsn ifNil: [
+		[ vrsn := self version ]
+			on: MetacelloVersionDoesNotExistError
+			do: [ :ex |
+				^ (MetacelloProjectSpecLoadError projectSpec: self)
+					  versionDoesNotExistException: ex;
+					  signal: 'No version found for ' , self versionString printString , ' of ' , self className asString , ' because: ' , ex description ] ].
 	mcLoader := self loader copy.
 	mcLoader operator: self operator.
 	vrsn loader: mcLoader.
 	list := (mcLoader ignoreImage
-		ifTrue: [ self loadListForVersion: vrsn ]
-		ifFalse: [ vrsn
-				packageAndProjectNamesToLoad: (self loadListForVersion: vrsn)
-				loader: mcLoader ]) asSet.
+		         ifTrue: [ self loadListForVersion: vrsn ]
+		         ifFalse: [ vrsn packageAndProjectNamesToLoad: (self loadListForVersion: vrsn) loader: mcLoader ]) asSet.
 	MetacelloPlatform current
-		useStackCacheDuring: [ :dict | 
+		useStackCacheDuring: [ :dict |
 			| projectCache cachedList |
-			projectCache := dict
-				at: self projectClass
-				ifAbsent: [ dict at: self projectClass put: Dictionary new ].
+			projectCache := dict at: self projectClass ifAbsent: [ dict at: self projectClass put: Dictionary new ].
 			(cachedList := projectCache at: vrsn ifAbsent: [  ]) == nil
 				ifTrue: [ projectCache at: vrsn put: list ]
-				ifFalse: [ 
-					(cachedList size = list size 
-					and: [ cachedList allSatisfy: [ :each | list  includes: each ] ])
-						ifTrue:
-							[ "no need to refetch list ... recursion stoppper (Issue 95)" ^ self ]
+				ifFalse: [
+					(cachedList size = list size and: [ cachedList allSatisfy: [ :each | list includes: each ] ])
+						ifTrue: [ "no need to refetch list ... recursion stoppper (Issue 95)" ^ self ]
 						ifFalse: [ projectCache at: vrsn put: list ] ].
-			vrsn versionString ~= self versionString
-				ifTrue: [ MetacelloNotification signal: (' [' , vrsn versionString , ']') ].
+			vrsn versionString ~= self versionString ifTrue: [ MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
 			mcLoader preLoad: self.
-			vrsn fetchRequiredFromArray: list.	"do the load"
-			(MetacelloProjectSpecLoadedNotification new
-				projectSpec: (self copy versionString: vrsn versionString)) signal.
+			vrsn fetchRequiredFromArray: list. "do the load"
+			(MetacelloProjectSpecLoadedNotification new projectSpec: (self copy versionString: vrsn versionString)) signal.
 			mcLoader postLoad: self ]
 		defaultDictionary: Dictionary new
 ]
@@ -433,12 +399,10 @@ MetacelloMCProjectSpec >> loadVersion: aVersionOrNil [
 MetacelloMCProjectSpec >> loadedPackageNames: aLoader [
 
 	| vrsn pkgs |
-	(vrsn := self versionOrNil) == nil ifTrue: [ ^#() ].
+	(vrsn := self versionOrNil) ifNil: [ ^ #(  ) ].
 	pkgs := OrderedCollection new.
-	(self loadListForVersion: vrsn) do: [:nm |
-		(vrsn packagesForSpecNamed: nm ) do: [:pkg |
-			(pkg isPackageLoaded: aLoader) ifTrue: [ pkgs add: pkg name ]]].
-	^pkgs
+	(self loadListForVersion: vrsn) do: [ :nm | (vrsn packagesForSpecNamed: nm) do: [ :pkg | (pkg isPackageLoaded: aLoader) ifTrue: [ pkgs add: pkg name ] ] ].
+	^ pkgs
 ]
 
 { #category : 'scripting' }
@@ -474,9 +438,9 @@ MetacelloMCProjectSpec >> packageFileSpecFor: aMetacelloPackagesSpec [
 
 { #category : 'querying' }
 MetacelloMCProjectSpec >> projectClass [
-    self className == nil
-        ifTrue: [ ^ nil ].
-    ^ Smalltalk at: self className asSymbol ifAbsent: [  ]
+
+	self className ifNil: [ ^ nil ].
+	^ Smalltalk at: self className asSymbol ifAbsent: [  ]
 ]
 
 { #category : 'querying' }
@@ -502,21 +466,19 @@ MetacelloMCProjectSpec >> projectPackage [
 
 { #category : 'querying' }
 MetacelloMCProjectSpec >> relativeCurrentVersion [
-    "currentVersion calculated relative to the loadList"
+	"currentVersion calculated relative to the loadList"
 
-    | vrsn expanded loadList |
-    (vrsn := self versionOrNil) == nil
-        ifTrue: [ ^ nil ].
-    expanded := [ vrsn expandToLoadableSpecNames: (loadList := self loadListForVersion: vrsn) ]
-        on: Error
-        do: [ :ex | 
-            vrsn blessing == #'development'
-                ifTrue: [ 
-                    self ensureLoadUsing: self loader.
-                    vrsn := self versionOrNil.
-                    ex return: (vrsn expandToLoadableSpecNames: loadList) ].
-            ex pass ].
-    ^ self projectClassProject currentVersionAgainst: expanded
+	| vrsn expanded loadList |
+	(vrsn := self versionOrNil) ifNil: [ ^ nil ].
+	expanded := [ vrsn expandToLoadableSpecNames: (loadList := self loadListForVersion: vrsn) ]
+		            on: Error
+		            do: [ :ex |
+			            vrsn blessing == #development ifTrue: [
+				            self ensureLoadUsing: self loader.
+				            vrsn := self versionOrNil.
+				            ex return: (vrsn expandToLoadableSpecNames: loadList) ].
+			            ex pass ].
+	^ self projectClassProject currentVersionAgainst: expanded
 ]
 
 { #category : 'private' }
@@ -545,20 +507,17 @@ MetacelloMCProjectSpec >> updateForSpawnMethod: sourceSpec [
 
 { #category : 'development support' }
 MetacelloMCProjectSpec >> updatePackageSpec: updatedSpecs [
-    "Add project copy to updatedSpecs if the current version of the project 
+	"Add project copy to updatedSpecs if the current version of the project 
 	 is different from the receiver's version"
 
-    | prj currentVersion spec |
-    className == nil
-        ifTrue: [ ^ self ].
-    prj := self projectClassProject.
-    (currentVersion := prj currentVersion) = self versionOrNil
-        ifTrue: [ ^ self ].
-    currentVersion == nil
-        ifTrue: [ ^ self ].
-    spec := self copy.
-    spec versionString: currentVersion versionString.
-    updatedSpecs at: spec name put: spec
+	| prj currentVersion spec |
+	className ifNil: [ ^ self ].
+	prj := self projectClassProject.
+	(currentVersion := prj currentVersion) = self versionOrNil ifTrue: [ ^ self ].
+	currentVersion ifNil: [ ^ self ].
+	spec := self copy.
+	spec versionString: currentVersion versionString.
+	updatedSpecs at: spec name put: spec
 ]
 
 { #category : 'scripting' }
@@ -621,18 +580,16 @@ MetacelloMCProjectSpec >> validateVersionString: issues withDefaultVersionString
 MetacelloMCProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
-	self projectClass == nil
-		ifTrue: [ ^ nil ].
+	self projectClass ifNil: [ ^ nil ].
 	^ self versionString == nil
-		ifTrue: [ 
-			| vrsn |
-			"Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default"
-			"self deprecated: 'Must specify a project reference version.'."
-			self flag: 'deprecate after version 1.0'.
-			(vrsn := self projectClassProject latestVersion) == nil
-				ifTrue: [ self projectClassProject version: #bleedingEdge ]
-				ifFalse: [ vrsn ] ]
-		ifFalse: [ self projectClassProject version: self versionString ]
+		  ifTrue: [
+			  | vrsn |
+			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
+			  self flag: 'deprecate after version 1.0'.
+			  (vrsn := self projectClassProject latestVersion) == nil
+				  ifTrue: [ self projectClassProject version: #bleedingEdge ]
+				  ifFalse: [ vrsn ] ]
+		  ifFalse: [ self projectClassProject version: self versionString ]
 ]
 
 { #category : 'scripting' }

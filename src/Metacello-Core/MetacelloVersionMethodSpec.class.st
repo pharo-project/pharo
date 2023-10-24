@@ -64,8 +64,8 @@ MetacelloVersionMethodSpec >> findMethodSection: attributeOrPath sectionIndex: s
 
 { #category : 'accessing' }
 MetacelloVersionMethodSpec >> imports [
-	imports == nil ifTrue: [ imports := #() ].
-	^ imports
+
+	^ imports ifNil: [ imports := #(  ) ]
 ]
 
 { #category : 'accessing' }

@@ -236,8 +236,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 { #category : 'accessing' }
 MetacelloCommonMCSpecLoader >> loaderPolicy [
 
-	loaderPolicy == nil ifTrue: [ loaderPolicy := MetacelloLoaderPolicy new ].
-	^loaderPolicy
+	^ loaderPolicy ifNil: [ loaderPolicy := MetacelloLoaderPolicy new ]
 ]
 
 { #category : 'accessing' }
@@ -260,8 +259,7 @@ MetacelloCommonMCSpecLoader >> nameComponentsFrom: aVersionName [
 { #category : 'accessing' }
 MetacelloCommonMCSpecLoader >> operator [
 
-	operator == nil ifTrue: [ ^#= ].
-	^operator
+	^ operator ifNil: [ #= ]
 ]
 
 { #category : 'accessing' }
@@ -400,8 +398,7 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
 { #category : 'accessing' }
 MetacelloCommonMCSpecLoader >> shouldDisablePackageCache [
 
-	disablePackageCache == nil ifTrue: [ disablePackageCache := false ].
-	^ disablePackageCache
+	^ disablePackageCache ifNil: [ disablePackageCache := false ]
 ]
 
 { #category : 'accessing' }

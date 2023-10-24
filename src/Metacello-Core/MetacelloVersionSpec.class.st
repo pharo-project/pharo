@@ -21,12 +21,10 @@ Class {
 { #category : 'accessing' }
 MetacelloVersionSpec >> author [
 
-	author == nil 
-		ifTrue: [
-			^self project valueHolderSpec
-				value: '';
-				yourself].
-	^ author
+	^ author ifNil: [
+		  self project valueHolderSpec
+			  value: '';
+			  yourself ]
 ]
 
 { #category : 'accessing' }
@@ -53,12 +51,10 @@ MetacelloVersionSpec >> baseline: aString with: aBlockOrString constructor: aVer
 { #category : 'accessing' }
 MetacelloVersionSpec >> blessing [
 
-	blessing == nil 
-		ifTrue: [
-			^self project valueHolderSpec
-				value: self project defaultBlessing;
-				yourself].
-	^ blessing
+	^ blessing ifNil: [
+		  self project valueHolderSpec
+			  value: self project defaultBlessing;
+			  yourself ]
 ]
 
 { #category : 'accessing' }
@@ -129,16 +125,15 @@ MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodOn: aStream for: spec selector: selector last: last indent: indent [
-	spec == nil
-		ifTrue: [ ^ self ].
+
+	spec ifNil: [ ^ self ].
 	aStream
 		tab: indent;
 		nextPutAll: 'spec ' , selector , ' [';
 		cr.
 	spec configMethodOn: aStream indent: indent + 1.
 	aStream nextPutAll: ' ].'.
-	last
-		ifFalse: [ aStream cr ]
+	last ifFalse: [ aStream cr ]
 ]
 
 { #category : 'printing' }
@@ -171,17 +166,16 @@ MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
 
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodValueOn: aStream for: spec selector: selector last: last indent: indent [
+
 	| valuePrintString |
-	spec == nil
-		ifTrue: [ ^ self ].
+	spec ifNil: [ ^ self ].
 	valuePrintString := spec value isSymbol
-		ifTrue: [ '#' , spec value asString printString ]
-		ifFalse: [ spec value printString ].
+		                    ifTrue: [ '#' , spec value asString printString ]
+		                    ifFalse: [ spec value printString ].
 	aStream
 		tab: indent;
 		nextPutAll: 'spec ' , selector , ' ' , valuePrintString , '.'.
-	last
-		ifFalse: [ aStream cr ]
+	last ifFalse: [ aStream cr ]
 ]
 
 { #category : 'printing' }
@@ -259,12 +253,10 @@ MetacelloVersionSpec >> deleteSpec: aSpec [
 { #category : 'accessing' }
 MetacelloVersionSpec >> description [
 
-	description == nil 
-		ifTrue: [
-			^self project valueHolderSpec
-				value: '';
-				yourself].
-	^ description
+	^ description ifNil: [
+		  self project valueHolderSpec
+			  value: '';
+			  yourself ]
 ]
 
 { #category : 'accessing' }
@@ -280,49 +272,33 @@ MetacelloVersionSpec >> description: aBlockOrString constructor: aVersionConstru
 
 { #category : 'querying' }
 MetacelloVersionSpec >> difference: otherVersionSpec [
-    "Return a dictionary of additions, removals and modifications"
+	"Return a dictionary of additions, removals and modifications"
 
-    | report myProjectSpecs otherProjectSpecs |
-    report := MetacelloVersionDiffReport new.
-    myProjectSpecs := Dictionary new.
-    self
-        projectDo: [ :projectSpec | myProjectSpecs at: projectSpec name put: projectSpec ]
-        packageDo: [ :ignored |  ]
-        groupDo: [ :ignored |  ].
-    otherProjectSpecs := Dictionary new.
-    otherVersionSpec
-        projectDo: [ :projectSpec | otherProjectSpecs at: projectSpec name put: projectSpec ]
-        packageDo: [ :ignored |  ]
-        groupDo: [ :ignored |  ].
-    myProjectSpecs
-        valuesDo: [ :myProjectSpec | 
-            | otherProjectSpec |
-            otherProjectSpec := otherProjectSpecs at: myProjectSpec name ifAbsent: [  ].
-            otherProjectSpec == nil
-                ifTrue: [ 
-                    report removals
-                        at: myProjectSpec name
-                        put:
-                            {(myProjectSpec versionString).
-                            ''} ]
-                ifFalse: [ 
-                    myProjectSpec versionString = otherProjectSpec versionString
-                        ifFalse: [ 
-                            report modifications
-                                at: myProjectSpec name
-                                put:
-                                    {(myProjectSpec versionString).
-                                    (otherProjectSpec versionString)} ] ] ].
-    otherProjectSpecs
-        valuesDo: [ :otherProjectSpec | 
-            (myProjectSpecs at: otherProjectSpec name ifAbsent: [  ]) == nil
-                ifTrue: [ 
-                    report additions
-                        at: otherProjectSpec name
-                        put:
-                            {''.
-                            (otherProjectSpec versionString)} ] ].
-    ^ report
+	| report myProjectSpecs otherProjectSpecs |
+	report := MetacelloVersionDiffReport new.
+	myProjectSpecs := Dictionary new.
+	self projectDo: [ :projectSpec | myProjectSpecs at: projectSpec name put: projectSpec ] packageDo: [ :ignored |  ] groupDo: [ :ignored |  ].
+	otherProjectSpecs := Dictionary new.
+	otherVersionSpec projectDo: [ :projectSpec | otherProjectSpecs at: projectSpec name put: projectSpec ] packageDo: [ :ignored |  ] groupDo: [ :ignored |  ].
+	myProjectSpecs valuesDo: [ :myProjectSpec |
+		| otherProjectSpec |
+		otherProjectSpec := otherProjectSpecs at: myProjectSpec name ifAbsent: [  ].
+		otherProjectSpec == nil
+			ifTrue: [
+				report removals at: myProjectSpec name put: {
+						myProjectSpec versionString.
+						'' } ]
+			ifFalse: [
+				myProjectSpec versionString = otherProjectSpec versionString ifFalse: [
+					report modifications at: myProjectSpec name put: {
+							myProjectSpec versionString.
+							otherProjectSpec versionString } ] ] ].
+	otherProjectSpecs valuesDo: [ :otherProjectSpec |
+		(myProjectSpecs at: otherProjectSpec name ifAbsent: [  ]) ifNil: [
+			report additions at: otherProjectSpec name put: {
+					''.
+					otherProjectSpec versionString } ] ].
+	^ report
 ]
 
 { #category : 'loading' }
@@ -525,9 +501,9 @@ MetacelloVersionSpec >> packageNamed: aString ifAbsent: aBlock [
 
 { #category : 'querying' }
 MetacelloVersionSpec >> packageNames [
-    packageList == nil
-        ifTrue: [ ^ #() ].
-    ^ self packages map keys asSet
+
+	packageList ifNil: [ ^ #(  ) ].
+	^ self packages map keys asSet
 ]
 
 { #category : 'querying' }
@@ -537,9 +513,8 @@ MetacelloVersionSpec >> packageSpecsInLoadOrder [
 
 { #category : 'accessing' }
 MetacelloVersionSpec >> packages [
-    packageList == nil
-        ifTrue: [ packageList := self project packagesSpec ].
-    ^ packageList
+
+	^ packageList ifNil: [ packageList := self project packagesSpec ]
 ]
 
 { #category : 'accessing' }
@@ -754,12 +729,10 @@ MetacelloVersionSpec >> setTimestamp: anObject [
 { #category : 'accessing' }
 MetacelloVersionSpec >> timestamp [
 
-	timestamp == nil 
-		ifTrue: [
-			^self project valueHolderSpec
-				value: '';
-				yourself].
-	^ timestamp
+	^ timestamp ifNil: [
+		  self project valueHolderSpec
+			  value: '';
+			  yourself ]
 ]
 
 { #category : 'accessing' }
@@ -786,8 +759,8 @@ MetacelloVersionSpec >> versionNumber [
 
 { #category : 'querying' }
 MetacelloVersionSpec >> versionString [
-	versionString == nil ifTrue: [ ^'' ].
-	^ versionString
+
+	^ versionString ifNil: [ '' ]
 ]
 
 { #category : 'accessing' }

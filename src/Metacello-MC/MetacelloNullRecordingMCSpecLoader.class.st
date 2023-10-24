@@ -20,15 +20,13 @@ MetacelloNullRecordingMCSpecLoader >> actionLabel [
 { #category : 'accessing' }
 MetacelloNullRecordingMCSpecLoader >> afterLoads [
 
-	afterLoads == nil ifTrue: [ afterLoads := OrderedCollection new ].
-	^afterLoads
+	^ afterLoads ifNil: [ afterLoads := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
 MetacelloNullRecordingMCSpecLoader >> beforeLoads [
 
-	beforeLoads == nil ifTrue: [ beforeLoads := OrderedCollection new ].
-	^beforeLoads
+	^ beforeLoads ifNil: [ beforeLoads := OrderedCollection new ]
 ]
 
 { #category : 'versionInfo' }
@@ -53,8 +51,7 @@ MetacelloNullRecordingMCSpecLoader >> ensureForDevelopment [
 { #category : 'accessing' }
 MetacelloNullRecordingMCSpecLoader >> evalDoits [
 
-	evalDoits == nil ifTrue: [ evalDoits := false ].
-	^evalDoits
+	^ evalDoits ifNil: [ evalDoits := false ]
 ]
 
 { #category : 'accessing' }

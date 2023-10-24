@@ -59,8 +59,7 @@ MetacelloLoadData >> currentVersionInfoFor: packageSpec ifAbsent: aBlock [
 { #category : 'accessing' }
 MetacelloLoadData >> dataMap [
 
-	dataMap == nil ifTrue: [ dataMap := Dictionary new ].
-	^dataMap
+	^ dataMap ifNil: [ dataMap := Dictionary new ]
 ]
 
 { #category : 'enumerating' }
@@ -79,13 +78,11 @@ MetacelloLoadData >> isEmpty [
 { #category : 'accessing' }
 MetacelloLoadData >> packageNameMap [
 
-	packageNameMap == nil ifTrue: [ packageNameMap := Dictionary new ].
-	^packageNameMap
+	^ packageNameMap ifNil: [ packageNameMap := Dictionary new ]
 ]
 
 { #category : 'accessing' }
 MetacelloLoadData >> versionInfoMap [
 
-	versionInfoMap == nil ifTrue: [ versionInfoMap := Dictionary new ].
-	^versionInfoMap
+	^ versionInfoMap ifNil: [ versionInfoMap := Dictionary new ]
 ]

@@ -859,8 +859,7 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 
 	| index assoc |
 	index := self findElementOrNil: key.
-	assoc := array at: index.
-	assoc == nil ifTrue: [ ^ aBlock value ].
+	assoc := (array at: index) ifNil: [ ^ aBlock value ].
 	array at: index put: nil.
 	tally := tally - 1.
 	self fixCollisionsFrom: index.
