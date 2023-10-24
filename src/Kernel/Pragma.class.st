@@ -273,6 +273,13 @@ Pragma >> sendTo: anObject [
 	^ anObject perform: self selector withArguments: self arguments
 ]
 
+{ #category : 'accessing' }
+Pragma >> sourceNode [
+	| index |
+	index := method pragmas identityIndexOf: self.
+	^ method ast pragmas at: index
+]
+
 { #category : 'processing' }
 Pragma >> withArgumentsDo: aBlock [
 	"Pass the arguments of the receiving pragma into aBlock and answer the result."
