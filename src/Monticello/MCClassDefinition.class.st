@@ -87,7 +87,12 @@ MCClassDefinition >> category [
 
 { #category : 'accessing' }
 MCClassDefinition >> category: categoryString [
-
+	Stdio stdout
+			nextPutAll: 'Should not use #category: to set ' , categoryString , '. Stack:';
+			lf;
+			nextPutAll: thisContext longStack;
+			lf;
+			lf. self error
 	self packageName: categoryString
 ]
 
