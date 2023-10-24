@@ -14,6 +14,13 @@ OCPragmaTest >> methodDoublePragma [
 ]
 
 { #category : 'method - tested' }
+OCPragmaTest >> methodDoublePragmaIdentical [
+		^'methodDoublePragma
+			<hello>
+			<hello>'
+]
+
+{ #category : 'method - tested' }
 OCPragmaTest >> methodNoPragma [
 	^'methodNoPragma: aNum
 		^aNum'
@@ -155,4 +162,19 @@ OCPragmaTest >> testSinglePragma [
 	| aCompiledMethod |
 	aCompiledMethod := OpalCompiler new compile: self methodSinglePragma.
 	self assert: aCompiledMethod pragmas first selector equals: #hello:
+]
+
+{ #category : 'tests' }
+OCPragmaTest >> testSourceNode [
+	| aCompiledMethod node1 node2|
+	aCompiledMethod := OpalCompiler new compile: self methodDoublePragmaIdentical.
+	
+	node1 := aCompiledMethod pragmas first sourceNode.
+	node2 := aCompiledMethod pragmas second sourceNode.
+
+	self assert: node1 isPragma.
+	self assert: node1 selector equals: aCompiledMethod pragmas first selector.
+	self assert: node2 isPragma.
+	self assert: node2 selector equals: aCompiledMethod pragmas second selector.
+	self deny: node1 identicalTo: node2
 ]

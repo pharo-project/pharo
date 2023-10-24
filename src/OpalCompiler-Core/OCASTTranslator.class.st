@@ -730,7 +730,7 @@ OCASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	| var |
 	aPragmaNode isParseError ifTrue: [ ^self ].
-	methodBuilder addPragma: aPragmaNode asPragma.
+	methodBuilder addPragma: aPragmaNode pragma.
 
 	"if the pragma is a primitive that defines an error variable, we need to store error value
 	which is on the stack"

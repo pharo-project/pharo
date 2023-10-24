@@ -149,13 +149,6 @@ UUID >> asInteger [
 ]
 
 { #category : 'converting' }
-UUID >> asString [
-	"Return a String with my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
-
-	^ self printString
-]
-
-{ #category : 'converting' }
 UUID >> asString36 [
 	"Return a String encoding the receiver as a base 36 number using 0-9 and lowercase a-z.
 	This is the shortest representation still being able to work as

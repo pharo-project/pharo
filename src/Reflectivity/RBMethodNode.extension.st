@@ -28,9 +28,9 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 						ifAbsent: [ #() ]) ].
 	"set meta link options defined per method"
 	(self pragmas
-		select: [ :pragma | pragma selector == #metaLinkOptions: ])
+		select: [ :pragmaNode | pragmaNode selector == #metaLinkOptions: ])
 		do:
-			[ :pragma | (pragma asPragma selector: #parseOptions:) sendTo: options ].
+			[ :pragmaNode | (pragmaNode pragma copy selector: #parseOptions:) sendTo: options ].
 	^ options
 ]
 
