@@ -16,23 +16,14 @@ MCSystemCategoryParser class >> pattern [
 { #category : 'actions' }
 MCSystemCategoryParser >> addDefinitionsTo: aCollection [
 
-	| definition category |
+	| definition converter |
 	definition := aCollection
 		              detect: [ :ea | ea isOrganizationDefinition ]
 		              ifNone: [ aCollection add: MCOrganizationDefinition new ].
 
-	category := self category.
-
-	"Let's find the package and the tag from the category."
-	definition packageName ifNil: [
-		definition packageName: ((self packageOrganizer packageMatchingExtensionName: category)
-				 ifNil: [ category ]
-				 ifNotNil: [ :package | package name ]) ].
-
-	category = definition packageName ifFalse: [
-		definition tagNames: (definition tagNames copyWith: ((category beginsWith: definition packageName , '-')
-					  ifTrue: [ category withoutPrefix: definition packageName , '-' ]
-					  ifFalse: [ category ])) ]
+	converter := CategoryConverter category: self category.
+	definition packageName ifNil: [ definition packageName: converter packageName ].
+	converter tagName ifNotNil: [ :tagName | definition tagNames: (definition tagNames copyWith: tagName) ]
 ]
 
 { #category : 'accessing' }
