@@ -93,9 +93,10 @@ MCPackageLoader >> basicLoadDefinitions [
 	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
 	errorDefinitions do: [ :each | each addMethodAdditionTo: methodAdditions ] displayingProgress: 'Reloading erroneous definitions...'.
 	
-	methodAdditions do: [ :each | each installMethod ].
-	methodAdditions do: [ :each | each notifyObservers ].
-	additions       do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
+	"Since the system is reacting to method addition, we want to announce the addition of methods only once we loaded all the methods.
+	This can be useful for example if a method defines a world menu entry (that is executed when the MethodAdded announcement is raised) and this entry relies on other methods of the class. We want all methods to be loaded before executing it."
+	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ methodAdditions do: [ :each | each installMethod ] ]) do: [ :announcement | SystemAnnouncer uniqueInstance announce: announcement ].
+	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
 	
 ]
 
