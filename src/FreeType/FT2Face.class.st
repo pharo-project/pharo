@@ -400,26 +400,30 @@ FT2Face >> height [
 
 { #category : 'testing' }
 FT2Face >> isBold [
-	styleFlags == nil ifTrue:[^false].
-	^styleFlags allMask: StyleFlagBold
+
+	styleFlags ifNil: [ ^ false ].
+	^ styleFlags allMask: StyleFlagBold
 ]
 
 { #category : 'testing' }
 FT2Face >> isFixedWidth [
-	styleFlags == nil ifTrue:[^false].
-	^faceFlags allMask: 4 "FT_FACE_FLAG_FIXED_WIDTH"
+
+	styleFlags ifNil: [ ^ false ].
+	^ faceFlags allMask: 4 "FT_FACE_FLAG_FIXED_WIDTH"
 ]
 
 { #category : 'testing' }
 FT2Face >> isItalic [
-	styleFlags == nil ifTrue:[^false].
-	^styleFlags allMask: StyleFlagItalic
+
+	styleFlags ifNil: [ ^ false ].
+	^ styleFlags allMask: StyleFlagItalic
 ]
 
 { #category : 'testing' }
 FT2Face >> isRegular [
-	styleFlags == nil ifTrue:[^true].
-	^styleFlags = 0
+
+	styleFlags ifNil: [ ^ true ].
+	^ styleFlags = 0
 ]
 
 { #category : 'kerning' }

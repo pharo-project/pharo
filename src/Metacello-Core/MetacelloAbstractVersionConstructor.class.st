@@ -35,15 +35,13 @@ MetacelloAbstractVersionConstructor >> addAttribute: anAttribute [
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> attributeMap [
 
-	attributeMap == nil ifTrue: [ attributeMap := Dictionary new ].
-	^attributeMap
+	^ attributeMap ifNil: [ attributeMap := Dictionary new ]
 ]
 
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> attributeOrder [
 
-	attributeOrder == nil ifTrue: [ attributeOrder := OrderedCollection new ].
-	^attributeOrder
+	^ attributeOrder ifNil: [ attributeOrder := OrderedCollection new ]
 ]
 
 { #category : 'api' }
@@ -456,9 +454,8 @@ MetacelloAbstractVersionConstructor >> preLoadDoItForVersion: aSymbol [
 
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> project [
-    project == nil
-        ifTrue: [ project := self projectClass new ].
-    ^ project
+
+	^ project ifNil: [ project := self projectClass new ]
 ]
 
 { #category : 'api' }
@@ -696,10 +693,9 @@ MetacelloAbstractVersionConstructor >> root: aMetacelloSpec [
 MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getAuthor) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setAuthor: spec ].
+	(spec := self root getAuthor) ifNil: [
+		spec := self project valueHolderSpec.
+		self root setAuthor: spec ].
 	self with: spec during: aBlock
 ]
 
@@ -735,10 +731,9 @@ MetacelloAbstractVersionConstructor >> setBaseline: aString withBlock: aBlock [
 MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getBlessing) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setBlessing: spec ].
+	(spec := self root getBlessing) ifNil: [
+		spec := self project valueHolderSpec.
+		self root setBlessing: spec ].
 	self with: spec during: aBlock
 ]
 
@@ -766,10 +761,9 @@ MetacelloAbstractVersionConstructor >> setConfiguration: aString withBlock: aBlo
 MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getDescription) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setDescription: spec ].
+	(spec := self root getDescription) ifNil: [
+		spec := self project valueHolderSpec.
+		self root setDescription: spec ].
 	self with: spec during: aBlock
 ]
 
@@ -868,10 +862,9 @@ MetacelloAbstractVersionConstructor >> setProject: aString withString: versionSt
 MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getTimestamp) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setTimestamp: spec ].
+	(spec := self root getTimestamp) ifNil: [
+		spec := self project valueHolderSpec.
+		self root setTimestamp: spec ].
 	self with: spec during: aBlock
 ]
 
@@ -929,8 +922,8 @@ MetacelloAbstractVersionConstructor >> timestampForVersion: aBlockOrStringOrDate
 { #category : 'validation' }
 MetacelloAbstractVersionConstructor >> validateDoItSelector: anObject [
 
-	anObject == nil ifTrue: [ ^ self ].
-	anObject isSymbol ifFalse: [ self error: 'Invalid message selector for doit: ', anObject printString ].
+	anObject ifNil: [ ^ self ].
+	anObject isSymbol ifFalse: [ self error: 'Invalid message selector for doit: ' , anObject printString ]
 ]
 
 { #category : 'api' }

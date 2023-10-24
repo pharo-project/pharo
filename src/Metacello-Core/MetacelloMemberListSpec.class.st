@@ -94,8 +94,7 @@ MetacelloMemberListSpec >> isEmpty [
 { #category : 'accessing' }
 MetacelloMemberListSpec >> list [
 
-	list == nil ifTrue: [ list := OrderedCollection new ].
-	^list
+	^ list ifNil: [ list := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }

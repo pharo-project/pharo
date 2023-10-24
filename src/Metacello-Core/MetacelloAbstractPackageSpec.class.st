@@ -90,12 +90,15 @@ MetacelloAbstractPackageSpec >> configMethodCascadeOn: aStream member: aMember l
 MetacelloAbstractPackageSpec >> configMethodOn: aStream for: aValue selector: selector cascading: cascading cascade: cascade indent: indent [
 
 	| valuePrintString |
-	aValue == nil ifTrue: [ ^self ].
-	cascading ifTrue: [ aStream cr; tab: indent ].
+	aValue ifNil: [ ^ self ].
+	cascading ifTrue: [
+		aStream
+			cr;
+			tab: indent ].
 	valuePrintString := aValue value isSymbol
-		ifTrue: [ '#' , aValue value asString printString ]
-		ifFalse: [ aValue value printString ].
-	aStream  nextPutAll: selector, valuePrintString.
+		                    ifTrue: [ '#' , aValue value asString printString ]
+		                    ifFalse: [ aValue value printString ].
+	aStream nextPutAll: selector , valuePrintString.
 	cascade ifTrue: [ aStream nextPut: $; ]
 ]
 
@@ -112,8 +115,7 @@ MetacelloAbstractPackageSpec >> includeSpecNamesForPackageOrdering: aVersionSpec
 { #category : 'querying' }
 MetacelloAbstractPackageSpec >> includes [
 
-	includes == nil ifTrue: [ includes := #() ].
-	^includes
+	^ includes ifNil: [ includes := #(  ) ]
 ]
 
 { #category : 'accessing' }
@@ -235,8 +237,7 @@ MetacelloAbstractPackageSpec >> requiredSpecsForPackageOrdering: aVersionSpec [
 { #category : 'querying' }
 MetacelloAbstractPackageSpec >> requires [
 
-	requires == nil ifTrue: [ requires := #() ].
-	^requires
+	^ requires ifNil: [ requires := #(  ) ]
 ]
 
 { #category : 'accessing' }

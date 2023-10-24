@@ -26,17 +26,13 @@ MetacelloMethodSpec >> category: anObject [
 { #category : 'method generation' }
 MetacelloMethodSpec >> compileMethod [
 
-	(project configuration class
-		compile: self methodSource
-		classified: self category) == nil
-		ifTrue: [ self error: 'Error compiling the method' ]
+	(project configuration class compile: self methodSource classified: self category) ifNil: [ self error: 'Error compiling the method' ]
 ]
 
 { #category : 'accessing' }
 MetacelloMethodSpec >> methodSections [
 
-	methodSections == nil ifTrue: [ methodSections := OrderedCollection new ].
-	^ methodSections
+	^ methodSections ifNil: [ methodSections := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }

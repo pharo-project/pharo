@@ -36,8 +36,9 @@ MetacelloVersionLoadDirective >> isExplicit [
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> label [
 
-	self spec == nil ifTrue: [ ^'' ].
-	^self spec label
+	^ self spec
+		  ifNil: [ '' ]
+		  ifNotNil: [ :aSpec | aSpec label ]
 ]
 
 { #category : 'actions' }
@@ -50,8 +51,7 @@ MetacelloVersionLoadDirective >> loadAtomicLoadDirective: aLoaderDirective gofer
 { #category : 'accessing' }
 MetacelloVersionLoadDirective >> loadDirectives [
 
-	loadDirectives == nil ifTrue: [ loadDirectives := OrderedCollection new ].
-	^ loadDirectives
+	^ loadDirectives ifNil: [ loadDirectives := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
