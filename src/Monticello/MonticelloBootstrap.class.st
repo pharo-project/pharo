@@ -50,6 +50,18 @@ MonticelloBootstrap class >> inDirectory: aDirectory [
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> bootstrap [
 
+	RPackageOrganizer default packages do: [ :package |
+		Stdio stdout
+			nextPutAll: 'Package named ' , package name , ' contaning:';
+			lf.
+		package classes do: [ :class |
+			Stdio stdout
+				nextPutAll: '- ' , class name , ' package:' , class packages name;
+				lf ].
+		Stdio stdout
+			lf;
+			lf ].
+
 	self createWorkingCopies.
 	self loadBootstrapPackages.
 	
