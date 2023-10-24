@@ -171,10 +171,10 @@ OCPragmaTest >> testSourceNode [
 	
 	node1 := aCompiledMethod pragmas first sourceNode.
 	node2 := aCompiledMethod pragmas second sourceNode.
-	
+
 	self assert: node1 isPragma.
 	self assert: node1 selector equals: aCompiledMethod pragmas first selector.
 	self assert: node2 isPragma.
 	self assert: node2 selector equals: aCompiledMethod pragmas second selector.
-	self deny: node1 == node2
+	self deny: node1 identicalTo: node2
 ]
