@@ -528,7 +528,7 @@ MCClassDefinition >> packageName: aString [
 	    #'STON-Text support' #'Morphic-Widgets-PolyTabs' #Compression #'Transcript-Tool' #'System-Changes' #'Collections-Streams' #MonticelloConfigurations
 	    #'Monticello-BackwardCompatibility' #'HeuristicCompletion-Morphic' #'NewTools-FontChooser' #MonticelloFileServices #'OSSubprocess-Tests-Stress'
 	    #'System-Changes-FileServices' #'Refactoring-Transformations' #'Fonts-Infrastructure' #'Morphic-Widgets-Menubar' #'Calypso-SystemQueries-Tests-P3WithSubclassFromP2' )
-		 includes: name) ifFalse: [
+		 includes: aString) ifFalse: [
 		Stdio stdout
 			nextPutAll: 'Tried to set a packages name ' , aString , ' in a MCClassDefinition. Stack:';
 			lf;
