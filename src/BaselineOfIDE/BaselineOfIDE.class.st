@@ -322,7 +322,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
-
+Smalltalk saveAndQuit.
 	self loadIceberg.
 	self loadExtraTools.
 	self makeCalypsoDefaultBrowser.
