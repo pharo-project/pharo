@@ -97,6 +97,14 @@ PragmaTest >> testHash [
 ]
 
 { #category : 'tests - cache' }
+PragmaTest >> testPragmaAddingProperty [
+	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+	(self class>>#methodWithPragma) propertyAt: #hello put: #something.
+	Smalltalk garbageCollect.
+	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+]
+
+{ #category : 'tests - cache' }
 PragmaTest >> testRecompile [
 	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
 	self class compile: 'methodWithPragma
