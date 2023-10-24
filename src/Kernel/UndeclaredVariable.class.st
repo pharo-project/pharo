@@ -8,6 +8,9 @@ In future I can profice logging and user warning when evaluated code accesses un
 Class {
 	#name : 'UndeclaredVariable',
 	#superclass : 'LiteralVariable',
+	#instVars : [
+		'usingMethods'
+	],
 	#category : 'Kernel-Variables',
 	#package : 'Kernel',
 	#tag : 'Variables'
@@ -38,6 +41,11 @@ UndeclaredVariable class >> registeredWithName: aString [
 	var := self possiblyRegisteredWithName: aString.
 	(var isUndeclaredVariable and: [ var isRegistered not ]) ifTrue: [ var register ].
 	^ var
+]
+
+{ #category : 'registry' }
+UndeclaredVariable >> addUsingMethod: aCompiledMethod [
+	self usingMethods add: aCompiledMethod
 ]
 
 { #category : 'queries' }
@@ -83,6 +91,15 @@ UndeclaredVariable >> register [
 	Undeclared add: self
 ]
 
+{ #category : 'registry' }
+UndeclaredVariable >> registerFromNode: aNode [
+	| methodNode |
+	methodNode := aNode methodNode.
+	methodNode propertyAt: #Undeclareds ifAbsentPut: [WeakSet new].
+	(methodNode propertyAt: #Undeclareds) add: self.
+	self register
+]
+
 { #category : 'code generation' }
 UndeclaredVariable >> runtimeUndeclaredRead [
 
@@ -107,4 +124,10 @@ UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
 { #category : 'registry' }
 UndeclaredVariable >> unregister [
 	Undeclared removeKey: name ifAbsent: [ ]
+]
+
+{ #category : 'queries' }
+UndeclaredVariable >> usingMethods [
+	^usingMethods 
+		ifNil: [ usingMethods := WeakIdentitySet new ]
 ]
