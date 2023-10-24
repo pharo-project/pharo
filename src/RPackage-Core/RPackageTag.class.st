@@ -154,8 +154,8 @@ RPackageTag >> privateAddClass: aClass [
 	aClass basicCategory: self categoryName.
 
 	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: self) ]
-		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRecategorized class: self recategorizedFrom: oldCategory to: self category) ]
+		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: aClass) ]
+		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRecategorized class: aClass recategorizedFrom: oldCategory to: aClass category) ]
 
 ]
 
