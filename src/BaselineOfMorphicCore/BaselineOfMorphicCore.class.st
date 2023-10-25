@@ -37,7 +37,6 @@ BaselineOfMorphicCore >> baseline: spec [
 		spec baseline: 'UnifiedFFI' with: [spec repository: repository].
 
 		spec package: 'System-Object Events'.
-		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Caching'.
 		spec package: 'Graphics-Canvas'.
 		spec package: 'FormCanvas-Core'.
