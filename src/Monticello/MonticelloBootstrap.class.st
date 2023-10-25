@@ -111,12 +111,15 @@ MonticelloBootstrap >> loadBootstrapPackageNamed: aName [
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackages [
 
+	| previous |
 	MCCacheRepository cacheDirectory: directory.
 
-	(self bootstrapVersionsExcept: [ :package | 
-		#('Shift-ClassBuilder' 'Monticello')
-			includes: package name])
-		do: [ :version | self loadPackageVersion: version ].
+	"Until the bootstrap of Pharo runs on Pharo 12, the MCZ exported will be exported with categories in MCZ format instead of packages and tags. Using #readingOldExport should allow to bootstrap until we run the bootstrap in Pharo 12."
+	previous := MCMczReader readingOldExport.
+	[
+	MCMczReader readingOldExport: true.
+
+	(self bootstrapVersionsExcept: [ :package | #( 'Shift-ClassBuilder' 'Monticello' ) includes: package name ]) do: [ :version | self loadPackageVersion: version ].
 
 	"We load ShiftClassBuilder at the end because it has a patch to work in the bootstrap process. The patch is used when there is no source."
 
@@ -124,7 +127,7 @@ MonticelloBootstrap >> loadBootstrapPackages [
 
 	"We load lastly monticello because we are using it to reload itself.
 	Othewise, we should handle the case that after loading monticello we should return to a safe place from the stack where no old methods or classes are used."
-	self loadBootstrapPackageNamed: 'Monticello'
+	self loadBootstrapPackageNamed: 'Monticello' ] ensure: [ MCMczReader readingOldExport: previous ]
 ]
 
 { #category : 'bootstrapping' }
