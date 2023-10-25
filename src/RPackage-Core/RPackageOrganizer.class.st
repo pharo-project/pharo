@@ -197,6 +197,34 @@ RPackageOrganizer >> announcer [
 { #category : 'initialization - data' }
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	| allBehaviors |
+
+	Stdio stdout lf; nextPutAll: 'BEFORE'; lf.
+	allBehaviors
+		do: [ :behavior |
+			{
+				behavior.
+				behavior classSide } do: [ :aBehavior |
+				aBehavior extensionProtocols do: [ :protocol |
+					(self ensurePackageMatching: protocol name allButFirst trimBoth) importProtocol: protocol forClass: aBehavior ] ] ]
+		displayingProgress: 'Importing extensions'.
+
+	Stdio stdout lf; nextPutAll: 'Classes :'; lf.
+	allBehaviors do: [ :c | Stdio stdout nextPutAll: '	- ' , c name , '(', c hash asString ,')'; lf. ].
+	Stdio stdout lf; nextPutAll: 'Package mapping :'; lf.
+	classPackageMapping keysAndValuesDo: [ :c :package | Stdio stdout nextPutAll: '	- ' , c name , '(', c hash asString ,') in package ', package name ; lf. ].
+	Stdio stdout lf; nextPutAll: 'Packages :'; lf.
+	self packages do: [ :package |
+		Stdio stdout
+			nextPutAll: '	Package named ' , package name , ' contaning:';
+			lf.
+		package definedClasses do: [ :class |
+			Stdio stdout
+				nextPutAll: '		- ' , class name , '(' , class hash asString , ') package: ' , class package name;
+				lf ].
+		Stdio stdout
+			lf;
+			lf ].
+
 	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
 
 	allBehaviors := Smalltalk allClassesAndTraits.
@@ -220,6 +248,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 					 aBehavior package importProtocol: protocol forClass: aBehavior ] ] ]
 		displayingProgress: 'Importing methods'.
 
+	Stdio stdout lf; nextPutAll: 'AFTER'; lf.
 	allBehaviors
 		do: [ :behavior |
 			{
