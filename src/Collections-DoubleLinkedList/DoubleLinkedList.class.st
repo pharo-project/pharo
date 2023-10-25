@@ -7,7 +7,7 @@ Note that some of my API deals with the elements that I hold, like any other col
 "
 Class {
 	#name : 'DoubleLinkedList',
-	#superclass : 'Object',
+	#superclass : 'Collection',
 	#instVars : [
 		'head',
 		'tail'
