@@ -54,7 +54,7 @@ MonticelloBootstrap >> bootstrap [
 		Stdio stdout
 			nextPutAll: 'Package named ' , package name , ' contaning:';
 			lf.
-		package classes do: [ :class |
+		package definedClasses do: [ :class |
 			Stdio stdout
 				nextPutAll: '- ' , class name , ' package:' , class package name;
 				lf ].

@@ -209,14 +209,14 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	self flag: #todo. "This next step should not be needed when we will not use announcements to manage method addition"
 	allBehaviors
 		do: [ :behavior |
-			Stdio stdout nextPutAll: 'Importing methods of ' , behavior name; lf.
+			Stdio stdout nextPutAll: 'Importing methods of ' , behavior name , ' from ' , behavior package name; lf.
 			{
 				behavior.
 				behavior classSide } do: [ :aBehavior |
 				aBehavior protocols
 					reject: [ :protocol | protocol isExtensionProtocol ]
 					thenDo: [ :protocol |
-					Stdio stdout nextPutAll: '	Importing methods of protocol' , protocol name, ' into ' , aBehavior package name ; lf.
+					Stdio stdout nextPutAll: '	Importing methods of protocol ' , protocol name; lf.
 					 aBehavior package importProtocol: protocol forClass: aBehavior ] ] ]
 		displayingProgress: 'Importing methods'.
 
@@ -227,7 +227,24 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 				behavior classSide } do: [ :aBehavior |
 				aBehavior extensionProtocols do: [ :protocol |
 					(self ensurePackageMatching: protocol name allButFirst trimBoth) importProtocol: protocol forClass: aBehavior ] ] ]
-		displayingProgress: 'Importing extensions'
+		displayingProgress: 'Importing extensions'.
+
+	Stdio stdout lf; nextPutAll: 'Classes :'; lf.
+	allBehaviors do: [ :c | Stdio stdout nextPutAll: '	- ' , c name , '(', c hash asString ,')'; lf. ].
+	Stdio stdout lf; nextPutAll: 'Package mapping :'; lf.
+	classPackageMapping keysAndValuesDo: [ :c :package | Stdio stdout nextPutAll: '	- ' , c name , '(', c hash asString ,') in package ', package name ; lf. ].
+	Stdio stdout lf; nextPutAll: 'Packages :'; lf.
+	self packages do: [ :package |
+		Stdio stdout
+			nextPutAll: '	Package named ' , package name , ' contaning:';
+			lf.
+		package definedClasses do: [ :class |
+			Stdio stdout
+				nextPutAll: '		- ' , class name , '(' , class hash asString , ') package: ' , class package name;
+				lf ].
+		Stdio stdout
+			lf;
+			lf ].
 ]
 
 { #category : 'private - registration' }
