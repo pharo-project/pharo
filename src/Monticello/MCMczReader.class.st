@@ -155,7 +155,8 @@ MCMczReader >> loadDefinitions [
 		self adaptDefinitions.
 		^ definitions ]
 			on: Error
-			do: [ :fallThrough | Stdio stdout nextPutAll: 'Error happened :(' , thisContext longStack; lf;lf  ] ].
+			do: [ :fallThrough |
+				('An error happened while reading MCZ. We will fallback to another format. Short error stack: ' , fallThrough signalerContext shortStack) traceCr ] ].
 	"otherwise"
 	(self zip membersMatching: 'snapshot/*') do: [ :m | self extractDefinitionsFrom: m ]
 ]
