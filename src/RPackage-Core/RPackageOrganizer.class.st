@@ -216,7 +216,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 				aBehavior protocols
 					reject: [ :protocol | protocol isExtensionProtocol ]
 					thenDo: [ :protocol |
-					Stdio stdout nextPutAll: '	Importing methods of protocol' , aBehavior protocol name, ' into ' , aBehavior package name ; lf.
+					Stdio stdout nextPutAll: '	Importing methods of protocol' , protocol name, ' into ' , aBehavior package name ; lf.
 					 aBehavior package importProtocol: protocol forClass: aBehavior ] ] ]
 		displayingProgress: 'Importing methods'.
 
