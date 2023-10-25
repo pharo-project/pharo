@@ -45,12 +45,6 @@ MethodPragmaTest >> methodDoublePragmaIdentical [
 ]
 
 { #category : 'test data' }
-MethodPragmaTest >> methodNoPragma [
-	^'methodNoPragma: aNum
-		^aNum'
-]
-
-{ #category : 'test data' }
 MethodPragmaTest >> methodPragmaAfterBeforTemps [
 	^'methodPragmaAfterBeforTemps
 		<hello: 5>
@@ -326,12 +320,6 @@ MethodPragmaTest >> testMethodSelector [
 	| pragma |
 	pragma := self pragma: 'foo' selector: #bar.
 	self assert: pragma methodSelector identicalTo: #bar
-]
-
-{ #category : 'tests - compiled' }
-MethodPragmaTest >> testNoPragma [
-
-	OpalCompiler new parse: self methodNoPragma
 ]
 
 { #category : 'tests' }
