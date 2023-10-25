@@ -125,6 +125,24 @@ DoubleLinkedList >> collect: block [
 ]
 
 { #category : 'enumerating' }
+DoubleLinkedList >> detect: block [
+	"Execute block for each of my elements and return a new instance of me
+	containing those elements for which the block returned true."
+
+	self detect: block ifNone: [ NotFound signalFor: block ]
+]
+
+{ #category : 'enumerating' }
+DoubleLinkedList >> detect: block ifNone: errorBlock [
+	"Execute block for each of my elements and return a new instance of me
+	containing those elements for which the block returned true."
+
+	self do: [ :each | (block value: each) ifTrue: [ ^ each ] ].
+
+	^ errorBlock value
+]
+
+{ #category : 'enumerating' }
 DoubleLinkedList >> do: block [
 	"Execute block for each of my elements."
 
