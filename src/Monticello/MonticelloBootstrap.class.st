@@ -111,13 +111,7 @@ MonticelloBootstrap >> loadBootstrapPackageNamed: aName [
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackages [
 
-	| previous |
 	MCCacheRepository cacheDirectory: directory.
-
-	"Until the bootstrap of Pharo runs on Pharo 12, the MCZ exported will be exported with categories in MCZ format instead of packages and tags. Using #readingOldExport should allow to bootstrap until we run the bootstrap in Pharo 12."
-	previous := MCMczReader readingOldExport.
-	[
-	MCMczReader readingOldExport: true.
 
 	(self bootstrapVersionsExcept: [ :package | #( 'Shift-ClassBuilder' 'Monticello' ) includes: package name ]) do: [ :version | self loadPackageVersion: version ].
 
@@ -127,7 +121,7 @@ MonticelloBootstrap >> loadBootstrapPackages [
 
 	"We load lastly monticello because we are using it to reload itself.
 	Othewise, we should handle the case that after loading monticello we should return to a safe place from the stack where no old methods or classes are used."
-	self loadBootstrapPackageNamed: 'Monticello' ] ensure: [ MCMczReader readingOldExport: previous ]
+	self loadBootstrapPackageNamed: 'Monticello'
 ]
 
 { #category : 'bootstrapping' }
@@ -145,14 +139,21 @@ MonticelloBootstrap >> loadPackageNamed: aName [
 
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackageVersion: aFileName [
-	
-	[ 	SystemNotification signal: ('Loading ', aFileName asString).
-		"Use snapshot install instead of load to force loading.
-		Otherwise monticello finds no changes and does not load anything."
-		(self localRepository loadVersionFromFileNamed: aFileName) load.
-	] on: MCMergeOrLoadWarning do: [:warning |
-		SystemNotification signal: ('Warning: ', warning messageText asString).
-		warning resume: true ]
+
+	| previous |
+	"Until the bootstrap of Pharo runs on Pharo 12, the MCZ exported will be exported with categories in MCZ format instead of packages and tags. Using #readingOldExport should allow to bootstrap until we run the bootstrap in Pharo 12."
+	previous := MCMczReader readingOldExport.
+	[
+	MCMczReader readingOldExport: true.
+
+	[
+	SystemNotification signal: 'Loading ' , aFileName asString.
+	"Use snapshot install instead of load to force loading. Otherwise monticello finds no changes and does not load anything."
+	(self localRepository loadVersionFromFileNamed: aFileName) load ]
+		on: MCMergeOrLoadWarning
+		do: [ :warning |
+			SystemNotification signal: 'Warning: ' , warning messageText asString.
+			warning resume: true ] ] ensure: [ MCMczReader readingOldExport: previous ]
 ]
 
 { #category : 'bootstrapping' }
