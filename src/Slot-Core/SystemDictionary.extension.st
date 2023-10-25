@@ -12,8 +12,8 @@ SystemDictionary >> declare: key from: aDictionary [
 		ifTrue:
 			[| undeclared |
 			undeclared := aDictionary associationAt: key.
-			"Undeclared variables record using methods in a property, remove"
-			undeclared removeProperty: #usingMethods ifAbsent: [ ]. 
+			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
+			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #usingMethods ifAbsent: [ ]]. 
 			"and change class to be Global"
 			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
 			aDictionary removeKey: key]
