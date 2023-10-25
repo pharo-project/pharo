@@ -8,9 +8,6 @@ In future I can profice logging and user warning when evaluated code accesses un
 Class {
 	#name : 'UndeclaredVariable',
 	#superclass : 'LiteralVariable',
-	#instVars : [
-		'usingMethods'
-	],
 	#category : 'Kernel-Variables',
 	#package : 'Kernel',
 	#tag : 'Variables'
@@ -128,6 +125,5 @@ UndeclaredVariable >> unregister [
 
 { #category : 'queries' }
 UndeclaredVariable >> usingMethods [
-	^usingMethods 
-		ifNil: [ usingMethods := WeakIdentitySet new ]
+	^ self propertyAt: #usingMethods ifAbsentPut: [ WeakIdentitySet new ]
 ]
