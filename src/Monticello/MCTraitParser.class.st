@@ -17,25 +17,36 @@ MCTraitParser class >> pattern [
 { #category : 'actions' }
 MCTraitParser >> addDefinitionsTo: aCollection [
 
-	| node compositionIndex categoryIndex slotsIndex traitName traitCompositionString slotsArray argumentNode categoryString definition |
+	| node compositionIndex categoryIndex slotsIndex traitCompositionString slotsArray argumentNode categoryString converter |
 	node := RBParser parseExpression: source.
 
-	node selector caseOf: { 
-		[#named:] -> [ 
-			compositionIndex := nil. slotsIndex := nil. categoryIndex := nil ].
-		[#named:uses:] -> [ 
-			compositionIndex := 2. slotsIndex := nil. categoryIndex := nil ].
-		[#named:uses:category:] -> [ 
-			compositionIndex := 2. slotsIndex := nil. categoryIndex := 3 ].
-		[#named:uses:package:] -> [ 
-			compositionIndex := 2. slotsIndex := nil. categoryIndex := 3 ].
-		[#named:uses:slots:category:] -> [ 
-			compositionIndex := 2. slotsIndex := 3. categoryIndex := 4 ].
-		[#named:uses:slots:package:] -> [ 
-			compositionIndex := 2. slotsIndex := 3. categoryIndex := 4 ]
-	} otherwise: [ self error: 'Unknown trait building selector' ].
-
-	traitName := node arguments first value.
+	node selector
+		caseOf: {
+				([ #named: ] -> [
+				 compositionIndex := nil.
+				 slotsIndex := nil.
+				 categoryIndex := nil ]).
+				([ #named:uses: ] -> [
+				 compositionIndex := 2.
+				 slotsIndex := nil.
+				 categoryIndex := nil ]).
+				([ #named:uses:category: ] -> [
+				 compositionIndex := 2.
+				 slotsIndex := nil.
+				 categoryIndex := 3 ]).
+				([ #named:uses:package: ] -> [
+				 compositionIndex := 2.
+				 slotsIndex := nil.
+				 categoryIndex := 3 ]).
+				([ #named:uses:slots:category: ] -> [
+				 compositionIndex := 2.
+				 slotsIndex := 3.
+				 categoryIndex := 4 ]).
+				([ #named:uses:slots:package: ] -> [
+				 compositionIndex := 2.
+				 slotsIndex := 3.
+				 categoryIndex := 4 ]) }
+		otherwise: [ self error: 'Unknown trait building selector' ].
 
 	traitCompositionString := compositionIndex
 		                          ifNotNil: [
@@ -49,17 +60,16 @@ MCTraitParser >> addDefinitionsTo: aCollection [
 			              argumentNode statements collect: [ :each | each source copyFrom: each sourceInterval first to: each sourceInterval last ] ]
 		              ifNil: [ Array new ].
 
-	categoryString := categoryIndex
-		                  ifNotNil: [
-			                  argumentNode := node arguments at: categoryIndex.
-			                  argumentNode source copyFrom: argumentNode sourceInterval first to: argumentNode sourceInterval last ]
-		                  ifNil: [ 'Unclassified' ].
+	categoryString := categoryIndex ifNotNil: [
+		                  argumentNode := node arguments at: categoryIndex.
+		                  argumentNode source copyFrom: argumentNode sourceInterval first to: argumentNode sourceInterval last ].
 
-	definition := (MCTraitDefinition named: traitName)
-		              traitComposition: traitCompositionString;
-		              packageName: categoryString;
-		              instVarNames: slotsArray;
-		              yourself.
+	converter := CategoryConverter category: categoryString.
 
-	aCollection add: definition
+	aCollection add: ((MCTraitDefinition named: node arguments first value)
+			 traitComposition: traitCompositionString;
+			 packageName: converter packageName;
+			 tagName: converter tagName;
+			 instVarNames: slotsArray;
+			 yourself)
 ]

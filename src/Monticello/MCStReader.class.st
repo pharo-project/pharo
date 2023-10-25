@@ -44,7 +44,7 @@ MCStReader >> categoryFromDoIt: aString [
 { #category : 'reading' }
 MCStReader >> classDefinitionFrom: aRingClass [
 
-	| tokens traitCompositionString lastIndex classTraitCompositionString |
+	| tokens traitCompositionString lastIndex classTraitCompositionString converter |
 	tokens := aRingClass definitionSource parseLiterals.
 	traitCompositionString := (aRingClass definitionSource readStream
 		                           match: 'uses:';
@@ -55,11 +55,13 @@ MCStReader >> classDefinitionFrom: aRingClass [
 	traitCompositionString ifEmpty: [ traitCompositionString := '{}' ].
 	classTraitCompositionString ifEmpty: [ classTraitCompositionString := '{}' ].
 	lastIndex := tokens size.
+	converter := CategoryConverter category: (tokens at: lastIndex).
 	^ (MCClassDefinition named: (tokens at: 3))
 		  superclassName: (tokens at: 1);
 		  traitComposition: traitCompositionString;
 		  classTraitComposition: classTraitCompositionString;
-		  packageName: (tokens at: lastIndex);
+		  packageName: converter packageName;
+		  tagName: converter tagName;
 		  instVarNames: ((tokens at: lastIndex - 6) findTokens: ' ');
 		  classVarNames: ((tokens at: lastIndex - 4) findTokens: ' ');
 		  poolDictionaryNames: ((tokens at: lastIndex - 2) findTokens: ' ');
