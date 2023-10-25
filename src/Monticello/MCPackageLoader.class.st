@@ -88,7 +88,6 @@ MCPackageLoader >> basicLoadDefinitions [
 
 	additions do: [ :each | self loadClassDefinition: each ] displayingProgress: 'Loading classes...'.
 	additions do: [ :each | self tryToLoad: each           ] displayingProgress: 'Compiling methods...'.
-	removals ifNotEmpty: [ Stdio stdout nextPutAll: 'Removals: ', removals printString; lf ].
 	removals  do: [ :each | each unload                    ] displayingProgress: 'Cleaning up...'.
 	
 	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
@@ -201,7 +200,7 @@ MCPackageLoader >> provisions [
 
 { #category : 'patch ops' }
 MCPackageLoader >> removeDefinition: aDefinition [
-	Stdio stdout nextPutAll: 'Adding removal. Stack: '; lf; nextPutAll: thisContext shortStack; lf;lf.
+
 	removals add: aDefinition
 ]
 
