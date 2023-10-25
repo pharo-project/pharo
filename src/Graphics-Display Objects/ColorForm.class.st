@@ -340,8 +340,7 @@ ColorForm >> replaceColorAtIndex: index with: newColor [
 
 	self ensureColorArrayExists.
 	colors at: index put: newColor.
-	cachedColormap == nil ifFalse:
-		[cachedColormap at: index put: (newColor pixelValueForDepth: cachedDepth)]
+	cachedColormap ifNotNil: [ cachedColormap at: index put: (newColor pixelValueForDepth: cachedDepth) ]
 ]
 
 { #category : 'private' }

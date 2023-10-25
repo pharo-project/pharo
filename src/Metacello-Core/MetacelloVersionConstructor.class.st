@@ -69,20 +69,16 @@ MetacelloVersionConstructor >> calculate: aConfig project: aProject [
 
 { #category : 'private' }
 MetacelloVersionConstructor >> collectAllSymbolicVersionsFromVersionPragmasInto: symbolicVersionMap using: executionBlock [
+
 	| defined versionPragmaDict versionString |
 	versionPragmaDict := self extractSymbolicVersionPragmas.
-	versionPragmaDict
-		keysAndValuesDo: [ :versionSymbol :pragmaColl | 
-			defined := false.
-			pragmaColl
-				do: [ :pragma | 
-					defined := true.
-					versionString := executionBlock value: versionSymbol value: pragma ].
-			defined
-				ifTrue: [ 
-					versionString == nil
-						ifFalse: [ symbolicVersionMap at: versionSymbol put: versionString ]].
-			self reset ]
+	versionPragmaDict keysAndValuesDo: [ :versionSymbol :pragmaColl |
+		defined := false.
+		pragmaColl do: [ :pragma |
+			defined := true.
+			versionString := executionBlock value: versionSymbol value: pragma ].
+		defined ifTrue: [ versionString ifNotNil: [ symbolicVersionMap at: versionSymbol put: versionString ] ].
+		self reset ]
 ]
 
 { #category : 'private' }
@@ -177,23 +173,16 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: version
 
 { #category : 'private' }
 MetacelloVersionConstructor >> collectDefaultSymbolicVersionsFromVersionPragmasFrom: versionPragmaDict into: symbolicVersionMap using: executionBlock [
+
 	| defined versionString |
-	versionPragmaDict
-		keysAndValuesDo: [ :versionSymbol :pragmaColl | 
-			defined := false.
-			symbolicVersionMap
-				at: versionSymbol
-				ifAbsent: [ 
-					"process the defaultSymbolicVersion only if the symbolicVersion is not defined yet"
-					pragmaColl
-						do: [ :pragma | 
-							defined := true.
-							versionString := executionBlock value: versionSymbol value: pragma ].
-					defined
-						ifTrue: [ 
-							versionString == nil
-								ifFalse: [ symbolicVersionMap at: versionSymbol put: versionString ] ].
-					self reset ] ]
+	versionPragmaDict keysAndValuesDo: [ :versionSymbol :pragmaColl |
+		defined := false.
+		symbolicVersionMap at: versionSymbol ifAbsent: [ "process the defaultSymbolicVersion only if the symbolicVersion is not defined yet"
+			pragmaColl do: [ :pragma |
+				defined := true.
+				versionString := executionBlock value: versionSymbol value: pragma ].
+			defined ifTrue: [ versionString ifNotNil: [ symbolicVersionMap at: versionSymbol put: versionString ] ].
+			self reset ] ]
 ]
 
 { #category : 'private' }

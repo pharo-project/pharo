@@ -238,60 +238,55 @@ ExternalType class >> new [
 
 { #category : 'private' }
 ExternalType class >> newTypeNamed: aString force: aBool [
+
 	| sym type referentClass pointerType |
+	StructTypes at: aString ifPresent: [ :aType | ^ aType ].
+	
 	sym := aString asSymbol.
-	type := StructTypes at: aString ifAbsent:[nil].
-	type == nil ifFalse:[^type].
-	referentClass := self environment at: sym ifAbsent:[nil].
-	(referentClass isBehavior and:[referentClass includesBehavior: ExternalStructure])
-		ifFalse:[referentClass := nil].
+	referentClass := self environment at: sym ifAbsent: [ nil ].
+	(referentClass isBehavior and: [ referentClass includesBehavior: ExternalStructure ]) ifFalse: [ referentClass := nil ].
 	"If we don't have a referent class and are not forced to create a type get out"
-	(referentClass == nil and:[aBool not]) ifTrue:[^nil].
-	type := self basicNew compiledSpec:
-		(WordArray with: self structureSpec).
-	pointerType := self basicNew compiledSpec:
-		(WordArray with: self pointerSpec).
+	(referentClass == nil and: [ aBool not ]) ifTrue: [ ^ nil ].
+	type := self basicNew compiledSpec: (WordArray with: self structureSpec).
+	pointerType := self basicNew compiledSpec: (WordArray with: self pointerSpec).
 	type setReferencedType: pointerType.
 	pointerType setReferencedType: type.
 	type newReferentClass: referentClass.
 	pointerType newReferentClass: referentClass.
 	StructTypes at: sym put: type.
-	^type
+	^ type
 ]
 
 { #category : 'housekeeping' }
 ExternalType class >> noticeModificationOf: aClass [
 	"A subclass of ExternalStructure has been redefined.
 	Clean out any obsolete references to its type."
-	| type |
-	aClass isBehavior ifFalse:[^nil]. "how could this happen?"
-	aClass withAllSubclassesDo:[:cls|
-		type := StructTypes at: cls name ifAbsent:[nil].
-		type == nil ifFalse:[
+
+	aClass isBehavior ifFalse: [ ^ nil ]. "how could this happen?"
+	aClass withAllSubclassesDo: [ :cls |
+		StructTypes at: cls name ifPresent: [ :type |
 			type newReferentClass: cls.
-			type asPointerType newReferentClass: cls].
-	]
+			type asPointerType newReferentClass: cls ] ]
 ]
 
 { #category : 'housekeeping' }
 ExternalType class >> noticeRemovalOf: aClass [
 	"A subclass of ExternalStructure is being removed.
 	Clean out any obsolete references to its type."
-	| type |
-	type := StructTypes at: aClass name ifAbsent:[nil].
-	type == nil ifFalse:[
+
+	StructTypes at: aClass name ifPresent: [ :type |
 		type newReferentClass: nil.
-		type asPointerType newReferentClass: nil]
+		type asPointerType newReferentClass: nil ]
 ]
 
 { #category : 'housekeeping' }
 ExternalType class >> noticeRenamingOf: aClass from: oldName to: newName [
 	"An ExternalStructure has been renamed from oldName to newName.
 	Keep our type names in sync."
-	| type |
-	type := StructTypes at: oldName ifAbsent:[nil].
-	type == nil ifFalse:[StructTypes at: newName put: type].
-	StructTypes removeKey: oldName ifAbsent:[]
+
+	StructTypes at: oldName ifPresent: [ :type |
+		StructTypes at: newName put: type.
+		StructTypes removeKey: oldName ]
 ]
 
 { #category : 'private' }

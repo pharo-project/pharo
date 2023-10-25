@@ -364,7 +364,7 @@ RubCharacterScanner >> setFont [
 	| priorFont |
 	"Set the font and other emphasis."
 	priorFont := font.
-	text == nil ifFalse: [
+	text ifNotNil: [
 		emphasisCode := 0.
 		kern := 0.
 		indentationLevel := 0.
