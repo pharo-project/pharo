@@ -155,7 +155,7 @@ MCMczReader >> loadDefinitions [
 		self adaptDefinitions.
 		^ definitions ]
 			on: Error
-			do: [ :fallThrough |  ] ].
+			do: [ :fallThrough | Stdio stdout nextPutAll: 'Error happened :(' , thisContext longStack; lf;lf  ] ].
 	"otherwise"
 	(self zip membersMatching: 'snapshot/*') do: [ :m | self extractDefinitionsFrom: m ]
 ]
