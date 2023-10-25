@@ -816,56 +816,6 @@ ClassDescription >> oldPharoDefinition [
 		definitionString
 ]
 
-{ #category : 'accessing - packages' }
-ClassDescription >> package [
-
-	^ self packageOrganizer packageOf: self
-]
-
-{ #category : 'accessing - packages' }
-ClassDescription >> package: aPackage [
-
-	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
-]
-
-{ #category : 'accessing - packages' }
-ClassDescription >> package: aPackage tag: aTag [
-
-	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
-]
-
-{ #category : 'accessing - packages' }
-ClassDescription >> packageName [
-
-	^ self package ifNotNil: [ :package | package name ]
-]
-
-{ #category : 'accessing - packages' }
-ClassDescription >> packageTag [
-	"Package tags are sub categories of packages to have a better organization of the packages."
-
-	^ self package tagOf: self
-]
-
-{ #category : 'accessing - packages' }
-ClassDescription >> packageTag: aTag [
-	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
-]
-
-{ #category : 'accessing - packages' }
-ClassDescription >> packageTagName [
-	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag or nil if the class is uncategorized."
-
-	^ self packageTag ifNotNil: [ :tag | tag name ]
-]
-
-{ #category : 'accessing - packages' }
-ClassDescription >> packages [
-	"the extending packages of a class are the packages that extend it."
-
-	^  self extendingPackages asSet copy add: self package; yourself
-]
-
 { #category : 'printing' }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name

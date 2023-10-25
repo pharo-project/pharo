@@ -63,7 +63,6 @@ MCMczReader >> adaptDefinitions [
 		thenDo: [ :definition |
 			| converter |
 			converter := CategoryConverter category: definition packageName.
-			Stdio stdout nextPutAll: 'Updated ' , definition className , ' from ', definition packageName , ' to package ' , converter packageName , ' tag ' , (converter tagName ifNil: [ 'nil' ]); lf;lf.
 			definition
 				packageName: converter packageName;
 				tagName: converter tagName ]

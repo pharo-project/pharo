@@ -50,23 +50,10 @@ MonticelloBootstrap class >> inDirectory: aDirectory [
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> bootstrap [
 
-	RPackageOrganizer default packages do: [ :package |
-		Stdio stdout
-			nextPutAll: 'Package named ' , package name , ' contaning:';
-			lf.
-		package definedClasses do: [ :class |
-			Stdio stdout
-				nextPutAll: '- ' , class name , ' package:' , class package name;
-				lf ].
-		Stdio stdout
-			lf;
-			lf ].
-
 	self createWorkingCopies.
 	self loadBootstrapPackages.
-	
-	SessionManager default registerSystemClassNamed: #SmalltalkImage.
 
+	SessionManager default registerSystemClassNamed: #SmalltalkImage
 ]
 
 { #category : 'versions' }
