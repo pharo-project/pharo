@@ -197,7 +197,7 @@ RPackageOrganizer >> announcer [
 { #category : 'initialization - data' }
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	| allBehaviors |
-
+	allBehaviors := Smalltalk allClassesAndTraits.
 	Stdio stdout lf; nextPutAll: 'BEFORE'; lf.
 	allBehaviors
 		do: [ :behavior |
@@ -226,8 +226,6 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 			lf ].
 
 	aPackagesList do: [ :packageName | self ensurePackage: packageName ] displayingProgress: 'Importing monticello packages'.
-
-	allBehaviors := Smalltalk allClassesAndTraits.
 
 	"This is a hack because of a weird behavior produced by the bootstrap were the package tags end up containing classes that are not the same instances than we have in the system dictionary.. To be investigated."
 	self packages do: [ :package |
