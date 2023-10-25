@@ -9,9 +9,9 @@ Class {
 { #category : 'tests' }
 OCStaticASTCompilerPluginTest >> testClassWithPluginEnabled [
 
-	self
-		assert: ASTTransformExamplePluginActive new example42
-		equals: 'meaning of life'
+ 	"It is possible that the method was loaded before the plugin was active. We recompile to be sure the plugin was active."
+ 	ASTTransformExamplePluginActive recompile.
+ 	self assert: ASTTransformExamplePluginActive new example42 equals: 'meaning of life'
 ]
 
 { #category : 'tests' }

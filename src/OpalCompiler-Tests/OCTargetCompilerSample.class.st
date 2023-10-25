@@ -7,6 +7,11 @@ Class {
 }
 
 { #category : 'accessing' }
+OCTargetCompilerSample class >> classSideCompilerClass [
+	^ OCTargetCompiler
+]
+
+{ #category : 'accessing' }
 OCTargetCompilerSample class >> compilerClass [
 	^ OCTargetCompiler
 ]

@@ -40,6 +40,11 @@ UndeclaredVariable class >> registeredWithName: aString [
 	^ var
 ]
 
+{ #category : 'registry' }
+UndeclaredVariable >> addUsingMethod: aCompiledMethod [
+	self usingMethods add: aCompiledMethod
+]
+
 { #category : 'queries' }
 UndeclaredVariable >> definingClass [
 	"Nobody defines undeclared variable"
@@ -83,6 +88,15 @@ UndeclaredVariable >> register [
 	Undeclared add: self
 ]
 
+{ #category : 'registry' }
+UndeclaredVariable >> registerFromNode: aNode [
+	| methodNode |
+	methodNode := aNode methodNode.
+	methodNode propertyAt: #Undeclareds ifAbsentPut: [WeakSet new].
+	(methodNode propertyAt: #Undeclareds) add: self.
+	self register
+]
+
 { #category : 'code generation' }
 UndeclaredVariable >> runtimeUndeclaredRead [
 
@@ -107,4 +121,9 @@ UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
 { #category : 'registry' }
 UndeclaredVariable >> unregister [
 	Undeclared removeKey: name ifAbsent: [ ]
+]
+
+{ #category : 'queries' }
+UndeclaredVariable >> usingMethods [
+	^ self propertyAt: #usingMethods ifAbsentPut: [ WeakIdentitySet new ]
 ]
