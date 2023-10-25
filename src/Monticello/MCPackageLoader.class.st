@@ -201,7 +201,7 @@ MCPackageLoader >> provisions [
 
 { #category : 'patch ops' }
 MCPackageLoader >> removeDefinition: aDefinition [
-	Stdio stdout nextPutAll: 'Adding removal. Stack: '; lf; nextPutAll: thisContext longStack; lf;lf.
+	Stdio stdout nextPutAll: 'Adding removal. Stack: '; lf; nextPutAll: thisContext shortStack; lf;lf.
 	removals add: aDefinition
 ]
 
