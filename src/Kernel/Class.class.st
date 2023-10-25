@@ -95,12 +95,6 @@ Class class >> superclassOrder: classes [
     ^all
 ]
 
-{ #category : 'accessing' }
-Class class >> unclassifiedCategory [
-
-	^ #Unclassified
-]
-
 { #category : 'class variables' }
 Class >> addClassVarNamed: aString [
 	"Add the argument, aString, as a class variable of the receiver.

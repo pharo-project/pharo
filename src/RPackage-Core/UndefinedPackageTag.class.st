@@ -26,7 +26,7 @@ UndefinedPackageTag class >> undefinedPackageTagName [
 { #category : 'accessing' }
 UndefinedPackageTag >> categoryName [
 
-	^ Class unclassifiedCategory
+	^ #Unclassified
 ]
 
 { #category : 'testing' }

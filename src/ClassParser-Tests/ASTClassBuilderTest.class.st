@@ -136,7 +136,7 @@ ASTClassBuilderTest >> testCreateNormalClassWithPackage [
 	| class |
 	class := self buildClassFromDefinition: 'Class << #TestSubClass package: ''Kernel-Classes'''.
 
-	self assert: class category equals: Class unclassifiedCategory
+	self assert: class package isUndefined
 ]
 
 { #category : 'tests' }

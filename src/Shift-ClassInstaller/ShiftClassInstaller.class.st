@@ -289,8 +289,8 @@ ShiftClassInstaller >> oldClass: anObject [
 
 { #category : 'notifications' }
 ShiftClassInstaller >> recategorize: aClass [
-
-	aClass package: builder package tag: builder tag
+	"If the package is nil we leave the class unclassified"
+	builder package ifNotNil: [ :package | aClass package: package tag: builder tag ]
 ]
 
 { #category : 'building' }
