@@ -494,7 +494,7 @@ MCWorkingCopy >> modified: aBoolean [
 	Stdio stdout
 		nextPutAll: 'Marking ' , self packageName , ' as dirty: ' , aBoolean asString , '. Stack:';
 		lf;
-		nextPutAll: thisContext longStack;
+		nextPutAll: thisContext shortStack;
 		lf;
 		lf.
 	
