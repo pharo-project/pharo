@@ -43,7 +43,7 @@ BaselineOfPharo class >> documentBrowser [
 		newName: 'DocumentBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-DocumentBrowser' 
-		version: 'v1.0.1'
+		version: 'v1.0.2'
 ]
 
 { #category : #'repository urls' }
