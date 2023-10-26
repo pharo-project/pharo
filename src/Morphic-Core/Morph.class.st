@@ -4406,21 +4406,15 @@ Morph >> moveOrResizeFromKeystroke: anEvent [
 	"move or resize the receiver based on a keystroke"
 
 	| dir |
-	anEvent keyValue = 28
-		ifTrue: [ dir := -1 @ 0 ].
-	anEvent keyValue = 29
-		ifTrue: [ dir := 1 @ 0 ].
-	anEvent keyValue = 30
-		ifTrue: [ dir := 0 @ -1 ].
-	anEvent keyValue = 31
-		ifTrue: [ dir := 0 @ 1 ].
-	dir notNil
-		ifTrue: [
-			anEvent controlKeyPressed
-				ifTrue: [ dir := dir * 10 ].
-			anEvent shiftPressed
-				ifTrue: [ self extent: self extent + dir ]
-				ifFalse: [ self position: self position + dir ] ]
+	anEvent keyValue = 28 ifTrue: [ dir := -1 @ 0 ].
+	anEvent keyValue = 29 ifTrue: [ dir := 1 @ 0 ].
+	anEvent keyValue = 30 ifTrue: [ dir := 0 @ -1 ].
+	anEvent keyValue = 31 ifTrue: [ dir := 0 @ 1 ].
+	dir ifNotNil: [
+		anEvent controlKeyPressed ifTrue: [ dir := dir * 10 ].
+		anEvent shiftPressed
+			ifTrue: [ self extent: self extent + dir ]
+			ifFalse: [ self position: self position + dir ] ]
 ]
 
 { #category : 'naming' }
@@ -5108,11 +5102,9 @@ Morph >> rejectDropMorphEvent: evt [
 	(1)  It remembers its former owner and position, and goes right back there
 	(2)  It remembers its former position only, in which case it was torn off from a parts bin, and the UI is that it floats back to its donor position and then vanishes."
 
-	self formerOwner notNil
-		ifTrue: [^ self slideBackToFormerSituation: evt].
+	self formerOwner ifNotNil: [ ^ self slideBackToFormerSituation: evt ].
 
-	self formerPosition  "Position but no owner -- can just make it vanish"
-		ifNotNil: [^ self vanishAfterSlidingTo: self formerPosition event: evt]
+	self formerPosition ifNotNil: [ :position | ^ self vanishAfterSlidingTo: position event: evt ] "Position but no owner -- can just make it vanish"
 ]
 
 { #category : 'recategorized' }
