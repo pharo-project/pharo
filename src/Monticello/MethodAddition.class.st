@@ -66,7 +66,7 @@ MethodAddition >> installMethod [
 { #category : 'notifying' }
 MethodAddition >> notifyObservers [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
+	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ myClass classify: selector under: protocolName ].
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [
