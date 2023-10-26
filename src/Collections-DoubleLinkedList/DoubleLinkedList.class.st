@@ -7,7 +7,7 @@ Note that some of my API deals with the elements that I hold, like any other col
 "
 Class {
 	#name : #DoubleLinkedList,
-	#superclass : #Object,
+	#superclass : #Collection,
 	#instVars : [
 		'head',
 		'tail'
@@ -68,14 +68,6 @@ DoubleLinkedList >> add: anObjectOrLink beforeLink: otherLink [
 ]
 
 { #category : #adding }
-DoubleLinkedList >> addAll: collection [
-	"Add all elements of collection to me, in order.
-	Each can be either a value object or a link."
-
-	collection do: [ :each | self add: each ]
-]
-
-{ #category : #adding }
 DoubleLinkedList >> addFirst: anObjectOrLink [
 	"Add anObjectOrLink to me, so that it becomes the first one.
 	Return the internal link object."
@@ -103,44 +95,11 @@ DoubleLinkedList >> addLast: anObjectOrLink [
 	^ link
 ]
 
-{ #category : #converting }
-DoubleLinkedList >> asArray [
-	"Return a new Array containing my elements"
-
-	^ Array streamContents: [ :out |
-		self do: [ :each | out nextPut: each ] ]
-]
-
-{ #category : #enumerating }
-DoubleLinkedList >> collect: block [
-	"Execute block for each of my elements and return a new instance of me containing the results."
-
-	| result |
-	result := self class new.
-	self do: [ :each |
-		result add: (block value: each) ].
-	^ result
-]
-
 { #category : #enumerating }
 DoubleLinkedList >> do: block [
 	"Execute block for each of my elements."
 
 	self linksDo: [ :each | block value: each value ]
-]
-
-{ #category : #private }
-DoubleLinkedList >> emptyCheck [
-
-	self isEmpty
-		ifTrue: [ CollectionIsEmpty signalWith: self ]
-]
-
-{ #category : #private }
-DoubleLinkedList >> errorEmptyCollection [
-	"Signal a CollectionIsEmpty exception"
-
-	CollectionIsEmpty signalWith: self
 ]
 
 { #category : #accessing }
@@ -162,26 +121,10 @@ DoubleLinkedList >> firstLink [
 ]
 
 { #category : #testing }
-DoubleLinkedList >> includes: object [
-	"Return true when I hold object as a value, false otherwise."
-
-	self do: [ :each |
-		each = object ifTrue: [ ^ true ] ].
-	^ false
-]
-
-{ #category : #testing }
 DoubleLinkedList >> isEmpty [
 	"Return true when I contain no elements, false otherwise."
 
 	^ head isNil and: [ tail isNil ]
-]
-
-{ #category : #testing }
-DoubleLinkedList >> isNotEmpty [
-	"Answer whether the receiver contains any elements."
-
-	^ self isEmpty not
 ]
 
 { #category : #accessing }
@@ -189,8 +132,7 @@ DoubleLinkedList >> last [
 	"Return the last element that I hold, also known as my tail value.
 	Signal a CollectionIsEmpty excpetion when I am empty."
 
-	self emptyCheck.
-	^ tail value
+	^ self lastLink value
 ]
 
 { #category : #accessing }
@@ -212,19 +154,6 @@ DoubleLinkedList >> linksDo: block [
 		whileFalse: [
 	 		block value: current.
 			current := current nextLink ]
-]
-
-{ #category : #enumerating }
-DoubleLinkedList >> reject: block [
-	"Execute block for each of my elements and return a new instance of me
-	containing those elements for which the block returned false."
-
-	| result |
-	result := self class new.
-	self do: [ :each |
-		(block value: each)
-			ifFalse: [ result add: each ] ].
-	^ result
 ]
 
 { #category : #removing }
@@ -304,17 +233,4 @@ DoubleLinkedList >> reverseLinksDo: block [
 		whileFalse: [
 	 		block value: current.
 			current := current previousLink ]
-]
-
-{ #category : #enumerating }
-DoubleLinkedList >> select: block [
-	"Execute block for each of my elements and return a new instance of me
-	containing those elements for which the block returned true."
-
-	| result |
-	result := self class new.
-	self do: [ :each |
-		(block value: each)
-			ifTrue: [ result add: each ] ].
-	^ result
 ]

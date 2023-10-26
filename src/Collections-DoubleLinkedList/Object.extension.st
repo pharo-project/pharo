@@ -1,6 +1,6 @@
 Extension { #name : #Object }
 
-{ #category : #'*System-Caching' }
+{ #category : #'*Collections-DoubleLinkedList' }
 Object >> asDoubleLink [
 	^ DoubleLink value: self
 ]
