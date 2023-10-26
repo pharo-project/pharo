@@ -156,7 +156,7 @@ FilteredMorphTreeModel >> rootItems: aListOfItems [
 { #category : 'accessing - pattern' }
 FilteredMorphTreeModel >> updateList [
 	"update the list by applying the pattern on the initial root item list"
-	super rootItems: (self initialRootItems select: [ :p | (self pattern matchesIn: p name) notEmpty ]).
+	super rootItems: (self initialRootItems select: [ :p | (self pattern matchesIn: p name) isNotEmpty ]).
 	super updateList
 ]
 

@@ -82,7 +82,7 @@ RBSequenceNode >> addFaultyNode: aNode [
 { #category : 'adding nodes' }
 RBSequenceNode >> addNode: aNode [
 	aNode parent: self.
-	(statements notEmpty and: [ statements last isReturn ])
+	(statements isNotEmpty and: [ statements last isReturn ])
 		ifTrue: [ self error: 'Cannot add statement after return node' ].
 	statements := statements asOrderedCollection
 		add: aNode;
@@ -137,7 +137,7 @@ RBSequenceNode >> addNodeLast: aNode [
 { #category : 'adding nodes' }
 RBSequenceNode >> addNodes: aCollection [
 	aCollection do: [ :each | each parent: self ].
-	(statements notEmpty and: [ statements last isReturn ])
+	(statements isNotEmpty and: [ statements last isReturn ])
 		ifTrue: [ self error: 'Cannot add statement after return node' ].
 	statements := statements asOrderedCollection
 		addAll: aCollection;
@@ -354,7 +354,7 @@ RBSequenceNode >> isSequence [
 
 { #category : 'testing' }
 RBSequenceNode >> lastIsReturn [
-	^statements notEmpty and: [statements last lastIsReturn]
+	^statements isNotEmpty and: [statements last lastIsReturn]
 ]
 
 { #category : 'accessing - token' }

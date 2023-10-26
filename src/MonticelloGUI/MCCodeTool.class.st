@@ -142,7 +142,7 @@ MCCodeTool >> methodListMenu: aMenu [
 	"Build the menu for the selected method, if any."
 	
 	self selectedMessageName 
-		ifNil: [ items notEmpty ifTrue: [aMenu add: 'FileOut (o)'	selector: #fileOutMessage]]
+		ifNil: [ items isNotEmpty ifTrue: [aMenu add: 'FileOut (o)'	selector: #fileOutMessage]]
 		ifNotNil: [
 			aMenu addList:#(
 				('Browse full (b)' 						browseMethodFull)

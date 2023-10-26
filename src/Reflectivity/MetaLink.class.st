@@ -235,7 +235,7 @@ MetaLink >> hasMetaLevel [
 
 { #category : 'testing' }
 MetaLink >> hasNodes [
-	^ nodes notEmpty
+	^ nodes isNotEmpty
 ]
 
 { #category : 'options' }

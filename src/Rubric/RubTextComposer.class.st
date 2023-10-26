@@ -226,7 +226,7 @@ RubTextComposer >> composeLinesFrom: argStart to: argStop delta: argDelta into: 
 RubTextComposer >> composeOneLine [
 	| rectangles |
 	rectangles := theContainer rectanglesAt: currentY height: defaultLineHeight.
-	rectangles notEmpty
+	rectangles isNotEmpty
 		ifTrue: [ (self composeAllRectangles: rectangles) ifNil: [ ^ nil ] ]
 		ifFalse: [ currentY := currentY + defaultLineHeight ].
 	self checkIfReadyToSlide

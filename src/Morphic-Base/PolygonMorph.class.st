@@ -1099,7 +1099,7 @@ PolygonMorph >> drawDashedBorderOn: aCanvas usingEnds: anArray [
 PolygonMorph >> drawDropShadowOn: aCanvas [
 	"Display the receiver, a spline curve, approximated by straight
 	line segments."
-	self assert: [vertices notEmpty] description: 'a polygon must have at least one point'.
+	self assert: [vertices isNotEmpty] description: 'a polygon must have at least one point'.
 	closed
 		ifTrue: [aCanvas drawPolygon: self getVertices fillStyle: self shadowColor]
 ]

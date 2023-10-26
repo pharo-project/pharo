@@ -52,7 +52,7 @@ MetacelloLoadingMCSpecLoader >> fetchingSpecLoader [
 { #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> goferCommitBranchPackage: branchName using: repositorySpecs commitMessage: commitMessage [
 	| gofer repoSpecs wc |
-	repoSpecs := self spec repositorySpecs notEmpty
+	repoSpecs := self spec repositorySpecs isNotEmpty
 		ifTrue: [ self spec repositorySpecs ]
 		ifFalse: [ repositorySpecs ].
 	gofer := MetacelloGofer new.
@@ -62,7 +62,7 @@ MetacelloLoadingMCSpecLoader >> goferCommitBranchPackage: branchName using: repo
 		do: [ :repoSpec | 
 			| repo |
 			repo := repoSpec createRepository.
-			(wc possiblyNewerVersionsIn: repo) notEmpty
+			(wc possiblyNewerVersionsIn: repo) isNotEmpty
 				ifTrue: [ 
 					self
 						notify:
@@ -87,7 +87,7 @@ MetacelloLoadingMCSpecLoader >> goferCommitBranchPackage: branchName using: repo
 MetacelloLoadingMCSpecLoader >> goferCommitPackageUsing: repositorySpecs commitMessage: commitMessage [
 
 	| gofer repoSpecs wc |
-	repoSpecs := self spec repositorySpecs notEmpty
+	repoSpecs := self spec repositorySpecs isNotEmpty
 				ifTrue: [ self spec repositorySpecs ]
 				ifFalse: [ repositorySpecs ].
 	gofer := MetacelloGofer new.
@@ -95,7 +95,7 @@ MetacelloLoadingMCSpecLoader >> goferCommitPackageUsing: repositorySpecs commitM
 	wc := self spec workingCopy.
 	repositorySpecs do: [:repoSpec | | repo |
 		repo := repoSpec createRepository.
-		(wc possiblyNewerVersionsIn: repo) notEmpty
+		(wc possiblyNewerVersionsIn: repo) isNotEmpty
 			ifTrue: [ self notify: 'There are possibly newer versions of the package ', self spec name printString, ' in the repository ', repo description printString, '. Cancel and manually merge if you want to pick up the changes from the later version.' ].
 		gofer repository: repo ].
 	gofer package: self spec name.
@@ -130,7 +130,7 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 			goferLoad execute.
 			self clearCurrentVersionCache.
 			self postLoad: packageSpec ].
-			(answers := packageSpec answers) notEmpty
+			(answers := packageSpec answers) isNotEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].
 			repo := resolvedReference repository.
@@ -153,8 +153,8 @@ MetacelloLoadingMCSpecLoader >> packagesNeedSavingUsing: repositorySpecs into: a
 
 	| wc repoSpecs repo |
 	(wc := self spec workingCopy) ifNil: [ ^ self ].
-	(wc ancestry ancestors notEmpty and: [ wc modified not ]) ifTrue: [ ^ self ].
-	repoSpecs := self spec repositorySpecs notEmpty
+	(wc ancestry ancestors isNotEmpty and: [ wc modified not ]) ifTrue: [ ^ self ].
+	repoSpecs := self spec repositorySpecs isNotEmpty
 		             ifTrue: [ self spec repositorySpecs ]
 		             ifFalse: [ repositorySpecs ].
 	repo := (self spec getFile == nil or: [ wc ancestry ancestors isEmpty ])
@@ -220,9 +220,9 @@ MetacelloLoadingMCSpecLoader >> savePackageUsing: repositorySpecs [
 
 	| wc repo repoSpecs newVersion |
 	(wc := self spec workingCopy) ifNil: [ ^false ].
-	(wc ancestry ancestors notEmpty and: [ wc modified not])
+	(wc ancestry ancestors isNotEmpty and: [ wc modified not])
 		ifTrue: [ ^false ].
-	repoSpecs := self spec repositorySpecs notEmpty
+	repoSpecs := self spec repositorySpecs isNotEmpty
 				ifTrue: [ self spec repositorySpecs ]
 				ifFalse: [ repositorySpecs ].
 	(self spec getFile isNil or: [ wc ancestry ancestors isEmpty ])

@@ -196,14 +196,14 @@ ChangeSet class >> fileOutChangeSetsNamed: nameList [
 				ifNil: [notFound add: aName]].
 
 	infoString := (nameList size - notFound size) printString, ' change set(s) filed out'.
-	notFound notEmpty ifTrue:
+	notFound isNotEmpty ifTrue:
 		[infoString := infoString, '
 
 ', notFound size printString, ' change set(s) not found:'.
 		notFound do:
 			[:aName | infoString := infoString, '
 ', aName]].
-	empty notEmpty ifTrue:
+	empty isNotEmpty ifTrue:
 		[infoString := infoString, '
 ', empty size printString, ' change set(s) were empty:'.
 		empty do:
@@ -967,7 +967,7 @@ ChangeSet >> fileOutPostscriptOn: stream [
 
 	| aString |
 	aString := self postscriptString.
-	(aString notNil and: [ aString notEmpty ])
+	(aString notNil and: [ aString isNotEmpty ])
 		ifFalse: [ ^ self ].
 	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
 	stream
@@ -981,7 +981,7 @@ ChangeSet >> fileOutPreambleOn: stream [
 
 	| aString |
 	aString := self preambleString.
-	(aString notNil and: [ aString notEmpty ])
+	(aString notNil and: [ aString isNotEmpty ])
 		ifFalse: [ ^ self ].
 	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
 	stream

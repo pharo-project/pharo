@@ -260,7 +260,7 @@ RBParseTreeSearcher >> foundMatch [
 
 { #category : 'testing' }
 RBParseTreeSearcher >> hasRules [
-	^searches notEmpty
+	^searches isNotEmpty
 ]
 
 { #category : 'initialization' }
@@ -331,7 +331,7 @@ RBParseTreeSearcher >> matchesTree: aBRProgramNode do: aBlock [
 { #category : 'accessing' }
 RBParseTreeSearcher >> messages [
 	messages ifNotNil: [^messages].
-	argumentSearches notEmpty ifTrue: [^messages := #()].
+	argumentSearches isNotEmpty ifTrue: [^messages := #()].
 	messages := Set new.
 	searches do:
 			[:each |

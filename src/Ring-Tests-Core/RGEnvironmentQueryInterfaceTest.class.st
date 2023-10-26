@@ -16,8 +16,8 @@ RGEnvironmentQueryInterfaceTest >> testCachingBehaviors [
 	self assert: (env ask behaviorsDictionary at: #SomeBehavior) equals: behavior.
 	self assert: (env ask includesClassNamed: #SomeBehavior).
 
-	self assert: (env ask allClasses notEmpty).
-	self assert: (env ask allClassesAndTraits notEmpty).
+	self assert: (env ask allClasses isNotEmpty).
+	self assert: (env ask allClassesAndTraits isNotEmpty).
 
 	env ask invalidateName: #SomeBehavior.
 	self assert: (env ask behaviorsDictionary isEmpty).

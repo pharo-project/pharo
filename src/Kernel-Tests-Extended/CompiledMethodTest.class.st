@@ -352,7 +352,7 @@ CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
 	| method copy |
 	method := thisContext method.
-	self assert: method pragmas notEmpty.
+	self assert: method pragmas isNotEmpty.
 	copy := method copy.
 	self assert: (method equivalentTo: copy).
 	self assert: method header equals: copy header.

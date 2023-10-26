@@ -302,7 +302,7 @@ ClyQueryViewMorph >> defaultColor [
 
 { #category : 'testing' }
 ClyQueryViewMorph >> definesTree [
-	^treeStructure notEmpty
+	^ treeStructure isNotEmpty
 ]
 
 { #category : 'accessing' }
@@ -845,7 +845,7 @@ ClyQueryViewMorph >> targetDropItem: anObject [
 	targetDropItem := anObject
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> transferExpansionStateFrom: oldDataSource [
 
 	| itemsSelector actionSelector newItems |

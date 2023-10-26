@@ -78,7 +78,7 @@ CoStatisticsTest >> testAcceptEntryLogsAverageTypedCharactersDoesNotAffectOtherI
 CoStatisticsTest >> testAcceptEntryLogsIt [
 	statistics := CoStatistics new.
 	self logAcceptedEvent: 1.
-	self assert: statistics acceptedEntries notEmpty
+	self assert: statistics acceptedEntries isNotEmpty
 ]
 
 { #category : 'tests - entries' }

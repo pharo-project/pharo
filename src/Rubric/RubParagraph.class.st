@@ -628,7 +628,7 @@ RubParagraph >> text [
 
 { #category : 'accessing' }
 RubParagraph >> text: aText [
-	(aText string notEmpty and: [aText runs isEmpty])
+	(aText string isNotEmpty and: [aText runs isEmpty])
 		ifTrue: [ aText runs: (Array with: self defaultFontChange) ].
 	text := aText
 ]

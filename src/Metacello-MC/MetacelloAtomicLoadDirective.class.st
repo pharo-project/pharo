@@ -27,7 +27,7 @@ MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 	| pkgLoads |
 	self preloads do: [:directive | super loadPreloadDirective: directive ].
 	preloads := nil.
-	(pkgLoads := self packageloads) notEmpty 
+	(pkgLoads := self packageloads) isNotEmpty 
 		ifTrue: [
 			self loader loadingSpecLoader 
 				loadPackageDirectives: pkgLoads 

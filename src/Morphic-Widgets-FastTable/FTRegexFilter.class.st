@@ -19,7 +19,7 @@ Class {
 
 { #category : 'matching' }
 FTRegexFilter >> matches: aString [
-	^(regex matchesIn: aString) notEmpty
+	^(regex matchesIn: aString) isNotEmpty
 ]
 
 { #category : 'accessing' }

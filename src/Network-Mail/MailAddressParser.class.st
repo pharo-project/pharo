@@ -200,7 +200,7 @@ MailAddressParser >> grabName [
 
 	| name |
 	name := ''.
-	[tokens notEmpty and: [#(Atom QuotedString $. $@) includes: (tokens last type) ]]
+	[tokens isNotEmpty and: [#(Atom QuotedString $. $@) includes: (tokens last type) ]]
 		whileTrue: [ name := ' ' join: {tokens removeLast text copyWithoutAll: '"'. name} ].
 	^ name trimBoth
 ]

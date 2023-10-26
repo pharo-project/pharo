@@ -1427,10 +1427,11 @@ Collection >> noneSatisfy: aBlock [
 
 { #category : 'testing' }
 Collection >> notEmpty [
-	"Answer whether the receiver contains any elements."
-	"use isNotEmpty for consistency with isEmpty"
+	self
+		deprecated: 'Please use #isNotEmpty instead.'
+		transformWith: '`@receiver notEmpty' -> '`@receiver isNotEmpty'.
 
-	^ self isEmpty not
+	^ self isNotEmpty
 ]
 
 { #category : 'enumerating' }

@@ -1036,7 +1036,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 
 	"If the previous node in the statement list is a return node, mark this node as unreachable"
 
-	(statementList notEmpty and: [ statementList last isReturn ]) ifTrue: [
+	(statementList isNotEmpty and: [ statementList last isReturn ]) ifTrue: [
 		node addWarning: 'Unreachable statement' ].
 
 	"Commit the statement to the statements list"
@@ -1216,7 +1216,7 @@ RBParser >> patchNegativeLiteral [
 	currentToken value = 0
 		ifTrue:
 			[(source notNil and:
-					[source notEmpty
+					[source isNotEmpty
 						and: [(source at: (currentToken start min: source size)) = $-]])
 				ifFalse: [^self]].
 	nextToken := currentToken.

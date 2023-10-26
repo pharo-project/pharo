@@ -32,7 +32,7 @@ AbsolutePath class >> removeRedundantSegments: segments [
 	[ newSegments isNotEmpty and: [ newSegments first = '..' ] ] whileTrue:
 		[ newSegments removeFirst ].
 	^ newSegments select:
-		[ :segment | segment notEmpty and: [ segment ~= '.' ] ]
+		[ :segment | segment isNotEmpty and: [ segment ~= '.' ] ]
 ]
 
 { #category : 'testing' }

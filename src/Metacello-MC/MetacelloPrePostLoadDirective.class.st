@@ -10,7 +10,7 @@ Class {
 MetacelloPrePostLoadDirective >> evaluateSupplyingAnswers: loadBlock [
 
 	| answers |
-	(answers := self spec answers) notEmpty
+	(answers := self spec answers) isNotEmpty
 		ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 		ifFalse: [ loadBlock value]
 ]

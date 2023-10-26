@@ -1013,7 +1013,7 @@ HandMorph >> restoreSavedPatchOn: aCanvas [
 	hasChanged := false.
 	savedPatch ifNotNil:
 			[aCanvas restoreSavedPatch: savedPatch at: savedPatch offset.
-			submorphs notEmpty ifTrue: [^self].
+			submorphs isNotEmpty ifTrue: [^self].
 			(temporaryCursor notNil and: [hardwareCursor isNil]) ifTrue: [^self].
 
 			"Make the transition to using hardware cursor. Clear savedPatch and

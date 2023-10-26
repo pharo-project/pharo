@@ -81,7 +81,7 @@ RGAnnouncementsTest >> testAnnouncerSuspendingWithStoring [
 		behavior := env ensureClassNamed: #SomeClass.].
 
 	self assert: announcements isEmpty.
-	self assert: stored notEmpty.
+	self assert: stored isNotEmpty.
 	"TODO: more detailed check"
 ]
 

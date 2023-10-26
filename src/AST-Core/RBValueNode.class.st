@@ -68,7 +68,7 @@ RBValueNode >> evaluateForReceiver: aReceiver [
 
 { #category : 'testing' }
 RBValueNode >> hasParentheses [
-	^self parentheses notEmpty
+	^self parentheses isNotEmpty
 ]
 
 { #category : 'testing' }

@@ -51,7 +51,7 @@ Author class >> changeStampPerSe [
 Author class >> fixStamp: changeStamp [
 	| parts |
 	parts := changeStamp findTokens: ' '.
-	(parts notEmpty and: [parts last first isLetter]) ifTrue:
+	(parts isNotEmpty and: [parts last first isLetter]) ifTrue:
 		["Put initials first in all time stamps..."
 		^ String streamContents:
 				[:s | s nextPutAll: parts last.

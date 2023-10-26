@@ -88,7 +88,7 @@ MCFileTreeRepository class >> parseName: aString extension: extension [
             package := package copyUpTo: $. ].
     author := (basicName copyAfterLast: $-) copyUpToLast: $..
     versionNumber := (basicName copyAfterLast: $-) copyAfterLast: $..
-    (versionNumber notEmpty and: [ versionNumber allSatisfy: [ :each | each isDigit ] ])
+    (versionNumber isNotEmpty and: [ versionNumber allSatisfy: [ :each | each isDigit ] ])
         ifTrue: [ versionNumber := versionNumber asNumber ]
         ifFalse: [ versionNumber := 0 ].
     packageName := package , branch.

@@ -961,7 +961,7 @@ MenuMorph >> keyDown: evt [
 	matchString := self valueOfProperty: #matchString ifAbsentPut: [ String new ].
 
 	"If we press the backspace, then we simply remove the last character from matchString"
-	(key = KeyboardKey backspace and: [ matchString notEmpty ])
+	(key = KeyboardKey backspace and: [ matchString isNotEmpty ])
 		ifTrue: [ matchString := matchString allButLast.
 			self recordFiltering: matchString.
 			self displayFiltered: evt ]

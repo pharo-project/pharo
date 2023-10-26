@@ -53,7 +53,7 @@ RGClassDefinitionTest >> testAsClassDefinition3 [
 		withPackages: true.
 	newSlice := newClass environment.
 	self assert: newClass package name equals: #Kernel.
-	self assert: newClass extensionMethods notEmpty.
+	self assert: newClass extensionMethods isNotEmpty.
 	self assert: newSlice methods size equals: newClass methods size + newClass classSide methods size.
 	self assert: (newSlice packageNamed: #'Ring-Definitions-Core') methods size > 1
 ]

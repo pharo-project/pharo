@@ -244,7 +244,7 @@ TextDiffBuilder >> print: aString withAttributes: attributes on: stream [
 		withAttributes: attributes
 		do: [
 			stream nextPutAll: aString.
-			(aString notEmpty and: [
+			(aString isNotEmpty and: [
 				aString last = Character cr or: [
 					aString endsWith: String crlf ] ])
 						ifFalse: [ stream cr ] ]

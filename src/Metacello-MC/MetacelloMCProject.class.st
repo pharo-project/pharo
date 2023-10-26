@@ -124,7 +124,7 @@ MetacelloMCProject >> projectPackage [
       pkgSpec := self packageSpec
         name: workingCopy packageName;
         yourself.
-      workingCopy ancestors notEmpty
+      workingCopy ancestors isNotEmpty
         ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
       repo := workingCopy repositoryGroup repositories
         detect: [ :each | each ~~ MCCacheRepository default ]
@@ -214,7 +214,7 @@ MetacelloMCProject >> updateProject: aLoaderPolicy [
 			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
 			ar := workingCopy metacelloPackageNameWithBranch.
 			pkg name: (ar at: 1).
-			(ar at: 2) notEmpty ifTrue: [ pkg file: (ar at: 2) ].
+			(ar at: 2) isNotEmpty ifTrue: [ pkg file: (ar at: 2) ].
 			pkg load.
 			^ true ] ].
 	^ true

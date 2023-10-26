@@ -43,7 +43,7 @@ CmdMenuGroup >> registerContextMenuItemsWithBuilder: aBuilder [
 	contents do: [ :each |
 		each registerContextMenuItemsWithBuilder: aBuilder ].
 
-	self isInlined & aBuilder items notEmpty
+	self isInlined & aBuilder items isNotEmpty
 		ifTrue: [ aBuilder withSeparatorAfter ]
 ]
 

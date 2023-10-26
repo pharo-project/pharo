@@ -50,7 +50,7 @@ RBVariableEnvironment class >> on: anEnvironment referencesToClassVariable: aSym
 	assoc := definingClass bindingOf: aSymbol.
 	definingClass withAllSubclassesDo:
 			[:cls |
-			((cls whichSelectorsReferTo: assoc) notEmpty or:[ (cls classSide whichSelectorsReferTo: assoc) notEmpty])
+			((cls whichSelectorsReferTo: assoc) isNotEmpty or:[ (cls classSide whichSelectorsReferTo: assoc) isNotEmpty])
 				ifTrue: [newEnv addClass: cls classVariable: aSymbol]].
 	^newEnv
 ]

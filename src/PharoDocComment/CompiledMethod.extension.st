@@ -2,7 +2,7 @@ Extension { #name : 'CompiledMethod' }
 
 { #category : '*PharoDocComment' }
 CompiledMethod >> hasDocComment [
-	^ self pharoDocCommentNodes notEmpty
+	^ self pharoDocCommentNodes isNotEmpty
 ]
 
 { #category : '*PharoDocComment' }

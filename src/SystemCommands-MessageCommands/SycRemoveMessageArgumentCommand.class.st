@@ -20,7 +20,7 @@ Class {
 { #category : 'testing' }
 SycRemoveMessageArgumentCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
-		and: [ aToolContext lastSelectedMessage argumentNames notEmpty]
+		and: [ aToolContext lastSelectedMessage argumentNames isNotEmpty]
 ]
 
 { #category : 'private' }

@@ -213,7 +213,7 @@ ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
 				ifFalse: [ methodsPreamble at: 5 ] ].
 	[
 	methodSource := readStream next.
-	methodSource notEmpty ]
+	methodSource isNotEmpty ]
 		whileTrue:
 			[
 			self

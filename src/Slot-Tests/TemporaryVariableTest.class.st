@@ -71,7 +71,7 @@ TemporaryVariableTest >> testReadNodes [
 	| method |
 	"On the level of CompiledMethod, args include temps. This needs to be fixed"
 	method := OrderedCollection >> #do:.
-	self assert: (method lookupVar: #aBlock) astNodes notEmpty
+	self assert: (method lookupVar: #aBlock) astNodes isNotEmpty
 ]
 
 { #category : 'tests' }

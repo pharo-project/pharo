@@ -32,7 +32,7 @@ PolygonMorph >> asAthensCurvedOpenPathOn: anAthensCanvas [
 	points := self computeCurvedSegmentCtrlPoints.
 	^ anAthensCanvas
 		createPath: [ :builder |
-			self vertices notEmpty
+			self vertices isNotEmpty
 				ifTrue: [
 					| prior |
 					"points contains {ctrl1 vertice ctrl2}"
@@ -56,7 +56,7 @@ PolygonMorph >> asAthensCurvedPathOn: anAthensCanvas [
 	points := self computeCurvedSegmentCtrlPoints.
 	^ anAthensCanvas
 		createPath: [ :builder |
-			self vertices notEmpty
+			self vertices isNotEmpty
 				ifTrue: [
 					| prior | "points contains {ctrl1 vertice ctrl2}"
 					prior := points first.
@@ -79,7 +79,7 @@ PolygonMorph >> asAthensLinePathOn: anAthensCanvas [
 	verts := self adjustSegmentPointsForArrows.
 	^ anAthensCanvas
 		createPath: [ :builder |
-			verts notEmpty
+			verts isNotEmpty
 				ifTrue: [
 					builder absolute.
 					builder moveTo: verts first.

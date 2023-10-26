@@ -155,7 +155,7 @@ RBAbstractVariablesTransformation >> computeVariablesToAbstract [
 
 { #category : 'executing' }
 RBAbstractVariablesTransformation >> hasVariablesToAbstract [
-	^ instVarReaders notEmpty or: [ instVarWriters notEmpty or: [ classVarReaders notEmpty or: [ classVarWriters notEmpty ] ] ]
+	^ instVarReaders isNotEmpty or: [ instVarWriters isNotEmpty or: [ classVarReaders isNotEmpty or: [ classVarWriters isNotEmpty ] ] ]
 ]
 
 { #category : 'executing' }

@@ -18,7 +18,7 @@ Class {
 
 { #category : 'smtp server' }
 MailComposition class >> isSmtpServerSet [
-	^ SmtpServer notNil and: [SmtpServer notEmpty]
+	^ SmtpServer notNil and: [SmtpServer isNotEmpty]
 ]
 
 { #category : 'instance creation' }

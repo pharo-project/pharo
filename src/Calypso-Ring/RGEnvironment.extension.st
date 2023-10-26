@@ -8,7 +8,7 @@ RGEnvironment >> adoptForBrowser [
 	unresolved do: [ :each |
 		each classes
 			select: [ :eachClass | (eachClass hasResolved: #name) and: [
-					eachClass extensions notEmpty or: [ eachClass classSide extensions notEmpty ] ] ]
+					eachClass extensions isNotEmpty or: [ eachClass classSide extensions isNotEmpty ] ] ]
 			thenDo: [ :eachClass | eachClass package: extensionsPackage] ].
 	unresolved do: [ :each | self removePackage: each ]
 ]

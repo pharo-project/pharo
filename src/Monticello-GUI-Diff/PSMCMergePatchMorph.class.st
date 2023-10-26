@@ -180,7 +180,7 @@ PSMCMergePatchMorph >> hasAnyNonKeptConflicts [
 PSMCMergePatchMorph >> hasConflicts [
 	"Answer whether there are any conflicts."
 
-	^self allConflicts notEmpty
+	^self allConflicts isNotEmpty
 ]
 
 { #category : 'actions' }

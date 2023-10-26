@@ -207,7 +207,7 @@ ase try to rewrite the signature as a whole, what unfortunately drops the commen
 		ifFalse: [
 			self addReplacement: (RBStringReplacement
 				replaceFrom: oldIntervals first first
-				to: (oldArguments notEmpty
+				to: (oldArguments isNotEmpty
 					ifTrue: [ oldArguments last stop ]
 					ifFalse: [ oldIntervals last last ])
 				with: (String streamContents: [ :stream |

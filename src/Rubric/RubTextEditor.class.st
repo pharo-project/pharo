@@ -1113,7 +1113,7 @@ RubTextEditor >> findNextString: aSubstring startingAt: searchIdx [
 RubTextEditor >> findPrevious: aRegex startingAt: searchIdx [
 	| allRanges |
 	allRanges := self findAll: aRegex endingAt: searchIdx.
-	^ allRanges notEmpty
+	^ allRanges isNotEmpty
 		ifTrue: [allRanges last]
 ]
 

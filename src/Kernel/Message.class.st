@@ -88,7 +88,7 @@ Message >> asSendTo: anObject [
 { #category : 'testing' }
 Message >> hasArguments [
 	<reflection: 'Message sending and code execution - Message send reification'>
-	^arguments notEmpty
+	^arguments isNotEmpty
 ]
 
 { #category : 'accessing' }

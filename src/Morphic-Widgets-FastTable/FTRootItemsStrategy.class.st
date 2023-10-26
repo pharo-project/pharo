@@ -42,7 +42,7 @@ FTRootItemsStrategy >> filter [
 	^ dataSource class
 		root:
 			(FTRootItem new
-				children: (dataSource rootsItems select: [ :each | (pattern matchesIn: (self dataSource toString: each)) notEmpty ]);
+				children: (dataSource rootsItems select: [ :each | (pattern matchesIn: (self dataSource toString: each)) isNotEmpty ]);
 				yourself)
 		children: dataSource childrenBlock
 ]

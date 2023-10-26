@@ -66,7 +66,7 @@ RBProgramNode >> hasBeenExecuted [
 
 { #category : '*Reflectivity' }
 RBProgramNode >> hasBreakpoint [
-	^ (self hasProperty: #breakpoints) and: [ self breakpoints notEmpty ]
+	^ (self hasProperty: #breakpoints) and: [ self breakpoints isNotEmpty ]
 ]
 
 { #category : '*Reflectivity' }
@@ -86,7 +86,7 @@ RBProgramNode >> hasLinks [
 
 { #category : '*Reflectivity' }
 RBProgramNode >> hasMetaLinks [
-	^ self links notNil and: [ self links notEmpty ]
+	^ self links notNil and: [ self links isNotEmpty ]
 ]
 
 { #category : '*Reflectivity' }

@@ -1131,7 +1131,7 @@ SimpleHierarchicalListMorph >> update: aSymbol [
 				[^(scroller submorphs at: 1 ifAbsent: [^self])
 					openItemPath: (aSymbol allButFirst: 2)].
 	((aSymbol isKindOf: Array)
-		and: [aSymbol notEmpty and: [aSymbol first == #openPath]])
+		and: [aSymbol isNotEmpty and: [aSymbol first == #openPath]])
 			ifTrue:
 				[^(scroller submorphs at: 1 ifAbsent: [^self])
 					openPath: aSymbol allButFirst].
@@ -1141,7 +1141,7 @@ SimpleHierarchicalListMorph >> update: aSymbol [
 			ifTrue:
 				[^self expandRoots].
 	((aSymbol isKindOf: Array)
-		and: [aSymbol notEmpty and: [aSymbol first = getListSelector and: [
+		and: [aSymbol isNotEmpty and: [aSymbol first = getListSelector and: [
 					aSymbol second == #expandAll]]])
 			ifTrue:
 				[^self expandAll]

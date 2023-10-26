@@ -66,7 +66,7 @@ ClyVariableReferencesQueryTest >> testForSharedClassVariable [
 	query := ClyVariableReferencesQuery of: classVar.
 	self queryFromScope: ClyBothMetaLevelClassScope of: Date.
 
-	self assert: resultItems notEmpty
+	self assert: resultItems isNotEmpty
 ]
 
 { #category : 'tests' }

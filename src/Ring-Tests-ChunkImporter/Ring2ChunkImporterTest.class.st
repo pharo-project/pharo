@@ -287,7 +287,7 @@ Ring2ChunkImporterTest >> testSpecialSuperclasses [
 	" Only a DoIt, because  we specify different superclass. "
 	class := importer environment ask behaviorNamed: #SomeClass.
 	self assert: class isNil.
-	importer doIts notEmpty.
+	importer doIts isNotEmpty.
 
 	importer := RGChunkImporter new.
 	importer fileInFrom: 'SomeClass subclass: #SomeClass.
@@ -295,7 +295,7 @@ Ring2ChunkImporterTest >> testSpecialSuperclasses [
 	" Only a DoIt, because  we do not specify superclass as nil. "
 	class := importer environment ask behaviorNamed: #SomeClass.
 	self assert: class isNil.
-	importer doIts notEmpty.
+	importer doIts isNotEmpty.
 
 	importer := RGChunkImporter new.
 	importer fileInFrom: 'SomeClass subclass: #SomeClass.
@@ -304,7 +304,7 @@ Ring2ChunkImporterTest >> testSpecialSuperclasses [
 	" Only a DoIt, because we do not keep expected format "
 	class := importer environment ask behaviorNamed: #SomeClass.
 	self assert: class isNil.
-	importer doIts notEmpty
+	importer doIts isNotEmpty
 ]
 
 { #category : 'tests' }
@@ -486,7 +486,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassTraitWithMultipleTraits [
 	trait := importer environment ask behaviorNamed: #'TClass classTrait'.
 	self assert: trait notNil.
 	self assert: trait isMetaclassTrait.
-	self assert: trait traitComposition transformations notEmpty.
+	self assert: trait traitComposition transformations isNotEmpty.
 	usedTraits := trait traitComposition transformations.
 	self assert: (usedTraits allSatisfy: [:each | each isTrait]).
 	self assert: (usedTraits collect: [:each | each name]) asArray equals: #('TClassDescription classTrait' 'TComposingDescription classTrait' 'TTransformationCompatibility classTrait')
@@ -505,7 +505,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassTraitWithSingleTrait [
 	trait := importer environment ask behaviorNamed: #'TClass classTrait'.
 	self assert: trait notNil.
 	self assert: trait isMetaclassTrait.
-	self assert: trait traitComposition transformations notEmpty.
+	self assert: trait traitComposition transformations isNotEmpty.
 	usedTrait := trait traitComposition transformations first.
 	self assert: usedTrait name equals: #'TBehaviorCategorization classTrait'.
 	self assert: (importer environment ask behaviorNamed: #'TBehaviorCategorization classTrait') notNil
@@ -730,7 +730,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithExclusions [
 
 	trait := importer environment ask behaviorNamed: #TClass.
 	self assert: trait notNil.
-	self assert: trait traitComposition transformations notEmpty.
+	self assert: trait traitComposition transformations isNotEmpty.
 	usedTraits := trait traitComposition transformations.
 	self assert: usedTraits size equals: 1.
 	self assert: usedTraits first subject name equals: 'TClassDescription'.
@@ -750,7 +750,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithMultipleTraits [
 
 	trait := importer environment ask behaviorNamed: #TClass.
 	self assert: trait notNil.
-	self assert: trait traitComposition transformations notEmpty.
+	self assert: trait traitComposition transformations isNotEmpty.
 	usedTraits := trait traitComposition transformations.
 	self assert: (usedTraits allSatisfy: [:each | each isTrait]).
 	self assert: (usedTraits collect: [:each | each name]) asArray equals: #(TClassDescription TComposingDescription TTransformationCompatibility).
@@ -770,7 +770,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithSingleTrait [
 
 	trait := importer environment ask behaviorNamed: #TClass.
 	self assert: trait notNil.
-	self assert: trait traitComposition transformations notEmpty.
+	self assert: trait traitComposition transformations isNotEmpty.
 	usedTrait := trait traitComposition transformations first.
 	self assert: usedTrait name equals: #TBehaviorCategorization.
 	self assert: (importer environment ask behaviorNamed: #TBehaviorCategorization) notNil.

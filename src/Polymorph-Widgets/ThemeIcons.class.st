@@ -286,7 +286,7 @@ ThemeIcons >> form16x16FromContents: aByteArray [
 
 { #category : 'testing' }
 ThemeIcons >> hasIcons [
-	^ self icons notEmpty
+	^ self icons isNotEmpty
 ]
 
 { #category : 'comparing' }

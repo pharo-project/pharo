@@ -105,7 +105,7 @@ RGClassTest >> testCopyForBehaviorDefinitionForClass [
 	self assert: copy classVarNames asArray equals: #(ClassVariable1).
 	self assert: (copy classVariables allSatisfy: [ :each | each parent == copy ]).
 
-	self assert: copy sharedPools notEmpty.
+	self assert: copy sharedPools isNotEmpty.
 	self assert: copy sharedPools anyOne name equals: #SomePool
 ]
 

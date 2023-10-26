@@ -285,13 +285,13 @@ RGContainer >> findPackageOfMethod: aRGMethodDefinition using: packageKeys [
 { #category : 'testing' }
 RGContainer >> hasClasses [
 
-	^self definedClasses notEmpty
+	^self definedClasses isNotEmpty
 ]
 
 { #category : 'testing' }
 RGContainer >> hasMethods [
 
-	^self methods notEmpty
+	^self methods isNotEmpty
 ]
 
 { #category : 'testing' }

@@ -57,7 +57,7 @@ MockSourceEditor >> insertAndSelect: aString at: anInteger [
 MockSourceEditor >> notify: aString at: anInteger in: aStream [
 
 	| pos |
-	pos := self selectionInterval notEmpty
+	pos := self selectionInterval isNotEmpty
 		ifTrue: [selectionStart + anInteger - 1 ]
 		ifFalse: [anInteger].
 	self insertAndSelect: aString at: (pos max: 1)

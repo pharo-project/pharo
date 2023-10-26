@@ -431,7 +431,7 @@ MailMessage >> fieldsFrom: aStream do: aBlock [
 		line isEmpty ifTrue: [ ^ self ].	"quit when we hit a blank line"
 
 		[ savedLine := self readStringLineFrom: aStream.
-		savedLine notEmpty and: [ savedLine first isSeparator ] ] whileTrue:
+		savedLine isNotEmpty and: [ savedLine first isSeparator ] ] whileTrue:
 			[ "lines starting with white space are continuation lines"
 			s := savedLine readStream.
 			s skipSeparators.

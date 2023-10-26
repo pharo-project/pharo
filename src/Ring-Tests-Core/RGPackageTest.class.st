@@ -17,7 +17,7 @@ RGPackageTest >> testAddingClass [
 	env := newPackage environment.
 	newClass:= RGClass named: #OrderedCollection parent: env.
 
-	self assert: (env ask packages notEmpty).
+	self assert: (env ask packages isNotEmpty).
 
 	newPackage addDefinedBehavior: newClass
 ]

@@ -35,7 +35,7 @@ TTutorialTest >> testLessonAtReturnsCorrespondingLesson [
 
 { #category : 'tests' }
 TTutorialTest >> testNotEmpty [
-	self assert: self testedTutorial tutorial notEmpty
+	self assert: self testedTutorial tutorial isNotEmpty
 ]
 
 { #category : 'tests' }

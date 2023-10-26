@@ -193,7 +193,7 @@ MetacelloToolBox class >> createBaseline: baselineVersionString for: configurati
 			versionSpecsDo: [ :attribute :versionSpec | 
 				attribute == #common
 					ifTrue: [ 
-						aString notEmpty
+						aString isNotEmpty
 							ifTrue: [ versionSpec description: aString ] ].
 				versionSpecBlock value: attribute value: versionSpec ];
 		commitMethod.
@@ -823,7 +823,7 @@ MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionStr
         ifTrue: [ 
           repositories := versionSpec repositories
             collect: [ :repoSpec | repoSpec createRepository ].
-          wcRepositoryGroup repositories notEmpty
+          wcRepositoryGroup repositories isNotEmpty
             ifTrue: [ 
               repositories := repositories
                 select: [ :repo | wcRepositoryGroup includes: repo ] ].
@@ -832,7 +832,7 @@ MetacelloToolBox class >> saveModifiedDevelopmentPackages: developmentVersionStr
                 reject: [ :repo | repo = MCCacheRepository default ] ] ].
       repositories
         do: [ :repo | 
-          (monticelloWorkingCopy possiblyNewerVersionsIn: repo) notEmpty
+          (monticelloWorkingCopy possiblyNewerVersionsIn: repo) isNotEmpty
             ifTrue: [ 
               self
                 notify:
@@ -956,7 +956,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 						timestamp: self timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].
-	updatedSpecs notEmpty
+	updatedSpecs isNotEmpty
 		ifTrue: [ toolbox commitMethod ].
 	^ updatedSpecs
 ]
@@ -981,7 +981,7 @@ MetacelloToolBox class >> updateDevelopment: developmentVersionString for: confi
 						timestamp: self timestamp.
 					self appendDescription: message to: versionSpec ].
 			true ].
-	updatedSpecs notEmpty
+	updatedSpecs isNotEmpty
 		ifTrue: [ toolbox commitMethod ].
 	^ updatedSpecs
 ]
@@ -1057,7 +1057,7 @@ MetacelloToolBox class >> validatePlatformLoad: platformAttribute for: configura
 			self inform: 'Failed validation with no versions load clean'.
 			^ issues ].
 	toolbox := self configurationNamed: configurationBasename.
-	cleanLoadAndTests notEmpty
+	cleanLoadAndTests isNotEmpty
 		ifTrue: [ 
 			toolbox
 				symbolicVersionMethod: #stable;
@@ -1077,7 +1077,7 @@ MetacelloToolBox class >> validatePlatformLoad: platformAttribute for: configura
 									'Development version ' , stableVersion versionString printString , ' is marked as #stableVersion for '
 										, configurationClass name asString) ].
 			cleanDevelopmentLoads := cleanDevelopmentLoads select: [ :version | version > stableVersion ] ].
-	cleanDevelopmentLoads notEmpty
+	cleanDevelopmentLoads isNotEmpty
 		ifTrue: [ 
 			toolbox
 				symbolicVersionMethod: #development;
@@ -2167,7 +2167,7 @@ MetacelloToolBox >> validateConfiguration [
     | issues |
     issues := (MetacelloMCVersionValidator validateConfiguration: project configuration class recurse: false)
         select: [ :issue | issue isCritical ].
-    issues notEmpty
+    issues isNotEmpty
         ifTrue: [ MetacelloValidationFailure issues: issues message: 'There are critical issues in the configuration' ]
 ]
 
@@ -2176,7 +2176,7 @@ MetacelloToolBox >> validateVersion: versionStringOrSymbol [
     | issues |
     issues := (MetacelloMCVersionValidator validateProject: project version: versionStringOrSymbol)
         select: [ :issue | issue isError ].
-    issues notEmpty
+    issues isNotEmpty
         ifTrue: [ 
             MetacelloValidationFailure
                 issues: issues

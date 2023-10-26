@@ -70,6 +70,6 @@ TEmptyTest >> testIsEmptyOrNil [
 
 { #category : 'tests - empty' }
 TEmptyTest >> testNotEmpty [
-	self assert: self nonEmpty notEmpty.
-	self deny: self empty notEmpty
+	self assert: self nonEmpty isNotEmpty.
+	self deny: self empty isNotEmpty
 ]

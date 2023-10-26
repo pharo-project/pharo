@@ -190,37 +190,37 @@ MetacelloMCVersionValidator >> validateBaselineVersionSpec: versionSpec [
 						callSite: #validateBaselineVersionSpec:
 						reasonCode: #duplicateNames ]
 				ifFalse: [ projectNames add: groupSpec name ] ].
-	(packageNames intersection: projectNames) notEmpty ifTrue: [
+	(packageNames intersection: projectNames) isNotEmpty ifTrue: [
 		self
 			recordValidationError: 'Names duplicated between packages and projects' , versionMessage
 			versionString: versionSpec versionString
 			callSite: #validateBaselineVersionSpec:
 			reasonCode: #shadowedNames ].
-	(groupNames intersection: projectNames) notEmpty ifTrue: [
+	(groupNames intersection: projectNames) isNotEmpty ifTrue: [
 		self
 			recordValidationError: 'Names duplicated between groups and projects' , versionMessage
 			versionString: versionSpec versionString
 			callSite: #validateBaselineVersionSpec:
 			reasonCode: #shadowedNames ].
-	(projectNames intersection: packageNames) notEmpty ifTrue: [
+	(projectNames intersection: packageNames) isNotEmpty ifTrue: [
 		self
 			recordValidationError: 'Names duplicated between projects and packages' , versionMessage
 			versionString: versionSpec versionString
 			callSite: #validateBaselineVersionSpec:
 			reasonCode: #shadowedNames ].
-	(groupNames intersection: packageNames) notEmpty ifTrue: [
+	(groupNames intersection: packageNames) isNotEmpty ifTrue: [
 		self
 			recordValidationError: 'Names duplicated between groups and packages' , versionMessage
 			versionString: versionSpec versionString
 			callSite: #validateBaselineVersionSpec:
 			reasonCode: #shadowedNames ].
-	(projectNames intersection: groupNames) notEmpty ifTrue: [
+	(projectNames intersection: groupNames) isNotEmpty ifTrue: [
 		self
 			recordValidationError: 'Names duplicated between projects and groups' , versionMessage
 			versionString: versionSpec versionString
 			callSite: #validateBaselineVersionSpec:
 			reasonCode: #shadowedNames ].
-	(packageNames intersection: groupNames) notEmpty ifTrue: [
+	(packageNames intersection: groupNames) isNotEmpty ifTrue: [
 		self
 			recordValidationError: 'Names duplicated between packages and groups' , versionMessage
 			versionString: versionSpec versionString
@@ -293,7 +293,7 @@ MetacelloMCVersionValidator >> validateCleanLoadAndTestsForVersion: version load
 { #category : 'loading' }
 MetacelloMCVersionValidator >> validateProjectLoad [
 	| issues project versions currentVersion collectedIssues |
-	(issues := self validateProject select: [ :issue | issue isError ]) notEmpty
+	(issues := self validateProject select: [ :issue | issue isError ]) isNotEmpty
 		ifTrue: [ ^ issues ].
 	project := self configurationClass project.
 	collectedIssues := issues.
@@ -324,7 +324,7 @@ MetacelloMCVersionValidator >> validateProjectLoad [
 { #category : 'loading' }
 MetacelloMCVersionValidator >> validateProjectVersionLoad: versionString loads: loadList [
 	| issues project version |
-	(issues := (self validateProjectVersion: versionString) select: [ :issue | issue isError ]) notEmpty
+	(issues := (self validateProjectVersion: versionString) select: [ :issue | issue isError ]) isNotEmpty
 		ifTrue: [ ^ issues ].
 	project := self configurationClass project.
 	version := project
@@ -453,7 +453,7 @@ MetacelloMCVersionValidator >> validateVersionTests: version [
 		do: [ :testCase | 
 			| testResults |
 			testResults := testCase suite run.
-			testResults defects notEmpty
+			testResults defects isNotEmpty
 				ifTrue: [ 
 					self
 						recordValidationError:

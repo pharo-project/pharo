@@ -1848,7 +1848,7 @@ Morph >> clipText [
 	content ifNil: [
 		| list |
 		list := self allStringsAfter: nil.
-		list notEmpty ifTrue: [
+		list isNotEmpty ifTrue: [
 			content := String streamContents: [:stream |
 				list do: [:each | stream nextPutAll: each; cr]]]].
 	"Did we find something?"
@@ -3371,7 +3371,7 @@ Morph >> hasRubberBandCellsString [
 
 { #category : 'submorphs - accessing' }
 Morph >> hasSubmorphs [
-	^submorphs notEmpty
+	^submorphs isNotEmpty
 ]
 
 { #category : 'layout - menu' }
@@ -4262,7 +4262,7 @@ Morph >> morphsAt: aPoint behind: aMorph unlocked: aBool [
 								morphsAt: (tfm globalPointToLocal: aPoint)
 								behind: nil
 								unlocked: aBool.
-					found notEmpty
+					found isNotEmpty
 						ifTrue:
 							[all ifNil: [all := Array new  writeStream].
 							all nextPutAll: found]].
@@ -5556,7 +5556,7 @@ Morph >> setNamePropertyTo: aName [
 Morph >> setNameTo: aName [
 	| nameToUse nameString |
 	nameToUse := aName ifNotNil:
-					[(nameString := aName asString) notEmpty ifTrue: [nameString] ifFalse: ['*']].
+					[(nameString := aName asString) isNotEmpty ifTrue: [nameString] ifFalse: ['*']].
 	self setNamePropertyTo: nameToUse	"no Texts here!"
 ]
 

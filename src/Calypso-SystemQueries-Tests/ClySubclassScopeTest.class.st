@@ -126,6 +126,6 @@ ClySubclassScopeTest >> testMethodsEnumerationWhenInstanceSideMetaLevel [
 	self assert: (result includesAll: ClyClass1FromP1Mock subclasses first localMethods).
 	subclassMethods := ClyClass1FromP1Mock subclasses
 		flatCollect: [ :each | each classSide localMethods ].
-	self assert: subclassMethods notEmpty.
+	self assert: subclassMethods isNotEmpty.
 	self deny: (result includesAll: subclassMethods)
 ]

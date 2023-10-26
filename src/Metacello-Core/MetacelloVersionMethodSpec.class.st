@@ -99,7 +99,7 @@ MetacelloVersionMethodSpec >> methodSelectorAndPragma: aSelector imports: import
 		cr;
 		tab;
 		nextPutAll: '<version: ' , aString printString.
-	importList notEmpty
+	importList isNotEmpty
 		ifTrue: [ 
 			strm nextPutAll: ' imports: #('.
 			importList

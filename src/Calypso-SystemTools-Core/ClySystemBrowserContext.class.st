@@ -81,7 +81,7 @@ ClySystemBrowserContext >> firstSelectedMethod [
 
 { #category : 'selection-classes' }
 ClySystemBrowserContext >> isClassSelected [
-	^self selectedClassItems notEmpty
+	^self selectedClassItems isNotEmpty
 ]
 
 { #category : 'selection-methods' }
@@ -118,12 +118,12 @@ ClySystemBrowserContext >> isMessageSelected [
 
 { #category : 'selection-methods' }
 ClySystemBrowserContext >> isMethodSelected [
-	^self selectedMethodItems notEmpty
+	^self selectedMethodItems isNotEmpty
 ]
 
 { #category : 'selection-packages' }
 ClySystemBrowserContext >> isPackageSelected [
-	^self selectedPackageItems notEmpty
+	^self selectedPackageItems isNotEmpty
 ]
 
 { #category : 'selection-classes' }

@@ -28,7 +28,7 @@ MCMerger >> conflicts [
 
 { #category : 'testing' }
 MCMerger >> hasConflicts [
-	^ self conflicts notEmpty
+	^ self conflicts notEmisNotEmptypty
 ]
 
 { #category : 'testing' }

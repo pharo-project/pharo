@@ -6,12 +6,12 @@ SycRemoveClassStrategy class >> createForBrowser: aBrowser classes: aCollection 
 	| hasReferences hasSubclasses hasUsers |
 	hasReferences := (ClyClassExternalReferencesQuery
 		                  toAny: aCollection
-		                  from: aBrowser systemScope) execute notEmpty.
+		                  from: aBrowser systemScope) execute isNotEmpty.
 	hasSubclasses := ((aCollection flatCollect: [ :each |
 		                   each subclasses ]) copyWithoutAll: aCollection)
-		                 notEmpty.
+		                 isNotEmpty.
 	hasUsers := ((aCollection flatCollect: [ :each | each users ])
-		             copyWithoutAll: aCollection) notEmpty.
+		             copyWithoutAll: aCollection) isNotEmpty.
 
 	hasReferences | hasSubclasses | hasUsers ifFalse: [
 		^ { SycSilentlyRemoveClassStrategy new } ].

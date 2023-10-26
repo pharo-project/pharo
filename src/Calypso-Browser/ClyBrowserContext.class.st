@@ -87,7 +87,7 @@ ClyBrowserContext >> firstSelectedObjectIn: selectedObjects [
 
 { #category : 'testing' }
 ClyBrowserContext >> hasSelectedItems [
-	^selectedItems notEmpty
+	^selectedItems isNotEmpty
 ]
 
 { #category : 'initialization' }

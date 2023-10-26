@@ -195,7 +195,7 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #size.
 	self assert: newMethod protocol notNil.
-	self assert: newMethod sourceCode notEmpty.
+	self assert: newMethod sourceCode isNotEmpty.
 	self assert: newMethod stamp notNil.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
@@ -210,7 +210,7 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #arrayType.
 	self assert: newMethod protocol notNil.
-	self assert: newMethod sourceCode notEmpty.
+	self assert: newMethod sourceCode isNotEmpty.
 	self assert: newMethod stamp notNil
 ]
 

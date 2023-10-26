@@ -73,10 +73,10 @@ RBRefactoringChangeTest >> setUp [
 
 { #category : 'utilities' }
 RBRefactoringChangeTest >> stringTestFor: aChange [
-	self assert: (aChange name isString and: [ aChange name notEmpty ]).
-	self assert: (aChange printString isString and: [ aChange printString notEmpty ]).
-	self assert: (aChange changeString isString and: [ aChange changeString notEmpty ]).
-	self assert: (aChange displayString isString and: [ aChange displayString notEmpty ])
+	self assert: (aChange name isString and: [ aChange name isNotEmpty ]).
+	self assert: (aChange printString isString and: [ aChange printString isNotEmpty ]).
+	self assert: (aChange changeString isString and: [ aChange changeString isNotEmpty ]).
+	self assert: (aChange displayString isString and: [ aChange displayString isNotEmpty ])
 ]
 
 { #category : 'tests' }

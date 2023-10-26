@@ -52,7 +52,7 @@ TKTWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	pool poolMaxSize: 4.
 	pool start.
 	(pool future: [ 1 ]) waitForCompletion: 1 second.
-	self assert: pool workers notEmpty
+	self assert: pool workers isNotEmpty
 ]
 
 { #category : 'tests' }
@@ -114,7 +114,7 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 
 	(pool future: [ 1 ]) waitForCompletion: 1 second.
 
-	self assert: pool workers notEmpty.
+	self assert: pool workers isNotEmpty.
 
 	workerProcess := WeakArray with: pool workers anyOne process.
 

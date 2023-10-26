@@ -193,7 +193,7 @@ RubTextScrollPane >> hasKeyboardFocus [
 
 { #category : 'text area protocol' }
 RubTextScrollPane >> hasTextArea [
-	^ self scroller submorphs notEmpty
+	^ self scroller submorphs isNotEmpty
 ]
 
 { #category : 'scrollbar managing' }

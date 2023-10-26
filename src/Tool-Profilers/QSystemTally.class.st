@@ -291,7 +291,7 @@ QSystemTally >> treePrintOn: aStream tabs: tabs thisTab: myTab total: total tota
 		ifTrue: [ receivers ]
 		ifFalse: [ self sonsOver: threshold ].
 	sons ifNil: [ ^ self ].
-	sons notEmpty
+	sons isNotEmpty
 		ifTrue: [ tabs addLast: myTab.
 			sons := self asSortedCollection: sons.
 			1 to: sons size do: [ :i |

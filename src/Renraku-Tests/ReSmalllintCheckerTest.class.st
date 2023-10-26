@@ -16,5 +16,5 @@ ReSmalllintCheckerTest >> testRun [
 
 	checker run.
 
-	self assert: (checker criticsOf: ScreamerRule new) notEmpty
+	self assert: (checker criticsOf: ScreamerRule new) isNotEmpty
 ]

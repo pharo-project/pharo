@@ -224,7 +224,7 @@ SystemWindow >> addPaneHSplitters [
 	remaining := paneMorphs reject: [:each |
 			each layoutFrame bottomFraction = 1 or: [
 				each layoutFrame bottomFraction = 0]].
-	[remaining notEmpty] whileTrue: [
+	[remaining isNotEmpty] whileTrue: [
 		targetBottom := remaining first layoutFrame bottomFraction.
 		sameBottom := remaining select: [:each |
 			each layoutFrame bottomFraction = targetBottom].
@@ -297,7 +297,7 @@ SystemWindow >> addPaneVSplitters [
 	remaining := paneMorphs reject: [:each |
 			each layoutFrame rightFraction = 1 or: [
 				each layoutFrame rightFraction = 0]].
-	[remaining notEmpty] whileTrue: [
+	[remaining isNotEmpty] whileTrue: [
 		targetRight := remaining first layoutFrame rightFraction.
 		sameRight := remaining select: [:each |
 			each layoutFrame rightFraction = targetRight].

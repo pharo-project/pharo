@@ -137,7 +137,7 @@ MCSnapshotBrowser >> extensionsCategory [
 
 { #category : 'accessing' }
 MCSnapshotBrowser >> hasExtensions [
-	^self extensionClassNames notEmpty
+	^self extensionClassNames isNotEmpty
 ]
 
 { #category : 'morphic ui' }

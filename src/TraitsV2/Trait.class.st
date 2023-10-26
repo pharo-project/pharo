@@ -312,7 +312,7 @@ Trait >> isTraitExclusion [
 { #category : 'testing' }
 Trait >> isUsed [
 	<reflection: 'Class structural inspection - Class kind testing'>
-	^ super isUsed or: [ self traitUsers notEmpty ]
+	^ super isUsed or: [ self traitUsers isNotEmpty ]
 ]
 
 { #category : 'organization updating' }

@@ -899,7 +899,7 @@ RubScrolledTextMorph >> position: aPoint [
 
 { #category : 'rulers handling' }
 RubScrolledTextMorph >> removeAllRulers [
-	[ self rulers notEmpty ] whileTrue: [ self withoutRuler: self rulers first ]
+	[ self rulers isNotEmpty ] whileTrue: [ self withoutRuler: self rulers first ]
 ]
 
 { #category : 'private' }

@@ -203,6 +203,11 @@ AdditionalMethodState >> isMethodProperties [
 	^true
 ]
 
+{ #category : 'testing' }
+AdditionalMethodState >> isNotEmpty [
+	^self basicSize > 0
+]
+
 { #category : 'accessing' }
 AdditionalMethodState >> keysAndValuesDo: aBlock [
 	"Enumerate the receiver with all the keys and values."
@@ -228,7 +233,11 @@ AdditionalMethodState >> method: aMethodNodeOrNil [
 
 { #category : 'testing' }
 AdditionalMethodState >> notEmpty [
-	^self basicSize > 0
+	self
+		deprecated: 'Please use #isNotEmpty instead.'
+		transformWith: '`@receiver notEmpty' -> '`@receiver isNotEmpty'.
+
+	^ self isNotEmpty
 ]
 
 { #category : 'copying' }

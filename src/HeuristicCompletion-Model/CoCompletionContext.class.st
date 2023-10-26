@@ -142,7 +142,7 @@ CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [
 { #category : 'testing' }
 CoCompletionContext >> hasEntries [
 
-	^ self completion notEmpty
+	^ self completion isNotEmpty
 ]
 
 { #category : 'menu' }

@@ -468,7 +468,7 @@ RGBehavior >> hasComment [
 RGBehavior >> hasMethods [
 	"validates the existance of methods"
 
-	^ self methods notEmpty
+	^ self methods isNotEmpty
 ]
 
 { #category : 'testing' }

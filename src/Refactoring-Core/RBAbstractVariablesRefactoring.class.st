@@ -161,7 +161,7 @@ RBAbstractVariablesRefactoring >> computeVariablesToAbstract [
 
 { #category : 'testing' }
 RBAbstractVariablesRefactoring >> hasVariablesToAbstract [
-	^ instVarReaders notEmpty or: [ instVarWriters notEmpty or: [ classVarReaders notEmpty or: [ classVarWriters notEmpty ] ] ]
+	^ instVarReaders isNotEmpty or: [ instVarWriters isNotEmpty or: [ classVarReaders isNotEmpty or: [ classVarWriters isNotEmpty ] ] ]
 ]
 
 { #category : 'transforming' }

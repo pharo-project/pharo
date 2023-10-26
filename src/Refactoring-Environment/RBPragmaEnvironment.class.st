@@ -69,7 +69,7 @@ RBPragmaEnvironment >> includesPragma: aPragma [
 
 { #category : 'testing' }
 RBPragmaEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (environment includesProtocol: aProtocol in: aClass) and: [ (self selectorsFor: aProtocol in: aClass) notEmpty ]
+	^ (environment includesProtocol: aProtocol in: aClass) and: [ (self selectorsFor: aProtocol in: aClass) isNotEmpty ]
 ]
 
 { #category : 'testing' }

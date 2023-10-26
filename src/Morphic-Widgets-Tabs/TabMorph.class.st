@@ -561,7 +561,7 @@ TabMorph >> handlesMouseDown: event [
 { #category : 'protocol' }
 TabMorph >> hasActions [
 
-	^ actions notEmpty
+	^ actions isNotEmpty
 ]
 
 { #category : 'protocol' }

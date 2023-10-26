@@ -51,7 +51,7 @@ FullscreenMorph >> layoutChanged [
 { #category : 'initialize' }
 FullscreenMorph >> postOpenInWorld: aWorld [
 
-	(self submorphs notEmpty and: [ self submorphs first isSystemWindow ])
+	(self submorphs isNotEmpty and: [ self submorphs first isSystemWindow ])
 		ifTrue: [ self submorphs first openedFullscreen ].
 	super postOpenInWorld: aWorld
 ]

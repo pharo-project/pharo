@@ -995,7 +995,7 @@ MorphTreeMorph >> headerBounds [
 			currLeft := scroller left - scroller offset x.
 			currRight := currPos.
 			controlBounds add: (currLeft @ topHeader top corner: currRight @ topHeader bottom).
-			[ positions notEmpty ]
+			[ positions isNotEmpty ]
 				whileTrue: [
 					currLeft := currPos + self resizerWidth.
 					currPos := positions removeFirst x.

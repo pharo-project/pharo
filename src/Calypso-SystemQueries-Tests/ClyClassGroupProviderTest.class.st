@@ -39,5 +39,5 @@ ClyClassGroupProviderTest >> testBuildingGroups [
 
 	self buildGroupsFor: self packageSampleWhichHasGroup.
 
-	self assert: builtGroups notEmpty
+	self assert: builtGroups isNotEmpty
 ]

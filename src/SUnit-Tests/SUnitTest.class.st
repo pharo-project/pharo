@@ -48,7 +48,7 @@ SUnitTest >> assertTerminationOfFailedChildProcesses [
 
 	| failedProcesses |
 	failedProcesses := self failedChildProcesses.
-	self assert: failedProcesses notEmpty.
+	self assert: failedProcesses isNotEmpty.
 	self assert: (failedProcesses allSatisfy: #isTerminated)
 ]
 

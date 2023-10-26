@@ -15,7 +15,7 @@ BorderedMorph >> addPaneSplitters [
 	self removeCornerGrips.
 
 	remaining := submorphs reject: [:each | each layoutFrame rightFraction = 1].
-	[remaining notEmpty] whileTrue:
+	[remaining isNotEmpty] whileTrue:
 		[target := remaining first.
 		targetX := target layoutFrame rightFraction.
 		sameX := submorphs select: [:each | each layoutFrame rightFraction = targetX].
@@ -34,7 +34,7 @@ BorderedMorph >> addPaneSplitters [
 		remaining := remaining copyWithoutAll: sameX].
 
 	remaining := submorphs copy reject: [:each | each layoutFrame bottomFraction = 1].
-	[remaining notEmpty]
+	[remaining isNotEmpty]
 		whileTrue: [target := remaining first.
 			targetY := target layoutFrame bottomFraction.
 			sameY := submorphs select: [:each | each layoutFrame bottomFraction = targetY].

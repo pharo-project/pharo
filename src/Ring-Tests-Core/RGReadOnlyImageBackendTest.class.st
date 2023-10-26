@@ -72,8 +72,8 @@ RGReadOnlyImageBackendTest >> testClassComment [
 
 	comment := (Point asRingMinimalDefinitionIn: env) comment.
 
-	comment content notEmpty.
-	comment author notEmpty.
+	comment content isNotEmpty.
+	comment author isNotEmpty.
 	comment time > DateAndTime new.
 	comment time <= DateAndTime now
 ]
@@ -227,7 +227,7 @@ RGReadOnlyImageBackendTest >> testProtocols [
 	env1 backend: (RGReadOnlyImageBackend for: env1).
 
 	point := Point asRingMinimalDefinitionIn: env1.
-	self assert: point protocols notEmpty.
+	self assert: point protocols isNotEmpty.
 	protocol := point protocols detect: [ :each | each = 'accessing' ].
 	self assert: protocol isSymbol.
 

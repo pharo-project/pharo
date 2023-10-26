@@ -85,7 +85,7 @@ IRBytecodeDecompiler >> jump: dist [
 		^self].
 	"jump backward"
 	seqs := irBuilder ir allSequences.
-	seq := seqs findLast: [:s | s notEmpty and: [s first bytecodeIndex <= index]].
+	seq := seqs findLast: [:s | s isNotEmpty and: [s first bytecodeIndex <= index]].
 	seq := seqs at: seq.
 	seq first bytecodeIndex = index
 		ifTrue: [ newSeq := seq ]

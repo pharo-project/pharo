@@ -303,7 +303,7 @@ ThreePhaseButtonMorph >> pressedImage: aForm [
 ThreePhaseButtonMorph >> printOn: aStream [
 	| string |
 	aStream nextPutAll: '3PButton'.
-	arguments notEmpty
+	arguments isNotEmpty
 		ifTrue: [string := arguments at: (2 min: arguments size)].
 	aStream nextPutAll: '('.
 	(string notNil and: [string ~~ self])

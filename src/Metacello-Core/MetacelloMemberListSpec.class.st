@@ -91,6 +91,12 @@ MetacelloMemberListSpec >> isEmpty [
 	^self list isEmpty
 ]
 
+{ #category : 'testing' }
+MetacelloMemberListSpec >> isNotEmpty [
+
+	^self list isNotEmpty
+]
+
 { #category : 'accessing' }
 MetacelloMemberListSpec >> list [
 
@@ -170,8 +176,11 @@ MetacelloMemberListSpec >> mergeSpec: anotherSpec [
 
 { #category : 'testing' }
 MetacelloMemberListSpec >> notEmpty [
+	self
+		deprecated: 'Please use #isNotEmpty instead.'
+		transformWith: '`@receiver notEmpty' -> '`@receiver isNotEmpty'.
 
-	^self list notEmpty
+	^ self isNotEmpty
 ]
 
 { #category : 'copying' }

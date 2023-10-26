@@ -253,15 +253,15 @@ BehaviorTest >> testThoroughWhichMethodsReferTo [
 	| array |
 	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
 	"normal case"
-	self assert: (Point thoroughWhichMethodsReferTo: #x) notEmpty.
+	self assert: (Point thoroughWhichMethodsReferTo: #x) isNotEmpty.
 	"we understand send bytecodes for special selectors"
-	self assert: (Point thoroughWhichMethodsReferTo: #+) notEmpty.
+	self assert: (Point thoroughWhichMethodsReferTo: #+) isNotEmpty.
 	"we dive into literal arrays"
-	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
+	self assert: (self class thoroughWhichMethodsReferTo: array first) isNotEmpty.
 	"and we are false for non existing symbols"
 	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
 	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
-	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) isNotEmpty
 ]
 
 { #category : 'tests - queries' }
@@ -269,13 +269,13 @@ BehaviorTest >> testThoroughWhichMethodsReferToSpecialIndex [
 	| array |
 	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
 	"normal case"
-	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) isNotEmpty.
 	"we understand send bytecodes for special selectors"
-	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) isNotEmpty.
 	"we dive into literal arrays"
-	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
+	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) isNotEmpty.
 	"and we are false for non existing symbols"
-	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isNotEmpty
 ]
 
 { #category : 'tests - queries' }
@@ -283,15 +283,15 @@ BehaviorTest >> testThoroughWhichSelectorsReferTo [
 	| array |
 	array := #(thisIsOnlyHereIntestthoroughWhichSelectorsReferTo).
 	"normal case"
-	self assert: (Point thoroughWhichSelectorsReferTo: #x) notEmpty.
+	self assert: (Point thoroughWhichSelectorsReferTo: #x) isNotEmpty.
 	"we understand send bytecodes for special selectors"
-	self assert: (Point thoroughWhichSelectorsReferTo: #+) notEmpty.
+	self assert: (Point thoroughWhichSelectorsReferTo: #+) isNotEmpty.
 	"we dive into literal arrays"
-	self assert: (self class thoroughWhichSelectorsReferTo: array first) notEmpty.
+	self assert: (self class thoroughWhichSelectorsReferTo: array first) isNotEmpty.
 	"and we are false for non existing symbols"
-	self assert: (self class thoroughWhichSelectorsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+	self assert: (self class thoroughWhichSelectorsReferTo: ('this', 'doesNotExist') asSymbol) isNotEmpty.
 	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
-	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) isNotEmpty
 ]
 
 { #category : 'tests - queries' }

@@ -395,7 +395,7 @@ SystemNavigation >> removeClass: aClass [
 	message := self removeClassMessageFor: className.
 	(result := self confirm: message)
 		ifTrue: [
-			classToRemove subclasses notEmpty
+			classToRemove subclasses isNotEmpty
 				ifTrue: [
 					(self confirm: 'class has subclasses: ' , message)
 						ifFalse: [ ^ false ] ].

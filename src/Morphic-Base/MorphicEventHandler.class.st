@@ -43,7 +43,7 @@ MorphicEventHandler >> doubleClickTimeout: event fromMorph: sourceMorph [
 
 { #category : 'testing' }
 MorphicEventHandler >> existsSubscriptionsFor: anEvent [
-	^(subscriptions includesKey: anEvent) and: [ (subscriptions at: anEvent) notEmpty ]
+	^(subscriptions includesKey: anEvent) and: [ (subscriptions at: anEvent) isNotEmpty ]
 ]
 
 { #category : 'testing' }

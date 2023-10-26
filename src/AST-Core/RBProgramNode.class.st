@@ -724,7 +724,7 @@ RBProgramNode >> isInstanceVariable [
 RBProgramNode >> isLast: aNode [
 	| children |
 	children := self children.
-	^children notEmpty and: [children last == aNode]
+	^children isNotEmpty and: [children last == aNode]
 ]
 
 { #category : 'testing - matching' }

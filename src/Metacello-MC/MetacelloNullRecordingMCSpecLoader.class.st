@@ -73,7 +73,7 @@ MetacelloNullRecordingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: 
 						externalReference: externalReference 
 						loader: self) addTo: self loadDirective.
 					self postLoad: packageSpec ].
-			(answers := packageSpec answers) notEmpty
+			(answers := packageSpec answers) isNotEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].
 			fake := packageSpec copy.

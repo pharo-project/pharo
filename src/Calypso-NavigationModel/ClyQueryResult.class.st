@@ -361,6 +361,11 @@ ClyQueryResult >> isEmpty [
 ]
 
 { #category : 'testing' }
+ClyQueryResult >> isNotEmpty [
+	^self isEmpty not
+]
+
+{ #category : 'testing' }
 ClyQueryResult >> isProtected [
 	^accessGuard notNil
 ]
@@ -420,7 +425,11 @@ ClyQueryResult >> needsRebuild [
 
 { #category : 'testing' }
 ClyQueryResult >> notEmpty [
-	^self isEmpty not
+	self
+		deprecated: 'Please use #isNotEmpty instead.'
+		transformWith: '`@receiver notEmpty' -> '`@receiver isNotEmpty'.
+
+	^ self isNotEmpty
 ]
 
 { #category : 'system changes' }

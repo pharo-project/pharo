@@ -42,7 +42,7 @@ MetacelloGenericProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
 
 { #category : 'testing' }
 MetacelloGenericProjectSpec >> hasRepository [
-    ^ self repositorySpecs notEmpty
+    ^ self repositorySpecs isNotEmpty
 ]
 
 { #category : 'loading' }

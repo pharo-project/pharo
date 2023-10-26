@@ -39,5 +39,5 @@ MetacelloMethodSection >> attributes: aCollectionOrSymbol [
 
 { #category : 'testing' }
 MetacelloMethodSection >> includesAttributeFrom: attributeCollection [
-    ^ (attributeCollection asSet intersection: self attributes asSet) notEmpty
+    ^ (attributeCollection asSet intersection: self attributes asSet) isNotEmpty
 ]

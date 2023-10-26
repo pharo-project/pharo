@@ -177,7 +177,7 @@ MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 					ifTrue: [self onImage]
 					ifFalse: [self offImage]]
 		ifFalse: [
-		(aString notEmpty and: [aString first = $<])
+		(aString isNotEmpty and: [aString first = $<])
 			ifFalse: [^super contents: aString].
 		markerIndex := aString indexOf: $>.
 		markerIndex = 0 ifTrue: [^super contents: aString].

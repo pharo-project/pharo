@@ -53,7 +53,7 @@ WorkingSession >> executeDeferredStartupActions: resuming [
 	"Execute the deferred actions which where added during startup,
 	resuming is true if the image was started fresh, false if we just saved an image"
 
-	[ deferredStartupActions notEmpty ]
+	[ deferredStartupActions isNotEmpty ]
 		whileTrue: [ | action |
 			action := deferredStartupActions removeFirst.
 			action cull: resuming

@@ -204,7 +204,7 @@ TextComposer >> composeOneLine [
 		              rectanglesAt: currentY
 		              height: defaultLineHeight.
 
-	rectangles notEmpty
+	rectangles isNotEmpty
 		ifTrue: [ (self composeAllRectangles: rectangles) ifNil: [ ^ nil ] ]
 		ifFalse: [ currentY := currentY + defaultLineHeight ].
 

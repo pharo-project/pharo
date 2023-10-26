@@ -349,13 +349,13 @@ RubFindReplaceDialogWindow >> replaceAll [
 { #category : 'user-interface' }
 RubFindReplaceDialogWindow >> replaceAllEnabled [
 	^ self textView notNil
-		and: [self findText notEmpty]
+		and: [self findText isNotEmpty]
 ]
 
 { #category : 'user-interface' }
 RubFindReplaceDialogWindow >> replaceEnabled [
 	^ self textView notNil
-		and: [self findText notEmpty]
+		and: [self findText isNotEmpty]
 ]
 
 { #category : 'accessing' }

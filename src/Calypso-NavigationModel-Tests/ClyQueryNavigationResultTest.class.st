@@ -42,7 +42,7 @@ ClyQueryNavigationResultTest >> setUp [
 ClyQueryNavigationResultTest >> testCheckingForEmpty [
 	self
 		assert: queryResult isEmpty;
-		deny: queryResult notEmpty
+		deny: queryResult isNotEmpty
 ]
 
 { #category : 'tests' }

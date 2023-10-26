@@ -787,7 +787,7 @@ Behavior >> hasMethodAccessingVariable: aVariable [
 Behavior >> hasMethods [
 	"Answer whether the receiver has any methods in its method dictionary."
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
-	^ self methodDict notEmpty
+	^ self methodDict isNotEmpty
 ]
 
 { #category : 'accessing - properties' }

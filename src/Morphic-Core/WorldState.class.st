@@ -549,7 +549,7 @@ were redrawn."
 					i := 1.
 					[remnants isEmpty or: [i > n]] whileFalse:
 							[mm := submorphs at: i.
-							((remnantIntersects := remnants select: [:each | (mm fullBounds intersects: each)]) notEmpty and: [mm visible])
+							((remnantIntersects := remnants select: [:each | (mm fullBounds intersects: each)]) isNotEmpty and: [mm visible])
 								ifTrue:
 									[morphs addLast: mm.
 

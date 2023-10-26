@@ -64,7 +64,7 @@ GoferVersionReference >> parseName: aString [
 			package := package copyUpTo: $. ].
 	author := (basicName copyAfterLast: $-) copyUpToLast: $..
 	versionNumber := (basicName copyAfterLast: $-) copyAfterLast: $..
-	(versionNumber notEmpty and: [ versionNumber allSatisfy: [ :each | each isDigit ] ])
+	(versionNumber isNotEmpty and: [ versionNumber allSatisfy: [ :each | each isDigit ] ])
 		ifTrue: [ versionNumber := versionNumber asInteger ]
 		ifFalse: [ versionNumber := 0 ]
 ]

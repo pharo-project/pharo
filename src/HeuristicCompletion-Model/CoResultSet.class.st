@@ -121,9 +121,18 @@ CoResultSet >> initialize [
 ]
 
 { #category : 'testing' }
-CoResultSet >> notEmpty [
+CoResultSet >> isNotEmpty [
 
-	^ results notEmpty or: [ fetcher atEnd not ]
+	^ results isNotEmpty or: [ fetcher atEnd not ]
+]
+
+{ #category : 'testing' }
+CoResultSet >> notEmpty [
+	self
+		deprecated: 'Please use #isNotEmpty instead.'
+		transformWith: '`@receiver notEmpty' -> '`@receiver isNotEmpty'.
+
+	^ self isNotEmpty
 ]
 
 { #category : 'api-filtering' }

@@ -32,7 +32,7 @@ DADependentPackageNode >> daPackage [
 
 { #category : 'testing' }
 DADependentPackageNode >> hasChildren [
-	^ [ self content dependencies notEmpty ]
+	^ [ self content dependencies isNotEmpty ]
 ]
 
 { #category : 'accessing' }

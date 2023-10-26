@@ -176,7 +176,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 					'Loading -> ' , resolvedReference name , ' --- '
 						, aPackageLoadDirective repository repositoryDescription , ' --- '
 						, resolvedReference repository description.
-			( answers := packageSpec answers ) notEmpty
+			( answers := packageSpec answers ) isNotEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].
 			resolvedReference workingCopy repositoryGroup addRepository: aPackageLoadDirective repository.
@@ -226,7 +226,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
       self clearCurrentVersionCache	"pkgLoads do: [:packageLoadDirective | 
 					packageLoadDirective resolvedReference ~~ nil
 						ifTrue: [mcLoader postLoad: packageLoadDirective spec ]]" ].
-      answers notEmpty
+      answers isNotEmpty
         ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
         ifFalse: [ loadBlock value ].
       MetacelloNotification signal: 'Finished atomic load' ]
@@ -344,7 +344,7 @@ MetacelloCommonMCSpecLoader >> resolvePackageSpecReferences: packageSpec gofer: 
 	localGofer := gofer.
 	self hasRepositoryOverrides not
 		ifTrue: [
-			packageSpec repositorySpecs notEmpty
+			packageSpec repositorySpecs isNotEmpty
 				ifTrue: [ 
 					localGofer := MetacelloGofer new.
 					(self repositoriesFrom: packageSpec repositorySpecs) do: [:repo | localGofer repository: repo ]]].

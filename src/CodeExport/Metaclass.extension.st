@@ -28,5 +28,5 @@ Metaclass >> fileOutOn: aFileStream initializing: aBool [
 Metaclass >> nonTrivial [
 	"Answer whether the receiver has any methods or instance variables."
 
-	^ self instVarNames notEmpty or: [self hasMethods or: [self hasTraitComposition]]
+	^ self instVarNames isNotEmpty or: [self hasMethods or: [self hasTraitComposition]]
 ]

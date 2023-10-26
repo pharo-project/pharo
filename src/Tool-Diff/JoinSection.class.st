@@ -139,14 +139,14 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 
 	| s d si di srcText dstText diffs i sb eb line |
 	self createHighlights.
-	self src lineRange notEmpty
+	self src lineRange isNotEmpty
 		ifTrue: [
 			line := srcPara lines at: self src lineRange first.
 			si := line first.
 			line := srcPara lines at: self src lineRange last.
 			srcText := srcPara string copyFrom: si to: line last ]
 		ifFalse: [ srcText := '' ].
-	self dst lineRange notEmpty
+	self dst lineRange isNotEmpty
 		ifTrue: [
 			line := dstPara lines at: self dst lineRange first.
 			di := line first.

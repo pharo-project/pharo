@@ -690,7 +690,7 @@ Class >> hasMethods [
 Class >> hasSharedPools [
 	"Returns whether the receiver uses shared pools directly (Does not take into account that it may inherit shared pool uses."
 	<reflection: 'Class structural inspection - Shared pool inspection'>
-	^ self sharedPools notEmpty
+	^ self sharedPools isNotEmpty
 ]
 
 { #category : 'accessing - class hierarchy' }

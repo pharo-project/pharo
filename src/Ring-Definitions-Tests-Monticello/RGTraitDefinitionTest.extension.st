@@ -10,7 +10,7 @@ RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	self assert: rgClass package isNil.
 
 	rgClass := TSortable asFullRingDefinition.
-	self assert: rgClass methods notEmpty.
+	self assert: rgClass methods isNotEmpty.
 	self assert: (rgClass methodNamed: #isSorted) package notNil.
 	self assert: rgClass superclass notNil.
 	self assert: rgClass superclass name equals: #Trait.

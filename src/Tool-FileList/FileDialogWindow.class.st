@@ -714,7 +714,7 @@ FileDialogWindow >> okEnabled [
 	(#(selectedAnyFileDirectory selectedPathName)
 			includes: self actionSelector) ifTrue: [^true].
 	((#(saveSelectedFile saveForcedSelectedFile)
-			includes: self actionSelector) and: [self fileNameText notEmpty]) ifTrue: [^true].
+			includes: self actionSelector) and: [self fileNameText isNotEmpty]) ifTrue: [^true].
 	(self actionSelector = #selectedFileName and: [
 		self selectedFileName notNil]) ifTrue: [^true].
 	^self selectedFileName notNil and: [self selectedFileEntry isDirectory not]
@@ -1045,7 +1045,7 @@ FileDialogWindow >> updateTextPreview [
 FileDialogWindow >> validExtensions: aList [
 	"Set the filter for the files to be those with the given extensions."
 
-	aList notEmpty
+	aList isNotEmpty
 		ifTrue: [self defaultExtension: aList first].
 	self fileSelectionBlock: [:de |
 		de isDirectory

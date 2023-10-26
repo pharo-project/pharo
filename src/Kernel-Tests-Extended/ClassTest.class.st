@@ -458,7 +458,7 @@ ClassTest >> testReferencedClasses [
 	 (ReferencedClassesTestClass -> {Array. OrderedCollection. Object})
 	}
 		do: [ :assoc |
-			self assert: assoc key referencedClasses notEmpty.
+			self assert: assoc key referencedClasses isNotEmpty.
 			self assert: (assoc key referencedClasses asSet includesAll: assoc value asSet)].
 
 	"classes referenced from class variables should not be seen as referenced statically"

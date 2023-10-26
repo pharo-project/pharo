@@ -45,7 +45,7 @@ MetacelloMCVersionSpecLoader >> load [
                 targetVersionStatus: #(#'allLoadedToSpec')
                 using: mcLoader)
                 ifTrue: [ packages removeKey: pkg name ] ] ] ].
-  packages notEmpty
+  packages isNotEmpty
     ifTrue: [ 
       mcLoader preLoad: self versionSpec.
       mcLoader load.

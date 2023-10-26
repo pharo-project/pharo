@@ -35,17 +35,17 @@ ClyFullBrowserContext >> isClassTagSelected [
 
 { #category : 'selection-method groups' }
 ClyFullBrowserContext >> isMethodGroupSelected [
-	^self selectedMethodGroupItems notEmpty
+	^self selectedMethodGroupItems isNotEmpty
 ]
 
 { #category : 'selection-projects' }
 ClyFullBrowserContext >> isProjectChildSelected [
-	^self selectedProjectChildItems notEmpty
+	^self selectedProjectChildItems isNotEmpty
 ]
 
 { #category : 'selection-projects' }
 ClyFullBrowserContext >> isProjectSelected [
-	^self selectedProjectItems notEmpty
+	^self selectedProjectItems isNotEmpty
 ]
 
 { #category : 'selection-method groups' }

@@ -51,7 +51,7 @@ ClyTextEditor >> notify: aString at: anInteger in: aStream [
 		ifFalse: [ aString ].
 
 	self inform: message.
-	pos := self selectionInterval notEmpty
+	pos := self selectionInterval isNotEmpty
 		ifTrue: [ self startIndex + anInteger - 1 ]
 		ifFalse: [ anInteger ].
 	self selectFrom: pos to: pos - 1. "move cursor in front of the location"

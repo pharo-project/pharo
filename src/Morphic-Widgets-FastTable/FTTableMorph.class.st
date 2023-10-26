@@ -437,7 +437,7 @@ FTTableMorph >> hasDataSource [
 
 { #category : 'testing' }
 FTTableMorph >> hasHighlighted [
-	^ self highlightedIndexes notEmpty
+	^ self highlightedIndexes isNotEmpty
 ]
 
 { #category : 'testing' }

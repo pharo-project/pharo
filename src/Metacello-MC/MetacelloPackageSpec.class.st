@@ -370,7 +370,7 @@ MetacelloPackageSpec >> goferPackage [
 
 { #category : 'testing' }
 MetacelloPackageSpec >> hasRepository [
-    ^ self repositorySpecs notEmpty
+    ^ self repositorySpecs isNotEmpty
 ]
 
 { #category : 'construction' }
@@ -438,7 +438,7 @@ MetacelloPackageSpec >> mergeSpec: anotherSpec [
 	| newSpec map anotherRepositories |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	(anotherRepositories := map at: #repositories) notEmpty
+	(anotherRepositories := map at: #repositories) isNotEmpty
 		ifTrue: [ 
 			newSpec 
 				repositories: (self repositories isEmpty

@@ -268,14 +268,14 @@ RGBehaviorDefinition >> hasMetaclass [
 RGBehaviorDefinition >> hasMethods [
 	"validates the existance of methods"
 
-	^methods notEmpty
+	^methods isNotEmpty
 ]
 
 { #category : 'testing' }
 RGBehaviorDefinition >> hasProtocols [
 	"Validates the existance of protocols"
 
-	^protocols notEmpty
+	^protocols isNotEmpty
 ]
 
 { #category : 'testing' }

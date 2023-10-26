@@ -229,7 +229,7 @@ ClyNavigationEnvironment >> handleSystemChange: aSystemAnnouncement [
 		todoList asArray do: [ :eachResult |
 			(todoList includes: eachResult) ifTrue: [
 				eachResult handleSystemChange: aSystemAnnouncement byProcessingList: todoList]]].
-	todoList notEmpty] whileTrue: [
+	todoList isNotEmpty] whileTrue: [
 		anyResult := todoList anyOne.
 		anyResult handleSystemChange: aSystemAnnouncement.
 		todoList remove: anyResult]

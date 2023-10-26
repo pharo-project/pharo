@@ -57,7 +57,7 @@ PaginatedMorphTreeMorph >> currentNodelist [
 PaginatedMorphTreeMorph >> expandItemPath: anItemPath [
 	| rest |
 	rest := anItemPath asOrderedCollection.
-	[ rest notEmpty ]
+	[ rest isNotEmpty ]
 		whileTrue: [
 			| res |
 			res := (1 to: self nodeList size) select: [ :li | (self nodeList at: li) item = rest first ].

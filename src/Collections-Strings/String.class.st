@@ -1229,7 +1229,7 @@ String >> endsWithAColon [
 	"'displayStringOn:' endsWithAColon >>> true"
 	"'displayStringOn:foo' endsWithAColon >>> false"
 
-	^ self notEmpty and: [ self last == $: ]
+	^ self isNotEmpty and: [ self last == $: ]
 ]
 
 { #category : 'testing' }
@@ -1239,7 +1239,7 @@ String >> endsWithDigit [
 	"'foo10foo' endsWithDigit >>> false"
 	"'foo1' endsWithDigit >>> true"
 
-	^ self notEmpty and: [self last isDigit]
+	^ self isNotEmpty and: [self last isDigit]
 ]
 
 { #category : 'converting' }
