@@ -95,12 +95,6 @@ Class class >> superclassOrder: classes [
     ^all
 ]
 
-{ #category : 'accessing' }
-Class class >> unclassifiedCategory [
-
-	^ #Unclassified
-]
-
 { #category : 'class variables' }
 Class >> addClassVarNamed: aString [
 	"Add the argument, aString, as a class variable of the receiver.
@@ -280,14 +274,17 @@ Class >> category: aString [
 	"Categorize the receiver under the system category, aString, removing it from
 	any previous categorization."
 
-	| oldCategory |
-	oldCategory := self category.
-	oldCategory = aString ifTrue: [ ^ self ].
+	| newPackage |
+
+	self flag: #package. "Should be deprecated"
+	self category = aString ifTrue: [ ^ self ].
+
 	self basicCategory: aString asSymbol.
 
-	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: self) ]
-		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRecategorized class: self recategorizedFrom: oldCategory to: self category) ]
+	self flag: #package. "#toTagName: should be inlined here."
+	newPackage := self packageOrganizer ensurePackageMatching: self category.
+	newPackage moveClass: self toTag: (newPackage toTagName: self category).
+
 ]
 
 { #category : 'subclass creation' }

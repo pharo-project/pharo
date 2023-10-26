@@ -332,23 +332,17 @@ RubTextEditor >> changeAlignment [
 { #category : 'menu messages' }
 RubTextEditor >> changeEmphasis [
 
-	|  reply code align menuList startIndex attribute choices |
+	| code align menuList startIndex choices |
 	choices := self emphasisChoices.
 	startIndex := self startIndex.
 	align := self text alignmentAt: startIndex ifAbsent: [ 0 ].
 	code := self text emphasisAt: startIndex.
 	menuList := WriteStream on: Array new.
-	menuList nextPut: (code isZero ->  'normal' translated).
-	menuList nextPutAll: (choices  collect: [:emph|
-							(code anyMask: (TextEmphasis perform: emph) emphasisCode)
-								-> emph asString translated ]).
+	menuList nextPut: code isZero -> 'normal' translated.
+	menuList nextPutAll: (choices collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated ]).
 
-	menuList nextPut: ((self text attributesAt: startIndex)
-							anySatisfy: [ :attr | attr isKern and: [attr kern < 0 ]]) -> 'narrow' translated.
-	reply := UIManager default chooseFrom:  choices values: choices.
-	reply notNil
-		ifTrue: [ attribute := TextEmphasis perform: reply.
-				self applyAttribute:  attribute].
+	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow' translated.
+	(UIManager default chooseFrom: choices values: choices) ifNotNil: [ :reply | self applyAttribute: (TextEmphasis perform: reply) ].
 	^ true
 ]
 
@@ -398,28 +392,27 @@ RubTextEditor >> changeEmphasis: aKeyboardEvent [
 
 { #category : 'menu messages' }
 RubTextEditor >> changeEmphasisOrAlignment [
-	| aList reply  code align menuList startIndex attribute |
+
+	| aList code align menuList startIndex |
 	startIndex := self startIndex.
 	align := self text alignmentAt: startIndex ifAbsent: [ 0 ].
 	code := self text emphasisAt: startIndex.
 	menuList := WriteStream on: Array new.
-	menuList nextPut: (code isZero -> 'normal' translated).
-	menuList nextPutAll: (#(bold italic underlined struckOut) collect: [:emph|
-		(code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated]).
+	menuList nextPut: code isZero -> 'normal' translated.
+	menuList nextPutAll:
+		(#( bold italic underlined struckOut ) collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated ]).
 
-	menuList nextPut: ((self text attributesAt: startIndex)
-		anySatisfy: [ :attr | attr isKern and: [attr kern < 0 ]]) -> 'narrow' translated.
+	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow' translated.
 
-	self alignmentChoices collectWithIndex: [ :type :i |
-		menuList nextPut: (align = (i-1)) -> type asString translated ].
+	self alignmentChoices collectWithIndex: [ :type :i | menuList nextPut: align = (i - 1) -> type asString translated ].
 
-	aList := #(normal bold italic underlined struckOut narrow leftFlush centered rightFlush justified).
-	reply := UIManager default chooseFrom:  aList values: aList.
-	reply notNil ifTrue: [
+	aList := #( normal bold italic underlined struckOut narrow leftFlush centered rightFlush justified ).
+	(UIManager default chooseFrom: aList values: aList) ifNotNil: [ :reply |
+		| attribute |
 		(self alignmentChoices includes: reply)
-			ifTrue: [ attribute :=TextAlignment perform: reply]
-			ifFalse: [ attribute := TextEmphasis perform: reply].
-		self applyAttribute:  attribute].
+			ifTrue: [ attribute := TextAlignment perform: reply ]
+			ifFalse: [ attribute := TextEmphasis perform: reply ].
+		self applyAttribute: attribute ].
 	^ true
 ]
 

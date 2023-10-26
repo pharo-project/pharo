@@ -200,6 +200,7 @@ MCPackageLoader >> provisions [
 
 { #category : 'patch ops' }
 MCPackageLoader >> removeDefinition: aDefinition [
+
 	removals add: aDefinition
 ]
 

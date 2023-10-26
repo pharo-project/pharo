@@ -164,8 +164,8 @@ MetacelloMCVersion >> executeLoadFromArray: anArray [
 	| loader |
 	loader := MetacelloMCVersionSpecLoader on: self spec.
 	loader required: anArray.
-	loaderPolicy notNil ifTrue: [ loader loaderPolicy: loaderPolicy ].
-	^loader load
+	loaderPolicy ifNotNil: [ loader loaderPolicy: loaderPolicy ].
+	^ loader load
 ]
 
 { #category : 'actions' }

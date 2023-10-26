@@ -218,7 +218,6 @@ SystemDictionary >> forgetClass: aClass [
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
 	self organization removeClass: aClass.
-	aClass basicCategory: Class unclassifiedCategory.
 	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]

@@ -383,28 +383,23 @@ RGContainer >> loadPackagesFromImage [
 { #category : 'image class and method loading' }
 RGContainer >> loadTraitUsers [
 	"Set the users of a trait"
-	| users |
 
-	users := self classes select: [ :cls | cls hasTraitComposition ].
-	users do:[ :each |  | rgTrait |
-		each traitNames do:[ :tname|
-			rgTrait := self traitNamed: tname.
-			rgTrait notNil ifTrue: [
-				rgTrait addUser: each.
-				rgTrait classSide addUser: each classSide ] ] ]
+	(self classes select: [ :class | class hasTraitComposition ]) do: [ :user |
+		user traitNames do: [ :tname |
+			(self traitNamed: tname) ifNotNil: [ :rgTrait |
+				rgTrait addUser: user.
+				rgTrait classSide addUser: user classSide ] ] ]
 ]
 
 { #category : 'lookup by name' }
 RGContainer >> metaclassNamed: metaclassName [
-	| theClass |
 
-	theClass:= (self classOrTraitNamed: metaclassName).
-	theClass notNil
-	ifTrue:[ ^theClass isMeta
-		      ifTrue: [ theClass ]
-		      ifFalse:[ theClass classSide ] ].
+	(self classOrTraitNamed: metaclassName) ifNotNil: [ :theClass |
+		^ theClass isMeta
+			  ifTrue: [ theClass ]
+			  ifFalse: [ theClass classSide ] ].
 
-	^nil
+	^ nil
 ]
 
 { #category : 'lookup by name' }

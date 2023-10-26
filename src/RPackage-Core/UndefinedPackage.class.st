@@ -18,6 +18,11 @@ UndefinedPackage class >> undefinedPackageName [
 	^ #_UnpackagedPackage
 ]
 
+{ #category : 'adding' }
+UndefinedPackage >> addMethod: aCompiledMethod [
+	"We do not import the methods in this package."
+]
+
 { #category : 'initialization' }
 UndefinedPackage >> initialize [
 

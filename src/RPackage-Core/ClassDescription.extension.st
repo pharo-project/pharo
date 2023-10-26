@@ -55,12 +55,6 @@ ClassDescription >> package: aPackage tag: aTag [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> packageFromOrganizer: anOrganizer [
-	"returns the package that defines this class"
-	^ anOrganizer packageOf: self
-]
-
-{ #category : '*RPackage-Core' }
 ClassDescription >> packageName [
 
 	^ self package ifNotNil: [ :package | package name ]
@@ -68,7 +62,7 @@ ClassDescription >> packageName [
 
 { #category : '*RPackage-Core' }
 ClassDescription >> packageTag [
-	"Package tags are sub parts of packages to have a better organization of the packages."
+	"Package tags are sub categories of packages to have a better organization of the packages."
 
 	^ self package tagOf: self
 ]
@@ -80,7 +74,7 @@ ClassDescription >> packageTag: aTag [
 
 { #category : '*RPackage-Core' }
 ClassDescription >> packageTagName [
-	"Package tags are sub parts of packages to have a better organization of the packages. I return the name of my package tag or nil if the class is uncategorized."
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag or nil if the class is uncategorized."
 
 	^ self packageTag ifNotNil: [ :tag | tag name ]
 ]
