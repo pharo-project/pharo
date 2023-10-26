@@ -893,8 +893,7 @@ ClassDescription >> removeFromProtocols: aSelector [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
 		protocol removeMethodSelector: aSelector.
-		self removeProtocolIfEmpty: protocol.
-		self notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+		self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : 'instance variables' }
@@ -955,8 +954,7 @@ ClassDescription >> removeSelector: selector [
 	package := method package.
 
 	method removeFromPackage.
-	"When we remove a method we do not want to announce a recategorization."
-	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self removeFromProtocols: selector ].
+	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 
