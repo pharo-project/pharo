@@ -87,8 +87,9 @@ MCWorkingCopy class >> classModified: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> classMoved: anEvent [
+
 	self workingCopiesForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
-	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ].
+	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ]
 ]
 
 { #category : 'system changes' }

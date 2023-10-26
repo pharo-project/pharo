@@ -254,9 +254,7 @@ ShiftClassBuilder >> copyProtocols [
 ShiftClassBuilder >> createClass [
 
 	newClass := newMetaclass new.
-	newClass
-		setName: self name;
-		basicCategory: Class unclassifiedCategory.
+	newClass setName: self name.
 
 	self builderEnhancer
 		configureClass: newClass
@@ -410,7 +408,6 @@ ShiftClassBuilder >> initialize [
 	changeComparers := OrderedCollection new.
 	changes := Set new.
 
-	package := 'Unclassified'.
 	inRemake := false.
 
 	buildEnvironment := self class environment

@@ -52,9 +52,8 @@ MonticelloBootstrap >> bootstrap [
 
 	self createWorkingCopies.
 	self loadBootstrapPackages.
-	
-	SessionManager default registerSystemClassNamed: #SmalltalkImage.
 
+	SessionManager default registerSystemClassNamed: #SmalltalkImage
 ]
 
 { #category : 'versions' }
