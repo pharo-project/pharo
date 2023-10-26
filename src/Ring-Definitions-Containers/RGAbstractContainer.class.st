@@ -33,12 +33,11 @@ RGAbstractContainer >> addElement: anObject in: aCollection [
 
 { #category : 'lookup elements' }
 RGAbstractContainer >> elementNamed: elementName [
-	| aSymbol found |
 
-	aSymbol:= elementName asSymbol.
-	elements do:[ :collection|
-		(found:= self elementNamed: aSymbol in: collection) notNil ifTrue:[ ^found ] ].
-	^nil
+	| aSymbol |
+	aSymbol := elementName asSymbol.
+	elements do: [ :collection | (self elementNamed: aSymbol in: collection) ifNotNil: [ :found | ^ found ] ].
+	^ nil
 ]
 
 { #category : 'lookup elements' }
