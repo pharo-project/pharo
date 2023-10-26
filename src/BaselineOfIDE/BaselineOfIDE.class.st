@@ -125,7 +125,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
-		spec package: 'BaselineOfTelePharoSupport'.
 		spec
 			baseline: 'ReferenceFinder'
 			with: [ spec repository: repository ].
