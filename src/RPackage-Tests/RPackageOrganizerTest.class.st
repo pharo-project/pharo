@@ -103,8 +103,7 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 
 	c1 := self newClassNamed: #C1 in: p2.
 
-	c1 compileSilently: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
-	self organizer addMethod: c1 >> #methodPackagedInP1.
+	c1 compile: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*p1-something'.
 
 	self deny: (self organizer hasPackage: #'p1-something').
 	self assert: (p1 extendedClasses includes: c1)

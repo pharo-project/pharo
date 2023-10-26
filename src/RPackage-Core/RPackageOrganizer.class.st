@@ -151,23 +151,6 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
-{ #category : 'private' }
-RPackageOrganizer >> addMethod: method [
-	"we have to register the method in the parent RPackage of the class.
-	to do that, we first have to look if the method is an extension from an external package:"
-
-	| package protocol |
-	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
-	method methodClass package name = UndefinedPackage undefinedPackageName ifTrue: [ ^ self ].
-
-	protocol := method protocol.
-	package := protocol isExtensionProtocol
-		           ifTrue: [ self ensurePackageOfExtensionProtocol: protocol ]
-		           ifFalse: [ method methodClass package ].
-
-	package addMethod: method
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> addPackage: aPackage [
 
@@ -410,7 +393,6 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	anAnnouncer unsubscribe: self.
 
 	anAnnouncer weak
-		when: ProtocolAdded send: #systemProtocolAddedActionFrom: to: self;
 		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
 		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
@@ -484,12 +466,19 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 { #category : 'system integration' }
 RPackageOrganizer >> systemMethodAddedActionFrom: ann [
 
-	| method |
+	| method protocol |
 	"If the method origin is not the one of the event, we do not care about that method"
 	method := ann method.
 	method origin = ann methodClass ifFalse: [ ^ self ].
 
-	self addMethod: method
+	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
+	method methodClass package name = UndefinedPackage undefinedPackageName ifTrue: [ ^ self ].
+
+	protocol := method protocol.
+
+	(protocol isExtensionProtocol
+		 ifTrue: [ self packageForProtocol: protocol ]
+		 ifFalse: [ method methodClass package ]) addMethod: method
 ]
 
 { #category : 'system integration' }
@@ -517,13 +506,6 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 		newPackage addMethod: method.
 
 		SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage ]
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> systemProtocolAddedActionFrom: ann [
-	"When a protocol is added we should ensure extensions protocols have their matching package."
-
-	ann protocol isExtensionProtocol ifTrue: [ self ensurePackageOfExtensionProtocol: ann protocol ]
 ]
 
 { #category : 'accessing' }

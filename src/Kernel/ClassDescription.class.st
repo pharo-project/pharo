@@ -78,6 +78,8 @@ ClassDescription >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
+	"For now extensions are managed via protocols. If the protocol represent an extension we need to make sure the corresponding package exists."
+	protocol isExtensionProtocol ifTrue: [ self packageOrganizer ensurePackageOfExtensionProtocol: protocol ].
 	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]
