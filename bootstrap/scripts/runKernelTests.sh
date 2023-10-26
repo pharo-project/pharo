@@ -60,7 +60,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image loadHermes  Kernel-Chronology-Extras.hermes AST-Core.hermes Jobs.hermes InitializePackagesCommandLineHandler.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
 #Initializing the package manager
-./pharo bootstrap.image initializePackages --packages=packagesKernel.txt --protocols=protocolsKernel.txt --save
+./pharo bootstrap.image initializePackages --packages --protocols=protocolsKernel.txt --save
 
 #Load traits
 ./pharo bootstrap.image loadHermes TraitsV2.hermes --save

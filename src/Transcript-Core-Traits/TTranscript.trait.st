@@ -14,8 +14,7 @@ Historical note: #ensureCr and #reset were removed since they were not used
 Trait {
 	#name : 'TTranscript',
 	#category : 'Transcript-Core-Traits',
-	#package : 'Transcript-Core',
-	#tag : 'Traits'
+	#package : 'Transcript-Core-Traits'
 }
 
 { #category : 'streaming' }
