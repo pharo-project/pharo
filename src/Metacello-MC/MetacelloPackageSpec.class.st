@@ -168,9 +168,8 @@ MetacelloPackageSpec >> currentPackageLoaded: loadedBlock comparing: comarisonOp
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
-	| wcName vis |
-	vis := anMCLoader ancestorsFor: self.
-	vis notNil ifTrue: [
+	| wcName |
+	(anMCLoader ancestorsFor: self) ifNotNil: [ :vis |
 		| fileRef wcRef |
 		self getFile ifNil: [ ^ loadedBlock value: false ].
 		vis do: [ :vi |
