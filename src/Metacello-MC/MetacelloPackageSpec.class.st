@@ -165,30 +165,22 @@ MetacelloPackageSpec >> copySpecTo: aRepositorySpec [
 
 { #category : 'testing' }
 MetacelloPackageSpec >> currentPackageLoaded: loadedBlock comparing: comarisonOperator notLoaded: notLoadedBlock using: anMCLoader [
-  "Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
+	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
-  | wcName vis |
-  vis := anMCLoader ancestorsFor: self.
-  vis notNil
-    ifTrue: [ 
-      | fileRef wcRef |
-      self getFile == nil
-        ifTrue: [ ^ loadedBlock value: false ].
-      vis
-        do: [ :vi | 
-          wcName := vi name.
-          fileRef := GoferVersionReference name: self file.
-          fileRef versionNumber = 0
-            ifTrue: [ 
-              "a shame that GoferVersionReference doesn't have better method for recognizing a missing verion number"
-              "fix for: https://github.com/dalehenrich/metacello-work/issues/185"
-              ^ loadedBlock value: false ].
-          wcRef := GoferVersionReference name: wcName.
-          (wcRef compare: fileRef using: comarisonOperator)
-            ifTrue: [ ^ loadedBlock value: true ] ].
-      ^ loadedBlock value: false ].
-  ^ notLoadedBlock value: true
+	| wcName |
+	(anMCLoader ancestorsFor: self) ifNotNil: [ :vis |
+		| fileRef wcRef |
+		self getFile ifNil: [ ^ loadedBlock value: false ].
+		vis do: [ :vi |
+			wcName := vi name.
+			fileRef := GoferVersionReference name: self file.
+			fileRef versionNumber = 0 ifTrue: [ "a shame that GoferVersionReference doesn't have better method for recognizing a missing verion number" "fix for: https://github.com/dalehenrich/metacello-work/issues/185"
+				^ loadedBlock value: false ].
+			wcRef := GoferVersionReference name: wcName.
+			(wcRef compare: fileRef using: comarisonOperator) ifTrue: [ ^ loadedBlock value: true ] ].
+		^ loadedBlock value: false ].
+	^ notLoadedBlock value: true
 ]
 
 { #category : 'testing' }
@@ -196,13 +188,9 @@ MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBl
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
-	| vis |
-	vis := anMCLoader ancestorsFor: self.
-	vis notNil
-		ifTrue: [ 
-			self getFile == nil
-				ifTrue: [ ^ loadedBlock value: #() value: self file ].
-			^ loadedBlock value: vis value: self file ].
+	(anMCLoader ancestorsFor: self) ifNotNil: [ :vis |
+		self getFile ifNil: [ ^ loadedBlock value: #(  ) value: self file ].
+		^ loadedBlock value: vis value: self file ].
 	^ notLoadedBlock value
 ]
 
@@ -245,8 +233,8 @@ MetacelloPackageSpec >> explicitLoadUsing: mcLoader [
 { #category : 'private' }
 MetacelloPackageSpec >> extractNameFromFile [
 
-	file == nil ifTrue: [ ^nil ].
-	^(self loader nameComponentsFrom: self file) first
+	file ifNil: [ ^ nil ].
+	^ (self loader nameComponentsFrom: self file) first
 ]
 
 { #category : 'loading' }
@@ -277,8 +265,8 @@ MetacelloPackageSpec >> fetchUsing: mcLoader [
 { #category : 'querying' }
 MetacelloPackageSpec >> file [
 
-	file == nil ifTrue: [ ^self name ].
-	^file
+	file ifNil: [ ^ self name ].
+	^ file
 ]
 
 { #category : 'accessing' }
@@ -375,9 +363,8 @@ MetacelloPackageSpec >> goferLoaderReference [
 { #category : 'accessing' }
 MetacelloPackageSpec >> goferPackage [
 
-	goferPackage == nil 
-		ifTrue: [ goferPackage := MetacelloGoferPackage name: self name packageFilename: self file ].
-	^goferPackage
+	goferPackage ifNil: [ goferPackage := MetacelloGoferPackage name: self name packageFilename: self file ].
+	^ goferPackage
 ]
 
 { #category : 'testing' }
@@ -462,8 +449,7 @@ MetacelloPackageSpec >> mergeSpec: anotherSpec [
 { #category : 'querying' }
 MetacelloPackageSpec >> name [
 
-	name == nil ifTrue: [ name := self extractNameFromFile ].
-	^name
+	^ name ifNil: [ name := self extractNameFromFile ]
 ]
 
 { #category : 'merging' }
@@ -535,8 +521,7 @@ MetacelloPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo:
 { #category : 'querying' }
 MetacelloPackageSpec >> repositories [
 
-	repositories == nil ifTrue: [ repositories := self project repositoriesSpec ].
-	^ repositories
+	^ repositories ifNil: [ repositories := self project repositoriesSpec ]
 ]
 
 { #category : 'querying' }
@@ -635,25 +620,26 @@ MetacelloPackageSpec >> supplyingAnswers: anObject constructor: aVersionConstruc
 
 { #category : 'development support' }
 MetacelloPackageSpec >> updateForSpawnMethod: sourceSpec [
-    "This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
+	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
 
-    | nm fl |
-    nm := name.
-    fl := file.
-    fl == nil
-        ifTrue: [ 
-            "if only name has been set, then force the file to be non-nil, if any attribute besides file is set, then leave file nil"
-            {answers.
-            requires.
-            includes.
-            repositories.
-            preLoadDoIt.
-            postLoadDoIt} detect: [ :each | each ~~ nil ] ifNone: [ fl := name ] ].
-    super updateForSpawnMethod: sourceSpec.
-    file := repositories := goferPackage := preLoadDoIt := postLoadDoIt := nil.
-    name := nm.
-    file := fl.
-    ^ file == nil
+	| nm fl |
+	nm := name.
+	fl := file.
+	fl ifNil: [ "if only name has been set, then force the file to be non-nil, if any attribute besides file is set, then leave file nil"
+		{
+			answers.
+			requires.
+			includes.
+			repositories.
+			preLoadDoIt.
+			postLoadDoIt }
+			detect: [ :each | each ~~ nil ]
+			ifNone: [ fl := name ] ].
+	super updateForSpawnMethod: sourceSpec.
+	file := repositories := goferPackage := preLoadDoIt := postLoadDoIt := nil.
+	name := nm.
+	file := fl.
+	^ file == nil
 ]
 
 { #category : 'development support' }
@@ -669,9 +655,9 @@ MetacelloPackageSpec >> updatePackageRepositories: repositorySpecs [
 { #category : 'development support' }
 MetacelloPackageSpec >> updatePackageRepositoriesFor: aVersionSpec [
 	"Don't update the repository unless the package is loaded in the image"
-	
-	self workingCopy == nil ifTrue: [ ^self ].
-	self updatePackageRepositories: self repositorySpecs, aVersionSpec repositorySpecs.
+
+	self workingCopy ifNil: [ ^ self ].
+	self updatePackageRepositories: self repositorySpecs , aVersionSpec repositorySpecs
 ]
 
 { #category : 'development support' }
@@ -679,12 +665,10 @@ MetacelloPackageSpec >> updatePackageSpec: updatedSpecs force: force using: anMC
 	"Add pkg copy to updatedSpecs if the file in current image is different from the receiver's file"
 
 	| viName |
-	(force not and: [ self getFile == nil ])
-		ifTrue: [ ^ self ].	"no file explicitly specified in this spec"
-	(viName := self workingCopyNameFor: anMCLoader) == nil
-		ifTrue: [ ^ self ].	"no working copy"
+	(force not and: [ self getFile == nil ]) ifTrue: [ ^ self ]. "no file explicitly specified in this spec"
+	(viName := self workingCopyNameFor: anMCLoader) ifNil: [ ^ self ]. "no working copy"
 	viName ~= self file
-		ifTrue: [ 
+		ifTrue: [
 			| spec |
 			spec := self copy.
 			spec file: viName.
@@ -715,16 +699,13 @@ MetacelloPackageSpec >> workingCopy [
 MetacelloPackageSpec >> workingCopyName [
 
 	| wc |
-	(wc := self workingCopy) == nil ifTrue: [ ^nil ].
-	wc ancestry ancestors isEmpty not
-		ifTrue: [ ^wc ancestry ancestors first name ].
-	^nil
+	(wc := self workingCopy) ifNil: [ ^ nil ].
+	wc ancestry ancestors isEmpty not ifTrue: [ ^ wc ancestry ancestors first name ].
+	^ nil
 ]
 
 { #category : 'gofer' }
 MetacelloPackageSpec >> workingCopyNameFor: anMCLoader [
 
-	| vi |
-	(vi := anMCLoader currentVersionInfoFor: self) == nil ifTrue: [ ^nil ].
-	^vi name
+	^ (anMCLoader currentVersionInfoFor: self) ifNotNil: [ :vi | vi name ]
 ]

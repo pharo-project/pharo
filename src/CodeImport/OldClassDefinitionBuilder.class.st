@@ -166,7 +166,7 @@ OldClassDefinitionBuilder >> build [
 	(#( CompiledBlock CompiledCode CompiledMethod ) includes: subclassName) ifTrue: [ layoutClass := CompiledMethodLayout ].
 
 	^ self class classInstaller make: [ :aBuilder |
-		  | superclass realPackageName |
+		  | superclass converter |
 		  superclass := self class environment at: superclassName asSymbol.
 
 		  aBuilder
@@ -176,14 +176,10 @@ OldClassDefinitionBuilder >> build [
 			  layoutClass: layoutClass.
 		  instanceVariableNames ifNotNil: [ aBuilder slotsFromString: instanceVariableNames ].
 		  classVariableNames ifNotNil: [ aBuilder sharedVariablesFromString: classVariableNames ].
-
-		  packageName ifNotNil: [ "Since before the category included the package name and the tags name, we are trying to find the right one here."
-			  realPackageName := (superclass environment organization packageMatchingExtensionName: packageName)
-				                     ifNil: [ packageName ]
-				                     ifNotNil: [ :package | package name ].
-			  aBuilder package: realPackageName ].
-
-		  realPackageName = packageName ifFalse: [ aBuilder tag: (packageName withoutPrefix: realPackageName , '-') ].
+		
+		  converter := CategoryConverter category: packageName environment: superclass environment.
+		  aBuilder package: converter packageName.
+		  aBuilder tag: converter tagName.
 
 		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
 		  isTrait ifTrue: [ aBuilder beTrait ].

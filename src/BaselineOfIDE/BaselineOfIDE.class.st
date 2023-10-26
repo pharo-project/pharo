@@ -125,7 +125,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
-		spec package: 'BaselineOfTelePharoSupport'.
 		spec
 			baseline: 'ReferenceFinder'
 			with: [ spec repository: repository ].
@@ -305,10 +304,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
 	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
-
-	ASTTransformExamplePluginActive recompile.
-	PharoCommandLineHandler recompile.
-	SmalltalkImage recompile.
 
 	RubCharacterScanner initialize.
 

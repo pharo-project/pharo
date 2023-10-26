@@ -30,12 +30,13 @@ DelayMillisecondTickerSimulation >> nowTick [
 { #category : 'private - primitives' }
 DelayMillisecondTickerSimulation >> primSignal: sempahore atMilliseconds: nextTick [
 	"This is a simulation of the primitive, working hand-in-hand with #simulate_vmMilliseconds:"
+
 	(sempahore isKindOf: Semaphore) ifTrue: [
 		vmSimTheTimerSemaphore := sempahore.
 		vmSimNextWakeupTick := nextTick ].
-	(sempahore = nil) ifTrue: [
+	sempahore ifNil: [
 		vmSimTheTimerSemaphore := nil.
-		vmSimNextWakeupTick := 0]
+		vmSimNextWakeupTick := 0 ]
 ]
 
 { #category : 'api-system' }

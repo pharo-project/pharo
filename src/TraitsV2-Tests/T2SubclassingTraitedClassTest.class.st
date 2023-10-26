@@ -16,7 +16,7 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass [
 	c2 compile: 'asd'.
 
 	self shouldnt: [c2 >> #asd] raise: Error.
-	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests'.
+	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests-TestClasses'.
 	self assert: (c2 >> #asd) package equals: c2 package
 ]
 
@@ -32,7 +32,7 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass2 [
 	c2 compile: 'asd'.
 
 	self shouldnt: [c2 >> #asd] raise: Error.
-	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests'.
+	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests-TestClasses'.
 	self assert: (c2 >> #asd) package equals: c2 package
 ]
 

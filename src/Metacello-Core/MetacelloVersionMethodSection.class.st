@@ -76,9 +76,10 @@ MetacelloVersionMethodSection >> printOn: aStream [
 
 { #category : 'accessing' }
 MetacelloVersionMethodSection >> topParent [
-	self parent == nil
-		ifTrue: [ ^ self ].
-	^ self parent topParent
+
+	^ self parent
+		  ifNil: [ self ]
+		  ifNotNil: [ :aParent | aParent topParent ]
 ]
 
 { #category : 'accessing' }

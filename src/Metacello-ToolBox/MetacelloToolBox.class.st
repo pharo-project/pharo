@@ -1045,45 +1045,35 @@ MetacelloToolBox class >> validatePlatformLoad: platformAttribute for: configura
 	cleanDevelopmentLoads := OrderedCollection new.
 	cleanLoadAndTests := OrderedCollection new.
 	issues := [ MetacelloMCVersionValidator validateConfigurationLoad: configurationClass ]
-		on: MetacelloCleanNotification
-		do: [ :ex | 
-			(ex isKindOf: MetacelloCleanLoadAndTestsNotification)
-				ifTrue: [ cleanLoadAndTests add: ex version ].
-			((ex isKindOf: MetacelloCleanLoadNotification) and: [ ex version blessing == #development ])
-				ifTrue: [ cleanDevelopmentLoads add: ex version ].
-			ex resume ].
-	(cleanDevelopmentLoads isEmpty and: [ cleanLoadAndTests isEmpty ])
-		ifTrue: [ 
-			self inform: 'Failed validation with no versions load clean'.
-			^ issues ].
+		          on: MetacelloCleanNotification
+		          do: [ :ex |
+			          (ex isKindOf: MetacelloCleanLoadAndTestsNotification) ifTrue: [ cleanLoadAndTests add: ex version ].
+			          ((ex isKindOf: MetacelloCleanLoadNotification) and: [ ex version blessing == #development ]) ifTrue: [ cleanDevelopmentLoads add: ex version ].
+			          ex resume ].
+	(cleanDevelopmentLoads isEmpty and: [ cleanLoadAndTests isEmpty ]) ifTrue: [
+		self inform: 'Failed validation with no versions load clean'.
+		^ issues ].
 	toolbox := self configurationNamed: configurationBasename.
-	cleanLoadAndTests notEmpty
-		ifTrue: [ 
-			toolbox
-				symbolicVersionMethod: #stable;
-				addSymbolicSection: platformAttribute version: (stableVersion := cleanLoadAndTests last) versionString;
-				commitMethod ].
-	stableVersion notNil
-		ifTrue: [ 
-			stableVersion blessing == #development
-				ifTrue: [ 
-					issues
-						add:
-							(MetacelloValidationWarning
-								configurationClass: configurationClass
-								reasonCode: #stableDevelopmentVersion
-								callSite: #validatePlatformLoad:for:
-								explanation:
-									'Development version ' , stableVersion versionString printString , ' is marked as #stableVersion for '
-										, configurationClass name asString) ].
-			cleanDevelopmentLoads := cleanDevelopmentLoads select: [ :version | version > stableVersion ] ].
+	cleanLoadAndTests notEmpty ifTrue: [
+		toolbox
+			symbolicVersionMethod: #stable;
+			addSymbolicSection: platformAttribute version: (stableVersion := cleanLoadAndTests last) versionString;
+			commitMethod ].
+	stableVersion ifNotNil: [
+		stableVersion blessing == #development ifTrue: [
+			issues add: (MetacelloValidationWarning
+					 configurationClass: configurationClass
+					 reasonCode: #stableDevelopmentVersion
+					 callSite: #validatePlatformLoad:for:
+					 explanation: 'Development version ' , stableVersion versionString printString , ' is marked as #stableVersion for ' , configurationClass name asString) ].
+		cleanDevelopmentLoads := cleanDevelopmentLoads select: [ :version | version > stableVersion ] ].
 	cleanDevelopmentLoads notEmpty
-		ifTrue: [ 
+		ifTrue: [
 			toolbox
 				symbolicVersionMethod: #development;
 				addSymbolicSection: platformAttribute version: cleanDevelopmentLoads last versionString;
 				commitMethod ]
-		ifFalse: [ 
+		ifFalse: [
 			toolbox
 				symbolicVersionMethod: #development;
 				addSymbolicSection: platformAttribute version: #notDefined;
@@ -1498,21 +1488,15 @@ MetacelloToolBox >> classicCreateProjectReferenceSpec: projectBaseName [
 
 { #category : 'private' }
 MetacelloToolBox >> clearVersionSpec: versionSpec fullVersionSpec: fullVersionSpec updateProjects: updateProjects updatePackages: updatePackages [
+
 	versionSpec
-		specListProjectDo: [ :spec | 
-			updateProjects
-				ifTrue: [ 
-					| fullProjectReferenceSpec fullProjectSpec |
-					(fullProjectReferenceSpec := fullVersionSpec packageNamed: spec name) ~~ nil
-						ifTrue: [ 
-							fullProjectSpec := fullProjectReferenceSpec projectReference.
-							fullProjectSpec versionString == nil
-								ifTrue: [ spec projectReference versionString: '' ] ] ] ]
-		packageDo: [ :spec | 
-			updatePackages
-				ifTrue: [ 
-					spec getFile ~~ nil
-						ifTrue: [ spec file: '' ] ] ]
+		specListProjectDo: [ :spec |
+			updateProjects ifTrue: [
+				| fullProjectReferenceSpec fullProjectSpec |
+				(fullProjectReferenceSpec := fullVersionSpec packageNamed: spec name) ~~ nil ifTrue: [
+					fullProjectSpec := fullProjectReferenceSpec projectReference.
+					fullProjectSpec versionString ifNil: [ spec projectReference versionString: '' ] ] ] ]
+		packageDo: [ :spec | updatePackages ifTrue: [ spec getFile ~~ nil ifTrue: [ spec file: '' ] ] ]
 		groupDo: [ :ignored |  ]
 ]
 
@@ -1646,17 +1630,17 @@ MetacelloToolBox >> createSymbolicVersionMethod: selector inCategory: category f
 
 { #category : 'spec creation' }
 MetacelloToolBox >> createVersion: versionString [
-	| version  |
+
+	| version |
 	[ version := project version: versionString ]
 		on: MetacelloVersionDoesNotExistError
-		do: [ :ex | 
+		do: [ :ex |
 			| versionSpec |
 			versionSpec := self createVersionSpec: versionString.
 			version := versionSpec createVersion.
-			project map == nil
-				ifTrue: [ project map: Dictionary new ].
+			project map ifNil: [ project map: Dictionary new ].
 			project map at: versionString put: version ].
-	^version
+	^ version
 ]
 
 { #category : 'api-configuration' }

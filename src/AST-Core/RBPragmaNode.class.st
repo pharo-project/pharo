@@ -19,7 +19,8 @@ Class {
 		'keywordsPositions',
 		'arguments',
 		'left',
-		'right'
+		'right',
+		'pragma'
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -201,6 +202,18 @@ RBPragmaNode >> numArgs [
 RBPragmaNode >> postCopy [
 	super postCopy.
 	self arguments: (self arguments collect: [ :each | each copy ])
+]
+
+{ #category : 'accessing' }
+RBPragmaNode >> pragma [
+
+	^ pragma
+]
+
+{ #category : 'accessing' }
+RBPragmaNode >> pragma: anObject [
+
+	pragma := anObject
 ]
 
 { #category : 'replacing' }

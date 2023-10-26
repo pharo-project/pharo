@@ -39,20 +39,8 @@ MCVersionLoader >> addVersion: aVersion [
 
 { #category : 'private' }
 MCVersionLoader >> announceLoad: aString do: aBlock [
-	| returnValue |
-	returnValue := nil.
-	[ self announceLoadStart: aString ] ensure: [ 
-		[ returnValue := aBlock value ] ensure: [ 
-			self announceLoadStop: aString ] ].
-	^ returnValue
-]
 
-{ #category : 'private' }
-MCVersionLoader >> announceLoadStart: aString [
-	SystemAnnouncer announce: (MCVersionLoaderStarted new
-		versionLoader: self;
-		label: aString; 
-		yourself)
+	^ [ aBlock value ] ensure: [ self announceLoadStop: aString ]
 ]
 
 { #category : 'private' }
@@ -171,13 +159,12 @@ MCVersionLoader >> mergeVersions [
 
 { #category : 'checking' }
 MCVersionLoader >> warnAboutLosingChangesTo: versionCollection ifCancel: cancelBlock ifMerge: mergeBlock [
-	
-	| result |
 
-	result := (MCMergeOrLoadWarning signalFor: versionCollection).
-	
+	| result |
+	result := MCMergeOrLoadWarning signalFor: versionCollection.
+
 	result = false ifTrue: [ ^ mergeBlock value ].
-	result = nil ifTrue: [ ^ cancelBlock value ].
-	
+	result ifNil: [ ^ cancelBlock value ]
+
 	"otherwise we will continue loading"
 ]

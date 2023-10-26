@@ -98,8 +98,7 @@ MetacelloVersion >> hash [
 { #category : 'accessing' }
 MetacelloVersion >> importedVersions [
 
-	importedVersions == nil ifTrue: [ importedVersions := #() ].
-	^importedVersions
+	^ importedVersions ifNil: [ importedVersions := #(  ) ]
 ]
 
 { #category : 'accessing' }
@@ -175,10 +174,9 @@ MetacelloVersion >> packageNamed: aString [
 { #category : 'querying' }
 MetacelloVersion >> packageNamed: aString ifAbsent: aBlock [
 
-	| pkg |
-	(pkg := self spec packageNamed: aString ifAbsent: []) == nil
-		ifTrue: [ ^aBlock value ].
-	^pkg referencedSpec
+	^ (self spec packageNamed: aString ifAbsent: [  ])
+		  ifNil: [ aBlock value ]
+		  ifNotNil: [ :pkg | pkg referencedSpec ]
 ]
 
 { #category : 'printing' }
@@ -296,8 +294,7 @@ MetacelloVersion >> versionSpec [
 { #category : 'accessing' }
 MetacelloVersion >> versionStatus [
 
-	versionStatus == nil ifTrue: [ versionStatus := self computeVersionStatus].
-	^versionStatus
+	^ versionStatus ifNil: [ versionStatus := self computeVersionStatus ]
 ]
 
 { #category : 'accessing' }

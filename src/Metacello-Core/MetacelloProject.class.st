@@ -300,8 +300,7 @@ MetacelloProject >> load: aVersionString [
 MetacelloProject >> loadType [
 	"#atomic or #linear"
 
-	loadType == nil ifTrue: [ ^#atomic ].
-	^loadType
+	^ loadType ifNil: [ #atomic ]
 ]
 
 { #category : 'accessing' }
@@ -326,8 +325,7 @@ MetacelloProject >> loader: aLoader [
 { #category : 'spec classes' }
 MetacelloProject >> loaderClass [
 
-	loaderClass == nil ifTrue: [ loaderClass := self defaultLoaderClass ].
-	^loaderClass
+	^ loaderClass ifNil: [ loaderClass := self defaultLoaderClass ]
 ]
 
 { #category : 'spec classes' }

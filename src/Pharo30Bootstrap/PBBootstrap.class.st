@@ -166,15 +166,6 @@ PBBootstrap >> exportIntoMcz: aPackageName [
 ]
 
 { #category : 'preparation' }
-PBBootstrap >> exportKernelPackageNames [
-	"Export list of kernel package names for RPackage initialization to a file"
-		
-	self exportPackageNamesFor: self kernelPackageNames to: self bootstrapCacheDirectory / 'packagesKernel.txt'.
-	
-	
-]
-
-{ #category : 'preparation' }
 PBBootstrap >> exportKernelProtocols [
 	"This method exports all protocols of the methots in the kernel in a single text file to be easily readed and imported from the 'in-midst of initialization' image."
 		
@@ -371,7 +362,6 @@ PBBootstrap >> prepareBootstrap [
 	
 	self
 		exportKernelProtocols;
-		exportKernelPackageNames;
 		exportAllPackagesIntoMcz;
 		exportMonticelloInStFile;
 		

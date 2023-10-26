@@ -81,8 +81,7 @@ MetacelloAtomicLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 { #category : 'accessing' }
 MetacelloAtomicLoadDirective >> packageloads [
 
-	packageloads == nil ifTrue: [ packageloads := OrderedCollection new ].
-	^ packageloads
+	^ packageloads ifNil: [ packageloads := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
@@ -93,15 +92,13 @@ MetacelloAtomicLoadDirective >> packageloads: anObject [
 { #category : 'accessing' }
 MetacelloAtomicLoadDirective >> postloads [
 
-	postloads == nil ifTrue: [ postloads := OrderedCollection new ].
-	^ postloads
+	^ postloads ifNil: [ postloads := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
 MetacelloAtomicLoadDirective >> preloads [
 
-	preloads == nil ifTrue: [ preloads := OrderedCollection new ].
-	^ preloads
+	^ preloads ifNil: [ preloads := OrderedCollection new ]
 ]
 
 { #category : 'enumerating' }

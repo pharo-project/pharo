@@ -55,12 +55,6 @@ ClassDescription >> package: aPackage tag: aTag [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> packageFromOrganizer: anOrganizer [
-	"returns the package that defines this class"
-	^ anOrganizer packageOf: self
-]
-
-{ #category : '*RPackage-Core' }
 ClassDescription >> packageName [
 
 	^ self package ifNotNil: [ :package | package name ]

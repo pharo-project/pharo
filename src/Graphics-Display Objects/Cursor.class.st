@@ -1030,6 +1030,17 @@ Cursor >> printOn: aStream [
 ]
 
 { #category : 'primitives' }
+Cursor >> scaledToExactSize: newExtent [
+
+	"We need to override, so we can scale also the offset."
+
+	| newOne |
+	newOne := super scaledToExactSize: newExtent.
+	newOne offset: offset * (newExtent / self extent).
+	^ newOne
+]
+
+{ #category : 'primitives' }
 Cursor >> scaledToSize: newExtent [
 
 	"We need to override, so we can scale also the offset."

@@ -1105,10 +1105,16 @@ UITheme >> createArrowImagesCache [
 	^ LRUCache new
 		maximumWeight: 40;
 		factory: [ :key |
-			self
-				scrollbarArrowOfDirection: key first
+			| form1 form2 |
+			form1 := self scrollbarArrowOfDirection: key first
 				size: key second
-				color: key third ];
+				color: key third.
+			form2 := self scrollbarArrowOfDirection: key first
+				size: key second * 2
+				color: key third.
+			FormSet forms: {
+				form1.
+				form2 scaledToExactSize: form1 extent * 2 } ];
 		yourself
 ]
 

@@ -13,8 +13,7 @@ Class {
 MetacelloCachingGoferResolvedReference >> version [
 	"Answer a Monticello version of the receiver."
 
-	cachedVersion == nil ifTrue: [ cachedVersion := super version ].
-	^cachedVersion
+	^ cachedVersion ifNil: [ cachedVersion := super version ]
 ]
 
 { #category : 'querying' }
@@ -22,7 +21,7 @@ MetacelloCachingGoferResolvedReference >> workingCopy [
 	"Answer a working copy or throw an error if not present."
 
 	| pName |
-	cachedVersion == nil ifTrue: [ ^ super workingCopy ].
+	cachedVersion ifNil: [ ^ super workingCopy ].
 	pName := cachedVersion package name.
 	^ MCWorkingCopy allWorkingCopies
 		  detect: [ :wc | pName = wc packageName ]

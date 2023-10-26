@@ -35,6 +35,12 @@ ClyQueryBrowserContext >> isPackageSelected [
 	^self hasSelectedItems
 ]
 
+{ #category : 'testing' }
+ClyQueryBrowserContext >> isQueryBrowserContext [
+
+	^ true.
+]
+
 { #category : 'selection-classes' }
 ClyQueryBrowserContext >> lastSelectedClass [
 

@@ -48,21 +48,19 @@ MetacelloMCProject >> fetchProject [
 { #category : 'development support' }
 MetacelloMCProject >> fetchProject: aLoaderPolicy [
 	"fetch the latest version of the configuration package"
-	
+
 	| mcLoader |
-	(mcLoader := self loader) == nil
-		ifTrue: [ mcLoader := self project loaderClass on: nil ].
+	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
 	mcLoader loaderPolicy: aLoaderPolicy.
-	mcLoader doingLoads: [ 
-		MCWorkingCopy
-			workingCopiesForClass: self configuration class
-			do: [:workingCopy | | pkg |
-				pkg := self packageSpec.
-				workingCopy repositoryGroup repositories do: [:repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
-				pkg name: workingCopy packageName.
-				pkg fetchUsing: mcLoader.
-				^true ]].
-	^true
+	mcLoader doingLoads: [
+		MCWorkingCopy workingCopiesForClass: self configuration class do: [ :workingCopy |
+			| pkg |
+			pkg := self packageSpec.
+			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
+			pkg name: workingCopy packageName.
+			pkg fetchUsing: mcLoader.
+			^ true ] ].
+	^ true
 ]
 
 { #category : 'development support' }
@@ -76,9 +74,9 @@ MetacelloMCProject >> goferBranch: branchName project: commitMessage [
 { #category : 'development support' }
 MetacelloMCProject >> goferCommitProject: commitMessage [
 
-	| pkgSpec |
-	(pkgSpec := self projectPackage) == nil ifTrue: [ ^false ].
-	^pkgSpec goferCommitPackage: commitMessage
+	^ self projectPackage
+		  ifNil: [ false ]
+		  ifNotNil: [ :pkgSpec | pkgSpec goferCommitPackage: commitMessage ]
 ]
 
 { #category : 'spec classes' }
@@ -170,9 +168,9 @@ MetacelloMCProject >> repositorySpecClass [
 { #category : 'development support' }
 MetacelloMCProject >> saveProject [
 
-	| pkgSpec |
-	(pkgSpec := self projectPackage) == nil ifTrue: [ ^false ].
-	^pkgSpec savePackage
+	^ self projectPackage
+		  ifNil: [ false ]
+		  ifNotNil: [ :pkgSpec | pkgSpec savePackage ]
 ]
 
 { #category : 'development support' }
@@ -207,23 +205,18 @@ MetacelloMCProject >> updateProject: aLoaderPolicy [
 	 otherwise your instance won't reflect the info in the freshly loaded configuration"
 
 	| mcLoader |
-	(mcLoader := self loader) == nil
-		ifTrue: [ mcLoader := self project loaderClass on: nil ].
+	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
 	mcLoader loaderPolicy: aLoaderPolicy.
-	mcLoader
-		doingLoads: [ 
-			MCWorkingCopy
-				workingCopiesForClass: self configuration class
-				do: [ :workingCopy | 
-					| pkg ar |
-					pkg := self packageSpec.
-					workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
-					ar := workingCopy metacelloPackageNameWithBranch.
-					pkg name: (ar at: 1).
-					(ar at: 2) notEmpty
-						ifTrue: [ pkg file: (ar at: 2) ].
-					pkg load.
-					^ true ] ].
+	mcLoader doingLoads: [
+		MCWorkingCopy workingCopiesForClass: self configuration class do: [ :workingCopy |
+			| pkg ar |
+			pkg := self packageSpec.
+			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
+			ar := workingCopy metacelloPackageNameWithBranch.
+			pkg name: (ar at: 1).
+			(ar at: 2) notEmpty ifTrue: [ pkg file: (ar at: 2) ].
+			pkg load.
+			^ true ] ].
 	^ true
 ]
 

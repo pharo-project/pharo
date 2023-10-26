@@ -87,8 +87,9 @@ MCWorkingCopy class >> classModified: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> classMoved: anEvent [
+
 	self workingCopiesForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
-	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ].
+	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -176,10 +177,6 @@ MCWorkingCopy class >> initialize [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> methodModified: anEvent [
-	"If the method has just been loaded by monticello itself, do not mark it as dirty"
-
-	anEvent propertyAt: #eventSource ifPresent: [ :source | source == self class package name ifTrue: [ ^ self ] ].
-
 	"trait methods aren't handled here"
 	anEvent isProvidedByATrait ifTrue: [ ^ self ].
 
@@ -261,7 +258,6 @@ MCWorkingCopy class >> registerPackage: aPackage packageOrganizer: aPackageOrgan
 	"When creating a MC package and a working copy, we need to ensure we create a system package also in case someone creates a package without an associated system package.
 	But we still check that the package does not exist because the working copy creation might be caused by the creation of the system package and we do not want to end up in a loop."
 	aPackageOrganizer packageNamed: aPackage name ifAbsent: [ aPackageOrganizer ensurePackage: aPackage name ].
-	self announcer announce: (MCWorkingCopyCreated workingCopy: workingCopy package: aPackage).
 	^ workingCopy
 ]
 
@@ -492,15 +488,11 @@ MCWorkingCopy >> modified [
 
 { #category : 'accessing' }
 MCWorkingCopy >> modified: aBoolean [
-	modified = aBoolean
-		ifTrue: [ ^ self ].
+
+	modified = aBoolean ifTrue: [ ^ self ].
 	modified := aBoolean.
 	self changed: #modified.
-	modified
-		ifFalse: [ 
-			ChangesLog default logChange: '"' , self packageName , '"' ].
-	self announcer announce: (MCPackageModified package: self package)
-	
+	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
 ]
 
 { #category : 'accessing' }
@@ -754,11 +746,9 @@ MCWorkingCopy >> unload [
 
 { #category : 'operations' }
 MCWorkingCopy >> unregister [
-	self class registry 
-		removeKey: package
-		ifAbsent: [ ^ self ].
-	self class changed: (Array with: #unregistered with: package).
-	self announcer announce: (MCWorkingCopyDeleted workingCopy: self package: package)
+
+	self class registry removeKey: package ifAbsent: [ ^ self ].
+	self class changed: { #unregistered . package }
 ]
 
 { #category : 'accessing' }
