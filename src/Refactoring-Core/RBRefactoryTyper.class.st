@@ -164,15 +164,13 @@ RBRefactoryTyper >> computeTypes [
 
 { #category : 'private' }
 RBRefactoryTyper >> executeSearch: searcher [
-	class withAllSubclasses do:
-			[:each |
-			each selectors do:
-					[:sel |
-					| parseTree |
-					methodName := sel.
-					parseTree := each parseTreeForSelector: sel.
-					parseTree doSemanticAnalysis.
-					parseTree notNil ifTrue: [searcher executeTree: parseTree]]]
+
+	class withAllSubclasses do: [ :aClass |
+		aClass selectors do: [ :selector |
+			methodName := selector.
+			searcher executeTree: ((aClass parseTreeForSelector: methodName)
+					 doSemanticAnalysis;
+					 yourself) ] ]
 ]
 
 { #category : 'computing types' }

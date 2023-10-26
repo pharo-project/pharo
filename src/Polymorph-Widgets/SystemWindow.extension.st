@@ -466,13 +466,13 @@ SystemWindow >> collapseBoxHit [
 SystemWindow >> configureForEmbedding [
 	"Set up the window so it can be embedded into another morph."
 
-	labelArea owner notNil ifTrue: [
+	labelArea owner ifNotNil: [
 		self
 			hasDropShadow: false;
 			beWithoutGrips;
 			removeLabelArea;
 			makeBorderless.
-		self submorphsDo: [:m | m unlock]]
+		self submorphsDo: [ :m | m unlock ] ]
 ]
 
 { #category : '*Polymorph-Widgets' }
