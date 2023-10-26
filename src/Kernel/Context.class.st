@@ -1087,9 +1087,7 @@ Context >> jump: distance withInterpreter: anInterpreter [
 Context >> longStack [
 	"Answer a String showing the top 100 contexts on my sender chain."
 
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 100) do: [ :item |
-			stream print: item; cr ]]
+	^ self printStackOfSize: 100
 ]
 
 { #category : 'accessing' }
@@ -1481,6 +1479,18 @@ Context >> printOn: aStream [
 			[closureOrNil printOn: aStream] on:Exception do: [aStream nextPutAll: 'Error printing the compiledBlock'].
 			aStream nextPutAll: ' in '.
 			outerContext printOn: aStream ]
+]
+
+{ #category : 'debugger access' }
+Context >> printStackOfSize: aNumber [
+	"Answer a String showing the top ten contexts on my sender chain."
+
+	<reflection: 'Stack Manipulation - Context'>
+	^ String streamContents: [ :stream |
+		  (self stackOfSize: aNumber) do: [ :item |
+			  stream
+				  print: item;
+				  lf ] ]
 ]
 
 { #category : 'initialization' }
@@ -2030,10 +2040,8 @@ Context >> shortDebugStackOn: aStream [
 { #category : 'debugger access' }
 Context >> shortStack [
 	"Answer a String showing the top ten contexts on my sender chain."
-	<reflection: 'Stack Manipulation - Context'>
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 10) do: [ :item |
-			stream print: item; cr]]
+
+	^ self printStackOfSize: 10
 ]
 
 { #category : 'debugger access' }

@@ -639,18 +639,18 @@ EDEmergencyDebugger >> shortStackIndex: newIndex [
 
 { #category : 'private' }
 EDEmergencyDebugger >> showDebuggerError [
+
 	| context text |
-	error
-		ifNil: [ self composeResult: '' title: 'No error.'.
-			^ self updateDisplay ].
+	error ifNil: [
+		self composeResult: '' title: 'No error.'.
+		^ self updateDisplay ].
 	context := error signalerContext.
-	text := String
-		streamContents: [ :s |
-			20
-				timesRepeat: [ context == nil
-						ifFalse: [ s
-								cr;
-								print: (context := context sender) ] ] ].
+	text := String streamContents: [ :s |
+		        20 timesRepeat: [
+			        context ifNotNil: [
+				        s
+					        cr;
+					        print: (context := context sender) ] ] ].
 	self composeResult: text title: error description.
 	self updateDisplay
 ]

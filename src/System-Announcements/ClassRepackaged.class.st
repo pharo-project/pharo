@@ -24,6 +24,12 @@ ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
 		  yourself
 ]
 
+{ #category : 'class initialization' }
+ClassRepackaged class >> initialize [
+
+	self deprecatedAliases: { #ClassRecategorized }
+]
+
 { #category : 'testing' }
 ClassRepackaged >> affectsMethods [
 	"methods belong to class which could be represented by tools as part of method"

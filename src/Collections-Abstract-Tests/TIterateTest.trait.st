@@ -432,9 +432,9 @@ TIterateTest >> testSelectThenDoOnEmpty [
 
 { #category : 'tests - iterating' }
 TIterateTest >> testSumNumbers [
-	|result|
-	result:= self collectionWithoutNilElements
-		sumNumbers: [ :ele | ele notNil ifTrue: [ 1 ] ifFalse: [ 0 ]].
-
+	| result |
+	result := self collectionWithoutNilElements
+	sumNumbers: [ :ele | ele ifNil: [ 0 ] ifNotNil: [ 1 ] ].
+	
 	self assert: self collectionWithoutNilElements size = result
 ]

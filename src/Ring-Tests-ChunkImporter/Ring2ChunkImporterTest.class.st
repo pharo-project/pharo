@@ -8,11 +8,6 @@ Class {
 	#package : 'Ring-Tests-ChunkImporter'
 }
 
-{ #category : 'expected failures' }
-Ring2ChunkImporterTest >> expectedFailures [
-	^ #(testMultipleMixedChunksInStrangeOrderWithMetaclassTrait testStandardMethodInNewMetaclassTrait)
-]
-
 { #category : 'tests' }
 Ring2ChunkImporterTest >> testClassWithNilSuperclass [
 
@@ -204,7 +199,7 @@ Ring2ChunkImporterTest >> testMultipleMixedChunksInStrangeOrderWithMetaclassTrai
 
 	| importer trait method |
 
-	" EXPECTED FAILURE "
+	<expectedFailure>
 	"This test currently needs to fail because the CodeImporter gives only original behavior name and #isMata.
 	We do not know that the behavior was supposed to be classTrait."
 
@@ -663,7 +658,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclassTrait [
 
 	| importer trait method code |
 
-	" EXPECTED FAILURE "
+	<expectedFailure>
 	"This test currently needs to fail because the CodeImporter gives only original behavior name and #isMata.
 	We do not know that the behavior was supposed to be classTrait."
 

@@ -52,9 +52,8 @@ MonticelloBootstrap >> bootstrap [
 
 	self createWorkingCopies.
 	self loadBootstrapPackages.
-	
-	SessionManager default registerSystemClassNamed: #SmalltalkImage.
 
+	SessionManager default registerSystemClassNamed: #SmalltalkImage
 ]
 
 { #category : 'versions' }
@@ -113,10 +112,7 @@ MonticelloBootstrap >> loadBootstrapPackages [
 
 	MCCacheRepository cacheDirectory: directory.
 
-	(self bootstrapVersionsExcept: [ :package | 
-		#('Shift-ClassBuilder' 'Monticello')
-			includes: package name])
-		do: [ :version | self loadPackageVersion: version ].
+	(self bootstrapVersionsExcept: [ :package | #( 'Shift-ClassBuilder' 'Monticello' ) includes: package name ]) do: [ :version | self loadPackageVersion: version ].
 
 	"We load ShiftClassBuilder at the end because it has a patch to work in the bootstrap process. The patch is used when there is no source."
 
@@ -142,14 +138,21 @@ MonticelloBootstrap >> loadPackageNamed: aName [
 
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackageVersion: aFileName [
-	
-	[ 	SystemNotification signal: ('Loading ', aFileName asString).
-		"Use snapshot install instead of load to force loading.
-		Otherwise monticello finds no changes and does not load anything."
-		(self localRepository loadVersionFromFileNamed: aFileName) load.
-	] on: MCMergeOrLoadWarning do: [:warning |
-		SystemNotification signal: ('Warning: ', warning messageText asString).
-		warning resume: true ]
+
+	| previous |
+	"Until the bootstrap of Pharo runs on Pharo 12, the MCZ exported will be exported with categories in MCZ format instead of packages and tags. Using #readingOldExport should allow to bootstrap until we run the bootstrap in Pharo 12."
+	previous := MCMczReader readingOldExport.
+	[
+	MCMczReader readingOldExport: true.
+
+	[
+	SystemNotification signal: 'Loading ' , aFileName asString.
+	"Use snapshot install instead of load to force loading. Otherwise monticello finds no changes and does not load anything."
+	(self localRepository loadVersionFromFileNamed: aFileName) load ]
+		on: MCMergeOrLoadWarning
+		do: [ :warning |
+			SystemNotification signal: 'Warning: ' , warning messageText asString.
+			warning resume: true ] ] ensure: [ MCMczReader readingOldExport: previous ]
 ]
 
 { #category : 'bootstrapping' }

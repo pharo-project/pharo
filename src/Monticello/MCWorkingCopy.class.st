@@ -87,8 +87,9 @@ MCWorkingCopy class >> classModified: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> classMoved: anEvent [
+
 	self workingCopiesForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
-	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ].
+	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -747,7 +748,7 @@ MCWorkingCopy >> unload [
 MCWorkingCopy >> unregister [
 
 	self class registry removeKey: package ifAbsent: [ ^ self ].
-	self class changed: (Array with: #unregistered with: package)
+	self class changed: { #unregistered . package }
 ]
 
 { #category : 'accessing' }

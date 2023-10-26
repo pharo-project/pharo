@@ -168,18 +168,11 @@ ShiftClassBuilder >> category [
 { #category : 'deprecated' }
 ShiftClassBuilder >> category: aString [
 
+	| converter |
 	self flag: #package. "To deprecate once it is not use in the bootstrap anymore."
-	(self installingEnvironment organization packageMatchingExtensionName: aString)
-		ifNil: [
-			(aString includes: $-)
-				ifTrue: [
-					self
-						package: (aString copyUpToLast: $-);
-						tag: (aString copyAfterLast: $-) ]
-				ifFalse: [ self package: aString ] ]
-		ifNotNil: [ :aPackage |
-			self package: aPackage name.
-			aString = aPackage name ifFalse: [ self tag: (aString withoutPrefix: aPackage name , '-') ] ]
+	converter := CategoryConverter category: aString environment: self installingEnvironment.
+	self package: converter packageName.
+	self tag: converter tagName
 ]
 
 { #category : 'accessing' }
@@ -261,9 +254,7 @@ ShiftClassBuilder >> copyProtocols [
 ShiftClassBuilder >> createClass [
 
 	newClass := newMetaclass new.
-	newClass
-		setName: self name;
-		basicCategory: Class unclassifiedCategory.
+	newClass setName: self name.
 
 	self builderEnhancer
 		configureClass: newClass
@@ -417,7 +408,6 @@ ShiftClassBuilder >> initialize [
 	changeComparers := OrderedCollection new.
 	changes := Set new.
 
-	package := 'Unclassified'.
 	inRemake := false.
 
 	buildEnvironment := self class environment

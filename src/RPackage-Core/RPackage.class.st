@@ -554,8 +554,10 @@ RPackage >> moveClass: aClass toTag: aTag [
 				reject: [ :protocol | protocol isExtensionProtocol ]
 				thenDo: [ :protocol | self importProtocol: protocol forClass: class ] ] ].
 
-	"If the tag is undefined, this means we are adding the class. In that case we do not want to announce a recategorization since there is already a ClassAddition announcement raised."
-	oldTag isUndefined ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
+	"If the tag is undefined, this means we are adding the class. Else we are updating the package or tag."
+	oldTag isUndefined
+		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: aClass) ]
+		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
 { #category : 'accessing' }
@@ -568,6 +570,7 @@ RPackage >> name [
 RPackage >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
+
 	name := aSymbol asSymbol
 ]
 

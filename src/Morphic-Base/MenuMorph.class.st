@@ -649,11 +649,12 @@ MenuMorph >> deleteIfPopUp [
 { #category : 'control' }
 MenuMorph >> deleteIfPopUp: evt [
 	"Remove this menu from the screen if stayUp is not true. If it is a submenu, also remove its owning menu."
-	stayUp ifFalse: [self topRendererOrSelf delete].
-	(popUpOwner notNil) ifTrue: [
+
+	stayUp ifFalse: [ self topRendererOrSelf delete ].
+	popUpOwner ifNotNil: [
 		popUpOwner isSelected: false.
-		popUpOwner deleteIfPopUp: evt].
-	evt ifNotNil:[evt hand releaseMouseFocus: self]
+		popUpOwner deleteIfPopUp: evt ].
+	evt ifNotNil: [ evt hand releaseMouseFocus: self ]
 ]
 
 { #category : 'control' }

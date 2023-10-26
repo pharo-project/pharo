@@ -600,7 +600,7 @@ MCClassDefinition >> tagName: aString [
 
 	tagName := aString = RPackage rootTagName
 		           ifTrue: [ nil ]
-		           ifFalse: [ aString asSymbol ]
+		           ifFalse: [ aString ifNotNil: [ aString asSymbol ] ]
 ]
 
 { #category : 'accessing' }
