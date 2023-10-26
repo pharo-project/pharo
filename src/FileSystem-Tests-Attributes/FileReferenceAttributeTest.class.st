@@ -183,8 +183,11 @@ FileReferenceAttributeTest >> testNLink [
 
 { #category : 'tests' }
 FileReferenceAttributeTest >> testTargetFile [
+	"The temporary file isn't a symbolic link, so the targetFile is the file itself"
 
-	"The temporary file isn't a symbolic link, so the targetFile isn't supported"
-	self should: [ self tempFileResource file targetPath ] raise: FileAttributeNotSupported.
-	self should: [ self tempFileResource file entry targetPath ] raise: FileAttributeNotSupported
+	self assert: self tempFileResource file targetFileReference equals: self tempFileResource file resolve.
+	self assert: self tempFileResource file symlinkEntry targetFileReference equals: self tempFileResource file resolve.
+	
+	"However the DirectoryEntry doesn't have the information"
+	self should: [ self tempFileResource file entry targetPath ] raise: FileAttributeNotSupported.
 ]
