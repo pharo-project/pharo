@@ -914,6 +914,17 @@ Dictionary >> select: aBlock [
 	^ newCollection
 ]
 
+{ #category : 'enumerating' }
+Dictionary >> select: selectBlock thenCollect: collectBlock [
+
+	| newCollection |
+	newCollection := self copyEmpty.
+	self associationsDo: [ :each |
+		(selectBlock value: each value) ifTrue: [
+			newCollection at: each key put: (collectBlock value: each value) ] ].
+	^ newCollection
+]
+
 { #category : 'printing' }
 Dictionary >> storeOn: aStream [
 	| noneYet |
