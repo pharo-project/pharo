@@ -1,7 +1,20 @@
-Extension { #name : 'WeakArray' }
+"
+I represent the pharo finalization process that waits for finalization of objects and sends the #mourn message to then. I am registered to the startup to stop/start myself on each start.
+"
+Class {
+	#name : 'FinalizationProcess',
+	#superclass : 'Object',
+	#classVars : [
+		'FinalizationSemaphore',
+		'TheFinalizationProcess'
+	],
+	#category : 'System-Finalization-Base',
+	#package : 'System-Finalization',
+	#tag : 'Base'
+}
 
-{ #category : '*System-Finalization' }
-WeakArray class >> finalizationProcess [
+{ #category : 'as yet unclassified' }
+FinalizationProcess class >> finalizationProcess [
 	"The finalization process arranges to send mourn to each element of the VM's finalization queue,
 	 which is accessed via primitiveFetchMourner.  The VM signals FinalizationSemaphore whenever
 	 the queue is non-empty.  This process loops, waiting on the semaphore, fetches the first element
@@ -22,8 +35,17 @@ WeakArray class >> finalizationProcess [
 		 throttle wait]]
 ]
 
-{ #category : '*System-Finalization' }
-WeakArray class >> mournLoopWith: firstMourner [
+{ #category : 'class initialization' }
+FinalizationProcess class >> initialize [
+	"Do we need to initialize specialObjectsArray?"
+
+	Smalltalk specialObjectsArray size < 42 ifTrue: [ Smalltalk recreateSpecialObjectsArray ].
+
+	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42
+]
+
+{ #category : 'as yet unclassified' }
+FinalizationProcess class >> mournLoopWith: firstMourner [
 	"Send mourn to all the objects available in the mourn queue, starting
 	 with firstMourner which the sender has already extracted for us.  If
 	 an error occurs here, it will break this loop but the sender will spawn
@@ -36,8 +58,8 @@ WeakArray class >> mournLoopWith: firstMourner [
 	 (mourner := self primitiveFetchMourner) notNil] whileTrue
 ]
 
-{ #category : '*System-Finalization' }
-WeakArray class >> primitiveFetchMourner [
+{ #category : 'as yet unclassified' }
+FinalizationProcess class >> primitiveFetchMourner [
 	"Answer the next mourner in the VM's queue of objects to be finalized.
 	 The queue contains weak arrays and ephemerons.  If the primitive is
 	 not implemented, raise an error telling people to upgrade the VM.  If
@@ -49,27 +71,34 @@ WeakArray class >> primitiveFetchMourner [
 	^nil
 ]
 
-{ #category : '*System-Finalization' }
-WeakArray class >> restartFinalizationProcess [
+{ #category : 'as yet unclassified' }
+FinalizationProcess class >> restartFinalizationProcess [
+	<script>
 	"kill any old process, just in case"
-	FinalizationProcess
-		ifNotNil: [FinalizationProcess terminate.
-			FinalizationProcess := nil].
+	TheFinalizationProcess
+		ifNotNil: [TheFinalizationProcess terminate.
+			TheFinalizationProcess := nil].
 
 	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42.
-	FinalizationProcess := [self finalizationProcess]
+	TheFinalizationProcess := [self finalizationProcess]
 		forkAt: Processor userInterruptPriority.
-	FinalizationProcess name: 'WeakArray Finalization Process'
+	TheFinalizationProcess name: 'Finalization Process'
 ]
 
-{ #category : '*System-Finalization' }
-WeakArray class >> restartMethods [
+{ #category : 'cleanup' }
+FinalizationProcess class >> restartMethods [
 
 	self restartFinalizationProcess
 ]
 
-{ #category : '*System-Finalization' }
-WeakArray class >> startUp: resuming [
+{ #category : 'accessing' }
+FinalizationProcess class >> runningFinalizationProcess [
+	"Answer the FinalizationProcess I am running, if any"
+	^TheFinalizationProcess
+]
+
+{ #category : 'system startup' }
+FinalizationProcess class >> startUp: resuming [
 	resuming ifFalse: [ ^self ].
 	self restartFinalizationProcess
 ]

@@ -72,7 +72,6 @@ FinalizationRegistryEntry >> link [
 	^ link
 ]
 
-
 { #category : 'accessing' }
 FinalizationRegistryEntry >> link: anObject [
 

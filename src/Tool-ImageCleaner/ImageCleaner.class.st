@@ -116,7 +116,7 @@ ImageCleaner >> cleanUpProcesses [
 		reject: [ :p |
 			{
 			Processor activeProcess.
-			WeakArray runningFinalizationProcess.
+			FinalizationProcess runningFinalizationProcess.
 			Processor backgroundProcess.
 			SmalltalkImage current lowSpaceWatcherProcess.
 			UIManager default uiProcess.
