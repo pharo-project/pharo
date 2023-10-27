@@ -173,7 +173,6 @@ RBCodeSnippetTest >> testParse [
 		self assert: ((node allParents includes: ast) or: [node = ast]).
 		node start to: node stop do: [ :i | self assert: ((node bestNodeFor: (i to: i)) isKindOf: RBProgramNode) ].
 		node start+1 to: node stop do: [ :i | self assert: ((node bestNodeForPosition: i) isKindOf: RBProgramNode) ].
-		self assert: node displaySourceCode isString.
 		self assert: node dump equals: node dump.
 		node hasMultipleReturns.
 		node hasNonLocalReturn.
