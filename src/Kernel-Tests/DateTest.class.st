@@ -75,17 +75,17 @@ DateTest >> testAccessing [
 { #category : 'tests' }
 DateTest >> testAddDays [
 
-	self assert: (january23rd2004 addDays: 0) equals: '2004-01-23' asDate.
-	self assert: (january23rd2004 addDays: 31) equals: '2004-02-23' asDate.
-	self assert: (january23rd2004 addDays: 366) equals: '2005-01-23' asDate
+	self assert: (january23rd2004 addDays: 0) equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addDays: 31) equals: (Date readFrom: '23-2-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addDays: 366) equals: (Date readFrom: '23-1-2005' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
 DateTest >> testAddMonths [
 
-	self assert: (january23rd2004 addMonths: 0) equals: '2004-01-23' asDate.
-	self assert: (january23rd2004 addMonths: 1) equals: '2004-02-23' asDate.
-	self assert: (january23rd2004 addMonths: 12) equals: '2005-01-23' asDate
+	self assert: (january23rd2004 addMonths: 0) equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addMonths: 1) equals: (Date readFrom: '23-2-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addMonths: 12) equals: (Date readFrom: '23-1-2005' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -154,7 +154,7 @@ DateTest >> testBasicPrinting [
 DateTest >> testComparing [
 
 	| sameDate laterDate earlierDate |
-	sameDate := june2nd1973 asString asDate.
+	sameDate := june2nd1973 copy.
 	laterDate := june2nd1973 + 1 day.
 	earlierDate := june2nd1973 - 1 day.
 
@@ -215,7 +215,7 @@ DateTest >> testDuration [
 
 { #category : 'tests' }
 DateTest >> testEqual [
-	self assert: january23rd2004 equals: 'January 23, 2004' asDate
+	self assert: january23rd2004 equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -249,7 +249,7 @@ DateTest >> testFromDays [
 	june2nd1973FromDays := self dateClass fromDays: (june2nd1973 - self epoch) asDays.
 	self assert: june2nd1973FromDays equals: (june2nd1973 translateTo: 0).
 
-	march18th1627 := '18 March 1627' asDate.
+	march18th1627 := Date readFrom: '18-3-1627' pattern: 'd-m-y'.
 	march18th1627FromDays := self dateClass fromDays: (march18th1627 - self epoch) asDays.
 	self assert: march18th1627FromDays equals: (march18th1627 translateTo: 0).
 
@@ -428,7 +428,7 @@ DateTest >> testNext [
 
 	| nextDay |
 	nextDay := june2nd1973 next.
-	self assert: nextDay equals: '3 June, 1973' asDate
+	self assert: nextDay equals: (Date readFrom: '3-6-1973' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -436,13 +436,13 @@ DateTest >> testPrevious [
 
 	| previousDay |
 	previousDay := june2nd1973 previous.
-	self assert: previousDay equals: '1 June, 1973' asDate
+	self assert: previousDay equals: (Date readFrom: '1-6-1973' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
 DateTest >> testPreviousByName [
 
-	self assert: (january23rd2004 previous: #Friday) equals: '2004-01-16' asDate
+	self assert: (january23rd2004 previous: #Friday) equals: (Date readFrom: '16-1-2004' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -556,8 +556,8 @@ DateTest >> testSubtractDate [
 { #category : 'tests' }
 DateTest >> testSubtractDays [
 
-	self assert: (january23rd2004 subtractDays: 0) equals: '2004-01-23' asDate.
-	self assert: (january23rd2004 subtractDays: 30) equals: '2003-12-24' asDate
+	self assert: (january23rd2004 subtractDays: 0) equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 subtractDays: 30) equals: (Date readFrom: '24-12-2003' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }

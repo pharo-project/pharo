@@ -74,6 +74,7 @@ Date class >> firstWeekdayOfMonth: month year: year [
 { #category : '*Kernel-Chronology-Extras' }
 Date class >> fromString: aString [
 	"Answer an instance of created from a string with format mm.dd.yyyy or mm-dd-yyyy or mm/dd/yyyy"
+	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
 
 	^ self readFrom: aString readStream
 ]
@@ -228,6 +229,10 @@ Date class >> readFrom: aStream [
 		<month> <day> <year>		(April 15, 1982; 4/15/82)
 		<year>-<month>-<day>			(1982-04-15) (ISO8601)"
 	| day month year parsedNumber prefix |
+	
+	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
+
+	
 	aStream peek = $-
 		ifTrue: [prefix := -1]
 		ifFalse: [prefix := 1].

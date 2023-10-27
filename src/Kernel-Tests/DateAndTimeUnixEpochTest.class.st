@@ -32,7 +32,7 @@ DateAndTimeUnixEpochTest >> tearDown [
 
 { #category : 'tests' }
 DateAndTimeUnixEpochTest >> testAsDate [
-	self assert: aDateAndTime asDate equals: 'January 1, 1970' asDate
+	self assert: aDateAndTime asDate equals: (Date readFrom: '1-1-1970' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -78,7 +78,7 @@ DateAndTimeUnixEpochTest >> testCurrent [
 
 { #category : 'tests' }
 DateAndTimeUnixEpochTest >> testDateTime [
-	self assert: aDateAndTime equals: (DateAndTime date: '01-01-1970' asDate time: '00:00:00' asTime)
+	self assert: aDateAndTime equals: (DateAndTime date: (Date readFrom: '1-1-1970' pattern: 'd-m-y') time: '00:00:00' asTime)
 ]
 
 { #category : 'tests' }
@@ -198,7 +198,7 @@ DateAndTimeUnixEpochTest >> testMeridianAbbreviation [
 
 { #category : 'tests' }
 DateAndTimeUnixEpochTest >> testMiddleOf [
-	self assert: (aDateAndTime middleOf: '2:00:00:00' asDuration) equals: (Timespan starting: '12-31-1969' asDate duration: 2 days)
+	self assert: (aDateAndTime middleOf: '2:00:00:00' asDuration) equals: (Timespan starting: (Date readFrom: '31-12-1969' pattern: 'd-m-y') duration: 2 days)
 ]
 
 { #category : 'tests' }
