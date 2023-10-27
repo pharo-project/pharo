@@ -609,7 +609,7 @@ Collection >> collect: aBlock [
 	"(#() collect: [:x | x+1]) >>> #()"
 
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self do: [:each | newCollection add: (aBlock value: each)].
 	^ newCollection
 ]
