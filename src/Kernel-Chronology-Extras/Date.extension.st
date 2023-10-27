@@ -265,7 +265,6 @@ Date class >> readFrom: aStream [
 				ifNil: ["MM-DD-YY or DD-MM-YY"
 					parsedNumber > 12
 						ifTrue: ["DD-MM-YY"
-							Error signal: 'Month out of bounds: ', parsedNumber asString, '.'.
 							day := parsedNumber.
 							month := Month nameOfMonth: (Integer readFrom: aStream) ]
 						ifFalse: ["MM-DD-YY"
@@ -307,7 +306,7 @@ Date >> storeOn: aStream [
 { #category : '*Kernel-Chronology-Extras' }
 Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
-	"((Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018') >>> 1"
+	"((Date year: 2018 month: 9 day: 28) subtractDate: '2018-09-27') >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]

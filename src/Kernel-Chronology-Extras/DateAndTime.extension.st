@@ -424,7 +424,7 @@ DateAndTime class >> readFrom: aStream defaultOffset: defaultOffset [
 	"self readFrom: '2013-03-04T23:47:52.876+01:00' readStream"
 
 	| date time offset |
-	date := (DateParser readingFrom: aStream pattern: 'yyyy-mm-dd')
+	date := (DateParser readingFrom: aStream pattern: 'y-mm-dd')
 		        continueAfterParsing;
 		        parse.
 	[ aStream atEnd or: [ '0123456789Z+-' includes: aStream peek ] ]

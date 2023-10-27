@@ -121,7 +121,7 @@ DateAndTimeLeapTest >> testFirstDayOfMonth [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testFromString [
-	self assert: aDateAndTime equals: (DateAndTime fromString: ' 2004-02-29T13:33:00+02:00')
+	self assert: aDateAndTime equals: (DateAndTime fromString: '2004-02-29T13:33:00+02:00')
 ]
 
 { #category : 'tests' }

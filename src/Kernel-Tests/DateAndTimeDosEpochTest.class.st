@@ -153,10 +153,10 @@ DateAndTimeDosEpochTest >> testFromSeconds [
 
 { #category : 'tests' }
 DateAndTimeDosEpochTest >> testFromString [
-	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00+00:00').
-	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00').
-	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00').
-	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00+00:00')
+	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00:00+00:00').
+	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00:00').
+	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00').
+	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00:00+00:00')
 ]
 
 { #category : 'tests' }
