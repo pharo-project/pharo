@@ -134,6 +134,24 @@ RBMethodNode >> lastPcForNode: aNode [
 ]
 
 { #category : '*OpalCompiler-Core' }
+RBMethodNode >> method [
+	
+	self deprecated: 'use compiledMethod' transformWith: '`@recv method' -> '`@recv compiledMethod'.
+	^ self compiledMethod
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> methodClass [
+
+	^ self scope ifNotNil: [ :s | s targetClass ]
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> methodClass: aClass [
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
+]
+
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodProperties [
 	^self propertyAt: #methodProperties ifAbsent: nil
 ]
