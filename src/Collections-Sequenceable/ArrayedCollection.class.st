@@ -4,9 +4,8 @@ I am an abstract collection of elements with a fixed range of integers (from 1 t
 Class {
 	#name : 'ArrayedCollection',
 	#superclass : 'SequenceableCollection',
-	#category : 'Collections-Abstract-Base',
-	#package : 'Collections-Abstract',
-	#tag : 'Base'
+	#category : 'Collections-Sequenceable',
+	#package : 'Collections-Sequenceable'
 }
 
 { #category : 'testing' }
