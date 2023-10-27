@@ -39,6 +39,13 @@ RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
 ]
 
 { #category : '*Calypso-SystemQueries' }
+RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
+
+	^(aSystemAnnouncement affectsClassesDefinedInPackage: self)
+		or: [ aSystemAnnouncement affectsClassesExtendedInPackage: self ]
+]
+
+{ #category : '*Calypso-SystemQueries' }
 RPackage >> isAboutPackage: aPackage [
 
 	^self == aPackage

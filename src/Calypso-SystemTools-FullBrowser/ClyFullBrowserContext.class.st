@@ -38,16 +38,6 @@ ClyFullBrowserContext >> isMethodGroupSelected [
 	^self selectedMethodGroupItems notEmpty
 ]
 
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> isProjectChildSelected [
-	^self selectedProjectChildItems notEmpty
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> isProjectSelected [
-	^self selectedProjectItems notEmpty
-]
-
 { #category : 'selection-method groups' }
 ClyFullBrowserContext >> isProtocolSelected [
 
@@ -81,16 +71,6 @@ ClyFullBrowserContext >> lastSelectedClassTag [
 { #category : 'selection-method groups' }
 ClyFullBrowserContext >> lastSelectedMethodGroup [
 	^self lastSelectedObjectIn: self selectedMethodGroups
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> lastSelectedProject [
-	^self lastSelectedObjectIn: self selectedProjects
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> lastSelectedProjectChild [
-	^self lastSelectedObjectIn: self selectedProjectChildren
 ]
 
 { #category : 'accessing' }
@@ -139,26 +119,6 @@ ClyFullBrowserContext >> selectedMethodItems [
 { #category : 'selection-packages' }
 ClyFullBrowserContext >> selectedPackageItems [
 	^tool packageSelection items
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjectChildItems [
-	^tool projectChildrenSelection items
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjectChildren [
-	^self actualSelectionFrom: self selectedProjectChildItems
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjectItems [
-	^tool projectSelection items
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjects [
-	^self actualSelectionFrom: self selectedProjectItems
 ]
 
 { #category : 'tool controlling' }
