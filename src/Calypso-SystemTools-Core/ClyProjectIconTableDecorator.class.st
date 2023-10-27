@@ -1,3 +1,6 @@
+"
+I decorate table with simple constant icon for projects
+"
 Class {
 	#name : 'ClyProjectIconTableDecorator',
 	#superclass : 'ClyTableDecorator',
