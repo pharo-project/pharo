@@ -490,6 +490,7 @@ MCWorkingCopy >> modified [
 MCWorkingCopy >> modified: aBoolean [
 
 	modified = aBoolean ifTrue: [ ^ self ].
+	('Marking ' , self packageName , ' as modified: ' , aBoolean asString , ' Stack: ' , String lf , thisContext longStack) traceCr.
 	modified := aBoolean.
 	self changed: #modified.
 	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
