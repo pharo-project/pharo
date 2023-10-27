@@ -189,6 +189,18 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 ]
 
 { #category : '*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDump [
+
+	| ast dump ast2 dump2 |
+	ast := snippet parse.
+	dump := ast dump.
+	ast2 := OpalCompiler new evaluate: dump.
+	self assert: ast2 equals: ast.
+	dump2 := ast2 dump.
+	self assert: dump2 equals: dump
+]
+
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testExecute: method [
 
 	| runBlock phonyArgs |
