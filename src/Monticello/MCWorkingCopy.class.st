@@ -185,7 +185,7 @@ MCWorkingCopy class >> methodModified: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> methodMoved: anEvent [
-
+	('Moved method ' , anEvent methodRepackaged name asString , ' from ' , anEvent oldPackage name , ' to ' , anEvent newPackage name, ' Stack : ', String lf, thisContext longStack) traceCr.
 	self workingCopiesForPackage: anEvent oldPackage do: [ :workingCopy | workingCopy modified: true ].
 	self workingCopiesForPackage: anEvent newPackage do: [ :workingCopy | workingCopy modified: true ]
 ]
