@@ -55,7 +55,7 @@ DateTest >> selectorsToBeIgnored [
 DateTest >> setUp [
 	super setUp.
 	june2nd1973 := self dateClass year: 1973 day: 153.
-	january23rd2004 := Date readFrom: '01-23-2004' readStream.
+	january23rd2004 := self dateClass newDay: 23 month: 1 year: 2004.
 	aTime := Time readFrom: '12:34:56 pm' readStream
 ]
 
@@ -117,19 +117,19 @@ DateTest >> testAsSeconds [
 
 	| secondsSinceEpoch dateUTC dateEDT datePST |
 	self useTimeZone: 'UTC' during: [
-		dateUTC := Date readFrom: '01-23-2004' readStream.
+		dateUTC := self dateClass newDay: 23 month: 1 year: 2004.
 		secondsSinceEpoch := (dateUTC start - DateAndTime epoch) asSeconds.
 		self assert: dateUTC asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: dateUTC asSeconds) equals: dateUTC ].
 
 	self useTimeZone: 'EDT' during: [
-		dateEDT := Date readFrom: '01-23-2004' readStream.
+		dateEDT := self dateClass newDay: 23 month: 1 year: 2004.
 		secondsSinceEpoch := (dateEDT start - DateAndTime epoch) asSeconds.
 		self assert: dateEDT asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: dateEDT asSeconds) equals: dateEDT ].
 
 	self useTimeZone: 'PST' during: [
-		datePST := Date readFrom: '01-23-2004' readStream.
+		datePST := self dateClass newDay: 23 month: 1 year: 2004.
 		secondsSinceEpoch := (datePST start - DateAndTime epoch) asSeconds.
 		self assert: datePST asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: datePST asSeconds) equals: datePST ].
@@ -513,22 +513,6 @@ DateTest >> testPrintOn [
 { #category : 'tests' }
 DateTest >> testPrintOnFormat [
 	self assert: (String streamContents: [ :str | january23rd2004 printOn: str format: #(3 2 1 $* 2 2) ]) equals: '04*Jan*23'
-]
-
-{ #category : 'tests' }
-DateTest >> testReadFrom [
-	| s1 s2 s3 s4 s5 |
-	s1 := '2 June 1973' readStream.
-	s2 := '2-JUN-73' readStream.
-	s3 := 'June 2, 1973' readStream.
-	s4 := '6/2/73' readStream.
-	s5 := '2JUN73' readStream.
-
-	self assert: (self dateClass readFrom: s1) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s2) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s3) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s4) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s5) equals: june2nd1973
 ]
 
 { #category : 'tests' }
