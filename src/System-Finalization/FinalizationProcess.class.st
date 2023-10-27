@@ -13,7 +13,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 FinalizationProcess class >> finalizationProcess [
 	"The finalization process arranges to send mourn to each element of the VM's finalization queue,
 	 which is accessed via primitiveFetchMourner.  The VM signals FinalizationSemaphore whenever
@@ -44,7 +44,7 @@ FinalizationProcess class >> initialize [
 	FinalizationSemaphore := Smalltalk specialObjectsArray at: 42
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private - mourning' }
 FinalizationProcess class >> mournLoopWith: firstMourner [
 	"Send mourn to all the objects available in the mourn queue, starting
 	 with firstMourner which the sender has already extracted for us.  If
@@ -58,7 +58,7 @@ FinalizationProcess class >> mournLoopWith: firstMourner [
 	 (mourner := self primitiveFetchMourner) notNil] whileTrue
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private - mourning' }
 FinalizationProcess class >> primitiveFetchMourner [
 	"Answer the next mourner in the VM's queue of objects to be finalized.
 	 The queue contains weak arrays and ephemerons.  If the primitive is
@@ -71,7 +71,7 @@ FinalizationProcess class >> primitiveFetchMourner [
 	^nil
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'mourning' }
 FinalizationProcess class >> restartFinalizationProcess [
 	<script>
 	"kill any old process, just in case"
