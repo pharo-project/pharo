@@ -43,6 +43,6 @@ ProjectManager >> isNotEmpty [
 ProjectManager >> projects [
 
 	^ self environment allClasses
-		  select: [ :class | class inheritsFrom: BaselineOf ]
+		  select: [ :class | (class inheritsFrom: BaselineOf) and: [ class isProject ] ]
 		  thenCollect: [ :baseline | Project baseline: baseline ]
 ]
