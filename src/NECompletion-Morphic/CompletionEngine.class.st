@@ -310,19 +310,19 @@ CompletionEngine >> openMenuForced: forced [
 
 	| theMenu theContext |
 	self stopCompletionDelay.
-
+	
 	theContext := self createContext.
 	(forced or: [ theContext hasEntries ]) ifFalse: [ ^ self ].
 	context := theContext.
 	
 	theMenu := self menuMorphClass
-				engine: self
-				position: (editor selectionPosition: self completionToken).
-
-	theMenu isClosed ifFalse: [ 
-		menuMorph := theMenu.
-		NECPreferences showCompletionDetails ifTrue: [ 
-			theMenu showDetail ] ]
+		           engine: self
+		           position:
+		           (editor selectionPosition: self completionToken).
+		
+	theMenu isClosed ifTrue: [ ^ self ].
+	menuMorph := theMenu.
+	NECPreferences showCompletionDetails ifTrue: [ theMenu showDetail ]
 ]
 
 { #category : 'replacement' }
