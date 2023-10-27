@@ -469,7 +469,7 @@ EncoderForSistaV1 class >> isCreateBlockAt: pc in: method [
 
 	| byte |
 	byte := self nonExtensionBytecodeAt: pc in: method.
-	^ byte = 250
+	^ byte = 250 or: [ (method sourceNodeForPC: pc) isBlock "Clean blocks are created as PushConstant" ]
 ]
 
 { #category : 'block closure support' }
