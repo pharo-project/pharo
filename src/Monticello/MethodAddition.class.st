@@ -41,23 +41,16 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 
 { #category : 'operations' }
 MethodAddition >> installMethod [
-	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
-	
-	Can't we just call #compile:classfied: here?"
 
-	| priorMethod priorOrigin |
+	('Compiling ' , text asString , ' into : ' , myClass name) traceCr.
 	compiledMethod := myClass compiler
+		                  source: text asString;
 		                  permitUndeclared: true;
-		                  compile: text asString.
-	selector := compiledMethod selector.
-	self writeSourceToLog.
-	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorOrigin := compiledMethod origin.
-	priorProtocol := myClass protocolOfSelector: selector.
-	myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName.
-
-	"The following code doesn't seem to do anything."
-	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
+		                  protocol: protocolName;
+		                  changeStamp: changeStamp;
+		                  logged: logSource;
+		                  install.
+	selector := compiledMethod selector
 ]
 
 { #category : 'accessing' }
