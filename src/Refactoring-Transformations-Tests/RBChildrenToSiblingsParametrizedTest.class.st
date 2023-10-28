@@ -19,13 +19,9 @@ RBChildrenToSiblingsParametrizedTest >> setUp [
 
 	(model := RBNamespace onEnvironment: ((RBClassEnvironment onEnvironment: RBBrowserEnvironment new) classes:
 			           (#( #ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass ) inject: OrderedCollection new into: [ :sum :each |
-				            | class |
-				            class := Smalltalk at: each ifAbsent: [ nil ].
-				            class notNil ifTrue: [ sum add: class ].
+				            Smalltalk at: each ifPresent: [ :class | sum add: class ].
 				            sum ]) , (#( #ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass ) inject: OrderedCollection new into: [ :sum :each |
-				            | class |
-				            class := Smalltalk at: each ifAbsent: [ nil ].
-				            class notNil ifTrue: [ sum add: class class ].
+				            Smalltalk at: each ifPresent: [ :class | sum add: class class ].
 				            sum ])) not) name: 'Test'.
 
 	model

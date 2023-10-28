@@ -462,24 +462,6 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 			matchNode match: pragmaNode inContext: aDictionary ] ]
 ]
 
-{ #category : 'accessing - compiled method' }
-RBMethodNode >> method [
-	
-	self deprecated: 'use compiledMethod' transformWith: '`@recv method' -> '`@recv compiledMethod'.
-	^ self compiledMethod
-]
-
-{ #category : 'accessing - compiled method' }
-RBMethodNode >> methodClass [
-
-	^ self scope ifNotNil: [ :s | s targetClass ]
-]
-
-{ #category : 'accessing - compiled method' }
-RBMethodNode >> methodClass: aClass [
-	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
-]
-
 { #category : 'accessing' }
 RBMethodNode >> methodNode [
 	^self

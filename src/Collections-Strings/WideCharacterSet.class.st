@@ -23,9 +23,8 @@ Class {
 		'map',
 		'byteArrayMap'
 	],
-	#category : 'Collections-Support-CharacterSets',
-	#package : 'Collections-Support',
-	#tag : 'CharacterSets'
+	#category : 'Collections-Strings',
+	#package : 'Collections-Strings'
 }
 
 { #category : 'instance creation' }

@@ -24,9 +24,8 @@ Class {
 		'tally',
 		'array'
 	],
-	#category : 'Collections-Abstract-Base',
-	#package : 'Collections-Abstract',
-	#tag : 'Base'
+	#category : 'Collections-Unordered',
+	#package : 'Collections-Unordered'
 }
 
 { #category : 'cleanup' }

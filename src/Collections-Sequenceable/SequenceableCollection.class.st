@@ -4,9 +4,8 @@ I am an abstract superclass for collections that have a well-defined order assoc
 Class {
 	#name : 'SequenceableCollection',
 	#superclass : 'Collection',
-	#category : 'Collections-Abstract-Base',
-	#package : 'Collections-Abstract',
-	#tag : 'Base'
+	#category : 'Collections-Sequenceable',
+	#package : 'Collections-Sequenceable'
 }
 
 { #category : 'testing' }

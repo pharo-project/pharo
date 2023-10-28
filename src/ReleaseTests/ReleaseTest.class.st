@@ -75,7 +75,7 @@ ReleaseTest >> knownProcesses [
 	^ {
 		Processor activeProcess.
 		Processor backgroundProcess.
-		WeakArray runningFinalizationProcess.
+		FinalizationProcess runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
 		MorphicUIManager uiProcess.
 		CurrentExecutionEnvironment value watchDogProcess.
@@ -156,7 +156,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 { #category : 'tests' }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
-	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
+	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #FinalizationProcess #BasicCommandLineHandler).
 	registeredHandlers := SessionManager default startupList
 		collect: [:each | each handledId].
 

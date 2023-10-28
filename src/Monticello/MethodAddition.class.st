@@ -29,8 +29,7 @@ MethodAddition >> compile [
 
 	self
 		createCompiledMethod;
-		installMethod;
-		notifyObservers.
+		installMethod.
 	^ selector
 ]
 
@@ -59,19 +58,9 @@ MethodAddition >> createCompiledMethod [
 
 { #category : 'operations' }
 MethodAddition >> installMethod [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
-]
 
-{ #category : 'notifying' }
-MethodAddition >> notifyObservers [
+	myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName.
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
-	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
-		ifFalse: [
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
-			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
 	"The following code doesn't seem to do anything."
 	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
 ]
