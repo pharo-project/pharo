@@ -22,16 +22,6 @@ MCClassTraitDefinition class >> baseTraitName: aString [
 		  yourself
 ]
 
-{ #category : 'instance creation' }
-MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: classTraitCompositionString category: aCategoryString [
-
-	^ self new
-		  baseTraitName: aString;
-		  classTraitComposition: classTraitCompositionString;
-		  category: aCategoryString;
-		  yourself
-]
-
 { #category : 'comparing' }
 MCClassTraitDefinition >> = aDefinition [
 	^ super = aDefinition
