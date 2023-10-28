@@ -48,7 +48,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	"Weak array class initialization 2 lines"
 	Smalltalk specialObjectsArray at: 42 put: Semaphore new."to put in EPObjectSpace>>#createSpecialObjectsArray?"
-	WeakArray restartFinalizationProcess.
+	FinalizationProcess restartFinalizationProcess.
 
 	Smalltalk globals
 		at: #Transcript
