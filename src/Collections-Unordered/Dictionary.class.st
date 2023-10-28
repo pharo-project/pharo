@@ -831,6 +831,23 @@ Dictionary >> rehash [
 	array := newSelf array
 ]
 
+{ #category : 'enumerating' }
+Dictionary >> reject: rejectBlock thenCollect: collectBlock [
+	"Optimized version of Collection>>#reject:thenCollect:"
+
+	| newDictionary |
+	tally = 0 ifTrue: [ ^ self copyEmpty ].
+	newDictionary := self copyEmpty.
+
+	1 to: array size do: [ :index |
+		| assoc |
+		assoc := array at: index.
+		assoc ifNotNil: [
+			(rejectBlock value: assoc value) ifFalse: [
+				newDictionary at: assoc key put: (collectBlock value: assoc value) ] ] ].
+	^ newDictionary
+]
+
 { #category : 'removing' }
 Dictionary >> remove: anObject [
 
@@ -916,13 +933,19 @@ Dictionary >> select: aBlock [
 
 { #category : 'enumerating' }
 Dictionary >> select: selectBlock thenCollect: collectBlock [
+	"Optimized version of Collection>>#select:thenCollect:"
 
-	| newCollection |
-	newCollection := self copyEmpty.
-	self associationsDo: [ :each |
-		(selectBlock value: each value) ifTrue: [
-			newCollection at: each key put: (collectBlock value: each value) ] ].
-	^ newCollection
+	| newDictionary |
+	tally = 0 ifTrue: [ ^ self copyEmpty ].
+	newDictionary := self copyEmpty.
+
+	1 to: array size do: [ :index |
+		| assoc |
+		assoc := array at: index.
+		assoc ifNotNil: [
+			(selectBlock value: assoc value) ifTrue: [
+				newDictionary at: assoc key put: (collectBlock value: assoc value) ] ] ].
+	^ newDictionary
 ]
 
 { #category : 'printing' }
