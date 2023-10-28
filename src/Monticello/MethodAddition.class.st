@@ -68,7 +68,9 @@ MethodAddition >> notifyObservers [
 
 	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ myClass classify: selector under: protocolName ].
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
+		ifTrue: [ 
+			(compiledMethod selector beginsWith: 'githubCommandsWith') ifTrue: [ Stdio stdout nextPutAll: ('Added ' , compiledMethod name , ' in ' , compiledMethod protocol name , ' Stack: ', String lf, thisContext longStack).].
+			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
 			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].

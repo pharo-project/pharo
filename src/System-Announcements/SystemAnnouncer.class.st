@@ -122,20 +122,23 @@ SystemAnnouncer >> isSuspended [
 
 { #category : 'triggering' }
 SystemAnnouncer >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [
-
+(newMethod selector beginsWith: 'githubCommandsWith') ifTrue: [ Stdio stdout nextPutAll: ('Method changed ' , newMethod name , ' from ' , oldProtocol name , ' Stack: ', String lf, thisContext longStack).].
+	
 	self announce: (MethodModified methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol)
 ]
 
 { #category : 'triggering' }
 SystemAnnouncer >> methodRecategorized: method oldProtocol: oldProtocol [
-
+(method selector beginsWith: 'githubCommandsWith') ifTrue: [ Stdio stdout nextPutAll: ('Recategorized ' , method name , ' from ' , oldProtocol name , ' to ' , method protocol name , ' Stack: ', String lf, thisContext longStack).].
+	
 	self announce: (MethodRecategorized method: method oldProtocol: oldProtocol)
 ]
 
 { #category : 'triggering' }
 SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage [
 	"A method with the given selector was removed from the class."
-
+(aMethod selector beginsWith: 'githubCommandsWith') ifTrue: [ Stdio stdout nextPutAll: ('Removed ' , aMethod name , ' from ' , aPackage name , ' Stack: ', String lf, thisContext longStack).].
+	
 	self announce: (MethodRemoved methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage)
 ]
 
