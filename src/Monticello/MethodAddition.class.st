@@ -27,12 +27,7 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 { #category : 'operations' }
 MethodAddition >> installMethod [
 
-	('Compiling ' , myClass name , ' >> ' , (source asString copyReplaceAll: String cr with: String lf)) traceCr.
-
-	"We are not using `myClass compiler` because the class could add itself as a compiler plugin but when we are loading it, it does not have its methods yet and the plugin cannot be used yet."
-	^ myClass compilerClass new
-		  environment: myClass environment;
-		  class: myClass;
+	^ myClass compiler
 		  source: source asString;
 		  permitUndeclared: true;
 		  protocol: protocolName;
