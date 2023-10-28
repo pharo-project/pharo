@@ -132,8 +132,6 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 		withStamp: timeStamp
 		logSource: true
 		inClass: self actualClass.
-	"This might raise an exception and never return"
-	methodAddition createCompiledMethod.
 	aCollection add: methodAddition.
 
 ]

@@ -11,10 +11,8 @@ Class {
 		'myClass',
 		'selector',
 		'compiledMethod',
-		'priorMethod',
 		'protocolName',
-		'priorProtocol',
-		'priorOrigin'
+		'priorProtocol'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -27,9 +25,7 @@ MethodAddition >> compile [
      This method should not normally be used, because the whole point of MethodAddition is to let
 	you first create a compiled method and then install the method later."
 
-	self
-		createCompiledMethod;
-		installMethod.
+	self installMethod.
 	^ selector
 ]
 
@@ -44,21 +40,20 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 ]
 
 { #category : 'operations' }
-MethodAddition >> createCompiledMethod [
+MethodAddition >> installMethod [
 	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
 	
 	Can't we just call #compile:classfied: here?"
-	compiledMethod := myClass compiler permitUndeclared: true; compile: text asString.
+
+	| priorMethod priorOrigin |
+	compiledMethod := myClass compiler
+		                  permitUndeclared: true;
+		                  compile: text asString.
 	selector := compiledMethod selector.
 	self writeSourceToLog.
 	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
 	priorOrigin := compiledMethod origin.
-	priorProtocol := myClass protocolOfSelector: selector
-]
-
-{ #category : 'operations' }
-MethodAddition >> installMethod [
-
+	priorProtocol := myClass protocolOfSelector: selector.
 	myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName.
 
 	"The following code doesn't seem to do anything."
