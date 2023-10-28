@@ -59,14 +59,13 @@ MethodAddition >> createCompiledMethod [
 
 { #category : 'operations' }
 MethodAddition >> installMethod [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName ]
 ]
 
 { #category : 'notifying' }
 MethodAddition >> notifyObservers [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [
