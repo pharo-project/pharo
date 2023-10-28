@@ -141,6 +141,7 @@ SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior p
 
 { #category : 'triggering' }
 SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
+	(aMethod selector beginsWith: 'githubCommandsWith') ifTrue: [ Stdio stdout nextPutAll: ('Repackaged ' , aMethod name , ' from ' , aPackage name , ' to ' , anotherPackage name , ' Stack: ', String lf, thisContext longStack).].
 	self announce: (MethodRepackaged
 						methodRepackaged: aMethod
 						oldPackage: aPackage

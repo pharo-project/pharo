@@ -185,7 +185,7 @@ MCWorkingCopy class >> methodModified: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> methodMoved: anEvent [
-	('Moved method ' , anEvent methodRepackaged name asString , ' from ' , anEvent oldPackage name , ' to ' , anEvent newPackage name, ' Stack : ', String lf, thisContext longStack) traceCr.
+	"('Moved method ' , anEvent methodRepackaged name asString , ' from ' , anEvent oldPackage name , ' to ' , anEvent newPackage name, ' Stack : ', String lf, thisContext longStack) traceCr."
 	self workingCopiesForPackage: anEvent oldPackage do: [ :workingCopy | workingCopy modified: true ].
 	self workingCopiesForPackage: anEvent newPackage do: [ :workingCopy | workingCopy modified: true ]
 ]
@@ -490,7 +490,7 @@ MCWorkingCopy >> modified [
 MCWorkingCopy >> modified: aBoolean [
 
 	modified = aBoolean ifTrue: [ ^ self ].
-	('Marking ' , self packageName , ' as modified: ' , aBoolean asString , ' Stack: ' , String lf , (thisContext printStackOfSize: 35)) traceCr.
+	"('Marking ' , self packageName , ' as modified: ' , aBoolean asString , ' Stack: ' , String lf , (thisContext printStackOfSize: 35)) traceCr."
 	modified := aBoolean.
 	self changed: #modified.
 	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
