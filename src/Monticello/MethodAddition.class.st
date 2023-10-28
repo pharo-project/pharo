@@ -59,13 +59,8 @@ MethodAddition >> createCompiledMethod [
 { #category : 'operations' }
 MethodAddition >> installMethod [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName ].
+	myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName.
 
-	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
-		ifFalse: [
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
-			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
 	"The following code doesn't seem to do anything."
 	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
 ]
