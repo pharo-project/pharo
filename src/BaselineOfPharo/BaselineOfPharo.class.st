@@ -121,8 +121,7 @@ BaselineOfPharo class >> newToolsRepository [
 
 { #category : 'external projects' }
 BaselineOfPharo class >> roassal [
-	<externalProject>	
-
+	<externalProject>
 	^ PharoExternalProject 
 		newName: 'Roassal' 
 		owner: 'pharo-graphics' 
