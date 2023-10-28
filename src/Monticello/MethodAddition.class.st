@@ -5,14 +5,10 @@ Class {
 	#name : 'MethodAddition',
 	#superclass : 'Object',
 	#instVars : [
-		'text',
 		'changeStamp',
-		'logSource',
 		'myClass',
-		'selector',
-		'compiledMethod',
 		'protocolName',
-		'priorProtocol'
+		'source'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -20,51 +16,22 @@ Class {
 }
 
 { #category : 'compilation' }
-MethodAddition >> compile [
-	"This method is the how compiling a method used to work.  All these steps were done at once.
-     This method should not normally be used, because the whole point of MethodAddition is to let
-	you first create a compiled method and then install the method later."
+MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2 inClass: aClass [
 
-	self installMethod.
-	^ selector
-]
-
-{ #category : 'compilation' }
-MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2 logSource: aBoolean inClass: aClass [
-
-	text := aString.
+	source := aString.
 	protocolName := aProtocolName.
 	changeStamp := aString2.
-	logSource := aBoolean.
 	myClass := aClass
 ]
 
 { #category : 'operations' }
 MethodAddition >> installMethod [
 
-	('Compiling ' , text asString , ' into : ' , myClass name) traceCr.
-	compiledMethod := myClass compiler
-		                  source: text asString;
-		                  permitUndeclared: true;
-		                  protocol: protocolName;
-		                  changeStamp: changeStamp;
-		                  logged: logSource;
-		                  install.
-	selector := compiledMethod selector
-]
-
-{ #category : 'accessing' }
-MethodAddition >> priorProtocol [
-	^ priorProtocol
-]
-
-{ #category : 'operations' }
-MethodAddition >> writeSourceToLog [
-
-	logSource ifTrue: [
-		myClass
-			logMethodSource: text
-			forMethod: compiledMethod
-			inProtocol: (myClass ensureProtocol: protocolName)
-			withStamp: changeStamp ]
+	('Compiling ' , (source asString copyReplaceAll: String cr with: String lf) , ' into : ' , myClass name) traceCr.
+	^ myClass compiler
+		  source: source asString;
+		  permitUndeclared: true;
+		  protocol: protocolName;
+		  changeStamp: changeStamp;
+		  install
 ]

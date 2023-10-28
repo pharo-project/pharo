@@ -125,15 +125,12 @@ MCMethodDefinition >> actualClass [
 
 { #category : 'installing' }
 MCMethodDefinition >> addMethodAdditionTo: aCollection [
-	| methodAddition |
-	methodAddition := MethodAddition new
-		compile: source
-		classified: category
-		withStamp: timeStamp
-		logSource: true
-		inClass: self actualClass.
-	aCollection add: methodAddition.
 
+	aCollection add: (MethodAddition new
+			 compile: source
+			 classified: category
+			 withStamp: timeStamp
+			 inClass: self actualClass)
 ]
 
 { #category : 'accessing - backward' }
