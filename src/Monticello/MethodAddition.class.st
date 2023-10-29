@@ -9,12 +9,9 @@ Class {
 		'changeStamp',
 		'logSource',
 		'myClass',
-		'selector',
 		'compiledMethod',
-		'priorMethod',
 		'protocolName',
-		'priorProtocol',
-		'priorOrigin'
+		'compiler'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -27,10 +24,8 @@ MethodAddition >> compile [
      This method should not normally be used, because the whole point of MethodAddition is to let
 	you first create a compiled method and then install the method later."
 
-	self
-		createCompiledMethod;
-		installMethod.
-	^ selector
+	self installMethod.
+	^ compiledMethod selector
 ]
 
 { #category : 'compilation' }
@@ -40,34 +35,26 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 	protocolName := aProtocolName.
 	changeStamp := aString2.
 	logSource := aBoolean.
-	myClass := aClass
-]
-
-{ #category : 'operations' }
-MethodAddition >> createCompiledMethod [
-	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
-	
-	Can't we just call #compile:classfied: here?"
-	compiledMethod := myClass compiler permitUndeclared: true; compile: text asString.
-	selector := compiledMethod selector.
-	self writeSourceToLog.
-	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorOrigin := compiledMethod origin.
-	priorProtocol := myClass protocolOfSelector: selector
+	myClass := aClass.
+	compiler := myClass compiler
 ]
 
 { #category : 'operations' }
 MethodAddition >> installMethod [
 
+	| selector priorMethod priorOrigin priorProtocol |
+	compiledMethod := compiler
+		                  permitUndeclared: true;
+		                  compile: text asString.
+	selector := compiledMethod selector.
+	self writeSourceToLog.
+	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
+	priorOrigin := compiledMethod origin.
+	priorProtocol := myClass protocolOfSelector: selector.
 	myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName.
 
 	"The following code doesn't seem to do anything."
 	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
-]
-
-{ #category : 'accessing' }
-MethodAddition >> priorProtocol [
-	^ priorProtocol
 ]
 
 { #category : 'operations' }
