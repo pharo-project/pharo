@@ -72,6 +72,13 @@ Class {
 	#package : 'Metacello-Base'
 }
 
+{ #category : 'testing' }
+BaselineOf class >> isProject [
+	"This method can be overriden if we have baselines in the image for tests so that we do not consider it is a project of the image."
+
+	^ true
+]
+
 { #category : 'baselines' }
 BaselineOf >> baseline: spec [
 	<baseline>

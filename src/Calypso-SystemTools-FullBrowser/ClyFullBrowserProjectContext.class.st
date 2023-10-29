@@ -13,7 +13,7 @@ Class {
 ClyFullBrowserProjectContext class >> selectionStrategy [
 	<classAnnotation>
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: ClyProjectChildItem
+	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: Project
 ]
 
 { #category : 'testing' }
@@ -24,10 +24,4 @@ ClyFullBrowserProjectContext >> isClassGroupSelected [
 { #category : 'testing' }
 ClyFullBrowserProjectContext >> isClassTagSelected [
 	^false
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserProjectContext >> selectedProjectItems [
-
-	^selectedItems collect: [ :each | each rootParentItem ]
 ]

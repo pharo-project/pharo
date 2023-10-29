@@ -19,15 +19,10 @@ ClyProjectScope class >> defaultName [
 	^'projects'
 ]
 
-{ #category : 'queries' }
-ClyProjectScope >> classesDo: aBlock [
-	self projectsDo: [ :project |
-		project classes do: aBlock ]
-]
-
 { #category : 'system changes' }
 ClyProjectScope >> includesClassesAffectedBy: aSystemAnnouncement [
-	^false
+
+	^ false
 ]
 
 { #category : 'queries' }
