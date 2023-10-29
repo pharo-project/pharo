@@ -236,18 +236,16 @@ RingChunkImporter >> visitDoItChunk: aChunk [
 RingChunkImporter >> visitMethodChunk: aChunk [
 
 	| theClass theMethod |
-	theClass:= self classNamed: aChunk behaviorName.
-	theMethod := (RGMethodDefinition
-						class: theClass
-						selector: aChunk methodSelector)
-							protocol: aChunk category;
-							sourceCode: aChunk contents;
-							stamp: aChunk stamp.
+	theClass := self classNamed: aChunk behaviorName.
+	theMethod := (RGMethodDefinition class: theClass selector: aChunk methodSelector)
+		             protocol: aChunk protocol;
+		             sourceCode: aChunk contents;
+		             stamp: aChunk stamp.
 	aChunk isMeta
 		ifTrue: [
 			theMethod isMeta: true.
-			theClass classSide addMethod: theMethod. ]
-		ifFalse:[ theClass addMethod: theMethod ]
+			theClass classSide addMethod: theMethod ]
+		ifFalse: [ theClass addMethod: theMethod ]
 ]
 
 { #category : 'visitor' }
