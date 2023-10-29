@@ -183,7 +183,8 @@ ChunkFileFormatParser >> parseCommentDeclaration: commentPreamble [
 
 { #category : 'parsing' }
 ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
-	| behaviorName isMeta category stamp methodSource |
+
+	| behaviorName isMeta protocol stamp methodSource |
 	"The method preable is an array with the following structure:
 	If instance side method:
 
@@ -199,31 +200,24 @@ ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
 
 	"
 	behaviorName := methodsPreamble first.
-	isMeta := methodsPreamble second = self classSelector
-		or: [ methodsPreamble second = self classTraitSelector ].
-	category := isMeta
-		ifTrue: [ methodsPreamble at: 4 ]
-		ifFalse: [ methodsPreamble at: 3 ].
+	isMeta := methodsPreamble second = self classSelector or: [ methodsPreamble second = self classTraitSelector ].
+	protocol := isMeta
+		            ifTrue: [ methodsPreamble at: 4 ]
+		            ifFalse: [ methodsPreamble at: 3 ].
 	stamp := ''.
-	methodsPreamble size > 4
-		ifTrue:
-			[
-			stamp := isMeta
-				ifTrue: [ methodsPreamble at: 6 ]
-				ifFalse: [ methodsPreamble at: 5 ] ].
+	methodsPreamble size > 4 ifTrue: [
+		stamp := isMeta
+			         ifTrue: [ methodsPreamble at: 6 ]
+			         ifFalse: [ methodsPreamble at: 5 ] ].
 	[
 	methodSource := readStream next.
-	methodSource notEmpty ]
-		whileTrue:
-			[
-			self
-				addDeclaration:
-					(self methodChunkClass
-						contents: methodSource
-						behaviorName: behaviorName asSymbol
-						isMeta: isMeta
-						category: category
-						stamp: stamp) ]
+	methodSource isNotEmpty ] whileTrue: [
+		self addDeclaration: (self methodChunkClass
+				 contents: methodSource
+				 behaviorName: behaviorName asSymbol
+				 isMeta: isMeta
+				 protocol: protocol
+				 stamp: stamp) ]
 ]
 
 { #category : 'parsing' }

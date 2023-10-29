@@ -104,7 +104,7 @@ MCMethodDefinition class >> shutDown [
 { #category : 'comparing' }
 MCMethodDefinition >> = aDefinition [
 	^ super = aDefinition
-		and: [ aDefinition category = self category
+		and: [ aDefinition protocol = self protocol
 		and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
 ]
 
@@ -303,7 +303,7 @@ MCMethodDefinition >> printAnnotations: requests on: aStream [
 	
 	requests do: [ :aRequest |
 		aRequest == #timeStamp ifTrue: [ aStream nextPutAll: self timeStamp ].
-		aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self category ].
+		aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self protocol ].
 		aRequest == #requirements ifTrue: [
 			self requirements do: [ :req |
 				aStream nextPutAll: req ] separatedBy: [ aStream space ]].
