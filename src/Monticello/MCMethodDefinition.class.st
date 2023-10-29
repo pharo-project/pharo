@@ -130,7 +130,6 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 			 compile: source
 			 classified: category
 			 withStamp: timeStamp
-			 logSource: true
 			 inClass: self actualClass)
 ]
 

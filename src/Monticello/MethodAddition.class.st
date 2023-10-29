@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'text',
 		'changeStamp',
-		'logSource',
 		'myClass',
 		'compiledMethod',
 		'protocolName',
@@ -19,22 +18,11 @@ Class {
 }
 
 { #category : 'compilation' }
-MethodAddition >> compile [
-	"This method is the how compiling a method used to work.  All these steps were done at once.
-     This method should not normally be used, because the whole point of MethodAddition is to let
-	you first create a compiled method and then install the method later."
-
-	self installMethod.
-	^ compiledMethod selector
-]
-
-{ #category : 'compilation' }
-MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2 logSource: aBoolean inClass: aClass [
+MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2 inClass: aClass [
 
 	text := aString.
 	protocolName := aProtocolName.
 	changeStamp := aString2.
-	logSource := aBoolean.
 	myClass := aClass.
 	compiler := myClass compiler
 ]
@@ -42,28 +30,19 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 { #category : 'operations' }
 MethodAddition >> installMethod [
 
-	| selector priorMethod priorOrigin priorProtocol |
 	compiledMethod := compiler
 		                  permitUndeclared: true;
 		                  compile: text asString.
-	selector := compiledMethod selector.
-	self writeSourceToLog.
-	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorOrigin := compiledMethod origin.
-	priorProtocol := myClass protocolOfSelector: selector.
-	myClass addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocolName.
+
+	myClass
+		logMethodSource: text
+		forMethod: compiledMethod
+		inProtocol: (myClass ensureProtocol: protocolName)
+		withStamp: changeStamp.
+
+	myClass addAndClassifySelector: compiledMethod selector withMethod: compiledMethod inProtocol: protocolName.
 
 	"The following code doesn't seem to do anything."
-	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
-]
-
-{ #category : 'operations' }
-MethodAddition >> writeSourceToLog [
-
-	logSource ifTrue: [
-		myClass
-			logMethodSource: text
-			forMethod: compiledMethod
-			inProtocol: (myClass ensureProtocol: protocolName)
-			withStamp: changeStamp ]
+	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.
+	^ compiledMethod
 ]
