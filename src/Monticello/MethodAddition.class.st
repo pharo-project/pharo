@@ -30,15 +30,19 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 { #category : 'operations' }
 MethodAddition >> installMethod [
 
+	| priorMethod |
 	compiledMethod := compiler
 		                  permitUndeclared: true;
 		                  compile: text asString.
 
-	myClass
-		logMethodSource: text
-		forMethod: compiledMethod
-		inProtocol: (myClass ensureProtocol: protocolName)
-		withStamp: changeStamp.
+	priorMethod := myClass compiledMethodAt: compiledMethod selector ifAbsent: [  ].
+
+	compiledMethod
+		putSource: text asString
+		class: myClass
+		protocol: (myClass ensureProtocol: protocolName)
+		withStamp: changeStamp
+		priorMethod: priorMethod.
 
 	myClass addAndClassifySelector: compiledMethod selector withMethod: compiledMethod inProtocol: protocolName.
 
