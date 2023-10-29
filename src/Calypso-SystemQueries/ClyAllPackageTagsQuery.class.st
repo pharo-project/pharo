@@ -1,22 +1,22 @@
 "
-I am a query of all class groups from given scope.
+I am a query of all package tags from given scope.
 
-Scope should support #classGroupsDo:. 
+Scope should support #packageTagsDo:. 
 Currently it is only ClyPackageScope.
 
 The scope delegates class group building to the environment plugins.
 It asks each plugin to collect class group providers using: 
 
-	plugin collectClassGroupProviders 
+	plugin collectPackageTagsProviders 
 
 And then each provider creates set of class groups using method: 
 
-	groupProvider classGroupsIn: aPackageScope do: aBlockWithGroup
+	groupProvider packageTagsIn: aPackageScope do: aBlockWithGroup
 	
-Look at ClyClassGroupProvider for details
+Look at ClyPackageTagProvider for details
 "
 Class {
-	#name : 'ClyAllClassGroupsQuery',
+	#name : 'ClyAllPackageTagsQuery',
 	#superclass : 'ClyTypedQuery',
 	#category : 'Calypso-SystemQueries-Queries',
 	#package : 'Calypso-SystemQueries',
@@ -24,12 +24,12 @@ Class {
 }
 
 { #category : 'items type' }
-ClyAllClassGroupsQuery class >> resultItemsType [
+ClyAllPackageTagsQuery class >> resultItemsType [
 	^ClyClassGroup
 ]
 
 { #category : 'execution' }
-ClyAllClassGroupsQuery >> buildResult: aQueryResult [
+ClyAllPackageTagsQuery >> buildResult: aQueryResult [
 
 	| groups |
 	groups := OrderedCollection new.
@@ -40,7 +40,7 @@ ClyAllClassGroupsQuery >> buildResult: aQueryResult [
 ]
 
 { #category : 'execution' }
-ClyAllClassGroupsQuery >> checkEmptyResult [
+ClyAllPackageTagsQuery >> checkEmptyResult [
 
 	scope classGroupsDo: [ :each | ^false].
 
@@ -48,18 +48,18 @@ ClyAllClassGroupsQuery >> checkEmptyResult [
 ]
 
 { #category : 'execution' }
-ClyAllClassGroupsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
+ClyAllPackageTagsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 	anEnvironmentPlugin collectMetadataOfClassGroups: aQueryResult
 ]
 
 { #category : 'printing' }
-ClyAllClassGroupsQuery >> description [
+ClyAllPackageTagsQuery >> description [
 
 	^'all class groups'
 ]
 
 { #category : 'system changes' }
-ClyAllClassGroupsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
+ClyAllPackageTagsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^scope includesClassGroupsAffectedBy: aSystemAnnouncement
 ]
