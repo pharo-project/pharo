@@ -8,7 +8,8 @@ Class {
 		'changeStamp',
 		'myClass',
 		'protocolName',
-		'source'
+		'source',
+		'compiler'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -21,13 +22,14 @@ MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2
 	source := aString.
 	protocolName := aProtocolName.
 	changeStamp := aString2.
-	myClass := aClass
+	myClass := aClass.
+	compiler := myClass compiler
 ]
 
 { #category : 'operations' }
 MethodAddition >> installMethod [
 
-	^ myClass compiler
+	^ compiler
 		  source: source asString;
 		  permitUndeclared: true;
 		  protocol: protocolName;
