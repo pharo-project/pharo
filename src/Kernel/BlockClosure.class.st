@@ -606,12 +606,6 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	^ans
 ]
 
-{ #category : 'accessing' }
-BlockClosure >> sender [	
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^ self subclassResponsibility
-]
-
 { #category : 'evaluating' }
 BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	"Simulate the valueWithArguments: primitive. Fail if anArray is not an array of the right arity."

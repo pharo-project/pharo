@@ -130,13 +130,6 @@ CleanBlockClosure >> refersToLiteral: aLiteral [
 	^self compiledBlock refersToLiteral: aLiteral
 ]
 
-{ #category : 'debugger access' }
-CleanBlockClosure >> sender [
-	" clean blocks do not know the sender"
-	<reflection: 'Message sending and code execution - Message send reification'>
-	^nil
-]
-
 { #category : 'accessing' }
 CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 	^self compiledBlock sendsAnySelectorOf: aCollection
