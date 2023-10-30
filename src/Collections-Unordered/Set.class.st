@@ -144,12 +144,6 @@ Set >> collect: aBlock [
 	^ newSet
 ]
 
-{ #category : 'copying' }
-Set >> copyEmpty [
-
-	^ self species new: self size
-]
-
 { #category : 'removing' }
 Set >> copyWithout: oldElement [
 	"Answer a copy of the receiver that does not contain any

@@ -1546,11 +1546,11 @@ Collection >> reject: rejectBlock thenCollect: collectBlock [
 
 	"(#(1 2 3 4 5) reject: #even thenCollect: [:x|x*10]) >>> #(10 30 50)"
 
-	| rejectedItems |
-	rejectedItems := self copyEmpty.
+	| newCollection |
+	newCollection := self copyEmpty.
 	self do: [ :e | (rejectBlock value: e) ifFalse: [ 
-			rejectedItems add: (collectBlock value: e) ] ].
-	^ rejectedItems
+			newCollection add: (collectBlock value: e) ] ].
+	^ newCollection
 ]
 
 { #category : 'enumerating' }
