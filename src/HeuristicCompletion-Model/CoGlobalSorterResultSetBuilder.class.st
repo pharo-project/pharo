@@ -38,11 +38,9 @@ CoGlobalSorterResultSetBuilder >> visitNode: aNode [
 	| fetcher entries sorter |
 	entries := aNode completionEntries: completionContext position.
 	sorter := self sorterClass new context: completionContext.
-	entries := sorter sortCompletionList: entries asOrderedCollection.
+	entries := sorter sortCompletionList: entries.
 
-	fetcher := (CoCollectionFetcher onCollection: entries).
+	fetcher := CoCollectionFetcher onCollection: entries.
 
-	^ self
-		configureFetcher: fetcher
-		forNode: aNode
+	^ self configureFetcher: fetcher forNode: aNode
 ]

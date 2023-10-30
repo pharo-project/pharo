@@ -350,7 +350,8 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
 	| found validExceptions remaining |
 	found := SystemNavigation default methods select: [ :m |
-		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
+		m isQuick not and: [ "quick methods do not define variables"
+			m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ]].
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.

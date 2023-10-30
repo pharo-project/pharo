@@ -181,7 +181,7 @@ AlphaImageMorph >> image: aForm size: aPoint [
 	"Convert color forms etc. to 32 bit before resizing since scaling of ColorForm introduces degraded color resolution.
 	Most noticable with grayscale forms."
 	(aForm depth < 32 and: [aForm depth > 4])
-		ifTrue: [f := Form extent: aPoint depth: 32.
+		ifTrue: [f := Form extent: aForm extent depth: 32.
 				f fillColor: (Color white alpha: 0.003922).
 				f getCanvas translucentImage: aForm at: 0@0.
 				f fixAlpha]

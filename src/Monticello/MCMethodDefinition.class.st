@@ -104,7 +104,7 @@ MCMethodDefinition class >> shutDown [
 { #category : 'comparing' }
 MCMethodDefinition >> = aDefinition [
 	^ super = aDefinition
-		and: [ aDefinition category = self category
+		and: [ aDefinition protocol = self protocol
 		and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
 ]
 
@@ -125,17 +125,12 @@ MCMethodDefinition >> actualClass [
 
 { #category : 'installing' }
 MCMethodDefinition >> addMethodAdditionTo: aCollection [
-	| methodAddition |
-	methodAddition := MethodAddition new
-		compile: source
-		classified: category
-		withStamp: timeStamp
-		logSource: true
-		inClass: self actualClass.
-	"This might raise an exception and never return"
-	methodAddition createCompiledMethod.
-	aCollection add: methodAddition.
 
+	aCollection add: (MethodAddition new
+			 compile: source
+			 classified: category
+			 withStamp: timeStamp
+			 inClass: self actualClass)
 ]
 
 { #category : 'accessing - backward' }
@@ -303,7 +298,7 @@ MCMethodDefinition >> printAnnotations: requests on: aStream [
 	
 	requests do: [ :aRequest |
 		aRequest == #timeStamp ifTrue: [ aStream nextPutAll: self timeStamp ].
-		aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self category ].
+		aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self protocol ].
 		aRequest == #requirements ifTrue: [
 			self requirements do: [ :req |
 				aStream nextPutAll: req ] separatedBy: [ aStream space ]].
