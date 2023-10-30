@@ -4,21 +4,51 @@ A trait for test purposes
 Class {
 	#name : 'WeakSetTest',
 	#superclass : 'TestCase',
+	#traits : 'TIterateTest',
+	#classTraits : 'TIterateTest classTrait',
+	#instVars : [
+		'weakSetWith3Elements',
+		'empty'
+	],
 	#category : 'Collections-Weak-Tests-Base',
 	#package : 'Collections-Weak-Tests',
 	#tag : 'Base'
 }
 
-{ #category : 'building suites' }
+{ #category : 'testing' }
 WeakSetTest class >> shouldInheritSelectors [
 
-^true
+	^ true
 ]
 
 { #category : 'requirements' }
 WeakSetTest >> classToBeTested [
 
 	^ WeakSet
+]
+
+{ #category : 'requirements' }
+WeakSetTest >> collectionWithoutNilElements [
+" return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
+	^ weakSetWith3Elements
+]
+
+{ #category : 'requirements' }
+WeakSetTest >> empty [
+
+	^ empty
+]
+
+{ #category : 'running' }
+WeakSetTest >> setUp [
+	super setUp.
+
+	empty := self classToBeTested  new.
+	weakSetWith3Elements := self classToBeTested new
+		add: 1;
+		add: -2;
+		add: 3;
+		yourself
 ]
 
 { #category : 'tests' }
@@ -265,4 +295,20 @@ WeakSetTest >> testIncludesNil [
 	ws add: 1/3.
 	Smalltalk garbageCollect.
 	self deny: (ws includes: nil)
+]
+
+{ #category : 'tests - iterating' }
+WeakSetTest >> testSelectThenCollectPrint [
+
+	| actualSet selectionBlock collectionBlock allElements |
+	selectionBlock := [ :e | e beginsWith: #print ].
+	collectionBlock := [ :e | CollectionElement with: e ].
+	allElements := { #printS. #print. #printG. #qwerty. #prontS. #printShowingDecimalPlaces:.
+	               #prrint }.
+
+	actualSet := self classToBeTested withAll: allElements.
+	actualSet := actualSet select: selectionBlock thenCollect: collectionBlock.
+
+	actualSet do: [ :e | self assert: (selectionBlock value: e enclosedElement) ].
+	self assert: actualSet size equals: 4
 ]
