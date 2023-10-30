@@ -19,13 +19,6 @@ Class {
 	#tag : 'Classes'
 }
 
-{ #category : 'compiling' }
-Metaclass >> acceptsLoggingOfCompilation [
-	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself."
-
-	^ self instanceSide acceptsLoggingOfCompilation
-]
-
 { #category : 'instance variables' }
 Metaclass >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
