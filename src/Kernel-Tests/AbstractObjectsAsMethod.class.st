@@ -39,6 +39,13 @@ AbstractObjectsAsMethod >> pragmas [
 ]
 
 { #category : 'compatibility' }
+AbstractObjectsAsMethod >> pragmasDo: aBlock [
+	"We do not manage pragmas."
+
+	
+]
+
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> removeFromPackage [
 ]
 
