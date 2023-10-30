@@ -9,7 +9,7 @@ Class {
 	#superclass : 'ImageMorph',
 	#instVars : [
 		'alpha',
-		'cachedForm',
+		'cachedFormSet',
 		'layout',
 		'scale',
 		'enabled',
@@ -45,7 +45,7 @@ AlphaImageMorph >> alpha: anObject [
 
 	alpha := anObject.
 	self
-		cachedForm: nil;
+		cachedFormSet: nil;
 		changed;
 		changed: #alpha
 ]
@@ -65,31 +65,35 @@ AlphaImageMorph >> autoSize: anObject [
 ]
 
 { #category : 'accessing' }
-AlphaImageMorph >> cachedForm [
-	"Answer the value of cachedForm"
+AlphaImageMorph >> cachedFormSet [
+	"Answer the value of cachedFormSet"
 
-	|form i effectiveAlpha|
-	cachedForm ifNil: [
-		i := self scaledImage.
+	|forms i effectiveAlpha|
+	cachedFormSet ifNil: [
+		i := self scaledFormSet.
 		effectiveAlpha := self enabled
 			ifTrue: [self alpha]
 			ifFalse: [self alpha / 2].
 		effectiveAlpha = 1.0
-			ifTrue: [self cachedForm: i]
-			ifFalse: [form := Form extent: i extent depth: 32.
+			ifTrue: [self cachedFormSet: i]
+			ifFalse: [
+				forms := i forms collect: [ :scaledForm |
+					| form |
+					form := Form extent: scaledForm extent depth: 32.
 					form fillColor: (Color white alpha: 0.003922).
 					(form getCanvas asAlphaBlendingCanvas: effectiveAlpha)
-						drawImage: i
-					at: 0@0.
-					self cachedForm: form]].
-	^cachedForm
+						drawImage: scaledForm
+						at: 0@0.
+					form ].
+				self cachedFormSet: (FormSet extent: i extent depth: 32 forms: forms)]].
+	^cachedFormSet
 ]
 
 { #category : 'accessing' }
-AlphaImageMorph >> cachedForm: anObject [
-	"Set the value of cachedForm"
+AlphaImageMorph >> cachedFormSet: anObject [
+	"Set the value of cachedFormSet"
 
-	cachedForm := anObject
+	cachedFormSet := anObject
 ]
 
 { #category : 'initialization' }
@@ -112,7 +116,7 @@ AlphaImageMorph >> displayBounds [
 	bounds the image (may be larger/smaller than visible area).
 	Just one rep for the tiled case."
 
-	^self layoutPosition extent: self cachedForm extent
+	^self layoutPosition extent: self cachedFormSet extent
 ]
 
 { #category : 'drawing' }
@@ -121,11 +125,11 @@ AlphaImageMorph >> drawOn: aCanvas [
 	Can't do simple way since BitBlt rules are dodgy!."
 
 	aCanvas fillRectangle: self bounds fillStyle: self fillStyle borderStyle: self borderStyle.
-	(self cachedForm width = 0 or: [self cachedForm height = 0]) ifTrue: [^self].
+	(self cachedFormSet width = 0 or: [self cachedFormSet height = 0]) ifTrue: [^self].
 	self layout == #tiled
-		ifTrue: [aCanvas fillRectangle: self innerBounds fillStyle: (AlphaInfiniteForm with: self cachedForm)]
+		ifTrue: [aCanvas fillRectangle: self innerBounds fillStyle: (AlphaInfiniteForm with: self cachedFormSet asForm)]
 		ifFalse: [aCanvas clipBy: self innerBounds during: [:c |
-					c translucentImage: self cachedForm at: self layoutPosition]]
+					c translucentFormSet: self cachedFormSet at: self layoutPosition]]
 ]
 
 { #category : 'accessing' }
@@ -141,7 +145,7 @@ AlphaImageMorph >> enabled: anObject [
 
 	enabled := anObject.
 	self
-		cachedForm: nil;
+		cachedFormSet: nil;
 		changed
 ]
 
@@ -151,7 +155,7 @@ AlphaImageMorph >> extent: aPoint [
 
 	self basicExtent: aPoint.
 
-	(self layout = #scaled or: [self layout = #scaledAspect]) ifTrue: [self cachedForm: nil]
+	(self layout = #scaled or: [self layout = #scaledAspect]) ifTrue: [self cachedFormSet: nil]
 ]
 
 { #category : 'accessing' }
@@ -191,7 +195,7 @@ AlphaImageMorph >> image: aForm size: aPoint [
 		ifTrue: [super image: f]
 		ifFalse: [formSet := FormSet form: f.
 				self changed].
-	self cachedForm: nil.
+	self cachedFormSet: nil.
 	self changed: #imageExtent
 ]
 
@@ -251,7 +255,7 @@ AlphaImageMorph >> layout: aSymbol [
 	(old := layout) = aSymbol ifTrue: [^self].
 	layout := aSymbol.
 	((old = #scaled or: [old = #scaledAspect]) or: [aSymbol = #scaled or: [aSymbol = #scaledAspect]])
-		ifTrue: [self cachedForm: nil].
+		ifTrue: [self cachedFormSet: nil].
 	self changed
 ]
 
@@ -260,14 +264,14 @@ AlphaImageMorph >> layoutPosition [
 	"Answer the position that the cached form should be drawn
 	based on the layout"
 
-	self layout == #topCenter ifTrue: [^self innerBounds topCenter - (self cachedForm width // 2 @ 0)].
-	self layout == #topRight ifTrue: [^self innerBounds topRight - (self cachedForm width @ 0)].
-	self layout == #rightCenter ifTrue: [^self innerBounds rightCenter - (self cachedForm width @ (self cachedForm height // 2))].
-	self layout == #bottomRight ifTrue: [^self innerBounds bottomRight - self cachedForm extent].
-	self layout == #bottomCenter ifTrue: [^self innerBounds bottomCenter - (self cachedForm width // 2 @ self cachedForm height)].
-	self layout == #bottomLeft ifTrue: [^self innerBounds bottomLeft - (0 @ self cachedForm height)].
-	self layout == #leftCenter ifTrue: [^self innerBounds leftCenter - (0 @ (self cachedForm height // 2))].
-	(self layout == #center or: [self layout == #scaledAspect]) ifTrue: [^self innerBounds center - (self cachedForm extent // 2)].
+	self layout == #topCenter ifTrue: [^self innerBounds topCenter - (self cachedFormSet width // 2 @ 0)].
+	self layout == #topRight ifTrue: [^self innerBounds topRight - (self cachedFormSet width @ 0)].
+	self layout == #rightCenter ifTrue: [^self innerBounds rightCenter - (self cachedFormSet width @ (self cachedFormSet height // 2))].
+	self layout == #bottomRight ifTrue: [^self innerBounds bottomRight - self cachedFormSet extent].
+	self layout == #bottomCenter ifTrue: [^self innerBounds bottomCenter - (self cachedFormSet width // 2 @ self cachedFormSet height)].
+	self layout == #bottomLeft ifTrue: [^self innerBounds bottomLeft - (0 @ self cachedFormSet height)].
+	self layout == #leftCenter ifTrue: [^self innerBounds leftCenter - (0 @ (self cachedFormSet height // 2))].
+	(self layout == #center or: [self layout == #scaledAspect]) ifTrue: [^self innerBounds center - (self cachedFormSet extent // 2)].
 	^self innerBounds topLeft
 ]
 
@@ -316,7 +320,7 @@ AlphaImageMorph >> scale: aNumber [
 	scale = aNumber ifTrue: [^self].
 	scale := aNumber.
 	self
-		cachedForm: nil;
+		cachedFormSet: nil;
 		changed;
 		changed: #scale
 ]
