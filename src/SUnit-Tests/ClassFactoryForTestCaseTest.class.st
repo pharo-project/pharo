@@ -88,10 +88,10 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 			         superclass: Object;
 			         slotsFromString: 'a b c';
 			         sharedVariablesFromString: 'X Y';
-			         tag: factory defaultTagPostfix ].
+			         tag: factory tagName ].
 	self assert: (self environment allClasses includes: class).
 	self assert: class package name equals: factory packageName.
-	self assert: class packageTag name equals: factory defaultTagPostfix.
+	self assert: class packageTag name equals: factory tagName.
 	self assert: class instVarNames equals: #( a b c ).
 	self assert: class classPool keys asSet equals: #( X Y ) asSet
 ]
