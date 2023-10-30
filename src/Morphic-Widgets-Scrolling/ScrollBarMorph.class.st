@@ -32,7 +32,7 @@ Class {
 { #category : 'images' }
 ScrollBarMorph class >> arrowOfDirection: aSymbol size: finalSizeInteger color: aColor [
 
-	^ (self formSetArrowOfDirection: aSymbol size: finalSizeInteger color: aColor) asForm
+	^ self formSetArrowOfDirection: aSymbol size: finalSizeInteger color: aColor
 ]
 
 { #category : 'images - samples' }
