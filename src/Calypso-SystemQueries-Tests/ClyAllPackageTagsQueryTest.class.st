@@ -1,5 +1,5 @@
 Class {
-	#name : 'ClyAllClassGroupsQueryTest',
+	#name : 'ClyAllPackageTagsQueryTest',
 	#superclass : 'ClyTypedQueryTest',
 	#category : 'Calypso-SystemQueries-Tests-Queries',
 	#package : 'Calypso-SystemQueries-Tests',
@@ -7,19 +7,20 @@ Class {
 }
 
 { #category : 'running' }
-ClyAllClassGroupsQueryTest >> createQuery [
-	^ClyAllPackageTagsQuery from: ClyPackageScope of: Object package in: environment
+ClyAllPackageTagsQueryTest >> createQuery [
+
+	^ ClyAllPackageTagsQuery from: ClyPackageScope of: Object package in: environment
 ]
 
 { #category : 'running' }
-ClyAllClassGroupsQueryTest >> setUp [
+ClyAllPackageTagsQueryTest >> setUp [
 	super setUp.
 
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new
 ]
 
 { #category : 'tests' }
-ClyAllClassGroupsQueryTest >> testCheckIfEmpty [
+ClyAllPackageTagsQueryTest >> testCheckIfEmpty [
 	| scope |
 	scope := ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
 	query scope: scope.
@@ -31,7 +32,7 @@ ClyAllClassGroupsQueryTest >> testCheckIfEmpty [
 ]
 
 { #category : 'tests' }
-ClyAllClassGroupsQueryTest >> testFromSinglePackage [
+ClyAllPackageTagsQueryTest >> testFromSinglePackage [
 
 	self queryFromScope: ClyPackageScope of: ClyClass7WithTag1FromP5Mock package.
 

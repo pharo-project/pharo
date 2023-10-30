@@ -33,14 +33,6 @@ ClyPackageScope >> classGroupProvidersDo: aBlock [
 ]
 
 { #category : 'queries' }
-ClyPackageScope >> classGroupsDo: aBlock [
-
-	self classGroupProvidersDo: [ :groupProvider |
-		groupProvider classGroupsIn: self do: [:group |
-			aBlock value: group] ]
-]
-
-{ #category : 'queries' }
 ClyPackageScope >> classesDo: aBlock [
 	self packagesDo: [ :package |
 		package definedClasses do: aBlock]
@@ -67,6 +59,14 @@ ClyPackageScope >> methodsDo: aBlock [
 
 	self packagesDo: [ :package |
 		package extensionMethods do: aBlock ]
+]
+
+{ #category : 'queries' }
+ClyPackageScope >> packageTagsDo: aBlock [
+
+	self classGroupProvidersDo: [ :groupProvider |
+		groupProvider packageTagssIn: self do: [:group |
+			aBlock value: group] ]
 ]
 
 { #category : 'queries' }

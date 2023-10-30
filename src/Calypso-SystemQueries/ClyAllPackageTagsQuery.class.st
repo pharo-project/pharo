@@ -34,7 +34,7 @@ ClyAllPackageTagsQuery >> buildResult: aQueryResult [
 	| groups |
 	groups := OrderedCollection new.
 
-	scope classGroupsDo: [ :each | groups add: each].
+	scope packageTagsDo: [ :each | groups add: each].
 
 	aQueryResult fillWith: groups
 ]
@@ -42,7 +42,7 @@ ClyAllPackageTagsQuery >> buildResult: aQueryResult [
 { #category : 'execution' }
 ClyAllPackageTagsQuery >> checkEmptyResult [
 
-	scope classGroupsDo: [ :each | ^false].
+	scope packageTagsDo: [ :each | ^false].
 
 	^true
 ]
