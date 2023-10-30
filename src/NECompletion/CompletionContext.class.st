@@ -98,7 +98,8 @@ CompletionContext >> hasMessage [
 
 { #category : 'entries' }
 CompletionContext >> initEntries [
-	^ sorter sortCompletionList: (node completionEntries: position) asOrderedCollection
+
+	^ sorter sortCompletionList: (node completionEntries: position)
 ]
 
 { #category : 'parsing' }
