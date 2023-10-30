@@ -159,6 +159,41 @@ AlphaImageMorph >> extent: aPoint [
 ]
 
 { #category : 'accessing' }
+AlphaImageMorph >> formSet: aFormSet [
+
+	self formSet: aFormSet size: aFormSet extent
+]
+
+{ #category : 'accessing' }
+AlphaImageMorph >> formSet: aFormSet size: aPoint [
+	"Set the image to be the form set scaled to the given size and padded if neccesary."
+
+	|f scaledExtent|
+	"Convert color forms etc. to 32 bit before resizing since scaling of ColorForm introduces degraded color resolution.
+	Most noticable with grayscale forms."
+	f := (aFormSet depth < 32 and: [aFormSet depth > 4])
+		ifTrue: [
+			FormSet extent: aFormSet extent depth: 32 forms: (aFormSet forms collect: [ :form |
+				| convertedForm |
+				convertedForm := Form extent: form extent depth: 32.
+				convertedForm fillColor: (Color white alpha: 0.003922).
+				convertedForm getCanvas translucentImage: form at: 0@0.
+				convertedForm fixAlpha.
+				convertedForm ]) ]
+		ifFalse: [aFormSet].
+	aPoint = f extent ifFalse: [
+		scaledExtent := (f extent * (aPoint x / f width min: aPoint y / f height)) truncated.
+		f := FormSet extent: scaledExtent depth: f depth forms: (f forms collect: [ :form |
+			form scaledToSize: scaledExtent * (form extent / f extent) ]) ].
+	self autoSize
+		ifTrue: [super formSet: f]
+		ifFalse: [formSet := f.
+				self changed].
+	self cachedFormSet: nil.
+	self changed: #imageExtent
+]
+
+{ #category : 'accessing' }
 AlphaImageMorph >> getImageSelector [
 
 	^ getImageSelector
@@ -179,24 +214,8 @@ AlphaImageMorph >> image: anImage [
 
 { #category : 'accessing' }
 AlphaImageMorph >> image: aForm size: aPoint [
-	"Set the image to be the form scaled to the given size and padded if neccesary."
 
-	|f|
-	"Convert color forms etc. to 32 bit before resizing since scaling of ColorForm introduces degraded color resolution.
-	Most noticable with grayscale forms."
-	(aForm depth < 32 and: [aForm depth > 4])
-		ifTrue: [f := Form extent: aForm extent depth: 32.
-				f fillColor: (Color white alpha: 0.003922).
-				f getCanvas translucentImage: aForm at: 0@0.
-				f fixAlpha]
-		ifFalse: [f := aForm].
-	f := f scaledToSize: aPoint.
-	self autoSize
-		ifTrue: [super image: f]
-		ifFalse: [formSet := FormSet form: f.
-				self changed].
-	self cachedFormSet: nil.
-	self changed: #imageExtent
+	^ self formSet: (FormSet form: aForm) size: aPoint
 ]
 
 { #category : 'accessing' }
