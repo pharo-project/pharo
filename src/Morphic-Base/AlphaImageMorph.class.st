@@ -322,27 +322,37 @@ AlphaImageMorph >> scale: aNumber [
 ]
 
 { #category : 'accessing' }
-AlphaImageMorph >> scaledImage [
+AlphaImageMorph >> scaledFormSet [
 	"Answer the image scaled as required."
 
 	|i|
-	i := self form.
-	i boundingBox area = 0 ifTrue: [^i].
+	i := self formSet.
+	(i width = 0 or: [ i height = 0 ]) ifTrue: [^i].
 	(self layout == #scaled and: [self extent ~= i extent]) ifTrue: [
-		^self scaledImageBy: (self extent / i extent)].
+		^self scaledFormSetBy: (self extent / i extent)].
 	(self layout == #scaledAspect and: [self extent ~= i extent]) ifTrue: [
 		^self width / i width > (self height / i height)
-			ifTrue: [self scaledImageBy: (self height / i height)]
-			ifFalse: [self scaledImageBy: (self width / i width)]].
+			ifTrue: [self scaledFormSetBy: (self height / i height)]
+			ifFalse: [self scaledFormSetBy: (self width / i width)]].
 	self scale ~= 1 ifTrue: [
-		^self scaledImageBy: self scale].
+		^self scaledFormSetBy: self scale].
 	^i
 ]
 
 { #category : 'accessing' }
-AlphaImageMorph >> scaledImageBy: imageScale [
+AlphaImageMorph >> scaledFormSetBy: imageScale [
 
-	^ self form magnifyBy: imageScale smoothing: 2
+	| scaledExtent |
+
+	scaledExtent := (formSet extent * imageScale) truncated.
+	^ FormSet extent: scaledExtent depth: formSet depth
+		forms: (formSet forms collect: [ :form | form magnifyBy: (scaledExtent / formSet extent) smoothing: 2 ])
+]
+
+{ #category : 'accessing' }
+AlphaImageMorph >> scaledImage [
+
+	^ self scaledFormSet asForm
 ]
 
 { #category : 'accessing' }
