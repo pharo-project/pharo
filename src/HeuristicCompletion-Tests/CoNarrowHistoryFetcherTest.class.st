@@ -44,7 +44,9 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectly [
 
 	| originalSearch narrowedResults selectors |
-	selectors := Symbol selectorTable asArray.
+	"using the array intead of the set leads to the test failing randomly
+	du to duplicate first entry in narrowedResults"
+	selectors := Symbol selectorTable asArray asSet.
 
 	"First execution with complete query"
 	fetcher := (CoCollectionFetcher onCollection: selectors) withNarrowHistory.
