@@ -309,6 +309,6 @@ WeakSetTest >> testSelectThenCollectPrint [
 	actualSet := self classToBeTested withAll: allElements.
 	actualSet := actualSet select: selectionBlock thenCollect: collectionBlock.
 
-	actualSet do: [ :e | self assert: (e enclosedElement beginsWith: #print) ].
+	actualSet do: [ :e | self assert: (selectionBlock value: e enclosedElement) ].
 	self assert: actualSet size equals: 4
 ]
