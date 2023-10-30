@@ -26,8 +26,10 @@ ClyDefaultSystemEnvironmentPlugin >> checkPackageHasClassGroups: aPackage [
 { #category : 'method groups' }
 ClyDefaultSystemEnvironmentPlugin >> collectClassGroupProviders [
 
-	^{ClyExtendedClassGroupProvider. ClyNoTagClassGroupProvider. ClyTaggedClassGroupProvider}
-		collect: [ :each | each new ]
+	^ {
+		  ClyExtendedClassGroupProvider.
+		  ClyNoTagClassGroupProvider.
+		  ClyTaggedClassGroupProvider } collect: [ :each | each new ]
 ]
 
 { #category : 'method groups' }

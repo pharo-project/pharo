@@ -24,7 +24,7 @@ ClyPackageTagProvider >> packageTagssIn: aPackageScope do: aBlock [
 
 { #category : 'system changes' }
 ClyPackageTagProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aPackageScope [
-	aPackageScope packagesDo: [ :each |
-		(aSystemAnnouncement affectsPackage: each) ifTrue: [^true]].
-	^false
+
+	aPackageScope packagesDo: [ :each | (aSystemAnnouncement affectsPackage: each) ifTrue: [ ^ true ] ].
+	^ false
 ]

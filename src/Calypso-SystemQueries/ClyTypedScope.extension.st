@@ -10,12 +10,6 @@ ClyTypedScope >> canDetectAffectOnClassesBy: aSystemAnnouncement [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-ClyTypedScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
-
-	^false
-]
-
-{ #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> includesClassesAffectedBy: aSystemAnnouncement [
 
 	^basisObjects anySatisfy: [ :each |
@@ -27,6 +21,12 @@ ClyTypedScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	^basisObjects anySatisfy: [ :each |
 		each includesMethodsAffectedBy: aSystemAnnouncement ]
+]
+
+{ #category : '*Calypso-SystemQueries' }
+ClyTypedScope >> includesPackageTagsAffectedBy: aSystemAnnouncement [
+
+	^false
 ]
 
 { #category : '*Calypso-SystemQueries' }

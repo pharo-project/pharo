@@ -14,7 +14,7 @@ Class {
 	#superclass : 'ClyTextEditorToolMorph',
 	#instVars : [
 		'package',
-		'classTag'
+		'tag'
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Classes',
 	#package : 'Calypso-SystemTools-Core',
@@ -57,16 +57,6 @@ ClyClassCreationToolMorph >> belongsToCurrentBrowserContext [
 	^packageSelection includesActualObject: package
 ]
 
-{ #category : 'accessing' }
-ClyClassCreationToolMorph >> classTag [
-	^ classTag
-]
-
-{ #category : 'accessing' }
-ClyClassCreationToolMorph >> classTag: anObject [
-	classTag := anObject
-]
-
 { #category : 'template' }
 ClyClassCreationToolMorph >> classTemplate [
 
@@ -93,7 +83,7 @@ ClyClassCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 
 	^package = anotherBrowserTool package
-		and: [ classTag = anotherBrowserTool classTag ]
+		and: [ tag = anotherBrowserTool tag ]
 ]
 
 { #category : 'testing' }
@@ -107,9 +97,9 @@ ClyClassCreationToolMorph >> isValidInContext: aClyFullBrowserContext [
 	aClyFullBrowserContext isPackageSelected
 		ifTrue: [ isValid := package = aClyFullBrowserContext lastSelectedPackage ].
 
-	^ isValid and: [ aClyFullBrowserContext isClassTagSelected
-		ifTrue: [ classTag = aClyFullBrowserContext lastSelectedClassTag ]
-		ifFalse: [ classTag isNil ] ]
+	^ isValid and: [ aClyFullBrowserContext isPackageTagSelected
+		ifTrue: [ tag = aClyFullBrowserContext lastSelectedPackageTag ]
+		ifFalse: [ tag isNil ] ]
 ]
 
 { #category : 'accessing' }
@@ -127,16 +117,16 @@ ClyClassCreationToolMorph >> packageName [
 
 	package ifNil: [ ^'' ].
 
-	classTag ifNil: [ ^package name ].
+	tag ifNil: [ ^package name ].
 
-	^package name , '-' , classTag
+	^package name , '-' , tag
 ]
 
 { #category : 'printing' }
 ClyClassCreationToolMorph >> printContext [
 	package ifNil: [^super printContext].
-	classTag ifNil: [ ^package name ].
-	^package name, ' / ' , classTag
+	tag ifNil: [ ^package name ].
+	^package name, ' / ' , tag
 ]
 
 { #category : 'initialization' }
@@ -155,5 +145,15 @@ ClyClassCreationToolMorph >> setUpModelFromContext [
 	super setUpModelFromContext.
 
 	context isPackageSelected ifTrue: [ package := context lastSelectedPackage ].
-	context isClassTagSelected ifTrue: [ classTag := context lastSelectedClassTag]
+	context isPackageTagSelected ifTrue: [ tag := context lastSelectedPackageTag]
+]
+
+{ #category : 'accessing' }
+ClyClassCreationToolMorph >> tag [
+	^ tag
+]
+
+{ #category : 'accessing' }
+ClyClassCreationToolMorph >> tag: anObject [
+	tag := anObject
 ]

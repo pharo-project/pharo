@@ -21,7 +21,7 @@ Class {
 
 { #category : 'testing' }
 SycPromotePackageFromTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isPackageSelected and: [aToolContext isClassTagSelected]
+	^aToolContext isPackageSelected and: [aToolContext isPackageTagSelected]
 ]
 
 { #category : 'execution' }
@@ -48,5 +48,5 @@ SycPromotePackageFromTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	package := aToolContext lastSelectedPackage.
-	classTag := aToolContext lastSelectedClassTag
+	classTag := aToolContext lastSelectedPackageTag
 ]

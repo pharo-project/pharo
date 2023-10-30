@@ -10,12 +10,12 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : 'ClyRenameClassTagCommand',
+	#name : 'ClyRenamePackageTagCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
 		'package',
-		'classGroup',
-		'newName'
+		'newName',
+		'packageTag'
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Class groups',
 	#package : 'Calypso-SystemTools-FullBrowser',
@@ -23,80 +23,70 @@ Class {
 }
 
 { #category : 'testing' }
-ClyRenameClassTagCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassTagSelected
+ClyRenamePackageTagCommand class >> canBeExecutedInContext: aToolContext [
+	^aToolContext isPackageTagSelected
 ]
 
 { #category : 'activation' }
-ClyRenameClassTagCommand class >> fullBrowserMenuActivation [
+ClyRenamePackageTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyFullBrowserClassGroupContext
 ]
 
 { #category : 'activation' }
-ClyRenameClassTagCommand class >> fullBrowserShortcutActivation [
+ClyRenamePackageTagCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation renamingFor: ClyFullBrowserClassGroupContext
 ]
 
 { #category : 'execution' }
-ClyRenameClassTagCommand >> applyResultInContext: aToolContext [
+ClyRenamePackageTagCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
-	aToolContext showPackage: package atClassTag: newName
+	aToolContext showPackage: package tag: newName
 ]
 
 { #category : 'accessing' }
-ClyRenameClassTagCommand >> classGroup [
-	^ classGroup
-]
-
-{ #category : 'accessing' }
-ClyRenameClassTagCommand >> classGroup: anObject [
-	classGroup := anObject
-]
-
-{ #category : 'accessing' }
-ClyRenameClassTagCommand >> defaultMenuItemName [
+ClyRenamePackageTagCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
 { #category : 'execution' }
-ClyRenameClassTagCommand >> execute [
+ClyRenamePackageTagCommand >> execute [
 
-	classGroup renameClassTagTo: newName
+	packageTag renameTagTo: newName
 ]
 
 { #category : 'accessing' }
-ClyRenameClassTagCommand >> newName [
+ClyRenamePackageTagCommand >> newName [
 	^ newName
 ]
 
 { #category : 'accessing' }
-ClyRenameClassTagCommand >> newName: anObject [
+ClyRenamePackageTagCommand >> newName: anObject [
 	newName := anObject
 ]
 
 { #category : 'accessing' }
-ClyRenameClassTagCommand >> package [
+ClyRenamePackageTagCommand >> package [
 	^ package
 ]
 
 { #category : 'accessing' }
-ClyRenameClassTagCommand >> package: anObject [
+ClyRenamePackageTagCommand >> package: anObject [
 	package := anObject
 ]
 
 { #category : 'execution' }
-ClyRenameClassTagCommand >> prepareFullExecutionInContext: aToolContext [
+ClyRenamePackageTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	package := aToolContext lastSelectedPackage.
-	classGroup := aToolContext lastSelectedClassGroup.
+	packageTag := aToolContext lastSelectedClassGroup.
 	newName := UIManager default
 		request: 'New name of the class tag'
-		initialAnswer: classGroup name
+		initialAnswer: packageTag name
 		title: 'Rename a class tag'.
-	newName isEmptyOrNil | (newName = classGroup name) ifTrue: [ CmdCommandAborted signal]
+	newName isEmptyOrNil | (newName = packageTag name) ifTrue: [ CmdCommandAborted signal]
 ]

@@ -49,7 +49,8 @@ ClyAllPackageTagsQuery >> checkEmptyResult [
 
 { #category : 'execution' }
 ClyAllPackageTagsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
-	anEnvironmentPlugin collectMetadataOfClassGroups: aQueryResult
+
+	
 ]
 
 { #category : 'printing' }
@@ -61,5 +62,5 @@ ClyAllPackageTagsQuery >> description [
 { #category : 'system changes' }
 ClyAllPackageTagsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
-	^scope includesClassGroupsAffectedBy: aSystemAnnouncement
+	^scope includesPackageTagsAffectedBy: aSystemAnnouncement
 ]

@@ -39,7 +39,7 @@ ClyPackageScope >> classesDo: aBlock [
 ]
 
 { #category : 'system changes' }
-ClyPackageScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
+ClyPackageScope >> includesPackageTagsAffectedBy: aSystemAnnouncement [
 
 	| providers |
 	basisObjects do: [ :eachPackage |
