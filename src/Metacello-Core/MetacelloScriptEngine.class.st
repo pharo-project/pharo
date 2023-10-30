@@ -39,11 +39,11 @@ MetacelloScriptEngine class >> baselineNameFrom: baseName [
 
 { #category : 'utilities' }
 MetacelloScriptEngine class >> configurationNameFrom: baseName [
-    "Return the fully-qualified configuration class name."
+	"Return the fully-qualified configuration class name."
 
-    ^ (baseName indexOfSubCollection: 'ConfigurationOf') > 0
-        ifTrue: [ baseName ]
-        ifFalse: [ 'ConfigurationOf' , baseName ]
+	^ ((baseName beginsWith: 'ConfigurationOf')
+		   ifTrue: [ baseName ]
+		   ifFalse: [ 'ConfigurationOf' , baseName ]) asSymbol
 ]
 
 { #category : 'defaults' }

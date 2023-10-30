@@ -56,25 +56,6 @@ MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
 	aCollection do: aBlock displayingProgress: aString
 ]
 
-{ #category : 'reflection' }
-MetacelloPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName [
-
-	| copysName class newDefinition |
-	copysName := newName asSymbol.
-	copysName = oldClass name ifTrue: [ ^ oldClass ].
-	(Smalltalk globals includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
-	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
-	newDefinition := newDefinition copyReplaceAll: 'category: ' , oldClass category asString printString with: 'category: ' , newCategoryName printString.
-	class := self class compiler
-		         logged: true;
-		         evaluate: newDefinition.
-	class class instanceVariableNames: oldClass class instanceVariablesString.
-	class copyAllMethodsFrom: oldClass.
-	class class copyAllMethodsFrom: oldClass class.
-	class category: newCategoryName.
-	^ class
-]
-
 { #category : 'repository creation' }
 MetacelloPlatform >> createRepository: aRepositorySpec [
 
