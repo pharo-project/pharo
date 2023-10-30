@@ -329,14 +329,20 @@ AlphaImageMorph >> scaledImage [
 	i := self form.
 	i boundingBox area = 0 ifTrue: [^i].
 	(self layout == #scaled and: [self extent ~= i extent]) ifTrue: [
-		^i magnifyBy: (self extent / i extent) smoothing: 2].
+		^self scaledImageBy: (self extent / i extent)].
 	(self layout == #scaledAspect and: [self extent ~= i extent]) ifTrue: [
 		^self width / i width > (self height / i height)
-			ifTrue: [i magnifyBy: (self height / i height) smoothing: 2]
-			ifFalse: [i magnifyBy: (self width / i width) smoothing: 2]].
+			ifTrue: [self scaledImageBy: (self height / i height)]
+			ifFalse: [self scaledImageBy: (self width / i width)]].
 	self scale ~= 1 ifTrue: [
-		^i magnifyBy: self scale smoothing: 2].
+		^self scaledImageBy: self scale].
 	^i
+]
+
+{ #category : 'accessing' }
+AlphaImageMorph >> scaledImageBy: imageScale [
+
+	^ self form magnifyBy: imageScale smoothing: 2
 ]
 
 { #category : 'accessing' }
