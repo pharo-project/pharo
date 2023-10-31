@@ -398,9 +398,7 @@ RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 	"There should be only one"
 
-	anAnnouncer unsubscribe: self.
-
-	anAnnouncer weak when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
+	anAnnouncer unsubscribe: self
 ]
 
 { #category : 'system integration' }
@@ -470,18 +468,11 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 ]
 
 { #category : 'system integration' }
-RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
+RPackageOrganizer >> repackageMethod: method oldProtocol: oldProtocol newProtocol: newProtocol [
 
-	| method oldPackage newPackage |
-	method := ann method.
-
-	method origin = ann methodClass ifFalse: [ ^ self ]. "Methods from traits are not treated"
-
-	ann methodClass package isUndefined ifTrue: [ ^ self ]. "Classes that are not packages are not treated"
-
-	newPackage := self packageForProtocol: ann newProtocol from: method methodClass.
-
-	oldPackage := self packageForProtocol: ann oldProtocol from: method methodClass.
+	| oldPackage newPackage |
+	newPackage := self packageForProtocol: newProtocol from: method methodClass.
+	oldPackage := self packageForProtocol: oldProtocol from: method methodClass.
 
 	oldPackage = newPackage ifTrue: [ ^ self ].
 
