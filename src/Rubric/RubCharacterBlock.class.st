@@ -90,6 +90,12 @@ RubCharacterBlock >> extent [
 	^ surface extent
 ]
 
+{ #category : 'truncation and round off' }
+RubCharacterBlock >> floor [
+
+	^ surface floor
+]
+
 { #category : 'accessing' }
 RubCharacterBlock >> height [
 	^ surface height

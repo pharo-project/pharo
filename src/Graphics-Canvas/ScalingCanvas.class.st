@@ -47,6 +47,13 @@ ScalingCanvas class >> exampleDrawPolygon [
 ]
 
 { #category : 'examples' }
+ScalingCanvas class >> exampleFillOval [
+
+	^ self privateExampleWithExtent: 10@10 fillColor: Color white scale: 10 drawBlock: [ :canvas |
+		canvas fillOval: (1.1@1.1 corner: 9.9@9.9) color: Color blue borderWidth: 2 borderColor: Color green ]
+]
+
+{ #category : 'examples' }
 ScalingCanvas class >> exampleFillRectangle [
 
 	^ self privateExampleWithExtent: 11@3 fillColor: Color white scale: 10 drawBlock: [ :canvas |
@@ -268,21 +275,28 @@ ScalingCanvas >> allocateForm: extentPoint [
 { #category : 'private' }
 ScalingCanvas >> apply: aBlock [
 
+	self applyClippingTo: self clipRect during: aBlock
+]
+
+{ #category : 'private' }
+ScalingCanvas >> applyClippingTo: clipRect during: aBlock [
+
 	FreeTypeSettings current forceNonSubPixelDuring: [
-		| clipRect |
-		clipRect := formCanvas clipRect.
+		| scaledClipRect |
+		scaledClipRect := ((clipRect scaleBy: scale)
+			intersect: formCanvas clipRect ifNone: [ 0@0 corner: 0@0 ])
+				intersect: (formCanvas origin negated extent: formCanvas extent) ifNone: [ 0@0 corner: 0@0 ].
 		self depth = 32 ifTrue: [
 			| sourceForm |
-			clipRect := clipRect intersect: (formCanvas origin negated extent: formCanvas extent) ifNone: [ 0@0 corner: 0@0 ].
-			sourceForm := Form extent: clipRect extent / scale depth: 32.
-			(FormCanvas on: sourceForm) translateBy: clipRect origin negated / scale during: aBlock.
-			(formCanvas warpFrom: sourceForm boundingBox innerCorners toRect: clipRect)
+			sourceForm := Form extent: scaledClipRect extent / scale depth: 32.
+			(FormCanvas on: sourceForm) translateBy: scaledClipRect origin negated / scale during: aBlock.
+			(formCanvas warpFrom: sourceForm boundingBox innerCorners toRect: scaledClipRect)
 				combinationRule: Form blend;
 				sourceForm: sourceForm;
 				warpBits
 		] ifFalse: [
 			formCanvas transformBy: (MatrixTransform2x3 withScale: scale)
-				clippingTo: clipRect
+				clippingTo: scaledClipRect
 				during: aBlock ] ]
 ]
 
@@ -341,7 +355,9 @@ ScalingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor
 		(self scalePolygon: vertices) ifNotNil: [ :scaledPolygon |
 			formCanvas drawPolygon: scaledPolygon color: aColor borderWidth: 0 borderColor: bc.
 			^ self ] ].
-	super drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc
+	self applyClippingTo: (vertices min floor corner: vertices max floor + 1)
+		during: [ :transformedCanvas |
+			transformedCanvas drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc ]
 ]
 
 { #category : 'private' }
@@ -371,6 +387,14 @@ ScalingCanvas >> extent [
 ScalingCanvas >> fillColor: aColor [
 
 	formCanvas fillColor: aColor
+]
+
+{ #category : 'drawing - ovals' }
+ScalingCanvas >> fillOval: r color: c borderWidth: borderWidth borderColor: borderColor [
+
+	self applyClippingTo: r floor
+		during: [ :clippedCanvas |
+			clippedCanvas fillOval: r color: c borderWidth: borderWidth borderColor: borderColor ]
 ]
 
 { #category : 'initialization' }
@@ -421,7 +445,10 @@ ScalingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: bord
 			formCanvas frameAndFillRectangle: scaledRectangle fillColor: fillColor
 				borderWidth: borderWidth * scale borderColor: borderColor.
 			^ self ] ].
-	super frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor
+	self applyClippingTo: r floor
+		during: [ :transformedCanvas |
+			transformedCanvas frameAndFillRectangle: r fillColor: fillColor
+				borderWidth: borderWidth borderColor: borderColor ]
 ]
 
 { #category : 'private' }
@@ -455,7 +482,9 @@ ScalingCanvas >> line: pt1 to: pt2 width: w color: c [
 					to: (pt2 - offset) * scale + scaledOffset
 					width: widthScaled color: c.
 				^ self ].
-	super line: pt1 to: pt2 width: w color: c
+	self applyClippingTo: (((pt1 min: pt2) - (w // 2)) floor corner: ((pt1 max: pt2) + (w // 2)) ceiling + 1)
+		during: [ :transformedCanvas |
+			transformedCanvas line: pt1 to: pt2 width: w color: c ]
 ]
 
 { #category : 'accessing' }
@@ -535,7 +564,9 @@ ScalingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aB
 				clipRect: (aClipRect floor scaleBy: scale))
 			scale: scale).
 		^ self ].
-	super transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize
+	self applyClippingTo: aClipRect floor
+		during: [ :transformedCanvas |
+			transformedCanvas transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize ]
 ]
 
 { #category : 'other' }
