@@ -924,10 +924,23 @@ Dictionary >> storeOn: aStream [
 
 { #category : #undeclared }
 Dictionary >> unreferencedKeys [
-	"This is private code for the Undeclared handling"
+	"This is private code for the Undeclared handling.
+ 	Optimize for performance--examine each literal only once.
+ 	Since we know these are variable bindings, they cannot be
+ 	optimized selectors nor be elements of Arrays, but we do need
+ 	to traverse nested blocks."
 
-	^self keys select: [ :key |
-			(self systemNavigation allReferencesTo: (self associationAt: key)) isEmpty ]
+ 	| unreferenced |
+ 	unreferenced := self keys asSet.
+ 	self systemNavigation allBehaviorsDo: [ :class |
+ 		class methodsDo: [ :method |
+ 			method withAllNestedLiteralsDo: [ :lit |
+ 				(lit isKindOf: UndeclaredVariable) ifTrue: [
+ 					unreferenced
+ 						remove: lit key
+ 						ifAbsent: [ "Sanity check--a binding with more than one reference may already be gone from the unreferenced set, but should be present in Undeclared itself"
+ 							self at: lit key ] ] ] ] ].
+ 	^ unreferenced
 ]
 
 { #category : #private }
