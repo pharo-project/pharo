@@ -136,21 +136,6 @@ RPackageOrganizer class >> isPackageDefinedForClass: aClass [
 	^ (self default packageOf: aClass) notNil
 ]
 
-{ #category : 'class initialization' }
-RPackageOrganizer class >> registerInterestToSystemAnnouncement [
-
-	<script>
-	self packageOrganizer unregisterInterestToSystemAnnouncement.
-	"To make sure that we do not have it twice registered"
-	self packageOrganizer registerInterestToSystemAnnouncement
-]
-
-{ #category : 'class initialization' }
-RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
-
-	self default unregisterInterestToSystemAnnouncement
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> addPackage: aPackage [
 
@@ -170,11 +155,6 @@ RPackageOrganizer >> addPackage: aPackage [
 	SystemAnnouncer announce: (PackageAdded to: package).
 
 	^ package
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> announcer [
-	^SystemAnnouncer uniqueInstance private
 ]
 
 { #category : 'private - registration' }
@@ -381,32 +361,10 @@ RPackageOrganizer >> packagesDo: aBlock [
 	self packages do: aBlock
 ]
 
-{ #category : 'initialization' }
-RPackageOrganizer >> register [
-
-	"self registerInterestToMC."
-	self registerInterestToSystemAnnouncement
-]
-
 { #category : 'private - registration' }
 RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
 
 	(classExtendingPackagesMapping at: aClass instanceSide ifAbsentPut: [ IdentitySet new ]) add: aPackage
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
-	"There should be only one"
-
-	anAnnouncer unsubscribe: self
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> registerInterestToSystemAnnouncement [
-	"self registerInterestToSystemAnnouncement"
-	<systemEventRegistration>
-
-	self registerInterestToAnnouncer: self announcer
 ]
 
 { #category : 'private - registration' }
@@ -500,22 +458,10 @@ RPackageOrganizer >> undefinedPackage [
 	^ self packages detect: [ :package | package isUndefined ]
 ]
 
-{ #category : 'initialization' }
-RPackageOrganizer >> unregister [
-	SystemAnnouncer uniqueInstance unsubscribe: self
-]
-
 { #category : 'private - registration' }
 RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
 
 	classExtendingPackagesMapping at: aClass instanceSide ifPresent: [ :extendingPackages | extendingPackages remove: aPackage ifAbsent: [  ] ]
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> unregisterInterestToSystemAnnouncement [
-	"self unregisterInterestToSystemAnnouncement"
-
-	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : 'private' }

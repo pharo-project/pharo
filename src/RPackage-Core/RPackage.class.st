@@ -128,14 +128,11 @@ RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
 	"Perform an action locally to aNewOrganizer. Does not impact any other organizers."
 
 	| old |
-	[ old := self organizer.
-	old unregister.
+	self flag: #package. "This should be removed"
+	[
+	old := self organizer.
 	self organizer: aNewOrganizer.
-	aNewOrganizer register.
-	aBlock cull: aNewOrganizer] ensure: [
-		self organizer: old.
-		old register.
-		aNewOrganizer unregister]
+	aBlock cull: aNewOrganizer ] ensure: [ self organizer: old ]
 ]
 
 { #category : 'comparing' }
