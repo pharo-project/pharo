@@ -392,9 +392,7 @@ RPackageOrganizer >> registerInterestToAnnouncer: anAnnouncer [
 
 	anAnnouncer unsubscribe: self.
 
-	anAnnouncer weak
-		when: MethodAdded send: #systemMethodAddedActionFrom: to: self;
-		when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
+	anAnnouncer weak when: MethodRecategorized send: #systemMethodRecategorizedActionFrom: to: self
 ]
 
 { #category : 'system integration' }
@@ -461,24 +459,6 @@ RPackageOrganizer >> renameTag: aTag to: newName inPackage: aPackage [
 	(self hasPackage: aPackage) ifFalse: [ ^ self ].
 
 	(self ensurePackage: aPackage) renameTag: aTag to: newName
-]
-
-{ #category : 'system integration' }
-RPackageOrganizer >> systemMethodAddedActionFrom: ann [
-
-	| method protocol |
-	"If the method origin is not the one of the event, we do not care about that method"
-	method := ann method.
-	method origin = ann methodClass ifFalse: [ ^ self ].
-
-	"If the class is not packaged yet, ignore the situation. This method is created during the creation of the class or on an anonymous class"
-	method methodClass package name = UndefinedPackage undefinedPackageName ifTrue: [ ^ self ].
-
-	protocol := method protocol.
-
-	(protocol isExtensionProtocol
-		 ifTrue: [ self packageForProtocol: protocol ]
-		 ifFalse: [ method methodClass package ]) addMethod: method
 ]
 
 { #category : 'system integration' }

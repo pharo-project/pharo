@@ -25,14 +25,6 @@ ClassDescription class >> isAbstract [
 	^ self == ClassDescription
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> acceptsLoggingOfCompilation [
-	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself
-	Weird name is so that it will come lexically before #compile, so that a clean build can make it through."
-
-	^ true
-]
-
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
@@ -51,7 +43,9 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
+		ifTrue: [ 
+			compiledMethod shouldBePackaged ifTrue: [ self packageOrganizer addMethod: compiledMethod ].
+			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
@@ -310,7 +304,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 		  classified: protocol
 		  withStamp: changeStamp
 		  notifying: requestor
-		  logSource: self acceptsLoggingOfCompilation
+		  logSource: true
 ]
 
 { #category : 'compiling' }

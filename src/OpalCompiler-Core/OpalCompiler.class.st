@@ -560,7 +560,7 @@ OpalCompiler >> install [
 	priorMethod := class compiledMethodAt: method selector ifAbsent: [  ].
 
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
-	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
+	logSource := self logged ifNil: [ true ].
 
 	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 

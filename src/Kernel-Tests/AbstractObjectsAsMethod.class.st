@@ -52,3 +52,9 @@ AbstractObjectsAsMethod >> removeFromPackage [
 { #category : 'compatibility' }
 AbstractObjectsAsMethod >> selector: aSymbol [
 ]
+
+{ #category : 'asserting' }
+AbstractObjectsAsMethod >> shouldBePackaged [
+
+	^ false
+]

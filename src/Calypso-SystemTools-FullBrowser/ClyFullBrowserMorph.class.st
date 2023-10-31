@@ -609,7 +609,7 @@ ClyFullBrowserMorph >> selectClass: aClass [
 
 		aClass packageTag isRoot
 			ifTrue: [ self selectPackage: aClass package ]
-			ifFalse: [ self selectPackage: aClass package atClassTag: aClass packageTagName ].
+			ifFalse: [ self selectPackage: aClass package andTag: aClass packageTagName ].
 
 		self packageSelection isEmpty ifTrue: [ ^ self ].
 
@@ -663,7 +663,7 @@ ClyFullBrowserMorph >> selectPackage: aPackage [
 ]
 
 { #category : 'navigation' }
-ClyFullBrowserMorph >> selectPackage: aPackage atClassTag: tagName [
+ClyFullBrowserMorph >> selectPackage: aPackage andTag: tagName [
 
 	| packageItem targetClassGroup foundPackages |
 
@@ -736,7 +736,7 @@ ClyFullBrowserMorph >> silentlySelectPackageOfSelectedClass [
 	packageView ignoreNavigationDuring: [
 		selectedClass packageTag isRoot
 			ifTrue: [ self selectPackage: selectedClass package ]
-			ifFalse: [ self selectPackage: selectedClass package atClassTag: selectedClass packageTagName ] ]
+			ifFalse: [ self selectPackage: selectedClass package andTag: selectedClass packageTagName ] ]
 ]
 
 { #category : 'navigation' }

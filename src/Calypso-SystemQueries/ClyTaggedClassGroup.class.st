@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : 'testing' }
-ClyTaggedClassGroup class >> isBasedOnClassTag [
+ClyTaggedClassGroup class >> isBasedOnPackageTag [
 	^true
 ]
 
@@ -48,7 +48,7 @@ ClyTaggedClassGroup >> removeWithClasses [
 ]
 
 { #category : 'operations' }
-ClyTaggedClassGroup >> renameClassTagTo: newTag [
+ClyTaggedClassGroup >> renameTagTo: newTag [
 
 	self classes do: [ :class | class packageTag: newTag ].
 

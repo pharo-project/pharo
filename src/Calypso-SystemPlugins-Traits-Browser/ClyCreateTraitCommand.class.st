@@ -15,7 +15,7 @@ Class {
 	#superclass : 'ClyBrowserCommand',
 	#instVars : [
 		'package',
-		'classTag'
+		'packageTag'
 	],
 	#category : 'Calypso-SystemPlugins-Traits-Browser',
 	#package : 'Calypso-SystemPlugins-Traits-Browser'
@@ -49,7 +49,7 @@ ClyCreateTraitCommand >> defaultMenuItemName [
 ClyCreateTraitCommand >> execute [
 	| traitDefinition category resultTrait |
 	category := package name.
-	classTag ifNotNil: [ category := category , '-' , classTag ].
+	packageTag ifNotNil: [ category := category , '-' , packageTag ].
 	traitDefinition := ClassDefinitionPrinter fluid traitDefinitionTemplateInPackage: category.
 	traitDefinition := UIManager default
 		                   multiLineRequest: 'Define trait:'
@@ -68,6 +68,6 @@ ClyCreateTraitCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
 
 	package := aBrowserContext lastSelectedPackage.
-	aBrowserContext isClassTagSelected ifTrue: [
-		classTag := aBrowserContext lastSelectedClassTag]
+	aBrowserContext isPackageTagSelected ifTrue: [
+		packageTag := aBrowserContext lastSelectedPackageTag]
 ]

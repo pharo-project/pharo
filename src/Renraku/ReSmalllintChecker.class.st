@@ -173,14 +173,13 @@ ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
 
 { #category : 'accessing' }
 ReSmalllintChecker >> manifestBuilderOfPackage: aPackage [
+
 	| key |
-	key := aPackage packageName.
-	^ manifestClassCache
-		at: key
-		ifAbsentPut: [
-			(self builderManifestClass hasPackageNamed: key)
-				ifTrue: [ self builderManifestClass ofPackageNamed: key ]
-				ifFalse: [ nil ] ]
+	key := aPackage name.
+	^ manifestClassCache at: key ifAbsentPut: [
+		  (self builderManifestClass hasPackageNamed: key)
+			  ifTrue: [ self builderManifestClass ofPackageNamed: key ]
+			  ifFalse: [ nil ] ]
 ]
 
 { #category : 'private' }

@@ -1295,11 +1295,15 @@ Collection >> reject: aBlock [
 
 { #category : 'enumerating' }
 Collection >> reject: rejectBlock thenCollect: collectBlock [
-	"Utility method to improve readability."
+	"Optimized implementation"
 
 	"(#(1 2 3 4 5) reject: #even thenCollect: [:x|x*10]) >>> #(10 30 50)"
 
-	^ (self reject: rejectBlock) collect: collectBlock
+	| newCollection |
+	newCollection := self copyEmpty.
+	self do: [ :e | (rejectBlock value: e) ifFalse: [ 
+			newCollection add: (collectBlock value: e) ] ].
+	^ newCollection
 ]
 
 { #category : 'enumerating' }
@@ -1407,12 +1411,16 @@ Collection >> select: aBlock [
 
 { #category : 'enumerating' }
 Collection >> select: selectBlock thenCollect: collectBlock [
-	"Utility method to improve readability."
+	"Optimized implementation"
 
 	"(#(1 2 3 4 5) select: #even thenCollect: #negated) >>> #(-2 -4)"
 	"('Hello, World!' select: #isLetter thenCollect: #uppercase) >>> 'HELLOWORLD'"
 
-	^ (self select: selectBlock) collect: collectBlock
+	| selectedItems |
+	selectedItems := self copyEmpty.
+	self do: [ :e | (selectBlock value: e) ifTrue: [ 
+			selectedItems add: (collectBlock value: e) ] ].
+	^ selectedItems
 ]
 
 { #category : 'enumerating' }

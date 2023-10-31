@@ -683,6 +683,18 @@ SmallDictionary >> privateAt: key put: value [
 	^values at: size put: value
 ]
 
+{ #category : 'enumerating' }
+SmallDictionary >> reject: rejectBlock thenCollect: collectBlock [
+	"Optimized implementation"
+
+	| newSmallDictionary |
+	newSmallDictionary := self copyEmpty.
+	1 to: size do: [:index | 
+		(rejectBlock value: (keys at: index)) ifFalse: [
+			newSmallDictionary at: (keys at: index) put: (collectBlock value: (values at: index)) ] ].
+	^ newSmallDictionary
+]
+
 { #category : 'removing' }
 SmallDictionary >> remove:anAssociation [
 
@@ -742,6 +754,17 @@ SmallDictionary >> select: aBlock [
 		[:each |
 		(aBlock value: each value) ifTrue: [newCollection add: each]].
 	^newCollection
+]
+
+{ #category : 'enumerating' }
+SmallDictionary >> select: selectBlock thenCollect: collectBlock [
+
+	| newSmallDictionary |
+	newSmallDictionary := self copyEmpty.
+	1 to: size do: [:index | 
+		(selectBlock value: (keys at: index)) ifTrue: [
+			newSmallDictionary at: (keys at: index) put: (collectBlock value: (values at: index)) ] ].
+	^ newSmallDictionary
 ]
 
 { #category : 'private' }
