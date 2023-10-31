@@ -85,14 +85,15 @@ MCPackageLoader >> basicLoadDefinitions [
 	superclass definitions before methods for subclasses but I need this NOW, and adding
 	an extra pass ensures that methods are compiled against their new class definitions."
 
-	additions do: [ :each | self loadClassDefinition: each ] displayingProgress: 'Loading classes...'.
+	additions do: [ :aDefinition | self loadClassDefinition: aDefinition ] displayingProgress: 'Loading classes...'.
 
-	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
-	errorDefinitions do: [ :each | each addMethodAdditionTo: methodAdditions ] displayingProgress: 'Reloading erroneous definitions...'.
+	errorDefinitions ifNotEmpty: [
+		self warnAboutErrors.
+		errorDefinitions do: [ :aClassDefinition | aClassDefinition load ] displayingProgress: 'Reloading erroneous definitions...' ].
 
 	additions
 		select: [ :aDefinition | aDefinition isMethodDefinition ]
-		thenDo: [ :aDefinition | aDefinition addMethodAdditionTo: methodAdditions ].
+		thenDo: [ :aDefinition | methodAdditions add: aDefinition asMethodAddition ].
 
 	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
 
@@ -206,11 +207,6 @@ MCPackageLoader >> provisions [
 MCPackageLoader >> removeDefinition: aDefinition [
 
 	removals add: aDefinition
-]
-
-{ #category : 'private' }
-MCPackageLoader >> shouldWarnAboutErrors [
-	^ errorDefinitions isEmpty not and: [false "should make this a setting ?"]
 ]
 
 { #category : 'private' }
