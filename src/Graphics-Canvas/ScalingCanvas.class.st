@@ -269,9 +269,21 @@ ScalingCanvas >> allocateForm: extentPoint [
 ScalingCanvas >> apply: aBlock [
 
 	FreeTypeSettings current forceNonSubPixelDuring: [
-		formCanvas transformBy: (MatrixTransform2x3 withScale: scale)
-			clippingTo: formCanvas clipRect
-			during: aBlock ]
+		| clipRect |
+		clipRect := formCanvas clipRect.
+		self depth = 32 ifTrue: [
+			| sourceForm |
+			clipRect := clipRect intersect: (formCanvas origin negated extent: formCanvas extent) ifNone: [ 0@0 corner: 0@0 ].
+			sourceForm := Form extent: clipRect extent / scale depth: 32.
+			(FormCanvas on: sourceForm) translateBy: clipRect origin negated / scale during: aBlock.
+			(formCanvas warpFrom: sourceForm boundingBox innerCorners toRect: clipRect)
+				combinationRule: Form blend;
+				sourceForm: sourceForm;
+				warpBits
+		] ifFalse: [
+			formCanvas transformBy: (MatrixTransform2x3 withScale: scale)
+				clippingTo: clipRect
+				during: aBlock ] ]
 ]
 
 { #category : 'drawing - support' }
