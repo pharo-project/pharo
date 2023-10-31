@@ -21,7 +21,6 @@ Class {
 		'obsoletions',
 		'additions',
 		'removals',
-		'errorDefinitions',
 		'provisions'
 	],
 	#category : 'Monticello-Loading',
@@ -68,8 +67,8 @@ MCPackageLoader >> analyze [
 
 { #category : 'private' }
 MCPackageLoader >> basicLoad [
-    errorDefinitions := OrderedCollection new.
-    SourceFiles deferFlushDuring: [self basicLoadDefinitions].
+
+	SourceFiles deferFlushDuring: [ self basicLoadDefinitions ]
 ]
 
 { #category : 'private' }
@@ -84,13 +83,20 @@ MCPackageLoader >> basicLoadDefinitions [
 	superclass definitions before methods for subclasses but I need this NOW, and adding
 	an extra pass ensures that methods are compiled against their new class definitions."
 
-	| methodAdditions |
+	| methodAdditions classAdditions errorDefinitions |
+	errorDefinitions := OrderedCollection new.
 	methodAdditions := OrderedCollection new.
 
-	additions do: [ :aDefinition | self loadClassDefinition: aDefinition ] displayingProgress: 'Loading classes...'.
+	classAdditions := additions select: [ :aDefinition | aDefinition isClassDefinition ].
+	classAdditions
+		do: [ :aDefinition |
+			[ aDefinition load ]
+				on: Error
+				do: [ errorDefinitions add: aDefinition ] ]
+		displayingProgress: 'Loading classes...'.
 
 	errorDefinitions ifNotEmpty: [
-		self warnAboutErrors.
+		self warnAboutErrors: errorDefinitions.
 		errorDefinitions do: [ :aClassDefinition | aClassDefinition load ] displayingProgress: 'Reloading erroneous definitions...' ].
 
 	additions
@@ -138,14 +144,6 @@ MCPackageLoader >> dependencyWarning [
 				  cr ] ]
 ]
 
-{ #category : 'private' }
-MCPackageLoader >> errorDefinitionWarning [
-	^ String streamContents:
-		[:s |
-		s nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):'; cr.
-		errorDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
-]
-
 { #category : 'initialization' }
 MCPackageLoader >> initialize [
 
@@ -168,15 +166,6 @@ MCPackageLoader >> load [
 
 	self validate.
 	self useNewChangeSetDuring: [ self basicLoad ]
-]
-
-{ #category : 'private' }
-MCPackageLoader >> loadClassDefinition: aDefinition [
-
-	[ aDefinition isClassDefinition 
-		ifTrue: [ aDefinition load ]
-	] on: Error do: [ 
-		errorDefinitions add: aDefinition ].
 ]
 
 { #category : 'public' }
@@ -280,7 +269,16 @@ MCPackageLoader >> warnAboutDependencies [
 ]
 
 { #category : 'private' }
-MCPackageLoader >> warnAboutErrors [
-	self notify: self errorDefinitionWarning.
+MCPackageLoader >> warnAboutErrors: errorDefinitions [
 
+	self notify: (String streamContents: [ :s |
+			 s
+				 nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):';
+				 cr.
+			 errorDefinitions do: [ :ea |
+				 s
+					 space;
+					 space;
+					 nextPutAll: ea summary;
+					 cr ] ])
 ]
