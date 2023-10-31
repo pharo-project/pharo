@@ -253,40 +253,40 @@ EpRevertTest >> testMethodRemovalWithMethodAlreadyAdded [
 { #category : 'tests' }
 EpRevertTest >> testPackageTagAdditionWithPackageTagRemoval [
 
-	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory tagName inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
-	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self assert: (self packageOrganizer hasTag: classFactory tagName inPackage: classFactory packageName).
 	self revertInputEntry.
-	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
+	self deny: (self packageOrganizer hasTag: classFactory tagName inPackage: classFactory packageName)
 ]
 
 { #category : 'tests' }
 EpRevertTest >> testPackageTagRemovalWithPackageTagAddition [
 
-	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
-	self packageOrganizer removeTag: classFactory defaultTagPostfix fromPackage: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory tagName inPackage: classFactory packageName.
+	self packageOrganizer removeTag: classFactory tagName fromPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
-	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
+	self deny: (self packageOrganizer hasTag: classFactory tagName inPackage: classFactory packageName).
 	self revertInputEntry.
-	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName)
+	self assert: (self packageOrganizer hasTag: classFactory tagName inPackage: classFactory packageName)
 ]
 
 { #category : 'tests' }
 EpRevertTest >> testPackageTagRename [
 
-	self packageOrganizer ensureTag: classFactory defaultTagPostfix inPackage: classFactory packageName.
-	self packageOrganizer renameTag: classFactory defaultTagPostfix to: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName.
+	self packageOrganizer ensureTag: classFactory tagName inPackage: classFactory packageName.
+	self packageOrganizer renameTag: classFactory tagName to: classFactory tagName , '2' inPackage: classFactory packageName.
 	self setHeadAsInputEntry.
 
 	self assert: inputEntry content class equals: EpPackageTagRename.
 
-	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
-	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName).
+	self deny: (self packageOrganizer hasTag: classFactory tagName inPackage: classFactory packageName).
+	self assert: (self packageOrganizer hasTag: classFactory tagName , '2' inPackage: classFactory packageName).
 	self revertInputEntry.
-	self assert: (self packageOrganizer hasTag: classFactory defaultTagPostfix inPackage: classFactory packageName).
-	self deny: (self packageOrganizer hasTag: classFactory defaultTagPostfix , '2' inPackage: classFactory packageName)
+	self assert: (self packageOrganizer hasTag: classFactory tagName inPackage: classFactory packageName).
+	self deny: (self packageOrganizer hasTag: classFactory tagName , '2' inPackage: classFactory packageName)
 ]
 
 { #category : 'tests' }
