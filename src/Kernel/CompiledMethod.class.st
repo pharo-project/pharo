@@ -915,6 +915,14 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	start + 1 to: self size do: [:n | self at: n put: (trailerBytes at: n - start) ]
 ]
 
+{ #category : 'testing' }
+CompiledMethod >> shouldBePackaged [
+	"This method is a hack.. Ideally this code should be inlined in ClassDescription>>#addAndClassifySelector:withMethod:inProtocol: but ObjectsAsMethodsExample needs this in order to work. I don't like this. If someone has a better idea on how to not packages this kind of ObjectAsMethod go ahead please!"
+
+	"This means I'm not from a Trait."
+	^ self origin = self methodClass
+]
+
 { #category : 'accessing' }
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
