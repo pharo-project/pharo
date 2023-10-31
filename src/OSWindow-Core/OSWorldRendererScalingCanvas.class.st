@@ -40,10 +40,23 @@ OSWorldRendererScalingCanvas class >> isApplicableFor: aWorld [
 	^ self isApplicable
 ]
 
+{ #category : 'private' }
+OSWorldRendererScalingCanvas >> canvasScale [
+
+	| scale |
+
+	scale := world scaleFactor reciprocal.
+	^ (scale ~= 1 and: [ scale truncated = scale ])
+		ifTrue: [ scale ]
+		ifFalse: [ nil ]
+]
+
 { #category : 'utilities' }
 OSWorldRendererScalingCanvas >> convertWindowMouseEventPosition: aPosition [
 
-	^ super convertWindowMouseEventPosition: aPosition * world scaleFactor
+	^ self canvasScale
+		ifNil: [ super convertWindowMouseEventPosition: aPosition ]
+		ifNotNil: [ :canvasScale | super convertWindowMouseEventPosition: aPosition * canvasScale reciprocal ]
 ]
 
 { #category : 'private' }
@@ -51,24 +64,21 @@ OSWorldRendererScalingCanvas >> doActivate [
 
 	super doActivate.
 	self osWindow backendWindow renderer canvasBlock: [ :formCanvas |
-		| scale |
-		scale := world scaleFactor reciprocal.
-		(scale ~= 1 and: [ scale truncated = scale ])
-			ifTrue: [ ScalingCanvas formCanvas: formCanvas scale: scale ]
-			ifFalse: [ formCanvas ] ]
+		self canvasScale
+			ifNotNil: [ :scale | ScalingCanvas formCanvas: formCanvas scale: scale ]
+			ifNil: [ formCanvas ] ]
 ]
 
 { #category : 'operations' }
 OSWorldRendererScalingCanvas >> updateDamage: allDamage [
 
-	| scale |
-	
-	scale := world scaleFactor reciprocal.
-	super updateDamage: (allDamage collect: [ :damageRect | damageRect scaleBy: scale ])
+	super updateDamage: (self canvasScale ifNil: [ allDamage ] ifNotNil: [ :canvasScale |
+		allDamage collect: [ :damageRect | damageRect scaleBy: canvasScale ] ])
 ]
 
 { #category : 'display box access' }
 OSWorldRendererScalingCanvas >> viewBox [
 
+	self canvasScale ifNil: [ ^ super viewBox ].
 	^ 0@0 corner: ((self windowExtent / self windowScaleFactor) ceiling max: 1@1)
 ]
