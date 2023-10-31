@@ -688,7 +688,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 UITheme >> checkboxMarkerForm [
 	"Answer the form to use for a checkbox marker."
 
-	^ self iconNamed: #checkboxMarkerForm
+	^ self iconNamed: #checkboxMarker
 ]
 
 { #category : 'fill-styles - buttons' }
@@ -3862,7 +3862,7 @@ UITheme >> radioButtonForm [
 UITheme >> radioButtonMarkerForm [
 	"Answer the form to use for a radio button marker."
 
-	^ self iconNamed: #radioButtonMarkerForm
+	^ self iconNamed: #radioButtonMarker
 ]
 
 { #category : 'border-styles - buttons' }
@@ -5071,14 +5071,14 @@ UITheme >> windowLeftOffset [
 UITheme >> windowMaximizeForm [
 	"Answer the form to use for the maximize button of a window."
 
-	^ self iconNamed: #windowMaximizeForm
+	^ self iconNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
 	"Answer the form to use for mouse over window maximize buttons"
 
-	^ self iconNamed: #windowMaximizeForm
+	^ self iconNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
@@ -5099,7 +5099,7 @@ UITheme >> windowMaximizeSound [
 UITheme >> windowMenuForm [
 	"Answer the form to use for the menu button of a window."
 
-	^ self iconNamed: #windowMenuForm
+	^ self iconNamed: #windowMenu
 ]
 
 { #category : 'label-styles - windows' }
