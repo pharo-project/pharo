@@ -277,7 +277,7 @@ ScalingCanvas >> apply: aBlock [
 { #category : 'drawing - support' }
 ScalingCanvas >> clipBy: aRectangle during: aBlock [
 
-	formCanvas clipBy: (aRectangle scaleBy: scale) during: [ :transformedFormCanvas |
+	formCanvas clipBy: (aRectangle floor scaleBy: scale) during: [ :transformedFormCanvas |
 		aBlock value: (self class formCanvas: transformedFormCanvas scale: scale) ]
 ]
 
@@ -301,7 +301,7 @@ ScalingCanvas >> contentsOfArea: aRectangle into: aForm [
 { #category : 'copying' }
 ScalingCanvas >> copyClipRect: newClipRect [
 
-	^ self class formCanvas: (formCanvas copyClipRect: (newClipRect scaleBy: scale)) scale: scale
+	^ self class formCanvas: (formCanvas copyClipRect: (newClipRect floor scaleBy: scale)) scale: scale
 ]
 
 { #category : 'accessing' }
@@ -520,7 +520,7 @@ ScalingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aB
 		aBlock value: (self class
 			formCanvas: (formCanvas
 				copyOffset: aDisplayTransform offset negated truncated * scale
-				clipRect: (aClipRect scaleBy: scale))
+				clipRect: (aClipRect floor scaleBy: scale))
 			scale: scale).
 		^ self ].
 	super transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize
@@ -529,7 +529,7 @@ ScalingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aB
 { #category : 'other' }
 ScalingCanvas >> translateBy: aPoint clippingTo: aRect during: aBlock [
 
-	formCanvas translateBy: aPoint * scale clippingTo: (aRect scaleBy: scale) during: [ :transformedFormCanvas |
+	formCanvas translateBy: aPoint * scale clippingTo: (aRect floor scaleBy: scale) during: [ :transformedFormCanvas |
 		aBlock value: (self class formCanvas: transformedFormCanvas scale: scale) ]
 ]
 
