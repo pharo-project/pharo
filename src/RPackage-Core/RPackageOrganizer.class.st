@@ -151,16 +151,6 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
-{ #category : 'private' }
-RPackageOrganizer >> addMethod: method [
-
-	| protocol |
-	protocol := method protocol.
-	(protocol isExtensionProtocol
-		           ifTrue: [ self ensurePackageOfExtensionProtocol: protocol ]
-		           ifFalse: [ method methodClass package ]) addMethod: method
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> addPackage: aPackage [
 
@@ -294,6 +284,14 @@ RPackageOrganizer >> packageForProtocol: aProtocol [
 	(aProtocol isNil or: [ aProtocol isExtensionProtocol not ]) ifTrue: [ ^ nil ].
 
 	^ self packageMatchingExtensionName: (aProtocol name copyWithout: $*)
+]
+
+{ #category : 'private' }
+RPackageOrganizer >> packageForProtocol: protocol from: aClass [
+
+	^ (protocol isNotNil and: [ protocol isExtensionProtocol ])
+		  ifTrue: [ self ensurePackageOfExtensionProtocol: protocol ]
+		  ifFalse: [ aClass package ]
 ]
 
 { #category : 'system integration' }
@@ -481,11 +479,9 @@ RPackageOrganizer >> systemMethodRecategorizedActionFrom: ann [
 
 	ann methodClass package isUndefined ifTrue: [ ^ self ]. "Classes that are not packages are not treated"
 
-	newPackage := ann newProtocol isExtensionProtocol
-		              ifTrue: [ self ensurePackageOfExtensionProtocol: ann newProtocol ]
-		              ifFalse: [ method methodClass package ].
+	newPackage := self packageForProtocol: ann newProtocol from: method methodClass.
 
-	oldPackage := (self packageForProtocol: ann oldProtocol) ifNil: [ method methodClass package ].
+	oldPackage := self packageForProtocol: ann oldProtocol from: method methodClass.
 
 	oldPackage = newPackage ifTrue: [ ^ self ].
 
