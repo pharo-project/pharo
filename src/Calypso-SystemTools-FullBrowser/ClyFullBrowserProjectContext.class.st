@@ -22,6 +22,6 @@ ClyFullBrowserProjectContext >> isClassGroupSelected [
 ]
 
 { #category : 'testing' }
-ClyFullBrowserProjectContext >> isClassTagSelected [
+ClyFullBrowserProjectContext >> isPackageTagSelected [
 	^false
 ]

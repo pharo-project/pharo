@@ -55,7 +55,7 @@ ClyClassGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin
 ]
 
 { #category : 'testing' }
-ClyClassGroup class >> isBasedOnClassTag [
+ClyClassGroup class >> isBasedOnPackageTag [
 	^false
 ]
 

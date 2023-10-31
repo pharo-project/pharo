@@ -58,8 +58,8 @@ RPackage class >> itemsSortOrderForCalypso [
 
 { #category : '*Calypso-SystemQueries' }
 RPackage class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironment [
-	^ ClyAllClassGroupsQuery
-		sortedFrom: (ClyPackageScope of: aPackage in: aNavigationEnvironment)
+
+	^ ClyAllPackageTagsQuery sortedFrom: (ClyPackageScope of: aPackage in: aNavigationEnvironment)
 ]
 
 { #category : '*Calypso-SystemQueries' }
