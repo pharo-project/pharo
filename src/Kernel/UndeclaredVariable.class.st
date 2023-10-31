@@ -40,11 +40,6 @@ UndeclaredVariable class >> registeredWithName: aString [
 	^ var
 ]
 
-{ #category : 'registry' }
-UndeclaredVariable >> addUsingMethod: aCompiledMethod [
-	self usingMethods add: aCompiledMethod
-]
-
 { #category : 'queries' }
 UndeclaredVariable >> definingClass [
 	"Nobody defines undeclared variable"
@@ -97,6 +92,18 @@ UndeclaredVariable >> registerFromNode: aNode [
 	self register
 ]
 
+{ #category : 'registry' }
+UndeclaredVariable >> registerMethod: aCompiledMethod [
+	self registeredMethods add: aCompiledMethod
+]
+
+{ #category : 'queries' }
+UndeclaredVariable >> registeredMethods [
+	"We hold weakly on all compiledMethods that use this Undeclared
+	note: they might not be installed, e.g. long running method on the stack or a tool holding on to it"
+	^ self propertyAt: #registeredMethods ifAbsentPut: [ WeakIdentitySet new ]
+]
+
 { #category : 'code generation' }
 UndeclaredVariable >> runtimeUndeclaredRead [
 
@@ -125,5 +132,6 @@ UndeclaredVariable >> unregister [
 
 { #category : 'queries' }
 UndeclaredVariable >> usingMethods [
-	^ self propertyAt: #usingMethods ifAbsentPut: [ WeakIdentitySet new ]
+	"using methods returns just those that are installed in a class"
+	^ self registeredMethods select: [ :method | method isInstalled ]
 ]

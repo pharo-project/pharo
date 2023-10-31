@@ -541,7 +541,7 @@ OpalCompiler >> generateMethod [
 	ast compiledMethod: method.
 	ast 
 		propertyAt: #Undeclareds 
-		ifPresent: [:undeclareds | undeclareds do: [ :var | var addUsingMethod: method ]].
+		ifPresent: [:undeclareds | undeclareds do: [ :var | var registerMethod: method ]].
 	method propertyAt: #source put: source.
 	self compilationContext noPattern ifTrue: [
 		method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
