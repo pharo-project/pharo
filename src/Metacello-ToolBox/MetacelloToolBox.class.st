@@ -1546,13 +1546,7 @@ MetacelloToolBox >> configurationNameFrom: baseName [
 { #category : 'api-configuration' }
 MetacelloToolBox >> configurationNamed: baseName [
 
-	| configurationName |
-	"Check if the class does not exist"
-	configurationName := self configurationNameFrom: baseName.
-	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
-		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
-		self packageOrganizer ensurePackage: configurationName ].
-	project := (self class environment at: configurationName asSymbol) project
+	project := self createConfiguration: baseName
 ]
 
 { #category : 'accessing' }
@@ -1562,6 +1556,20 @@ MetacelloToolBox >> constructor [
 	constructor := MetacelloToolBoxConstructor new.
 	constructor configuration: project configuration class new.
 	^constructor
+]
+
+{ #category : 'private' }
+MetacelloToolBox >> copyClass: oldClass as: newName inPackage: packageName [
+
+	newName = oldClass name ifTrue: [ ^ oldClass ].
+
+	(Smalltalk globals includesKey: newName) ifTrue: [ ^ self error: newName , ' already exists' ].
+
+	^ self class classInstaller make: [ :builder |
+		  builder
+			  fillFor: oldClass;
+			  name: newName;
+			  package: packageName ]
 ]
 
 { #category : 'api-configuration' }
@@ -1577,14 +1585,8 @@ MetacelloToolBox >> createBaselineOfMethod: selector inCategory: category [
 MetacelloToolBox >> createConfiguration: baseName [
 
 	| configurationName |
-	"Check if the class does not exist"
-	configurationName := (baseName beginsWith: 'ConfigurationOf')
-		                     ifTrue: [ baseName ]
-		                     ifFalse: [ 'ConfigurationOf' , baseName ].
-	(Smalltalk includesKey: configurationName asSymbol) ifFalse: [
-		MetacelloPlatform current copyClass: MetacelloConfigTemplate as: configurationName asSymbol inCategory: configurationName asString. "Create the package that has the same name"
-		self packageOrganizer ensurePackage: configurationName ].
-	^ (self class environment at: configurationName asSymbol) project
+	configurationName := self configurationNameFrom: baseName.
+	^ (Smalltalk at: configurationName ifAbsent: [ self copyClass: MetacelloConfigTemplate as: configurationName inPackage: configurationName ]) project
 ]
 
 { #category : 'spec creation' }

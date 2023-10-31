@@ -145,7 +145,6 @@ ShiftClassBuilderTest >> testBuilderWithTag [
 ShiftClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
-	self categoryHack.
 
 	instBuilder := (Object << #Point2)
 		               slots: { #a. #b };
@@ -156,9 +155,6 @@ ShiftClassBuilderTest >> testChevronIsWorkingOnClassSide [
 		               tag: 'boring';
 		               package: self packageNameForTest.
 
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
 	newClass := instBuilder install.
 
 	clasBuilder := Object class << newClass class traits: { TViewModelMock classTrait }.
@@ -261,37 +257,6 @@ ShiftClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 ]
 
 { #category : 'tests - class creation' }
-ShiftClassBuilderTest >> testCreatedClassHasAllElements [
-
-	| instBuilder newClass |
-	self categoryHack.
-
-	instBuilder := (Object << #Point2)
-		               slots: { #a. #b };
-		               layout: WeakLayout;
-		               traits: { TViewModelMock };
-		               sharedVariables: { #AAA };
-		               sharedPools: { #TextConstants };
-		               tag: 'boring';
-		               package: self packageNameForTest.
-
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
-	newClass := instBuilder install.
-
-	self assert: newClass name equals: #Point2.
-	self assert: newClass slots size equals: 2.
-	self assert: newClass slotNames equals: #( a b ).
-	self assert: newClass classLayout class equals: WeakLayout.
-	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
-	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
-	self assert: newClass classVarNames equals: #( AAA ).
-	self assertCollection: newClass sharedPools hasSameElements: { TextConstants }.
-	self assert: newClass category equals: self packageNameForTest , '-boring'
-]
-
-{ #category : 'tests - class creation' }
 ShiftClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 
 	| instBuilder newClass |
@@ -316,8 +281,6 @@ ShiftClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 
 	| instBuilder newClass |
-		self categoryHack.
-
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	When redefining the instance side, the class slot should not be lost."
 	instBuilder := (Object << #Point2)
@@ -330,9 +293,6 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 		               tag: 'boring';
 		               package: self packageNameForTest.
 
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
 	newClass := instBuilder install.
 
 	self assert: newClass class slots first name equals: #AAA.
@@ -344,7 +304,7 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 		               sharedVariables: { #BBB };
 		               sharedPools: { #TextConstants };
 		               tag: 'boring';
-		               package: self packageNameForTest..
+		               package: self packageNameForTest.
 
 	newClass := instBuilder install.
 
@@ -355,11 +315,8 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 ShiftClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 
 	| instBuilder newClass classBuilder |
-	self categoryHack.
-
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	Then we are removing the classSlot, it should remove it"
-
 	instBuilder := (Object << #Point2)
 		               slots: { #a. #b };
 		               layout: WeakLayout;
@@ -370,9 +327,6 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 		               tag: 'boring';
 		               package: self packageNameForTest.
 
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
 	newClass := instBuilder install.
 
 	self assert: newClass class slots first name equals: #AAA.

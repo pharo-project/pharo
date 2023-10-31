@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : 'testing' }
-ClyNoTagClassGroup class >> isBasedOnClassTag [
+ClyNoTagClassGroup class >> isBasedOnPackageTag [
 	^true
 ]
 
@@ -28,7 +28,7 @@ ClyNoTagClassGroup class >> priority [
 ]
 
 { #category : 'operations' }
-ClyNoTagClassGroup >> renameClassTagTo: newTag [
+ClyNoTagClassGroup >> renameTagTo: newTag [
 
 	self classes do: [ :class | class packageTag: newTag ]
 ]

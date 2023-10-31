@@ -19,7 +19,7 @@ Class {
 
 { #category : 'testing' }
 ClyRemoveClassGroupCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassTagSelected
+	^aToolContext isPackageTagSelected
 ]
 
 { #category : 'activation' }

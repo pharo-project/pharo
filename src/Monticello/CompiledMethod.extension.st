@@ -40,6 +40,6 @@ CompiledMethod >> sameAsMCDefinition: anMCMethodDefinition [
 		  anMCMethodDefinition className = self className and: [ 
 			  anMCMethodDefinition classIsMeta = self isClassSide 
 				  and: [ 
-					  anMCMethodDefinition category = self protocolName and: [ 
+					  anMCMethodDefinition protocol = self protocolName and: [ 
 						  anMCMethodDefinition source = self sourceCode ] ] ] ]
 ]

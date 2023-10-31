@@ -9,6 +9,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'testing' }
+BaselineOfTestToLock2 class >> isProject [
+
+	^ false
+]
+
 { #category : 'baselines' }
 BaselineOfTestToLock2 >> baseline: spec [
 	<baseline>

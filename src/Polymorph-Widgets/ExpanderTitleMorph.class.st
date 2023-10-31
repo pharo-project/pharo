@@ -61,7 +61,7 @@ ExpanderTitleMorph >> defaultBorderStyle [
 ExpanderTitleMorph >> expandLabel [
 	"Answer the label for the expand button."
 
-	^AlphaImageMorph new image: (
+	^AlphaImageMorph new formSet: (
 		ScrollBarMorph
 			arrowOfDirection: (self expanded ifTrue: [#top] ifFalse: [#bottom])
 			size: self buttonWidth - 3

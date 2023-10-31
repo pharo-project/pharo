@@ -9,21 +9,6 @@ Class {
 	#tag : 'Modeling'
 }
 
-{ #category : 'deprecated' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
-	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
-
-	^ (self named: classNameString)
-		  traitComposition: traitCompositionString;
-		  category: categoryString;
-		  instVarNames: ivarArray;
-		  classInstVarNames: civarArray;
-		  comment: commentString;
-		  commentStamp: commentStamp;
-		  classTraitComposition: classTraitCompositionString;
-		  yourself
-]
-
 { #category : 'comparing' }
 MCTraitDefinition >> = aDefinition [
 

@@ -75,7 +75,6 @@ MCPackageLoader >> basicLoad [
 
 { #category : 'private' }
 MCPackageLoader >> basicLoadDefinitions [
-
 	"FIXME. Do a separate pass on loading class definitions as the very first thing.
 	This is a workaround for a problem with the so-called 'atomic' loading (you wish!)
 	which isn't atomic at all but mixes compilation of methods with reshapes of classes.
@@ -87,17 +86,21 @@ MCPackageLoader >> basicLoadDefinitions [
 	an extra pass ensures that methods are compiled against their new class definitions."
 
 	additions do: [ :each | self loadClassDefinition: each ] displayingProgress: 'Loading classes...'.
-	additions do: [ :each | self tryToLoad: each           ] displayingProgress: 'Compiling methods...'.
-	removals  do: [ :each | each unload                    ] displayingProgress: 'Cleaning up...'.
-	
+
 	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
 	errorDefinitions do: [ :each | each addMethodAdditionTo: methodAdditions ] displayingProgress: 'Reloading erroneous definitions...'.
-	
+
+	additions
+		select: [ :aDefinition | aDefinition isMethodDefinition ]
+		thenDo: [ :aDefinition | aDefinition addMethodAdditionTo: methodAdditions ].
+
+	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
+
 	"Since the system is reacting to method addition, we want to announce the addition of methods only once we loaded all the methods.
 	This can be useful for example if a method defines a world menu entry (that is executed when the MethodAdded announcement is raised) and this entry relies on other methods of the class. We want all methods to be loaded before executing it."
-	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ methodAdditions do: [ :each | each installMethod ] ]) do: [ :announcement | SystemAnnouncer uniqueInstance announce: announcement ].
-	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
-	
+	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ methodAdditions do: [ :each | each installMethod ] ]) do: [ :announcement |
+		SystemAnnouncer uniqueInstance announce: announcement ].
+	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'
 ]
 
 { #category : 'private' }
@@ -216,17 +219,6 @@ MCPackageLoader >> sorterForItems: aCollection [
 	sorter := MCDependencySorter items: aCollection.
 	sorter addExternalProvisions: self provisions.
 	^ sorter
-]
-
-{ #category : 'private' }
-MCPackageLoader >> tryToLoad: aDefinition [
-	"Here we are only interested by method definition. We want to avoid recompilating classes or traits for example."
-
-	aDefinition isMethodDefinition ifFalse: [ ^ self ].
-
-	[ aDefinition addMethodAdditionTo: methodAdditions ]
-		on: Error
-		do: [ errorDefinitions add: aDefinition ]
 ]
 
 { #category : 'public' }

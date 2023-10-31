@@ -222,9 +222,8 @@ MCSnapshotBrowser >> methodSelection: aNumber [
 
 { #category : 'accessing' }
 MCSnapshotBrowser >> methodsForSelectedClass [
-	^ items select: [:ea | (ea className = classSelection) 
-							and: [ea isMethodDefinition
-									and: [ea classIsMeta = self switchIsClass]]].
+
+	^ items select: [ :ea | ea className = classSelection and: [ ea isMethodDefinition and: [ ea classIsMeta = self switchIsClass ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -242,7 +241,7 @@ MCSnapshotBrowser >> methodsForSelectedProtocol [
 	protocolSelection ifNil: [^ Array new].
 	methods := self methodsForSelectedClass asOrderedCollection.
 	(protocolSelection = '-- all --') 
-		ifFalse: [methods removeAllSuchThat: [:ea | ea category ~= protocolSelection]].
+		ifFalse: [methods removeAllSuchThat: [:ea | ea protocol ~= protocolSelection]].
 	^ methods 
 	
 								

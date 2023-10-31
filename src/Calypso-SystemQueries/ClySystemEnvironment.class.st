@@ -208,7 +208,7 @@ ClySystemEnvironment >> includesClassNamed: aSymbol [
 { #category : 'initialization' }
 ClySystemEnvironment >> initialize [
 	super initialize.
-	projectManager := ClyProjectManagerRegistry new
+	projectManager := ProjectManager new
 ]
 
 { #category : 'class management' }
@@ -271,12 +271,6 @@ ClySystemEnvironment >> projectManager: anObject [
 { #category : 'accessing' }
 ClySystemEnvironment >> projects [
 	^projectManager projects
-]
-
-{ #category : 'package management' }
-ClySystemEnvironment >> registerProjectManager: aPackageManager [
-	aPackageManager systemEnvironment: self.
-	projectManager registerProjectManager: aPackageManager
 ]
 
 { #category : 'subscription' }
