@@ -55,14 +55,15 @@ MCPackageLoader >> addDefinition: aDefinition [
 
 { #category : 'private' }
 MCPackageLoader >> analyze [
+
 	| sorter |
 	sorter := self sorterForItems: additions.
 	additions := sorter orderedItems.
 	requirements := sorter externalRequirements.
 	unloadableDefinitions := sorter itemsWithMissingRequirements asSortedCollection.
-	
+
 	sorter := self sorterForItems: removals.
-	removals := sorter orderedItems reversed.
+	removals := sorter orderedItems reversed
 ]
 
 { #category : 'private' }
@@ -73,42 +74,19 @@ MCPackageLoader >> basicLoad [
 
 { #category : 'private' }
 MCPackageLoader >> basicLoadDefinitions [
-	"FIXME. Do a separate pass on loading class definitions as the very first thing.
-	This is a workaround for a problem with the so-called 'atomic' loading (you wish!)
-	which isn't atomic at all but mixes compilation of methods with reshapes of classes.
 
-	Since the method is not installed until later, any class reshape in the middle *will*
-	affect methods in subclasses that have been compiled before. There is probably
-	a better way of dealing with this by ensuring that the sort order of the definition lists
-	superclass definitions before methods for subclasses but I need this NOW, and adding
-	an extra pass ensures that methods are compiled against their new class definitions."
+	| methodAdditions |
+	self loadClassDefinitions.
 
-	| methodAdditions classAdditions errorDefinitions |
-	errorDefinitions := OrderedCollection new.
-	methodAdditions := OrderedCollection new.
+	methodAdditions := additions
+		                   select: [ :aDefinition | aDefinition isMethodDefinition ]
+		                   thenCollect: [ :aDefinition | aDefinition asMethodAddition ].
 
-	classAdditions := additions select: [ :aDefinition | aDefinition isClassDefinition ].
-	classAdditions
-		do: [ :aDefinition |
-			[ aDefinition load ]
-				on: Error
-				do: [ errorDefinitions add: aDefinition ] ]
-		displayingProgress: 'Loading classes...'.
-
-	errorDefinitions ifNotEmpty: [
-		self warnAboutErrors: errorDefinitions.
-		errorDefinitions do: [ :aClassDefinition | aClassDefinition load ] displayingProgress: 'Reloading erroneous definitions...' ].
-
-	additions
-		select: [ :aDefinition | aDefinition isMethodDefinition ]
-		thenDo: [ :aDefinition | methodAdditions add: aDefinition asMethodAddition ].
+	"We want to announce the addition of the methods only once all methods are loaded because the system might react to the annoucements and execute code requirement other methods from the classes we are loading."
+	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ methodAdditions do: [ :each | each installMethod ] ].
 
 	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
 
-	"Since the system is reacting to method addition, we want to announce the addition of methods only once we loaded all the methods.
-	This can be useful for example if a method defines a world menu entry (that is executed when the MethodAdded announcement is raised) and this entry relies on other methods of the class. We want all methods to be loaded before executing it."
-	(SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ methodAdditions do: [ :each | each installMethod ] ]) do: [ :announcement |
-		SystemAnnouncer uniqueInstance announce: announcement ].
 	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'
 ]
 
@@ -166,6 +144,41 @@ MCPackageLoader >> load [
 
 	self validate.
 	self useNewChangeSetDuring: [ self basicLoad ]
+]
+
+{ #category : 'private' }
+MCPackageLoader >> loadClassDefinitions [
+	"Here we are loading the class definitions.
+	
+	When loading a class it is possible that it fails. The reason is that a class can use a trait from this package, but the dependency sorter of Monticello does not sort those traits before the classes using it.
+	In that case we are implementing a retry mechanisme."
+
+	| errorDefinitions |
+	errorDefinitions := OrderedCollection new.
+
+	"We first load the class definitions and store the potential errors"
+	(additions select: [ :aDefinition | aDefinition isClassDefinition ])
+		do: [ :aDefinition |
+			[ aDefinition load ]
+				on: Error
+				do: [ errorDefinitions add: aDefinition ] ]
+		displayingProgress: 'Loading classes...'.
+
+	"Until we succed to fix errors, we try to install them"
+	[
+	| previousErrors |
+	previousErrors := errorDefinitions copy.
+	previousErrors
+		do: [ :aClassDefinition |
+			errorDefinitions remove: aClassDefinition.
+			[ aClassDefinition load ]
+				on: Error
+				do: [ errorDefinitions add: aClassDefinition ] ]
+		displayingProgress: 'Reloading erroneous definitions...'.
+	previousErrors size = errorDefinitions size ] whileFalse.
+
+	"Finally we warn about the errors we could not fix."
+	errorDefinitions ifNotEmpty: [ self warnAboutErrors: errorDefinitions ]
 ]
 
 { #category : 'public' }
