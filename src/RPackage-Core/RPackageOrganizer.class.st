@@ -151,6 +151,16 @@ RPackageOrganizer class >> unregisterInterestToSystemAnnouncement [
 	self default unregisterInterestToSystemAnnouncement
 ]
 
+{ #category : 'private' }
+RPackageOrganizer >> addMethod: method [
+
+	| protocol |
+	protocol := method protocol.
+	(protocol isExtensionProtocol
+		           ifTrue: [ self ensurePackageOfExtensionProtocol: protocol ]
+		           ifFalse: [ method methodClass package ]) addMethod: method
+]
+
 { #category : 'registration' }
 RPackageOrganizer >> addPackage: aPackage [
 
