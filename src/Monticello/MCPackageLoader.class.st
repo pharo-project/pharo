@@ -22,8 +22,7 @@ Class {
 		'additions',
 		'removals',
 		'errorDefinitions',
-		'provisions',
-		'methodAdditions'
+		'provisions'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -85,6 +84,9 @@ MCPackageLoader >> basicLoadDefinitions [
 	superclass definitions before methods for subclasses but I need this NOW, and adding
 	an extra pass ensures that methods are compiled against their new class definitions."
 
+	| methodAdditions |
+	methodAdditions := OrderedCollection new.
+
 	additions do: [ :aDefinition | self loadClassDefinition: aDefinition ] displayingProgress: 'Loading classes...'.
 
 	errorDefinitions ifNotEmpty: [
@@ -106,21 +108,34 @@ MCPackageLoader >> basicLoadDefinitions [
 
 { #category : 'private' }
 MCPackageLoader >> dependencyWarning [
+
 	| packageName |
-	
-	packageName := (additions, methodAdditions) 
-		detect:  [ :each | each respondsTo: #category ]
-		ifFound: [ :aDefinition | aDefinition category ] 
-		ifNone: [ 'UNKNOWN' ].
-	
-	^ String streamContents: [ :stream|
-		stream 
-			nextPutAll: 'Package '; 
-			nextPutAll: packageName; 
-			nextPutAll: ' depends on the following classes:'; cr.
-		requirements do: [ :each | stream space; space; nextPutAll: each; cr].
-		stream nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: '; cr.
-		unloadableDefinitions do: [:ea | stream space; space; nextPutAll: ea summary; cr]] 
+	packageName := additions
+		               detect: [ :aDefinition | aDefinition isClassDefinition ]
+		               ifFound: [ :aDefinition | aDefinition packageName ]
+		               ifNone: [ 'UNKNOWN' ].
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: 'Package ';
+			  nextPutAll: packageName;
+			  nextPutAll: ' depends on the following classes:';
+			  cr.
+		  requirements do: [ :each |
+			  stream
+				  space;
+				  space;
+				  nextPutAll: each;
+				  cr ].
+		  stream
+			  nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: ';
+			  cr.
+		  unloadableDefinitions do: [ :ea |
+			  stream
+				  space;
+				  space;
+				  nextPutAll: ea summary;
+				  cr ] ]
 ]
 
 { #category : 'private' }
@@ -133,12 +148,11 @@ MCPackageLoader >> errorDefinitionWarning [
 
 { #category : 'initialization' }
 MCPackageLoader >> initialize [
+
 	super initialize.
 	additions := OrderedCollection new.
 	removals := OrderedCollection new.
-	obsoletions := Dictionary new.
-	methodAdditions := OrderedCollection new. 
-
+	obsoletions := Dictionary new
 ]
 
 { #category : 'public' }
