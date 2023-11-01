@@ -43,11 +43,11 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ 
-			compiledMethod shouldBePackaged ifTrue: [ self packageOrganizer addMethod: compiledMethod ].
+		ifTrue: [
+			compiledMethod shouldBePackaged ifTrue: [ (self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod ].
 			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
+			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
@@ -146,6 +146,16 @@ ClassDescription >> allUnreferencedInstanceVariables [
 	"Return a list of the instance variables known to the receiver which are not referenced"
 
 	^ self allSlots reject: [:slot | slot isReferenced]
+]
+
+{ #category : 'accessing - method dictionary' }
+ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
+
+	"Repackage the method if it is not from a trait"
+	compiledMethod origin = compiledMethod methodClass ifTrue: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
+
+	"Announce the recategorization"
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : 'authors' }
@@ -776,7 +786,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
+	self compiledMethodAt: selector ifPresent: [ :method | self announceRecategorizationOf: method oldProtocol: oldProtocol ]
 ]
 
 { #category : 'private' }

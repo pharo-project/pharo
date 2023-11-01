@@ -64,7 +64,6 @@ Class {
 		'organizer'
 	],
 	#classVars : [
-		'PackageGlobalOrganizer',
 		'Properties'
 	],
 	#category : 'RPackage-Core-Base',
@@ -74,11 +73,11 @@ Class {
 
 { #category : 'class initialization' }
 RPackage class >> initialize [
-	"Ensure the organizer will be the RPackageOrganizer default"
-	self organizer: nil.
+
 	Properties
 		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict |
+		ifNotNil: [
+			| newDict |
 			newDict := WeakIdentityKeyDictionary newFrom: Properties.
 			newDict rehash.
 			Properties := newDict ]
@@ -105,37 +104,10 @@ RPackage class >> named: aString organizer: aPackageOrganizer [
 		  yourself
 ]
 
-{ #category : 'protected only for tests' }
-RPackage class >> organizer [
-
-	^ PackageGlobalOrganizer ifNil: [ self packageOrganizer ]
-]
-
-{ #category : 'protected only for tests' }
-RPackage class >> organizer: aPackageOrganizer [
-
-	PackageGlobalOrganizer := aPackageOrganizer
-]
-
 { #category : 'accessing' }
 RPackage class >> rootTagName [
 
 	^ #Uncategorized
-]
-
-{ #category : 'protected only for tests' }
-RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
-	"Perform an action locally to aNewOrganizer. Does not impact any other organizers."
-
-	| old |
-	[ old := self organizer.
-	old unregister.
-	self organizer: aNewOrganizer.
-	aNewOrganizer register.
-	aBlock cull: aNewOrganizer] ensure: [
-		self organizer: old.
-		old register.
-		aNewOrganizer unregister]
 ]
 
 { #category : 'comparing' }
@@ -570,8 +542,7 @@ RPackage >> name: aSymbol [
 { #category : 'private' }
 RPackage >> organizer [
 
-	self flag: #package.
-	^ organizer ifNil: [ self class organizer ]
+	^ organizer
 ]
 
 { #category : 'accessing' }

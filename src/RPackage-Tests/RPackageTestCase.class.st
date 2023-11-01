@@ -139,16 +139,10 @@ RPackageTestCase >> organizer [
 ]
 
 { #category : 'running' }
-RPackageTestCase >> runCase [
+RPackageTestCase >> setUp [
 
-	testEnvironment := self class environment class new.
-	[
-	^ RPackage withOrganizer: self organizer do: [
-		  self resources do: [ :each | each availableFor: self ].
-		  self setUp.
-		  self performTest ] ] ensure: [
-		self tearDown.
-		self cleanUpInstanceVariables ]
+	super setUp.
+	testEnvironment := self class environment class new
 ]
 
 { #category : 'running' }

@@ -209,6 +209,19 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage class >> organizer [
+
+	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'.
+	^ self packageOrganizer
+]
+
+{ #category : '*Deprecated12' }
+RPackage class >> organizer: aPackageOrganizer [
+
+	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> register [
 
 	self
@@ -239,4 +252,11 @@ RPackage >> unregister [
 		transformWith: '`@rcv unregister' -> '`@rcv organizer unregisterPackage: `@rcv'.
 
 	self organizer unregisterPackage: self
+]
+
+{ #category : '*Deprecated12' }
+RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
+
+	self deprecated: 'There is no need to use this method to execute code in another package organizer anymore. Just make sure to set the environemnt of this organizer when using the shift class builder.'.
+	aBlock cull: aNewOrganizer
 ]
