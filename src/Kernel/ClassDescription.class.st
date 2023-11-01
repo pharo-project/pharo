@@ -34,6 +34,9 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorMethod := method.
 		priorOrigin := method origin ].
 
+	"For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
+	priorMethod ifNotNil: [ priorMethod propertyAt: #extensionPackage ifPresent: [ :package | compiledMethod propertyAt: #extensionPackage put: package ] ].
+
 	oldProtocol := self protocolOfSelector: selector.
 	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.

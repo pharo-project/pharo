@@ -130,8 +130,11 @@ RPackage >> addMethod: aCompiledMethod [
 	| methodClass |
 	methodClass := aCompiledMethod methodClass.
 	(self includesClass: methodClass)
-		ifTrue: [ (definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
+		ifTrue: [
+			aCompiledMethod removeProperty: #extensionPackage. "We want to make sure the method is not considered an extension."
+			(definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
 		ifFalse: [
+			aCompiledMethod propertyAt: #extensionPackage put: self. "We tag the method as an extension method."
 			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector.
 			"we added a method extension so the receiver is an extending package of the class"
 			self organizer registerExtendingPackage: self forClass: methodClass ].
