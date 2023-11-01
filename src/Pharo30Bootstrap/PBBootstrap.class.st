@@ -145,31 +145,25 @@ PBBootstrap >> createImage [
 
 { #category : 'pre-requisites' }
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) load.
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfTraits')) load.
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
+
+	#( #'Metacello-PharoExtensions' #BaselineOfPharoBootstrap #BaselineOfTraits #BaselineOfMetacello ) do: [ :versionName |
+		(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: versionName)) load ]
 ]
 
 { #category : 'preparation' }
 PBBootstrap >> exportAllPackagesIntoMcz [
 
-	self mczCache directory ensureDeleteAll; ensureCreateDirectory.
-	self packagesToExportAsMCZ do: [ :packageName |
-		self exportIntoMcz: packageName ].
+	self ensureBaselineOfPharoBootstrap.
+	self mczCache directory
+		ensureDeleteAll;
+		ensureCreateDirectory.
+	self packagesToExportAsMCZ do: [ :packageName | self exportIntoMcz: packageName ]
 ]
 
 { #category : 'preparation' }
 PBBootstrap >> exportIntoMcz: aPackageName [
 
 	self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
-]
-
-{ #category : 'preparation' }
-PBBootstrap >> exportKernelProtocols [
-	"This method exports all protocols of the methots in the kernel in a single text file to be easily readed and imported from the 'in-midst of initialization' image."
-
-	self kernelPackageNames
 ]
 
 { #category : 'preparation' }
@@ -287,7 +281,6 @@ PBBootstrap >> initializeImage [
 { #category : 'package-names' }
 PBBootstrap >> kernelPackageNames [
 
-	self ensureBaselineOfPharoBootstrap.
 	^ #BaselineOfPharoBootstrap asClass kernelPackageNames
 ]
 
@@ -333,15 +326,14 @@ PBBootstrap >> packagesToExportAsMCZ [
 
 { #category : 'preparation' }
 PBBootstrap >> prepareBootstrap [
-	
+
 	self
-		exportKernelProtocols;
 		exportAllPackagesIntoMcz;
 		exportMonticelloInStFile;
-		
+
 		prepareEnvironmentForHermes;
 		generateHermesFiles;
-		prepareEnvironmentForExport.
+		prepareEnvironmentForExport
 ]
 
 { #category : 'preparation' }
