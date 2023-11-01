@@ -256,7 +256,7 @@ PBBootstrap >> exportProtocolsFor: packageNames to: protocolsFile [
 	"This methods takes the packages from the (filetree) origin repository, reads all methods in these packages and export the their protocols in a single text file with the following format:
 		[className]\tab[class is meta?]\tab[selector]\tab[protocol]."
 
-	self originRepository directory directories sorted
+	self originRepository
 ]
 
 { #category : 'preparation' }
