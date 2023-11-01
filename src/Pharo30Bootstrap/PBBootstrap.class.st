@@ -258,7 +258,7 @@ PBBootstrap >> exportProtocolsFor: packageNames to: protocolsFile [
 
 	self originRepository directory directories sorted
 		select: [ :file | packageNames includes: file basenameWithoutExtension ]
-		thenDo: [ :file | self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: file basenameWithoutExtension) ]
+		thenDo: [ :file | self originRepository versionInfoFromVersionNamed: file basenameWithoutExtension ]
 ]
 
 { #category : 'preparation' }
