@@ -168,10 +168,8 @@ PBBootstrap >> exportIntoMcz: aPackageName [
 { #category : 'preparation' }
 PBBootstrap >> exportKernelProtocols [
 	"This method exports all protocols of the methots in the kernel in a single text file to be easily readed and imported from the 'in-midst of initialization' image."
-		
-	self exportProtocolsFor: self kernelPackageNames to: self bootstrapCacheDirectory / 'protocolsKernel.txt'.
-	
-	
+
+	self kernelPackageNames
 ]
 
 { #category : 'preparation' }
@@ -249,14 +247,6 @@ PBBootstrap >> exportPackages: packageList withBlacklistedClasses: blacklistedCl
 		"Write initialization instructions"
 		stream nextPutAll: aString.
 	].
-]
-
-{ #category : 'preparation' }
-PBBootstrap >> exportProtocolsFor: packageNames to: protocolsFile [
-	"This methods takes the packages from the (filetree) origin repository, reads all methods in these packages and export the their protocols in a single text file with the following format:
-		[className]\tab[class is meta?]\tab[selector]\tab[protocol]."
-
-	self originRepository
 ]
 
 { #category : 'preparation' }
