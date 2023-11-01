@@ -181,10 +181,8 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 
 { #category : 'installing package' }
 HEInstaller >> installPackage: aHEPackage [
-	| storedAnnouncements |
-	
-	storedAnnouncements := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ].	
-	storedAnnouncements do: [ :e | SystemAnnouncer uniqueInstance announce: e ].
+
+	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
 ]
 
 { #category : 'messages' }
