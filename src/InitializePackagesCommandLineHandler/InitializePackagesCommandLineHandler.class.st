@@ -33,12 +33,13 @@ Class {
 
 { #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> commandName [
-	^ 'initializePackages'
+	^ 'fixPackages'
 ]
 
 { #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> description [
-	^ 'Initialize packages and protocols from a given lists'
+
+	^ 'I fix some problems in the packages due to the first step of the bootstrap.'
 ]
 
 { #category : 'activation' }
@@ -46,36 +47,8 @@ InitializePackagesCommandLineHandler >> activate [
 
 	self activateHelp ifTrue: [ ^ self ].
 
-	(self hasOption: 'protocols') ifTrue: [ self initializeProtocolsFrom: (self optionAt: 'protocols') ].
-
-	(self hasOption: 'packages') ifTrue: [ self initializePackages ].
+	self packageOrganizer basicBootstrapInitialize.
 
 	(self hasOption: 'save') ifTrue: [ Smalltalk snapshot: true andQuit: false ].
 	self exitSuccess
-]
-
-{ #category : 'activation' }
-InitializePackagesCommandLineHandler >> initializePackages [
-
-	RPackageOrganizer default basicBootstrapInitialize
-]
-
-{ #category : 'activation' }
-InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
-
-	(File named: aFileName) readStreamDo: [ :binaryStream |
-		| stream |
-		stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-		[ stream atEnd ] whileFalse: [
-			| line items selector class |
-			line := stream upTo: Character cr.
-			items := line findTokens: String tab.
-			class := items second = 'true'
-				         ifTrue: [ (Smalltalk classOrTraitNamed: items first) classSide ]
-				         ifFalse: [ Smalltalk classOrTraitNamed: items first ].
-			selector := items third asSymbol.
-
-			class ifNil: [ self error: 'Could not found class: ' , items first printString , ' for selector: ' , selector printString ].
-
-			(class selectors includes: selector) ifTrue: [ class classify: selector under: items fourth ] ] ]
 ]
