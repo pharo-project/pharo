@@ -257,8 +257,6 @@ PBBootstrap >> exportProtocolsFor: packageNames to: protocolsFile [
 		[className]\tab[class is meta?]\tab[selector]\tab[protocol]."
 
 	self originRepository directory directories sorted
-		select: [ :file | packageNames includes: file basenameWithoutExtension ]
-		thenDo: [ :file | self originRepository versionInfoFromVersionNamed: file basenameWithoutExtension ]
 ]
 
 { #category : 'preparation' }
