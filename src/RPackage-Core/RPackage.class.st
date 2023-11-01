@@ -108,12 +108,14 @@ RPackage class >> named: aString organizer: aPackageOrganizer [
 { #category : 'protected only for tests' }
 RPackage class >> organizer [
 
+	self flag: #package. "To remove."
 	^ PackageGlobalOrganizer ifNil: [ self packageOrganizer ]
 ]
 
 { #category : 'protected only for tests' }
 RPackage class >> organizer: aPackageOrganizer [
 
+	self flag: #package. "To remove."
 	PackageGlobalOrganizer := aPackageOrganizer
 ]
 
@@ -121,18 +123,6 @@ RPackage class >> organizer: aPackageOrganizer [
 RPackage class >> rootTagName [
 
 	^ #Uncategorized
-]
-
-{ #category : 'protected only for tests' }
-RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
-	"Perform an action locally to aNewOrganizer. Does not impact any other organizers."
-
-	| old |
-	self flag: #package. "This should be removed"
-	[
-	old := self organizer.
-	self organizer: aNewOrganizer.
-	aBlock cull: aNewOrganizer ] ensure: [ self organizer: old ]
 ]
 
 { #category : 'comparing' }

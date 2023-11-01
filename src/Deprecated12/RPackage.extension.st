@@ -240,3 +240,10 @@ RPackage >> unregister [
 
 	self organizer unregisterPackage: self
 ]
+
+{ #category : '*Deprecated12' }
+RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
+
+	self deprecated: 'There is no need to use this method to execute code in another package organizer anymore. Just make sure to set the environemnt of this organizer when using the shift class builder.'.
+	aBlock cull: aNewOrganizer
+]
