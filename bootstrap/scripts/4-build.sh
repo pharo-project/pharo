@@ -101,7 +101,6 @@ BOOTSTRAP_IMAGE_NAME=bootstrap
 BOOTSTRAP_ARCHIVE_IMAGE_NAME=${PHARO_NAME_PREFIX}-bootstrap-${SUFFIX}
 
 HERMES_ARCHIVE_NAME=${PHARO_NAME_PREFIX}-hermesPackages-${SUFFIX}
-RPACKAGE_ARCHIVE_NAME=${PHARO_NAME_PREFIX}-rpackage-${SUFFIX}
 
 CORE_IMAGE_NAME=${PHARO_NAME_PREFIX}-core-${SUFFIX}
 COMPILER_IMAGE_NAME=${PHARO_NAME_PREFIX}-compiler-${SUFFIX}
@@ -125,9 +124,6 @@ zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image
 
 # Archive binary Hermes packages
 zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes
-
-# Archive RPackage definitions
-zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt
 
 # Find st-cache path
 [[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"

@@ -46,9 +46,6 @@ IMAGE_FILE=$(find . -name ${TEST_NAME_PREFIX}-bootstrap-${1}bit-*.image)
 HERMES_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-hermesPackages-${1}bit-*.zip)
 unzip $HERMES_ARCHIVE
 
-RPACKAGE_ARCHIVE=$(find ${CACHE} -name ${TEST_NAME_PREFIX}-rpackage-${1}bit-*.zip)
-unzip $RPACKAGE_ARCHIVE
-
 mv $IMAGE_FILE bootstrap.image
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
