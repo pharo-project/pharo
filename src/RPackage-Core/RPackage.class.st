@@ -64,7 +64,6 @@ Class {
 		'organizer'
 	],
 	#classVars : [
-		'PackageGlobalOrganizer',
 		'Properties'
 	],
 	#category : 'RPackage-Core-Base',
@@ -74,11 +73,11 @@ Class {
 
 { #category : 'class initialization' }
 RPackage class >> initialize [
-	"Ensure the organizer will be the RPackageOrganizer default"
-	self organizer: nil.
+
 	Properties
 		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict |
+		ifNotNil: [
+			| newDict |
 			newDict := WeakIdentityKeyDictionary newFrom: Properties.
 			newDict rehash.
 			Properties := newDict ]
@@ -103,20 +102,6 @@ RPackage class >> named: aString organizer: aPackageOrganizer [
 	^ (self named: aString)
 		  organizer: aPackageOrganizer;
 		  yourself
-]
-
-{ #category : 'protected only for tests' }
-RPackage class >> organizer [
-
-	self flag: #package. "To remove."
-	^ PackageGlobalOrganizer ifNil: [ self packageOrganizer ]
-]
-
-{ #category : 'protected only for tests' }
-RPackage class >> organizer: aPackageOrganizer [
-
-	self flag: #package. "To remove."
-	PackageGlobalOrganizer := aPackageOrganizer
 ]
 
 { #category : 'accessing' }
@@ -557,8 +542,7 @@ RPackage >> name: aSymbol [
 { #category : 'private' }
 RPackage >> organizer [
 
-	self flag: #package.
-	^ organizer ifNil: [ self class organizer ]
+	^ organizer
 ]
 
 { #category : 'accessing' }

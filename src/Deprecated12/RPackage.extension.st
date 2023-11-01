@@ -209,6 +209,19 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage class >> organizer [
+
+	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'.
+	^ self packageOrganizer
+]
+
+{ #category : '*Deprecated12' }
+RPackage class >> organizer: aPackageOrganizer [
+
+	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> register [
 
 	self
