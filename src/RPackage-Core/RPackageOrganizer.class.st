@@ -106,7 +106,6 @@ Class {
 	#instVars : [
 		'classPackageMapping',
 		'packages',
-		'classExtendingPackagesMapping',
 		'environment'
 	],
 	#category : 'RPackage-Core-Base',
@@ -146,7 +145,6 @@ RPackageOrganizer >> addPackage: aPackage [
 		ifTrue: [ package := RPackage named: aPackage organizer: self ]
 		ifFalse: [
 			aPackage organizer: self.
-			aPackage extendedClasses do: [ :extendedClass | self registerExtendingPackage: aPackage forClass: extendedClass ].
 			aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
 			package := aPackage ].
 
@@ -216,13 +214,6 @@ RPackageOrganizer >> environment: aSystemDictionary [
 	 environment := aSystemDictionary
 ]
 
-{ #category : 'package - access from class' }
-RPackageOrganizer >> extendingPackagesOf: aClass [
-	"Returns the packages extending the class aClass"
-
-	^ classExtendingPackagesMapping at: aClass instanceSide ifAbsent: [ #(  ) ]
-]
-
 { #category : 'testing' }
 RPackageOrganizer >> hasPackage: aPackage [
 	"Takes a package or a package name as parameter and return true if I include this package."
@@ -249,7 +240,6 @@ RPackageOrganizer >> initialize [
 
 	packages := IdentityDictionary new.
 	classPackageMapping := IdentityDictionary new.
-	classExtendingPackagesMapping := IdentityDictionary new.
 	self ensurePackage: UndefinedPackage new
 ]
 
@@ -362,12 +352,6 @@ RPackageOrganizer >> packagesDo: aBlock [
 ]
 
 { #category : 'private - registration' }
-RPackageOrganizer >> registerExtendingPackage: aPackage forClass: aClass [
-
-	(classExtendingPackagesMapping at: aClass instanceSide ifAbsentPut: [ IdentitySet new ]) add: aPackage
-]
-
-{ #category : 'private - registration' }
 RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
 
 	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
@@ -379,8 +363,8 @@ RPackageOrganizer >> removeClass: class [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
 
 	class isClassSide ifTrue: [ self error: 'We should only be able to remove classes and not instances of metaclass.' ].
-	(self packageOf: class) removeClass: class.
-	(self extendingPackagesOf: class) do: [ :extendedPackage | extendedPackage removeAllMethodsFromClass: class ]
+	class package removeClass: class.
+	class extendingPackages do: [ :extendedPackage | extendedPackage removeAllMethodsFromClass: class ]
 ]
 
 { #category : 'cleanup' }
@@ -458,12 +442,6 @@ RPackageOrganizer >> undefinedPackage [
 	^ self packages detect: [ :package | package isUndefined ]
 ]
 
-{ #category : 'private - registration' }
-RPackageOrganizer >> unregisterExtendingPackage: aPackage forClass: aClass [
-
-	classExtendingPackagesMapping at: aClass instanceSide ifPresent: [ :extendingPackages | extendingPackages remove: aPackage ifAbsent: [  ] ]
-]
-
 { #category : 'private' }
 RPackageOrganizer >> unregisterPackage: aPackage [
 	"I am a private method to unregister a package from myself without removing its contents fro the image."
@@ -476,7 +454,6 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		           ifFalse: [ aPackage ].
 
 	self basicUnregisterPackage: package.
-	package extendedClasses do: [ :extendedClass | self unregisterExtendingPackage: package forClass: extendedClass ].
 	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
 	SystemAnnouncer announce: (PackageRemoved to: package).
 

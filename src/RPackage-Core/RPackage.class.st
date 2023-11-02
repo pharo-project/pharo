@@ -135,9 +135,7 @@ RPackage >> addMethod: aCompiledMethod [
 			(definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
 		ifFalse: [
 			aCompiledMethod propertyAt: #extensionPackage put: self. "We tag the method as an extension method."
-			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector.
-			"we added a method extension so the receiver is an extending package of the class"
-			self organizer registerExtendingPackage: self forClass: methodClass ].
+			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ].
 
 	^ aCompiledMethod
 ]
@@ -623,9 +621,7 @@ RPackage >> removeAllMethodsFromClass: aClass [
 	definedSelectors removeKey: aClass ifAbsent: [  ].
 	definedSelectors removeKey: aClass classSide ifAbsent: [  ].
 	extensionSelectors removeKey: aClass ifAbsent: [  ].
-	extensionSelectors removeKey: aClass classSide ifAbsent: [  ].
-
-	self organizer unregisterExtendingPackage: self forClass: aClass
+	extensionSelectors removeKey: aClass classSide ifAbsent: [  ]
 ]
 
 { #category : 'removing' }
@@ -672,10 +668,6 @@ RPackage >> removeMethod: aCompiledMethod [
 			extensionSelectors at: methodClass ifPresent: [ :selectors |
 				selectors remove: aCompiledMethod selector ifAbsent: [  ].
 				selectors ifEmpty: [ extensionSelectors removeKey: methodClass ] ] ].
-
-	((extensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty and: [
-		 (extensionSelectors at: methodClass classSide ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
-		self organizer unregisterExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
