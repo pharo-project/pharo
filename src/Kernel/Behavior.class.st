@@ -587,6 +587,20 @@ Behavior >> deepCopy [
 	^ self shallowCopy
 ]
 
+{ #category : 'accessing - method dictionary' }
+Behavior >> definedMethods [
+	"Returns the methods defined in the class. This rejects methods from traits and extensions."
+
+	^ self localMethods reject: [ :method | method isExtension ]
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> definedSelectors [
+	"Returns the selectors defined in the class. This rejects methods from traits and extensions."
+
+	^ self definedMethods collect: [ :method | method selector ]
+]
+
 { #category : 'accessing - instances and variables' }
 Behavior >> definedVariables [
 	"return all the Variables defined"
@@ -1149,6 +1163,19 @@ Behavior >> kindOfSubclass [
 	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self classLayout kindOfSubclass
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> localMethods [
+	"returns the methods of classes excluding the ones of the traits that the class uses"
+
+	^ self methods
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> localSelectors [
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	^ self methodDict keys
 ]
 
 { #category : 'printing' }
