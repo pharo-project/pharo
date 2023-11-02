@@ -154,7 +154,7 @@ RPackageClassesSynchronisationTest >> testRemoveProtocol [
 
 	class removeProtocol: 'classic category'.
 
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
 ]
 
 { #category : 'tests - operations on protocols' }
@@ -170,8 +170,7 @@ RPackageClassesSynchronisationTest >> testRemovingExtensionProtocol [
 
 	class removeProtocol: '*yyyyy'.
 
-	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
+	self deny: (yPackage includesSelector: #stubMethod ofClass: class)
 ]
 
 { #category : 'tests - operations on classes' }
@@ -292,7 +291,7 @@ RPackageClassesSynchronisationTest >> testRenamingExtensionProtocolToAnotherExte
 
 	self assert: (zPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
 ]
 
 { #category : 'tests - operations on protocols' }
@@ -333,6 +332,6 @@ RPackageClassesSynchronisationTest >> testRenamingProtocolToMakeItAnExtension [
 
 	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (yPackage includesExtensionSelector: #stubMethod2 ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod2 ofClass: class)
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class).
+	self deny: (xPackage includesSelector: #stubMethod2 ofClass: class)
 ]

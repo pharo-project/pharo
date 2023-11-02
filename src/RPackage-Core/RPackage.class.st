@@ -384,13 +384,6 @@ RPackage >> includesClassTagNamed: aString [
 ]
 
 { #category : 'testing' }
-RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
-
-	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
-]
-
-{ #category : 'testing' }
 RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
@@ -416,7 +409,7 @@ RPackage >> includesProtocol: protocol ofClass: aClass [
 RPackage >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
-	^ (self includesDefinedSelector: aSelector ofClass: aClass) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
+	^ ((self includesClass: aClass) and: [ aClass definedSelectors includes: aSelector ]) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
 ]
 
 { #category : 'initialization' }

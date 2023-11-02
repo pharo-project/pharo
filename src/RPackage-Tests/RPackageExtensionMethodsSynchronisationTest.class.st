@@ -22,7 +22,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryB
 
 	self createMethodNamed: #newMethod inClass: class inCategory: '*XXXXX-YYYY'.
 
-	self deny: (yPackage includesDefinedSelector: #newMethod ofClass: class).
+	self deny: (yPackage includesSelector: #newMethod ofClass: class).
 	self assert: (xPackage includesExtensionSelector: #newMethod ofClass: class).
 
 	self assert: (class >> #newMethod) package equals: xPackage
@@ -40,7 +40,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryM
 	self createMethodNamed: #newMethod inClass: class inCategory: '*YYYYY-subcategory'.
 
 	self assert: (yPackage includesExtensionSelector: #newMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #newMethod ofClass: class).
+	self deny: (xPackage includesSelector: #newMethod ofClass: class).
 
 	self assert: (class >> #newMethod) package equals: yPackage
 ]
@@ -56,7 +56,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 
 	self createMethodNamed: #newMethod inClass: class inCategory: '*SomethingDifferentNothingToDoWithWhatWeHave'.
 
-	self deny: (class package includesDefinedSelector: #newMethod ofClass: class).
+	self deny: (class package includesSelector: #newMethod ofClass: class).
 
 	self assert: (self organizer hasPackage: #SomethingDifferentNothingToDoWithWhatWeHave)
 ]
@@ -72,7 +72,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 
 	self createMethodNamed: #newMethod inClass: class inCategory: '*SomethingDifferentNothingToDoWithWhatWeHave'.
 
-	self deny: (class package includesDefinedSelector: #newMethod ofClass: class).
+	self deny: (class package includesSelector: #newMethod ofClass: class).
 
 	self assert: (self organizer hasPackage: #SomethingDifferentNothingToDoWithWhatWeHave).
 	self assert: (class >> #newMethod) package equals: (self organizer packageNamed: #SomethingDifferentNothingToDoWithWhatWeHave)
@@ -90,7 +90,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyYyY'.
 
 	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class).
 
 	self assert: (class >> #stubMethod) package equals: yPackage
 ]
@@ -109,7 +109,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryW
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*YYYYY'.
 
 	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class).
 
 	self assert: (class >> #stubMethod) package equals: yPackage
 ]

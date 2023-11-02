@@ -76,18 +76,15 @@ RPackageIncrementalTest >> testAddRemoveMethod [
 	self assert: (a2 >> #methodDefinedInP2) package equals: p2.
 	self deny: (a2 >> #methodDefinedInP2) isExtension.
 	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2).
+	self deny: (p3 includesSelector: #methodDefinedInP1 ofClass: a2).
 
 	a2 removeSelector: #methodDefinedInP2.
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a2).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a2).
+	self deny: (p2 includesSelector: #methodDefinedInP2 ofClass: a2).
 
 	a2 removeSelector: #methodDefinedInP1.
-	self deny: (p1 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
-	self deny: (p1 includesExtensionSelector: #methodDefinedInP3 ofClass: a2)
+	self deny: (p1 includesSelector: #methodDefinedInP3 ofClass: a2)
 ]
 
 { #category : 'tests - class addition removal' }
@@ -348,11 +345,9 @@ RPackageIncrementalTest >> testIncludeSelectorOfClass [
 
 	self deny: (p2 includesSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
 
 	self deny: (p2 includesSelector: #methodDefinedInP1 ofClass: a2).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2)
+	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
 { #category : 'tests - extension' }
@@ -376,12 +371,9 @@ RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
 
 	self deny: (p2 includesSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2 class).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP3 ofClass: a2 class).
 
 	self deny: (p2 includesSelector: #methodDefinedInP1 ofClass: a2 class).
-	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2 class).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2 class).
-	self deny: (p3 includesDefinedSelector: #methodDefinedInP1 ofClass: a2)
+	self assert: (p1 includesExtensionSelector: #methodDefinedInP1 ofClass: a2 class)
 ]
 
 { #category : 'tests - extension' }
@@ -401,10 +393,8 @@ RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExte
 	self assert: (p3 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (a2 >> #methodDefinedInP2) package equals: p2.
 	self deny: (a2 >> #methodDefinedInP2) isExtension.
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP3 ofClass: a2).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP1 ofClass: a2).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP1 ofClass: a2)
+	self deny: (p2 includesSelector: #methodDefinedInP3 ofClass: a2).
+	self deny: (p2 includesSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
 { #category : 'tests - extension' }
@@ -495,9 +485,7 @@ RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
 
 	a1 removeFromSystem.
 
-	self deny: (p2 includesSelector: #methodDefinedInP2 ofClass: a1).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a1).
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a1)
+	self deny: (p2 includesSelector: #methodDefinedInP2 ofClass: a1)
 ]
 
 { #category : 'tests - class addition removal' }
@@ -516,9 +504,7 @@ RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromPackage
 
 	a1 removeSelector: #methodDefinedInP2.
 
-	self deny: (p2 includesSelector: #methodDefinedInP2 ofClass: a1).
-	self deny: (p2 includesExtensionSelector: #methodDefinedInP2 ofClass: a1).
-	self deny: (p2 includesDefinedSelector: #methodDefinedInP2 ofClass: a1)
+	self deny: (p2 includesSelector: #methodDefinedInP2 ofClass: a1)
 ]
 
 { #category : 'tests - extension' }

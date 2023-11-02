@@ -20,7 +20,7 @@ RPackageMethodsSynchronisationTest >> testModifyExtensionProtocolUpdatesThePacka
 	self createMethodNamed: #newMethod inClass: class inCategory: '*yyyyy'.
 
 	class classify: #newMethod under: '*zzzzz'.
-	self deny: (xPackage includesDefinedSelector: #newMethod ofClass: class).
+	self deny: (xPackage includesSelector: #newMethod ofClass: class).
 	self deny: (yPackage includesExtensionSelector: #newMethod ofClass: class).
 	self assert: (zPackage includesExtensionSelector: #newMethod ofClass: class).
 	self assert: (class >> #newMethod) package equals: zPackage
@@ -56,12 +56,12 @@ RPackageMethodsSynchronisationTest >> testModifyProtocolToExtensionUpdatesThePac
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'old protocol'.
 
 	class classify: #stubMethod under: '*yyyyy'.
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class).
 	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (class >> #stubMethod) package equals: yPackage.
 
 	class classify: #stubMethod under: '*yyyyy-subcategory'.
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class).
 	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self assert: (class >> #stubMethod) package equals: yPackage
 ]
@@ -123,7 +123,5 @@ RPackageMethodsSynchronisationTest >> testRemoveMethodRemoveMethodFromItsPackage
 
 	class removeSelector: #stubMethod.
 
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
 ]
