@@ -439,6 +439,7 @@ ShClassInstallerTest >> testRecompilingAClassKeepExtensionMethodsAsExtension [
 	| extensionMethod |
 	newClass := self newClass: #ShCITestClass slots: {  }.
 
+	[
 	extensionMethod := newClass compiler
 		                   protocol: '*' , self generatedClassesPackageName , '2';
 		                   install: 'billy ^ #Billy'.
@@ -449,7 +450,8 @@ ShClassInstallerTest >> testRecompilingAClassKeepExtensionMethodsAsExtension [
 	newClass := self newClass: #ShCITestClass slots: { #addedSlot }.
 
 	self assert: extensionMethod isExtension.
-	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2'
+	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2' ] ensure: [
+		self packageOrganizer removePackage: self generatedClassesPackageName , '2' ]
 ]
 
 { #category : 'tests' }
