@@ -22,14 +22,15 @@ HDReport class >> runPackage: aString [
 HDReport class >> runPackages: aCollectionOfStrings [
 
 	^ aCollectionOfStrings collect: [ :packageName |
-		  | time |
+		  | time result |
 		  time := DateAndTime now.
 		  Transcript << 'Beginning to run tests of ' << packageName << OSPlatform current lineEnding.
 		  "We flush so that if a crash happens during the tests, we print in which package is the naughty test in the logs."
 		  Transcript flush.
-		  self runPackage: packageName.
+		  result := self runPackage: packageName.
 		  Transcript << 'Finished to run tests of ' << packageName << ' in ' << (DateAndTime now - time) humanReadablePrintString << OSPlatform current lineEnding.
-		  Transcript flush ]
+		  Transcript flush.
+		  result ]
 ]
 
 { #category : 'private' }
