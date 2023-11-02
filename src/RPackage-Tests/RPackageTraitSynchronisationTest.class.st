@@ -23,7 +23,8 @@ RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMetho
 	self assertEmpty: xPackage methods.
 	self denyEmpty: yPackage methods.
 	class addToComposition: trait.
-	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: trait).
+	self assert: (trait >> #stubMethod) package equals: yPackage.
+	self assert: (class >> #stubMethod) package equals: yPackage.
 	self assertEmpty: xPackage methods
 ]
 
@@ -42,7 +43,7 @@ RPackageTraitSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemove
 	class setTraitComposition: trait asTraitComposition.
 
 	class removeSelector: #stubMethod.
-	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: trait).
+	self assert: (trait >> #stubMethod) package equals: yPackage.
 	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]
 
@@ -90,12 +91,12 @@ RPackageTraitSynchronisationTest >> testTraitCompositionMethodsArePackagedWithTh
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 
-	class := self newClassNamed: 'NewClass' in: yPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
 	trait := self newTraitNamed: 'NewTrait' in: yPackage.
 
 	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'classic protocol'.
 	class setTraitComposition: trait asTraitComposition.
 
-	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: trait).
+	self assert: (trait >> #stubMethod) package equals: yPackage.
 	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
 ]

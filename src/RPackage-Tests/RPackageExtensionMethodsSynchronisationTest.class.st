@@ -121,15 +121,14 @@ RPackageExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode [
 	| class xPackage |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'protocol'.
 
 	class compile: 'stubMethod ^22222222222'.
 
 	"nothing should change"
-	self assert: (class >> #stubMethod) protocolName equals: 'classic category'.
-	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod) package equals: xPackage
+	self assert: (class >> #stubMethod) protocolName equals: 'protocol'.
+	self assert: (class >> #stubMethod) package equals: xPackage.
+	self deny: (xPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
 
 { #category : 'tests - operations on methods' }
@@ -146,37 +145,36 @@ RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensi
 
 	"Everything should now be in second package (and not listed as an extension)."
 	self deny: (class >> #stubMethod) isClassified.
-	self assert: (yPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod) package equals: yPackage
+	self assert: (class >> #stubMethod) package equals: yPackage.
+	self deny: (class >> #stubMethod) isExtension.
+	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
 
 { #category : 'tests - operations on methods' }
 RPackageExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensionsOnClassAndBack [
 	"Move a class in package XXXXX (with extensions from YYYY) to package YYYYY."
 
-	| class xPackage secondPackage |
+	| class xPackage yPackage |
 	xPackage := self ensureXPackage.
-	secondPackage := self ensureYPackage.
+	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*' , secondPackage name.
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*' , yPackage name.
 
-	secondPackage addClass: class.
+	yPackage addClass: class.
 
 	"Everything should now be in second package (and not listed as an extension, but instead as 'as yet unclassified')."
-
 	self deny: (class >> #stubMethod) isClassified.
-	self assert: (secondPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (class >> #stubMethod) package equals: secondPackage.
+	self assert: (class >> #stubMethod) package equals: yPackage.
+	self deny: (class >> #stubMethod) isExtension.
+	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
 
 	"Moving back, we should not see the extension reappear."
-
 	xPackage addClass: class.
 
 	self deny: (class >> #stubMethod) isClassified.
-	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (secondPackage includesExtensionSelector: #stubMethod ofClass: class)
+	self assert: (class >> #stubMethod) package equals: xPackage.
+	self deny: (class >> #stubMethod) isExtension.
+	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
 
 { #category : 'tests - operations on methods' }
