@@ -2,7 +2,8 @@ Extension { #name : 'CompiledMethod' }
 
 { #category : '*RPackage-Core' }
 CompiledMethod >> isDefinedInPackage: anRPackage [
-	^ anRPackage includesDefinedSelector: self selector ofClass: self methodClass
+
+	^ self origin package = anRPackage
 ]
 
 { #category : '*RPackage-Core' }
