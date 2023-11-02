@@ -215,9 +215,7 @@ RPackage >> definesOrExtendsClass: aClass [
 	"Returns true whether the class, aClass, is one of the locally defined classes of the receiver or
 	if the receiver extends such class (that is defined in another package)"
 
-	| canonizedName |
-	canonizedName := aClass instanceSide name.
-	^ (self includesClassNamed: canonizedName) or: [ self extendedClassNames includes: canonizedName ]
+	^ (self includesClass: aClass instanceSide) or: [ self extendedClasses includes: aClass instanceSide ]
 ]
 
 { #category : 'converting' }
@@ -274,7 +272,7 @@ RPackage >> environment [
 RPackage >> extendedClassNames [
 	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
 
-	^ extensionSelectors keys collect: [ :class | class instanceSide name ] as: Set
+	^ self extendedClasses collect: [ :class | class instanceSide name ] as: Set
 ]
 
 { #category : 'accessing' }
@@ -400,7 +398,6 @@ RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
 RPackage >> includesProtocol: protocol ofClass: aClass [
 
 	(protocol isExtensionProtocolMatching: self) ifTrue: [ ^ true ].
-
 
 	^ (self includesClass: aClass) and: [ protocol isExtensionProtocol not ]
 ]
