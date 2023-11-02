@@ -62,7 +62,7 @@ ProcessTest >> testChangingOtherPriorityAffectsScheduling [
 	self assert: val equals: #( 1 2 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingOtherPriorityLowerDuringSemaphoreWait [
 
 	| semaphore hasBlockRun backgroundProcess |
@@ -83,7 +83,7 @@ ProcessTest >> testChangingOtherPriorityLowerDuringSemaphoreWait [
 	self assert: hasBlockRun. "Preempted as normal"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingOtherPriorityPreemptsCurrentProcess [
 
 	| hasBlockRun backgroundProcess |
@@ -95,7 +95,7 @@ ProcessTest >> testChangingOtherPriorityPreemptsCurrentProcess [
 	self assert: hasBlockRun "We have been preempted."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingOtherPriorityRaiseDuringSemaphoreWait [
 
 	| semaphore hasBlockRun backgroundProcess |
@@ -114,7 +114,7 @@ ProcessTest >> testChangingOtherPriorityRaiseDuringSemaphoreWait [
 	self assert: hasBlockRun
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	"test whether #priority: preempts active process to allow higher priority processes run;
 	#priority behavior reflects the processPreemptionYields setting - for false the active

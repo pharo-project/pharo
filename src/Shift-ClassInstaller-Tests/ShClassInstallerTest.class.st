@@ -433,6 +433,28 @@ ShClassInstallerTest >> testModifyingSuperclassInOtherOrder [
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testRecompilingAClassKeepExtensionMethodsAsExtension [
+	"This is a regression test were recompiling a class was considering that all extension method became defined methods."
+
+	| extensionMethod |
+	newClass := self newClass: #ShCITestClass slots: {  }.
+
+	[
+	extensionMethod := newClass compiler
+		                   protocol: '*' , self generatedClassesPackageName , '2';
+		                   install: 'billy ^ #Billy'.
+
+	self assert: extensionMethod isExtension.
+	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2'.
+
+	newClass := self newClass: #ShCITestClass slots: { #addedSlot }.
+
+	self assert: extensionMethod isExtension.
+	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2' ] ensure: [
+		self packageOrganizer removePackage: self generatedClassesPackageName , '2' ]
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
 
 	| obj obj2 |
