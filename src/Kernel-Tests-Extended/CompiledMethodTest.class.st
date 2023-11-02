@@ -479,7 +479,8 @@ CompiledMethodTest >> testIsExtension [
 	self assert: method isExtension.
 
 	self class removeSelector: #isExtensionTestMethod.
-	self deny: method isExtension ] ensure: [
+	"Now we keep the infos about extension methods even after removing them"
+	self assert: method isExtension ] ensure: [
 		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
