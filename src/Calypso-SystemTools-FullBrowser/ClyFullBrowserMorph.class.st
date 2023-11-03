@@ -870,6 +870,12 @@ ClyFullBrowserMorph >> switchToVariables [
 	]
 ]
 
+{ #category : 'taskbar-required' }
+ClyFullBrowserMorph >> taskbarLabel [
+
+	^ self newWindowTitle copyAfter: $:
+]
+
 { #category : 'private' }
 ClyFullBrowserMorph >> updateDefaultPackageFilter [
 
