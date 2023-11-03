@@ -873,7 +873,7 @@ ClyFullBrowserMorph >> switchToVariables [
 { #category : 'taskbar-required' }
 ClyFullBrowserMorph >> taskbarLabel [
 
-	^ self newWindowTitle copyAfter: $:
+	^ self newWindowTitle copyAfter: Character space
 ]
 
 { #category : 'private' }
