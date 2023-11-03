@@ -18,13 +18,6 @@ ClassDescription >> extensionSelectors [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> isDefinedInPackage: aPackage [
-	"returns true if aPackage contains the definitino of this class"
-
-	^ aPackage includesClass: self
-]
-
-{ #category : '*RPackage-Core' }
 ClassDescription >> isExtended [
 
 	^ self extendingPackages isEmpty

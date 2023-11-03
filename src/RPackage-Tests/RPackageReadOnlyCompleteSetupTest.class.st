@@ -138,13 +138,6 @@ RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 ]
 
 { #category : 'tests - compiled method' }
-RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
-
-	self assert: (a1 >> #methodDefinedInP1 isDefinedInPackage: p1).
-	self deny: (a2 >> #methodDefinedInP1 isDefinedInPackage: p1)
-]
-
-{ #category : 'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsExtensionInPackage [
 
 	self deny: (a1 >> #methodDefinedInP1 isExtensionInPackage: p1).
