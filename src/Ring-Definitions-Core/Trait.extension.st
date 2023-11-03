@@ -13,6 +13,7 @@ Trait >> asRingDefinition [
 		        comment: self comment;
 		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
+		        package: self package asRingDefinition;
 		        withMetaclass.
 
 	ring classSide

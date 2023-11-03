@@ -3,36 +3,19 @@ Extension { #name : 'Class' }
 { #category : '*Ring-Definitions-Core' }
 Class >> asFullRingDefinition [
 	"A behavior is converted to a ring class including its variables, methods, direct superclass, direct subclasses and the package in which is loaded.
-	Active methods are generated and each knows its package as well.
-	Note that for its direct superclass and subclasses no full definitions are requested. If you need to traverse hierarchies use #asRingDefinitionWithMethods:withSuperclasses:withSubclasses:withPackages:"
+	Active methods are generated and each knows its package as well."
 
-	| rgClass rgSuper rgSub rgMethod packageKeys |
-	rgClass:= self asRingDefinition.
-	rgClass package: (RGContainer packageOfClass: rgClass).
+	| rgClass |
+	rgClass := self asRingDefinition.
 
-	self superclass notNil
-		ifTrue: [
-			rgSuper := self superclass asRingDefinition.
-			rgClass superclass: rgSuper ]
-		ifFalse: [
-			self isTrait ifTrue: [
-				rgSuper := Trait asRingDefinition.
-				rgClass superclass: rgSuper. ]
-			].
+	self superclass
+		ifNotNil: [ rgClass superclass: self superclass asRingDefinition ]
+		ifNil: [ self isTrait ifTrue: [ rgClass superclass: Trait asRingDefinition ] ].
 
-	self subclasses do:[ :each |
-		rgSub := each asRingDefinition.
-		rgSub superclass: rgClass ].
+	self subclasses do: [ :subclass | subclass asRingDefinition superclass: rgClass ].
 
-	packageKeys := RGContainer packageKeys.
-	self methodsDo:[ :mth|
-			rgMethod := mth asActiveRingDefinition.
-			rgClass addMethod: rgMethod.
-			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
-	self classSide methodsDo:[ :mth|
-			rgMethod := mth asActiveRingDefinition.
-			rgClass classSide addMethod: rgMethod.
-			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
+	self methodsDo: [ :method | method asFullRingDefinitionInRGClass: rgClass ].
+	self classSide methodsDo: [ :method | method asFullRingDefinitionInRGClass: rgClass classSide ].
 
 	^ rgClass
 ]

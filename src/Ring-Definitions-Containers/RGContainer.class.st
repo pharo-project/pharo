@@ -12,75 +12,11 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'image package loading' }
-RGContainer class >> allWorkingCopies [
-
-	^ Smalltalk globals
-		  at: #MCWorkingCopy
-		  ifPresent: [ :class | class allWorkingCopies ]
-		  ifAbsent: [ OrderedCollection new ]
-]
-
 { #category : 'class initialization' }
 RGContainer class >> initialize [
 	"Those got merged into RGPackageDefinition"
 
 	self deprecatedAliases: { #RGAbstractContainer }
-]
-
-{ #category : 'image package loading' }
-RGContainer class >> packageKeys [
-
-	^ self allWorkingCopies collect: [ :pck | pck package name asSymbol -> ('*' , pck package name asLowercase) ]
-]
-
-{ #category : 'image package loading' }
-RGContainer class >> packageNames [
-
-	^ self allWorkingCopies collect: [ :pck | pck package name asSymbol ]
-]
-
-{ #category : 'image package loading' }
-RGContainer class >> packageOfClass: aRGBehaviorDefinition [
-
-	^ self packageOfClass: aRGBehaviorDefinition using: self packageNames
-]
-
-{ #category : 'image package loading' }
-RGContainer class >> packageOfClass: aRGBehaviorDefinition using: packageNames [
-	"Looks for the package of aRGBehaviorDefinition from the image"
-
-	| pName |
-	aRGBehaviorDefinition ifNil: [ ^ nil ].
-	pName := packageNames
-		         detect: [ :each | each = aRGBehaviorDefinition category ]
-		         ifNone: [
-			         packageNames
-				         detect: [ :each | aRGBehaviorDefinition category isCategoryOf: each ]
-				         ifNone: [ nil ] ].
-	^ pName ifNotNil: [ RGPackageDefinition named: pName ]
-]
-
-{ #category : 'image package loading' }
-RGContainer class >> packageOfMethod: aRGMethodDefinition [
-
-	^ self packageOfMethod: aRGMethodDefinition using: self packageKeys
-]
-
-{ #category : 'image package loading' }
-RGContainer class >> packageOfMethod: aRGMethodDefinition using: packageKeys [
-	"Looks for the package of aRGMethodDefinition from the image"
-
-	| pName parentPackage |
-	(aRGMethodDefinition protocol notNil and: [ aRGMethodDefinition protocol beginsWith: '*' ]) ifFalse: [
-		parentPackage := aRGMethodDefinition parent ifNotNil: [ aRGMethodDefinition parent package ].
-		^ parentPackage ifNil: [ self packageOfClass: aRGMethodDefinition parent ] ].
-
-	aRGMethodDefinition protocol ifNil: [ ^ nil ].
-	pName := packageKeys
-		         detect: [ :each | aRGMethodDefinition protocol asLowercase isCategoryOf: each value ]
-		         ifNone: [ nil ].
-	^ pName ifNotNil: [ RGPackageDefinition named: pName key ]
 ]
 
 { #category : 'adding-removing' }
