@@ -3,7 +3,10 @@ A concrete container already knows how to treat classes, methods and packages.
 "
 Class {
 	#name : 'RGContainer',
-	#superclass : 'RGAbstractContainer',
+	#superclass : 'RGDefinition',
+	#instVars : [
+		'elements'
+	],
 	#category : 'Ring-Definitions-Containers-Base',
 	#package : 'Ring-Definitions-Containers',
 	#tag : 'Base'
@@ -16,6 +19,13 @@ RGContainer class >> allWorkingCopies [
 		  at: #MCWorkingCopy
 		  ifPresent: [ :class | class allWorkingCopies ]
 		  ifAbsent: [ OrderedCollection new ]
+]
+
+{ #category : 'class initialization' }
+RGContainer class >> initialize [
+	"Those got merged into RGPackageDefinition"
+
+	self deprecatedAliases: { #RGAbstractContainer }
 ]
 
 { #category : 'image package loading' }
@@ -87,6 +97,20 @@ RGContainer >> addClass: aRGBehaviorDefinition [
 RGContainer >> addClassNamed: className [
 	"Creates a class with the given name"
 	self addClass: (RGClassDefinition named: className)
+]
+
+{ #category : 'adding-removing' }
+RGContainer >> addElement: anObject [
+
+	anObject addInContainer: self
+]
+
+{ #category : 'adding-removing' }
+RGContainer >> addElement: anObject in: aCollection [
+
+	aCollection isDictionary
+		ifTrue: [ aCollection at: anObject fullName put: anObject ]
+		ifFalse:[ aCollection add: anObject ]
 ]
 
 { #category : 'adding-removing' }
@@ -249,6 +273,52 @@ RGContainer >> definedClassesDo: aBlock [
 			ifTrue:[ aBlock value: each classSide ] ]
 ]
 
+{ #category : 'lookup elements' }
+RGContainer >> elementNamed: elementName [
+
+	| aSymbol |
+	aSymbol := elementName asSymbol.
+	elements do: [ :collection | (self elementNamed: aSymbol in: collection) ifNotNil: [ :found | ^ found ] ].
+	^ nil
+]
+
+{ #category : 'lookup elements' }
+RGContainer >> elementNamed: elementName in: aCollection [
+	| aSymbol |
+
+	aSymbol:= elementName asSymbol.
+	^aCollection isDictionary
+		ifTrue: [ aCollection at: aSymbol ifAbsent: [ nil ] ]
+		ifFalse:[ aCollection detect:[ :each| each fullName = aSymbol ] ifNone:[ nil ] ]
+]
+
+{ #category : 'accessing' }
+RGContainer >> elements [
+	"Retrieves the elements"
+
+	^elements
+]
+
+{ #category : 'managing elements groups' }
+RGContainer >> elementsCategorized: aSymbol [
+	"Retrieves a group of elements.
+	If does not exist set an Set"
+
+	^elements at: aSymbol ifAbsentPut:[ Set ]
+]
+
+{ #category : 'managing elements groups' }
+RGContainer >> elementsCategorized: aSymbol with: aCollection [
+	"Allows to define other groups of elements with a particular kind of collection"
+
+	elements at: aSymbol put: aCollection
+]
+
+{ #category : 'iterating elements' }
+RGContainer >> elementsDo: aBlock [
+	elements valuesDo: [ :collection | collection do: [ :each | aBlock value: each ] ]
+]
+
 { #category : 'convenient accesses' }
 RGContainer >> extensionMethods [
 	"Retrieves a collection (by default a dictionary) with the extensions methods of the receiver"
@@ -282,6 +352,12 @@ RGContainer >> findPackageOfMethod: aRGMethodDefinition using: packageKeys [
 	^ pair ifNotNil: [ self packages at: pair key ]
 ]
 
+{ #category : 'initialization' }
+RGContainer >> flushElements [
+
+	elements:= IdentityDictionary new
+]
+
 { #category : 'testing' }
 RGContainer >> hasClasses [
 
@@ -307,6 +383,26 @@ RGContainer >> includesClassNamed: className [
 
 	self flag: 'can a metaclass be stored without its nonMetaClass? Check this'.
 	^self includesElementNamed: (self theNonMetaClassNameOf: className) in: self definedClasses
+]
+
+{ #category : 'testing' }
+RGContainer >> includesElement: anRGDefinition [
+
+	^anRGDefinition isIncludedInContainer: self
+]
+
+{ #category : 'testing' }
+RGContainer >> includesElementNamed: elementName [
+
+	^ elements anySatisfy: [ :collection | self includesElementNamed: elementName asSymbol in: collection ]
+]
+
+{ #category : 'testing' }
+RGContainer >> includesElementNamed: elementName in: aCollection [
+
+	^aCollection isDictionary
+		ifTrue: [ aCollection includesKey:  elementName asSymbol ]
+		ifFalse:[ aCollection anySatisfy: [ :each| each name = elementName asSymbol ] ]
 ]
 
 { #category : 'testing' }
@@ -339,6 +435,7 @@ RGContainer >> includesPackageNamed: packageName [
 RGContainer >> initialize [
 
 	super initialize.
+	elements := IdentityDictionary new.
 	self definedClasses: IdentityDictionary new.
 	self methods: IdentityDictionary new.
 	self packages: IdentityDictionary new
@@ -453,6 +550,27 @@ RGContainer >> packages: aCollection [
 RGContainer >> removeClass: aRGAbstractClassDefinition [
 
 	self removeElement: aRGAbstractClassDefinition from: self definedClasses
+]
+
+{ #category : 'adding-removing' }
+RGContainer >> removeElement: anObject [
+
+	anObject removeFromContainer: self
+]
+
+{ #category : 'adding-removing' }
+RGContainer >> removeElement: anObject from: aCollection [
+
+	aCollection isDictionary
+		ifTrue: [ aCollection removeKey: anObject fullName ifAbsent:[ ] ]
+		ifFalse:[ aCollection remove: anObject ifAbsent:[ ] ]
+]
+
+{ #category : 'managing elements groups' }
+RGContainer >> removeElementsCategorized: aSymbol [
+	"Deletes a group of elements"
+
+	elements removeKey: aSymbol ifAbsent:[ ]
 ]
 
 { #category : 'adding-removing' }
