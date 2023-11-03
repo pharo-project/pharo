@@ -814,14 +814,3 @@ RPackage >> tagOf: aClass [
 						   aClass name.
 						   self name }) ]
 ]
-
-{ #category : 'private' }
-RPackage >> toTagName: aSymbol [
-
-	^ (aSymbol beginsWith: self name asString , '-')
-		  ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
-		  ifFalse: [
-			  (aSymbol sameAs: self name)
-				  ifTrue: [ self rootTagName ]
-				  ifFalse: [ aSymbol ] ]
-]
