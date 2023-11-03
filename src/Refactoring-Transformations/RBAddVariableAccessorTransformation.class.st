@@ -53,7 +53,7 @@ RBAddVariableAccessorTransformation >> createSetterAccessor [
 RBAddVariableAccessorTransformation >> defineGetterMethod [
 
 	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
-	(RBAddMethodTransformation
+	(RBAddOverrideMethodRefactoring
 		model: self model 
 		sourceCode: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
 		in: self definingClass
@@ -68,7 +68,7 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
 	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
-	(RBAddMethodTransformation
+	(RBAddOverrideMethodRefactoring 
 		model: self model
 		sourceCode: (sourceCode expandMacrosWith: setterMethod with: variableName)
 		in: self definingClass 
