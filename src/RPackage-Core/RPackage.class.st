@@ -744,9 +744,6 @@ RPackage >> renameTo: aSymbol [
 	self organizer basicUnregisterPackage: self.
 	self name: aSymbol.
 
-	self flag: #package. "For now, the root tag has the name of the package, thus, renaming the package means that we need to rename the root tag. In the future I want to update the root tag name to be fix and not depend on the name of the package. When that happens, we'll be able to remove the next line."
-	self classTagNamed: oldName ifPresent: [ :tag | tag renameTo: newName ].
-
 	self flag: #package. "The next line is necessary until classes know their tag. Then it will not be needed anymore"
 	self classTags do: [ :tag | tag classes do: [ :class | class basicCategory: tag categoryName ] ].
 

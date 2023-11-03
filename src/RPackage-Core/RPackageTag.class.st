@@ -157,12 +157,9 @@ RPackageTag >> promoteAsPackage [
 	"This method converts this package tag into a package"
 
 	| newPackage |
-	self flag: #package. "We need to create and register in two steps because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a `self organizer ensurePackage: self package name , '-' , self name` to avoid to have a manual package creation AND a registration."
-	newPackage := RPackage named: self categoryName organizer: self organizer.
+	newPackage := self organizer ensurePackage: self package name , '-' , self name.
 
-	self classes do: [ :class | newPackage moveClass: class toTag: newPackage rootTag ].
-
-	self organizer addPackage: newPackage
+	self classes do: [ :class | newPackage moveClass: class toTag: newPackage rootTag ]
 ]
 
 { #category : 'accessing' }
