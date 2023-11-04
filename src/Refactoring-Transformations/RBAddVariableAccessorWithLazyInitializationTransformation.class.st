@@ -99,7 +99,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> defineGetterCalled:
 
 	| selector |
 	selector := aSymbol.
-	(RBAddOverrideMethodTransformation
+	(RBAddMethodTransformation
 		model: self model
 		sourceCode: ('<1s><r><r><t>^ <2s> ifNil: [ <2s> := <3s> ]'
 			expandMacrosWith: selector
