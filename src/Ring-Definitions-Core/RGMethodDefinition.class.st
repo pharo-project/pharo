@@ -146,12 +146,6 @@ RGMethodDefinition >> = aRGMethodDefinition [
 		and: [ self selector == aRGMethodDefinition selector]
 ]
 
-{ #category : 'managing container' }
-RGMethodDefinition >> addInContainer: aRGContainer [
-
-	aRGContainer addMethod: self
-]
-
 { #category : 'traits' }
 RGMethodDefinition >> argumentNames [
 	"Return an array with the argument names of the method's selector"
