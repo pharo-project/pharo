@@ -424,7 +424,9 @@ DateAndTime class >> readFrom: aStream defaultOffset: defaultOffset [
 	"self readFrom: '2013-03-04T23:47:52.876+01:00' readStream"
 
 	| date time offset |
-	date := Date readFrom: aStream.
+	date := (DateParser readingFrom: aStream pattern: 'y-mm-dd')
+		        continueAfterParsing;
+		        parse.
 	[ aStream atEnd or: [ '0123456789Z+-' includes: aStream peek ] ]
 		whileFalse: [ aStream next ].
   	('0123456789' includes: aStream peek)
@@ -465,7 +467,9 @@ DateAndTime class >> readSeparateDateAndTimeFrom: stream [
 
 	| date time |
 	stream skipSeparators.
-	date := Date readFrom: stream.
+	date := (DateParser readingFrom: stream pattern: 'yyyy-mm-dd')
+		        continueAfterParsing;
+		        parse.
 	stream skipSeparators.
 	time := Time readFrom: stream.
 	^ self
