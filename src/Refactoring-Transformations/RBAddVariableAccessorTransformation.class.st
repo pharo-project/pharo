@@ -68,7 +68,7 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
 	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
-	(RBAddMethodTransformation
+	(RBAddMethodTransformation 
 		model: self model
 		sourceCode: (sourceCode expandMacrosWith: setterMethod with: variableName)
 		in: self definingClass 
