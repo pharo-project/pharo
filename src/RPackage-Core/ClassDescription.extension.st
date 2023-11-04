@@ -9,7 +9,9 @@ ClassDescription >> definedSelectors [
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
 
-	^ self packageOrganizer extendingPackagesOf: self
+	^ (self localMethods , self classSide localMethods
+		   select: #isExtension
+		   thenCollect: #extensionPackage) asIdentitySet
 ]
 
 { #category : '*RPackage-Core' }

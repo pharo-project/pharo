@@ -86,7 +86,13 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
 	<reflection: 'Class structural modification - Selector/Method modification'>
+	self
+		compiledMethodAt: selector
+		ifPresent: [ :priorMethod | "For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
+			priorMethod propertyAt: #extensionPackage ifPresent: [ :package | compiledMethod propertyAt: #extensionPackage put: package ] ].
+
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
 ]

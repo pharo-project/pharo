@@ -479,7 +479,8 @@ CompiledMethodTest >> testIsExtension [
 	self assert: method isExtension.
 
 	self class removeSelector: #isExtensionTestMethod.
-	self deny: method isExtension ] ensure: [
+	"Now we keep the infos about extension methods even after removing them"
+	self assert: method isExtension ] ensure: [
 		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
@@ -836,6 +837,23 @@ CompiledMethodTest >> testReadsSlot [
 	self assert: ((Point>>#x) readsSlot: (Point slotNamed: #x)).
 	self deny: ((Point>>#x) readsSlot: (Point slotNamed: #y)).
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y))
+]
+
+{ #category : 'tests - abstract' }
+CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	| method |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	method := self class >> #isExtensionTestMethod.
+	self assert: method isExtension.
+
+	method recompile.
+
+	self assert: method isExtension ] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
 { #category : 'tests - accessing' }

@@ -13,7 +13,7 @@ CompiledMethod >> isExtension [
 
 	"(self >> #traitSource) isExtension >>> true"
 
-	^ self extensionPackage isNotNil
+	^ self hasProperty: #extensionPackage
 ]
 
 { #category : '*RPackage-Core' }
