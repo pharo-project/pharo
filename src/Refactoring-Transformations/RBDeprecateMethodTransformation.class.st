@@ -108,7 +108,7 @@ RBDeprecateMethodTransformation >> buildTransformations [
 	node := self parserClass parseExpression: self callDeprecationMethod.
 	parseTree body addNodeFirst: node.
 
-	^ { (RBAddOverrideMethodRefactoring
+	^ { (RBAddOverrideMethodTransformation
 			 sourceCode: parseTree newSource
 			 in: class
 			 withProtocol: method protocols) } 

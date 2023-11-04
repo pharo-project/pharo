@@ -6,7 +6,7 @@ Add Override Method allows Refactoring to create a method in a class that can ov
 
 "
 Class {
-	#name : 'RBAddOverrideMethodRefactoring',
+	#name : 'RBAddOverrideMethodTransformation',
 	#superclass : 'RBAddMethodRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBAddOverrideMethodRefactoring >> preconditions [
+RBAddOverrideMethodTransformation >> preconditions [
 
 	^ (RBCondition definesSelector: transformation selector in: class) not
 ]
