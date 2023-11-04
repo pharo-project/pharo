@@ -28,12 +28,6 @@ MetacelloFetchingMCSpecLoader >> atomicLoadPackageSpecs: packageSpecs repositori
 		for: self
 ]
 
-{ #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> cacheRepository [
-
-	^self loaderPolicy cacheRepository
-]
-
 { #category : 'versionInfo' }
 MetacelloFetchingMCSpecLoader >> currentVersionInfoFor: packageSpec [
 
@@ -51,7 +45,6 @@ MetacelloFetchingMCSpecLoader >> doLoad [
 { #category : 'accessing' }
 MetacelloFetchingMCSpecLoader >> ensureSpecLoader [
 	^ (MetacelloEnsureFetchingMCSpecLoader on: self spec)
-		shouldDisablePackageCache: self shouldDisablePackageCache;
 		loaderPolicy: self loaderPolicy; "explicitly share the loaderPolicy"
 		yourself
 ]
@@ -132,7 +125,7 @@ MetacelloFetchingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer
           (l := (GoferVersionReference name: reference name)
             resolveAllWith: self loaderPolicy cacheGofer) isEmpty
             ifTrue: [ 
-              self cacheRepository storeVersion: mcVersion.
+              self loaderPolicy cacheRepository storeVersion: mcVersion.
               reference == nearestReference
                 ifTrue: [ pSpec := packageSpec ]
                 ifFalse: [ 
@@ -171,7 +164,6 @@ MetacelloFetchingMCSpecLoader >> loadDirective [
 MetacelloFetchingMCSpecLoader >> loadingSpecLoader [
 
 	^(MetacelloLoadingMCSpecLoader on: self spec)
-		shouldDisablePackageCache: self shouldDisablePackageCache;
 		loaderPolicy: self loaderPolicy copy;
 		yourself
 ]

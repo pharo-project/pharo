@@ -156,13 +156,6 @@ MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember inde
 		ifTrue: [ aStream nextPutAll: ' with: ', file printString ]
 ]
 
-{ #category : 'development support' }
-MetacelloPackageSpec >> copySpecTo: aRepositorySpec [
-	"Copy current mcz file to the repository named in aRepositorySpec"
-
-	self loader copySpec: self from: self repositorySpecs to: aRepositorySpec createRepository
-]
-
 { #category : 'testing' }
 MetacelloPackageSpec >> currentPackageLoaded: loadedBlock comparing: comarisonOperator notLoaded: notLoadedBlock using: anMCLoader [
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
@@ -319,37 +312,6 @@ MetacelloPackageSpec >> getRepositories [
     ^ repositories
 ]
 
-{ #category : 'development support' }
-MetacelloPackageSpec >> goferBranchPackage: branchName message: commitMessage [
-	"uses gofer to do commit ... non-interactive"
-
-	| latestFile pkgSpec   |
-	(file notNil and: [ (self name, '.', branchName) = self file ])
-		ifTrue: [ 
-			latestFile := self loader latestPackage: self file fromRepository: self repositorySpecs.
-			pkgSpec := self copy.
-			latestFile ~~ nil
-				ifTrue: [ 
-					pkgSpec file: latestFile.
-					pkgSpec goferCommitPackage: commitMessage.
-					^ self ] ].
-	self loader goferCommitBranchPackage: branchName using: self repositorySpecs commitMessage: commitMessage
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> goferCommitPackage: commitMessage [
-	"uses gofer to do commit ... non-interactive"
-	
-	| latestFile pkgSpec |
-	^(file notNil and: [ self name = self file ])
-		ifTrue: [
-			latestFile := self loader latestPackage: self name fromRepository: self repositorySpecs.
-			pkgSpec := self copy.
-			pkgSpec file: latestFile.
-			pkgSpec goferCommitPackage: commitMessage ]
-		ifFalse: [ self loader goferCommitPackageUsing: self repositorySpecs commitMessage: commitMessage ]
-]
-
 { #category : 'accessing' }
 MetacelloPackageSpec >> goferLoaderReference [
 
@@ -464,12 +426,6 @@ MetacelloPackageSpec >> packageSpecsInLoadOrder [
 	^{ self. }
 ]
 
-{ #category : 'development support' }
-MetacelloPackageSpec >> packagesNeedSavingVisited: visitedProjects using: repos into: aCollection [
-
-	^self loader packagesNeedSavingUsing: repos into: aCollection
-]
-
 { #category : 'copying' }
 MetacelloPackageSpec >> postCopy [
 
@@ -578,20 +534,6 @@ MetacelloPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 	^{ self }
 ]
 
-{ #category : 'development support' }
-MetacelloPackageSpec >> savePackage [
-	"Interactive save ... prompted for commit message and package name unless MCVersionNameAndMessageRequest handled"
-
-	| latestFile pkgSpec |
-	^(file notNil and: [ self name = self file ])
-		ifTrue: [
-			latestFile := self loader latestPackage: self name fromRepository: self repositorySpecs.
-			pkgSpec := self copy.
-			pkgSpec file: latestFile.
-			pkgSpec savePackage ]
-		ifFalse: [ self loader savePackageUsing: self repositorySpecs ]
-]
-
 { #category : 'fetching' }
 MetacelloPackageSpec >> searchCacheRepositoryForPackage: searchBlock [
   "evaluate the <searchBlock> if you want to search for the package in a local package cache"
@@ -640,24 +582,6 @@ MetacelloPackageSpec >> updateForSpawnMethod: sourceSpec [
 	name := nm.
 	file := fl.
 	^ file == nil
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> updatePackageRepositories: repositorySpecs [
-
-	| resolvedPackageRef |
-	MetacelloNotification signal: ('  Looking up version -> ', self file).
-	resolvedPackageRef := self loader resolveSpec: self from: repositorySpecs.
-	MetacelloNotification signal: ('Update repositoryGroup -> ', resolvedPackageRef name, ' ' , resolvedPackageRef repository description).
-	resolvedPackageRef version workingCopy repositoryGroup addRepository: resolvedPackageRef repository
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> updatePackageRepositoriesFor: aVersionSpec [
-	"Don't update the repository unless the package is loaded in the image"
-
-	self workingCopy ifNil: [ ^ self ].
-	self updatePackageRepositories: self repositorySpecs , aVersionSpec repositorySpecs
 ]
 
 { #category : 'development support' }
