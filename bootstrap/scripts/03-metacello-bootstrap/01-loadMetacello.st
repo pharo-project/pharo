@@ -21,7 +21,6 @@ mcPackages := #(
  'Metacello-Bitbucket'
  'Metacello-Platform'
  'Metacello-ToolBox'
- 'Metacello-PharoExtensions'
  'MetacelloCommandLineHandler-Core'
  ).
 
