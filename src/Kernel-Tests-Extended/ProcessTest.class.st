@@ -9,7 +9,7 @@ Class {
 	#tag : 'Processes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ProcessTest >> setUp [
 	super setUp.
 
@@ -634,7 +634,7 @@ ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 	effectiveProcess terminate
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testProcessFaithfulTermination [
 	"When terminating a process, unwind blocks should be evaluated as if they were executed by the process being terminated."
 
@@ -648,7 +648,7 @@ ProcessTest >> testProcessFaithfulTermination [
 	self assert: process isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testRealActiveProcessFromProcesor [
 
 	| processFromProcessor activeProcess |
@@ -755,7 +755,7 @@ ProcessTest >> testTerminateAnswersSelf [
 	self assert: process isTerminated
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testTerminateInTerminate [
 	"Terminating a terminator process should unwind both the terminator and its terminatee process"
 	
@@ -775,7 +775,7 @@ ProcessTest >> testTerminateInTerminate [
 	self assert: unwound
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 "
 	<expectedFailure>

@@ -26,7 +26,7 @@ spec description: ''Descriptive comment''.
 spec preLoadDoIt: #''preloadForVersion''.
 spec postLoadDoIt: #''postloadForVersion''.
 spec author: ''dkh''.
-spec timestamp: ''10/7/2009 14:40''.
+spec timestamp: ''12009-07-10T14:40''.
 spec repositories: [
 	spec
 		repository: ''/opt/mc/repository'';
