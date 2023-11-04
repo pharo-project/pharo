@@ -50,7 +50,7 @@ MetacelloAtomicLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer:
 	super loadLinearLoadDirective: aLoaderDirective gofer: aGofer
 ]
 
-{ #category : 'loading' }
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 	"accumulate packages"
 	
@@ -74,7 +74,6 @@ MetacelloAtomicLoadDirective >> loadPreloadDirective: aPreloadDirective [
 { #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
-	1halt.
 	self loadDirectives isEmpty ifTrue: [ ^self ].
 	aLoaderDirective loadAtomicLoadDirective: self gofer: aGofer.
 ]

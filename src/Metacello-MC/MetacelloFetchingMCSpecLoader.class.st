@@ -133,9 +133,11 @@ MetacelloFetchingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer
 { #category : 'private' }
 MetacelloFetchingMCSpecLoader >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
 	
-	self loaderPolicy 
+	| directive |
+	directive := self loaderPolicy 
 		pushLinearLoadDirectivesDuring: [ super linearLoadPackageSpecs: packageSpecs repositories: repositories ]
-		 for: self
+		 for: self.
+	directive loadWithPolicy: self loaderPolicy
 ]
 
 { #category : 'accessing' }

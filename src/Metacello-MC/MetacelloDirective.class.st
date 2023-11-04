@@ -13,9 +13,10 @@ Class {
 { #category : 'instance creation' }
 MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference loader: aLoader [
 
-	^ MetacelloLinearLoadDirective new
-		  spec: aPackageSpec loader: aLoader;
-		  yourself
+	^ MetacelloPackageLoadDirective new
+		  spec: aPackageSpec
+		  externalReference: externalReference
+		  loader: aLoader
 ]
 
 { #category : 'instance creation' }

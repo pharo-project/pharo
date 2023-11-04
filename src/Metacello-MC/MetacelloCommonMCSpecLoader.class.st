@@ -189,6 +189,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 { #category : 'actions' }
 MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 
+1halt.
   MetacelloPlatform current
     do: [ 
       | goferLoad loadBlock answers |

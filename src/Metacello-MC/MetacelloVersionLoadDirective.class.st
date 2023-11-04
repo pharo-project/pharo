@@ -60,7 +60,7 @@ MetacelloVersionLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer
 	aLoaderDirective finalizeLoad: aGofer.
 ]
 
-{ #category : 'loading' }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 
 	aPackageLoadDirective loader loadingSpecLoader 

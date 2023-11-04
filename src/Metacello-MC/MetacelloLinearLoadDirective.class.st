@@ -13,6 +13,16 @@ MetacelloLinearLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 	aLoaderDirective loadLinearLoadDirective: self gofer: aGofer.
 ]
 
+{ #category : 'actions' }
+MetacelloLinearLoadDirective >> loadWithPolicy: aLoadPolicy [
+
+	| gofer |
+	gofer := MetacelloGofer new.
+	gofer disablePackageCache.
+	gofer repository: aLoadPolicy cacheRepository.
+	self loadUsing: self gofer: gofer
+]
+
 { #category : 'accessing' }
 MetacelloLinearLoadDirective >> title [
 
