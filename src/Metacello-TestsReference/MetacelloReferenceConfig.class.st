@@ -4,8 +4,8 @@ Class {
 	#instVars : [
 		'project'
 	],
-	#category : 'Metacello-Reference',
-	#package : 'Metacello-Reference'
+	#category : 'Metacello-TestsReference',
+	#package : 'Metacello-TestsReference'
 }
 
 { #category : 'accessing' }
