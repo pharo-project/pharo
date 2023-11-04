@@ -8,7 +8,6 @@ Class {
 	#name : 'RGPackageDefinition',
 	#superclass : 'RGDefinition',
 	#instVars : [
-		'package',
 		'elements',
 		'definedClasses'
 	],
@@ -71,22 +70,6 @@ RGPackageDefinition >> addMethod: aRGMethodDefinition [
 	self addElement: aRGMethodDefinition in: (aRGMethodDefinition isExtension
 			 ifTrue: [ self extensionMethods ]
 			 ifFalse: [ self definedMethods ])
-]
-
-{ #category : 'adding-removing' }
-RGPackageDefinition >> addPackage: aRGPackage [
-	"adds a child package"
-
-	aRGPackage isPackage ifFalse:[ ^self ].
-	self addElement: aRGPackage in: self packages
-]
-
-{ #category : 'adding-removing' }
-RGPackageDefinition >> addPackageNamed: packageName [
-	"adds a child package with the given name"
-
-	(self includesPackageNamed: packageName) ifTrue: [ ^self ].
-	self addPackage: (RGPackageDefinition named: packageName)
 ]
 
 { #category : 'adding-removing' }
@@ -278,11 +261,6 @@ RGPackageDefinition >> elements [
 	^elements
 ]
 
-{ #category : 'iterating elements' }
-RGPackageDefinition >> elementsDo: aBlock [
-	elements valuesDo: [ :collection | collection do: [ :each | aBlock value: each ] ]
-]
-
 { #category : 'accessing' }
 RGPackageDefinition >> extendedClassNames [
 
@@ -423,20 +401,6 @@ RGPackageDefinition >> includesMethodNamed: fullSelectorName [
 	^self includesElementNamed: fullSelectorName in: self methods
 ]
 
-{ #category : 'testing' }
-RGPackageDefinition >> includesPackage: aRGPackage [
-	"Verifies if a child package == aRGPackage exists"
-
-	^self packages includes: aRGPackage
-]
-
-{ #category : 'testing' }
-RGPackageDefinition >> includesPackageNamed: packageName [
-	"Verifies if a child package with name = packageName exists"
-
-	^self includesElementNamed: packageName in: self packages
-]
-
 { #category : 'initialization' }
 RGPackageDefinition >> initialize [
 
@@ -444,8 +408,6 @@ RGPackageDefinition >> initialize [
 	elements := IdentityDictionary new.
 	definedClasses := IdentityDictionary new.
 	self methods: IdentityDictionary new.
-	self packages: IdentityDictionary new.
-	self withoutPackages. "By default the receiver has no child packages"
 	self extensionMethods: IdentityDictionary new
 ]
 
@@ -461,47 +423,7 @@ RGPackageDefinition >> isMetaclassName: aSymbol [
 { #category : 'testing' }
 RGPackageDefinition >> isPackage [
 
-	^true
-]
-
-{ #category : 'image class and method loading' }
-RGPackageDefinition >> loadClass: aRGBehaviorDefinition using: packageKeys [
-
-	self setPackageOfClass: aRGBehaviorDefinition using: packageKeys.
-	self addClass: aRGBehaviorDefinition
-]
-
-{ #category : 'image class and method loading' }
-RGPackageDefinition >> loadMethod: aRGMethodDefinition inClass: aRGBehaviorDefinition using: packageKeys [
-
-	self addMethod: aRGMethodDefinition.
-	aRGBehaviorDefinition addMethod: aRGMethodDefinition.
-	self setPackageOfMethod: aRGMethodDefinition ofClass: aRGBehaviorDefinition using: packageKeys
-]
-
-{ #category : 'image class and method loading' }
-RGPackageDefinition >> loadTraitUsers [
-	"Set the users of a trait"
-
-	(self classes select: [ :class | class hasTraitComposition ]) do: [ :user |
-		user traitNames do: [ :tname |
-			(self traitNamed: tname) ifNotNil: [ :rgTrait |
-				rgTrait addUser: user.
-				rgTrait classSide addUser: user classSide ] ] ]
-]
-
-{ #category : 'lookup' }
-RGPackageDefinition >> lookupClassNamed: className [
-	"Look for the class named className in the receiver's defined classes or in any of its package children"
-	| class |
-
-	class:= self classNamed: className.
-	class ifNotNil:[ ^class ].
-
-	self packages
-		do:[ :each| class:= each lookupClassNamed: className.
-				    class ifNotNil:[ ^class ] ].
-	^nil
+	^ true
 ]
 
 { #category : 'lookup by name' }
@@ -553,40 +475,6 @@ RGPackageDefinition >> numberOfLinesOfCode [
 			number := self classes inject: 0 into: [ :sum :each | sum + each numberOfLinesOfCode + each classSide numberOfLinesOfCode ].
 			number := self methods inject: number into: [ :sum :each | sum + each numberOfLinesOfCode ].
 			number ]
-]
-
-{ #category : 'accessing' }
-RGPackageDefinition >> package [
-	"Retrieves the  package in which self is contained"
-
-	^package
-]
-
-{ #category : 'accessing' }
-RGPackageDefinition >> package: aRGPackage [
-	"Sets the outer package of the receiver if exists"
-
-	package:= aRGPackage
-]
-
-{ #category : 'lookup by name' }
-RGPackageDefinition >> packageNamed: packageName [
-	"Look for a child package named packageName"
-
-	^self elementNamed: packageName in: self packages
-]
-
-{ #category : 'accessing' }
-RGPackageDefinition >> packages [
-	"Retrieves the children packages defined in the receiver"
-
-	^ self elements at: #packages ifAbsentPut: [ OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
-RGPackageDefinition >> packages: aCollection [
-
-	elements at: #packages put: aCollection
 ]
 
 { #category : 'accessing' }
@@ -647,39 +535,10 @@ RGPackageDefinition >> removeMethod: aRGMethodDefinition [
 ]
 
 { #category : 'adding-removing' }
-RGPackageDefinition >> removePackage: aRGPackage [
-	"removes a child aRGPackage"
-
-	aRGPackage isPackage ifFalse:[ ^self ].
-	self removeElement: aRGPackage from: self packages
-]
-
-{ #category : 'adding-removing' }
 RGPackageDefinition >> removeTrait: aRGTraitDefinition [
 	"convenient method"
 
 	self removeClass: aRGTraitDefinition
-]
-
-{ #category : 'image package loading' }
-RGPackageDefinition >> setPackageOfClass: rgClass using: packageKeys [
-	"Set the package to aRGBehaviorDefinition"
-
-	(self findPackageOfClass: rgClass using: packageKeys)
-		ifNotNil:[ :pck| pck addClass: rgClass ]
-]
-
-{ #category : 'image package loading' }
-RGPackageDefinition >> setPackageOfMethod: rgMethod ofClass: rgClass using: packageKeys [
-	"Set the package to aRGMethodDefinition and its value isExtension"
-
-	(self findPackageOfMethod: rgMethod using: packageKeys)
-		ifNil:[ rgClass package ifNotNil:[ :pck|
-				pck addMethod: rgMethod.
-				rgMethod isExtension: false ] ]
-		ifNotNil:[ :pck|
-			pck addMethod: rgMethod.
-			rgMethod isExtension: (rgMethod package ~= rgClass package) ]
 ]
 
 { #category : 'utilities' }
@@ -731,10 +590,4 @@ RGPackageDefinition >> traitsDo: aBlock [
 		aBlock value: each.
 		each hasMetaclass
 			ifTrue:[ aBlock value: each classSide ] ]
-]
-
-{ #category : 'adding-removing' }
-RGPackageDefinition >> withoutPackages [
-
-	self removeElementsCategorized: #packages
 ]

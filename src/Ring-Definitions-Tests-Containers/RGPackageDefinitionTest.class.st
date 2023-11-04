@@ -21,20 +21,6 @@ RGPackageDefinitionTest >> testAddingClass [
 	self assert: (newPackage classNamed: #OrderedCollection) identicalTo: newClass
 ]
 
-{ #category : 'testing' }
-RGPackageDefinitionTest >> testAddingPackage [
-	| newPackage childPackage |
-	newPackage := RGPackageDefinition named: #Collections.
-	newPackage addPackageNamed: #'Collections-Sequenceable'.
-
-	self assert: (newPackage includesPackageNamed: #'Collections-Sequenceable').
-	self assert: newPackage packages size equals: 1.
-
-	childPackage := newPackage packageNamed: #'Collections-Sequenceable'.
-	self assert: childPackage parent equals: newPackage parent.
-	self assert: childPackage package equals: newPackage
-]
-
 { #category : 'tests' }
 RGPackageDefinitionTest >> testCategoryMatching [
 
@@ -54,7 +40,5 @@ RGPackageDefinitionTest >> testNewPackage [
 	self assert: newPackage name equals: 'Collections-Sequenceable'.
 	self assertEmpty: newPackage classes.
 	self assertEmpty: newPackage traits.
-	self assertEmpty: newPackage packages.
-	self assert: newPackage package isNil.
 	self assert: newPackage parent identicalTo: Smalltalk globals
 ]
