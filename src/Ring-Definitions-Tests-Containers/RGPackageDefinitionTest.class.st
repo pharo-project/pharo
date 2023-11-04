@@ -35,6 +35,16 @@ RGPackageDefinitionTest >> testAddingPackage [
 	self assert: childPackage package equals: newPackage
 ]
 
+{ #category : 'tests' }
+RGPackageDefinitionTest >> testCategoryMatching [
+
+	self assert: ('Compression-Archives' isCategoryOf: 'Compression').
+	self deny: ('Compression' isCategoryOf: 'Compression-Archives').
+	self assert: ('Compression' isCategoryOf: 'Compression').
+	self assert: ('Compression-Arh' isCategoryOf: 'Compression').
+	self deny: ('XXXX' isCategoryOf: 'Compression-Archives')
+]
+
 { #category : 'testing' }
 RGPackageDefinitionTest >> testNewPackage [
 	| newPackage |

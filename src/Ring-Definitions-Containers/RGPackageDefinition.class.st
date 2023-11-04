@@ -9,7 +9,8 @@ Class {
 	#superclass : 'RGDefinition',
 	#instVars : [
 		'package',
-		'elements'
+		'elements',
+		'definedClasses'
 	],
 	#category : 'Ring-Definitions-Containers-Base',
 	#package : 'Ring-Definitions-Containers',
@@ -30,7 +31,8 @@ RGPackageDefinition >> addClass: aRGBehaviorDefinition [
 	self flag: 'when i am adding a metaclass? check this?'.
 
 	(aRGBehaviorDefinition isClass or: [ aRGBehaviorDefinition isTrait ]) ifFalse: [ ^ self ].
-	self addElement: aRGBehaviorDefinition in: self definedClasses
+	aRGBehaviorDefinition package: self.
+	definedClasses at: aRGBehaviorDefinition fullName put: aRGBehaviorDefinition
 ]
 
 { #category : 'adding-removing' }
@@ -97,7 +99,8 @@ RGPackageDefinition >> addTrait: aRGTraitDefinition [
 { #category : 'adding-removing' }
 RGPackageDefinition >> addTraitNamed: traitName [
 	"Creates a trait with the given name"
-	self addClass:  (RGTraitDefinition named: traitName)
+
+	self addClass: (RGTraitDefinition named: traitName)
 ]
 
 { #category : 'convenient accesses' }
@@ -160,15 +163,13 @@ RGPackageDefinition >> classNames [
 { #category : 'lookup by name' }
 RGPackageDefinition >> classOrTraitNamed: className [
 	"A class or metaclass can be reached by its name"
-	| theClass |
 
-	className ifNil: [^nil ].
-	theClass:= self elementNamed: (self theNonMetaClassNameOf: className) in: self definedClasses.
-	theClass ifNil:[ ^nil ].
+	className ifNil: [ ^ nil ].
 
-	^(self isMetaclassName: className)
-		ifTrue: [ theClass classSide ]
-		ifFalse:[ theClass ]
+	^ definedClasses at: (self theNonMetaClassNameOf: className) ifPresent: [ :theClass |
+		  (self isMetaclassName: className)
+			  ifTrue: [ theClass classSide ]
+			  ifFalse: [ theClass ] ]
 ]
 
 { #category : 'accessing' }
@@ -212,14 +213,14 @@ RGPackageDefinition >> definedClassNames [
 RGPackageDefinition >> definedClasses [
 	"Retrieves classes (traits are included)"
 
-	^self elements at: #definedClasses ifAbsentPut:[ IdentityDictionary new ]
+	^ definedClasses
 ]
 
 { #category : 'accessing' }
 RGPackageDefinition >> definedClasses: aCollection [
 	"Set the classes collection"
 
-	self elements at: #definedClasses put: aCollection
+	definedClasses := aCollection
 ]
 
 { #category : 'iterating' }
@@ -235,7 +236,7 @@ RGPackageDefinition >> definedClassesDo: aBlock [
 RGPackageDefinition >> definedMethods [
 	"Retrieves methods defined in the container"
 
-	^ self elements at: #methods ifAbsentPut: [ IdentityDictionary new ]
+	^ self elements at: #methods ifAbsentPut: [ OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
@@ -260,16 +261,7 @@ RGPackageDefinition >> definesOrExtendsClass: aRGBehaviorDefinition [
 	^ (self definesClass: aRGBehaviorDefinition) or:[ self extendsClass: aRGBehaviorDefinition ]
 ]
 
-{ #category : 'lookup elements' }
-RGPackageDefinition >> elementNamed: elementName [
-
-	| aSymbol |
-	aSymbol := elementName asSymbol.
-	elements do: [ :collection | (self elementNamed: aSymbol in: collection) ifNotNil: [ :found | ^ found ] ].
-	^ nil
-]
-
-{ #category : 'lookup elements' }
+{ #category : 'lookup' }
 RGPackageDefinition >> elementNamed: elementName in: aCollection [
 	| aSymbol |
 
@@ -284,21 +276,6 @@ RGPackageDefinition >> elements [
 	"Retrieves the elements"
 
 	^elements
-]
-
-{ #category : 'managing elements groups' }
-RGPackageDefinition >> elementsCategorized: aSymbol [
-	"Retrieves a group of elements.
-	If does not exist set an Set"
-
-	^elements at: aSymbol ifAbsentPut:[ Set ]
-]
-
-{ #category : 'managing elements groups' }
-RGPackageDefinition >> elementsCategorized: aSymbol with: aCollection [
-	"Allows to define other groups of elements with a particular kind of collection"
-
-	elements at: aSymbol put: aCollection
 ]
 
 { #category : 'iterating elements' }
@@ -465,7 +442,7 @@ RGPackageDefinition >> initialize [
 
 	super initialize.
 	elements := IdentityDictionary new.
-	self definedClasses: IdentityDictionary new.
+	definedClasses := IdentityDictionary new.
 	self methods: IdentityDictionary new.
 	self packages: IdentityDictionary new.
 	self withoutPackages. "By default the receiver has no child packages"
@@ -603,13 +580,13 @@ RGPackageDefinition >> packageNamed: packageName [
 RGPackageDefinition >> packages [
 	"Retrieves the children packages defined in the receiver"
 
-	^self elements at: #packages ifAbsentPut:[ IdentityDictionary new ]
+	^ self elements at: #packages ifAbsentPut: [ OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
 RGPackageDefinition >> packages: aCollection [
 
-	self elementsCategorized: #packages with: aCollection
+	elements at: #packages put: aCollection
 ]
 
 { #category : 'accessing' }
@@ -754,18 +731,6 @@ RGPackageDefinition >> traitsDo: aBlock [
 		aBlock value: each.
 		each hasMetaclass
 			ifTrue:[ aBlock value: each classSide ] ]
-]
-
-{ #category : 'adding-removing' }
-RGPackageDefinition >> withoutClasses [
-
-	self removeElementsCategorized: #definedClasses
-]
-
-{ #category : 'adding-removing' }
-RGPackageDefinition >> withoutMethods [
-
-	self removeElementsCategorized: #methods
 ]
 
 { #category : 'adding-removing' }
