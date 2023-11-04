@@ -3,8 +3,7 @@ Class {
 	#superclass : 'MetacelloSpecLoader',
 	#instVars : [
 		'operator',
-		'loaderPolicy',
-		'disablePackageCache'
+		'loaderPolicy'
 	],
 	#classVars : [
 		'RetryPackageResolution'
@@ -111,12 +110,6 @@ MetacelloCommonMCSpecLoader >> fetchingSpecLoader [
 	^self
 ]
 
-{ #category : 'testing' }
-MetacelloCommonMCSpecLoader >> hasRepositoryOverrides [
-
-	^self loaderPolicy hasRepositoryOverrides
-]
-
 { #category : 'accessing' }
 MetacelloCommonMCSpecLoader >> ignoreImage [
 
@@ -158,7 +151,6 @@ MetacelloCommonMCSpecLoader >> load [
 MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 
 	| packageSpec |
-
 	packageSpec := aPackageLoadDirective spec.
 	MetacelloPlatform current
 		do: [ | loadBlock goferLoad answers resolvedReference |
@@ -190,6 +182,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 
 { #category : 'actions' }
 MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
+
   MetacelloPlatform current
     do: [ 
       | goferLoad loadBlock answers |
@@ -253,6 +246,7 @@ MetacelloCommonMCSpecLoader >> loadingSpecLoader [
 { #category : 'packages' }
 MetacelloCommonMCSpecLoader >> nameComponentsFrom: aVersionName [
 
+	1halt.
 	^self class nameComponentsFrom: aVersionName
 ]
 
@@ -283,7 +277,6 @@ MetacelloCommonMCSpecLoader >> preLoad: packageOrVersionSpec [
 MetacelloCommonMCSpecLoader >> recordingSpecLoader [
 
 	^(MetacelloNullRecordingMCSpecLoader on: self spec)
-		shouldDisablePackageCache: self shouldDisablePackageCache;
 		loaderPolicy: self loaderPolicy copy;
 		yourself
 ]
@@ -298,14 +291,18 @@ MetacelloCommonMCSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 MetacelloCommonMCSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: ignoreOverrides [
 
 	| repositories repos |
-	(ignoreOverrides not and: [self hasRepositoryOverrides]) ifTrue: [ ^self loaderPolicy overrideRepositories ].
+	ignoreOverrides not ifTrue: [
+		^ self loaderPolicy overrideRepositories ].
 	repositories := MCRepositoryGroup default repositories.
 	repos := OrderedCollection new.
-	aMetacelloMVRepositorySpecs do: [:aSpec | | description repo |
+	aMetacelloMVRepositorySpecs do: [ :aSpec |
+		| description repo |
 		description := aSpec description.
-		(repo := repositories detect: [:rep | rep description = description ] ifNone: [ aSpec createRepository ]) ~~ nil
-			ifTrue: [ repos add: repo ]].
-	^repos
+		(repo := repositories
+			         detect: [ :rep | rep description = description ]
+			         ifNone: [ aSpec createRepository ]) ~~ nil ifTrue: [
+			repos add: repo ] ].
+	^ repos
 ]
 
 { #category : 'accessing' }
@@ -340,22 +337,13 @@ MetacelloCommonMCSpecLoader >> resolvePackageSpec: packageSpec gofer: gofer [
 { #category : 'private' }
 MetacelloCommonMCSpecLoader >> resolvePackageSpecReferences: packageSpec gofer: gofer [
 
-	|  versionReference references localGofer |
+	| versionReference references localGofer |
 	localGofer := gofer.
-	self hasRepositoryOverrides not
-		ifTrue: [
-			packageSpec repositorySpecs notEmpty
-				ifTrue: [ 
-					localGofer := MetacelloGofer new.
-					(self repositoriesFrom: packageSpec repositorySpecs) do: [:repo | localGofer repository: repo ]]].
-	(packageSpec getFile == nil or: [ self shouldDisablePackageCache ])
-		ifTrue: [ 
-			"don't use package-cache when trying to get latest version"
-			localGofer disablePackageCache ].
+	packageSpec getFile ifNil: [ localGofer disablePackageCache ].
 	versionReference := packageSpec goferLoaderReference.
 	references := versionReference resolveAllWith: localGofer.
 	localGofer enablePackageCache.
-	^references
+	^ references
 ]
 
 { #category : 'private' }
@@ -393,15 +381,4 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
                 repositoryError: repositoryError;
                 yourself) signal ].
     ^ references
-]
-
-{ #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> shouldDisablePackageCache [
-
-	^ disablePackageCache ifNil: [ disablePackageCache := false ]
-]
-
-{ #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> shouldDisablePackageCache: anObject [
-	disablePackageCache := anObject
 ]

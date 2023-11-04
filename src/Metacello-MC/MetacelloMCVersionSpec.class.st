@@ -426,12 +426,6 @@ MetacelloMCVersionSpec >> packages [
 	^ packages ifNil: [ super packages ]
 ]
 
-{ #category : 'development support' }
-MetacelloMCVersionSpec >> packagesNeedSavingVisited: visitedProjects into: aCollection [
-
-	self packages map valuesDo: [:pkg | pkg packagesNeedSavingVisited: visitedProjects using: self repositories map values into: aCollection ].
-]
-
 { #category : 'copying' }
 MetacelloMCVersionSpec >> postCopy [
     super postCopy.

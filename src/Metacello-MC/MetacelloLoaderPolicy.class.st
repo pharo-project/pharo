@@ -12,16 +12,9 @@ Class {
 		'loadDirective',
 		'silently'
 	],
-	#category : 'Metacello-MC-Loaders',
-	#package : 'Metacello-MC',
-	#tag : 'Loaders'
+	#category : 'Metacello-MC',
+	#package : 'Metacello-MC'
 }
-
-{ #category : 'instance creation' }
-MetacelloLoaderPolicy class >> overrideRepositories: aCollection [
-
-	^self new overrideRepositories: aCollection
-]
 
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> cacheGofer [
@@ -56,12 +49,6 @@ MetacelloLoaderPolicy >> ensuredMap [
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> ensuredMap: anObject [
 	ensuredMap := anObject
-]
-
-{ #category : 'testing' }
-MetacelloLoaderPolicy >> hasRepositoryOverrides [
-
-	^self overrideRepositories ~~ nil
 ]
 
 { #category : 'accessing' }

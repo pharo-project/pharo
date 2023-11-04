@@ -56,13 +56,6 @@ MetacelloMCVersion >> allPackagesForSpecs: pkgSpecs visited: visited [
 	^ coll values asOrderedCollection
 ]
 
-{ #category : 'accessing' }
-MetacelloMCVersion >> cacheRepository: repository [ 
-	"by default cacheRepository is an MCDictionaryRepository"
-	
-	self loaderPolicy cacheRepository: repository
-]
-
 { #category : 'private' }
 MetacelloMCVersion >> computeVersionStatus [
 	"
@@ -326,12 +319,6 @@ MetacelloMCVersion >> record [
 MetacelloMCVersion >> record: required [
 
 	^required recordRequiredForMetacelloMCVersion: self
-]
-
-{ #category : 'accessing' }
-MetacelloMCVersion >> repositoryOverrides: repositoriesCollection [ 
-
-	self loaderPolicy overrideRepositories: repositoriesCollection
 ]
 
 { #category : 'accessing' }
