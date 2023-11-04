@@ -262,7 +262,7 @@ MetacelloPackageSpec >> forceLoadUsing: mcLoader [
 	"fetch and force load it"
 	fetchingSpecLoader := mcLoader fetchingSpecLoader.
 	fetchingSpecLoader
-		forceLoadPackageSpecs: (Array with: self)
+		linearLoadPackageSpecs: (Array with: self)
 		repositories:
 		(fetchingSpecLoader repositoriesFrom: self repositorySpecs)
 ]

@@ -113,15 +113,6 @@ MetacelloLoaderPolicy >> pushAtomicLoadDirectivesDuring: aBlock for: aLoader [
 ]
 
 { #category : 'actions' }
-MetacelloLoaderPolicy >> pushForceLoadDirectivesDuring: aBlock for: aLoader [
-
-	| directive |
-	directive := MetacelloExplicitLoadDirective loader: aLoader.
-	self pushLoadDirective: directive during: aBlock.
-	^directive
-]
-
-{ #category : 'actions' }
 MetacelloLoaderPolicy >> pushLinearLoadDirectivesDuring: aBlock for: aLoader [
 
 	self pushLoadDirective: (MetacelloLinearLoadDirective loader: aLoader) during: aBlock.

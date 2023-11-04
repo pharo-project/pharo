@@ -55,16 +55,6 @@ MetacelloFetchingMCSpecLoader >> ensuredMap [
 	^self loaderPolicy ensuredMap
 ]
 
-{ #category : 'private' }
-MetacelloFetchingMCSpecLoader >> forceLoadPackageSpecs: packageSpecs repositories: repositories [
-	
-	| directive |
-	directive := self loaderPolicy 
-		pushForceLoadDirectivesDuring: [ super linearLoadPackageSpecs: packageSpecs repositories: repositories ]
-		for: self.
-	directive loadWithPolicy: self loaderPolicy.
-]
-
 { #category : 'actions' }
 MetacelloFetchingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
   MetacelloPlatform current
