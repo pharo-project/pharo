@@ -10,8 +10,8 @@ Class {
 		'definedMethods',
 		'extensionMethods'
 	],
-	#category : 'Ring-Definitions-Containers-Base',
-	#package : 'Ring-Definitions-Containers',
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
 	#tag : 'Base'
 }
 
