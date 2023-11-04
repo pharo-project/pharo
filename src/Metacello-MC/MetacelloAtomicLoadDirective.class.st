@@ -74,6 +74,7 @@ MetacelloAtomicLoadDirective >> loadPreloadDirective: aPreloadDirective [
 { #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
+	1halt.
 	self loadDirectives isEmpty ifTrue: [ ^self ].
 	aLoaderDirective loadAtomicLoadDirective: self gofer: aGofer.
 ]

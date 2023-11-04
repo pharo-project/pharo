@@ -7,35 +7,23 @@ Class {
 }
 
 { #category : 'actions' }
-MetacelloExplicitLoadDirective >> explicitLoadUsing: aLoaderDirective gofer: aGofer [
+MetacelloExplicitLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
-	aLoaderDirective loadLinearLoadDirective: self gofer: aGofer.
+	"load has already been performed, no need to load again"
 ]
 
 { #category : 'actions' }
-MetacelloExplicitLoadDirective >> explicitLoadWithPolicy: aLoadPolicy [
+MetacelloExplicitLoadDirective >> loadWithPolicy: aLoadPolicy [
 
 	| gofer |
 	gofer := MetacelloGofer new.
 	gofer disablePackageCache.
 	gofer repository: aLoadPolicy cacheRepository.
-	self explicitLoadUsing: self gofer: gofer
-]
-
-{ #category : 'testing' }
-MetacelloExplicitLoadDirective >> isExplicit [
-
-	^true
-]
-
-{ #category : 'actions' }
-MetacelloExplicitLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadExplicitLoadDirective: self gofer: aGofer.
+	self loadLinearLoadDirective: self gofer: gofer
 ]
 
 { #category : 'accessing' }
 MetacelloExplicitLoadDirective >> title [
 
-	^'explicit load'
+	^'force load'
 ]

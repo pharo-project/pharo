@@ -110,6 +110,12 @@ MetacelloCommonMCSpecLoader >> fetchingSpecLoader [
 	^self
 ]
 
+{ #category : 'testing' }
+MetacelloCommonMCSpecLoader >> hasRepositoryOverrides [
+
+	^self loaderPolicy hasRepositoryOverrides
+]
+
 { #category : 'accessing' }
 MetacelloCommonMCSpecLoader >> ignoreImage [
 
@@ -291,18 +297,14 @@ MetacelloCommonMCSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 MetacelloCommonMCSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: ignoreOverrides [
 
 	| repositories repos |
-	ignoreOverrides not ifTrue: [
-		^ self loaderPolicy overrideRepositories ].
+	(ignoreOverrides not and: [self hasRepositoryOverrides]) ifTrue: [ ^self loaderPolicy overrideRepositories ].
 	repositories := MCRepositoryGroup default repositories.
 	repos := OrderedCollection new.
-	aMetacelloMVRepositorySpecs do: [ :aSpec |
-		| description repo |
+	aMetacelloMVRepositorySpecs do: [:aSpec | | description repo |
 		description := aSpec description.
-		(repo := repositories
-			         detect: [ :rep | rep description = description ]
-			         ifNone: [ aSpec createRepository ]) ~~ nil ifTrue: [
-			repos add: repo ] ].
-	^ repos
+		(repo := repositories detect: [:rep | rep description = description ] ifNone: [ aSpec createRepository ]) ~~ nil
+			ifTrue: [ repos add: repo ]].
+	^repos
 ]
 
 { #category : 'accessing' }
@@ -337,13 +339,22 @@ MetacelloCommonMCSpecLoader >> resolvePackageSpec: packageSpec gofer: gofer [
 { #category : 'private' }
 MetacelloCommonMCSpecLoader >> resolvePackageSpecReferences: packageSpec gofer: gofer [
 
-	| versionReference references localGofer |
+	|  versionReference references localGofer |
 	localGofer := gofer.
-	packageSpec getFile ifNil: [ localGofer disablePackageCache ].
+	self hasRepositoryOverrides not
+		ifTrue: [
+			packageSpec repositorySpecs notEmpty
+				ifTrue: [ 
+					localGofer := MetacelloGofer new.
+					(self repositoriesFrom: packageSpec repositorySpecs) do: [:repo | localGofer repository: repo ]]].
+	(packageSpec getFile == nil or: [ self shouldDisablePackageCache ])
+		ifTrue: [ 
+			"don't use package-cache when trying to get latest version"
+			localGofer disablePackageCache ].
 	versionReference := packageSpec goferLoaderReference.
 	references := versionReference resolveAllWith: localGofer.
 	localGofer enablePackageCache.
-	^ references
+	^references
 ]
 
 { #category : 'private' }

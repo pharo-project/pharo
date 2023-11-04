@@ -51,6 +51,12 @@ MetacelloLoaderPolicy >> ensuredMap: anObject [
 	ensuredMap := anObject
 ]
 
+{ #category : 'testing' }
+MetacelloLoaderPolicy >> hasRepositoryOverrides [
+
+	^self overrideRepositories ~~ nil
+]
+
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> ignoreImage [
 	^ ignoreImage
@@ -107,7 +113,7 @@ MetacelloLoaderPolicy >> pushAtomicLoadDirectivesDuring: aBlock for: aLoader [
 ]
 
 { #category : 'actions' }
-MetacelloLoaderPolicy >> pushExplicitLoadDirectivesDuring: aBlock for: aLoader [
+MetacelloLoaderPolicy >> pushForceLoadDirectivesDuring: aBlock for: aLoader [
 
 	| directive |
 	directive := MetacelloExplicitLoadDirective loader: aLoader.

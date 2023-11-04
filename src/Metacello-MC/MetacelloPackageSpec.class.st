@@ -195,7 +195,7 @@ MetacelloPackageSpec >> currentVersionInfo [
 
 { #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadUsing: mcLoader [
-	self explicitLoadUsing: mcLoader ensureSpecLoader
+	self forceLoadUsing: mcLoader ensureSpecLoader
 ]
 
 { #category : 'loading' }
@@ -203,24 +203,6 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 	"noop"
 	
 	^true
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> explicitLoadUsing: mcLoader [
-	| wc fetchingSpecLoader |
-
-	((wc := self workingCopy) notNil and: [ wc needsSaving ]) 
-		ifTrue: [ 
-			(MetacelloSkipDirtyPackageLoad signal: self)
-				ifTrue:  [
-					MetacelloNotification signal: ('Skipping load of modified package: ', self file).
-					^self]
-				ifFalse: [MetacelloNotification signal: ('Load over modified package: ', self file)] ].
-	"fetch and explicitly load it"
-	fetchingSpecLoader := mcLoader fetchingSpecLoader.
-	fetchingSpecLoader
-		explicitLoadPackageSpecs: (Array with: self) 
-		repositories: (fetchingSpecLoader repositoriesFrom: self repositorySpecs).
 ]
 
 { #category : 'private' }
@@ -271,6 +253,18 @@ MetacelloPackageSpec >> file: aString [
 { #category : 'construction' }
 MetacelloPackageSpec >> file: aString constructor: aVersionConstructor [
     aVersionConstructor fileForPackage: aString
+]
+
+{ #category : 'loading' }
+MetacelloPackageSpec >> forceLoadUsing: mcLoader [
+
+	| fetchingSpecLoader |
+	"fetch and force load it"
+	fetchingSpecLoader := mcLoader fetchingSpecLoader.
+	fetchingSpecLoader
+		forceLoadPackageSpecs: (Array with: self)
+		repositories:
+		(fetchingSpecLoader repositoriesFrom: self repositorySpecs)
 ]
 
 { #category : 'development support' }
@@ -366,13 +360,13 @@ MetacelloPackageSpec >> isPackageLoaded: aLoader [
 { #category : 'loading' }
 MetacelloPackageSpec >> load [
 
-	self explicitLoadUsing: self loader
+	self forceLoadUsing: self loader
 ]
 
 { #category : 'loading' }
 MetacelloPackageSpec >> loadUsing: mcLoader [
 
-	self loader doingLoads: [ self explicitLoadUsing: mcLoader ]
+	self loader doingLoads: [ self forceLoadUsing: mcLoader ]
 ]
 
 { #category : 'loading' }

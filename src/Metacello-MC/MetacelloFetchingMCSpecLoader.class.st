@@ -56,13 +56,13 @@ MetacelloFetchingMCSpecLoader >> ensuredMap [
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> explicitLoadPackageSpecs: packageSpecs repositories: repositories [
+MetacelloFetchingMCSpecLoader >> forceLoadPackageSpecs: packageSpecs repositories: repositories [
 	
 	| directive |
 	directive := self loaderPolicy 
-		pushExplicitLoadDirectivesDuring: [ super linearLoadPackageSpecs: packageSpecs repositories: repositories ]
+		pushForceLoadDirectivesDuring: [ super linearLoadPackageSpecs: packageSpecs repositories: repositories ]
 		for: self.
-	directive explicitLoadWithPolicy: self loaderPolicy.
+	directive loadWithPolicy: self loaderPolicy.
 ]
 
 { #category : 'actions' }
