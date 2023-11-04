@@ -26,10 +26,10 @@ RGPackageDefinition class >> initialize [
 { #category : 'adding-removing' }
 RGPackageDefinition >> addClass: aRGBehaviorDefinition [
 	"aRGBehaviorDefinition has to be a class, trait or metaclass"
+
 	self flag: 'when i am adding a metaclass? check this?'.
 
-	(aRGBehaviorDefinition isClass
-		or:[ aRGBehaviorDefinition isTrait ]) ifFalse:[ ^self ].
+	(aRGBehaviorDefinition isClass or: [ aRGBehaviorDefinition isTrait ]) ifFalse: [ ^ self ].
 	self addElement: aRGBehaviorDefinition in: self definedClasses
 ]
 
@@ -139,20 +139,6 @@ RGPackageDefinition >> allTraitsDo: aBlock [
 		aBlock value: each.
 		each hasMetaclass
 			ifTrue:[ aBlock value: each classSide ] ]
-]
-
-{ #category : 'accessing' }
-RGPackageDefinition >> categories [
-	"Retrieves class categories of the receiver"
-
-	^self elements at: #categories
-]
-
-{ #category : 'accessing' }
-RGPackageDefinition >> categories: aCollection [
-	"Set the class categories collection"
-
-	self elements at: #categories put: (aCollection asOrderedCollection)
 ]
 
 { #category : 'lookup by name' }
@@ -483,8 +469,7 @@ RGPackageDefinition >> initialize [
 	self methods: IdentityDictionary new.
 	self packages: IdentityDictionary new.
 	self withoutPackages. "By default the receiver has no child packages"
-	self extensionMethods: IdentityDictionary new.
-	self categories: OrderedCollection new
+	self extensionMethods: IdentityDictionary new
 ]
 
 { #category : 'utilities' }
@@ -769,12 +754,6 @@ RGPackageDefinition >> traitsDo: aBlock [
 		aBlock value: each.
 		each hasMetaclass
 			ifTrue:[ aBlock value: each classSide ] ]
-]
-
-{ #category : 'adding-removing' }
-RGPackageDefinition >> withoutCategories [
-
-	self removeElementsCategorized: #categories
 ]
 
 { #category : 'adding-removing' }
