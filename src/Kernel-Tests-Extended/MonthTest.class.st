@@ -46,7 +46,7 @@ MonthTest >> tearDown [
 
 { #category : 'tests' }
 MonthTest >> testConverting [
-	self assert: month asDate equals: (Date readFrom: '1-7-1998' pattern: 'd-m-y')
+	self assert: month asDate equals: '1 July 1998' asDate
 ]
 
 { #category : 'tests' }
@@ -54,7 +54,7 @@ MonthTest >> testEnumerating [
 	| weeks |
 	weeks := OrderedCollection new.
 	month weeksDo: [ :w | weeks add: w start ].
-	0 to: 4 do: [ :i | weeks remove: (Week starting: ((Date readFrom: '29-6-1998' pattern: 'd-m-y') addDays: i * 7)) start ].
+	0 to: 4 do: [ :i | weeks remove: (Week starting: ('29 June 1998' asDate addDays: i * 7)) start ].
 	self assertEmpty: weeks
 ]
 
@@ -108,7 +108,7 @@ MonthTest >> testInquiries [
 { #category : 'tests' }
 MonthTest >> testInstanceCreation [
 	| m1 m2 |
-	m1 := Month starting: (Date readFrom: '4-7-1998' pattern: 'd-m-y').
+	m1 := Month starting: '4 July 1998' asDate.
 	m2 := Month year: 1998 month: #July.
 	self
 		assert: month equals: m1;
@@ -133,7 +133,7 @@ MonthTest >> testOffset [
 
 	| dt newMonth |
 
-	dt := DateAndTime fromString: '2018-01-01T00:00:00+10'.
+	dt := DateAndTime fromString: '2018/01/01T00:00:00+10'.
 	newMonth := Month starting: dt duration: 0. "duration is ignored"
 	self assert: newMonth asDateAndTime offset equals: dt offset
 ]

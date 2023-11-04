@@ -9,11 +9,12 @@ Class {
 RGStampParserTest >> testAuthor [
 
 	"TODO: improve"
-	self assert: (RGStampParser parseAuthorAliasFrom: 'StephaneDucasse 2015-10-11T18:13') equals: 'StephaneDucasse'
+	self assert: (RGStampParser parseAuthorAliasFrom: 'StephaneDucasse 11/10/2015 18:13') equals: 'StephaneDucasse'
 ]
 
 { #category : 'tests' }
 RGStampParserTest >> testTime [
 
-	self assert: (RGStampParser parseTimestampFrom: '2015-10-11T18:13') equals: '2015-10-11T18:13:00' asDateAndTime
+	"TODO: improve"
+	self assert: (RGStampParser parseTimestampFrom: '11/10/2015 18:13') equals: '2015-11-10T18:13:00' asDateAndTime
 ]
