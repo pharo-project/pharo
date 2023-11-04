@@ -8,14 +8,12 @@ Date class >> fromSton: stonReader [
 
 	| readStream date |
 	readStream := stonReader parseListSingleton readStream.
-	date := (DateParser readingFrom: readStream pattern: 'yyyy-mm-dd')
-		        continueAfterParsing;
-		        parse.
-	readStream atEnd ifFalse: [
-		| offset |
-		offset := DateAndTime readTimezoneOffsetFrom: readStream.
-		offset = date offset ifFalse: [
-			date start: (date start translateTo: offset) ] ].
+	date := self readFrom: readStream.
+	readStream atEnd
+		ifFalse: [ | offset |
+			offset := DateAndTime readTimezoneOffsetFrom: readStream.
+			offset = date offset
+				ifFalse: [ date start: (date start translateTo: offset) ] ].
 	^ date
 ]
 
