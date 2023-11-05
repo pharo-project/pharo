@@ -13,7 +13,7 @@ Class >> asEpiceaRingDefinition [
 		        comment: self comment;
 		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
-		        package: self package name;
+		        package: self package asRingDefinition;
 		        packageTag: self packageTag name;
 		        withMetaclass.
 

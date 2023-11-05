@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'metaClass',
 		'comment',
-		'category',
 		'package',
 		'packageTag'
 	],

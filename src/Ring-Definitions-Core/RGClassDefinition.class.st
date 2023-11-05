@@ -8,7 +8,6 @@ Class {
 		'metaClass',
 		'comment',
 		'classVariables',
-		'category',
 		'package',
 		'packageTag',
 		'sharedPools'

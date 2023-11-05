@@ -4,6 +4,6 @@ Extension { #name : 'Trait' }
 Trait >> asEpiceaRingDefinition [
 
 	^ self asRingDefinition
-		package: self package name;
-		yourself
+		  package: self package asRingDefinition;
+		  yourself
 ]
