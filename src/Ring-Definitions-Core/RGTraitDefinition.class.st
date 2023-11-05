@@ -19,17 +19,10 @@ Class {
 { #category : 'accessing' }
 RGTraitDefinition >> category [
 
-	^ category ifNil: [
-		  self package ifNotNil: [ :aPackage |
-			  self packageTag
-				  ifNil: [ aPackage ]
-				  ifNotNil: [ :tag | aPackage , '-' , tag ] ] ]
-]
-
-{ #category : 'accessing' }
-RGTraitDefinition >> category: aSymbol [
-
-	category:= aSymbol
+	^ self package ifNotNil: [ :aPackage |
+		  self packageTag
+			  ifNil: [ aPackage name ]
+			  ifNotNil: [ :tag | aPackage name , '-' , tag ] ]
 ]
 
 { #category : 'accessing - parallel hierarchy' }

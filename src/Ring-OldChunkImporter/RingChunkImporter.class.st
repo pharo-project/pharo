@@ -194,14 +194,19 @@ RingChunkImporter >> scannedSource: aString [
 { #category : 'private' }
 RingChunkImporter >> traitDefinition: aString with: chgRec [
 
-	| tokens trait |
+	| tokens trait converter |
 	tokens := self scannedSource: aString.
 	trait := self classNamed: tokens third.
-	trait isTrait
-		ifFalse: [ trait:= self createTraitNamed: tokens third ].
-	trait superclassName: tokens first;
-			 definitionSource: aString;
-			 category: tokens last
+	trait isTrait ifFalse: [ trait := self createTraitNamed: tokens third ].
+	trait
+		superclassName: tokens first;
+		definitionSource: aString.
+
+	converter := CategoryConverter category: tokens last.
+
+	trait
+		package: (RGPackageDefinition named: converter packageName);
+		packageTag: converter tagName
 ]
 
 { #category : 'visitor' }

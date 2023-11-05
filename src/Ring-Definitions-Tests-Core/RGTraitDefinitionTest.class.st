@@ -100,9 +100,10 @@ RGTraitDefinitionTest >> testNonExistingClass [
 
 { #category : 'testing' }
 RGTraitDefinitionTest >> testTraitEquality [
+
 	| newClass |
 	self assert: TSortable asRingDefinition equals: TSortable asRingDefinition.
 
-	newClass := TSortable asRingDefinition category: #Kernel.
+	newClass := TSortable asRingDefinition package: (RGPackageDefinition named: #Kernel).
 	self assert: TSortable asRingDefinition equals: newClass
 ]

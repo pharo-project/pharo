@@ -116,18 +116,10 @@ RGClassDefinition >> allSharedPools [
 { #category : 'accessing' }
 RGClassDefinition >> category [
 
-	^ category ifNil: [
-		  self package ifNotNil: [ :aPackage |
-			  self packageTag
-				  ifNil: [ aPackage name ]
-				  ifNotNil: [ :tag | aPackage name , '-' , tag ] ] ]
-]
-
-{ #category : 'accessing' }
-RGClassDefinition >> category: aSymbol [
-	"stores a tag for its package"
-
-	category := aSymbol
+	^ self package ifNotNil: [ :aPackage |
+		  self packageTag
+			  ifNil: [ aPackage name ]
+			  ifNotNil: [ :tag | aPackage name , '-' , tag ] ]
 ]
 
 { #category : 'accessing - parallel hierarchy' }
