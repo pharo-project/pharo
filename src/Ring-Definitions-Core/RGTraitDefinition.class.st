@@ -15,15 +15,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'accessing' }
-RGTraitDefinition >> category [
-
-	^ self package ifNotNil: [ :aPackage |
-		  self packageTag
-			  ifNil: [ aPackage name ]
-			  ifNotNil: [ :tag | aPackage name , '-' , tag ] ]
-]
-
 { #category : 'accessing - parallel hierarchy' }
 RGTraitDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."

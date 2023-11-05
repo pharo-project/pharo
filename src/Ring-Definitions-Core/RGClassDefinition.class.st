@@ -112,15 +112,6 @@ RGClassDefinition >> allSharedPools [
 		ifTrue: [ self superclass allSharedPools , sharedPools ]
 ]
 
-{ #category : 'accessing' }
-RGClassDefinition >> category [
-
-	^ self package ifNotNil: [ :aPackage |
-		  self packageTag
-			  ifNil: [ aPackage name ]
-			  ifNotNil: [ :tag | aPackage name , '-' , tag ] ]
-]
-
 { #category : 'accessing - parallel hierarchy' }
 RGClassDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
