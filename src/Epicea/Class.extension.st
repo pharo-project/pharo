@@ -5,10 +5,8 @@ Class >> asEpiceaRingDefinition [
 
 	| ring |
 	ring := (RGClassDefinition named: self name)
-		        category: self category;
 		        superclassName: self superclass asString;
-		        "Note it's nil for ProtoObject"traitCompositionSource:
-			        self traitCompositionString;
+		        traitCompositionSource: self traitCompositionString;
 		        addInstanceVariables: self instVarNames;
 		        addClassVariables: self classVarNames;
 		        addSharedPools: self sharedPoolNames;
@@ -16,6 +14,7 @@ Class >> asEpiceaRingDefinition [
 		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
 		        package: self package name;
+		        packageTag: self packageTag name;
 		        withMetaclass.
 
 	ring classSide

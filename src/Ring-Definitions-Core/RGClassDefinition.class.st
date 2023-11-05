@@ -119,8 +119,8 @@ RGClassDefinition >> category [
 	^ category ifNil: [
 		  self package ifNotNil: [ :aPackage |
 			  self packageTag
-				  ifNil: [ aPackage ]
-				  ifNotNil: [ :tag | aPackage , '-' , tag ] ] ]
+				  ifNil: [ aPackage name ]
+				  ifNotNil: [ :tag | aPackage name , '-' , tag ] ] ]
 ]
 
 { #category : 'accessing' }

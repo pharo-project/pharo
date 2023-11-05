@@ -95,10 +95,11 @@ RGClassDefinitionTest >> testAsRingDefinition [
 
 { #category : 'testing' }
 RGClassDefinitionTest >> testClassEquality [
+
 	| newClass |
 	self assert: OrderedCollection asRingDefinition equals: OrderedCollection asRingDefinition.
 
-	newClass := OrderedCollection asRingDefinition category: #Kernel.
+	newClass := OrderedCollection asRingDefinition package: (RGPackageDefinition named: #Kernel).
 	self assert: OrderedCollection asRingDefinition equals: newClass
 ]
 
@@ -202,17 +203,6 @@ RGClassDefinitionTest >> testStoreOn [
 			Point class asRingDefinition storeOn: s.
 			s contents ].
 	self assert: st equals: '((RGMetaclassDefinition named: #''Point class'') baseClass:(RGClassDefinition named: #Point))'
-]
-
-{ #category : 'testing' }
-RGClassDefinitionTest >> testWithCategory [
-	| newClass |
-	newClass := (RGClassDefinition named: #Object)
-		category: 'Kernel-Objects';
-		yourself.
-
-	self assert: newClass package isNil.
-	self assert: newClass category equals: 'Kernel-Objects'
 ]
 
 { #category : 'testing' }
@@ -326,6 +316,19 @@ RGClassDefinitionTest >> testWithInstanceVariables [
 	newClass removeInstVarNamed: #array.
 	self assert: newClass instanceVariables size equals: 2.
 	self assert: (newClass instanceVariableNamed: #array) isNil
+]
+
+{ #category : 'testing' }
+RGClassDefinitionTest >> testWithPackageTag [
+
+	| newClass |
+	newClass := (RGClassDefinition named: #Object)
+		            package: (RGPackageDefinition named: #Kernel);
+		            packageTag: #Objects;
+		            yourself.
+
+	self assert: newClass package name equals: #Kernel.
+	self assert: newClass packageTag equals: #Objects
 ]
 
 { #category : 'testing' }
