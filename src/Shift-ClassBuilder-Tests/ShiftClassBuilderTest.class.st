@@ -274,7 +274,7 @@ ShiftClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 	self assert: newClass class traitComposition equals: {  } asTraitComposition.
 	self assert: newClass classVarNames equals: #(  ).
 	self assertCollection: newClass sharedPools hasSameElements: {  }.
-	self assert: newClass category equals: self packageNameForTest
+	self assert: newClass package name equals: self packageNameForTest
 ]
 
 { #category : 'tests - class creation' }
@@ -341,18 +341,18 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 { #category : 'tests - classBuilder generation' }
 ShiftClassBuilderTest >> testFillShiftClassBuilder [
 
-	builder := Object << #Point2.
-	builder slots: { #x. #y }.
-	builder sharedVariables: { #Share1. #Share2 }.
-	builder sharedPools: { ChronologyConstants }.
-	builder tag: 'Mafia'.
-	builder package: self packageNameForTest.
+	builder := (Object << #Point2)
+		           slots: { #x. #y };
+		           sharedVariables: { #Share1. #Share2 };
+		           sharedPools: { ChronologyConstants };
+		           tag: 'Mafia';
+		           package: self packageNameForTest.
 	self assert: builder superclass equals: Object.
 	self assert: builder name equals: #Point2.
 	self assert: builder slots size equals: 2.
 	self assert: builder sharedPools equals: { ChronologyConstants }.
-	self assert: builder category equals: self packageNameForTest , '-Mafia'.
-	self assert: builder category equals: self packageNameForTest , '-Mafia'
+	self assert: builder package equals: self packageNameForTest.
+	self assert: builder tag equals: #Mafia
 ]
 
 { #category : 'tests - mandatory' }
