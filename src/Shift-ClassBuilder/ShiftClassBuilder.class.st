@@ -344,7 +344,6 @@ ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 { #category : 'initialization' }
 ShiftClassBuilder >> fillFor: aClass [
 
-	self flag: #package. "package tag should be improved in the future"
 	self
 		superclass: aClass superclass;
 		name: aClass getName;
@@ -357,7 +356,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
 
-	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
+	aClass packageTag isRoot ifFalse: [ self tag: aClass packageTag name ].
 
 	self builderEnhancer fillBuilder: self from: aClass
 ]

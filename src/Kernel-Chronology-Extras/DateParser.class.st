@@ -28,8 +28,7 @@ Class {
 		'year',
 		'month',
 		'day',
-		'invalidPattern',
-		'shouldParseAll'
+		'invalidPattern'
 	],
 	#category : 'Kernel-Chronology-Extras',
 	#package : 'Kernel-Chronology-Extras'
@@ -42,12 +41,6 @@ DateParser class >> readingFrom: anInputStream pattern: aPattern [
 	self comment"
 
 	^self new initializeReadingFrom: anInputStream pattern: aPattern
-]
-
-{ #category : 'initialization' }
-DateParser >> continueAfterParsing [
-
-	shouldParseAll := false
 ]
 
 { #category : 'private - parsing' }
@@ -77,7 +70,6 @@ DateParser >> initializeParsing [
 { #category : 'initialization' }
 DateParser >> initializeReadingFrom: anInputStream pattern: aPattern [
 
-	shouldParseAll := true.
 	inputStream := anInputStream.
 	pattern := aPattern
 ]
@@ -191,8 +183,7 @@ DateParser >> parseIfError: aBlock [
 	self isInvalidPattern ifTrue: [ aBlock value ].
 	self convertTwoDigitsYear.
 
-	(shouldParseAll and: [
-	inputStream atEnd not or: [ patternStream atEnd not ] ]) ifTrue: [ DateError signal: 'Input doesn''t match given pattern.' ].
+	(inputStream atEnd and: [ patternStream atEnd ]) ifFalse: [ DateError signal: 'Input doesn''t match given pattern.' ].
 
 	^ self createDate
 ]

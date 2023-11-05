@@ -7,7 +7,7 @@ RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	self assertEmpty: rgClass methods.
 	self assert: rgClass superclass isNil.
 	self assertEmpty: rgClass subclasses.
-	self assert: rgClass package isNil.
+	self assert: rgClass package name equals: #'Collections-Abstract-Traits'.
 
 	rgClass := TSortable asFullRingDefinition.
 	self assert: rgClass methods notEmpty.
