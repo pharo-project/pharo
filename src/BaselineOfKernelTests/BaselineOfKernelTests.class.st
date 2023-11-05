@@ -37,7 +37,6 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'AST-Core-Tests';
 			package: 	'OpalCompiler-Tests' with: [ spec requires: #('AST-Core-Tests') ];
 			package: 	'Random-Tests';
-			package: 	'Ring-Definitions-Tests-Core';
 			package: 	'System-Object Events-Tests';
 			package: 	'System-OSEnvironments-Tests';
 			package: 	'Zinc-Character-Encoding-Tests' ;
