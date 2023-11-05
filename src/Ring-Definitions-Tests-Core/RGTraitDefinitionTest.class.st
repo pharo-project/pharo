@@ -48,13 +48,15 @@ RGTraitDefinitionTest >> testAddingMethods [
 
 { #category : 'testing' }
 RGTraitDefinitionTest >> testAsTraitDefinition [
+
 	| newTrait |
 	newTrait := TSortable asRingDefinition.
 	self assert: newTrait isRingObject.
 	self assert: newTrait isTrait.
 	self assert: newTrait name identicalTo: #TSortable.
-	self assert: newTrait category notNil.
-	self assert: newTrait superclassName notNil.
+	self assert: newTrait package isNotNil.
+	self assert: newTrait packageTag isNotNil.
+	self assert: newTrait superclassName isNotNil.
 
 
 	self assert: newTrait classSide isRingObject.
@@ -82,6 +84,7 @@ RGTraitDefinitionTest >> testExistingTrait [
 
 { #category : 'testing' }
 RGTraitDefinitionTest >> testNonExistingClass [
+
 	| newClass |
 	newClass := RGTraitDefinition named: #TConnection.
 	self assert: newClass isTrait.
@@ -90,7 +93,7 @@ RGTraitDefinitionTest >> testNonExistingClass [
 	self assert: newClass hasStamp not.
 	self assert: newClass parent equals: Smalltalk globals.
 	self assert: newClass package isNil.
-	self assert: newClass category isNil.
+	self assert: newClass packageTag isNil.
 	self assert: newClass hasMethods not.
 	self assert: newClass hasSuperclass not.
 	self assert: newClass hasTraitComposition not.

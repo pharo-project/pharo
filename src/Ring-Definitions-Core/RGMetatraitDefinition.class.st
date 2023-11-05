@@ -71,6 +71,12 @@ RGMetatraitDefinition >> package [
 ]
 
 { #category : 'accessing' }
+RGMetatraitDefinition >> packageTag [
+
+	^ baseClass packageTag
+]
+
+{ #category : 'accessing' }
 RGMetatraitDefinition >> realClass [
 
 	^baseClass realClass classSide

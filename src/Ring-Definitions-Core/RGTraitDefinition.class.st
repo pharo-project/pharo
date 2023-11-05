@@ -97,11 +97,12 @@ RGTraitDefinition >> instanceVariables [
 RGTraitDefinition >> isSameRevisionAs: aRGTraitDefinition [
 	"This method look for equality of the properties of the receiver"
 
-	^(super isSameRevisionAs: aRGTraitDefinition)
-		and: [ self category = aRGTraitDefinition category
-		and: [ self traitCompositionSource = aRGTraitDefinition traitCompositionSource
-		and: [ ((self hasComment and: [ self comment isSameRevisionAs: aRGTraitDefinition comment ]) or:[ self hasComment not ])
-		and: [ (self classSide isSameRevisionAs: aRGTraitDefinition classSide) ] ] ] ]
+	^ (super isSameRevisionAs: aRGTraitDefinition) and: [
+		  self package name = aRGTraitDefinition package name and: [
+			  self packageTag = aRGTraitDefinition packageTag and: [
+				  self traitCompositionSource = aRGTraitDefinition traitCompositionSource and: [
+					  ((self hasComment and: [ self comment isSameRevisionAs: aRGTraitDefinition comment ]) or: [ self hasComment not ]) and: [
+						  self classSide isSameRevisionAs: aRGTraitDefinition classSide ] ] ] ] ]
 ]
 
 { #category : 'accessing' }

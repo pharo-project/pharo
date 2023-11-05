@@ -54,8 +54,9 @@ RGClassDefinitionTest >> testAsClassDefinition [
 	self assert: newClass isRingObject.
 	self assert: newClass isClass.
 	self assert: newClass name identicalTo: #OrderedCollection.
-	self assert: newClass category notNil.
-	self assert: newClass superclassName notNil.
+	self assert: newClass package isNotNil.
+	self assert: newClass packageTag isNotNil.
+	self assert: newClass superclassName isNotNil.
 
 	self assert: newClass classSide isRingObject.
 	self assert: newClass classSide isClass
@@ -63,14 +64,16 @@ RGClassDefinitionTest >> testAsClassDefinition [
 
 { #category : 'testing' }
 RGClassDefinitionTest >> testAsClassDefinition2 [
+
 	| newClass |
 	newClass := MOPTestClassC asRingDefinition.
 
 	self assert: newClass isRingObject.
 	self assert: newClass isClass.
 	self assert: newClass name identicalTo: #MOPTestClassC.
-	self assert: newClass category notNil.
-	self assert: newClass superclassName notNil.
+	self assert: newClass package name equals: 'TraitsV2-Tests'.
+	self assert: newClass packageTag equals: #MOP.
+	self assert: newClass superclassName isNotNil.
 	self assert: newClass traitCompositionSource equals: 'Trait2'.
 
 	self assert: newClass classSide isRingObject.
@@ -134,7 +137,7 @@ RGClassDefinitionTest >> testNonExistingClass [
 	self assert: newClass hasStamp not.
 	self assert: newClass parent equals: Smalltalk globals.
 	self assert: newClass package isNil.
-	self assert: newClass category isNil.
+	self assert: newClass packageTag isNil.
 	self assert: newClass hasMethods not.
 	self assert: newClass hasSuperclass not.
 	self assert: newClass hasTraitComposition not.

@@ -89,6 +89,11 @@ RGMetaclassDefinition >> package [
 ]
 
 { #category : 'accessing' }
+RGMetaclassDefinition >> packageTag [
+	^ self instanceSide packageTag
+]
+
+{ #category : 'accessing' }
 RGMetaclassDefinition >> realClass [
 
 	^baseClass realClass classSide
