@@ -76,9 +76,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Announcements-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'RPackage-Tests'.
-		spec package: 'Ring-Definitions-Tests-Core'.
-		spec package: 'Monticello-Tests'.
-		spec package: 'MonticelloGUI-Tests'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'ProfStef-Core'.
