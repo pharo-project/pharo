@@ -23,7 +23,8 @@ Class {
 		'sharedPools',
 		'environment',
 		'category',
-		'commentSourcePointer'
+		'commentSourcePointer',
+		'packageTag'
 	],
 	#classVars : [
 		'ObsoleteClasses'
@@ -233,6 +234,11 @@ Class >> basicDeclareClassVariable: aClassVariable [
 		existingVar becomeForward: aClassVariable
 	].
 	self classPool add: aClassVariable
+]
+
+{ #category : 'accessing' }
+Class >> basicTag: aPackageTag [
+	packageTag := aPackageTag
 ]
 
 { #category : 'compiling' }

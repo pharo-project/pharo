@@ -149,7 +149,8 @@ RPackageTag >> privateAddClass: aClass [
 	self organizer registerPackage: self package forClass: aClass.
 
 	self flag: #package. "Next line should be removed once we will not need the category"
-	aClass basicCategory: self categoryName
+	aClass basicCategory: self categoryName.
+	aClass basicTag: self
 ]
 
 { #category : 'converting' }
