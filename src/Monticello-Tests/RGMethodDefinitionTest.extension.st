@@ -1,6 +1,6 @@
 Extension { #name : 'RGMethodDefinitionTest' }
 
-{ #category : '*Ring-Definitions-Tests-Monticello' }
+{ #category : '*Monticello-Tests' }
 RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	| rgMethod |
 	rgMethod := (Class >> #asRingDefinition) asRingDefinition.

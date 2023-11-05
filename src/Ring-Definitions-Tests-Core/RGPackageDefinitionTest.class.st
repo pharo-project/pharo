@@ -4,9 +4,8 @@ SUnit tests for packages
 Class {
 	#name : 'RGPackageDefinitionTest',
 	#superclass : 'TestCase',
-	#category : 'Ring-Definitions-Tests-Containers-Base',
-	#package : 'Ring-Definitions-Tests-Containers',
-	#tag : 'Base'
+	#category : 'Ring-Definitions-Tests-Core',
+	#package : 'Ring-Definitions-Tests-Core'
 }
 
 { #category : 'testing' }

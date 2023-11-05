@@ -133,6 +133,18 @@ MCMethodDefinition >> asMethodAddition [
 		  inClass: self actualClass
 ]
 
+{ #category : 'ring' }
+MCMethodDefinition >> asRingDefinition [
+
+	^RGMethodDefinition new
+		name: self selector;
+		parentName: self className;
+		isMeta: self classIsMeta;
+		protocol: self protocol;
+		sourceCode: self source;
+		stamp: self timeStamp
+]
+
 { #category : 'accessing - backward' }
 MCMethodDefinition >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"

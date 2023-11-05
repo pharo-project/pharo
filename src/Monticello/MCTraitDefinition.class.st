@@ -29,6 +29,32 @@ MCTraitDefinition >> accept: aVisitor [
 
 ]
 
+{ #category : 'ring' }
+MCTraitDefinition >> asRingDefinition [
+
+	| ring |
+	ring := ( RGTraitDefinition named: self className)
+		category: self category;
+		superclassName: self superclassName;
+		traitCompositionSource: self traitCompositionString;
+		comment: self comment;
+		stamp: self commentStamp;
+		definitionSource: self definitionString;
+		withMetaclass.
+
+	ring classSide
+		traitCompositionSource: self classTraitCompositionString;
+		definitionSource: self classDefinitionString.
+	^ring
+]
+
+{ #category : 'accessing' }
+MCTraitDefinition >> classDefinitionString [
+	"Answer a string describing the class-side definition."
+
+	^String streamContents: [:stream | self printMetaDefinitionOn: stream]
+]
+
 { #category : 'printing' }
 MCTraitDefinition >> classSlotDefinitionString [
 
@@ -109,6 +135,13 @@ MCTraitDefinition >> printDefinitionOn: stream [
 		 nextPutAll: 'package: ';
 		 store: self category asString
 
+]
+
+{ #category : 'printing' }
+MCTraitDefinition >> printMetaDefinitionOn: stream [
+
+	stream nextPutAll: self className, ' classTrait'.
+	self printDefinitionBodyOn: stream
 ]
 
 { #category : 'comparing' }

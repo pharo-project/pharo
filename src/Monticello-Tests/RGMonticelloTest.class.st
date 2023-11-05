@@ -4,9 +4,8 @@ SUnit tests for monticello
 Class {
 	#name : 'RGMonticelloTest',
 	#superclass : 'TestCase',
-	#category : 'Ring-Definitions-Tests-Monticello-Base',
-	#package : 'Ring-Definitions-Tests-Monticello',
-	#tag : 'Base'
+	#category : 'Monticello-Tests',
+	#package : 'Monticello-Tests'
 }
 
 { #category : 'testing' }

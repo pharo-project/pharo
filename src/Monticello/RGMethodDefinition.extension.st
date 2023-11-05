@@ -51,3 +51,11 @@ RGMethodDefinition >> basicAsMCMethodDefinition [
 				timeStamp: self stamp
 				source: self sourceCode ]
 ]
+
+{ #category : '*Monticello' }
+RGMethodDefinition >> sameAsMCDefinition: anMCMethodDefinition [
+
+	^ anMCMethodDefinition selector = self selector and: [
+		  anMCMethodDefinition className = self className and: [
+			  anMCMethodDefinition classIsMeta = self isMeta and: [ anMCMethodDefinition protocol = self protocol and: [ anMCMethodDefinition source = self sourceCode ] ] ] ]
+]

@@ -16,5 +16,5 @@ ManifestMonticello class >> ignoredDependencies [
 
 { #category : 'meta-data - dependency analyser' }
 ManifestMonticello class >> manuallyResolvedDependencies [
-	^ #(#'Graphics-Primitives' #'OpalCompiler-Core' #Jobs #'Random-Core' #'FFI-Kernel' #'Ring-Definitions-Monticello' #'System-Settings-Core' #'FileSystem-Disk')
+	^ #(#'Graphics-Primitives' #'OpalCompiler-Core' #Jobs #'Random-Core' #'FFI-Kernel' #'System-Settings-Core' #'FileSystem-Disk')
 ]

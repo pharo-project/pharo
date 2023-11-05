@@ -1,6 +1,6 @@
 Extension { #name : 'RGClassDefinitionTest' }
 
-{ #category : '*Ring-Definitions-Tests-Monticello' }
+{ #category : '*Monticello-Tests' }
 RGClassDefinitionTest >> testAsFullClassDefinition [
 	| rgClass |
 	rgClass := Class asRingDefinition.

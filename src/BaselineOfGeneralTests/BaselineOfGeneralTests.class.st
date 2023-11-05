@@ -45,7 +45,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'NECompletion-Tests';
 			package: 'ProfStef-Tests';
 			package: 'Regex-Core-Tests';
-			package: 'Ring-Definitions-Tests-Monticello';
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
