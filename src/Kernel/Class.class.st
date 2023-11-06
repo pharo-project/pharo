@@ -236,12 +236,6 @@ Class >> basicDeclareClassVariable: aClassVariable [
 ]
 
 { #category : 'accessing' }
-Class >> basicTag [
-
-	^ packageTag
-]
-
-{ #category : 'accessing' }
 Class >> basicTag: aPackageTag [
 
 	aPackageTag ifNil: [
@@ -834,6 +828,18 @@ Class >> obsolete [
 	self hasClassSide ifTrue: [ self classSide obsolete].
 	ObsoleteClasses add: self.
 	super obsolete
+]
+
+{ #category : 'accessing' }
+Class >> package [
+
+	^ self packageTag package
+]
+
+{ #category : 'accessing' }
+Class >> packageTag [
+
+	^ packageTag
 ]
 
 { #category : 'compiling' }
