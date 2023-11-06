@@ -508,7 +508,8 @@ Class >> copyForAnnouncement [
 		            setFormat: format;
 		            setName: name;
 		            classPool: classPool copy;
-		            sharedPools: sharedPools copy.
+		            sharedPools: sharedPools copy;
+		            basicTag: packageTag.
 	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].
 	newClass classLayout: (layout copy host: newClass).
 	^ newClass
