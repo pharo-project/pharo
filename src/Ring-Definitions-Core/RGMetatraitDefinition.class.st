@@ -27,11 +27,6 @@ RGMetatraitDefinition >> baseClass: anRGTraitDefinition [
 	self name: (baseClass name, ' classTrait') asSymbol
 ]
 
-{ #category : 'accessing' }
-RGMetatraitDefinition >> category [
-	^ self instanceSide category
-]
-
 { #category : 'accessing - parallel hierarchy' }
 RGMetatraitDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
@@ -68,6 +63,12 @@ RGMetatraitDefinition >> isSameRevisionAs: aRGMetatraitDefinition [
 RGMetatraitDefinition >> package [
 
 	^baseClass package
+]
+
+{ #category : 'accessing' }
+RGMetatraitDefinition >> packageTag [
+
+	^ baseClass packageTag
 ]
 
 { #category : 'accessing' }
