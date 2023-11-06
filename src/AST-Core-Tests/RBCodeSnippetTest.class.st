@@ -54,6 +54,7 @@ RBCodeSnippetTest >> testCodeImporter [
 	| string importer class runBlock |
 	"Code importer meed a plain expression or use a custom format"
 	snippet source isAllSeparators ifTrue: [ ^ self skip ].
+	[
 	string := snippet isScripting
 		          ifFalse: [
 			          class := ChunkImportTestCase new importAClass.
@@ -90,7 +91,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	            value ].
 
-	self testExecuteBlock: runBlock
+	self testExecuteBlock: runBlock ] ensure: [ self packageOrganizer removePackage: ChunkImportTestCase new packageNameForTests ]
 ]
 
 { #category : 'tests' }
