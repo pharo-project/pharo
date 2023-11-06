@@ -2,31 +2,31 @@
 Unit test for categorization of traits
 "
 Class {
-	#name : 'T2TraitWithCategoriesTest',
+	#name : 'T2TraitWithMethodsInProtocolsTest',
 	#superclass : 'T2AbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitWithCategoriesTest >> testPackageOfMethodFromTraits [
+T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraits [
 	| t1 t2 |
 
-	t1 := self newTrait: #T1 with: #() uses: {}.
+	t1 := self newTrait: #T1 with: #() traits: {}.
 	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
 
-	t2 := self newTrait: #T2 with: #() uses: t1.
+	t2 := self newTrait: #T2 with: #() traits: t1.
 
 	self assert: (t1 >> #m1) protocolName equals: 'aProtocol'.
 	self assert: (t2 >> #m1) protocolName equals: 'aProtocol'
 ]
 
 { #category : 'tests' }
-T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsAfterCreation [
+T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsAfterCreation [
 	| t1 t2 |
 
-	t1 := self newTrait: #T1 with: #() uses: {}.
-	t2 := self newTrait: #T2 with: #() uses: t1.
+	t1 := self newTrait: #T1 with: #() traits: {}.
+	t2 := self newTrait: #T2 with: #() traits: t1.
 	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
 
 	self assert: (t1 >> #m1) protocolName equals: 'aProtocol'.
@@ -34,13 +34,13 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsAfterCreation [
 ]
 
 { #category : 'tests' }
-T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChanged [
+T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChanged [
 	| t1 t2 |
 
-	t1 := self newTrait: #T1 with: #() uses: {}.
+	t1 := self newTrait: #T1 with: #() traits: {}.
 	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
 
-	t2 := self newTrait: #T2 with: #() uses: t1.
+	t2 := self newTrait: #T2 with: #() traits: t1.
 
 	t1 compile: 'm1 ^42.' classified: 'anotherProtocol'.
 
@@ -49,13 +49,13 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChanged [
 ]
 
 { #category : 'tests' }
-T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChangedWithoutCompile [
+T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChangedWithoutCompile [
 	| trait1 trait2 |
 
-	trait1 := self newTrait: #T1 with: #() uses: {}.
+	trait1 := self newTrait: #T1 with: #() traits: {}.
 	trait1 compile: 'm1 ^42.' classified: 'aProtocol'.
 
-	trait2 := self newTrait: #T2 with: #() uses: trait1.
+	trait2 := self newTrait: #T2 with: #() traits: trait1.
 
 	trait1 classify: #m1 under: 'anotherProtocol'.
 
@@ -64,13 +64,13 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChangedWithoutCompile 
 ]
 
 { #category : 'tests' }
-T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsOverriden [
+T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsOverriden [
 	| t1 t2 |
 
-	t1 := self newTrait: #T1 with: #() uses: {}.
+	t1 := self newTrait: #T1 with: #() traits: {}.
 	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
 
-	t2 := self newTrait: #T2 with: #() uses: t1.
+	t2 := self newTrait: #T2 with: #() traits: t1.
 	t2 compile: 'm1 ^42.' classified: 'anotherProtocol'.
 
 	self assert: (t1 >> #m1) protocolName equals: 'aProtocol'.
@@ -78,14 +78,14 @@ T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsOverriden [
 ]
 
 { #category : 'tests' }
-T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsRenamedCategory [
+T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsRenamedCategory [
 
 	| t1 t2 |
-	t1 := self newTrait: #T1 with: #(  ) uses: {  }.
+	t1 := self newTrait: #T1 with: #(  ) traits: {  }.
 	t1 compile: 'm1 ^42.' classified: 'aProtocol'.
 	t1 compile: 'm2 ^42.' classified: 'aProtocol'.
 
-	t2 := self newTrait: #T2 with: #(  ) uses: t1.
+	t2 := self newTrait: #T2 with: #(  ) traits: t1.
 
 	t1 renameProtocol: 'aProtocol' as: 'anotherProtocol'.
 
