@@ -19,7 +19,7 @@ SycRemoveVariablesCommand class >> sourceCodeMenuActivation [
 
 { #category : 'accessing' }
 SycRemoveVariablesCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }

@@ -48,7 +48,7 @@ ClyRemoveClassGroupCommand >> classGroup: anObject [
 
 { #category : 'accessing' }
 ClyRemoveClassGroupCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }

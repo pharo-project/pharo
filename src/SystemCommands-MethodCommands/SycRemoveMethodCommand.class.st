@@ -24,7 +24,7 @@ Class {
 
 { #category : 'accessing' }
 SycRemoveMethodCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }
