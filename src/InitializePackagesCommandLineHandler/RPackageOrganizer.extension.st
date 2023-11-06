@@ -7,8 +7,24 @@ RPackageOrganizer >> basicBootstrapInitialize [
 	allBehaviors := Smalltalk allClassesAndTraits.
 
 	"This is a hack because of a weird behavior produced by the bootstrap were the package or tags end up containing classes that are not the same instances than we have in the system dictionary..To be investigated..."
-	self packages do: [ :package | package classTags do: [ :tag | tag instVarNamed: #classes put: (tag classes collect: [ :class | allBehaviors detect: [ :aClass | aClass name = class name ] ]) ] ].
-	classPackageMapping := (classPackageMapping associations collect: [ :asso | (allBehaviors detect: [ :aClass | aClass name = asso key name ]) -> asso value ]) as: IdentityDictionary.
+	self packages do: [ :package |
+		package classTags do: [ :tag |
+			tag instVarNamed: #classes put: (tag classes collect: [ :class |
+					 | c |
+					 c := allBehaviors detect: [ :aClass | aClass name = class name ].
+					 c basicTag: tag.
+					 c ]) ] ].
+	classPackageMapping := (classPackageMapping associations collect: [ :asso | (allBehaviors detect: [ :aClass | aClass name = asso key name ]) -> asso value ])
+		                       as: IdentityDictionary.
+
+	Stdio stdout nextPutAll: (String streamContents: [ :s |
+			 s
+				 << 'Tags by class:';
+				 lf.
+			 allBehaviors do: [ :c |
+				 s << '- ' << c name << ' tag: ' << c packageTag asString.
+				 s lf ].
+			 s lf ]).
 
 	self flag: #todo. "This next step should not be needed when we will not use announcements to manage method addition"
 	allBehaviors
