@@ -37,7 +37,8 @@ Class {
 		'methodGroupQuery'
 	],
 	#classVars : [
-		'DefaultPackageFilter'
+		'DefaultPackageFilter',
+		'ShouldDisplayProjectView'
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-UI',
 	#package : 'Calypso-SystemTools-FullBrowser',
@@ -133,11 +134,31 @@ ClyFullBrowserMorph class >> registerToolsOn: registry [
 
 { #category : 'settings' }
 ClyFullBrowserMorph class >> settingsGroupOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #Calypso)
 		label: 'Calypso Browser';
 		parent: #codeBrowsing;
-		description: 'Settings related to the browser'
+		description: 'Settings related to the browser';
+		with: [
+			(aBuilder setting: #shouldDisplayProjectView)
+				label: 'Should display project view by default';
+				default: false;
+				target: self;
+				description:
+					'If true, Calypso will open a a project view. A project view list all the baselines in the current image as a project. A project can be open to display the packages inside of it. If false, displays the list of all packages present in the image.' ]
+]
+
+{ #category : 'accessing' }
+ClyFullBrowserMorph class >> shouldDisplayProjectView [
+
+	^ ShouldDisplayProjectView ifNil: [ ShouldDisplayProjectView := false ]
+]
+
+{ #category : 'accessing' }
+ClyFullBrowserMorph class >> shouldDisplayProjectView: anObject [
+
+	ShouldDisplayProjectView := anObject
 ]
 
 { #category : 'icons' }
@@ -177,25 +198,24 @@ ClyFullBrowserMorph >> allNavigationScopes [
 
 { #category : 'updating' }
 ClyFullBrowserMorph >> buildTitleFromSelections [
+
 	| newTitle mainItem |
-	self projectSelection isEmpty ifFalse: [
-		newTitle := self projectSelection lastSelectedItem name].
+	self projectSelection isEmpty ifFalse: [ newTitle := 'Project: ' , self projectSelection lastSelectedItem name ].
 
-	self packageSelection isEmpty ifFalse: [
-		newTitle := self packageSelection lastSelectedItem name].
+	self packageSelection isEmpty ifFalse: [ newTitle := 'Package: ' , self packageSelection lastSelectedItem name ].
 
-	self classSelection isEmpty ifTrue: [ ^newTitle ].
+	self classSelection isEmpty ifTrue: [ ^ newTitle ].
 
 	mainItem := self methodSelection isEmpty
-		ifTrue: [ self classSelection lastSelectedItem ]
-		ifFalse: [ self methodSelection lastSelectedItem].
+		            ifTrue: [ self classSelection lastSelectedItem ]
+		            ifFalse: [ self methodSelection lastSelectedItem ].
 
 	newTitle := mainItem systemDefinition printDefiningClass asString.
-	mainItem systemDefinition isInstanceSide & (metaLevelScope = ClyClassSideScope)
-		ifTrue: [ newTitle := newTitle , ' class' ].
-	self methodSelection isEmpty ifFalse: [
-		newTitle := newTitle , '>>' , self methodSelection lastSelectedItem name ].
-	^newTitle
+	mainItem systemDefinition isInstanceSide & (metaLevelScope = ClyClassSideScope) ifTrue: [ newTitle := newTitle , ' class' ].
+	self methodSelection isEmpty ifFalse: [ newTitle := newTitle , '>>' , self methodSelection lastSelectedItem name ].
+	^ (self methodSelection isEmpty
+		   ifTrue: [ 'Class: ' ]
+		   ifFalse: [ 'Method: ' ]) , newTitle
 ]
 
 { #category : 'navigation' }
@@ -362,12 +382,6 @@ ClyFullBrowserMorph >> isClassSelected: aClass [
 ]
 
 { #category : 'testing' }
-ClyFullBrowserMorph >> isInProjectView [
-
-	^ self packageView showsItemsFromQuery: (systemScope projectQueryFor: self systemScope) class
-]
-
-{ #category : 'testing' }
 ClyFullBrowserMorph >> isPackagePartOfSelection: aPackage [
 
 	(self isPackageSelected: aPackage) ifTrue: [ ^true ].
@@ -508,7 +522,7 @@ ClyFullBrowserMorph >> newPackageView [
 
 	newPackageView := self newNavigationView
 		treeStructure: 	{
-			ClyProjectChildItem -> #prepareProjectItemsQueryFrom:in:.
+			Project -> #prepareProjectItemsQueryFrom:in:.
 			RPackage -> #prepareClassGroupQueryFrom:in: };
 		enableFilterUsing: ClyRegexPattern new;
 		requestNavigationBy: #packageSelectionChanged.
@@ -564,23 +578,14 @@ ClyFullBrowserMorph >> prepareInitialState [
 
 	methodGroupQuery := ClyAllMethodGroupsQuery sortedFrom: (metaLevelScope emptyIn: navigationEnvironment).
 
-	self switchToPackages
-]
-
-{ #category : 'accessing - selection' }
-ClyFullBrowserMorph >> projectChildrenSelection [
-	^packageView selection asSelectedParentsOf: ClyProjectChildItem
-]
-
-{ #category : 'accessing' }
-ClyFullBrowserMorph >> projectClass [
-
-	^ ClyManagedProject
+	self class shouldDisplayProjectView
+		ifTrue: [ self switchToProjects ]
+		ifFalse: [ self switchToPackages ]
 ]
 
 { #category : 'accessing - selection' }
 ClyFullBrowserMorph >> projectSelection [
-	^packageView selection asSelectedParentsOf: self projectClass
+	^packageView selection asSelectedParentsOf: Project
 ]
 
 { #category : 'navigation' }
@@ -604,7 +609,7 @@ ClyFullBrowserMorph >> selectClass: aClass [
 
 		aClass packageTag isRoot
 			ifTrue: [ self selectPackage: aClass package ]
-			ifFalse: [ self selectPackage: aClass package atClassTag: aClass packageTagName ].
+			ifFalse: [ self selectPackage: aClass package andTag: aClass packageTagName ].
 
 		self packageSelection isEmpty ifTrue: [ ^ self ].
 
@@ -658,7 +663,7 @@ ClyFullBrowserMorph >> selectPackage: aPackage [
 ]
 
 { #category : 'navigation' }
-ClyFullBrowserMorph >> selectPackage: aPackage atClassTag: tagName [
+ClyFullBrowserMorph >> selectPackage: aPackage andTag: tagName [
 
 	| packageItem targetClassGroup foundPackages |
 
@@ -731,7 +736,7 @@ ClyFullBrowserMorph >> silentlySelectPackageOfSelectedClass [
 	packageView ignoreNavigationDuring: [
 		selectedClass packageTag isRoot
 			ifTrue: [ self selectPackage: selectedClass package ]
-			ifFalse: [ self selectPackage: selectedClass package atClassTag: selectedClass packageTagName ] ]
+			ifFalse: [ self selectPackage: selectedClass package andTag: selectedClass packageTagName ] ]
 ]
 
 { #category : 'navigation' }
@@ -843,15 +848,14 @@ ClyFullBrowserMorph >> switchToPackageScopeOf: packages [
 
 { #category : 'navigation' }
 ClyFullBrowserMorph >> switchToPackages [
-	| packages |
-	packages := ClyAllPackagesQuery sortedFrom: self systemScope.
 
-	packageView showQuery: packages
+	packageView showQuery: (ClyAllPackagesQuery sortedFrom: self systemScope)
 ]
 
 { #category : 'navigation' }
 ClyFullBrowserMorph >> switchToProjects [
-	packageView showQuery: (systemScope projectQueryFor: self systemScope)
+
+	packageView showQuery: (ClyAllProjectsQuery sortedFrom: self systemScope)
 ]
 
 { #category : 'navigation' }
@@ -864,6 +868,14 @@ ClyFullBrowserMorph >> switchToVariables [
 			from: classScope, classScope asInheritedScope
 			as: ClyGroupedInstanceVariablesResult withDefaultHierarchy
 	]
+]
+
+{ #category : 'taskbar-required' }
+ClyFullBrowserMorph >> taskbarLabel [
+
+	| title |
+	title := self newWindowTitle.
+	^ title allButFirst: (title findString: ': ')
 ]
 
 { #category : 'private' }

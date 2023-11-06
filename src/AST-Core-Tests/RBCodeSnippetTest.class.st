@@ -94,18 +94,6 @@ RBCodeSnippetTest >> testCodeImporter [
 ]
 
 { #category : 'tests' }
-RBCodeSnippetTest >> testDump [
-
-	| ast dump ast2 dump2 |
-	ast := snippet parse.
-	dump := ast dump.
-	ast2 := OpalCompiler new evaluate: dump.
-	self assert: ast2 equals: ast.
-	dump2 := ast2 dump.
-	self assert: dump2 equals: dump
-]
-
-{ #category : 'tests' }
 RBCodeSnippetTest >> testFormattedCode [
 
 	| ast |
@@ -173,7 +161,6 @@ RBCodeSnippetTest >> testParse [
 		self assert: ((node allParents includes: ast) or: [node = ast]).
 		node start to: node stop do: [ :i | self assert: ((node bestNodeFor: (i to: i)) isKindOf: RBProgramNode) ].
 		node start+1 to: node stop do: [ :i | self assert: ((node bestNodeForPosition: i) isKindOf: RBProgramNode) ].
-		self assert: node displaySourceCode isString.
 		self assert: node dump equals: node dump.
 		node hasMultipleReturns.
 		node hasNonLocalReturn.

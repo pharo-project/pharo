@@ -211,7 +211,7 @@ SmallDictionary >> associationsSelect: aBlock [
 	to true."
 
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:
 		[:each |
 		(aBlock value: each) ifTrue: [newCollection add: each]].
@@ -254,7 +254,7 @@ SmallDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey ifAbsentPut: aZeroArgBlock
 ]
 
@@ -263,7 +263,7 @@ SmallDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey put: aValue
 ]
 
@@ -390,7 +390,7 @@ SmallDictionary >> collect: aBlock [
 	resulting values into a collection that is like me. Answer with the new
 	collection."
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:[:each |
 		newCollection at: each key put: (aBlock value: each value).
 	].
@@ -683,6 +683,18 @@ SmallDictionary >> privateAt: key put: value [
 	^values at: size put: value
 ]
 
+{ #category : 'enumerating' }
+SmallDictionary >> reject: rejectBlock thenCollect: collectBlock [
+	"Optimized implementation"
+
+	| newSmallDictionary |
+	newSmallDictionary := self copyEmpty.
+	1 to: size do: [:index | 
+		(rejectBlock value: (keys at: index)) ifFalse: [
+			newSmallDictionary at: (keys at: index) put: (collectBlock value: (values at: index)) ] ].
+	^ newSmallDictionary
+]
+
 { #category : 'removing' }
 SmallDictionary >> remove:anAssociation [
 
@@ -742,6 +754,17 @@ SmallDictionary >> select: aBlock [
 		[:each |
 		(aBlock value: each value) ifTrue: [newCollection add: each]].
 	^newCollection
+]
+
+{ #category : 'enumerating' }
+SmallDictionary >> select: selectBlock thenCollect: collectBlock [
+
+	| newSmallDictionary |
+	newSmallDictionary := self copyEmpty.
+	1 to: size do: [:index | 
+		(selectBlock value: (keys at: index)) ifTrue: [
+			newSmallDictionary at: (keys at: index) put: (collectBlock value: (values at: index)) ] ].
+	^ newSmallDictionary
 ]
 
 { #category : 'private' }

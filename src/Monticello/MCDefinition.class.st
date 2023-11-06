@@ -27,11 +27,6 @@ MCDefinition >> actualClass [
 	^nil
 ]
 
-{ #category : 'installing' }
-MCDefinition >> addMethodAdditionTo: aCollection [
-	self load
-]
-
 { #category : 'accessing' }
 MCDefinition >> className [
 	"Answer the class name here or nil if not applicable."

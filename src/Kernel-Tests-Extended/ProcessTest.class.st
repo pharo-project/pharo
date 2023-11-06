@@ -40,6 +40,81 @@ ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
 ]
 
 { #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityAffectsScheduling [
+
+	| val sem proc1 proc2 |
+	val := #(  ).
+	sem := Semaphore new.
+	proc1 := [
+	         val := val copyWith: 1.
+	         sem signal ] forkAt: Processor activePriority - 3.
+	proc2 := [
+	         val := val copyWith: 2.
+	         sem signal ] forkAt: Processor activePriority - 2.
+
+	proc1 priority: Processor activePriority - 1.
+	self assert: val equals: #(  ). "Sanity check"
+	sem wait.
+	"proc1 is recognized as higher-priority than proc2.
+	We get the processor back before proc2 runs."
+	self assert: val equals: #( 1 ).
+	sem wait.
+	self assert: val equals: #( 1 2 )
+]
+
+{ #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityLowerDuringSemaphoreWait [
+
+	| semaphore hasBlockRun backgroundProcess |
+	semaphore := Semaphore new.
+	hasBlockRun := false.
+	backgroundProcess := [
+	                     semaphore wait.
+	                     hasBlockRun := true ] forkAt:
+		                     Processor activePriority + 1.
+	self assert: backgroundProcess suspendingList equals: semaphore. 
+	self deny: hasBlockRun. "Process is blocked on Semaphore"
+	backgroundProcess priority: Processor activePriority - 1.
+	self deny: hasBlockRun. "Still waiting on Semaphore"
+	self assert: backgroundProcess suspendingList equals: semaphore.
+	semaphore signal.
+	self deny: hasBlockRun. "Lowered priority respected when signaling semaphore"
+	backgroundProcess priority: Processor activePriority + 1.
+	self assert: hasBlockRun. "Preempted as normal"
+]
+
+{ #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityPreemptsCurrentProcess [
+
+	| hasBlockRun backgroundProcess |
+	hasBlockRun := false.
+	backgroundProcess := [ hasBlockRun := true ] forkAt:
+		                     Processor activePriority - 1.
+	self deny: hasBlockRun. "We continue running."
+	backgroundProcess priority: Processor activePriority + 1.
+	self assert: hasBlockRun "We have been preempted."
+]
+
+{ #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityRaiseDuringSemaphoreWait [
+
+	| semaphore hasBlockRun backgroundProcess |
+	semaphore := Semaphore new.
+	hasBlockRun := false.
+	backgroundProcess := [
+	                     semaphore wait.
+	                     hasBlockRun := true ] forkAt:
+		                     Processor activePriority + 1.
+	self assert: backgroundProcess suspendingList equals: semaphore.
+	self deny: hasBlockRun. "Process is blocked on Semaphore"
+	backgroundProcess priority: Processor activePriority + 2.
+	self deny: hasBlockRun. "Still waiting on Semaphore"
+	self assert: backgroundProcess suspendingList equals: semaphore.
+	semaphore signal.
+	self assert: hasBlockRun
+]
+
+{ #category : 'tests' }
 ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	"test whether #priority: preempts active process to allow higher priority processes run;
 	#priority behavior reflects the processPreemptionYields setting - for false the active

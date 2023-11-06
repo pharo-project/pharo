@@ -98,7 +98,7 @@ FinalizationRegistry >> ephemeronAtKey: aKey [
 	^ ephemeronList detect: [ :e | e key = aKey ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FinalizationRegistry >> ephemeronAtKey: aKey ifAbsent: aBlock [
 
 	^ ephemeronList detect: [ :e | e key = aKey ] ifNone: aBlock

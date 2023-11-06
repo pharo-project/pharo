@@ -169,6 +169,27 @@ SystemDictionary >> classOrTraitNamed: aString [
 				  ifTrue: [ global classSide ] ] ]
 ]
 
+{ #category : 'adding' }
+SystemDictionary >> declare: key from: aDictionary [
+	"Add key to the receiver. If key already exists, do nothing. If aDictionary
+	includes key, then remove it from aDictionary and use its association as
+	the element of the receiver."
+	"overridden here to add a Global, not just an association"
+
+	(self includesKey: key) ifTrue: [^ self].
+	(aDictionary includesKey: key)
+		ifTrue:
+			[| undeclared |
+			undeclared := aDictionary associationAt: key.
+			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
+			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #registeredMethods ifAbsent: [ ]]. 
+			"and change class to be Global"
+			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
+			aDictionary removeKey: key]
+		ifFalse:
+			[self add: (GlobalVariable key: key)]
+]
+
 { #category : 'accessing' }
 SystemDictionary >> environment [
 	"For conversion from SmalltalkImage to SystemDictionary"

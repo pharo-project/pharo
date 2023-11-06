@@ -19,7 +19,7 @@ Class {
 
 { #category : 'testing' }
 ClyRemoveClassGroupCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassTagSelected
+	^aToolContext isPackageTagSelected
 ]
 
 { #category : 'activation' }
@@ -48,7 +48,7 @@ ClyRemoveClassGroupCommand >> classGroup: anObject [
 
 { #category : 'accessing' }
 ClyRemoveClassGroupCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }

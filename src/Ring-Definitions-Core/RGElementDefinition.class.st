@@ -366,7 +366,7 @@ RGElementDefinition >> realParent [
 		          ifNotNil: [ self parent realClass ]
 		          ifNil: [ self rootEnvironment classNamed: self parentName ].
 	parent ifNil: [ ^ nil ].
-	
+
 	self isMeta ifTrue: [ parent := parent classSide ].
 	^ parent
 ]

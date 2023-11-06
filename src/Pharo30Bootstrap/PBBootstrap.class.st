@@ -145,7 +145,6 @@ PBBootstrap >> createImage [
 
 { #category : 'pre-requisites' }
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfTraits')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
@@ -337,7 +336,7 @@ PBBootstrap >> monticelloNetworkPackageNames [
 { #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
-	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' )
+	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' )
 ]
 
 { #category : 'accessing' }

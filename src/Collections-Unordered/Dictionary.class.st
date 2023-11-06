@@ -326,7 +326,7 @@ Dictionary >> associationsSelect: aBlock [
 	to true."
 
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:
 		[:each |
 		(aBlock value: each) ifTrue: [newCollection add: each]].
@@ -368,7 +368,7 @@ Dictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey ifAbsentPut: aZeroArgBlock
 ]
 
@@ -377,7 +377,7 @@ Dictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey put: aValue
 ]
 
@@ -489,7 +489,7 @@ Dictionary >> collect: aBlock [
 	resulting values into a collection that is like me. Answer with the new
 	collection."
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:[:each |
 		newCollection at: each key put: (aBlock value: each value).
 	].
@@ -831,6 +831,23 @@ Dictionary >> rehash [
 	array := newSelf array
 ]
 
+{ #category : 'enumerating' }
+Dictionary >> reject: rejectBlock thenCollect: collectBlock [
+	"Optimized version of Collection>>#reject:thenCollect:"
+
+	| newDictionary |
+	tally = 0 ifTrue: [ ^ self copyEmpty ].
+	newDictionary := self copyEmpty.
+
+	1 to: array size do: [ :index |
+		| assoc |
+		assoc := array at: index.
+		assoc ifNotNil: [
+			(rejectBlock value: assoc value) ifFalse: [
+				newDictionary at: assoc key put: (collectBlock value: assoc value) ] ] ].
+	^ newDictionary
+]
+
 { #category : 'removing' }
 Dictionary >> remove: anObject [
 
@@ -912,6 +929,23 @@ Dictionary >> select: aBlock [
 	self associationsDo: [ :each |
 		(aBlock value: each value) ifTrue: [ newCollection add: each copy ] ].
 	^ newCollection
+]
+
+{ #category : 'enumerating' }
+Dictionary >> select: selectBlock thenCollect: collectBlock [
+	"Optimized version of Collection>>#select:thenCollect:"
+
+	| newDictionary |
+	tally = 0 ifTrue: [ ^ self copyEmpty ].
+	newDictionary := self copyEmpty.
+
+	1 to: array size do: [ :index |
+		| assoc |
+		assoc := array at: index.
+		assoc ifNotNil: [
+			(selectBlock value: assoc value) ifTrue: [
+				newDictionary at: assoc key put: (collectBlock value: assoc value) ] ] ].
+	^ newDictionary
 ]
 
 { #category : 'printing' }

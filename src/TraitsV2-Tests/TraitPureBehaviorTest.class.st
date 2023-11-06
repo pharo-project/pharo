@@ -173,7 +173,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	add subtrait t1 which implements m11 as well."
 
 	| trait |
-	trait := self createTraitNamed: #T uses: {}.
+	trait := self createTraitNamed: #T uses: {  }.
 	trait compile: 'm11 ^999'.
 	self assert: trait methodDict size equals: 1.
 	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
@@ -182,11 +182,11 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 		aBuilder
 			name: #T;
 			traitComposition: self t1;
-			package: self class category;
+			package: self class package name;
 			beTrait ].
 
 	self assert: trait methodDict size equals: 3.
-	self assert: (trait selectors asSet includesAll: #(#m11 #m12 #m13)).
+	self assert: (trait selectors asSet includesAll: #( #m11 #m12 #m13 )).
 	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
 	self assert: (trait methodDict at: #m12) sourceCode equals: 'm12 ^12'
 ]

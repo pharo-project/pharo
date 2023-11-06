@@ -146,12 +146,6 @@ RGMethodDefinition >> = aRGMethodDefinition [
 		and: [ self selector == aRGMethodDefinition selector]
 ]
 
-{ #category : 'managing container' }
-RGMethodDefinition >> addInContainer: aRGContainer [
-
-	aRGContainer addMethod: self
-]
-
 { #category : 'traits' }
 RGMethodDefinition >> argumentNames [
 	"Return an array with the argument names of the method's selector"
@@ -170,16 +164,14 @@ RGMethodDefinition >> asActive [
 
 { #category : 'type of methods' }
 RGMethodDefinition >> asHistorical [
-
 	"Sets the receiver as historical object, which will allow itself to retrieve its data using the sourcePointer"
+
 	self annotationNamed: self class statusKey put: #historical.
-	self sourcePointer ifNil:[ | pointer compiledMethod |
+	self sourcePointer ifNil: [
+		| pointer |
 		pointer := 0.
-		compiledMethod := self compiledMethod.
-		compiledMethod notNil ifTrue: [
-			pointer := compiledMethod sourcePointer ].
-		pointer isZero
-			ifFalse:[ self sourcePointer: pointer ] ]
+		self compiledMethod ifNotNil: [ :compiledMethod | pointer := compiledMethod sourcePointer ].
+		pointer isZero ifFalse: [ self sourcePointer: pointer ] ]
 ]
 
 { #category : 'type of methods' }
@@ -231,12 +223,9 @@ RGMethodDefinition >> classIsMeta [
 RGMethodDefinition >> compiledMethod [
 	"Retrieves the compiled method of this definition if exists"
 
-	| rClass |
-	(rClass := self realClass) notNil
-		ifTrue: [ (rClass includesSelector: self selector)
-			ifTrue: [ ^rClass >> self selector ] ].
+	self realClass ifNotNil: [ :rClass | (rClass includesSelector: self selector) ifTrue: [ ^ rClass >> self selector ] ].
 
-	^nil
+	^ nil
 ]
 
 { #category : 'testing' }
@@ -257,10 +246,8 @@ RGMethodDefinition >> fromActiveToHistorical [
 RGMethodDefinition >> fromActiveToPassive [
 	"If the receiver was generated as an active method, it can be converted to a passive one by reading the data of the compiled method (if exists)"
 
-	| compiledMethod |
 	self isActive ifFalse: [ ^ self ].
-	compiledMethod := self compiledMethod.
-	compiledMethod notNil ifTrue: [
+	self compiledMethod ifNotNil: [ :compiledMethod |
 		self protocol: compiledMethod protocolName.
 		self sourceCode: compiledMethod sourceCode.
 		self stamp: compiledMethod timeStamp ].

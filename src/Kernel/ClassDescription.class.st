@@ -25,14 +25,6 @@ ClassDescription class >> isAbstract [
 	^ self == ClassDescription
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> acceptsLoggingOfCompilation [
-	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself
-	Weird name is so that it will come lexically before #compile, so that a clean build can make it through."
-
-	^ true
-]
-
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
@@ -51,9 +43,11 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
+		ifTrue: [
+			compiledMethod shouldBePackaged ifTrue: [ (self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod ].
+			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
+			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
@@ -78,6 +72,8 @@ ClassDescription >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
+	"For now extensions are managed via protocols. If the protocol represent an extension we need to make sure the corresponding package exists."
+	protocol isExtensionProtocol ifTrue: [ self packageOrganizer ensurePackageOfExtensionProtocol: protocol ].
 	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]
@@ -90,7 +86,13 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
 	<reflection: 'Class structural modification - Selector/Method modification'>
+	self
+		compiledMethodAt: selector
+		ifPresent: [ :priorMethod | "For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
+			priorMethod propertyAt: #extensionPackage ifPresent: [ :package | compiledMethod propertyAt: #extensionPackage put: package ] ].
+
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
 ]
@@ -150,6 +152,16 @@ ClassDescription >> allUnreferencedInstanceVariables [
 	"Return a list of the instance variables known to the receiver which are not referenced"
 
 	^ self allSlots reject: [:slot | slot isReferenced]
+]
+
+{ #category : 'accessing - method dictionary' }
+ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
+
+	"Repackage the method if it is not from a trait"
+	compiledMethod origin = compiledMethod methodClass ifTrue: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
+
+	"Announce the recategorization"
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : 'authors' }
@@ -308,7 +320,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 		  classified: protocol
 		  withStamp: changeStamp
 		  notifying: requestor
-		  logSource: self acceptsLoggingOfCompilation
+		  logSource: true
 ]
 
 { #category : 'compiling' }
@@ -780,7 +792,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
+	self compiledMethodAt: selector ifPresent: [ :method | self announceRecategorizationOf: method oldProtocol: oldProtocol ]
 ]
 
 { #category : 'private' }
@@ -893,8 +905,7 @@ ClassDescription >> removeFromProtocols: aSelector [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
 		protocol removeMethodSelector: aSelector.
-		self removeProtocolIfEmpty: protocol.
-		self notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+		self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : 'instance variables' }
@@ -955,8 +966,7 @@ ClassDescription >> removeSelector: selector [
 	package := method package.
 
 	method removeFromPackage.
-	"When we remove a method we do not want to announce a recategorization."
-	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self removeFromProtocols: selector ].
+	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 

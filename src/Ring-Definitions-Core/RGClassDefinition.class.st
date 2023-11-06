@@ -8,7 +8,6 @@ Class {
 		'metaClass',
 		'comment',
 		'classVariables',
-		'category',
 		'package',
 		'packageTag',
 		'sharedPools'
@@ -111,23 +110,6 @@ RGClassDefinition >> allSharedPools [
 	^ self hasSuperclass
 		ifFalse: [ sharedPools ]
 		ifTrue: [ self superclass allSharedPools , sharedPools ]
-]
-
-{ #category : 'accessing' }
-RGClassDefinition >> category [
-
-	^ category ifNil: [
-		  self package ifNotNil: [ :aPackage |
-			  self packageTag
-				  ifNil: [ aPackage ]
-				  ifNotNil: [ :tag | aPackage , '-' , tag ] ] ]
-]
-
-{ #category : 'accessing' }
-RGClassDefinition >> category: aSymbol [
-	"stores a tag for its package"
-
-	category := aSymbol
 ]
 
 { #category : 'accessing - parallel hierarchy' }
@@ -249,14 +231,15 @@ RGClassDefinition >> isPool: aBoolean [
 RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 	"This method look for equality of the properties of the receiver"
 
-	^(super isSameRevisionAs: aRGClassDefinition)
-		and:[ self superclassName == aRGClassDefinition superclassName
-		and:[ self category = aRGClassDefinition category
-		and:[ self classVarNames sorted = aRGClassDefinition classVarNames sorted
-		and:[ self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted
-		and:[ self traitCompositionSource = aRGClassDefinition traitCompositionSource
-		and:[ ((self hasComment and:[ self comment isSameRevisionAs: aRGClassDefinition comment ]) or:[ self hasComment not ])
-		and:[ (self classSide isSameRevisionAs: aRGClassDefinition classSide) ] ] ] ] ] ] ]
+	^ (super isSameRevisionAs: aRGClassDefinition) and: [
+		  self superclassName == aRGClassDefinition superclassName and: [
+			  self package name = aRGClassDefinition package name and: [
+				  self packageTag = aRGClassDefinition packageTag and: [
+					  self classVarNames sorted = aRGClassDefinition classVarNames sorted and: [
+						  self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted and: [
+							  self traitCompositionSource = aRGClassDefinition traitCompositionSource and: [
+								  ((self hasComment and: [ self comment isSameRevisionAs: aRGClassDefinition comment ]) or: [ self hasComment not ]) and: [
+									  self classSide isSameRevisionAs: aRGClassDefinition classSide ] ] ] ] ] ] ] ]
 ]
 
 { #category : 'accessing' }

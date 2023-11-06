@@ -269,24 +269,6 @@ Class >> category [
 	^ category
 ]
 
-{ #category : 'organization' }
-Class >> category: aString [
-	"Categorize the receiver under the system category, aString, removing it from
-	any previous categorization."
-
-	| newPackage |
-
-	self flag: #package. "Should be deprecated"
-	self category = aString ifTrue: [ ^ self ].
-
-	self basicCategory: aString asSymbol.
-
-	self flag: #package. "#toTagName: should be inlined here."
-	newPackage := self packageOrganizer ensurePackageMatching: self category.
-	newPackage moveClass: self toTag: (newPackage toTagName: self category).
-
-]
-
 { #category : 'subclass creation' }
 Class >> checkForCompiledMethodLayout: className [ 
 	"There is no class definiton message for CompiledMethodLayout, it just uses the one for bytelayout for CompiledCode, CompiledMethod and CompiledBlock"

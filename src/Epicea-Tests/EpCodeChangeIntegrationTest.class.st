@@ -358,7 +358,7 @@ EpCodeChangeIntegrationTest >> testTraitAddition [
 	events := self allLogEventsWith: EpTraitAddition.
 	self assert: events size equals: 1.
 	event := events anyOne.
-	self assert: event behaviorAffected package equals: package
+	self assert: event behaviorAffected package name equals: package
 ]
 
 { #category : 'tests' }

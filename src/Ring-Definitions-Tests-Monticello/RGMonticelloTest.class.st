@@ -11,6 +11,7 @@ Class {
 
 { #category : 'testing' }
 RGMonticelloTest >> testAsMCMethodDefinition [
+
 	| ringMethod mcMethod |
 	ringMethod := (OrderedCollection >> #size) asActiveRingDefinition.
 	mcMethod := ringMethod asMCMethodDefinition.
@@ -19,7 +20,7 @@ RGMonticelloTest >> testAsMCMethodDefinition [
 	self assert: mcMethod className equals: #OrderedCollection.
 	self deny: mcMethod classIsMeta.
 	self assert: mcMethod selector equals: #size.
-	self assert: mcMethod category equals: #accessing.
+	self assert: mcMethod protocol equals: #accessing.
 	self assert: mcMethod source equals: (OrderedCollection >> #size) sourceCode
 ]
 
@@ -45,18 +46,6 @@ RGMonticelloTest >> testConvertingMCMethodDefinition [
 	self assert: (ringMethod isMethod).
 	self assert: (ringMethod isSameRevisionAs: ((OrderedCollection >> #add: ) asRingDefinition)).
 	self deny: (ringMethod isSameRevisionAs: ((OrderedCollection >> #addAll: ) asRingDefinition))
-]
-
-{ #category : 'testing' }
-RGMonticelloTest >> testConvertingMCOrganizationDefinition [
-
-	| mcOrganization ringOrganization mcOrganization2 |
-	mcOrganization := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions }.
-	mcOrganization2 := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions. #Variables }.
-	ringOrganization := mcOrganization asRingDefinition.
-
-	self assert: ringOrganization isOrganization.
-	self deny: (ringOrganization isSameRevisionAs: mcOrganization2 asRingDefinition)
 ]
 
 { #category : 'testing' }

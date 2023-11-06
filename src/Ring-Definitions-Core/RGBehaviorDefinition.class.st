@@ -79,12 +79,6 @@ RGBehaviorDefinition class >> usersKey [
 	^#users
 ]
 
-{ #category : 'managing container' }
-RGBehaviorDefinition >> addInContainer: aRGContainer [
-
-	aRGContainer addClass: self
-]
-
 { #category : 'adding-removing methods' }
 RGBehaviorDefinition >> addMethod: aRGMethodDefinition [
 	"Adds aRGMethodDefinition in the methods dictionary.
@@ -379,6 +373,12 @@ RGBehaviorDefinition >> methods: aDictionary [
 
 { #category : 'accessing' }
 RGBehaviorDefinition >> package [
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+RGBehaviorDefinition >> packageTag [
 
 	self subclassResponsibility
 ]

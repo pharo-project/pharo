@@ -25,27 +25,17 @@ ClyFullBrowserContext >> currentMetaLevelOf: aClass [
 	^metaLevelScope metaLevelOf: aClass
 ]
 
-{ #category : 'selection-packages' }
-ClyFullBrowserContext >> isClassTagSelected [
-	| groups |
-	groups := tool classGroupSelection.
-	groups isEmpty ifTrue: [ ^false ].
-	^groups lastSelectedItem type isBasedOnClassTag
-]
-
 { #category : 'selection-method groups' }
 ClyFullBrowserContext >> isMethodGroupSelected [
 	^self selectedMethodGroupItems notEmpty
 ]
 
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> isProjectChildSelected [
-	^self selectedProjectChildItems notEmpty
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> isProjectSelected [
-	^self selectedProjectItems notEmpty
+{ #category : 'selection-packages' }
+ClyFullBrowserContext >> isPackageTagSelected [
+	| groups |
+	groups := tool classGroupSelection.
+	groups isEmpty ifTrue: [ ^false ].
+	^groups lastSelectedItem type isBasedOnPackageTag
 ]
 
 { #category : 'selection-method groups' }
@@ -70,27 +60,15 @@ ClyFullBrowserContext >> isSimilarTo: anotherBrowserContext [
 		and: [ metaLevelScope == anotherBrowserContext metaLevelScope ]
 ]
 
-{ #category : 'selection-packages' }
-ClyFullBrowserContext >> lastSelectedClassTag [
-	| tagItem |
-	tagItem := tool classGroupSelection items
-		detect: [ :each | each type isBasedOnClassTag ].
-	^tagItem name
-]
-
 { #category : 'selection-method groups' }
 ClyFullBrowserContext >> lastSelectedMethodGroup [
 	^self lastSelectedObjectIn: self selectedMethodGroups
 ]
 
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> lastSelectedProject [
-	^self lastSelectedObjectIn: self selectedProjects
-]
+{ #category : 'selection-packages' }
+ClyFullBrowserContext >> lastSelectedPackageTag [
 
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> lastSelectedProjectChild [
-	^self lastSelectedObjectIn: self selectedProjectChildren
+	^ (tool classGroupSelection items detect: [ :each | each type isBasedOnPackageTag ]) name
 ]
 
 { #category : 'accessing' }
@@ -141,34 +119,14 @@ ClyFullBrowserContext >> selectedPackageItems [
 	^tool packageSelection items
 ]
 
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjectChildItems [
-	^tool projectChildrenSelection items
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjectChildren [
-	^self actualSelectionFrom: self selectedProjectChildItems
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjectItems [
-	^tool projectSelection items
-]
-
-{ #category : 'selection-projects' }
-ClyFullBrowserContext >> selectedProjects [
-	^self actualSelectionFrom: self selectedProjectItems
-]
-
 { #category : 'tool controlling' }
 ClyFullBrowserContext >> showPackage: aPackage [
 	tool selectPackage: aPackage
 ]
 
 { #category : 'tool controlling' }
-ClyFullBrowserContext >> showPackage: aPackage atClassTag: tagName [
-	tool selectPackage: aPackage atClassTag: tagName
+ClyFullBrowserContext >> showPackage: aPackage tag: tagName [
+	tool selectPackage: aPackage andTag: tagName
 ]
 
 { #category : 'tool controlling' }

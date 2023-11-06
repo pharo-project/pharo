@@ -260,7 +260,7 @@ BalloonEngine >> bitBlt: aBitBlt [
 	bitBlt ifNil: [^self].
 	width := bitBlt destForm width.
 	width <= 0 ifTrue: [ width := self class defaultBitmapWidth ].
-	span := Bitmap new: width.
+	span := Bitmap new: width + 1.
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
 	bitBlt

@@ -55,7 +55,7 @@ ClyClassGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin
 ]
 
 { #category : 'testing' }
-ClyClassGroup class >> isBasedOnClassTag [
+ClyClassGroup class >> isBasedOnPackageTag [
 	^false
 ]
 
@@ -102,7 +102,6 @@ ClyClassGroup >> = anObject [
 ClyClassGroup >> addClass: aClass [
 
 	| newPackages |
-	super addClass: aClass.
 	newPackages := OrderedCollection new.
 	classQuery scope packagesDo: [ :package | package = aClass package ifFalse: [ newPackages add: package ] ].
 	newPackages size > 1 ifTrue: [ self error: 'You should select single package for import!' ].

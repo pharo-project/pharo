@@ -170,7 +170,7 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
 	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
-	(addGrabHandle:			center		top				(gray)							#haloGrabIcon)
+	(addGrabHandle:			center		top				(gray)							#haloGrab)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
 	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)

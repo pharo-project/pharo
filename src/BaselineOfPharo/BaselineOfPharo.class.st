@@ -121,13 +121,12 @@ BaselineOfPharo class >> newToolsRepository [
 
 { #category : 'external projects' }
 BaselineOfPharo class >> roassal [
-	<externalProject>	
-
+	<externalProject>
 	^ PharoExternalProject 
 		newName: 'Roassal' 
 		owner: 'pharo-graphics' 
 		project: 'Roassal' 
-		version: 'v1.04b'
+		version: 'v1.05b'
 ]
 
 { #category : 'repository urls' }

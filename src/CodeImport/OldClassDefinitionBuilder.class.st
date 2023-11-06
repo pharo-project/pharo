@@ -76,6 +76,7 @@ OldClassDefinitionBuilder class >> allowedSelectors [
 #named:
 #named:uses:category:
 #named:uses:package:
+#named:uses:instanceVariableNames:package:
 )
 ]
 

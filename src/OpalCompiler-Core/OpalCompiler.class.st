@@ -541,7 +541,7 @@ OpalCompiler >> generateMethod [
 	ast compiledMethod: method.
 	ast 
 		propertyAt: #Undeclareds 
-		ifPresent: [:undeclareds | undeclareds do: [ :var | var addUsingMethod: method ]].
+		ifPresent: [:undeclareds | undeclareds do: [ :var | var registerMethod: method ]].
 	method propertyAt: #source put: source.
 	self compilationContext noPattern ifTrue: [
 		method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
@@ -560,7 +560,7 @@ OpalCompiler >> install [
 	priorMethod := class compiledMethodAt: method selector ifAbsent: [  ].
 
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
-	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
+	logSource := self logged ifNil: [ true ].
 
 	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 

@@ -62,31 +62,7 @@ ShiftTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 	self assert: newTrait traitComposition equals: {  } asTraitComposition.
 	self assert: newTrait class traitComposition equals: {  } asTraitComposition.
 	self assert: newTrait classVarNames equals: #(  ).
-	self assert: newTrait category equals: self packageNameForTest
-]
-
-{ #category : 'tests - class creation' }
-ShiftTraitBuilderTest >> testCreatingFullTraitHasAllElements [
-
-	| instBuilder newTrait |
-	self categoryHack.
-	instBuilder := (Trait << #TTestTrait)
-		               slots: #( a b c );
-		               traits: { TViewModelMock };
-		               tag: 'lala';
-		               package: self packageNameForTest.
-
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
-	newTrait := instBuilder install.
-
-	self assert: newTrait name equals: #TTestTrait.
-	self assert: newTrait slotNames equals: #( a b c ).
-	self assert: newTrait traitComposition equals: { TViewModelMock } asTraitComposition.
-	self assert: newTrait class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
-	self assert: newTrait classVarNames equals: #(  ).
-	self assert: newTrait category equals: self packageNameForTest , '-lala'
+	self assert: newTrait package name equals: self packageNameForTest
 ]
 
 { #category : 'tests - class creation' }
@@ -137,7 +113,6 @@ ShiftTraitBuilderTest >> testExistingTraitWithSlotsArePreservedIfChangingClassSi
 { #category : 'tests - classBuilder generation' }
 ShiftTraitBuilderTest >> testFillShiftClassBuilder [
 
-	self categoryHack.
 	builder := (Trait << #TPoint2)
 		           slots: { #x. #y };
 		           traits: { TViewModelMock };

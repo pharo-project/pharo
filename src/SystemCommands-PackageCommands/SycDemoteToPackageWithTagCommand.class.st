@@ -16,7 +16,7 @@ SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
 
 	newPackage := (lastPackage name copyUpToLast: $-) asPackage.
 	tag := lastPackage name last: lastPackage name size - newPackage name size - 1.
-	aBrowserContext showPackage: newPackage atClassTag: tag asSymbol
+	aBrowserContext showPackage: newPackage tag: tag asSymbol
 ]
 
 { #category : 'accessing' }

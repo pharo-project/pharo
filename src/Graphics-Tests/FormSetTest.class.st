@@ -232,3 +232,57 @@ FormSetTest >> testForms [
 	formSet := FormSet extent: 3@6 depth: 1 forms: { form2. form1 }.
 	self assert: formSet forms equals: { form2. form1 }.
 ]
+
+{ #category : 'tests - accessing' }
+FormSetTest >> testHeight [
+
+	| form1 form2 formSet |
+
+	form1 := Form extent: 1@2 depth: 32.
+	form2 := Form extent: 2@4 depth: 8.
+
+	formSet := FormSet form: form1.
+	self assert: formSet height equals: 2.
+
+	formSet := FormSet form: form2.
+	self assert: formSet height equals: 4.
+
+	formSet := FormSet forms: { form1. form2 }.
+	self assert: formSet height equals: 2.
+
+	formSet := FormSet forms: { form2. form1 }.
+	self assert: formSet height equals: 4.
+
+	formSet := FormSet extent: 1@2 depth: 32 forms: { form1. form2 }.
+	self assert: formSet height equals: 2.
+
+	formSet := FormSet extent: 3@5 depth: 32 forms: { form2. form1 }.
+	self assert: formSet height equals: 5.
+]
+
+{ #category : 'tests - accessing' }
+FormSetTest >> testWidth [
+
+	| form1 form2 formSet |
+
+	form1 := Form extent: 1@2 depth: 32.
+	form2 := Form extent: 2@4 depth: 8.
+
+	formSet := FormSet form: form1.
+	self assert: formSet width equals: 1.
+
+	formSet := FormSet form: form2.
+	self assert: formSet width equals: 2.
+
+	formSet := FormSet forms: { form1. form2 }.
+	self assert: formSet width equals: 1.
+
+	formSet := FormSet forms: { form2. form1 }.
+	self assert: formSet width equals: 2.
+
+	formSet := FormSet extent: 1@2 depth: 32 forms: { form1. form2 }.
+	self assert: formSet width equals: 1.
+
+	formSet := FormSet extent: 3@4 depth: 32 forms: { form2. form1 }.
+	self assert: formSet width equals: 3.
+]

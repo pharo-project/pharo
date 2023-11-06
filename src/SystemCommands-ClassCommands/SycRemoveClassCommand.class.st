@@ -10,7 +10,7 @@ Class {
 
 { #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }

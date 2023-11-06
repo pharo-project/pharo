@@ -191,7 +191,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 
 	class rename: 'RPackageNewStubClass'.
 
-	self assert: ((self organizer extendingPackagesOf: class) includes: yPackage)
+	self assert: (class extendingPackages includes: yPackage)
 ]
 
 { #category : 'tests - operations on classes' }
