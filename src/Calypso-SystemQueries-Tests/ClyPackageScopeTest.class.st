@@ -1,31 +1,33 @@
 Class {
-	#name : #ClyPackageScopeTest,
-	#superclass : #ClyTypedScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyPackageScopeTest',
+	#superclass : 'ClyTypedScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyPackageScopeTest >> extraBasisSample [
 	^ClySubclassMOfClass1FromP2Mock package
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyPackageScopeTest >> scopeClass [
 
 	^ClyPackageScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyPackageScopeTest >> singleBasisSample [
 	^ClyClass1FromP1Mock package
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageScopeTest >> testClassGroupEnumeration [
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new.
 	scope := ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
 
-	scope classGroupsDo: [ :each | result add: each ].
+	scope packageTagsDo: [ :each | result add: each ].
 
 	self
 		assert: (result collect: #class as: Set)
@@ -38,7 +40,7 @@ ClyPackageScopeTest >> testClassGroupEnumeration [
 		equals: ClyClass7WithTag1FromP5Mock package tagsForClasses sorted asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageScopeTest >> testClassesEnumeration [
 	scope := ClyPackageScope of: ClyClass1FromP1Mock package.
 
@@ -48,7 +50,7 @@ ClyPackageScopeTest >> testClassesEnumeration [
 	self deny: (result includesAll: ClyClass1FromP1Mock package extendedClasses)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageScopeTest >> testMethodsEnumeration [
 	scope := ClyPackageScope of: ClyClass1FromP1Mock package.
 
@@ -64,7 +66,7 @@ ClyPackageScopeTest >> testMethodsEnumeration [
 		description: 'Package scope should see all clas extensions'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageScopeTest >> testPackageEnumeration [
 	scope := ClyPackageScope ofAll: {Array package. Object package}.
 

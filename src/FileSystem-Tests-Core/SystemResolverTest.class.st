@@ -2,62 +2,64 @@
 SUnit tests for SystemResolver
 "
 Class {
-	#name : #SystemResolverTest,
-	#superclass : #FileSystemResolverTest,
+	#name : 'SystemResolverTest',
+	#superclass : 'FileSystemResolverTest',
 	#instVars : [
 		'originalUserLocalDir'
 	],
-	#category : #'FileSystem-Tests-Core-Resolver'
+	#category : 'FileSystem-Tests-Core-Resolver',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Resolver'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SystemResolverTest >> createResolver [
 	^ SystemResolver new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SystemResolverTest >> resetToOriginalUserLocalDirectory [
 
 	resolver class userLocalDirectory: originalUserLocalDir
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SystemResolverTest >> setUp [
 
 	super setUp.
 	originalUserLocalDir := resolver class userLocalDirectory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SystemResolverTest >> tearDown [
 
 	self resetToOriginalUserLocalDirectory.
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testChanges [
 	self assertOriginResolves: #changes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testImage [
 	self assertOriginResolves: #image
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testImageDirectory [
 	self assertOriginResolves: #imageDirectory
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testLocalDirectory [
 	| reference |
 	reference := resolver resolve: #localDirectory.
 	self assert: (reference isKindOf: FileReference)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testUserLocalDirectory [
 	| newReference originalReference |
 	originalReference := resolver class userLocalDirectory.
@@ -73,12 +75,12 @@ SystemResolverTest >> testUserLocalDirectory [
 	self assert: resolver class userLocalDirectory equals: newReference
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testVmBinary [
 	self assertOriginResolves: #vmBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testVmDirectory [
 	self assertOriginResolves: #vmDirectory
 ]

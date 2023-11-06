@@ -1,65 +1,40 @@
 Class {
-	#name : #BaselineOfTaskIt,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfTaskIt
+	#name : 'BaselineOfTaskIt',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfTaskIt',
+	#package : 'BaselineOfTaskIt'
 }
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 BaselineOfTaskIt class >> DevelopmentSupport [
 
 "See the methods in the 'development support' category on the class-side of MetacelloBaseConfiguration. Decide what development support methods you would like to use and copy them the the class-side of your configuration."
 	<apiDocumentation>
 ]
 
-{ #category : #private }
-BaselineOfTaskIt class >> baseConfigurationClassIfAbsent: aBlock [
-
-	^Smalltalk
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			self ensureMetacelloBaseConfiguration.
-			Smalltalk at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
-]
-
-{ #category : #catalog }
+{ #category : 'catalog' }
 BaselineOfTaskIt class >> catalogContactInfo [
 	^ 'santiagobragagnolo@gmail.com'
 ]
 
-{ #category : #catalog }
+{ #category : 'catalog' }
 BaselineOfTaskIt class >> catalogDescription [
 	^ 'Task & Jobs oriented multiprocessing framework. Check for nicely showed documentation at https://github.com/pharo-contributions/taskit/ :)'
 ]
 
-{ #category : #catalog }
+{ #category : 'catalog' }
 BaselineOfTaskIt class >> catalogKeywords [
 	^ {'multiprocessing'. 'futures'. 'tasks'. 'services'. }
 ]
 
-{ #category : #private }
-BaselineOfTaskIt class >> ensureMetacelloBaseConfiguration [
-
-	Smalltalk
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			| repository version |
-			repository := MCHttpRepository location: 'http://seaside.gemstone.com/ss/metacello' user: '' password: ''.
-			repository
-				versionReaderForFileNamed: 'Metacello-Base-DaleHenrichs.2.mcz'
-				do: [ :reader | 
-					version := reader version.
-					version load.
-					version workingCopy repositoryGroup addRepository: repository ] ]
-]
-
-{ #category : #'metacello tool support' }
+{ #category : 'metacello tool support' }
 BaselineOfTaskIt class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
 	
 	^true
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 BaselineOfTaskIt class >> load [
 	"Load the #stable version defined for this platform. The #stable version is the version that is recommended to be used on this platform."
 
@@ -69,7 +44,7 @@ BaselineOfTaskIt class >> load [
 	^(self project version: #stable) load
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 BaselineOfTaskIt class >> loadBleedingEdge [
 	"Load the latest versions of the mcz files defined for this project. It is not likely that the #bleedingEdge has been tested."
 
@@ -79,7 +54,7 @@ BaselineOfTaskIt class >> loadBleedingEdge [
 	^(self project version: #bleedingEdge) load
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 BaselineOfTaskIt class >> loadDevelopment [
 	"Load the #development version defined for this platform. The #development version will change over time and is not expected to be stable."
 
@@ -89,7 +64,7 @@ BaselineOfTaskIt class >> loadDevelopment [
 	^(self project version: #development) load
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTaskIt >> baseline: spec [
 
 	<baseline>
@@ -101,7 +76,7 @@ BaselineOfTaskIt >> baseline: spec [
 		self baselineForCommon: spec ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTaskIt >> baselineForCommon: spec [
 
 	spec
@@ -136,7 +111,7 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 		group: 'development' with: #('default' 'debug' 'tests')
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTaskIt >> baselineForPharo6: spec [
 	spec
 		package: #TaskIt;
@@ -167,7 +142,7 @@ BaselineOfTaskIt >> baselineForPharo6: spec [
 		group: 'development' with: #( 'default' 'debug' 'tests' )
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTaskIt >> baselineForPharo7: spec [
 
 	spec 

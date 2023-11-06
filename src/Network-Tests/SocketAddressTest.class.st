@@ -2,12 +2,14 @@
 Unit test for SocketAddress
 "
 Class {
-	#name : #SocketAddressTest,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-Kernel'
+	#name : 'SocketAddressTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketAddressTest >> testByteArrayConversionErrors [
 	self should: [ #[ ] asSocketAddress ] raise: Error.
 	self should: [ #[ 1 ] asSocketAddress ] raise: Error.
@@ -16,7 +18,7 @@ SocketAddressTest >> testByteArrayConversionErrors [
 	self should: [ #[ 1 2 3 4 5] asSocketAddress ] raise: Error
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketAddressTest >> testDottedRepresentation [
 	| address |
 	address := SocketAddress fromDottedString: '104.28.27.35'.
@@ -24,7 +26,7 @@ SocketAddressTest >> testDottedRepresentation [
 	self assert: address printString equals: '104.28.27.35'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketAddressTest >> testDottedRepresentationErrors [
 	self should: [ SocketAddress fromDottedString: '' ] raise: Error.
 	self should: [ SocketAddress fromDottedString: '1' ] raise: Error.
@@ -35,7 +37,7 @@ SocketAddressTest >> testDottedRepresentationErrors [
 	self should: [ SocketAddress fromDottedString: '1 . 2 . 3 . 200' ] raise: Error
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketAddressTest >> testIsPrivateAddress [
 	#('10.0.0.1' '172.20.1.1' '192.168.10.12') do: [ :each |
 		self assert: (SocketAddress fromDottedString: each) isPrivateAddress ].
@@ -43,7 +45,7 @@ SocketAddressTest >> testIsPrivateAddress [
 		self deny: (SocketAddress fromDottedString: each) isPrivateAddress ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SocketAddressTest >> testZero [
 	| address |
 	address := SocketAddress zero.

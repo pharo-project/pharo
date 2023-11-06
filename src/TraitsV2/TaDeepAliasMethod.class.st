@@ -5,18 +5,20 @@ I am useful when you want to rename a method. You alias deeply with me and then 
 I implement the #@=  operator.
 "
 Class {
-	#name : #TaDeepAliasMethod,
-	#superclass : #TaAliasMethod,
-	#category : #'TraitsV2-Compositions'
+	#name : 'TaDeepAliasMethod',
+	#superclass : 'TaAliasMethod',
+	#category : 'TraitsV2-Compositions',
+	#package : 'TraitsV2',
+	#tag : 'Compositions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaDeepAliasMethod >> changesSourceCode: aSelector [
 
 	^ true
 ]
 
-{ #category : #rewriting }
+{ #category : 'rewriting' }
 TaDeepAliasMethod >> rewriteText: aSelector [
 	| stream |
 	stream := WriteStream on: String new.
@@ -37,7 +39,7 @@ TaDeepAliasMethod >> rewriteText: aSelector [
 	^ stream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaDeepAliasMethod >> sourceCodeAt: aSelector [
 	| originalSourceCode parseTree rewriter |
 	originalSourceCode := super sourceCodeAt: aSelector.

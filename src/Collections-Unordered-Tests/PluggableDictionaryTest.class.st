@@ -2,30 +2,32 @@
 SUnit tests for pluggable dictionaries
 "
 Class {
-	#name : #PluggableDictionaryTest,
-	#superclass : #DictionaryTest,
-	#category : #'Collections-Unordered-Tests-Dictionaries'
+	#name : 'PluggableDictionaryTest',
+	#superclass : 'DictionaryTest',
+	#category : 'Collections-Unordered-Tests-Dictionaries',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 PluggableDictionaryTest class >> classToBeTested [
 
 	^ IdentitySet
 ]
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 PluggableDictionaryTest class >> shouldInheritSelectors [
 
 ^true
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 PluggableDictionaryTest >> classToBeTested [
 
 	^ PluggableDictionary
 ]
 
-{ #category : #'tests - copy - clone' }
+{ #category : 'tests - copy - clone' }
 PluggableDictionaryTest >> testCopyEmpty [
 	| pluggableDict copiedPluggableDict |
 	super testCopyEmpty.
@@ -39,7 +41,7 @@ PluggableDictionaryTest >> testCopyEmpty [
 	self assert: copiedPluggableDict hashBlock identicalTo: pluggableDict hashBlock
 ]
 
-{ #category : #'tests - comparing' }
+{ #category : 'tests - comparing' }
 PluggableDictionaryTest >> testEqualBlock [
 	| pluggableDict assoc |
 	pluggableDict := self emptyDict.
@@ -61,7 +63,7 @@ PluggableDictionaryTest >> testEqualBlock [
 	self assert: (pluggableDict includesAssociation: assoc)
 ]
 
-{ #category : #'tests - comparing' }
+{ #category : 'tests - comparing' }
 PluggableDictionaryTest >> testEqualBlockEquality [
 	| pluggableDict pluggableDict2 equalBlock |
 	pluggableDict := self nonEmptyDict.
@@ -77,7 +79,7 @@ PluggableDictionaryTest >> testEqualBlockEquality [
 	self assert: pluggableDict2 equals: pluggableDict
 ]
 
-{ #category : #'tests - comparing' }
+{ #category : 'tests - comparing' }
 PluggableDictionaryTest >> testHashBlock [
 	| pluggableDict keys |
 	pluggableDict := self nonEmptyDict.
@@ -89,7 +91,7 @@ PluggableDictionaryTest >> testHashBlock [
 	self deny: (pluggableDict includesKey: self keyNotIn)
 ]
 
-{ #category : #'tests - comparing' }
+{ #category : 'tests - comparing' }
 PluggableDictionaryTest >> testHashBlockEquality [
 	| pluggableDict pluggableDict2 hashBlock |
 	pluggableDict := self nonEmptyDict.

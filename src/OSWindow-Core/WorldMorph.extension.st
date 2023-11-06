@@ -1,11 +1,11 @@
-Extension { #name : #WorldMorph }
+Extension { #name : 'WorldMorph' }
 
-{ #category : #'*OSWindow-Core' }
+{ #category : '*OSWindow-Core' }
 WorldMorph >> clipboardText [
 	^ self osWindow clipboardText
 ]
 
-{ #category : #'*OSWindow-Core' }
+{ #category : '*OSWindow-Core' }
 WorldMorph >> clipboardText: aString [
 	^ self osWindow clipboardText: aString
 ]

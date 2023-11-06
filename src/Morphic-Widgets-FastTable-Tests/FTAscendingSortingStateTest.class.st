@@ -2,17 +2,19 @@
 A FTAscendingSortingStateTest is a test class for testing the behavior of FTAscendingSortingState
 "
 Class {
-	#name : #FTAscendingSortingStateTest,
-	#superclass : #FTAbstractSortingStateTest,
-	#category : #'Morphic-Widgets-FastTable-Tests-Sorting'
+	#name : 'FTAscendingSortingStateTest',
+	#superclass : 'FTAbstractSortingStateTest',
+	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Sorting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAscendingSortingStateTest >> actualClass [
 	^ FTAscendingSortingState
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTAscendingSortingStateTest >> testExecuteSortingOn [
 	| dataSource |
 	dataSource := self dataSourceForTesting.

@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloPackageSpec,
-	#superclass : #MetacelloAbstractPackageSpec,
+	#name : 'MetacelloPackageSpec',
+	#superclass : 'MetacelloAbstractPackageSpec',
 	#instVars : [
 		'file',
 		'repositories',
@@ -8,16 +8,18 @@ Class {
 		'preLoadDoIt',
 		'postLoadDoIt'
 	],
-	#category : #'Metacello-MC-Specs'
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #gofer }
+{ #category : 'gofer' }
 MetacelloPackageSpec >> ancestors [
 
 	^self goferPackage ancestors
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader [
 
 	self 
@@ -27,13 +29,13 @@ MetacelloPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: s
 		using: anMCLoader
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloPackageSpec >> compareRelativeCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader [
 
 	^self compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloPackageSpec >> compareWorkingCopyNamed: wcName using: comarisonOperator [
 	| fileRef wcRef |
 	fileRef := GoferResolvedReference name: self file.
@@ -41,7 +43,7 @@ MetacelloPackageSpec >> compareWorkingCopyNamed: wcName using: comarisonOperator
 	^ wcRef compare: fileRef using: comarisonOperator
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: indent [
 
 	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
@@ -102,7 +104,7 @@ MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: ind
 	aStream nextPut: $.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloPackageSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
 
 	aMember methodUpdateSelector  == #remove:
@@ -113,7 +115,7 @@ MetacelloPackageSpec >> configMethodCascadeOn: aStream member: aMember last: las
 		ifFalse: [ aStream nextPut: $;; cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 
 	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers hasFile |
@@ -131,7 +133,7 @@ MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 			aStream nextPutAll: 'name: ', self name printString ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember indent: indent [
 
 	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
@@ -154,75 +156,63 @@ MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember inde
 		ifTrue: [ aStream nextPutAll: ' with: ', file printString ]
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> copySpecTo: aRepositorySpec [
 	"Copy current mcz file to the repository named in aRepositorySpec"
 
 	self loader copySpec: self from: self repositorySpecs to: aRepositorySpec createRepository
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloPackageSpec >> currentPackageLoaded: loadedBlock comparing: comarisonOperator notLoaded: notLoadedBlock using: anMCLoader [
-  "Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
+	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
-  | wcName vis |
-  vis := anMCLoader ancestorsFor: self.
-  vis notNil
-    ifTrue: [ 
-      | fileRef wcRef |
-      self getFile == nil
-        ifTrue: [ ^ loadedBlock value: false ].
-      vis
-        do: [ :vi | 
-          wcName := vi name.
-          fileRef := GoferVersionReference name: self file.
-          fileRef versionNumber = 0
-            ifTrue: [ 
-              "a shame that GoferVersionReference doesn't have better method for recognizing a missing verion number"
-              "fix for: https://github.com/dalehenrich/metacello-work/issues/185"
-              ^ loadedBlock value: false ].
-          wcRef := GoferVersionReference name: wcName.
-          (wcRef compare: fileRef using: comarisonOperator)
-            ifTrue: [ ^ loadedBlock value: true ] ].
-      ^ loadedBlock value: false ].
-  ^ notLoadedBlock value: true
+	| wcName |
+	(anMCLoader ancestorsFor: self) ifNotNil: [ :vis |
+		| fileRef wcRef |
+		self getFile ifNil: [ ^ loadedBlock value: false ].
+		vis do: [ :vi |
+			wcName := vi name.
+			fileRef := GoferVersionReference name: self file.
+			fileRef versionNumber = 0 ifTrue: [ "a shame that GoferVersionReference doesn't have better method for recognizing a missing verion number" "fix for: https://github.com/dalehenrich/metacello-work/issues/185"
+				^ loadedBlock value: false ].
+			wcRef := GoferVersionReference name: wcName.
+			(wcRef compare: fileRef using: comarisonOperator) ifTrue: [ ^ loadedBlock value: true ] ].
+		^ loadedBlock value: false ].
+	^ notLoadedBlock value: true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBlock using: anMCLoader [
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
-	| vis |
-	vis := anMCLoader ancestorsFor: self.
-	vis notNil
-		ifTrue: [ 
-			self getFile == nil
-				ifTrue: [ ^ loadedBlock value: #() value: self file ].
-			^ loadedBlock value: vis value: self file ].
+	(anMCLoader ancestorsFor: self) ifNotNil: [ :vis |
+		self getFile ifNil: [ ^ loadedBlock value: #(  ) value: self file ].
+		^ loadedBlock value: vis value: self file ].
 	^ notLoadedBlock value
 ]
 
-{ #category : #gofer }
+{ #category : 'gofer' }
 MetacelloPackageSpec >> currentVersionInfo [
 
 	^self goferPackage currentVersionInfo
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadUsing: mcLoader [
 	self explicitLoadUsing: mcLoader ensureSpecLoader
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 	"noop"
 	
 	^true
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> explicitLoadUsing: mcLoader [
 	| wc fetchingSpecLoader |
 
@@ -240,20 +230,20 @@ MetacelloPackageSpec >> explicitLoadUsing: mcLoader [
 		repositories: (fetchingSpecLoader repositoriesFrom: self repositorySpecs).
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloPackageSpec >> extractNameFromFile [
 
-	file == nil ifTrue: [ ^nil ].
-	^(self loader nameComponentsFrom: self file) first
+	file ifNil: [ ^ nil ].
+	^ (self loader nameComponentsFrom: self file) first
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> fetch [
 
 	self fetchUsing: self loader
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> fetchPackage: aLoaderPolicy [
 
 	self fetchUsing: 
@@ -262,7 +252,7 @@ MetacelloPackageSpec >> fetchPackage: aLoaderPolicy [
 			yourself)
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> fetchUsing: mcLoader [
 
 	| fetchingSpecLoader |
@@ -272,64 +262,64 @@ MetacelloPackageSpec >> fetchUsing: mcLoader [
 		repositories: (fetchingSpecLoader repositoriesFrom: self repositorySpecs).
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> file [
 
-	file == nil ifTrue: [ ^self name ].
-	^file
+	file ifNil: [ ^ self name ].
+	^ file
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> file: aString [
 
 	file := aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> file: aString constructor: aVersionConstructor [
     aVersionConstructor fileForPackage: aString
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> forceUpdatePackageSpec: updatedSpecs using: anMCLoader [
 	
 	self updatePackageSpec: updatedSpecs force: true using: anMCLoader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> getFile [
 	"raw access to iv"
 	
 	^file
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> getName [
     "raw access to iv"
 
     ^ name
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> getPostLoadDoIt [
 
 	^postLoadDoIt
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> getPreLoadDoIt [
 
 	^preLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> getRepositories [
     "raw access to iv"
 
     ^ repositories
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> goferBranchPackage: branchName message: commitMessage [
 	"uses gofer to do commit ... non-interactive"
 
@@ -346,7 +336,7 @@ MetacelloPackageSpec >> goferBranchPackage: branchName message: commitMessage [
 	self loader goferCommitBranchPackage: branchName using: self repositorySpecs commitMessage: commitMessage
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> goferCommitPackage: commitMessage [
 	"uses gofer to do commit ... non-interactive"
 	
@@ -360,7 +350,7 @@ MetacelloPackageSpec >> goferCommitPackage: commitMessage [
 		ifFalse: [ self loader goferCommitPackageUsing: self repositorySpecs commitMessage: commitMessage ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> goferLoaderReference [
 
 	^file == nil 
@@ -370,67 +360,66 @@ MetacelloPackageSpec >> goferLoaderReference [
 			MetacelloGoferPackage name: self name packageFilename: self file ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> goferPackage [
 
-	goferPackage == nil 
-		ifTrue: [ goferPackage := MetacelloGoferPackage name: self name packageFilename: self file ].
-	^goferPackage
+	goferPackage ifNil: [ goferPackage := MetacelloGoferPackage name: self name packageFilename: self file ].
+	^ goferPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloPackageSpec >> hasRepository [
     ^ self repositorySpecs notEmpty
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> includes: anObject constructor: aVersionConstructor [
     aVersionConstructor includesForPackage: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloPackageSpec >> includesForPackageOrdering [
   ^ self includes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> info [
 	"test compatibility method"
 
 	^self
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> isPackageLoaded [
 
 	^self isPackageLoaded: self loader
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> isPackageLoaded: aLoader [
 
 	^(self workingCopyNameFor: aLoader) ~~ nil
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> load [
 
 	self explicitLoadUsing: self loader
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> loadUsing: mcLoader [
 
 	self loader doingLoads: [ self explicitLoadUsing: mcLoader ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> loadUsing: aLoader gofer: gofer [
 
 	^aLoader linearLoadPackageSpec: self gofer: gofer
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloPackageSpec >> mergeMap [
 
 	| map |
@@ -442,7 +431,7 @@ MetacelloPackageSpec >> mergeMap [
 	^map
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloPackageSpec >> mergeSpec: anotherSpec [
 
 	| newSpec map anotherRepositories |
@@ -457,32 +446,31 @@ MetacelloPackageSpec >> mergeSpec: anotherSpec [
 	^newSpec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> name [
 
-	name == nil ifTrue: [ name := self extractNameFromFile ].
-	^name
+	^ name ifNil: [ name := self extractNameFromFile ]
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloPackageSpec >> nonOverridable [
 
 	^super nonOverridable, #( repositories)
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> packageSpecsInLoadOrder [
 
 	^{ self. }
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> packagesNeedSavingVisited: visitedProjects using: repos into: aCollection [
 
 	^self loader packagesNeedSavingUsing: repos into: aCollection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloPackageSpec >> postCopy [
 
 	super postCopy.
@@ -490,108 +478,107 @@ MetacelloPackageSpec >> postCopy [
 	repositories := repositories copy.
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> postLoadDoIt [
 
 	^postLoadDoIt
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> postLoadDoIt: anObject [
 
 	anObject setPostLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> postLoadDoIt: aSymbol constructor: aVersionConstructor [
     aVersionConstructor postLoadDoItForPackage: aSymbol
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> preLoadDoIt [
 
 	^preLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> preLoadDoIt: anObject [
 
 	anObject setPreLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> preLoadDoIt: aSymbol constructor: aVersionConstructor [
     aVersionConstructor preLoadDoItForPackage: aSymbol
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
 	packageBlock value: self
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> repositories [
 
-	repositories == nil ifTrue: [ repositories := self project repositoriesSpec ].
-	^ repositories
+	^ repositories ifNil: [ repositories := self project repositoriesSpec ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloPackageSpec >> repositories: anObject [
 	repositories := anObject
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> repositories: aBlock constructor: aVersionConstructor [
     aVersionConstructor repositoriesForPackage: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> repository: aStringOrMetacelloRepositorySpec [
 
 	self repositories repository: aStringOrMetacelloRepositorySpec
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> repository: anObject constructor: aVersionConstructor [
     aVersionConstructor repositoryForPackage: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> repository: aString username: username password: password [
 
 	self repositories repository: aString username: username password: password
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
     aVersionConstructor repositoryForPackage: aString username: username password: password
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> repositoryDescriptions [
     ^ self repositorySpecs collect: [ :repoSpec | repoSpec description ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloPackageSpec >> repositorySpecs [
 
 	^self repositories map values
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> requires: anObject constructor: aVersionConstructor [
     aVersionConstructor requiresForPackage: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 
 	^{ self }
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> savePackage [
 	"Interactive save ... prompted for commit message and package name unless MCVersionNameAndMessageRequest handled"
 
@@ -605,7 +592,7 @@ MetacelloPackageSpec >> savePackage [
 		ifFalse: [ self loader savePackageUsing: self repositorySpecs ]
 ]
 
-{ #category : #fetching }
+{ #category : 'fetching' }
 MetacelloPackageSpec >> searchCacheRepositoryForPackage: searchBlock [
   "evaluate the <searchBlock> if you want to search for the package in a local package cache"
 
@@ -614,47 +601,48 @@ MetacelloPackageSpec >> searchCacheRepositoryForPackage: searchBlock [
   searchBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> setPostLoadDoIt: aSymbol [
 
 	postLoadDoIt := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> setPreLoadDoIt: aSymbol [
 
 	preLoadDoIt := aSymbol
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloPackageSpec >> supplyingAnswers: anObject constructor: aVersionConstructor [
     aVersionConstructor supplyingAnswersForPackage: anObject
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> updateForSpawnMethod: sourceSpec [
-    "This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
+	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
 
-    | nm fl |
-    nm := name.
-    fl := file.
-    fl == nil
-        ifTrue: [ 
-            "if only name has been set, then force the file to be non-nil, if any attribute besides file is set, then leave file nil"
-            {answers.
-            requires.
-            includes.
-            repositories.
-            preLoadDoIt.
-            postLoadDoIt} detect: [ :each | each ~~ nil ] ifNone: [ fl := name ] ].
-    super updateForSpawnMethod: sourceSpec.
-    file := repositories := goferPackage := preLoadDoIt := postLoadDoIt := nil.
-    name := nm.
-    file := fl.
-    ^ file == nil
+	| nm fl |
+	nm := name.
+	fl := file.
+	fl ifNil: [ "if only name has been set, then force the file to be non-nil, if any attribute besides file is set, then leave file nil"
+		{
+			answers.
+			requires.
+			includes.
+			repositories.
+			preLoadDoIt.
+			postLoadDoIt }
+			detect: [ :each | each ~~ nil ]
+			ifNone: [ fl := name ] ].
+	super updateForSpawnMethod: sourceSpec.
+	file := repositories := goferPackage := preLoadDoIt := postLoadDoIt := nil.
+	name := nm.
+	file := fl.
+	^ file == nil
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> updatePackageRepositories: repositorySpecs [
 
 	| resolvedPackageRef |
@@ -664,25 +652,23 @@ MetacelloPackageSpec >> updatePackageRepositories: repositorySpecs [
 	resolvedPackageRef version workingCopy repositoryGroup addRepository: resolvedPackageRef repository
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> updatePackageRepositoriesFor: aVersionSpec [
 	"Don't update the repository unless the package is loaded in the image"
-	
-	self workingCopy == nil ifTrue: [ ^self ].
-	self updatePackageRepositories: self repositorySpecs, aVersionSpec repositorySpecs.
+
+	self workingCopy ifNil: [ ^ self ].
+	self updatePackageRepositories: self repositorySpecs , aVersionSpec repositorySpecs
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> updatePackageSpec: updatedSpecs force: force using: anMCLoader [
 	"Add pkg copy to updatedSpecs if the file in current image is different from the receiver's file"
 
 	| viName |
-	(force not and: [ self getFile == nil ])
-		ifTrue: [ ^ self ].	"no file explicitly specified in this spec"
-	(viName := self workingCopyNameFor: anMCLoader) == nil
-		ifTrue: [ ^ self ].	"no working copy"
+	(force not and: [ self getFile == nil ]) ifTrue: [ ^ self ]. "no file explicitly specified in this spec"
+	(viName := self workingCopyNameFor: anMCLoader) ifNil: [ ^ self ]. "no working copy"
 	viName ~= self file
-		ifTrue: [ 
+		ifTrue: [
 			| spec |
 			spec := self copy.
 			spec file: viName.
@@ -690,39 +676,36 @@ MetacelloPackageSpec >> updatePackageSpec: updatedSpecs force: force using: anMC
 		ifFalse: [ updatedSpecs at: self name put: #uptodate ]
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloPackageSpec >> updatePackageSpec: updatedSpecs using: anMCLoader [
 	"Add pkg copy to updatedSpecs if the file in current image is different from the receiver's file"
 	
 	self updatePackageSpec: updatedSpecs force: false using: anMCLoader
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloPackageSpec >> visitingWithPackages: packages [
 
 	packages at: self name put: self
 ]
 
-{ #category : #gofer }
+{ #category : 'gofer' }
 MetacelloPackageSpec >> workingCopy [
 
 	^self goferPackage workingCopy
 ]
 
-{ #category : #gofer }
+{ #category : 'gofer' }
 MetacelloPackageSpec >> workingCopyName [
 
 	| wc |
-	(wc := self workingCopy) == nil ifTrue: [ ^nil ].
-	wc ancestry ancestors isEmpty not
-		ifTrue: [ ^wc ancestry ancestors first name ].
-	^nil
+	(wc := self workingCopy) ifNil: [ ^ nil ].
+	wc ancestry ancestors isEmpty not ifTrue: [ ^ wc ancestry ancestors first name ].
+	^ nil
 ]
 
-{ #category : #gofer }
+{ #category : 'gofer' }
 MetacelloPackageSpec >> workingCopyNameFor: anMCLoader [
 
-	| vi |
-	(vi := anMCLoader currentVersionInfoFor: self) == nil ifTrue: [ ^nil ].
-	^vi name
+	^ (anMCLoader currentVersionInfoFor: self) ifNotNil: [ :vi | vi name ]
 ]

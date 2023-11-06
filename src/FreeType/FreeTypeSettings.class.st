@@ -2,8 +2,8 @@
 Settings for FreeType
 "
 Class {
-	#name : #FreeTypeSettings,
-	#superclass : #Object,
+	#name : 'FreeTypeSettings',
+	#superclass : 'Object',
 	#instVars : [
 		'gamma',
 		'hinting',
@@ -29,23 +29,25 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'FreeType-Settings'
+	#category : 'FreeType-Settings',
+	#package : 'FreeType',
+	#tag : 'Settings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeSettings class >> current [
-	current == nil ifFalse:[^current].
-	^current := self new
+
+	^ current ifNil: [ current := self new ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FreeTypeSettings class >> initialize [
 	SessionManager default
 		registerGuiClassNamed: self name
 		atPriority: 10
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 FreeTypeSettings class >> shutDown: quitting [
 	quitting ifFalse: [ ^ self ].
 
@@ -59,22 +61,22 @@ FreeTypeSettings class >> shutDown: quitting [
 	EmbeddedFreeTypeFontInstaller resetCurrent."
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 FreeTypeSettings class >> startUp: resuming [
 	resuming ifTrue:[ self updateFreeType ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSettings class >> updateFontsAtImageStartup [
 	^ UpdateFontsAtImageStartup ifNil: [UpdateFontsAtImageStartup := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSettings class >> updateFontsAtImageStartup: aBoolean [
 	UpdateFontsAtImageStartup := aBoolean
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 FreeTypeSettings class >> updateFreeType [
 	self current
 		clearBitBltSubPixelAvailable;
@@ -85,66 +87,66 @@ FreeTypeSettings class >> updateFreeType [
 		ifTrue: [ FreeTypeFontProvider current updateFromSystem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> clearBitBltSubPixelAvailable [
 
 	bitBltSubPixelAvailable := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> clearForceNonSubPixelCount [
 
 	forceNonSubPixelCount := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> defaultSubPixelFilterRatios [
 	^#((1 3 5 3 1) (1 3 5 3 1) (1 3 5 3 1))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> forceAutoHinting [
 	^forceAutoHinting ifNil:[forceAutoHinting := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> forceNonSubPixelCount [
 	^forceNonSubPixelCount ifNil:[forceNonSubPixelCount := 0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> forceNonSubPixelDuring: aBlock [
 	forceNonSubPixelCount ifNil:[forceNonSubPixelCount := 0].
 	forceNonSubPixelCount := forceNonSubPixelCount + 1.
 	aBlock ensure:[forceNonSubPixelCount := forceNonSubPixelCount - 1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> gamma [
 	^gamma ifNil:[gamma := 1.0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> gammaInverseTable [
 	^gammaInverseTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> gammaTable [
 	^gammaTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> glyphContrast [
 	^ 100 - ((self gamma  sqrt * 100) - 50)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> hinting [
 	^hinting ifNil:[hinting := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> hintingFlags [
 	| answer |
 	answer := 0.
@@ -159,7 +161,7 @@ FreeTypeSettings >> hintingFlags [
 	^answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> hintingSymbol [
 	"#Full, #Light, #Normal or #None"
 	^ self monoHinting
@@ -173,7 +175,7 @@ FreeTypeSettings >> hintingSymbol [
 						ifFalse: [#None]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> hintingSymbol: aSymbol [
 	"#Full, #Light, #Normal or #None"
 
@@ -189,40 +191,40 @@ FreeTypeSettings >> hintingSymbol: aSymbol [
 		ifPresent: [ :aClass | aClass refreshAllCompositions ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> lcdHinting [
 	^lcdHinting ifNil:[lcdHinting := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> lcdvHinting [
 	^lcdvHinting ifNil:[lcdvHinting := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> lightHinting [
 	^lightHinting ifNil:[lightHinting := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> monitorType [
   "#LCD or #CRT"
   ^ self subPixelAntiAliasing ifTrue: [#LCD] ifFalse: [#CRT]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> monitorType: aSymbol [
 	"#LCD or #CRT"
 	subPixelAntiAliasing := aSymbol = #LCD.
 	self currentWorld restoreMorphicDisplay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> monoHinting [
 	^monoHinting ifNil:[monoHinting := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> pretendBitBltSubPixelUnavailableDuring: aBlock [
 	"
 	For testing/profiling only.
@@ -246,7 +248,7 @@ FreeTypeSettings >> pretendBitBltSubPixelUnavailableDuring: aBlock [
 		FreeTypeCache current removeAll.]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> setGamma: aFloat [
 
 	(aFloat closeTo: self gamma)
@@ -268,7 +270,7 @@ FreeTypeSettings >> setGamma: aFloat [
 				self currentWorld restoreMorphicDisplay]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> setSubPixelFilter: ratiosArray [
 	"Set the subPixelFilters from ratiosArray.
 	the ratiosArray can specify the red, green, and blue filter ratios separately.
@@ -287,22 +289,22 @@ FreeTypeSettings >> setSubPixelFilter: ratiosArray [
 			self currentWorld restoreMorphicDisplay]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> subPixelAntiAliasing [
 	^ self useSubPixelAntiAliasing and: [ subPixelAntiAliasing ifNil: [ false ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> subPixelAntiAliasing: aBoolean [
 	subPixelAntiAliasing := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> subPixelFilters [
 	^subPixelFilters ifNil:[subPixelFilters := self subPixelFiltersFromRatios: self defaultSubPixelFilterRatios]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> subPixelFiltersFromRatios: anArray [
 	"Convert the ratios in anArray to a similar array containing the filter proportions as floats.
 	Example:
@@ -332,7 +334,7 @@ FreeTypeSettings >> subPixelFiltersFromRatios: anArray [
 	^{rfilter. gfilter. bfilter}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeSettings >> useSubPixelAntiAliasing [
 	^ self forceNonSubPixelCount == 0 and: [ self bitBltSubPixelAvailable ]
 ]

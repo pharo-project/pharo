@@ -15,15 +15,23 @@ transf := (RBRemoveClassPushingStateToSubclassesRefactoring
 ```
 "
 Class {
-	#name : #RBRemoveClassPushingStateToSubclassesRefactoring,
-	#superclass : #RBRemoveClassRefactoring,
+	#name : 'RBRemoveClassPushingStateToSubclassesRefactoring',
+	#superclass : 'RBRemoveClassRefactoring',
 	#instVars : [
 		'refactorings'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #transforming }
+{ #category : 'preconditions' }
+RBRemoveClassPushingStateToSubclassesRefactoring >> breakingChangePreconditions [
+
+	^ { self preconditionHaveNoReferences }
+]
+
+{ #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownClassVarsOf: class [
 	class classVariableNames do: [ :e |
 		refactorings add: (RBPushDownClassVariableRefactoring
@@ -32,7 +40,7 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownCla
 	]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownInstVarsOf: class [
 	class instanceVariableNames
 		do: [ :e |
@@ -43,12 +51,12 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownIns
 						class: class) ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownMethodsOf: class [
 	refactorings add: (RBPushDownMethodRefactoring pushDown: class selectors from: class)
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactorings [
 	"I mimick a composite refactoring. In the future I will take advantage of the new cool RBCompositeRefactoring."
 	
@@ -61,27 +69,13 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactorings [
 			self createRefactoringPushDownClassVarsOf: class]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> initialize [
 	super initialize.
 	refactorings := OrderedCollection new
 ]
 
-{ #category : #preconditions }
-RBRemoveClassPushingStateToSubclassesRefactoring >> preconditions [
-
-	^ classNames inject: self trueCondition into: [ :sum :each |
-		  | aClassOrTrait |
-		  aClassOrTrait := self model classNamed: each asSymbol.
-		  aClassOrTrait ifNil: [
-			  self refactoringError: 'No such class or trait' ].
-		  sum & ((self preconditionIsNotMetaclass: aClassOrTrait)
-		   & (self preconditionHasNoReferences: aClassOrTrait)
-		   & (self preconditionHasNoUsers: aClassOrTrait))
-		  "& ( self preconditionEmptyOrHasNoSubclasses: aClassOrTrait )" ]
-]
-
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 	self createRefactorings.
 	refactorings do: [ :ref | ref generateChanges ].
@@ -89,7 +83,15 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 	self removeClasses
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> removeClasses [
 	classNames do: [:each | self model removeClassKeepingSubclassesNamed: each]
+]
+
+{ #category : 'removing' }
+RBRemoveClassPushingStateToSubclassesRefactoring >> removeClassesChanges [
+
+	self privateTransform.
+	
+	^ self changes
 ]

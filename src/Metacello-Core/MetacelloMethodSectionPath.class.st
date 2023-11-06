@@ -1,11 +1,13 @@
 Class {
-	#name : #MetacelloMethodSectionPath,
-	#superclass : #Array,
-	#type : #variable,
-	#category : #'Metacello-Core-Constructors'
+	#name : 'MetacelloMethodSectionPath',
+	#superclass : 'Array',
+	#type : 'variable',
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 MetacelloMethodSectionPath >> asAttributeOrPath [
     self size = 1
         ifTrue: [ 
@@ -17,7 +19,7 @@ MetacelloMethodSectionPath >> asAttributeOrPath [
     ^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MetacelloMethodSectionPath >> asMetacelloAttributePath [
     ^ self
 ]

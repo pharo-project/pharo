@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloProjectSpec,
-	#superclass : #MetacelloSpec,
+	#name : 'MetacelloProjectSpec',
+	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'name',
 		'className',
@@ -10,10 +10,12 @@ Class {
 		'preLoadDoIt',
 		'postLoadDoIt'
 	],
-	#category : #'Metacello-Core-Specs'
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetacelloProjectSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
@@ -28,49 +30,40 @@ MetacelloProjectSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 			yourself)
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> canDowngradeTo: aMetacelloProjectSpec [
-  (self className = aMetacelloProjectSpec className
-    and: [ self operator == aMetacelloProjectSpec operator ])
-    ifFalse: [ ^ false ].
-  self versionOrNil == nil
-    ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458"
-      ^ true ].
-  ^ (self compareVersions: aMetacelloProjectSpec usingOperator: self operator)
-    not
+
+	(self className = aMetacelloProjectSpec className and: [ self operator == aMetacelloProjectSpec operator ]) ifFalse: [ ^ false ].
+	self versionOrNil ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458" ^ true ].
+	^ (self compareVersions: aMetacelloProjectSpec usingOperator: self operator) not
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> canUpgradeTo: aMetacelloProjectSpec [
-  (self className = aMetacelloProjectSpec className
-    and: [ self operator == aMetacelloProjectSpec operator ])
-    ifFalse: [ ^ false ].
-  self versionOrNil == nil
-    ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458"
-      ^ true ].
-  ^ self compareVersions: aMetacelloProjectSpec usingOperator: self operator
+
+	(self className = aMetacelloProjectSpec className and: [ self operator == aMetacelloProjectSpec operator ]) ifFalse: [ ^ false ].
+	self versionOrNil ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458" ^ true ].
+	^ self compareVersions: aMetacelloProjectSpec usingOperator: self operator
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> className [
     className ifNil: [ self name ifNotNil: [ self className: self constructClassName ] ].
     ^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> className: aString [
     self shouldBeMutable.
     className := aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> className: aString constructor: aVersionConstructor [
     aVersionConstructor classNameForProject: aString
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
   "name className versionString operator loads preLoadDoIt postLoadDoIt"
 
@@ -86,7 +79,7 @@ MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
                     and: [ self postLoadDoIt value == aMetacelloProjectSpec postLoadDoIt value ] ] ] ] ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: anOperator [
   ^ aMetacelloProjectSpec versionOrNil == nil
     ifTrue: [ 
@@ -97,7 +90,7 @@ MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: an
     ifFalse: [ ^ aMetacelloProjectSpec version perform: anOperator with: self version ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
   | vrsn otherVrsn |
   vrsn := self versionOrNil.
@@ -107,17 +100,17 @@ MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
   ^ vrsn versionNumber = otherVrsn versionNumber
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> configHasVersionString [
   ^ self versionString ~~ nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent [
   ^ self configMethodBodyOn: aStream indent: indent fromShortCut: false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut: fromShortCut [
   | hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
   hasClassName := self hasClassName.
@@ -260,7 +253,7 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut:
               self repositories configMethodCascadeOn: aStream indent: indent ] ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> configMethodOn: aStream indent: indent [
 
 	aStream 
@@ -272,7 +265,7 @@ MetacelloProjectSpec >> configMethodOn: aStream indent: indent [
 	aStream nextPut: $.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> configShortCutMethodOn: aStream member: aMember indent: indent [
   | hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
   hasClassName := self hasClassName.
@@ -312,72 +305,72 @@ MetacelloProjectSpec >> configShortCutMethodOn: aStream member: aMember indent: 
       aStream nextPutAll: vs asString printString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProjectSpec >> constructClassName [
     ^ nil
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
     self versionOrNil ifNotNil: [ :vrsn | ^ vrsn currentlyLoadedClassesInVersion ].
     ^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> file [
     ^ self className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> getClassName [
     "raw access to iv"
 
     ^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> getFile [
     "raw access to iv"
 
     ^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> getOperator [
 
 	^operator
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> getPostLoadDoIt [
 
 	^postLoadDoIt
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> getPreLoadDoIt [
 
 	^preLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> getRepositories [
     "raw access to iv"
 
     ^ nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> hasClassName [
     ^ className ~~ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectSpec >> hasLoadConflicts: aMetacelloProjectSpec [
   ^ (self hasNoLoadConflicts: aMetacelloProjectSpec) not
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
   "same as compareEqual:, except if versionString and/or repositories are not 
 	specified for either one, then there are not conflicts"
@@ -388,7 +381,7 @@ MetacelloProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
         and: [ self operator == aMetacelloProjectSpec operator ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectSpec >> hasNonVersionStringField [
     | hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
     hasClassName := self hasClassName.
@@ -402,12 +395,12 @@ MetacelloProjectSpec >> hasNonVersionStringField [
     ^ hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectSpec >> hasRepository [
     ^ false
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> isLocked [
 
   ^ self registration 
@@ -415,19 +408,19 @@ MetacelloProjectSpec >> isLocked [
 	ifNil: [ false ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> label [
 
 	^self name
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloProjectSpec >> load [
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProjectSpec >> loadListForVersion: vrsn [ 
 
 	^ (self loads == nil
@@ -436,23 +429,23 @@ MetacelloProjectSpec >> loadListForVersion: vrsn [
 		ifFalse: [self loads]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> loads [
 	^ loads
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> loads: aCollection [
 
 	aCollection setLoadsInMetacelloProject: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> loads: anObject constructor: aVersionConstructor [
     aVersionConstructor loadsForProject: anObject
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloProjectSpec >> mergeMap [
 
 	| map |
@@ -467,7 +460,7 @@ MetacelloProjectSpec >> mergeMap [
 	^map
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> mergeScriptLoads: aSpec [
     self shouldBeMutable.
     aSpec loads
@@ -475,7 +468,7 @@ MetacelloProjectSpec >> mergeScriptLoads: aSpec [
     self loader: aSpec loader
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> metacelloRegistrationHash [
     "name className versionString operator loads preLoadDoIt postLoadDoIt"
 
@@ -489,13 +482,13 @@ MetacelloProjectSpec >> metacelloRegistrationHash [
     ^ hash bitXor: loads hash
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> name [
 
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> name: aString [
     ((aString at: 1) isSeparator or: [ (aString at: aString size) isSeparator ])
         ifTrue: [ self error: 'Names are not allowed to have leading or trailing blanks: ' , aString printString ].
@@ -503,19 +496,18 @@ MetacelloProjectSpec >> name: aString [
     name := aString
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> name: aString constructor: aVersionConstructor [
     aVersionConstructor nameForProject: aString
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> operator [
 
-	operator == nil ifTrue: [ ^#>= ].
-	^ operator
+	^ operator ifNil: [ #'>=' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> operator: anObject [
     " #= #~= #> #< #>= #<= #~> "
 
@@ -523,62 +515,62 @@ MetacelloProjectSpec >> operator: anObject [
     operator := anObject
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> operator: anObject constructor: aVersionConstructor [
     aVersionConstructor operatorForProject: anObject
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> postLoadDoIt [
 
 	^postLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> postLoadDoIt: anObject [
 
 	anObject setPostLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> postLoadDoIt: aSymbol constructor: aVersionConstructor [
     aVersionConstructor postLoadDoItForProject: aSymbol
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> preLoadDoIt [
 
 	^preLoadDoIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> preLoadDoIt: anObject [
 
 	anObject setPreLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> preLoadDoIt: aSymbol constructor: aVersionConstructor [
     aVersionConstructor preLoadDoItForProject: aSymbol
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloProjectSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
     projectBlock value: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectSpec >> projectLabel [
     ^ 'project'
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> projectPackage [
 
 	^nil
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> registration [
     ^ MetacelloProjectRegistration
         registrationForProjectSpec: self
@@ -586,7 +578,7 @@ MetacelloProjectSpec >> registration [
         ifPresent: [ :existing :new | existing ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
     "name className versionString operator loads preLoadDoIt postLoadDoIt"
 
@@ -594,37 +586,37 @@ MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
         and: [ self versionString = aMetacelloProjectSpec versionString and: [ self operator == aMetacelloProjectSpec operator ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProjectSpec >> resolveToLoadableSpec [
 
 	^self copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProjectSpec >> setLoads: aCollection [
     self shouldBeMutable.
     loads := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProjectSpec >> setName: aStringOrNil [
     self shouldBeMutable.
     name := aStringOrNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> setPostLoadDoIt: aSymbol [
     self shouldBeMutable.
     postLoadDoIt := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> setPreLoadDoIt: aSymbol [
     self shouldBeMutable.
     preLoadDoIt := aSymbol
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProjectSpec >> unregisterProject [
     ^ MetacelloProjectRegistration
         registrationForProjectSpec: self
@@ -632,41 +624,41 @@ MetacelloProjectSpec >> unregisterProject [
         ifPresent: [ :existing :new | existing unregisterProject ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> version [
     self subclassResponsibility
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> version: anObject constructor: aVersionConstructor [
     aVersionConstructor versionForProject: anObject
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> versionKey [
 	"suitable for using as a unique key for the receiver's version in a dictionary"
 
 	^ self version versionKey
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> versionOrNil [
 
 	^[ self version ] on: MetacelloVersionDoesNotExistError do: [:ex | ^nil ].
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectSpec >> versionString [
 	^ versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> versionString: anObject [
     self shouldBeMutable.
     versionString := anObject
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloProjectSpec >> versionString: anObject constructor: aVersionConstructor [
     aVersionConstructor versionStringForProject: anObject
 ]

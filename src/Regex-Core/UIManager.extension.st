@@ -1,6 +1,6 @@
-Extension { #name : #UIManager }
+Extension { #name : 'UIManager' }
 
-{ #category : #'*Regex-Core' }
+{ #category : '*Regex-Core' }
 UIManager >> request: aTitleString regex: initialRegexString [
 	"Prompt the user for a valid regex.
 	 Return nil on cancel or a valid RxMatcher"

@@ -21,25 +21,6 @@ Class {
 	#tag : 'Modeling'
 }
 
-{ #category : 'deprecated' }
-MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
-	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
-
-	^ (self named: nameString)
-		  category: categoryString;
-		  superclassName: superclassString;
-		  traitComposition: traitCompositionString;
-		  classTraitComposition: classTraitCompositionString;
-		  instVarNames: ivarArray;
-		  classVarNames: cvarArray;
-		  poolDictionaryNames: poolArray;
-		  classInstVarNames: civarArray;
-		  type: typeSymbol;
-		  comment: commentString;
-		  commentStamp: stampString;
-		  yourself
-]
-
 { #category : 'instance creation' }
 MCClassDefinition class >> named: nameString [
 
@@ -73,15 +54,16 @@ MCClassDefinition >> actualClass [
 
 { #category : 'initialization' }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
-	variables addAll: (aCollection collect: [:var | aClass name: var asString]).
+
+	variables addAll: (aCollection collect: [ :var | aClass name: var asString ])
 ]
 
 { #category : 'accessing' }
 MCClassDefinition >> category [
-	^ self packageName ifNotNil: [ :package |
-		  (self tagName isNil or: [ self tagName = package ])
-			  ifTrue: [ package ]
-			  ifFalse: [ package , '-' , self tagName ] ]
+
+	^ self tagName
+		  ifNil: [ self packageName ]
+		  ifNotNil: [ :tag | self packageName , '-' , tag ]
 ]
 
 { #category : 'accessing' }
@@ -206,7 +188,7 @@ MCClassDefinition >> createClass [
 
 	superClass := superclassName = #nil ifFalse: [ Smalltalk globals at: superclassName ].
 	^ [
-	  Smalltalk classInstaller make: [ :builder |
+	  self class classInstaller make: [ :builder |
 		  builder
 			  superclass: superClass;
 			  name: name;
@@ -218,7 +200,8 @@ MCClassDefinition >> createClass [
 			  traitComposition: self traitCompositionCompiled;
 			  classTraitComposition: self classTraitCompositionCompiled;
 			  comment: comment stamp: self commentStamp;
-			  category: self category;
+			  package: self packageName;
+			  tag: self tagName;
 			  environment: superClass environment ] ]
 		  on: Warning , DuplicatedVariableError
 		  do: [ :ex | ex resume ]
@@ -298,17 +281,6 @@ MCClassDefinition >> initialize [
 	comment := ''.
 	commentStamp := self defaultCommentStamp.
 	variables := OrderedCollection new
-]
-
-{ #category : 'introspection' }
-MCClassDefinition >> instVarNamed: aString put: aValue [
-
-	self flag: #package. "temporary hack until Tonel is fixed"
-	super
-		instVarNamed: (aString = 'category'
-				 ifTrue: [ 'packageName' ]
-				 ifFalse: [ aString ])
-		put: aValue
 ]
 
 { #category : 'accessing' }
@@ -596,7 +568,9 @@ MCClassDefinition >> tagName [
 { #category : 'accessing' }
 MCClassDefinition >> tagName: aString [
 
-	tagName := aString ifNotNil: [ :tag | tag asSymbol ]
+	tagName := aString = RPackage rootTagName
+		           ifTrue: [ nil ]
+		           ifFalse: [ aString ifNotNil: [ aString asSymbol ] ]
 ]
 
 { #category : 'accessing' }

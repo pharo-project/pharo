@@ -3,29 +3,33 @@ I represent a sequence of refactorings that are executed one after the others.
 I will fail on the first one that fails. 
 "
 Class {
-	#name : #RBCompositeRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'RBCompositeRefactoring',
+	#superclass : 'RBRefactoring',
 	#instVars : [
 		'refactorings'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCompositeRefactoring >> applicabilityPreconditions [
 
 	^ RBCondition true 
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCompositeRefactoring >> breakingChangePreconditions [ 
 
 	^ RBCondition true 
 ]
 
-{ #category : #preconditions }
+{ #category : 'executing' }
 RBCompositeRefactoring >> generateChanges [
 	
+	self prepareForExecution.
+
 	self applicabilityPreconditions check ifFalse: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
@@ -37,25 +41,30 @@ RBCompositeRefactoring >> generateChanges [
 	^ self changes
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBCompositeRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
-{ #category : #transforming }
+{ #category : 'preparation' }
+RBCompositeRefactoring >> prepareForInteractiveMode [
+	self 
+]
+
+{ #category : 'transforming' }
 RBCompositeRefactoring >> privateTransform [
 
 	refactorings do: [ :each | each generateChanges ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeRefactoring >> refactorings [
 
 	^ refactorings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeRefactoring >> refactorings: aCollection [
 
 	refactorings := aCollection

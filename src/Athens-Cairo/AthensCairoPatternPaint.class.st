@@ -2,38 +2,40 @@
 i am abstract class for different kinds of paints in cairo backend.
 "
 Class {
-	#name : #AthensCairoPatternPaint,
-	#superclass : #FFIExternalObject,
+	#name : 'AthensCairoPatternPaint',
+	#superclass : 'FFIExternalObject',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo-Paints'
+	#category : 'Athens-Cairo-Paints',
+	#package : 'Athens-Cairo',
+	#tag : 'Paints'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoPatternPaint class >> finalizeResourceData: handle [
 
 	self primDestroyPattern: handle value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoPatternPaint class >> primDestroyPattern: aHandle [
 	^ self ffiCall: #(void cairo_pattern_destroy (ulong aHandle) )
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensCairoPatternPaint >> asAthensPaintOn: anAthensCanvas [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensCairoPatternPaint >> asStrokePaintOn: aCanvas [
 	^ aCanvas surface createStrokePaintFor: self
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoPatternPaint >> athensFillPath: path on: aCanvas [
 
 	aCanvas
@@ -45,7 +47,7 @@ AthensCairoPatternPaint >> athensFillPath: path on: aCanvas [
 	aCanvas fill
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoPatternPaint >> athensFillRectangle: aRectangle on: aCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -61,7 +63,7 @@ AthensCairoPatternPaint >> athensFillRectangle: aRectangle on: aCanvas [
 	aCanvas fill
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoPatternPaint >> athensLoadOn: anAthensCanvas [
 	"
 	Note: The pattern's transformation matrix will be locked to the user space in effect at the time of cairo_set_source(). This means that further modifications of the current transformation matrix will not affect the source pattern. See cairo_pattern_set_matrix().
@@ -72,7 +74,7 @@ AthensCairoPatternPaint >> athensLoadOn: anAthensCanvas [
 		ifFalse:[ anAthensCanvas setSourceR: 1.0 g: 0.0 b: 0.0 a: 1.0]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoPatternPaint >> defaultExtend [
 "The default extend mode is CAIRO_EXTEND_NONE for surface patterns and CAIRO_EXTEND_PAD for gradient patterns.
 "
@@ -80,7 +82,7 @@ AthensCairoPatternPaint >> defaultExtend [
 	^  CAIRO_EXTEND_NONE
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoPatternPaint >> initialize [
 	handle value = 0
 		ifTrue: [ self error: 'Error creating new paint' ].
@@ -88,17 +90,17 @@ AthensCairoPatternPaint >> initialize [
 	FFIExternalResourceManager addResource: self data: handle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensCairoPatternPaint >> isPatternTypeMismatch [
 	^ self status = CAIRO_STATUS_PATTERN_TYPE_MISMATCH
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensCairoPatternPaint >> isSuccess [
 	^ self status  =	CAIRO_STATUS_SUCCESS
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoPatternPaint >> loadOnCairoCanvas: aCanvas [
 	"
 	Note: The pattern's transformation matrix will be locked to the user space in effect at the time of cairo_set_source(). This means that further modifications of the current transformation matrix will not affect the source pattern. See cairo_pattern_set_matrix().
@@ -109,7 +111,7 @@ AthensCairoPatternPaint >> loadOnCairoCanvas: aCanvas [
 		ifFalse:[ aCanvas setSourceR: 1.0 g: 0.0 b: 0.0 a: 1.0]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoPatternPaint >> maskOn: anAthensCanvas [
 "
 A drawing operator that paints the current source using the alpha channel of pattern as a mask. (Opaque areas of pattern are painted with the source, transparent areas are not painted.)
@@ -117,33 +119,33 @@ A drawing operator that paints the current source using the alpha channel of pat
 	^ self ffiCall: #(void cairo_mask(cairo_t anAthensCanvas, self))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternPaint >> noRepeat [
 	self primSetExtend: CAIRO_EXTEND_NONE
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoPatternPaint >> primSetExtend: extend [
 	^ self ffiCall:#(
 		void cairo_pattern_set_extend ( self , ulong extend) )
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoPatternPaint >> primSetSourceOn: aCanvas [
 	^ self ffiCall: #(void cairo_set_source ( cairo_t  aCanvas,  self))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternPaint >> reflect [
 	self primSetExtend: CAIRO_EXTEND_REFLECT
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternPaint >> repeat [
 	self primSetExtend: CAIRO_EXTEND_REPEAT
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternPaint >> setExtend: aSymbol [
 	"
 	typedef enum {
@@ -162,7 +164,7 @@ AthensCairoPatternPaint >> setExtend: aSymbol [
 	self primSetExtend: enum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternPaint >> setMatrix: m [
 	^ self ffiCall: #(
 		void
@@ -170,7 +172,7 @@ AthensCairoPatternPaint >> setMatrix: m [
 		)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternPaint >> status [
 	^ self ffiCall: #(int cairo_pattern_status (cairo_pattern_t  self))
 ]

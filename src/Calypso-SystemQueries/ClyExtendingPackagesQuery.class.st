@@ -10,43 +10,39 @@ But I can give you extending package from any scope. For example you can retriev
 
 "
 Class {
-	#name : #ClyExtendingPackagesQuery,
-	#superclass : #ClyPackageQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyExtendingPackagesQuery',
+	#superclass : 'ClyPackageQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyExtendingPackagesQuery >> buildResult: aQueryResult [
-	| packages classPackage |
+
+	| packages |
 	packages := IdentitySet new.
 
-	scope methodsDo: [ :eachMethod |
-		classPackage := eachMethod origin package.
-		(eachMethod isDefinedInPackage: classPackage) ifFalse: [
-			eachMethod package ifNotNil: [ :p | packages add: p]]].
+	scope methodsDo: [ :method | method isExtension ifTrue: [ packages add: method package ] ].
 
 	aQueryResult fillWith: packages
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyExtendingPackagesQuery >> checkEmptyResult [
 
-	| classPackage |
-	scope methodsDo: [ :eachMethod |
-		classPackage := eachMethod origin package.
-		(eachMethod isDefinedInPackage: classPackage) ifFalse: [
-			eachMethod package ifNotNil: [ :p | ^false]]].
+	scope methodsDo: [ :method | method isExtension ifTrue: [ ^ false ] ].
 
-	^true
+	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyExtendingPackagesQuery >> description [
 
 	^'extending packages'
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyExtendingPackagesQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^scope includesMethodsAffectedBy: aSystemAnnouncement

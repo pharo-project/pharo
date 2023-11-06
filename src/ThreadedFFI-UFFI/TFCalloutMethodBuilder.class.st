@@ -2,18 +2,19 @@
 I override some methods to correctly generate TFFI methods when using UFFI.
 "
 Class {
-	#name : #TFCalloutMethodBuilder,
-	#superclass : #FFICalloutMethodBuilder,
+	#name : 'TFCalloutMethodBuilder',
+	#superclass : 'FFICalloutMethodBuilder',
 	#classVars : [
 		'ABI_MAPPING'
 	],
 	#pools : [
 		'TFAbiTypes'
 	],
-	#category : #'ThreadedFFI-UFFI'
+	#category : 'ThreadedFFI-UFFI',
+	#package : 'ThreadedFFI-UFFI'
 }
 
-{ #category : #'calling conventions' }
+{ #category : 'calling conventions' }
 TFCalloutMethodBuilder class >> abiConstantFor: aString [
 
 	| key |
@@ -29,13 +30,13 @@ TFCalloutMethodBuilder class >> abiConstantFor: aString [
 		  , key printString ]
 ]
 
-{ #category : #'calling convention' }
+{ #category : 'calling convention' }
 TFCalloutMethodBuilder class >> abiConstantMapping [
 
 	^ ABI_MAPPING ifNil: [ self initializeABIMapping ]
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 TFCalloutMethodBuilder class >> initializeABIMapping [
 
 	"self initializeABIMapping"
@@ -74,13 +75,13 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 		} asDictionary
 ]
 
-{ #category : #'calling convention' }
+{ #category : 'calling convention' }
 TFCalloutMethodBuilder >> abiConstantFor: aSelector [
 
 	^ self class abiConstantFor: aSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 
 	^ TFExternalFunction
@@ -93,7 +94,7 @@ TFCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 		  abi: (self abiConstantFor: calloutAPI callingConvention)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary [
 
 	TFCalloutAPI isTracing ifTrue: [

@@ -1,10 +1,11 @@
 Class {
-	#name : #RGTraitCompositionTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGTraitCompositionTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitCompositionTest >> testGlobalVariablesCollection [
 
 	| globalVariable globalVariable2 env |
@@ -32,7 +33,7 @@ RGTraitCompositionTest >> testGlobalVariablesCollection [
 	self assert: (env hasResolved: #globalVariables)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitCompositionTest >> testImplicitEnvironment [
 
 	| def def2 env |
@@ -48,7 +49,7 @@ RGTraitCompositionTest >> testImplicitEnvironment [
 	self checkImplicitSingleClassEnvironmentOf: def parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitCompositionTest >> testNewTraitComposition [
 
 	| traitComposition |
@@ -58,7 +59,7 @@ RGTraitCompositionTest >> testNewTraitComposition [
 	self assert: (traitComposition isTraitComposition)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitCompositionTest >> testResolvingConsistency [
 
 	| anObject |
@@ -66,7 +67,7 @@ RGTraitCompositionTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitCompositionTest >> testTransformationsCollection [
 
 	| traitComposition env transformation1 transformation2 transformation3 |
@@ -100,7 +101,7 @@ RGTraitCompositionTest >> testTransformationsCollection [
 	self assert: (traitComposition hasResolved: #transformations)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitCompositionTest >> testUsedTraits [
 	| traitComposition env trait1 trait2 trait3 trait4 transformation2 transformation3 usedTraits |
 	traitComposition := RGTraitComposition unnamed.

@@ -2,28 +2,30 @@
 An abstract superclass for all font descriptions of embedded free type fonts
 "
 Class {
-	#name : #EmbeddedFreeTypeFontDescription,
-	#superclass : #Object,
-	#category : #'EmbeddedFreeType-Base'
+	#name : 'EmbeddedFreeTypeFontDescription',
+	#superclass : 'Object',
+	#category : 'EmbeddedFreeType-Base',
+	#package : 'EmbeddedFreeType',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmbeddedFreeTypeFontDescription class >> canBeInstalled [
 	"By default, concrete font descriptions can be installed anywhere"
 	^ self isAbstract not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedFreeTypeFontDescription class >> fontContents [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedFreeTypeFontDescription class >> installAllFontsIn: provider [
 	self allSubclasses do: [ :each | each installFontsIn: provider ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedFreeTypeFontDescription class >> installFontsIn: provider [
 	self canBeInstalled ifFalse: [ ^ self ].
 	provider
@@ -31,12 +33,12 @@ EmbeddedFreeTypeFontDescription class >> installFontsIn: provider [
 		baseName: self originalFileName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmbeddedFreeTypeFontDescription class >> isAbstract [
 	^self name = #EmbeddedFreeTypeFontDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedFreeTypeFontDescription class >> originalFileName [
 	self subclassResponsibility
 ]

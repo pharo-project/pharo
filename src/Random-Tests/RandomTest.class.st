@@ -2,21 +2,22 @@
 SUnit tests for random generator
 "
 Class {
-	#name : #RandomTest,
-	#superclass : #ClassTestCase,
+	#name : 'RandomTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'gen'
 	],
-	#category : #'Random-Tests'
+	#category : 'Random-Tests',
+	#package : 'Random-Tests'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 RandomTest >> classToBeTested [
 
 	^ Random
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> generateNewSequenceOfSize: aNumber withGenerator: aRandom [
 
 	| results |
@@ -28,13 +29,13 @@ RandomTest >> generateNewSequenceOfSize: aNumber withGenerator: aRandom [
 	^ results asArray
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RandomTest >> setUp [
 	super setUp.
 	gen := Random seed: 112629
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testDistribution [
 	| results occurrences generator |
 	1 to: 100 do: [ :i |
@@ -50,7 +51,7 @@ RandomTest >> testDistribution [
 		self assert: occurrences stdev < 10]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNext [
 
 	10000 timesRepeat: [
@@ -61,7 +62,7 @@ RandomTest >> testNext [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextBetweenAnd [
 
 	10000 timesRepeat: [
@@ -71,7 +72,7 @@ RandomTest >> testNextBetweenAnd [
 		self assert: (next < 5) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextInteger [
 	| int |
 	int := gen nextInteger: 256.
@@ -79,7 +80,7 @@ RandomTest >> testNextInteger [
 	self assert: (int between: 1 and: 256)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextIntegerBetweenAnd [
 
 	10000 timesRepeat: [
@@ -89,7 +90,7 @@ RandomTest >> testNextIntegerBetweenAnd [
 		self assert: (next between: -3 and: 5) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testNextInto [
 	| array |
 	array := Array new: 8.
@@ -97,7 +98,7 @@ RandomTest >> testNextInto [
 	self assert: (array allSatisfy: [ :each | each isFloat and: [ each >= 0 and: [ each < 1 ] ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testPrimitiveRandomGeneration1 [
 
 	self
@@ -123,7 +124,7 @@ RandomTest >> testPrimitiveRandomGeneration1 [
 			   391109809 395500445 774308967 509549754 1714383213 1069569682 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testPrimitiveRandomGeneration2 [
 
 	self
@@ -150,7 +151,7 @@ RandomTest >> testPrimitiveRandomGeneration2 [
 			   1267254030 2056734050 1359495350 1088203006 1024528242 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testPrimitiveRandomGeneration3 [
 
 	self
@@ -178,7 +179,7 @@ RandomTest >> testPrimitiveRandomGeneration3 [
 			   498333902 399158151 832415416 1705443437 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RandomTest >> testUnixRandomGeneratorSeed [
 	"the test is very slow on the CI (>2 minutes)"
 	self skipOnPharoCITestingEnvironment.

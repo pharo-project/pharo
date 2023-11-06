@@ -17,23 +17,25 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyProtocolEditorMorph,
-	#superclass : #ClyStatusBarItemMorph,
+	#name : 'ClyProtocolEditorMorph',
+	#superclass : 'ClyStatusBarItemMorph',
 	#instVars : [
 		'extensionCheckbox',
 		'editButton',
 		'label',
 		'resetButton'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClyProtocolEditorMorph class >> initialize [
 	self deprecatedAliases: { #ClyProtocolAndPackageEditorMorph }
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyProtocolEditorMorph >> build [
 	self buildResetButton.
 	self addMorphBack: resetButton.
@@ -50,7 +52,7 @@ ClyProtocolEditorMorph >> build [
 	self update
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyProtocolEditorMorph >> buildEditButton [
 	editButton := IconicButtonMorph new
 		target: self;
@@ -61,7 +63,7 @@ ClyProtocolEditorMorph >> buildEditButton [
 		borderWidth: 0
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyProtocolEditorMorph >> buildExtensionCheckBoxButton [
 	extensionCheckbox := self theme
 		newCheckboxIn: self
@@ -77,14 +79,14 @@ ClyProtocolEditorMorph >> buildExtensionCheckBoxButton [
 		hResizing: #shrinkWrap
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyProtocolEditorMorph >> buildLabel [
 
 	label := self theme newLabelIn: self label: self printProtocolOrPackage.
 	label on: #click send: #openEditor to: self
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyProtocolEditorMorph >> buildResetButton [
 
 	resetButton := IconicButtonMorph new
@@ -98,41 +100,40 @@ ClyProtocolEditorMorph >> buildResetButton [
 		layoutInset: 4@0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyProtocolEditorMorph >> initialize [
 	super initialize.
 	self cellInset: 2@2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyProtocolEditorMorph >> isExtensionActive [
 
 	^ownerTool extendingPackage notNil
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyProtocolEditorMorph >> openEditor [
 
 	self requestChangeBy: [
 		self isExtensionActive
-			ifTrue: [ self requestPackage]
-			ifFalse: [ self requestProtocol ]
-	]
+			ifTrue: [ self requestPackage ]
+			ifFalse: [ self requestProtocol ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyProtocolEditorMorph >> ownerTool: anObject [
 
 	super ownerTool: anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyProtocolEditorMorph >> printProtocol [
 
 	^ ownerTool methodProtocol ifNil: [ Protocol unclassified asText makeAllColor: Color red ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyProtocolEditorMorph >> printProtocolOrPackage [
 
 	^self isExtensionActive
@@ -140,7 +141,7 @@ ClyProtocolEditorMorph >> printProtocolOrPackage [
 		ifFalse: [ self printProtocol ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyProtocolEditorMorph >> requestChangeBy: aBlock [
 
 	aBlock on: CmdCommandAborted do: [ :err ].
@@ -148,7 +149,7 @@ ClyProtocolEditorMorph >> requestChangeBy: aBlock [
 	self update
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyProtocolEditorMorph >> requestPackage [
 
 	| extendingPackage |
@@ -157,7 +158,7 @@ ClyProtocolEditorMorph >> requestPackage [
 	ownerTool extendingPackage: extendingPackage
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyProtocolEditorMorph >> requestProtocol [
 
 	| newProtocol priorProtocol |
@@ -169,14 +170,14 @@ ClyProtocolEditorMorph >> requestProtocol [
 	ownerTool methodProtocol: newProtocol
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyProtocolEditorMorph >> resetProtocolAndPackage [
 
 	ownerTool methodProtocol: Protocol unclassified.
 	self update
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyProtocolEditorMorph >> toggleExtension [
 
 	self requestChangeBy: [
@@ -186,7 +187,7 @@ ClyProtocolEditorMorph >> toggleExtension [
 	]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyProtocolEditorMorph >> update [
 	label color: label defaultColor.
 	label contents: self printProtocolOrPackage.

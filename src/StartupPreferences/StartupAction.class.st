@@ -2,18 +2,19 @@
 I am an atomic item used to execute a portion of code at image startup.
 "
 Class {
-	#name : #StartupAction,
-	#superclass : #Object,
+	#name : 'StartupAction',
+	#superclass : 'Object',
 	#instVars : [
 		'code',
 		'hasBeenExecuted',
 		'runOnce',
 		'name'
 	],
-	#category : #StartupPreferences
+	#category : 'StartupPreferences',
+	#package : 'StartupPreferences'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StartupAction class >> name: nameOfItem code: code [
 
 	^ self new
@@ -22,7 +23,7 @@ StartupAction class >> name: nameOfItem code: code [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StartupAction class >> name: nameOfItem code: code runOnce: aBoolean [
 
 	^ self new
@@ -32,26 +33,26 @@ StartupAction class >> name: nameOfItem code: code runOnce: aBoolean [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 StartupAction >> = anObject [
 
 	anObject class = self class ifFalse: [ ^ false ].
 	^ self code = anObject code and: [ self name = anObject name and: [ self runOnce = anObject runOnce ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> code [
 
 	^ code
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> code: anObject [
 
 	code := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 StartupAction >> execute [
 
 	| block correctlyExecuted |
@@ -66,49 +67,49 @@ StartupAction >> execute [
 	self hasBeenExecuted: correctlyExecuted
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> hasBeenExecuted [
 
 	^ hasBeenExecuted ifNil: [ hasBeenExecuted := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> hasBeenExecuted: anObject [
 
 	hasBeenExecuted := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 StartupAction >> printOn: aStream [
 
 	aStream <<'a ' << self class name << '(' << self name << ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> runOnce [
 
 	^ runOnce ifNil: [ runOnce := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupAction >> runOnce: anObject [
 
 	runOnce := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 StartupAction >> storeOn: aStream [
 
 	aStream << self class name << ' name: '<< self name printString <<' code: ' << code printString.

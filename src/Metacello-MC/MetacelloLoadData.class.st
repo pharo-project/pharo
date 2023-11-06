@@ -1,15 +1,17 @@
 Class {
-	#name : #MetacelloLoadData,
-	#superclass : #Object,
+	#name : 'MetacelloLoadData',
+	#superclass : 'Object',
 	#instVars : [
 		'dataMap',
 		'versionInfoMap',
 		'packageNameMap'
 	],
-	#category : #'Metacello-MC-Loaders'
+	#category : 'Metacello-MC-Loaders',
+	#package : 'Metacello-MC',
+	#tag : 'Loaders'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadData >> addVersion: version versionInfo: versionInfo resolvedReference: resolvedReference packageSpec: packageSpec [
 	| vis |
 	"check for duplicates and use the one that is being added"
@@ -30,7 +32,7 @@ MetacelloLoadData >> addVersion: version versionInfo: versionInfo resolvedRefere
 	self packageNameMap at: packageSpec name put: {versionInfo}
 ]
 
-{ #category : #versionInfo }
+{ #category : 'versionInfo' }
 MetacelloLoadData >> ancestorsFor: packageSpec ifAbsent: aBlock [
 
 	^self versionInfoMap 
@@ -41,7 +43,7 @@ MetacelloLoadData >> ancestorsFor: packageSpec ifAbsent: aBlock [
 				ifAbsent: aBlock ]
 ]
 
-{ #category : #versionInfo }
+{ #category : 'versionInfo' }
 MetacelloLoadData >> currentVersionInfoFor: packageSpec ifAbsent: aBlock [
 
 	^self versionInfoMap 
@@ -54,36 +56,33 @@ MetacelloLoadData >> currentVersionInfoFor: packageSpec ifAbsent: aBlock [
 				ifAbsent: aBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadData >> dataMap [
 
-	dataMap == nil ifTrue: [ dataMap := Dictionary new ].
-	^dataMap
+	^ dataMap ifNil: [ dataMap := Dictionary new ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloLoadData >> do: aBlock [
 
 	self dataMap valuesDo: [:ar |
 		aBlock value: (ar at: 1) value: (ar at: 2) value: (ar at: 3) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloLoadData >> isEmpty [
 
 	^self dataMap isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadData >> packageNameMap [
 
-	packageNameMap == nil ifTrue: [ packageNameMap := Dictionary new ].
-	^packageNameMap
+	^ packageNameMap ifNil: [ packageNameMap := Dictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadData >> versionInfoMap [
 
-	versionInfoMap == nil ifTrue: [ versionInfoMap := Dictionary new ].
-	^versionInfoMap
+	^ versionInfoMap ifNil: [ versionInfoMap := Dictionary new ]
 ]

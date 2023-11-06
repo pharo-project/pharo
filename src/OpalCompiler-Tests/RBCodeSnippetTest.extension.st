@@ -1,6 +1,6 @@
-Extension { #name : #RBCodeSnippetTest }
+Extension { #name : 'RBCodeSnippetTest' }
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileFailBlock [
 
 	| method error |
@@ -24,7 +24,7 @@ RBCodeSnippetTest >> testCompileFailBlock [
 			self testExecute: method ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileFaulty [
 
 	| method |
@@ -48,7 +48,7 @@ RBCodeSnippetTest >> testCompileFaulty [
 	self testExecute: method
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileOnError [
 
 	| method error |
@@ -66,7 +66,7 @@ RBCodeSnippetTest >> testCompileOnError [
 			self testExecute: method ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileOnErrorResume [
 
 	| method error |
@@ -81,7 +81,7 @@ RBCodeSnippetTest >> testCompileOnErrorResume [
 	self testExecute: method
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
 
 	| method error |
@@ -106,7 +106,7 @@ RBCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
 			self testExecute: method ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testCompileWithRequestor [
 
 	| requestor method |
@@ -136,7 +136,7 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 	self testExecute: method
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testDecompile [
 
 	| method ast |
@@ -149,7 +149,7 @@ RBCodeSnippetTest >> testDecompile [
 	"Decompilation lose many information. Not sure how to test more"
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testDecompileIR [
 
 	| method ir |
@@ -160,7 +160,7 @@ RBCodeSnippetTest >> testDecompileIR [
 	"Decompilation lose information. Not sure how to test more"
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testDoSemanticAnalysis [
 	"We should test more than that"
 
@@ -172,7 +172,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysis [
 	self assert: (snippet hasAllNotices: ast allNotices)
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 	"We should test more than that"
 
@@ -188,7 +188,19 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 			self assert: error isNil ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDump [
+
+	| ast dump ast2 dump2 |
+	ast := snippet parse.
+	dump := ast dump.
+	ast2 := OpalCompiler new evaluate: dump.
+	self assert: ast2 equals: ast.
+	dump2 := ast2 dump.
+	self assert: dump2 equals: dump
+]
+
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testExecute: method [
 
 	| runBlock phonyArgs |
@@ -201,7 +213,7 @@ RBCodeSnippetTest >> testExecute: method [
 	self testExecuteBlock: runBlock
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testExecuteBlock: aRunBlock [
 
 	| runBlock |

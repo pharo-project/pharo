@@ -2,18 +2,20 @@
 SUnit tests for objects
 "
 Class {
-	#name : #ObjectTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'ObjectTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ObjectTest >> classToBeTested [
 
 	^ Object
 ]
 
-{ #category : #'tests - reflecting' }
+{ #category : 'tests - reflecting' }
 ObjectTest >> testAdoptInstance [
 
 	| point |
@@ -34,7 +36,7 @@ ObjectTest >> testAdoptInstance [
 	self should: [ Object adoptInstance: point ] raise: PrimitiveFailed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectTest >> testAs [
 	| coll1 coll2 |
 	coll1 := {1 . 2 . 3}.
@@ -48,7 +50,7 @@ ObjectTest >> testAs [
 	self assert: coll1 identicalTo: coll2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectTest >> testAssert [
 
 	self shouldnt: [Object new assert: true] raise: AssertionFailure.
@@ -57,7 +59,7 @@ ObjectTest >> testAssert [
 		self should: [Object new assert: 1] raise: AssertionFailure ] raise: [NonBooleanReceiver]. 
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 ObjectTest >> testBasicSize [
 	"Numbers are not indexable"
 	self assert: 1 basicSize equals: 0.
@@ -66,20 +68,20 @@ ObjectTest >> testBasicSize [
 	self assert: #(a b c) basicSize equals: 3
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 ObjectTest >> testBasicSizeNotOverwritten [
 	"#basicSize should not be overwritten by subclasses of Object, except in Context"
 
 	self assert: #basicSize implementors asArray equals: {Context>>#basicSize. Object>>#basicSize}
 ]
 
-{ #category : #'tests - write barrier' }
+{ #category : 'tests - write barrier' }
 ObjectTest >> testBeReadOnlyLiteral [
 	self assert: String new beReadOnlyLiteral isReadOnlyObject.
 	self deny: Object new beReadOnlyLiteral isReadOnlyObject
 ]
 
-{ #category : #'tests - write barrier' }
+{ #category : 'tests - write barrier' }
 ObjectTest >> testBeRecursivelyReadOnlyObject [
 
 	| assoc array |
@@ -94,7 +96,7 @@ ObjectTest >> testBeRecursivelyReadOnlyObject [
 	self should: [ array second  at: 1 put: 2 ] raise: ModificationForbidden
 ]
 
-{ #category : #'tests - write barrier' }
+{ #category : 'tests - write barrier' }
 ObjectTest >> testBeRecursivelyWritableObject [
 
 	| assoc array |
@@ -119,7 +121,7 @@ ObjectTest >> testBeRecursivelyWritableObject [
 	self assert: array second first equals: 2
 ]
 
-{ #category : #'tests - reflecting' }
+{ #category : 'tests - reflecting' }
 ObjectTest >> testBecome [
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
       object pointing to the other are pointing to the object"
@@ -135,7 +137,7 @@ ObjectTest >> testBecome [
 	self assert: pt1 equals: 100 @ 100
 ]
 
-{ #category : #'tests - reflecting' }
+{ #category : 'tests - reflecting' }
 ObjectTest >> testBecomeForward [
 	"this test should that all the variables pointing to an object are pointing now to another one.
 	Not that this inverse is not true. This kind of become is called oneWayBecome in VW"
@@ -150,7 +152,7 @@ ObjectTest >> testBecomeForward [
 	self assert: pt1 equals: 100 @ 100
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectTest >> testCaseOf [
 	| temp |
 
@@ -189,7 +191,7 @@ ObjectTest >> testCaseOf [
 		] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectTest >> testCaseOfOtherwise [
 	| temp |
 	"Test for Value"
@@ -243,13 +245,13 @@ ObjectTest >> testCaseOfOtherwise [
 	self assert: temp equals: 3
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 ObjectTest >> testDisplayString [
 
 	self assert: Object new displayString equals: 'an Object'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 ObjectTest >> testDisplayStringLimitedString [
 
 	| actual |
@@ -257,7 +259,7 @@ ObjectTest >> testDisplayStringLimitedString [
 	self assert: actual equals: 'an O[..]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectTest >> testInstVarNamed [
 	| obj |
 	obj := ObjectMockForTest new.
@@ -274,7 +276,7 @@ ObjectTest >> testInstVarNamed [
 		equals: 'timoleon'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectTest >> testInstVarNamedPut [
 	| obj |
 	obj := ObjectMockForTest new.
@@ -285,7 +287,7 @@ ObjectTest >> testInstVarNamedPut [
 	self should: [ obj instVarNamed: 'timoleon' put: 1 ] raise: InstanceVariableNotFound
 ]
 
-{ #category : #'tests - reflecting' }
+{ #category : 'tests - reflecting' }
 ObjectTest >> testPrimitiveChangeClassTo [
 
 	| point |
@@ -306,7 +308,7 @@ ObjectTest >> testPrimitiveChangeClassTo [
 	self should: [ point primitiveChangeClassTo: Object new ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 ObjectTest >> testPrintLimitedString [
 
 	| actual |
@@ -314,23 +316,23 @@ ObjectTest >> testPrintLimitedString [
 	self assert: actual equals: 'an O[..]'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 ObjectTest >> testPrintString [
 
 	self assert: Object new printString equals: 'an Object'
 ]
 
-{ #category : #'tests - introspection' }
+{ #category : 'tests - introspection' }
 ObjectTest >> testReadSlot [
 	self assert: (5 @ 3 readSlot: (Point slotNamed: #x)) equals: 5
 ]
 
-{ #category : #'tests - introspection' }
+{ #category : 'tests - introspection' }
 ObjectTest >> testReadSlotNamed [
 	self assert: (5 @ 3 readSlotNamed: #x) equals: 5
 ]
 
-{ #category : #'tests - introspection' }
+{ #category : 'tests - introspection' }
 ObjectTest >> testWriteSlotNamedValue [
 	| object |
 	object := 5 @ 6.
@@ -339,7 +341,7 @@ ObjectTest >> testWriteSlotNamedValue [
 	self assert: object equals: 7 @ 6
 ]
 
-{ #category : #'tests - introspection' }
+{ #category : 'tests - introspection' }
 ObjectTest >> testWriteSlotValue [
 	| object |
 	object := 5 @ 6.

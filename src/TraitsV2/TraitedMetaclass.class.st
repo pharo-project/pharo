@@ -8,24 +8,27 @@ Also I have the localMethodDict and the traitComposition of the base class.
 So it is not needed to recompile the methods from TraitedClass. Check #initializeBasicMethods for more details
 "
 Class {
-	#name : #TraitedMetaclass,
-	#superclass : #Metaclass,
+	#name : 'TraitedMetaclass',
+	#superclass : 'Metaclass',
 	#instVars : [
 		'localMethods',
 		'composition',
 		'baseLocalMethods',
 		'baseComposition'
 	],
-	#category : #'TraitsV2-Base'
+	#category : 'TraitsV2-Base',
+	#package : 'TraitsV2',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass class >> traitedClassTrait [
 	^ (TaCompositionElement for: TraitedClass)
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
+	<reflection: 'Class structural modification - Selector/Method modification'>
 
 	self localMethodDict at: selector put: compiledMethod.
 
@@ -34,62 +37,55 @@ TraitedMetaclass >> addAndClassifySelector: selector withMethod: compiledMethod 
 	TraitChange addSelector: selector on: self
 ]
 
-{ #category : #'accessing - method dictionary' }
-TraitedMetaclass >> addSelector: selector withRecompiledMethod: compiledMethod [
-
-	compiledMethod isFromTrait ifTrue: [ ^ super addSelector: selector withRecompiledMethod: compiledMethod ].
-
-	self addSelector: selector withMethod: compiledMethod
-]
-
-{ #category : #querying }
+{ #category : 'querying' }
 TraitedMetaclass >> allTraits [
-
+	<reflection: 'Class structural inspection - Traits'>
 	^ self traitComposition allTraits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> baseComposition [
 	^ baseComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> baseComposition: anObject [
 	baseComposition := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> baseLocalMethods [
 	^ baseLocalMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> baseLocalMethods: anObject [
 	baseLocalMethods := anObject
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
 
 	^ aConfiguredPrinter traitedMetaclassDefinitionString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitedMetaclass >> emptyMethodDictionary [
 	^ MethodDictionary new: 64
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 TraitedMetaclass >> expandedDefinitionStringFor: aPrinter [
 
 	^ aPrinter expandedTraitedMetaclassDefinitionString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> findOriginClassOf: aMethod [
 
 	"I return the myself or the trait that has the original implementation of a method.
 	If the method is an alias, the returned class includes the original aliased method"
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 
 	(aMethod hasProperty: #traitSource)
 		ifTrue: [ ^ aMethod traitSource innerClass ].
@@ -102,7 +98,7 @@ TraitedMetaclass >> findOriginClassOf: aMethod [
 		ifNone: [ self class traitedClassTrait traitDefining: aMethod selector ifNone: [ ^ self ] ]) innerClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> findOriginMethodOf: aMethod [
 
 	"I return the original method for a aMethod.
@@ -110,6 +106,7 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 	If it cames from a trait composition I look for the method in the trait composition.
 	First I try with the trait stored in the traitSource.
 	If it is an aliased or conflicting method, the method is look up in the whole trait composition"
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 
 	(self isLocalSelector: aMethod selector)
 		ifTrue: [ ^ aMethod].
@@ -125,18 +122,19 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 		compiledMethodAt: aMethod selector ifAbsent: [ ^ aMethod ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> hasTraitComposition [
 
 	^ self traitComposition isEmpty not
 ]
 
-{ #category : #'testing - method dictionary' }
+{ #category : 'testing - method dictionary' }
 TraitedMetaclass >> includesLocalSelector: aSymbol [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self isLocalSelector: aSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitedMetaclass >> initialize [
 	super initialize.
 	localMethods := self emptyMethodDictionary.
@@ -146,7 +144,7 @@ TraitedMetaclass >> initialize [
 	baseLocalMethods := self emptyMethodDictionary
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitedMetaclass >> initializeBasicMethods [
 	| selectors |
 
@@ -157,7 +155,7 @@ TraitedMetaclass >> initializeBasicMethods [
 	selectors do: [ :e | self class traitedClassTrait copyMethod: e into: self replacing: true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> isAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias defined
 	in my or in another composition somewhere deeper in
@@ -166,7 +164,7 @@ TraitedMetaclass >> isAliasSelector: aSymbol [
 	^ self traitComposition isAliasSelector: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> isLocalAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias defined
 	in my trait composition."
@@ -174,13 +172,13 @@ TraitedMetaclass >> isLocalAliasSelector: aSymbol [
 	^ self traitComposition isLocalAliasSelector: aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> isLocalSelector: aSelector [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ localMethods includesKey: aSelector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> isRejectedMethod: aSelector [
 	"Determine if the method is not to be installed in method dictionary"
 
@@ -210,7 +208,7 @@ TraitedMetaclass >> isRejectedMethod: aSelector [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TraitedMetaclass >> isSelectorToKeep: aSelector [
 	"I have to keep the local methods and the methods from TraitedClass
 	The methods from TraitedClass makes me a class suporting traits, without them I am a normal class"
@@ -219,25 +217,25 @@ TraitedMetaclass >> isSelectorToKeep: aSelector [
 		or: [ TraitedClass methodDict includesKey: aSelector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> localMethodDict [
 	^ localMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses"
 
 	^ localMethods values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> localSelectors [
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ localMethods keys
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitedMetaclass >> rebuildMethodDictionary [
 	| selectors removedSelectors modified |
 
@@ -261,7 +259,7 @@ TraitedMetaclass >> rebuildMethodDictionary [
 	^ modified
 ]
 
-{ #category : #categories }
+{ #category : 'categories' }
 TraitedMetaclass >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
 
@@ -277,7 +275,7 @@ TraitedMetaclass >> recategorizeSelector: selector from: oldProtocol to: newProt
 		self notifyOfRecategorizedSelector: selectorAlias from: oldProtocol to: newProtocol ]
 ]
 
-{ #category : #recompilation }
+{ #category : 'recompilation' }
 TraitedMetaclass >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
@@ -285,41 +283,40 @@ TraitedMetaclass >> recompile: selector from: oldClass [
 	method := oldClass compiledMethodAt: selector.
 	newMethod := self recompileBasic: selector from: oldClass.
 
-	method properties
-		at: #traitSource
-		ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource].
+	method properties at: #traitSource ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource ].
 
-	self addSelector: selector withRecompiledMethod: newMethod
+	self addSelectorSilently: selector withMethod: newMethod
 ]
 
-{ #category : #traits }
+{ #category : 'traits' }
 TraitedMetaclass >> removeFromComposition: aTrait [
 	self setTraitComposition: (self traitComposition copyWithoutTrait: aTrait asTraitComposition)
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 TraitedMetaclass >> removeSelector: aSelector [
 
 	"When a selector is removed it should be notified to my users.
 	Check the class TraitChange for more details"
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	super removeSelector: aSelector.
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 
 	TraitChange removeSelector: aSelector on: self
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 TraitedMetaclass >> slots [
-
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ super slots reject: [ :e | composition slots includes: e ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> traitComposition [
 	^ composition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> traitComposition: aComposition [
 
 	aComposition asTraitComposition allTraits do: [ :aMaybeTrait |
@@ -329,18 +326,21 @@ TraitedMetaclass >> traitComposition: aComposition [
 	composition := aComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> traitCompositionString [
 	^ self traitComposition asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitedMetaclass >> traitUsers [
 
+	<reflection: 'Class structural inspection - Traits'>
 	^ #()
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TraitedMetaclass >> traits [
+
+	<reflection: 'Class structural inspection - Traits'>
 	^ composition traits
 ]

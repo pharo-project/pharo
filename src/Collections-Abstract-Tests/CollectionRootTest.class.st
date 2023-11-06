@@ -3,65 +3,67 @@ I'm the root of the hierarchy of the collection tests.
 
 "
 Class {
-	#name : #CollectionRootTest,
-	#superclass : #ClassTestCase,
+	#name : 'CollectionRootTest',
+	#superclass : 'ClassTestCase',
 	#traits : 'TIterateTest + TEmptyTest + TSizeTest',
 	#classTraits : 'TIterateTest classTrait + TEmptyTest classTrait + TSizeTest classTrait',
-	#category : #'Collections-Abstract-Tests-Base'
+	#category : 'Collections-Abstract-Tests-Base',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CollectionRootTest class >> isAbstract [
 
 	^ self name = #CollectionRootTest
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	self subclassResponsibility
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> doWithoutNumber [
 
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> element [
 	^ 3
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> elementTwiceIn [
 	^ 1 "12332312322"
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> empty [
 	self subclassResponsibility
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> expectedElementByDetect [
 
 	^ -2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> nonEmpty [
 
 	self subclassResponsibility
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 CollectionRootTest >> sizeCollection [
 	"Answers a collection not empty"
 	^ self subclassResponsibility
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 CollectionRootTest >> testAsMultilineString [
 
 	| expectedResult |
@@ -74,7 +76,7 @@ c'.
 		assert: 'abc' asMultilineString equals: expectedResult
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 CollectionRootTest >> testCopyWithAll [
 
 	| col res |
@@ -106,7 +108,7 @@ CollectionRootTest >> testCopyWithAll [
 		deny: col identicalTo: res
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 CollectionRootTest >> testCopyWithoutFirst [
 
 	| col res |
@@ -130,7 +132,7 @@ CollectionRootTest >> testCopyWithoutFirst [
 		deny: col identicalTo: res
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 CollectionRootTest >> testCopyWithoutFirstOccuranceOf [
 
 	| col res |
@@ -160,14 +162,14 @@ CollectionRootTest >> testCopyWithoutFirstOccuranceOf [
 		deny: col identicalTo: res
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 CollectionRootTest >> testDetectIfFoundIfNoneWhenNobodyIsFound [
 	| wasFound |
 	wasFound := self collectionWithoutNilElements detect: [ :each | each isNil ] ifFound: [ true ] ifNone: [ false ].
 	self deny: wasFound
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 CollectionRootTest >> testDetectIfFoundIfNoneWhenSomethingIsFound [
 	| wasFound foundObject |
 	foundObject := nil.
@@ -182,7 +184,7 @@ CollectionRootTest >> testDetectIfFoundIfNoneWhenSomethingIsFound [
 		assert: (self collectionWithoutNilElements includes: foundObject)
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 CollectionRootTest >> testDetectIfFoundIfNoneWhenSomethingIsFoundIgnoringTheFoundObject [
 	"The foundBlock can be a zero argument block ignoring the object found"
 
@@ -191,7 +193,7 @@ CollectionRootTest >> testDetectIfFoundIfNoneWhenSomethingIsFoundIgnoringTheFoun
 	self assert: wasFound
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 CollectionRootTest >> testDetectIfFoundWhenNobodyIsFound [
 	| wasFound |
 	wasFound := false.
@@ -199,7 +201,7 @@ CollectionRootTest >> testDetectIfFoundWhenNobodyIsFound [
 	self deny: wasFound
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 CollectionRootTest >> testDetectIfFoundWhenSomethingIsFound [
 	| wasFound foundObject |
 	wasFound := false.
@@ -214,7 +216,7 @@ CollectionRootTest >> testDetectIfFoundWhenSomethingIsFound [
 		assert: (self collectionWithoutNilElements includes: foundObject)
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 CollectionRootTest >> testDetectIfFoundWhenSomethingIsFoundIgnoringTheFoundObject [
 	"The foundBlock can be a zero argument block ignoring the object found"
 
@@ -224,7 +226,7 @@ CollectionRootTest >> testDetectIfFoundWhenSomethingIsFoundIgnoringTheFoundObjec
 	self assert: wasFound
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : 'tests - iterate' }
 CollectionRootTest >> testRejectNoReject [
 	| res collection |
 	collection := self collectionWithoutNilElements.

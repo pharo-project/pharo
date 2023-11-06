@@ -83,6 +83,27 @@ UndeclaredVariable >> register [
 	Undeclared add: self
 ]
 
+{ #category : 'registry' }
+UndeclaredVariable >> registerFromNode: aNode [
+	| methodNode |
+	methodNode := aNode methodNode.
+	methodNode propertyAt: #Undeclareds ifAbsentPut: [WeakSet new].
+	(methodNode propertyAt: #Undeclareds) add: self.
+	self register
+]
+
+{ #category : 'registry' }
+UndeclaredVariable >> registerMethod: aCompiledMethod [
+	self registeredMethods add: aCompiledMethod
+]
+
+{ #category : 'queries' }
+UndeclaredVariable >> registeredMethods [
+	"We hold weakly on all compiledMethods that use this Undeclared
+	note: they might not be installed, e.g. long running method on the stack or a tool holding on to it"
+	^ self propertyAt: #registeredMethods ifAbsentPut: [ WeakIdentitySet new ]
+]
+
 { #category : 'code generation' }
 UndeclaredVariable >> runtimeUndeclaredRead [
 
@@ -107,4 +128,10 @@ UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
 { #category : 'registry' }
 UndeclaredVariable >> unregister [
 	Undeclared removeKey: name ifAbsent: [ ]
+]
+
+{ #category : 'queries' }
+UndeclaredVariable >> usingMethods [
+	"using methods returns just those that are installed in a class"
+	^ self registeredMethods select: [ :method | method isInstalled ]
 ]

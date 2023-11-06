@@ -3,8 +3,8 @@ I am a page on a calypso notebook.
 I define a different kind of header (icon, label, close) plus some actions on it.
 "
 Class {
-	#name : #ClyNotebookPageMorph,
-	#superclass : #SpNotebookPageMorph,
+	#name : 'ClyNotebookPageMorph',
+	#superclass : 'SpNotebookPageMorph',
 	#instVars : [
 		'icon',
 		'labelPresenter',
@@ -12,10 +12,12 @@ Class {
 		'actions',
 		'closeable'
 	],
-	#category : #'Calypso-Browser-Tabs'
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNotebookPageMorph class >> newLabel: aString icon: anIcon provider: aBlock [
 
 	^ self new
@@ -25,51 +27,51 @@ ClyNotebookPageMorph class >> newLabel: aString icon: anIcon provider: aBlock [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> actions [
 
 	^ actions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> actions: aCollection [
 
 	actions := aCollection
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 ClyNotebookPageMorph >> addToSelection [
 
 	owner addToSelection: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> backgroundColor [
 
 	^ Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> beCloseable [
 
 	closeable := true.
 	labelPresenter updatePresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> icon [
 
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> icon: anIcon [
 
 	icon := anIcon.
 	labelPresenter updatePresenter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNotebookPageMorph >> initialize [
 
 	super initialize.
@@ -83,25 +85,25 @@ ClyNotebookPageMorph >> initialize [
 		              yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNotebookPageMorph >> isCloseable [
 
 	^ closeable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> label [
 
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> label: aStringOrText [
 
 	label := aStringOrText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> markDirty: dirty [
 
 	dirty
@@ -112,25 +114,25 @@ ClyNotebookPageMorph >> markDirty: dirty [
 	labelPresenter updatePresenter
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyNotebookPageMorph >> onClose: aBlock [
 
 	labelPresenter onClose: aBlock.
 	self beCloseable
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyNotebookPageMorph >> onDoubleClick: aBlock [
 
 	labelPresenter onDoubleClick: aBlock
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 ClyNotebookPageMorph >> removeFromSelection [
 	owner removeFromSelection: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageMorph >> themeChanged [
 
 	super themeChanged.

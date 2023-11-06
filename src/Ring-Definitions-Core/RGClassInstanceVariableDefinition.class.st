@@ -2,19 +2,21 @@
 A class instance variable definition
 "
 Class {
-	#name : #RGClassInstanceVariableDefinition,
-	#superclass : #RGVariableDefinition,
-	#category : #'Ring-Definitions-Core-Base'
+	#name : 'RGClassInstanceVariableDefinition',
+	#superclass : 'RGVariableDefinition',
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGClassInstanceVariableDefinition >> initialize [
 
 	super initialize.
-	self isMetaSide: true
+	self isMeta: true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGClassInstanceVariableDefinition >> isClassInstanceVariable [
 
 	^true

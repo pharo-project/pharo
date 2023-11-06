@@ -1,10 +1,12 @@
 Class {
-	#name : #OpalCompilerTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Misc'
+	#name : 'OpalCompilerTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Misc',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Misc'
 }
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
 	result := Smalltalk compiler
@@ -13,7 +15,7 @@ OpalCompilerTest >> testArrayBindingsWithUppercaseNameDoOverwriteGlobals [
 	self assert: result equals: Object class
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayBindingsWriteGlobals [
 	| result |
 	result := Smalltalk compiler
@@ -22,7 +24,7 @@ OpalCompilerTest >> testArrayBindingsWriteGlobals [
 	self assert: result equals: 42
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindings [
 	| result |
 	result := Smalltalk compiler
@@ -31,7 +33,7 @@ OpalCompilerTest >> testArrayEvaluateWithBindings [
 	self assert: result equals: 4
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindingsReadGlobal [
 | result |
 	result := Smalltalk compiler
@@ -40,7 +42,7 @@ OpalCompilerTest >> testArrayEvaluateWithBindingsReadGlobal [
 	self assert: result equals: OrderedCollection
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler
@@ -49,7 +51,7 @@ OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 	self assert: result equals: 4
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 	| result |
 	result := Smalltalk compiler
@@ -58,7 +60,7 @@ OpalCompilerTest >> testBindingsWithUppercaseNameDoOverwriteGlobals [
 	self assert: result equals: Object class
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testBindingsWriteGlobals [
 	| result |
 	result := Smalltalk compiler
@@ -67,7 +69,7 @@ OpalCompilerTest >> testBindingsWriteGlobals [
 	self assert: result equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testCompileFromAnalysedAST [
 
 	| source ast value |
@@ -78,7 +80,7 @@ OpalCompilerTest >> testCompileFromAnalysedAST [
 	self assert: value equals: 7.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testCompileFromText [
 
 	| source result |
@@ -89,7 +91,7 @@ OpalCompilerTest >> testCompileFromText [
 	self assert: result sourceCode equals: source asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testCompileSource [
 	| source result |
 	source := 'tt ^3+4'.
@@ -120,7 +122,7 @@ OpalCompilerTest >> testCompileSource [
 	(MockForCompilation>>#tt) removeFromSystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testCompileWithNilClass [
 	"we shoud use UndefinedObject if the class is nil"
 	| method |
@@ -128,7 +130,7 @@ OpalCompilerTest >> testCompileWithNilClass [
 	self assert: method methodClass equals: UndefinedObject
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 
 	| compiler method |
@@ -142,7 +144,7 @@ OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 	self assert: method literals second class equals: CleanBlockClosure
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindings [
 	| result |
 	result := Smalltalk compiler
@@ -151,7 +153,7 @@ OpalCompilerTest >> testEvaluateWithBindings [
 	self assert: result equals: 4
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
 	| result |
 
@@ -177,7 +179,7 @@ OpalCompilerTest >> testEvaluateWithBindingsSelfSuperThisContext [
 	self assert: result equals: 4
 ]
 
-{ #category : #'tests - bindings' }
+{ #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler
@@ -186,7 +188,7 @@ OpalCompilerTest >> testEvaluateWithBindingsWithUppercaseName [
 	self assert: result equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testInstall [
 
 	| method |
@@ -210,7 +212,7 @@ OpalCompilerTest >> testInstall [
 	self deny: (MockForCompilation includesSelector: #foo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testInstallException [
 
 	| method message |
@@ -226,7 +228,7 @@ OpalCompilerTest >> testInstallException [
 	self assert: message equals: 'Unknown character :('
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testInstallRequestor [
 
 	| method requestor |
@@ -251,7 +253,7 @@ OpalCompilerTest >> testInstallRequestor [
 	self assert: requestor notifyList first first equals: 'Unknown character ->'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OpalCompilerTest >> testShadowPseudoVariable [
 	"We can shadw PseudoVariables (here thisContext) and it works"
 	| result |

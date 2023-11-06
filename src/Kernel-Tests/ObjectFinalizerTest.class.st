@@ -1,10 +1,12 @@
 Class {
-	#name : #ObjectFinalizerTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Finalization'
+	#name : 'ObjectFinalizerTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Finalization',
+	#package : 'Kernel-Tests',
+	#tag : 'Finalization'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectFinalizerTest >> testFinalizationOfMultipleResources [
 	"Test that finalizers for multiple resources registered will be ran when
 	object is finalized"

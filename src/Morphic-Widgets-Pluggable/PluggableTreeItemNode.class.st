@@ -2,47 +2,49 @@
 Tree item for PluggableTreeMorph.
 "
 Class {
-	#name : #PluggableTreeItemNode,
-	#superclass : #ListItemWrapper,
-	#category : #'Morphic-Widgets-Pluggable-Tree'
+	#name : 'PluggableTreeItemNode',
+	#superclass : 'ListItemWrapper',
+	#category : 'Morphic-Widgets-Pluggable-Tree',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Tree'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> acceptDroppingObject: anotherItem [
 	^model dropNode: anotherItem on: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> asString [
 	^model printNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> balloonText [
 	^model balloonTextForNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> canBeDragged [
 	^model isDraggableNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> contents [
 	^model contentsOfNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> hasContents [
 	^model hasNodeContents: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> icon [
 	^model iconOfNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeItemNode >> wantsDroppedObject: anotherItem [
 	^model wantsDroppedNode: anotherItem on: self
 ]

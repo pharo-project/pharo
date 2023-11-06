@@ -1,6 +1,6 @@
-Extension { #name : #FreeTypeSettings }
+Extension { #name : 'FreeTypeSettings' }
 
-{ #category : #'*FreeType-Graphics' }
+{ #category : '*FreeType-Graphics' }
 FreeTypeSettings >> bitBltSubPixelAvailable [
 	"Answer true if the the subPixel combination rule is available, false otherwise.
 	to test :-
@@ -10,25 +10,29 @@ FreeTypeSettings >> bitBltSubPixelAvailable [
 	"
 
 	| form bitBlt color |
-	bitBltSubPixelAvailable == nil ifFalse:[^bitBltSubPixelAvailable].
-	form := Form extent: 10@10 depth: 32.
+	bitBltSubPixelAvailable ifNotNil: [ ^ bitBltSubPixelAvailable ].
+	form := Form extent: 10 @ 10 depth: 32.
 	bitBlt := GrafPort toForm: form.
 	bitBlt combinationRule: 41.
-	bitBlt sourceForm: (Form extent: 5@5 depth: 32).
-	bitBlt destOrigin: 1@1.
-	bitBlt width: 5; height: 5.
+	bitBlt sourceForm: (Form extent: 5 @ 5 depth: 32).
+	bitBlt destOrigin: 1 @ 1.
+	bitBlt
+		width: 5;
+		height: 5.
 	color := Color black asNontranslucentColor pixelValueForDepth: 32.
-	[bitBlt
+	[
+	bitBlt
 		copyBitsColor: (color bitAnd: 16rFFFFFF)
 		alpha: (color bitAnd: 16rFF000000) >> 24
 		gammaTable: nil
-		ungammaTable: nil]
-	on: Error do:[:e | ^bitBltSubPixelAvailable := false].
+		ungammaTable: nil ]
+		on: Error
+		do: [ :e | ^ bitBltSubPixelAvailable := false ].
 	#toDo. "need to check that rule 41 has done the right thing, and isn't someone elses new BitBlt rule"
-	^bitBltSubPixelAvailable := true
+	^ bitBltSubPixelAvailable := true
 ]
 
-{ #category : #'*FreeType-Graphics' }
+{ #category : '*FreeType-Graphics' }
 FreeTypeSettings >> glyphContrast: aContrastValue [
 	" value between 1 and 100.
 	100 is highest contrast and maps to gamma 0.25

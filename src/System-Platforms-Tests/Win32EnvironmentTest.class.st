@@ -1,10 +1,12 @@
 Class {
-	#name : #Win32EnvironmentTest,
-	#superclass : #TestCase,
-	#category : #'System-Platforms-Tests-Windows'
+	#name : 'Win32EnvironmentTest',
+	#superclass : 'TestCase',
+	#category : 'System-Platforms-Tests-Windows',
+	#package : 'System-Platforms-Tests',
+	#tag : 'Windows'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32EnvironmentTest >> testExistingEnvironmentVariableLongerThanBufferShouldReturnValue [
 
 	| value aExpectedValue |
@@ -21,7 +23,7 @@ Win32EnvironmentTest >> testExistingEnvironmentVariableLongerThanBufferShouldRet
 	self assert: value equals: aExpectedValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32EnvironmentTest >> testExistingEnvironmentVariableShouldReturnValue [
 
 	| value |
@@ -36,7 +38,7 @@ Win32EnvironmentTest >> testExistingEnvironmentVariableShouldReturnValue [
 	self assert: value equals: 'IamAValue'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Win32EnvironmentTest >> testNonExistingEnvironmentVariableShouldGenerateException [
 
 	OSPlatform current isWindows

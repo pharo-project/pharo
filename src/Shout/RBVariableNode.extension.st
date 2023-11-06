@@ -1,6 +1,6 @@
-Extension { #name : #RBVariableNode }
+Extension { #name : 'RBVariableNode' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 RBVariableNode >> styleName [
 
 	^ self variable

@@ -2,48 +2,50 @@
 A trait for test purposes
 "
 Class {
-	#name : #WriteStreamTest,
-	#superclass : #ClassTestCase,
-	#category : #'Collections-Streams-Tests-Base'
+	#name : 'WriteStreamTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Collections-Streams-Tests-Base',
+	#package : 'Collections-Streams-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WriteStreamTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WriteStreamTest >> classToBeTested [
 
 	^ self streamClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WriteStreamTest >> newStream [
 	^ self newStreamOn: String new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WriteStreamTest >> newStreamOn: aCollection [
 	^ self streamClass on: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStreamTest >> streamClass [
 	^ WriteStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStreamTest >> string [
 	^ 'testing'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteStreamTest >> stringSize [
 	^ self string size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testEnsureASpace [
 	| stream |
 	stream := self newStream.
@@ -60,7 +62,7 @@ WriteStreamTest >> testEnsureASpace [
 	self assert: stream contents equals: 'this is a test for WriteStreamTest'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testEnsureASpace2 [
 	| stream |
 	stream := self newStream.
@@ -68,7 +70,7 @@ WriteStreamTest >> testEnsureASpace2 [
 	self assert: stream contents equals: ' '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testEnsureEndsWith [
 
 	| stream |
@@ -91,7 +93,7 @@ WriteStreamTest >> testEnsureEndsWith [
 	self assert: stream contents equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testEnsureNoSpace [
 
 	| stream |
@@ -109,7 +111,7 @@ WriteStreamTest >> testEnsureNoSpace [
 	self assert: stream contents equals: ' ab'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testIsEmpty [
 	| stream |
 	stream := self newStream.
@@ -120,7 +122,7 @@ WriteStreamTest >> testIsEmpty [
 	self deny: stream isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testLessThanLessThan [
 	"Tests for #<< output operator shortcut on WriteStreams"
 
@@ -138,13 +140,13 @@ WriteStreamTest >> testLessThanLessThan [
 	self should: [ ByteArray streamContents: [ :out | out << 1234 ] ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testNew [
 
 	self should: [self streamClass new] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testNextPut [
 	| stream |
 	stream := self newStream.
@@ -156,7 +158,7 @@ WriteStreamTest >> testNextPut [
 				assert: stream contents equals: (self string first: i) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testNextPutAll [
 	| stream |
 	stream := self newStream.
@@ -166,7 +168,7 @@ WriteStreamTest >> testNextPutAll [
 		assert: stream contents equals: self string
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testOn [
 	| collection stream |
 	collection := String new.
@@ -178,7 +180,7 @@ WriteStreamTest >> testOn [
 		assert: stream size isZero
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testOnFromTo [
 	| stream |
 	stream := self streamClass on: self string , self string from: self stringSize + 1 to: self stringSize * 2.
@@ -189,7 +191,7 @@ WriteStreamTest >> testOnFromTo [
 		assert: stream size equals: self stringSize * 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testPosition [
 	| stream |
 	stream := self newStream.
@@ -205,7 +207,7 @@ WriteStreamTest >> testPosition [
 	self should: [ stream position: self stringSize + 1 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testSetToEnd [
 	| stream |
 	stream := self newStream.
@@ -222,7 +224,7 @@ WriteStreamTest >> testSetToEnd [
 			assert: stream contents equals: self string ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testWith [
 	"like on: except it starts writing at the end of its argument collection,
 	and the initial position is the collection size and the initial contents
@@ -237,7 +239,7 @@ WriteStreamTest >> testWith [
 		assert: stream size equals: self stringSize
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteStreamTest >> testWithFromTo [
 	"like with: except it paritions its argument collection first using the
 	from:/to: indexes"

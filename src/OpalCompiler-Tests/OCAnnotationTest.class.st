@@ -1,10 +1,12 @@
 Class {
-	#name : #OCAnnotationTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Plugins'
+	#name : 'OCAnnotationTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Plugins',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Plugins'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCAnnotationTest >> testAnnotationAST [
 	"This test uses an AST plugin to detect and transform a custom annotation `@meaning:`
 	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeRewriter`).
@@ -35,7 +37,7 @@ OCAnnotationTest >> testAnnotationAST [
 		equals: { 'meaning of life'. 'no meaning'. 'no meaning'. 42 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCAnnotationTest >> testAnnotationBinding [
 	"A more advanced usage.
 	The `@binding:` example annotation takes a variable and push its binding instead of reading it.
@@ -98,7 +100,7 @@ OCAnnotationTest >> testAnnotationBinding [
 		raise: RuntimeSyntaxError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCAnnotationTest >> testAnnotationConstexprAST [
 	"This advanced example shows a `@constexpr:` annotation that evaluates its argument at compile-time.
 	You might think about `##()` in some Smalltalk dialects for instance.
@@ -133,7 +135,7 @@ OCAnnotationTest >> testAnnotationConstexprAST [
 	self assert: (nil executeMethod: result) equals: Float pi
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCAnnotationTest >> testAnnotationConstexprIR [
 	"This advanced example shows a `@constexpr:` annotation that evaluates its argument at compile-time.
 	You might think about `##()` in some Smalltalk dialects for instance.
@@ -171,7 +173,7 @@ OCAnnotationTest >> testAnnotationConstexprIR [
 	self assert: (nil executeMethod: result) equals: Float pi
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCAnnotationTest >> testAnnotationIR [
 	"This test uses an AST plugin to detect a custom annotation `@meaning:`
 	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeSearcher`)

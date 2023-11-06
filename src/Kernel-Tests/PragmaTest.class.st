@@ -2,23 +2,25 @@
 SUnit tests for Pragma class
 "
 Class {
-	#name : #PragmaTest,
-	#superclass : #TestCase,
+	#name : 'PragmaTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'atPragma',
 		'anotherAtPragma',
 		'yetAnotherAtPragma',
 		'atPutPragma'
 	],
-	#category : #'Kernel-Tests-Pragmas'
+	#category : 'Kernel-Tests-Pragmas',
+	#package : 'Kernel-Tests',
+	#tag : 'Pragmas'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 PragmaTest >> methodWithPragma [
 	<testPragmaArg1: #toto arg2: 2 arg3: true>
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PragmaTest >> setUp [
 	super setUp.
 	atPragma := Pragma for: (Object methodDict at: #at:) selector: #primitive: arguments: (Array with: 60).
@@ -27,14 +29,14 @@ PragmaTest >> setUp [
 	atPutPragma := Pragma for: (Object methodDict at: #at:) selector: #primitive: arguments: (Array with: 61)
 ]
 
-{ #category : #'tests - cache' }
+{ #category : 'tests - cache' }
 PragmaTest >> testAllNamed [
 	self assert: ((Pragma allNamed: #primitive:) first selector) equals: #primitive:.
 	"does it work when asking for a non existing Pragma?"
 	self assert: (Pragma allNamed: #nonExistingPragma) isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PragmaTest >> testArgumentAt [
 	| pragma |
 	pragma := (self class >> #methodWithPragma) pragmas anyOne.
@@ -43,7 +45,7 @@ PragmaTest >> testArgumentAt [
 	self assert: (pragma argumentAt: 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PragmaTest >> testArgumentNamed [
 	| pragma |
 	pragma := (self class >> #methodWithPragma) pragmas anyOne.
@@ -53,7 +55,7 @@ PragmaTest >> testArgumentNamed [
 	self should: [ pragma argumentNamed: #nonExisting ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PragmaTest >> testArgumentNamedIfNone [
 	| pragma |
 	pragma := (self class >> #methodWithPragma) pragmas anyOne.
@@ -61,7 +63,7 @@ PragmaTest >> testArgumentNamedIfNone [
 	self deny: (pragma argumentNamed: #nonExisting ifNone: [ false ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PragmaTest >> testCopy [
 	| copy |
 	copy := atPragma copy.
@@ -72,7 +74,7 @@ PragmaTest >> testCopy [
 	self assert: atPragma arguments identicalTo: copy arguments
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PragmaTest >> testEqual [
 	self assert: atPragma equals: atPragma.
 	self assert: atPragma equals: anotherAtPragma.
@@ -84,7 +86,7 @@ PragmaTest >> testEqual [
 	self deny: atPragma equals: atPutPragma
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PragmaTest >> testHash [
 	self assert: atPragma hash equals: atPragma hash.
 	self assert: atPragma hash equals: anotherAtPragma hash.
@@ -94,7 +96,24 @@ PragmaTest >> testHash [
 	self assert: yetAnotherAtPragma hash equals: atPragma hash
 ]
 
-{ #category : #'tests - cache' }
+{ #category : 'tests - cache' }
+PragmaTest >> testPragmaAddingProperty [
+	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+	(self class>>#methodWithPragma) propertyAt: #hello put: #something.
+	Smalltalk garbageCollect.
+	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+]
+
+{ #category : 'tests - cache' }
+PragmaTest >> testRecompile [
+	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+	self class compile: 'methodWithPragma
+	<testPragmaArg1: #toto arg2: 2 arg3: true>' classified: 'helper'.
+	Smalltalk garbageCollect.
+	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+]
+
+{ #category : 'tests - cache' }
 PragmaTest >> testall [
 	self assert: Pragma all first class equals: Pragma
 ]

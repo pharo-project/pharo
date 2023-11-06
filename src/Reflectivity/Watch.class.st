@@ -6,8 +6,8 @@ To install a Watch in a node:
 Watch in: aNode
 "
 Class {
-	#name : #Watch,
-	#superclass : #Object,
+	#name : 'Watch',
+	#superclass : 'Object',
 	#instVars : [
 		'tagname',
 		'node',
@@ -18,42 +18,44 @@ Class {
 	#classVars : [
 		'Watches'
 	],
-	#category : #'Reflectivity-Breakpoints'
+	#category : 'Reflectivity-Breakpoints',
+	#package : 'Reflectivity',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch class >> allWatches [
 	^ Watches ifNil: [ Watches := WeakKeyDictionary new ]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Watch class >> deleteAllHistory [
 
 	self allWatches valuesDo: [ :aWatch| aWatch deleteHistory]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Watch class >> deleteHistoryFrom: aNode [
 
 	(self allWatches at: aNode ifAbsent:[^self]) deleteHistory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch class >> from: aNode [
 	^self allWatches at: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch class >> from: aNode ifAbsent: aBlock [
 	^self allWatches at: aNode ifAbsent: aBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Watch class >> in: aRBProgramNode [
 	^self in: aRBProgramNode named: ''
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Watch class >> in: aRBProgramNode named: aName [
 	aRBProgramNode hasWatch ifTrue: [ ^ aRBProgramNode watch ].
 	^self new
@@ -62,43 +64,43 @@ Watch class >> in: aRBProgramNode named: aName [
 		install
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Watch class >> removeAll [
 	self allWatches values do: [ :aWatchpoint| aWatchpoint uninstall].
 	Watches := nil
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Watch class >> removeFrom: aNode [
 
 	(self allWatches at: aNode ifAbsent: [ ^self ]) uninstall
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Watch >> addValue: anObject [
 	values add:
 		(DateAndTime now -> anObject).
 	^anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch >> compiledMethod [
 	^self node methodNode method
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Watch >> deleteHistory [
 	values := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Watch >> initialize [
 	super initialize.
 	values := OrderedCollection new.
 	recording := true
 ]
 
-{ #category : #install }
+{ #category : 'install' }
 Watch >> install [
 
 	node hasWatch ifTrue: [ self error: 'Node already has a Watchpoint'].
@@ -114,29 +116,29 @@ Watch >> install [
 	self class allWatches at: node put: self
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 Watch >> isRecording [
 	^recording
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch >> node [
 	^ node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch >> node: anObject [
 	node := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Watch >> printLastValue [
 	values ifNil: [ ^''].
 	values ifEmpty: [ ^'not run' ].
 	^values last value printStringLimitedTo: 5
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Watch >> printOn: aStream [
 	aStream nextPutAll: 'WP'.
 	tagname isAllSeparators
@@ -147,36 +149,36 @@ Watch >> printOn: aStream [
 	aStream nextPutAll: (self printLastValue)
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 Watch >> start [
 	recording := true.
 	link announceChange
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 Watch >> stop [
 	recording := false.
 	link announceChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch >> tagname [
 	^ tagname
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch >> tagname: anObject [
 	tagname := anObject
 ]
 
-{ #category : #install }
+{ #category : 'install' }
 Watch >> uninstall [
 	node hasWatch ifFalse: [ ^self ].
 	link uninstall.
 	self class allWatches removeKey: node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Watch >> values [
 	^values
 ]

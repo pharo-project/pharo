@@ -1,22 +1,24 @@
 Class {
-	#name : #NewCommandLineRunnerTest,
-	#superclass : #NewTestRunnerTest,
-	#category : #'TestRunner-Tests-Core'
+	#name : 'NewCommandLineRunnerTest',
+	#superclass : 'NewTestRunnerTest',
+	#category : 'TestRunner-Tests-Core',
+	#package : 'TestRunner-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NewCommandLineRunnerTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NewCommandLineRunnerTest >> setUp [
 
 	super setUp.
 	runner := NewCommandLineRunner new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NewCommandLineRunnerTest >> testReporterDatasShouldBeResetBeetwenTwoExecution [
 
 	runner reporter: XmlReporter new.

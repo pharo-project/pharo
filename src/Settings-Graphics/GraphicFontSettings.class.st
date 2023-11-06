@@ -2,12 +2,13 @@
 Settings for the fonts
 "
 Class {
-	#name : #GraphicFontSettings,
-	#superclass : #Model,
-	#category : #'Settings-Graphics'
+	#name : 'GraphicFontSettings',
+	#superclass : 'Model',
+	#category : 'Settings-Graphics',
+	#package : 'Settings-Graphics'
 }
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 
 	^ (#(#(#superTiny 0.6) #(#tiny 0.8) #(#small 1) #(#medium 1.4) #(#large 1.6) #(veryLarge 2) #(huge 2.7))
@@ -15,7 +16,7 @@ GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 			ifNotNil: [:info | info second]
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
 	| label |
 	label := StringMorph
@@ -34,7 +35,7 @@ GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
 			yourself
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> fontSizeRow [
 	^ self theme newRowIn: self for: {
 			self theme buttonLabelForText: 'Predefined styles: ' translated.
@@ -46,14 +47,15 @@ GraphicFontSettings class >> fontSizeRow [
 	}
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> resetAllFontToDefault [
+
 	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont.
 	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp
+
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> resetAllFontToDefaultButton [
 	^ (self theme
 		newButtonIn: self
@@ -74,7 +76,7 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 		yourself
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 
 	(self class environment includesKey: #SourceCodeFonts)
@@ -84,10 +86,10 @@ GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol).
 
 	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp
+
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #standardFonts)

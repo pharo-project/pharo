@@ -2,12 +2,13 @@
 This class provides tests for the regular expression parser.
 "
 Class {
-	#name : #RxParserTest,
-	#superclass : #TestCase,
-	#category : #'Regex-Core-Tests'
+	#name : 'RxParserTest',
+	#superclass : 'TestCase',
+	#category : 'Regex-Core-Tests',
+	#package : 'Regex-Core-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> DoesNotWorktestBackQuotesEscape [
 
 	"Regular expressions can also include the following backquote escapes
@@ -27,7 +28,7 @@ minus'."
 	self assert: ('one' matchesRegex: '\w')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> test [
 
 	self assert: ('\<t\w+' asRegexIgnoringCase
@@ -37,7 +38,7 @@ RxParserTest >> test [
 	"the regular expression matches words beginning with either an uppercase or a lowercase T"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testCadrMatching [
 	"A bit more complex example is the following expression, matching the
 name of any of the Lisp-style `car', `cdr', `caar', `cadr',
@@ -50,7 +51,7 @@ name of any of the Lisp-style `car', `cdr', `caar', `cadr',
 	self assert: ( 'caddar' matchesRegex: 'c(a|d)+r')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testCharacterSet [
 	"So far, we have used only characters as the 'smallest' components of
 regular expressions. There are other, more `interesting', components.
@@ -64,7 +65,7 @@ brackets. For example, `[01]' matches either `0' or `1':"
 	self deny: ('01' matchesRegex: '[01]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testCharacterSetBinaryNumber [
 	"Using plus operator, we can build the following binary number
 recognizer:"
@@ -72,7 +73,7 @@ recognizer:"
 	self deny: ('10001210' matchesRegex: '[01]+')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testCharacterSetInversion [
 	"If the first character after the opening bracket is `^', the set is
 inverted: it matches any single character *not* appearing between the
@@ -89,7 +90,7 @@ brackets:"
 	"there is one zero so it does not match"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testCharacterSetRange [
 	"For convenience, a set may include ranges: pairs of characters
 separated with `-'. This is equivalent to listing all characters
@@ -102,14 +103,14 @@ between them: `[0-9]' is the same as `[0123456789]'. "
 	self assert: ('01442128629839374565' matchesRegex: '[0-9]+')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testLookaround [
 	self assert: ('A'   matchesRegex: '(?!ABC).*').
 	self assert: ('AB'  matchesRegex: '(?!ABC).*').
 	self deny:   ('ABC' matchesRegex: '(?!ABC).*')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testMatchesInwW [
 	"1. Backslash escapes similar to those in Perl are allowed in patterns:
 	\w	any word constituent character (equivalent to [a-zA-Z0-9:=])
@@ -122,7 +123,7 @@ RxParserTest >> testMatchesInwW [
 	self assert: ('\w' asRegex matchesIn: 'now') asArray equals: #('n' 'o' 'w')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testOrOperator [
 	"The last operator is `|' meaning `or'. It is placed between two
 regular expressions, and the resulting expression matches if one of
@@ -141,7 +142,7 @@ such expression: `(a|)*' is an invalid expression."
 	self should: ['(a|)*' asRegex] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testQuantifier [
 	self deny:   (''     matchesRegex: 'a{2}').
 	self deny:   ('a'    matchesRegex: 'a{2}').
@@ -167,7 +168,7 @@ RxParserTest >> testQuantifier [
 	self deny:   ('aaaa' matchesRegex: 'a{,3}')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testQuantifierSimple [
 	"Test quantifier expressions that can be expressed with + or *"
 	self assert: ('a'  matchesRegex: 'a{1}').
@@ -185,7 +186,7 @@ RxParserTest >> testQuantifierSimple [
 	self deny:   ('abab' matchesRegex: '(ab){,1}')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testQuotingOperators [
 	"As we have seen, characters `*', `+', `?', `(', and `)' have special
 meaning in regular expressions. If one of them is to be used
@@ -199,7 +200,7 @@ further)."
 	self assert: ('a\c' matchesRegex: 'a\\c')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testSimpleMatchesRegex [
 	"The simplest regular expression is a single character.  It matches
 exactly that character. A sequence of characters matches a string with
@@ -210,7 +211,7 @@ exactly the same sequence of characters:"
 	self deny: ('blorple' matchesRegex: 'foobar')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testSimpleMatchesRegexWithStar [
 	"The above paragraph in testSimpleMatchesRegex introduced a primitive regular expression (a
 character), and an operator (sequencing). Operators are applied to
@@ -228,7 +229,7 @@ expression. For example:"
 	self deny: ('aac' matchesRegex: 'a*b')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testSpecialCharacterInSetRange [
 	"Special characters within a set are `^', `-', and `]' that closes the
 set. Below are the examples of how to literally use them in a set:
@@ -248,7 +249,7 @@ set. Below are the examples of how to literally use them in a set:
 	self assert: ('^' matchesRegex: '[^01]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testStarPlusQuestionMark [
 	"Two other operators similar to `*' are `+' and `?'. `+' (positive
 closure, or simply `plus') matches one or more occurrences of the
@@ -262,7 +263,7 @@ more, occurrences."
 	self deny: ('abbc' matchesRegex: 'ab?c')	 	"-- false: too many b's"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testStarPrecedence [
 	"A star's precedence is higher than that of sequencing. A star applies
 to the shortest possible subexpression that precedes it. For example,
@@ -278,7 +279,7 @@ or more occurrences of ab':"
 	self deny: ('abcab' matchesRegex: '(ab)*')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RxParserTest >> testTranslatingMatchesUsing [
 	self assert: ('\<t\w+' asRegexIgnoringCase
 		copy: 'now is the Time'

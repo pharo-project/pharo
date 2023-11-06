@@ -8,25 +8,26 @@ Internal Representation and Key Implementation Points.
 	newSignature:		<SycMessageDescription>
 "
 Class {
-	#name : #SycRenameMessageCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
+	#name : 'SycRenameMessageCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSignature'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycRenameMessageCommand >> canAddArgs [
 	^false
 ]
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycRenameMessageCommand >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessageCommand >> createRefactoring [
 
 	^ (RBRenameMethodRefactoring
@@ -38,34 +39,34 @@ SycRenameMessageCommand >> createRefactoring [
 			renameMap: newSignature renameMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuIconName [
 	^#edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> newSignature [
 	^ newSignature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessageCommand >> newSignature: anObject [
 	newSignature := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	newSignature := self requestNewMessageIn: aToolContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessageCommand >> resultMessageSelector [
 	^newSignature selector
 ]

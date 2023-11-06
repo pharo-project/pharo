@@ -20,8 +20,8 @@ readOnlyStream (returns an open read-only stream)
 
 "
 Class {
-	#name : #SimpleServiceEntry,
-	#superclass : #Model,
+	#name : 'SimpleServiceEntry',
+	#superclass : 'Model',
 	#instVars : [
 		'provider',
 		'label',
@@ -32,42 +32,44 @@ Class {
 		'argumentGetter',
 		'buttonLabel'
 	],
-	#category : #'System-FileRegistry-Base'
+	#category : 'System-FileRegistry-Base',
+	#package : 'System-FileRegistry',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimpleServiceEntry class >> provider: anObject label: aString selector: aSymbol [
 
 	^self provider: anObject label: aString selector: aSymbol description: ''
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimpleServiceEntry class >> provider: anObject label: aString selector: aSymbol description: anotherString [
 
 	^self new provider: anObject label: aString selector: aSymbol description: anotherString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimpleServiceEntry class >> provider: anObject label: aString selector: aSymbol description: anotherString buttonLabel: aLabel [
 	"Answer a new service object with the given initializations.  This variant allows a custom button label to be provided, in order to preserve precious horizontal real-estate in the button pane, while still allowing more descriptive wordings in the popup menu"
 
 	^ self new provider: anObject label: aString selector: aSymbol description: anotherString; buttonLabel: aLabel; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> argumentGetter: aBlock [
 
 	argumentGetter := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> buttonLabel [
 	"Answer the label to be emblazoned on a button representing the service in a file list, for example"
 
 	^ buttonLabel ifNil: [label]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> buttonLabel: aString [
 	"Set the receiver's buttonLabel, to be used on a button in a
 	tool-pane; this is split out so that a more abbreviated wording
@@ -75,59 +77,59 @@ SimpleServiceEntry >> buttonLabel: aString [
 	buttonLabel := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> description [
 	"may be used for balloon or other"
 
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> description: aString [
 	"may be used for balloon or other"
 
 	description := aString
 ]
 
-{ #category : #'services menu' }
+{ #category : 'services menu' }
 SimpleServiceEntry >> doNotUseLineAfter [
 
 	self usingLineAfter: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> extraSelector [
 	"normally should not be used directly"
 
 	^stateSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> extraSelector: aSymbol [
 
 	stateSelector := aSymbol
 ]
 
-{ #category : #'performing service' }
+{ #category : 'performing service' }
 SimpleServiceEntry >> getArgumentsFrom: aProvider [
 
 	argumentGetter ifNil: [^aProvider fullName].
 	^argumentGetter value: aProvider
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SimpleServiceEntry >> initialize [
 
 	super initialize.
 	self useLineAfter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> label [
 	^label
 ]
 
-{ #category : #extra }
+{ #category : 'extra' }
 SimpleServiceEntry >> performExtraFor: anObject [
 	"carry out the extra service I provide"
 	"the stateSelector can be used to ask state of the provider to be reflected in button or other"
@@ -137,7 +139,7 @@ SimpleServiceEntry >> performExtraFor: anObject [
 		ifFalse: [provider perform: stateSelector with: (self getArgumentsFrom: anObject) ]
 ]
 
-{ #category : #'performing service' }
+{ #category : 'performing service' }
 SimpleServiceEntry >> performServiceFor: anObject [
 	"carry out the service I provide"
 
@@ -149,25 +151,25 @@ SimpleServiceEntry >> performServiceFor: anObject [
 				ifFalse: [ provider perform: selector withArguments: (self getArgumentsFrom: anObject) ]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SimpleServiceEntry >> printOn: aStream [
 
-	aStream nextPutAll: self class name; nextPutAll: ': ('.
-	self provider notNil
-		ifTrue: [ aStream print: provider ].
+	aStream
+		nextPutAll: self class name;
+		nextPutAll: ': ('.
+	self provider ifNotNil: [ aStream print: provider ].
 	aStream nextPutAll: ' --- '.
-	self selector notNil
-		ifTrue: [ aStream print: selector ].
+	self selector ifNotNil: [ aStream print: selector ].
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> provider [
 
 	^ provider
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol [
 	"basic initialization message"
 	provider := anObject.
@@ -177,7 +179,7 @@ SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol [
 	description := ''
 ]
 
-{ #category : #'performing service' }
+{ #category : 'performing service' }
 SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol description: anotherString [
 	"basic initialization message"
 	self
@@ -188,33 +190,33 @@ SimpleServiceEntry >> provider: anObject label: aString selector: aSymbol descri
 	description := anotherString
 ]
 
-{ #category : #extra }
+{ #category : 'extra' }
 SimpleServiceEntry >> requestExtraSelector [
 	"send me this message to ask me to perform secondary service"
 
 	^#performExtraFor:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> selector [
 	"normally should not be used directly"
 
 	^selector
 ]
 
-{ #category : #'services menu' }
+{ #category : 'services menu' }
 SimpleServiceEntry >> useLineAfter [
 
 	self usingLineAfter: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> usingLineAfter [
 
 	^ usingLineAfter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleServiceEntry >> usingLineAfter: aBoolean [
 
 	usingLineAfter := aBoolean

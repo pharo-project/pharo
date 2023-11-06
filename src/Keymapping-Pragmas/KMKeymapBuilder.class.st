@@ -2,16 +2,17 @@
 I am a specific builder to configure one shortcut.
 "
 Class {
-	#name : #KMKeymapBuilder,
-	#superclass : #Object,
+	#name : 'KMKeymapBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'shortcutName',
 		'platform'
 	],
-	#category : #'Keymapping-Pragmas'
+	#category : 'Keymapping-Pragmas',
+	#package : 'Keymapping-Pragmas'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMKeymapBuilder class >> for: aShortcutName platform: aPlatform [
 	^self new
 		shortcutName: aShortcutName;
@@ -19,7 +20,7 @@ KMKeymapBuilder class >> for: aShortcutName platform: aPlatform [
 		yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMKeymapBuilder >> category: aCategoryName default: aShortcut do: actionBlock [
 	"actionBlock - can take 3 optional arguments: target, morph, and keyboard event"
 
@@ -31,7 +32,7 @@ KMKeymapBuilder >> category: aCategoryName default: aShortcut do: actionBlock [
 		platform: platform
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMKeymapBuilder >> category: aCategoryName default: aShortcut do: anAction description: aDescription [
 	KMRepository default
 		initializeKeymap: shortcutName
@@ -42,7 +43,7 @@ KMKeymapBuilder >> category: aCategoryName default: aShortcut do: anAction descr
 		description: aDescription
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMKeymapBuilder >> category: aCategoryName shortcut: aShortcutCombination do: actionBlock [
 	"actionBlock - can take 3 optional arguments: target, morph, and keyboard event"
 	aShortcutCombination combinationsDo: [ :combination |
@@ -55,7 +56,7 @@ KMKeymapBuilder >> category: aCategoryName shortcut: aShortcutCombination do: ac
 	]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMKeymapBuilder >> category: aCategoryName shortcut: aShortcutCombination do: actionBlock description: aDescription [
 	"actionBlock - can take 3 optional arguments: target, morph, and keyboard event"
 	aShortcutCombination combinationsDo: [ :combination |
@@ -69,12 +70,12 @@ KMKeymapBuilder >> category: aCategoryName shortcut: aShortcutCombination do: ac
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymapBuilder >> platform: aPlatform [
 	platform := aPlatform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeymapBuilder >> shortcutName: aShortcutName [
 	shortcutName := aShortcutName
 ]

@@ -9,21 +9,6 @@ Class {
 	#tag : 'Modeling'
 }
 
-{ #category : 'deprecated' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
-	"Do not use this method! This method will be deprecated once Tonel will not use it anymore."
-
-	^ (self named: classNameString)
-		  traitComposition: traitCompositionString;
-		  category: categoryString;
-		  instVarNames: ivarArray;
-		  classInstVarNames: civarArray;
-		  comment: commentString;
-		  commentStamp: commentStamp;
-		  classTraitComposition: classTraitCompositionString;
-		  yourself
-]
-
 { #category : 'comparing' }
 MCTraitDefinition >> = aDefinition [
 
@@ -61,20 +46,20 @@ MCTraitDefinition >> classSlotDefinitionString [
 { #category : 'installing' }
 MCTraitDefinition >> createClass [
 
-	| trait |
-	trait := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: name;
-			         traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
-			         slots: self instanceVariables;
-			         package: self category;
-			         beTrait ].
-
-
-	trait ifNotNil: [
-		trait comment: comment stamp: commentStamp.
-		self classInstanceVariables ifNotEmpty: [ :vars | trait classSide slots: vars ] ].
-	^ trait
+	^ [
+	  self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: name;
+			  traitComposition: (Smalltalk compiler evaluate: self traitCompositionString);
+			  classTraitComposition: (Smalltalk compiler evaluate: self classTraitCompositionString);
+			  slots: self instanceVariables;
+			  classSlots: self classInstanceVariables;
+			  package: self packageName;
+			  tag: self tagName;
+			  comment: comment stamp: commentStamp;
+			  beTrait ] ]
+		  on: Warning , DuplicatedVariableError
+		  do: [ :ex | ex resume ]
 ]
 
 { #category : 'testing' }
@@ -88,6 +73,11 @@ MCTraitDefinition >> hasClassInstanceVariables [
 MCTraitDefinition >> hash [
 
 	^ (name hash bitXor: traitComposition hash) bitXor: self category hash
+]
+
+{ #category : 'testing' }
+MCTraitDefinition >> isTraitDefinition [
+	^ true
 ]
 
 { #category : 'printing' }

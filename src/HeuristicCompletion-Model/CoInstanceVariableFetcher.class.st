@@ -2,12 +2,14 @@
 I am a fetcher looking for the instance variables implemented in a class.
 "
 Class {
-	#name : #CoInstanceVariableFetcher,
-	#superclass : #CoClassBasedFetcher,
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#name : 'CoInstanceVariableFetcher',
+	#superclass : 'CoClassBasedFetcher',
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoInstanceVariableFetcher >> entriesDo: aBlock [
 
 	self completionClass instVarNames do: [ :e |

@@ -293,6 +293,7 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 
 { #category : 'accessing' }
 CompiledCode >> hasPragmaNamed: arg1 [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self subclassResponsibility
 ]
 
@@ -548,7 +549,7 @@ CompiledCode >> literalsToSkip [
 { #category : 'scanning' }
 CompiledCode >> localMessages [
 	"Answer a Set of all the message selectors sent by this method."
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	| scanner aSet |
 	aSet := IdentitySet new.
 	scanner := InstructionStream on: self.
@@ -580,7 +581,7 @@ CompiledCode >> localReadsThisContext [
 
 { #category : 'testing' }
 CompiledCode >> localSendsAnySelectorOf: aCollection [
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	self literalsDo: [ :lit |
 		(lit isSymbol and: [ aCollection includes: lit ])
 			ifTrue: [ ^ self messages includesAny: aCollection ]
@@ -623,6 +624,7 @@ CompiledCode >> longPrintOn: aStream [
 { #category : 'scanning' }
 CompiledCode >> messages [
 	"Answer a Set of all the message selectors sent by this method."
+	<reflection: 'Structural queries on methods - Method element references'>
 	| aSet |
 	aSet := self localMessages.
 	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
@@ -656,7 +658,7 @@ CompiledCode >> needsFrameSize: newFrameSize [
 { #category : 'accessing' }
 CompiledCode >> numArgs [
 	"Answer the number of arguments the receiver takes."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ (self header bitShift: -24) bitAnd: 16r0F
 ]
 
@@ -708,6 +710,7 @@ CompiledCode >> originMethod [
 
 { #category : 'accessing' }
 CompiledCode >> pragmas [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self subclassResponsibility
 ]
 
@@ -853,6 +856,8 @@ CompiledCode >> scanner [
 
 { #category : 'accessing' }
 CompiledCode >> selector [
+
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self subclassResponsibility
 ]
 

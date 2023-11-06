@@ -21,9 +21,7 @@ Class {
 		'obsoletions',
 		'additions',
 		'removals',
-		'errorDefinitions',
-		'provisions',
-		'methodAdditions'
+		'provisions'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -39,9 +37,8 @@ MCPackageLoader class >> installSnapshot: aSnapshot [
 
 { #category : 'public' }
 MCPackageLoader class >> unloadPackage: aPackage [
-	self new
-		unloadPackage: aPackage;
-		loadWithNameLike: aPackage name, '-unload'
+
+	self new unloadPackage: aPackage
 ]
 
 { #category : 'public' }
@@ -58,83 +55,80 @@ MCPackageLoader >> addDefinition: aDefinition [
 
 { #category : 'private' }
 MCPackageLoader >> analyze [
+
 	| sorter |
 	sorter := self sorterForItems: additions.
 	additions := sorter orderedItems.
 	requirements := sorter externalRequirements.
 	unloadableDefinitions := sorter itemsWithMissingRequirements asSortedCollection.
-	
+
 	sorter := self sorterForItems: removals.
-	removals := sorter orderedItems reversed.
+	removals := sorter orderedItems reversed
 ]
 
 { #category : 'private' }
 MCPackageLoader >> basicLoad [
-    errorDefinitions := OrderedCollection new.
-    SourceFiles deferFlushDuring: [self basicLoadDefinitions].
+
+	SourceFiles deferFlushDuring: [ self basicLoadDefinitions ]
 ]
 
 { #category : 'private' }
 MCPackageLoader >> basicLoadDefinitions [
 
-	"FIXME. Do a separate pass on loading class definitions as the very first thing.
-	This is a workaround for a problem with the so-called 'atomic' loading (you wish!)
-	which isn't atomic at all but mixes compilation of methods with reshapes of classes.
+	| methodAdditions |
+	self loadClassDefinitions.
 
-	Since the method is not installed until later, any class reshape in the middle *will*
-	affect methods in subclasses that have been compiled before. There is probably
-	a better way of dealing with this by ensuring that the sort order of the definition lists
-	superclass definitions before methods for subclasses but I need this NOW, and adding
-	an extra pass ensures that methods are compiled against their new class definitions."
+	methodAdditions := additions
+		                   select: [ :aDefinition | aDefinition isMethodDefinition ]
+		                   thenCollect: [ :aDefinition | aDefinition asMethodAddition ].
 
-	additions do: [ :each | self loadClassDefinition: each ] displayingProgress: 'Loading classes...'.
-	additions do: [ :each | self tryToLoad: each           ] displayingProgress: 'Compiling methods...'.
-	removals  do: [ :each | each unload                    ] displayingProgress: 'Cleaning up...'.
-	
-	self shouldWarnAboutErrors ifTrue: [ self warnAboutErrors ].
-	errorDefinitions do: [ :each | each addMethodAdditionTo: methodAdditions ] displayingProgress: 'Reloading erroneous definitions...'.
-	
-	methodAdditions do: [ :each | each installMethod ].
-	methodAdditions do: [ :each | each notifyObservers ].
-	additions       do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'.
-	
+	"We want to announce the addition of the methods only once all methods are loaded because the system might react to the annoucements and execute code requirement other methods from the classes we are loading."
+	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ methodAdditions do: [ :each | each installMethod ] ].
+
+	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
+
+	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'
 ]
 
 { #category : 'private' }
 MCPackageLoader >> dependencyWarning [
-	| packageName |
-	
-	packageName := (additions, methodAdditions) 
-		detect:  [ :each | each respondsTo: #category ]
-		ifFound: [ :aDefinition | aDefinition category ] 
-		ifNone: [ 'UNKNOWN' ].
-	
-	^ String streamContents: [ :stream|
-		stream 
-			nextPutAll: 'Package '; 
-			nextPutAll: packageName; 
-			nextPutAll: ' depends on the following classes:'; cr.
-		requirements do: [ :each | stream space; space; nextPutAll: each; cr].
-		stream nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: '; cr.
-		unloadableDefinitions do: [:ea | stream space; space; nextPutAll: ea summary; cr]] 
-]
 
-{ #category : 'private' }
-MCPackageLoader >> errorDefinitionWarning [
-	^ String streamContents:
-		[:s |
-		s nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):'; cr.
-		errorDefinitions do: [:ea | s space; space; nextPutAll: ea summary; cr]] 
+	| packageName |
+	packageName := additions
+		               detect: [ :aDefinition | aDefinition isClassDefinition ]
+		               ifFound: [ :aDefinition | aDefinition packageName ]
+		               ifNone: [ 'UNKNOWN' ].
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: 'Package ';
+			  nextPutAll: packageName;
+			  nextPutAll: ' depends on the following classes:';
+			  cr.
+		  requirements do: [ :each |
+			  stream
+				  space;
+				  space;
+				  nextPutAll: each;
+				  cr ].
+		  stream
+			  nextPutAll: 'You must resolve these dependencies before you will be able to load these definitions: ';
+			  cr.
+		  unloadableDefinitions do: [ :ea |
+			  stream
+				  space;
+				  space;
+				  nextPutAll: ea summary;
+				  cr ] ]
 ]
 
 { #category : 'initialization' }
 MCPackageLoader >> initialize [
+
 	super initialize.
 	additions := OrderedCollection new.
 	removals := OrderedCollection new.
-	obsoletions := Dictionary new.
-	methodAdditions := OrderedCollection new. 
-
+	obsoletions := Dictionary new
 ]
 
 { #category : 'public' }
@@ -153,12 +147,38 @@ MCPackageLoader >> load [
 ]
 
 { #category : 'private' }
-MCPackageLoader >> loadClassDefinition: aDefinition [
+MCPackageLoader >> loadClassDefinitions [
+	"Here we are loading the class definitions.
+	
+	When loading a class it is possible that it fails. The reason is that a class can use a trait from this package, but the dependency sorter of Monticello does not sort those traits before the classes using it.
+	In that case we are implementing a retry mechanisme."
 
-	[ aDefinition isClassDefinition 
-		ifTrue: [ aDefinition load ]
-	] on: Error do: [ 
-		errorDefinitions add: aDefinition ].
+	| errorDefinitions |
+	errorDefinitions := OrderedCollection new.
+
+	"We first load the class definitions and store the potential errors"
+	(additions select: [ :aDefinition | aDefinition isClassDefinition ])
+		do: [ :aDefinition |
+			[ aDefinition load ]
+				on: Error
+				do: [ errorDefinitions add: aDefinition ] ]
+		displayingProgress: 'Loading classes...'.
+
+	"Until we succed to fix errors, we try to install them"
+	[
+	| previousErrors |
+	previousErrors := errorDefinitions copy.
+	previousErrors
+		do: [ :aClassDefinition |
+			errorDefinitions remove: aClassDefinition.
+			[ aClassDefinition load ]
+				on: Error
+				do: [ errorDefinitions add: aClassDefinition ] ]
+		displayingProgress: 'Reloading erroneous definitions...'.
+	previousErrors size = errorDefinitions size ] whileFalse.
+
+	"Finally we warn about the errors we could not fix."
+	errorDefinitions ifNotEmpty: [ self warnAboutErrors: errorDefinitions ]
 ]
 
 { #category : 'public' }
@@ -201,12 +221,8 @@ MCPackageLoader >> provisions [
 
 { #category : 'patch ops' }
 MCPackageLoader >> removeDefinition: aDefinition [
-	removals add: aDefinition
-]
 
-{ #category : 'private' }
-MCPackageLoader >> shouldWarnAboutErrors [
-	^ errorDefinitions isEmpty not and: [false "should make this a setting ?"]
+	removals add: aDefinition
 ]
 
 { #category : 'private' }
@@ -215,17 +231,6 @@ MCPackageLoader >> sorterForItems: aCollection [
 	sorter := MCDependencySorter items: aCollection.
 	sorter addExternalProvisions: self provisions.
 	^ sorter
-]
-
-{ #category : 'private' }
-MCPackageLoader >> tryToLoad: aDefinition [
-	"Here we are only interested by method definition. We want to avoid recompilating classes or traits for example."
-
-	aDefinition isMethodDefinition ifFalse: [ ^ self ].
-
-	[ aDefinition addMethodAdditionTo: methodAdditions ]
-		on: Error
-		do: [ errorDefinitions add: aDefinition ]
 ]
 
 { #category : 'public' }
@@ -277,7 +282,16 @@ MCPackageLoader >> warnAboutDependencies [
 ]
 
 { #category : 'private' }
-MCPackageLoader >> warnAboutErrors [
-	self notify: self errorDefinitionWarning.
+MCPackageLoader >> warnAboutErrors: errorDefinitions [
 
+	self notify: (String streamContents: [ :s |
+			 s
+				 nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):';
+				 cr.
+			 errorDefinitions do: [ :ea |
+				 s
+					 space;
+					 space;
+					 nextPutAll: ea summary;
+					 cr ] ])
 ]

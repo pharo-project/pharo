@@ -2,71 +2,73 @@
 Instances of this class represent a directory entry in a memory file system. So basically this class provides similar behavior as a DiscDirectoryEntry but for a memory file system.
 "
 Class {
-	#name : #MemoryDirectoryEntry,
-	#superclass : #FileSystemDirectoryEntry,
-	#category : #'FileSystem-Core-Public'
+	#name : 'MemoryDirectoryEntry',
+	#superclass : 'FileSystemDirectoryEntry',
+	#category : 'FileSystem-Core-Public',
+	#package : 'FileSystem-Core',
+	#tag : 'Public'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryDirectoryEntry >> creationTime [
 
 	^reference creationTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryDirectoryEntry >> deviceId [
 	"Simulate the device id with the file systemss hash"
 
 	^reference store hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryDirectoryEntry >> fileSize [
 	"Simulate the device id with the file systems hash"
 
 	^reference fileSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryDirectoryEntry >> inode [
 	"Simulate the inode with the file hash"
 
 	^reference hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryDirectoryEntry >> isDirectory [
 
 	^reference isDirectory
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryDirectoryEntry >> isFile [
 
 	^reference isFile
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryDirectoryEntry >> isReadable [
 	"The Memory File System doesn't have any access controls"
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryDirectoryEntry >> isWritable [
 	"The Memory File System doesn't have any access controls"
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryDirectoryEntry >> modificationTime [
 
 	^reference modificationTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryDirectoryEntry >> posixPermissions [
 	"Answer the receivers posix permissions.
 	The memory file system doesn't have any access controls"
@@ -74,7 +76,15 @@ MemoryDirectoryEntry >> posixPermissions [
 	^8r777
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryDirectoryEntry >> size [
 	^reference size
+]
+
+{ #category : 'accessing' }
+MemoryDirectoryEntry >> targetPath [
+	"Answer the Path pointing to the real file.
+	MemoryStore doesn't support symbolic links, answer the receivers file path"
+
+	^reference path
 ]

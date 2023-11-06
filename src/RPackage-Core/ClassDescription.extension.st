@@ -9,19 +9,14 @@ ClassDescription >> definedSelectors [
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
 
-	^ self packageOrganizer extendingPackagesOf: self
+	^ (self localMethods , self classSide localMethods
+		   select: #isExtension
+		   thenCollect: #extensionPackage) asIdentitySet
 ]
 
 { #category : '*RPackage-Core' }
 ClassDescription >> extensionSelectors [
 	^ self extendingPackages flatCollect: [ :each | each extensionSelectorsForClass: self ]
-]
-
-{ #category : '*RPackage-Core' }
-ClassDescription >> isDefinedInPackage: aPackage [
-	"returns true if aPackage contains the definitino of this class"
-
-	^ aPackage includesClass: self
 ]
 
 { #category : '*RPackage-Core' }
@@ -43,9 +38,15 @@ ClassDescription >> package [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> packageFromOrganizer: anOrganizer [
-	"returns the package that defines this class"
-	^ anOrganizer packageOf: self
+ClassDescription >> package: aPackage [
+
+	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
+]
+
+{ #category : '*RPackage-Core' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
 ]
 
 { #category : '*RPackage-Core' }
@@ -62,17 +63,15 @@ ClassDescription >> packageTag [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> packageTag: aSymbol [
-
-	self flag: #package. "In the future this method should work with a real package tag also."
-	(self package ensureTag: aSymbol) addClass: self
+ClassDescription >> packageTag: aTag [
+	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
 ]
 
 { #category : '*RPackage-Core' }
 ClassDescription >> packageTagName [
-	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag or nil if the class is uncategorized."
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag.."
 
-	^ self packageTag ifNotNil: [ :tag | tag name ]
+	^ self packageTag name
 ]
 
 { #category : '*RPackage-Core' }
@@ -84,9 +83,9 @@ ClassDescription >> packages [
 
 { #category : '*RPackage-Core' }
 ClassDescription >> removePackageTag [
+	"Removing a package tag is the same as moving it to the root tag that is the uncategorized tag."
 
-	self packageTag isRoot ifTrue: [ "Cannot remove root tag" ^ self ].
-
-	self packageTag removeClass: self.
-	self package addClass: self
+	| package |
+	package := self package.
+	package moveClass: self toTag: package rootTag
 ]

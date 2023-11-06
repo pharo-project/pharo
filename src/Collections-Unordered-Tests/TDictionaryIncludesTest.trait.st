@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryIncludesTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryIncludesTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryIncludesTest >> keyNotInNonEmpty [
 	" return a key not included in nonEmpty"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryIncludesTest >> nonEmpty [
 
 ^self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryIncludesTest >> test0FixtureDictionaryIncludes [
 	| in |
 	self nonEmpty.
@@ -33,7 +35,7 @@ TDictionaryIncludesTest >> test0FixtureDictionaryIncludes [
 	self deny: in
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesTest >> testIncludesAssociation [
 
 	|  nonExistantAssociation associationIn keyIn valueIn |
@@ -51,7 +53,7 @@ TDictionaryIncludesTest >> testIncludesAssociation [
 	self deny: (self nonEmpty includesAssociation: (self keyNotInNonEmpty -> valueIn  ))
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesTest >> testIncludesComportementForDictionnary [
 	| valueIn collection keyIn |
 	collection := self nonEmpty.
@@ -63,7 +65,7 @@ TDictionaryIncludesTest >> testIncludesComportementForDictionnary [
 	self deny: (collection includes: keyIn)
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesTest >> testIncludesIdentityBasicComportement [
 
 | valueIn collection |
@@ -74,7 +76,7 @@ self assert: (collection includesIdentity: valueIn ) .
 self deny: (collection includesIdentity: self valueNotInNonEmpty )
 ]
 
-{ #category : #'tests - dictionary including' }
+{ #category : 'tests - dictionary including' }
 TDictionaryIncludesTest >> testIncludesKey [
 
 	| collection keyIn nonExistantKey |
@@ -87,7 +89,7 @@ TDictionaryIncludesTest >> testIncludesKey [
 	self deny: ( collection includesKey: nonExistantKey )
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryIncludesTest >> valueNotInNonEmpty [
 	" return a value not included in nonEmpty"
 	^ self explicitRequirement

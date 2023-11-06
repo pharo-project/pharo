@@ -1,19 +1,20 @@
 Class {
-	#name : #ClyBrowserQueryResultTest,
-	#superclass : #ClyQueryNavigationResultTest,
+	#name : 'ClyBrowserQueryResultTest',
+	#superclass : 'ClyQueryNavigationResultTest',
 	#instVars : [
 		'cursor',
 		'items'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserQueryResultTest class >> isAbstract [
 	^self == ClyBrowserQueryResultTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserQueryResultTest >> assertItems: itemValueWithDepthArray [
 
 	self
@@ -21,7 +22,7 @@ ClyBrowserQueryResultTest >> assertItems: itemValueWithDepthArray [
 		withValue: [:item | self meaningfullObjectToAssert: item]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserQueryResultTest >> assertItems: itemValueWithDepthArray withValue: aBlockToGetValue [
 	| i actualItem valueOfItem |
 	items := queryResult items.
@@ -35,12 +36,12 @@ ClyBrowserQueryResultTest >> assertItems: itemValueWithDepthArray withValue: aBl
 		i := i + 1]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserQueryResultTest >> meaningfullObjectToAssert: resultItem [
 	^resultItem actualObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryResultTest >> testOpeningBrowserCursor [
 
 	| itemObserver |

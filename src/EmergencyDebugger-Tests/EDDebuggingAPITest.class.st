@@ -1,21 +1,22 @@
 Class {
-	#name : #EDDebuggingAPITest,
-	#superclass : #EDTest,
-	#category : #'EmergencyDebugger-Tests'
+	#name : 'EDDebuggingAPITest',
+	#superclass : 'EDTest',
+	#category : 'EmergencyDebugger-Tests',
+	#package : 'EmergencyDebugger-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 EDDebuggingAPITest >> forbiddenProcesses [
 	self flag: 'This is a fixed list of processes we do not want to kill if they exist. This is too magickal, but we lack tools to have such information and we do not want to depend on process browser packages (information is taken from there).'.
 	^ {[  ].
 	[ Smalltalk lowSpaceWatcherProcess ].
-	[ WeakArray runningFinalizationProcess ].
+	[ FinalizationProcess runningFinalizationProcess ].
 	[ Processor backgroundProcess ].
 	[ UIManager default uiProcess ].
 	[ Delay schedulingProcess ]}
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 EDDebuggingAPITest >> injectContextWithMethodWithChanges [
 	| context |
 	self prepareMethodVersionTest.
@@ -30,7 +31,7 @@ EDDebuggingAPITest >> injectContextWithMethodWithChanges [
 	debugAPI stack addFirst: context
 ]
 
-{ #category : #'tests - processes' }
+{ #category : 'tests - processes' }
 EDDebuggingAPITest >> testAllRunningProcesses [
 	| processes |
 	processes := EDDebuggingAPI allRunningProcesses.
@@ -41,12 +42,12 @@ EDDebuggingAPITest >> testAllRunningProcesses [
 	processes do: [ :p | self deny: p isTerminated ]
 ]
 
-{ #category : #'tests - initialization' }
+{ #category : 'tests - initialization' }
 EDDebuggingAPITest >> testAttachTo [
 	self assert: debugAPI session identicalTo: session
 ]
 
-{ #category : #'tests - reverting methods' }
+{ #category : 'tests - reverting methods' }
 EDDebuggingAPITest >> testChangeRecordsForMethod [
 	| changes |
 	self prepareMethodVersionTest.
@@ -57,7 +58,7 @@ EDDebuggingAPITest >> testChangeRecordsForMethod [
 	self assert: changes second sourceCode equals: self sampleMethodSourceCodeVersion1
 ]
 
-{ #category : #'tests - debugging support' }
+{ #category : 'tests - debugging support' }
 EDDebuggingAPITest >> testCloseEmergencySession [
 	ed := EDEmergencyDebugger new.
 	ed basicDebug: session.
@@ -65,7 +66,7 @@ EDDebuggingAPITest >> testCloseEmergencySession [
 	self deny: ed isRunning
 ]
 
-{ #category : #'tests - context' }
+{ #category : 'tests - context' }
 EDDebuggingAPITest >> testContextAt [
 	1 to: session stack size do: [ :i |
 		self
@@ -73,14 +74,14 @@ EDDebuggingAPITest >> testContextAt [
 			identicalTo: (session stack at: i) ]
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testDisplayStackSize [
 	self
 		assert: debugAPI displayStackSize
 		equals: debugAPI class displayStackSize
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testDumpStack [
 	| dump splittedDump |
 	dump := debugAPI dumpStack.
@@ -90,7 +91,7 @@ EDDebuggingAPITest >> testDumpStack [
 		equals: (session shortStack collect: [ :ctx | ctx printString ])
 ]
 
-{ #category : #'tests - processes' }
+{ #category : 'tests - processes' }
 EDDebuggingAPITest >> testForbiddenProcesses [
 	EDDebuggingAPI forbiddenProcesses
 		with: self forbiddenProcesses
@@ -98,27 +99,27 @@ EDDebuggingAPITest >> testForbiddenProcesses [
 			[ :actualProcess :expectedProcess | self assert: actualProcess value identicalTo: expectedProcess value ]
 ]
 
-{ #category : #'tests - initialization' }
+{ #category : 'tests - initialization' }
 EDDebuggingAPITest >> testInitialize [
 	self assert: debugAPI debugger isNil.
 	self assertEmpty: debugAPI changesForMethods
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testLongStack [
 	self
 		assertCollection: debugAPI longStack
 		equals: (session stackOfSize: debugAPI longStackSize)
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testLongStackSize [
 	self
 		assert: debugAPI longStackSize
 		equals: debugAPI class longStackSize
 ]
 
-{ #category : #'tests - context' }
+{ #category : 'tests - context' }
 EDDebuggingAPITest >> testMethodAt [
 	1 to: session stack size do: [ :i |
 		self
@@ -126,7 +127,7 @@ EDDebuggingAPITest >> testMethodAt [
 			identicalTo: (session stack at: i) method ]
 ]
 
-{ #category : #'tests - reverting methods' }
+{ #category : 'tests - reverting methods' }
 EDDebuggingAPITest >> testMethodVersionAt [
 	self injectContextWithMethodWithChanges.
 	self
@@ -134,13 +135,13 @@ EDDebuggingAPITest >> testMethodVersionAt [
 		equals: (debugAPI changesForMethods at: EDMockObjectForTests >> #mWithVersion)
 ]
 
-{ #category : #'tests - reverting methods' }
+{ #category : 'tests - reverting methods' }
 EDDebuggingAPITest >> testMethodVersionSizeAt [
 	self injectContextWithMethodWithChanges.
 	self assert: (debugAPI methodVersionAt: 1) size equals: 2
 ]
 
-{ #category : #'tests - context' }
+{ #category : 'tests - context' }
 EDDebuggingAPITest >> testNodeAt [
 	1 to: session stack size do: [ :i |
 		| context |
@@ -150,7 +151,7 @@ EDDebuggingAPITest >> testNodeAt [
 			identicalTo: (context method sourceNodeForPC: context pc) ]
 ]
 
-{ #category : #'tests - context' }
+{ #category : 'tests - context' }
 EDDebuggingAPITest >> testNodeForContext [
 	| context |
 	context := session stack first.
@@ -159,7 +160,7 @@ EDDebuggingAPITest >> testNodeForContext [
 		identicalTo: (context method sourceNodeForPC: context pc)
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testResetStack [
 	debugAPI longStack removeAll.
 	debugAPI resetStack.
@@ -168,7 +169,7 @@ EDDebuggingAPITest >> testResetStack [
 		equals: (session stackOfSize: debugAPI longStackSize)
 ]
 
-{ #category : #'tests - context' }
+{ #category : 'tests - context' }
 EDDebuggingAPITest >> testRestartContextAt [
 	| secondContext |
 	secondContext := debugAPI longStack second.
@@ -176,7 +177,7 @@ EDDebuggingAPITest >> testRestartContextAt [
 	self assert: debugAPI longStack first identicalTo: secondContext
 ]
 
-{ #category : #'tests - reverting methods' }
+{ #category : 'tests - reverting methods' }
 EDDebuggingAPITest >> testRevertTo [
 	|method changes|
 	self prepareMethodVersionTest.
@@ -204,7 +205,7 @@ EDDebuggingAPITest >> testRevertTo [
 				equals: (changes collect:[:c| c sourceCode])
 ]
 
-{ #category : #'tests - reverting methods' }
+{ #category : 'tests - reverting methods' }
 EDDebuggingAPITest >> testRevertToInContext [
 	|method changes|
 	self prepareMethodVersionTest.
@@ -238,18 +239,18 @@ EDDebuggingAPITest >> testRevertToInContext [
 				equals: (changes collect:[:c| c sourceCode])
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testStack [
 	self assert: debugAPI stack identicalTo: debugAPI longStack
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testStackAt [
 	1 to: session stack size do:
 		[ :i | self assert: (debugAPI stackAt: i) equals: (session stack at: i) ]
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testStackFromTo [
 	| stack stackExtract |
 	stack := session stack.
@@ -264,14 +265,14 @@ EDDebuggingAPITest >> testStackFromTo [
 		equals: stackExtract
 ]
 
-{ #category : #'tests - stack' }
+{ #category : 'tests - stack' }
 EDDebuggingAPITest >> testStackSize [
 	self
 		assert: debugAPI stackSize
 		equals: debugAPI stack size
 ]
 
-{ #category : #'tests - processes' }
+{ #category : 'tests - processes' }
 EDDebuggingAPITest >> testTerminateProcesses [
 	|processes|
 	processes := { [  ] newProcess.  [  ] newProcess.}.
@@ -281,7 +282,7 @@ EDDebuggingAPITest >> testTerminateProcesses [
 	processes do:[:p| self assert: p isTerminated]
 ]
 
-{ #category : #'tests - debugging support' }
+{ #category : 'tests - debugging support' }
 EDDebuggingAPITest >> testTerminateSession [
 
 	|process|
@@ -293,7 +294,7 @@ EDDebuggingAPITest >> testTerminateSession [
 	self assert: process isTerminated
 ]
 
-{ #category : #'tests - reverting methods' }
+{ #category : 'tests - reverting methods' }
 EDDebuggingAPITest >> testVersionsForMethod [
 	|changes|
 	self prepareMethodVersionTest.

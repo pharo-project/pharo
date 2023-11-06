@@ -1,13 +1,14 @@
 Class {
-	#name : #ClyExampleScope,
-	#superclass : #ClyTypedScope,
+	#name : 'ClyExampleScope',
+	#superclass : 'ClyTypedScope',
 	#instVars : [
 		'extraParameter'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyExampleScope >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -16,17 +17,17 @@ ClyExampleScope >> = anObject [
 	^ extraParameter = anObject extraParameter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExampleScope >> extraParameter [
 	^ extraParameter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExampleScope >> extraParameter: anObject [
 	extraParameter := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyExampleScope >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 

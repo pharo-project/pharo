@@ -1,6 +1,6 @@
-Extension { #name : #Date }
+Extension { #name : 'Date' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Date class >> fromSton: stonReader [
 	"Read a ISO YYYY-MM-DD format.
 	Since my current implementation is time zone offset sensitive, the offset has to be taken into account.
@@ -17,12 +17,12 @@ Date class >> fromSton: stonReader [
 	^ date
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Date >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Date >> stonOn: stonWriter [
 	"Use an ISO style YYYY-MM-DD representation.
 	Since my current implementation is time zone offset sensitive, the offset has to be included."

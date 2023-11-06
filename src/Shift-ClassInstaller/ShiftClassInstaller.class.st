@@ -38,7 +38,8 @@ ShiftClassInstaller class >> example [
 			superclass: Object;
 			name: #MyClass;
 			slots: #(varA varB);
-			category: 'My-Category' ]
+			tag: 'ATag';
+			package: 'My-Package' ]
 ]
 
 { #category : 'building' }
@@ -67,11 +68,6 @@ ShiftClassInstaller >> builder [
 { #category : 'accessing' }
 ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass comment: builder comment stamp: builder commentStamp ]
-]
-
-{ #category : 'building' }
-ShiftClassInstaller >> copyClassSlotsFromExistingClass [
-	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
 ]
 
 { #category : 'copying' }
@@ -176,7 +172,6 @@ ShiftClassInstaller >> make [
 
 	[
 		builder oldClass: oldClass.
-		self copyClassSlotsFromExistingClass.
 		newClass := builder build.
 
 		self installInEnvironment: newClass.
@@ -190,15 +185,13 @@ ShiftClassInstaller >> make [
 		builder builderEnhancer afterMigratingClass: builder installer: self.
 
 		builder builderEnhancer propagateChangesToRelatedClasses: newClass installer: self.
+		
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
 		newClass := oldClass.
 	].
 
-	self fixSlotScope: newClass.
-	self fixSlotScope: newClass class.
-
-	self recategorize: newClass to: builder category asSymbol.
+	self recategorize: newClass.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -210,7 +203,6 @@ ShiftClassInstaller >> make [
 ShiftClassInstaller >> make: aBlock [
 
 	aBlock value: builder.
-
 	^self make
 ]
 
@@ -256,6 +248,9 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 		{ oldClass. builder oldMetaclass } , oldClassVariables asArray
 			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.
 
+		self fixSlotScope: newClass.
+		self fixSlotScope: newClass class.
+
 		newClass classPool rehash.
 	] valueUninterruptably
 ]
@@ -293,19 +288,9 @@ ShiftClassInstaller >> oldClass: anObject [
 ]
 
 { #category : 'notifications' }
-ShiftClassInstaller >> recategorize: aClass to: newCategory [
-
-	| oldCategory |
-	oldCategory := oldClass ifNotNil: [ oldClass basicCategory ].
-	oldCategory == newCategory ifTrue: [ ^ self ].
-
-	self installingEnvironment organization ifNotNil: [ :systemOrganizer |
-		systemOrganizer classify: aClass name under: newCategory.
-		aClass basicCategory: newCategory ].
-
-	(oldCategory isNil or: [ oldCategory = Class unclassifiedCategory ])
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
-		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
+ShiftClassInstaller >> recategorize: aClass [
+	"If the package is nil we leave the class unclassified"
+	builder package ifNotNil: [ :package | aClass package: package tag: builder tag ]
 ]
 
 { #category : 'building' }

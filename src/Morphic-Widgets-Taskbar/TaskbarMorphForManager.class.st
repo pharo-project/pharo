@@ -2,15 +2,16 @@
 is same of taskBarMorph but just for the manager
 "
 Class {
-	#name : #TaskbarMorphForManager,
-	#superclass : #TaskbarMorph,
+	#name : 'TaskbarMorphForManager',
+	#superclass : 'TaskbarMorph',
 	#instVars : [
 		'manager'
 	],
-	#category : #'Morphic-Widgets-Taskbar'
+	#category : 'Morphic-Widgets-Taskbar',
+	#package : 'Morphic-Widgets-Taskbar'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaskbarMorphForManager class >> newByManager: aManager [
 
 	| taskbar |
@@ -19,13 +20,13 @@ TaskbarMorphForManager class >> newByManager: aManager [
 	^ taskbar 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskbarMorphForManager >> manager: aManager [
 
 	manager := aManager 
 ]
 
-{ #category : #taskbar }
+{ #category : 'taskbar' }
 TaskbarMorphForManager >> windows [
 
 	^ manager allWindow

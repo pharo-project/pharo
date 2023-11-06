@@ -2,17 +2,13 @@
 I'm a nice comment!, treat me well :).
 "
 Class {
-	#name : #Ring2ChunkImporterTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-ChunkImporter'
+	#name : 'Ring2ChunkImporterTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-ChunkImporter',
+	#package : 'Ring-Tests-ChunkImporter'
 }
 
-{ #category : #'expected failures' }
-Ring2ChunkImporterTest >> expectedFailures [
-	^ #(testMultipleMixedChunksInStrangeOrderWithMetaclassTrait testStandardMethodInNewMetaclassTrait)
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testClassWithNilSuperclass [
 
 	| importer class |
@@ -32,7 +28,7 @@ SomeClass superclass: nil!' readStream.
 	self assert: class package name equals: 'SomePackage'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testClassWithSimpleSlots [
 
 	| importer class |
@@ -51,7 +47,7 @@ Ring2ChunkImporterTest >> testClassWithSimpleSlots [
 	self assert: class category equals: 'Slot-Tests-Associations'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testClassWithUnknownSlots [
 
 	| importer class |
@@ -72,7 +68,7 @@ Ring2ChunkImporterTest >> testClassWithUnknownSlots [
 	self assert: ((class slots last: 2) allSatisfy: [ :each | each isKindOf: RGUnknownSlot  ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testClassWithUnknownSlotsWithMessages [
 
 	| importer class |
@@ -93,7 +89,7 @@ Ring2ChunkImporterTest >> testClassWithUnknownSlotsWithMessages [
 	self assert: ((class slots last: 2) allSatisfy: [ :each | each isKindOf: RGUnknownSlot  ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testHistoricalStandardComment [
 
 	| importer class comment code |
@@ -117,7 +113,7 @@ Ring2ChunkImporterTest >> testHistoricalStandardComment [
 	self assert: comment time equals: DateAndTime new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testMetaclassWithTrait [
 
 	| importer class |
@@ -138,7 +134,7 @@ Ring2ChunkImporterTest >> testMetaclassWithTrait [
 	self assert: class traitComposition transformations first isTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testMultipleChunks [
 	| importer class |
 	importer := RGChunkImporter new.
@@ -157,7 +153,7 @@ Object subclass: #SomeClass2!' readStream.
 	self assert: class superclass name equals: #Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testMultipleClassChunksInStrangeOrder [
 	| importer class class2 |
 	importer := RGChunkImporter new.
@@ -178,7 +174,7 @@ Object subclass: #SomeClass2!' readStream.
 	self assert: class superclass identicalTo: class2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testMultipleMixedChunksInStrangeOrder [
 	| importer class method |
 	importer := RGChunkImporter new.
@@ -198,12 +194,12 @@ Object subclass: #SomeClass!' readStream.
 	self assert: (method sourceCode endsWith: '^true')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testMultipleMixedChunksInStrangeOrderWithMetaclassTrait [
 
 	| importer trait method |
 
-	" EXPECTED FAILURE "
+	<expectedFailure>
 	"This test currently needs to fail because the CodeImporter gives only original behavior name and #isMata.
 	We do not know that the behavior was supposed to be classTrait."
 
@@ -224,7 +220,7 @@ Trait named: #TBehavior
 	self assert: (method sourceCode endsWith: '^true')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testMultipleMixedChunksInStrangeOrderWithTrait [
 
 	| importer trait method |
@@ -246,7 +242,7 @@ Trait named: #TBehavior
 	self assert: (method sourceCode endsWith: '^true')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testProtoObject [
 
 	| importer class |
@@ -267,7 +263,7 @@ ProtoObject superclass: nil!' readStream.
 	self assert: class package name equals: 'Kernel-Objects'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testSpecialSuperclasses [
 
 	| importer class |
@@ -311,7 +307,7 @@ Ring2ChunkImporterTest >> testSpecialSuperclasses [
 	importer doIts notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardClass [
 
 	| importer class |
@@ -335,7 +331,7 @@ Ring2ChunkImporterTest >> testStandardClass [
 	self assert: class category equals: #SomePackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardClassWithPackage [
 
 	| importer class |
@@ -359,7 +355,7 @@ Ring2ChunkImporterTest >> testStandardClassWithPackage [
 	self assert: class package name equals: #SomePackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardClassWithVariables [
 
 
@@ -390,7 +386,7 @@ Ring2ChunkImporterTest >> testStandardClassWithVariables [
 	self assert: class category equals: #SomePackage
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardComment [
 
 	| importer class comment code |
@@ -414,7 +410,7 @@ Ring2ChunkImporterTest >> testStandardComment [
 	self assert: comment time equals: ('5/2/2012 13:35' asDateAndTime)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMetaclass [
 
 	| importer class |
@@ -437,7 +433,7 @@ Ring2ChunkImporterTest >> testStandardMetaclass [
 	self assert: class instVarNames equals: #(var1 var2 var3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMetaclassMethod [
 
 	| importer class method code |
@@ -464,7 +460,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassMethod [
 	^true'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMetaclassTrait [
 
 	| importer trait |
@@ -480,7 +476,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassTrait [
 	self assert: trait traitComposition transformations isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMetaclassTraitWithMultipleTraits [
 
 	| importer trait usedTraits |
@@ -496,7 +492,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassTraitWithMultipleTraits [
 	self assert: (usedTraits collect: [:each | each name]) asArray equals: #('TClassDescription classTrait' 'TComposingDescription classTrait' 'TTransformationCompatibility classTrait')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMetaclassTraitWithSingleTrait [
 	| importer trait usedTrait |
 	importer := RGChunkImporter new.
@@ -515,7 +511,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassTraitWithSingleTrait [
 	self assert: (importer environment ask behaviorNamed: #'TBehaviorCategorization classTrait') notNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMethod [
 
 	| importer class method code |
@@ -543,7 +539,7 @@ Ring2ChunkImporterTest >> testStandardMethod [
 	^true'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 
 	| importer class method code |
@@ -571,7 +567,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 	^true'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 
 	| importer trait method code |
@@ -600,7 +596,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 	^true'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 
 	| importer trait method code |
@@ -629,7 +625,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 	^true'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 
 	| importer class method code |
@@ -657,12 +653,12 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 	^true'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMethodInNewMetaclassTrait [
 
 	| importer trait method code |
 
-	" EXPECTED FAILURE "
+	<expectedFailure>
 	"This test currently needs to fail because the CodeImporter gives only original behavior name and #isMata.
 	We do not know that the behavior was supposed to be classTrait."
 
@@ -690,7 +686,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclassTrait [
 	^true'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardSubclasses [
 
 	| importer class |
@@ -703,7 +699,7 @@ Ring2ChunkImporterTest >> testStandardSubclasses [
 	self assert: class superclass name equals: #Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardTrait [
 
 	| importer trait |
@@ -721,7 +717,7 @@ Ring2ChunkImporterTest >> testStandardTrait [
 	self assert: trait package name equals: 'Traits-Kernel-Traits'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardTraitWithExclusions [
 
 	| importer trait usedTraits |
@@ -743,7 +739,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithExclusions [
 	self assert: trait category equals: 'Traits-Kernel'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardTraitWithMultipleTraits [
 
 	| importer trait usedTraits |
@@ -761,7 +757,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithMultipleTraits [
 	self assert: trait category equals: 'Traits-Kernel'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardTraitWithSingleTrait [
 	| importer trait usedTrait |
 	importer := RGChunkImporter new.
@@ -781,7 +777,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithSingleTrait [
 	self assert: trait category equals: 'Traits-Kernel-Traits'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardTraitWithTraits [
 
 	| importer trait |
@@ -798,7 +794,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithTraits [
 	self assert: trait package name equals: 'Traits-Kernel-Traits'
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 Ring2ChunkImporterTest >> testingCommentFor: aClassName [
 
 	| comment commentToWrite|
@@ -808,7 +804,7 @@ Ring2ChunkImporterTest >> testingCommentFor: aClassName [
 	^ ('!{1} commentStamp: ''GuillermoPolito 5/2/2012 13:35'' prior: 0!{2}!' format: { aClassName. commentToWrite })
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 Ring2ChunkImporterTest >> testingHistoricalCommentFor: aClassName [
 
 	| comment commentToWrite|

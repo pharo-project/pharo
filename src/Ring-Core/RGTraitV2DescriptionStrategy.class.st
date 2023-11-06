@@ -1,13 +1,15 @@
 Class {
-	#name : #RGTraitV2DescriptionStrategy,
-	#superclass : #RGBehaviorStrategy,
+	#name : 'RGTraitV2DescriptionStrategy',
+	#superclass : 'RGBehaviorStrategy',
 	#instVars : [
 		'layout'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RGTraitV2DescriptionStrategy >> allSlots [
 
 	| superclassSlots aSuperclass |
@@ -18,7 +20,7 @@ RGTraitV2DescriptionStrategy >> allSlots [
 	^ (superclassSlots, self layout allSlots) asArray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2DescriptionStrategy >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
 
@@ -28,7 +30,7 @@ RGTraitV2DescriptionStrategy >> classVariablesString [
 			separatedBy: [ stream space ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RGTraitV2DescriptionStrategy >> copyForBehaviorDefinitionPostCopy [
 
 	super copyForBehaviorDefinitionPostCopy.
@@ -36,13 +38,13 @@ RGTraitV2DescriptionStrategy >> copyForBehaviorDefinitionPostCopy [
 	layout parent: self owner
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2DescriptionStrategy >> defaultLayout [
 
 	^ self owner defaultFixedLayoutStubIn: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2DescriptionStrategy >> initialize [
 
 	super initialize.
@@ -51,7 +53,7 @@ RGTraitV2DescriptionStrategy >> initialize [
 	self owner environment backend createUnresolvedClassGroupFor: self owner
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2DescriptionStrategy >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -59,18 +61,18 @@ RGTraitV2DescriptionStrategy >> initializeUnresolved [
 	layout := self unresolvedValue: self defaultLayout
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2DescriptionStrategy >> instSize [
 
 	^ self owner allInstVarNames size
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2DescriptionStrategy >> instVarNames [
 	^ self layout instVarNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitV2DescriptionStrategy >> instanceVariables: aCollectionOfSymbols [
 
 	"specify instance variable names"
@@ -87,7 +89,7 @@ RGTraitV2DescriptionStrategy >> instanceVariables: aCollectionOfSymbols [
 		layout addSlot: (RGInstanceVariableSlot named: instVarName asSymbol parent: self)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitV2DescriptionStrategy >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
 
@@ -97,13 +99,13 @@ RGTraitV2DescriptionStrategy >> instanceVariablesString [
 			separatedBy: [ stream space ] ]
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitV2DescriptionStrategy >> isTrait [
 
 	^true
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitV2DescriptionStrategy >> makeResolved [
 
 	super makeResolved.
@@ -111,13 +113,13 @@ RGTraitV2DescriptionStrategy >> makeResolved [
 	layout := self layout makeResolved markAsRingResolved
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitV2DescriptionStrategy >> pvtLayout [
 
 	^ layout value
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitV2DescriptionStrategy >> pvtLayout: anRGLayout [
 
 	self owner environment verifyOwnership: anRGLayout.
@@ -125,7 +127,7 @@ RGTraitV2DescriptionStrategy >> pvtLayout: anRGLayout [
 	^ layout := anRGLayout
 ]
 
-{ #category : #'private - backend interface' }
+{ #category : 'private - backend interface' }
 RGTraitV2DescriptionStrategy >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -133,7 +135,7 @@ RGTraitV2DescriptionStrategy >> pvtResolvableProperties [
      	}
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGTraitV2DescriptionStrategy >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';
@@ -143,13 +145,13 @@ RGTraitV2DescriptionStrategy >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGTraitV2DescriptionStrategy >> trait [
 
 	^ self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2DescriptionStrategy >> traitTransformationString [
 
 	^ self owner name

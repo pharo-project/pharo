@@ -1,6 +1,6 @@
-Extension { #name : #RGPackageDefinition }
+Extension { #name : 'RGPackageDefinition' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RGPackageDefinition >> arrayStringForManifest [
 	| array |
 	array := Array new: 2.
@@ -9,8 +9,8 @@ RGPackageDefinition >> arrayStringForManifest [
 	^ array
 ]
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RGPackageDefinition class >> manifestReadOn: aArray [
 
-	^ self named:( aArray first)
+	^ self named: aArray first
 ]

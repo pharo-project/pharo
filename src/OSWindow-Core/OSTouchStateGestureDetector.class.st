@@ -2,56 +2,58 @@
 I am a gesture detector who detects gestures with a begin, current and end state
 "
 Class {
-	#name : #OSTouchStateGestureDetector,
-	#superclass : #OSTouchGestureDetector,
+	#name : 'OSTouchStateGestureDetector',
+	#superclass : 'OSTouchGestureDetector',
 	#instVars : [
 		'modeActivated'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchStateGestureDetector >> beginConditions [
 	^ self hasGoodNumberOfFingers
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchStateGestureDetector >> createEventBeginning [
 	self subclassResponsibility
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchStateGestureDetector >> createEventDuringMove [
 	self subclassResponsibility
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchStateGestureDetector >> createEventEnding [
 	self subclassResponsibility
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchStateGestureDetector >> hasGoodNumberOfFingers [
 	^ eventHandler fingerCount = self necessaryFingers
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchStateGestureDetector >> initialize [
 	super initialize.
 	modeActivated := false
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchStateGestureDetector >> necessaryFingers [
 	self subclassResponsibility
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchStateGestureDetector >> stayActiveConditions [
 	^ self hasGoodNumberOfFingers
 ]
 
-{ #category : #'changing state' }
+{ #category : 'changing state' }
 OSTouchStateGestureDetector >> tryToEndGesture [
 	self stayActiveConditions
 		ifTrue: [ ^ self ].
@@ -59,27 +61,27 @@ OSTouchStateGestureDetector >> tryToEndGesture [
 	self sendToEventHandler: self createEventEnding
 ]
 
-{ #category : #'changing state' }
+{ #category : 'changing state' }
 OSTouchStateGestureDetector >> tryToGoThroughNextState [
 	modeActivated
 		ifTrue: [ self tryToEndGesture ]
 		ifFalse: [ self tryToStartGesture ]
 ]
 
-{ #category : #'changing state' }
+{ #category : 'changing state' }
 OSTouchStateGestureDetector >> tryToStartGesture [
 	self beginConditions ifFalse: [ ^self ].
 	modeActivated := true.
 	self sendToEventHandler: self createEventBeginning
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchStateGestureDetector >> visitTouchPointerDownEvent: anEvent [
 	super visitTouchPointerDownEvent: anEvent.
 	self tryToGoThroughNextState
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchStateGestureDetector >> visitTouchPointerMoveEvent: anEvent [
 	super visitTouchPointerMoveEvent: anEvent.
 	self tryToGoThroughNextState.
@@ -87,7 +89,7 @@ OSTouchStateGestureDetector >> visitTouchPointerMoveEvent: anEvent [
 		ifTrue: [ self sendToEventHandler: self createEventDuringMove ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchStateGestureDetector >> visitTouchPointerUpEvent: anEvent [
 	super visitTouchPointerUpEvent: anEvent.
 	self tryToGoThroughNextState

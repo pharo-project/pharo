@@ -1,33 +1,34 @@
 Class {
-	#name : #BehaviorWithCompilerTest,
-	#superclass : #TestCase,
+	#name : 'BehaviorWithCompilerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'c1',
 		'c2'
 	],
-	#category : #'Kernel-Tests-WithCompiler'
+	#category : 'Kernel-Tests-WithCompiler',
+	#package : 'Kernel-Tests-WithCompiler'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorWithCompilerTest >> newClass1 [
 
 	^ self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: 'MySuperclass';
-			package: self class category ]
+			package: self class package name ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorWithCompilerTest >> newClass2 [
 
 	^ self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: 'MySubclass';
 			superclass: c1;
-			package: self class category ]
+			package: self class package name ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BehaviorWithCompilerTest >> tearDown [
 
 	c2 ifNotNil: [ c2 removeFromSystem ].
@@ -36,7 +37,7 @@ BehaviorWithCompilerTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorWithCompilerTest >> testCanPerform [
 
 	c1 := self newClass1.
@@ -49,7 +50,7 @@ BehaviorWithCompilerTest >> testCanPerform [
 	self deny: (c1 canPerform: #method3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorWithCompilerTest >> testCanPerformInSubclass [
 
 	c1 := self newClass1.
@@ -63,7 +64,7 @@ BehaviorWithCompilerTest >> testCanPerformInSubclass [
 	self assert: (c2 canPerform: #method3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorWithCompilerTest >> testCanUnderstand [
 
 	c1 := self newClass1.
@@ -75,7 +76,7 @@ BehaviorWithCompilerTest >> testCanUnderstand [
 	self deny: (c1 canUnderstand: #method3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorWithCompilerTest >> testCanUnderstandInSubclass [
 
 	c1 := self newClass1.
@@ -88,7 +89,7 @@ BehaviorWithCompilerTest >> testCanUnderstandInSubclass [
 	self assert: (c2 canUnderstand: #method3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorWithCompilerTest >> testCompile [
 	<ignoreNotImplementedSelectors: #(thisIsATest)>
 	| behavior |

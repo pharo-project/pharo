@@ -2,17 +2,18 @@
 I am example class which has ffi methods
 "
 Class {
-	#name : #ClyClassWithFFIMethods,
-	#superclass : #Object,
-	#category : #'Calypso-SystemPlugins-FFI-Queries-Tests'
+	#name : 'ClyClassWithFFIMethods',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemPlugins-FFI-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-FFI-Queries-Tests'
 }
 
-{ #category : #'ffi methods' }
+{ #category : 'ffi methods' }
 ClyClassWithFFIMethods >> ffiMethod [
 
 	^ self ffiCall: #(int system #(char * command))
 ]
 
-{ #category : #'not ffi methods' }
+{ #category : 'not ffi methods' }
 ClyClassWithFFIMethods >> notFFIMethod [
 ]

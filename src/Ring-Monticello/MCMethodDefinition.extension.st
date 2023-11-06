@@ -1,6 +1,6 @@
-Extension { #name : #MCMethodDefinition }
+Extension { #name : 'MCMethodDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCMethodDefinition >> asRGDefinition [
 
 "	method2 := (Object>>#isRingObject) asRingDefinition.
@@ -13,7 +13,7 @@ MCMethodDefinition >> asRGDefinition [
 	^ self ensureRingDefinitionIn: RGEnvironment new
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCMethodDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
@@ -41,14 +41,14 @@ MCMethodDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 		def author: (self authorForStamp: self timeStamp).
 		def time: (self timeForStamp: self timeStamp).
 
-		protocol := parent ensureProtocolNamed: self category asSymbol.
+		protocol := parent ensureProtocolNamed: self protocol asSymbol.
 		parent addProtocol: protocol.
 		def protocol: protocol.
 		def
 	]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCMethodDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackage [
 
 	| def  |

@@ -13,33 +13,26 @@ The most common use is...
 
 "
 Class {
-	#name : #FontSet,
-	#superclass : #Object,
+	#name : 'FontSet',
+	#superclass : 'Object',
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Graphics-Fonts'
+	#category : 'Graphics-Fonts',
+	#package : 'Graphics-Fonts'
 }
 
-{ #category : #compiling }
-FontSet class >> acceptsLoggingOfCompilation [
-	"Dont log sources for my subclasses, so as not to waste time
-	and space storing printString versions of the string literals."
-
-	^ self == FontSet
-]
-
-{ #category : #private }
+{ #category : 'private' }
 FontSet class >> fontCategory [
 	^ 'Graphics-Fonts' asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FontSet class >> fontName [
 	^ self name asSymbol
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 FontSet class >> fontNamed: fontName fromMimeLiteral: aString [
 	"This method allows a font set to be captured as sourcecode in a subclass.
 	The string literals will presumably be created by printing, eg,
@@ -53,7 +46,7 @@ FontSet class >> fontNamed: fontName fromMimeLiteral: aString [
 		readFromStrike2Stream: aString base64Decoded readStream
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 FontSet class >> installAsDefault [
 	"FontSetNewYork installAsDefault"
 
@@ -64,7 +57,7 @@ FontSet class >> installAsDefault [
 	TextSharedInformation at: #DefaultTextStyle put: (TextStyle named: self fontName)
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 FontSet class >> installAsTextStyle [
 	"FontSetNewYork installAsTextStyle"
 	| selectors |

@@ -401,19 +401,19 @@ ProcessList >> removeLink: aLink ifAbsent: aBlock [
 
 	| tempLink |
 	aLink == firstLink
-		ifTrue: [firstLink := aLink nextLink.
-				aLink == lastLink
-					ifTrue: [lastLink := nil]]
-		ifFalse: [tempLink := firstLink.
-				[tempLink == nil ifTrue: [^aBlock value].
-				 tempLink nextLink == aLink]
-					whileFalse: [tempLink := tempLink nextLink].
-				tempLink nextLink: aLink nextLink.
-				aLink == lastLink
-					ifTrue: [lastLink := tempLink]].
+		ifTrue: [
+			firstLink := aLink nextLink.
+			aLink == lastLink ifTrue: [ lastLink := nil ] ]
+		ifFalse: [
+			tempLink := firstLink.
+			[
+			tempLink ifNil: [ ^ aBlock value ].
+			tempLink nextLink == aLink ] whileFalse: [ tempLink := tempLink nextLink ].
+			tempLink nextLink: aLink nextLink.
+			aLink == lastLink ifTrue: [ lastLink := tempLink ] ].
 	"Not nilling the link enables us to delete while iterating"
 	"aLink nextLink: nil."
-	^aLink
+	^ aLink
 ]
 
 { #category : 'enumerating' }
@@ -452,7 +452,7 @@ ProcessList >> size [
 	^ tally
 ]
 
-{ #category : 'enumerating' }
+{ #category : 'private' }
 ProcessList >> species [
 
 	^ Array

@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Traits-Browser' }
+Package { #name : 'Calypso-SystemPlugins-Traits-Browser' }

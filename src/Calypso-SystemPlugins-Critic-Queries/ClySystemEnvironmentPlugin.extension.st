@@ -1,5 +1,5 @@
-Extension { #name : #ClySystemEnvironmentPlugin }
+Extension { #name : 'ClySystemEnvironmentPlugin' }
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Queries' }
+{ #category : '*Calypso-SystemPlugins-Critic-Queries' }
 ClySystemEnvironmentPlugin >> resolveMetadataOfCritiques: aClySortedCritiques [
 ]

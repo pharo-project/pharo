@@ -58,7 +58,7 @@ FLCreateClassSerializationTest >> testCreateByteArrayWithInstance [
 
 { #category : 'tests' }
 FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
-	"Tests materialization a class or trait not defined in the image and that the metaclass is also created."
+	"Tests materialization of a class or trait not defined in the image and that the metaclass is also created."
 
 	| class materializedClassOrTrait environment category name metaclassName metaclass |
 	class := self classFactory silentlyNewClass.
@@ -67,22 +67,19 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 	name := class name.
 	metaclassName := class class name.
 	metaclass := class class.
-	
+
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: class.
-	
-	"This is the test environment, so we have to cheat"
-	self
-		assertCollection: environment associations
-		hasSameElements: materializedClassOrTrait environment associations.
-		"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
-	self assert: category equals: materializedClassOrTrait basicCategory.
+
+	self assert: environment identicalTo: materializedClassOrTrait environment.
+
+	self assert: category equals: materializedClassOrTrait category.
 	self assert: name equals: materializedClassOrTrait name.
 	"Notice that the metaclass is serialized by Fuel and a new one will be created."
 	self assert: metaclassName equals: materializedClassOrTrait class name.
 	self deny: metaclass identicalTo: materializedClassOrTrait class.
 
-    "It is important to notice that (at this moment) Fuel does not add the materialized class or trait into Smalltalk globals"
-    self deny: (self environmentOfTest includesKey: name)
+	"It is important to notice that (at this moment) Fuel does not add the materialized class or trait into Smalltalk globals"
+	self deny: (self environmentOfTest includesKey: name)
 ]
 
 { #category : 'tests' }
@@ -475,22 +472,21 @@ FLCreateClassSerializationTest >> testCreateWithNilEnvironment [
 ]
 
 { #category : 'tests' }
-FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [ 
-	"Tests materialization a class or trait not defined in the image, and with Smalltalk globals  in the instance variable 'environment '. In that case, the whole Smalltalk globals should NOT be fully serialized but instead just store a reference to it. "
+FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
+	"Tests materialization of a class or trait not defined in the image, and with Smalltalk globals  in the instance variable 'environment'. In that case, the whole Smalltalk globals should NOT be fully serialized but only a reference to the globals should be stored. "
 
 	| aClassOrTrait materializedClassOrTrait category name |
 	aClassOrTrait := self classFactory silentlyNewClass.
 	aClassOrTrait environment: Smalltalk globals.
 	category := aClassOrTrait category.
 	name := aClassOrTrait name.
-	
+
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
-	self assert:  materializedClassOrTrait basicEnvironment == Smalltalk globals.
+	self assert: materializedClassOrTrait basicEnvironment identicalTo: Smalltalk globals.
 
-	"Classes are not direclty inserted in the system organization so we can only test #basicCategory and not #category."
-	self assert: category = materializedClassOrTrait basicCategory.
-	self assert: name = materializedClassOrTrait name.
+	self assert: category equals: materializedClassOrTrait category.
+	self assert: name equals: materializedClassOrTrait name
 ]
 
 { #category : 'tests' }

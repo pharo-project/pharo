@@ -74,17 +74,6 @@ MCTestCase >> mockCategoryName [
 ]
 
 { #category : 'mocks' }
-MCTestCase >> mockClass: className super: superclassName [
-
-	^ (MCClassDefinition named: className)
-		  superclassName: superclassName;
-		  packageName: self mockCategoryName;
-		  comment: (self commentForClass: className);
-		  commentStamp: (self commentStampForClass: className);
-		  yourself
-]
-
-{ #category : 'mocks' }
 MCTestCase >> mockClassA [
 	^ testingEnvironment at: #MCMockClassA
 ]

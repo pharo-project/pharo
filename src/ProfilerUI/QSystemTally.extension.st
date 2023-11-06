@@ -1,28 +1,28 @@
-Extension { #name : #QSystemTally }
+Extension { #name : 'QSystemTally' }
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 QSystemTally >> <= aQSystemTally [
 	^ tally <= aQSystemTally tally
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 QSystemTally >> asTallyModel [
 	^ TallyModelAndreas new
 		item: self;
 		yourself
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 QSystemTally >> methodClassName [
 	^ class ifNil: [ 'nil' ] ifNotNil: [ class name ]
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 QSystemTally >> methodOrBlock [
 	^ method
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 QSystemTally >> originMethod [
 	| methodOrBlock |
 	methodOrBlock := self methodOrBlock.

@@ -2,8 +2,8 @@
 I am a visitor on MCDefinition objects. I will group a collection of definitions into a tree that will be shown in the PSMCPatchMorph.
 "
 Class {
-	#name : #PSMCChangesGrouper,
-	#superclass : #Object,
+	#name : 'PSMCChangesGrouper',
+	#superclass : 'Object',
 	#instVars : [
 		'nonClassChanges',
 		'classes',
@@ -11,10 +11,11 @@ Class {
 		'currentOperation',
 		'classChanges'
 	],
-	#category : #'Monticello-GUI-Diff'
+	#category : 'Monticello-GUI-Diff',
+	#package : 'Monticello-GUI-Diff'
 }
 
-{ #category : #'helper methods' }
+{ #category : 'helper methods' }
 PSMCChangesGrouper class >> group: aCollectionOfPatches [
 
 	^ self new
@@ -22,7 +23,7 @@ PSMCChangesGrouper class >> group: aCollectionOfPatches [
 		group
 ]
 
-{ #category : #grouping }
+{ #category : 'grouping' }
 PSMCChangesGrouper >> ensureClassChangeWrapperNamed: aClassName [
 
 	(classes includes: aClassName)
@@ -30,7 +31,7 @@ PSMCChangesGrouper >> ensureClassChangeWrapperNamed: aClassName [
 				classChanges add: (PSMCClassChangeWrapper with: aClassName model: model ) ]
 ]
 
-{ #category : #grouping }
+{ #category : 'grouping' }
 PSMCChangesGrouper >> group [
 
 	model do: [:operation | self visit: operation ].
@@ -38,7 +39,7 @@ PSMCChangesGrouper >> group [
 		(classChanges sorted: [:a :b | a item <= b item])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PSMCChangesGrouper >> initialize [
 
 	super initialize.
@@ -47,13 +48,13 @@ PSMCChangesGrouper >> initialize [
 	classes := Set new
 ]
 
-{ #category : #grouping }
+{ #category : 'grouping' }
 PSMCChangesGrouper >> model: aCollection [
 
 	model := aCollection
 ]
 
-{ #category : #grouping }
+{ #category : 'grouping' }
 PSMCChangesGrouper >> visit: aMCOperation [
 
 	| previous |
@@ -63,49 +64,49 @@ PSMCChangesGrouper >> visit: aMCOperation [
 	currentOperation := previous
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitClassDefinition: aMCClassDefinition [
 
 	self ensureClassChangeWrapperNamed: aMCClassDefinition fullClassName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitClassTraitDefinition: aMCClassTraitDefinition [
 
 	"Do nothing for class traits (similar to #visitMetaclassDefinition:)"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitDefaultDefinition: aDefinition [
 
 	nonClassChanges add: aDefinition
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitMetaclassDefinition: aMCClassDefinition [
 
 	"Do nothing for metaclasses"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitMethodDefinition: aMCMethodDefinition [
 
 	self ensureClassChangeWrapperNamed: aMCMethodDefinition fullClassName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitOrganizationDefinition: aMCOrganizationDefinition [
 
 	nonClassChanges add: (currentOperation patchWrapper model: model)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitScriptDefinition: aMCScriptDefinition [
 
 	"do nothing for script definitions"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 PSMCChangesGrouper >> visitTraitDefinition: aMCTraitDefinition [
 
 	self ensureClassChangeWrapperNamed: aMCTraitDefinition fullClassName

@@ -13,12 +13,13 @@ However  I have the following groups to describe the dependencies:
 - traits-tests: adding the tests for TraitsV2.
 "
 Class {
-	#name : #BaselineOfTraits,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfTraits
+	#name : 'BaselineOfTraits',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfTraits',
+	#package : 'BaselineOfTraits'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTraits class >> corePackages [
 	| groups |
 
@@ -26,13 +27,13 @@ BaselineOfTraits class >> corePackages [
 	^ groups flatCollect: [ :e | self packagesOfGroupNamed: e ].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTraits class >> packagesToExportWithHermes [
 
 	^ self allPackageNames reject: [ :aPackageName | aPackageName = 'TraitsV2-Tests'].
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfTraits >> baseline: spec [
 	<baseline>
 
@@ -44,7 +45,6 @@ BaselineOfTraits >> baseline: spec [
 			package: 'Kernel-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'AST-Core-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'Collections-Abstract-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'Transcript-Core-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeImport-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeExport-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'TraitsV2-Tests' with: [ spec requires: #('TraitsV2') ];
@@ -55,7 +55,6 @@ BaselineOfTraits >> baseline: spec [
 		spec group: 'traits-in-kernel' with: #(
 					'Kernel-Traits'
 					'Collections-Abstract-Traits'
-					'Transcript-Core-Traits'
 					'CodeImport-Traits'
 					'CodeExport-Traits' ).
 

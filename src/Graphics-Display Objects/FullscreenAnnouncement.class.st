@@ -2,31 +2,33 @@
 I am announced when full-screen mode state is changed.
 "
 Class {
-	#name : #FullscreenAnnouncement,
-	#superclass : #SystemAnnouncement,
+	#name : 'FullscreenAnnouncement',
+	#superclass : 'SystemAnnouncement',
 	#instVars : [
 		'displayScreen',
 		'fullscreen'
 	],
-	#category : #'Graphics-Display Objects-Utilities'
+	#category : 'Graphics-Display Objects-Utilities',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullscreenAnnouncement >> displayScreen [
 	^ displayScreen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullscreenAnnouncement >> displayScreen: anObject [
 	displayScreen := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullscreenAnnouncement >> fullscreen [
 	^ fullscreen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullscreenAnnouncement >> fullscreen: anObject [
 	fullscreen := anObject
 ]

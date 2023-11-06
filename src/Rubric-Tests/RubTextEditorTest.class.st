@@ -2,16 +2,18 @@
 A RubTextEditorTest is a test class for testing the behavior of RubTextEditor
 "
 Class {
-	#name : #RubTextEditorTest,
-	#superclass : #TestCase,
+	#name : 'RubTextEditorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'editor',
 		'string'
 	],
-	#category : #'Rubric-Tests-Editing-Core'
+	#category : 'Rubric-Tests-Editing-Core',
+	#package : 'Rubric-Tests',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RubTextEditorTest >> setUp [
 
 	super setUp.
@@ -21,7 +23,7 @@ RubTextEditorTest >> setUp [
 	editor addString: string
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextEditorTest >> testLineIndentationStart [
 
 	| starts |
@@ -37,7 +39,7 @@ RubTextEditorTest >> testLineIndentationStart [
 		#( 1 1 1 1 7 7 7 7 7 7 13 13 13 13 13 13 17 18 21 21 21 23 23 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextEditorTest >> testLineStart [
 
 	| starts |
@@ -53,7 +55,7 @@ RubTextEditorTest >> testLineStart [
 		#( 1 1 1 1 5 5 5 5 5 5 11 11 11 11 11 11 17 18 19 19 19 22 22 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextEditorTest >> testNextWord [
 
 	| textSize |
@@ -83,7 +85,7 @@ RubTextEditorTest >> testNextWord [
 	self assert: (editor nextWord: 999) equals: textSize + 1. "Out of range"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextEditorTest >> testPreviousWord [
 
 	| textSize |
@@ -106,7 +108,7 @@ RubTextEditorTest >> testPreviousWord [
 	self assert: (editor previousWord: 999) equals: 7. "Out of range"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextEditorTest >> testSelectWord [
 
 	string := '#Lorem #ipsum #dolor #sit #amet'.
@@ -148,7 +150,7 @@ RubTextEditorTest >> testSelectWord [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubTextEditorTest >> testSelectWordMarkPoint [
 
 	| textSize |

@@ -82,27 +82,25 @@ DependentsArray class >> withAll: aCollection [
 
 { #category : 'accessing' }
 DependentsArray >> at: anIndex [
-	| basicSize counter dep |
-	anIndex > 0 ifTrue: [
-		basicSize := self basicSize.
-		anIndex <= basicSize ifTrue: [
-			counter := 0.
-			1 to: basicSize do: [:i |
-				(dep := self basicAt: i) == nil
-					ifFalse: [(counter := counter + 1) = anIndex ifTrue: [^dep]]]]].
-	self error: 'access with an index out of bounds'
-]
 
-{ #category : 'accessing' }
-DependentsArray >> at: anIndex put: anObject [
 	| basicSize counter |
 	anIndex > 0 ifTrue: [
 		basicSize := self basicSize.
 		anIndex <= basicSize ifTrue: [
 			counter := 0.
-			1 to: basicSize do: [:i |
-				(self basicAt: i) == nil
-					ifFalse: [(counter := counter + 1) = anIndex ifTrue: [^self basicAt: i put: anObject]]]]].
+			1 to: basicSize do: [ :i | (self basicAt: i) ifNotNil: [ :dep | (counter := counter + 1) = anIndex ifTrue: [ ^ dep ] ] ] ] ].
+	self error: 'access with an index out of bounds'
+]
+
+{ #category : 'accessing' }
+DependentsArray >> at: anIndex put: anObject [
+
+	| basicSize counter |
+	anIndex > 0 ifTrue: [
+		basicSize := self basicSize.
+		anIndex <= basicSize ifTrue: [
+			counter := 0.
+			1 to: basicSize do: [ :i | (self basicAt: i) ifNotNil: [ (counter := counter + 1) = anIndex ifTrue: [ ^ self basicAt: i put: anObject ] ] ] ] ].
 	self error: 'access with an index out of bounds'
 ]
 
@@ -117,15 +115,19 @@ DependentsArray >> basicReplaceFrom: start to: stop with: replacement startingAt
 { #category : 'enumerating' }
 DependentsArray >> collect: aBlock [
 	"Refer to the comment in Collection|select:."
-	| basicSize newSelf size dep selection |
+
+	| basicSize newSelf size selection |
 	basicSize := self basicSize.
 	newSelf := self species new: basicSize.
 	size := 0.
-	1 to: basicSize do: [:i |
-		(dep := self basicAt: i) notNil ifTrue: [newSelf basicAt: (size := size+1) put: (aBlock value: dep)]].
+	1 to: basicSize do: [ :i | (self basicAt: i) ifNotNil: [ :dep | newSelf basicAt: (size := size + 1) put: (aBlock value: dep) ] ].
 	selection := self species new: size.
-	selection basicReplaceFrom: 1 to: size with: newSelf startingAt: 1.
-	^selection
+	selection
+		basicReplaceFrom: 1
+		to: size
+		with: newSelf
+		startingAt: 1.
+	^ selection
 ]
 
 { #category : 'copying' }

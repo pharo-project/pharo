@@ -6,17 +6,19 @@ I delegate #classesRelatedTo:do: to the class side. So it can be used by classes
 Subclasses should implement this method on class side.
 "
 Class {
-	#name : #ClySingleClassRelationScope,
-	#superclass : #ClyClassHierarchyScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClySingleClassRelationScope',
+	#superclass : 'ClyClassHierarchyScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySingleClassRelationScope class >> classesRelatedTo: aClass do: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClySingleClassRelationScope >> classesRelatedTo: aClass do: aBlock [
 	self class classesRelatedTo: aClass do: aBlock
 ]

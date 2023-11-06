@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloVersionConstructor,
-	#superclass : #MetacelloAbstractVersionConstructor,
+	#name : 'MetacelloVersionConstructor',
+	#superclass : 'MetacelloAbstractVersionConstructor',
 	#instVars : [
 		'errorMap'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionConstructor class >> on: aConfig [
 
 	^(self new)
@@ -15,7 +17,7 @@ MetacelloVersionConstructor class >> on: aConfig [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionConstructor class >> on: aConfig project: aProject [
 
 	^(self new)
@@ -23,7 +25,7 @@ MetacelloVersionConstructor class >> on: aConfig project: aProject [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloVersionConstructor >> calculate: aConfig project: aProject [
     | versionMap symbolicVersionMap executionBlock pragmaDict |
     self setProject: aProject.
@@ -65,25 +67,21 @@ MetacelloVersionConstructor >> calculate: aConfig project: aProject [
             symbolicVersionMap at: symbolic put: versionString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectAllSymbolicVersionsFromVersionPragmasInto: symbolicVersionMap using: executionBlock [
+
 	| defined versionPragmaDict versionString |
 	versionPragmaDict := self extractSymbolicVersionPragmas.
-	versionPragmaDict
-		keysAndValuesDo: [ :versionSymbol :pragmaColl | 
-			defined := false.
-			pragmaColl
-				do: [ :pragma | 
-					defined := true.
-					versionString := executionBlock value: versionSymbol value: pragma ].
-			defined
-				ifTrue: [ 
-					versionString == nil
-						ifFalse: [ symbolicVersionMap at: versionSymbol put: versionString ]].
-			self reset ]
+	versionPragmaDict keysAndValuesDo: [ :versionSymbol :pragmaColl |
+		defined := false.
+		pragmaColl do: [ :pragma |
+			defined := true.
+			versionString := executionBlock value: versionSymbol value: pragma ].
+		defined ifTrue: [ versionString ifNotNil: [ symbolicVersionMap at: versionSymbol put: versionString ] ].
+		self reset ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectAllVersionsFromVersionImportPragmasInto: versionMap using: executionBlock satisfiedPragmas: pragmaDict [
     | defined done completed count |
     done := false.
@@ -144,7 +142,7 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionImportPragmasInto: v
                     self reset ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: versionMap using: executionBlock [
     | defined versionPragmaDict |
     versionPragmaDict := self extractVersionPragmas.
@@ -173,38 +171,31 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: version
             self reset ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> collectDefaultSymbolicVersionsFromVersionPragmasFrom: versionPragmaDict into: symbolicVersionMap using: executionBlock [
+
 	| defined versionString |
-	versionPragmaDict
-		keysAndValuesDo: [ :versionSymbol :pragmaColl | 
-			defined := false.
-			symbolicVersionMap
-				at: versionSymbol
-				ifAbsent: [ 
-					"process the defaultSymbolicVersion only if the symbolicVersion is not defined yet"
-					pragmaColl
-						do: [ :pragma | 
-							defined := true.
-							versionString := executionBlock value: versionSymbol value: pragma ].
-					defined
-						ifTrue: [ 
-							versionString == nil
-								ifFalse: [ symbolicVersionMap at: versionSymbol put: versionString ] ].
-					self reset ] ]
+	versionPragmaDict keysAndValuesDo: [ :versionSymbol :pragmaColl |
+		defined := false.
+		symbolicVersionMap at: versionSymbol ifAbsent: [ "process the defaultSymbolicVersion only if the symbolicVersion is not defined yet"
+			pragmaColl do: [ :pragma |
+				defined := true.
+				versionString := executionBlock value: versionSymbol value: pragma ].
+			defined ifTrue: [ versionString ifNotNil: [ symbolicVersionMap at: versionSymbol put: versionString ] ].
+			self reset ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> commonDefaultSymbolicVersionResolverBlock [
 	^ self defaultSymbolicVersionResolverBlock: (ConfigurationOf new project: self project)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock [
 	^ self defaultSymbolicVersionResolverBlock: self configuration
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock: receiver [
 	^ [ :symbolicVrsn :pragma | 
 	| result |
@@ -212,19 +203,19 @@ MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock: receiver [
 	(pragma argumentAt: 1) = symbolicVrsn
 		ifTrue: [ 
 			self symbolicVersion: symbolicVrsn.
-			result := [ receiver perform: (MetacelloPlatform current selectorForPragma: pragma) ] 
+			result := [ receiver perform: pragma methodSelector ] 
 				on: MetacelloVersionDoesNotExistError 
 				do: [ :ex | ex return: nil ] ].
 	result ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionConstructor >> errorMap [
     errorMap ifNil: [ errorMap := Dictionary new ].
     ^ errorMap
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloVersionConstructor >> on: aConfig [
 
 	| cacheKey |
@@ -238,7 +229,7 @@ MetacelloVersionConstructor >> on: aConfig [
 	self setProject: project.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloVersionConstructor >> on: aConfig project: aProject [
     | cacheKey cachedProject |
     cacheKey := aConfig class.
@@ -256,7 +247,7 @@ MetacelloVersionConstructor >> on: aConfig project: aProject [
     self setProject: aProject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> specResolverBlock [
 	^ [ :versionSpec :pragma | 
 	(pragma argumentAt: 1) = versionSpec versionString
@@ -269,7 +260,7 @@ MetacelloVersionConstructor >> specResolverBlock [
 						ifTrue: [ blockList do: [ :block | self with: versionSpec during: block ] ] ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> symbolicVersionResolverBlock [
 	^ [ :symbolicVrsn :pragma | 
 	| result |
@@ -287,7 +278,7 @@ MetacelloVersionConstructor >> symbolicVersionResolverBlock [
 	result ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloVersionConstructor >> validateVersionString: versionString againstSpec: versionSpec [
 
 	versionString = versionSpec versionString
@@ -303,7 +294,7 @@ MetacelloVersionConstructor >> validateVersionString: versionString againstSpec:
 								, versionSpec versionString printString) ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionConstructor >> verifyVersionImportPragmas: pragmaDict definedIn: versionMap [
     pragmaDict copy
         keysAndValuesDo: [ :versionString :pragmaColl | 
@@ -321,7 +312,7 @@ MetacelloVersionConstructor >> verifyVersionImportPragmas: pragmaDict definedIn:
                                             ^ self
                                                 error:
                                                     'The imported version:' , importedVersion printString , ' for version: ' , versionString
-                                                        , ' referenced from the method: ' , (MetacelloPlatform current selectorForPragma: pragma) printString
+                                                        , ' referenced from the method: ' , pragma methodSelector printString
                                                         , ' in configuration ' , configuration class printString
                                                         , ' has not been defined.' ] ] ] ] ]
                 on: Error

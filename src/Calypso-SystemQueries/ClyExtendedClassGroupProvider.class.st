@@ -2,17 +2,20 @@
 I provide ""extensions"" class group. I add this group only when package has extensions.
 "
 Class {
-	#name : #ClyExtendedClassGroupProvider,
-	#superclass : #ClySingleClassGroupProvider,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyExtendedClassGroupProvider',
+	#superclass : 'ClySingleClassGroupProvider',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClyExtendedClassGroupProvider >> createClassGroupFor: aClassQuery from: aPackageScope [
 	^ClyClassGroup named: 'Extensions' priority: 0 on: aClassQuery
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClyExtendedClassGroupProvider >> createClassQueryFrom: aPackageScope [
-	^ClyAllClassesQuery from: (aPackageScope asScope: ClyPackageExtensionScope)
+
+	^ ClyAllClassesQuery from: (aPackageScope asScope: ClyPackageExtensionScope)
 ]

@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloLoadingMCSpecLoader,
-	#superclass : #MetacelloCommonMCSpecLoader,
-	#category : #'Metacello-MC-Loaders'
+	#name : 'MetacelloLoadingMCSpecLoader',
+	#superclass : 'MetacelloCommonMCSpecLoader',
+	#category : 'Metacello-MC-Loaders',
+	#package : 'Metacello-MC',
+	#tag : 'Loaders'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadingMCSpecLoader >> actionLabel [
 
 	^'Loading '
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec from: repositorySpecs to: repository [
 
 	| gofer |
@@ -19,7 +21,7 @@ MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec from: repositorySpecs to: repo
 	^self copySpec: pkgSpec with: gofer to: repository
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec with: gofer to: aRepository [
 
 	| repository resolvedReference |
@@ -33,12 +35,12 @@ MetacelloLoadingMCSpecLoader >> copySpec: pkgSpec with: gofer to: aRepository [
 	^resolvedReference repository
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloLoadingMCSpecLoader >> doLoad [
 	"NOOP"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLoadingMCSpecLoader >> fetchingSpecLoader [
 
 	^(MetacelloFetchingMCSpecLoader on: self spec)
@@ -47,7 +49,7 @@ MetacelloLoadingMCSpecLoader >> fetchingSpecLoader [
 		yourself
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> goferCommitBranchPackage: branchName using: repositorySpecs commitMessage: commitMessage [
 	| gofer repoSpecs wc |
 	repoSpecs := self spec repositorySpecs notEmpty
@@ -81,7 +83,7 @@ MetacelloLoadingMCSpecLoader >> goferCommitBranchPackage: branchName using: repo
 	^ true
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> goferCommitPackageUsing: repositorySpecs commitMessage: commitMessage [
 
 	| gofer repoSpecs wc |
@@ -101,7 +103,7 @@ MetacelloLoadingMCSpecLoader >> goferCommitPackageUsing: repositorySpecs commitM
 	^true
 ]
 
-{ #category : #packages }
+{ #category : 'packages' }
 MetacelloLoadingMCSpecLoader >> latestPackage: aString fromRepository: repositorySpecs [
 
 	| gofer |
@@ -113,7 +115,7 @@ MetacelloLoadingMCSpecLoader >> latestPackage: aString fromRepository: repositor
 		do: [:ignored | ^ nil ]) name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
 	MetacelloPlatform current
 		do: [ | loadBlock goferLoad answers resolvedReference repo |
@@ -126,7 +128,7 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 			goferLoad := MetacelloGoferLoad on: MetacelloGofer new.
 			goferLoad addResolved: resolvedReference.
 			goferLoad execute.
-			MetacelloPlatform current clearCurrentVersionCache.
+			self clearCurrentVersionCache.
 			self postLoad: packageSpec ].
 			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
@@ -146,26 +148,25 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 		displaying: 'Loading ' , packageSpec file
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> packagesNeedSavingUsing: repositorySpecs into: aCollection [
 
 	| wc repoSpecs repo |
-	(wc := self spec workingCopy) == nil ifTrue: [ ^self ].
-	(wc ancestry ancestors notEmpty and: [ wc modified not])
-		ifTrue: [ ^self ].
+	(wc := self spec workingCopy) ifNil: [ ^ self ].
+	(wc ancestry ancestors notEmpty and: [ wc modified not ]) ifTrue: [ ^ self ].
 	repoSpecs := self spec repositorySpecs notEmpty
-				ifTrue: [ self spec repositorySpecs ]
-				ifFalse: [ repositorySpecs ].
+		             ifTrue: [ self spec repositorySpecs ]
+		             ifFalse: [ repositorySpecs ].
 	repo := (self spec getFile == nil or: [ wc ancestry ancestors isEmpty ])
-		ifTrue: [ (self repositoriesFrom: repoSpecs ignoreOverrides: true) first ]
-		ifFalse: [
-			([ self resolveSpec: self spec from: repoSpecs ] 
-				on: Error 
-				do: [:ignored | ^self ]) repository ].
+		        ifTrue: [ (self repositoriesFrom: repoSpecs ignoreOverrides: true) first ]
+		        ifFalse: [
+			        ([ self resolveSpec: self spec from: repoSpecs ]
+				         on: Error
+				         do: [ :ignored | ^ self ]) repository ].
 	aCollection add: self spec -> repo
 ]
 
-{ #category : #doits }
+{ #category : 'doits' }
 MetacelloLoadingMCSpecLoader >> postLoad: packageOrVersionSpec [
 
 	| block |
@@ -173,7 +174,7 @@ MetacelloLoadingMCSpecLoader >> postLoad: packageOrVersionSpec [
 		ifTrue: [ block valueWithPossibleArgs: { self. packageOrVersionSpec. } ]
 ]
 
-{ #category : #doits }
+{ #category : 'doits' }
 MetacelloLoadingMCSpecLoader >> preLoad: packageOrVersionSpec [
 
 	| block |
@@ -181,7 +182,7 @@ MetacelloLoadingMCSpecLoader >> preLoad: packageOrVersionSpec [
 		ifTrue: [ block valueWithPossibleArgs: { self. packageOrVersionSpec. } ]
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec from: repositorySpecs [
 
 	^([self resolveSpec: pkgSpec from: repositorySpecs]
@@ -189,7 +190,7 @@ MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec from: repositorySpecs [
 		do: [:ignored | ^nil ]) repository
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec with: gofer [
 
 	^([self resolveSpec: pkgSpec with: gofer]
@@ -197,7 +198,7 @@ MetacelloLoadingMCSpecLoader >> repositoryFor: pkgSpec with: gofer [
 		do: [:ignored | ^nil ]) repository
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> resolveSpec: pkgSpec from: repositorySpecs [
 
 	| gofer |
@@ -208,36 +209,34 @@ MetacelloLoadingMCSpecLoader >> resolveSpec: pkgSpec from: repositorySpecs [
 	^self resolveSpec: pkgSpec with: gofer
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> resolveSpec: pkgSpec with: gofer [
 
 	^pkgSpec goferLoaderReference resolveWith: gofer
 ]
 
-{ #category : #'development support' }
+{ #category : 'development support' }
 MetacelloLoadingMCSpecLoader >> savePackageUsing: repositorySpecs [
 
 	| wc repo repoSpecs newVersion |
-	(wc := self spec workingCopy) == nil ifTrue: [ ^false ].
+	(wc := self spec workingCopy) ifNil: [ ^false ].
 	(wc ancestry ancestors notEmpty and: [ wc modified not])
 		ifTrue: [ ^false ].
 	repoSpecs := self spec repositorySpecs notEmpty
 				ifTrue: [ self spec repositorySpecs ]
 				ifFalse: [ repositorySpecs ].
-	(self spec getFile == nil or: [ wc ancestry ancestors isEmpty ])
+	(self spec getFile isNil or: [ wc ancestry ancestors isEmpty ])
 		ifTrue: [ repo := (self repositoriesFrom: repoSpecs ignoreOverrides: true) first ]
 		ifFalse: [
-			[ 	| newer |
+			[
 				repo := (self resolveSpec: self spec from: repoSpecs) repository.
-				newer := wc possiblyNewerVersionsIn: repo.
-				newer isEmpty not 
-					ifTrue: [
-						(MetacelloPlatform current confirm: 'CAUTION! These versions in the repository may be newer:', 
+				(wc possiblyNewerVersionsIn: repo) ifNotEmpty: [ :newer |
+						(self confirm: 'CAUTION! These versions in the repository may be newer:', 
 							String cr, newer printString, String cr,
 							'Do you really want to save this version?') ifFalse: [ ^false ]] ] 
 				on: Error 
 				do: [:ignored | ^false ] ].
-	(newVersion :=  MetacelloPlatform current newVersionForWorkingCopy: wc) == nil ifTrue: [ ^false ].
+	(newVersion :=  wc newVersionIn: wc repositoryGroup) ifNil: [ ^false ].
 	repo storeVersion: newVersion.
 	^true
 ]

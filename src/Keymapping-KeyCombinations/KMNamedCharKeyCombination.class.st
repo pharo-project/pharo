@@ -10,22 +10,23 @@ rather than
 ""Shift +  "" 
 "
 Class {
-	#name : #KMNamedCharKeyCombination,
-	#superclass : #KMSingleKeyCombination,
+	#name : 'KMNamedCharKeyCombination',
+	#superclass : 'KMSingleKeyCombination',
 	#instVars : [
 		'name'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMNamedCharKeyCombination class >> ifSpecialKey: aCharacter do: aBlock [
 	"Lookup if aCharacter needs to be handled by me, if so use one of the instance creation function for creating the corresponding KeyCombination."
 	 self specialKeys at: aCharacter ifPresent: [ :symbol |
 		aBlock value: (self perform: symbol) ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMNamedCharKeyCombination class >> key: aCharacter name: aString [
 	^ self new
 		key: aCharacter;
@@ -33,7 +34,7 @@ KMNamedCharKeyCombination class >> key: aCharacter name: aString [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMNamedCharKeyCombination class >> newSpecialKeys [
 "Build a new dictionary that maps untypable characters to symbols for instacation creation methods on this class. For now, only for SPACE Key"
 	| dictionary |
@@ -42,24 +43,24 @@ KMNamedCharKeyCombination class >> newSpecialKeys [
 	^ dictionary
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMNamedCharKeyCombination class >> space [
 	^ self
 		key: Character space
 		name: 'Space'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMNamedCharKeyCombination class >> specialKeys [
 	^ specialKeys ifNil: [ specialKeys := self newSpecialKeys ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMNamedCharKeyCombination >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMNamedCharKeyCombination >> name: aSymbol [
 	name := aSymbol
 ]

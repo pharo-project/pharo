@@ -2,41 +2,43 @@
 I am delivered when window resized by user or OS/window manager.
 "
 Class {
-	#name : #OSWindowResizeEvent,
-	#superclass : #OSWindowEvent,
+	#name : 'OSWindowResizeEvent',
+	#superclass : 'OSWindowEvent',
 	#instVars : [
 		'width',
 		'height'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSWindowResizeEvent >> accept: aVisitor [
 	^ aVisitor visitWindowResizeEvent: self
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSWindowResizeEvent >> defaultAction [
 	window renderer ifNotNil: [ :renderer | renderer resized ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResizeEvent >> height [
 	^ height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResizeEvent >> height: anInteger [
 	height := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResizeEvent >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResizeEvent >> width: anInteger [
 	width := anInteger
 ]

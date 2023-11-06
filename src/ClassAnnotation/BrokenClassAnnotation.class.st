@@ -20,27 +20,28 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #BrokenClassAnnotation,
-	#superclass : #ClassAnnotation,
+	#name : 'BrokenClassAnnotation',
+	#superclass : 'ClassAnnotation',
 	#instVars : [
 		'errorString'
 	],
-	#category : #ClassAnnotation
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BrokenClassAnnotation class >> forBadMethodReturn [
 	^self new
 		errorString: 'Annotating method do not return an annotation instance'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BrokenClassAnnotation class >> withError: anError [
 	^self new
 		errorString: anError description
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 BrokenClassAnnotation >> debug [
 	"here we just reevaluate messages which could fail"
 	| ann |
@@ -49,17 +50,17 @@ BrokenClassAnnotation >> debug [
 	^ann
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BrokenClassAnnotation >> errorString [
 	^ errorString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BrokenClassAnnotation >> errorString: anObject [
 	errorString := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BrokenClassAnnotation >> printOn: aStream [
 	super printOn: aStream.
 

@@ -8,25 +8,27 @@ Conditional loops are instances of my subclass.
 backjump <Smi> pc of the backjump instruction
 "
 Class {
-	#name : #FBDLoop,
-	#superclass : #Object,
+	#name : 'FBDLoop',
+	#superclass : 'Object',
 	#instVars : [
 		'backjump'
 	],
-	#category : #'Flashback-Decompiler-Utilities'
+	#category : 'Flashback-Decompiler-Utilities',
+	#package : 'Flashback-Decompiler',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FBDLoop >> backjump [
 	^ backjump
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FBDLoop >> backjump: anObject [
 	backjump := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDLoop >> isConditionalLoop [
 	^ false
 ]

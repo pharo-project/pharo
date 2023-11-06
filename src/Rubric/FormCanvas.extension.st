@@ -1,6 +1,6 @@
-Extension { #name : #FormCanvas }
+Extension { #name : 'FormCanvas' }
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 FormCanvas >> rubParagraph: para bounds: bounds color: c [
 
 	| scanner |

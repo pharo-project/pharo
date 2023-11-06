@@ -75,8 +75,8 @@ Here we only check the exact message sends: this is not a pc-sampling approach
 
 "
 Class {
-	#name : #MessageTally,
-	#superclass : #Magnitude,
+	#name : 'MessageTally',
+	#superclass : 'Magnitude',
 	#instVars : [
 		'class',
 		'method',
@@ -95,42 +95,44 @@ Class {
 		'DefaultPollPeriod',
 		'Timer'
 	],
-	#category : #'Tool-Profilers-Messages'
+	#category : 'Tool-Profilers-Messages',
+	#package : 'Tool-Profilers',
+	#tag : 'Messages'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MessageTally class >> defaultMaxClassNameSize [
 	"Return the default maximum width of the class name alone"
 	^50
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MessageTally class >> defaultMaxClassPlusSelectorSize [
 	"Return the default maximum width of the class plus selector together (not counting the '>>')"
 	^100
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MessageTally class >> defaultMaxTabs [
 	"Return the default number of tabs after which leading white space is compressed"
 	^120
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MessageTally class >> defaultPollPeriod [
 	"Answer the number of milliseconds between interrupts for spyOn: and friends.
 	This should be faster for faster machines."
 	^DefaultPollPeriod ifNil: [ DefaultPollPeriod := 1 ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MessageTally class >> defaultPollPeriod: numberOfMilliseconds [
 	"Set the default number of milliseconds between interrupts for spyOn: and friends.
 	This should be faster for faster machines."
 	DefaultPollPeriod := numberOfMilliseconds
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MessageTally class >> example [
 
 	[1000 timesRepeat: [3.14159 printString. Processor yield]] fork.
@@ -139,20 +141,20 @@ MessageTally class >> example [
 	MessageTally spyAllOn: [ (Delay forMilliseconds: 100) wait]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MessageTally class >> exampleSpyForSeconds [
 
 	self spyFor: 2
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyAllOn: aBlock [
 	"Spy on all the processes in the system"
 	<script: 'self example'>
 	^ self spyAllOn: aBlock cutoff: 1
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyAllOn: aBlock cutoff: aNumber [
 	| node result |
 	node := self new.
@@ -166,7 +168,7 @@ MessageTally class >> spyAllOn: aBlock cutoff: aNumber [
 	^ result
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOn: aBlock [
 	"
 	Spy on aBlock, in the current process. Can include or not statistics on other processes in the report.
@@ -179,13 +181,13 @@ MessageTally class >> spyOn: aBlock [
 	^self spyOn: aBlock reportOtherProcesses: false
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOn: aBlock cutoff: aNumber [
 
 	^self spyOn: aBlock reportOtherProcesses: false cutoff: aNumber
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean [
 	"
 	Spy on aBlock, in the current process. Can include or not statistics on other processes in the report.
@@ -198,7 +200,7 @@ MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean [
 	^ self spyOn: aBlock reportOtherProcesses: aBoolean cutoff: 1
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean cutoff: aNumber [
 	"
 	Spy on aBlock, in the current process. Can include or not statistics on other processes in the report.
@@ -216,7 +218,7 @@ MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean cutoff: aNumb
 		closeAfter: true
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean cutoff: aNumber openResultWindow: openResultWindow [
 
 	^ self
@@ -227,7 +229,7 @@ MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean cutoff: aNumb
 		closeAfter: true
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean cutoff: aNumber openResultWindow: openResultWindow closeAfter: closeAfter [
 	| node |
 	node := self new.
@@ -243,7 +245,7 @@ MessageTally class >> spyOn: aBlock reportOtherProcesses: aBoolean cutoff: aNumb
 	^ node
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MessageTally class >> spyOn: aBlock toFileNamed: fileName reportOtherProcesses: aBoolean [
 	"Spy on the evaluation of aBlock. Write the data collected on a file
 	named fileName."
@@ -256,13 +258,13 @@ MessageTally class >> spyOn: aBlock toFileNamed: fileName reportOtherProcesses: 
 	^ value
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOnProcess: aProcess forMilliseconds: msecDuration [
 
 	^self spyOnProcess: aProcess forMilliseconds: msecDuration reportOtherProcesses: false
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOnProcess: aProcess forMilliseconds: msecDuration reportOtherProcesses: aBoolean [
 	"
 	Spy on aProcess for a certain amount of time
@@ -287,7 +289,7 @@ MessageTally class >> spyOnProcess: aProcess forMilliseconds: msecDuration repor
 		openInWorld
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> spyOnProcess: aProcess forMilliseconds: msecDuration toFileNamed: fileName reportOtherProcesses: aBoolean [
 	"Spy on the evaluation of aProcess. Write the data collected on a file
 	named fileName. Will overwrite fileName"
@@ -302,7 +304,7 @@ MessageTally class >> spyOnProcess: aProcess forMilliseconds: msecDuration toFil
 	fileName asFileReference writeStreamDo: [ :out | node report: out ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MessageTally class >> tallySends: aBlock [
 	"
 	MessageTally tallySends: [3.14159 printString]
@@ -317,17 +319,17 @@ MessageTally class >> tallySends: aBlock [
 	^ self tallySendsTo: nil inBlock: aBlock showTree: true
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> tallySendsTo: receiver inBlock: aBlock showTree: treeOption [
 	^ self tallySendsTo: receiver inBlock: aBlock showTree: treeOption closeAfter: true
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> tallySendsTo: receiver inBlock: aBlock showTree: treeOption closeAfter: closeAfter [
 	^ self tallySendsTo: receiver inBlock: aBlock showTree: treeOption closeAfter: closeAfter openResultWindow: true
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> tallySendsTo: receiver inBlock: aBlock showTree: treeOption closeAfter: closeAfter openResultWindow: openResultWindow [
 	"
 	MessageTally tallySends: [3.14159 printString]
@@ -371,27 +373,27 @@ MessageTally class >> tallySendsTo: receiver inBlock: aBlock showTree: treeOptio
 	^ tallies
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MessageTally class >> terminateTimerProcess [
 	<script>
 	Timer ifNotNil: [ Timer terminate ].
 	Timer := nil
 ]
 
-{ #category : #spying }
+{ #category : 'spying' }
 MessageTally class >> time: aBlock [
 
 	^ Time millisecondsToRun: aBlock
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MessageTally >> < aMessageTally [
 	"Refer to the comment in Magnitude|<."
 
 	^tally > aMessageTally tally
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MessageTally >> = aMessageTally [
 
 	self species == aMessageTally species ifFalse: [^ false].
@@ -399,19 +401,19 @@ MessageTally >> = aMessageTally [
 		and: [ aMessageTally process == process ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MessageTally >> > aMessageTally [
 	"Refer to the comment in Magnitude|>."
 
 	^tally < aMessageTally tally
 ]
 
-{ #category : #'collecting leaves' }
+{ #category : 'collecting leaves' }
 MessageTally >> bump: hitCount [
 	tally := tally + hitCount
 ]
 
-{ #category : #'collecting leaves' }
+{ #category : 'collecting leaves' }
 MessageTally >> bump: hitCount fromSender: senderTally [
 	"Add this hitCount to the total, and include a reference to the
 	sender responsible for the increment"
@@ -420,13 +422,13 @@ MessageTally >> bump: hitCount fromSender: senderTally [
 	senderTally ifNotNil: [senders add: (senderTally copyWithTally: hitCount)]
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTally >> bumpBy: count [
 
 	tally := tally + count
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MessageTally >> class: aClass method: aMethod [
 
 	class := aClass.
@@ -435,7 +437,7 @@ MessageTally >> class: aClass method: aMethod [
 	receivers := Array new: 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MessageTally >> close [
 
 	Timer ifNotNil: [ Timer terminate ].
@@ -443,7 +445,7 @@ MessageTally >> close [
 	class := method := tally := receivers := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MessageTally >> copyWithTally: hitCount [
 	^ (self class new class: class method: method)
 		reportOtherProcesses: reportOtherProcesses;
@@ -451,7 +453,7 @@ MessageTally >> copyWithTally: hitCount [
 		bump: hitCount
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> displayIdentifierOn: aStream [
 	self isClosed ifTrue: [ ^ self ].
 
@@ -466,7 +468,7 @@ MessageTally >> displayIdentifierOn: aStream [
 		store: self method selector
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> displayStringOn: aStream [
 	self displayIdentifierOn: aStream.
 	aStream
@@ -475,7 +477,7 @@ MessageTally >> displayStringOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> fullPrintExactOn: aStream [
 	aStream nextPutAll: '**Tree**'; cr.
 	self
@@ -491,7 +493,7 @@ MessageTally >> fullPrintExactOn: aStream [
 	self leavesPrintExactOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> fullPrintOn: aStream threshold: perCent [
 	| threshold |
 	threshold := (perCent asFloat / 100 * tally) rounded.
@@ -508,14 +510,14 @@ MessageTally >> fullPrintOn: aStream threshold: perCent [
 		threshold: threshold
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MessageTally >> hash [
 	"Hash is reimplemented because = is implemented."
 
 	^method hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MessageTally >> initialize [
 	"We do not do a super initialize since it is not strickly necessary and more importantly MessageTally must be instantiated quickly"
 	"super initialize."
@@ -528,7 +530,7 @@ MessageTally >> initialize [
 	tally := 0
 ]
 
-{ #category : #'collecting leaves' }
+{ #category : 'collecting leaves' }
 MessageTally >> into: leafDict fromSender: senderTally [
 	| leafNode |
 	leafNode := leafDict at: method
@@ -540,7 +542,7 @@ MessageTally >> into: leafDict fromSender: senderTally [
 	leafNode bump: tally fromSender: senderTally
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MessageTally >> isClosed [
 
 	^ class isNil
@@ -549,13 +551,13 @@ MessageTally >> isClosed [
 		and: [ receivers isNil ] ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MessageTally >> isPrimitives [
 	"Detect pseudo node used to carry tally of local hits"
 	^ receivers isNil
 ]
 
-{ #category : #'collecting leaves' }
+{ #category : 'collecting leaves' }
 MessageTally >> leavesInto: leafDict fromSender: senderTally [
 
 	| rcvrs |
@@ -573,7 +575,7 @@ MessageTally >> leavesInto: leafDict fromSender: senderTally [
 					ifFalse: [ node leavesInto: leafDict fromSender: self ]]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> leavesPrintExactOn: aStream [
 	| dict |
 	dict := IdentityDictionary new: 100.
@@ -584,7 +586,7 @@ MessageTally >> leavesPrintExactOn: aStream [
 			node printSenderCountsOn: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> leavesPrintOn: aStream threshold: threshold [
 	| dict |
 	dict := IdentityDictionary new: 100.
@@ -595,51 +597,51 @@ MessageTally >> leavesPrintOn: aStream threshold: threshold [
 			node printOn: aStream total: tally totalTime: time tallyExact: false ]
 ]
 
-{ #category : #'printing format' }
+{ #category : 'printing format' }
 MessageTally >> maxClassNameSize [
 	^maxClassNameSize
 ]
 
-{ #category : #'printing format' }
+{ #category : 'printing format' }
 MessageTally >> maxClassNameSize: aNumber [
 	maxClassNameSize := aNumber
 ]
 
-{ #category : #'printing format' }
+{ #category : 'printing format' }
 MessageTally >> maxClassPlusSelectorSize [
 	^maxClassPlusSelectorSize
 ]
 
-{ #category : #'printing format' }
+{ #category : 'printing format' }
 MessageTally >> maxClassPlusSelectorSize: aNumber [
 	maxClassPlusSelectorSize := aNumber
 ]
 
-{ #category : #'printing format' }
+{ #category : 'printing format' }
 MessageTally >> maxTabs [
 	^maxTabs
 ]
 
-{ #category : #'printing format' }
+{ #category : 'printing format' }
 MessageTally >> maxTabs: aNumber [
 	maxTabs := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> method [
 	"Return the compiled method associated to this tally"
 
 	^method
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MessageTally >> primitives: anInteger [
 
 	tally := anInteger.
 	receivers := nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> printOn: aStream [
 	| aSelector className |
 	(class isNil or: [method isNil]) ifTrue: [^super printOn: aStream].
@@ -655,18 +657,17 @@ MessageTally >> printOn: aStream [
 					contractTo: self maxClassPlusSelectorSize - className size)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: isExact [
 
 	isExact
 		ifTrue: [
 			| myTally |
 			myTally := tally.
-			receivers == nil
-				ifFalse: [receivers do: [:r | myTally := myTally - r tally]].
+			receivers ifNotNil: [ receivers do: [ :r | myTally := myTally - r tally ] ].
 			aStream
 				print: myTally;
-				space]
+				space ]
 		ifFalse: [
 			| percentage |
 			percentage := tally asFloat / total * 100.0.
@@ -674,12 +675,12 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 				nextPutAll: (percentage printShowingDecimalPlaces: 1);
 				nextPutAll: '% {';
 				print: (percentage * totalTime / 100) rounded;
-				nextPutAll: 'ms} '].
+				nextPutAll: 'ms} ' ].
 	receivers
 		ifNil: [
 			aStream
 				nextPutAll: 'primitives';
-				cr]
+				cr ]
 		ifNotNil: [
 			| className aSelector aClass |
 			aSelector := method selector.
@@ -688,14 +689,13 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 			aStream
 				nextPutAll: class name;
 				nextPutAll: (aClass = class
-							ifTrue: ['>>']
-							ifFalse: ['(' , aClass name , ')>>']);
-				nextPutAll: (aSelector
-							contractTo: self maxClassPlusSelectorSize - className size);
-				cr]
+						 ifTrue: [ '>>' ]
+						 ifFalse: [ '(' , aClass name , ')>>' ]);
+				nextPutAll: (aSelector contractTo: self maxClassPlusSelectorSize - className size);
+				cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> printSenderCountsOn: aStream [
 	| mergedSenders |
 	mergedSenders := IdentityDictionary new.
@@ -709,24 +709,24 @@ MessageTally >> printSenderCountsOn: aStream [
 		node printOn: aStream total: tally totalTime: nil tallyExact: true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> process [
 	"Return the profiled process"
 
 	^process
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> process: aProcess [
 	process := aProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> receivers [
 	^ receivers
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 MessageTally >> report: strm [
 	"Print a report, with cutoff percentage of each element of the tree
 	(leaves, roots, tree), on the stream, strm."
@@ -734,7 +734,7 @@ MessageTally >> report: strm [
 	self report: strm cutoff: 1
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 MessageTally >> report: strm cutoff: threshold [
 	tally = 0
 		ifTrue: [strm nextPutAll: ' - no tallies obtained']
@@ -746,7 +746,7 @@ MessageTally >> report: strm cutoff: threshold [
 		[self reportGCStatsOn: strm]
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 MessageTally >> reportGCStatsOn: str [
 	| oldSpaceEnd youngSpaceEnd memoryEnd fullGCs fullGCTime incrGCs incrGCTime tenureCount upTime rootOverflows |
 	upTime := time.
@@ -806,17 +806,17 @@ MessageTally >> reportGCStatsOn: str [
 	str cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> reportOtherProcesses [
 	^ reportOtherProcesses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> reportOtherProcesses: aBoolean [
 	reportOtherProcesses := aBoolean
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> rootPrintOn: aStream total: total totalTime: totalTime threshold: threshold [
 
 	| groups |
@@ -841,7 +841,7 @@ MessageTally >> rootPrintOn: aStream total: total totalTime: totalTime threshold
 	]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MessageTally >> sonsOver: threshold [
 	"Returns all the sons that are not below a certain threshold. threshold is a number."
 	| hereTally sons |
@@ -860,7 +860,7 @@ MessageTally >> sonsOver: threshold [
 	^sons
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MessageTally >> spyAllEvery: millisecs on: aBlock [
 	"Create a spy and spy on the given block at the specified rate."
 	"Spy all the system processes"
@@ -901,7 +901,7 @@ MessageTally >> spyAllEvery: millisecs on: aBlock [
 		time := Time millisecondClockValue - time0]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MessageTally >> spyEvery: millisecs on: aBlock [
 	"Create a spy and spy on the given block at the specified rate."
 	"Spy only on the active process (in which aBlock is run)"
@@ -942,7 +942,7 @@ MessageTally >> spyEvery: millisecs on: aBlock [
 		time := Time millisecondClockValue - time0]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MessageTally >> spyEvery: millisecs onProcess: aProcess forMilliseconds: msecDuration [
 	"Create a spy and spy on the given process at the specified rate."
 	| myDelay time0 endTime observedProcess sem |
@@ -982,14 +982,14 @@ MessageTally >> spyEvery: millisecs onProcess: aProcess forMilliseconds: msecDur
 	time := Time millisecondClockValue - time0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> tally [
 	"Answer the receiver's number of tally."
 
 	^tally
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTally >> tally: context by: count [
 	"Explicitly tally the specified context and its stack."
 	| sender |
@@ -1005,7 +1005,7 @@ MessageTally >> tally: context by: count [
 	^ (self tally: sender by: count) tallyPath: context by: count
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTally >> tally: context in: aProcess by: count [
 	"Explicitly tally the specified context and its stack."
 	| sender |
@@ -1021,7 +1021,7 @@ MessageTally >> tally: context in: aProcess by: count [
 	^ (self tally: sender in: aProcess by: count) tallyPath: context in: aProcess by: count
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTally >> tallyPath: context by: count [
 	| aMethod path |
 	aMethod := context method.
@@ -1039,7 +1039,7 @@ MessageTally >> tallyPath: context by: count [
 	^ path bumpBy: count
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 MessageTally >> tallyPath: context in: aProcess by: count [
 	| aMethod path |
 	aMethod := context method.
@@ -1062,21 +1062,21 @@ MessageTally >> tallyPath: context in: aProcess by: count [
 	^ path bumpBy: count
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> theClass [
 	"Return the class of the object receiver related to this tally"
 
 	 ^ class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MessageTally >> time [
 	"Answer the receiver's run time."
 
 	^time
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MessageTally >> treePrintOn: aStream tabs: tabs thisTab: myTab total: total totalTime: totalTime tallyExact: isExact orThreshold: threshold [
 	| sons sonTab |
 	tabs do: [:tab | aStream nextPutAll: tab].

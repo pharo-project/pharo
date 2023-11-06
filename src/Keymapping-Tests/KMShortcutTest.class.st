@@ -2,12 +2,13 @@
 SUnit tests for key mapping shortcuts
 "
 Class {
-	#name : #KMShortcutTest,
-	#superclass : #AbstractKeymappingTest,
-	#category : #'Keymapping-Tests'
+	#name : 'KMShortcutTest',
+	#superclass : 'AbstractKeymappingTest',
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testAsString [
 	self assert: $a asShortcut asString equals: 'A'.
 	self assert: $A asShortcut asString equals: 'Shift + A'.
@@ -22,42 +23,42 @@ KMShortcutTest >> testAsString [
 	self assert: ($o command, $i command) asString equals: 'Cmd + (O , I)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testBadComposedCmdShortcutFails [
 	^ self should: [ KMModifier ctrl ctrl ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testChainIntegerSucceds [
 	^ self assert: ($e ctrl , 1) equals: ($e ctrl , 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testChainShortcutSucceds [
 	^ self assert: ($e ctrl , $e ctrl) equals: ($e ctrl , $e ctrl)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testChainSimpleCharsSucceds [
 	^ self assert: ($e ctrl , $e) equals: ($e ctrl , $e)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testCmdIntegerSucceds [
 	^ self assert: 1 ctrl equals: 1 ctrl
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testCmdKeySucceds [
 	^ self assert: $e ctrl equals: $e ctrl
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testCmdShiftSucceds [
 	^ self assert: ($1 shift ctrl matches: {self eventKey: $1 alt: false ctrl: true command: false shift: true})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testComplexChainMatches [
 	|eCtrl eShift f|
 
@@ -74,20 +75,20 @@ KMShortcutTest >> testComplexChainMatches [
 	self assert: (($e ctrl, $e shift, $f) matchesCompletely: {eCtrl. eShift. f})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testCreation [
 	self assert: ($e asKeyCombination isKindOf: KMSingleKeyCombination).
 	self assert: ($e ctrl isKindOf: KMModifiedKeyCombination).
 	self assert: ($e ctrl alt shift command isKindOf: KMModifiedKeyCombination)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testEventCodes [
 	self assert: $s meta modifier eventCode
 		  equals: OSPlatform current defaultModifier eventCode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testModifiedShortcutsMatch [
 	|a oneShift oneCommand oneCommandShift|
 
@@ -113,12 +114,12 @@ KMShortcutTest >> testModifiedShortcutsMatch [
 	self assert: ($1 command shift matchesCompletely: {oneCommandShift})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testShiftKeySucceds [
 	^ self assert: $e shift equals: $e shift
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testSimpleChainMatches [
 	|e eCtrl |
 	e := self eventKey: $e.
@@ -133,7 +134,7 @@ KMShortcutTest >> testSimpleChainMatches [
 	self deny: ($e ctrl matches: {e})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testSingleShortcutsMatch [
 	|a one home |
 	a := self eventKey: $a.
@@ -150,7 +151,7 @@ KMShortcutTest >> testSingleShortcutsMatch [
 	self assert: (1 asKeyCombination matchesCompletely: {one})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutTest >> testTripleChainShortcutSucceds [
 	^ self assert: ($e ctrl , $e ctrl , $d ctrl) equals: ($e ctrl , $e ctrl , $d ctrl)
 ]

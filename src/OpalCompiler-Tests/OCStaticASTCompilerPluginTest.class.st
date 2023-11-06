@@ -1,18 +1,20 @@
 Class {
-	#name : #OCStaticASTCompilerPluginTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Plugins'
+	#name : 'OCStaticASTCompilerPluginTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Plugins',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Plugins'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCStaticASTCompilerPluginTest >> testClassWithPluginEnabled [
 
-	self
-		assert: ASTTransformExamplePluginActive new example42
-		equals: 'meaning of life'
+ 	"It is possible that the method was loaded before the plugin was active. We recompile to be sure the plugin was active."
+ 	ASTTransformExamplePluginActive recompile.
+ 	self assert: ASTTransformExamplePluginActive new example42 equals: 'meaning of life'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCStaticASTCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
 
 	| result plugin |
@@ -26,13 +28,13 @@ OCStaticASTCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
 	self assert: result equals: 'meaning of life'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCStaticASTCompilerPluginTest >> testIsAbstract [
 
 	self assert: OCStaticASTCompilerPlugin isAbstract
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCStaticASTCompilerPluginTest >> testTransform [
 
 	| ast |

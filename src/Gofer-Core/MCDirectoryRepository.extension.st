@@ -1,6 +1,6 @@
-Extension { #name : #MCDirectoryRepository }
+Extension { #name : 'MCDirectoryRepository' }
 
-{ #category : #'*Gofer-Core' }
+{ #category : '*Gofer-Core' }
 MCDirectoryRepository >> goferPriority [
 	^ 5
 ]

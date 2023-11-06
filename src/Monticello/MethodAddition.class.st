@@ -7,14 +7,10 @@ Class {
 	#instVars : [
 		'text',
 		'changeStamp',
-		'logSource',
 		'myClass',
-		'selector',
 		'compiledMethod',
-		'priorMethod',
 		'protocolName',
-		'priorProtocol',
-		'priorOrigin'
+		'compiler'
 	],
 	#category : 'Monticello-Loading',
 	#package : 'Monticello',
@@ -22,72 +18,35 @@ Class {
 }
 
 { #category : 'compilation' }
-MethodAddition >> compile [
-	"This method is the how compiling a method used to work.  All these steps were done at once.
-     This method should not normally be used, because the whole point of MethodAddition is to let
-	you first create a compiled method and then install the method later."
-
-	self
-		createCompiledMethod;
-		installMethod;
-		notifyObservers.
-	^ selector
-]
-
-{ #category : 'compilation' }
-MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2 logSource: aBoolean inClass: aClass [
+MethodAddition >> compile: aString classified: aProtocolName withStamp: aString2 inClass: aClass [
 
 	text := aString.
 	protocolName := aProtocolName.
 	changeStamp := aString2.
-	logSource := aBoolean.
-	myClass := aClass
-]
-
-{ #category : 'operations' }
-MethodAddition >> createCompiledMethod [
-	"CyrilFerlicot: Why do we need to explicitly write to the source? Why do we call the compiler?
-	
-	Can't we just call #compile:classfied: here?"
-	compiledMethod := myClass compiler permitUndeclared: true; compile: text asString.
-	selector := compiledMethod selector.
-	self writeSourceToLog.
-	priorMethod := myClass compiledMethodAt: selector ifAbsent: [ nil ].
-	priorOrigin := compiledMethod origin.
-	priorProtocol := myClass protocolOfSelector: selector
+	myClass := aClass.
+	compiler := myClass compiler
 ]
 
 { #category : 'operations' }
 MethodAddition >> installMethod [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ myClass addSelector: selector withMethod: compiledMethod ]
-]
 
-{ #category : 'notifying' }
-MethodAddition >> notifyObservers [
+	| priorMethod |
+	compiledMethod := compiler
+		                  permitUndeclared: true;
+		                  compile: text asString.
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ myClass classify: selector under: protocolName ].
-	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod configuredWith: [ :event | event propertyAt: #eventSource put: #Monticello ] ]
-		ifFalse: [
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: priorProtocol.
-			priorProtocol name = protocolName ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: priorProtocol ] ].
+	priorMethod := myClass compiledMethodAt: compiledMethod selector ifAbsent: [  ].
+
+	compiledMethod
+		putSource: text asString
+		class: myClass
+		protocol: (myClass ensureProtocol: protocolName)
+		withStamp: changeStamp
+		priorMethod: priorMethod.
+
+	myClass addAndClassifySelector: compiledMethod selector withMethod: compiledMethod inProtocol: protocolName.
+
 	"The following code doesn't seem to do anything."
-	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide
-]
-
-{ #category : 'accessing' }
-MethodAddition >> priorProtocol [
-	^ priorProtocol
-]
-
-{ #category : 'operations' }
-MethodAddition >> writeSourceToLog [
-
-	logSource ifTrue: [
-		myClass
-			logMethodSource: text
-			forMethod: compiledMethod
-			inProtocol: (myClass ensureProtocol: protocolName)
-			withStamp: changeStamp ]
+	myClass instanceSide noteCompilationOf: compiledMethod meta: myClass isClassSide.
+	^ compiledMethod
 ]

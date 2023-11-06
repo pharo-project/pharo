@@ -18,8 +18,8 @@ https://www.w3.org/Graphics/GIF/spec-gif89a.txt
 
 "
 Class {
-	#name : #LzwGifDecoder,
-	#superclass : #Object,
+	#name : 'LzwGifDecoder',
+	#superclass : 'Object',
 	#instVars : [
 		'suffixTable',
 		'prefixTable',
@@ -35,10 +35,11 @@ Class {
 		'codeStreamBuffer',
 		'outBlock'
 	],
-	#category : #'Graphics-Files'
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifDecoder >> checkCodeSize [
 	"Ensure that the next available code to enter
 	into the table is not equal to the bitMask.
@@ -57,7 +58,7 @@ LzwGifDecoder >> checkCodeSize [
 			bitMask := bitMask + nextAvailableCode ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifDecoder >> codeStream: aReadableStream [
 	"Set the stream of encoded bytes we will decode
 	to be the internal codeStream. We read off the first
@@ -69,7 +70,7 @@ LzwGifDecoder >> codeStream: aReadableStream [
 	codeStreamBuffer := ReadStream on: (codeStream next: chunkSize)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 LzwGifDecoder >> decode [
 	| currentCode prevCode outStream |
 	self initializeTables.
@@ -99,7 +100,7 @@ LzwGifDecoder >> decode [
 	^ outStream contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteStream [
 	"Check for the code in the tables
 	and perform the appropriate LZW action"
@@ -162,7 +163,7 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 		self checkCodeSize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LzwGifDecoder >> initializeTables [
 	"The two arrays are our lookup tables.
 	We do this instead of Dictionaries because
@@ -184,17 +185,17 @@ LzwGifDecoder >> initializeTables [
 		suffixTable at: n put: (n - 1) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifDecoder >> maxCode: anInteger [
 	maxCode := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifDecoder >> minimumCodeSize: anInteger [
 	minimumCodeSize := anInteger
 ]
 
-{ #category : #'private - packing' }
+{ #category : 'private - packing' }
 LzwGifDecoder >> nextByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd
@@ -205,8 +206,9 @@ LzwGifDecoder >> nextByte [
 	^ codeStreamBuffer next
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifDecoder >> nextCode [
+
 	| integer numBitsRead newRemainder shiftAmount byte |
 	"Retrieve the next code of codeSize bits.
 	Store the remaining bits etc for later computation"
@@ -218,21 +220,21 @@ LzwGifDecoder >> nextCode [
 		ifFalse: [
 			numBitsRead := numLeftoverBits.
 			shiftAmount := numLeftoverBits - 8 ].
-		[ numBitsRead < codeSize ] whileTrue: [
-			byte := self nextByte.
-			byte == nil ifTrue: [ ^ eoiCode ].
-			integer := integer + (byte bitShift: shiftAmount).
-			shiftAmount := shiftAmount + 8.
-			numBitsRead := numBitsRead + 8 ].
-		(newRemainder := numBitsRead - codeSize) = 0
-			ifTrue: [ byte := self nextByte ]
-			ifFalse: [ byte := self peekByte ].
-		byte == nil ifTrue: [ ^ eoiCode ].
-		numLeftoverBits := newRemainder.
-		^ integer + (byte bitShift: shiftAmount) bitAnd: bitMask
+	[ numBitsRead < codeSize ] whileTrue: [
+		byte := self nextByte.
+		byte ifNil: [ ^ eoiCode ].
+		integer := integer + (byte bitShift: shiftAmount).
+		shiftAmount := shiftAmount + 8.
+		numBitsRead := numBitsRead + 8 ].
+	(newRemainder := numBitsRead - codeSize) = 0
+		ifTrue: [ byte := self nextByte ]
+		ifFalse: [ byte := self peekByte ].
+	byte ifNil: [ ^ eoiCode ].
+	numLeftoverBits := newRemainder.
+	^ integer + (byte bitShift: shiftAmount) bitAnd: bitMask
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifDecoder >> onDecodedBit: aBlock [
 	"This block will be executed once each time a new
 	value is decoded from the stream, with the value
@@ -240,7 +242,7 @@ LzwGifDecoder >> onDecodedBit: aBlock [
 	outBlock := aBlock
 ]
 
-{ #category : #'private - packing' }
+{ #category : 'private - packing' }
 LzwGifDecoder >> peekByte [
 	| nextChunkSize |
 	codeStreamBuffer atEnd
@@ -251,7 +253,7 @@ LzwGifDecoder >> peekByte [
 	^ codeStreamBuffer peek
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 LzwGifDecoder >> writeBit: anInteger on: aWriteStream [
 	"Write the incoming decoded value onto a
 	writestream. If I have an outBlock set,

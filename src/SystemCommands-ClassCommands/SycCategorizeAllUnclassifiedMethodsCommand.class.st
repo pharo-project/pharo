@@ -2,22 +2,23 @@
 I am a command to categorize all unclassified methods of given classes
 "
 Class {
-	#name : #SycCategorizeAllUnclassifiedMethodsCommand,
-	#superclass : #SycClassCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycCategorizeAllUnclassifiedMethodsCommand',
+	#superclass : 'SycClassCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCategorizeAllUnclassifiedMethodsCommand >> defaultMenuIconName [
 	^#glamorousBrowse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCategorizeAllUnclassifiedMethodsCommand >> defaultMenuItemName [
 	^'Categorize all uncategorized'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCategorizeAllUnclassifiedMethodsCommand >> execute [
 	| classifier |
 	"MethodClassifier should not be hardcoded and should be based on Smalltalk tools"
@@ -28,7 +29,7 @@ SycCategorizeAllUnclassifiedMethodsCommand >> execute [
 			classifier classify: each >> selector ]]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCategorizeAllUnclassifiedMethodsCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

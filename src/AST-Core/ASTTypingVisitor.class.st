@@ -25,8 +25,8 @@ Instance variables:
 * dirty <Boolean> used for basic fixed-point analysis when more than on pass is needed
 "
 Class {
-	#name : #ASTTypingVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'ASTTypingVisitor',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'variableTypes',
 		'shortcutKernelMessages',
@@ -35,10 +35,12 @@ Class {
 		'cha',
 		'unknownMethods'
 	],
-	#category : #'AST-Core-Type'
+	#category : 'AST-Core-Type',
+	#package : 'AST-Core',
+	#tag : 'Type'
 }
 
-{ #category : #benchmarking }
+{ #category : 'benchmarking' }
 ASTTypingVisitor class >> bench: trees [
 
 	| report valueNodes duration count visitor steps moreTrees knownMethods |
@@ -160,7 +162,7 @@ ASTTypingVisitor class >> bench: trees [
 	^ report contents
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ASTTypingVisitor class >> printTypedNodeCount: valueNodes [
 
 	| count |
@@ -173,31 +175,31 @@ ASTTypingVisitor class >> printTypedNodeCount: valueNodes [
 			  nextPutAll: '%)' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> cha [
 
 	^ cha
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> cha: anObject [
 
 	cha := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> dirty [
 
 	^ dirty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> dirty: anObject [
 
 	dirty := anObject
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 ASTTypingVisitor >> fixedPointAnalysis: aNode [
 	"Repeat the analysis until a fixed point is reached.
 	Because the analysis is monotonous and the height of the latice is bounded, a fixed point is reachable in finite time."
@@ -208,7 +210,7 @@ ASTTypingVisitor >> fixedPointAnalysis: aNode [
 	dirty ] whileTrue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ASTTypingVisitor >> initialize [
 
 	variableTypes := IdentityDictionary new.
@@ -218,7 +220,7 @@ ASTTypingVisitor >> initialize [
 	cha := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> lookupMethod: aSelector type: recvType [
 
 	| method methods type |
@@ -251,13 +253,13 @@ ASTTypingVisitor >> lookupMethod: aSelector type: recvType [
 	^ type
 ]
 
-{ #category : #lattice }
+{ #category : 'lattice' }
 ASTTypingVisitor >> merge: types [
 
 	^ types reduce: [ :t1 :t2 | self merge: t1 with: t2 ]
 ]
 
-{ #category : #lattice }
+{ #category : 'lattice' }
 ASTTypingVisitor >> merge: type1 with: type2 [
 	"Do a join operation on the two type, so return the common super class.
 	`nil` behave as a bottom element of a lattice.
@@ -281,19 +283,19 @@ ASTTypingVisitor >> merge: type1 with: type2 [
 	self error: 'This should not occurs, unless multiple roots?'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> shortcutKernelMessages [
 
 	^ shortcutKernelMessages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> shortcutKernelMessages: anObject [
 
 	shortcutKernelMessages := anObject
 ]
 
-{ #category : #lattice }
+{ #category : 'lattice' }
 ASTTypingVisitor >> typeMethod: aCompilerMethod with: aClass [
 
 	| type |
@@ -307,7 +309,7 @@ ASTTypingVisitor >> typeMethod: aCompilerMethod with: aClass [
 	returnTypes at: aCompilerMethod put: type
 ]
 
-{ #category : #lattice }
+{ #category : 'lattice' }
 ASTTypingVisitor >> typeNode: aNode with: aClass [
 
 	| type |
@@ -323,7 +325,7 @@ ASTTypingVisitor >> typeNode: aNode with: aClass [
 	aNode propertyAt: #type put: type
 ]
 
-{ #category : #lattice }
+{ #category : 'lattice' }
 ASTTypingVisitor >> typeVariable: aVariable with: aClass [
 
 	| type |
@@ -337,20 +339,20 @@ ASTTypingVisitor >> typeVariable: aVariable with: aClass [
 	variableTypes at: aVariable put: type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTTypingVisitor >> unknownMethods [
 
 	^ unknownMethods
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitArrayNode: aLiteralNode [
 
 	super visitArrayNode: aLiteralNode.
 	self typeNode: aLiteralNode with: Array
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitAssignmentNode: anAssignmentNode [
 
 	| type variable |
@@ -363,33 +365,33 @@ ASTTypingVisitor >> visitAssignmentNode: anAssignmentNode [
 	self typeVariable: variable with: type
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitBlockNode: aNode [
 
 	super visitBlockNode: aNode.
 	self typeNode: aNode with: BlockClosure
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitGlobalNode: aGlobalNode [
 
 	self typeNode: aGlobalNode with: aGlobalNode binding read class
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitLiteralArrayNode: aLiteralNode [
 
 	super visitLiteralArrayNode: aLiteralNode.
 	self typeNode: aLiteralNode with: Array
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitLiteralNode: aLiteralNode [
 
 	self typeNode: aLiteralNode with: aLiteralNode value class
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitMessageNode: aNode [
 
 	| recvType type |
@@ -421,7 +423,7 @@ ASTTypingVisitor >> visitMessageNode: aNode [
 	type ifNotNil: [ self typeNode: aNode with: type ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitMethodNode: aNode [
 
 	super visitMethodNode: aNode.
@@ -435,7 +437,7 @@ ASTTypingVisitor >> visitMethodNode: aNode [
 		self typeMethod: aNode compiledMethod with: aNode methodClass ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitReturnNode: aNode [
 
 	| type |
@@ -446,12 +448,12 @@ ASTTypingVisitor >> visitReturnNode: aNode [
 		self typeMethod: cm with: type ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitSelfNode: aSelfNode [
 	self typeNode: aSelfNode with: aSelfNode methodNode methodClass
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitSuperNode: aSuperNode [
 	| class |
 	class := aSuperNode methodNode methodClass.
@@ -460,7 +462,7 @@ ASTTypingVisitor >> visitSuperNode: aSuperNode [
 	self typeNode: aSuperNode with: class superclass
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ASTTypingVisitor >> visitVariableNode: aNode [
 
 	| type variable |

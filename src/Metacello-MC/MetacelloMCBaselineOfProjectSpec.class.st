@@ -1,27 +1,29 @@
 Class {
-	#name : #MetacelloMCBaselineOfProjectSpec,
-	#superclass : #MetacelloMCProjectSpec,
-	#category : #'Metacello-MC-Specs'
+	#name : 'MetacelloMCBaselineOfProjectSpec',
+	#superclass : 'MetacelloMCProjectSpec',
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> asBaselineProjectSpec [
     ^ self
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> asProjectRegistration [
     ^ MetacelloProjectRegistration fromMCBaselineProjectSpec: self
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> canDowngradeTo: aProjectSpec [
     "cannot upgrade between baselines"
 
     ^ false
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> canUpgradeTo: aProjectSpec [
   "cannot upgrade between baselines unless repositories can be upgraded"
 
@@ -30,17 +32,17 @@ MetacelloMCBaselineOfProjectSpec >> canUpgradeTo: aProjectSpec [
   ^ false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMCBaselineOfProjectSpec >> configHasVersionString [
   ^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloMCBaselineOfProjectSpec >> constructClassName [
     ^ 'BaselineOf' , self name
 ]
 
-{ #category : #mutability }
+{ #category : 'mutability' }
 MetacelloMCBaselineOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
   | copy |
   aMetacelloProjectRegistration
@@ -57,12 +59,12 @@ MetacelloMCBaselineOfProjectSpec >> copyForRegistration: aMetacelloProjectRegist
         ifAbsent: [ aBlock value: nil ] ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCBaselineOfProjectSpec >> determineCurrentVersionForLoad [
     ^ self version
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
   "answer true if the configuration should be reloaded"
 
@@ -73,7 +75,7 @@ MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ens
   ^ true
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloMCBaselineOfProjectSpec >> ensureLoadUsing: aLoader [
   "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
    baseline"
@@ -83,35 +85,35 @@ MetacelloMCBaselineOfProjectSpec >> ensureLoadUsing: aLoader [
     do: [ :ex | ex resume: ex packageSpec name = self name ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMCBaselineOfProjectSpec >> hasClassName [
     ^ className ~~ nil and: [ className ~= self constructClassName ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCBaselineOfProjectSpec >> hasConflictWithConfigurationSpec: projectSpec [
   "baseline can be loaded on top of a configuration without a conflict"
 
   ^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCBaselineOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
 	^ projectSpec hasConflictWithBaselineSpec: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloMCBaselineOfProjectSpec >> isBaselineOfProjectSpec [
 	^ true
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 MetacelloMCBaselineOfProjectSpec >> mergeImportLoads: aLoadList [
     aLoadList
         ifNotNil: [ :otherLoads | self loads ifNil: [ loads := otherLoads ] ifNotNil: [ loads := loads , otherLoads ] ]
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloMCBaselineOfProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
   "anotherRepositories wins ... there can ever only be one repository for the 
    baseline to load from"
@@ -121,17 +123,17 @@ MetacelloMCBaselineOfProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
   self repositories: anotherRepositories
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloMCBaselineOfProjectSpec >> mergeSpec: anotherSpec [
     ^ super mergeSpec: anotherSpec asBaselineProjectSpec
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloMCBaselineOfProjectSpec >> projectLabel [
     ^ 'baseline'
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> repositoryBranchName [
   "extract a branch name from the repository ... if possible"
 
@@ -143,7 +145,7 @@ MetacelloMCBaselineOfProjectSpec >> repositoryBranchName [
   ^ repo repositoryBranchName
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
   "extract a version string from the repository ... if possible"
 
@@ -157,7 +159,7 @@ MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
   ^ repo repositoryVersionString
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
     self versionString
         ifNotNil: [ :vs | 
@@ -176,24 +178,24 @@ MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVer
                                     'version field is incorrect, should be: ' , prj singletonVersionName printString) ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> version [
-    self projectClass == nil
-        ifTrue: [ ^ nil ].
-    ^ self projectClassProject version
+
+	self projectClass ifNil: [ ^ nil ].
+	^ self projectClassProject version
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloMCBaselineOfProjectSpec >> version: anObject constructor: aVersionConstructor [
     self error: 'version: not allowed in a baseline project spec'
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> versionString [
     ^ versionString ifNil: [ self version ifNotNil: [:v | v versionString] ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MetacelloMCBaselineOfProjectSpec >> versionString: anObject constructor: aVersionConstructor [
     self error: 'versionString: not allowed in a baseline project spec'
 ]

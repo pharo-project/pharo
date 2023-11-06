@@ -1,6 +1,6 @@
-Extension { #name : #TextMorph }
+Extension { #name : 'TextMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 TextMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the receiver on a canvas.
 	Draw keyboard focus if appropriate."

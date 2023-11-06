@@ -12,14 +12,14 @@ Class {
 { #category : 'accessing' }
 UndefinedObject class >> allInstances [
 	"It is well known there is a single instance"
-
+	<reflection: 'Memory Scanning - Instances of a class'>
 	^Array with: nil
 ]
 
 { #category : 'accessing' }
 UndefinedObject class >> allInstancesDo: aBlock [
 	"It is well known there is a single instance"
-
+	<reflection: 'Memory Scanning - Instances of a class'>
 	aBlock value: nil
 ]
 
@@ -38,10 +38,12 @@ UndefinedObject >> addDependent: ignored [
 { #category : 'class hierarchy' }
 UndefinedObject >> addSubclass: aClass [
 	"Ignored -- necessary to support disjoint class hierarchies"
+	<reflection: 'Class structural modification - Hierarchy modification'>
 ]
 
 { #category : 'class hierarchy' }
 UndefinedObject >> allSuperclassesDo: aBlockContext [
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	"Ignored -- necessary to support disjoint class hierarchies"
 ]
 
@@ -86,6 +88,7 @@ UndefinedObject >> classInstaller [
 
 { #category : 'class hierarchy' }
 UndefinedObject >> commonSuperclassWith: aClass [
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self
 ]
 
@@ -197,6 +200,7 @@ UndefinedObject >> printOn: aStream [
 { #category : 'class hierarchy' }
 UndefinedObject >> removeSubclass: aClass [
 	"Ignored -- necessary to support disjoint class hierarchies"
+	<reflection: 'Class structural modification - Hierarchy modification'>
 ]
 
 { #category : 'pinning' }
@@ -219,23 +223,6 @@ UndefinedObject >> storeOn: aStream [
 ]
 
 { #category : 'class hierarchy' }
-UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNameList classVariableNames: classVarNames poolDictionaries: poolDictnames category: category [
-	"Calling this method is now considered an accident.  If you really want to create a class with a nil superclass, then create the class and then set the superclass using #superclass:"
-
-	Warning signal: 'Attempt to create ' , nameOfClass ,
-		' as a subclass of nil.  Possibly a class is being loaded before its superclass.'.
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: nil;
-			  name: nameOfClass;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  sharedPools: poolDictnames;
-			  category: category;
-			  environment: self environment ]
-]
-
-{ #category : 'class hierarchy' }
 UndefinedObject >> subclassDefinerClass [
 	"For disjunct class hierarchies -- how should subclasses of nil be evaluated"
 	^self class subclassDefinerClass
@@ -244,6 +231,8 @@ UndefinedObject >> subclassDefinerClass [
 { #category : 'class hierarchy' }
 UndefinedObject >> subclasses [
 	"Return all the subclasses of nil"
+
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	| classList |
 	classList := Array new writeStream.
 	self subclassesDo:[:class| classList nextPut: class].
@@ -253,7 +242,7 @@ UndefinedObject >> subclasses [
 { #category : 'class hierarchy' }
 UndefinedObject >> subclassesDo: aBlock [
 	"Evaluate aBlock with all subclasses of nil.  Others are not direct subclasses of Class."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ Class subclassesDo: [:cl |
 			cl isMeta ifTrue: [aBlock value: cl soleInstance]]
 ]

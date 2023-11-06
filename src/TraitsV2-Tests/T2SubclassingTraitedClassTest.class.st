@@ -1,10 +1,11 @@
 Class {
-	#name : #T2SubclassingTraitedClassTest,
-	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#name : 'T2SubclassingTraitedClassTest',
+	#superclass : 'T2AbstractTest',
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass [
 	| t1 c1 c2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -15,11 +16,11 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass [
 	c2 compile: 'asd'.
 
 	self shouldnt: [c2 >> #asd] raise: Error.
-	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests'.
+	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests-TestClasses'.
 	self assert: (c2 >> #asd) package equals: c2 package
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass2 [
 	| t1 c1 c2 |
 	c1 := self newClass: #C1 with: #() uses: {}.
@@ -31,11 +32,11 @@ T2SubclassingTraitedClassTest >> testCreatingMethodInSubclass2 [
 	c2 compile: 'asd'.
 
 	self shouldnt: [c2 >> #asd] raise: Error.
-	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests'.
+	self assert: (c2 >> #asd) package name equals: 'TraitsV2-Tests-TestClasses'.
 	self assert: (c2 >> #asd) package equals: c2 package
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 T2SubclassingTraitedClassTest >> testCreatingMethodInTraitClassSide [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.

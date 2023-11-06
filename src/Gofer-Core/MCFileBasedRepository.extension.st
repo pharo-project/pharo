@@ -1,6 +1,6 @@
-Extension { #name : #MCFileBasedRepository }
+Extension { #name : 'MCFileBasedRepository' }
 
-{ #category : #'*Gofer-Core' }
+{ #category : '*Gofer-Core' }
 MCFileBasedRepository >> goferReferences [
 	| versionNames |
 	versionNames := [ self allVersionNames ]

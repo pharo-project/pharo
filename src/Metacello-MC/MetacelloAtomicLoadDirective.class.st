@@ -1,15 +1,17 @@
 Class {
-	#name : #MetacelloAtomicLoadDirective,
-	#superclass : #MetacelloVersionLoadDirective,
+	#name : 'MetacelloAtomicLoadDirective',
+	#superclass : 'MetacelloVersionLoadDirective',
 	#instVars : [
 		'packageloads',
 		'preloads',
 		'postloads'
 	],
-	#category : #'Metacello-MC-Directives'
+	#category : 'Metacello-MC-Directives',
+	#package : 'Metacello-MC',
+	#tag : 'Directives'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloAtomicLoadDirective >> directivesDo: aBlock [
 
 	aBlock value: self.
@@ -18,7 +20,7 @@ MetacelloAtomicLoadDirective >> directivesDo: aBlock [
 	self postloads do: [:directive | directive directivesDo: aBlock ].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 	"load the accumulated packages (if any), reset the package list"
 
@@ -35,74 +37,71 @@ MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 	postloads := nil
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadAtomicLoadDirective: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadDirectives do: [:directive | directive loadUsing: self gofer: aGofer ].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer: aGofer [
 
 	self finalizeLoad: aGofer.
 	super loadLinearLoadDirective: aLoaderDirective gofer: aGofer
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloAtomicLoadDirective >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 	"accumulate packages"
 	
 	self packageloads add: aPackageLoadDirective
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloAtomicLoadDirective >> loadPostloadDirective: aPostloadDirective [
 	"accumulate postloads"
 
 	self postloads add: aPostloadDirective
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloAtomicLoadDirective >> loadPreloadDirective: aPreloadDirective [ 
 	"accumulate preloads"
 
 	self preloads add: aPreloadDirective
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 
 	self loadDirectives isEmpty ifTrue: [ ^self ].
 	aLoaderDirective loadAtomicLoadDirective: self gofer: aGofer.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAtomicLoadDirective >> packageloads [
 
-	packageloads == nil ifTrue: [ packageloads := OrderedCollection new ].
-	^ packageloads
+	^ packageloads ifNil: [ packageloads := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAtomicLoadDirective >> packageloads: anObject [
 	packageloads := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAtomicLoadDirective >> postloads [
 
-	postloads == nil ifTrue: [ postloads := OrderedCollection new ].
-	^ postloads
+	^ postloads ifNil: [ postloads := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAtomicLoadDirective >> preloads [
 
-	preloads == nil ifTrue: [ preloads := OrderedCollection new ].
-	^ preloads
+	^ preloads ifNil: [ preloads := OrderedCollection new ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloAtomicLoadDirective >> prepostLoadDirectivesDo: aBlock [
 
 	self preloads do: [:directive | directive prepostLoadDirectivesDo: aBlock ].
@@ -110,7 +109,7 @@ MetacelloAtomicLoadDirective >> prepostLoadDirectivesDo: aBlock [
 	self postloads do: [:directive | directive prepostLoadDirectivesDo: aBlock ].
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloAtomicLoadDirective >> prepostLoadsDo: aBlock [
 
 	self preloads do: [:directive | directive prepostLoadDo: aBlock ].
@@ -118,7 +117,7 @@ MetacelloAtomicLoadDirective >> prepostLoadsDo: aBlock [
 	self postloads do: [:directive | directive prepostLoadDo: aBlock ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAtomicLoadDirective >> title [
 
 	^'atomic load'

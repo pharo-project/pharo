@@ -5,34 +5,36 @@ As Pharo doesn't provide a mechanism to set the attributes, pick a few well know
 
 "
 Class {
-	#name : #FileReferenceAttributeTest,
-	#superclass : #TestCase,
+	#name : 'FileReferenceAttributeTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'primitives'
 	],
-	#category : #'FileSystem-Tests-Attributes-Tests'
+	#category : 'FileSystem-Tests-Attributes-Tests',
+	#package : 'FileSystem-Tests-Attributes',
+	#tag : 'Tests'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 FileReferenceAttributeTest class >> resources [
 
 	^Array with: DiskFileAttributesTestsResource
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileReferenceAttributeTest >> setUp [
 
 	super setUp.
 	primitives := File
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileReferenceAttributeTest >> tempFileResource [
 
 	^DiskFileAttributesTestsResource current
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testAccessTime [
 
 	| resource accessTime |
@@ -43,7 +45,7 @@ FileReferenceAttributeTest >> testAccessTime [
 	self assert: resource file entry accessTime equals: accessTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testChangeTime [
 
 	| resource changeTime |
@@ -54,7 +56,7 @@ FileReferenceAttributeTest >> testChangeTime [
 	self assert: resource file entry changeTime equals: changeTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testCreationTime [
 
 	| resource creationTime |
@@ -65,34 +67,34 @@ FileReferenceAttributeTest >> testCreationTime [
 	self assert: resource file entry creationTime equals: creationTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testExists [
 
 	self assert: self tempFileResource file exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testFileSize [
 
 	self assert: self tempFileResource file size equals: 72.
 	self assert: self tempFileResource file entry size equals: self tempFileResource file size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsBlock [
 
 	self deny: self tempFileResource file isBlock.
 	self assert: self tempFileResource file entry isBlock equals: self tempFileResource file isBlock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsCharacter [
 
 	self deny: self tempFileResource file isCharacter.
 	self assert: self tempFileResource file entry isCharacter equals: self tempFileResource file isCharacter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsDirectory [
 
 	self assert: self tempFileResource file isDirectory equals: false.
@@ -100,21 +102,21 @@ FileReferenceAttributeTest >> testIsDirectory [
 	self assert: FileLocator temp isDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsExecutable [
 
 	self assert: FileLocator vmBinary isExecutable.
 	self assert: FileLocator vmBinary entry isExecutable equals: FileLocator vmBinary isExecutable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsFIFO [
 
 	self assert: self tempFileResource file isFIFO equals: false.
 	self assert: self tempFileResource file entry isFIFO equals: self tempFileResource file isFIFO
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsFile [
 
 	self assert: self tempFileResource file isFile.
@@ -122,42 +124,42 @@ FileReferenceAttributeTest >> testIsFile [
 	self deny: FileLocator temp isFile
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsReadable [
 
 	self assert: self tempFileResource file isReadable.
 	self assert: self tempFileResource file entry isReadable equals: self tempFileResource file isReadable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsRegular [
 
 	self assert: self tempFileResource file isRegular.
 	self assert: self tempFileResource file entry isRegular equals: self tempFileResource file isRegular
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsSocket [
 
 	self assert: self tempFileResource file isSocket equals: false.
 	self assert: self tempFileResource file entry isSocket equals: self tempFileResource file isSocket
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsSymlink [
 
 	self assert: self tempFileResource file isSymlink equals: false.
 	self assert: self tempFileResource file entry isSymlink equals: self tempFileResource file isSymlink
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testIsWriteable [
 
 	self assert: self tempFileResource file isWritable.
 	self assert: self tempFileResource file entry isWritable equals: self tempFileResource file isWritable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testModificationTime [
 
 	| resource modificationTime |
@@ -168,7 +170,7 @@ FileReferenceAttributeTest >> testModificationTime [
 	self assert: resource file entry modificationTime equals: modificationTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testNLink [
 	"Assume that there is only one hard link to the just created temporary file"
 
@@ -179,10 +181,18 @@ FileReferenceAttributeTest >> testNLink [
 		self assert: self tempFileResource file entry numberOfHardLinks equals: 1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTest >> testTargetFile [
+	"Linux & Mac: The temporary file isn't a symbolic link, so the targetFile is the file itself.
+	Windows: the attribute isn't supported."
 
-	"The temporary file isn't a symbolic link, so the targetFile isn't supported"
-	self should: [ self tempFileResource file targetPath ] raise: FileAttributeNotSupported.
-	self should: [ self tempFileResource file entry targetPath ] raise: FileAttributeNotSupported
+	[ self assert: self tempFileResource file targetFileReference equals: self tempFileResource file resolve ]
+		on: FileAttributeNotSupported
+		do: [ :ex | OSPlatform current isWindows ifFalse: [ ex pass ] ].
+	[ self assert: self tempFileResource file symlinkEntry targetFileReference equals: self tempFileResource file resolve ]
+		on: FileAttributeNotSupported
+		do: [ :ex | OSPlatform current isWindows ifFalse: [ ex pass ] ].
+
+	"However the DirectoryEntry doesn't have the information"
+	self should: [ self tempFileResource file entry targetPath ] raise: FileAttributeNotSupported.
 ]

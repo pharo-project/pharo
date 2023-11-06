@@ -4,18 +4,20 @@ I am the abstract cluster for CompiledCode classes. I implement shared serializa
 See the class comment of CompiledCode for information on the format.
 "
 Class {
-	#name : #FLCompiledCodeCluster,
-	#superclass : #FLIteratingCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLCompiledCodeCluster',
+	#superclass : 'FLIteratingCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLCompiledCodeCluster class >> clusterBucketIn: aClusterization [
 
 	^aClusterization primitivesBucket
 ]
 
-{ #category : #protected }
+{ #category : 'protected' }
 FLCompiledCodeCluster >> decodeHeaderWith: aDecoder [
 	| signBit header |
 	signBit := aDecoder nextEncodedByte.
@@ -26,7 +28,7 @@ FLCompiledCodeCluster >> decodeHeaderWith: aDecoder [
 		ifFalse: [ header ]
 ]
 
-{ #category : #protected }
+{ #category : 'protected' }
 FLCompiledCodeCluster >> encodeHeader: aSmallInteger with: anEncoder [
 	"Store the sign bit separately. We can't encoded it within the 32 bit integer because the
 	high bit will be truncated.
@@ -36,7 +38,7 @@ FLCompiledCodeCluster >> encodeHeader: aSmallInteger with: anEncoder [
 		encodeInt32: aSmallInteger
 ]
 
-{ #category : #protected }
+{ #category : 'protected' }
 FLCompiledCodeCluster >> materializeLiteralsTo: compiledCode with: aDecoder [
 	1
 		to: compiledCode numLiterals 
@@ -46,7 +48,7 @@ FLCompiledCodeCluster >> materializeLiteralsTo: compiledCode with: aDecoder [
 				put: aDecoder nextEncodedReference ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCompiledCodeCluster >> materializeReferencesStepWith: aDecoder [
 	objects do: [ :compiledCode |
 		self
@@ -54,14 +56,14 @@ FLCompiledCodeCluster >> materializeReferencesStepWith: aDecoder [
 			with: aDecoder ]
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLCompiledCodeCluster >> referencesOf: compiledCode do: aBlock [
 	1
 		to: compiledCode numLiterals
 		do: [ :index | aBlock value: (compiledCode literalAt: index) ]
 ]
 
-{ #category : #protected }
+{ #category : 'protected' }
 FLCompiledCodeCluster >> serializeLiteralsOf: aCompiledBlock with: anEncoder [
 	1
 		to: aCompiledBlock numLiterals 
@@ -69,7 +71,7 @@ FLCompiledCodeCluster >> serializeLiteralsOf: aCompiledBlock with: anEncoder [
 			anEncoder encodeReferenceTo: (aCompiledBlock literalAt: index) ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCompiledCodeCluster >> serializeReferencesStepWith: anEncoder [
 	objects do: [ :compiledCode |
 		self

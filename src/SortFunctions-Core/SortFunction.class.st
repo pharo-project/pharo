@@ -37,33 +37,34 @@ Applications can implement their own domain sort functions defining the method:
 
 "
 Class {
-	#name : #SortFunction,
-	#superclass : #Object,
+	#name : 'SortFunction',
+	#superclass : 'Object',
 	#classVars : [
 		'Default'
 	],
-	#category : #'SortFunctions-Core'
+	#category : 'SortFunctions-Core',
+	#package : 'SortFunctions-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SortFunction class >> default [
 	^Default
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SortFunction >> , aSortFunction [
 	"Return a new SortFunction which is the concatenation of aSortFunction to me, I will be the primary sort, but if I compare equal, I will defer to the argument."
 
 	^ChainedSortFunction startWith: self then: aSortFunction asSortFunction
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SortFunction >> asSortFunction [
 
 	^self
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 SortFunction >> collate: anObject1 with: anObject2 [
 	"Do a three-way comparison between the anObject1 and anObject2, returning
 	-1 if anObject1 < anObject2
@@ -74,26 +75,26 @@ SortFunction >> collate: anObject1 with: anObject2 [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SortFunction >> reversed [
 	"Return new sort function with reverse sort order."
 
 	^ReverseSortFunction on: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SortFunction >> undefinedFirst [
 	"Return a new SortFunction that sort all the nil first, an non nil with myself."
 	^(UndefinedSortFunction on: self) undefinedFirst
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SortFunction >> undefinedLast [
 	"Return a new SortFunction that sort all the nil last, an non nil with myself."
 	^(UndefinedSortFunction on: self) undefinedLast
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 SortFunction >> value: anObject1 value: anObject2 [
 	"Masquerade as a two argument block, used by many of the sorting APIs,
 	by returning whether anObject1 should be placed before anObject2 or not"

@@ -1,6 +1,6 @@
-Extension { #name : #MCDefinition }
+Extension { #name : 'MCDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> authorForStamp: stamp [
 
 	^ stamp isEmptyOrNil
@@ -8,13 +8,13 @@ MCDefinition >> authorForStamp: stamp [
 		ifFalse: [ stamp substrings first]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	"do nothing by default"
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackage [
 
 	"by default do not set the package"
@@ -22,7 +22,7 @@ MCDefinition >> ensureRingDefinitionIn: anRGEnvironment package: anRGPackage [
 	^ self ensureRingDefinitionIn: anRGEnvironment
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> timeForStamp: stamp [
 
 	^ stamp
@@ -33,7 +33,7 @@ MCDefinition >> timeForStamp: stamp [
 			([(DateAndTime fromString: (' ' join: substrings allButFirst ))] on: Exception do: [DateAndTime epoch]) ]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCDefinition >> traitCompositionFrom: aStringOrNil parent: aBehavior [
 
 	| composition transformations |

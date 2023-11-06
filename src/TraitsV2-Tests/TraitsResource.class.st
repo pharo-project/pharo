@@ -4,8 +4,8 @@ I define objects to be used for testing traits.
 Browsr references to myself.
 "
 Class {
-	#name : #TraitsResource,
-	#superclass : #TestResource,
+	#name : 'TraitsResource',
+	#superclass : 'TestResource',
 	#instVars : [
 		'createdClassesAndTraits',
 		'dirty',
@@ -32,120 +32,121 @@ Class {
 		'c11',
 		't12'
 	],
-	#category : #'TraitsV2-Tests'
+	#category : 'TraitsV2-Tests',
+	#package : 'TraitsV2-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c1 [
 	^c1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c10 [
 	^c10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c10: anObject [
 	^c10 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c11 [
 	^c11
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c11: anObject [
 	^c11 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c1: anObject [
 	^c1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c2 [
 	^c2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c2: anObject [
 	^c2 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c3 [
 	^c3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c3: anObject [
 	^c3 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c4 [
 	^c4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c4: anObject [
 	^c4 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c5 [
 	^c5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c5: anObject [
 	^c5 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c6 [
 	^c6
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c6: anObject [
 	^c6 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c7 [
 	^c7
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c7: anObject [
 	^c7 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c8 [
 	^c8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c8: anObject [
 	^c8 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c9 [
 	^c9
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> c9: anObject [
 	^c9 := anObject
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
 
 	| class |
@@ -160,7 +161,7 @@ TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 	^ class
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 
 	| trait |
@@ -175,20 +176,20 @@ TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 	^ trait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> createdClassesAndTraits [
 	createdClassesAndTraits ifNil: [
 		createdClassesAndTraits := OrderedCollection new].
 	^createdClassesAndTraits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> packageName [
 
-	^ self class packageName
+	^ self class package name
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TraitsResource >> setUp [
 	"Please note, that most tests rely on this setup of traits and
 	classes - and that especially the order of the definitions matters."
@@ -276,7 +277,7 @@ TraitsResource >> setUp [
 			self setUpTranslatingRequiresFixture]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TraitsResource >> setUpTranslatingRequiresFixture [
 	self c6: (self
 				createClassNamed: #C6
@@ -298,7 +299,7 @@ TraitsResource >> setUpTranslatingRequiresFixture [
 	self c8 compile: 'bar ^self blah' classified: #accessing
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TraitsResource >> setUpTrivialRequiresFixture [
 	self c3: (self
 				createClassNamed: #C3
@@ -309,7 +310,7 @@ TraitsResource >> setUpTrivialRequiresFixture [
 	self c3 compile: 'foo ^self bla' classified: #accessing
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TraitsResource >> setUpTwoLevelRequiresFixture [
 	self c4: (self
 				createClassNamed: #C4
@@ -325,117 +326,117 @@ TraitsResource >> setUpTwoLevelRequiresFixture [
 	self c5 compile: 'foo ^self blah' classified: #accessing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t1 [
 	^t1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t10 [
 	^t10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t10: anObject [
 	^t10 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t11 [
 	^t11
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t11: anObject [
 	^t11 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t12 [
 	^t12
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t12: anObject [
 	^t12 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t1: anObject [
 	^t1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t2 [
 	^t2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t2: anObject [
 	^t2 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t3 [
 	^t3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t3: anObject [
 	^t3 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t4 [
 	^t4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t4: anObject [
 	^t4 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t5 [
 	^t5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t5: anObject [
 	^t5 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t6 [
 	^t6
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t6: anObject [
 	^t6 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t8 [
 	^t8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t8: anObject [
 	^t8 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t9 [
 	^t9
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TraitsResource >> t9: anObject [
 	^t9 := anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TraitsResource >> tearDown [
 
 	self createdClassesAndTraits reverse

@@ -1,14 +1,14 @@
-Extension { #name : #ThreePhaseButtonMorph }
+Extension { #name : 'ThreePhaseButtonMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ThreePhaseButtonMorph >> drawOnAthensCanvas: anAthensCanvas [
 	| paint |
-	paint := offImage.
+	paint := self offImage.
 
 	state == #pressed
-		ifTrue: [ paint := pressedImage ].
+		ifTrue: [ paint := self pressedImage ].
 	state == #on
-		ifTrue: [ paint := image ].
+		ifTrue: [ paint := self onImage ].
 	paint ifNil: [ ^ self ].
 
 	anAthensCanvas setPaint: paint.

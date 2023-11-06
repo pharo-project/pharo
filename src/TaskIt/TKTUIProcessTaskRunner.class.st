@@ -1,15 +1,17 @@
 Class {
-	#name : #TKTUIProcessTaskRunner,
-	#superclass : #TKTRunner,
-	#category : #'TaskIt-Kernel'
+	#name : 'TKTUIProcessTaskRunner',
+	#superclass : 'TKTRunner',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 TKTUIProcessTaskRunner >> isUIRunner [
 	^ true
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 TKTUIProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
 	self currentWorld defer: [ self executeTask: aTaskExecution ]
 ]

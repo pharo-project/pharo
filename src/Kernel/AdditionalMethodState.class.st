@@ -132,7 +132,7 @@ AdditionalMethodState >> copyWith: aPropertyOrPragma [ "<Association|Pragma>"
 	copy := self class basicNew: (bs := self basicSize) + 1.
 	1 to: bs do:
 		[:i|
-		copy basicAt: i put: (self basicAt: i) shallowCopy].
+		copy basicAt: i put: (self basicAt: i)].
 	copy basicAt: bs + 1 put: aPropertyOrPragma.
 	1 to: self class instSize do:
 		[:i| copy instVarAt: i put: (self instVarAt: i)].
@@ -152,7 +152,7 @@ AdditionalMethodState >> copyWithout: aPropertyOrPragma [ "<Association|Pragma>"
 		[:i|
 		(self basicAt: i) = aPropertyOrPragma
 			ifTrue: [offset := 1]
-			ifFalse: [copy basicAt: i - offset put: (self basicAt: i) shallowCopy]].
+			ifFalse: [copy basicAt: i - offset put: (self basicAt: i)]].
 	1 to: self class instSize do:
 		[:i| copy instVarAt: i put: (self instVarAt: i)].
 	^copy
@@ -294,6 +294,13 @@ AdditionalMethodState >> propertyAt: aKey ifAbsent: aBlock [
 		 and: [propertyOrPragma key == aKey]) ifTrue:
 			[^propertyOrPragma value]].
 	^aBlock value
+]
+
+{ #category : 'properties' }
+AdditionalMethodState >> propertyAt: aKey ifPresent: aBlock [
+	"Answer the property value associated with aKey or, if aKey is found, evaluate aBlock with it."
+
+	^ aBlock value: (self propertyAt: aKey ifAbsent: [ ^ self ])
 ]
 
 { #category : 'properties' }

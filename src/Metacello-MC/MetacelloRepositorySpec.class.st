@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloRepositorySpec,
-	#superclass : #MetacelloSpec,
+	#name : 'MetacelloRepositorySpec',
+	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'description',
 		'username',
 		'password',
 		'type'
 	],
-	#category : #'Metacello-MC-Specs'
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
+	#tag : 'Specs'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetacelloRepositorySpec >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	aMetacelloRepositoriesSpec addMember: 
@@ -20,7 +22,7 @@ MetacelloRepositorySpec >> addToMetacelloRepositories: aMetacelloRepositoriesSpe
 			yourself)
 ]
 
-{ #category : #'mc support' }
+{ #category : 'mc support' }
 MetacelloRepositorySpec >> canUpgradeTo: aMetacelloRepositorySpec [
   self description = aMetacelloRepositorySpec description
     ifTrue: [ ^ true ].
@@ -29,7 +31,7 @@ MetacelloRepositorySpec >> canUpgradeTo: aMetacelloRepositorySpec [
   ^ false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloRepositorySpec >> configMethodCascadeOn: aStream lastCascade: lastCascade [
 
 	aStream nextPutAll: 'repository: ', self description printString.
@@ -38,7 +40,7 @@ MetacelloRepositorySpec >> configMethodCascadeOn: aStream lastCascade: lastCasca
 	lastCascade ifFalse: [ aStream nextPut: $;; cr ].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloRepositorySpec >> configMethodOn: aStream indent: indent [
 
 	aStream 
@@ -47,7 +49,7 @@ MetacelloRepositorySpec >> configMethodOn: aStream indent: indent [
 	self configMethodCascadeOn: aStream lastCascade: true
 ]
 
-{ #category : #'mc support' }
+{ #category : 'mc support' }
 MetacelloRepositorySpec >> createRepository [
   | repo |
   repo := self project createRepository: self.
@@ -58,25 +60,25 @@ MetacelloRepositorySpec >> createRepository [
       repo ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloRepositorySpec >> description [
 
 	^description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloRepositorySpec >> description: aString [
 
 	description := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloRepositorySpec >> extractTypeFromDescription [
 
 	^MetacelloPlatform current extractTypeFromDescription: self description
 ]
 
-{ #category : #'mc support' }
+{ #category : 'mc support' }
 MetacelloRepositorySpec >> hasNoLoadConflicts: aMetacelloRepositorySpec [
   self description = aMetacelloRepositorySpec description
     ifTrue: [ ^ true ].
@@ -92,7 +94,7 @@ MetacelloRepositorySpec >> hasNoLoadConflicts: aMetacelloRepositorySpec [
   ^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloRepositorySpec >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	aMetacelloRepositoriesSpec addMember: 
@@ -102,7 +104,7 @@ MetacelloRepositorySpec >> mergeIntoMetacelloRepositories: aMetacelloRepositorie
 			yourself)
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloRepositorySpec >> mergeMap [
     | map |
     map := super mergeMap.
@@ -113,26 +115,25 @@ MetacelloRepositorySpec >> mergeMap [
     ^ map
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloRepositorySpec >> name [
 
 	^self description
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloRepositorySpec >> password [
 
-	password == nil ifTrue: [ password := '' ].
-	^password
+	^ password ifNil: [ password := '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloRepositorySpec >> password: aString [
 
 	password := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	aMetacelloRepositoriesSpec addMember: 
@@ -142,27 +143,25 @@ MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositori
 			yourself)
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloRepositorySpec >> type [
 
-	type == nil ifTrue: [ type := self extractTypeFromDescription ].
-	^type
+	^ type ifNil: [ type := self extractTypeFromDescription ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloRepositorySpec >> type: aString [
 
 	type := aString
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloRepositorySpec >> username [
 
-	username == nil ifTrue: [ username := '' ].
-	^username
+	^ username ifNil: [ username := '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloRepositorySpec >> username: aString [
 
 	username := aString

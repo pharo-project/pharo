@@ -1,19 +1,21 @@
 Class {
-	#name : #MetacelloGoferPackage,
-	#superclass : #GoferPackageReference,
+	#name : 'MetacelloGoferPackage',
+	#superclass : 'GoferPackageReference',
 	#instVars : [
 		'packageFilename',
 		'workingCopy'
 	],
-	#category : #'Metacello-MC-Gofer'
+	#category : 'Metacello-MC-Gofer',
+	#package : 'Metacello-MC',
+	#tag : 'Gofer'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloGoferPackage class >> name: aString packageFilename: packageFilename [
 	^ self basicNew initializeName: aString packageFilename: packageFilename
 ]
 
-{ #category : #'package name matching' }
+{ #category : 'package name matching' }
 MetacelloGoferPackage class >> packageFileName: pkgFileName matchesPackageName: wcPkgName [
   ^ (pkgFileName beginsWith: wcPkgName)
     ifTrue: [ 
@@ -31,7 +33,7 @@ MetacelloGoferPackage class >> packageFileName: pkgFileName matchesPackageName: 
       ^ (wcPkgName at: pkgFileName size + 1) = $. ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloGoferPackage >> ancestors [
 
 	| wc |
@@ -42,7 +44,7 @@ MetacelloGoferPackage >> ancestors [
 	^nil
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloGoferPackage >> currentVersionInfo [
 
 	| wc |
@@ -53,7 +55,7 @@ MetacelloGoferPackage >> currentVersionInfo [
 	^nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGoferPackage >> findWorkingCopy [
 	"Answer a working copy, or nil if the package is not loaded."
 
@@ -63,14 +65,14 @@ MetacelloGoferPackage >> findWorkingCopy [
 	^ wcs detectMax: [ :ea | ea package name size ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloGoferPackage >> initializeName: aString packageFilename: packagefilename [
 
 	name := aString.
 	packageFilename := packagefilename
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGoferPackage >> matches: aLoadableReference [
   | pFilename |
   ((pFilename := self packageFilename) == nil
@@ -83,40 +85,34 @@ MetacelloGoferPackage >> matches: aLoadableReference [
   ^ aLoadableReference matchesMetacelloGoferPackage: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGoferPackage >> matchesMetacelloGoferPackage: aMetacelloGoferPackage [
   self
     error:
       'Should not be matching a MetacelloGoferPackage with another MetacelloGoferPackage'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloGoferPackage >> matchesWorkingCopy: aWorkingCopy [
 	"check that the working copy package name matches the package file name and that the first ancestor's package file name
 	 matches the packageName"
-	
+
 	| pFilename |
-	(pFilename := self packageFilename) == nil ifTrue: [ ^self error: 'cannot match working copy' ].
-	(self class 
-		packageFileName: pFilename 
-		matchesPackageName: aWorkingCopy package name)
-			ifTrue: [
-				aWorkingCopy ancestry ancestors isEmpty ifTrue: [ ^true ].
-				^self class 
-					packageFileName: aWorkingCopy ancestry ancestors first name 
-					matchesPackageName: self packageName ].
-	^false
+	(pFilename := self packageFilename) ifNil: [ ^ self error: 'cannot match working copy' ].
+	(self class packageFileName: pFilename matchesPackageName: aWorkingCopy package name) ifTrue: [
+		aWorkingCopy ancestry ancestors isEmpty ifTrue: [ ^ true ].
+		^ self class packageFileName: aWorkingCopy ancestry ancestors first name matchesPackageName: self packageName ].
+	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGoferPackage >> packageFilename [
 
 	^packageFilename
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloGoferPackage >> workingCopy [
-	
-	workingCopy == nil ifTrue: [ workingCopy := self findWorkingCopy ].
-	^workingCopy
+
+	^ workingCopy ifNil: [ workingCopy := self findWorkingCopy ]
 ]

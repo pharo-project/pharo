@@ -25,8 +25,8 @@ The huffman tree used for decoding literal, distance and length codes in the inf
 
 "
 Class {
-	#name : #InflateStream,
-	#superclass : #ReadStream,
+	#name : 'InflateStream',
+	#superclass : 'ReadStream',
 	#instVars : [
 		'state',
 		'bitBuf',
@@ -48,10 +48,12 @@ Class {
 		'StateNewBlock',
 		'StateNoMoreData'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 InflateStream class >> initialize [
 	"InflateStream initialize"
 	MaxBits := 16.
@@ -74,7 +76,7 @@ InflateStream class >> initialize [
 	FixedDistCodes := ((1 to: 32) collect:[:i| 5])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InflateStream >> atEnd [
 	"Note: It is possible that we have a few bits left,
 	representing just the EOB marker. To check for
@@ -90,7 +92,7 @@ InflateStream >> atEnd [
 	^false
 ]
 
-{ #category : #'bit access' }
+{ #category : 'bit access' }
 InflateStream >> bitPosition [
 	"Return the current bit position of the source"
 
@@ -99,12 +101,12 @@ InflateStream >> bitPosition [
 		ifFalse: [ (sourceStream position + sourcePos) * 8 + bitPos ]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 InflateStream >> close [
 	sourceStream ifNotNil:[sourceStream close]
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> computeHuffmanValues: aCollection counts: counts from: minBits to: maxBits [
 	"Assign numerical values to all codes.
 	Note: The values are stored according to the bit length"
@@ -125,18 +127,18 @@ InflateStream >> computeHuffmanValues: aCollection counts: counts from: minBits 
 	^values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> contents [
 
 	^ self upToEnd
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 InflateStream >> crcError: aString [
 	^CRCError signal: aString
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> createHuffmanTables: values counts: counts from: minBits to: maxBits [
 	"Create the actual tables"
 	| table tableStart tableSize tableEnd
@@ -218,7 +220,7 @@ InflateStream >> createHuffmanTables: values counts: counts from: minBits to: ma
 	 ^table copyFrom: 1 to: tableEnd-1
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> decodeDynamicTable: nItems from: aHuffmanTable [
 	"Decode the code length of the literal/length and distance table
 	in a block compressed with dynamic huffman trees"
@@ -252,7 +254,7 @@ InflateStream >> decodeDynamicTable: nItems from: aHuffmanTable [
 	^values
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> decodeValueFrom: table [
 	"Decode the next value in the receiver using the given huffman table."
 	| bits bitsNeeded tableIndex value |
@@ -268,7 +270,7 @@ InflateStream >> decodeValueFrom: table [
 	^value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InflateStream >> decompressAll [
 	"Profile the decompression speed"
 	[self atEnd] whileFalse:[
@@ -277,7 +279,7 @@ InflateStream >> decompressAll [
 	]
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> decompressBlock: llTable with: dTable [
 	"Process the compressed data in the block.
 	llTable is the huffman table for literal/length codes
@@ -320,26 +322,27 @@ InflateStream >> decompressBlock: llTable with: dTable [
 	]
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> distanceMap [
 	"This is used by the fast decompressor"
 	^nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InflateStream >> getFirstBuffer [
 	"Get the first source buffer after initialization has been done"
-	sourceStream == nil ifTrue:[^self].
+
+	sourceStream ifNil: [ ^ self ].
 	source := sourceStream next: 1 << 16. "This is more than enough..."
 	sourceLimit := source size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InflateStream >> getNextBlock [
 	^self nextBits: 3
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> growHuffmanTable: table [
 	| newTable |
 	newTable := table species new: table size * 2.
@@ -347,7 +350,7 @@ InflateStream >> growHuffmanTable: table [
 	^newTable
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> huffmanTableFrom: aCollection mappedBy: valueMap [
 	"Create a new huffman table from the given code lengths.
 	Map the actual values by valueMap if it is given.
@@ -378,20 +381,20 @@ InflateStream >> huffmanTableFrom: aCollection mappedBy: valueMap [
 	^table
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> increment: value bits: nBits [
 	"Increment a value of nBits length.
 	The fast decompressor will do this differently"
 	^value+1
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> literalLengthMap [
 	"This is used by the fast decompressor"
 	^nil
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 InflateStream >> mapValues: values by: valueMap [
 	| oldValue |
 	valueMap ifNil: [^values].
@@ -403,7 +406,7 @@ InflateStream >> mapValues: values by: valueMap [
 			ifNotNil: [values at: i put: (valueMap at: oldValue+1)]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InflateStream >> moveContentsToFront [
 	"Move the decoded contents of the receiver to the front so that we have enough space for decoding more data."
 	| delta |
@@ -418,7 +421,7 @@ InflateStream >> moveContentsToFront [
 		readLimit := readLimit - delta + 1]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InflateStream >> moveSourceToFront [
 	"Move the encoded contents of the receiver to the front so that we have enough space for decoding more data."
 	(sourceStream == nil or:[sourceStream atEnd]) ifTrue:[^self].
@@ -436,7 +439,7 @@ InflateStream >> moveSourceToFront [
 		sourceLimit := source size]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> next [
 	"Answer the next decompressed object in the Stream represented by the
 	receiver."
@@ -446,7 +449,7 @@ InflateStream >> next [
 		ifFalse: [ collection at: (position := position + 1) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> next: anInteger [
 	"Answer the next anInteger elements of my collection.  overriden for simplicity"
 	| newArray |
@@ -464,34 +467,34 @@ InflateStream >> next: anInteger [
 	^newArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> next: n into: buffer startingAt: startIndex [
 	"Read n objects into the given collection.
 	Return aCollection or a partial copy if less than
 	n elements have been read."
+
 	| c numRead count |
-	n = 0 ifTrue: [ ^buffer ].
+	n = 0 ifTrue: [ ^ buffer ].
 	numRead := 0.
-	["Force decompression if necessary"
-	(c := self next) == nil
-		ifTrue:[^buffer copyFrom: 1 to: startIndex+numRead-1].
+	[ "Force decompression if necessary"
+	(c := self next) ifNil: [ ^ buffer copyFrom: 1 to: startIndex + numRead - 1 ].
 	"Store the first value which provoked decompression"
 	buffer at: startIndex + numRead put: c.
 	numRead := numRead + 1.
 	"After collection has been filled copy as many objects as possible"
-	count := (readLimit - position) min: (n - numRead).
+	count := readLimit - position min: n - numRead.
 	buffer
 		replaceFrom: startIndex + numRead
 		to: startIndex + numRead + count - 1
 		with: collection
-		startingAt: position+1.
+		startingAt: position + 1.
 	position := position + count.
 	numRead := numRead + count.
-	numRead = n] whileFalse.
-	^buffer
+	numRead = n ] whileFalse.
+	^ buffer
 ]
 
-{ #category : #'bit access' }
+{ #category : 'bit access' }
 InflateStream >> nextBits: n [
 	| bits |
 	[bitPos < n] whileTrue:[
@@ -503,12 +506,12 @@ InflateStream >> nextBits: n [
 	^bits
 ]
 
-{ #category : #'bit access' }
+{ #category : 'bit access' }
 InflateStream >> nextByte [
 	^source byteAt: (sourcePos := sourcePos + 1)
 ]
 
-{ #category : #'bit access' }
+{ #category : 'bit access' }
 InflateStream >> nextSingleBits: n [
 	| out |
 	out := 0.
@@ -516,7 +519,7 @@ InflateStream >> nextSingleBits: n [
 	^out
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InflateStream >> on: aCollectionOrStream [
 	aCollectionOrStream isStream
 		ifTrue:[
@@ -527,7 +530,7 @@ InflateStream >> on: aCollectionOrStream [
 	^self on: source from: 1 to: source size
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InflateStream >> on: aCollection from: firstIndex to: lastIndex [
 	bitBuf := bitPos := 0.
 	"The decompression buffer has a size of at 64k,
@@ -542,7 +545,7 @@ InflateStream >> on: aCollection from: firstIndex to: lastIndex [
 	state := StateNewBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InflateStream >> pastEndRead [
 	"A client has attempted to read beyond the read limit.
 	Check in what state we currently are and perform
@@ -568,35 +571,34 @@ InflateStream >> pastEndRead [
 	^self next
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> proceedDynamicBlock [
 	self decompressBlock: litTable with: distTable
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> proceedFixedBlock [
 	self decompressBlock: litTable with: distTable
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> proceedStoredBlock [
 	"Proceed decompressing a stored (e.g., uncompressed) block"
+
 	| length decoded |
 	"Literal table must be nil for a stored block"
-	litTable == nil ifFalse:[^self error:'Bad state'].
+	litTable ifNotNil: [ ^ self error: 'Bad state' ].
 	length := distTable.
-	[length > 0 and:[readLimit < collection size and:[sourcePos < sourceLimit]]]
-		whileTrue:[
-			collection at: (readLimit := readLimit + 1) put:
-				(source at: (sourcePos := sourcePos + 1)).
-			length := length - 1].
-	length = 0 ifTrue:[state := state bitAnd: StateNoMoreData].
+	[ length > 0 and: [ readLimit < collection size and: [ sourcePos < sourceLimit ] ] ] whileTrue: [
+		collection at: (readLimit := readLimit + 1) put: (source at: (sourcePos := sourcePos + 1)).
+		length := length - 1 ].
+	length = 0 ifTrue: [ state := state bitAnd: StateNoMoreData ].
 	decoded := length - distTable.
 	distTable := length.
-	^decoded
+	^ decoded
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> processDynamicBlock [
 	| nLit nDist nLen codeLength lengthTable bits |
 	nLit := (self nextBits: 5) + 257.
@@ -621,7 +623,7 @@ InflateStream >> processDynamicBlock [
 	self proceedDynamicBlock
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> processFixedBlock [
 	litTable := self
 				huffmanTableFrom: FixedLitCodes
@@ -633,7 +635,7 @@ InflateStream >> processFixedBlock [
 	self proceedFixedBlock
 ]
 
-{ #category : #inflating }
+{ #category : 'inflating' }
 InflateStream >> processStoredBlock [
 	| chkSum length |
 	"Skip to byte boundary"
@@ -648,33 +650,33 @@ InflateStream >> processStoredBlock [
 	^self proceedStoredBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> readInto: buffer startingAt: startIndex count: n [
 	"Read n objects into the given collection.
 	Return number of elements that have been read."
+
 	| c numRead count |
-	n = 0 ifTrue: [ ^n ].
+	n = 0 ifTrue: [ ^ n ].
 	numRead := 0.
-	["Force decompression if necessary"
-	(c := self next) == nil
-		ifTrue: [^numRead].
+	[ "Force decompression if necessary"
+	(c := self next) ifNil: [ ^ numRead ].
 	"Store the first value which provoked decompression"
 	buffer at: startIndex + numRead put: c.
 	numRead := numRead + 1.
 	"After collection has been filled copy as many objects as possible"
-	count := (readLimit - position) min: (n - numRead).
+	count := readLimit - position min: n - numRead.
 	buffer
 		replaceFrom: startIndex + numRead
 		to: startIndex + numRead + count - 1
 		with: collection
-		startingAt: position+1.
+		startingAt: position + 1.
 	position := position + count.
 	numRead := numRead + count.
-	numRead = n] whileFalse.
-	^n
+	numRead = n ] whileFalse.
+	^ n
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InflateStream >> reset [
 	"Position zero - nothing decoded yet"
 	position := readLimit := 0.
@@ -683,28 +685,28 @@ InflateStream >> reset [
 	state := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> size [
 	"This is a compressed stream - we don't know the size beforehand"
 	^self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> sourceLimit [
 	^sourceLimit
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 InflateStream >> sourcePosition [
 	^sourcePos
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> sourceStream [
 	^sourceStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> upTo: anObject [
 	"Answer a subcollection from the current access position to the
 	occurrence (if any, but not inclusive) of anObject in the receiver. If
@@ -716,7 +718,7 @@ InflateStream >> upTo: anObject [
 	^newStream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InflateStream >> upToEnd [
 	"Answer a subcollection from the current access position through the last element of the receiver."
 
@@ -727,14 +729,14 @@ InflateStream >> upToEnd [
 	^ newStream contents
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 InflateStream >> updateCrc: oldCrc from: start to: stop in: aCollection [
 	"Answer an updated CRC for the range of bytes in aCollection.
 	Subclasses can implement the appropriate means for the check sum they wish to use."
 	^oldCrc
 ]
 
-{ #category : #crc }
+{ #category : 'crc' }
 InflateStream >> verifyCrc [
 	"Verify the crc checksum in the input"
 ]

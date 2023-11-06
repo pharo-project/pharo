@@ -6,34 +6,38 @@ There is Cargo package manager. But it is not ready yet.
 Normally we should implement Metacello integration.
 "
 Class {
-	#name : #ClySwitchToProjectsCommand,
-	#superclass : #ClySwitchPackageViewModeCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Packages'
+	#name : 'ClySwitchToProjectsCommand',
+	#superclass : 'ClySwitchPackageViewModeCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Packages',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Packages'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchToProjectsCommand class >> canBeExecutedInContext: aContext [
 
-	^ ClySystemEnvironment currentImage projectManager projectManagers notEmpty
+	^ ClySystemEnvironment currentImage projectManager hasProjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToProjectsCommand >> defaultMenuItemName [
 	^'Projects'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToProjectsCommand >> description [
-	^'Do not supported currently'
+
+	^ 'Click to group packages by projects. Projects are currently defined by baselines.'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToProjectsCommand >> execute [
-	browser switchToProjects
+
+	^ browser switchToProjects
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchToProjectsCommand >> isAppliedToBrowser [
 
-	^ browser isInProjectView
+	^ (browser packageView showsItemsFromQuery: ClyAllProjectsQuery) and: [ browser isScopedModeEnabled not ]
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloVersionValidator,
-	#superclass : #MetacelloAbstractConstructor,
+	#name : 'MetacelloVersionValidator',
+	#superclass : 'MetacelloAbstractConstructor',
 	#instVars : [
 		'configurationClass',
 		'exludededValidations',
@@ -12,15 +12,17 @@ Class {
 	#classInstVars : [
 		'reasonCodeDescriptions'
 	],
-	#category : #'Metacello-Core-Validation'
+	#category : 'Metacello-Core-Validation',
+	#package : 'Metacello-Core',
+	#tag : 'Validation'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator class >> descriptionForReasonCode: reasonCode [
 	^ self reasonCodeDescriptions at: reasonCode ifAbsent: [ self error: 'Unknown reasonCode: ' , reasonCode printString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator class >> populateReasonCodeDescriptions [
     "update MetacelloMCVersionValidator class comment to include any changes to descriptions"
 
@@ -55,19 +57,19 @@ MetacelloVersionValidator class >> populateReasonCodeDescriptions [
     ^ dict
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator class >> reasonCodeDescriptions [
 
 	reasonCodeDescriptions ifNil: [ reasonCodeDescriptions := self populateReasonCodeDescriptions ].
 	^reasonCodeDescriptions
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateBaseline: baselineClass [
   ^ self validateBaseline: baselineClass debug: #() recurse: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateBaseline: baselineClass debug: debugList recurse: aBool [
   ^ (self new
     configurationClass: baselineClass;
@@ -76,18 +78,18 @@ MetacelloVersionValidator class >> validateBaseline: baselineClass debug: debugL
     yourself) validateBaselineOf
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateBaseline: baselineClass recurse: aBool [
   ^ self validateBaseline: baselineClass debug: #() recurse: aBool
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateConfiguration: configurationClass [
 
 	^self validateConfiguration: configurationClass debug: #() recurse: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateConfiguration: configurationClass debug: debugList recurse: aBool [
 	^ ((self new)
 		configurationClass: configurationClass;
@@ -96,19 +98,19 @@ MetacelloVersionValidator class >> validateConfiguration: configurationClass deb
 		yourself) validate
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateConfiguration: configurationClass recurse: aBool [
 
 	^self validateConfiguration: configurationClass debug: #() recurse: aBool
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateProject: aMetacelloProject [
 
 	^self validateProject: aMetacelloProject debug: #() recurse: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateProject: aMetacelloProject debug: debugList recurse: aBool [
 	^ ((self new)
 		recurse: aBool;
@@ -117,25 +119,25 @@ MetacelloVersionValidator class >> validateProject: aMetacelloProject debug: deb
 		yourself) validateProject: aMetacelloProject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateProject: aMetacelloProject recurse: aBool [
 
 	^self validateProject: aMetacelloProject debug: #() recurse: aBool
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateProject: aMetacelloProject version: versionString [
 
 	^self validateProject: aMetacelloProject version: versionString debug: #() recurse: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateProject: aMetacelloProject version: versionString debug: debugList [
 
 	^self validateProject: aMetacelloProject version: versionString debug: debugList recurse: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateProject: aMetacelloProject version: versionString debug: debugList recurse: aBool [
 
 	^ ((self new)
@@ -145,7 +147,7 @@ MetacelloVersionValidator class >> validateProject: aMetacelloProject version: v
 		yourself) validateProject: aMetacelloProject version: versionString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionValidator class >> validateProject: aMetacelloProject version: versionString debug: debugList recurse: aBool visited: visitied [
 
 	^(self new
@@ -156,48 +158,46 @@ MetacelloVersionValidator class >> validateProject: aMetacelloProject version: v
 		yourself) validateProject: aMetacelloProject version: versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> configurationClass [
 	^ configurationClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> configurationClass: anObject [
 	configurationClass := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> criticalWarningReasonCodes [
     ^ #(#'packageNameMismatch' #'projectClassNameFileMismatch' #'duplicateVersionDefinitions')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> debug [
 
-	debug == nil ifTrue: [ debug := #() ].
-	^ debug
+	^ debug ifNil: [ debug := #(  ) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> debug: aCollection [
 	"Any combination of: #error, #criticalWarning, #warning"
 
 	debug := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> errorReasonCodes [
     ^ #(#'duplicateNames' #'shadowedNames' #'invalidDoItSelector' #'invalidVersionString' #'missingVersionImport' #'projectCreationError' #'noVersionsDefined' #'cannotResolveVersion' #'incompleteProjectSpec' #'incorrectVersionString' #'versionCompositionError' #'versionCreationError')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> exludededValidations [
 
-	exludededValidations == nil ifTrue: [ exludededValidations := self extractExcludedValidations ].
-	^exludededValidations
+	^ exludededValidations ifNil: [ exludededValidations := self extractExcludedValidations ]
 ]
 
-{ #category : #'pragma extraction' }
+{ #category : 'pragma extraction' }
 MetacelloVersionValidator >> extractExcludedValidations [
 
 	| exclusionDict |
@@ -213,13 +213,13 @@ MetacelloVersionValidator >> extractExcludedValidations [
 	^exclusionDict
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recordValidationCriticalWarning: aString callSite: callSite reasonCode: aSymbol [
 
 	^self recordValidationCriticalWarning: aString versionString: nil callSite: callSite reasonCode: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recordValidationCriticalWarning: aString versionString: versionString callSite: callSite reasonCode: aSymbol [
 	<haltOrBreakpointForTesting>
 	"reasonCodes:
@@ -246,13 +246,13 @@ MetacelloVersionValidator >> recordValidationCriticalWarning: aString versionStr
 				explanation: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recordValidationError: aString callSite: callSite reasonCode: aSymbol [
 
 	^self recordValidationError: aString versionString: nil callSite: callSite reasonCode: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recordValidationError: aString versionString: versionString callSite: callSite reasonCode: aSymbol [
 	<haltOrBreakpointForTesting>
 	"reasonCodes:
@@ -286,14 +286,14 @@ MetacelloVersionValidator >> recordValidationError: aString versionString: versi
 				explanation: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recordValidationWarning: aString callSite: callSite reasonCode: aSymbol [
 
 				
 	^self recordValidationWarning: aString versionString: nil callSite: callSite reasonCode: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recordValidationWarning: aString versionString: versionString callSite: callSite reasonCode: aSymbol [
 	<haltOrBreakpointForTesting>
 	"reasonCodes:
@@ -318,18 +318,18 @@ MetacelloVersionValidator >> recordValidationWarning: aString versionString: ver
 				explanation: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recurse [
-	recurse == nil ifTrue: [ recurse := false ].
-	^ recurse
+
+	^ recurse ifNil: [ recurse := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> recurse: anObject [
 	recurse := anObject
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloVersionValidator >> validate [
 	"Issue 5: 
 		[]no shadowing of names across project/package/group boundaries
@@ -348,13 +348,13 @@ MetacelloVersionValidator >> validate [
 	^self validateProject
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloVersionValidator >> validateBaselineOf [
   self validatePragmas.
   ^ self validateBaselineProject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateBaselineProject [
   | project |
   project := self
@@ -371,7 +371,7 @@ MetacelloVersionValidator >> validateBaselineProject [
   ^ self validateBaselineProject: project
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloVersionValidator >> validateBaselineProject: project [
   | version spec |
   (self visited includes: project configuration class)
@@ -392,13 +392,13 @@ MetacelloVersionValidator >> validateBaselineProject: project [
   ^ self validationReport
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateBaselineVersionSpec: versionSpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateDoIts: aSpec versionString: versionString errorMessage: errorMessage [
 	| ar |
 	ar := {
@@ -419,7 +419,7 @@ MetacelloVersionValidator >> validateDoIts: aSpec versionString: versionString e
 							reasonCode: #invalidDoItSelector ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validatePragmas [
     "Ensure that versions are Strings and symbolic versions are symbols.
 	 Ensure that imported versions are defined"
@@ -506,7 +506,7 @@ MetacelloVersionValidator >> validatePragmas [
                                         reasonCode: #'missingVersionImport' ] ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateProject [
 	| project |
 	project := self
@@ -522,7 +522,7 @@ MetacelloVersionValidator >> validateProject [
 	^ self validateProject: project
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloVersionValidator >> validateProject: project [
 	| hasNoBaseline hasNoVersion |
 	(self visited includes: project configuration class)
@@ -581,7 +581,7 @@ MetacelloVersionValidator >> validateProject: project [
 	^ self validationReport
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloVersionValidator >> validateProject: project version: versionString [
 	| version spec |
 	(self visited includes: project configuration class)
@@ -611,7 +611,7 @@ MetacelloVersionValidator >> validateProject: project version: versionString [
 	^ self validationReport
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateProjectCreationFrom: aConfigurationClass onError: aBlock [
     [ ^ aConfigurationClass project ]
         on: Error , MetacelloValidationNotification , MetacelloErrorInProjectConstructionNotification
@@ -634,7 +634,7 @@ MetacelloVersionValidator >> validateProjectCreationFrom: aConfigurationClass on
             ^ aBlock value: ex ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateProjectVersion: versionString [
 	| project |
 	project := self
@@ -650,43 +650,42 @@ MetacelloVersionValidator >> validateProjectVersion: versionString [
 	^ self validateProject: project version: versionString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateVersionSpec: versionSpec [
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> validateVersionSpecForSymbolicVersion: versionSpec symbolicVersion: symbolicVersionString [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> validationReport [
-	
-	validationReport == nil ifTrue: [ validationReport := OrderedCollection new ].
-	^ validationReport
+
+	^ validationReport ifNil: [ validationReport := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> validationReport: anObject [
 	validationReport := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> visited [
 
 	^ visited ifNil: [ visited := IdentitySet new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionValidator >> visited: anIdentitySet [
 
 	visited := anIdentitySet
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionValidator >> warningReasonCodes [
 	^ #(#onlyBaselineVersion )
 ]

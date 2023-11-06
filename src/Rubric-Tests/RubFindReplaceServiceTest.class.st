@@ -1,16 +1,18 @@
 Class {
-	#name : #RubFindReplaceServiceTest,
-	#superclass : #TestCase,
-	#category : #'Rubric-Tests-Base'
+	#name : 'RubFindReplaceServiceTest',
+	#superclass : 'TestCase',
+	#category : 'Rubric-Tests-Base',
+	#package : 'Rubric-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubFindReplaceServiceTest >> defaultFindReplaceServiceClass [
 
 	^ RubFindReplaceService
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RubFindReplaceServiceTest >> testCaseSensitive [
 
 	self deny: ( self defaultFindReplaceServiceClass newFor: self) caseSensitive

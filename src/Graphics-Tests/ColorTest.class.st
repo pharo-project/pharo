@@ -2,12 +2,14 @@
 SUnit tests for class Color
 "
 Class {
-	#name : #ColorTest,
-	#superclass : #ClassTestCase,
-	#category : #'Graphics-Tests-Primitives'
+	#name : 'ColorTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Graphics-Tests-Primitives',
+	#package : 'Graphics-Tests',
+	#tag : 'Primitives'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ColorTest >> assertColorrefFor: aColor equals: anInteger [
 	| colorref |
 	colorref := aColor asColorref.
@@ -17,34 +19,34 @@ ColorTest >> assertColorrefFor: aColor equals: anInteger [
 			('(<1p>) asColorref was <2s>; should have been <3s>' expandMacrosWith: aColor with: colorref hex with: anInteger hex)
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ColorTest >> classToBeTested [
 
 	^Color
 ]
 
-{ #category : #'tests - 32 bit' }
+{ #category : 'tests - 32 bit' }
 ColorTest >> test32BitBlackColorTranformation [
 	"Solve bug: https://pharo.manuscript.com/f/cases/14619"
 
 	self assert: ((Color black pixelWordForDepth: 32) asColorOfDepth: 32) equals: Color black
 ]
 
-{ #category : #'tests - 32 bit' }
+{ #category : 'tests - 32 bit' }
 ColorTest >> test32BitOpaqueBlackIsTotallyBlack [
 	"The pixel value of a black at depth32 should really be black..."
 	"At the time of this test, it returned 16rFF000001 ...."
 	self assert: 16rFF000000 equals: (Color black pixelValueForDepth: 32)
 ]
 
-{ #category : #'tests - 32 bit' }
+{ #category : 'tests - 32 bit' }
 ColorTest >> test32BitTranslucentPixelValueKeepsRGB [
 	"The pixel value of a translucent color at depth32 should keep the RGB component irrespective of alpha.
 	At the time of this test, setting an alpha of zero made the entire pixel 0 irrespective of depth..."
 	self assert: 16rFFFFFF equals: ((Color white alpha: 0) pixelValueForDepth: 32)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ColorTest >> testAsColorrefPrimaryColors [
 "issue 13784 Color>>#asColorref ignores blue"
 	self assertColorrefFor: Color black equals: 16r000000;
@@ -57,7 +59,7 @@ ColorTest >> testAsColorrefPrimaryColors [
 	assertColorrefFor: Color white equals: 16rFFFFFF
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ColorTest >> testAsHexString [
 	| table aColorString |
 	self assert: Color white asHexString equals: 'FFFFFF'.
@@ -87,7 +89,7 @@ ColorTest >> testAsHexString [
 			self assert: ((Color fromHexString: aColorString) asHexString sameAs: aColorString) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ColorTest >> testColorFrom [
 	self assert: ((Color colorFrom: #white) asHexString sameAs: 'ffffff').
 	self assert: ((Color colorFrom: #(1.0 0.5 0.0)) asHexString sameAs: 'ff8000').
@@ -96,7 +98,7 @@ ColorTest >> testColorFrom [
 	self assert: ((Color colorFrom: '#222222') asHexString sameAs: '222222')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ColorTest >> testFromHexString [
 
 	| color |
@@ -117,7 +119,7 @@ ColorTest >> testFromHexString [
 	self assert: (color alpha > 0.3 and: [color alpha < 0.4])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ColorTest >> testFromString [
 	self assert: ((Color fromString: '#FF8800') asHexString sameAs: 'ff8800');
 		assert: ((Color fromString: 'FF8800') asHexString sameAs: 'ff8800');
@@ -133,7 +135,7 @@ ColorTest >> testFromString [
 		assert: (Color fromString: '#blue') = Color blue description: 'Color can be specified with a leading literal sharp'
 ]
 
-{ #category : #'tests - multiply' }
+{ #category : 'tests - multiply' }
 ColorTest >> testMultiplyByArray [
 	| newColor oldColor tolerance |
 	tolerance := 0.001.
@@ -146,7 +148,7 @@ ColorTest >> testMultiplyByArray [
 	self assert: (0.75 - newColor blue) abs < tolerance
 ]
 
-{ #category : #'tests - multiply' }
+{ #category : 'tests - multiply' }
 ColorTest >> testMultiplyByArrayIdentityTransform [
 	| newColor oldColor tolerance |
 	tolerance := 0.001.
@@ -159,7 +161,7 @@ ColorTest >> testMultiplyByArrayIdentityTransform [
 	self assert: (0.5 - newColor blue) abs < tolerance
 ]
 
-{ #category : #'tests - multiply' }
+{ #category : 'tests - multiply' }
 ColorTest >> testMultiplyByNumber [
 	| newColor oldColor tolerance |
 	tolerance := 0.001.

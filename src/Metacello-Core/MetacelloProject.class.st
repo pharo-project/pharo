@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloProject,
-	#superclass : #Object,
+	#name : 'MetacelloProject',
+	#superclass : 'Object',
 	#instVars : [
 		'versionMap',
 		'symbolicVersionMap',
@@ -12,10 +12,12 @@ Class {
 		'projectAttributes',
 		'versionNumberClass'
 	],
-	#category : #'Metacello-Core-Model'
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloProject class >> new [
 
 	| inst |
@@ -23,18 +25,18 @@ MetacelloProject class >> new [
 	^inst configuration: inst; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloProject class >> on: aConfig [
 
 	^self basicNew configuration: aConfig; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject class >> versionConstructorClass [
     ^ MetacelloVersionConstructor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> attributes [
 
 	^(OrderedCollection with: #common)
@@ -42,48 +44,48 @@ MetacelloProject >> attributes [
 		yourself
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> baselineOfProjectSpec [
     ^ self baselineOfProjectSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> baselineOfProjectSpecClass [
     ^ self subclassResponsibility
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> baselineOfVersionSpecClass [
     ^ self subclassResponsibility
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> bleedingEdge [
 
 	^self version: #bleedingEdge
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> configuration [
 	^ configuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> configuration: anObject [
 	configuration := anObject
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> configurationOfProjectSpec [
     ^ self configurationOfProjectSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> configurationOfProjectSpecClass [
     ^ self subclassResponsibility
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> currentVersion [
 	| cacheKey cv |
 	cacheKey := self configuration class.
@@ -95,7 +97,7 @@ MetacelloProject >> currentVersion [
 			^ cache at: cacheKey put: cv ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
 
 	| cacheKey |
@@ -143,73 +145,73 @@ MetacelloProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
 			]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> defaultBlessing [
 
 	^#release
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> defaultLoaderClass [
 
 	^MetacelloSpecLoader
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> defaultPlatformAttributes [
 
-	^ MetacelloPlatform current defaultPlatformAttributes
+	^ Smalltalk image metacelloPlatformAttributes
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> development [
 
 	^self version: #development
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> errorMap [
 	^ errorMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> errorMap: anObject [
     errorMap ifNil: [ errorMap := Dictionary new ].
     errorMap := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> excludeFromLatestVersion [
 
 	^#(structural development broken baseline)
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> groupSpec [
 
 	^self groupSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> groupSpecClass [
 
 	^MetacelloGroupSpec
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> hasVersion: versionString [
 
 	self version: versionString ifAbsent: [ ^false ].
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> label [
 
 	^self configuration class name
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> lastVersion [
 
 	| coll |
@@ -218,7 +220,7 @@ MetacelloProject >> lastVersion [
 	^coll last
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> latestVersion [
 
 	| excluded |
@@ -229,13 +231,13 @@ MetacelloProject >> latestVersion [
 		(excluded includes: version blessing) not ]) detectMax: [:version | version ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> latestVersion: blessing [
 
 	^(self map values select: [:version | blessing = version blessing ]) detectMax: [:version | version ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> latestVersionMatching: versionPatternString [
 	"Answer whether the version number of the receiver matches the given pattern string.
 
@@ -257,7 +259,7 @@ MetacelloProject >> latestVersionMatching: versionPatternString [
 		excludedBlessings: self excludeFromLatestVersion
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> latestVersionMatching: versionPatternString excludedBlessings: excluded [
 
 	^self 
@@ -266,7 +268,7 @@ MetacelloProject >> latestVersionMatching: versionPatternString excludedBlessing
 		excludedBlessings: excluded
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> latestVersionMatching: versionPatternString includedBlessings: included [
 
 	^self 
@@ -275,7 +277,7 @@ MetacelloProject >> latestVersionMatching: versionPatternString includedBlessing
 		excludedBlessings: self excludeFromLatestVersion
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> latestVersionMatching: versionPatternString includedBlessings: included excludedBlessings: excludedBlessings [
 
 	| excluded |
@@ -288,53 +290,51 @@ MetacelloProject >> latestVersionMatching: versionPatternString includedBlessing
 		detectMax: [:version | version ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 MetacelloProject >> load: aVersionString [
 
 	^(self version: aVersionString) load
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> loadType [
 	"#atomic or #linear"
 
-	loadType == nil ifTrue: [ ^#atomic ].
-	^loadType
+	^ loadType ifNil: [ #atomic ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> loadType: aSymbol [
 	"#atomic or #linear"
 
 	loadType := aSymbol
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> loader [
 
 	^loader
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> loader: aLoader [
 
 	loader := aLoader
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> loaderClass [
 
-	loaderClass == nil ifTrue: [ loaderClass := self defaultLoaderClass ].
-	^loaderClass
+	^ loaderClass ifNil: [ loaderClass := self defaultLoaderClass ]
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> loaderClass: aMetacelloSpecLoader [
 
 	loaderClass := aMetacelloSpecLoader
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> lookupVersion: aVersionString ifAbsent: aBlock [
     "please use version:...this is a private method"
 
@@ -346,43 +346,43 @@ MetacelloProject >> lookupVersion: aVersionString ifAbsent: aBlock [
                 signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> map [
 	versionMap ifNil: [ ^ Dictionary new ].
 	^ versionMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> map: aDictionary [
 
 	versionMap := aDictionary
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> packagesSpec [
 
 	^self packagesSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> packagesSpecClass [
 
 	^MetacelloPackagesSpec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> platformAttributes [
 
 	 ^self projectPlatformAttributes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> pragmaKeywords [
 
 	^#(version:attribute: blessing:attribute: description:attribute: required:attribute: groups:attribute: doits:attribute:)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProject >> printOn: aStream [
 	| label |
 	self configuration class printOn: aStream.
@@ -400,36 +400,36 @@ MetacelloProject >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> project [
 
 	^self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> projectAttributes [
 
 	projectAttributes ~~ nil ifTrue: [ ^projectAttributes ].
 	^#()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> projectAttributes: aList [
 
 	projectAttributes := aList
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine [
     ^ self projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: false
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
     ^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> projectPlatformAttributes [
 
 	| list aBlock |
@@ -439,72 +439,72 @@ MetacelloProject >> projectPlatformAttributes [
 	^self defaultPlatformAttributes, list
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> projectReferenceSpec [
 
 	^self projectReferenceSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> projectReferenceSpecClass [
 
 	^MetacelloProjectReferenceSpec
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> projectSpec [
 
 	^self projectSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> projectSpecClass [
     ^ MetacelloProjectSpec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloProject >> sortedAndFilteredVersions [
 
 		^(self map values asArray sort: [:a :b | a >= b ]) select: [:vrsn | (#(structural broken baseline) includes: vrsn blessing) not ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> stableVersion [
 
 	^self version: #stable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> symbolicVersionMap [
 
 	^symbolicVersionMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProject >> symbolicVersionMap: aDictionary [
 
 	symbolicVersionMap := aDictionary
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> symbolicVersionSymbols [
 
 	^self symbolicVersionMap keys asArray sort: [:a :b | a <= b ]
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> valueHolderSpec [
 
 	^self valueHolderSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> valueHolderSpecClass [
 
 	^MetacelloValueHolderSpec
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> version: aVersionString [
     
     aVersionString isSymbol
@@ -523,36 +523,36 @@ MetacelloProject >> version: aVersionString [
         ifAbsent: [ (MetacelloVersionDoesNotExistError project: self project versionString: aVersionString) signal ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> version: aVersionString ifAbsent: aBlock [
 
 	^[ self version: aVersionString ] on: MetacelloVersionDoesNotExistError do: [:ex | aBlock value ].
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> versionNumberClass [
     versionNumberClass ifNil: [ versionNumberClass := MetacelloVersionNumber ].
     ^ versionNumberClass
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> versionNumberClass: aClass [
     versionNumberClass := aClass
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> versionSpec [
 
 	^self versionSpecClass for: self
 ]
 
-{ #category : #'spec classes' }
+{ #category : 'spec classes' }
 MetacelloProject >> versionSpecClass [
 
 	^MetacelloVersionSpec
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MetacelloProject >> versions [
 
 	^self map values asArray sort: [:a :b | a <= b ]

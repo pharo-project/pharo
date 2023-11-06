@@ -1,6 +1,6 @@
-Extension { #name : #MorphicUIManager }
+Extension { #name : 'MorphicUIManager' }
 
-{ #category : #'*Monticello-GUI-Diff' }
+{ #category : '*Monticello-GUI-Diff' }
 MorphicUIManager >> merge: merger informing: aString [
 
 	| mergeMorph  window |

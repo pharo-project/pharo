@@ -10,37 +10,32 @@ It is polymorphic to ClyTaggedClassGroup which performs actual tag renaming.
 My class query is ClyRestUntaggedClasses 
 "
 Class {
-	#name : #ClyNoTagClassGroup,
-	#superclass : #ClyClassGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyNoTagClassGroup',
+	#superclass : 'ClyClassGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
-ClyNoTagClassGroup class >> isBasedOnClassTag [
+{ #category : 'testing' }
+ClyNoTagClassGroup class >> isBasedOnPackageTag [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNoTagClassGroup class >> priority [
 	^10
 ]
 
-{ #category : #operations }
-ClyNoTagClassGroup >> importClass: aClass [
-
-	| newPackages |
-	super importClass: aClass.
-	newPackages := OrderedCollection new.
-	classQuery scope packagesDo: [ :each | each = aClass package ifFalse: [ newPackages add: each ] ].
-	newPackages size > 1 ifTrue: [ ^ self error: 'You should select single package for import!' ].
-
-	newPackages ifNotEmpty: [ ^ newPackages first addClass: aClass ].
-	self flag: #package. "I'm not sure this next line even makes sens after moving the class from package. The tag should be removed automatically?"
-	aClass removePackageTag
-]
-
-{ #category : #operations }
-ClyNoTagClassGroup >> renameClassTagTo: newTag [
+{ #category : 'operations' }
+ClyNoTagClassGroup >> renameTagTo: newTag [
 
 	self classes do: [ :class | class packageTag: newTag ]
+]
+
+{ #category : 'accessing' }
+ClyNoTagClassGroup >> tag [
+	"Uncategorized classes are going to the root tag."
+
+	^ RPackage rootTagName
 ]

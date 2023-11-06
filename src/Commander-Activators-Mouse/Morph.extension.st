@@ -1,6 +1,6 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*Commander-Activators-Mouse' }
+{ #category : '*Commander-Activators-Mouse' }
 Morph >> enableAllMouseCommandsFrom: someObjectWithCommandContext [
 
 	self
@@ -8,7 +8,7 @@ Morph >> enableAllMouseCommandsFrom: someObjectWithCommandContext [
 		enableMouseCommands: CmdDoubleClickActivation withContextFrom: someObjectWithCommandContext
 ]
 
-{ #category : #'*Commander-Activators-Mouse' }
+{ #category : '*Commander-Activators-Mouse' }
 Morph >> enableMouseCommands: aMouseActivationClass withContextFrom: someObjectWithCommandContext [
 
 	aMouseActivationClass enableInMorph: self withCommandsFrom: someObjectWithCommandContext

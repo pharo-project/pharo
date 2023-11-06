@@ -10,8 +10,8 @@ The following layout is fixed for the JPEG primitives to work:
 	bitsInBuffer	<SmallInteger>
 "
 Class {
-	#name : #JPEGReadStream,
-	#superclass : #ReadStream,
+	#name : 'JPEGReadStream',
+	#superclass : 'ReadStream',
 	#instVars : [
 		'bitBuffer',
 		'bitsInBuffer'
@@ -19,16 +19,17 @@ Class {
 	#classVars : [
 		'MaxBits'
 	],
-	#category : #'Graphics-Files'
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 JPEGReadStream class >> initialize [
 	"JPEGReadStream initialize"
 	MaxBits := 16
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 JPEGReadStream >> buildLookupTable: values counts: counts [
 	| min max |
 	min := max := nil.
@@ -46,7 +47,7 @@ JPEGReadStream >> buildLookupTable: values counts: counts [
 		to: max
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 JPEGReadStream >> createHuffmanTables: values counts: counts from: minBits to: maxBits [
 	"Create the actual tables"
 	| table tableStart tableSize tableEnd valueIndex tableStack numValues deltaBits maxEntries lastTable lastTableStart tableIndex lastTableIndex |
@@ -143,7 +144,7 @@ JPEGReadStream >> createHuffmanTables: values counts: counts from: minBits to: m
 		to: tableEnd - 1
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 JPEGReadStream >> decodeValueFrom: table [
 	"Decode the next value in the receiver using the given huffman table."
 	| bits bitsNeeded tableIndex value |
@@ -160,7 +161,7 @@ JPEGReadStream >> decodeValueFrom: table [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGReadStream >> fillBuffer [
 	| byte |
 	[ bitsInBuffer <= 16 ] whileTrue:
@@ -173,7 +174,7 @@ JPEGReadStream >> fillBuffer [
 	^ bitsInBuffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGReadStream >> getBits: requestedBits [
 	| value |
 	requestedBits > bitsInBuffer ifTrue:
@@ -185,7 +186,7 @@ JPEGReadStream >> getBits: requestedBits [
 	^ value
 ]
 
-{ #category : #'huffman trees' }
+{ #category : 'huffman trees' }
 JPEGReadStream >> growHuffmanTable: table [
 	| newTable |
 	newTable := table species new: table size * 2.
@@ -197,23 +198,23 @@ JPEGReadStream >> growHuffmanTable: table [
 	^ newTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGReadStream >> nextByte [
 	^self next asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGReadStream >> nextBytes: n [
 	^(self next: n) asByteArray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 JPEGReadStream >> reset [
 	super reset.
 	self resetBitBuffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGReadStream >> resetBitBuffer [
 	bitBuffer := 0.
 	bitsInBuffer := 0

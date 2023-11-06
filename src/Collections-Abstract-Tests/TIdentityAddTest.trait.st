@@ -2,26 +2,28 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TIdentityAddTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TIdentityAddTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIdentityAddTest >> collection [
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIdentityAddTest >> element [
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - identity adding' }
+{ #category : 'tests - identity adding' }
 TIdentityAddTest >> equalNotIdenticalElement [
 	^ self element copy
 ]
 
-{ #category : #'tests - identity adding' }
+{ #category : 'tests - identity adding' }
 TIdentityAddTest >> testIdentityAdd [
 	| added |
 	self collection add: self element.

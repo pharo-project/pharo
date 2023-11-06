@@ -1,6 +1,6 @@
 Class {
-	#name : #DATarjanAlgorithmTest,
-	#superclass : #TestCase,
+	#name : 'DATarjanAlgorithmTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'tarjanPackage',
 		'packageA',
@@ -13,10 +13,12 @@ Class {
 		'packageH',
 		'anArray'
 	],
-	#category : #'Tool-DependencyAnalyser-Tests-Algorithm'
+	#category : 'Tool-DependencyAnalyser-Tests-Algorithm',
+	#package : 'Tool-DependencyAnalyser-Tests',
+	#tag : 'Algorithm'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DATarjanAlgorithmTest >> setUp [
 	super setUp.
 	tarjanPackage := AITarjan new.
@@ -39,19 +41,19 @@ DATarjanAlgorithmTest >> setUp [
 	anArray at: 8 put:packageH
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DATarjanAlgorithmTest >> stackSize [
 	^ (tarjanPackage instVarNamed: 'stack') size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	"test if we have 0 outgoing dependencies in each SCC after the algorithm"
 
 	| aRelation aCollection sccs |
 	aCollection := OrderedCollection withAll: (self packageOrganizer packages
-			                select: [ :package | '*Collections*' match: package packageName asString ]
-			                thenCollect: [ :package | package packageName ]).
+			                select: [ :package | '*Collections*' match: package name asString ]
+			                thenCollect: [ :package | package name ]).
 	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: (RPackageSet named: each) ]).
 	aRelation
 		computeStaticDependencies;
@@ -64,7 +66,7 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	self assert: (sccs anySatisfy: [ :scc | scc outgoing isEmpty ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DATarjanAlgorithmTest >> testRunTarjan [
 	"test the Tarjan algorithm on a simple graph with 8 nodes"
 	| aPDPackageRelation  sccs |

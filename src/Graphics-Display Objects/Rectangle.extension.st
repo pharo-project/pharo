@@ -1,6 +1,6 @@
-Extension { #name : #Rectangle }
+Extension { #name : 'Rectangle' }
 
-{ #category : #'*Graphics-Display Objects' }
+{ #category : '*Graphics-Display Objects' }
 Rectangle >> asMargin [
 
 	^ Margin fromRectangle: self

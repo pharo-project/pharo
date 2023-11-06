@@ -1,83 +1,85 @@
 Class {
-	#name : #MetacelloVersion,
-	#superclass : #Magnitude,
+	#name : 'MetacelloVersion',
+	#superclass : 'Magnitude',
 	#instVars : [
 		'spec',
 		'versionNumber',
 		'importedVersions',
 		'versionStatus'
 	],
-	#category : #'Metacello-Core-Model'
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersion class >> fromSpec: aMetacelloVersionSpec [
     ^ (self new versionNumber: aMetacelloVersionSpec versionNumber)
         spec: aMetacelloVersionSpec;
         yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersion class >> fromString: aString [
 
 	^self new versionNumber: aString asMetacelloVersionNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> < aMetacelloVersion [
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].
 	^self versionNumber < aMetacelloVersion versionNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> = aMetacelloVersion [
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].
 	^self versionNumber = aMetacelloVersion versionNumber
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> author [
 
 	^self spec author value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> basicSpec [
     ^ self spec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> blessing [
     ^ self basicSpec blessing value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersion >> computeVersionStatus [
     ^ #'noStatus'
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> description [
     ^ self basicSpec description value
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> difference: aMetacelloVersion [
 	"Return a a dictionary of additions, removals and modifications"
 	
 	^self spec difference: aMetacelloVersion spec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> expandToLoadableSpecNames: nameList [
 	"Just like #resolveToLoadableSpecs:, but returns list of spec names instead of specs"
 	
 	^self spec expandToLoadableSpecNames: nameList
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> groups [
 	"Answers the list of groups associated with this version"
 	
@@ -87,99 +89,97 @@ MetacelloVersion >> groups [
 	^groups
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> hash [
 
 	^self versionNumber hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> importedVersions [
 
-	importedVersions == nil ifTrue: [ importedVersions := #() ].
-	^importedVersions
+	^ importedVersions ifNil: [ importedVersions := #(  ) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> importedVersions: aCollection [
 
 	importedVersions := aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersion >> isAllLoadedToSpec [
 	"all projects and packages are loaded and match specification"
 	
 	^self spec isAllLoadedToSpec
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersion >> isLoadedMatchConstraints [
 	"all loaded projects and packages match constraints"
 	
 	^self spec isLoadedMatchConstraints
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersion >> isLoadedToSpec [
 	"all loaded projects and packages match specifications"
 	
 	^self spec isLoadedToSpec
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersion >> isPossibleBaseline [
 
 	^self spec isPossibleBaseline
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersion >> isSomethingLoaded [
 	"at least one project or package has been loaded"
 	
 	^self spec isSomethingLoaded
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersion >> load [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersion >> load: required [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> loader [
 
 	^self spec loader
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersion >> name [
 
 	^self versionString
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> packageNamed: aString [
 
 	^self packageNamed: aString ifAbsent: [ ^nil ].
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> packageNamed: aString ifAbsent: aBlock [
 
-	| pkg |
-	(pkg := self spec packageNamed: aString ifAbsent: []) == nil
-		ifTrue: [ ^aBlock value ].
-	^pkg referencedSpec
+	^ (self spec packageNamed: aString ifAbsent: [  ])
+		  ifNil: [ aBlock value ]
+		  ifNotNil: [ :pkg | pkg referencedSpec ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersion >> printOn: aStream [
     | label vs |
     (#(structural broken) includes: self blessing) not
@@ -197,17 +197,17 @@ MetacelloVersion >> printOn: aStream [
                 ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> project [
     ^ self basicSpec project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> projectLabel [
     ^ self basicSpec projectLabel
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> projects [
 	"Answers the list of projects associated with this version"
 
@@ -217,7 +217,7 @@ MetacelloVersion >> projects [
 	^projects
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> resolveToLoadableSpecs: nameList [
 	"Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
 	not traversed during the transitive closure. The scope is that of the version itself.
@@ -230,30 +230,30 @@ MetacelloVersion >> resolveToLoadableSpecs: nameList [
 	^self spec resolveToLoadableSpecs: nameList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> spec [
 
 	^spec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> spec: aMetacellVersionSpec [
 
 	spec := aMetacellVersionSpec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> timestamp [
     ^ self basicSpec timestamp value
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersion >> unload [
 
 	^self spec unload
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionKey [
     "version printString, without the versionStatus decorations, suitable for using as a unique key for the 
 	 receiver in a dictionary"
@@ -268,49 +268,48 @@ MetacelloVersion >> versionKey [
                         ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionNumber [
 
 	^versionNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> versionNumber: aVersionNumber [
 
 	versionNumber := aVersionNumber
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionNumberFrom: aString [
     ^ self versionNumber class fromString: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> versionSpec [
 
 	^self spec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> versionStatus [
 
-	versionStatus == nil ifTrue: [ versionStatus := self computeVersionStatus].
-	^versionStatus
+	^ versionStatus ifNil: [ versionStatus := self computeVersionStatus ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> versionStatus: aSymbol [
 
 	versionStatus := aSymbol
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionString [
 
 	^self versionNumber versionString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> ~> aMetacelloVersion [
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].

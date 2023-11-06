@@ -2,12 +2,14 @@
 A WindowsResolverTest is a test class for testing the behavior of WindowsResolver
 "
 Class {
-	#name : #WindowsResolverTest,
-	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Core-Resolver'
+	#name : 'WindowsResolverTest',
+	#superclass : 'TestCase',
+	#category : 'FileSystem-Tests-Core-Resolver',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Resolver'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WindowsResolverTest >> testResolveTempPathFromTMP [
 
 	| expected |

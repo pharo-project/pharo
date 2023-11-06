@@ -2,42 +2,44 @@
 An enumeration for test purposes
 "
 Class {
-	#name : #FFITestEnumeration,
-	#superclass : #FFIExternalEnumeration,
+	#name : 'FFITestEnumeration',
+	#superclass : 'FFIExternalEnumeration',
 	#classVars : [
 		'AAA',
 		'BBB',
 		'CCC',
 		'DDD'
 	],
-	#category : #'UnifiedFFI-Tests-Test-Data'
+	#category : 'UnifiedFFI-Tests-Test-Data',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Test-Data'
 }
 
-{ #category : #'accessing enum' }
+{ #category : 'accessing enum' }
 FFITestEnumeration class >> AAA [
 	"This method was automatically generated"
 	^ AAA
 ]
 
-{ #category : #'accessing enum' }
+{ #category : 'accessing enum' }
 FFITestEnumeration class >> BBB [
 	"This method was automatically generated"
 	^ BBB
 ]
 
-{ #category : #'accessing enum' }
+{ #category : 'accessing enum' }
 FFITestEnumeration class >> CCC [
 	"This method was automatically generated"
 	^ CCC
 ]
 
-{ #category : #'accessing enum' }
+{ #category : 'accessing enum' }
 FFITestEnumeration class >> DDD [
 	"This method was automatically generated"
 	^ DDD
 ]
 
-{ #category : #'enum declaration' }
+{ #category : 'enum declaration' }
 FFITestEnumeration class >> enumDecl [
 	^ #(AAA 1
 	BBB  2
@@ -45,7 +47,7 @@ FFITestEnumeration class >> enumDecl [
 	DDD 2400)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFITestEnumeration class >> initialize [
 	self initializeEnumeration
 ]

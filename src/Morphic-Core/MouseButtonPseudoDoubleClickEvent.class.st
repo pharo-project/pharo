@@ -3,21 +3,23 @@ I get created from a mouseDown MouseButtonEvent, adding the second mouseDown eve
 I can be usefull for refining some doubleClick: implementations. (as is done for FTTableMorph>>#doubleClick:)
 "
 Class {
-	#name : #MouseButtonPseudoDoubleClickEvent,
-	#superclass : #MouseButtonEvent,
+	#name : 'MouseButtonPseudoDoubleClickEvent',
+	#superclass : 'MouseButtonEvent',
 	#instVars : [
 		'secondEvent'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MouseButtonPseudoDoubleClickEvent >> secondEvent [
 
 	^ secondEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MouseButtonPseudoDoubleClickEvent >> secondEvent: anObject [
 
 	secondEvent := anObject

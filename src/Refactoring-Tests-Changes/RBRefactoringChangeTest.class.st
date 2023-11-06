@@ -1,25 +1,26 @@
 Class {
-	#name : #RBRefactoringChangeTest,
-	#superclass : #AbstractEnvironmentTestCase,
+	#name : 'RBRefactoringChangeTest',
+	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'changes',
 		'workingEnvironment',
 		'changeFactory'
 	],
-	#category : #'Refactoring-Tests-Changes'
+	#category : 'Refactoring-Tests-Changes',
+	#package : 'Refactoring-Tests-Changes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringChangeTest class >> packageNamesUnderTest [
 	^ #('Refactoring-Changes')
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBRefactoringChangeTest >> changeMockClass [
 	^ RBRefactoringChangeMock
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRefactoringChangeTest >> equalityTestFor: aChange [
 	self assert: aChange equals: aChange.
 	self assert: aChange hash equals: aChange hash.
@@ -28,7 +29,7 @@ RBRefactoringChangeTest >> equalityTestFor: aChange [
 	self assert: aChange copy hash equals: aChange hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringChangeTest >> exampleClasses [
 	<sampleInstance>
 	^ { "Standard Classes"
@@ -39,13 +40,13 @@ RBRefactoringChangeTest >> exampleClasses [
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoringChangeTest >> exampleTraits [
     <sampleInstance>
 	^ { TSortable. TAssertable }
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRefactoringChangeTest >> performAndUndoChange: aChange do: aBlock [
 	"Perform a change in the system silently, evaluate aBlock and then undo the change again."
 
@@ -55,12 +56,12 @@ RBRefactoringChangeTest >> performAndUndoChange: aChange do: aBlock [
 		aBlock ensure: [ undo execute ] ]
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBRefactoringChangeTest >> selectionInterval [
 	^ 1 to: 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBRefactoringChangeTest >> setUp [
 	super setUp.
 	workingEnvironment := Smalltalk globals.
@@ -70,7 +71,7 @@ RBRefactoringChangeTest >> setUp [
 	changes := changeFactory compositeRefactoryChangeNamed: 'testing'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRefactoringChangeTest >> stringTestFor: aChange [
 	self assert: (aChange name isString and: [ aChange name notEmpty ]).
 	self assert: (aChange printString isString and: [ aChange printString notEmpty ]).
@@ -78,7 +79,7 @@ RBRefactoringChangeTest >> stringTestFor: aChange [
 	self assert: (aChange displayString isString and: [ aChange displayString notEmpty ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testAddClassInstanceVariable [
 	| change |
 	change := changes addInstanceVariable: 'instVar' to: self class class.
@@ -89,15 +90,19 @@ RBRefactoringChangeTest >> testAddClassInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testAddClassInteractively [
+
 	| change |
-	change := changeFactory addClassDefinition: 'AbstractEnvironmentTestCase << #' , self class name , '
-	slots: { #instVar};
-	sharedVariables: { #ClassVar};
-	sharedPools: {PoolDict};
-	package: ''' , self class category , '''' for: self.
-	self assert: change controller equals: self.
+	change := changeFactory addClassDefinition: [ :aBuilder |
+		          aBuilder
+			          superclass: AbstractEnvironmentTestCase;
+			          name: self class name;
+			          slots: { #instVar };
+			          sharedVariables: { #ClassVar };
+			          sharedPools: 'PoolDict';
+			          tag: self class packageTag name;
+			          package: self class package name ].
 	self assert: change superclassName equals: self class superclass name.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
@@ -108,50 +113,36 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 	self assert: change classVariableNames first equals: 'ClassVar'.
 	self assert: change sharedPoolNames size equals: 1.
 	self assert: change sharedPoolNames first equals: 'PoolDict'.
-	self assert: change category equals: self class category.
+	self assert: change package equals: self class package name.
+	self assert: change tag equals: self class packageTag name.
 	self universalTestFor: change
 ]
 
-{ #category : #'tests - pattern' }
+{ #category : 'tests - pattern' }
 RBRefactoringChangeTest >> testAddClassPattern [
-
 	"Make sure that all class definitions can be parsed."
 
-	self exampleClasses
-		do: [ :class |
-			( class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ] )
-				ifFalse: [ | change |
+	self exampleClasses do: [ :class |
+		(class isObsolete or: [ class superclass isNotNil and: [ class superclass isObsolete ] ]) ifFalse: [
+			| change |
+			change := changes defineClass: [ :aBuilder | aBuilder fillFor: class ].
+			self assert: (change isKindOf: RBAddClassChange).
+			self assert: change changeClassName equals: class name.
 
-					change := changes defineClass: class oldDefinition.
-					self assert: ( change isKindOf: RBAddClassChange ).
-					self assert: change changeClassName equals: class name.
+			class superclass
+				ifNil: [ self assert: change definitionClass equals: ProtoObject ]
+				ifNotNil: [ self assert: change definitionClass equals: class superclass ].
 
-					class superclass
-						ifNil: [ self assert: change definitionClass equals: ProtoObject ]
-						ifNotNil: [ self assert: change definitionClass equals: class superclass ].
-
-					self assert: change instanceVariableNames equals: class instVarNames asArray.
-					self assert: change classVariableNames equals: class classVarNames asArray.
-					self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
-					self assert: change category equals: class category.
-					self universalTestFor: change
-					]
-			]
+			self assert: change instanceVariableNames equals: class instVarNames asArray.
+			self assert: change classVariableNames equals: class classVarNames asArray.
+			self assert: change classInstanceVariableNames equals: class class instVarNames.
+			self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
+			self assert: change package equals: class package name.
+			self assert: change tag equals: class packageTag name.
+			self universalTestFor: change ] ]
 ]
 
-{ #category : #'tests - pattern' }
-RBRefactoringChangeTest >> testAddClassTraitPattern [
-	"Make sure that all class trait definitions can be parsed."
-
-	self exampleTraits do: [ :trait |
-		| change |
-		change := changes defineClass:  trait classTrait oldDefinition.
-		self assert: (change isKindOf: RBAddClassTraitChange).
-		self assert: change changeClassName equals: trait name.
-		self universalTestFor: change ]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testAddClassVariable [
 
 	| change |
@@ -163,7 +154,7 @@ RBRefactoringChangeTest >> testAddClassVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testAddInstanceVariable [
 
 	| change |
@@ -175,21 +166,7 @@ RBRefactoringChangeTest >> testAddInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #'tests - pattern' }
-RBRefactoringChangeTest >> testAddMetaclassPattern [
-	"Make sure that metaclass definitions can be parsed."
-
-	self exampleClasses do: [ :class |
-		(class isObsolete or: [ class superclass notNil and: [ class superclass isObsolete ] ]) ifFalse: [
- 		| change |
-		change := changes defineClass: class class oldDefinition.
-		self assert: (change isKindOf: RBAddMetaclassChange).
-		self assert: change changeClassName equals: class name.
-		self assert: change classInstanceVariableNames equals: class class instVarNames.
-		self universalTestFor: change ]]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testAddPool [
 
 	| change |
@@ -201,20 +178,22 @@ RBRefactoringChangeTest >> testAddPool [
 	self universalTestFor: change
 ]
 
-{ #category : #'tests - pattern' }
+{ #category : 'tests - pattern' }
 RBRefactoringChangeTest >> testAddTraitPattern [
 	"Make sure that all trait definitions can be parsed."
 
 	self exampleTraits do: [ :trait |
 		| change |
-		change := changes defineClass: trait oldDefinition.
-		self assert: (change isKindOf: RBAddTraitChange).
+		change := changes defineClass: [ :aBuilder | aBuilder fillFor: trait ].
 		self assert: change changeClassName equals: trait name.
-		self assert: change category equals: trait category.
+		self assert: change package equals: trait package name.
+		self assert: change tag equals: (trait packageTag isRoot
+				 ifTrue: [ nil ]
+				 ifFalse: [ trait packageTag name ]).
 		self universalTestFor: change ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testComment [
 
 	| change |
@@ -226,12 +205,11 @@ RBRefactoringChangeTest >> testComment [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testCompileInClass [
 	"note that this compile does not modify the class because the change is not performed"
 	| change |
 	change := changes compile: 'setUp' in: self class.
-	self assert: change controller isNil.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
@@ -241,12 +219,11 @@ RBRefactoringChangeTest >> testCompileInClass [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testCompileInClassified [
 	"note that this compile does not modify the class because the change is not performed"
 	| change |
 	change := changes compile: 'setUp' in: self class classified: #accessing.
-	self assert: change controller isNil.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
@@ -256,13 +233,12 @@ RBRefactoringChangeTest >> testCompileInClassified [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testCompileInInteractively [
 	"note that this compile does not modify the class because the change is not performed"
 	
 	| change |
-	change := changeFactory addMethodSource: 'setUp' in: self class classified: #running for: self.
-	self assert: change controller equals: self.
+	change := changeFactory addMethodSource: 'setUp' in: self class classified: #running.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class.
 	self assert: change isMeta not.
@@ -272,13 +248,12 @@ RBRefactoringChangeTest >> testCompileInInteractively [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testCompileInMetaclass [
 	"note that this compile does not modify the class because the change is not performed"
 	
 	| change |
 	change := changes compile: 'new' in: self class class.
-	self assert: change controller isNil.
 	self assert: change changeClassName equals: self class name.
 	self assert: change changeClass equals: self class class.
 	self assert: change isMeta.
@@ -288,7 +263,7 @@ RBRefactoringChangeTest >> testCompileInMetaclass [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testComposite [
 	"note that this compile does not modify the class because the change is not performed"
 	
@@ -302,35 +277,15 @@ RBRefactoringChangeTest >> testComposite [
 	self universalTestFor: changes
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClass [
-	
-	| change |
-	change := changes defineClass: 'Object << #' , self changeMockClass name , 'Temporary
-	package: ''' , self class category , ''''.
-	self performAndUndoChange: change do: [
-		self assert: (workingEnvironment  hasClassNamed: change changeClassName).
-		self assert: change definedClass name equals: change changeClassName.
-		self assert: change definedClass isBehavior ].
-	self deny: (workingEnvironment hasClassNamed: change changeClassName).
-	self assert: change definedClass isObsolete
-]
-
-{ #category : #'tests - perform' }
-RBRefactoringChangeTest >> testPerformAddRemoveClassInstanceVariable [
 
 	| change |
-	change := changes addInstanceVariable: 'foo' to: self changeMockClass class.
-	self performAndUndoChange: change do: [ self assert: (change changeClass instVarNames includes: 'foo') ].
-	self deny: (change changeClass instVarNames includes: 'foo')
-]
-
-{ #category : #'tests - perform' }
-RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
-
-	| change |
-	change := changeFactory addClassDefinition: 'Object << #' , self changeMockClass name , 'Temporary
-	package: ''' , self class category , '''' for: self.
+	change := changes defineClass: [ :aBuilder |
+		          aBuilder
+			          superclass: Object;
+			          name: self changeMockClass name , 'Temporary';
+			          package: self class package name ].
 	self performAndUndoChange: change do: [
 		self assert: (workingEnvironment hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
@@ -339,7 +294,33 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
 	self assert: change definedClass isObsolete
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
+RBRefactoringChangeTest >> testPerformAddRemoveClassInstanceVariable [
+
+	| change |
+	change := changes addInstanceVariable: 'foo' to: self changeMockClass class.
+	self performAndUndoChange: change do: [ self assert: (change changeClass instVarNames includes: 'foo') ].
+	self deny: (change changeClass instVarNames includes: 'foo')
+]
+
+{ #category : 'tests - perform' }
+RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
+
+	| change |
+	change := changeFactory addClassDefinition: [ :aBuilder |
+		          aBuilder
+			          superclass: Object;
+			          name: self changeMockClass name , 'Temporary';
+			          package: self class package name ].
+	self performAndUndoChange: change do: [
+		self assert: (workingEnvironment hasClassNamed: change changeClassName).
+		self assert: change definedClass name equals: change changeClassName.
+		self assert: change definedClass isBehavior ].
+	self deny: (workingEnvironment hasClassNamed: change changeClassName).
+	self assert: change definedClass isObsolete
+]
+
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClassMethod [
 
 	| change |
@@ -349,7 +330,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassMethod [
 	self assert: change definedSelector equals: #method
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveClassVariable [
 
 	| change |
@@ -358,7 +339,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassVariable [
 	self deny: (change changeClass classVarNames includes: 'Foo')
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveInstanceVariable [
 
 	| change |
@@ -367,7 +348,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveInstanceVariable [
 	self deny: (change changeClass instVarNames includes: 'foo')
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveMethod [
 	| change |
 	change := changes compile: 'method ^ 1' in: self changeMockClass classified: #utilities.
@@ -376,42 +357,49 @@ RBRefactoringChangeTest >> testPerformAddRemoveMethod [
 	self assert: change definedSelector equals: #method
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformAddRemoveMethodInteractively [
 
 	| change |
-	change := changeFactory 
-			addMethodSource: 'method ^ 1' 
-			in: self changeMockClass 
-			classified: #utilities 
-			for: self.
+	change := changeFactory addMethodSource: 'method ^ 1' in: self changeMockClass classified: #utilities.
 	self performAndUndoChange: change do: [ self assert: (self changeMockClass canUnderstand: #method) ].
 	self deny: (self changeMockClass canUnderstand: #method).
 	self assert: change definedSelector equals: #method
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeClass [
 
 	| change |
-	change := changes
-		defineClass:
-			self class name , ' << #' , self changeMockClass name
-				,
-					'
-	package: ''' , self class category , ''''.
-	self
-		performAndUndoChange: change
-		do: [ self assert: change changeClass superclass equals: self class.
-			self assertEmpty: change changeClass instVarNames.
-			self assertEmpty: change changeClass classVarNames.  ].
+	change := changes defineClass: [ :aBuilder |
+		          aBuilder
+			          superclass: self class;
+			          name: self changeMockClass name;
+			          package: self class package name ].
+	self performAndUndoChange: change do: [
+		self assert: change changeClass superclass equals: self class.
+		self assertEmpty: change changeClass instVarNames.
+		self assertEmpty: change changeClass classVarNames ].
 	self assert: change changeClass superclass equals: Object.
 	self denyEmpty: change changeClass instVarNames.
-	self denyEmpty: change changeClass classVarNames. 
+	self denyEmpty: change changeClass classVarNames.
 	self assert: change definedClass equals: self changeMockClass
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
+RBRefactoringChangeTest >> testPerformChangeClassInstanceVariables [
+
+	| change |
+	change := changes defineClass: [ :aBuilder |
+		          aBuilder
+			          fillFor: self changeMockClass;
+			          classSlots: {  } ].
+	self performAndUndoChange: change do: [ self assertEmpty: change changeClass class instVarNames ].
+	self denyEmpty: change changeClass class instVarNames.
+	self assert: change definedClass equals: self changeMockClass
+]
+
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeComment [
 
 	| change comment |
@@ -421,20 +409,7 @@ RBRefactoringChangeTest >> testPerformChangeComment [
 	self assert: change changeClass comment equals: comment
 ]
 
-{ #category : #'tests - perform' }
-RBRefactoringChangeTest >> testPerformChangeMetaclass [
-	| change |
-	change := changes
-		defineClass:
-			self changeMockClass name
-				,
-					' class instanceVariableNames: '''''.
-	self performAndUndoChange: change do: [ self assertEmpty: change changeClass class instVarNames ].
-	self denyEmpty: change changeClass class instVarNames.
-	self assert: change definedClass equals: self changeMockClass class
-]
-
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformChangeMethod [
 
 	| change source |
@@ -447,7 +422,7 @@ RBRefactoringChangeTest >> testPerformChangeMethod [
 	self assert: (change changeClass sourceCodeAt: #one) equals: source
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformCompositeChange [
 	changes
 		compile: 'method1 ^ 1' in: self changeMockClass;
@@ -459,7 +434,7 @@ RBRefactoringChangeTest >> testPerformCompositeChange [
 	self deny: (self changeMockClass canUnderstand: #method2)
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameClass [
 
 	| change |
@@ -473,7 +448,7 @@ RBRefactoringChangeTest >> testPerformRenameClass [
 	self deny: (workingEnvironment hasClassNamed: change newName)
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameClassInstanceVariable [
 
 	| change |
@@ -486,7 +461,7 @@ RBRefactoringChangeTest >> testPerformRenameClassInstanceVariable [
 	self deny: (change changeClass instVarNames includes: change newName)
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameClassVariable [
 	
 	| change |
@@ -501,7 +476,7 @@ RBRefactoringChangeTest >> testPerformRenameClassVariable [
 	self deny: (change changeClass classVarNames includes: change newName)
 ]
 
-{ #category : #'tests - perform' }
+{ #category : 'tests - perform' }
 RBRefactoringChangeTest >> testPerformRenameInstanceVariable [
 	| change |
 	change := changes renameInstanceVariable: 'instVar' to: 'instVarPlus' in: self changeMockClass.
@@ -512,7 +487,7 @@ RBRefactoringChangeTest >> testPerformRenameInstanceVariable [
 	self deny: (change changeClass instVarNames includes: change newName)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRemoveClass [
 
 	| change |
@@ -523,7 +498,7 @@ RBRefactoringChangeTest >> testRemoveClass [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRemoveClassInstanceVariable [
 
 	| change |
@@ -535,7 +510,7 @@ RBRefactoringChangeTest >> testRemoveClassInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRemoveClassNamed [
 
 	| change |
@@ -546,7 +521,7 @@ RBRefactoringChangeTest >> testRemoveClassNamed [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRemoveClassVariable [
 
 	| change |
@@ -558,7 +533,7 @@ RBRefactoringChangeTest >> testRemoveClassVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRemoveInstanceVariable [
 
 	| change |
@@ -570,7 +545,7 @@ RBRefactoringChangeTest >> testRemoveInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRemoveMethod [
 
 	| change |
@@ -582,7 +557,7 @@ RBRefactoringChangeTest >> testRemoveMethod [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRemovePool [
 
 	| change |
@@ -594,7 +569,7 @@ RBRefactoringChangeTest >> testRemovePool [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRenameClass [
 
 	| change |
@@ -605,7 +580,7 @@ RBRefactoringChangeTest >> testRenameClass [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRenameClassInstanceVariable [
 
 	| change |
@@ -616,7 +591,7 @@ RBRefactoringChangeTest >> testRenameClassInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRenameClassVariable [
 
 	| change |
@@ -627,7 +602,7 @@ RBRefactoringChangeTest >> testRenameClassVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBRefactoringChangeTest >> testRenameInstanceVariable [
 
 	| change |
@@ -638,20 +613,20 @@ RBRefactoringChangeTest >> testRenameInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #mocking }
+{ #category : 'mocking' }
 RBRefactoringChangeTest >> text [
 	"for #testPerformAddRemoveMethodInteractively"
 	^'method ^1'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRefactoringChangeTest >> undoTestFor: aChange [
 	| undo |
 	undo := aChange asUndoOperation.
 	self assert: (undo isKindOf: RBRefactoryChange)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRefactoringChangeTest >> universalTestFor: aChange [
 	self equalityTestFor: aChange.
 	self stringTestFor: aChange.

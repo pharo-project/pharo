@@ -12,189 +12,191 @@ Subinstances are the graphical representation of the associated decorators defin
 
 "
 Class {
-	#name : #RubScrolledTextExtra,
-	#superclass : #Morph,
-	#category : #'Rubric-Editing-Widgets'
+	#name : 'RubScrolledTextExtra',
+	#superclass : 'Morph',
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubScrolledTextExtra class >> classOfRulerNamed: aKey [
 	^ self allSubclasses detect: [ :cls | cls key = aKey ] ifNone: [  ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubScrolledTextExtra class >> key [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> computedExtentFrom: aRectangle [
 	^ (self computedWidthFrom: aRectangle) @ (self computedHeightFrom: aRectangle)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> computedHeightFrom: aRectangle [
 	^ aRectangle height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> computedPositionFrom: aRectangle [
 	^ aRectangle topLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> computedWidthFrom: aRectangle [
 	^ aRectangle width
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubScrolledTextExtra >> defaultBackgroundColor [
 	^ Color transparent
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubScrolledTextExtra >> defaultColor [
 	^ self defaultBackgroundColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubScrolledTextExtra >> initialize [
 	super initialize.
 	self clipSubmorphs: true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubScrolledTextExtra >> isHorizontal [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubScrolledTextExtra >> isOver [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubScrolledTextExtra >> isSideRuler [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubScrolledTextExtra >> isVertical [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> key [
 	^self class key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> level [
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> lineIndexForPoint: aPoint [
 	^ self paragraph lineIndexForPoint: aPoint  + (0 @ (self offset y - self bounds top))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> lines [
 	^ self paragraph lines
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubScrolledTextExtra >> manageLayoutInBounds: aRectangle [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> margins [
 	^ self textArea margins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> offset [
 	^ self paragraphProvider scrollPane offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> paragraph [
 	^ self paragraphProvider ifNotNil: [:p | p paragraph]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> paragraphProvider [
 
 	^ self ownerThatIsA: RubScrolledTextMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> primarySelectionColor [
 	^ self textArea primarySelectionColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> scrollBounds [
 	^ self paragraphProvider scrollBounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> scrollPane [
 	^ self paragraphProvider scrollPane
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubScrolledTextExtra >> scrollerOffsetChanged [
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubScrolledTextExtra >> selectionChanged [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> selectionStart [
 	^ self paragraph selectionStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> selectionStop [
 	^ self paragraph selectionStop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> text [
 	^ self textArea text
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubScrolledTextExtra >> textAccepted [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> textArea [
 	^ self paragraph textArea
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubScrolledTextExtra >> textChanged [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextExtra >> textStyle [
 
 	^ self textArea textStyle
 ]
 
-{ #category : #structure }
+{ #category : 'structure' }
 RubScrolledTextExtra >> topRendererOrSelf [
 	^self paragraphProvider
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubScrolledTextExtra >> unplug [
 	self paragraphProvider
 		ifNotNil: [

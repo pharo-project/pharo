@@ -26,9 +26,10 @@ RPackageTag class >> package: aPackage name: aString [
 
 { #category : 'accessing' }
 RPackageTag >> addClass: aClass [
+	"I cannot just add the class myself because I need to be sure it is removed from the old packages and that extension methods are managed.
+	So I deleate to the package."
 
-	aClass category = self categoryName ifFalse: [ aClass category: self categoryName ].
-	classes add: aClass
+	self package moveClass: aClass toTag: self
 ]
 
 { #category : 'private' }
@@ -38,9 +39,12 @@ RPackageTag >> basicRenameTo: aString [
 
 { #category : 'accessing' }
 RPackageTag >> categoryName [
-	"Answer this tag as a SystemCategory.
-    That would be RPackage, '-', RPackageTag, unless tag is root (same name as RPackage)"
-	^ self toCategoryName: self name
+	"Answer this tag as a SystemCategory. This should be use the less possible ideally.
+    That would be Package, '-', PackageTag, unless tag is root (same name as Package)"
+
+	^ self isRoot
+		  ifTrue: [ self packageName ]
+		  ifFalse: [ self packageName , '-' , self name ]
 ]
 
 { #category : 'accessing' }
@@ -62,12 +66,6 @@ RPackageTag >> environment [
 ]
 
 { #category : 'testing' }
-RPackageTag >> hasClass: aClass [
-
-	^ self classes includes: aClass instanceSide
-]
-
-{ #category : 'testing' }
 RPackageTag >> hasClassNamed: aSymbol [
 	^ self classNames includes: aSymbol
 ]
@@ -76,7 +74,7 @@ RPackageTag >> hasClassNamed: aSymbol [
 RPackageTag >> includesClass: aClass [
 	"To deprecate in favor of #hasClass:"
 
-	^ self hasClass: aClass
+	^ self classes includes: aClass instanceSide
 ]
 
 { #category : 'initialization' }
@@ -93,7 +91,14 @@ RPackageTag >> isEmpty [
 
 { #category : 'testing' }
 RPackageTag >> isRoot [
-	^ self name = self packageName
+
+	^ self name = self package rootTagName
+]
+
+{ #category : 'testing' }
+RPackageTag >> isUndefined [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -136,26 +141,33 @@ RPackageTag >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
+{ #category : 'private' }
+RPackageTag >> privateAddClass: aClass [
+	"This method adds the class to the tag but does not check is the class was already in the right package."
+
+	classes add: aClass.
+	self organizer registerPackage: self package forClass: aClass.
+
+	self flag: #package. "Next line should be removed once we will not need the category"
+	aClass basicCategory: self categoryName
+]
+
 { #category : 'converting' }
 RPackageTag >> promoteAsPackage [
 	"This method converts this package tag into a package"
 
 	| newPackage |
-	self flag: #package. "We need to create and register in two steps because we cannot have a package X-Y and a package X with a tag Y at the same time because of the system organizer. Once the system organizer is not here anymore, we should just do a `self organizer ensurePackage: self package name , '-' , self name` to avoid to have a manual package creation AND a registration."
-	newPackage := RPackage named: self categoryName organizer: self organizer.
+	newPackage := self organizer ensurePackage: self package name , '-' , self name.
 
-	self classes do: [ :class | newPackage moveClass: class toTag: newPackage rootTag ].
-
-	self organizer registerPackage: newPackage
+	self classes do: [ :class | newPackage moveClass: class toTag: newPackage rootTag ]
 ]
 
 { #category : 'accessing' }
 RPackageTag >> removeClass: aClass [
 
-	| oldObject |
-	oldObject := classes remove: aClass ifAbsent: [  ].
-	self isEmpty ifTrue: [ self removeFromPackage ].
-	^ oldObject
+	classes remove: aClass ifAbsent: [ ^ self ].
+	self organizer unregisterPackage: self package forClass: aClass.
+	self isEmpty ifTrue: [ self removeFromPackage ]
 ]
 
 { #category : 'accessing' }
@@ -167,20 +179,24 @@ RPackageTag >> removeFromPackage [
 ]
 
 { #category : 'accessing' }
+RPackageTag >> removeFromSystem [
+	"Remove the tag and its content from the system"
+
+	self package removeTag: self
+]
+
+{ #category : 'accessing' }
 RPackageTag >> renameTo: newTagName [
 
-	| oldCategoryName newCategoryName oldTagName |
+	| oldTagName |
 	oldTagName := self name.
-	oldCategoryName := self toCategoryName: oldTagName.
-	newCategoryName := self toCategoryName: newTagName.
 
 	oldTagName = newTagName ifTrue: [ ^ self ].
 
 	self basicRenameTo: newTagName.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self flag: #package. "This should be removed with the system organizer."
-		self classes do: [ :each | each category: newCategoryName ].
-		self organizer renameCategory: oldCategoryName toBe: newCategoryName ].
+
+	self flag: #package. "This should be removed later when the class will know its tag."
+	self classes do: [ :class | class basicCategory: self categoryName ].
 	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 
@@ -188,11 +204,4 @@ RPackageTag >> renameTo: newTagName [
 RPackageTag >> rootTagName [
 
 	^ self package rootTagName
-]
-
-{ #category : 'private' }
-RPackageTag >> toCategoryName: aString [
-	^ aString = self packageName
-		ifTrue: [ aString ]
-		ifFalse: [ self packageName, '-', aString ]
 ]

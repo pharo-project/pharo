@@ -57,8 +57,8 @@ Of course, the children indices must be less than the tally otherwise they are c
 
 "
 Class {
-	#name : #Heap,
-	#superclass : #Collection,
+	#name : 'Heap',
+	#superclass : 'Collection',
 	#instVars : [
 		'array',
 		'tally',
@@ -68,10 +68,12 @@ Class {
 	#classInstVars : [
 		'sortBlock'
 	],
-	#category : #'Collections-Sequenceable-Base'
+	#category : 'Collections-Sequenceable-Base',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap class >> defaultSortBlock [
 	"Cache the default sort block here. Since the sortBlock is used to compare instances, a single instance
 	 for the default block helps us."
@@ -79,23 +81,23 @@ Heap class >> defaultSortBlock [
 		sortBlock := [ :a :b | a <= b]]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Heap class >> new [
 	^self new: 10
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Heap class >> new: n [
 	^super new setCollection: (Array new: n)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Heap class >> sortBlock: aBlock [
 	"Create a new heap sorted by the given block"
 	^self new sortBlock: aBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Heap class >> withAll: aCollection [
 	"Create a new heap with all the elements from aCollection"
 	^(self basicNew)
@@ -104,7 +106,7 @@ Heap class >> withAll: aCollection [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Heap class >> withAll: aCollection sortBlock: aBlock [
 	"Create a new heap with all the elements from aCollection"
 	^(self basicNew)
@@ -113,7 +115,7 @@ Heap class >> withAll: aCollection sortBlock: aBlock [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Heap >> = anObject [
 	"Heap are considered equals only if they have same sort order and same elements."
 
@@ -124,7 +126,7 @@ Heap >> = anObject [
 	^(self asArray sort: sortBlock) = (anObject asArray sort: sortBlock)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Heap >> add: anObject [
 	"Include newObject as one of the receiver's elements. Answer newObject."
 	tally = array size ifTrue:[self grow].
@@ -134,19 +136,19 @@ Heap >> add: anObject [
 	^anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> array [
 	^array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> at: index [
 	"Heap are not designed to be accessed sequentially."
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> at: index put: newObject [
 	"Heap are not designed to be accessed sequentially.
 	Please consider using #add: instead."
@@ -154,30 +156,30 @@ Heap >> at: index put: newObject [
 	self shouldNotImplement
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Heap >> collect: aBlock [
 	^self collect: aBlock as: Array
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Heap >> copyEmpty [
 	"Answer a copy of the receiver without any of the receiver's elements."
 
 	^self class sortBlock: sortBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> defaultSortBlock [
 	^ self class defaultSortBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Heap >> do: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument."
 	1 to: tally do:[:i| aBlock value: (array at: i)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> downHeap: anIndex [
 	"Check the heap downwards for correctness starting at anIndex.
 	 Everything above (i.e. left of) anIndex is ok."
@@ -204,7 +206,7 @@ Heap >> downHeap: anIndex [
 	self updateObjectIndex: k
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> downHeapSingle: anIndex [
 	"This version is optimized for the case when only one element in the receiver can be at a wrong position. It avoids one comparison at each node when travelling down the heap and checks the heap upwards after the element is at a bottom position. Since the probability for being at the bottom of the heap is much larger than for being somewhere in the middle this version should be faster."
 	| value k n j |
@@ -226,13 +228,13 @@ Heap >> downHeapSingle: anIndex [
 	self upHeap: k
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> first [
 	"Return the first element in the receiver"
 	^array at: 1
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> fullySort [
 	"Fully sort the heap.
 	This method preserves the heap invariants and can thus be sent safely"
@@ -240,19 +242,19 @@ Heap >> fullySort [
 	1 to: tally // 2 do: [:i | array swap: i with: 1 + tally - i]
 ]
 
-{ #category : #growing }
+{ #category : 'growing' }
 Heap >> grow [
 	"Become larger."
 	self growTo: self size + self growSize
 ]
 
-{ #category : #growing }
+{ #category : 'growing' }
 Heap >> growSize [
 	"Return the size by which the receiver should grow if there are no empty slots left."
 	^array size max: 5
 ]
 
-{ #category : #growing }
+{ #category : 'growing' }
 Heap >> growTo: newSize [
 	"Grow to the requested size."
 	| newArray |
@@ -261,25 +263,25 @@ Heap >> growTo: newSize [
 	array := newArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> indexUpdateBlock: aBlockOrNil [
 
 	indexUpdateBlock := aBlockOrNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Heap >> isEmpty [
 	"Answer whether the receiver contains any elements."
 	^tally = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Heap >> isHeap [
 
 	^ true
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> isSorted [
 	"Return true if the receiver is sorted by the given criterion.
 	Optimization for isSortedBy: [:a :b | a <= b]."
@@ -295,7 +297,7 @@ Heap >> isSorted [
 	^ true
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> isSortedBy: aBlock [
 	"Return true if the receiver is sorted by the given criterion."
 
@@ -310,7 +312,7 @@ Heap >> isSortedBy: aBlock [
 	^ true
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
 	"Private. Merge the sorted ranges [first..middle] and [middle+1..last]
 	of the receiver into the range [first..last] of dst."
@@ -337,7 +339,7 @@ Heap >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
 		ifFalse: [dst replaceFrom: out + 1 to: last with: self startingAt: i2]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	"Sort the given range of indices using the mergesort algorithm.
 	Mergesort is a worst-case O(N log N) sorting algorithm that usually
@@ -362,7 +364,7 @@ Heap >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 		by: aBlock
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> mergeSortFrom: first to: last src: src dst: dst by: aBlock [
 	"Private. Split the range to be sorted in half, sort each half, and
 	merge the two half-ranges into dst."
@@ -375,13 +377,13 @@ Heap >> mergeSortFrom: first to: last src: src dst: dst by: aBlock [
 	src mergeFirst: first middle: middle last: last into: dst by: aBlock
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Heap >> postCopy [
 	super postCopy.
 	array := array copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> privateRemoveAt: index [
 	"Remove the element at the given index and make sure the sorting order is okay"
 	| removed |
@@ -395,7 +397,7 @@ Heap >> privateRemoveAt: index [
 	^removed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> privateReverseSort [
 	"Arrange to have the array sorted in reverse order.
 	WARNING: this method breaks the heap invariants. It's up to the sender to restore them afterwards."
@@ -408,14 +410,14 @@ Heap >> privateReverseSort [
 	tally := oldTally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> reSort [
 	"Resort the entire heap"
 	self isEmpty ifTrue:[^self].
 	tally // 2 to: 1 by: -1 do:[:i| self downHeap: i]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Heap >> remove: oldObject ifAbsent: aBlock [
 	"Remove oldObject as one of the receiver's elements. If several of the
 	elements are equal to oldObject, only one is removed. If no element is
@@ -426,47 +428,47 @@ Heap >> remove: oldObject ifAbsent: aBlock [
 	^aBlock value
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Heap >> removeAll [
 
 	array atAllPut: nil.
 	tally := 0
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Heap >> removeFirst [
 	"Remove the first element from the receiver"
 	self emptyCheck.
 	^self privateRemoveAt: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> setCollection: aCollection [
 	array := aCollection.
 	tally := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> setCollection: aCollection tally: newTally [
 	array := aCollection.
 	tally := newTally
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> size [
 	"Answer how many elements the receiver contains."
 
 	^ tally
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> sort [
 	"Sort this collection into ascending order using the '<=' operator."
 
 	self sort: [:a :b | a <= b]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> sort: aSortBlock [
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
@@ -477,18 +479,18 @@ Heap >> sort: aSortBlock [
 		by: aSortBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> sortBlock [
 	^ sortBlock ifNil: [ sortBlock := self defaultSortBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Heap >> sortBlock: aBlock [
 	sortBlock := aBlock.
 	self reSort
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> sorted [
 	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted in ascending order using the #'<=' operator."
@@ -496,7 +498,7 @@ elements are sorted in ascending order using the #'<=' operator."
 	^self sorted: [ :a :b| a <= b ]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Heap >> sorted: aSortBlockOrNil [
 	"Return a new sequenceable collection which contains the same elements as self but its
 elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if
@@ -506,7 +508,7 @@ comparison."
 	^self copy sort: aSortBlockOrNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Heap >> sorts: element1 before: element2 [
 	"Return true if element1 should be sorted before element2.
 	This method defines the sort order in the receiver"
@@ -515,13 +517,13 @@ Heap >> sorts: element1 before: element2 [
 		ifFalse:[sortBlock value: element1 value: element2]
 ]
 
-{ #category : #growing }
+{ #category : 'growing' }
 Heap >> trim [
 	"Remove any empty slots in the receiver."
 	self growTo: self size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> upHeap: anIndex [
 	"Check the heap upwards for correctness starting at anIndex.
 	 Everything below anIndex is ok."
@@ -538,7 +540,7 @@ Heap >> upHeap: anIndex [
 	self updateObjectIndex: k
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Heap >> updateObjectIndex: index [
 	"If indexUpdateBlock is not nil, notify the object at index of its new position in the heap array."
 	indexUpdateBlock ifNotNil: [

@@ -6,32 +6,34 @@ Signals that a connection to the specified host and port was refused.
 
 "
 Class {
-	#name : #ConnectionRefused,
-	#superclass : #NetworkError,
+	#name : 'ConnectionRefused',
+	#superclass : 'NetworkError',
 	#instVars : [
 		'host',
 		'port'
 	],
-	#category : #'Network-Kernel-Exceptions'
+	#category : 'Network-Kernel-Exceptions',
+	#package : 'Network-Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ConnectionRefused class >> host: addressOrHostName port: portNumber [
 	^ self new host: addressOrHostName port: portNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConnectionRefused >> host [
 	^ host
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConnectionRefused >> host: addressOrHostName port: portNumber [
 	host := addressOrHostName.
 	port := portNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConnectionRefused >> port [
 	^ port
 ]

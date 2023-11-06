@@ -1,22 +1,23 @@
 Class {
-	#name : #RGBehaviorTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGBehaviorTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> behaviorClass [
 
 	^ RGClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testBadInstantiation [
 
 	self should: [ RGBehavior named: #SomeBehavior ] raise: RGBadInstantiationError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testBehaviorWithMethodTags [
 
 	| newBehavior |
@@ -38,7 +39,7 @@ RGBehaviorTest >> testBehaviorWithMethodTags [
 	self assert: newBehavior tagsForMethods isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testBehaviorWithProtocols [
 
 	| newBehavior |
@@ -58,14 +59,14 @@ RGBehaviorTest >> testBehaviorWithProtocols [
 	self assert: newBehavior protocols isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testInheritsFromUnresolved [
 
 	self deny: (RGBehavior new inheritsFrom: RGClass unresolved).
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testOldDefinition [
 	| newBehavior |
 	newBehavior := self behaviorClass named: #SomeClass.
@@ -76,7 +77,7 @@ RGBehaviorTest >> testOldDefinition [
 	category: ''unresolved'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testResolvingConsistency [
 
 	| anObject |
@@ -84,7 +85,7 @@ RGBehaviorTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testSiblings [
 
 	| newBehavior |
@@ -113,7 +114,7 @@ RGBehaviorTest >> testSiblings [
 	self assert: newBehavior instanceSide equals: newBehavior baseTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGBehaviorTest >> testUnresolveSuperclass [
 	| env class1 class2 |
 

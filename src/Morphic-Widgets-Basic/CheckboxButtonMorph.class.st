@@ -2,20 +2,22 @@
 Checkbox/radio - button only.
 "
 Class {
-	#name : #CheckboxButtonMorph,
-	#superclass : #ThreePhaseButtonMorph,
+	#name : 'CheckboxButtonMorph',
+	#superclass : 'ThreePhaseButtonMorph',
 	#traits : 'TEnableOnHaloMenu',
 	#classTraits : 'TEnableOnHaloMenu classTrait',
 	#instVars : [
-		'repressedImage',
+		'repressedFormSet',
 		'enabled',
 		'isRadioButton',
-		'images'
+		'formSets'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CheckboxButtonMorph class >> checkBox [
 	"Answer a button pre-initialized with checkbox images."
 
@@ -23,7 +25,7 @@ CheckboxButtonMorph class >> checkBox [
 		beCheckbox
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CheckboxButtonMorph class >> radioButton [
 	"Answer a button pre-initialized with radio button images."
 
@@ -31,7 +33,7 @@ CheckboxButtonMorph class >> radioButton [
 		beRadioButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> adoptPaneColor: paneColor [
 	"Pass on to the border too."
 
@@ -44,7 +46,7 @@ CheckboxButtonMorph >> adoptPaneColor: paneColor [
 		ifFalse: [self theme checkboxCornerStyleFor: self])
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CheckboxButtonMorph >> beCheckbox [
 	"Change the images and square the border
 	to be a checkbox."
@@ -57,7 +59,7 @@ CheckboxButtonMorph >> beCheckbox [
 		borderStyle: self borderStyleToUse
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CheckboxButtonMorph >> beRadioButton [
 	"Change the images and round the border
 	to be a radio button."
@@ -70,18 +72,18 @@ CheckboxButtonMorph >> beRadioButton [
 		borderStyle: self borderStyleToUse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> borderStyle: newStyle [
 	"Use narrowest image dimension."
 
 	| newExtent |
 	self borderStyle = newStyle ifTrue: [^self].
 	super borderStyle: newStyle.
-	newExtent := 2 * newStyle width + image extent min asPoint.
+	newExtent := 2 * newStyle width + formSet extent min asPoint.
 	bounds extent = newExtent ifFalse: [self extent: newExtent]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> borderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver."
 
@@ -90,17 +92,17 @@ CheckboxButtonMorph >> borderStyleToUse [
 		ifFalse: [self checkboxBorderStyleToUse]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> borderWidth: bw [
 	"Use narrowest image dimension."
 
 	| newExtent |
 	super borderWidth: bw.
-	newExtent := 2 * bw + image extent min asPoint.
+	newExtent := 2 * bw + formSet extent min asPoint.
 	bounds extent = newExtent ifFalse: [super extent: newExtent]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CheckboxButtonMorph >> checkboxBorderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver when it is a checkbox."
 
@@ -113,7 +115,7 @@ CheckboxButtonMorph >> checkboxBorderStyleToUse [
 			ifFalse: [self theme checkboxButtonDisabledBorderStyleFor: self]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CheckboxButtonMorph >> checkboxFillStyleToUse [
 	"Answer the fillStyle that should be used for the receiver when it is a checkbox."
 
@@ -126,52 +128,52 @@ CheckboxButtonMorph >> checkboxFillStyleToUse [
 			ifFalse: [self theme checkboxButtonDisabledFillStyleFor: self]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> colorToUse [
 	"Answer the color we should use."
 
 	^self paneColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CheckboxButtonMorph >> disable [
 	"Disable the receiver."
 
 	self enabled: false
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 CheckboxButtonMorph >> drawOn: aCanvas [
 	"Draw the image for the current state."
 
 	|img|
 	aCanvas fillRectangle: self bounds fillStyle: self fillStyle borderStyle: self borderStyle.
-	img := self imageToUse.
+	img := self formSetToUse.
 	img ifNotNil: [
 		aCanvas
-			translucentImage: img
+			translucentFormSet: img
 			at: self innerBounds center - (img extent // 2)].
-	((self state == #pressed or: [self state == #repressed]) and: [image isNil]) ifTrue: [
+	((self state == #pressed or: [self state == #repressed]) and: [formSet isNil]) ifTrue: [
 		aCanvas fillRectangle: self innerBounds fillStyle: (self paneColor alpha: 0.3)].
 	(self enabled not and: [self theme fadeCheckboxWhenDisabled]) ifTrue: [
 		aCanvas fillRectangle: self innerBounds fillStyle: (self paneColor alpha: 0.4)]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 CheckboxButtonMorph >> enable [
 	"Enable the receiver."
 
 	self enabled: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> enabled [
 	"Answer the value of enabled"
 
 	^ enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> enabled: anObject [
 	"Set the value of enabled"
 
@@ -183,7 +185,7 @@ CheckboxButtonMorph >> enabled: anObject [
 		changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> fillStyleToUse [
 	"Answer the fillStyle that should be used for the receiver."
 
@@ -192,43 +194,45 @@ CheckboxButtonMorph >> fillStyleToUse [
 		ifFalse: [self checkboxFillStyleToUse]
 ]
 
-{ #category : #accessing }
-CheckboxButtonMorph >> image: anImage [
+{ #category : 'accessing' }
+CheckboxButtonMorph >> formSet: aFormSet [
 	"Fixed to take account of border width. Use narrowest
 	dimanesion of image to allow a little flexibility."
 
-	image := anImage depth = 1
-				ifTrue: [ColorForm mappingWhiteToTransparentFrom: anImage]
-				ifFalse: [anImage].
-	self extent: 2 * self borderWidth + image extent min asPoint.
+	formSet := aFormSet depth = 1
+		ifTrue: [
+			FormSet extent: aFormSet extent depth: aFormSet depth forms: (aFormSet forms collect: [ :form |
+				ColorForm mappingWhiteToTransparentFrom: (form asFormOfDepth: 1) ]) ]
+		ifFalse: [ aFormSet ].
+	self extent: 2 * self borderWidth + formSet extent min asPoint.
 	self changed
 ]
 
-{ #category : #private }
-CheckboxButtonMorph >> imageFromName: aSymbol [
-	^ self images
+{ #category : 'private' }
+CheckboxButtonMorph >> formSetFromName: aSymbol [
+	^ self formSets
 		at: aSymbol
 		ifPresent: [:block | block value]
 		ifAbsent: []
 ]
 
-{ #category : #private }
-CheckboxButtonMorph >> imageToUse [
+{ #category : 'private' }
+CheckboxButtonMorph >> formSetToUse [
 	"Answer the image we should use."
 
-	^ self imageFromName: state
+	^ self formSetFromName: state
 ]
 
-{ #category : #accessing }
-CheckboxButtonMorph >> images [
-	^ images ifNil: [images := Dictionary newFromPairs: {
-								#off . [self offImage] .
-								#pressed . [self pressedImage] .
-								#on . [self onImage] .
-								#repressed . [self repressedImage ifNil: [self onImage]] }]
+{ #category : 'accessing' }
+CheckboxButtonMorph >> formSets [
+	^ formSets ifNil: [formSets := Dictionary newFromPairs: {
+								#off . [self offFormSet] .
+								#pressed . [self pressedFormSet] .
+								#on . [self onFormSet] .
+								#repressed . [self repressedFormSet ifNil: [self onFormSet]] }]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CheckboxButtonMorph >> initialize [
 	"Initialize the receiver."
 
@@ -241,21 +245,21 @@ CheckboxButtonMorph >> initialize [
 		borderStyle: self borderStyleToUse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> isRadioButton [
 	"Answer the value of isRadioButton"
 
 	^ isRadioButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> isRadioButton: anObject [
 	"Set the value of isRadioButton"
 
 	isRadioButton := anObject
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CheckboxButtonMorph >> mouseDown: evt [
 	"Handle the transitions."
 
@@ -270,7 +274,7 @@ CheckboxButtonMorph >> mouseDown: evt [
 	self mouseStillDown: evt
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CheckboxButtonMorph >> mouseMove: evt [
 	"Check for straying."
 
@@ -287,7 +291,7 @@ CheckboxButtonMorph >> mouseMove: evt [
 					ifTrue: [self state: #off]]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CheckboxButtonMorph >> mouseUp: evt [
 	"Allow on:send:to: to set the response to events other than actWhen"
 
@@ -302,7 +306,7 @@ CheckboxButtonMorph >> mouseUp: evt [
 	^self perform: #mouseUp: withArguments: {evt} inSuperclass: Morph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CheckboxButtonMorph >> radioBorderStyleToUse [
 	"Answer the borderStyle that should be used for the receiver when it is a radio button."
 
@@ -315,7 +319,7 @@ CheckboxButtonMorph >> radioBorderStyleToUse [
 			ifFalse: [self theme radioButtonDisabledBorderStyleFor: self]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CheckboxButtonMorph >> radioFillStyleToUse [
 	"Answer the fillStyle that should be used for the receiver when it is a radio button."
 
@@ -328,30 +332,41 @@ CheckboxButtonMorph >> radioFillStyleToUse [
 			ifFalse: [self theme radioButtonDisabledFillStyleFor: self]]
 ]
 
-{ #category : #accessing }
-CheckboxButtonMorph >> repressedImage [
-	"Answer the value of repressedImage"
+{ #category : 'accessing' }
+CheckboxButtonMorph >> repressedFormSet [
 
-	^ repressedImage
+	^ repressedFormSet
 ]
 
-{ #category : #accessing }
-CheckboxButtonMorph >> repressedImage: anObject [
-	"Set the value of repressedImage. This is shown when
+{ #category : 'accessing' }
+CheckboxButtonMorph >> repressedFormSet: aFormSet [
+	"Set the value of repressedFormSet. This is shown when
 	pressed after being off."
 
-	repressedImage := anObject.
+	repressedFormSet := aFormSet.
 	self invalidRect: self bounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CheckboxButtonMorph >> repressedImage [
+
+	^ repressedFormSet ifNotNil: [ repressedFormSet asForm ]
+]
+
+{ #category : 'accessing' }
+CheckboxButtonMorph >> repressedImage: aForm [
+
+	self repressedFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
+]
+
+{ #category : 'accessing' }
 CheckboxButtonMorph >> selected [
 	"Answer the state taking account of the intermediate states."
 
 	^self state == #repressed or: [self state == #on]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> selected: aBoolean [
 	"Set the state taking account of the intermediate states."
 
@@ -360,14 +375,14 @@ CheckboxButtonMorph >> selected: aBoolean [
 		ifFalse: [self state: (aBoolean ifTrue: [#on] ifFalse: [#off])]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> state [
 	"Answer the state."
 
 	^state
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CheckboxButtonMorph >> state: newState [
 	"Change the image and invalidate the rect."
 
@@ -378,7 +393,7 @@ CheckboxButtonMorph >> state: newState [
 		changed
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 CheckboxButtonMorph >> themeChanged [
 	"Update the on image."
 

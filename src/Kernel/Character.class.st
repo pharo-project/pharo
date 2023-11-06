@@ -395,6 +395,8 @@ Character >> basicIdentityHash [
 	 The value answered is unsigned. It can in theory be in the full
 	 poisitive SmallInteger range, but based on Unicode, it is fair
 	 to assume that the value is in the range [ 0 ; 16r3FFFFF ]"
+	
+	<reflection: 'Object Inspection - Accessing object identity'>
 	<primitive: 171>
 	^self primitiveFailed
 ]
@@ -474,6 +476,12 @@ Character >> hexDigitValue [
 	^ ((codePoint := self asInteger) between: 0 and: 127)
 		ifTrue: [ #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil) at: codePoint + 1 ]
 		ifFalse: [ nil ]
+]
+
+{ #category : 'initialization' }
+Character >> initialize [
+		<ignoreUnusedClassVariables: #( CharacterTable )>
+		super initialize.
 ]
 
 { #category : 'testing' }
@@ -817,7 +825,7 @@ Character >> lowercase [
 { #category : 'memory scanning' }
 Character >> nextObject [
 	"Characters are immediate objects, and, as such, do not have successors in object memory."
-
+	<reflection: 'Memory Scanning'>
 	self shouldNotImplement
 ]
 

@@ -1,20 +1,18 @@
 "
-Instances of MessageSend encapsulate messages send to objects. Arguments can be either predefined or supplied when the message send is performed. 
+Instances of `MessageSend` encapsulate messages send to objects. Arguments can be either predefined or supplied when the message send is performed. 
 
 Use #value to perform a message send with its predefined arguments and #valueWithArguments: if additonal arguments have to supplied.
 
-Structure:
- receiver		Object -- object receiving the message send
- selector		Symbol -- message selector
- arguments		Array -- bound arguments
+## Structure
+
+- receiver: 	Object -- object receiving the message send
+
 "
 Class {
 	#name : 'MessageSend',
-	#superclass : 'Object',
+	#superclass : 'Message',
 	#instVars : [
-		'receiver',
-		'selector',
-		'arguments'
+		'receiver'
 	],
 	#category : 'Kernel-Messaging',
 	#package : 'Kernel',
@@ -33,7 +31,7 @@ MessageSend class >> receiver: anObject selector: aSymbol [
 
 { #category : 'instance creation' }
 MessageSend class >> receiver: anObject selector: aSymbol argument: aParameter [
-	^ self receiver: anObject selector: aSymbol arguments: (Array with: aParameter)
+	^ self receiver: anObject selector: aSymbol arguments: { aParameter }
 ]
 
 { #category : 'instance creation' }
@@ -50,16 +48,6 @@ MessageSend >> = anObject [
 		and: [receiver == anObject receiver
 		and: [selector == anObject selector
 		and: [arguments = anObject arguments]]]
-]
-
-{ #category : 'accessing' }
-MessageSend >> arguments [
-	^ arguments
-]
-
-{ #category : 'accessing' }
-MessageSend >> arguments: anArray [
-	arguments := anArray
 ]
 
 { #category : 'converting' }
@@ -79,7 +67,7 @@ MessageSend >> asWeakMessageSend [
 { #category : 'private' }
 MessageSend >> collectArguments: anArgArray [
 	"Private"
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	| staticArgs |
 	staticArgs := self arguments.
 	^ anArgArray size = staticArgs size
@@ -94,6 +82,7 @@ MessageSend >> collectArguments: anArgArray [
 
 { #category : 'evaluating' }
 MessageSend >> cull: arg [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ selector numArgs = 0
 		ifTrue: [ self value ]
 		ifFalse: [ self value: arg ]
@@ -101,6 +90,7 @@ MessageSend >> cull: arg [
 
 { #category : 'evaluating' }
 MessageSend >> cull: arg1 cull: arg2 [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ selector numArgs < 2
 		ifTrue: [ self cull: arg1]
 		ifFalse: [ self value: arg1 value: arg2 ]
@@ -108,6 +98,7 @@ MessageSend >> cull: arg1 cull: arg2 [
 
 { #category : 'evaluating' }
 MessageSend >> cull: arg1 cull: arg2 cull: arg3 [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ selector numArgs < 3
 		ifTrue: [ self cull: arg1 cull: arg2 ]
 		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
@@ -125,19 +116,14 @@ MessageSend >> isMessageSend [
 
 { #category : 'testing' }
 MessageSend >> isValid [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^true
 ]
 
 { #category : 'accessing' }
 MessageSend >> message [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^Message selector: selector arguments: arguments
-]
-
-{ #category : 'accessing' }
-MessageSend >> numArgs [
-	"Answer the number of arguments in this message"
-
-	^arguments size
 ]
 
 { #category : 'printing' }
@@ -154,27 +140,20 @@ MessageSend >> printOn: aStream [
 
 { #category : 'accessing' }
 MessageSend >> receiver [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^ receiver
 ]
 
 { #category : 'accessing' }
 MessageSend >> receiver: anObject [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	receiver := anObject
-]
-
-{ #category : 'accessing' }
-MessageSend >> selector [
-	^ selector
-]
-
-{ #category : 'accessing' }
-MessageSend >> selector: aSymbol [
-	selector := aSymbol
 ]
 
 { #category : 'evaluating' }
 MessageSend >> value [
   "Send the message and answer the return value"
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 
   arguments ifNil: [^ receiver perform: selector].
 
@@ -185,7 +164,7 @@ MessageSend >> value [
 
 { #category : 'evaluating' }
 MessageSend >> value: anObject [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
   ^ receiver
     perform: selector
     with: anObject
@@ -193,7 +172,7 @@ MessageSend >> value: anObject [
 
 { #category : 'evaluating' }
 MessageSend >> value: anObject1 value: anObject2 [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ receiver
 		perform: selector
 		with: anObject1
@@ -202,7 +181,7 @@ MessageSend >> value: anObject1 value: anObject2 [
 
 { #category : 'evaluating' }
 MessageSend >> value: anObject1 value: anObject2 value: anObject3 [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ receiver
 		perform: selector
 		with: anObject1
@@ -212,7 +191,7 @@ MessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 
 { #category : 'evaluating' }
 MessageSend >> valueWithArguments: anArray [
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^ receiver
 		perform: selector
 		withArguments: (self collectArguments: anArray)
@@ -221,6 +200,7 @@ MessageSend >> valueWithArguments: anArray [
 { #category : 'evaluating' }
 MessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	| args |
 	args := Array new: selector numArgs.
 	args replaceFrom: 1

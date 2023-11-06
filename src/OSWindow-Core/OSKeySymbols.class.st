@@ -4,8 +4,8 @@ This pool contains all the platform independent key symbols. They are the same u
 The symbolic constants and their mapping to named KeyboardKey	for Morphic consumption are defined in the data method. Some SDL2 constants are omitted because they are rare and they do not have a corresponding mapping in KeyboardKey. One requirement in the initialize method is that all of the named constan have a corresponding mapping in KeyboardKey.
 "
 Class {
-	#name : #OSKeySymbols,
-	#superclass : #SharedPool,
+	#name : 'OSKeySymbols',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'OSK_0',
 		'OSK_1',
@@ -160,10 +160,12 @@ Class {
 		'OSKeySymbolNameToValueMap',
 		'OSKeySymbolValueToKeyboardKeyMap'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OSKeySymbols class >> data [
 	^ #(
 		(16r0000 OSK_UNKNOWN null)
@@ -405,7 +407,7 @@ OSKeySymbols class >> data [
 	)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSKeySymbols class >> initialize [
 
 	OSKeySymbolValueToKeyboardKeyMap := Dictionary new.
@@ -425,12 +427,18 @@ OSKeySymbols class >> initialize [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeySymbols class >> mapKeySymbolNameToValue: keySymbolName [
 	^ OSKeySymbolNameToValueMap at: keySymbolName ifAbsent: [ OSK_UNKNOWN ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeySymbols class >> mapKeySymbolValueToKeyboardKey: keySymbolValue [
 	^ OSKeySymbolValueToKeyboardKeyMap at: keySymbolValue ifAbsent: [ nil ]
+]
+
+{ #category : 'initialization' }
+OSKeySymbols >> initialize [
+		<ignoreUnusedClassVariables: #( OSK_UNDERSCORE OSK_F18 OSK_6 OSK_i OSK_LEFTBRACKET OSK_LALT OSK_s OSK_F7 OSK_F17 OSK_5 OSK_h OSK_CARET OSK_RIGHTPAREN OSK_BACKQUOTE OSK_r OSK_SELECT OSK_F6 OSK_RIGHTBRACKET OSK_SCROLLLOCK OSK_LCTRL OSK_NUMLOCKCLEAR OSK_F16 OSK_EQUALS OSK_4 OSK_g OSK_q OSK_F24 OSK_SYSREQ OSK_LESS OSK_QUESTION OSK_COMMA OSK_F5 OSK_COLON OSK_F15 OSK_3 OSK_f OSK_LGUI OSK_p OSK_F23 OSK_GREATER OSK_z OSK_ASTERISK OSK_F4 OSK_AT OSK_MENU OSK_RSHIFT OSK_F14 OSK_2 OSK_e OSK_PLUS OSK_o OSK_F22 OSK_EXCLAIM OSK_y OSK_F3 OSK_RALT OSK_CANCEL OSK_STOP OSK_EXECUTE OSK_COPY OSK_F13 OSK_1 OSK_d OSK_CLEAR OSK_PRINTSCREEN OSK_n OSK_PERCENT OSK_x OSK_APPLICATION OSK_F2 OSK_PASTE OSK_F12 OSK_SPACE OSK_0 OSK_c OSK_SLASH OSK_m OSK_w OSK_F1 OSK_PRIOR OSK_QUOTE OSK_F11 OSK_HELP OSK_b OSK_PAUSE OSK_MINUS OSK_DOLLAR OSK_9 OSK_l OSK_F21 OSK_v OSK_RGUI OSK_AMPERSAND OSK_F10 OSK_UNDO OSK_a OSK_FIND OSK_ESCAPE OSK_8 OSK_k OSK_QUOTEDBL OSK_F20 OSK_LSHIFT OSK_u OSK_HASH OSK_BACKSLASH OSK_F9 OSK_CUT OSK_PERIOD OSK_AGAIN OSK_RCTRL OSK_F19 OSK_7 OSK_j OSK_KP_EQUALS OSK_SEMICOLON OSK_t OSK_LEFTPAREN OSK_F8 OSK_CAPSLOCK )>
+		super initialize.
 ]

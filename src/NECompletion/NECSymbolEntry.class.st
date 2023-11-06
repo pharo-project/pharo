@@ -2,12 +2,14 @@
 I represent a symbol, there might be a method with this selector
 "
 Class {
-	#name : #NECSymbolEntry,
-	#superclass : #NECEntry,
-	#category : #'NECompletion-Model'
+	#name : 'NECSymbolEntry',
+	#superclass : 'NECEntry',
+	#category : 'NECompletion-Model',
+	#package : 'NECompletion',
+	#tag : 'Model'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NECSymbolEntry >> browse [
 	| class |
 	class := node propertyAt: #type ifAbsent: nil.
@@ -25,7 +27,7 @@ NECSymbolEntry >> browse [
 			true ]
 ]
 
-{ #category : #'detail information' }
+{ #category : 'detail information' }
 NECSymbolEntry >> createDescription [
 	"Creates description either from looking up the method in a class,
 	or in the system."
@@ -38,7 +40,7 @@ NECSymbolEntry >> createDescription [
 		ifAbsent: [:selector | self implementorsDescription: selector]
 ]
 
-{ #category : #'detail information' }
+{ #category : 'detail information' }
 NECSymbolEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	| result  implementors |
 
@@ -52,7 +54,7 @@ NECSymbolEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	^ foundBlock value: result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECSymbolEntry >> implementorsDescription: aSymbol [
 	| implementors output |
 	output := WriteStream on: String new.
@@ -72,7 +74,7 @@ NECSymbolEntry >> implementorsDescription: aSymbol [
 		description: output contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 	"I return if it's a class or a method, its class name, and the implementation."
 	| styler styledText |
@@ -87,7 +89,7 @@ NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 		description: styledText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECSymbolEntry >> selector [
 
 	^ contents

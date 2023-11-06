@@ -2,24 +2,25 @@
 A BalloonEngineTest is a test class for testing the behavior of BalloonEngine
 "
 Class {
-	#name : #BalloonEngineTest,
-	#superclass : #TestCase,
-	#category : #'FormCanvas-Tests'
+	#name : 'BalloonEngineTest',
+	#superclass : 'TestCase',
+	#category : 'FormCanvas-Tests',
+	#package : 'FormCanvas-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BalloonEngineTest >> testDefaultBitmapWidth [
 
 	self assert: BalloonEngine defaultBitmapWidth equals: 2048
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BalloonEngineTest >> testSpan [
 
 	| engine |
 	engine := BalloonEngine new.
 
 	Display width > 0
-		ifTrue: [ self assert: engine span size equals: Display width ]
-		ifFalse: [ self assert: engine span size equals: BalloonEngine defaultBitmapWidth ]
+		ifTrue: [ self assert: engine span size equals: Display width + 1 ]
+		ifFalse: [ self assert: engine span size equals: BalloonEngine defaultBitmapWidth + 1 ]
 ]

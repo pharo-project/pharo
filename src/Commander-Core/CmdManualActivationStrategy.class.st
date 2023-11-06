@@ -4,12 +4,13 @@ For example I can be used in button kind widgets where model is command activato
 In that case widgets are able create activator directly from given command using my instance and null tool context.
 "
 Class {
-	#name : #CmdManualActivationStrategy,
-	#superclass : #CmdCommandActivationStrategy,
-	#category : #'Commander-Core'
+	#name : 'CmdManualActivationStrategy',
+	#superclass : 'CmdCommandActivationStrategy',
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdManualActivationStrategy >> menuItemNameFor: aCommand [
 	^ aCommand defaultMenuItemName
 ]

@@ -25,18 +25,19 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #ClyRing2Environment,
-	#superclass : #Object,
+	#name : 'ClyRing2Environment',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'name',
 		'packageOrganizer',
 		'projectManager'
 	],
-	#category : #'Calypso-Ring'
+	#category : 'Calypso-Ring',
+	#package : 'Calypso-Ring'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyRing2Environment class >> on: anRGEvironment [
 
 	^ self new
@@ -44,25 +45,25 @@ ClyRing2Environment class >> on: anRGEvironment [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyRing2Environment >> asGlobalScopeIn: aNavigationEnvironment [
 
 
 	^ClySystemEnvironmentScope of: self in: aNavigationEnvironment named: name
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 ClyRing2Environment >> bindingOf: aSymbol [
 
 	^ environment bindingOf: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> classes [
 	^ self environment ask allClasses
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> compileANewClassFrom: aString notifying: aController startingFrom: aClass [
 
 	| importer |
@@ -74,96 +75,96 @@ ClyRing2Environment >> compileANewClassFrom: aString notifying: aController star
 	^ aClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> createPackageNamed: aPackageName [
 
 	^ environment ensurePackageNamed: aPackageName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> defaultClassCompiler [
 
 	^ self class compiler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> includesClassNamed: aSymbol [
 
 	^ self environment includesClassNamed: aSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> initialize [
 
 	super initialize.
 
 	environment := RGEnvironment new.
-	projectManager := ClyProjectManagerRegistry new
+	projectManager := ProjectManager new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> name [
 	^ name ifNil: [ super printString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> packageOrganizer [
 	^ packageOrganizer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> packageOrganizer: anObject [
 	packageOrganizer := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> packages [
 
 	^ environment ask packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> projectManager [
 	^ projectManager
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRing2Environment >> projectManager: anObject [
 	projectManager := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> subscribe: anObject [
 	self subscribe: anObject for: SystemAnnouncement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> subscribe: anObject for: anAnnouncementClass [
 	self unsubscribe: anObject.
 	environment announcer when: anAnnouncementClass send: #systemChanged: to: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyRing2Environment >> unsubscribe: anObject [
 	environment announcer unsubscribe: anObject
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 ClyRing2Environment >> when: anAnnouncementClass send: aSelector to: anObject [
 	self environment announcer when: anAnnouncementClass send: aSelector to: anObject
 ]

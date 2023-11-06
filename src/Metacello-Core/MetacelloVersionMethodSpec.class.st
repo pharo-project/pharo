@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloVersionMethodSpec,
-	#superclass : #MetacelloMethodSpec,
+	#name : 'MetacelloVersionMethodSpec',
+	#superclass : 'MetacelloMethodSpec',
 	#instVars : [
 		'imports'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetacelloVersionMethodSpec >> addMethodSection: attributePath versionSpec: versionSpec [
     | attributeList methodSection index sections found |
     attributeList := attributePath last.
@@ -38,7 +40,7 @@ MetacelloVersionMethodSpec >> addMethodSection: attributePath versionSpec: versi
         ifFalse: [ self methodSections add: methodSection ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetacelloVersionMethodSpec >> findMethodSection: attributeOrPath sectionIndex: sectionIndex [
     | attributePath index sections found |
     attributePath := attributeOrPath asMetacelloAttributePath.
@@ -60,18 +62,18 @@ MetacelloVersionMethodSpec >> findMethodSection: attributeOrPath sectionIndex: s
     self error: 'Method section for attribute: ' , attributePath printString , ' not found.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSpec >> imports [
-	imports == nil ifTrue: [ imports := #() ].
-	^ imports
+
+	^ imports ifNil: [ imports := #(  ) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSpec >> imports: anObject [
 	imports := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloVersionMethodSpec >> methodSection: methodSection pre: preBlock last: last post: postBlock indent: indent [
 	| list |
 	methodSection ~~ self
@@ -90,7 +92,7 @@ MetacelloVersionMethodSpec >> methodSection: methodSection pre: preBlock last: l
 		ifTrue: [ postBlock value: methodSection value: indent value: last ]
 ]
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloVersionMethodSpec >> methodSelectorAndPragma: aSelector imports: importList versionString: aString on: strm [
 	strm
 		nextPutAll: aSelector asString , ' spec';
@@ -111,7 +113,7 @@ MetacelloVersionMethodSpec >> methodSelectorAndPragma: aSelector imports: import
 		cr
 ]
 
-{ #category : #'method generation' }
+{ #category : 'method generation' }
 MetacelloVersionMethodSpec >> methodSource [
     | strm |
     strm := WriteStream on: String new.
@@ -138,7 +140,7 @@ MetacelloVersionMethodSpec >> methodSource [
     ^ strm contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionMethodSpec >> versionString: aStringOrSymbol [
 
 	aStringOrSymbol isSymbol ifTrue: [ self error: 'Version string ', aStringOrSymbol printString, ' for version method must be a String' ].

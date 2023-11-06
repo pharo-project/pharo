@@ -27,32 +27,34 @@ Comparing Symbols takes less time than comparing Strings.
 ```
 "
 Class {
-	#name : #Symbol,
-	#superclass : #String,
+	#name : 'Symbol',
+	#superclass : 'String',
 	#classVars : [
 		'NewSymbols',
 		'SelectorTable',
 		'StrictComparison',
 		'SymbolTable'
 	],
-	#category : #'Collections-Strings-Base'
+	#category : 'Collections-Strings-Base',
+	#package : 'Collections-Strings',
+	#tag : 'Base'
 }
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> allSymbolTablesDo: aBlock [
 
 	NewSymbols do: aBlock.
 	SymbolTable do: aBlock
 ]
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> allSymbolTablesDo: aBlock after: aSymbol [
 
 	NewSymbols do: aBlock after: aSymbol.
 	SymbolTable do: aBlock after: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Symbol class >> allSymbols [
 	"Answer all interned symbols"
 	^Array streamContents:[:s|
@@ -61,14 +63,14 @@ Symbol class >> allSymbols [
 	]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Symbol class >> cleanUp [
 	"Flush caches"
 
 	self rehash
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Symbol class >> compactSymbolTable [
 	"this used to create a set with just 25% empty space, but that reduces lookup performance"
 		self
@@ -77,7 +79,7 @@ Symbol class >> compactSymbolTable [
 	self rehash
 ]
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> findInterned: aStringOrSymbol [
 
 	^(SymbolTable like: aStringOrSymbol) ifNil: [
@@ -85,7 +87,7 @@ Symbol class >> findInterned: aStringOrSymbol [
 	]
 ]
 
-{ #category : #'selector table' }
+{ #category : 'selector table' }
 Symbol class >> findInternedSelector: aString [
 	"return a selector if the argument is used as a selector, nil if not"
 	self deprecated: 'use #isSelectorSymbol instead'.
@@ -94,14 +96,14 @@ Symbol class >> findInternedSelector: aString [
 			  selectorSymbol ] ]
 ]
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> hasInterned: aStringOrSymbol [
 	"Answer with false if aString hasnt been interned (into a Symbol)"
 
 	^(SymbolTable includes: aStringOrSymbol) or: [ NewSymbols includes: aStringOrSymbol ]
 ]
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> hasInterned: aString ifTrue: symBlock [
 	"Answer with false if aString hasnt been interned (into a Symbol),
 	otherwise supply the symbol to symBlock and return true.
@@ -114,20 +116,20 @@ Symbol class >> hasInterned: aString ifTrue: symBlock [
 			true ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Symbol class >> initialize [
 
 	self rehash
 ]
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
 	^ (self findInterned: aStringOrSymbol) ifNil: [
 		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> lookup: aStringOrSymbol [
 	self
 		deprecated: 'Use #findInterned: instead'
@@ -136,18 +138,18 @@ Symbol class >> lookup: aStringOrSymbol [
 	^ self findInterned: aStringOrSymbol
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Symbol class >> new: aSize [
 
 	self shouldNotImplement
 ]
 
-{ #category : #'stream creation' }
+{ #category : 'stream creation' }
 Symbol class >> new: size streamContents: aBlock [
 	^ (super new: size streamContents: aBlock) asSymbol
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Symbol class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 
@@ -158,7 +160,7 @@ Symbol class >> newFrom: aCollection [
 "
 ]
 
-{ #category : #'selector table' }
+{ #category : 'selector table' }
 Symbol class >> possibleSelectorsFor: misspelled [
 	"Answer an ordered collection of possible corrections
 	for the misspelled selector in order of likelyhood"
@@ -187,7 +189,7 @@ Symbol class >> possibleSelectorsFor: misspelled [
 	^ best
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Symbol class >> readFrom: strm [
 	"Symbol readFromString: '#abc'"
 
@@ -195,7 +197,7 @@ Symbol class >> readFrom: strm [
     	^ strm contents parseLiterals first
 ]
 
-{ #category : #'selector table' }
+{ #category : 'selector table' }
 Symbol class >> rebuildSelectorTable [
 
 	^ SystemNavigation new allMethods
@@ -203,12 +205,12 @@ Symbol class >> rebuildSelectorTable [
 		  as: WeakIdentitySet
 ]
 
-{ #category : #'selector table' }
+{ #category : 'selector table' }
 Symbol class >> recordSelector: aSymbol [
 	self selectorTable add: aSymbol
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Symbol class >> rehash [
    "Symbol rehash"
 	"Rebuild the hash table, reclaiming unreferenced Symbols."
@@ -218,17 +220,17 @@ Symbol class >> rehash [
 	self resetSelectorTable
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 Symbol class >> resetSelectorTable [
 	^ SelectorTable := nil
 ]
 
-{ #category : #'selector table' }
+{ #category : 'selector table' }
 Symbol class >> selectorTable [
 	^SelectorTable ifNil: [SelectorTable := self rebuildSelectorTable]
 ]
 
-{ #category : #'selector table' }
+{ #category : 'selector table' }
 Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 	"Same as thatStartsCaseSensitive:skipping: but on the SelectorTable only"
 	| size firstMatch key |
@@ -250,14 +252,14 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 	^nil
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.
 	NewSymbols := WeakSetOfSymbols new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Symbol class >> streamSpecies [
 	^ String
 ]
@@ -320,7 +322,7 @@ Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 "Symbol thatStarts: 'candidate' skipping: nil"
 ]
 
-{ #category : #'symbol table' }
+{ #category : 'symbol table' }
 Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 	"Same as thatStarts:skipping: but caseSensitive"
 	| size firstMatch key |
@@ -342,18 +344,18 @@ Symbol class >> thatStartsCaseSensitive: leadingCharacters skipping: skipSym [
 	^nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Symbol class >> with: aCharacter [
 
 	^ self newFrom: (OrderedCollection with: aCharacter)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Symbol class >> withAll: aCollection [
 	^ self newFrom: aCollection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Symbol >> , otherSymbolOrString [
 	"Concatenate the receiver with otherSymbolOrString and return the result.
 	Overwritten to always return Symbol results,
@@ -362,7 +364,7 @@ Symbol >> , otherSymbolOrString [
 	^ (super , otherSymbolOrString) asSymbol
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Symbol >> = aSymbol [
 	"Compare the receiver and aSymbol."
 	Symbol strictComparison ifTrue: [ ^ self == aSymbol ].
@@ -372,13 +374,7 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
-{ #category : #converting }
-Symbol >> asAnnouncement [
-
-	^ self
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 Symbol >> asMutator [
 	"Return a setter message from a getter message.
 	Return self if it is already a setter.
@@ -394,7 +390,7 @@ Symbol >> asMutator [
 	^ (self copyWith: $:) asSymbol
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Symbol >> asString [
 	"Refer to the comment in String|asString."
 	| newString |
@@ -403,53 +399,53 @@ Symbol >> asString [
 	^newString
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Symbol >> asSymbol [
 	"Refer to the comment in String|asSymbol."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Symbol >> at: anInteger put: anObject [
 	"You cannot modify the receiver."
 
 	self errorNoModification
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Symbol >> capitalized [
 	^ self asString capitalized asSymbol
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Symbol >> copy [
 	"Answer with the receiver, because Symbols are unique."
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Symbol >> createSymbol [
 
 	^ self
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Symbol >> cull: anObject [
 	^anObject perform: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Symbol >> errorNoModification [
 
 	self error: 'symbols can not be modified.'
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Symbol >> flushCache [
 	"Tell the virtual machine to remove all entries with this symbol as a selector from its method lookup caches, if it has any.  This 	must be done whenever a method is added, redefined or removed, so that message lookups reflect the revised organization.  c.f. 	Behavior>>flushCache & CompiledMethod>>flushCache.  Essential. See MethodDictionary class comment."
 
 	<primitive: 119>
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 Symbol >> handlesAnnouncement: anAnnouncement [
 	"Anything else than the announcement identifier (in the case of symbol i.e. #foo for ... on: #foo send: #bar to: nil) will not
 	be handled."
@@ -461,56 +457,56 @@ Symbol >> handlesAnnouncement: anAnnouncement [
 	^ anAnnouncement == self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> includesKey: sym [
 	^self == sym
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isBinary [
 	"Answer whether the receiver is a binary message selector."
 
 	^ self precedence = 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isDoIt [
 
 	^ self == #DoIt
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isInfix [
 	"Answer whether the receiver is an infix message selector."
 
 	^ self precedence = 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isKeyword [
 	"Answer whether the receiver is a message keyword."
 
 	^ self precedence = 3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isOrientedFill [
 	"Needs to be implemented here because symbols can occupy 'color' slots of morphs."
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isSelectorSymbol [
 	^ self class selectorTable includes: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isSymbol [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Symbol >> isUnary [
 	"Answer whether the receiver is an unary message selector."
 
@@ -521,7 +517,7 @@ Symbol >> isUnary [
 	^ self precedence = 1
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Symbol >> keywordsStrict [
 	"Returns the keywords of the provided selector. If the receiver is not keyword-based, an empty array is returned."
 
@@ -538,13 +534,13 @@ Symbol >> keywordsStrict [
 		  ifFalse: [ #(  ) ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Symbol >> literalEqual: other [
 
 	^ self == other
 ]
 
-{ #category : #'system primitives' }
+{ #category : 'system primitives' }
 Symbol >> numArgs: n [
 	"Answer a string that can be used as a selector with n arguments.
 	 TODO: need to be extended to support shrinking and for selectors like #+ "
@@ -564,7 +560,7 @@ Symbol >> numArgs: n [
 			stream nextPutAll: 'with:' ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Symbol >> precedence [
 	"Answer the receiver's precedence, assuming it is a valid Smalltalk
 	message selector or 0 otherwise.  The numbers are 1 for unary,
@@ -576,17 +572,18 @@ Symbol >> precedence [
 	^ 1
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 Symbol >> prepareForDelivery [
 	"somehow symbol can be announcemnt"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Symbol >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 
 	self errorNoModification
 ]
 
+<<<<<<< HEAD
 { #category : #comparing }
 Symbol >> sameContents: aSymbol [
 	"Compare the receiver and aSymbol."
@@ -597,6 +594,9 @@ Symbol >> sameContents: aSymbol [
 ]
 
 { #category : #converting }
+=======
+{ #category : 'converting' }
+>>>>>>> Pharo12
 Symbol >> separateKeywords [
 	"#'foo:zork:' separateKeywords -> 'foo:  zork:'"
 
@@ -611,19 +611,19 @@ Symbol >> separateKeywords [
 				separatedBy: [ stream nextPutAll: '  ' ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Symbol >> shallowCopy [
 	"Answer with the receiver, because Symbols are unique."
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Symbol >> sorted: aSortBlockOrNil [
 	"Return a new sequenceable collection which contains the same elements as self but its elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if the first element should preceed the second one. If aSortBlock is nil then <= is used for comparison. We convert the symbol to an array because symbols can't be changed."
 
 	^self asArray sort: aSortBlockOrNil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Symbol >> storeOn: aStream [
 
 	aStream nextPut: $#.
@@ -632,26 +632,26 @@ Symbol >> storeOn: aStream [
 		ifFalse: [super storeOn: aStream]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Symbol >> string: aString [
 
 	1 to: aString size do: [:j | super at: j put: (aString at: j)].
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Symbol >> uncapitalized [
 	"Answer an object like the receiver but with first character downshifted if necessary"
 
 	^ self asString uncapitalized asSymbol
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Symbol >> value: anObject [
 	^anObject perform: self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Symbol >> veryDeepCopyWith: deepCopier [
 	"Return self.  I am immutable in the Morphic world.  Do not record me."
 ]

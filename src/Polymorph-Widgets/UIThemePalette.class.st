@@ -2,655 +2,657 @@
 I am a color palette. I cache the colors that are returned by the color configurator in a dictionary.
 "
 Class {
-	#name : #UIThemePalette,
-	#superclass : #Object,
+	#name : 'UIThemePalette',
+	#superclass : 'Object',
 	#instVars : [
 		'colorConfigurator',
 		'paletteDictionary'
 	],
-	#category : #'Polymorph-Widgets-Themes'
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> backgroundColor [
 
 	^ paletteDictionary at: #backgroundColor ifAbsentPut: [ colorConfigurator backgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> badgeColor [
 
 	^ paletteDictionary at: #badgeColor ifAbsentPut: [ colorConfigurator badgeColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> badgeTextColor [
 
 	^ paletteDictionary at: #badgeTextColor ifAbsentPut: [ colorConfigurator badgeTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> balloonBackgroundColor [
 
 	^ paletteDictionary at: #balloonBackgroundColor ifAbsentPut: [ colorConfigurator balloonBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> balloonTextColor [
 
 	^ paletteDictionary at: #balloonTextColor ifAbsentPut: [ colorConfigurator balloonTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> baseColor [
 
 	^ paletteDictionary at: #baseColor ifAbsentPut: [ colorConfigurator baseColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> baseColorFor: anObject [
 
 	^ paletteDictionary at: #baseColorFor: ifAbsentPut: [ colorConfigurator baseColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> basePassiveBackgroundColor [
 
 	^ paletteDictionary at: #basePassiveBackgroundColor ifAbsentPut: [ colorConfigurator basePassiveBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> baseScrollbarColorFor: aScrollbar [
 
 	^ paletteDictionary at: #baseScrollbarColorFor: ifAbsentPut: [ colorConfigurator baseScrollbarColorFor: aScrollbar ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> baseSelectionColor [
 
 	^ paletteDictionary at: #baseSelectionColor ifAbsentPut: [ colorConfigurator baseSelectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> borderColor [
 
 	^ paletteDictionary at: #borderColor ifAbsentPut: [ colorConfigurator borderColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> buttonColor [
 
 	^ paletteDictionary at: #buttonColor ifAbsentPut: [ colorConfigurator buttonColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> buttonColorFor: aButton [
 
 	^ paletteDictionary at: #buttonColorFor: ifAbsentPut: [ colorConfigurator buttonColorFor: aButton ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> buttonColouredMiddleColor [
 
 	^ paletteDictionary at: #buttonColouredMiddleColor ifAbsentPut: [ colorConfigurator buttonColouredMiddleColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> buttonPlainMiddleColor [
 
 	^ paletteDictionary at: #buttonPlainMiddleColor ifAbsentPut: [ colorConfigurator buttonPlainMiddleColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> calypsoFrozenItemColor [
 
 	^ paletteDictionary at: #calypsoFrozenItemColor ifAbsentPut: [ colorConfigurator calypsoFrozenItemColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> caretColor [
 
 	^ paletteDictionary at: #caretColor ifAbsentPut: [ colorConfigurator caretColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> classExtensionColor [
 
 	^ paletteDictionary at: #classExtensionColor ifAbsentPut: [ colorConfigurator classExtensionColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UIThemePalette >> colorConfigurator: aColorConfigurator [
 
 	colorConfigurator := aColorConfigurator
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> dangerBackgroundColor [
 
 	^ paletteDictionary at: #dangerBackgroundColor ifAbsentPut: [ colorConfigurator dangerBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> dangerTextColor [
 
 	^ paletteDictionary at: #dangerTextColor ifAbsentPut: [ colorConfigurator dangerTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> darkBaseColor [
 
 	^ paletteDictionary at: #darkBaseColor ifAbsentPut: [ colorConfigurator darkBaseColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> desktopColor [
 
 	^ paletteDictionary at: #desktopColor ifAbsentPut: [ colorConfigurator desktopColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffAdditionalLineBackgroundColor [
 
 	^ paletteDictionary at: #diffAdditionalLineBackgroundColor ifAbsentPut: [ colorConfigurator diffAdditionalLineBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffAdditionalTextInLineBackgroundColor [
 
 	^ paletteDictionary at: #diffAdditionalTextInLineBackgroundColor ifAbsentPut: [ colorConfigurator diffAdditionalTextInLineBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffEdgeColor [
 
 	^ paletteDictionary at: #diffEdgeColor ifAbsentPut: [ colorConfigurator diffEdgeColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffJoinColor [
 
 	^ paletteDictionary at: #diffJoinColor ifAbsentPut: [ colorConfigurator diffJoinColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffMapColor [
 
 	^ paletteDictionary at: #diffMapColor ifAbsentPut: [ colorConfigurator diffMapColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffModificatedLineBackgroundColor [
 
 	^ paletteDictionary at: #diffModificatedLineBackgroundColor ifAbsentPut: [ colorConfigurator diffModificatedLineBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffRemovalHighlightColor [
 
 	^ paletteDictionary at: #diffRemovalHighlightColor ifAbsentPut: [ colorConfigurator diffRemovalHighlightColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> diffRemovedLinesBackgroundColor [
 
 	^ paletteDictionary at: #diffRemovedLinesBackgroundColor ifAbsentPut: [ colorConfigurator diffRemovedLinesBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> disabledColor [
 
 	^ paletteDictionary at: #disabledColor ifAbsentPut: [ colorConfigurator disabledColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> disabledLabelColor [
 
 	^ paletteDictionary at: #disabledLabelColor ifAbsentPut: [ colorConfigurator disabledLabelColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> disabledTextColor [
 
 	^ paletteDictionary at: #disabledTextColor ifAbsentPut: [ colorConfigurator disabledTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> dropListNormalFillStyleFor: anObject [
 
 	^ paletteDictionary at: #dropListNormalFillStyleFor: ifAbsentPut: [ colorConfigurator dropListNormalFillStyleFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> dropListNormalListFillStyleFor: anObject [
 
 	^ paletteDictionary at: #dropListNormalListFillStyleFor: ifAbsentPut: [ colorConfigurator dropListNormalListFillStyleFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> enabledColor [
 
 	^ paletteDictionary at: #enabledColor ifAbsentPut: [ colorConfigurator enabledColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> errorPopperBackgroundColor [
 
 	^ paletteDictionary at: #errorPopperBackgroundColor ifAbsentPut: [ colorConfigurator errorPopperBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> ghostTextColor [
 
 	^ paletteDictionary at: #ghostTextColor ifAbsentPut: [ colorConfigurator ghostTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> growlBorderColorFor: aGrowlMorph [
 
 	^ paletteDictionary at: #growlBorderColorFor: ifAbsentPut: [ colorConfigurator growlBorderColorFor: aGrowlMorph ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> growlContentsColorFor: aGrowlMorph [
 
 	^ paletteDictionary at: #growlContentsColorFor:
 		  ifAbsentPut: [ colorConfigurator growlContentsColorFor: aGrowlMorph ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> growlFillColorFor: aGrowlMorph [
 
 	^ paletteDictionary at: #growlFillColorFor: ifAbsentPut: [ colorConfigurator growlFillColorFor: aGrowlMorph ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> growlLabelColorFor: aGrowlMorph [
 
 	^ paletteDictionary at: #growlLabelColorFor: ifAbsentPut: [ colorConfigurator growlLabelColorFor: aGrowlMorph ]
 ]
 
-{ #category : #'basic-colors' }
+{ #category : 'basic-colors' }
 UIThemePalette >> highlightTextColor [
 	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
 
 	^ paletteDictionary at: #highlightTextColor ifAbsentPut: [ colorConfigurator highlightTextColor ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UIThemePalette >> initialize [
 
 	super initialize.
 	paletteDictionary := Dictionary new
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> lessConspicuousColorFrom: anObject [
 
 	^ paletteDictionary at: #lessConspicuousColorFrom: ifAbsentPut: [ colorConfigurator lessConspicuousColorFrom: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> lightBackgroundColor [
 
 	^ paletteDictionary at: #lightBackgroundColor ifAbsentPut: [ colorConfigurator lightBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> lightBaseColor [
 
 	^ paletteDictionary at: #lightBaseColor ifAbsentPut: [ colorConfigurator lightBaseColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> lightColorFor: anObject [
 
 	^ paletteDictionary at: #lightColorFor: ifAbsentPut: [ colorConfigurator lightColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> lightSelectionColor [
 
 	^ paletteDictionary at: #lightSelectionColor ifAbsentPut: [ colorConfigurator lightSelectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> lineNumberColor [
 
 	^ paletteDictionary at: #lineNumberColor ifAbsentPut: [ colorConfigurator lineNumberColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> listBackgroundColor [
 
 	^ paletteDictionary at: #listBackgroundColor ifAbsentPut: [ colorConfigurator listBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> listNormalFillStyleFor: anObject [
 
 	^ paletteDictionary at: #listNormalFillStyleFor: ifAbsentPut: [ colorConfigurator listNormalFillStyleFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> listTextColor [
 
 	^ paletteDictionary at: #listTextColor ifAbsentPut: [ colorConfigurator listTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> menuBorderColor [
 
 	^ paletteDictionary at: #menuBorderColor ifAbsentPut: [ colorConfigurator menuBorderColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> menuColor [
 
 	^ paletteDictionary at: #menuColor ifAbsentPut: [ colorConfigurator menuColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> menuItemDisabledTextColorFor: anObject [
 
 	^ paletteDictionary at: #menuItemDisabledTextColorFor: ifAbsentPut: [ colorConfigurator menuItemDisabledTextColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> menuKeyboardFocusColor [
 
 	^ paletteDictionary at: #menuKeyboardFocusColor ifAbsentPut: [ colorConfigurator menuKeyboardFocusColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> menuSelectionColor [
 
 	^ paletteDictionary at: #menuSelectionColor ifAbsentPut: [ colorConfigurator menuSelectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> menuShadowColor [
 
 	^ paletteDictionary at: #menuShadowColor ifAbsentPut: [ colorConfigurator menuShadowColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> menuTitleColor [
 
 	^ paletteDictionary at: #menuTitleColor ifAbsentPut: [ colorConfigurator menuTitleColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> modalBackdropColor [
 
 	^ paletteDictionary at: #modalBackdropColor ifAbsentPut: [ colorConfigurator modalBackdropColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> mouseOverColor [
 
 	^ paletteDictionary at: #mouseOverColor ifAbsentPut: [ colorConfigurator mouseOverColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> paginatorSelectionColor [
 
 	^ paletteDictionary at: #paginatorSelectionColor ifAbsentPut: [ colorConfigurator paginatorSelectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> patchworkUIThemeColorFor: anObject [
 
 	^ paletteDictionary at: #patchworkUIThemeColorFor: ifAbsentPut: [ colorConfigurator patchworkUIThemeColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> popoverButtonColor [
 
 	^ paletteDictionary at: #popoverButtonColor ifAbsentPut: [ colorConfigurator popoverButtonColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> progressBarColorFor: anObject [
 
 	^ paletteDictionary at: #progressBarColorFor: ifAbsentPut: [ colorConfigurator progressBarColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> progressBarProgressColorFor: anObject [
 
 	^ paletteDictionary at: #progressBarProgressColorFor: ifAbsentPut: [ colorConfigurator progressBarProgressColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> resizerGripNormalFillStyleFor: aResizer [
 
 	^ paletteDictionary at: #resizerGripNormalFillStyleFor: ifAbsentPut: [ colorConfigurator resizerGripNormalFillStyleFor: aResizer ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> scrollbarColor [
 
 	^ paletteDictionary at: #scrollbarColor ifAbsentPut: [ colorConfigurator scrollbarColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> scrollbarColorFor: aScrollbar [
 
 	^ paletteDictionary at: #scrollbarColorFor: ifAbsentPut: [ colorConfigurator scrollbarColorFor: aScrollbar ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> scrollbarImageColorFor: aScrollbar [
 
 	^ paletteDictionary at: #scrollbarImageColorFor: ifAbsentPut: [ colorConfigurator scrollbarImageColorFor: aScrollbar ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> scrollbarNormalFillStyleFor: aScrollbar [
 
 	^ paletteDictionary at: #scrollbarNormalFillStyleFor: ifAbsentPut: [ colorConfigurator scrollbarNormalFillStyleFor: aScrollbar ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> secondarySelectionColor [
 
 	^ paletteDictionary at: #secondarySelectionColor ifAbsentPut: [ colorConfigurator secondarySelectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> selectedItemListTextColor [
 
 	^ paletteDictionary at: #selectedItemListTextColor ifAbsentPut: [ colorConfigurator selectedItemListTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> selectionBarColor [
 
 	^ paletteDictionary at: #selectionBarColor ifAbsentPut: [ colorConfigurator selectionBarColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> selectionColor [
 
 	^ paletteDictionary at: #selectionColor ifAbsentPut: [ colorConfigurator selectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> selectionTextColor [
 
 	^ paletteDictionary at: #selectionTextColor ifAbsentPut: [ colorConfigurator selectionTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> sliderNormalFillStyleFor: anObject [
 
 	^ paletteDictionary at: #sliderNormalFillStyleFor: ifAbsentPut: [ colorConfigurator sliderNormalFillStyleFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> spotlightWindowColor [
 
 	^ paletteDictionary at: #spotlightWindowColor ifAbsentPut: [ colorConfigurator spotlightWindowColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> subgroupColorFrom: anObject [
 
 	^ paletteDictionary at: #subgroupColorFrom: ifAbsentPut: [ colorConfigurator subgroupColorFrom: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> successBackgroundColor [
 
 	^ paletteDictionary at: #successBackgroundColor ifAbsentPut: [ colorConfigurator successBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> successTextColor [
 
 	^ paletteDictionary at: #successTextColor ifAbsentPut: [ colorConfigurator successTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> taskbarActiveButtonColorFor: anObject [
 
 	^ paletteDictionary at: #taskbarActiveButtonColorFor: ifAbsentPut: [ colorConfigurator taskbarActiveButtonColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> taskbarButtonColorFor: anObject [
 
 	^ paletteDictionary at: #taskbarButtonColorFor: ifAbsentPut: [ colorConfigurator taskbarButtonColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> taskbarButtonLabelColorFor: aButton [
 
 	^ paletteDictionary at: #taskbarButtonLabelColorFor: ifAbsentPut: [ colorConfigurator taskbarButtonLabelColorFor: aButton ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> taskbarItemLabelColorForCollapsed: anObject [
 
 	^ paletteDictionary at: #taskbarItemLabelColorForCollapsed: ifAbsentPut: [ colorConfigurator taskbarItemLabelColorForCollapsed: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> taskbarItemLabelColorForExpanded: anObject [
 
 	^ paletteDictionary at: #taskbarItemLabelColorForExpanded: ifAbsentPut: [ colorConfigurator taskbarItemLabelColorForExpanded: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> taskbarMinimizedButtonColorFor: anObject [
 
 	^ paletteDictionary at: #taskbarMinimizedButtonColorFor: ifAbsentPut: [ colorConfigurator taskbarMinimizedButtonColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> textColor [
 
 	^ paletteDictionary at: #textColor ifAbsentPut: [ colorConfigurator textColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> textColorForNonStandardBackground [
 
 	^ paletteDictionary at: #textColorForNonStandardBackground ifAbsentPut: [ colorConfigurator textColorForNonStandardBackground ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> textEditorNormalFillStyleFor: anObject [
 
 	^ paletteDictionary at: #textEditorNormalFillStyleFor: ifAbsentPut: [ colorConfigurator textEditorNormalFillStyleFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> textFieldNormalFillStyleFor: aTextField [
 
 	^ paletteDictionary at: #textFieldNormalFillStyleFor: ifAbsentPut: [ colorConfigurator textFieldNormalFillStyleFor: aTextField ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> themeSettings [
 
 	^ paletteDictionary at: #themeSettings ifAbsentPut: [ colorConfigurator themeSettings ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> themeSettings: anObject [
 
 	^ paletteDictionary at: #themeSettings: ifAbsentPut: [ colorConfigurator themeSettings: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> treeLineColorsFrom: aColor [
 
 	^ paletteDictionary at: #treeLineColorsFrom: ifAbsentPut: [ colorConfigurator treeLineColorsFrom: aColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> unfocusedSelectionColor [
 
 	^ paletteDictionary at: #unfocusedSelectionColor ifAbsentPut: [ colorConfigurator unfocusedSelectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> urlColor [
 
 	^ paletteDictionary at: #urlColor ifAbsentPut: [ colorConfigurator urlColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> veryLightSelectionColor [
 
 	^ paletteDictionary at: #veryLightSelectionColor ifAbsentPut: [ colorConfigurator veryLightSelectionColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> warningBackgroundColor [
 
 	^ paletteDictionary at: #warningBackgroundColor ifAbsentPut: [ colorConfigurator warningBackgroundColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> warningTextColor [
 
 	^ paletteDictionary at: #warningTextColor ifAbsentPut: [ colorConfigurator warningTextColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> windowActiveLabelFillStyleFor: anObject [
 
 	^ paletteDictionary at: #windowActiveLabelFillStyleFor: ifAbsentPut: [ colorConfigurator windowActiveLabelFillStyleFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> windowColor [
 
 	^ paletteDictionary at: #windowColor ifAbsentPut: [ colorConfigurator windowColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> windowColorFor: anObject [
 
 	^ paletteDictionary at: #windowColorFor: ifAbsentPut: [ colorConfigurator windowColorFor: anObject  ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> windowEdgeNormalFillStyleFor: anEdgeGrip [
 
 	^ paletteDictionary at: #windowEdgeNormalFillStyleFor: ifAbsentPut: [ colorConfigurator windowEdgeNormalFillStyleFor: anEdgeGrip ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> windowShadowColor [
 
 	^ paletteDictionary at: #windowShadowColor ifAbsentPut: [ colorConfigurator windowShadowColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemePalette >> worldMainDockingBarColorFor: anObject [
 
 	^ paletteDictionary at: #worldMainDockingBarColorFor: ifAbsentPut: [ colorConfigurator worldMainDockingBarColorFor: anObject  ]

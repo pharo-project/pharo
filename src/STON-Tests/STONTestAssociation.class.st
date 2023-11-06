@@ -3,31 +3,33 @@ STONTestAssociation is used to support unit tests.
 
 "
 Class {
-	#name : #STONTestAssociation,
-	#superclass : #Association,
+	#name : 'STONTestAssociation',
+	#superclass : 'Association',
 	#instVars : [
 		'timestamp'
 	],
-	#category : #'STON-Tests-Support'
+	#category : 'STON-Tests-Support',
+	#package : 'STON-Tests',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestAssociation >> key: aKey value: anObject [
 	super key: aKey value: anObject.
 	timestamp := self now
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestAssociation >> now [
 	^ DateAndTime now
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestAssociation >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONTestAssociation >> value: anObject [
 	super value: anObject.
 	timestamp := self now

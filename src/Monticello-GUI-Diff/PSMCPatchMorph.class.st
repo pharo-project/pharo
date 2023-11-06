@@ -3,8 +3,8 @@ I'm a Monticello tool based on polymorph used to browse diffs.
 Activate me with the setting named 'Use Polymorph difference tools'.
 "
 Class {
-	#name : #PSMCPatchMorph,
-	#superclass : #DiffChangeMorph,
+	#name : 'PSMCPatchMorph',
+	#superclass : 'DiffChangeMorph',
 	#instVars : [
 		'changeTree',
 		'selectedChangeWrapper'
@@ -12,10 +12,11 @@ Class {
 	#classVars : [
 		'UsedByDefault'
 	],
-	#category : #'Monticello-GUI-Diff'
+	#category : 'Monticello-GUI-Diff',
+	#package : 'Monticello-GUI-Diff'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 PSMCPatchMorph class >> defaultDiffToolsSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #polymorphDiffToolsUsedByDefault)
@@ -27,7 +28,7 @@ PSMCPatchMorph class >> defaultDiffToolsSettingOn: aBuilder [
 		selector: #usedByDefault
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCPatchMorph class >> forPatch: aPatch [
 	"Answer a new instance of the receiver
 	with the given patch as the model."
@@ -35,28 +36,28 @@ PSMCPatchMorph class >> forPatch: aPatch [
 	^ self new model: aPatch operations
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 PSMCPatchMorph class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallForwardIcon
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 PSMCPatchMorph class >> usedByDefault [
 	"Answer whether the Polymorph diff tools should be used with Monticello."
 
 	^UsedByDefault ifNil: [UsedByDefault := true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 PSMCPatchMorph class >> usedByDefault: aBoolean [
 	"Specify whether the Polymorph diff tools should be used with Monticello."
 
 	UsedByDefault := aBoolean
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCPatchMorph >> browseClass [
 	"Browse the class of the selected item."
 
@@ -65,7 +66,7 @@ PSMCPatchMorph >> browseClass [
 		selector: self selectedMessageName
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCPatchMorph >> browseImplementors [
 	"Browse the method implementors."
 
@@ -73,7 +74,7 @@ PSMCPatchMorph >> browseImplementors [
 		browseAllImplementorsOf: (self selectedMessageName ifNil: [^self])
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCPatchMorph >> browseSenders [
 	"Browse the method senders."
 
@@ -81,7 +82,7 @@ PSMCPatchMorph >> browseSenders [
 		browseAllSendersOf: (self selectedMessageName ifNil: [^self])
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCPatchMorph >> browseVersions [
 	"Browse the method versions."
 
@@ -90,7 +91,7 @@ PSMCPatchMorph >> browseVersions [
 			selector: self selectedMessageName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PSMCPatchMorph >> buildUI [
 	|descriptionHeight|
 	self
@@ -111,21 +112,21 @@ PSMCPatchMorph >> buildUI [
 	self onAnnouncement: MorphOpened do: [ self expandChangeTree ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> changeTree [
 	"Answer the value of changeTree"
 
 	^ changeTree
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> changeTree: anObject [
 	"Set the value of changeTree"
 
 	changeTree := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PSMCPatchMorph >> changeTreeKey: aCharacter [
 	"Handle change tree key strokes."
 
@@ -139,14 +140,14 @@ PSMCPatchMorph >> changeTreeKey: aCharacter [
 		^self browseSenders]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> changes [
 	"Answer the changes tree roots."
 
 	^ PSMCChangesGrouper group: self model
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PSMCPatchMorph >> changesMenu: m [
 	"Answer the changes menu."
 
@@ -223,7 +224,7 @@ PSMCPatchMorph >> changesMenu: m [
 	^ menu
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PSMCPatchMorph >> compositeText [
 	"Answer the composite text based on the selection state
 	of the joins."
@@ -231,20 +232,20 @@ PSMCPatchMorph >> compositeText [
 	^self diffMorph compositeText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
 	^'Changes' translated
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PSMCPatchMorph >> expandChangeTree [
 	self flag: #TODO. "We should only expand the nodes wich have partial changes, if a class was added or removed there is no need to show the complete tree expanded"
 	self changeTree expandAll
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 PSMCPatchMorph >> loadMethodSelection [
 	"Install the selected change"
 
@@ -252,13 +253,13 @@ PSMCPatchMorph >> loadMethodSelection [
 	self selectedChange definition load
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PSMCPatchMorph >> model [
 
 	^ super model ifNil: [ #() ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PSMCPatchMorph >> model: aCollection [
 	"Set the model and update the window."
 
@@ -266,7 +267,7 @@ PSMCPatchMorph >> model: aCollection [
 	self changed: #changes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PSMCPatchMorph >> newChangeTreeMorph [
 	"Answer a new morph for the tree of changes."
 
@@ -279,7 +280,7 @@ PSMCPatchMorph >> newChangeTreeMorph [
 		keystrokeActionSelector: #changeTreeKey:
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PSMCPatchMorph >> removeSelection [
 	"unselect current selection"
 	self selectedChangeWrapper: nil.
@@ -287,7 +288,7 @@ PSMCPatchMorph >> removeSelection [
 	self updateSource
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PSMCPatchMorph >> revertChange: aChange [
 	"Revert the change"
 
@@ -297,7 +298,7 @@ PSMCPatchMorph >> revertChange: aChange [
 	loader loadWithName: ChangeSet current name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PSMCPatchMorph >> revertSelectedChange [
 	"Revert the selected change"
 	| change |
@@ -308,21 +309,21 @@ PSMCPatchMorph >> revertSelectedChange [
 	self removeSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> selectedChange [
 	"Answer the selected change."
 
 	^(self selectedChangeWrapper ifNil: [^nil]) operation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> selectedChangeWrapper [
 	"Answer the selected change."
 
 	^selectedChangeWrapper
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> selectedChangeWrapper: aWrapper [
 	"Set the selected change."
 
@@ -333,7 +334,7 @@ PSMCPatchMorph >> selectedChangeWrapper: aWrapper [
 		changed: #compositeText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PSMCPatchMorph >> selectedMessageName [
 	"Answer the method selector or nil if no method change
 	is selected.."
@@ -342,7 +343,7 @@ PSMCPatchMorph >> selectedMessageName [
 		ifTrue: [self selectedChange definition selector]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PSMCPatchMorph >> selectionHasActualClass [
 	"Answer whether the currently selected change has an actual
 	class in the image."
@@ -352,7 +353,7 @@ PSMCPatchMorph >> selectionHasActualClass [
 		ifNotNil: [:w | w actualClass notNil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PSMCPatchMorph >> selectionIsMethodChange [
 	"Answer whether the currently selected change is for a method."
 
@@ -361,7 +362,7 @@ PSMCPatchMorph >> selectionIsMethodChange [
 			self selectedChange definition isLoadable ] ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PSMCPatchMorph >> update: aspect [
 	"A join has probably changed its selection state."
 
@@ -370,7 +371,7 @@ PSMCPatchMorph >> update: aspect [
 		ifTrue: [self changed: #compositeText]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PSMCPatchMorph >> updateSource [
 
 	"Update the source difference morph."

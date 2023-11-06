@@ -2,66 +2,64 @@
 A custom transform morph for a morphic based tree
 "
 Class {
-	#name : #MorphTreeTransformMorph,
-	#superclass : #TransformMorph,
-	#category : #'Morphic-Widgets-Tree'
+	#name : 'MorphTreeTransformMorph',
+	#superclass : 'TransformMorph',
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 MorphTreeTransformMorph >> addAllMorphs: aCollection after: anotherMorph [
 	^self privateAddAllMorphs: aCollection
 			atIndex: (anotherMorph index ifNil: [submorphs size])
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> bottomVisibleRowForCanvas: aCanvas [
      "return the bottom visible row in aCanvas's clip rectangle"
 
 	^ self rowAtLocation: (aCanvas clipRect  bottomRight)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> bottomVisibleRowForCanvas: aCanvas startingAt: aPos [
      "return the bottom visible row in aCanvas's clip rectangle"
 
 	^ self rowAtLocation: (aCanvas clipRect  bottomRight)  startingAt: aPos
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> drawRawColorOn: aCanvas forSubmorph: aSubMorph [
-	| c frame |
-	frame := (aSubMorph fullBounds withWidth: owner scroller innerBounds width) translateBy:(owner scroller offset x)@0.
-	aSubMorph = owner listManager searchedElement
-		ifTrue: [
-			aCanvas fillRectangle: frame color: owner secondarySelectionColor.
-			^ self ].
+
+	| frame |
+	frame := (aSubMorph fullBounds withWidth: owner scroller innerBounds width) translateBy: owner scroller offset x @ 0.
+	aSubMorph = owner listManager searchedElement ifTrue: [
+		aCanvas fillRectangle: frame color: owner secondarySelectionColor.
+		^ self ].
 	owner listManager isCheckList
 		ifTrue: [
-			aSubMorph = owner listManager lastClickedMorph
-				ifTrue: [
-					aCanvas fillRectangle: frame color: owner selectionColorToUse.
-					^ self ] ]
+			aSubMorph = owner listManager lastClickedMorph ifTrue: [
+				aCanvas fillRectangle: frame color: owner selectionColorToUse.
+				^ self ] ]
 		ifFalse: [
-			aSubMorph selected
-				ifTrue: [
-					aCanvas fillRectangle: frame color: owner selectionColorToUse.
-					^ self ] ].
-	(c := aSubMorph color) notNil
-		ifTrue: [
-			c isColor
-				ifTrue: [
-					aCanvas
-						frameAndFillRectangle: frame
-						fillColor: c
-						borderWidth: 0
-						borderColor: Color transparent ]
-				ifFalse: [
-					c origin: aSubMorph bounds topLeft.
-					c direction: aSubMorph bounds width @ 0.
-					aCanvas fillRectangle: frame basicFillStyle: c ] ]
+			aSubMorph selected ifTrue: [
+				aCanvas fillRectangle: frame color: owner selectionColorToUse.
+				^ self ] ].
+	aSubMorph color ifNotNil: [ :subMorphColor |
+		subMorphColor isColor
+			ifTrue: [
+				aCanvas
+					frameAndFillRectangle: frame
+					fillColor: subMorphColor
+					borderWidth: 0
+					borderColor: Color transparent ]
+			ifFalse: [
+				subMorphColor origin: aSubMorph bounds topLeft.
+				subMorphColor direction: aSubMorph bounds width @ 0.
+				aCanvas fillRectangle: frame basicFillStyle: subMorphColor ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> drawSubmorphsOn: aCanvas [
 	submorphs ifEmpty: [^ self].
 	aCanvas transformBy: transform
@@ -81,7 +79,7 @@ MorphTreeTransformMorph >> drawSubmorphsOn: aCanvas [
 	owner enabled ifFalse: [ aCanvas fillRectangle: owner innerBounds fillStyle: (owner paneColor alpha: 0.2) ]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 MorphTreeTransformMorph >> fullBounds [
 	"Overridden to clip submorph hit detection to my bounds."
 	"It might be better to override doLayoutIn:, and remove this method"
@@ -91,13 +89,13 @@ MorphTreeTransformMorph >> fullBounds [
 	^ fullBounds
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MorphTreeTransformMorph >> initialize [
 	super initialize.
 	self smoothingOn
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MorphTreeTransformMorph >> localSubmorphBounds [
 	"Answer, in my coordinate system, the bounds of all my visible submorphs (or nil if no visible submorphs)"
 	localBounds ifNil: [
@@ -106,7 +104,7 @@ MorphTreeTransformMorph >> localSubmorphBounds [
 	^ localBounds
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphTreeTransformMorph >> privateAddAllMorphs: aCollection atIndex: index [
 	"Private. Add aCollection of morphs to the receiver"
 	submorphs := Array
@@ -121,11 +119,11 @@ MorphTreeTransformMorph >> privateAddAllMorphs: aCollection atIndex: index [
 	self layoutChanged
 ]
 
-{ #category : #'change reporting' }
+{ #category : 'change reporting' }
 MorphTreeTransformMorph >> privateInvalidateMorph: aMorph [
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> rowAtLocation: aPoint [
 	"return the number of the row at aPoint"
 	| y |
@@ -135,7 +133,7 @@ MorphTreeTransformMorph >> rowAtLocation: aPoint [
 	^ submorphs size
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> rowAtLocation: aPoint startingAt: aPosition [
 	"return the number of the row at aPoint"
 	| y |
@@ -147,28 +145,28 @@ MorphTreeTransformMorph >> rowAtLocation: aPoint startingAt: aPosition [
 	^ submorphs size
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MorphTreeTransformMorph >> submorphBounds [
 	"Private. Compute the actual full bounds of the receiver, optimized for speed"
 	self hasSubmorphs ifFalse: [^ nil].
 	^ self firstSubmorph topLeft corner: owner scroller bounds bottomLeft + (0@ owner extraScrollRange)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> topVisibleRowForCanvas: aCanvas [
      "return the top visible row in aCanvas's clip rectangle"
 
         ^ self rowAtLocation: (aCanvas clipRect topLeft)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeTransformMorph >> topVisibleRowForCanvas: aCanvas startingAt: aPos [
      "return the top visible row in aCanvas's clip rectangle"
 
         ^ self rowAtLocation: (aCanvas clipRect topLeft) startingAt: aPos
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphTreeTransformMorph >> wantsSteps [
 	^ false
 ]

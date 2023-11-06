@@ -21,18 +21,19 @@ touchPoints
 
 "
 Class {
-	#name : #CalendarMorph,
-	#superclass : #BorderedMorph,
+	#name : 'CalendarMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'date',
 		'days',
 		'touchPoints',
 		'announcer'
 	],
-	#category : #'Morphic-Widgets-Extra'
+	#category : 'Morphic-Widgets-Extra',
+	#package : 'Morphic-Widgets-Extra'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CalendarMorph class >> on: aDate [
 
 	^self new
@@ -41,13 +42,13 @@ CalendarMorph class >> on: aDate [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CalendarMorph class >> openOn: aDate [
 
 	^(self on: aDate) openInWorld
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CalendarMorph >> announceDate [
 
 	| announcement |
@@ -55,13 +56,13 @@ CalendarMorph >> announceDate [
 	announcer ifNotNil: [ announcer announce: announcement ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CalendarMorph >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CalendarMorph >> computeDays [
 	"Populate the days instance variable with CalendarChooserDay instances for the receiver's month."
 
@@ -90,13 +91,13 @@ CalendarMorph >> computeDays [
 			theDay bounds: (cellPosX @ yOffset extent: cellWidth @ cellHeight)]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CalendarMorph >> date [
 
 	^date
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CalendarMorph >> date: aDate [
 
 	| recompute |
@@ -106,7 +107,7 @@ CalendarMorph >> date: aDate [
 		ifTrue: [self computeDays]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CalendarMorph >> daysForLine: aNumber [
 	"Return an array of numbers that correspond to the day-of-month numbers of the given line (row)
 	in the calendar for the month of the receiver's date."
@@ -143,14 +144,14 @@ CalendarMorph >> daysForLine: aNumber [
 			ifFalse: [each - dayCount]]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 CalendarMorph >> defaultBounds [
 	"Answer the default bounds for the receiver."
 
 	^0 @ 0 corner: 200 @ 160
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 CalendarMorph >> drawDaysOn: aCanvas [
 
 	days do: [:each |
@@ -159,7 +160,7 @@ CalendarMorph >> drawDaysOn: aCanvas [
 			offset: self bounds topLeft]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 CalendarMorph >> drawMonthHeaderOn: aCanvas [
 
 	| headerWidth headerString box textBox textTopLeft monthBox monthNameWidth yearBox previousMonthBox nextMonthBox |
@@ -205,7 +206,7 @@ CalendarMorph >> drawMonthHeaderOn: aCanvas [
 		color: Color black
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 CalendarMorph >> drawOn: aCanvas [
 
 	touchPoints := Dictionary new.
@@ -228,7 +229,7 @@ CalendarMorph >> drawOn: aCanvas [
 				color: Color black]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 CalendarMorph >> drawTodayOn: aCanvas [
 
 	| text textHeight textTopLeft textWidth textBox |
@@ -245,7 +246,7 @@ CalendarMorph >> drawTodayOn: aCanvas [
 		color: Color gray
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 CalendarMorph >> drawWeekDayNamesOn: aCanvas [
 
 	| cellHeight height topLeft topRight cellWidth |
@@ -272,18 +273,17 @@ CalendarMorph >> drawWeekDayNamesOn: aCanvas [
 			color: Color darkGray]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CalendarMorph >> extent: aPoint [
 	"Since the day objects cache their bounding box, we have to recompute them if the receiver resizes."
 
 	| result |
 	result := super extent: aPoint.
-	date notNil
-		ifTrue: [self computeDays].
-	^result
+	date ifNotNil: [ self computeDays ].
+	^ result
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> handleMonthNameTouched [
 
 	| newMonthName dayCount |
@@ -300,28 +300,28 @@ CalendarMorph >> handleMonthNameTouched [
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> handleNextMonthTouched [
 
 	self date: date onNextMonth.
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> handlePreviousMonthTouched [
 
 	self date: date onPreviousMonth.
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> handleTodayTouched [
 
 	self date: Date today.
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> handleYearTouched [
 
 	| newYear dayCount |
@@ -339,20 +339,20 @@ CalendarMorph >> handleYearTouched [
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> handlesMouseDown: event [
 
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CalendarMorph >> initialize [
 
 	super initialize.
 	touchPoints := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CalendarMorph >> monthNameFont [
 
 	| font boldItalic |
@@ -361,7 +361,7 @@ CalendarMorph >> monthNameFont [
 	^ font emphasis: boldItalic
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> mouseDown: event [
 	"Handle mouse down and mouse movement. Highlight the day under the mouse."
 
@@ -372,13 +372,13 @@ CalendarMorph >> mouseDown: event [
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> mouseMove: event [
 
 	self mouseDown: event
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 CalendarMorph >> mouseUp: event [
 	"Check for hotspot hits - handle them if they match.
 	Otherwise, convert the event cursor to morph-local, and find the day under it.
@@ -398,13 +398,13 @@ CalendarMorph >> mouseUp: event [
 	self changed
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 CalendarMorph >> onChoiceSend: aSymbol to: anObject [
 
 	self announcer when: ChoseDate send: aSymbol to: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CalendarMorph >> weekdayFont [
 
 	^ LogicalFont familyName: 'Bitmap DejaVu Sans' pointSize: 9

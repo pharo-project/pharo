@@ -1,40 +1,40 @@
-Extension { #name : #FTTableMorph }
+Extension { #name : 'FTTableMorph' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTTableMorph >> activateFilterWith: patternString [
 	(function isKindOf: FTFilterFunction) ifFalse: [ ^self ].
 
 	function filterNowWith: patternString
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTTableMorph >> cleanupFilter [
 	"it is ugly. but now it is easy to do like this. Normally it should be somehow supported by table package itself"
 	(function isKindOf: FTFilterFunction)
 		ifTrue: [ function terminateFilterProcess]
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTTableMorph >> filterField [
 	^(function isKindOf: FTFilterFunction )
 		ifTrue: [ function field]
 		ifFalse: [ nil ]
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTTableMorph >> filterFieldHasKeyboardFocus [
 	| field |
 	field := self filterField.
 	^ field isNotNil and: [ field hasKeyboardFocus ]
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTTableMorph >> filterString [
 	(function isKindOf: FTFilterFunction) ifFalse: [ ^'' ].
 	^function pattern ifNil: [ '' ]
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTTableMorph >> initialDataSource [
 	"it is ugly. but now it is easy to do like this. Normally it should be somehow supported by table package itself"
 	^(function isKindOf: FTFilterFunction)
@@ -42,7 +42,7 @@ FTTableMorph >> initialDataSource [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTTableMorph >> initialDataSource: aDataSource [
 	"it is ugly. but now it is easy to do like this. Normally it should be somehow supported by table package itself"
 	(function isKindOf: FTFilterFunction)

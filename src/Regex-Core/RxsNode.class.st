@@ -4,12 +4,14 @@
 A generic syntax tree node, provides some common responses to the standard tests, as well as tree structure printing -- handy for debugging.
 "
 Class {
-	#name : #RxsNode,
-	#superclass : #Object,
-	#category : #'Regex-Core-Nodes'
+	#name : 'RxsNode',
+	#superclass : 'Object',
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 RxsNode >> indentCharacter [
 	"Normally, #printOn:withIndent: method in subclasses
 	print several characters returned by this method to indicate
@@ -18,7 +20,7 @@ RxsNode >> indentCharacter [
 	^$+
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsNode >> isAtomic [
 	"Answer whether the node is atomic, i.e. matches exactly one
 	constant predefined normal character.  A matcher may decide to
@@ -28,7 +30,7 @@ RxsNode >> isAtomic [
 	^false "tentatively"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsNode >> isNullable [
 	"True if the node can match an empty sequence of characters."
 

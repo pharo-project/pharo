@@ -1,6 +1,6 @@
-Extension { #name : #ClyActiveBreakpointsQuery }
+Extension { #name : 'ClyActiveBreakpointsQuery' }
 
-{ #category : #'*Calypso-SystemPlugins-Reflectivity-Browser' }
+{ #category : '*Calypso-SystemPlugins-Reflectivity-Browser' }
 ClyActiveBreakpointsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 
@@ -8,7 +8,7 @@ ClyActiveBreakpointsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: g
 	anItemCellMorph definitionIcon: #smallDebug
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Reflectivity-Browser' }
+{ #category : '*Calypso-SystemPlugins-Reflectivity-Browser' }
 ClyActiveBreakpointsQuery >> decorateResultMethodEditor: aMethodEditor [
 
 	aMethodEditor selectAnySelector: #(halt halt: haltIf: haltOnce haltOnCount)

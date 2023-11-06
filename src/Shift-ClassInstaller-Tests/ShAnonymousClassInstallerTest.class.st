@@ -1,20 +1,22 @@
 Class {
-	#name : #ShAnonymousClassInstallerTest,
-	#superclass : #TestCase,
-	#category : #'Shift-ClassInstaller-Tests'
+	#name : 'ShAnonymousClassInstallerTest',
+	#superclass : 'TestCase',
+	#category : 'Shift-ClassInstaller-Tests',
+	#package : 'Shift-ClassInstaller-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShAnonymousClassInstallerTest >> testSubclasses [
 
 	| aSubClass |
 	aSubClass := Smalltalk anonymousClassInstaller make: [ :builder |
-		             builder superclass: Point.
-		             builder name: #AnotherPoint ].
+		             builder
+			             superclass: Point;
+			             name: #AnotherPoint ].
 
 	self deny: (Point subclasses includes: aSubClass).
 	self assert: aSubClass superclass equals: Point.
 	self deny: (Smalltalk hasClassNamed: #AnotherPoint).
 
-	self assert: (self packageOrganizer packageOfClassNamed: aSubClass name) isNil
+	self assert: (self packageOrganizer packageOfClassNamed: aSubClass name) isUndefined
 ]

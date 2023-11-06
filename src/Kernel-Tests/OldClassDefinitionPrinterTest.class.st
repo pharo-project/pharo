@@ -1,28 +1,24 @@
 Class {
-	#name : #OldClassDefinitionPrinterTest,
-	#superclass : #CommonClassDefinitionPrinterTest,
-	#category : #'Kernel-Tests-Fluid'
+	#name : 'OldClassDefinitionPrinterTest',
+	#superclass : 'CommonClassDefinitionPrinterTest',
+	#category : 'Kernel-Tests-Fluid',
+	#package : 'Kernel-Tests',
+	#tag : 'Fluid'
 }
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 OldClassDefinitionPrinterTest >> expandedForClass: aClass [
 
 	^ aClass expandedDefinitionStringFor: (OldPharoClassDefinitionPrinter for: aClass)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OldClassDefinitionPrinterTest >> forClass: aClass [
-	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString
+
+	^ (OldPharoClassDefinitionPrinter oldPharo for: aClass) definitionString
 ]
 
-{ #category : #running }
-OldClassDefinitionPrinterTest >> setUp [
-
-	super setUp.
-	ClassDefinitionPrinter showFluidClassDefinition: false
-]
-
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 OldClassDefinitionPrinterTest >> testArray [
 
 	self
@@ -33,7 +29,7 @@ OldClassDefinitionPrinterTest >> testArray [
 	package: ''Collections-Sequenceable-Base'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 OldClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection subclass: #ExampleForTestWithSharedPool
@@ -43,7 +39,7 @@ OldClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 	package: ''Kernel-Tests-Classes'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 OldClassDefinitionPrinterTest >> testByteString [
 
 	self
@@ -54,7 +50,7 @@ OldClassDefinitionPrinterTest >> testByteString [
 	package: ''Collections-Strings-Base'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 OldClassDefinitionPrinterTest >> testChronologyConstants [
 
 	self
@@ -65,14 +61,14 @@ OldClassDefinitionPrinterTest >> testChronologyConstants [
 	package: ''Kernel-Chronology'''
 ]
 
-{ #category : #'tests - metaclasses' }
+{ #category : 'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
 	self assert: (self forClass: ContextTest class) equals: 'ContextTest class
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - metaclasses' }
+{ #category : 'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testMetaclass [
 
 	self assert: (self forClass: Metaclass) equals:  'ClassDescription subclass: #Metaclass
@@ -81,7 +77,7 @@ OldClassDefinitionPrinterTest >> testMetaclass [
 	package: ''Kernel-Classes'''
 ]
 
-{ #category : #'tests - metaclasses' }
+{ #category : 'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testMetaclassClass [
 
 	self
@@ -90,7 +86,7 @@ OldClassDefinitionPrinterTest >> testMetaclassClass [
 	instanceVariableNames: '''''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 OldClassDefinitionPrinterTest >> testPoint [
 
 	self
@@ -101,7 +97,7 @@ OldClassDefinitionPrinterTest >> testPoint [
 	package: ''Kernel-BasicObjects'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 OldClassDefinitionPrinterTest >> testProtoObject [
 
 	self assert: (self forClass: ProtoObject) equals: 'ProtoObject subclass: #ProtoObject
@@ -111,7 +107,7 @@ OldClassDefinitionPrinterTest >> testProtoObject [
 ProtoObject superclass: nil'
 ]
 
-{ #category : #'tests - metaclasses' }
+{ #category : 'tests - metaclasses' }
 OldClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 
 	self

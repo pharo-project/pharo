@@ -1,17 +1,17 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> bcToASTCache [
 	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForNode: self ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> bcToASTCache: anObject [
 
 	bcToASTCache := anObject
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
 	"Retrieve the associated CompiledMethod (cached version).
 	If no CompiledMethod was generated, nil is returned.
@@ -22,13 +22,13 @@ RBMethodNode >> compiledMethod [
 	^ self propertyAt: #compiledMethod ifAbsent: [ nil ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod: aCompiledMethod [
 
 	self propertyAt: #compiledMethod put: aCompiledMethod
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> compiler [
 	"Return a compiler configured with self as the AST"
 
@@ -37,13 +37,13 @@ RBMethodNode >> compiler [
 	^ class compiler ast: self
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysis [
 
 	self compiler doSemanticAnalysis
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysisIn: behavior [
 
 	behavior compiler
@@ -51,12 +51,12 @@ RBMethodNode >> doSemanticAnalysisIn: behavior [
 		doSemanticAnalysis
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> ensureCachedArgumentNames [
 	^self methodPropertyAt: #argumentNames put: self argumentNames
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	| message |
 	message := RBMessageNode
@@ -69,13 +69,13 @@ RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 		body: (RBSequenceNode statements: {message})
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> firstPcForNode: aNode [
 
 	^ self bcToASTCache firstBcOffsetForNode: aNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generate [
 
 	self deprecated: 'Use generateMethod. Beware that there are limitations so read the comments.' transformWith: '`@receiver generate' -> '`@receiver generateMethod'.
@@ -83,7 +83,7 @@ RBMethodNode >> generate [
 	^ self generateMethod
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generate: trailer [
 	self
 		deprecated: 'Use generateMethod'
@@ -92,14 +92,14 @@ RBMethodNode >> generate: trailer [
 	^ self generateMethod
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
 	"Generate an IRMethod. See `ir` for the cached version."
 
 	^ self compiler generateIR
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generateMethod [
 	"Generate a CompiledMethod (uncached, see `compiledMethod` for the cached version).
 	Important: the current state of the AST is not cheched, and specific controls or steps done
@@ -109,42 +109,60 @@ RBMethodNode >> generateMethod [
 	^ self compiler compile
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> ir [
 	"Retrieve or generate an IRMethod (cached version)"
 
 	^ self propertyAt: #ir ifAbsentPut: [ self generateIR ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> ir: aIRMethodNode [
 
 	^ self propertyAt: #ir put: aIRMethodNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> irInstruction [
 	^ self ir
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> lastPcForNode: aNode [
 
 	^ self bcToASTCache lastBcOffsetForNode: aNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> method [
+	
+	self deprecated: 'use compiledMethod' transformWith: '`@recv method' -> '`@recv compiledMethod'.
+	^ self compiledMethod
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> methodClass [
+
+	^ self scope ifNotNil: [ :s | s targetClass ]
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> methodClass: aClass [
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
+]
+
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodProperties [
 	^self propertyAt: #methodProperties ifAbsent: nil
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey [
 
 	^self methodPropertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey ifAbsent: absentBlock [
 	| existingProperties |
 	existingProperties := self propertyAt: #methodProperties ifAbsent: absentBlock.
@@ -152,7 +170,7 @@ RBMethodNode >> methodPropertyAt: aKey ifAbsent: absentBlock [
 	^existingProperties propertyAt: aKey ifAbsent: absentBlock
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> methodPropertyAt: aKey put: anObject [
 	| existingProperties newProperties |
 	existingProperties := self propertyAt: #methodProperties ifAbsentPut: [
@@ -166,18 +184,18 @@ RBMethodNode >> methodPropertyAt: aKey put: anObject [
 	self propertyAt: #methodProperties put: newProperties
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> owningScope [
 	^ self scope
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> pcsForNode: aNode [
 
 	^ self bcToASTCache pcsForNode: aNode
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> primitiveFromPragma [
 	^ pragmas
 		detect: [ :each | each isPrimitive ]
@@ -185,7 +203,7 @@ RBMethodNode >> primitiveFromPragma [
 		ifNone: [ IRPrimitive null ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
 ]

@@ -8,12 +8,14 @@ I am a class variable that can initialize itself class creation.
 #name => InitializedClassVariable defaultBlock: [ :class | 'a block, parameter is the class' ].
 "
 Class {
-	#name : #InitializedClassVariable,
-	#superclass : #AbstractInitializedClassVariable,
-	#category : #'VariablesLibrary-ClassVariables'
+	#name : 'InitializedClassVariable',
+	#superclass : 'AbstractInitializedClassVariable',
+	#category : 'VariablesLibrary-ClassVariables',
+	#package : 'VariablesLibrary',
+	#tag : 'ClassVariables'
 }
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 InitializedClassVariable >> installingIn: aClass [
 	default isBlock
 		ifTrue: [ self write: (default cull: aClass) ]

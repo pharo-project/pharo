@@ -194,7 +194,7 @@ MCStWriter >> writeMethodPreamble: definition [
 			[ str nextPutAll: ' class' ].
 		str
 			nextPutAll: ' methodsFor: ';
-			nextPutAll: definition category asString printString;
+			nextPutAll: definition protocol asString printString;
 			nextPutAll: ' stamp: ';
 			nextPutAll: definition timeStamp asString printString
 		]
@@ -209,9 +209,9 @@ MCStWriter >> writeMethodSource: definition [
 MCStWriter >> writePackage: packageName tags: aCollection [
 
 	stream
-		nextChunkPut: ('self packageOrganizer ensurePackage: #{1} withTags: {2}' format: {
-						 packageName.
-						 aCollection printString });
+		nextChunkPut: ('self packageOrganizer ensurePackage: {1} withTags: {2}' format: {
+						 packageName storeString.
+						 aCollection storeString });
 		cr
 ]
 

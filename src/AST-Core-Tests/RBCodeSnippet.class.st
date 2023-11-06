@@ -20,8 +20,8 @@ Tests are executed by the parametrized matrix class `RBCodeSnippetTest`
 Additional tools can add more information and expectation (please improve the list and the tools)
 "
 Class {
-	#name : #RBCodeSnippet,
-	#superclass : #Object,
+	#name : 'RBCodeSnippet',
+	#superclass : 'Object',
 	#instVars : [
 		'source',
 		'isScripting',
@@ -41,10 +41,12 @@ Class {
 		'nodePositions',
 		'styledPattern'
 	],
-	#category : #'AST-Core-Tests-Snippets'
+	#category : 'AST-Core-Tests-Snippets',
+	#package : 'AST-Core-Tests',
+	#tag : 'Snippets'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> allSnippets [
 
 	^ {
@@ -60,7 +62,7 @@ RBCodeSnippet class >> allSnippets [
 		  self badVariableAndScopes } flattened
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badAnnotations [
 
 	<script: 'self styleWithError: self badAnnotations'>
@@ -125,7 +127,7 @@ RBCodeSnippet class >> badAnnotations [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badComments [
 	"EFFormater is not the best here :("
 
@@ -288,7 +290,7 @@ RBCodeSnippet class >> badComments [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badExpressions [
 	"This list focuses on composed expressions and sequences of statements.
 	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
@@ -1091,7 +1093,7 @@ RBCodeSnippet class >> badExpressions [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badMethods [
 
 	<script: 'self styleWithError: self badMethods'>
@@ -1342,7 +1344,7 @@ RBCodeSnippet class >> badMethods [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badPositions [
 	"This list focuses on node positions (and later highlighing)"
 
@@ -1403,7 +1405,7 @@ RBCodeSnippet class >> badPositions [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badScanner [
 	"While simple, the Pharo syntax has some hacks and exceptions when dealing with the scanning of token.
 	Raw scanned lexical tokens are not always used as is and might be transformed or split according to specific grammatical rules."
@@ -1551,7 +1553,7 @@ RBCodeSnippet class >> badScanner [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badSemantic [
 	"List of varions semantic and backend errors."
 
@@ -1880,12 +1882,12 @@ RBCodeSnippet class >> badSemantic [
 			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
 		        (self new
 			         source:
-				         'OCUndeclaredVariableWarning signal: ''false error''';
+				         'Warning signal: ''false error''';
 			         nodeAt:
-				         '1111111111111111111111111110000000002222222222222';
+				         '11111110000000002222222222222';
 			         styled:
-				         'ggggggggggggggggggggggggggg sssssss ''''''''''''''''''''''''''';
-			         raise: OCUndeclaredVariableWarning). "same, but warning are silently ignored"
+				         'ggggggg sssssss ''''''''''''''''''''''''''';
+			         raise: Warning). "same, but warning are silently ignored"
 		        (self new
 			         source: 'RuntimeSyntaxError signal: ''false error''';
 			         nodeAt: '1111111111111111110000000002222222222222';
@@ -1902,7 +1904,7 @@ RBCodeSnippet class >> badSemantic [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badSimpleExpressions [
 	"This list focuses simple expressions like message sends, assigments and return.
 	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
@@ -2230,7 +2232,7 @@ RBCodeSnippet class >> badSimpleExpressions [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badTokens [
 	"This list focuses on bad literal, malformed tokens, unexpected character and other scanner related issue.
 	It contains various (and possibly systematic) variations of faulty inputs (and some correct ones for good measure).
@@ -2586,7 +2588,7 @@ RBCodeSnippet class >> badTokens [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet class >> badVariableAndScopes [
 	"Test various combinaisons of error and warnings on variables and scope nesting"
 
@@ -2756,7 +2758,7 @@ RBCodeSnippet class >> badVariableAndScopes [
 	^ list
 ]
 
-{ #category : #script }
+{ #category : 'script' }
 RBCodeSnippet class >> styleAll [
 	"Display all snippets in a big styled text.
 	Each snipped is styled independently."
@@ -2770,52 +2772,7 @@ RBCodeSnippet class >> styleAll [
 	bigtext inspect
 ]
 
-{ #category : #script }
-RBCodeSnippet class >> styleWithError: snippets [
-	"Display all snippets in a big styled text with compilation error messages and error nodes.
-	Each compilation error message and each error node is displayed indenpendently."
-
-	<script: 'self styleWithError: self allSnippets'>
-
-	| bigtext |
-	bigtext := Text new.
-	snippets do: [ :each |
-		| text ast |
-		bigtext ifNotEmpty: [ bigtext append: String cr ].
-
-		"Get the original styled text"
-		text := each styledText.
-		bigtext append: text.
-
-		"Try to compile it and collect error messages"
-		each compileOnError: [ :exception |
-				"In case of error, insert error message (like an old-school smalltalk compiler)"
-				text
-					replaceFrom: exception position
-					to: exception position - 1
-					with: (exception messageText asText addAttribute:
-							 (TextBackgroundColor color: Color lightBlue)).
-				bigtext append: String cr.
-				bigtext append: String tab.
-				bigtext append: text.
-				bigtext append: '   '.
-				bigtext append: ('SyntaxErrorNotification' asText makeAllColor: Color gray).
-				].
-
-		"Then the fun part. Add line for each node with error or warning"
-		ast := each doSemanticAnalysis.
-		ast nodesPostorderDo: [ :node |
-			node notices do: [ :notice |
-				text := each textWithNode: node message: notice messageText at: notice position.
-				bigtext append: String cr.
-				bigtext append: String tab.
-				bigtext append: text.
-				bigtext append: (('   {1} ({2})' format: {node class name. notice class name}) asText makeAllColor: Color gray)
-			] ] ].
-	bigtext inspect
-]
-
-{ #category : #updating }
+{ #category : 'updating' }
 RBCodeSnippet class >> updateSnippets: snippets [
 	"This script will update all definitions of all snippets.
 	Beware of code loss and double check the generated definitions."
@@ -2831,7 +2788,7 @@ RBCodeSnippet class >> updateSnippets: snippets [
 		displayingProgress: 'Updating snippets...'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> applyDefaultTo: aCollection [
 
 	aCollection do: [ :each |
@@ -2846,13 +2803,13 @@ RBCodeSnippet >> applyDefaultTo: aCollection [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> default: aRBCodeSnippet [
 
 	default := aRBCodeSnippet
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RBCodeSnippet >> definitionRefactoring [
 	"A transformation to update the definition of self in the correct class side method"
 
@@ -2875,7 +2832,7 @@ RBCodeSnippet >> definitionRefactoring [
 		  inClass: node methodNode methodClass
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RBCodeSnippet >> dumpDefinition [
 	"The definition of the snippet (according to the current values)
 	as it should appears in the class side methods."
@@ -2933,7 +2890,7 @@ RBCodeSnippet >> dumpDefinition [
 		  aStream nextPut: $) ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RBCodeSnippet >> dumpDefinitionValue: aStream [
 
 	self messageNotUnderstood ifNotNil: [ :val |
@@ -2955,36 +2912,36 @@ RBCodeSnippet >> dumpDefinitionValue: aStream [
 				print: self value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> formattedCode [
 
 	^ formattedCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> formattedCode: anObject [
 
 	formattedCode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> group [
 	^ group
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> group: aString [
 	group := aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCodeSnippet >> hasAllNotices: someNotices [
 
 	(self notices ifNil: [0] ifNotNil: [self notices size]) = someNotices size ifFalse: [ ^ false ].
 	^ someNotices allSatisfy: [ :each | self hasNotice: each ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCodeSnippet >> hasNotice: aNotice [
 
 	self notices ifNil: [ ^ false ].
@@ -2995,7 +2952,7 @@ RBCodeSnippet >> hasNotice: aNotice [
 		& (aNotice messageText = each fourth) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCodeSnippet >> hasNotice: aString at: anInteger [
 
 	self notices ifNil: [ ^ false ].
@@ -3004,26 +2961,26 @@ RBCodeSnippet >> hasNotice: aString at: anInteger [
 		  each third = anInteger and: [ each fourth = aString ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCodeSnippet >> hasUndeclared [
 
 	self notices ifNil: [ ^ false ].
 	^ self notices anySatisfy: [ :n | n fourth = 'Undeclared variable' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> hasValue [
 
 	^ hasValue ifNil: [ value isNotNil | isFaulty not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> hasValue: anObject [
 
 	hasValue := anObject
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 RBCodeSnippet >> ifSkip: aTestName then: aBlock [
 
 	skippedTests ifNil: [ ^ self ].
@@ -3031,115 +2988,115 @@ RBCodeSnippet >> ifSkip: aTestName then: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #inspecting }
+{ #category : 'inspecting' }
 RBCodeSnippet >> inspectionSource [
 	<inspectorPresentationOrder: 35 title: 'Source'>
 
 	^ self searchDefinition inspectionSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isFaulty [
 
 	^ isFaulty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isFaulty: anObject [
 
 	isFaulty := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isFaultyMinusUndeclared [
 
 	^ isFaultyMinusUndeclared
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isFaultyMinusUndeclared: anObject [
 
 	isFaultyMinusUndeclared := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isParseFaulty [
 
 	^ isParseFaulty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isParseFaulty: anObject [
 
 	isParseFaulty := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isScripting [
 
 	^ isScripting
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> isScripting: anObject [
 
 	isScripting := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> messageNotUnderstood [
 
 	^ messageNotUnderstood
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> messageNotUnderstood: anObject [
 
 	messageNotUnderstood := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> nodeAt: anObject [
 	"Synonym for `bestNodes:` used to be aligned with `source:`"
 
 	nodePositions := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> nodePositions [
 
 	^ nodePositions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> nodePositions: anObject [
 
 	nodePositions := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> notices [
 	^ notices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> notices: aCollection [
 	notices := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> numberOfCritiques [
 
 	^ numberOfCritiques
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> numberOfCritiques: anObject [
 
 	numberOfCritiques := anObject
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBCodeSnippet >> parse [
 	^ isScripting
 		ifTrue: [ RBParser parseFaultyExpression: self source ]
@@ -3147,7 +3104,7 @@ RBCodeSnippet >> parse [
 
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBCodeSnippet >> parseOnError: aBlock [
 
 	^ [ isScripting
@@ -3157,7 +3114,7 @@ RBCodeSnippet >> parseOnError: aBlock [
 		  do: [ :e | aBlock value: e ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBCodeSnippet >> printOn: aStream [
 
 	super printOn: aStream.
@@ -3168,19 +3125,19 @@ RBCodeSnippet >> printOn: aStream [
 			nextPut: $) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> raise [
 
 	^ raise
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> raise: anObject [
 
 	raise := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RBCodeSnippet >> searchDefinition [
 	"Get the AST node defining self in the class side method.
 	The source code is used as a key to distinguishes other snippets.
@@ -3203,56 +3160,56 @@ RBCodeSnippet >> searchDefinition [
 		  ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> skip: aSymbol [
 
 	skippedTests ifNil: [ skippedTests := OrderedCollection new ].
 	skippedTests addIfNotPresent: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> skippedTests [
 
 	^ skippedTests
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> skippedTests: anObject [
 
 	skippedTests := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> source [
 
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> source: anObject [
 
 	source := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> styled: anObject [
 
 	styledPattern := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> styledPattern [
 
 	^ styledPattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> styledPattern: anObject [
 
 	styledPattern := anObject
 ]
 
-{ #category : #inspecting }
+{ #category : 'inspecting' }
 RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 
 	| text |
@@ -3270,7 +3227,7 @@ RBCodeSnippet >> textWithNode: aNode message: aString at: aPosition [
 	^ text
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RBCodeSnippet >> updateDefinition [
 	"Do the update of the definition of self in the method (class-side) that defines it"
 
@@ -3278,7 +3235,7 @@ RBCodeSnippet >> updateDefinition [
 		transformation execute ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RBCodeSnippet >> updateExpectations [
 	"Update the value of expectations according what tools produce.
 	Do not blindly trust it, as a tool cannot judge itself."
@@ -3303,13 +3260,13 @@ RBCodeSnippet >> updateExpectations [
 			 as: Array)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCodeSnippet >> value: anObject [
 
 	value := anObject.

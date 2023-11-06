@@ -30,8 +30,8 @@ Internal Representation and Key Implementation Points.
 	methodName 		 	<RBMethod>						A RBMethodName to ensure the validity of the new name.
 "
 Class {
-	#name : #SycMethodNameEditorPresenter,
-	#superclass : #SpPresenter,
+	#name : 'SycMethodNameEditorPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'selectorInput',
 		'argumentsList',
@@ -45,10 +45,11 @@ Class {
 		'canAddArgs',
 		'canEditName'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SycMethodNameEditorPresenter class >> example2 [
 	<script>
 	self
@@ -61,7 +62,7 @@ SycMethodNameEditorPresenter class >> example2 [
 		canAddArgs: true
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 SycMethodNameEditorPresenter class >> openOn: aMethod [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
@@ -69,7 +70,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod [
 	^ temp openBlockedDialog
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 SycMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
@@ -80,7 +81,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod canRenameArgs: aBoolean1 c
 	^ temp openBlockedDialog
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 	|temp|
@@ -92,7 +93,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 	^ temp openBlockedDialog
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canRenameArgs: aBoolean1 canRemoveArgs: aBoolean2 canAddArgs: aBoolean3 canEditName: aBoolean4 [
 
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
@@ -107,7 +108,7 @@ SycMethodNameEditorPresenter class >> openOn: aMethod withInvalidArgs: aSet canR
 	^ temp openBlockedDialog
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> addArgument [
 
 	| newArg argValue newKeyword |
@@ -124,7 +125,7 @@ SycMethodNameEditorPresenter >> addArgument [
 	self updateLabel
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
 
 	| newArg argValue selectedIndex newKeyword |
@@ -144,12 +145,12 @@ SycMethodNameEditorPresenter >> addArgumentAfter: anItem [
 	self updateLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> addButton [
 	^ addButton
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SycMethodNameEditorPresenter >> alert: aString [
 	"Display a message for the user to read and then dismiss."
 
@@ -157,12 +158,12 @@ SycMethodNameEditorPresenter >> alert: aString [
 		ifFalse: [ self inform: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> argumentsList [
 	^ argumentsList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> argumentsListMenu [
 	^ self newMenu
 		addGroup: [ :aGroup |
@@ -189,41 +190,41 @@ SycMethodNameEditorPresenter >> argumentsListMenu [
 						action: [ self removeArgument: argumentsList selectedItem ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> canAddArgs [
 	^canAddArgs ifNil: [ canAddArgs := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> canAddArgs: aBoolean [
 	canAddArgs := aBoolean.
 	addButton enabled: canAddArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> canEditName [
 	^canEditName  ifNil: [ canEditName := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> canEditName: aBoolean [
 	canEditName := aBoolean.
 	selectorInput enabled: canEditName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> canRemoveArgs: anObject [
 
 	argumentsList items do: [ :arg | arg canBeRemoved: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> canRenameArgs: anObject [
 
 	argumentsList items do: [ :arg | arg canBeRenamed: anObject ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> computePermutation [
 	| index |
 	index := 0.
@@ -232,7 +233,7 @@ SycMethodNameEditorPresenter >> computePermutation [
 	 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> connectPresenters [
 
 	selectorInput
@@ -243,7 +244,7 @@ SycMethodNameEditorPresenter >> connectPresenters [
 			toAction: [ self owner triggerCancelAction; close ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 SycMethodNameEditorPresenter >> defaultLayout [
 	| argumentsEditor |
 
@@ -268,12 +269,12 @@ SycMethodNameEditorPresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 SycMethodNameEditorPresenter >> downButton [
 	^ downButton
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> getDefaultValue [
 
 	^ self
@@ -281,7 +282,7 @@ SycMethodNameEditorPresenter >> getDefaultValue [
 		  initialAnswer: 'nil'
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> getNewKeywordName [
 
 	^ self
@@ -289,12 +290,12 @@ SycMethodNameEditorPresenter >> getNewKeywordName [
 		  initialAnswer: 'arg'
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SycMethodNameEditorPresenter >> getParametersOrder [
 	^ argumentsList items collect: [ :arg | arg newName ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 	aModalPresenter
 		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
@@ -305,7 +306,7 @@ SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 					ifNotNil: [ :selector | ' : "', selector, '"' ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycMethodNameEditorPresenter >> initializePresenters [
 
 	selectorInput := self newTextInput.
@@ -345,17 +346,17 @@ SycMethodNameEditorPresenter >> initializePresenters [
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> invalidArgNames [
 	^ invalidArgNames ifNil: [ invalidArgNames := { } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> invalidArgNames: aSet [
 	invalidArgNames := aSet
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMethodNameEditorPresenter >> newArgName [
 	| baseString index newString |
 	newString := baseString := 'anObject'.
@@ -367,17 +368,17 @@ SycMethodNameEditorPresenter >> newArgName [
 	^ newString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> newArgs [
 	^ argumentsList items select: [ :e | (args includes: e name) not ]
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 SycMethodNameEditorPresenter >> previewResult [
 	^ previewResult
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> pushDownSelectedArgument [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
@@ -390,7 +391,7 @@ SycMethodNameEditorPresenter >> pushDownSelectedArgument [
 	self updateLabel
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> pushUpSelectedArgument [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
@@ -403,7 +404,7 @@ SycMethodNameEditorPresenter >> pushUpSelectedArgument [
 	self updateLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMethodNameEditorPresenter >> removeArgument: anItem [
 	| selectedIndex |
 	selectedIndex := argumentsList selection selectedIndex.
@@ -412,7 +413,7 @@ SycMethodNameEditorPresenter >> removeArgument: anItem [
 	self updateLabel
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> renameArgument: anItem [
 
 	| argName selectedIndex |
@@ -429,12 +430,12 @@ SycMethodNameEditorPresenter >> renameArgument: anItem [
 	self updateLabel
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 SycMethodNameEditorPresenter >> renameMap [
 	^ argumentsList items select: [ :arg | arg hasNewName ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 	^ self previewResult label = '(invalid)'
 		ifTrue: [ self inform: 'Invalid method name' ]
@@ -450,7 +451,7 @@ SycMethodNameEditorPresenter >> renameMethodAndClose: presenter [
 				close ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> request: aString initialAnswer: aSecondString [
 
 	^ self application newRequest
@@ -460,23 +461,23 @@ SycMethodNameEditorPresenter >> request: aString initialAnswer: aSecondString [
 			openModal
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 SycMethodNameEditorPresenter >> selectorInput [
 	^ selectorInput
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 SycMethodNameEditorPresenter >> setModelBeforeInitialization: aRBMethodName [
 	methodName := aRBMethodName.
 	args := methodName arguments copy
 ]
 
-{ #category : #'accessing - ui' }
+{ #category : 'accessing - ui' }
 SycMethodNameEditorPresenter >> upButton [
 	^ upButton
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 SycMethodNameEditorPresenter >> updateLabel [
 	"Update the new method name to display to the user when the user change its name or order of the arguments."
 
@@ -487,7 +488,7 @@ SycMethodNameEditorPresenter >> updateLabel [
 				arguments: (argumentsList items collect: #newName) ) methodName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycMethodNameEditorPresenter >> updatePresenter [
 
 	selectorInput text: methodName selector.

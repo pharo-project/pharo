@@ -3,12 +3,13 @@ I am example of deprecated class.
 I just implement #isDeprecated as true
 "
 Class {
-	#name : #ClyDeprecatedClassExample,
-	#superclass : #Object,
-	#category : #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
+	#name : 'ClyDeprecatedClassExample',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemPlugins-Deprecation-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Deprecation-Queries-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDeprecatedClassExample class >> isDeprecated [
 	^true
 ]

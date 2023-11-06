@@ -1,6 +1,15 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
+CompiledMethod >> isDefinedInPackage: aPackage [
+
+	self
+		deprecated: 'This method will be removed because it is really specific and easy to inline. Use `receiver package = argument` instead.'
+		transformWith: '`@rcv isDefinedInPackage: `@package' -> '`@rcv package = `@package'.
+	^ self package = aPackage
+]
+
+{ #category : '*Deprecated12' }
 CompiledMethod >> isTaggedWith: aSymbol [
 
 	self deprecated: 'You should compare the protocol instead of using this method.' transformWith: '`@rcv isTaggedWith: `@arg' -> '`@rcv protocolName == `@arg'.
@@ -8,14 +17,14 @@ CompiledMethod >> isTaggedWith: aSymbol [
 	^ self protocolName == aSymbol
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 CompiledMethod >> tagWith: aSymbol [
 
 	self deprecated: 'Use #protocol: instead.' transformWith: '`@rcv tagWith: `@arg' -> '`@rcv protocol: `@arg'.
 	self protocol: aSymbol
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 CompiledMethod >> tags [
 	"Any method could be tagged with multiple symbols for user purpose.
 	For now we only define API to manage them implemented on top of method protocols.
@@ -30,7 +39,7 @@ CompiledMethod >> tags [
 	^ { protocol }
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 CompiledMethod >> untagFrom: aSymbol [
 
 	self

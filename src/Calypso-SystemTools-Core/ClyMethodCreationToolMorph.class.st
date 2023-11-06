@@ -10,25 +10,27 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyMethodCreationToolMorph,
-	#superclass : #ClyMethodEditorToolMorph,
+	#name : 'ClyMethodCreationToolMorph',
+	#superclass : 'ClyMethodEditorToolMorph',
 	#instVars : [
 		'methodClass'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCreationToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext isClassSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCreationToolMorph class >> tabOrder [
 	^ 1000
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCreationToolMorph >> activationPriority [
 	"We want creation tool be active by default only when user select method group.
 	Instead when user select class creation tool should not be activated"
@@ -37,7 +39,7 @@ ClyMethodCreationToolMorph >> activationPriority [
 		ifFalse: [ ClyClassDefinitionEditorToolMorph tabOrder + 1 ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodCreationToolMorph >> applyChanges [
 	| newMethod selector selectedClass |
 	selectedClass := self chooseClassForNewMethodIfNone: [^false].
@@ -57,12 +59,12 @@ ClyMethodCreationToolMorph >> applyChanges [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCreationToolMorph >> belongsToCurrentBrowserContext [
 	^browser isClassSelected: methodClass instanceSide
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCreationToolMorph >> decorateContainerTab [
 	| title |
 
@@ -74,23 +76,23 @@ ClyMethodCreationToolMorph >> decorateContainerTab [
 	containerTab label: title
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCreationToolMorph >> defaultIconName [
 	^#add
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCreationToolMorph >> defaultTitle [
 
 	^browser metaLevelScope defaultName capitalized, ' method'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCreationToolMorph >> editingText [
 	^methodClass sourceCodeTemplate
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 
@@ -99,29 +101,29 @@ ClyMethodCreationToolMorph >> isSimilarTo: anotherBrowserTool [
 				and: [ extendingPackage = anotherBrowserTool extendingPackage ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodCreationToolMorph >> methodClass [
 	^methodClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodCreationToolMorph >> modifiesExtension [
 	"I create new method. So I am not modify anything"
 	^false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodCreationToolMorph >> printContext [
 	^methodClass printSystemPath, ' / ' , methodClass name
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodCreationToolMorph >> restoreBrowserState [
 
 	browser selectClass: methodClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCreationToolMorph >> setUpModelFromContext [
 
 	| selectedGroup |
@@ -134,7 +136,7 @@ ClyMethodCreationToolMorph >> setUpModelFromContext [
 	(selectedGroup isKindOf: ClyMethodsInProtocolGroup) ifTrue: [ ^ methodProtocol := selectedGroup protocol ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodCreationToolMorph >> setUpTargetClasses [
 
 	targetClasses := browser chooseClassesForNewMethod.

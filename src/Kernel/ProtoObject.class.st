@@ -33,6 +33,7 @@ ProtoObject >> basicIdentityHash [
 
 	Do not override, use #identityHash instead"
 
+	<reflection: 'Object Inspection - Accessing object identity'>
 	<primitive: 75>
 	self primitiveFailed
 ]
@@ -43,7 +44,7 @@ ProtoObject >> become: otherObject [
 	All variables in the entire system that used to point to the
 	receiver now point to the argument, and vice-versa.
 	Fails if either object is a SmallInteger"
-
+	<reflection: 'Chasing and swapping pointers - Bulk pointer swapping'>
 	{self} elementsExchangeIdentityWith: {otherObject}
 ]
 
@@ -52,7 +53,7 @@ ProtoObject >> becomeForward: otherObject [
 	"Primitive. All variables in the entire system that used to point
 	to the receiver now point to the argument.
 	Fails if either argument is a SmallInteger."
-
+	<reflection: 'Chasing and swapping pointers - Bulk pointer swapping'>
 	{self} elementsForwardIdentityTo: {otherObject}
 ]
 
@@ -61,7 +62,7 @@ ProtoObject >> becomeForward: otherObject copyHash: copyHash [
 	"Primitive. All variables in the entire system that used to point to the receiver now point to the argument.
 	If copyHash is true, the argument's identity hash bits will be set to those of the receiver.
 	Fails if either argument is a SmallInteger."
-
+	<reflection: 'Chasing and swapping pointers - Bulk pointer swapping'>
 	{self} elementsForwardIdentityTo: {otherObject} copyHash: copyHash
 ]
 
@@ -71,6 +72,7 @@ ProtoObject >> cannotInterpret: aMessage [
 
 "If this is the result of encountering a swap-out stub, then simulating the lookup in Smalltalk should suffice to install the class properly, and the message may be resent."
 
+	<reflection: 'Message sending and code execution - Control message passing'>
 	(self class lookupSelector: aMessage selector) ifNotNil:
 		["Simulated lookup succeeded -- resend the message."
 		^ aMessage sentTo: self].
@@ -86,7 +88,7 @@ ProtoObject >> cannotInterpret: aMessage [
 ProtoObject >> class [
 	"Primitive. Answer the object which is the receiver's class. Essential. See
 	Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - Accessing object class'>
 	<primitive: 111>
 	self primitiveFailed
 ]
@@ -94,6 +96,7 @@ ProtoObject >> class [
 { #category : 'reflective operations' }
 ProtoObject >> doesNotUnderstand: aMessage [
 
+	<reflection: 'Message sending and code execution - Control message passing'>
 	<debuggerCompleteToSender>
 
 	^ MessageNotUnderstood new
@@ -104,6 +107,7 @@ ProtoObject >> doesNotUnderstand: aMessage [
 
 { #category : 'executing' }
 ProtoObject >> executeMethod: compiledMethod [
+	<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	^ self withArgs: #( ) executeMethod: compiledMethod
 ]
 
@@ -123,7 +127,7 @@ ProtoObject >> identityHash [
 	 (30 bits + 1 sign bit).  Shifting by 8 will not create large integers.
 
 	 Do not override."
-
+	<reflection: 'Object Inspection - Accessing object identity'>
 	^self basicIdentityHash bitShift: 8
 ]
 
@@ -175,7 +179,7 @@ ProtoObject >> initialize [
 { #category : 'introspection' }
 ProtoObject >> instVarsInclude: anObject [
 "Answers true if anObject is among my named or indexed instance variables, and false otherwise"
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 132>
 	1 to: self class instSize do:
 		[:i | (self instVarAt: i) == anObject ifTrue: [^ true]].
@@ -257,7 +261,7 @@ ProtoObject >> nextInstance [
 	"Primitive. Answer the next instance after the receiver in the
 	enumeration of all instances of this class. Fails if all instances have been
 	enumerated. Essential. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Memory Scanning - Instances of a class'>
 	<primitive: 78>
 	^nil
 ]
@@ -267,13 +271,14 @@ ProtoObject >> nextObject [
 	"Primitive. Answer the next object after the receiver in the
 	enumeration of all objects. Return 0 when all objects have been
 	enumerated."
-
+	<reflection: 'Memory Scanning'>
 	<primitive: 139>
 	self primitiveFailed
 ]
 
 { #category : 'pointing to' }
 ProtoObject >> pointersTo [
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	^self pointersToExcept: #()
 ]
 
@@ -287,13 +292,15 @@ ProtoObject >> pointersToAmong: aCollectionOfObjects [
 
 	Avoid multiple calls to allObjects Primitive and multiple gcs.
 	"
-
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	^ self pointersToExcept: #() among: aCollectionOfObjects
 ]
 
 { #category : 'pointing to' }
 ProtoObject >> pointersToExcept: objectsToExclude [
 	"Find all objects in the system that hold a pointer to me, excluding those listed"
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
+
 	| c pointers objectsToAlwaysExclude closure|
 	Smalltalk garbageCollect.
 	pointers := OrderedCollection new.
@@ -320,7 +327,7 @@ ProtoObject >> pointersToExcept: objectsToExclude among: aCollectionOfObjects [
 	This method is meant to be a faster solution if used several times on several objects rather than calling the GC multiples times.
 	See pointersToExcept: for usage.
 	"
-
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	| pointers objectsToAlwaysExclude |
 	pointers := OrderedCollection new.
 	pointers := aCollectionOfObjects select: [ :e | e pointsTo: self ].
@@ -341,7 +348,7 @@ ProtoObject >> pointersToExcept: objectsToExclude among: aCollectionOfObjects [
 ProtoObject >> pointsTo: anObject [
 	"Answers true if I hold a reference to anObject, or false otherwise.
 	Note: an object points to the class via the header"
-
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	^ (self instVarsInclude: anObject) or: [ ^self class == anObject]
 ]
 
@@ -372,7 +379,7 @@ ProtoObject >> primitiveFailed: selector [
 ProtoObject >> tryPrimitive: primIndex withArgs: argumentArray [
 	"This method is a template that the Smalltalk simulator uses to
 	execute primitives. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	<primitive: 118 error: code >
 	^ Context primitiveFailTokenFor: code
 ]
@@ -380,7 +387,7 @@ ProtoObject >> tryPrimitive: primIndex withArgs: argumentArray [
 { #category : 'executing' }
 ProtoObject >> withArgs: argArray executeMethod: compiledMethod [
 	"Execute compiledMethod against the receiver and args in argArray"
-
+	<reflection: 'Message sending and code execution - Arbitrary method/primitive execution'>
 	<primitive: 188>
 	self primitiveFailed
 ]

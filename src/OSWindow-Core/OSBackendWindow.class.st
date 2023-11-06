@@ -5,230 +5,232 @@ Each instance of OSWindow holds a handle, through which it communicates with und
 The implementation of OSWindowHandle (and subclasses) is highly driver-specific and therefore considered private.
 "
 Class {
-	#name : #OSBackendWindow,
-	#superclass : #Object,
+	#name : 'OSBackendWindow',
+	#superclass : 'Object',
 	#instVars : [
 		'osWindow',
 		'renderer'
 	],
-	#category : #'OSWindow-Core-Utilities'
+	#category : 'OSWindow-Core-Utilities',
+	#package : 'OSWindow-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSBackendWindow class >> initialize [
 
 	self deprecatedAliases: { #OSWindowHandle }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> borderless [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> borderless: aBoolean [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> bounds [
 	^ self position extent: self extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> bounds: newBounds [
 	self subclassResponsibility
 ]
 
-{ #category : #'mouse capture' }
+{ #category : 'mouse capture' }
 OSBackendWindow >> captureMouse [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> clipboardText [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> clipboardText: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> diagonalDPI [
 	^ self screenScaleFactorBaseDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> extent [
 	^ self bounds extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> extent: newExtent [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> fullscreen: aBoolean [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> hide [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> horizontalDPI [
 	^ self screenScaleFactorBaseDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> icon: aForm [
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSBackendWindow >> isTextInputActive [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSBackendWindow >> isValid [
 	self subclassResponsibility
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSBackendWindow >> newFormRenderer: aForm [
 	self subclassResponsibility
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSBackendWindow >> newGenericRenderer [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> osWindow [
 
 	^ osWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> osWindow: anObject [
 
 	osWindow := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> platformSpecificHandle [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> position [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> position: newPosition [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> prepareExternalResourceForAutoRelease [
 	"This hook will allow just create handlers to prepate their external resources for being
 	 releases by the GC (if needed). By default, do nothing."
 ]
 
-{ #category : #'mouse capture' }
+{ #category : 'mouse capture' }
 OSBackendWindow >> releaseMouse [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> renderer [
 
 	^ renderer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> renderer: anObject [
 
 	renderer := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> resizable [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> resizable: aBoolean [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> screenScaleFactor [
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> screenScaleFactorBaseDPI [
 	^ OSPlatform current osWindowScreenScaleFactorBaseDPI
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 OSBackendWindow >> setMouseCursor: cursorWithMask [
 	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
 ]
 
-{ #category : #cursor }
+{ #category : 'cursor' }
 OSBackendWindow >> setMouseCursor: cursor mask: mask [
 
 	self setMouseCursor: cursor mask: mask andScale: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> show [
 	self subclassResponsibility
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSBackendWindow >> startTextInput [
 	self subclassResponsibility
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSBackendWindow >> startTextInputAtRectangle: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSBackendWindow >> stopTextInput [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> title [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> title: aTitle [
 	self subclassResponsibility
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSBackendWindow >> updateToNewResolution [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> verticalDPI [
 	^ self screenScaleFactorBaseDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSBackendWindow >> windowId [
 	^ nil
 ]

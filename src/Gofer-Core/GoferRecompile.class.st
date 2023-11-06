@@ -2,19 +2,21 @@
 Recompile
 "
 Class {
-	#name : #GoferRecompile,
-	#superclass : #GoferWorking,
-	#category : #'Gofer-Core-Operations'
+	#name : 'GoferRecompile',
+	#superclass : 'GoferWorking',
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 GoferRecompile >> execute [
 
 	self workingCopies
 		do: [ :each | self execute: each ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferRecompile >> execute: aWorkingCopy [
 
 	aWorkingCopy packageSet methods

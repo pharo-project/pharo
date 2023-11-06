@@ -3,11 +3,17 @@ SUnit tests for RPackage Monticello synchronization
 "
 Class {
 	#name : 'RPackageMonticelloSynchronisationTest',
-	#superclass : 'RPackageMCSynchronisationTest',
+	#superclass : 'RPackageTestCase',
 	#category : 'Monticello-Tests-RPackage',
 	#package : 'Monticello-Tests',
 	#tag : 'RPackage'
 }
+
+{ #category : 'accessing' }
+RPackageMonticelloSynchronisationTest >> allWorkingCopies [
+
+	^ MCWorkingCopy allWorkingCopies
+]
 
 { #category : 'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [

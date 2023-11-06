@@ -7,34 +7,31 @@ So I see all objects which are defined in given projects:
 - methods
 "
 Class {
-	#name : #ClyProjectScope,
-	#superclass : #ClyTypedScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyProjectScope',
+	#superclass : 'ClyTypedScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyProjectScope class >> defaultName [
 	^'projects'
 ]
 
-{ #category : #queries }
-ClyProjectScope >> classesDo: aBlock [
-	self projectsDo: [ :project |
-		project classes do: aBlock ]
-]
-
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyProjectScope >> includesClassesAffectedBy: aSystemAnnouncement [
-	^false
+
+	^ false
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyProjectScope >> packagesDo: aBlock [
 	self projectsDo: [ :project |
 		project packages do: aBlock ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyProjectScope >> projectsDo: aBlock [
 	basisObjects do: aBlock
 ]

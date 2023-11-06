@@ -1,16 +1,18 @@
 Class {
-	#name : #RBSharedVariableStillReferenced,
-	#superclass : #RBBreakingChangeReport,
-	#category : #'Refactoring-UI-Drivers'
+	#name : 'RBSharedVariableStillReferenced',
+	#superclass : 'RBBreakingChangeReport',
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 RBSharedVariableStillReferenced >> browse [
 
 	MessageBrowserPresenter browse: (SystemNavigation default allReferencesToBinding: (self refactoring refactoredClass realClass bindingOf: self refactoring variableName))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSharedVariableStillReferenced >> refactoring: aRefactoring [
 
 	refactoring := aRefactoring.

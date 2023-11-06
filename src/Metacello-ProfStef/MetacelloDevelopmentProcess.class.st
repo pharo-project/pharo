@@ -1,16 +1,17 @@
 Class {
-	#name : #MetacelloDevelopmentProcess,
-	#superclass : #AbstractTutorial,
-	#category : #'Metacello-ProfStef'
+	#name : 'MetacelloDevelopmentProcess',
+	#superclass : 'AbstractTutorial',
+	#category : 'Metacello-ProfStef',
+	#package : 'Metacello-ProfStef'
 }
 
-{ #category : #'tutorial metainfo' }
+{ #category : 'tutorial metainfo' }
 MetacelloDevelopmentProcess class >> title [	
 
 	^'Metacello Development Cycle'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> checkpointSave [
 	^Lesson
 		title: '4. Checkpoint save'
@@ -32,7 +33,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> compareVersions [
 	^Lesson
 		title: '6. Compare versions'
@@ -44,7 +45,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> createConfigurationAndBaseline [
 	^Lesson
 		title: '1. Create configuration'
@@ -77,7 +78,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> createDevelopmentVersion [
 	^Lesson
 		title: '2. Create development version'
@@ -107,7 +108,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> createNewDevelopmentVersion [
 	^Lesson
 		title: '8. Create new development version'
@@ -123,7 +124,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> integrateCodeContributions [
 	^Lesson
 		title: '5. Integrate code contributions'
@@ -147,7 +148,7 @@ ProfStef next.
 '
 ]
 
-{ #category : #intro }
+{ #category : 'intro' }
 MetacelloDevelopmentProcess >> introductionText [
 
 	^'This tutorial covers some of the methods that can be found in the MetacelloToolBox.
@@ -175,7 +176,7 @@ For convenience, a number of the methods covered in these sections can be found 
 "'
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> releaseVersion [
 	^Lesson
 		title: '7. Release development version'
@@ -203,12 +204,12 @@ ProfStef next.
 '
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 MetacelloDevelopmentProcess >> tutorial [
 	^#(  createConfigurationAndBaseline createDevelopmentVersion validateAndSaveConfiguration checkpointSave integrateCodeContributions compareVersions releaseVersion createNewDevelopmentVersion)
 ]
 
-{ #category : #lessons }
+{ #category : 'lessons' }
 MetacelloDevelopmentProcess >> validateAndSaveConfiguration [
 	^Lesson
 		title: '3. Validate and save configuration in project repository'

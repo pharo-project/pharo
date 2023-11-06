@@ -1,15 +1,16 @@
 Class {
-	#name : #SycRenameMessage2Command,
-	#superclass : #SycChangeMessageSignatureCommand,
+	#name : 'SycRenameMessage2Command',
+	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSignature',
 		'driver',
 		'toolContext'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessage2Command >> applyResultInContext: aToolContext [
 	"I have problem to understand how to plug the call to the driver in the cmd architecture
 	in a way that I can come back here only once the refactoring is applied."
@@ -21,27 +22,27 @@ SycRenameMessage2Command >> applyResultInContext: aToolContext [
 		renamedTo: driver newMessage"
 ]
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycRenameMessage2Command >> canAddArgs [
 	^false
 ]
 
-{ #category : #requesting }
+{ #category : 'requesting' }
 SycRenameMessage2Command >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessage2Command >> defaultMenuIconName [
 	^#edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessage2Command >> defaultMenuItemName [
 	^'Rename2'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessage2Command >> execute [
 
 	driver := RBRenameMethodDriver new
@@ -54,30 +55,30 @@ SycRenameMessage2Command >> execute [
 	
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessage2Command >> isComplexRefactoring [ 
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessage2Command >> newSignature [
 	^ newSignature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameMessage2Command >> newSignature: anObject [
 	newSignature := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessage2Command >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameMessage2Command >> resultMessageSelector [
 	^newSignature selector
 ]

@@ -2,17 +2,18 @@
 I am a command to remove given packages
 "
 Class {
-	#name : #SycRemovePackageCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'SystemCommands-PackageCommands'
+	#name : 'SycRemovePackageCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemovePackageCommand class >> defaultMenuIconName [
 	^ #delete
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemovePackageCommand >> applyResultInContext: aToolContext [
 	"Update the browser's title and method editor  after removal of a package"
 
@@ -28,24 +29,24 @@ SycRemovePackageCommand >> applyResultInContext: aToolContext [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemovePackageCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemovePackageCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemovePackageCommand >> execute [
 
 	self packages do: [ :each | each removeFromSystem ].
 	self packages: OrderedCollection new.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemovePackageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| packagesWithClasses names answer |
