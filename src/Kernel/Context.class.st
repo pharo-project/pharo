@@ -502,6 +502,21 @@ Context >> cut: aContext [
 	callee privSender: nil
 ]
 
+{ #category : 'accessing' }
+Context >> deadContextForClosure: closure [
+
+	| outerMethod |
+	outerMethod := closure literalAt: closure literals size + 1.
+
+	^ (self class
+		   sender: self
+		   receiver: nil
+		   method: outerMethod
+		   arguments: {  })
+		  pc: nil;
+		  yourself
+]
+
 { #category : 'printing' }
 Context >> debugStack: stackSize on: aStream [
 	"print a condensed version of the stack up to stackSize on aStream"
@@ -925,9 +940,9 @@ Context >> home [
 
 	closureOrNil ifNil: [ ^ self ].
 	"this happens for clean blocks, we try to find the home on the stack"
-	^ closureOrNil outerContext 
-		ifNil: [ self activeHome ]
-		ifNotNil: [:outer | outer home ]
+	^ closureOrNil outerContext
+		  ifNil: [ self activeHome ifNil: [ self deadContextForClosure: self method ] ]
+		  ifNotNil: [ :outer | outer home ]
 ]
 
 { #category : 'accessing' }
