@@ -128,12 +128,6 @@ RPackageOrganizer class >> initialize [
 	is the usual way (but is not in this package by default, it depends on MC)"
 ]
 
-{ #category : 'quieries' }
-RPackageOrganizer class >> isPackageDefinedForClass: aClass [
-
-	^ (self default packageOf: aClass) notNil
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> addPackage: aPackage [
 
@@ -236,6 +230,17 @@ RPackageOrganizer >> initialize [
 
 	packages := IdentityDictionary new.
 	self ensurePackage: UndefinedPackage new
+]
+
+{ #category : 'testing' }
+RPackageOrganizer >> isClassInstalled: aClass [
+
+	(self hasPackage: aClass package) ifFalse: [ ^ false ].
+
+	"It could be that the class got removed but still knows its package"
+	(aClass package includesClass: aClass) ifFalse: [ ^ false ].
+
+	^ aClass package isUndefined not
 ]
 
 { #category : 'system integration' }

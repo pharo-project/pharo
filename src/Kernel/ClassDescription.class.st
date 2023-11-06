@@ -653,6 +653,13 @@ ClassDescription >> isDeprecated [
 	^ self package isDeprecated
 ]
 
+{ #category : 'testing' }
+ClassDescription >> isInstalled [
+	"Return true if I am installed in the system (which is equivalent to me been part of my package organizer). Else, return false."
+
+	^ self packageOrganizer isClassInstalled: self
+]
+
 { #category : 'accessing - parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
