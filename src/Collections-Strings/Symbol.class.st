@@ -583,7 +583,6 @@ Symbol >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	self errorNoModification
 ]
 
-<<<<<<< HEAD
 { #category : #comparing }
 Symbol >> sameContents: aSymbol [
 	"Compare the receiver and aSymbol."
@@ -594,9 +593,6 @@ Symbol >> sameContents: aSymbol [
 ]
 
 { #category : #converting }
-=======
-{ #category : 'converting' }
->>>>>>> Pharo12
 Symbol >> separateKeywords [
 	"#'foo:zork:' separateKeywords -> 'foo:  zork:'"
 
