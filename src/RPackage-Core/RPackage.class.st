@@ -739,9 +739,6 @@ RPackage >> renameTo: aSymbol [
 	self organizer basicUnregisterPackage: self.
 	self name: aSymbol.
 
-	self flag: #package. "The next line is necessary until classes know their tag. Then it will not be needed anymore"
-	self classTags do: [ :tag | tag classes do: [ :class | class basicCategory: tag categoryName ] ].
-
 	"We rename the extension protocols refering to this package"
 	(self extensionMethods collect: [ :method | method protocol ] as: Set) do: [ :protocol |
 		protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ].

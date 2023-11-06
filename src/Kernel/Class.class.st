@@ -284,8 +284,6 @@ Class >> category: aString [
 	self flag: #package. "Should be deprecated"
 	self category = aString ifTrue: [ ^ self ].
 
-	self basicCategory: aString asSymbol.
-
 	newPackage := self packageOrganizer ensurePackageMatching: self category.
 
 	"The category can be

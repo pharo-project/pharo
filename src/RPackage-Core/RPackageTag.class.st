@@ -148,8 +148,6 @@ RPackageTag >> privateAddClass: aClass [
 	classes add: aClass.
 	self organizer registerPackage: self package forClass: aClass.
 
-	self flag: #package. "Next line should be removed once we will not need the category"
-	aClass basicCategory: self categoryName.
 	aClass basicTag: self
 ]
 
@@ -196,8 +194,6 @@ RPackageTag >> renameTo: newTagName [
 
 	self basicRenameTo: newTagName.
 
-	self flag: #package. "This should be removed later when the class will know its tag."
-	self classes do: [ :class | class basicCategory: self categoryName ].
 	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 
