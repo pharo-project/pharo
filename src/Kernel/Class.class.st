@@ -204,11 +204,6 @@ Class >> applyDeprecation [
 	self deprecationRefactorings do: #execute
 ]
 
-{ #category : 'accessing' }
-Class >> basicCategory: aSymbol [
-	self flag: #package. "To remove"
-]
-
 { #category : 'class variables' }
 Class >> basicDeclareClassVariable: aClassVariable [
 	"Add aClassVariable to the receiver. Two cases are handled here:
