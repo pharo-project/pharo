@@ -237,6 +237,12 @@ Class >> basicDeclareClassVariable: aClassVariable [
 
 { #category : 'accessing' }
 Class >> basicTag: aPackageTag [
+
+	aPackageTag ifNil: [
+		Stdio stdout
+			nextPutAll: 'Nil tag for ' , self name , ' Stack: ' , thisContext longStack;
+			lf;
+			lf ].
 	packageTag := aPackageTag
 ]
 
