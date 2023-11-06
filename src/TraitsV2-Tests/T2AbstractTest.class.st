@@ -4,9 +4,6 @@ Abstract Test of all the TraitsV2 tests
 Class {
 	#name : 'T2AbstractTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'createdClasses'
-	],
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
@@ -19,124 +16,53 @@ T2AbstractTest class >> isAbstract [
 
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName [
-	^self newClass: aName with: #() trait: TEmpty
+	^self newClass: aName with: #() traits: TEmpty
 ]
 
 { #category : 'instance creation' }
-T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aComposition [
+T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots traits: aComposition [
 
-	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses'
+	^ self class classInstaller make: [ :aClassBuilder |
+		  aClassBuilder
+			  name: aName;
+			  superclass: aSuperclass;
+			  slots: slots;
+			  traitComposition: aComposition;
+			  package: self packageNameForTests ]
 ]
 
 { #category : 'instance creation' }
-T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots trait: aComposition category: category [
-
-	| class |
-
-	class := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: aName;
-			superclass: aSuperclass;
-			slots: slots;
-			traitComposition: aComposition;
-			package: category ].
-
-	createdClasses add:class.
-
-	^class
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition [
-
-	^ self newClass: aName superclass: aSuperclass with: slots uses: aComposition category: 'TraitsV2-Tests-TestClasses'
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots uses: aComposition category: category [
-
-	| class |
-
-	class := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: aName;
-			superclass: aSuperclass;
-			slots: slots;
-			traitComposition: aComposition;
-			package: category ].
-
-	createdClasses add:class.
-
-	^class
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newClass: aName with: slots trait: aComposition [
-	^ self newClass: aName superclass: Object with: slots trait: aComposition
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newClass: aName with: slots uses: aComposition [
-	^ self newClass: aName superclass: Object with: slots uses: aComposition
+T2AbstractTest >> newClass: aName with: slots traits: aComposition [
+	^ self newClass: aName superclass: Object with: slots traits: aComposition
 ]
 
 { #category : 'instance creation' }
 T2AbstractTest >> newTrait: aName with: slots [
-	^ self newTrait: aName with: slots trait: TEmpty
+	^ self newTrait: aName with: slots traits: TEmpty
 ]
 
 { #category : 'instance creation' }
-T2AbstractTest >> newTrait: aName with: slots trait: aComposition [
-	^ self newTrait: aName with: slots trait: aComposition category: 'TraitsV2-Tests-TestClasses'
+T2AbstractTest >> newTrait: aName with: slots traits: aComposition [
+
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: aName;
+			  traitComposition: aComposition;
+			  slots: slots;
+			  package: self packageNameForTests;
+			  beTrait ]
 ]
 
-{ #category : 'instance creation' }
-T2AbstractTest >> newTrait: aName with: slots trait: aComposition category: category [
-	| class |
-	class := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: aName;
-			traitComposition: aComposition;
-			slots: slots;
-			package: category;
-			beTrait ].
+{ #category : 'setup' }
+T2AbstractTest >> packageNameForTests [
 
-	createdClasses add:class.
-
-	^class
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newTrait: aName with: slots uses: aComposition [
-	^ self newTrait: aName with: slots trait: aComposition category: 'TraitsV2-Tests-TestClasses'
-]
-
-{ #category : 'instance creation' }
-T2AbstractTest >> newTrait: aName with: slots uses: aComposition category: category [
-	| class |
-	class := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: aName;
-			traitComposition: aComposition;
-			slots: slots;
-			package: category;
-			beTrait ].
-
-	createdClasses add:class.
-
-	^class
-]
-
-{ #category : 'running' }
-T2AbstractTest >> setUp [
-	super setUp.
-	createdClasses := OrderedCollection new
+	^ #'Generated-Trait-Test-Package'
 ]
 
 { #category : 'running' }
 T2AbstractTest >> tearDown [
-	createdClasses reverseDo: #removeFromSystem.
-	createdClasses := nil.
+
+	self packageOrganizer removePackage: self packageNameForTests.
 
 	super tearDown
 ]
