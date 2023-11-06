@@ -828,6 +828,19 @@ ClassDescription >> oldPharoDefinition [
 		definitionString
 ]
 
+{ #category : 'accessing' }
+ClassDescription >> package [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+ClassDescription >> packageTag [
+	"Package tags are sub categories of packages to have a better organization of the packages."
+
+	^ self subclassResponsibility
+]
+
 { #category : 'printing' }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name

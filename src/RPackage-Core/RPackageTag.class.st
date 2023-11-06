@@ -146,8 +146,6 @@ RPackageTag >> privateAddClass: aClass [
 	"This method adds the class to the tag but does not check is the class was already in the right package."
 
 	classes add: aClass.
-	self organizer registerPackage: self package forClass: aClass.
-
 	aClass basicTag: self
 ]
 
@@ -165,7 +163,6 @@ RPackageTag >> promoteAsPackage [
 RPackageTag >> removeClass: aClass [
 
 	classes remove: aClass ifAbsent: [ ^ self ].
-	self organizer unregisterPackage: self package forClass: aClass.
 	self isEmpty ifTrue: [ self removeFromPackage ]
 ]
 
