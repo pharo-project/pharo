@@ -240,7 +240,7 @@ DADependencyTreePresenter >> initializeButtons [
 	buttonRemovePackage := self newButton
 		help: 'Remove package to the current analysis';
 		label: 'Remove packages';
-		icon: (self iconNamed: #removeIcon).
+		icon: (self iconNamed: #remove).
 	buttonGenerateGraphViz := self newButton
 		help: 'Open the graph in world';
 		label: 'Open the graph'.
