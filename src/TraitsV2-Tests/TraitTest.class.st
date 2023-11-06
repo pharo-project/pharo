@@ -16,16 +16,29 @@ TraitTest >> createClassUsing: aTrait [
 
 { #category : 'utilities' }
 TraitTest >> createTrait [
-	| trait |
 
+	| trait |
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #ATraitForTests;
-			package: 'AAA';
-			beTrait ].
+		         aBuilder
+			         name: #ATraitForTests;
+			         package: self packageNameForTests;
+			         beTrait ].
 
 	trait compile: 'm1 ^1' classified: 'test'.
 	^ trait
+]
+
+{ #category : 'helpers' }
+TraitTest >> packageNameForTests [
+
+	^ #'Generated-Trait-Test-Package'
+]
+
+{ #category : 'running' }
+TraitTest >> tearDown [
+
+	self packageOrganizer removePackage: self packageNameForTests.
+	super tearDown
 ]
 
 { #category : 'tests' }
@@ -87,47 +100,42 @@ TraitTest >> testCompositionCopy [
 
 { #category : 'tests' }
 TraitTest >> testErrorClassCreation [
-    | tmpCategory trait aSubclass aClass |
 
-    tmpCategory := 'TemporaryGeneratedClasses'.
-
-	 trait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #TMyTrait;
-			package: tmpCategory;
-			beTrait ].
+	| trait aSubclass aClass |
+	trait := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TMyTrait;
+			         package: self packageNameForTests;
+			         beTrait ].
 
 
-    [
-		aClass := self class classInstaller make: [ :aClassBuilder |
-			aClassBuilder
-				name: #AClass;
-				superclass: nil;
-				package: tmpCategory ].
+	[
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #AClass;
+			          superclass: nil;
+			          package: self packageNameForTests ].
 
 	"----------------"
-		aSubclass := self class classInstaller make: [ :aClassBuilder |
-			aClassBuilder
-				name: #AClass2;
-				traitComposition: trait;
-				superclass: aClass;
-				package: tmpCategory ].
+	aSubclass := self class classInstaller make: [ :aClassBuilder |
+		             aClassBuilder
+			             name: #AClass2;
+			             traitComposition: trait;
+			             superclass: aClass;
+			             package: self packageNameForTests ].
 
 	"----------------"
 
-    "Change the superclass of AClass"
-		aClass := self class classInstaller make: [ :aClassBuilder |
-			aClassBuilder
-				name: #AClass;
-				superclass: Object;
-				package: tmpCategory ].
+	"Change the superclass of AClass"
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #AClass;
+			          superclass: Object;
+			          package: self packageNameForTests ].
 
-    self assert: trait traitUsers asArray equals: {aSubclass}.
-    self assert: aSubclass traits asArray equals: {trait}.
-
-    ] ensure: [
-        #(AClass AClass2 TMyTrait) do: [ :aClassName |
-            testingEnvironment at: aClassName ifPresent: [ :v | v removeFromSystem ]]]
+	self assert: trait traitUsers asArray equals: { aSubclass }.
+	self assert: aSubclass traits asArray equals: { trait } ] ensure: [
+		#( AClass AClass2 TMyTrait ) do: [ :aClassName | testingEnvironment at: aClassName ifPresent: [ :v | v removeFromSystem ] ] ]
 ]
 
 { #category : 'tests' }
@@ -248,14 +256,13 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 
 { #category : 'tests' }
 TraitTest >> testForbidInstantiation [
-	| tmpCategory trait |
-	tmpCategory := 'TemporaryGeneratedClasses'.
 
+	| trait |
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #TMyTrait;
-			package: tmpCategory;
-			beTrait ].
+		         aBuilder
+			         name: #TMyTrait;
+			         package: self packageNameForTests;
+			         beTrait ].
 
 	self should: [ trait basicNew ] raise: Error
 ]
