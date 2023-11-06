@@ -4950,14 +4950,14 @@ UITheme >> windowBottomOffset [
 UITheme >> windowCloseForm [
 	"Answer the form to use for the close button of a window."
 
-	^ self iconNamed: #windowCloseForm
+	^ self iconNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowCloseOverForm [
 	"Answer the form to use for mouse over window close buttons"
 
-	^ self iconNamed: #windowCloseForm
+	^ self iconNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
@@ -5120,14 +5120,14 @@ UITheme >> windowMenuPassiveForm [
 UITheme >> windowMinimizeForm [
 	"Answer the form to use for the minimize button of a window."
 
-	^ self iconNamed: #windowMinimizeForm
+	^ self iconNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
 	"Answer the form to use for mouse over window minimize buttons"
 
-	^ self iconNamed: #windowMinimizeForm
+	^ self iconNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
