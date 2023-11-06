@@ -832,7 +832,7 @@ Class >> package [
 { #category : 'accessing' }
 Class >> packageTag [
 
-	^ packageTag
+	^ packageTag ifNil: [ self packageOrganizer undefinedPackage undefinedTag ]
 ]
 
 { #category : 'compiling' }
