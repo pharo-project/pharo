@@ -22,7 +22,6 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category',
 		'commentSourcePointer',
 		'packageTag'
 	],
@@ -207,7 +206,7 @@ Class >> applyDeprecation [
 
 { #category : 'accessing' }
 Class >> basicCategory: aSymbol [
-	category := aSymbol
+	self flag: #package. "To remove"
 ]
 
 { #category : 'class variables' }
@@ -272,7 +271,7 @@ Class >> bindingOf: varName [
 Class >> category [
 	"Answer the system organization category for the receiver."
 
-	^ category
+	^ self packageTag categoryName
 ]
 
 { #category : 'organization' }
