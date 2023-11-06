@@ -236,6 +236,12 @@ Class >> basicDeclareClassVariable: aClassVariable [
 ]
 
 { #category : 'accessing' }
+Class >> basicTag [
+
+	^ packageTag
+]
+
+{ #category : 'accessing' }
 Class >> basicTag: aPackageTag [
 
 	aPackageTag ifNil: [

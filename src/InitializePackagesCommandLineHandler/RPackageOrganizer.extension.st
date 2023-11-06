@@ -22,7 +22,7 @@ RPackageOrganizer >> basicBootstrapInitialize [
 				 << 'Tags by class:';
 				 lf.
 			 allBehaviors do: [ :c |
-				 s << '- ' << c name << ' tag: ' << c packageTag asString.
+				 s << '- ' << c name << ' tag: ' << c basicTag asString.
 				 s lf ].
 			 s lf ]).
 
