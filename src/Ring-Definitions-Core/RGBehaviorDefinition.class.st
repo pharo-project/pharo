@@ -377,6 +377,12 @@ RGBehaviorDefinition >> package [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+RGBehaviorDefinition >> packageTag [
+
+	self subclassResponsibility
+]
+
 { #category : 'printing' }
 RGBehaviorDefinition >> printOn: aStream [
 	aStream nextPutAll: self name
