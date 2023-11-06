@@ -157,25 +157,6 @@ ShiftClassBuilder >> builderEnhancer: anObject [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> category [
-
-	self flag: #package. "Category is an old concept mixing packages and tag. For now this is what is used by the system but in the future we should go away from it."
-	^ self tag
-		  ifNotNil: [ :packageTag | self package , '-' , packageTag ]
-		  ifNil: [ self package ]
-]
-
-{ #category : 'deprecated' }
-ShiftClassBuilder >> category: aString [
-
-	| converter |
-	self flag: #package. "To deprecate once it is not use in the bootstrap anymore."
-	converter := CategoryConverter category: aString environment: self installingEnvironment.
-	self package: converter packageName.
-	self tag: converter tagName
-]
-
-{ #category : 'accessing' }
 ShiftClassBuilder >> changeComparers [
 	^ changeComparers
 ]
