@@ -240,7 +240,7 @@ ToggleMenuItemMorph >> mouseEnter: evt [
 	Handle the case when in an EmbeddedMenuMorph."
 
 	super mouseEnter: evt.
-	(owner notNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
+	(owner isNotNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
 		owner selectedItem ~~ self
 			ifTrue: [owner selectItem: self event: evt]]
 ]
@@ -251,7 +251,7 @@ ToggleMenuItemMorph >> mouseLeave: evt [
 	Handle the case when in an EmbeddedMenuMorph."
 
 	super mouseLeave: evt.
-	(owner notNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
+	(owner isNotNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
 		owner selectedItem == self
 			ifTrue: [owner selectItem: nil event: evt]]
 ]

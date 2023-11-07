@@ -178,7 +178,7 @@ RGClassDefinition >> hasComment [
 { #category : 'testing' }
 RGClassDefinition >> hasMetaclass [
 
-	^metaClass notNil
+	^metaClass isNotNil
 ]
 
 { #category : 'testing' }

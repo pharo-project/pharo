@@ -221,7 +221,7 @@ RGClassDefinitionTest >> testWithClassInstanceVariables [
 	self assert: metaClass allInstVarNames size equals: 1.
 
 	classInstVar := metaClass instanceVariableNamed: #sizes.
-	self assert: classInstVar notNil.
+	self assert: classInstVar isNotNil.
 	self assert: classInstVar parent equals: metaClass.
 	self assert: classInstVar isClassInstanceVariable.
 	self assert: classInstVar isVariable.
@@ -309,7 +309,7 @@ RGClassDefinitionTest >> testWithInstanceVariables [
 	self assert: newClass allInstVarNames size equals: 3.
 
 	instVar := newClass instanceVariableNamed: #firstIndex.
-	self assert: instVar notNil.
+	self assert: instVar isNotNil.
 	self assert: instVar parent equals: newClass.
 	self assert: instVar isInstanceVariable.
 	self assert: instVar isVariable.
@@ -347,7 +347,7 @@ RGClassDefinitionTest >> testWithPoolDictionaries [
 	self assert: newClass allSharedPoolNames size equals: 1.
 
 	poolVar := newClass sharedPoolNamed: #TextConstants.
-	self assert: poolVar notNil.
+	self assert: poolVar isNotNil.
 	self assert: poolVar isPoolVariable.
 	self assert: poolVar isVariable.
 	self assert: poolVar parent equals: newClass.
