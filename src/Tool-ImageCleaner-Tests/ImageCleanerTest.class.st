@@ -21,5 +21,5 @@ ImageCleanerTest >> testTestPackages [
 	self assert: (self imageCleanerClass testPackages allSatisfy: #isSymbol).
 
 	"All test package names are candidates for cleanup, except ReleaseTests package"
-	self assert: (self imageCleanerClass testPackages noneSatisfy: [ :aSymbol | aSymbol = #ReleaseTests ])
+	self assert: (self imageCleanerClass testPackages noneSatisfy: [ :aSymbol | aSymbol = #'Release-Tests' ])
 ]

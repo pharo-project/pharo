@@ -6,8 +6,8 @@ The goal is to keep some conventions around protocols. For example we should use
 Class {
 	#name : 'ProtocolConventionsTest',
 	#superclass : 'TestCase',
-	#category : 'ReleaseTests-Categorization',
-	#package : 'ReleaseTests',
+	#category : 'Release-Tests-Categorization',
+	#package : 'Release-Tests',
 	#tag : 'Categorization'
 }
 

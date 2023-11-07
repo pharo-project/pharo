@@ -59,7 +59,7 @@ ImageCleaner class >> testPackages [
 	"All test packages to wipe out, except ReleeaseTests package."
 
 	<script: 'self testPackages inspect'>
-	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
+	^ RPackageOrganizer default testPackageNames copyWithout: 'Release-Tests'
 ]
 
 { #category : 'api' }

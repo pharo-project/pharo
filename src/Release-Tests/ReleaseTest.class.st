@@ -4,8 +4,8 @@ I contain tests that validate the integrity of the system.
 Class {
 	#name : 'ReleaseTest',
 	#superclass : 'AbstractEnvironmentTestCase',
-	#category : 'ReleaseTests-Release',
-	#package : 'ReleaseTests',
+	#category : 'Release-Tests-Release',
+	#package : 'Release-Tests',
 	#tag : 'Release'
 }
 

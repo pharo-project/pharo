@@ -4,8 +4,8 @@ Check for proper Manifest categorization
 Class {
 	#name : 'ProperPackagesTest',
 	#superclass : 'TestCase',
-	#category : 'ReleaseTests-Categorization',
-	#package : 'ReleaseTests',
+	#category : 'Release-Tests-Categorization',
+	#package : 'Release-Tests',
 	#tag : 'Categorization'
 }
 

@@ -4,8 +4,8 @@ Tests to enforce proper categorization of methods
 Class {
 	#name : 'ProperMethodCategorizationTest',
 	#superclass : 'TestCase',
-	#category : 'ReleaseTests-Categorization',
-	#package : 'ReleaseTests',
+	#category : 'Release-Tests-Categorization',
+	#package : 'Release-Tests',
 	#tag : 'Categorization'
 }
 

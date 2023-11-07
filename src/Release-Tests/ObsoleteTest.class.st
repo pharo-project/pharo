@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'classFactory'
 	],
-	#category : 'ReleaseTests-CleanCode',
-	#package : 'ReleaseTests',
+	#category : 'Release-Tests-CleanCode',
+	#package : 'Release-Tests',
 	#tag : 'CleanCode'
 }
 
