@@ -29,20 +29,24 @@ ProjectManager >> environment: anObject [
 
 { #category : 'testing' }
 ProjectManager >> hasProjects [
+	"Even if we do not have projects we have un undefined project."
 
-	^ self projects isNotEmpty
-]
-
-{ #category : 'testing' }
-ProjectManager >> isNotEmpty [
-
-	^ self projects isNotEmpty
+	^ true
 ]
 
 { #category : 'accessing' }
 ProjectManager >> projects [
+	"Maybe we should cache this and invalidate the cache when a package announcement or class (impacting baselines) is received?"
 
-	^ self environment allClasses
-		  select: [ :class | (class inheritsFrom: BaselineOf) and: [ class isProject ] ]
-		  thenCollect: [ :baseline | Project baseline: baseline ]
+	| projects packages |
+	projects := self environment allClasses
+		            select: [ :class | (class inheritsFrom: BaselineOf) and: [ class isProject ] ]
+		            thenCollect: [ :baseline | Project baseline: baseline ].
+
+	packages := projects flatCollect: [ :project | project packages ].
+
+	(self environment organization packages reject: [ :package | package isUndefined or: [ packages identityIncludes: package ] ]) ifNotEmpty: [ :orphans |
+		projects add: (UndefinedProject packages: orphans) ].
+
+	^ projects
 ]

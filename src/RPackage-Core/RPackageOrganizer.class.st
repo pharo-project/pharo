@@ -104,7 +104,6 @@ Class {
 	#name : 'RPackageOrganizer',
 	#superclass : 'Object',
 	#instVars : [
-		'classPackageMapping',
 		'packages',
 		'environment'
 	],
@@ -129,24 +128,15 @@ RPackageOrganizer class >> initialize [
 	is the usual way (but is not in this package by default, it depends on MC)"
 ]
 
-{ #category : 'quieries' }
-RPackageOrganizer class >> isPackageDefinedForClass: aClass [
-
-	^ (self default packageOf: aClass) notNil
-]
-
 { #category : 'registration' }
 RPackageOrganizer >> addPackage: aPackage [
 
 	| package |
 	self validatePackageDoesNotExist: aPackage.
 
-	aPackage isString
-		ifTrue: [ package := RPackage named: aPackage organizer: self ]
-		ifFalse: [
-			aPackage organizer: self.
-			aPackage definedClasses do: [ :definedClass | self registerPackage: aPackage forClass: definedClass ].
-			package := aPackage ].
+	package := aPackage isString
+		           ifTrue: [ RPackage named: aPackage organizer: self ]
+		           ifFalse: [ aPackage organizer: self ].
 
 	self basicRegisterPackage: package.
 
@@ -239,8 +229,18 @@ RPackageOrganizer >> initialize [
 	super initialize.
 
 	packages := IdentityDictionary new.
-	classPackageMapping := IdentityDictionary new.
 	self ensurePackage: UndefinedPackage new
+]
+
+{ #category : 'testing' }
+RPackageOrganizer >> isClassInstalled: aClass [
+
+	(self hasPackage: aClass package) ifFalse: [ ^ false ].
+
+	"It could be that the class got removed but still knows its package"
+	(aClass package includesClass: aClass) ifFalse: [ ^ false ].
+
+	^ aClass package isUndefined not
 ]
 
 { #category : 'system integration' }
@@ -328,15 +328,17 @@ RPackageOrganizer >> packageNamesDo: aBlock [
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOf: aClass [
 
-	^ classPackageMapping at: aClass instanceSide ifAbsent: [ self undefinedPackage ]
+	^ self packages
+		  detect: [ :package | package includesClass: aClass ]
+		  ifNone: [ self undefinedPackage ]
 ]
 
 { #category : 'package - access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
-	classPackageMapping keysAndValuesDo: [ :class :package | class originalName = aName ifTrue: [ ^ package ] ].
-
-	^ self undefinedPackage
+	^ self packages
+		  detect: [ :package | package includesClassNamed: aName ]
+		  ifNone: [ self undefinedPackage ]
 ]
 
 { #category : 'accessing' }
@@ -349,13 +351,6 @@ RPackageOrganizer >> packages [
 RPackageOrganizer >> packagesDo: aBlock [
 
 	self packages do: aBlock
-]
-
-{ #category : 'private - registration' }
-RPackageOrganizer >> registerPackage: aPackage forClass: aClass [
-
-	(aPackage includesClass: aClass) ifFalse: [ self error: aPackage name , ' does not includes the class ' , aClass name ].
-	^ classPackageMapping at: aClass instanceSide put: aPackage
 ]
 
 { #category : 'system integration' }
@@ -454,18 +449,9 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		           ifFalse: [ aPackage ].
 
 	self basicUnregisterPackage: package.
-	package definedClasses do: [ :definedClass | self unregisterPackage: package forClass: definedClass ].
 	SystemAnnouncer announce: (PackageRemoved to: package).
 
 	^ package
-]
-
-{ #category : 'private - registration' }
-RPackageOrganizer >> unregisterPackage: aPackage forClass: aClass [
-	"unregister the back pointer mapping from classes to packages."
-
-	self flag: #package. "When RPackage will be simplified we should not have to check the package but it is required for now"
-	^ (classPackageMapping at: aClass instanceSide ifAbsent: [ ^ self ]) = aPackage ifTrue: [ classPackageMapping removeKey: aClass instanceSide ]
 ]
 
 { #category : 'registration' }

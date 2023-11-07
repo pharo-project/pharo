@@ -304,6 +304,16 @@ Metaclass >> obsoleteSubclasses [
 	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
+{ #category : 'accessing' }
+Metaclass >> package [
+	^ self instanceSide package
+]
+
+{ #category : 'accessing' }
+Metaclass >> packageTag [
+	^ self instanceSide packageTag
+]
+
 { #category : 'compiling' }
 Metaclass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 

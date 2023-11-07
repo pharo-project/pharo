@@ -531,7 +531,7 @@ ReleaseTest >> testUnknownProcesses [
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) name = UndefinedPackage undefinedPackageName ].
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | each package isUndefined ].
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
