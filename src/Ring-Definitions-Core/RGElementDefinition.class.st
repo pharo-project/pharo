@@ -277,7 +277,7 @@ RGElementDefinition >> instanceSideParentName [
 RGElementDefinition >> isDefined [
 	"isDefined when the receiver has its realClass defined in the system"
 
-	^self realClass notNil
+	^self realClass isNotNil
 ]
 
 { #category : 'accessing' }
