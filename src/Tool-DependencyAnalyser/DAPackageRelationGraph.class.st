@@ -486,7 +486,7 @@ DAPackageRelationGraph >> successors: aPackage [
 { #category : 'queries' }
 DAPackageRelationGraph >> systemPackageContaining: aClass [
 
-	^ (self packageOrganizer packageOf: aClass) name
+	^ aClass package name
 		  ifNil: [ self error: 'Package for ' , aClass name , ' not found.' ]
 		  ifNotNil: [ :packageName | DAPackage on: (RPackageSet named: packageName asString) ]
 ]

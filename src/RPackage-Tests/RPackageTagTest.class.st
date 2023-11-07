@@ -160,7 +160,9 @@ RPackageTagTest >> testRemoveClass [
 
 	self deny: (tag includesClass: class).
 	self deny: (package includesClass: class).
-	self deny: class packageTag equals: tag
+	
+	"We want the class to keep it's tag after been removed so that tools can act on it."
+	self assert: class packageTag equals: tag
 ]
 
 { #category : 'tests' }
