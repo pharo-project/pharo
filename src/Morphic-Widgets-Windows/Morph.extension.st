@@ -123,9 +123,9 @@ Morph >> previousMorphInWindow [
 	from the receiver to its previous sibling's last submorph (recursive)
 	or owner's previous sibling's last submorph (recursive) etc."
 
-	^self submorphBefore notNil
-		ifTrue: [self submorphBefore lastSubmorphRecursive]
-		ifFalse: [self owner]
+	^ self submorphBefore
+		  ifNotNil: [ self submorphBefore lastSubmorphRecursive ]
+		  ifNil: [ self owner ]
 ]
 
 { #category : '*Morphic-Widgets-Windows' }
