@@ -129,6 +129,13 @@ SystemDictionary >> at: aKey put: anObject [
 	^ anObject
 ]
 
+{ #category : 'adding' }
+SystemDictionary >> atNewIndex: index put: aGlobalVariable [
+
+	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemDictionary and not associations.' ].
+	^ super atNewIndex: index put: aGlobalVariable
+]
+
 { #category : 'accessing - variable lookup' }
 SystemDictionary >> bindingOf: varName [
 	"SystemDictionaries includes symbols only"
