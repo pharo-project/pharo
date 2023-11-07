@@ -891,18 +891,17 @@ Class >> removeFromSystem: logged [
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
 	Tell class to deactivate and unload itself-- two separate events in the module system"
 
-	| tag variable |
-
+	| tag |
 	self release.
 	self unload.
 
 	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
-	variable := self environment associationAt: self name asSymbol.
+	self environment associationAt: self name asSymbol ifPresent: [ :variable |
 	"we remove it later using #forgetClass:"
 	variable primitiveChangeClassTo: UndeclaredVariable new.
-	variable register.
+	variable register].
 	self flag: #package. "For now the class cannot return its package tag after been removed. In the future the class should keep a reference to its package tag so we should not need that."
 	tag := self packageTag.
 	self environment forgetClass: self.
