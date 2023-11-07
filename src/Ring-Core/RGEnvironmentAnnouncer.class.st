@@ -101,8 +101,7 @@ RGEnvironmentAnnouncer >> methodRemoved: aMethod [
 					  at: aMethod methodClass
 					  ifPresent: [ :class | class protocolNamed: aMethod protocol ]
 					  ifAbsent: [ aMethod protocol ])
-			 origin: aMethod parent
-			 package: aMethod package)
+			 origin: aMethod parent)
 ]
 
 { #category : 'accessing' }
