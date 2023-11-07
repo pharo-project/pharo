@@ -171,7 +171,7 @@ MorphTreeListManager >> autoMultiSelection: aBoolean [
 MorphTreeListManager >> basicKeyPressed: aChar [
     | nextSelection oldSelection milliSeconds slowKeyStroke nextSelectionNodeMorph |
 
-    (aChar == Character space and: [ lastClickedMorph notNil ])
+    (aChar == Character space and: [ lastClickedMorph isNotNil ])
         ifTrue: [
             self
                 selectMorph: lastClickedMorph

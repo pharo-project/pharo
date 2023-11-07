@@ -256,7 +256,8 @@ LazyListMorph >> initialize [
 { #category : 'row management' }
 LazyListMorph >> isRowSelected: row [
 	"Answer true if the arg row is selected"
-	^ ((selectedRow notNil
+
+	^ ((selectedRow isNotNil
 				and: [row = selectedRow])
 			or: [listSource itemSelectedAmongMultiple: row])
 ]

@@ -911,7 +911,7 @@ SystemWindow >> deleteCloseBox [
 SystemWindow >> deleteDiscardingChanges [
 	| thisWorld announcement animateClose |
 	animateClose := self visible
-		and: [ self world notNil
+		and: [ self world isNotNil
 				and: [ self theme shouldUseAnimations
 						and: [ self theme animationSettings animateClosing ] ] ].
 	self removePaneSplitters.	"in case we add some panes and reopen!"
@@ -1200,9 +1200,9 @@ SystemWindow >> isCollapsed [
 
 { #category : 'testing' }
 SystemWindow >> isDisplayed [
-	" Answer true if I am currently displayed in the World"
+	"Answer true if I am currently displayed in the World"
 
-	^ self world notNil
+	^ self world isNotNil
 ]
 
 { #category : 'controls' }

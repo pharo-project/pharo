@@ -765,7 +765,7 @@ PasteUpMorph >> mouseDown: evt [
 			^ evt hand grabMorph: grabbedMorph ].
 	(super handlesMouseDown: evt)
 		ifTrue: [ ^ super mouseDown: evt ].
-	handHadHalos := evt hand halo notNil.
+	handHadHalos := evt hand halo isNotNil.
 	evt hand removeHalo.	"shake off halos"
 	evt hand releaseKeyboardFocus.	"shake of keyboard foci"
 	(evt shiftPressed not and: [ self isWorldMorph not and: [ self wantsEasySelection not ] ])
@@ -915,9 +915,10 @@ PasteUpMorph >> setGridSpec [
 
 { #category : 'wiw support' }
 PasteUpMorph >> shouldGetStepsFrom: aWorld [
-	(self isWorldMorph and: [owner notNil])
-		ifTrue: [ ^self outermostWorldMorph == aWorld ].
-	^super shouldGetStepsFrom: aWorld
+
+	(self isWorldMorph and: [ owner isNotNil ]) ifTrue: [
+		^ self outermostWorldMorph == aWorld ].
+	^ super shouldGetStepsFrom: aWorld
 ]
 
 { #category : 'options' }
@@ -970,7 +971,8 @@ PasteUpMorph >> wantsKeyboardFocusFor: aSubmorph [
 
 { #category : 'event handling' }
 PasteUpMorph >> wantsWindowEvent: anEvent [
-	^ self windowEventHandler notNil
+
+	^ self windowEventHandler isNotNil
 ]
 
 { #category : 'event handling' }
