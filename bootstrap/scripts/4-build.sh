@@ -180,15 +180,13 @@ echo $(date -u) "[Monticello] Bootstrap Monticello Core and Local repositories"
 ${VM} "${CORE_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${MC_BOOTSTRAP_IMAGE_NAME}
 #cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${ST_CACHE}/Monticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
-#${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "TraitsBootstrap fixSourceCodeOfTraits "
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
 echo $(date -u) "[Monticello] Loading Networking Packages and Remote Repositories"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save $MC_IMAGE_NAME
-${VM} "${MC_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
+${VM} "${MC_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticelloRemote.st --save --quit
 zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 
 #Bootstrap Metacello

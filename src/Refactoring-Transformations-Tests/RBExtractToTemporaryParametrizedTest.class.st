@@ -64,6 +64,22 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 	^ answer')
 ]
 
+{ #category : 'tests' }
+RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicatesInOtherScopes [
+	| refactoring |
+	refactoring := self createRefactoringWithArguments:
+		{ (58 to: 64) . 'j' . #demoMethodWithDuplicatesInBlocks . RBClassDataForRefactoringTest }.
+	self executeRefactoring: refactoring.
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #demoMethodWithDuplicatesInBlocks) equals: (self parseMethod: 'demoMethodWithDuplicatesInBlocks
+
+	(1 to: 10) do: [ :i |
+		| j |
+		j := i + 1.
+		j odd ifTrue: [ j doSomething ] ].
+	(1 to: 10) do: [ :i |
+		(i + 1) even ifTrue: [ (i + 1) doSomethingElse ] ]')
+]
+
 { #category : 'failure tests' }
 RBExtractToTemporaryParametrizedTest >> testFailureBadInterval [
 	self shouldFail:

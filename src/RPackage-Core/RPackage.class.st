@@ -64,7 +64,6 @@ Class {
 		'organizer'
 	],
 	#classVars : [
-		'PackageGlobalOrganizer',
 		'Properties'
 	],
 	#category : 'RPackage-Core-Base',
@@ -74,11 +73,11 @@ Class {
 
 { #category : 'class initialization' }
 RPackage class >> initialize [
-	"Ensure the organizer will be the RPackageOrganizer default"
-	self organizer: nil.
+
 	Properties
 		ifNil: [ self initializeProperties ]
-		ifNotNil: [ | newDict |
+		ifNotNil: [
+			| newDict |
 			newDict := WeakIdentityKeyDictionary newFrom: Properties.
 			newDict rehash.
 			Properties := newDict ]
@@ -105,37 +104,10 @@ RPackage class >> named: aString organizer: aPackageOrganizer [
 		  yourself
 ]
 
-{ #category : 'protected only for tests' }
-RPackage class >> organizer [
-
-	^ PackageGlobalOrganizer ifNil: [ self packageOrganizer ]
-]
-
-{ #category : 'protected only for tests' }
-RPackage class >> organizer: aPackageOrganizer [
-
-	PackageGlobalOrganizer := aPackageOrganizer
-]
-
 { #category : 'accessing' }
 RPackage class >> rootTagName [
 
 	^ #Uncategorized
-]
-
-{ #category : 'protected only for tests' }
-RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
-	"Perform an action locally to aNewOrganizer. Does not impact any other organizers."
-
-	| old |
-	[ old := self organizer.
-	old unregister.
-	self organizer: aNewOrganizer.
-	aNewOrganizer register.
-	aBlock cull: aNewOrganizer] ensure: [
-		self organizer: old.
-		old register.
-		aNewOrganizer unregister]
 ]
 
 { #category : 'comparing' }
@@ -158,11 +130,12 @@ RPackage >> addMethod: aCompiledMethod [
 	| methodClass |
 	methodClass := aCompiledMethod methodClass.
 	(self includesClass: methodClass)
-		ifTrue: [ (definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
+		ifTrue: [
+			aCompiledMethod removeProperty: #extensionPackage. "We want to make sure the method is not considered an extension."
+			(definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
 		ifFalse: [
-			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector.
-			"we added a method extension so the receiver is an extending package of the class"
-			self organizer registerExtendingPackage: self forClass: methodClass ].
+			aCompiledMethod propertyAt: #extensionPackage put: self. "We tag the method as an extension method."
+			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ].
 
 	^ aCompiledMethod
 ]
@@ -564,14 +537,14 @@ RPackage >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
 
+	aSymbol isEmptyOrNil ifTrue: [ self error: 'Cannot have empty or nil package name.' ].
 	name := aSymbol asSymbol
 ]
 
 { #category : 'private' }
 RPackage >> organizer [
 
-	self flag: #package.
-	^ organizer ifNil: [ self class organizer ]
+	^ organizer
 ]
 
 { #category : 'accessing' }
@@ -649,9 +622,7 @@ RPackage >> removeAllMethodsFromClass: aClass [
 	definedSelectors removeKey: aClass ifAbsent: [  ].
 	definedSelectors removeKey: aClass classSide ifAbsent: [  ].
 	extensionSelectors removeKey: aClass ifAbsent: [  ].
-	extensionSelectors removeKey: aClass classSide ifAbsent: [  ].
-
-	self organizer unregisterExtendingPackage: self forClass: aClass
+	extensionSelectors removeKey: aClass classSide ifAbsent: [  ]
 ]
 
 { #category : 'removing' }
@@ -698,10 +669,6 @@ RPackage >> removeMethod: aCompiledMethod [
 			extensionSelectors at: methodClass ifPresent: [ :selectors |
 				selectors remove: aCompiledMethod selector ifAbsent: [  ].
 				selectors ifEmpty: [ extensionSelectors removeKey: methodClass ] ] ].
-
-	((extensionSelectors at: methodClass instanceSide ifAbsent: [ #(  ) ]) isEmpty and: [
-		 (extensionSelectors at: methodClass classSide ifAbsent: [ #(  ) ]) isEmpty ]) ifTrue: [
-		self organizer unregisterExtendingPackage: self forClass: methodClass ].
 
 	^ aCompiledMethod
 ]
@@ -773,12 +740,6 @@ RPackage >> renameTo: aSymbol [
 	self organizer basicUnregisterPackage: self.
 	self name: aSymbol.
 
-	self flag: #package. "For now, the root tag has the name of the package, thus, renaming the package means that we need to rename the root tag. In the future I want to update the root tag name to be fix and not depend on the name of the package. When that happens, we'll be able to remove the next line."
-	self classTagNamed: oldName ifPresent: [ :tag | tag renameTo: newName ].
-
-	self flag: #package. "The next line is necessary until classes know their tag. Then it will not be needed anymore"
-	self classTags do: [ :tag | tag classes do: [ :class | class basicCategory: tag categoryName ] ].
-
 	"We rename the extension protocols refering to this package"
 	(self extensionMethods collect: [ :method | method protocol ] as: Set) do: [ :protocol |
 		protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ].
@@ -842,15 +803,4 @@ RPackage >> tagOf: aClass [
 			  self error: ('No tag containing {1} found in package {2}' format: {
 						   aClass name.
 						   self name }) ]
-]
-
-{ #category : 'private' }
-RPackage >> toTagName: aSymbol [
-
-	^ (aSymbol beginsWith: self name asString , '-')
-		  ifTrue: [ (aSymbol allButFirst: self name size + 1) asSymbol ]
-		  ifFalse: [
-			  (aSymbol sameAs: self name)
-				  ifTrue: [ self rootTagName ]
-				  ifFalse: [ aSymbol ] ]
 ]

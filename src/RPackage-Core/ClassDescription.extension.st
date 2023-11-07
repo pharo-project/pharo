@@ -9,19 +9,14 @@ ClassDescription >> definedSelectors [
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
 
-	^ self packageOrganizer extendingPackagesOf: self
+	^ (self localMethods , self classSide localMethods
+		   select: #isExtension
+		   thenCollect: #extensionPackage) asIdentitySet
 ]
 
 { #category : '*RPackage-Core' }
 ClassDescription >> extensionSelectors [
 	^ self extendingPackages flatCollect: [ :each | each extensionSelectorsForClass: self ]
-]
-
-{ #category : '*RPackage-Core' }
-ClassDescription >> isDefinedInPackage: aPackage [
-	"returns true if aPackage contains the definitino of this class"
-
-	^ aPackage includesClass: self
 ]
 
 { #category : '*RPackage-Core' }
@@ -34,12 +29,6 @@ ClassDescription >> isExtended [
 ClassDescription >> isExtendedInPackage: aPackage [
 	"returns true if aPackage defines an extension to this class"
 	^ aPackage extendsClass: self
-]
-
-{ #category : '*RPackage-Core' }
-ClassDescription >> package [
-
-	^ self packageOrganizer packageOf: self
 ]
 
 { #category : '*RPackage-Core' }
@@ -61,22 +50,15 @@ ClassDescription >> packageName [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> packageTag [
-	"Package tags are sub categories of packages to have a better organization of the packages."
-
-	^ self package tagOf: self
-]
-
-{ #category : '*RPackage-Core' }
 ClassDescription >> packageTag: aTag [
 	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
 ]
 
 { #category : '*RPackage-Core' }
 ClassDescription >> packageTagName [
-	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag or nil if the class is uncategorized."
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag.."
 
-	^ self packageTag ifNotNil: [ :tag | tag name ]
+	^ self packageTag name
 ]
 
 { #category : '*RPackage-Core' }

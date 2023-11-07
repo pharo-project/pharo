@@ -49,18 +49,6 @@ RGMonticelloTest >> testConvertingMCMethodDefinition [
 ]
 
 { #category : 'testing' }
-RGMonticelloTest >> testConvertingMCOrganizationDefinition [
-
-	| mcOrganization ringOrganization mcOrganization2 |
-	mcOrganization := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions }.
-	mcOrganization2 := MCOrganizationDefinition packageName: #'Ring-Definitions-Core' tagNames: { #Definitions. #Variables }.
-	ringOrganization := mcOrganization asRingDefinition.
-
-	self assert: ringOrganization isOrganization.
-	self deny: (ringOrganization isSameRevisionAs: mcOrganization2 asRingDefinition)
-]
-
-{ #category : 'testing' }
 RGMonticelloTest >> testConvertingMCTraitDefinition [
 	| mcClass ringClass |
 	mcClass := TSortable asClassDefinition.

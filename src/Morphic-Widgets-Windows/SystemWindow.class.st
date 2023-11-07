@@ -461,7 +461,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 	(aBuilder item: #Close)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
-		iconName: #windowCloseForm;
+		iconName: #windowClose;
 		enabledBlock: [ aBuilder model allowedToClose ];
 		withSeparatorAfter.
 	(aBuilder item: #About)

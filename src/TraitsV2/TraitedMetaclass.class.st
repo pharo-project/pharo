@@ -279,13 +279,8 @@ TraitedMetaclass >> recategorizeSelector: selector from: oldProtocol to: newProt
 TraitedMetaclass >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
-	| method newMethod |
-	method := oldClass compiledMethodAt: selector.
-	newMethod := self recompileBasic: selector from: oldClass.
-
-	method properties at: #traitSource ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource ].
-
-	self addSelectorSilently: selector withMethod: newMethod
+	super recompile: selector from: oldClass.
+	TraitChange addSelector: selector on: self
 ]
 
 { #category : 'traits' }

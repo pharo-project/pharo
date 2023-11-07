@@ -688,7 +688,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 UITheme >> checkboxMarkerForm [
 	"Answer the form to use for a checkbox marker."
 
-	^ self iconNamed: #checkboxMarkerForm
+	^ self iconNamed: #checkboxMarker
 ]
 
 { #category : 'fill-styles - buttons' }
@@ -3862,7 +3862,7 @@ UITheme >> radioButtonForm [
 UITheme >> radioButtonMarkerForm [
 	"Answer the form to use for a radio button marker."
 
-	^ self iconNamed: #radioButtonMarkerForm
+	^ self iconNamed: #radioButtonMarker
 ]
 
 { #category : 'border-styles - buttons' }
@@ -4950,14 +4950,14 @@ UITheme >> windowBottomOffset [
 UITheme >> windowCloseForm [
 	"Answer the form to use for the close button of a window."
 
-	^ self iconNamed: #windowCloseForm
+	^ self iconNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowCloseOverForm [
 	"Answer the form to use for mouse over window close buttons"
 
-	^ self iconNamed: #windowCloseForm
+	^ self iconNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
@@ -5071,14 +5071,14 @@ UITheme >> windowLeftOffset [
 UITheme >> windowMaximizeForm [
 	"Answer the form to use for the maximize button of a window."
 
-	^ self iconNamed: #windowMaximizeForm
+	^ self iconNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
 	"Answer the form to use for mouse over window maximize buttons"
 
-	^ self iconNamed: #windowMaximizeForm
+	^ self iconNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
@@ -5099,7 +5099,7 @@ UITheme >> windowMaximizeSound [
 UITheme >> windowMenuForm [
 	"Answer the form to use for the menu button of a window."
 
-	^ self iconNamed: #windowMenuForm
+	^ self iconNamed: #windowMenu
 ]
 
 { #category : 'label-styles - windows' }
@@ -5120,14 +5120,14 @@ UITheme >> windowMenuPassiveForm [
 UITheme >> windowMinimizeForm [
 	"Answer the form to use for the minimize button of a window."
 
-	^ self iconNamed: #windowMinimizeForm
+	^ self iconNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
 	"Answer the form to use for mouse over window minimize buttons"
 
-	^ self iconNamed: #windowMinimizeForm
+	^ self iconNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }

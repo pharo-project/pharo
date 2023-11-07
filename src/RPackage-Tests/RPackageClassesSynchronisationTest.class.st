@@ -108,15 +108,17 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtension
 ]
 
 { #category : 'tests - operations on classes' }
-RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedInTheParentPackage [
-	"test that when we rename a class, the classes Defined in the parent package includes the new name"
+RPackageClassesSynchronisationTest >> testRenameClass [
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
+	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
 
-	class := self newClassNamed: 'RPackageOldStubClass' in: xPackage.
-	class rename: 'RPackageNewStubClass'.
+	class rename: #RPackageNewStubClass.
 
+	self assert: (self organizer packageOf: class) equals: xPackage.
+	self assert: (self organizer packageOfClassNamed: #RPackageNewStubClass) equals: xPackage.
+	self assert: (self organizer packageOfClassNamed: #RPackageOldStubClass) equals: self organizer undefinedPackage.
 	self assert: (xPackage includesClassNamed: 'RPackageNewStubClass').
 	self deny: (xPackage includesClassNamed: 'RPackageOldStubClass')
 ]
@@ -191,21 +193,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 
 	class rename: 'RPackageNewStubClass'.
 
-	self assert: ((self organizer extendingPackagesOf: class) includes: yPackage)
-]
-
-{ #category : 'tests - operations on classes' }
-RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackageMapping [
-	"test that when we rename a class, the classPackage dictionary of the organizer is updated with the new name, so that we can access the package when specifying the new name"
-
-	| xPackage class |
-	xPackage := self ensureXPackage.
-	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
-
-	class rename: #RPackageNewStubClass.
-
-	self assert: (self organizer packageOf: class) equals: xPackage.
-	self assert: (self organizer packageOfClassNamed: #RPackageOldStubClass) equals: self organizer undefinedPackage
+	self assert: (class extendingPackages includes: yPackage)
 ]
 
 { #category : 'tests - operations on protocols' }

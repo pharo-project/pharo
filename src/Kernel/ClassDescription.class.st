@@ -43,11 +43,11 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ 
-			compiledMethod shouldBePackaged ifTrue: [ self packageOrganizer addMethod: compiledMethod ].
+		ifTrue: [
+			compiledMethod shouldBePackaged ifTrue: [ (self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod ].
 			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
+			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
 			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
@@ -86,7 +86,13 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
 	<reflection: 'Class structural modification - Selector/Method modification'>
+	self
+		compiledMethodAt: selector
+		ifPresent: [ :priorMethod | "For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
+			priorMethod propertyAt: #extensionPackage ifPresent: [ :package | compiledMethod propertyAt: #extensionPackage put: package ] ].
+
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
 ]
@@ -146,6 +152,16 @@ ClassDescription >> allUnreferencedInstanceVariables [
 	"Return a list of the instance variables known to the receiver which are not referenced"
 
 	^ self allSlots reject: [:slot | slot isReferenced]
+]
+
+{ #category : 'accessing - method dictionary' }
+ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
+
+	"Repackage the method if it is not from a trait"
+	compiledMethod origin = compiledMethod methodClass ifTrue: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
+
+	"Announce the recategorization"
+	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : 'authors' }
@@ -637,6 +653,13 @@ ClassDescription >> isDeprecated [
 	^ self package isDeprecated
 ]
 
+{ #category : 'testing' }
+ClassDescription >> isInstalled [
+	"Return true if I am installed in the system (which is equivalent to me been part of my package organizer). Else, return false."
+
+	^ self packageOrganizer isClassInstalled: self
+]
+
 { #category : 'accessing - parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
@@ -776,7 +799,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
+	self compiledMethodAt: selector ifPresent: [ :method | self announceRecategorizationOf: method oldProtocol: oldProtocol ]
 ]
 
 { #category : 'private' }
@@ -810,6 +833,19 @@ ClassDescription >> oldPharoDefinition [
 	^ ClassDefinitionPrinter oldPharo
 		for: self;
 		definitionString
+]
+
+{ #category : 'accessing' }
+ClassDescription >> package [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+ClassDescription >> packageTag [
+	"Package tags are sub categories of packages to have a better organization of the packages."
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'printing' }

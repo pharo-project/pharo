@@ -197,9 +197,6 @@ PBClassLoader >> initialize [
 	definitionMirrorMap := EPDictionary new.
 	mirrorDefinitionMap := EPDictionary new.
 	
-	"maybe we could use a state pattern but for now this is so simple"
-	useClassBuilder := false.
-	
 	fullyLoaded := Dictionary new
 ]
 
@@ -408,10 +405,4 @@ PBClassLoader >> registerTrait: aTraitMirror named: aName fullyLoaded: aBoolean 
 { #category : 'accessing' }
 PBClassLoader >> systemDefinition: aRFiEnvironment [ 
 	systemDefinition := aRFiEnvironment
-]
-
-{ #category : 'stages' }
-PBClassLoader >> useClassBuilder [
-	
-	useClassBuilder := true
 ]

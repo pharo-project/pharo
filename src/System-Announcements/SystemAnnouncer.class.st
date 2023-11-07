@@ -103,6 +103,14 @@ SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
 	self announce: (ClassRenamed class: aClass oldName: oldClassName newName: newClassName)
 ]
 
+{ #category : 'announce' }
+SystemAnnouncer >> delayAnnouncementsAfter: aBlock [
+	"I will execute a block and store all the announcements I am making during the execution of this block.
+	Once the execution is done, I will announce everything at once."
+
+	(self suspendAllWhileStoring: aBlock) do: [ :announcement | self announce: announcement ]
+]
+
 { #category : 'triggering' }
 SystemAnnouncer >> evaluated: textOrStream [
 	^ self evaluated: textOrStream context: nil
