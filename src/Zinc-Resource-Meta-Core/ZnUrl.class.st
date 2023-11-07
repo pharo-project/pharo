@@ -385,7 +385,7 @@ ZnUrl >> hasPassword [
 { #category : 'testing' }
 ZnUrl >> hasPath [
 
-	^ segments isNotEmpty and: [ segments isNotEmpty ]
+	^ segments isNotNil and: [ segments isNotEmpty ]
 ]
 
 { #category : 'testing' }
