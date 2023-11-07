@@ -759,7 +759,7 @@ ZnClientTest >> testRedirectWithCookies [
 						yourself ]
 				ifFalse: [
 					cookie := request cookies detect: [ :each | each name = 'session' ] ifNone: [ nil ].
-					(request uri firstPathSegment = 'two' and: [ cookie notNil and: [ cookie value = '123456' ] ])
+					(request uri firstPathSegment = 'two' and: [ cookie isNotNil and: [ cookie value = '123456' ] ])
 						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 				ifFalse: [ ZnResponse badRequest: request ] ] ].
 		(client := ZnClient new)

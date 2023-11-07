@@ -206,12 +206,12 @@ ZnEntity >> contents [
 
 { #category : 'testing' }
 ZnEntity >> hasContentLength [
-	^ contentLength notNil
+	^ contentLength isNotNil
 ]
 
 { #category : 'testing' }
 ZnEntity >> hasContentType [
-	^ contentType notNil
+	^ contentType isNotNil
 ]
 
 { #category : 'comparing' }
