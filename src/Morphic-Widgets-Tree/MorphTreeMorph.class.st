@@ -674,14 +674,14 @@ MorphTreeMorph >> drawLinesOn: aCanvas [
 		during: [:clippedCanvas |
 			scroller submorphsDo: [ :submorph | | last |
 				((submorph isExpanded and: [
-					(submorph nextSibling notNil and: [
+					(submorph nextSibling isNotNil and: [
 						clippedCanvas isVisible: (submorph fullBounds topLeft
 							corner: submorph nextSibling fullBounds bottomRight)]) or: [
-					submorph nextSibling isNil and: [(last := submorph lastChild) notNil and: [
+					submorph nextSibling isNil and: [(last := submorph lastChild) isNotNil and: [
 						clippedCanvas isVisible: (submorph fullBounds topLeft
 							corner: last fullBounds bottomRight)]]]]) or: [
 				(clippedCanvas isVisible: submorph fullBounds) or: [
-				(submorph nextSibling notNil and: [
+				(submorph nextSibling isNotNil and: [
 						clippedCanvas isVisible: submorph nextSibling fullBounds])]]) ifTrue:[
 					submorph drawLinesOn: clippedCanvas]]]
 		smoothing: scroller smoothing
@@ -973,7 +973,8 @@ MorphTreeMorph >> handlesMouseStillDown: anEvent [
 
 { #category : 'accessing' }
 MorphTreeMorph >> hasIconBlock [
-	^ iconBlock notNil
+
+	^ iconBlock isNotNil
 ]
 
 { #category : 'accessing' }
@@ -1334,24 +1335,19 @@ MorphTreeMorph >> mouseStillDownStepRate [
 { #category : 'events-processing' }
 MorphTreeMorph >> mouseUp: event [
 	"Fixed up highlight problems."
-	| nodeMorph wasHigh |
 
-	self enabled ifFalse: [ ^self ].
+	| nodeMorph wasHigh |
+	self enabled ifFalse: [ ^ self ].
 	mouseOverAllowed := false.
 	nodeMorph := self scrollerSubMorphFromPoint: event position.
 
-	wasHigh := nodeMorph notNil
-		ifTrue: [nodeMorph highlightedForMouseDown]
-		ifFalse: [false].
+	wasHigh := nodeMorph
+		           ifNotNil: [ nodeMorph highlightedForMouseDown ]
+		           ifNil: [ false ].
 
-	self allNodeMorphs
-		do: [:m |
-				m highlightedForMouseDown
-					ifTrue: [m highlightForMouseDown: false]].
-	wasHigh
-		ifFalse: [
-			nodeMorph
-				ifNotNil: [^self]].
+	self allNodeMorphs do: [ :m |
+		m highlightedForMouseDown ifTrue: [ m highlightForMouseDown: false ] ].
+	wasHigh ifFalse: [ nodeMorph ifNotNil: [ ^ self ] ].
 
 	self listManager mouseUp: event on: nodeMorph
 ]

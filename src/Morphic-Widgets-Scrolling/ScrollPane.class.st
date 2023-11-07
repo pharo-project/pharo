@@ -972,7 +972,8 @@ ScrollPane >> vUnadjustedScrollRange [
 { #category : 'menu' }
 ScrollPane >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu"
-	^ self getMenuSelector notNil
+
+	^ self getMenuSelector isNotNil
 ]
 
 { #category : 'scroll bar events' }

@@ -145,7 +145,7 @@ StringMorph >> boundsForBalloon [
 	"Some morphs have bounds that are way too big.  This is a contorted way of making things work okay in PluggableListMorphs, whose list elements historically have huge widths"
 
 	| ownerOwner |
-	^ ((owner notNil and: [(ownerOwner := owner owner) notNil]) and:
+	^ ((owner isNotNil and: [(ownerOwner := owner owner) isNotNil]) and:
 			[ownerOwner isKindOf: PluggableListMorph])
 		ifTrue:
 			[self boundsInWorld intersect: ownerOwner boundsInWorld ifNone: [self boundsInWorld] ]
@@ -409,7 +409,8 @@ StringMorph >> interimContents: aString [
 
 { #category : 'accessing' }
 StringMorph >> isEditable [
-	^ self editorProvider notNil
+
+	^ self editorProvider isNotNil
 ]
 
 { #category : 'testing' }
@@ -508,7 +509,7 @@ StringMorph >> privateSetContents: newContents [
 { #category : 'accessing' }
 StringMorph >> rowMorphForNode: aNode inColumn: aColumn [
 	| hasIcon |
-	hasIcon := (aColumn container iconBlock value: aNode) notNil.
+	hasIcon := (aColumn container iconBlock value: aNode) isNotNil.
 	(aColumn isFirstColumn and: [hasIcon])
 		ifTrue: [^ super rowMorphForNode: aNode inColumn: aColumn].
 	self layoutInset: aColumn container columnInset @ aColumn container rowInset.
