@@ -657,27 +657,25 @@ ClyFullBrowserMorph >> selectPackage: aPackage [
 
 	self changeStateBy: [
 		packageView selection selectItemsWith: { aPackage }.
-		packageView selection isEmpty ifTrue: [ self switchToPackages ].
-		packageView selection selectItemsWith: { aPackage }.
-	]
+		packageView selection isEmpty ifTrue: [
+			self showInPackageView: aPackage.
+			packageView selection selectItemsWith: { aPackage } ] ]
 ]
 
 { #category : 'navigation' }
 ClyFullBrowserMorph >> selectPackage: aPackage andTag: tagName [
 
 	| packageItem targetClassGroup foundPackages |
-
 	self changeStateBy: [
-		foundPackages := packageView findItemsWith: {aPackage}.
+		foundPackages := packageView findItemsWith: { aPackage }.
 		foundPackages ifEmpty: [
-			self switchToPackages.
-			foundPackages := packageView findItemsWith: {aPackage} ].
+			self showInPackageView: aPackage.
+			foundPackages := packageView findItemsWith: { aPackage } ].
 		packageItem := foundPackages first.
 		packageItem expand.
-		targetClassGroup := packageItem childrenItems detect: [:each | each name = tagName ].
+		targetClassGroup := packageItem childrenItems detect: [ :each | each name = tagName ].
 
-		packageView selection selectItems: { targetClassGroup }
-	]
+		packageView selection selectItems: { targetClassGroup } ]
 ]
 
 { #category : 'navigation' }
@@ -712,6 +710,19 @@ ClyFullBrowserMorph >> showAllMethods [
 
 	methodQuery := ClyAllMethodsQuery sortedFrom: self classScopeForMethods.
 	methodView showQuery: methodQuery
+]
+
+{ #category : 'navigation' }
+ClyFullBrowserMorph >> showInPackageView: aPackage [
+
+	"If true we are in the project view and we need to find the package and expand it"
+	(packageView showsItemsFromQuery: ClyAllProjectsQuery)
+		ifTrue: [
+			packageView dataSource allElements
+				detect: [ :element | (element actualObject isKindOf: Project) and: [ element actualObject packages includes: aPackage ] ]
+				ifFound: [ :element | packageView dataSource expand: element ]
+				ifNone: [ "this should not happen but who knows with calypso.." self switchToPackages ] ]
+		ifFalse: [ self switchToPackages ]
 ]
 
 { #category : 'testing' }
