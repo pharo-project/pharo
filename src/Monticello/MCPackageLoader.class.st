@@ -75,18 +75,12 @@ MCPackageLoader >> basicLoad [
 { #category : 'private' }
 MCPackageLoader >> basicLoadDefinitions [
 
-	| methodAdditions |
 	self loadClassDefinitions.
 
-	methodAdditions := additions
-		                   select: [ :aDefinition | aDefinition isMethodDefinition ]
-		                   thenCollect: [ :aDefinition | aDefinition asMethodAddition ].
-
 	"We want to announce the addition of the methods only once all methods are loaded because the system might react to the annoucements and execute code requirement other methods from the classes we are loading."
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ methodAdditions do: [ :each | each installMethod ] ].
+	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ additions select: [ :aDefinition | aDefinition isMethodDefinition ] thenDo: [ :definition | definition load ] ].
 
 	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
-
 	additions do: [ :each | each postloadOver: (self obsoletionFor: each) ] displayingProgress: 'Initializing...'
 ]
 

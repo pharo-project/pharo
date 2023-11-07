@@ -123,16 +123,6 @@ MCMethodDefinition >> actualClass [
 				ifFalse: [ class ] ]
 ]
 
-{ #category : 'installing' }
-MCMethodDefinition >> asMethodAddition [
-
-	^ MethodAddition new
-		  compile: source
-		  classified: category
-		  withStamp: timeStamp
-		  inClass: self actualClass
-]
-
 { #category : 'accessing - backward' }
 MCMethodDefinition >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
@@ -248,17 +238,15 @@ MCMethodDefinition >> isOverrideMethod [
 
 { #category : 'installing' }
 MCMethodDefinition >> load [
-	| sel |
-	sel := (self actualClass compiler
+
+	"We do not use #compiler on the actual class because the actual class can override it and call a method that might not be loaded because this method is myself and I'm not there yet or a method to install after me."
+	self actualClass compilerClass new
+		environment: self actualClass environment;
+		class: self actualClass;
 		protocol: category;
 		changeStamp: timeStamp;
 		permitUndeclared: true;
-		install: source) selector.
-	sel = selector ifTrue: [ ^ self ].
-	Warning signal: (
-		'Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.'
-		format: { sel. selector. self actualClass name }).
-	selector := sel
+		install: source
 ]
 
 { #category : 'installing' }
