@@ -22,8 +22,8 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category',
-		'commentSourcePointer'
+		'commentSourcePointer',
+		'packageTag'
 	],
 	#classVars : [
 		'ObsoleteClasses'
@@ -204,11 +204,6 @@ Class >> applyDeprecation [
 	self deprecationRefactorings do: #execute
 ]
 
-{ #category : 'accessing' }
-Class >> basicCategory: aSymbol [
-	category := aSymbol
-]
-
 { #category : 'class variables' }
 Class >> basicDeclareClassVariable: aClassVariable [
 	"Add aClassVariable to the receiver. Two cases are handled here:
@@ -233,6 +228,12 @@ Class >> basicDeclareClassVariable: aClassVariable [
 		existingVar becomeForward: aClassVariable
 	].
 	self classPool add: aClassVariable
+]
+
+{ #category : 'accessing' }
+Class >> basicTag: aPackageTag [
+
+	packageTag := aPackageTag
 ]
 
 { #category : 'compiling' }
@@ -266,7 +267,7 @@ Class >> bindingOf: varName [
 Class >> category [
 	"Answer the system organization category for the receiver."
 
-	^ category
+	^ self packageTag categoryName
 ]
 
 { #category : 'subclass creation' }
@@ -502,7 +503,8 @@ Class >> copyForAnnouncement [
 		            setFormat: format;
 		            setName: name;
 		            classPool: classPool copy;
-		            sharedPools: sharedPools copy.
+		            sharedPools: sharedPools copy;
+		            basicTag: packageTag.
 	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].
 	newClass classLayout: (layout copy host: newClass).
 	^ newClass
@@ -792,6 +794,18 @@ Class >> obsolete [
 	super obsolete
 ]
 
+{ #category : 'accessing' }
+Class >> package [
+
+	^ self packageTag package
+]
+
+{ #category : 'accessing' }
+Class >> packageTag [
+
+	^ packageTag ifNil: [ self packageOrganizer undefinedPackage undefinedTag ]
+]
+
 { #category : 'compiling' }
 Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
@@ -876,7 +890,7 @@ Class >> removeFromSystem: logged [
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
 	Tell class to deactivate and unload itself-- two separate events in the module system"
 
-	| packageTag |
+	| tag |
 	self release.
 	self unload.
 
@@ -885,14 +899,14 @@ Class >> removeFromSystem: logged [
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
 	Undeclared declare: self name asSymbol from: Smalltalk globals.
 	self flag: #package. "For now the class cannot return its package tag after been removed. In the future the class should keep a reference to its package tag so we should not need that."
-	packageTag := self packageTag.
+	tag := self packageTag.
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
 	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
 	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self packageTag: packageTag) ]
+	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self packageTag: tag) ]
 ]
 
 { #category : 'initialization' }
