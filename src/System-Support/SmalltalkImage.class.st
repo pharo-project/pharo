@@ -339,7 +339,7 @@ SmalltalkImage >> cleanOutUndeclared [
 	"remove all Undeclareds that are not used in installed methods"
 	Undeclared associations 
 		select: [ :var | var usingMethods isEmpty ]
-		thenDo: [ :var | Undeclared removeKey: var name ]
+		thenDo: [ :var | var unregister ]
 ]
 
 { #category : 'cleanup' }
