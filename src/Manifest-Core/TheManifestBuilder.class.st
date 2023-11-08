@@ -465,7 +465,8 @@ TheManifestBuilder >> manifestClass: aClass [
 
 { #category : 'accessing' }
 TheManifestBuilder >> manifestOf: elem [
-	^ manifestClass := elem package ifNotNil: [ :package | package packageManifestOrNil ]
+
+	^ manifestClass := elem package packageManifestOrNil
 ]
 
 { #category : 'private' }

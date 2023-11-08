@@ -85,12 +85,10 @@ MCSnapshotTest >> setUp [
 ]
 
 { #category : 'running' }
-MCSnapshotTest >> tearDown [ 
+MCSnapshotTest >> tearDown [
 
-	| package |
-	package := 'Monticello-Snapshot-Mock' asPackageIfAbsent: [nil].
-	package ifNotNil: [ package removeFromSystem ].
-	super tearDown.
+	self packageOrganizer removePackage: 'Monticello-Snapshot-Mock'.
+	super tearDown
 ]
 
 { #category : 'tests' }

@@ -41,7 +41,7 @@ ClassDescription >> package: aPackage tag: aTag [
 { #category : '*RPackage-Core' }
 ClassDescription >> packageName [
 
-	^ self package ifNotNil: [ :package | package name ]
+	^ self package name
 ]
 
 { #category : '*RPackage-Core' }

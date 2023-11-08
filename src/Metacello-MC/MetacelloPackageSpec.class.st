@@ -363,8 +363,7 @@ MetacelloPackageSpec >> goferLoaderReference [
 { #category : 'accessing' }
 MetacelloPackageSpec >> goferPackage [
 
-	goferPackage ifNil: [ goferPackage := MetacelloGoferPackage name: self name packageFilename: self file ].
-	^ goferPackage
+	^ goferPackage ifNil: [ goferPackage := MetacelloGoferPackage name: self name packageFilename: self file ]
 ]
 
 { #category : 'testing' }

@@ -23,5 +23,5 @@ CompiledMethod >> isExtensionInPackage: aPackage [
 { #category : '*RPackage-Core' }
 CompiledMethod >> removeFromPackage [
 
-	self isFromTrait ifFalse: [ self package ifNotNil: [ :package | package removeMethod: self ] ]
+	self isFromTrait ifFalse: [ self package removeMethod: self ]
 ]

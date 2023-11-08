@@ -9,6 +9,6 @@ CompiledMethod >> asEpiceaRingDefinition [
 		  protocol: self protocolName;
 		  sourceCode: self sourceCode;
 		  stamp: self timeStamp;
-		  package: (self package ifNotNil: [ :package | package name ]);
+		  package: self package name;
 		  yourself
 ]
