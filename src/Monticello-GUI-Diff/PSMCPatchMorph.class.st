@@ -40,7 +40,7 @@ PSMCPatchMorph class >> forPatch: aPatch [
 PSMCPatchMorph class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallForwardIcon
+	^#smallForward
 ]
 
 { #category : 'settings' }

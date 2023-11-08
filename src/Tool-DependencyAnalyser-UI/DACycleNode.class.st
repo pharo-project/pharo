@@ -30,7 +30,7 @@ DACycleNode >> childNodeClassFor: anItem [
 
 { #category : 'accessing' }
 DACycleNode >> icon [
-	^ self iconNamed: #refreshIcon
+	^ self iconNamed: #refresh
 ]
 
 { #category : 'accessing' }
