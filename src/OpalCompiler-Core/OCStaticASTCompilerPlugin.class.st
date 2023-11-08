@@ -20,8 +20,7 @@ OCStaticASTCompilerPlugin class >> isAbstract [
 
 { #category : 'private' }
 OCStaticASTCompilerPlugin class >> priority [
-
-	^ 0
+	self subclassResponsibility
 ]
 
 { #category : 'instance creation' }
