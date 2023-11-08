@@ -239,10 +239,7 @@ MCMethodDefinition >> isOverrideMethod [
 { #category : 'installing' }
 MCMethodDefinition >> load [
 
-	"We do not use #compiler on the actual class because the actual class can override it and call a method that might not be loaded because this method is myself and I'm not there yet or a method to install after me."
-	self actualClass compilerClass new
-		environment: self actualClass environment;
-		class: self actualClass;
+	self actualClass compiler
 		protocol: category;
 		changeStamp: timeStamp;
 		permitUndeclared: true;
