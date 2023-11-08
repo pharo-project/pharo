@@ -13,7 +13,7 @@ Class {
 EmbeddedFreeTypeFontInstallerTest >> currentInstallerOrError [
 	| installer |
 	installer := EmbeddedFreeTypeFontInstaller readSlotNamed: #current.
-	self assert: installer notNil.
+	self assert: installer isNotNil.
 	^ installer
 ]
 
@@ -21,7 +21,7 @@ EmbeddedFreeTypeFontInstallerTest >> currentInstallerOrError [
 EmbeddedFreeTypeFontInstallerTest >> currentProviderOrError [
 	| provider |
 	provider := FreeTypeFontProvider readSlotNamed: #current.
-	self assert: provider notNil.
+	self assert: provider isNotNil.
 	^ provider
 ]
 

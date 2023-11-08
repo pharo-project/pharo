@@ -61,7 +61,7 @@ AthensPathConverter >> convert: aSourcePath [
 
 	segment := aSourcePath.
 
-	[ segment notNil ] whileTrue: [
+	[ segment isNotNil ] whileTrue: [
 		segment convertWith: self.
 		endPoint := segment endPoint.
 		segment := segment next.
