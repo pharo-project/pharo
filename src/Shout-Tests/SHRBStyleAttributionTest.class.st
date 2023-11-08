@@ -435,6 +435,20 @@ SHRBStyleAttributionTest >> testDeprecatedGlobalVariable [
 ]
 
 { #category : 'tests' }
+SHRBStyleAttributionTest >> testDeprecatedGlobalVariableAsSymbol [
+
+	[
+	| aText |
+	Smalltalk globals at: #SHRBDeprecatedGlobalVariable put: self class.
+	(Smalltalk globals lookupVar: #SHRBDeprecatedGlobalVariable) isDeprecated: true.
+	aText := 'm ^ #SHRBDeprecatedGlobalVariable' asText.
+	self style: aText.
+
+	5 to: 33 do: [ :index | self assert: ((aText attributesAt: index) includes: TextEmphasis struckOut) ] ] ensure: [
+		Smalltalk globals removeKey: #SHRBDeprecatedGlobalVariable ifAbsent: [ "Do nothing. The test just crashed really really early." ] ]
+]
+
+{ #category : 'tests' }
 SHRBStyleAttributionTest >> testErrorStyle [
 
 	| aText |
