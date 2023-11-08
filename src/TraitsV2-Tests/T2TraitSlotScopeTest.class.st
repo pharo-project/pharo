@@ -206,7 +206,8 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 	x1 := self class classInstaller make: [ :aClassBuilder |
 		      aClassBuilder
 			      name: #X1;
-			      superclass: SharedPool ].
+			      superclass: SharedPool;
+			      package: self packageNameForTests ].
 
 
 	c1 := self class classInstaller make: [ :aClassBuilder |
