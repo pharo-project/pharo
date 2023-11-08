@@ -210,7 +210,7 @@ PBImageBuilder50 >> createInitialObjects [
 		'DangerousClassNotifier disable'.
 
 	self bootstrapInterpreter evaluateCode:
-		'Undeclared := UndeclaredHolder new.'.
+		'Undeclared := UndeclaredRegistry new.'.
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk := SmalltalkImage basicNew.'.
 	self bootstrapInterpreter evaluateCode:
