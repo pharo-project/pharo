@@ -359,7 +359,7 @@ RPackageOrganizer >> removeClass: class [
 
 	class isClassSide ifTrue: [ self error: 'We should only be able to remove classes and not instances of metaclass.' ].
 	class package removeClass: class.
-	class extendingPackages do: [ :extendedPackage | extendedPackage removeAllMethodsFromClass: class ]
+	class extendingPackages do: [ :extendedPackage | extendedPackage removeAllExtensionMethodsFromClass: class ]
 ]
 
 { #category : 'cleanup' }
