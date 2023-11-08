@@ -13,7 +13,7 @@ Class {
 
 { #category : 'accessing' }
 ASTPluginMeaningOfLife class >> priority [
-	^ 0
+	^ 0.1
 ]
 
 { #category : 'private - transforming' }

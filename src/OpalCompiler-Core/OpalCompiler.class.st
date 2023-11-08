@@ -252,20 +252,22 @@ OpalCompiler >> buildOuterScope [
 
 { #category : 'private' }
 OpalCompiler >> callParsePlugins [
-	| plugins |
 
-	plugins := compilationContext astParseTransformPlugins ifEmpty: [ ^ self ].
-	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	self callPlugins: compilationContext astParseTransformPlugins
 ]
 
 { #category : 'private' }
 OpalCompiler >> callPlugins [
-	| plugins |
 
-	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
-	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	self callPlugins: compilationContext astTransformPlugins
+]
+
+{ #category : 'private' }
+OpalCompiler >> callPlugins: aCollectionOfPlugins [
+
+	aCollectionOfPlugins ifNotEmpty: [ :plugins |
+		plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
+		plugins do: [ :plugin | [ ast := plugin transform: ast copy ] onErrorDo: [ Warning signal: 'Error during the execution of the plugin ' , plugin asString ] ] ]
 ]
 
 { #category : 'accessing' }
