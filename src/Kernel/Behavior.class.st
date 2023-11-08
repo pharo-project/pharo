@@ -773,7 +773,7 @@ Behavior >> hasAbstractMethods [
 
 { #category : 'binding' }
 Behavior >> hasBindingOf: aString [
-	^ (self bindingOf: aString) notNil
+	^ (self bindingOf: aString) isNotNil
 ]
 
 { #category : 'testing - method dictionary' }

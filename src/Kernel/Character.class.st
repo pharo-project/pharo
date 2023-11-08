@@ -837,7 +837,7 @@ Character >> printOn: aStream [
 		ifFalse: [
 			name := self class constantNameFor: self.
 			aStream nextPutAll: self class name.
-			name notNil
+			name isNotNil
 				ifTrue: [ aStream space; nextPutAll: name ]
 				ifFalse: [ aStream nextPutAll: ' value: '; print: self asInteger ] ]
 ]
@@ -887,7 +887,7 @@ Character >> storeOn: aStream [
 		ifTrue: [ aStream nextPut: $$; nextPut: self ]
 		ifFalse: [
 			name := self class constantNameFor: self.
-			name notNil
+			name isNotNil
 				ifTrue: [ aStream nextPutAll: self class name; space; nextPutAll: name ]
 				ifFalse: [
 					aStream
