@@ -61,7 +61,7 @@ OCDynamicASTCompilerPlugin >> priority: anObject [
 { #category : 'transforming' }
 OCDynamicASTCompilerPlugin >> transform: ast [
 
-	^ transformBlock value: ast copy
+	^ transformBlock value: ast
 ]
 
 { #category : 'accessing' }
