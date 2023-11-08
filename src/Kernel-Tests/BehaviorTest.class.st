@@ -181,6 +181,20 @@ BehaviorTest >> testIsUsed [
 	self assert: Object class isUsed
 ]
 
+{ #category : 'tests' }
+BehaviorTest >> testLocalMethods [
+
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) }
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalSelectors [
+
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: )
+]
+
 { #category : 'tests - queries' }
 BehaviorTest >> testMethodsAccessingSlot [
 	| numberViaSlot numberViaIVar |

@@ -1151,6 +1151,19 @@ Behavior >> kindOfSubclass [
 	^ self classLayout kindOfSubclass
 ]
 
+{ #category : 'accessing - method dictionary' }
+Behavior >> localMethods [
+	"returns the methods of classes excluding the ones of the traits that the class uses"
+
+	^ self methods
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> localSelectors [
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	^ self methodDict keys
+]
+
 { #category : 'printing' }
 Behavior >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."

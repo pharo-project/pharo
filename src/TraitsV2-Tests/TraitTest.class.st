@@ -294,6 +294,32 @@ TraitTest >> testLocalMethodWithSameCodeInTrait [
 										ifNotNil: [ :trait | (trait selectors includes: selector) ifTrue: [ self deny: (trait compiledMethodAt: selector) equals: each >> selector ] ] ] ] ] ]
 ]
 
+{ #category : 'tests - accessing' }
+TraitTest >> testLocalMethods [
+	
+	"Test local methods of a trait standalone"
+	self assertCollection: Trait1 localMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c) }.
+	
+	"Test local methods of a trait using a trait"
+	self assertCollection: Trait3 localMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c) }.
+	
+	"Test local methods of a class using a trait"
+	self assertCollection: MOPTestClassC localMethods hasSameElements: { (MOPTestClassC >> #c) }
+]
+
+{ #category : 'tests - accessing' }
+TraitTest >> testLocalSelectors [
+	"Test local selectors of a trait standalone"
+
+	self assertCollection: Trait1 localSelectors hasSameElements: #( #c1 #c ).
+
+	"Test local selectors of a trait using a trait"
+	self assertCollection: Trait3 localSelectors hasSameElements: #( #c3 #c ).
+
+	"Test local selectors of a class using a trait"
+	self assertCollection: MOPTestClassC localSelectors hasSameElements: #( #c )
+]
+
 { #category : 'tests' }
 TraitTest >> testMarkerMethods [
 	self t1 compile: 'm1 self foo bar'.
