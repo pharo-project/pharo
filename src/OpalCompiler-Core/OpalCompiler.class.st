@@ -267,7 +267,10 @@ OpalCompiler >> callPlugins: aCollectionOfPlugins [
 
 	aCollectionOfPlugins ifNotEmpty: [ :plugins |
 		plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-		plugins do: [ :plugin | [ ast := plugin transform: ast copy ] onErrorDo: [ Warning signal: 'Error during the execution of the plugin ' , plugin asString ] ] ]
+
+		plugins do: [ :plugin |
+			[ ast := plugin transform: ast copy ] onErrorDo: [ "We should probably raise a warning instead of logging "
+				('Error during the execution of the plugin ' , plugin asString) traceCr ] ] ]
 ]
 
 { #category : 'accessing' }
