@@ -239,11 +239,20 @@ MCMethodDefinition >> isOverrideMethod [
 { #category : 'installing' }
 MCMethodDefinition >> load [
 
-	self actualClass compiler
-		protocol: category;
-		changeStamp: timeStamp;
-		permitUndeclared: true;
-		install: source
+	| method |
+	method := self actualClass compiler
+		        protocol: category;
+		        changeStamp: timeStamp;
+		        permitUndeclared: true;
+		        install: source.
+	
+	method selector = selector ifTrue: [ ^ self ].
+	"This can happen if we provide a selector that does not match the source code. I (Cyril Ferlicot) personnaly do not like that. I would prefer even that the MCMethodDefinition would not have a selector variable at all. But this is used in some places of the system :("
+	Warning signal: ('Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.' format: {
+				 method selector.
+				 selector.
+				 self actualClass name }).
+	selector := method selector
 ]
 
 { #category : 'installing' }
