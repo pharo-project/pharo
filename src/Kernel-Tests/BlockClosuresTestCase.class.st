@@ -108,7 +108,7 @@ BlockClosuresTestCase >> continuationExample1: aCollection [
                  [ | local |
                   local := valueWithContinuation value.
                   oc add: local first.
-                  local last notNil]
+                  local last isNotNil]
                  whileTrue: [].
                  oc.
                ].
@@ -165,7 +165,7 @@ BlockClosuresTestCase >> continuationExample2: aCollection [
 	             | local |
 	             local := valueWithContinuation value.
 	             oc add: local first.
-	             local last notNil ] whileTrue: [  ].
+	             local last isNotNil ] whileTrue: [  ].
 	             oc ].
 
 	^ collector value: (processor value: (stream value: aCollection) value: [ :x | x * x ])
@@ -207,7 +207,7 @@ BlockClosuresTestCase >> continuationExample3: aCollection [
 	             | local |
 	             local := valueWithContinuation value.
 	             oc add: local first.
-	             local last notNil ] whileTrue: [  ].
+	             local last isNotNil ] whileTrue: [  ].
 	             oc ].
 
 	^ collector value: (processor value: (processor value: (stream value: aCollection) value: [ :x | x * x ]) value: [ :x | x - 10 ])

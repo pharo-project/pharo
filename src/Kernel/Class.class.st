@@ -85,7 +85,7 @@ Class class >> superclassOrder: classes [
     all := OrderedCollection new: unprocessedClasses size.
     unprocessedClasses size timesRepeat:
         [ | nextClass nextClassIndex |
-            nextClassIndex := list findFirst: [:aClass | aClass notNil
+            nextClassIndex := list findFirst: [:aClass | aClass isNotNil
                 and: [(unprocessedClasses includes: aClass)
                 and: [self hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache]]].
             nextClass := list at: nextClassIndex.
@@ -276,7 +276,7 @@ Class >> checkForCompiledMethodLayout: className [
 
 	| oldClassOrNil actualLayoutClass |
 	oldClassOrNil := self environment at: className ifAbsent: [ nil ].
-	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
+	actualLayoutClass := (oldClassOrNil isNotNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
 		ifTrue: [ CompiledMethodLayout ]
 		ifFalse: [ ByteLayout ].
 	^ actualLayoutClass
@@ -635,7 +635,8 @@ Class >> hasBindingThatBeginsWith: aString [
 { #category : 'accessing - parallel hierarchy' }
 Class >> hasClassSide [
 	<reflection: 'Class structural inspection - Class/Metaclass shift'>
-	^self classSide notNil
+
+	^ self classSide isNotNil
 ]
 
 { #category : 'class variables' }
@@ -856,7 +857,7 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 	aSymbol := aString asSymbol.
 	(self classPool includesKey: aSymbol) ifFalse: [ ^ self error: aString , ' is not a class variable' ].
 	varUserClass := self anyUserOfClassVarNamed: aSymbol.
-	varUserClass notNil & interactive ifTrue: [
+	varUserClass isNotNil & interactive ifTrue: [
 		(self confirm: (aString , ' is still used in code of class ' , varUserClass name , '.\Is it okay to move it to Undeclared?') withCRs) ifFalse: [ ^ self ] ].
 
 	varUserClass
