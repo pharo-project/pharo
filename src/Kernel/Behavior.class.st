@@ -407,20 +407,20 @@ Behavior >> basicNew: sizeRequested [
 ]
 
 { #category : 'instance creation' }
-Behavior >> basicNewOld [
+Behavior >> basicNewTenured [
 	"Primitive. Allocates the object in the old space. Answers the allocated object.
 	
-	See more information in the newOld method comment."
+	See more information in the newTenured method comment."
 
 	<primitive: 596 error: ec>
 	self error: 'Could not allocated object in the old space. Primitive error'
 ]
 
 { #category : 'instance creation' }
-Behavior >> basicNewOld: sizeRequested [
+Behavior >> basicNewTenured: sizeRequested [
 	"Primitive. Allocates the object in the old space. Answers the allocated object.
 	
-	See more information in the newOld method comment."
+	See more information in the newTenured method comment."
 
 	<primitive: 597 error: ec>
 	self error: 'Could not allocated object in the old space. Primitive error'
@@ -1292,22 +1292,25 @@ Behavior >> new: sizeRequested [
 ]
 
 { #category : 'instance creation' }
-Behavior >> newOld [
+Behavior >> newTenured [
 	"Allocates the object directly in the old space. This is useful when you know
 	that you have an object that will live for a long time. It saves the garbage collector
 	from moving the object from different memory positions when it is in the young space and
 	then moving the object to the old space (a.k.a. tenuring).  It gives the power to the user
-	to do memory optimizations, such as pre-tenuring."
+	to do memory optimizations, such as pre-tenuring.
+	Use with caution. Keep in mind that the garbage collector is optimized when the allocations
+	are made in the new space, that why the new space exists.
+	Use this method when you know that tenuring the object is what you want."
 
-	^ self basicNewOld initialize
+	^ self basicNewTenured initialize
 ]
 
 { #category : 'instance creation' }
-Behavior >> newOld: sizeRequested [
-	"Allocates the variable size object in the old space. See newOld comment for more
+Behavior >> newTenured: sizeRequested [
+	"Allocates the variable size object in the old space. See newTenured comment for more
 	information."
 
-	^ (self basicNewOld: sizeRequested) initialize
+	^ (self basicNewTenured: sizeRequested) initialize
 ]
 
 { #category : 'initialization' }
