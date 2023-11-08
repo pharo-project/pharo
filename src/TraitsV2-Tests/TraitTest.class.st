@@ -9,9 +9,10 @@ Class {
 TraitTest >> createClassUsing: aTrait [
 
 	^ self class classInstaller make: [ :aBuilder |
-		aBuilder name: #AClassForTests;
-			traitComposition: aTrait;
-			package: 'AAA' ]
+		  aBuilder
+			  name: #AClassForTests;
+			  traitComposition: aTrait;
+			  package: self packageNameForTests ]
 ]
 
 { #category : 'utilities' }
