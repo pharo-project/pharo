@@ -7,13 +7,13 @@ Trait >> asRingDefinition [
 
 	| ring |
 	ring := (RGTraitDefinition named: self name)
-		        category: self category;
+		        package: self package asRingDefinition;
+		        packageTag: self packageTag name;
 		        superclassName: #Trait;
 		        traitCompositionSource: self traitCompositionString;
 		        comment: self comment;
 		        stamp: self commentStamp;
 		        definitionSource: self definitionString;
-		        package: self package asRingDefinition;
 		        withMetaclass.
 
 	ring classSide

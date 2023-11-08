@@ -1021,7 +1021,8 @@ BlockClosure >> whileNil: aBlock [
 { #category : 'controlling' }
 BlockClosure >> whileNotNil: aBlock [
 	"Unlike #whileTrue/False: this is not compiled inline."
-	^ [self value notNil] whileTrue: [aBlock value]
+
+	^ [self value isNotNil] whileTrue: [aBlock value]
 ]
 
 { #category : 'controlling' }

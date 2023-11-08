@@ -589,18 +589,17 @@ Behavior >> deepCopy [
 
 { #category : 'accessing - method dictionary' }
 Behavior >> definedMethods [
-	"Returns the methods defined in the class. This rejects methods from traits and extensions."
+	"Returns the methods of classes excluding the ones of the traits or extensions"
 
 	^ self localMethods reject: [ :method | method isExtension ]
 ]
 
 { #category : 'accessing - method dictionary' }
 Behavior >> definedSelectors [
-	"Returns the selectors defined in the class. This rejects methods from traits and extensions."
+	"Returns the selectors of classes excluding the ones of the traits or extensions"
 
 	^ self definedMethods collect: [ :method | method selector ]
 ]
-
 { #category : 'accessing - instances and variables' }
 Behavior >> definedVariables [
 	"return all the Variables defined"
@@ -787,7 +786,7 @@ Behavior >> hasAbstractMethods [
 
 { #category : 'binding' }
 Behavior >> hasBindingOf: aString [
-	^ (self bindingOf: aString) notNil
+	^ (self bindingOf: aString) isNotNil
 ]
 
 { #category : 'testing - method dictionary' }

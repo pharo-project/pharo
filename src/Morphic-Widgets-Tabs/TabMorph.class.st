@@ -567,7 +567,7 @@ TabMorph >> hasActions [
 { #category : 'protocol' }
 TabMorph >> hasMenu [
 
-	^ menu notNil or: [ retrievingBlock notNil ]
+	^ menu isNotNil or: [ retrievingBlock isNotNil ]
 ]
 
 { #category : 'protocol' }

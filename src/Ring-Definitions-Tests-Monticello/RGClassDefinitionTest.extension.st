@@ -2,6 +2,7 @@ Extension { #name : 'RGClassDefinitionTest' }
 
 { #category : '*Ring-Definitions-Tests-Monticello' }
 RGClassDefinitionTest >> testAsFullClassDefinition [
+
 	| rgClass |
 	rgClass := Class asRingDefinition.
 	self assertEmpty: rgClass methods.
@@ -18,7 +19,7 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 	self assert: rgClass package notNil.
 	self assert: rgClass package equals: rgClass instanceSide package.
 	self assert: rgClass package name equals: #Kernel.
-	self assert: rgClass category equals: #'Kernel-Classes'.
+	self assert: rgClass packageTag equals: #Classes.
 	self denyEmpty: rgClass extensionMethods.
 
 	self assert: rgClass superclass superclass isNil.

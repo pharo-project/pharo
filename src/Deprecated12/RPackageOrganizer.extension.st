@@ -97,6 +97,16 @@ RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
 ]
 
 { #category : '*Deprecated12' }
+RPackageOrganizer class >> isPackageDefinedForClass: aClass [
+
+	self
+		deprecated: 'This method is refering to a global which is not good. If you want to see if a class is packaged you should ask it to an instance of package organizer.'
+		transformWith: '`@rcv isPackageDefinedForClass: `@class' -> '`@rcv packageOrganizer isClassInstalled: `@class'.
+
+	^ self packageOrganizer isClassInstalled: aClass
+]
+
+{ #category : '*Deprecated12' }
 RPackageOrganizer >> listAtCategoryNamed: categoryName [
 	"Answer the array of elements associated with the name, categoryName."
 

@@ -35,8 +35,10 @@ UndefinedPackageTest >> testName [
 UndefinedPackageTest >> testPackageOfUnpackagedClass [
 
 	| class |
-	class := self newClassNamed: #MyTestClass in: #Package1.
-	self organizer removeClass: class.
+	class := self class classInstaller make: [ :aClassBuilder |
+		         aClassBuilder
+			         name: #MyTestClass;
+			         installingEnvironment: testEnvironment ].
 
 	self assert: class package identicalTo: self undefinedPackage
 ]

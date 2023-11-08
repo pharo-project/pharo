@@ -129,6 +129,14 @@ FLBehaviorCluster >> serializeReferencesStepWith: anEncoder [
 	objects do:	[ :aClassOrTrait | self serializeReferencesOf: aClassOrTrait with: anEncoder ]
 ]
 
+{ #category : 'serialize/materialize' }
+FLBehaviorCluster >> setTag: packageTagName ofPackage: packageName to: aClass [
+
+	aClass packageOrganizer packageNamed: packageName ifPresent: [ :package | ^ aClass basicTag: (package ensureTag: packageTagName) ].
+
+	aClass basicTag: aClass packageOrganizer undefinedPackage undefinedTag
+]
+
 { #category : 'serialize/materialize layouts' }
 FLBehaviorCluster >> superclassLayoutOf: aClassOrTrait [
 	^ aClassOrTrait superclass

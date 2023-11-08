@@ -76,7 +76,7 @@ RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 			tl := self lineIndexForPoint: visibleRectangle topLeft.
 			br := self lineIndexForPoint: visibleRectangle bottomRight.
 			tl to: br do: [ :i |
-				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon notNil ])
+				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon isNotNil ])
 					ifNotEmpty: [ :segments |
 						| s pos |
 						s := segments first.

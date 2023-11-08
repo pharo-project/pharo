@@ -39,11 +39,6 @@ RGMetaclassDefinition >> baseClass: aRGClassDefinition [
 	self name: (baseClass name, ' class') asSymbol
 ]
 
-{ #category : 'accessing' }
-RGMetaclassDefinition >> category [
-	^ self instanceSide category
-]
-
 { #category : 'accessing - parallel hierarchy' }
 RGMetaclassDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
@@ -86,6 +81,11 @@ RGMetaclassDefinition >> isSameRevisionAs: aRGMetaclassDefinition [
 RGMetaclassDefinition >> package [
 
 	^baseClass package
+]
+
+{ #category : 'accessing' }
+RGMetaclassDefinition >> packageTag [
+	^ self instanceSide packageTag
 ]
 
 { #category : 'accessing' }

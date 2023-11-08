@@ -214,7 +214,7 @@ PolygonMorph >> drawOnAthensCanvas: anAthensCanvas [
 PolygonMorph >> hasTwoColorDash [
 	" return true if the dash spec has another color"
 
-	^ self dashedBorder notNil and: [ self dashedBorder size > 2 ]
+	^ self dashedBorder isNotNil and: [ self dashedBorder size > 2 ]
 ]
 
 { #category : '*Athens-Morphic' }

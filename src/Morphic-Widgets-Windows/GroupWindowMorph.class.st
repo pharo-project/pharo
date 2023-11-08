@@ -54,7 +54,7 @@ GroupWindowMorph >> addWindow: aSystemWindow [
 { #category : 'layout' }
 GroupWindowMorph >> changePropotionalLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
 	self layoutChanged

@@ -37,7 +37,7 @@ DADependentPackageNode >> hasChildren [
 
 { #category : 'accessing' }
 DADependentPackageNode >> icon [
-	^ self iconNamed: #forwardIcon
+	^ self iconNamed: #forward
 ]
 
 { #category : 'testing' }
