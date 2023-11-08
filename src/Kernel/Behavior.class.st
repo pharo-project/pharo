@@ -587,6 +587,22 @@ Behavior >> deepCopy [
 	^ self shallowCopy
 ]
 
+{ #category : 'accessing - method dictionary' }
+Behavior >> definedMethods [
+	"Returns the methods of classes excluding the ones of the traits or extensions"
+
+	^ self localMethods reject: [ :method | method isExtension ]
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> definedSelectors [
+	"Returns the selectors of classes excluding the ones of the traits or extensions"
+
+	^ self localMethods
+		  reject: [ :method | method isExtension ]
+		  thenCollect: [ :method | method selector ]
+]
+
 { #category : 'accessing - instances and variables' }
 Behavior >> definedVariables [
 	"return all the Variables defined"

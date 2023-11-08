@@ -98,6 +98,49 @@ TraitTest >> testCompositionCopy [
 				includesAll: { (self t1). (self t2). (self t6) })
 ]
 
+{ #category : 'tests - accessing' }
+TraitTest >> testDefinedMethods [
+
+	[
+	Trait1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	Trait3 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	MOPTestClassC compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	
+	"Test local methods of a trait standalone"
+	self assertCollection: Trait1 localMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c). (Trait1 >> #extensionMethod) }.
+	self assertCollection: Trait1 definedMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c) }.
+	
+	"Test local methods of a trait using a trait"
+	self assertCollection: Trait3 localMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c). (Trait3 >> #extensionMethod) }.
+	self assertCollection: Trait3 definedMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c) }.
+	
+	"Test local methods of a class using a trait"
+	self assertCollection: MOPTestClassC localMethods hasSameElements: { (MOPTestClassC >> #c).  (MOPTestClassC >> #extensionMethod)}.
+	self assertCollection: MOPTestClassC definedMethods hasSameElements: { (MOPTestClassC >> #c) } ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+	
+]
+
+{ #category : 'tests - accessing' }
+TraitTest >> testDefinedSelectors [
+
+	[
+	Trait1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	Trait3 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	MOPTestClassC compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+
+	"Test local selectors of a trait standalone"
+	self assertCollection: Trait1 localSelectors hasSameElements: #( #c1 #c #extensionMethod ).
+	self assertCollection: Trait1 definedSelectors hasSameElements: #( #c1 #c ).
+
+	"Test local selectors of a trait using a trait"
+	self assertCollection: Trait3 localSelectors hasSameElements: #( #c3 #c #extensionMethod ).
+	self assertCollection: Trait3 definedSelectors hasSameElements: #( #c3 #c ).
+
+	"Test local selectors of a class using a trait"
+	self assertCollection: MOPTestClassC localSelectors hasSameElements: #( #c #extensionMethod ).
+	self assertCollection: MOPTestClassC definedSelectors hasSameElements: #( #c ) ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
 { #category : 'tests' }
 TraitTest >> testErrorClassCreation [
 
@@ -309,8 +352,8 @@ TraitTest >> testLocalMethods [
 
 { #category : 'tests - accessing' }
 TraitTest >> testLocalSelectors [
-	"Test local selectors of a trait standalone"
 
+	"Test local selectors of a trait standalone"
 	self assertCollection: Trait1 localSelectors hasSameElements: #( #c1 #c ).
 
 	"Test local selectors of a trait using a trait"

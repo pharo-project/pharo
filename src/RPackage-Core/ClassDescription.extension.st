@@ -1,11 +1,6 @@
 Extension { #name : 'ClassDescription' }
 
 { #category : '*RPackage-Core' }
-ClassDescription >> definedSelectors [
-	^ self package definedSelectorsForClass: self
-]
-
-{ #category : '*RPackage-Core' }
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
 
