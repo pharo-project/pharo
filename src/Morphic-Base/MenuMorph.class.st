@@ -120,7 +120,7 @@ MenuMorph class >> confirm: queryString trueChoice: trueChoice falseChoice: fals
 		ifNotNil: [ :answer | ^ trueChoice = answer ].
 	aBlock := [ :v | result := v ].
 	menu := self new.
-	menu addTitle: queryString icon: (self iconNamed: #confirmIcon).
+	menu addTitle: queryString icon: (self iconNamed: #confirm).
 	menu
 		add: trueChoice
 		target: aBlock
