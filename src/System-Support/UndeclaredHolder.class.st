@@ -10,10 +10,3 @@ Class {
 	#package : 'System-Support',
 	#tag : 'Utilities'
 }
-
-{ #category : 'private' }
-UndeclaredHolder >> atNewIndex: index put: aUndeclaredVariable [
-
-	aUndeclaredVariable isAssociation ifTrue: [ self error: 'Only undeclared variables should be added to the undeclareds and not associations.' ].
-	^ super atNewIndex: index put: aUndeclaredVariable
-]
