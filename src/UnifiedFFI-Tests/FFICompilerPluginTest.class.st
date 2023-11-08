@@ -10,11 +10,10 @@ Class {
 }
 
 { #category : 'compiler' }
-FFICompilerPluginTest >> compiler [
+FFICompilerPluginTest class >> compiler [
+	"the example plugin is active for this class"
 
-	^ self class compiler
-		  addPlugin: FFICompilerPlugin;
-		  yourself
+	^ super compiler addPlugin: FFICompilerPlugin
 ]
 
 { #category : 'tests' }
