@@ -46,19 +46,6 @@ Behavior >> localMethodNamed: selector ifAbsent: aBlock [
 ]
 
 { #category : '*TraitsV2' }
-Behavior >> localMethods [
-	"returns the methods of classes excluding the ones of the traits that the class uses"
-
-	^ self methods
-]
-
-{ #category : '*TraitsV2' }
-Behavior >> localSelectors [
-	<reflection: 'Class structural inspection - Selectors and methods inspection'>
-	^ self methodDict keys
-]
-
-{ #category : '*TraitsV2' }
 Behavior >> setTraitComposition: aComposition [
 
 	^ self subclassResponsibility
