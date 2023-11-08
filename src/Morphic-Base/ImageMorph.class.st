@@ -286,7 +286,8 @@ ImageMorph >> shouldFlex [
 
 { #category : 'testing' }
 ImageMorph >> wantsRecolorHandle [
-	^ formSet notNil and: [formSet depth = 1]
+
+	^ formSet isNotNil and: [formSet depth = 1]
 ]
 
 { #category : 'accessing' }
