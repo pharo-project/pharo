@@ -487,6 +487,52 @@ TraitTest >> testTraitRemoval [
 ]
 
 { #category : 'tests' }
+TraitTest >> testTraitSource [
+
+	self assert: (MOPTestClassC >> #c) traitSource isNil.
+	self assert: (MOPTestClassC >> #c2) traitSource equals: Trait2 asTraitComposition
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitSourceIsPersistedWithRecompilation [
+
+	[
+	Trait2 compile: 'traitMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	(Trait2 >> #traitMethod) recompile.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition ] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package' ]
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitSourceIsPersistedWithRemovalOfMetalinks [
+
+	[
+	| metalink |
+	Trait2 compile: 'traitMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	metalink := MetaLink new.
+	(MOPTestClassC >> #traitMethod) ast link: metalink.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	metalink uninstall.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
 TraitTest >> testTraitsMethodClassSanity [
 
 	(testingEnvironment allTraits flatCollect: #traitUsers) asSet do: [ :each |

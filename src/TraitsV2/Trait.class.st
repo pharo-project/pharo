@@ -44,6 +44,11 @@ Trait class >> << aSymbolOrAClassSideTrait [
 		  yourself
 ]
 
+{ #category : 'class initialization' }
+Trait class >> initialize [
+	AdditionalMethodState persistProperty: #traitSource
+]
+
 { #category : 'accessing' }
 Trait >> + anotherTrait [
 	"I return my self in a sequence with anotherTrait"
