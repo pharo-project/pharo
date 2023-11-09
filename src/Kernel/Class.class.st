@@ -899,7 +899,10 @@ Class >> removeFromSystem: logged [
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
 	
-	(UndeclaredVariable named: self name asSymbol) register.
+	"NOTE: this adds globals to Undeclared, we need to change it to UndeclaredVariable"
+	Smalltalk globals associationAt: self name asSymbol 
+		ifPresent: [: global | Undeclared add: global ]
+		ifAbsent: [ (UndeclaredVariable named: self name asSymbol) register  ].
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
