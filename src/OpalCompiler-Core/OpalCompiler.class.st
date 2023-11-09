@@ -258,7 +258,7 @@ OpalCompiler >> callParsePlugins [
 
 	plugins := compilationContext astParseTransformPlugins ifEmpty: [ ^ self ].
 	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	plugins do: [ :each | ast := each transform: ast "In case I fail during the loading of code, check OCASTComplierPlugin class comment."]
 ]
 
 { #category : 'private' }
@@ -267,7 +267,7 @@ OpalCompiler >> callPlugins [
 
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
 	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	plugins do: [ :each | ast := each transform: ast "In case I fail during the loading of code, check OCASTComplierPlugin class comment."]
 ]
 
 { #category : 'accessing' }

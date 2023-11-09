@@ -37,6 +37,11 @@ T2AbstractTest >> newClass: aName with: slots traits: aComposition [
 ]
 
 { #category : 'instance creation' }
+T2AbstractTest >> newTrait: aName [
+	^ self newTrait: aName with: #()
+]
+
+{ #category : 'instance creation' }
 T2AbstractTest >> newTrait: aName with: slots [
 	^ self newTrait: aName with: slots traits: TEmpty
 ]

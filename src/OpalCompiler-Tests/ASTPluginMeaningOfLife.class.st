@@ -11,11 +11,6 @@ Class {
 	#tag : 'Plugins'
 }
 
-{ #category : 'accessing' }
-ASTPluginMeaningOfLife class >> priority [
-	^ 0
-]
-
 { #category : 'private - transforming' }
 ASTPluginMeaningOfLife >> transform [
 
