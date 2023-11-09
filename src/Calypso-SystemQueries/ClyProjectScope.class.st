@@ -19,10 +19,41 @@ ClyProjectScope class >> defaultName [
 	^'projects'
 ]
 
-{ #category : 'system changes' }
+{ #category : 'queries' }
+ClyProjectScope >> classesDo: aBlock [
+	self packagesDo: [ :package |
+		package definedClasses do: aBlock]
+]
+
+{ #category : 'testing' }
 ClyProjectScope >> includesClassesAffectedBy: aSystemAnnouncement [
 
+	self classesDo: [ :class | (aSystemAnnouncement affectsClass: class) ifTrue: [ ^ true ] ].
 	^ false
+]
+
+{ #category : 'testing' }
+ClyProjectScope >> includesMethodsAffectedBy: aSystemAnnouncement [
+
+	self methodsDo: [ :method | (aSystemAnnouncement affectsMethod: method) ifTrue: [ ^ true ] ].
+	^ false
+]
+
+{ #category : 'testing' }
+ClyProjectScope >> includesPackagesAffectedBy: aSystemAnnouncement [
+
+	self packagesDo: [ :package | (aSystemAnnouncement affectsPackage: package) ifTrue: [ ^ true ] ].
+	^ false
+]
+
+{ #category : 'queries' }
+ClyProjectScope >> methodsDo: aBlock [
+
+	self classesDo: [ :class |
+		class localMethods do: aBlock.
+		class classSide localMethods do: aBlock ].
+
+	self packagesDo: [ :package | package extensionMethods do: aBlock ]
 ]
 
 { #category : 'queries' }

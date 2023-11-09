@@ -17,15 +17,11 @@ Project class >> defaultSortFunctionForCalypso [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-Project >> includesClassesAffectedBy: aSystemAnnouncement [
-
-	^ self packages anySatisfy: [ :package | package includesClassesAffectedBy: aSystemAnnouncement ]
-]
-
-{ #category : '*Calypso-SystemQueries' }
-Project class >> prepareClassQueriesFrom: projects in: aNavigationEnvironment [
-
-	^ {  }
+Project class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
+	^{
+		ClyAllClassesQuery from: ClyProjectScope ofAll: packages in: aNavigationEnvironment.
+		ClyAllClassesQuery from: ClyProjectExtensionScope ofAll: packages in: aNavigationEnvironment
+	}
 ]
 
 { #category : '*Calypso-SystemQueries' }
