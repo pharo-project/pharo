@@ -120,6 +120,15 @@ BaselineOf class >> version [
 	^ self project version
 ]
 
+{ #category : 'accessing' }
+BaselineOf class >> withAllPackageNames [
+	"Return the name of all packages I includes and the name of my package "
+
+	^ self allPackageNames
+		  add: self class package name;
+		  yourself
+]
+
 { #category : 'baselines' }
 BaselineOf >> baseline: spec [
 	<baseline>

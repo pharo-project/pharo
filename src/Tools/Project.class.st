@@ -73,9 +73,7 @@ Project >> packageManager [
 { #category : 'accessing' }
 Project >> packages [
 
-	^ (self baseline allPackageNames
-		   select: [ :packageName | self packageManager hasPackage: packageName ]
-		   thenCollect: [ :packageName | self packageManager packageNamed: packageName ])
-		  addFirst: self baseline package;
-		  yourself
+	^ self baseline withAllPackageNames
+		  select: [ :packageName | self packageManager hasPackage: packageName ]
+		  thenCollect: [ :packageName | self packageManager packageNamed: packageName ]
 ]
