@@ -224,6 +224,10 @@ ReflectiveMethod >> printOn: aStream [
 ReflectiveMethod >> recompileAST [
 
 	compiledMethod := self compileAST.
+	"For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
+	ast
+		propertyAt: #compiledMethod
+		ifPresent: [ :priorMethod | priorMethod propertyAt: #extensionPackage ifPresent: [ :package | compiledMethod propertyAt: #extensionPackage put: package ] ].
 	ast compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self
 ]
