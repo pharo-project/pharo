@@ -400,7 +400,7 @@ Ring2ChunkImporterTest >> testStandardComment [
 	class := importer environment ask behaviorNamed: #SomeClass.
 	comment := class comment.
 
-	self assert: comment notNil.
+	self assert: comment isNotNil.
 	self assert: comment isComment.
 	self assert: comment isRingResolved.
 	self assert: (comment hasResolvedAll: #(content author time)).
@@ -527,7 +527,7 @@ Ring2ChunkImporterTest >> testStandardMethod [
 	method := class methodNamed: #someMethod.
 
 	self assert: class isClass.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -555,7 +555,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 	method := class methodNamed: #someMethod.
 
 	self assert: class isClass.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -584,7 +584,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 	method := trait methodNamed: #someMethod.
 
 	self assert: (trait isMetaclassTrait).
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -613,7 +613,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 	method := trait methodNamed: #someMethod.
 
 	self assert: (trait isTrait and: [trait isMetaclassTrait not]).
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -641,7 +641,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 	method := class metaclass methodNamed: #someMethod.
 
 	self assert: class isClass.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name tags sourceCode author time)).
 
