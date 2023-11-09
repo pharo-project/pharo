@@ -351,14 +351,14 @@ CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
 
 	[
 	| method |
-	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
 	method := self class >> #isExtensionTestMethod.
 	self assert: method isExtension.
 
 	self class compile: 'isExtensionTestMethod ^ 2'.
 
 	self assert: method isExtension ] ensure: [
-		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
@@ -860,14 +860,14 @@ CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
 
 	[
 	| method |
-	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
 	method := self class >> #isExtensionTestMethod.
 	self assert: method isExtension.
 
 	method recompile.
 
 	self assert: method isExtension ] ensure: [
-		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
