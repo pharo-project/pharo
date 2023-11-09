@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 DAInheritanceDependencyNode >> icon [
-	^ self iconNamed: #arrowUpIcon
+	^ self iconNamed: #arrowUp
 ]
 
 { #category : 'accessing' }

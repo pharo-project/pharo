@@ -1672,7 +1672,7 @@ UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the plain drop shadow for the given window."
 
 	|blOffset brOffset trOffset|
-	(aSystemWindow owner notNil and: [aSystemWindow owner isHandMorph])
+	(aSystemWindow owner isNotNil and: [aSystemWindow owner isHandMorph])
 		ifTrue: [^self]. "skip if being dragged"
 	blOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 2])
 		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].

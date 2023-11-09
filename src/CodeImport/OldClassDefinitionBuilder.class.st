@@ -74,9 +74,19 @@ OldClassDefinitionBuilder class >> allowedSelectors [
 #weakSubclass:uses:instanceVariableNames:classVariableNames:poolDictionaries:package:
 
 #named:
+#named:uses:
+#named:package:
 #named:uses:category:
 #named:uses:package:
+#named:uses:category:env:
+#named:uses:package:env:
+#named:uses:slots:category:
+#named:uses:slots:package:
+#named:uses:slots:package:env:
+#named:uses:slots:category:env:
+#named:instanceVariableNames:package:
 #named:uses:instanceVariableNames:package:
+#named:uses:instanceVariableNames:package:env:
 )
 ]
 

@@ -95,7 +95,7 @@ Color class >> computeIndexedColorConvertingMap: targetColor from: sourceDepth t
 		to: (1 bitShift: sourceDepth)) collect:
 		[ :cc | | f c |
 		f := 1.0 - ((cc red + cc green + cc blue) / 3.0).
-		c := targetColor notNil
+		c := targetColor isNotNil
 			ifTrue:
 				[ destDepth = 32
 					ifTrue: [ targetColor * f alpha: f ]
@@ -138,7 +138,7 @@ Color class >> computeRGBColorConvertingMap: targetColor to: destDepth keepSubPi
 			g := (i bitShift: 0 - bitsPerColor) bitAnd: mask.
 			b := (i bitShift: 0) bitAnd: mask.
 			f := 1.0 - ((r + g + b) / 3.0 / mask).
-			c := targetColor notNil
+			c := targetColor isNotNil
 				ifTrue:
 					[ (keepSubPix and: [ destDepth > 8 ])
 						ifTrue:

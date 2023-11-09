@@ -145,17 +145,6 @@ RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackage [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testDefinedSelectors [
-
-	self assert: a1 definedSelectors size equals: 2.
-	self assert: (a1 definedSelectors includes: #methodDefinedInP1).
-	self assert: (a1 definedSelectors includes: #anotherMethodDefinedInP1).
-
-	self assert: a2 definedSelectors size equals: 1.
-	self assert: (a2 definedSelectors includes: #methodDefinedInP2)
-]
-
-{ #category : 'tests - situation' }
 RPackageReadOnlyCompleteSetupTest >> testDefinedSelectorsForClass [
 
 	self assert: (p1 definedSelectorsForClass: a1) size equals: 2.

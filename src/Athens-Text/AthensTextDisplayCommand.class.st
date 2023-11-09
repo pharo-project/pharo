@@ -75,6 +75,6 @@ AthensTextDisplayCommand >> tail [
 
 	| nn |
 	nn := self.
-	[ nn next notNil ] whileTrue: [ nn := nn next ].
+	[ nn next isNotNil ] whileTrue: [ nn := nn next ].
 	^ nn
 ]

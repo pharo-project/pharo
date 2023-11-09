@@ -714,15 +714,12 @@ ClyFullBrowserMorph >> showAllMethods [
 
 { #category : 'navigation' }
 ClyFullBrowserMorph >> showInPackageView: aPackage [
-
 	"If true we are in the project view and we need to find the package and expand it"
-	(packageView showsItemsFromQuery: ClyAllProjectsQuery)
-		ifTrue: [
-			packageView dataSource allElements
-				detect: [ :element | (element actualObject isKindOf: Project) and: [ element actualObject packages includes: aPackage ] ]
-				ifFound: [ :element | packageView dataSource expand: element ]
-				ifNone: [ "this should not happen but who knows with calypso.." self switchToPackages ] ]
-		ifFalse: [ self switchToPackages ]
+
+	(packageView showsItemsFromQuery: ClyAllProjectsQuery) ifTrue: [
+		self projectSelection selectItemsWhere: [ :each | (each representsItemOfType: Project) and: [ each actualObject includesPackage: aPackage ] ].
+		self projectSelection items first expand ].
+	self packageSelection selectItemsWith: { aPackage }
 ]
 
 { #category : 'testing' }

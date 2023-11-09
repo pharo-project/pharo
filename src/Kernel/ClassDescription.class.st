@@ -88,11 +88,6 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	self
-		compiledMethodAt: selector
-		ifPresent: [ :priorMethod | "For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
-			priorMethod propertyAt: #extensionPackage ifPresent: [ :package | compiledMethod propertyAt: #extensionPackage put: package ] ].
-
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
 ]
@@ -979,18 +974,17 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
   <reflection: 'Class structural modification - Selector/Method modification'>
-	| method protocol package origin |
+	| method protocol origin |
 	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := method origin.
 	protocol := self protocolOfSelector: selector.
-	package := method package.
 
 	method removeFromPackage.
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin package: package
+	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin
 ]
 
 { #category : 'instance variables' }
