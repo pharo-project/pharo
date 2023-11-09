@@ -115,14 +115,12 @@ SystemDictionary >> at: aKey put: anObject [
  			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #registeredMethods ifAbsent: [ ]]. 
  			"and change class to be Global" 
  			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
- 			Undeclared removeKey: aKey.
- 			self flushClassNameCache ].
-
+ 			Undeclared removeKey: aKey].
  	"code of super at:put:, not using Associations but GlobalVariable"
  	index := self findElementOrNil: aKey.
  	assoc := array at: index.
  	assoc
- 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject)]
+ 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
  		ifNotNil: [assoc value: anObject].
  	^ anObject
 ]
