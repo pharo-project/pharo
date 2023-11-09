@@ -345,7 +345,7 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - compilation' }
 CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 
@@ -362,7 +362,7 @@ CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - copying' }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
 	| method copy |
@@ -457,7 +457,7 @@ CompiledMethodTest >> testHasPragma [
 	self deny: methodWithOutPragma hasPragma
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsAbstract [
 
 	self assert: (self class >> #abstractMethod) isAbstract.
@@ -481,7 +481,7 @@ CompiledMethodTest >> testIsDeprecated [
 			ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsExtension [
 
 	[
@@ -854,7 +854,7 @@ CompiledMethodTest >> testReadsSlot [
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y))
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - compilation' }
 CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 

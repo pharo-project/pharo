@@ -578,6 +578,17 @@ CompiledMethod >> methodClass: aClass [
 		ifTrue: [ self literalAt: self numLiterals put: aClass binding ]
 ]
 
+{ #category : 'private' }
+CompiledMethod >> migratePersistingPropertiesIn: aNewCompileMethod [
+	"While creating a new version of a method, we might want to persist some properties. I am here for this. I migrate the properties to persist from myself, the old version of the method, to the new version."
+
+	| properties |
+	(properties := self penultimateLiteral) isMethodProperties ifFalse: [ ^ self "There is no property so nothing to migrate." ].
+
+	properties class propertiesToPersist do: [ :propertyName |
+		properties at: propertyName ifPresent: [ :value | aNewCompileMethod propertyAt: propertyName put: value ] ]
+]
+
 { #category : 'accessing' }
 CompiledMethod >> name [
 	^ self printString
