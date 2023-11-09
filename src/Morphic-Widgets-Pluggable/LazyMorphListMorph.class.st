@@ -146,6 +146,6 @@ LazyMorphListMorph >> userString [
 	^ String
 		streamContents: [ :stream |
 			1 to: self getListSize do: [ :i |
-				(self getListItem: i) submorphs detect: [ :morph | morph userString notNil ] ifFound: [ :morph | stream nextPutAll: morph userString ].
+				(self getListItem: i) submorphs detect: [ :morph | morph userString isNotNil ] ifFound: [ :morph | stream nextPutAll: morph userString ].
 				stream cr ] ]
 ]

@@ -669,7 +669,7 @@ GIFReadWriter >> writeFrameHeader: anImageFrame [
 	"Write any Extensions and/or headers that apply
 	to individual frames/subimages"
 	| interlaceByte |
-	anImageFrame delay notNil | transparentIndex notNil ifTrue: [
+	anImageFrame delay isNotNil | transparentIndex ifNotNil: [
 		self writeGCEForFrame: anImageFrame ].
 
 	"Next is the image descriptor"

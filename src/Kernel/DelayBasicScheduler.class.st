@@ -94,7 +94,8 @@ DelayBasicScheduler class >> onTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 { #category : 'testing' }
 DelayBasicScheduler >> anyActive [
 	"Return true if there is any delay currently active"
-	^activeDelay notNil
+	
+	^ activeDelay isNotNil
 ]
 
 { #category : 'initialization' }
@@ -166,13 +167,13 @@ DelayBasicScheduler >> runBackendLoopAtTimingPriority [
 
 			"Signal any expired delays"
 			nowTick := ticker nowTick.
-			[ 	activeDelay notNil and: [nowTick >= activeDelay resumptionTick] ]
+			[ 	activeDelay isNotNil and: [nowTick >= activeDelay resumptionTick] ]
 					whileTrue: [
 						activeDelay timingPrioritySignalExpired.
 						activeDelay := suspendedDelays removeFirstOrNil ].
 		]
 	] ensure: [ "When timer event loop exits, expire remaining delays."
-		[activeDelay notNil] whileTrue: [
+		[activeDelay isNotNil] whileTrue: [
 				activeDelay timingPrioritySignalExpired.
 				activeDelay := suspendedDelays removeFirstOrNil ]]
 ]

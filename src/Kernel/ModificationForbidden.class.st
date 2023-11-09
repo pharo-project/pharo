@@ -98,9 +98,10 @@ ModificationForbidden >> printObject: obj on: s [
 
 { #category : 'retrying' }
 ModificationForbidden >> retryModification [
-	fieldIndex notNil
-		ifTrue: [ object perform: retrySelector with: fieldIndex with: newValue ]
-		ifFalse: [object perform: retrySelector with: newValue ].
+
+	fieldIndex
+		ifNotNil: [ object perform: retrySelector with: fieldIndex with: newValue ]
+		ifNil: [ object perform: retrySelector with: newValue ].
 	self resumeUnchecked: newValue
 ]
 

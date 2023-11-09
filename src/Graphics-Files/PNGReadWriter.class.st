@@ -758,7 +758,7 @@ PNGReadWriter >> nextImage [
 		ifNotNil: [ "Dump the palette if it's the same as our standard palette"
 			palette = (StandardColors copyFrom: 1 to: palette size)
 				ifTrue: [ palette := nil ] ].
-	(depth <= 8 and: [ palette notNil ])
+	(depth <= 8 and: [ palette isNotNil ])
 		ifTrue: [ form := ColorForm extent: width @ height depth: depth.
 			form colors: palette ]
 		ifFalse: [ form := Form extent: width @ height depth: depth ].

@@ -1,11 +1,6 @@
 Extension { #name : 'ClassDescription' }
 
 { #category : '*RPackage-Core' }
-ClassDescription >> definedSelectors [
-	^ self package definedSelectorsForClass: self
-]
-
-{ #category : '*RPackage-Core' }
 ClassDescription >> extendingPackages [
 	"the extending packages of a class are the packages that extend it."
 
@@ -32,12 +27,6 @@ ClassDescription >> isExtendedInPackage: aPackage [
 ]
 
 { #category : '*RPackage-Core' }
-ClassDescription >> package [
-
-	^ self packageOrganizer packageOf: self
-]
-
-{ #category : '*RPackage-Core' }
 ClassDescription >> package: aPackage [
 
 	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
@@ -53,13 +42,6 @@ ClassDescription >> package: aPackage tag: aTag [
 ClassDescription >> packageName [
 
 	^ self package ifNotNil: [ :package | package name ]
-]
-
-{ #category : '*RPackage-Core' }
-ClassDescription >> packageTag [
-	"Package tags are sub categories of packages to have a better organization of the packages."
-
-	^ self package tagOf: self
 ]
 
 { #category : '*RPackage-Core' }

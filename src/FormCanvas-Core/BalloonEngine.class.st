@@ -260,7 +260,7 @@ BalloonEngine >> bitBlt: aBitBlt [
 	bitBlt ifNil: [^self].
 	width := bitBlt destForm width.
 	width <= 0 ifTrue: [ width := self class defaultBitmapWidth ].
-	span := Bitmap new: width.
+	span := Bitmap new: width + 1.
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
 	bitBlt
@@ -311,7 +311,7 @@ BalloonEngine >> colorTransform: aColorTransform [
 
 { #category : 'copying' }
 BalloonEngine >> copyBits [
-	(bitBlt notNil and:[bitBlt destForm notNil]) ifTrue:[bitBlt destForm unhibernate].
+	(bitBlt isNotNil and:[bitBlt destForm isNotNil]) ifTrue:[bitBlt destForm unhibernate].
 	self copyLoopFaster
 ]
 
@@ -718,8 +718,8 @@ BalloonEngine >> registerFill: fill1 and: fill2 [
 BalloonEngine >> registerFills: fills [
 
 	| fillIndexList index fillIndex |
-	((colorTransform notNil and:[colorTransform isAlphaTransform]) or:[
-		fills anySatisfy: [:any| any notNil and:[any isTranslucent]]])
+	((colorTransform isNotNil and:[colorTransform isAlphaTransform]) or:[
+		fills anySatisfy: [:any| any isNotNil and:[any isTranslucent]]])
 			ifTrue:[	self flush.
 					self reset.
 					postFlushNeeded := true].
