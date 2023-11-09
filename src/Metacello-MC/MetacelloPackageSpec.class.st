@@ -259,8 +259,10 @@ MetacelloPackageSpec >> file: aString constructor: aVersionConstructor [
 MetacelloPackageSpec >> forceLoadUsing: mcLoader [
 
 	| fetchingSpecLoader |
-	"fetch and force load it"
-	fetchingSpecLoader := mcLoader fetchingSpecLoader.
+	"force load it"
+	fetchingSpecLoader := (MetacelloLoadingMCSpecLoader on: mcLoader spec)
+		                      loaderPolicy: mcLoader loaderPolicy copy;
+		                      yourself.
 	fetchingSpecLoader
 		linearLoadPackageSpecs: (Array with: self)
 		repositories:
