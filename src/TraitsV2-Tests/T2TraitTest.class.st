@@ -239,6 +239,48 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 ]
 
 { #category : 'tests' }
+T2TraitTest >> testRecompilingTraitClassMethodRecompilesTheMethodInTheUsers [
+
+	| trait class priorTraitMethod priorClassMethod |
+	trait := self newTrait: #TTraitForTest.
+
+	class := self newClass: #ClassUsingTTraitForTest with: #(  ) traits: trait.
+
+	trait class compile: 'test
+    ^ #test'.
+
+
+	priorTraitMethod := trait class >> #test.
+	priorClassMethod := class class >> #test.
+
+	priorTraitMethod recompile.
+
+	self deny: trait class >> #test identicalTo: priorTraitMethod.
+	self deny: class class >> #test identicalTo: priorClassMethod
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testRecompilingTraitMethodRecompilesTheMethodInTheUsers [
+
+	| trait class priorTraitMethod priorClassMethod |
+	trait := self newTrait: #TTraitForTest.
+
+	class := self newClass: #ClassUsingTTraitForTest with: #(  ) traits: trait.
+	
+	trait compile: 'test
+    ^ #test'.
+
+
+	priorTraitMethod := trait >> #test.
+	priorClassMethod := class >> #test.
+
+	priorTraitMethod recompile.
+
+	self deny: trait >> #test identicalTo: priorTraitMethod.
+	self deny: class >> #test identicalTo: priorClassMethod
+]
+
+{ #category : 'tests' }
 T2TraitTest >> testRedefiningAClassAsTraitShouldRaiseError [
 
 	self newClass: #C1.
