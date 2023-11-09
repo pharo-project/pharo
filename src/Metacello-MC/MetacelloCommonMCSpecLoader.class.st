@@ -253,7 +253,6 @@ MetacelloCommonMCSpecLoader >> loadingSpecLoader [
 { #category : 'packages' }
 MetacelloCommonMCSpecLoader >> nameComponentsFrom: aVersionName [
 
-	1halt.
 	^self class nameComponentsFrom: aVersionName
 ]
 
