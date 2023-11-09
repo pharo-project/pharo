@@ -3,7 +3,6 @@ mcPackages := #(
  'ScriptingExtensions'
  'System-FileRegistry'
  'FileSystem-Memory'
- 'Ring-Definitions-Containers'
  'StartupPreferences'
  'ConfigurationCommandLineHandler-Core'
  'PragmaCollector'

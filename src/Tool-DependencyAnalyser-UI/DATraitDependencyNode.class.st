@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 DATraitDependencyNode >> icon [
-	^  Smalltalk ui icons iconNamed: #traitIcon
+	^  Smalltalk ui icons iconNamed: #trait
 ]
 
 { #category : 'browse-nautilus' }

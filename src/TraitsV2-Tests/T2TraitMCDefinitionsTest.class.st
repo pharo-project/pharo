@@ -10,27 +10,40 @@ Class {
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionHasCorrectString [
+
 	| t2 definition t1 definitionString |
-	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }.
-	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
+	t1 := self newTrait: #T1 with: {
+			      (#x => PropertySlot).
+			      (#y => PropertySlot) }.
+	t2 := self
+		      newTrait: #T2
+		      with: {
+				      (#a => PropertySlot).
+				      (#b => PropertySlot) }
+		      traits: t1.
 
 	definition := t2 asClassDefinition.
 	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
 
- 	self assert: (definitionString reject: [ :each | each isSeparator]) equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''#a=>PropertySlot#b=>PropertySlot''package:''TraitsV2-Tests-TestClasses'''
+	self
+		assert: (definitionString reject: [ :each | each isSeparator ])
+		equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''#a=>PropertySlot#b=>PropertySlot''package:''' , self packageNameForTests , ''''
 	"We cannot use the class printer because this is a mix between instancevariableNames and complex slot."
 ]
 
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionHasCorrectStringWithoutSlots [
+
 	| t2 definition t1 definitionString |
-	t1 := self newTrait: #T1 with: {}.
-	t2 := self newTrait: #T2 with: {#a. #b } uses: t1.
+	t1 := self newTrait: #T1 with: {  }.
+	t2 := self newTrait: #T2 with: { #a. #b } traits: t1.
 
 	definition := t2 asClassDefinition.
 	definitionString := String streamContents: [ :s | definition printDefinitionOn: s ].
 
-	self assert: (definitionString reject: [ :each | each isSeparator ]) equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''ab''package:''TraitsV2-Tests-TestClasses'''
+	self
+		assert: (definitionString reject: [ :each | each isSeparator ])
+		equals: 'Traitnamed:#T2uses:T1instanceVariableNames:''ab''package:''' , self packageNameForTests , ''''
 
 
 	"We cannot use ((ClassDefinitionPrinter oldPharo for: t2) definitionString reject: [ :each | each isSeparator ])
@@ -42,7 +55,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTrait [
 
 	| t1 definition |
 
-	t1 := self newTrait: #T1 with: #() uses: #().
+	t1 := self newTrait: #T1 with: #() traits: #().
 	t1 classTrait uses: {} slots: #(aSlot).
 
 	definition := t1 asClassDefinition.
@@ -54,7 +67,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTrait [
 T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitHasCorrectString [
 
 	| t1 definition |
-	t1 := self newTrait: #T1 with: #() trait: {}.
+	t1 := self newTrait: #T1 with: #() traits: {}.
 	t1 classTrait trait: { } slots: #(aSlot).
 
 	definition := t1 asClassDefinition.
@@ -70,7 +83,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorr
 
 	| t1 definition |
 
-	t1 := self newTrait: #T1 with: #() trait: {}.
+	t1 := self newTrait: #T1 with: #() traits: {}.
 	t1 classTrait trait: { } slots: {#aSlot => WeakSlot.}.
 
 	definition := t1 asClassDefinition.
@@ -81,7 +94,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorr
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfNormalClass [
 	| c1 definition |
-	c1 := self newClass: #C1 with: #(a b c) uses: {}.
+	c1 := self newClass: #C1 with: #(a b c) traits: {}.
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: 'a b c'.
@@ -93,7 +106,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfNormalClass [
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfNormalClassWithSlots [
 	| c1 definition |
-	c1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } uses: {}.
+	c1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } traits: {}.
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: '#a => PropertySlot #b => PropertySlot'.
@@ -105,7 +118,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfNormalClassWithSlots [
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfTrait [
 	| t1 definition |
-	t1 := self newTrait: #T1 with: #(a b c) uses: {}.
+	t1 := self newTrait: #T1 with: #(a b c) traits: {}.
 	definition := t1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: 'a b c'.
@@ -118,7 +131,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTrait [
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTrait [
 	| t2 definition t1 |
 	t1 := self newTrait: #T1 with: #(x y z).
-	t2 := self newTrait: #T2 with: #(a b c) uses: t1.
+	t2 := self newTrait: #T2 with: #(a b c) traits: t1.
 	definition := t2 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: 'a b c'.
@@ -131,7 +144,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTrait [
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTraitWithSlots [
 	| t2 definition t1 |
 	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }.
-	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
+	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } traits: t1.
 
 	definition := t2 asClassDefinition.
 
@@ -144,7 +157,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTraitWithSlots [
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitWithSlots [
 	| t1  definition |
-	t1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } uses: {}.
+	t1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } traits: {}.
 
 	definition := t1 asClassDefinition.
 
@@ -157,7 +170,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitWithSlots [
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClass [
 	| c1 definition t1 |
 	t1 := self newTrait: #T1 with: #(x y z).
-	c1 := self newClass: #C1 with: #(a b c) uses: t1.
+	c1 := self newClass: #C1 with: #(a b c) traits: t1.
 	definition := c1 asClassDefinition.
 
 	self assert: definition instanceVariablesString equals: 'a b c'.
@@ -170,7 +183,7 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClass [
 T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClassWithSlots [
 	| c1 definition t1 |
 	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }.
-	c1 := self newClass: #C1 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
+	c1 := self newClass: #C1 with: {#a => PropertySlot. #b => PropertySlot } traits: t1.
 
 	definition := c1 asClassDefinition.
 
@@ -183,10 +196,10 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClassWithSlots [
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinition [
 	| t1 definition1 definition2 |
-	t1 := self newTrait: #T1 with: #() uses: {}.
+	t1 := self newTrait: #T1 with: #() traits: {}.
 	definition1 := t1 asClassDefinition.
 
-	t1 := self newTrait: #T1 with: #(a b c) uses: {}.
+	t1 := self newTrait: #T1 with: #(a b c) traits: {}.
 	definition2 := t1 asClassDefinition.
 
 	self deny: definition1 equals: definition2
@@ -195,12 +208,12 @@ T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinition [
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinitionInUses [
 	| t1 t2 definition1 definition2 |
-	t1 := self newTrait: #T1 with: #() uses: {}.
-	t2 := self newTrait: #T2 with: #() uses: {}.
+	t1 := self newTrait: #T1 with: #() traits: {}.
+	t2 := self newTrait: #T2 with: #() traits: {}.
 
 	definition1 := t2 asClassDefinition.
 
-	t2 := self newTrait: #T2 with: #() uses: {t1}.
+	t2 := self newTrait: #T2 with: #() traits: {t1}.
 	definition2 := t2 asClassDefinition.
 
 	self deny: definition1 equals: definition2
@@ -209,10 +222,10 @@ T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinitionInUses [
 { #category : 'tests' }
 T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinitionWithDifferentSlotTypes [
 	| t1 definition1 definition2 |
-	t1 := self newTrait: #T1 with: #(a) uses: {}.
+	t1 := self newTrait: #T1 with: #(a) traits: {}.
 	definition1 := t1 asClassDefinition.
 
-	t1 := self newTrait: #T1 with: {(#a => PropertySlot)} uses: {}.
+	t1 := self newTrait: #T1 with: {(#a => PropertySlot)} traits: {}.
 	definition2 := t1 asClassDefinition.
 
 	self deny: definition1 equals: definition2

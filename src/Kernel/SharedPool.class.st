@@ -31,7 +31,7 @@ SharedPool class >> classBindingOf: varName [
 { #category : 'testing' }
 SharedPool class >> includesKey: aName [
 	"does this pool include aName"
-	^(self localBindingOf: aName) notNil
+	^(self localBindingOf: aName) isNotNil
 ]
 
 { #category : 'testing' }

@@ -1076,17 +1076,17 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 	attributes := OrderedCollection new.
 
 	"We can have 3 different kind of links from a literal:
-	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
+	- In case it is a symbol representing a class or a global, we want to return a TextClassLink to browse the class or its references. In that case we also want to check if this global is deprecated or not to strikethrought it.
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
 	value isSymbol
 		ifTrue: [
-			self class environment
-				at: value
-				ifPresent: [ :aGlobal |
+			"We ask the binding to be able to know if the binding is deprecated ot not. If we used #at: then we would get the value of the binding which is not what interest us."
+			(self class environment bindingOf: value)
+				ifNotNil: [ :aGlobalVariable |
 					attributes add: (TextClassLink className: value).
-					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
-				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
+					aGlobalVariable isDeprecated ifTrue: [ attributes add: TextEmphasis struckOut ] ]
+				ifNil: [ attributes add: (TextMethodLink selector: value) ] ]
 		ifFalse: [ TextClassLink class: value class ].
 	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode
 ]

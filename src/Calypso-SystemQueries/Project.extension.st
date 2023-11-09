@@ -5,7 +5,8 @@ Project class >> convertToCalypsoBrowserItem: aProject [
 
 	| item |
 	item := ClyBrowserItem named: aProject name with: aProject.
-	aProject hasPackages ifTrue: [ item markWithChildrenOf: self ].
+	"We cannot use `self` because my subclass also need to return Project.."
+	aProject hasPackages ifTrue: [ item markWithChildrenOf: Project ].
 	^ item
 ]
 

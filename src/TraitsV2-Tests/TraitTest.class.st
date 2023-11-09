@@ -9,23 +9,37 @@ Class {
 TraitTest >> createClassUsing: aTrait [
 
 	^ self class classInstaller make: [ :aBuilder |
-		aBuilder name: #AClassForTests;
-			traitComposition: aTrait;
-			package: 'AAA' ]
+		  aBuilder
+			  name: #AClassForTests;
+			  traitComposition: aTrait;
+			  package: self packageNameForTests ]
 ]
 
 { #category : 'utilities' }
 TraitTest >> createTrait [
-	| trait |
 
+	| trait |
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #ATraitForTests;
-			package: 'AAA';
-			beTrait ].
+		         aBuilder
+			         name: #ATraitForTests;
+			         package: self packageNameForTests;
+			         beTrait ].
 
 	trait compile: 'm1 ^1' classified: 'test'.
 	^ trait
+]
+
+{ #category : 'helpers' }
+TraitTest >> packageNameForTests [
+
+	^ #'Generated-Trait-Test-Package'
+]
+
+{ #category : 'running' }
+TraitTest >> tearDown [
+
+	self packageOrganizer removePackage: self packageNameForTests.
+	super tearDown
 ]
 
 { #category : 'tests' }
@@ -85,49 +99,87 @@ TraitTest >> testCompositionCopy [
 				includesAll: { (self t1). (self t2). (self t6) })
 ]
 
+{ #category : 'tests - accessing' }
+TraitTest >> testDefinedMethods [
+
+	[
+	Trait1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	Trait3 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	MOPTestClassC compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	
+	"Test local methods of a trait standalone"
+	self assertCollection: Trait1 localMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c). (Trait1 >> #extensionMethod) }.
+	self assertCollection: Trait1 definedMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c) }.
+	
+	"Test local methods of a trait using a trait"
+	self assertCollection: Trait3 localMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c). (Trait3 >> #extensionMethod) }.
+	self assertCollection: Trait3 definedMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c) }.
+	
+	"Test local methods of a class using a trait"
+	self assertCollection: MOPTestClassC localMethods hasSameElements: { (MOPTestClassC >> #c).  (MOPTestClassC >> #extensionMethod)}.
+	self assertCollection: MOPTestClassC definedMethods hasSameElements: { (MOPTestClassC >> #c) } ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+	
+]
+
+{ #category : 'tests - accessing' }
+TraitTest >> testDefinedSelectors [
+
+	[
+	Trait1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	Trait3 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	MOPTestClassC compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+
+	"Test local selectors of a trait standalone"
+	self assertCollection: Trait1 localSelectors hasSameElements: #( #c1 #c #extensionMethod ).
+	self assertCollection: Trait1 definedSelectors hasSameElements: #( #c1 #c ).
+
+	"Test local selectors of a trait using a trait"
+	self assertCollection: Trait3 localSelectors hasSameElements: #( #c3 #c #extensionMethod ).
+	self assertCollection: Trait3 definedSelectors hasSameElements: #( #c3 #c ).
+
+	"Test local selectors of a class using a trait"
+	self assertCollection: MOPTestClassC localSelectors hasSameElements: #( #c #extensionMethod ).
+	self assertCollection: MOPTestClassC definedSelectors hasSameElements: #( #c ) ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
 { #category : 'tests' }
 TraitTest >> testErrorClassCreation [
-    | tmpCategory trait aSubclass aClass |
 
-    tmpCategory := 'TemporaryGeneratedClasses'.
-
-	 trait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #TMyTrait;
-			package: tmpCategory;
-			beTrait ].
+	| trait aSubclass aClass |
+	trait := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TMyTrait;
+			         package: self packageNameForTests;
+			         beTrait ].
 
 
-    [
-		aClass := self class classInstaller make: [ :aClassBuilder |
-			aClassBuilder
-				name: #AClass;
-				superclass: nil;
-				package: tmpCategory ].
+	[
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #AClass;
+			          superclass: nil;
+			          package: self packageNameForTests ].
 
 	"----------------"
-		aSubclass := self class classInstaller make: [ :aClassBuilder |
-			aClassBuilder
-				name: #AClass2;
-				traitComposition: trait;
-				superclass: aClass;
-				package: tmpCategory ].
+	aSubclass := self class classInstaller make: [ :aClassBuilder |
+		             aClassBuilder
+			             name: #AClass2;
+			             traitComposition: trait;
+			             superclass: aClass;
+			             package: self packageNameForTests ].
 
 	"----------------"
 
-    "Change the superclass of AClass"
-		aClass := self class classInstaller make: [ :aClassBuilder |
-			aClassBuilder
-				name: #AClass;
-				superclass: Object;
-				package: tmpCategory ].
+	"Change the superclass of AClass"
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #AClass;
+			          superclass: Object;
+			          package: self packageNameForTests ].
 
-    self assert: trait traitUsers asArray equals: {aSubclass}.
-    self assert: aSubclass traits asArray equals: {trait}.
-
-    ] ensure: [
-        #(AClass AClass2 TMyTrait) do: [ :aClassName |
-            testingEnvironment at: aClassName ifPresent: [ :v | v removeFromSystem ]]]
+	self assert: trait traitUsers asArray equals: { aSubclass }.
+	self assert: aSubclass traits asArray equals: { trait } ] ensure: [
+		#( AClass AClass2 TMyTrait ) do: [ :aClassName | testingEnvironment at: aClassName ifPresent: [ :v | v removeFromSystem ] ] ]
 ]
 
 { #category : 'tests' }
@@ -248,14 +300,13 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 
 { #category : 'tests' }
 TraitTest >> testForbidInstantiation [
-	| tmpCategory trait |
-	tmpCategory := 'TemporaryGeneratedClasses'.
 
+	| trait |
 	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: #TMyTrait;
-			package: tmpCategory;
-			beTrait ].
+		         aBuilder
+			         name: #TMyTrait;
+			         package: self packageNameForTests;
+			         beTrait ].
 
 	self should: [ trait basicNew ] raise: Error
 ]
@@ -285,6 +336,32 @@ TraitTest >> testLocalMethodWithSameCodeInTrait [
 							(each includesLocalSelector: selector)
 								ifTrue: [ (each traitComposition traitDefining: selector ifNone: [ nil ])
 										ifNotNil: [ :trait | (trait selectors includes: selector) ifTrue: [ self deny: (trait compiledMethodAt: selector) equals: each >> selector ] ] ] ] ] ]
+]
+
+{ #category : 'tests - accessing' }
+TraitTest >> testLocalMethods [
+	
+	"Test local methods of a trait standalone"
+	self assertCollection: Trait1 localMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c) }.
+	
+	"Test local methods of a trait using a trait"
+	self assertCollection: Trait3 localMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c) }.
+	
+	"Test local methods of a class using a trait"
+	self assertCollection: MOPTestClassC localMethods hasSameElements: { (MOPTestClassC >> #c) }
+]
+
+{ #category : 'tests - accessing' }
+TraitTest >> testLocalSelectors [
+
+	"Test local selectors of a trait standalone"
+	self assertCollection: Trait1 localSelectors hasSameElements: #( #c1 #c ).
+
+	"Test local selectors of a trait using a trait"
+	self assertCollection: Trait3 localSelectors hasSameElements: #( #c3 #c ).
+
+	"Test local selectors of a class using a trait"
+	self assertCollection: MOPTestClassC localSelectors hasSameElements: #( #c )
 ]
 
 { #category : 'tests' }

@@ -120,7 +120,7 @@ ShiftClassBuilder >> build [
 	self createClass.
 
 	self oldClass ifNotNil: [
-		self newClass basicCategory: self oldClass category.
+		self newClass basicTag: self oldClass packageTag.
 		self copyProtocols.
 		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
@@ -154,25 +154,6 @@ ShiftClassBuilder >> builderEnhancer: anObject [
 	builderEnhancer := anObject.
 
 	builderEnhancer initializeBuilder: self
-]
-
-{ #category : 'accessing' }
-ShiftClassBuilder >> category [
-
-	self flag: #package. "Category is an old concept mixing packages and tag. For now this is what is used by the system but in the future we should go away from it."
-	^ self tag
-		  ifNotNil: [ :packageTag | self package , '-' , packageTag ]
-		  ifNil: [ self package ]
-]
-
-{ #category : 'deprecated' }
-ShiftClassBuilder >> category: aString [
-
-	| converter |
-	self flag: #package. "To deprecate once it is not use in the bootstrap anymore."
-	converter := CategoryConverter category: aString environment: self installingEnvironment.
-	self package: converter packageName.
-	self tag: converter tagName
 ]
 
 { #category : 'accessing' }
@@ -344,7 +325,6 @@ ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 { #category : 'initialization' }
 ShiftClassBuilder >> fillFor: aClass [
 
-	self flag: #package. "package tag should be improved in the future"
 	self
 		superclass: aClass superclass;
 		name: aClass getName;
@@ -357,7 +337,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
 
-	aClass packageTag ifNotNil: [ :aTag | aTag isRoot ifFalse: [ self tag: aTag name ] ].
+	aClass packageTag isRoot ifFalse: [ self tag: aClass packageTag name ].
 
 	self builderEnhancer fillBuilder: self from: aClass
 ]

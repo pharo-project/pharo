@@ -218,7 +218,7 @@ DropListMorph >> extent: newExtent [
 	"Update the gradient."
 
 	super extent: newExtent.
-	(self fillStyle notNil and: [self fillStyle isSolidFill not])
+	(self fillStyle isNotNil and: [self fillStyle isSolidFill not])
 		ifTrue: [self fillStyle: self fillStyleToUse]
 ]
 
@@ -264,7 +264,7 @@ DropListMorph >> font: aFont [
 DropListMorph >> getCurrentSelection [
 	"Answer the current selection from the model."
 
-	^(self model notNil and: [self getIndexSelector notNil])
+	^(self model isNotNil and: [self getIndexSelector isNotNil])
 		ifTrue: [|mySelection|
 			mySelection := self model perform: self getIndexSelector.
 			(self list includes: mySelection)
@@ -527,7 +527,7 @@ DropListMorph >> listSelectionIndex: anInteger [
 DropListMorph >> listVisible [
 	"Answer whether the list is visible."
 
-	^self listMorph owner notNil
+	^self listMorph owner isNotNil
 ]
 
 { #category : 'wiw support' }

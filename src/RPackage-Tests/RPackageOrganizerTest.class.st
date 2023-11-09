@@ -302,18 +302,6 @@ RPackageOrganizerTest >> testRegisteredPackages [
 		self assert: (self organizer packages includes: package) ]
 ]
 
-{ #category : 'tests - extending' }
-RPackageOrganizerTest >> testRegistrationExtendingPackages [
-
-	| p |
-	self newClassNamed: 'QuadrangleForTesting' in: self class package.
-	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	p := self ensurePackage: 'P1'.
-	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
-	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1
-]
-
 { #category : 'tests' }
 RPackageOrganizerTest >> testRemoveClassUsingEnvironment [
 
@@ -457,17 +445,4 @@ RPackageOrganizerTest >> testUnregister [
 		self deny: (self organizer packageNames includes: package name) ].
 
 	self assert: self organizer packageNames size equals: 1
-]
-
-{ #category : 'tests - extending' }
-RPackageOrganizerTest >> testUnregistrationExtendingPackages [
-
-	| p |
-	self newClassNamed: 'QuadrangleForTesting' in: self class package.
-	p := self ensurePackage: 'P1'.
-	self organizer registerExtendingPackage: p forClass: self quadrangleClass.
-	self denyEmpty: (self organizer extendingPackagesOf: self quadrangleClass).
-	self assert: (self organizer extendingPackagesOf: self quadrangleClass) anyOne name equals: #P1.
-	self organizer unregisterExtendingPackage: p forClass: self quadrangleClass.
-	self assertEmpty: (self organizer extendingPackagesOf: self quadrangleClass)
 ]

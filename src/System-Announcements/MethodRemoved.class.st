@@ -8,8 +8,7 @@ Class {
 	#superclass : 'MethodAnnouncement',
 	#instVars : [
 		'protocol',
-		'methodOrigin',
-		'methodPackage'
+		'methodOrigin'
 	],
 	#category : 'System-Announcements-System-Methods',
 	#package : 'System-Announcements',
@@ -17,13 +16,12 @@ Class {
 }
 
 { #category : 'instance creation' }
-MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin: aBehavior package: aPackage [
+MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin: aBehavior [
 
 	^ self new
 		  method: aCompiledMethod;
 		  protocol: aProtocol;
 		  methodOrigin: aBehavior;
-		  methodPackage: aPackage;
 		  yourself
 ]
 
@@ -41,18 +39,6 @@ MethodRemoved >> methodOrigin [
 { #category : 'accessing' }
 MethodRemoved >> methodOrigin: anObject [
 	methodOrigin := anObject
-]
-
-{ #category : 'accessing' }
-MethodRemoved >> methodPackage [
-
-	^ methodPackage
-]
-
-{ #category : 'accessing' }
-MethodRemoved >> methodPackage: aPackage [
-
-	methodPackage := aPackage
 ]
 
 { #category : 'accessing' }

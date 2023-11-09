@@ -845,7 +845,7 @@ ClyQueryViewMorph >> targetDropItem: anObject [
 	targetDropItem := anObject
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> transferExpansionStateFrom: oldDataSource [
 
 	| itemsSelector actionSelector newItems |

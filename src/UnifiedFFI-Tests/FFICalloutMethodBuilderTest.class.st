@@ -38,7 +38,7 @@ FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -75,7 +75,7 @@ FFICalloutMethodBuilderTest >> testCallCreateObject [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 	self assert: result literals second functionName equals: 'method1'.
@@ -97,7 +97,7 @@ FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -120,7 +120,7 @@ FFICalloutMethodBuilderTest >> testCallSimple [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 	tfFunction := result literals second.
@@ -143,7 +143,7 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -168,7 +168,7 @@ FFICalloutMethodBuilderTest >> testCallWithObject [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 	tfFunction := result literals second.
@@ -191,7 +191,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointer [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -215,7 +215,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -240,7 +240,7 @@ FFICalloutMethodBuilderTest >> testCallWithSelf [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 

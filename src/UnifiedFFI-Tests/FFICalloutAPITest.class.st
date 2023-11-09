@@ -191,9 +191,9 @@ FFICalloutAPITest >> testCallWithObjectCreation [
 
 	[
 		self shouldnt: [ object := FFICalloutObjectForTest primCreate: 1 ] raise: Error.
-		self assert: object notNil.
+		self assert: object isNotNil.
 		self assert: object class equals: FFICalloutObjectForTest.
-		self assert: object handle notNil.
+		self assert: object handle isNotNil.
 		self deny: object handle isNull ]
 	ensure: [
 		object ifNotNil: [ object free ] ]

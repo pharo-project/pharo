@@ -135,7 +135,7 @@ IndentingListItemMorph >> drawLinesOn: aCanvas lineColor: lineColor [
 	self nextSibling ifNotNil: [ self drawLinesToNextSiblingOn: aCanvas lineColor: lineColor hasToggle: hasToggle ].
 
 	"If I have children and am expanded, draw a line to my first child"
-	(self firstChild notNil and: [ self isExpanded ])
+	(self firstChild isNotNil and: [ self isExpanded ])
 		ifTrue: [ self drawLinesToFirstChildOn: aCanvas lineColor: lineColor]
 ]
 
@@ -277,7 +277,7 @@ IndentingListItemMorph >> firstChild [
 { #category : 'accessing' }
 IndentingListItemMorph >> hasIcon [
 	"Answer whether the receiver has an icon."
-	^ icon notNil
+	^ icon isNotNil
 ]
 
 { #category : 'private' }
@@ -351,7 +351,7 @@ IndentingListItemMorph >> isExpanded: aBoolean [
 IndentingListItemMorph >> isFirstItem [
 	"I have no idea why the owner of the list can get nil but it happens when the packages are published with the Monticello Browser."
 
-	^ owner notNil and: [owner submorphs first == self]
+	^ owner isNotNil and: [owner submorphs first == self]
 ]
 
 { #category : 'accessing' }
