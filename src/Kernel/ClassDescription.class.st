@@ -979,18 +979,17 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
   <reflection: 'Class structural modification - Selector/Method modification'>
-	| method protocol package origin |
+	| method protocol origin |
 	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := method origin.
 	protocol := self protocolOfSelector: selector.
-	package := method package.
 
 	method removeFromPackage.
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin package: package
+	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin
 ]
 
 { #category : 'instance variables' }

@@ -71,7 +71,7 @@ RGEnvironmentAnnouncer >> behaviorParentRenamed: anRGBehavior from: oldName [
 { #category : 'triggering' }
 RGEnvironmentAnnouncer >> behaviorRemoved: anRGBehavior [
 
-	self announce: (ClassRemoved class: anRGBehavior packageTag: anRGBehavior packageTag)
+	self announce: (ClassRemoved class: anRGBehavior)
 ]
 
 { #category : 'triggering' }
@@ -101,8 +101,7 @@ RGEnvironmentAnnouncer >> methodRemoved: aMethod [
 					  at: aMethod methodClass
 					  ifPresent: [ :class | class protocolNamed: aMethod protocol ]
 					  ifAbsent: [ aMethod protocol ])
-			 origin: aMethod parent
-			 package: aMethod package)
+			 origin: aMethod parent)
 ]
 
 { #category : 'accessing' }

@@ -21,18 +21,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'accessing - method dictionary' }
-TraitedClass class >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: aProtocol [
-	<reflection: 'Class structural modification - Selector/Method modification'>
-
-	super
-		addAndClassifySelector: selector
-		withMethod: compiledMethod
-		inProtocol: aProtocol.
-
-	self propagateChangeOf: selector
-]
-
 { #category : 'users' }
 TraitedClass class >> addUser: aClass [
 
@@ -53,17 +41,6 @@ TraitedClass class >> classTrait [
 TraitedClass class >> isTrait [
 	<reflection: 'Class structural inspection - Traits'>
 	^ true
-]
-
-{ #category : 'changes' }
-TraitedClass class >> propagateChangeOf: aSelector [
-	| change |
-
-	change := TraitChange new
-		updatedSelectors: {aSelector};
-		yourself.
-
-	self basicUsers do: [ :e | change applyOn: e ]
 ]
 
 { #category : 'users' }
@@ -240,15 +217,9 @@ TraitedClass >> recategorizeSelector: selector from: oldProtocol to: newProtocol
 
 { #category : 'recompilation' }
 TraitedClass >> recompile: selector from: oldClass [
-	"Compile the method associated with selector in the receiver's method dictionary."
 
-	| method newMethod |
-	method := oldClass compiledMethodAt: selector.
-	newMethod := self recompileBasic: selector from: oldClass.
-
-	method properties at: #traitSource ifPresent: [ :aSource | newMethod propertyAt: #traitSource put: aSource ].
-
-	self addSelectorSilently: selector withMethod: newMethod
+	super recompile: selector from: oldClass.
+	TraitChange addSelector: selector on: self
 ]
 
 { #category : 'trait-composition' }

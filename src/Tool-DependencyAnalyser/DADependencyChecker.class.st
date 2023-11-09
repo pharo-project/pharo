@@ -74,8 +74,7 @@ DADependencyChecker >> computeTransitiveDependenciesOf: aPackageName visitedPack
 { #category : 'private' }
 DADependencyChecker >> daPackageFor: aPackageName [
 
-	('Building relation graph for package named: ' , aPackageName) traceCr.
-	^ [ ((self buildPackageRelationGraphFor: aPackageName) packages select: #isSeen) first ] onErrorDo: [ :e | e signalerContext shortStack traceCr ]
+	^ ((self buildPackageRelationGraphFor: aPackageName) packages select: #isSeen) first
 ]
 
 { #category : 'accessing' }

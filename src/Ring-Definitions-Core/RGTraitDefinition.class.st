@@ -56,7 +56,7 @@ RGTraitDefinition >> hasComment [
 { #category : 'testing' }
 RGTraitDefinition >> hasMetaclass [
 
-	^metaClass notNil
+	^metaClass isNotNil
 ]
 
 { #category : 'testing' }

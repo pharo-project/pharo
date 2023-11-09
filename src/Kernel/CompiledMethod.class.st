@@ -523,7 +523,7 @@ CompiledMethod >> isReturnField [
 { #category : 'printing' }
 CompiledMethod >> isSelfEvaluating [
 
-	^self methodClass notNil and: [self isDoIt not]
+	^self methodClass isNotNil and: [self isDoIt not]
 ]
 
 { #category : 'testing' }

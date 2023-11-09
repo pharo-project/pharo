@@ -83,7 +83,7 @@ DAAddPackagePresenter >> initializePresenters [
 	buttonAddPackage := self newButton
 		help: 'Add these packages to the current analysis';
 		label: 'Add packages';
-		icon: (self iconNamed: #addIcon);
+		icon: (self iconNamed: #add);
 		yourself.
 
 	packageList := SpChooserPresenter new
