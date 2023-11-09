@@ -345,6 +345,23 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
+{ #category : 'tests - abstract' }
+CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	| method |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	method := self class >> #isExtensionTestMethod.
+	self assert: method isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 2'.
+
+	self assert: method isExtension ] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
+]
+
 { #category : 'tests' }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
