@@ -71,12 +71,12 @@ EmbeddedFreeTypeFontInstaller >> addFromFileContents: bytes baseName:  originalF
 	| i face numFaces info externalMem cachedInfo cachedNumFaces |
 
 	i:= 0.
-	[(cachedInfo := self validEmbeddedCachedInfoFor: bytes index: i) notNil]
+	[(cachedInfo := self validEmbeddedCachedInfoFor: bytes index: i) isNotNil]
 		whileTrue:[
 			i = 0 ifTrue:[cachedNumFaces := cachedInfo numFaces].
 			self addFirstFileInfo: cachedInfo index: i.
 			i := i + 1.].
-	(cachedNumFaces notNil and:[i >= cachedNumFaces]) ifTrue:[^self].
+	(cachedNumFaces isNotNil and:[i >= cachedNumFaces]) ifTrue:[^self].
 	[externalMem := FreeTypeExternalMemory bytes: bytes.
 	externalMem validate.
 	face := FreeTypeFace basicNew fileContentsExternalMemory: externalMem .
@@ -87,7 +87,7 @@ EmbeddedFreeTypeFontInstaller >> addFromFileContents: bytes baseName:  originalF
 		do:[:e |
 			self failedToOpen:face index: i.
 			^ self].
-	(face height notNil  and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
+	(face height isNotNil and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
 		ifFalse:[
 			self failedToOpen:face index: i.
 			^ self]

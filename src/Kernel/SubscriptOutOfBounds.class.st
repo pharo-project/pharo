@@ -74,7 +74,7 @@ SubscriptOutOfBounds >> standardMessageText [
 		  self subscript
 			  ifNil: [ stream << 'subscript' ]
 			  ifNotNil: [ stream print: self subscript ].
-		  (self lowerBound notNil and: [ self upperBound notNil ]) ifTrue: [
+		  (self lowerBound isNotNil and: [ self upperBound isNotNil ]) ifTrue: [
 			  stream
 				  << ' is not between ';
 				  print: self lowerBound;

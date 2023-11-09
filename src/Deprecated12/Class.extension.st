@@ -8,6 +8,18 @@ Class >> basicCategory [
 ]
 
 { #category : '*Deprecated12' }
+Class >> category: aString [
+
+	| converter |
+	self deprecated: 'Trying to package a class using the concept of categpry is not supported anymore in Pharo. You can use #package:tag: instead to avoid any ambiguity on what part of the category is the package and what is the tag.'.
+	self category = aString ifTrue: [ ^ self ].
+
+	converter := CategoryConverter category: aString asSymbol.
+
+	^ self package: converter packageName tag: converter tagName
+]
+
+{ #category : '*Deprecated12' }
 Class >> ephemeronSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: package [
 	"Added to allow for a simplified subclass creation experience. "
 

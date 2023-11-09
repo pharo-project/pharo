@@ -138,35 +138,10 @@ RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 ]
 
 { #category : 'tests - compiled method' }
-RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsDefinedInPackage [
-
-	self assert: (a1 >> #methodDefinedInP1 isDefinedInPackage: p1).
-	self deny: (a2 >> #methodDefinedInP1 isDefinedInPackage: p1)
-]
-
-{ #category : 'tests - compiled method' }
-RPackageReadOnlyCompleteSetupTest >> testCompiledMethodIsExtensionInPackage [
-
-	self deny: (a1 >> #methodDefinedInP1 isExtensionInPackage: p1).
-	self assert: (a2 >> #methodDefinedInP1 isExtensionInPackage: p1)
-]
-
-{ #category : 'tests - compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackage [
 
 	self assert: (a1 >> #methodDefinedInP1) package equals: p1.
 	self assert: (a2 >> #methodDefinedInP1) package equals: p1
-]
-
-{ #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testDefinedSelectors [
-
-	self assert: a1 definedSelectors size equals: 2.
-	self assert: (a1 definedSelectors includes: #methodDefinedInP1).
-	self assert: (a1 definedSelectors includes: #anotherMethodDefinedInP1).
-
-	self assert: a2 definedSelectors size equals: 1.
-	self assert: (a2 definedSelectors includes: #methodDefinedInP2)
 ]
 
 { #category : 'tests - situation' }

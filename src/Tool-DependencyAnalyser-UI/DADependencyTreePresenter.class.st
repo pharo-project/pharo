@@ -236,11 +236,11 @@ DADependencyTreePresenter >> initializeButtons [
 	buttonAddPackage := self newButton
 		help: 'Add package to the current analysis';
 		label: 'Add packages';
-		icon: (Smalltalk ui icons iconNamed: #addIcon).
+		icon: (self iconNamed: #add).
 	buttonRemovePackage := self newButton
 		help: 'Remove package to the current analysis';
 		label: 'Remove packages';
-		icon: (self iconNamed: #removeIcon).
+		icon: (self iconNamed: #remove).
 	buttonGenerateGraphViz := self newButton
 		help: 'Open the graph in world';
 		label: 'Open the graph'.

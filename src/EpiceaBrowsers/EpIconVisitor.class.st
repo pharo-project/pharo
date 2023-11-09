@@ -11,7 +11,7 @@ Class {
 
 { #category : 'private' }
 EpIconVisitor >> additionIcon [
-	^ self iconNamed: #changeAddIcon
+	^ self iconNamed: #changeAdd
 ]
 
 { #category : 'private' }
@@ -21,12 +21,12 @@ EpIconVisitor >> emptyIcon [
 
 { #category : 'private' }
 EpIconVisitor >> modificationIcon [
-	^ self iconNamed: #changeUpdateIcon
+	^ self iconNamed: #changeUpdate
 ]
 
 { #category : 'private' }
 EpIconVisitor >> removalIcon [
-	^ self iconNamed: #changeRemoveIcon
+	^ self iconNamed: #changeRemove
 ]
 
 { #category : 'visitor' }
@@ -36,7 +36,7 @@ EpIconVisitor >> visitBehaviorCommentChange: aChange [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitBehaviorCopy: anEvent [
-	^ self iconNamed: #configurationIcon
+	^ self iconNamed: #configuration
 ]
 
 { #category : 'visitor' }
@@ -76,7 +76,7 @@ EpIconVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitLogCommentModification: aLogCommentModification [
-	^ self iconNamed: #announcementIcon
+	^ self iconNamed: #announcement
 ]
 
 { #category : 'visitor' }
@@ -153,7 +153,7 @@ EpIconVisitor >> visitRedo: aRedoEvent [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitRefactoring: aRefactoring [
-	^ self iconNamed: #configurationIcon
+	^ self iconNamed: #configuration
 ]
 
 { #category : 'visitor' }

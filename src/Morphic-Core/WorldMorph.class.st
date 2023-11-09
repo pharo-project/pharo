@@ -368,7 +368,7 @@ WorldMorph >> fullscreenChanged: fullscreenAnnouncement [
 { #category : 'world state' }
 WorldMorph >> haloMorphs [
 
-	^ self hands collect: [ :h | h halo ] thenSelect: [ :halo | halo notNil ]
+	^ self hands collect: [ :h | h halo ] thenSelect: [ :halo | halo isNotNil ]
 ]
 
 { #category : 'project state' }

@@ -248,7 +248,7 @@ Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderSt
        aFillStyle isTransparent ifFalse: [
                self fillRectangle: (aRectangle insetBy: aBorderStyle width) fillStyle: aFillStyle ].
 
-       (aBorderStyle notNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
+       (aBorderStyle isNotNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
 ]
 
 { #category : 'initialization' }

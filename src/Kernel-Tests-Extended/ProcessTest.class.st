@@ -9,7 +9,7 @@ Class {
 	#tag : 'Processes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ProcessTest >> setUp [
 	super setUp.
 
@@ -62,7 +62,7 @@ ProcessTest >> testChangingOtherPriorityAffectsScheduling [
 	self assert: val equals: #( 1 2 )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingOtherPriorityLowerDuringSemaphoreWait [
 
 	| semaphore hasBlockRun backgroundProcess |
@@ -83,7 +83,7 @@ ProcessTest >> testChangingOtherPriorityLowerDuringSemaphoreWait [
 	self assert: hasBlockRun. "Preempted as normal"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingOtherPriorityPreemptsCurrentProcess [
 
 	| hasBlockRun backgroundProcess |
@@ -95,7 +95,7 @@ ProcessTest >> testChangingOtherPriorityPreemptsCurrentProcess [
 	self assert: hasBlockRun "We have been preempted."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingOtherPriorityRaiseDuringSemaphoreWait [
 
 	| semaphore hasBlockRun backgroundProcess |
@@ -114,7 +114,7 @@ ProcessTest >> testChangingOtherPriorityRaiseDuringSemaphoreWait [
 	self assert: hasBlockRun
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	"test whether #priority: preempts active process to allow higher priority processes run;
 	#priority behavior reflects the processPreemptionYields setting - for false the active
@@ -634,7 +634,7 @@ ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 	effectiveProcess terminate
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testProcessFaithfulTermination [
 	"When terminating a process, unwind blocks should be evaluated as if they were executed by the process being terminated."
 
@@ -648,7 +648,7 @@ ProcessTest >> testProcessFaithfulTermination [
 	self assert: process isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessTest >> testRealActiveProcessFromProcesor [
 
 	| processFromProcessor activeProcess |
@@ -755,7 +755,7 @@ ProcessTest >> testTerminateAnswersSelf [
 	self assert: process isTerminated
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testTerminateInTerminate [
 	"Terminating a terminator process should unwind both the terminator and its terminatee process"
 	
@@ -775,7 +775,7 @@ ProcessTest >> testTerminateInTerminate [
 	self assert: unwound
 ]
 
-{ #category : #'tests - termination' }
+{ #category : 'tests - termination' }
 ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 "
 	<expectedFailure>

@@ -28,7 +28,6 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'Metacello-Gitlab';
 			package: 'Metacello-MC';
 			package: 'Metacello-Platform';
-
 			package: 'MonticelloFileTree-Core';
 			package: 'MonticelloFileTree-FileSystem-Utilities';
 			package: 'STON-Core';

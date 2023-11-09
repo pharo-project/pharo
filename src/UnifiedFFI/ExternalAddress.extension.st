@@ -163,7 +163,7 @@ ExternalAddress class >> fromString: aString [
 	| result |
 
 	result := self allocate: aString size + 1.
-	(self assert: result notNil).
+	(self assert: result isNotNil).
 	result writeString: aString.
 	result unsignedByteAt: aString size + 1 put: 0.
 	^ result

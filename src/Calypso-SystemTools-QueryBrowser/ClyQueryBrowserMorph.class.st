@@ -225,6 +225,37 @@ ClyQueryBrowserMorph >> itemCount [
 ]
 
 { #category : 'initialization' }
+ClyQueryBrowserMorph >> layoutChildren [
+
+	"Set up the message browser layout with:
+	  - toolbar on top
+	  - list on the left
+	  - tool (the code editor and so on) on the right"
+
+	| contentPanel |
+	self changeTableLayout.
+	self listDirection: #topToBottom.
+
+	self addMorph: toolbar.
+
+	contentPanel := PanelMorph new.
+	contentPanel changeProportionalLayout.
+	contentPanel name: 'tools panel'.
+	contentPanel
+		hResizing: #spaceFill;
+		vResizing: #spaceFill.
+
+	contentPanel
+		addMorph: navigationPanel
+		fullFrame: (0 @ 0.0 corner: 0.5 @ 1) asLayoutFrame.
+	contentPanel
+		addMorph: tabManager tabMorph
+		fullFrame: (0.5 @ 0 corner: 1 @ 1.0) asLayoutFrame.
+	self addMorphBack: contentPanel.
+	contentPanel addPaneSplitters
+]
+
+{ #category : 'initialization' }
 ClyQueryBrowserMorph >> mainNameOf: aBrowserItem [
 	aBrowserItem type = ClyClass ifTrue: [ ^'' ].
 

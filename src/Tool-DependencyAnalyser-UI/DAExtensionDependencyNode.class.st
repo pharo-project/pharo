@@ -11,5 +11,5 @@ Class {
 
 { #category : 'accessing' }
 DAExtensionDependencyNode >> icon [
-	^  self iconNamed: #editIcon
+	^  self iconNamed: #edit
 ]

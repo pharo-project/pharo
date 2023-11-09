@@ -49,7 +49,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 		<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
 	| t1 c1 |
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: '' asSlotCollection uses: t1.
+	c1 := self newClass: #C1 with: '' asSlotCollection traits: t1.
 	self
 		assert:
 			c1 isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
@@ -64,13 +64,13 @@ T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
 	superclass := self
 		newClass: #C2Superclass
 		with: '' asSlotCollection
-		uses: t2.
+		traits: t2.
 
 	subclass := self
 		newClass: #C1Subclass
 		superclass: superclass
 		with: '' asSlotCollection
-		uses: t1.
+		traits: t1.
 	self
 		deny:
 			superclass
