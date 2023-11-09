@@ -110,9 +110,6 @@ Behavior >> recompileBasic: selector from: oldClass [
 				permitFaulty: true;
 				compile.   "Assume OK after proceed from SyntaxError"
 	newMethod sourcePointer: method sourcePointer.
-	
-	"For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
-	method propertyAt: #extensionPackage ifPresent: [ :package | newMethod propertyAt: #extensionPackage put: package ].
 
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	^ newMethod
