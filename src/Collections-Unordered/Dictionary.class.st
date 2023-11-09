@@ -496,21 +496,6 @@ Dictionary >> collect: aBlock [
 	^newCollection
 ]
 
-{ #category : 'adding' }
-Dictionary >> declare: key from: aDictionary [
-	"Add key to the receiver. If key already exists, do nothing. If aDictionary
-	includes key, then remove it from aDictionary and use its association as
-	the element of the receiver."
-
-	(self includesKey: key) ifTrue: [^ self].
-	(aDictionary includesKey: key)
-		ifTrue:
-			[self add: (aDictionary associationAt: key).
-			aDictionary removeKey: key]
-		ifFalse:
-			[self add: key -> nil]
-]
-
 { #category : 'enumerating' }
 Dictionary >> difference: aCollection [
 	"Answer the set theoretic difference of two collections. This is a specialized version for Dictionaries keeping the keys of the objects. At a slightly higher price of an additional Set to track duplicates."
@@ -964,21 +949,6 @@ Dictionary >> storeOn: aStream [
 			aStream store: each].
 	noneYet ifFalse: [aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : 'private' }
-Dictionary >> valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDictionary [
-	"Support for coordinating class variable and global declarations
-	with variables that have been put in Undeclared so as to
-	redirect all references to the undeclared variable."
-
-	(aDictionary includesKey: aKey)
-		ifTrue:
-			[self atNewIndex: index
-				put: ((aDictionary associationAt: aKey) value: anObject).
-			aDictionary removeKey: aKey]
-		ifFalse:
-			[self atNewIndex: index put: (Association key: aKey value: anObject)]
 ]
 
 { #category : 'accessing' }

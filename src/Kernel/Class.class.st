@@ -863,9 +863,10 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 	varUserClass
 		ifNotNil: [
 			NewUndeclaredWarning signal: aString in: self name.
-			Undeclared declare: aSymbol from: self classPool ]
-		ifNil: [ self classPool removeKey: aSymbol ].
-
+			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
+			Undeclared add: (self classPool associationAt: aSymbol) ].
+		
+	self classPool removeKey: aSymbol.
 	self classPool ifEmpty: [ self classPool: nil ].
 
 	SystemAnnouncer uniqueInstance classModificationAppliedTo: self
@@ -897,7 +898,8 @@ Class >> removeFromSystem: logged [
 	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
-	Undeclared declare: self name asSymbol from: Smalltalk globals.
+	
+	(UndeclaredVariable named: self name asSymbol) register.
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
