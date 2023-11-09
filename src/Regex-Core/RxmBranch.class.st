@@ -49,7 +49,7 @@ RxmBranch >> matchAgainst: aMatcher [
 
 	original := aMatcher currentState.
 	(next matchAgainst: aMatcher)
-		ifFalse: [^alternative notNil and: [alternative matchAgainst: aMatcher]].
+		ifFalse: [^alternative isNotNil and: [alternative matchAgainst: aMatcher]].
 	alternative ifNil: [^true].
 	firstMatch := aMatcher currentState.
 	firstMatchPos := aMatcher position.

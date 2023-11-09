@@ -30,7 +30,7 @@ RubFindReplaceService >> dialogIsActiveFor: aTextArea [
 
 	dialog ifNil: [ ^ false ].
 
-	^ (self textArea = aTextArea) and: [ self dialog world notNil ]
+	^ (self textArea = aTextArea) and: [ self dialog world isNotNil ]
 ]
 
 { #category : 'services' }
