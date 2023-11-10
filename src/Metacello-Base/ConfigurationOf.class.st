@@ -129,7 +129,7 @@ ConfigurationOf >> project: aProject [
 
 { #category : 'accessing' }
 ConfigurationOf >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
 { #category : 'private' }

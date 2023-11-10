@@ -8,7 +8,7 @@ MCRepository >> asRepositorySpecFor: aMetacelloMCProject [
 
 { #category : '*Metacello-MC' }
 MCRepository >> metacelloProjectClassFor: aScriptEngine [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
 { #category : '*Metacello-MC' }

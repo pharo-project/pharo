@@ -23,7 +23,7 @@ The `<baseline>` pragma marks the method containing the baseline specification.
 "
 Class {
 	#name : 'MetacelloMCBaselineProject',
-	#superclass : 'MetacelloMCProject',
+	#superclass : 'MetacelloProject',
 	#category : 'Metacello-MC-Model',
 	#package : 'Metacello-MC',
 	#tag : 'Model'
@@ -46,7 +46,7 @@ MetacelloMCBaselineProject >> asBaselineProject [
 
 { #category : 'scripting' }
 MetacelloMCBaselineProject >> asConfigurationProject [
-    ^ MetacelloMCProject new
+    ^ MetacelloProject new
 ]
 
 { #category : 'versions' }

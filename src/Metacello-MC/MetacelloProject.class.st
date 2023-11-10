@@ -2,20 +2,26 @@ Class {
 	#name : 'MetacelloProject',
 	#superclass : 'Object',
 	#instVars : [
-		'versionMap',
-		'symbolicVersionMap',
+		'versionNumberClass',
+		'projectAttributes',
 		'errorMap',
+		'symbolicVersionMap',
+		'loadType',
+		'versionMap',
 		'loader',
 		'loaderClass',
-		'loadType',
-		'configuration',
-		'projectAttributes',
-		'versionNumberClass'
+		'configuration'
 	],
-	#category : 'Metacello-Core-Model',
-	#package : 'Metacello-Core',
+	#category : 'Metacello-MC-Model',
+	#package : 'Metacello-MC',
 	#tag : 'Model'
 }
+
+{ #category : 'class initialization' }
+MetacelloProject class >> initialize [
+
+	self deprecatedAliases: { #MetacelloMCProject }
+]
 
 { #category : 'instance creation' }
 MetacelloProject class >> new [
@@ -36,6 +42,16 @@ MetacelloProject class >> versionConstructorClass [
     ^ MetacelloVersionConstructor
 ]
 
+{ #category : 'scripting' }
+MetacelloProject >> asBaselineProject [
+    ^ MetacelloMCBaselineProject new
+]
+
+{ #category : 'scripting' }
+MetacelloProject >> asConfigurationProject [
+    ^ self
+]
+
 { #category : 'private' }
 MetacelloProject >> attributes [
 
@@ -51,12 +67,7 @@ MetacelloProject >> baselineOfProjectSpec [
 
 { #category : 'spec classes' }
 MetacelloProject >> baselineOfProjectSpecClass [
-    ^ self subclassResponsibility
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> baselineOfVersionSpecClass [
-    ^ self subclassResponsibility
+    ^ MetacelloMCBaselineOfProjectSpec
 ]
 
 { #category : 'versions' }
@@ -82,7 +93,13 @@ MetacelloProject >> configurationOfProjectSpec [
 
 { #category : 'spec classes' }
 MetacelloProject >> configurationOfProjectSpecClass [
-    ^ self subclassResponsibility
+    ^ MetacelloMCConfigurationOfProjectSpec
+]
+
+{ #category : 'repository creation' }
+MetacelloProject >> createRepository: aRepositorySpec [
+
+	^ MetacelloPlatform current createRepository: aRepositorySpec
 ]
 
 { #category : 'versions' }
@@ -154,7 +171,7 @@ MetacelloProject >> defaultBlessing [
 { #category : 'spec classes' }
 MetacelloProject >> defaultLoaderClass [
 
-	^MetacelloSpecLoader
+	^MetacelloLoadingMCSpecLoader
 ]
 
 { #category : 'private' }
@@ -184,6 +201,31 @@ MetacelloProject >> errorMap: anObject [
 MetacelloProject >> excludeFromLatestVersion [
 
 	^#(structural development broken baseline)
+]
+
+{ #category : 'development support' }
+MetacelloProject >> fetchProject [
+	"fetch the latest version of the configuration package"
+	
+	^self fetchProject: MetacelloLoaderPolicy new
+]
+
+{ #category : 'development support' }
+MetacelloProject >> fetchProject: aLoaderPolicy [
+	"fetch the latest version of the configuration package"
+
+	| mcLoader |
+	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
+	mcLoader loaderPolicy: aLoaderPolicy.
+	mcLoader doingLoads: [
+		MCWorkingCopy workingCopiesForClass: self configuration class do: [ :workingCopy |
+			| pkg |
+			pkg := self packageSpec.
+			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
+			pkg name: workingCopy packageName.
+			pkg fetchUsing: mcLoader.
+			^ true ] ].
+	^ true
 ]
 
 { #category : 'spec classes' }
@@ -359,6 +401,18 @@ MetacelloProject >> map: aDictionary [
 ]
 
 { #category : 'spec classes' }
+MetacelloProject >> packageSpec [
+
+	^self packageSpecClass for: self
+]
+
+{ #category : 'spec classes' }
+MetacelloProject >> packageSpecClass [
+
+	^MetacelloPackageSpec
+]
+
+{ #category : 'spec classes' }
 MetacelloProject >> packagesSpec [
 
 	^self packagesSpecClass for: self
@@ -379,7 +433,7 @@ MetacelloProject >> platformAttributes [
 { #category : 'private' }
 MetacelloProject >> pragmaKeywords [
 
-	^#(version:attribute: blessing:attribute: description:attribute: required:attribute: groups:attribute: doits:attribute:)
+	^#(version:attribute: blessing:attribute: description:attribute: required:attribute: groups:attribute: doits:attribute: projectPackage:attribute: packages:attribute: repositories:attribute: )
 ]
 
 { #category : 'printing' }
@@ -426,7 +480,28 @@ MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine [
 
 { #category : 'scripting' }
 MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
-    ^ self subclassResponsibility
+    ^ aMetacelloScriptEngine getConfigurationProjectUnconditionalLoad: aBool
+]
+
+{ #category : 'development support' }
+MetacelloProject >> projectPackage [
+  MCWorkingCopy
+    workingCopiesForClass: self configuration class
+    do: [ :workingCopy | 
+      | pkgSpec repo |
+      pkgSpec := self packageSpec
+        name: workingCopy packageName;
+        yourself.
+      workingCopy ancestors notEmpty
+        ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
+      repo := workingCopy repositoryGroup repositories
+        detect: [ :each | each ~~ MCCacheRepository default ]
+        ifNone: [ 
+          MetacelloNotification signal: ('Using cache repository for ' , self label , ' project package').
+          MCCacheRepository default ].
+      pkgSpec repository: (repo asRepositorySpecFor: self).
+      ^ pkgSpec ].
+  ^ nil
 ]
 
 { #category : 'private' }
@@ -459,7 +534,36 @@ MetacelloProject >> projectSpec [
 
 { #category : 'spec classes' }
 MetacelloProject >> projectSpecClass [
-    ^ MetacelloProjectSpec
+	^ MetacelloMCNamelessProjectSpec
+]
+
+{ #category : 'spec classes' }
+MetacelloProject >> repositoriesSpec [
+
+	^self repositoriesSpecClass for: self
+]
+
+{ #category : 'spec classes' }
+MetacelloProject >> repositoriesSpecClass [
+
+	^MetacelloRepositoriesSpec
+]
+
+{ #category : 'spec classes' }
+MetacelloProject >> repositorySpec [
+
+	^self repositorySpecClass for: self
+]
+
+{ #category : 'spec classes' }
+MetacelloProject >> repositorySpecClass [
+
+	^MetacelloRepositorySpec
+]
+
+{ #category : 'development support' }
+MetacelloProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
+    "noop "
 ]
 
 { #category : 'private' }
@@ -490,6 +594,39 @@ MetacelloProject >> symbolicVersionMap: aDictionary [
 MetacelloProject >> symbolicVersionSymbols [
 
 	^self symbolicVersionMap keys asArray sort: [:a :b | a <= b ]
+]
+
+{ #category : 'development support' }
+MetacelloProject >> updateProject [
+	"load the latest version of the configuration package"
+
+	"WARNING: don't forget to refresh your project instance after doing an #updateProject, 
+	 otherwise your instance won't reflect the info in the freshly loaded configuration"
+	
+	^self updateProject: MetacelloLoaderPolicy new
+]
+
+{ #category : 'development support' }
+MetacelloProject >> updateProject: aLoaderPolicy [
+	"load the latest version of the configuration package"
+
+	"WARNING: don't forget to refresh your project instance after doing an #updateProject, 
+	 otherwise your instance won't reflect the info in the freshly loaded configuration"
+
+	| mcLoader |
+	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
+	mcLoader loaderPolicy: aLoaderPolicy.
+	mcLoader doingLoads: [
+		MCWorkingCopy workingCopiesForClass: self configuration class do: [ :workingCopy |
+			| pkg ar |
+			pkg := self packageSpec.
+			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
+			ar := workingCopy metacelloPackageNameWithBranch.
+			pkg name: (ar at: 1).
+			(ar at: 2) notEmpty ifTrue: [ pkg file: (ar at: 2) ].
+			pkg load.
+			^ true ] ].
+	^ true
 ]
 
 { #category : 'spec classes' }
@@ -549,7 +686,7 @@ MetacelloProject >> versionSpec [
 { #category : 'spec classes' }
 MetacelloProject >> versionSpecClass [
 
-	^MetacelloVersionSpec
+	^MetacelloMCVersionSpec
 ]
 
 { #category : 'versions' }
