@@ -686,7 +686,7 @@ MetacelloProject >> versionSpec [
 { #category : 'spec classes' }
 MetacelloProject >> versionSpecClass [
 
-	^MetacelloMCVersionSpec
+	^MetacelloVersionSpec
 ]
 
 { #category : 'versions' }

@@ -2,21 +2,29 @@ Class {
 	#name : 'MetacelloVersionSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
+		'repositories',
+		'packages',
 		'versionString',
-		'blessing',
-		'description',
+		'packageList',
 		'author',
 		'timestamp',
-		'preLoadDoIt',
+		'importArray',
 		'postLoadDoIt',
-		'packageList',
+		'blessing',
 		'importName',
-		'importArray'
+		'preLoadDoIt',
+		'description'
 	],
-	#category : 'Metacello-Core-Specs',
-	#package : 'Metacello-Core',
+	#category : 'Metacello-MC-Specs',
+	#package : 'Metacello-MC',
 	#tag : 'Specs'
 }
+
+{ #category : 'class initialization' }
+MetacelloVersionSpec class >> initialize [
+
+	self deprecatedAliases: { #MetacelloMCVersionSpec }
+]
 
 { #category : 'accessing' }
 MetacelloVersionSpec >> author [
@@ -66,6 +74,25 @@ MetacelloVersionSpec >> blessing: anObject [
 { #category : 'construction' }
 MetacelloVersionSpec >> blessing: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor blessingForVersion: aBlockOrString
+]
+
+{ #category : 'accessing' }
+MetacelloVersionSpec >> computeVersionStatus: matchBlock [
+	self computeVersionStatus: (self expandToLoadableSpecNames: #('ALL')) matchBlock: matchBlock
+]
+
+{ #category : 'accessing' }
+MetacelloVersionSpec >> computeVersionStatus: resolvedPackageAndProjectNames matchBlock: matchBlock [
+
+	| status |
+
+	status := resolvedPackageAndProjectNames
+		ifNil: [ self isPartiallyCurrent ]
+		ifNotNil: [ self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames ].
+	status isAllLoadedToSpec: matchBlock.
+	status isLoadedToSpec: matchBlock.
+	status isLoadedMatchConstraints: matchBlock.
+	status isSomethingLoaded: matchBlock
 ]
 
 { #category : 'printing' }
@@ -144,24 +171,30 @@ MetacelloVersionSpec >> configMethodOn: aStream indent: indent [
 
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
-    | hasPackageSpecs |
-    hasPackageSpecs := false.
-    self packagesSpec list
-        do: [ :member | 
-            member spec
-                projectDo: [ :proj | 
-                    member spec name ~~ nil
-                        ifTrue: [ hasPackageSpecs := true ] ]
-                packageDo: [ :package | 
-                    member spec name ~~ nil
-                        ifTrue: [ hasPackageSpecs := true ] ]
-                groupDo: [ :group | 
-                    member spec name ~~ nil
-                        ifTrue: [ hasPackageSpecs := true ] ] ].
-    self configMethodBasicOn: aStream last: hasPackageSpecs not indent: indent.
-    self configPackagesSpecMethodOn: aStream indent: indent.
-    last
-        ifFalse: [ aStream cr ]
+
+	| spec hasRepositories hasPackageSpecs hasImport |
+	hasRepositories := (spec := self repositoriesSpec) isNotNil and: [ spec list isEmpty not ].
+	hasImport := self import isNotNil.
+	hasPackageSpecs := false.
+	self packagesSpec list do: [ :member |
+		member spec
+			projectDo: [ :proj | member spec name ifNotNil: [ hasPackageSpecs := true ] ]
+			packageDo: [ :package | member spec name ifNotNil: [ hasPackageSpecs := true ] ]
+			groupDo: [ :group | member spec name ifNotNil: [ hasPackageSpecs := true ] ] ].
+	self configMethodBasicOn: aStream last: (hasRepositories | hasPackageSpecs | hasImport) not indent: indent.
+	hasImport ifTrue: [ self configMethodValueOn: aStream for: self import selector: 'import:' last: (hasRepositories | hasPackageSpecs) not indent: indent ].
+	hasRepositories ifTrue: [
+		spec map values size = 1
+			ifTrue: [
+				aStream
+					tab: indent;
+					nextPutAll: 'spec repository: ';
+					nextPutAll: spec map values first description printString;
+					nextPutAll: '.'.
+				hasPackageSpecs ifTrue: [ aStream cr ] ]
+			ifFalse: [ self configMethodOn: aStream for: spec selector: 'repositories:' last: hasPackageSpecs not indent: indent ] ].
+	self configPackagesSpecMethodOn: aStream indent: indent.
+	last ifFalse: [ aStream cr ]
 ]
 
 { #category : 'printing' }
@@ -215,14 +248,6 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 				index ~= groupSpecs size ifTrue: [ aStream tab: indent + 1 ]]].
 ]
 
-{ #category : 'printing' }
-MetacelloVersionSpec >> configSpawnMethodOn: aStream indent: indent [
-
-	self configMethodValueOn: aStream for: self getBlessing selector: 'blessing:' last: false indent: indent.
-	self configMethodValueOn: aStream for: self getAuthor selector: 'author:' last: false indent: indent.
-	self configMethodValueOn: aStream for: self getTimestamp selector: 'timestamp:' last: false indent: indent.
-]
-
 { #category : 'construction' }
 MetacelloVersionSpec >> configuration: aString with: aBlockOrString constructor: aVersionConstructor [
     aVersionConstructor configurationForVersion: aString with: aBlockOrString
@@ -232,6 +257,23 @@ MetacelloVersionSpec >> configuration: aString with: aBlockOrString constructor:
 MetacelloVersionSpec >> createVersion [
 
 	^self versionClass fromSpec: self
+]
+
+{ #category : 'querying' }
+MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
+  | classes |
+  classes := Set new.
+  self
+    projectDo: [ :ignored |  ]
+    packageDo: [ :packageSpec | 
+      | wc |
+      wc := [ packageSpec workingCopy ]
+        on: Error
+        do: [ :ex | ex return: nil ].
+      wc ~~ nil
+        ifTrue: [ classes addAll: wc packageSet classes ] ]
+    groupDo: [ :ignored |  ].
+  ^ classes
 ]
 
 { #category : 'loading' }
@@ -274,12 +316,20 @@ MetacelloVersionSpec >> description: aBlockOrString constructor: aVersionConstru
 MetacelloVersionSpec >> difference: otherVersionSpec [
 	"Return a dictionary of additions, removals and modifications"
 
-	| report myProjectSpecs otherProjectSpecs |
+	| report myProjectSpecs myPackageSpecs otherProjectSpecs otherPackageSpecs |
 	report := MetacelloVersionDiffReport new.
 	myProjectSpecs := Dictionary new.
-	self projectDo: [ :projectSpec | myProjectSpecs at: projectSpec name put: projectSpec ] packageDo: [ :ignored |  ] groupDo: [ :ignored |  ].
+	myPackageSpecs := Dictionary new.
+	self
+		projectDo: [ :projectSpec | myProjectSpecs at: projectSpec name put: projectSpec ]
+		packageDo: [ :packageSpec | myPackageSpecs at: packageSpec name put: packageSpec ]
+		groupDo: [ :ignored |  ].
 	otherProjectSpecs := Dictionary new.
-	otherVersionSpec projectDo: [ :projectSpec | otherProjectSpecs at: projectSpec name put: projectSpec ] packageDo: [ :ignored |  ] groupDo: [ :ignored |  ].
+	otherPackageSpecs := Dictionary new.
+	otherVersionSpec
+		projectDo: [ :projectSpec | otherProjectSpecs at: projectSpec name put: projectSpec ]
+		packageDo: [ :packageSpec | otherPackageSpecs at: packageSpec name put: packageSpec ]
+		groupDo: [ :ignored |  ].
 	myProjectSpecs valuesDo: [ :myProjectSpec |
 		| otherProjectSpec |
 		otherProjectSpec := otherProjectSpecs at: myProjectSpec name ifAbsent: [  ].
@@ -298,6 +348,24 @@ MetacelloVersionSpec >> difference: otherVersionSpec [
 			report additions at: otherProjectSpec name put: {
 					''.
 					otherProjectSpec versionString } ] ].
+	myPackageSpecs valuesDo: [ :myPackageSpec |
+		| otherPackageSpec |
+		otherPackageSpec := otherPackageSpecs at: myPackageSpec name ifAbsent: [  ].
+		otherPackageSpec == nil
+			ifTrue: [
+				report removals at: myPackageSpec name put: {
+						myPackageSpec file.
+						'' } ]
+			ifFalse: [
+				myPackageSpec file = otherPackageSpec file ifFalse: [
+					report modifications at: myPackageSpec name put: {
+							myPackageSpec file.
+							otherPackageSpec file } ] ] ].
+	otherPackageSpecs valuesDo: [ :otherPackageSpec |
+		(myPackageSpecs at: otherPackageSpec name ifAbsent: [  ]) ifNil: [
+			report additions at: otherPackageSpec name put: {
+					''.
+					otherPackageSpec file } ] ].
 	^ report
 ]
 
@@ -312,6 +380,16 @@ MetacelloVersionSpec >> expandToLoadableSpecNames: nameList [
 		doing: [ :cache | 
 			names := (self resolveToLoadableSpecs: nameList) collect: [:spec | spec name ].
 			cache at: cacheKey put: names ].
+]
+
+{ #category : 'development support' }
+MetacelloVersionSpec >> forceUpdatedPackageSpecs [
+
+	| updatedSpecs mcLoader |
+	updatedSpecs := Dictionary new.
+	mcLoader := self loader.
+	self packages map valuesDo: [:pkg | pkg forceUpdatePackageSpec: updatedSpecs using: mcLoader].
+	^updatedSpecs
 ]
 
 { #category : 'accessing' }
@@ -387,14 +465,134 @@ MetacelloVersionSpec >> importArray [
 ]
 
 { #category : 'testing' }
+MetacelloVersionSpec >> isAllLoadedToSpec [
+	"all projects and packages are loaded and match specification"
+
+	self isPartiallyCurrent isAllLoadedToSpec: [ :ignored | ^ true ].
+	^ false
+]
+
+{ #category : 'testing' }
+MetacelloVersionSpec >> isAllLoadedToSpecAgainst: resolvedPackageAndProjectNames [
+	"all projects and packages are loaded and match specification"
+
+	(self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames) isAllLoadedToSpec: [ :ignored | ^ true ].
+	^ false
+]
+
+{ #category : 'testing' }
+MetacelloVersionSpec >> isLoadedMatchConstraints [
+	"all loaded projects and packages match constraints (at least one package loaded)"
+	
+	self isPartiallyCurrent isLoadedMatchConstraints: [ :ignored | ^ true ].
+	^ false
+]
+
+{ #category : 'testing' }
+MetacelloVersionSpec >> isLoadedMatchConstraintsAgainst: resolvedPackageAndProjectNames [
+	"all loaded projects and packages match constraints (at least one package loaded)"
+
+	(self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames) isLoadedMatchConstraints: [ :ignored | ^ true ].
+	^ false
+]
+
+{ #category : 'testing' }
+MetacelloVersionSpec >> isLoadedToSpec [
+	"all loaded projects and packages match specifications (at least one package loaded)"
+	
+	self isPartiallyCurrent isLoadedToSpec: [ :ignored | ^ true ].
+	^ false
+]
+
+{ #category : 'testing' }
+MetacelloVersionSpec >> isPartiallyCurrent [
+
+	^self isPartiallyCurrentAgainst: (self expandToLoadableSpecNames: #('ALL'))
+]
+
+{ #category : 'testing' }
 MetacelloVersionSpec >> isPartiallyCurrent: notLoadedMatters useEquality: useEquality [
 
 	self subclassResponsibility
 ]
 
 { #category : 'testing' }
+MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectNames [
+	| mcLoader status |
+	status := MetacelloMCPartiallyLoadedStatus new.
+	mcLoader := self loader.
+	self
+		specsNamed: resolvedPackageAndProjectNames
+		projectDo: [ :prj | 
+			| vrsn currentVersion |
+			status hasNoProject: false.
+			vrsn := prj versionOrNil.
+			vrsn ~~ nil
+				ifTrue: [ 
+					(currentVersion := prj relativeCurrentVersion) ~~ nil
+						ifTrue: [ status vrsnStatus add: currentVersion versionStatus ] ].
+			currentVersion ~~ nil
+				ifTrue: [ 
+					status aProjectIsLoaded: true.
+					(currentVersion perform: #= with: vrsn)
+						ifTrue: [ status aLoadedProjectIsExact: true ]
+						ifFalse: [ 
+							(currentVersion perform: prj projectReference operator with: vrsn)
+								ifTrue: [ status aLoadedProjectIsCurrent: true ]
+								ifFalse: [ status aLoadedProjectIsNotCurrent: true ] ] ]
+				ifFalse: [ status aProjectNotLoaded: true ] ]
+		packageDo: [ :pkg | 
+			status hasNoPackage: false.
+			pkg
+				currentPackageLoaded: [ :versionInfos :file | 
+					| wcName wcRef fileRef exact current |
+					status aPackageIsLoaded: true.
+					versionInfos isEmpty
+						ifTrue: [ status aLoadedPackageIsNotCurrent: true ]
+						ifFalse: [ 
+							exact := current := false.
+							versionInfos
+								do: [ :vi | 
+									wcName := vi name.
+									fileRef := GoferResolvedReference name: file.
+									wcRef := GoferResolvedReference name: wcName.
+									(wcRef compare: fileRef using: #=)
+										ifTrue: [ exact := true ] ].
+							exact
+								ifTrue: [ status aLoadedPackageIsExact: true ]
+								ifFalse: [ 
+									versionInfos
+										do: [ :vi | 
+											wcName := vi name.
+											fileRef := GoferResolvedReference name: file.
+											wcRef := GoferResolvedReference name: wcName.
+											(wcRef compare: fileRef using: #>=)
+												ifTrue: [ current := true ] ].
+									current
+										ifTrue: [ status aLoadedPackageIsCurrent: true ]
+										ifFalse: [ status aLoadedPackageIsNotCurrent: true ] ] ] ]
+				notLoaded: [ status aPackageNotLoaded: true ]
+				using: mcLoader ]
+		groupDo: [ :ignoredGroup | 
+			"if we encounter a group, trouble"
+			status abort: true.
+			^ status ].
+	^ status
+]
+
+{ #category : 'testing' }
 MetacelloVersionSpec >> isPossibleBaseline [
-    self subclassResponsibility
+
+	self projectDo: [ :prj | prj isPossibleBaseline ifFalse: [ ^ false ] ] packageDo: [ :pkg | pkg isPackageLoaded ifFalse: [ ^ false ] ] groupDo: [ :ignored |  ].
+	^ true
+]
+
+{ #category : 'testing' }
+MetacelloVersionSpec >> isSomethingLoaded [
+	"at least one package loaded"
+	
+	self isPartiallyCurrent isSomethingLoaded: [ :ignored | ^ true ].
+	^ false
 ]
 
 { #category : 'printing' }
@@ -415,27 +613,45 @@ MetacelloVersionSpec >> mergeMap [
     map at: #'preLoadDoIt' put: preLoadDoIt.
     map at: #'postLoadDoIt' put: postLoadDoIt.
     map at: #'packageList' put: self packages.
+    map at: #'repositories' put: self repositories.
     ^ map
 ]
 
 { #category : 'merging' }
 MetacelloVersionSpec >> mergeSpec: anotherSpec [
-    | newSpec map anotherPackages |
-    newSpec := super mergeSpec: anotherSpec.
-    map := anotherSpec mergeMap.
-    (anotherPackages := map at: #'packageList') isEmpty not
-        ifTrue: [ 
-            newSpec
-                packages:
-                    (self packages isEmpty
-                        ifTrue: [ anotherPackages ]
-                        ifFalse: [ self packages mergeSpec: anotherPackages ]) ].
-    ^ newSpec
+
+	| newSpec map anotherPackages anotherRepositories |
+	newSpec := super mergeSpec: anotherSpec.
+	map := anotherSpec mergeMap.
+	(anotherPackages := map at: #packageList) isEmpty not ifTrue: [
+		newSpec packages: (self packages isEmpty
+				 ifTrue: [ anotherPackages ]
+				 ifFalse: [ self packages mergeSpec: anotherPackages ]) ].
+	(anotherRepositories := map at: #repositories) isEmpty not ifTrue: [
+		newSpec repositories: (self repositories isEmpty
+				 ifTrue: [ anotherRepositories ]
+				 ifFalse: [ self repositories mergeSpec: anotherRepositories ]) ].
+	^ newSpec
 ]
 
 { #category : 'merging' }
 MetacelloVersionSpec >> nonOverridable [
-    ^ super nonOverridable , #(#'packageList')
+    ^ super nonOverridable , #(#'packageList' #'repositories')
+]
+
+{ #category : 'construction' }
+MetacelloVersionSpec >> package: aString constructor: aVersionConstructor [
+    aVersionConstructor packageForVersion: aString
+]
+
+{ #category : 'construction' }
+MetacelloVersionSpec >> package: aString overrides: aBlock constructor: aVersionConstructor [
+    aVersionConstructor packageForVersion: aString overrides: aBlock
+]
+
+{ #category : 'construction' }
+MetacelloVersionSpec >> package: packageName with: aBlockOrString constructor: aVersionConstructor [
+    aVersionConstructor packageForVersion: packageName with: aBlockOrString
 ]
 
 { #category : 'querying' }
@@ -501,8 +717,9 @@ MetacelloVersionSpec >> packageNamed: aString ifAbsent: aBlock [
 
 { #category : 'querying' }
 MetacelloVersionSpec >> packageNames [
+	"leave reference to packages for upgrade purposes"
 
-	packageList ifNil: [ ^ #(  ) ].
+	packages ifNil: [ packageList ifNil: [ ^ #(  ) ] ].
 	^ self packages map keys asSet
 ]
 
@@ -511,10 +728,66 @@ MetacelloVersionSpec >> packageSpecsInLoadOrder [
   ^ self packages packageSpecsInLoadOrderFor: self
 ]
 
+{ #category : 'querying' }
+MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
+  | loadOrder pkgs packageNames importNames importSpec importProjectSpecs importProjectNameMap |
+  loadOrder := self packageSpecsInLoadOrder.
+  importNames := (packageNames := (packageMap values
+    collect: [ :pkg | pkg name ]) asSet) copy.
+  (self import isNil and: [ self importArray isNil ])
+    ifTrue: [ ^ loadOrder select: [ :pkg | packageNames includes: pkg name ] ].
+  loadOrder do: [ :pkg | importNames remove: pkg name ifAbsent: [  ] ].
+  pkgs := OrderedCollection new.
+  importProjectSpecs := Dictionary new.
+  importProjectNameMap := Dictionary new.
+  importArray
+    ifNotNil: [ 
+      loadOrder
+        do: [ :pkg | 
+          importArray
+            do: [ :assoc | 
+              assoc key = pkg name
+                ifTrue: [ 
+                  importProjectSpecs at: pkg name put: pkg.
+                  (assoc value select: [ :each | importNames includes: each ])
+                    do: [ :each | 
+                      (importProjectNameMap
+                        at: pkg name
+                        ifAbsent: [ importProjectNameMap at: pkg name put: Set new ])
+                        add: each ] ] ] ] ].
+  self import
+    ifNotNil: [ 
+      loadOrder
+        do: [ :pkg | 
+          pkg name = self import
+            ifTrue: [ 
+              importProjectSpecs at: pkg name put: pkg.
+              importProjectNameMap at: pkg name put: importNames ] ] ].
+  loadOrder
+    do: [ :pkg | 
+      (packageNames includes: pkg name)
+        ifTrue: [ pkgs add: pkg ].
+      importProjectSpecs
+        at: pkg name
+        ifPresent: [ :importProjectSpec | 
+          "insert the imports at this point"
+          (importProjectNameMap at: pkg name ifAbsent: [ #() ])
+            do: [ :importedName | 
+              pkgs
+                add:
+                  (importSpec := importProjectSpec copy
+                    name: importedName;
+                    mergeImportLoads: {importedName};
+                    yourself).
+              importSpec projectReference name: importedName ] ] ].
+  ^ pkgs
+]
+
 { #category : 'accessing' }
 MetacelloVersionSpec >> packages [
+	"leave reference to packages for upgrade purposes"
 
-	^ packageList ifNil: [ packageList := self project packagesSpec ]
+	^ packages ifNil: [ packageList ifNil: [ packageList := self project packagesSpec ] ]
 ]
 
 { #category : 'accessing' }
@@ -531,11 +804,13 @@ MetacelloVersionSpec >> packagesSpec [
 { #category : 'copying' }
 MetacelloVersionSpec >> postCopy [
     super postCopy.
-    blessing := blessing copy.
+  blessing := blessing copy.
     description := description copy.
     author := author copy.
     timestamp := timestamp copy.
-    packageList := packageList copy
+    packageList := packageList copy.
+    repositories := repositories copy.
+    packages := packages copy	"leave reference to packages for upgrade purposes"
 ]
 
 { #category : 'querying' }
@@ -611,8 +886,24 @@ MetacelloVersionSpec >> removeGroup: aString constructor: aVersionConstructor [
 ]
 
 { #category : 'construction' }
+MetacelloVersionSpec >> removePackage: aString constructor: aVersionConstructor [
+    aVersionConstructor removePackageForVersion: aString
+]
+
+{ #category : 'construction' }
 MetacelloVersionSpec >> removeProject: aString constructor: aVersionConstructor [
     aVersionConstructor removeProjectForVersion: aString
+]
+
+{ #category : 'accessing' }
+MetacelloVersionSpec >> repositories [
+
+	^ repositories ifNil: [ repositories := self project repositoriesSpec ]
+]
+
+{ #category : 'accessing' }
+MetacelloVersionSpec >> repositories: anObject [
+	repositories := anObject
 ]
 
 { #category : 'construction' }
@@ -620,14 +911,36 @@ MetacelloVersionSpec >> repositories: aBlock constructor: aVersionConstructor [
     aVersionConstructor repositoriesForVersion: aBlock
 ]
 
+{ #category : 'accessing' }
+MetacelloVersionSpec >> repositoriesSpec [
+
+	^self repositories
+]
+
+{ #category : 'accessing' }
+MetacelloVersionSpec >> repository: aString [
+	self repositoriesSpec add: aString
+]
+
 { #category : 'construction' }
 MetacelloVersionSpec >> repository: anObject constructor: aVersionConstructor [
     aVersionConstructor repositoryForVersion: anObject
 ]
 
+{ #category : 'accessing' }
+MetacelloVersionSpec >> repository: aString username: username password: password [
+	self repositoriesSpec repository: aString username: username password: password
+]
+
 { #category : 'construction' }
 MetacelloVersionSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
     aVersionConstructor repositoryForVersion: aString username: username password: password
+]
+
+{ #category : 'loading' }
+MetacelloVersionSpec >> repositorySpecs [
+
+	^self repositories map values
 ]
 
 { #category : 'loading' }
@@ -726,6 +1039,23 @@ MetacelloVersionSpec >> setTimestamp: anObject [
 	timestamp := anObject
 ]
 
+{ #category : 'enumerating' }
+MetacelloVersionSpec >> specListProjectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
+
+	self packages specListDo: [:pkgSpec |
+		pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ]
+]
+
+{ #category : 'enumerating' }
+MetacelloVersionSpec >> specsNamed: packageAndProjectNames projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
+
+	| map |
+	map := self packages map.
+	packageAndProjectNames do: [:name | | pkgSpec |
+		(pkgSpec := map at: name ifAbsent: [ ]) ~~ nil
+			ifTrue: [ pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ]]
+]
+
 { #category : 'accessing' }
 MetacelloVersionSpec >> timestamp [
 
@@ -746,10 +1076,27 @@ MetacelloVersionSpec >> timestamp: aBlockOrStringOrDateAndTime constructor: aVer
     aVersionConstructor timestampForVersion: aBlockOrStringOrDateAndTime
 ]
 
+{ #category : 'development support' }
+MetacelloVersionSpec >> updateForSpawnMethod: sourceSpec [
+	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
+	
+	repositories := preLoadDoIt := postLoadDoIt := nil.
+]
+
+{ #category : 'development support' }
+MetacelloVersionSpec >> updatedPackageSpecs [
+
+	| updatedSpecs mcLoader |
+	updatedSpecs := Dictionary new.
+	mcLoader := self loader.
+	self packages map valuesDo: [:pkg | pkg updatePackageSpec: updatedSpecs using: mcLoader].
+	^updatedSpecs
+]
+
 { #category : 'private' }
 MetacelloVersionSpec >> versionClass [
 
-	^MetacelloVersion
+	^MetacelloMCVersion
 ]
 
 { #category : 'private' }

@@ -42,12 +42,6 @@ MetacelloSpec >> answers [
 ]
 
 { #category : 'printing' }
-MetacelloSpec >> configMethodOn: aStream [
-
-	self configMethodOn: aStream indent: 0
-]
-
-{ #category : 'printing' }
 MetacelloSpec >> configMethodOn: aStream indent: indent [
 
 	self subclassResponsibility
