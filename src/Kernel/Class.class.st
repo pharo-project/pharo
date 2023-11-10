@@ -898,12 +898,7 @@ Class >> removeFromSystem: logged [
 	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
-	
-	"NOTE: this adds globals to Undeclared, we need to change it to UndeclaredVariable"
-	(Undeclared includesKey: self name asSymbol) ifFalse: [ 
-		Smalltalk globals associationAt: self name asSymbol 
-			ifPresent: [: global | Undeclared add: global ]
-			ifAbsent: [ (UndeclaredVariable named: self name asSymbol) register  ]].
+	Undeclared declare: self name asSymbol from: Smalltalk globals.
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
