@@ -64,37 +64,36 @@ MetacelloValidationError >> label [
 
 { #category : 'printing' }
 MetacelloValidationError >> printOn: aStream [
+
 	aStream
 		nextPutAll: self label;
 		nextPut: $:;
 		space;
 		nextPutAll: self explanation.
-	self reasonCode ~~ #none
-		ifTrue: [ 
-			aStream
-				space;
-				nextPut: ${;
-				space;
-				print: self reasonCode;
-				space;
-				nextPut: $} ].
-	(self configurationClass ~~ nil or: [ self callSite ~~ nil ])
-		ifTrue: [ 
-			aStream
-				space;
-				nextPut: $[;
-				space.
-			self configurationClass ~~ nil
-				ifTrue: [ 
-					aStream
-						print: self configurationClass name;
-						space ].
-			self callSite ~~ nil
-				ifTrue: [ 
-					aStream
-						print: self callSite name;
-						space ].
-			aStream nextPut: $] ]
+	self reasonCode ~~ #none ifTrue: [
+		aStream
+			space;
+			nextPut: ${;
+			space;
+			print: self reasonCode;
+			space;
+			nextPut: $} ].
+
+	(self configurationClass isNil and: [ self callSite isNil ]) ifTrue: [ ^ self ].
+
+	aStream
+		space;
+		nextPut: $[;
+		space.
+	self configurationClass ifNotNil: [ :class |
+		aStream
+			print: class name;
+			space ].
+	self callSite ifNotNil: [ :site |
+		aStream
+			print: site name;
+			space ].
+	aStream nextPut: $]
 ]
 
 { #category : 'accessing' }
