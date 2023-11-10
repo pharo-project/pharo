@@ -14,12 +14,6 @@ T2AbstractTest class >> isAbstract [
 	^self == T2AbstractTest
 ]
 
-{ #category : 'utilities' }
-T2AbstractTest >> classesAndTraitsInTestPackage [
-
-	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
-]
-
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName [
 	^self newClass: aName with: #() traits: TEmpty

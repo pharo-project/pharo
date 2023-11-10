@@ -155,6 +155,58 @@ T2TraitTest >> testClassUsingTraitsDoesNotHaveUsers [
 	self assert: (aClass class allSlots noneSatisfy: [:e | e name = #users])
 ]
 
+{ #category : 'tests' }
+T2TraitTest >> testComposedBy [
+	"tests the #isComposedBy: aTrait method"
+
+	self assert: (Trait3 isComposedBy: Trait2).
+	self deny: (Trait2 isComposedBy: Trait3).
+	self deny: (Trait3 isComposedBy: Object)
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testDefinedMethods [
+
+	[
+	Trait1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	Trait3 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	MOPTestClassC compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	
+	"Test local methods of a trait standalone"
+	self assertCollection: Trait1 localMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c). (Trait1 >> #extensionMethod) }.
+	self assertCollection: Trait1 definedMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c) }.
+	
+	"Test local methods of a trait using a trait"
+	self assertCollection: Trait3 localMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c). (Trait3 >> #extensionMethod) }.
+	self assertCollection: Trait3 definedMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c) }.
+	
+	"Test local methods of a class using a trait"
+	self assertCollection: MOPTestClassC localMethods hasSameElements: { (MOPTestClassC >> #c).  (MOPTestClassC >> #extensionMethod)}.
+	self assertCollection: MOPTestClassC definedMethods hasSameElements: { (MOPTestClassC >> #c) } ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+	
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testDefinedSelectors [
+
+	[
+	Trait1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	Trait3 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	MOPTestClassC compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+
+	"Test local selectors of a trait standalone"
+	self assertCollection: Trait1 localSelectors hasSameElements: #( #c1 #c #extensionMethod ).
+	self assertCollection: Trait1 definedSelectors hasSameElements: #( #c1 #c ).
+
+	"Test local selectors of a trait using a trait"
+	self assertCollection: Trait3 localSelectors hasSameElements: #( #c3 #c #extensionMethod ).
+	self assertCollection: Trait3 definedSelectors hasSameElements: #( #c3 #c ).
+
+	"Test local selectors of a class using a trait"
+	self assertCollection: MOPTestClassC localSelectors hasSameElements: #( #c #extensionMethod ).
+	self assertCollection: MOPTestClassC definedSelectors hasSameElements: #( #c ) ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
 { #category : 'tests - empty' }
 T2TraitTest >> testEmptyCompositionManagesTEmpty [
 
@@ -162,6 +214,56 @@ T2TraitTest >> testEmptyCompositionManagesTEmpty [
 	t1 := self newTrait: #T1 traits: TEmpty.
 
 	self assert: t1 hasEmptyComposition
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testErrorClassCreation [
+
+	| trait aSubclass aClass |
+	trait := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TMyTrait;
+			         package: self packageNameForTests;
+			         beTrait ].
+
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #AClass;
+			          superclass: nil;
+			          package: self packageNameForTests ].
+
+	"----------------"
+	aSubclass := self class classInstaller make: [ :aClassBuilder |
+		             aClassBuilder
+			             name: #AClass2;
+			             traitComposition: trait;
+			             superclass: aClass;
+			             package: self packageNameForTests ].
+
+	"----------------"
+
+	"Change the superclass of AClass"
+	aClass := self class classInstaller make: [ :aClassBuilder |
+		          aClassBuilder
+			          name: #AClass;
+			          superclass: Object;
+			          package: self packageNameForTests ].
+
+	self assert: trait traitUsers asArray equals: { aSubclass }.
+	self assert: aSubclass traits asArray equals: { trait }
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testForbidInstantiation [
+
+	| trait |
+	trait := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TMyTrait;
+			         package: self packageNameForTests;
+			         beTrait ].
+
+	self should: [ trait basicNew ] raise: Error
 ]
 
 { #category : 'tests' }
@@ -183,6 +285,53 @@ T2TraitTest >> testIndirectSequence [
 
 	self assert: obj getValues equals: 6.
 	self assert: obj getValues2 equals: 12
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testIsUsed [
+
+	self assert: Trait1 isUsed.
+	self assert: Trait1 classTrait isUsed
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testLocalMethodWithSameCodeInTrait [
+	"Test whether there are no unintentional overridden traits methods"
+
+	SystemNavigation new
+		allBehaviorsDo: [ :each |
+			each hasTraitComposition
+				ifTrue: [ each
+						selectorsDo: [ :selector |
+							(each includesLocalSelector: selector)
+								ifTrue: [ (each traitComposition traitDefining: selector ifNone: [ nil ])
+										ifNotNil: [ :trait | (trait selectors includes: selector) ifTrue: [ self deny: (trait compiledMethodAt: selector) equals: each >> selector ] ] ] ] ] ]
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testLocalMethods [
+	
+	"Test local methods of a trait standalone"
+	self assertCollection: Trait1 localMethods hasSameElements: { (Trait1 >> #c1). (Trait1 >> #c) }.
+	
+	"Test local methods of a trait using a trait"
+	self assertCollection: Trait3 localMethods hasSameElements: { (Trait3 >> #c3). (Trait3 >> #c) }.
+	
+	"Test local methods of a class using a trait"
+	self assertCollection: MOPTestClassC localMethods hasSameElements: { (MOPTestClassC >> #c) }
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testLocalSelectors [
+
+	"Test local selectors of a trait standalone"
+	self assertCollection: Trait1 localSelectors hasSameElements: #( #c1 #c ).
+
+	"Test local selectors of a trait using a trait"
+	self assertCollection: Trait3 localSelectors hasSameElements: #( #c3 #c ).
+
+	"Test local selectors of a class using a trait"
+	self assertCollection: MOPTestClassC localSelectors hasSameElements: #( #c )
 ]
 
 { #category : 'tests' }
@@ -239,6 +388,62 @@ T2TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperc
 ]
 
 { #category : 'tests' }
+T2TraitTest >> testOrigin [
+
+	| tr1 tr2 tr3 tr23 |
+	tr1 := self newTrait: #TTT1 traits: {  }.
+	tr2 := self newTrait: #TTT2 traits: { tr1 }.
+	tr3 := self newTrait: #TTT3 traits: { tr1 }.
+	tr23 := self newTrait: #TTT23 traits: { (tr3 + tr2) }.
+
+	tr1 compile: 'foo ^ 4'.
+	self assert: (tr1 >> #foo) origin identicalTo: tr1.
+	self assert: (tr2 >> #foo) origin identicalTo: tr1.
+	self assert: (tr3 >> #foo) origin identicalTo: tr1.
+
+	"-----------"
+	"For TR2"
+
+	self assert: (tr2 traitComposition traitDefining: #foo) innerClass identicalTo: tr1.
+	self assert: (tr2 >> #foo) origin identicalTo: tr1.
+	"-----------"
+
+	"-----------"
+	"For TR23"
+
+	self assert: (tr23 traitComposition traitDefining: #foo) innerClass identicalTo: tr1.
+	self assert: (tr23 >> #foo) origin identicalTo: tr1
+	"----------"
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testOriginWithRequiredMethod [
+
+	| tr1 c1 |
+	tr1 := self newTrait: #TTT1 traits: {  }.
+
+	tr1 compile: 'foo ^ self explicitRequirement'.
+	self assert: (tr1 >> #foo) origin identicalTo: tr1.
+
+	c1 := self newClass: #CTT1 superclass: Object traits: tr1.
+	self assert: (c1 >> #foo) origin identicalTo: tr1
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testOriginWithRequiredMethodInTraitChain [
+	"check that the origin of a explicit requirement is the trait defining this method, even if we check
+this from another *trait* using the first trait. Tr2 uses Tr1, Tr1 defines a explicit requirement #foo, the
+origin of Tr2>>foo is Tr1"
+
+	| tr1 tr2 |
+	tr1 := self newTrait: #TTT1 traits: {  }.
+	tr1 compile: 'foo ^ self explicitRequirement'.
+	self assert: (tr1 >> #foo) origin identicalTo: tr1.
+	tr2 := self newTrait: #TTT2 traits: { tr1 }.
+	self assert: (tr2 >> #foo) origin identicalTo: tr1
+]
+
+{ #category : 'tests' }
 T2TraitTest >> testRecompilingTraitClassMethodRecompilesTheMethodInTheUsers [
 
 	| trait class priorTraitMethod priorClassMethod |
@@ -284,7 +489,7 @@ T2TraitTest >> testRecompilingTraitMethodRecompilesTheMethodInTheUsers [
 T2TraitTest >> testRedefiningAClassAsTraitShouldRaiseError [
 
 	self newClass: #C1.
-	self should: [ self newTrait: #C1 with: #() ] raise: Error
+	self should: [ self newTrait: #C1 ] raise: Error
 ]
 
 { #category : 'tests' }
@@ -292,6 +497,17 @@ T2TraitTest >> testRedefiningATraitAsAClassShouldRaiseError [
 
 	self newTrait: #C1 with: #().
 	self should: [ 	self newClass: #C1 ] raise: Error
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testRemoveFromSystem [
+
+	| aClass aTrait |
+	aTrait := self newTrait: #T1.
+	aClass := self newClass: #AClassForTests traits: aTrait.
+	aTrait removeFromSystem: false.
+	self deny: aClass hasTraitComposition.
+	self assert: aTrait isObsolete
 ]
 
 { #category : 'tests' }
@@ -437,6 +653,20 @@ T2TraitTest >> testTraitHaveUsersInstanceVariable [
 ]
 
 { #category : 'tests' }
+T2TraitTest >> testTraitRemoval [
+
+	| aClass aTrait |
+	aTrait := self newTrait: #T1.
+	aClass := self newClass: #AClassForTests traits: aTrait.
+	self assertEmpty: aClass localSelectors.
+	aClass removeFromComposition: aTrait.
+	self assertEmpty: aClass localSelectors.
+	self assertEmpty: aClass selectors.
+	self deny: aClass hasTraitComposition.
+	self deny: (aTrait traitUsers includes: aClass)
+]
+
+{ #category : 'tests' }
 T2TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	| t3 aClass |
 
@@ -449,6 +679,14 @@ T2TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	(aClass >> #aMethod) recompile.
 
 	self assert: (aClass >> #aMethod) traitSource equals: t3 asTraitComposition
+]
+
+{ #category : 'tests' }
+T2TraitTest >> testTraitsUsersSanity [
+	"This documents bug http://code.google.com/p/pharo/issues/detail?id=443"
+
+	Smalltalk allClassesAndTraits do: [ :each | self assert: (each traits allSatisfy: [ :t | t traitUsers includes: each ]) ].
+	Smalltalk globals allTraits do: [ :each | self assert: (each traitUsers allSatisfy: [ :b | b traits includes: each ]) ]
 ]
 
 { #category : 'tests' }

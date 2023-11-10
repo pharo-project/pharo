@@ -19,6 +19,12 @@ TraitFileOutTest class >> defaultTimeLimit [
 	^ 15 seconds
 ]
 
+{ #category : 'utilities' }
+TraitFileOutTest >> classesAndTraitsInTestPackage [
+
+	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
+]
+
 { #category : 'running' }
 TraitFileOutTest >> setUp [
 
