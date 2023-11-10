@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloMCConfigurationOfProjectSpec',
-	#superclass : 'MetacelloMCProjectSpec',
+	#superclass : 'MetacelloProjectSpec',
 	#category : 'Metacello-MC-Specs',
 	#package : 'Metacello-MC',
 	#tag : 'Specs'
