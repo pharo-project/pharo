@@ -758,11 +758,20 @@ Class >> needsSlotClassDefinition [
 
 { #category : 'subclass creation' }
 Class >> newAnonymousSubclass [
+
+	<reflection: 'Class structural modification - Anonymous class creation'>
+	^ self newAnonymousSubclassInEnvironment: self environment
+]
+
+{ #category : 'subclass creation' }
+Class >> newAnonymousSubclassInEnvironment: anEnvironment [
+
 	<reflection: 'Class structural modification - Anonymous class creation'>
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
-		builder
-			superclass: self ;
-			layoutClass: self classLayout class ]
+		  builder
+			  installingEnvironment: anEnvironment;
+			  superclass: self;
+			  layoutClass: self classLayout class ]
 ]
 
 { #category : 'subclass creation' }
