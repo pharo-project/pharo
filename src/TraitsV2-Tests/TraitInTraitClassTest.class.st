@@ -1,16 +1,16 @@
 Class {
-	#name : 'T2TraitInTraitClassTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitInTraitClassTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitInTraitClassTest >> testAddingSlotToClassSide [
+TraitInTraitClassTest >> testAddingSlotToClassSide [
 
 	| t1 |
 
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: #(aSlot).
 
 	self assert: t1 classTrait slots size equals: 1.
@@ -18,11 +18,11 @@ T2TraitInTraitClassTest >> testAddingSlotToClassSide [
 ]
 
 { #category : 'tests' }
-T2TraitInTraitClassTest >> testAddingSpecialSlotToClassSide [
+TraitInTraitClassTest >> testAddingSpecialSlotToClassSide [
 
 	| t1 |
 
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: {#aSlot => WeakSlot}.
 
 	self assert: t1 classTrait slots size equals: 1.

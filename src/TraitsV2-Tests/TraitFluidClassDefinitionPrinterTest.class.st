@@ -1,23 +1,23 @@
 Class {
-	#name : 'T2FluidClassDefinitionPrinterTest',
-	#superclass : 'T2CommonClassDefinitionPrinterTest',
+	#name : 'TraitFluidClassDefinitionPrinterTest',
+	#superclass : 'TraitCommonClassDefinitionPrinterTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'helpers' }
-T2FluidClassDefinitionPrinterTest >> expandedForClass: aClass [
+TraitFluidClassDefinitionPrinterTest >> expandedForClass: aClass [
 
 	^ aClass expandedDefinitionStringFor: (FluidClassDefinitionPrinter for: aClass)
 ]
 
 { #category : 'helpers' }
-T2FluidClassDefinitionPrinterTest >> forClass: aClass [
+TraitFluidClassDefinitionPrinterTest >> forClass: aClass [
 	^ (FluidClassDefinitionPrinter for: aClass) definitionString
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testAlignmentMorphClass [
+TraitFluidClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
 	self
 		assert: (self forClass: AlignmentMorph class)
@@ -26,13 +26,13 @@ T2FluidClassDefinitionPrinterTest >> testAlignmentMorphClass [
 ]
 
 { #category : 'tests - metaclasses' }
-T2FluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
+TraitFluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 
 	self assert: (self forClass: MOPTraitTest class) equals: 'TestCase class << MOPTraitTest class'
 ]
 
 { #category : 'tests - template' }
-T2FluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
+TraitFluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
 
 	self
 		assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait
@@ -42,7 +42,7 @@ T2FluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testComplexTrait [
+TraitFluidClassDefinitionPrinterTest >> testComplexTrait [
 
 	self assert: (self forClass: MOPTestClassD) equals: 'Object << #MOPTestClassD
 	traits: {Trait2 @ {#c3->#c2}};
@@ -51,7 +51,7 @@ T2FluidClassDefinitionPrinterTest >> testComplexTrait [
 ]
 
 { #category : 'tests - complex slots' }
-T2FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
+TraitFluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 	"Fluid definition support complex slots."
 
 	self assert: (self forClass: TMockWithComplexSlot) equals: 'Trait << #TMockWithComplexSlot
@@ -60,7 +60,7 @@ T2FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 ]
 
 { #category : 'tests - expanded' }
-T2FluidClassDefinitionPrinterTest >> testExpandedClySubclassWithTraitsOfClassWithTraits [
+TraitFluidClassDefinitionPrinterTest >> testExpandedClySubclassWithTraitsOfClassWithTraits [
 
 	self
 		assert: (self expandedForClass: ClySubclassWithTraitsOfClassWithTraits)
@@ -75,7 +75,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedClySubclassWithTraitsOfClassWit
 ]
 
 { #category : 'tests - expanded' }
-T2FluidClassDefinitionPrinterTest >> testExpandedEpTEventVisitorClassTrait [
+TraitFluidClassDefinitionPrinterTest >> testExpandedEpTEventVisitorClassTrait [
 
 	self
 		assert: (self expandedForClass: EpTEventVisitor classTrait)
@@ -85,7 +85,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedEpTEventVisitorClassTrait [
 ]
 
 { #category : 'tests - expanded' }
-T2FluidClassDefinitionPrinterTest >> testExpandedEpTEventVisitorTrait [
+TraitFluidClassDefinitionPrinterTest >> testExpandedEpTEventVisitorTrait [
 
 	self
 		assert: (self expandedForClass: EpTEventVisitor)
@@ -97,7 +97,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedEpTEventVisitorTrait [
 ]
 
 { #category : 'tests - expanded' }
-T2FluidClassDefinitionPrinterTest >> testExpandedMetaclassWithTrait [
+TraitFluidClassDefinitionPrinterTest >> testExpandedMetaclassWithTrait [
 
 	self assert: (self expandedForClass: MOPTestClassD class) equals: 'Object class << MOPTestClassD class
 	traits: {Trait2 classTrait};
@@ -105,7 +105,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedMetaclassWithTrait [
 ]
 
 { #category : 'tests - expanded' }
-T2FluidClassDefinitionPrinterTest >> testExpandedTComparableClassTrait [
+TraitFluidClassDefinitionPrinterTest >> testExpandedTComparableClassTrait [
 
 	self
 		assert:  (self expandedForClass: TComparable classTrait)
@@ -115,7 +115,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedTComparableClassTrait [
 ]
 
 { #category : 'tests - expanded' }
-T2FluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
+TraitFluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
 
 	self
 		assert: (self expandedForClass: Trait3 classTrait)
@@ -125,7 +125,7 @@ T2FluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
 ]
 
 { #category : 'tests - template' }
-T2FluidClassDefinitionPrinterTest >> testFullTraitTemplate [
+TraitFluidClassDefinitionPrinterTest >> testFullTraitTemplate [
 
 	self
 		assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'TraitsV2') equals: 'Trait << #TMyTrait
@@ -136,14 +136,14 @@ T2FluidClassDefinitionPrinterTest >> testFullTraitTemplate [
 ]
 
 { #category : 'tests - metaclasses' }
-T2FluidClassDefinitionPrinterTest >> testMetaclassWithTrait [
+TraitFluidClassDefinitionPrinterTest >> testMetaclassWithTrait [
 
 	self assert: (self forClass: MOPTestClassD class) equals: 'Object class << MOPTestClassD class
 	traits: {Trait2 classTrait}'
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testMultiPools [
+TraitFluidClassDefinitionPrinterTest >> testMultiPools [
 
 	self assert: (self forClass: ClassMultiplePoolUser) equals: 'Object << #ClassMultiplePoolUser
 	sharedPools: { PoolDefiner . PoolDefiner2 };
@@ -152,7 +152,7 @@ T2FluidClassDefinitionPrinterTest >> testMultiPools [
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTBehavior [
+TraitFluidClassDefinitionPrinterTest >> testTBehavior [
 
 	self
 		assert: (self forClass: TBehavior)
@@ -162,13 +162,13 @@ T2FluidClassDefinitionPrinterTest >> testTBehavior [
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTComparableClassTrait [
+TraitFluidClassDefinitionPrinterTest >> testTComparableClassTrait [
 
 	self assert: (self forClass: TComparable classTrait) equals: 'Trait << TComparable classTrait'
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
+TraitFluidClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 
 	self
 		assert: (self forClass: EpTEventVisitor classTrait)
@@ -177,7 +177,7 @@ T2FluidClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTSlot [
+TraitFluidClassDefinitionPrinterTest >> testTSlot [
 
 	self
 		assert: (Trait << #TTUses slots: {  #x . #y }; package: 'Fake') build definitionString
@@ -188,7 +188,7 @@ T2FluidClassDefinitionPrinterTest >> testTSlot [
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTUses [
+TraitFluidClassDefinitionPrinterTest >> testTUses [
 
 	self
 		assert: ((Trait << #TTUses)
@@ -200,7 +200,7 @@ T2FluidClassDefinitionPrinterTest >> testTUses [
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTrait [
+TraitFluidClassDefinitionPrinterTest >> testTrait [
 
 	self assert: (self forClass: RubScrolledTextModel) equals: 'Object << #RubScrolledTextModel
 	traits: {TViewModel};
@@ -210,14 +210,14 @@ T2FluidClassDefinitionPrinterTest >> testTrait [
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTrait3 [
+TraitFluidClassDefinitionPrinterTest >> testTrait3 [
 
 	self assert: (self forClass: Trait3 classTrait) equals: 'Trait << Trait3 classTrait
 	traits: {Trait2 classTrait}'
 ]
 
 { #category : 'tests - traits' }
-T2FluidClassDefinitionPrinterTest >> testTrait3AndTag [
+TraitFluidClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self assert: (self forClass: Trait3) equals: 'Trait << #Trait3
 	traits: {Trait2};

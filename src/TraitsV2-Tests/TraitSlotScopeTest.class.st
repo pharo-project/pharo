@@ -2,17 +2,17 @@
 Unit test for trait related slot scopes
 "
 Class {
-	#name : 'T2TraitSlotScopeTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitSlotScopeTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testClassWithComplexTraits [
+TraitSlotScopeTest >> testClassWithComplexTraits [
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1 + t2.
 
@@ -21,9 +21,9 @@ T2TraitSlotScopeTest >> testClassWithComplexTraits [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testClassWithTraits [
+TraitSlotScopeTest >> testClassWithTraits [
 	| t1 c1 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
+	t1 := self newTrait: #T1.
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1.
 
 	self assert: c1 classLayout slotScope parentScope identicalTo: c1 superclass classLayout slotScope.
@@ -31,10 +31,10 @@ T2TraitSlotScopeTest >> testClassWithTraits [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassAndAddComplexTraitAfter [
+TraitSlotScopeTest >> testSubClassAndAddComplexTraitAfter [
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: {}.
 	c2 := self
@@ -52,10 +52,10 @@ T2TraitSlotScopeTest >> testSubClassAndAddComplexTraitAfter [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassAndAddTraitAfter [
+TraitSlotScopeTest >> testSubClassAndAddTraitAfter [
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: {}.
 	c2 := self
@@ -71,10 +71,10 @@ T2TraitSlotScopeTest >> testSubClassAndAddTraitAfter [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithComplexTraits [
+TraitSlotScopeTest >> testSubClassWithComplexTraits [
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1 + t2.
 	c2 := self
@@ -88,10 +88,10 @@ T2TraitSlotScopeTest >> testSubClassWithComplexTraits [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModification [
+TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModification [
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1 + t2.
 	c2 := self
@@ -113,11 +113,11 @@ T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModification [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModificationOfParent [
+TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModificationOfParent [
 	| t1 c1 c2 t2 t3 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
-	t3 := self newTrait: #T3 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
+	t3 := self newTrait: #T3.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1 + t3.
 	c2 := self
@@ -131,10 +131,10 @@ T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModificationOfParent [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithTraits [
+TraitSlotScopeTest >> testSubClassWithTraits [
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1.
 	c2 := self
@@ -148,10 +148,10 @@ T2TraitSlotScopeTest >> testSubClassWithTraits [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModification [
+TraitSlotScopeTest >> testSubClassWithTraitsAfterModification [
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1.
 	c2 := self
@@ -173,10 +173,10 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModification [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
+TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #() traits: {}.
-	t2 := self newTrait: #T2 with: #() traits: {}.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #(aSlot) traits: t1.
 	c2 := self
@@ -190,11 +190,11 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPools [
+TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPools [
 
 	| t1 c1 c2 t2 x1 |
-	t1 := self newTrait: #T1 with: #(  ) traits: {  }.
-	t2 := self newTrait: #T2 with: #(  ) traits: {  }.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #( aSlot ) traits: t1.
 	c2 := self
@@ -222,11 +222,11 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPoo
 ]
 
 { #category : 'tests' }
-T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvariables [
+TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedvariables [
 
 	| t1 c1 c2 t2 |
-	t1 := self newTrait: #T1 with: #(  ) traits: {  }.
-	t2 := self newTrait: #T2 with: #(  ) traits: {  }.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
 	c1 := self newClass: #C1 with: #( aSlot ) traits: t1.
 	c2 := self

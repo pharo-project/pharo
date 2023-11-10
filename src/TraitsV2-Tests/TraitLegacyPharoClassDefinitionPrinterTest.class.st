@@ -1,98 +1,106 @@
 Class {
-	#name : 'T2OldPharoClassDefinitionPrinterTest',
-	#superclass : 'T2CommonClassDefinitionPrinterTest',
+	#name : 'TraitLegacyPharoClassDefinitionPrinterTest',
+	#superclass : 'TraitCommonClassDefinitionPrinterTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'helpers' }
-T2OldPharoClassDefinitionPrinterTest >> forClass: aClass [
-	^ (OldPharoClassDefinitionPrinter oldPharo for: aClass) definitionString
+TraitLegacyPharoClassDefinitionPrinterTest >> forClass: aClass [
+	^ (ClassDefinitionPrinter legacy for: aClass) definitionString
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
+TraitLegacyPharoClassDefinitionPrinterTest >> testAlignmentMorphClass [
 
 	self
 		assert: (self forClass: AlignmentMorph class) equals: 'AlignmentMorph class
-	uses: TAbleToRotate classTrait
 	instanceVariableNames: '''''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testComplexTrait [
+TraitLegacyPharoClassDefinitionPrinterTest >> testClassUsingComplexTrait [
 
 	self assert: (self forClass: MOPTestClassD) equals: 'Object subclass: #MOPTestClassD
 	uses: Trait2 @ {#c3->#c2}
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	package: ' , self packageTagOfMOP
+	poolDictionaries: ''''
+	category: ' , self packageTagOfMOP
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testMultiPools [
+TraitLegacyPharoClassDefinitionPrinterTest >> testComplexTrait [
 
-	self assert: (self forClass: ClassMultiplePoolUser) equals: 'Object subclass: #ClassMultiplePoolUser
+	self assert: (self forClass: Trait4) equals: 'Trait named: #Trait4
+	 uses: Trait1 + (Trait2 - {#c})
+	 package: ' , self packageTagOfMOP
+]
+
+{ #category : 'tests - traits' }
+TraitLegacyPharoClassDefinitionPrinterTest >> testMultiPools [
+
+	self
+		assert: (self forClass: ClassMultiplePoolUser)
+		equals: 'Object subclass: #ClassMultiplePoolUser
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''PoolDefiner PoolDefiner2''
-	package: ''Kernel-Tests-Classes'''
+	category: ''Kernel-Tests-Classes'''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testTBehavior [
+TraitLegacyPharoClassDefinitionPrinterTest >> testTBehavior [
 	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
 	self
-		assert: (self forClass: TBehavior)  equals:  'Trait named: #TBehavior
-	instanceVariableNames: ''''
-	package: ''TraitsV2-Compatibility-Traits'''
+		assert: (self forClass: TBehavior)  equals: 'Trait named: #TBehavior
+	 uses: {}
+	 package: ''TraitsV2-Compatibility-Traits'''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
+TraitLegacyPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
 
 	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait
 	instanceVariableNames: '''''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
+TraitLegacyPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 
 	self assert: (self forClass: EpTEventVisitor classTrait) equals: 'EpTEventVisitor classTrait
-	uses: EpTCodeChangeVisitor classTrait
 	instanceVariableNames: '''''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testTSortable [
+TraitLegacyPharoClassDefinitionPrinterTest >> testTSortable [
 
 	self assert: (self forClass: TSortable classTrait) equals: 'TSortable classTrait
 	instanceVariableNames: '''''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testTrait [
+TraitLegacyPharoClassDefinitionPrinterTest >> testTrait [
 
 	self assert: (self forClass: RubScrolledTextModel) equals: 'Object subclass: #RubScrolledTextModel
 	uses: TViewModel
 	instanceVariableNames: ''hasUnacceptedEdits announcer text primarySelectionInterval interactionModel''
 	classVariableNames: ''''
-	package: ''Rubric-Editing-Widgets'''
+	poolDictionaries: ''''
+	category: ''Rubric-Editing-Widgets'''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testTrait3 [
+TraitLegacyPharoClassDefinitionPrinterTest >> testTrait3 [
 
 	self assert: (self forClass: Trait3 classTrait) equals: 'Trait3 classTrait
-	uses: Trait2 classTrait
 	instanceVariableNames: '''''
 ]
 
 { #category : 'tests - traits' }
-T2OldPharoClassDefinitionPrinterTest >> testTrait3AndTag [
+TraitLegacyPharoClassDefinitionPrinterTest >> testTrait3AndTag [
 
 	self assert: (self forClass: Trait3) equals: 'Trait named: #Trait3
-	uses: Trait2
-	instanceVariableNames: ''''
-	package: ' , self packageTagOfMOP
+	 uses: Trait2
+	 package: ' , self packageTagOfMOP
 ]

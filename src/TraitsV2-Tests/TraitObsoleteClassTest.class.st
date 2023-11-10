@@ -2,20 +2,20 @@
 Unit test for trait handling when classes are removed
 "
 Class {
-	#name : 'T2ObsoleteClassTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitObsoleteClassTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsers [
+TraitObsoleteClassTest >> testObsoleteClassIsRemovedFromUsers [
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #(  ) traits: {  }.
-	t2 := self newTrait: #T2 with: #(  ) traits: {  }.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
-	c1 := self newClass: #C1 with: #(  ) traits: t1 + t2.
+	c1 := self newClass: #C1 traits: t1 + t2.
 
 	self assert: (t1 users includes: c1).
 	self assert: (t2 users includes: c1).
@@ -27,13 +27,13 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsers [
 ]
 
 { #category : 'tests' }
-T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
+TraitObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: #(  ) traits: {  }.
-	t2 := self newTrait: #T2 with: #(  ) traits: {  }.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
-	c1 := self newClass: #C1 with: #(  ) traits: {  }.
+	c1 := self newClass: #C1.
 	c1 class setTraitComposition: t1 + t2.
 
 	self assert: (t1 users includes: c1 class).
@@ -46,13 +46,13 @@ T2ObsoleteClassTest >> testObsoleteClassIsRemovedFromUsersClassSide [
 ]
 
 { #category : 'tests' }
-T2ObsoleteClassTest >> testObsoleteTraitIsRemovedFromUsers [
+TraitObsoleteClassTest >> testObsoleteTraitIsRemovedFromUsers [
 
 	| t1 t2 t3 |
-	t1 := self newTrait: #T1 with: #(  ) traits: {  }.
-	t2 := self newTrait: #T2 with: #(  ) traits: {  }.
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
 
-	t3 := self newTrait: #T3 with: #(  ) traits: t1 + t2.
+	t3 := self newTrait: #T3 traits: t1 + t2.
 
 	self assert: (t1 users includes: t3).
 	self assert: (t2 users includes: t3).

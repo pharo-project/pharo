@@ -2,26 +2,20 @@
 Unit test for announcement handling when dealing with traits
 "
 Class {
-	#name : 'T2TraitAnnouncementsTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitAnnouncementsTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitAnnouncementsTest >> packageName [
-	^ 'TestPackage'
-]
-
-{ #category : 'tests' }
-T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
+TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
-
-	t1 := self newTrait: #T1 with: #() traits: TEmpty.
+	t1 := self newTrait: #T1.
 	t1 class compile: 'msg ^ 1'.
 
-	c1 := self newClass: #C1 superclass: Object with: #() traits: t1.
+	c1 := self newClass: #C1 superclass: Object traits: t1.
 	c1 class compile: 'msg ^ 12'.
 
 	self assert: self packageNameForTests asPackage methods size equals: 2.
@@ -30,17 +24,13 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 ]
 
 { #category : 'tests' }
-T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
+TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
 	| c1 t1 |
-	t1 := self newTrait: #T1 with: #(  ) traits: #(  ).
+	t1 := self newTrait: #T1.
 	t1 compile: 'msg ^ 1'.
 
-	c1 := self
-		      newClass: #C1
-		      superclass: Object
-		      with: #(  )
-		      traits: t1.
+	c1 := self newClass: #C1 superclass: Object traits: t1.
 	c1 compile: 'msg ^ 12'.
 
 	self assert: (c1 >> #msg) origin equals: c1.

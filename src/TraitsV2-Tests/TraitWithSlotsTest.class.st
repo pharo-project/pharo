@@ -2,14 +2,14 @@
 Unit test for traits with slots
 "
 Class {
-	#name : 'T2TraitWithSlotsTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitWithSlotsTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> createT1 [
+TraitWithSlotsTest >> createT1 [
 	| t1 |
 	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
 	t1
@@ -28,7 +28,7 @@ T2TraitWithSlotsTest >> createT1 [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
+TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 
 	| t1 c1 obj |
 	t1 := self newTrait: #T1 with: #(aSlot).
@@ -44,18 +44,18 @@ T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
+TraitWithSlotsTest >> testClassUsingStatefulTraits [
 
 	| t1 c1 |
 
 	t1 := self newTrait: #T1 with: #(aSlot).
-	c1 := self newClass: #C1 superclass: Object with: #() traits: { t1 }.
+	c1 := self newClass: #C1 superclass: Object traits: { t1 }.
 
 	self assertCollection: c1 slots hasSameElements: { c1 slotNamed: #aSlot }
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
+TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 
 	| t1 c1 |
 
@@ -66,7 +66,7 @@ T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testDefiningClass [
+TraitWithSlotsTest >> testDefiningClass [
 
 	| t1 c1 |
 
@@ -85,38 +85,38 @@ T2TraitWithSlotsTest >> testDefiningClass [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
-	| t1 t2 c1 t3 t4 |
+TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 
-	t1 := self newTrait: #T1 with: #(anSlot) traits: {}.
-	t2 := self newTrait: #T2 with: #(s2) traits: {t1}.
-	t3 := self newTrait: #T3 with: #(s3) traits: {t1}.
-	t4 := self newTrait: #T4 with: #(s4) traits: {t1}.
+	| t1 t2 c1 t3 t4 |
+	t1 := self newTrait: #T1 with: #( anSlot ).
+	t2 := self newTrait: #T2 with: #( s2 ) traits: { t1 }.
+	t3 := self newTrait: #T3 with: #( s3 ) traits: { t1 }.
+	t4 := self newTrait: #T4 with: #( s4 ) traits: { t1 }.
 
 	t1 compile: 'm1 ^ anSlot:=42'.
 
-	c1 := self newClass: #C1 with: #(aSlot s2) traits: t2 + t3.
+	c1 := self newClass: #C1 with: #( aSlot s2 ) traits: t2 + t3.
 	c1 traitComposition: c1 traitComposition + t4.
 
 	self assert: (c1 new perform: #m1) equals: 42
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
-	| t1 t2 c1 |
+TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
 
-	t1 := self newTrait: #T1 with: #(anSlot) traits: {}.
-	t2 := self newTrait: #T2 with: #(s2) traits: {t1}.
+	| t1 t2 c1 |
+	t1 := self newTrait: #T1 with: #( anSlot ).
+	t2 := self newTrait: #T2 with: #( s2 ) traits: { t1 }.
 
 	t1 compile: 'm1 ^ anSlot:=42'.
 
-	c1 := self newClass: #C1 with: #(aSlot s2) traits: t2 + t1.
+	c1 := self newClass: #C1 with: #( aSlot s2 ) traits: t2 + t1.
 
 	self assert: (c1 new perform: #m1) equals: 42
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testOwningClass [
+TraitWithSlotsTest >> testOwningClass [
 
 	| t1 c1 |
 
@@ -135,7 +135,7 @@ T2TraitWithSlotsTest >> testOwningClass [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testRedefiningSuperclass [
+TraitWithSlotsTest >> testRedefiningSuperclass [
 
 	| t1 c1 t2 c2 |
 
@@ -159,7 +159,7 @@ T2TraitWithSlotsTest >> testRedefiningSuperclass [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testRedefiningTrait [
+TraitWithSlotsTest >> testRedefiningTrait [
 
 | t1 |
 
