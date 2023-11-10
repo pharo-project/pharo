@@ -2,14 +2,14 @@
 Unit test for categorization of traits
 "
 Class {
-	#name : 'T2TraitWithMethodsInProtocolsTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitWithMethodsInProtocolsTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraits [
+TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraits [
 
 	| t1 t2 |
 	t1 := self newTrait: #T1.
@@ -22,7 +22,7 @@ T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraits [
 ]
 
 { #category : 'tests' }
-T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsAfterCreation [
+TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsAfterCreation [
 	| t1 t2 |
 
 	t1 := self newTrait: #T1.
@@ -34,7 +34,7 @@ T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsAfterCreation 
 ]
 
 { #category : 'tests' }
-T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChanged [
+TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChanged [
 	| t1 t2 |
 
 	t1 := self newTrait: #T1.
@@ -49,7 +49,7 @@ T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChanged [
 ]
 
 { #category : 'tests' }
-T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChangedWithoutCompile [
+TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChangedWithoutCompile [
 	| trait1 trait2 |
 
 	trait1 := self newTrait: #T1.
@@ -64,7 +64,7 @@ T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsChangedWithout
 ]
 
 { #category : 'tests' }
-T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsOverriden [
+TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsOverriden [
 	| t1 t2 |
 
 	t1 := self newTrait: #T1.
@@ -78,7 +78,7 @@ T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsOverriden [
 ]
 
 { #category : 'tests' }
-T2TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsRenamedCategory [
+TraitWithMethodsInProtocolsTest >> testPackageOfMethodFromTraitsRenamedCategory [
 
 	| t1 t2 |
 	t1 := self newTrait: #T1.

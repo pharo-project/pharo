@@ -57,7 +57,7 @@ Trait class >> traitDependencyOrder: traitsToSort [
 	                    trait traitComposition traits do: [ :usedTrait | (visited includes: usedTrait) ifFalse: [ depthFirstSearch value: usedTrait ] ].
 	                    result add: trait ].
 
-	traitsToSort keysDo: [ :trait | (visited includes: trait) ifFalse: [ depthFirstSearch value: trait ] ].
+	traitsToSort do: [ :trait | (visited includes: trait) ifFalse: [ depthFirstSearch value: trait ] ].
 
 	^ result
 ]

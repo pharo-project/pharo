@@ -1,12 +1,12 @@
 Class {
-	#name : 'T2OverloadingOfMethodsInTraitedClassTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitOverloadingOfMethodsInTraitedClassTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2OverloadingOfMethodsInTraitedClassTest >> createT1 [
+TraitOverloadingOfMethodsInTraitedClassTest >> createT1 [
 	| t1 |
 	t1 := self newTrait: #T1 with: '' asSlotCollection.
 	t1 classTrait
@@ -31,12 +31,12 @@ T2OverloadingOfMethodsInTraitedClassTest >> createT1 [
 ]
 
 { #category : 'tests' }
-T2OverloadingOfMethodsInTraitedClassTest >> createT2 [
+TraitOverloadingOfMethodsInTraitedClassTest >> createT2 [
 	^ self newTrait: #T2 with: '' asSlotCollection
 ]
 
 { #category : 'running' }
-T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
+TraitOverloadingOfMethodsInTraitedClassTest >> tearDown [
 	TraitedClass
 		removeSelector: #isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
 	Behavior
@@ -45,7 +45,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> tearDown [
 ]
 
 { #category : 'tests' }
-T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
+TraitOverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 
 	<ignoreNotImplementedSelectors: #( isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest )>
 	| t1 c1 |
@@ -55,7 +55,7 @@ T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 ]
 
 { #category : 'tests' }
-T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
+TraitOverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
 
 	<ignoreNotImplementedSelectors:
 	#( isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest )>

@@ -1,12 +1,12 @@
 Class {
-	#name : 'T2TraitChangesTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitChangesTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
+TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
 	t1 := self newTrait: #T1 with: {  }.
@@ -28,7 +28,7 @@ T2TraitChangesTest >> testGeneratingTheSameTraitDoesNotProduceChanges [
 ]
 
 { #category : 'tests' }
-T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
+TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 
 	| t1 builder |
 	t1 := self newTrait: #T1 with: {  }.
@@ -53,7 +53,7 @@ T2TraitChangesTest >> testUpdatingTheSameTraitDoesNotProduceChanges [
 ]
 
 { #category : 'tests' }
-T2TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariableNamesPackageName [
+TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariableNamesPackageName [
 
 	| builder |
 	builder := ShiftClassBuilder new

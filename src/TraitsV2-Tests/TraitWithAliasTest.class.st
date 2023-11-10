@@ -1,12 +1,12 @@
 Class {
-	#name : 'T2TraitWithAliasTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitWithAliasTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
+TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 
 	| t1 c1 |
 
@@ -20,7 +20,7 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 ]
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
+TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 
 	| t1 c1 obj |
 	<ignoreNotImplementedSelectors: #(m1 m2)>
@@ -40,7 +40,7 @@ T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 ]
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingDeleteSlot [
+TraitWithAliasTest >> testChangingDeleteSlot [
 
 	| t1 c1 |
 
@@ -58,7 +58,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlot [
 ]
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
+TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 	"we can add a slot in the class that we removed from the trait"
 	| t1 c1 |
 
@@ -79,7 +79,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlot2Slots [
 ]
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingDeleteSlotAddVar [
+TraitWithAliasTest >> testChangingDeleteSlotAddVar [
 
 	| t1 c1 |
 
@@ -97,7 +97,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlotAddVar [
 ]
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
+TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
 	"we can remove a slot from one trait, then rename from the other trait and the class has one var"
 	| t1 t2 c1 |
 
@@ -114,7 +114,7 @@ T2TraitWithAliasTest >> testChangingDeleteSlotAndAlias [
 ]
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingRenamedSlot [
+TraitWithAliasTest >> testChangingRenamedSlot [
 
 	| t1 c1 |
 
@@ -137,7 +137,7 @@ T2TraitWithAliasTest >> testChangingRenamedSlot [
 ]
 
 { #category : 'tests' }
-T2TraitWithAliasTest >> testChangingRenamedSlot2Slots [
+TraitWithAliasTest >> testChangingRenamedSlot2Slots [
 
 	| t1 c1 |
 

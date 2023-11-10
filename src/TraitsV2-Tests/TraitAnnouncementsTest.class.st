@@ -2,14 +2,14 @@
 Unit test for announcement handling when dealing with traits
 "
 Class {
-	#name : 'T2TraitAnnouncementsTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitAnnouncementsTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
+TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
 	t1 := self newTrait: #T1.
@@ -24,7 +24,7 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 ]
 
 { #category : 'tests' }
-T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
+TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
 	| c1 t1 |
 	t1 := self newTrait: #T1.

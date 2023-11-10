@@ -1,12 +1,12 @@
 Class {
-	#name : 'T2TraitInTraitClassTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitInTraitClassTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitInTraitClassTest >> testAddingSlotToClassSide [
+TraitInTraitClassTest >> testAddingSlotToClassSide [
 
 	| t1 |
 
@@ -18,7 +18,7 @@ T2TraitInTraitClassTest >> testAddingSlotToClassSide [
 ]
 
 { #category : 'tests' }
-T2TraitInTraitClassTest >> testAddingSpecialSlotToClassSide [
+TraitInTraitClassTest >> testAddingSpecialSlotToClassSide [
 
 	| t1 |
 

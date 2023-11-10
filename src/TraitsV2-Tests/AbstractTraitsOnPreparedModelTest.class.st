@@ -1,6 +1,6 @@
 Class {
 	#name : 'AbstractTraitsOnPreparedModelTest',
-	#superclass : 'T2AbstractTest',
+	#superclass : 'TraitAbstractTest',
 	#instVars : [
 		't1',
 		't2',

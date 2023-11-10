@@ -2,14 +2,14 @@
 Unit test for trait conflict scenarios
 "
 Class {
-	#name : 'T2TraitWithConflictsTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitWithConflictsTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
+TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
 	| t1 t2 c1 |
 	<ignoreNotImplementedSelectors: #(m1)>
 	t1 := self newTrait: #T1.
@@ -23,7 +23,7 @@ T2TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
 ]
 
 { #category : 'tests' }
-T2TraitWithConflictsTest >> testComplexDependencyIsNotConflict [
+TraitWithConflictsTest >> testComplexDependencyIsNotConflict [
 
 	<ignoreNotImplementedSelectors: #( m1 )>
 	| t1 t2 c1 t3 t4 t5 t6 |
@@ -42,7 +42,7 @@ T2TraitWithConflictsTest >> testComplexDependencyIsNotConflict [
 ]
 
 { #category : 'tests' }
-T2TraitWithConflictsTest >> testDiamonProblemIsNotConflict [
+TraitWithConflictsTest >> testDiamonProblemIsNotConflict [
 
 	| t1 t2 c1 t3 |
 	t1 := self newTrait: #T1.
@@ -57,7 +57,7 @@ T2TraitWithConflictsTest >> testDiamonProblemIsNotConflict [
 ]
 
 { #category : 'tests' }
-T2TraitWithConflictsTest >> testDifferentMethodsAreConflict [
+TraitWithConflictsTest >> testDifferentMethodsAreConflict [
 	| t1 t2 c1 |
 	<ignoreNotImplementedSelectors: #(m1)>
 	t1 := self newTrait: #T1.
@@ -72,7 +72,7 @@ T2TraitWithConflictsTest >> testDifferentMethodsAreConflict [
 ]
 
 { #category : 'tests' }
-T2TraitWithConflictsTest >> testNonConflictingTraitsAreNotConflict [
+TraitWithConflictsTest >> testNonConflictingTraitsAreNotConflict [
 
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1.
@@ -88,7 +88,7 @@ T2TraitWithConflictsTest >> testNonConflictingTraitsAreNotConflict [
 ]
 
 { #category : 'tests' }
-T2TraitWithConflictsTest >> testSameSourceButDifferentMethodsAreConflict [
+TraitWithConflictsTest >> testSameSourceButDifferentMethodsAreConflict [
 
 	<ignoreNotImplementedSelectors: #( m1 )>
 	| t1 t2 c1 |

@@ -1,6 +1,6 @@
 Class {
-	#name : 'T2CommonClassDefinitionPrinterTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitCommonClassDefinitionPrinterTest',
+	#superclass : 'TraitAbstractTest',
 	#instVars : [
 		'emptySlots'
 	],
@@ -9,13 +9,13 @@ Class {
 }
 
 { #category : 'helpers' }
-T2CommonClassDefinitionPrinterTest >> packageTagOfMOP [
+TraitCommonClassDefinitionPrinterTest >> packageTagOfMOP [
 
 	^ '''TraitsV2-Tests-MOP'''
 ]
 
 { #category : 'running' }
-T2CommonClassDefinitionPrinterTest >> setUp [
+TraitCommonClassDefinitionPrinterTest >> setUp [
 
 	super setUp.
 	emptySlots := ClassDefinitionPrinter displayEmptySlots.
@@ -23,7 +23,7 @@ T2CommonClassDefinitionPrinterTest >> setUp [
 ]
 
 { #category : 'running' }
-T2CommonClassDefinitionPrinterTest >> tearDown [
+TraitCommonClassDefinitionPrinterTest >> tearDown [
 
 	ClassDefinitionPrinter displayEmptySlots: emptySlots.
 	super tearDown

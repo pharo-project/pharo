@@ -2,14 +2,14 @@
 Unit test for traits with slots
 "
 Class {
-	#name : 'T2TraitWithSlotsTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitWithSlotsTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> createT1 [
+TraitWithSlotsTest >> createT1 [
 	| t1 |
 	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
 	t1
@@ -28,7 +28,7 @@ T2TraitWithSlotsTest >> createT1 [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
+TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 
 	| t1 c1 obj |
 	t1 := self newTrait: #T1 with: #(aSlot).
@@ -44,7 +44,7 @@ T2TraitWithSlotsTest >> testAddingStatefulTraitToClassAddsInstanceVariable [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
+TraitWithSlotsTest >> testClassUsingStatefulTraits [
 
 	| t1 c1 |
 
@@ -55,7 +55,7 @@ T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
+TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 
 	| t1 c1 |
 
@@ -66,7 +66,7 @@ T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testDefiningClass [
+TraitWithSlotsTest >> testDefiningClass [
 
 	| t1 c1 |
 
@@ -85,7 +85,7 @@ T2TraitWithSlotsTest >> testDefiningClass [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
+TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 
 	| t1 t2 c1 t3 t4 |
 	t1 := self newTrait: #T1 with: #( anSlot ).
@@ -102,7 +102,7 @@ T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
+TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
 
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: #( anSlot ).
@@ -116,7 +116,7 @@ T2TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testOwningClass [
+TraitWithSlotsTest >> testOwningClass [
 
 	| t1 c1 |
 
@@ -135,7 +135,7 @@ T2TraitWithSlotsTest >> testOwningClass [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testRedefiningSuperclass [
+TraitWithSlotsTest >> testRedefiningSuperclass [
 
 	| t1 c1 t2 c2 |
 
@@ -159,7 +159,7 @@ T2TraitWithSlotsTest >> testRedefiningSuperclass [
 ]
 
 { #category : 'tests' }
-T2TraitWithSlotsTest >> testRedefiningTrait [
+TraitWithSlotsTest >> testRedefiningTrait [
 
 | t1 |
 

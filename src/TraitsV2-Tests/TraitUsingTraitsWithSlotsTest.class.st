@@ -1,12 +1,12 @@
 Class {
-	#name : 'T2UsingTraitsWithSlotsTest',
-	#superclass : 'T2AbstractTest',
+	#name : 'TraitUsingTraitsWithSlotsTest',
+	#superclass : 'TraitAbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
 
 { #category : 'tests' }
-T2UsingTraitsWithSlotsTest >> testRedefinitionKeepsSlots [
+TraitUsingTraitsWithSlotsTest >> testRedefinitionKeepsSlots [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #(a b c).
 	t1 classTrait slots: #(aSlot).
