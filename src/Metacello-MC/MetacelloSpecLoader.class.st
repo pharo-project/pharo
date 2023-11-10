@@ -1,9 +1,10 @@
 Class {
-	#name : 'MetacelloCommonMCSpecLoader',
-	#superclass : 'MetacelloSpecLoader',
+	#name : 'MetacelloSpecLoader',
+	#superclass : 'Object',
 	#instVars : [
 		'operator',
-		'loaderPolicy'
+		'loaderPolicy',
+		'spec'
 	],
 	#classVars : [
 		'RetryPackageResolution'
@@ -13,8 +14,14 @@ Class {
 	#tag : 'Loaders'
 }
 
+{ #category : 'class initialization' }
+MetacelloSpecLoader class >> initialize [
+
+	self deprecatedAliases: { #MetacelloCommonMCSpecLoader }
+]
+
 { #category : 'utilities' }
-MetacelloCommonMCSpecLoader class >> nameComponentsFrom: aVersionName [
+MetacelloSpecLoader class >> nameComponentsFrom: aVersionName [
 	| ar |
 	ar := (aVersionName last isDigit and: [ (aVersionName indexOf: $.) > 0 ])ifFalse: [Array with: aVersionName with: '' with: 0 with: aVersionName with: self]
 		ifTrue: [ | vrsn str |
@@ -31,9 +38,17 @@ MetacelloCommonMCSpecLoader class >> nameComponentsFrom: aVersionName [
 	^ar
 ]
 
+{ #category : 'instance creation' }
+MetacelloSpecLoader class >> on: aMetacelloPackagesSpec [
+
+	^ self new
+		  spec: aMetacelloPackagesSpec;
+		  yourself
+]
+
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader class >> retryPackageResolution [
-    "if true, 
+MetacelloSpecLoader class >> retryPackageResolution [
+	"if true, 
 		errors during #retryingResolvePackageSpecReferences:gofer: are caught and 
 		the resolution is retried 3 times. After the thrid time, a MetacelloPackageSpecResolutionError
 		is thrown
@@ -41,17 +56,16 @@ MetacelloCommonMCSpecLoader class >> retryPackageResolution [
 		an error during #retryingResolvePackageSpecReferences:gofer: will be passed,
 		likely resulting in a walkback ... useful for debugging."
 
-    RetryPackageResolution ifNil: [ RetryPackageResolution := true ].
-    ^ RetryPackageResolution
+	^ RetryPackageResolution ifNil: [ RetryPackageResolution := true ]
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader class >> retryPackageResolution: aBool [
+MetacelloSpecLoader class >> retryPackageResolution: aBool [
     RetryPackageResolution := aBool
 ]
 
 { #category : 'versionInfo' }
-MetacelloCommonMCSpecLoader >> ancestorsFor: packageSpec [
+MetacelloSpecLoader >> ancestorsFor: packageSpec [
 
 	| cacheKey vi |
 	cacheKey := packageSpec file.
@@ -64,12 +78,12 @@ MetacelloCommonMCSpecLoader >> ancestorsFor: packageSpec [
 ]
 
 { #category : 'caching' }
-MetacelloCommonMCSpecLoader >> clearCurrentVersionCache [
+MetacelloSpecLoader >> clearCurrentVersionCache [
 	MetacelloClearStackCacheNotification signal: #(#currentVersion #currentVersionAgainst: #currentVersionInfo)
 ]
 
 { #category : 'versionInfo' }
-MetacelloCommonMCSpecLoader >> currentVersionInfoFor: packageSpec [
+MetacelloSpecLoader >> currentVersionInfoFor: packageSpec [
 
 	| cacheKey vi |
 	cacheKey := packageSpec file.
@@ -82,60 +96,60 @@ MetacelloCommonMCSpecLoader >> currentVersionInfoFor: packageSpec [
 ]
 
 { #category : 'actions' }
-MetacelloCommonMCSpecLoader >> doLoad [
+MetacelloSpecLoader >> doLoad [
 
 	self subclassResponsibility
 ]
 
 { #category : 'actions' }
-MetacelloCommonMCSpecLoader >> doingLoads: aBlock [
+MetacelloSpecLoader >> doingLoads: aBlock [
 	"escape mechanism for recording and null loaders to skip doing loaderlike things"
 	
 	aBlock value
 ]
 
 { #category : 'testing' }
-MetacelloCommonMCSpecLoader >> ensureForDevelopment [
+MetacelloSpecLoader >> ensureForDevelopment [
   ^ true
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> ensureSpecLoader [
+MetacelloSpecLoader >> ensureSpecLoader [
 	^ self
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> fetchingSpecLoader [
+MetacelloSpecLoader >> fetchingSpecLoader [
 
 	^self
 ]
 
 { #category : 'testing' }
-MetacelloCommonMCSpecLoader >> hasRepositoryOverrides [
+MetacelloSpecLoader >> hasRepositoryOverrides [
 
 	^self loaderPolicy hasRepositoryOverrides
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> ignoreImage [
+MetacelloSpecLoader >> ignoreImage [
 
 	^self loaderPolicy ignoreImage
 ]
 
 { #category : 'initialization' }
-MetacelloCommonMCSpecLoader >> initialize [
+MetacelloSpecLoader >> initialize [
 
 	self loaderPolicy
 ]
 
 { #category : 'actions' }
-MetacelloCommonMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
+MetacelloSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private' }
-MetacelloCommonMCSpecLoader >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
+MetacelloSpecLoader >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
 	
 	| gofer |
 	gofer := MetacelloGofer new.
@@ -144,7 +158,7 @@ MetacelloCommonMCSpecLoader >> linearLoadPackageSpecs: packageSpecs repositories
 ]
 
 { #category : 'actions' }
-MetacelloCommonMCSpecLoader >> load [
+MetacelloSpecLoader >> load [
 	| repos |
 	repos := self repositoriesFrom: self spec repositorySpecs.
 	^ self loadType == #atomic
@@ -154,7 +168,7 @@ MetacelloCommonMCSpecLoader >> load [
 ]
 
 { #category : 'actions' }
-MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
+MetacelloSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 
 	| packageSpec |
 	packageSpec := aPackageLoadDirective spec.
@@ -187,7 +201,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 ]
 
 { #category : 'actions' }
-MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
+MetacelloSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 
   MetacelloPlatform current
     do: [ 
@@ -233,53 +247,66 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> loaderPolicy [
+MetacelloSpecLoader >> loadType [
+	"#atomic or #linear"
+	
+	^self project loadType
+]
+
+{ #category : 'accessing' }
+MetacelloSpecLoader >> loaderPolicy [
 
 	^ loaderPolicy ifNil: [ loaderPolicy := MetacelloLoaderPolicy new ]
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> loaderPolicy: anObject [
+MetacelloSpecLoader >> loaderPolicy: anObject [
 	loaderPolicy := anObject
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> loadingSpecLoader [
+MetacelloSpecLoader >> loadingSpecLoader [
 
 	^self
 ]
 
 { #category : 'packages' }
-MetacelloCommonMCSpecLoader >> nameComponentsFrom: aVersionName [
+MetacelloSpecLoader >> nameComponentsFrom: aVersionName [
 
 	^self class nameComponentsFrom: aVersionName
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> operator [
+MetacelloSpecLoader >> operator [
 
 	^ operator ifNil: [ #= ]
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> operator: aSymbol [
+MetacelloSpecLoader >> operator: aSymbol [
 
 	operator := aSymbol
 ]
 
 { #category : 'doits' }
-MetacelloCommonMCSpecLoader >> postLoad: packageOrVersionSpec [
+MetacelloSpecLoader >> postLoad: packageOrVersionSpec [
 	"subclassResponsibility, but it gets called during an upgrade, so leave it as NOOP"
 ]
 
 { #category : 'doits' }
-MetacelloCommonMCSpecLoader >> preLoad: packageOrVersionSpec [
+MetacelloSpecLoader >> preLoad: packageOrVersionSpec [
 
 	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> recordingSpecLoader [
+MetacelloSpecLoader >> project [
+
+	^self spec project
+]
+
+{ #category : 'accessing' }
+MetacelloSpecLoader >> recordingSpecLoader [
 
 	^(MetacelloNullRecordingMCSpecLoader on: self spec)
 		loaderPolicy: self loaderPolicy copy;
@@ -287,13 +314,13 @@ MetacelloCommonMCSpecLoader >> recordingSpecLoader [
 ]
 
 { #category : 'repositories' }
-MetacelloCommonMCSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
+MetacelloSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 
 	^self repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: false
 ]
 
 { #category : 'repositories' }
-MetacelloCommonMCSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: ignoreOverrides [
+MetacelloSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: ignoreOverrides [
 
 	| repositories repos |
 	(ignoreOverrides not and: [self hasRepositoryOverrides]) ifTrue: [ ^self loaderPolicy overrideRepositories ].
@@ -307,13 +334,13 @@ MetacelloCommonMCSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs ign
 ]
 
 { #category : 'accessing' }
-MetacelloCommonMCSpecLoader >> repositoryMap [
+MetacelloSpecLoader >> repositoryMap [
 
 	^self loaderPolicy repositoryMap
 ]
 
 { #category : 'private' }
-MetacelloCommonMCSpecLoader >> resolvePackageSpec: packageSpec gofer: gofer [
+MetacelloSpecLoader >> resolvePackageSpec: packageSpec gofer: gofer [
   | references resolvedReference mcVersion loadedVersionInfos |
   references := self
     retryingResolvePackageSpecReferences: packageSpec
@@ -336,7 +363,7 @@ MetacelloCommonMCSpecLoader >> resolvePackageSpec: packageSpec gofer: gofer [
 ]
 
 { #category : 'private' }
-MetacelloCommonMCSpecLoader >> resolvePackageSpecReferences: packageSpec gofer: gofer [
+MetacelloSpecLoader >> resolvePackageSpecReferences: packageSpec gofer: gofer [
 
 	| versionReference references localGofer |
 	localGofer := gofer.
@@ -354,7 +381,7 @@ MetacelloCommonMCSpecLoader >> resolvePackageSpecReferences: packageSpec gofer: 
 ]
 
 { #category : 'private' }
-MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec gofer: gofer [
+MetacelloSpecLoader >> retryingResolvePackageSpecReferences: packageSpec gofer: gofer [
     | retryCount references repositoryError |
     retryCount := 0.
     references := #().
@@ -388,4 +415,16 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
                 repositoryError: repositoryError;
                 yourself) signal ].
     ^ references
+]
+
+{ #category : 'accessing' }
+MetacelloSpecLoader >> spec [
+
+	^spec
+]
+
+{ #category : 'accessing' }
+MetacelloSpecLoader >> spec: aMetacelloPackagesSpec [
+
+	spec := aMetacelloPackagesSpec
 ]

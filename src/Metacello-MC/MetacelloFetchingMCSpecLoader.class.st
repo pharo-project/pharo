@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloFetchingMCSpecLoader',
-	#superclass : 'MetacelloCommonMCSpecLoader',
+	#superclass : 'MetacelloSpecLoader',
 	#category : 'Metacello-MC-Loaders',
 	#package : 'Metacello-MC',
 	#tag : 'Loaders'
