@@ -16,11 +16,6 @@ String >> addToMetacelloPackages: aMetacelloPackagesSpec [
 ]
 
 { #category : '*Metacello-Core' }
-String >> asMetacelloSemanticVersionNumber [
-    ^ MetacelloSemanticVersionNumber fromString: self
-]
-
-{ #category : '*Metacello-Core' }
 String >> asMetacelloVersionNumber [
 
 	^MetacelloVersionNumber fromString: self

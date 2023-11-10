@@ -262,11 +262,6 @@ MetacelloSemanticVersionNumber >> approximateBase [
 	^base
 ]
 
-{ #category : 'converting' }
-MetacelloSemanticVersionNumber >> asMetacelloSemanticVersionNumber [
-    ^ self
-]
-
 { #category : 'accessing' }
 MetacelloSemanticVersionNumber >> buildVersion [
     buildVersion ifNil: [ buildVersion := #() ].

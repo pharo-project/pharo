@@ -1,11 +1,6 @@
 Extension { #name : 'UndefinedObject' }
 
 { #category : '*Metacello-Core' }
-UndefinedObject >> asMetacelloSemanticVersionNumber [
-    ^ MetacelloSemanticVersionNumber fromString: ''
-]
-
-{ #category : '*Metacello-Core' }
 UndefinedObject >> asMetacelloVersionNumber [
 
 	^MetacelloVersionNumber fromString: ''
