@@ -28,7 +28,7 @@ RubCharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textL
 	characterIndex := index.	" == nil means scanning for point"
 	characterPoint := aPoint.
 	(characterPoint isNil or: [ characterPoint y > line bottom ]) ifTrue: [ characterPoint := line bottomRight ].
-	(text isEmpty or: [ (characterPoint y < line top or: [ characterPoint x < line left ]) or: [ characterIndex notNil and: [ characterIndex < line first ] ] ])
+	(text isEmpty or: [ (characterPoint y < line top or: [ characterPoint x < line left ]) or: [ characterIndex isNotNil and: [ characterIndex < line first ] ] ])
 		ifTrue: [ ^ (RubCharacterBlock new stringIndex: line first topLeft: line leftMargin @ line top extent: 0 @ textStyle lineGrid) textLine: line ].
 	destX := leftMargin := line leftMarginForAlignment: alignment.
 	destY := line top.
@@ -80,7 +80,7 @@ RubCharacterBlockScanner >> cr [
 	CharacterBlocks, sometimes including the carriage return (cursor is at
 	the end) and sometimes not (cursor is in the middle of the text)."
 
-	((characterIndex notNil
+	((characterIndex isNotNil
 		and: [characterIndex > text size])
 			or: [(line last = text size)
 				and: [(destY + line lineHeight) < characterPoint y]])
@@ -171,7 +171,7 @@ RubCharacterBlockScanner >> endOfRun [
 	lastCharacter := text at: lastIndex.
 	characterPoint := destX @ destY.
 	((lastCharacter = Space and: [alignment = Justified])
-		or: [lastCharacter = Tab and: [lastSpaceOrTabExtent notNil]])
+		or: [lastCharacter = Tab and: [lastSpaceOrTabExtent isNotNil]])
 		ifTrue: [lastCharacterExtent := lastSpaceOrTabExtent].
 	characterIndex ~~ nil
 		ifTrue:	["If scanning for an index and we've stopped on that index,

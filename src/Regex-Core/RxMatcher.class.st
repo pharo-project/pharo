@@ -657,7 +657,7 @@ RxMatcher >> syntaxBranch: branchNode [
 			result := result contents.
 			result size > 1
 				ifTrue: [ "worth merging"
-					rest := next notNil
+					rest := next isNotNil
 						ifTrue: [ next dispatchTo: self ]
 						ifFalse: [ nil ].
 					^ ( RxmSubstring new substring: result ignoreCase: ignoreCase )
