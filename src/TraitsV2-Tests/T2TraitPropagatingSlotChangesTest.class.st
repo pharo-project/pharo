@@ -12,7 +12,7 @@ Class {
 T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 	| t1 c1 |
 	t1 := self newTrait: #T1.
-	c1 := self newClass: #C1 with: #() traits: t1.
+	c1 := self newClass: #C1 traits: t1.
 
 	self assert: c1 classLayout slotScope parentScope identicalTo: c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope.
@@ -29,7 +29,7 @@ T2TraitPropagatingSlotChangesTest >> testAddingSlotToTrait [
 T2TraitPropagatingSlotChangesTest >> testRemovingSlotToTrait [
 	| t1 c1 |
 	t1 := self newTrait: #T1 with: #(aSlot).
-	c1 := self newClass: #C1 with: #() traits: t1.
+	c1 := self newClass: #C1 traits: t1.
 
 	self assert: c1 classLayout slotScope parentScope identicalTo: c1 superclass classLayout slotScope.
 	self assert: c1 class classLayout slotScope parentScope identicalTo: c1 class superclass classLayout slotScope.

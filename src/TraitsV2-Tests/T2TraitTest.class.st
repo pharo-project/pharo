@@ -244,7 +244,7 @@ T2TraitTest >> testRecompilingTraitClassMethodRecompilesTheMethodInTheUsers [
 	| trait class priorTraitMethod priorClassMethod |
 	trait := self newTrait: #TTraitForTest.
 
-	class := self newClass: #ClassUsingTTraitForTest with: #(  ) traits: trait.
+	class := self newClass: #ClassUsingTTraitForTest traits: trait.
 
 	trait class compile: 'test
     ^ #test'.
@@ -265,7 +265,7 @@ T2TraitTest >> testRecompilingTraitMethodRecompilesTheMethodInTheUsers [
 	| trait class priorTraitMethod priorClassMethod |
 	trait := self newTrait: #TTraitForTest.
 
-	class := self newClass: #ClassUsingTTraitForTest with: #(  ) traits: trait.
+	class := self newClass: #ClassUsingTTraitForTest traits: trait.
 	
 	trait compile: 'test
     ^ #test'.
@@ -348,7 +348,7 @@ T2TraitTest >> testSelectorsWithExplicitOrigin [
 	t1 := self newTrait: #T1 with: #().
 	t1 compile: 'instanceSideMethod'.
 	t1 class compile: 'classSideMethod'.
-	c1 := self newClass: #C1 with: #() traits: t1.
+	c1 := self newClass: #C1 traits: t1.
 	self assertCollection: c1 selectorsWithExplicitOrigin hasSameElements: #(instanceSideMethod).
 	self assertCollection: c1 class selectorsWithExplicitOrigin hasSameElements: #(classSideMethod)
 ]
@@ -389,7 +389,7 @@ T2TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 
 	| t1 c1 |
 	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
-	c1 := self newClass: #C1 with: '' asSlotCollection traits: #().
+	c1 := self newClass: #C1.
 
 	self should: [ t1 traitComposition: c1 ] raise: Error.
 	self should: [ t1 classTrait traitComposition: c1 ] raise: Error.
@@ -401,7 +401,7 @@ T2TraitTest >> testSlotsAreNotDuplicated [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: 'a' asSlotCollection.
 	t2 := self newTrait: #T2 traits: t1.
-	c1 := self newClass: #C1 with: #(  ) traits: t1 + t2.
+	c1 := self newClass: #C1 traits: t1 + t2.
 
 	self assert: c1 traitComposition slots size equals: c1 traitComposition slots asSet size.
 	self assert: c1 traitComposition slots size equals: 1

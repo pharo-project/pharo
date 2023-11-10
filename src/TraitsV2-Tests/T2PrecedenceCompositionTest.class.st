@@ -61,7 +61,7 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 	t2 compile: 'm1 ^ 33'.
 	t3 compile: 'm2 ^ 11'.
 
-	c1 := self newClass: #C1 with: #(  ) traits: (t2 + t1 + t3 withPrecedenceOf: t2).
+	c1 := self newClass: #C1 traits: (t2 + t1 + t3 withPrecedenceOf: t2).
 
 	self assert: (ClassDefinitionPrinter oldPharo for: c1) definitionString equals: 'Object subclass: #C1
 	uses: (T2 + T1 + T3 withPrecedenceOf: T2)
@@ -87,7 +87,7 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithA
 	t2 compile: 'm1 ^ 33'.
 	t3 compile: 'm2 ^ 11'.
 
-	c1 := self newClass: #C1 with: #(  ) traits: (t2 + (t1 -- #aSlot) + t3 withPrecedenceOf: t2).
+	c1 := self newClass: #C1  traits: (t2 + (t1 -- #aSlot) + t3 withPrecedenceOf: t2).
 
 	self assert: (ClassDefinitionPrinter oldPharo for: c1) definitionString equals: 'Object subclass: #C1
 	uses: (T2 + (T1 -- #aSlot) + T3 withPrecedenceOf: T2)
@@ -115,7 +115,7 @@ T2PrecedenceCompositionTest >> testPrecedencesCanBeCombined [
 
 	t3 compile: 'm2 ^ 11'.
 
-	c1 := self newClass: #C1 with: #() traits: (((t2 + t1) withPrecedenceOf: t2) + t3).
+	c1 := self newClass: #C1 traits: (((t2 + t1) withPrecedenceOf: t2) + t3).
 
 	self assert: (c1 new m1) equals: 33.
 	self assert: (c1 new m2) equals: 11
@@ -135,7 +135,7 @@ T2PrecedenceCompositionTest >> testWithPrecedenceIsNonAConflict [
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	c1 := self newClass: #C1 with: #() traits: ((t1 + t2) withPrecedenceOf: t2).
+	c1 := self newClass: #C1 traits: ((t1 + t2) withPrecedenceOf: t2).
 
 	self deny: (c1 >> #m1) isConflict
 ]
@@ -154,7 +154,7 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOne [
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	c1 := self newClass: #C1 with: #() traits: ((t1 + t2) withPrecedenceOf: t2).
+	c1 := self newClass: #C1 traits: ((t1 + t2) withPrecedenceOf: t2).
 
 	self assert: (c1 new m1) equals: 33
 ]
@@ -173,7 +173,7 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOneWithoutCaring
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	c1 := self newClass: #C1 with: #() traits: ((t2 + t1) withPrecedenceOf: t2).
+	c1 := self newClass: #C1 traits: ((t2 + t1) withPrecedenceOf: t2).
 
 	self assert: (c1 new m1) equals: 33
 ]
@@ -192,7 +192,7 @@ T2PrecedenceCompositionTest >> testWithoutPrecedenceIsAConflict [
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	c1 := self newClass: #C1 with: #() traits: t1 + t2.
+	c1 := self newClass: #C1 traits: t1 + t2.
 
 	self assert: (c1 >> #m1) isConflict
 ]

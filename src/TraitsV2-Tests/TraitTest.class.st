@@ -5,37 +5,6 @@ Class {
 	#package : 'TraitsV2-Tests'
 }
 
-{ #category : 'utilities' }
-TraitTest >> createClassUsing: aTrait [
-
-	^ self class classInstaller make: [ :aBuilder |
-		  aBuilder
-			  name: #AClassForTests;
-			  traitComposition: aTrait;
-			  package: self packageNameForTests ]
-]
-
-{ #category : 'utilities' }
-TraitTest >> createTrait [
-
-	| trait |
-	trait := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: #ATraitForTests;
-			         package: self packageNameForTests;
-			         beTrait ].
-
-	trait compile: 'm1 ^1' classified: 'test'.
-	^ trait
-]
-
-{ #category : 'running' }
-TraitTest >> tearDown [
-
-	self packageOrganizer removePackage: self packageNameForTests.
-	super tearDown
-]
-
 { #category : 'tests' }
 TraitTest >> testAddAndRemoveMethodsFromSubtraits [
 	| aC2 |
@@ -441,13 +410,12 @@ TraitTest >> testPrintingClassSide [
 { #category : 'tests' }
 TraitTest >> testRemoveFromSystem [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		| aClass aTrait |
-		aTrait := self createTrait.
-		aClass := self createClassUsing: aTrait.
-		aTrait removeFromSystem: false.
-		self deny: aClass hasTraitComposition.
-		self assert: aTrait isObsolete ]
+	| aClass aTrait |
+	aTrait := self newTrait: #T1.
+	aClass := self newClass: #AClassForTests traits: aTrait.
+	aTrait removeFromSystem: false.
+	self deny: aClass hasTraitComposition.
+	self assert: aTrait isObsolete
 ]
 
 { #category : 'tests' }
@@ -464,16 +432,15 @@ TraitTest >> testTraitCompositionRespectsParenthesis [
 { #category : 'tests' }
 TraitTest >> testTraitRemoval [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		| aClass aTrait |
-		aTrait := self createTrait.
-		aClass := self createClassUsing: aTrait.
-		self assertEmpty: aClass localSelectors.
-		aClass removeFromComposition: aTrait.
-		self assertEmpty: aClass localSelectors.
-		self assertEmpty: aClass selectors.
-		self deny: aClass hasTraitComposition.
-		self deny: (aTrait traitUsers includes: aClass) ]
+	| aClass aTrait |
+	aTrait := self newTrait: #T1.
+	aClass := self newClass: #AClassForTests traits: aTrait.
+	self assertEmpty: aClass localSelectors.
+	aClass removeFromComposition: aTrait.
+	self assertEmpty: aClass localSelectors.
+	self assertEmpty: aClass selectors.
+	self deny: aClass hasTraitComposition.
+	self deny: (aTrait traitUsers includes: aClass)
 ]
 
 { #category : 'tests' }

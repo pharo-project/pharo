@@ -44,6 +44,12 @@ T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots traits: aC
 ]
 
 { #category : 'instance creation' }
+T2AbstractTest >> newClass: aName traits: aComposition [
+
+	^ self newClass: aName with: {  } traits: aComposition
+]
+
+{ #category : 'instance creation' }
 T2AbstractTest >> newClass: aName with: slots traits: aComposition [
 	^ self newClass: aName superclass: Object with: slots traits: aComposition
 ]
