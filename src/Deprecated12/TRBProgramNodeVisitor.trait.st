@@ -3,9 +3,16 @@ A TRBProgramNodeVisitor is a simple Trait that define visitor methods.
 "
 Trait {
 	#name : 'TRBProgramNodeVisitor',
-	#category : 'AST-Core-Traits',
-	#package : 'AST-Core-Traits'
+	#category : 'Deprecated12',
+	#package : 'Deprecated12'
 }
+
+{ #category : 'testing' }
+TRBProgramNodeVisitor classSide >> isDeprecated [
+	"You should subclass RBProgramNodeVisitor"
+
+	^ true
+]
 
 { #category : 'visiting' }
 TRBProgramNodeVisitor >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
