@@ -140,7 +140,7 @@ RPackageOrganizer >> addPackage: aPackage [
 
 	self basicRegisterPackage: package.
 
-	SystemAnnouncer announce: (PackageAdded to: package).
+	self pharoModelAnnouncer  announce: (PackageAdded to: package).
 
 	^ package
 ]
@@ -353,6 +353,12 @@ RPackageOrganizer >> packagesDo: aBlock [
 	self packages do: aBlock
 ]
 
+{ #category : 'accessing' }
+RPackageOrganizer >> pharoModelAnnouncer [
+
+	^ self environment pharoModelAnnouncer
+]
+
 { #category : 'system integration' }
 RPackageOrganizer >> removeClass: class [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
@@ -416,7 +422,7 @@ RPackageOrganizer >> repackageMethod: method oldProtocol: oldProtocol newProtoco
 	oldPackage removeMethod: method.
 	newPackage addMethod: method.
 
-	SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage
+	self pharoModelAnnouncer  methodRepackaged: method from: oldPackage to: newPackage
 ]
 
 { #category : 'accessing' }
@@ -449,7 +455,7 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		           ifFalse: [ aPackage ].
 
 	self basicUnregisterPackage: package.
-	SystemAnnouncer announce: (PackageRemoved to: package).
+	self pharoModelAnnouncer  announce: (PackageRemoved to: package).
 
 	^ package
 ]

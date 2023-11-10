@@ -133,6 +133,12 @@ RPackageTag >> packageName [
 	^ self package name
 ]
 
+{ #category : 'accessing' }
+RPackageTag >> pharoModelAnnouncer [
+
+	^ self environment pharoModelAnnouncer
+]
+
 { #category : 'printing' }
 RPackageTag >> printOn: aStream [
 	super printOn: aStream.
@@ -191,7 +197,7 @@ RPackageTag >> renameTo: newTagName [
 
 	self basicRenameTo: newTagName.
 
-	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
+	self pharoModelAnnouncer  announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 
 { #category : 'accessing' }

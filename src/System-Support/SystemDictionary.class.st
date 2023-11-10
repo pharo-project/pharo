@@ -331,6 +331,13 @@ SystemDictionary >> outerScope [
 ]
 
 { #category : 'accessing' }
+SystemDictionary >> pharoModelAnnouncer [
+	"This should not be hardcoded in the futurebut I should have my own instance."
+
+	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
 SystemDictionary >> poolUsers [
 	"Answer a dictionary of pool name -> classes that refer to it.
 	Also includes any globally know dictionaries (such as

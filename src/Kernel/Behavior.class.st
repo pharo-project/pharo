@@ -1336,6 +1336,12 @@ Behavior >> packageOrganizer [
 	^ self environment organization
 ]
 
+{ #category : 'accessing' }
+Behavior >> pharoModelAnnouncer [
+
+	^ self environment pharoModelAnnouncer
+]
+
 { #category : 'copying' }
 Behavior >> postCopy [
 	super postCopy.
@@ -1438,7 +1444,7 @@ Behavior >> removeSelector: aSelector [
 Behavior >> removeSelectorSilently: selector [
 	"Remove selector without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector]
+	^ self pharoModelAnnouncer suspendAllWhile: [self removeSelector: selector]
 ]
 
 { #category : 'cleanup' }
