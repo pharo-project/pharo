@@ -48,7 +48,7 @@ Class {
 { #category : 'cleanup' }
 PharoImage class >> cleanUp [
 
-	Smalltalk image cleanOutUndeclared
+	self current image cleanOutUndeclared
 ]
 
 { #category : 'settings' }
@@ -66,7 +66,15 @@ PharoImage class >> compilerClass: aClass [
 
 { #category : 'instance creation' }
 PharoImage class >> current [
-	^Smalltalk
+
+	^ Pharo
+]
+
+{ #category : 'class initialization' }
+PharoImage class >> initialize [
+
+	self environment at: #Pharo put: Smalltalk.
+	(self environment lookupVar: #Smalltalk) isDeprecated: true
 ]
 
 { #category : 'instance creation' }
@@ -89,7 +97,7 @@ PharoImage class >> startUp: isImageStarting [
 
 { #category : 'image' }
 PharoImage class >> wordSize [
-	^ Smalltalk vm wordSize
+	^ self current vm wordSize
 ]
 
 { #category : 'startup - shutdown' }
@@ -394,7 +402,7 @@ PharoImage >> cleanUp: aggressive except: exclusions confirming: aBool [
 Are you sure you want to proceed?') ifFalse: [^self]].
 
 	"Find all classes implementing #cleanUp or cleanUp:"
-	classes := Smalltalk allClasses select: [:aClass|
+	classes := self allClasses select: [:aClass|
 		(aClass class includesSelector: #cleanUp)
 			or: [aClass class includesSelector: #cleanUp:]].
 
@@ -638,7 +646,7 @@ PharoImage >> fixObsoleteBindings [
 				trace: 'Binding: ';
 				traceCr: obsName.
 			realName := obsName copyReplaceAll: 'AnObsolete' with: ''.
-			realClass := Smalltalk globals at: realName asSymbol ifAbsent: [ UndefinedObject ].
+			realClass := self globals at: realName asSymbol ifAbsent: [ UndefinedObject ].
 			binding key: binding key value: realClass ].
 		"do not forget to flush the JIT cache"
 		obsoleteBindings ifNotEmpty: [ method flushCache ] ]
@@ -887,9 +895,9 @@ PharoImage >> isInteractiveGraphic [
 	^ false
 ]
 
-{ #category : 'printing' }
+{ #category : 'self evaluating' }
 PharoImage >> isSelfEvaluating [
-	self == Smalltalk ifTrue: [^true].
+	self == Pharo ifTrue: [^true].
 	^super isSelfEvaluating
 ]
 
@@ -1107,8 +1115,8 @@ PharoImage >> lowSpaceWatcher [
 	self primLowSpaceSemaphore: nil.
 	LowSpaceProcess := nil.
 	"The process that was active at the time of the low space interrupt."
-	preemptedProcess := Smalltalk specialObjectsArray at: 23.
-	Smalltalk specialObjectsArray at: 23 put: nil.
+	preemptedProcess := self specialObjectsArray at: 23.
+	self specialObjectsArray at: 23 put: nil.
 	"Note: user now unprotected until the low space watcher is re-installed"
 	self memoryHogs isEmpty
 		ifFalse: [free := self bytesLeft.
@@ -1117,7 +1125,7 @@ PharoImage >> lowSpaceWatcher [
 
 	UIManager default lowSpaceWatcherDefaultAction: preemptedProcess.
 	"We need to reinstall the lowSpaceWatcher"
-	Smalltalk installLowSpaceWatcher
+	self installLowSpaceWatcher
 ]
 
 { #category : 'memory space' }
@@ -1288,7 +1296,7 @@ PharoImage >> openLog [
 
 	^ [ZnNewLineWriterStream on: (ZnCharacterWriteStream
 		on:
-			((File named: Smalltalk logFileName) writeStream
+			((File named: self logFileName) writeStream
 				setToEnd;
 				yourself)
 		encoding: 'utf8')] on: FileException do: [ NullStream new ]
@@ -1400,8 +1408,8 @@ PharoImage >> primitiveGetSpecialObjectsArray [
 
 { #category : 'printing' }
 PharoImage >> printOn: aStream [
-	self == Smalltalk ifFalse: [^super printOn: aStream].
-	aStream nextPutAll: 'Smalltalk'
+	self == Pharo ifFalse: [^super printOn: aStream].
+	aStream nextPutAll: 'Pharo'
 ]
 
 { #category : 'private' }
@@ -1412,7 +1420,7 @@ PharoImage >> privSaveImageWithCleanup [
 	20 timesRepeat: [
 		(Delay forMilliseconds: 50) wait.
 		Processor yield.
-		Smalltalk garbageCollect. ].
+		self garbageCollect. ].
 
 	[
 		self snapshot: true andQuit: true.
@@ -1423,7 +1431,7 @@ PharoImage >> privSaveImageWithCleanup [
 	  		rep nextPutAll: thisContext stack size asString.
 	 	  	thisContext stack copy withIndexDo: [:stck :i |
 				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] onErrorDo: []]].
-		Smalltalk exitFailure ]
+		self exitFailure ]
 ]
 
 { #category : 'snapshot and quit' }
@@ -1438,7 +1446,7 @@ PharoImage >> quitPrimitive [
 
 { #category : 'compiler' }
 PharoImage >> recompile [
-	Smalltalk globals allClassesAndTraits
+	self globals allClassesAndTraits
 		do: [:classOrTrait | classOrTrait recompile]
 		displayingProgress: 'Recompiling all classes and traits'
 ]
@@ -1637,10 +1645,10 @@ PharoImage >> saveChangesInFileNamed: aString [
 	changesFile := aString asFileReference.
 	changesFile parent ensureCreateDirectory.
 	"Ensure that the destination file is not the same as the original one"
-	(Smalltalk changesFile absolutePath = changesFile absolutePath)
+	(self changesFile absolutePath = changesFile absolutePath)
 		ifFalse: [
 			changesFile deleteIfAbsent: [  ].
-			Smalltalk changesFile copyTo: changesFile ]
+			self changesFile copyTo: changesFile ]
 ]
 
 { #category : 'saving' }
@@ -1798,9 +1806,9 @@ PharoImage >> specialSelectorAt: anInteger [
 
 { #category : 'special objects' }
 PharoImage >> specialSelectorIndexOrNil: selector [
-	1 to: Smalltalk specialSelectorSize do:
+	1 to: self specialSelectorSize do:
 		[:index |
-		(Smalltalk specialSelectorAt: index) == selector
+		(self specialSelectorAt: index) == selector
 			ifTrue: [^index ]].
 	^ nil
 ]
