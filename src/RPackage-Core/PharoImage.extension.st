@@ -1,7 +1,7 @@
-Extension { #name : 'SmalltalkImage' }
+Extension { #name : 'PharoImage' }
 
 { #category : '*RPackage-Core' }
-SmalltalkImage >> packages [
+PharoImage >> packages [
 
 	^ RPackageOrganizer default packages
 ]

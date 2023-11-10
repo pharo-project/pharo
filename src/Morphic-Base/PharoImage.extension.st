@@ -1,7 +1,7 @@
-Extension { #name : 'SmalltalkImage' }
+Extension { #name : 'PharoImage' }
 
 { #category : '*Morphic-Base' }
-SmalltalkImage >> aboutThisSystem [
+PharoImage >> aboutThisSystem [
 	"Identify software version"
 
 	AboutDialogWindow openForPharo

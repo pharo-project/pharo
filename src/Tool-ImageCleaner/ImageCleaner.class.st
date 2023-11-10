@@ -118,7 +118,7 @@ ImageCleaner >> cleanUpProcesses [
 			Processor activeProcess.
 			FinalizationProcess runningFinalizationProcess.
 			Processor backgroundProcess.
-			SmalltalkImage current lowSpaceWatcherProcess.
+			PharoImage current lowSpaceWatcherProcess.
 			UIManager default uiProcess.
 			Delay schedulingProcess} includes: p ])
 		do: [ :p |

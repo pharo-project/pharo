@@ -134,7 +134,7 @@ BehaviorTest >> testDefinedVariables [
 	self assert: Behavior new definedVariables isEmpty.
 	self assert: Point definedVariables equals: Point instanceVariables.
 	self assert: EmptyLayout class definedVariables first name equals: #instance.
-	self assert: (SmalltalkImage definedVariables includes: (SmalltalkImage classVariableNamed: #CompilerClass))
+	self assert: (PharoImage definedVariables includes: (PharoImage classVariableNamed: #CompilerClass))
 ]
 
 { #category : 'tests' }

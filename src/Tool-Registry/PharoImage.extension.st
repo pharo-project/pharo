@@ -1,7 +1,7 @@
-Extension { #name : 'SmalltalkImage' }
+Extension { #name : 'PharoImage' }
 
 { #category : '*Tool-Registry' }
-SmalltalkImage >> tools [
+PharoImage >> tools [
 
 	^ Tools ifNil: [
 		Tools := PharoCommonTools new ]
