@@ -1,6 +1,6 @@
 Class {
 	#name : 'TraitTest',
-	#superclass : 'TraitsTestCase',
+	#superclass : 'AbstractTraitsOnPreparedModelTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
@@ -479,7 +479,7 @@ TraitTest >> testTraitRemoval [
 { #category : 'tests' }
 TraitTest >> testTraitsMethodClassSanity [
 
-	((self createdClassesAndTraits select: [ :behavior | behavior isTrait ]) flatCollect: #traitUsers) asSet do: [ :trait |
+	((self classesAndTraitsInTestPackage select: [ :behavior | behavior isTrait ]) flatCollect: #traitUsers) asSet do: [ :trait |
 		trait selectorsDo: [ :selector | self should: [ (trait >> selector) methodClass == trait ] ] ]
 ]
 

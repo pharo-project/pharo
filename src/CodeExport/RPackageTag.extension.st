@@ -17,8 +17,7 @@ RPackageTag >> fileOutOn: aFileStream [
 	with the category and any requested shared pools in the right order."
 
 	| toExport traits |
-	traits := (self classes select: [ :class | class isTrait ]) asSortedCollection: [ :t1 :t2 |
-		          (t2 traitComposition allTraits includes: t1) or: [ (t1 traitComposition allTraits includes: t2) not ] ].
+	traits := Trait traitDependencyOrder: (self classes select: [ :class | class isTrait ]).
 
 	toExport := traits asArray , (Class superclassOrder: (self classes reject: [ :class | class isTrait ])) asArray.
 

@@ -1,6 +1,6 @@
 Class {
 	#name : 'TraitPureBehaviorTest',
-	#superclass : 'TraitsTestCase',
+	#superclass : 'AbstractTraitsOnPreparedModelTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }

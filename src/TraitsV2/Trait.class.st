@@ -44,6 +44,24 @@ Trait class >> << aSymbolOrAClassSideTrait [
 		  yourself
 ]
 
+{ #category : 'file in/out' }
+Trait class >> traitDependencyOrder: traitsToSort [
+	"Given a collection of traits, return a the collection sorted so that traits used by other traits are before them."
+
+	| visited result depthFirstSearch |
+	visited := OrderedCollection new.
+	result := OrderedCollection new.
+
+	depthFirstSearch := [ :trait |
+	                    visited add: trait.
+	                    trait traitComposition traits do: [ :usedTrait | (visited includes: usedTrait) ifFalse: [ depthFirstSearch value: usedTrait ] ].
+	                    result add: trait ].
+
+	traitsToSort keysDo: [ :trait | (visited includes: trait) ifFalse: [ depthFirstSearch value: trait ] ].
+
+	^ result
+]
+
 { #category : 'accessing' }
 Trait >> + anotherTrait [
 	"I return my self in a sequence with anotherTrait"

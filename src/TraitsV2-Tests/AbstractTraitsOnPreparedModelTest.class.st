@@ -1,11 +1,6 @@
-"
-I define objects to be used for testing traits.
-
-Browsr references to myself.
-"
 Class {
-	#name : 'TraitsResource',
-	#superclass : 'TestResource',
+	#name : 'AbstractTraitsOnPreparedModelTest',
+	#superclass : 'T2AbstractTest',
 	#instVars : [
 		't1',
 		't2',
@@ -34,157 +29,134 @@ Class {
 	#package : 'TraitsV2-Tests'
 }
 
+{ #category : 'testing' }
+AbstractTraitsOnPreparedModelTest class >> isUnitTest [
+	^false
+]
+
+{ #category : 'utilities' }
+AbstractTraitsOnPreparedModelTest >> assertPrints: aString like: anotherString [
+	self assert: (aString copyWithout: $ ) equals: (anotherString copyWithout: $ )
+]
+
 { #category : 'accessing' }
-TraitsResource >> c1 [
+AbstractTraitsOnPreparedModelTest >> c1 [
 	^c1
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c10 [
+AbstractTraitsOnPreparedModelTest >> c10 [
 	^c10
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c10: anObject [
+AbstractTraitsOnPreparedModelTest >> c10: anObject [
 	^c10 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c11 [
+AbstractTraitsOnPreparedModelTest >> c11 [
 	^c11
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c11: anObject [
+AbstractTraitsOnPreparedModelTest >> c11: anObject [
 	^c11 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c1: anObject [
+AbstractTraitsOnPreparedModelTest >> c1: anObject [
 	^c1 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c2 [
+AbstractTraitsOnPreparedModelTest >> c2 [
 	^c2
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c2: anObject [
+AbstractTraitsOnPreparedModelTest >> c2: anObject [
 	^c2 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c3 [
+AbstractTraitsOnPreparedModelTest >> c3 [
 	^c3
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c3: anObject [
+AbstractTraitsOnPreparedModelTest >> c3: anObject [
 	^c3 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c4 [
+AbstractTraitsOnPreparedModelTest >> c4 [
 	^c4
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c4: anObject [
+AbstractTraitsOnPreparedModelTest >> c4: anObject [
 	^c4 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c5 [
+AbstractTraitsOnPreparedModelTest >> c5 [
 	^c5
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c5: anObject [
+AbstractTraitsOnPreparedModelTest >> c5: anObject [
 	^c5 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c6 [
+AbstractTraitsOnPreparedModelTest >> c6 [
 	^c6
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c6: anObject [
+AbstractTraitsOnPreparedModelTest >> c6: anObject [
 	^c6 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c7 [
+AbstractTraitsOnPreparedModelTest >> c7 [
 	^c7
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c7: anObject [
+AbstractTraitsOnPreparedModelTest >> c7: anObject [
 	^c7 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c8 [
+AbstractTraitsOnPreparedModelTest >> c8 [
 	^c8
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c8: anObject [
+AbstractTraitsOnPreparedModelTest >> c8: anObject [
 	^c8 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c9 [
+AbstractTraitsOnPreparedModelTest >> c9 [
 	^c9
 ]
 
 { #category : 'accessing' }
-TraitsResource >> c9: anObject [
+AbstractTraitsOnPreparedModelTest >> c9: anObject [
 	^c9 := anObject
 ]
 
-{ #category : 'accessing' }
-TraitsResource >> createdClassesAndTraits [
-
-	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
-]
-
-{ #category : 'utilities' }
-TraitsResource >> newClass: aSymbol superclass: aClass traits: aTraitComposition [
-
-	^ self class classInstaller make: [ :aBuilder |
-		  aBuilder
-			  name: aSymbol;
-			  superclass: aClass;
-			  traitComposition: aTraitComposition;
-			  package: self packageNameForTests ]
-]
-
-{ #category : 'utilities' }
-TraitsResource >> newTrait: aSymbol traits: aTraitComposition [
-
-	^ self class classInstaller make: [ :aBuilder |
-		  aBuilder
-			  name: aSymbol;
-			  traitComposition: aTraitComposition;
-			  package: self packageNameForTests;
-			  beTrait ]
-]
-
-{ #category : 'helpers' }
-TraitsResource >> packageNameForTests [
-
-	^ #'Generated-Trait-Test-Package'
-]
-
 { #category : 'running' }
-TraitsResource >> setUp [
+AbstractTraitsOnPreparedModelTest >> setUp [
 	"Please note, that most tests rely on this setup of traits and
 	classes - and that especially the order of the definitions matters."
 	"SetUpCount := SetUpCount + 1."
 
 	super setUp.
+	'Setup' traceCr.
 	SystemAnnouncer uniqueInstance suspendAllWhile:
 			[self t1: (self newTrait: #T1
 						traits: { }).
@@ -266,7 +238,7 @@ TraitsResource >> setUp [
 ]
 
 { #category : 'running' }
-TraitsResource >> setUpTranslatingRequiresFixture [
+AbstractTraitsOnPreparedModelTest >> setUpTranslatingRequiresFixture [
 	self c6: (self
 				newClass: #C6
 				superclass: ProtoObject
@@ -288,7 +260,7 @@ TraitsResource >> setUpTranslatingRequiresFixture [
 ]
 
 { #category : 'running' }
-TraitsResource >> setUpTrivialRequiresFixture [
+AbstractTraitsOnPreparedModelTest >> setUpTrivialRequiresFixture [
 	self c3: (self
 				newClass: #C3
 				superclass: ProtoObject
@@ -299,7 +271,7 @@ TraitsResource >> setUpTrivialRequiresFixture [
 ]
 
 { #category : 'running' }
-TraitsResource >> setUpTwoLevelRequiresFixture [
+AbstractTraitsOnPreparedModelTest >> setUpTwoLevelRequiresFixture [
 	self c4: (self
 				newClass: #C4
 				superclass: ProtoObject
@@ -315,119 +287,117 @@ TraitsResource >> setUpTwoLevelRequiresFixture [
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t1 [
+AbstractTraitsOnPreparedModelTest >> t1 [
 	^t1
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t10 [
+AbstractTraitsOnPreparedModelTest >> t10 [
 	^t10
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t10: anObject [
+AbstractTraitsOnPreparedModelTest >> t10: anObject [
 	^t10 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t11 [
+AbstractTraitsOnPreparedModelTest >> t11 [
 	^t11
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t11: anObject [
+AbstractTraitsOnPreparedModelTest >> t11: anObject [
 	^t11 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t12 [
+AbstractTraitsOnPreparedModelTest >> t12 [
 	^t12
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t12: anObject [
+AbstractTraitsOnPreparedModelTest >> t12: anObject [
 	^t12 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t1: anObject [
+AbstractTraitsOnPreparedModelTest >> t1: anObject [
 	^t1 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t2 [
+AbstractTraitsOnPreparedModelTest >> t2 [
 	^t2
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t2: anObject [
+AbstractTraitsOnPreparedModelTest >> t2: anObject [
 	^t2 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t3 [
+AbstractTraitsOnPreparedModelTest >> t3 [
 	^t3
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t3: anObject [
+AbstractTraitsOnPreparedModelTest >> t3: anObject [
 	^t3 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t4 [
+AbstractTraitsOnPreparedModelTest >> t4 [
 	^t4
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t4: anObject [
+AbstractTraitsOnPreparedModelTest >> t4: anObject [
 	^t4 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t5 [
+AbstractTraitsOnPreparedModelTest >> t5 [
 	^t5
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t5: anObject [
+AbstractTraitsOnPreparedModelTest >> t5: anObject [
 	^t5 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t6 [
+AbstractTraitsOnPreparedModelTest >> t6 [
 	^t6
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t6: anObject [
+AbstractTraitsOnPreparedModelTest >> t6: anObject [
 	^t6 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t8 [
+AbstractTraitsOnPreparedModelTest >> t8 [
 	^t8
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t8: anObject [
+AbstractTraitsOnPreparedModelTest >> t8: anObject [
 	^t8 := anObject
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t9 [
+AbstractTraitsOnPreparedModelTest >> t9 [
 	^t9
 ]
 
 { #category : 'accessing' }
-TraitsResource >> t9: anObject [
+AbstractTraitsOnPreparedModelTest >> t9: anObject [
 	^t9 := anObject
 ]
 
 { #category : 'running' }
-TraitsResource >> tearDown [
-
-	self t1: (self t2: (self t3: (self t4: (self t5: (self t6: (self c1: (self c2: (self c3: (self c4: (self c5: (self c6: (self c7: (self c8: nil))))))))))))).
+AbstractTraitsOnPreparedModelTest >> tearDown [
 
 	self packageOrganizer removePackage: self packageNameForTests.
 
