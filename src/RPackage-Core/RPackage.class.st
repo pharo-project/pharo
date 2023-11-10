@@ -73,7 +73,6 @@ Class {
 
 { #category : 'class initialization' }
 RPackage class >> initialize [
-	AdditionalMethodState persistProperty: #extensionPackage.
 	Properties
 		ifNil: [ self initializeProperties ]
 		ifNotNil: [
