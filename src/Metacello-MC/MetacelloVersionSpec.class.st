@@ -1096,7 +1096,7 @@ MetacelloVersionSpec >> updatedPackageSpecs [
 { #category : 'private' }
 MetacelloVersionSpec >> versionClass [
 
-	^MetacelloMCVersion
+	^MetacelloVersion
 ]
 
 { #category : 'private' }

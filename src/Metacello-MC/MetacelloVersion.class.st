@@ -1,16 +1,52 @@
 Class {
-	#name : 'MetacelloMCVersion',
-	#superclass : 'MetacelloVersion',
+	#name : 'MetacelloVersion',
+	#superclass : 'Magnitude',
 	#instVars : [
-		'loaderPolicy'
+		'loaderPolicy',
+		'versionStatus',
+		'importedVersions',
+		'spec',
+		'versionNumber'
 	],
 	#category : 'Metacello-MC-Model',
 	#package : 'Metacello-MC',
 	#tag : 'Model'
 }
 
+{ #category : 'instance creation' }
+MetacelloVersion class >> fromSpec: aMetacelloVersionSpec [
+    ^ (self new versionNumber: aMetacelloVersionSpec versionNumber)
+        spec: aMetacelloVersionSpec;
+        yourself
+]
+
+{ #category : 'instance creation' }
+MetacelloVersion class >> fromString: aString [
+
+	^self new versionNumber: aString asMetacelloVersionNumber
+]
+
+{ #category : 'class initialization' }
+MetacelloVersion class >> initialize [ 
+	self deprecatedAliases: { #MetacelloMCVersion }
+]
+
+{ #category : 'comparing' }
+MetacelloVersion >> < aMetacelloVersion [
+
+	aMetacelloVersion species = self species ifFalse: [ ^false ].
+	^self versionNumber < aMetacelloVersion versionNumber
+]
+
+{ #category : 'comparing' }
+MetacelloVersion >> = aMetacelloVersion [
+
+	aMetacelloVersion species = self species ifFalse: [ ^false ].
+	^self versionNumber = aMetacelloVersion versionNumber
+]
+
 { #category : 'querying' }
-MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray [
+MetacelloVersion >> allPackagesForSpecNamed: aStringOrArray [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including the package and the transitive closure on 
 			its #requires: and #includes: fields.
@@ -26,7 +62,7 @@ MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray [
 ]
 
 { #category : 'querying' }
-MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray ifAbsent: aBlock [
+MetacelloVersion >> allPackagesForSpecNamed: aStringOrArray ifAbsent: aBlock [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including the package and the transitive closure on 
 			its #requires: and #includes: fields.
@@ -45,7 +81,7 @@ MetacelloMCVersion >> allPackagesForSpecNamed: aStringOrArray ifAbsent: aBlock [
 ]
 
 { #category : 'private' }
-MetacelloMCVersion >> allPackagesForSpecs: pkgSpecs visited: visited [
+MetacelloVersion >> allPackagesForSpecs: pkgSpecs visited: visited [
 
  
 	| coll |
@@ -56,8 +92,24 @@ MetacelloMCVersion >> allPackagesForSpecs: pkgSpecs visited: visited [
 	^ coll values asOrderedCollection
 ]
 
+{ #category : 'querying' }
+MetacelloVersion >> author [
+
+	^self spec author value
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> basicSpec [
+    ^ self spec
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> blessing [
+    ^ self basicSpec blessing value
+]
+
 { #category : 'private' }
-MetacelloMCVersion >> computeVersionStatus [
+MetacelloVersion >> computeVersionStatus [
 	"
 		#allLoadedToSpec - all projects and packages are loaded and match specification
 		#loadedToSpec - all loaded projects and packages match specifications (at least one package loaded)
@@ -70,27 +122,39 @@ MetacelloMCVersion >> computeVersionStatus [
 ]
 
 { #category : 'querying' }
-MetacelloMCVersion >> currentlyLoadedClassesInVersion [
+MetacelloVersion >> currentlyLoadedClassesInVersion [
 
 	^self spec currentlyLoadedClassesInVersion
 ]
 
 { #category : 'querying' }
-MetacelloMCVersion >> defaultPackageNamesToLoad [
+MetacelloVersion >> defaultPackageNamesToLoad [
 	"Answer the list of packages and projects to be loaded --> packages already loaded"
 	
 	^ self defaultPackageNamesToLoad: self spec defaultPackageNames
 ]
 
 { #category : 'querying' }
-MetacelloMCVersion >> defaultPackageNamesToLoad: defaultList [
+MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	
 	^ self packageAndProjectNamesToLoad: defaultList loader: self loader
 ]
 
+{ #category : 'querying' }
+MetacelloVersion >> description [
+    ^ self basicSpec description value
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> difference: aMetacelloVersion [
+	"Return a a dictionary of additions, removals and modifications"
+	
+	^self spec difference: aMetacelloVersion spec
+]
+
 { #category : 'private' }
-MetacelloMCVersion >> doFetchRequiredFromArray: anArray [
+MetacelloVersion >> doFetchRequiredFromArray: anArray [
 
 	| oldPolicy oldBypassProgress displayString |
 	displayString := self versionNumber printString, ' of ', self spec projectLabel.
@@ -108,7 +172,7 @@ MetacelloMCVersion >> doFetchRequiredFromArray: anArray [
 ]
 
 { #category : 'private' }
-MetacelloMCVersion >> doLoadRequiredFromArray: anArray [
+MetacelloVersion >> doLoadRequiredFromArray: anArray [
 
 	| displayString oldPolicy oldBypassProgress |
 	displayString := self versionNumber printString, ' of ', self spec projectLabel.
@@ -129,7 +193,7 @@ MetacelloMCVersion >> doLoadRequiredFromArray: anArray [
 ]
 
 { #category : 'private' }
-MetacelloMCVersion >> doRecordRequiredFromArray: anArray [
+MetacelloVersion >> doRecordRequiredFromArray: anArray [
 
 	| originalLoader oldPolicy displayString oldBypassProgress |
 	displayString := self versionNumber printString, ' of ', self spec projectLabel.
@@ -152,7 +216,7 @@ MetacelloMCVersion >> doRecordRequiredFromArray: anArray [
 ]
 
 { #category : 'private' }
-MetacelloMCVersion >> executeLoadFromArray: anArray [
+MetacelloVersion >> executeLoadFromArray: anArray [
 
 	| loader |
 	loader := MetacelloMCVersionSpecLoader on: self spec.
@@ -161,20 +225,27 @@ MetacelloMCVersion >> executeLoadFromArray: anArray [
 	^ loader load
 ]
 
+{ #category : 'querying' }
+MetacelloVersion >> expandToLoadableSpecNames: nameList [
+	"Just like #resolveToLoadableSpecs:, but returns list of spec names instead of specs"
+	
+	^self spec expandToLoadableSpecNames: nameList
+]
+
 { #category : 'actions' }
-MetacelloMCVersion >> fetch [
+MetacelloVersion >> fetch [
 
 	^self doFetchRequiredFromArray: self spec defaultPackageNames
 ]
 
 { #category : 'actions' }
-MetacelloMCVersion >> fetch: required [
+MetacelloVersion >> fetch: required [
 
 	^required fetchRequiredForMetacelloMCVersion: self
 ]
 
 { #category : 'private' }
-MetacelloMCVersion >> fetchRequiredFromArray: anArray [
+MetacelloVersion >> fetchRequiredFromArray: anArray [
 	| originalLoader displayString newLoader |
 	originalLoader := self versionSpec loader.
 	newLoader := originalLoader fetchingSpecLoader.
@@ -189,27 +260,89 @@ MetacelloMCVersion >> fetchRequiredFromArray: anArray [
 		displaying: displayString
 ]
 
+{ #category : 'querying' }
+MetacelloVersion >> groups [
+	"Answers the list of groups associated with this version"
+	
+	| groups |
+	groups := OrderedCollection new.
+	self spec projectDo: [:ignored | ] packageDo: [:ignored | ] groupDo: [:grp | groups add: grp ].
+	^groups
+]
+
+{ #category : 'comparing' }
+MetacelloVersion >> hash [
+
+	^self versionNumber hash
+]
+
 { #category : 'accessing' }
-MetacelloMCVersion >> ignoreImage: aBool [ 
+MetacelloVersion >> ignoreImage: aBool [ 
 	"by default ignoreImage is false"
 	
 	self loaderPolicy ignoreImage: aBool
 ]
 
+{ #category : 'accessing' }
+MetacelloVersion >> importedVersions [
+
+	^ importedVersions ifNil: [ importedVersions := #(  ) ]
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> importedVersions: aCollection [
+
+	importedVersions := aCollection
+]
+
+{ #category : 'testing' }
+MetacelloVersion >> isAllLoadedToSpec [
+	"all projects and packages are loaded and match specification"
+	
+	^self spec isAllLoadedToSpec
+]
+
+{ #category : 'testing' }
+MetacelloVersion >> isLoadedMatchConstraints [
+	"all loaded projects and packages match constraints"
+	
+	^self spec isLoadedMatchConstraints
+]
+
+{ #category : 'testing' }
+MetacelloVersion >> isLoadedToSpec [
+	"all loaded projects and packages match specifications"
+	
+	^self spec isLoadedToSpec
+]
+
+{ #category : 'testing' }
+MetacelloVersion >> isPossibleBaseline [
+
+	^self spec isPossibleBaseline
+]
+
+{ #category : 'testing' }
+MetacelloVersion >> isSomethingLoaded [
+	"at least one project or package has been loaded"
+	
+	^self spec isSomethingLoaded
+]
+
 { #category : 'actions' }
-MetacelloMCVersion >> load [
+MetacelloVersion >> load [
 
 	^self doLoadRequiredFromArray: self spec defaultPackageNames
 ]
 
 { #category : 'actions' }
-MetacelloMCVersion >> load: required [
+MetacelloVersion >> load: required [
 
 	^required loadRequiredForMetacelloMCVersion: self
 ]
 
 { #category : 'private' }
-MetacelloMCVersion >> loadRequiredFromArray: anArray [
+MetacelloVersion >> loadRequiredFromArray: anArray [
 
 	| displayString |
 	displayString := 'Loading ', self versionNumber printString, ' of ', self spec projectLabel.
@@ -218,25 +351,37 @@ MetacelloMCVersion >> loadRequiredFromArray: anArray [
 		displaying: displayString
 ]
 
+{ #category : 'querying' }
+MetacelloVersion >> loader [
+
+	^self spec loader
+]
+
 { #category : 'private' }
-MetacelloMCVersion >> loader: aLoader [
+MetacelloVersion >> loader: aLoader [
 
 	self versionSpec loader: aLoader
 ]
 
 { #category : 'accessing' }
-MetacelloMCVersion >> loaderPolicy [
+MetacelloVersion >> loaderPolicy [
 
 	^ loaderPolicy ifNil: [ loaderPolicy := MetacelloLoaderPolicy new ]
 ]
 
 { #category : 'accessing' }
-MetacelloMCVersion >> loaderPolicy: anObject [
+MetacelloVersion >> loaderPolicy: anObject [
 	loaderPolicy := anObject
 ]
 
+{ #category : 'testing' }
+MetacelloVersion >> name [
+
+	^self versionString
+]
+
 { #category : 'querying' }
-MetacelloMCVersion >> packageAndProjectNamesToLoad: defaultList loader: aLoader [
+MetacelloVersion >> packageAndProjectNamesToLoad: defaultList loader: aLoader [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	
 	| loadedPackageNames projectMap loadedProjectNames list |
@@ -272,7 +417,21 @@ MetacelloMCVersion >> packageAndProjectNamesToLoad: defaultList loader: aLoader 
 ]
 
 { #category : 'querying' }
-MetacelloMCVersion >> packages [
+MetacelloVersion >> packageNamed: aString [
+
+	^self packageNamed: aString ifAbsent: [ ^nil ].
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> packageNamed: aString ifAbsent: aBlock [
+
+	^ (self spec packageNamed: aString ifAbsent: [  ])
+		  ifNil: [ aBlock value ]
+		  ifNotNil: [ :pkg | pkg referencedSpec ]
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> packages [
 	"Answers the list of packages associated with this version"
 
 	| packages |
@@ -282,7 +441,7 @@ MetacelloMCVersion >> packages [
 ]
 
 { #category : 'querying' }
-MetacelloMCVersion >> packagesForSpecNamed: aString [
+MetacelloVersion >> packagesForSpecNamed: aString [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including only the package. #requires: and #includes:
 			fields in the package are ignored.
@@ -295,7 +454,7 @@ MetacelloMCVersion >> packagesForSpecNamed: aString [
 ]
 
 { #category : 'querying' }
-MetacelloMCVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
+MetacelloVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including only the package. #requires: and #includes:
 			fields in the package are ignored.
@@ -309,21 +468,158 @@ MetacelloMCVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
 	^pkgSpec resolveToPackagesIn: self spec visited: MetacelloVisitedPackages new
 ]
 
+{ #category : 'printing' }
+MetacelloVersion >> printOn: aStream [
+    | label vs |
+    (#(structural broken) includes: self blessing) not
+        ifTrue: [ 
+            (vs := self versionStatus) == #'somethingLoaded'
+                ifTrue: [ aStream nextPutAll: '<>' ].
+            vs == #'loadedMatchConstraints'
+                ifTrue: [ aStream nextPutAll: '>=' ].
+            vs == #'loadedToSpec'
+                ifTrue: [ aStream nextPut: $~ ] ].
+    self versionNumber printOn: aStream.
+    self basicSpec ~~ nil
+        ifTrue: [ 
+            (label := self projectLabel) isEmpty
+                ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ]
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> project [
+    ^ self basicSpec project
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> projectLabel [
+    ^ self basicSpec projectLabel
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> projects [
+	"Answers the list of projects associated with this version"
+
+	| projects |
+	projects := OrderedCollection new.
+	self spec projectDo: [:prj | projects add: prj projectReference ] packageDo: [:ignored | ] groupDo: [:ignored | ].
+	^projects
+]
+
 { #category : 'actions' }
-MetacelloMCVersion >> record [
+MetacelloVersion >> record [
 
 	^self doRecordRequiredFromArray: self spec defaultPackageNames
 ]
 
 { #category : 'actions' }
-MetacelloMCVersion >> record: required [
+MetacelloVersion >> record: required [
 
 	^required recordRequiredForMetacelloMCVersion: self
 ]
 
+{ #category : 'querying' }
+MetacelloVersion >> resolveToLoadableSpecs: nameList [
+	"Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
+	not traversed during the transitive closure. The scope is that of the version itself.
+	   If the spec is a package, answer a list including the package and the transitive closure on 
+			its #requires: and #includes: fields.
+	   If the spec is a project, answer the project.
+	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
+			Groups in the #includes: field are expanded following the transitive closure on groups"
+
+	^self spec resolveToLoadableSpecs: nameList
+]
+
 { #category : 'accessing' }
-MetacelloMCVersion >> silently: aBool [ 
+MetacelloVersion >> silently: aBool [ 
 	"by default silently is false"
 	
 	self loaderPolicy silently: aBool
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> spec [
+
+	^spec
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> spec: aMetacellVersionSpec [
+
+	spec := aMetacellVersionSpec
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> timestamp [
+    ^ self basicSpec timestamp value
+]
+
+{ #category : 'actions' }
+MetacelloVersion >> unload [
+
+	^self spec unload
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> versionKey [
+    "version printString, without the versionStatus decorations, suitable for using as a unique key for the 
+	 receiver in a dictionary"
+
+    ^ String
+        streamContents: [ :aStream | 
+            | label |
+            self versionNumber printOn: aStream.
+            self basicSpec ~~ nil
+                ifTrue: [ 
+                    (label := self projectLabel) isEmpty
+                        ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ] ]
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> versionNumber [
+
+	^versionNumber
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> versionNumber: aVersionNumber [
+
+	versionNumber := aVersionNumber
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> versionNumberFrom: aString [
+    ^ self versionNumber class fromString: aString
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> versionSpec [
+
+	^self spec
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> versionStatus [
+
+	^ versionStatus ifNil: [ versionStatus := self computeVersionStatus ]
+]
+
+{ #category : 'accessing' }
+MetacelloVersion >> versionStatus: aSymbol [
+
+	versionStatus := aSymbol
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> versionString [
+
+	^self versionNumber versionString
+]
+
+{ #category : 'comparing' }
+MetacelloVersion >> ~> aMetacelloVersion [
+
+	aMetacelloVersion species = self species ifFalse: [ ^false ].
+	^self versionNumber ~> aMetacelloVersion versionNumber
 ]
