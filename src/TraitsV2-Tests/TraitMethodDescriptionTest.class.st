@@ -58,7 +58,7 @@ TraitMethodDescriptionTest >> testConflictMethodCreation [
 { #category : 'tests' }
 TraitMethodDescriptionTest >> testConflictingProtocols [
 
-	| t7 t8 |
+	| t7 tr8 |
 	self t2 compile: 'm11' classified: #catY.
 	self assert: (self t4 protocolOfSelector: #m11) name equals: #catX.
 	self assert: (self t5 protocolOfSelector: #m11) name equals: Protocol traitConflictName.
@@ -70,12 +70,12 @@ TraitMethodDescriptionTest >> testConflictingProtocols [
 	self assert: (t7 protocolOfSelector: #m11) name equals: #catY.
 	self deny: (t7 hasProtocol: Protocol traitConflictName).
 	self t1 compile: 'm11' classified: #cat1.
-	t8 := self newTrait: #T8 traits: self t1 + self t2.
-	t8 classify: #m11 under: #cat1.
+	tr8 := self newTrait: #T8 traits: self t1 + self t2.
+	tr8 classify: #m11 under: #cat1.
 	self t1 classify: #m11 under: #catZ.
 	self assert: (self t4 protocolOfSelector: #m11) name equals: #catX.
 	self assert: (self t5 protocolOfSelector: #m11) name equals: Protocol traitConflictName.
-	self assert: (t8 protocolOfSelector: #m11) name equals: #catZ
+	self assert: (tr8 protocolOfSelector: #m11) name equals: #catZ
 ]
 
 { #category : 'tests' }
