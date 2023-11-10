@@ -73,6 +73,7 @@ PharoImage class >> current [
 { #category : 'class initialization' }
 PharoImage class >> initialize [
 
+	self deprecatedAliases: { #SmalltalkImage }.
 	self environment at: #Pharo put: Smalltalk.
 	(self environment lookupVar: #Smalltalk) isDeprecated: true
 ]
