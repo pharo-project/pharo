@@ -32,7 +32,7 @@ ChangeRecord >> <= anotherOne [
 ChangeRecord >> classIncludesSelector [
 
 	| aClass |
-	^ (aClass := self methodClass) notNil
+	^ (aClass := self methodClass) isNotNil
 			and: [aClass includesSelector: self methodSelector]
 ]
 
