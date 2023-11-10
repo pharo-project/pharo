@@ -433,7 +433,7 @@ TraitTest >> testPrinting [
 	self assertPrints: (ClassDefinitionPrinter oldPharo for: self t6) definitionString like: 'Trait named: #T6
 	uses: T1 + (T2 @ {#m22Alias->#m22})
 	instanceVariableNames:''''
-	package: ''TraitsV2-Tests'''
+	package: ''' , self packageNameForTests , ''''
 ]
 
 { #category : 'tests' }

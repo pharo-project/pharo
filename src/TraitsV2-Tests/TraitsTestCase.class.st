@@ -1,9 +1,6 @@
 Class {
 	#name : 'TraitsTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
-	#instVars : [
-		'createdClassesAndTraits'
-	],
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
@@ -87,7 +84,7 @@ TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 			         name: aSymbol;
 			         superclass: aClass;
 			         traitComposition: aTraitComposition;
-			         package: self packageName ].
+			         package: self packageNameForTests ].
 
 	self createdClassesAndTraits add: class.
 	^ class
@@ -101,7 +98,7 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 		aBuilder
 			name: aSymbol;
 			traitComposition: aTraitComposition;
-			package: self packageName;
+			package: self packageNameForTests;
 			beTrait ].
 
 	self createdClassesAndTraits add: trait.
@@ -110,15 +107,14 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 
 { #category : 'utilities' }
 TraitsTestCase >> createdClassesAndTraits [
-	createdClassesAndTraits ifNil: [
-		createdClassesAndTraits := OrderedCollection new].
-	^createdClassesAndTraits
+
+	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
 ]
 
 { #category : 'running' }
-TraitsTestCase >> packageName [
+TraitsTestCase >> packageNameForTests [
 
-	^ self class packageName
+	^ #'Generated-Trait-Test-Package'
 ]
 
 { #category : 'utilities' }
@@ -185,10 +181,8 @@ TraitsTestCase >> t9 [
 TraitsTestCase >> tearDown [
 
 	TraitsResource reset.
-	self createdClassesAndTraits do: [ :aClassOrTrait |
-		| behaviorName |
-		behaviorName := aClassOrTrait name.
-		testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ] ].
-	createdClassesAndTraits := nil.
+
+	self packageOrganizer removePackage: self packageNameForTests.
+
 	super tearDown
 ]

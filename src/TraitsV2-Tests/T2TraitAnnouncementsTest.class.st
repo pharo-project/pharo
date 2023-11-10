@@ -9,11 +9,6 @@ Class {
 }
 
 { #category : 'tests' }
-T2TraitAnnouncementsTest >> packageName [
-	^ 'TestPackage'
-]
-
-{ #category : 'tests' }
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |

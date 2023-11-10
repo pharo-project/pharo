@@ -182,7 +182,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 		aBuilder
 			name: #T;
 			traitComposition: self t1;
-			package: self class package name;
+			package: self packageNameForTests;
 			beTrait ].
 
 	self assert: trait methodDict size equals: 3.

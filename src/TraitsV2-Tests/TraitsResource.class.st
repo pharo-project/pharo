@@ -7,8 +7,6 @@ Class {
 	#name : 'TraitsResource',
 	#superclass : 'TestResource',
 	#instVars : [
-		'createdClassesAndTraits',
-		'dirty',
 		't1',
 		't2',
 		't3',
@@ -155,7 +153,7 @@ TraitsResource >> createClassNamed: aSymbol superclass: aClass uses: aTraitCompo
 			         name: aSymbol;
 			         superclass: aClass;
 			         traitComposition: aTraitComposition;
-			         package: self packageName ].
+			         package: self packageNameForTests ].
 
 	self createdClassesAndTraits add: class.
 	^ class
@@ -169,7 +167,7 @@ TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 		         aBuilder
 			         name: aSymbol;
 			         traitComposition: aTraitComposition;
-			         package: self packageName;
+			         package: self packageNameForTests;
 			         beTrait ].
 
 	self createdClassesAndTraits add: trait.
@@ -178,15 +176,14 @@ TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 
 { #category : 'accessing' }
 TraitsResource >> createdClassesAndTraits [
-	createdClassesAndTraits ifNil: [
-		createdClassesAndTraits := OrderedCollection new].
-	^createdClassesAndTraits
+
+	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
 ]
 
-{ #category : 'accessing' }
-TraitsResource >> packageName [
+{ #category : 'helpers' }
+TraitsResource >> packageNameForTests [
 
-	^ self class package name
+	^ #'Generated-Trait-Test-Package'
 ]
 
 { #category : 'running' }
@@ -196,7 +193,6 @@ TraitsResource >> setUp [
 	"SetUpCount := SetUpCount + 1."
 
 	super setUp.
-	dirty := false.
 	SystemAnnouncer uniqueInstance suspendAllWhile:
 			[self t1: (self createTraitNamed: #T1
 						uses: { }).
@@ -439,28 +435,9 @@ TraitsResource >> t9: anObject [
 { #category : 'running' }
 TraitsResource >> tearDown [
 
-	self createdClassesAndTraits reverse
-		do: [ :aClassOrTrait |
-			| behaviorName |
-			behaviorName := aClassOrTrait name.
-			Smalltalk globals
-				at: behaviorName
-				ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ] ].
+	self t1: (self t2: (self t3: (self t4: (self t5: (self t6: (self c1: (self c2: (self c3: (self c4: (self c5: (self c6: (self c7: (self c8: nil))))))))))))).
 
-	createdClassesAndTraits := self
-		t1:
-			(self
-				t2:
-					(self
-						t3:
-							(self
-								t4:
-									(self
-										t5:
-											(self
-												t6:
-													(self
-														c1:
-															(self
-																c2: (self c3: (self c4: (self c5: (self c6: (self c7: (self c8: nil)))))))))))))
+	self packageOrganizer removePackage: self packageNameForTests.
+
+	super tearDown
 ]

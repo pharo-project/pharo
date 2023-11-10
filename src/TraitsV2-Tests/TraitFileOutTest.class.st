@@ -19,16 +19,16 @@ TraitFileOutTest class >> defaultTimeLimit [
 	^ 15 seconds
 ]
 
-{ #category : 'running' }
-TraitFileOutTest >> packageName [
+{ #category : 'accessing' }
+TraitFileOutTest class >> resources [
 
-	^ 'Traits-Tests-FileOut'
+	^ {  }
 ]
 
 { #category : 'running' }
 TraitFileOutTest >> setUp [
 	super setUp.
-	self packageOrganizer ensurePackage: self packageName.
+	self packageOrganizer ensurePackage: self packageNameForTests.
 
 	td := self createTraitNamed: #TD uses: {}.
 	td compile: 'd' classified: #cat1.
@@ -54,8 +54,8 @@ TraitFileOutTest >> tearDown [
 	| dir |
 	dir := FileSystem workingDirectory.
 	self createdClassesAndTraits , self resourceClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
-	(dir / self packageName , 'st') ensureDelete.
-	self packageOrganizer removePackage: self packageName.
+	(dir / self packageNameForTests , 'st') ensureDelete.
+	self packageOrganizer removePackage: self packageNameForTests.
 	"Ensure cleaning of obsoletes refs"
 	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
@@ -67,12 +67,12 @@ TraitFileOutTest >> testFileOutCategory [
 	file them in again."
 
 	self timeLimit: 30 seconds.
-	(self packageOrganizer packageNamed: self packageName)
+	(self packageOrganizer packageNamed: self packageNameForTests)
 		fileOut;
 		removeFromSystem.
 	self deny: (testingEnvironment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
 
-	CodeImporter evaluateFileNamed: self packageName , '.st'.
+	CodeImporter evaluateFileNamed: self packageNameForTests , '.st'.
 	self assertCollection: testingEnvironment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
 	ta := testingEnvironment at: #TA.
 	self assert: ta traitComposition asString equals: '((TB + TC) @ {#cc->#c}) - {#c}'.
