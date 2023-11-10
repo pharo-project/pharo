@@ -2,13 +2,15 @@ Class {
 	#name : 'MetacelloProjectSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
-		'name',
-		'className',
+		'projectPackage',
+		'repositories',
 		'versionString',
-		'operator',
-		'loads',
 		'preLoadDoIt',
-		'postLoadDoIt'
+		'loads',
+		'name',
+		'operator',
+		'postLoadDoIt',
+		'className'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -65,18 +67,14 @@ MetacelloProjectSpec >> className: aString constructor: aVersionConstructor [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
-  "name className versionString operator loads preLoadDoIt postLoadDoIt"
+	"'projectPackage repositories'"
 
-  ^ self className = aMetacelloProjectSpec className
-    and: [ 
-      (self compareVersionsEqual: aMetacelloProjectSpec)
-        and: [ 
-          self operator == aMetacelloProjectSpec operator
-            and: [ 
-              self loads = aMetacelloProjectSpec loads
-                and: [ 
-                  self preLoadDoIt value == aMetacelloProjectSpec preLoadDoIt value
-                    and: [ self postLoadDoIt value == aMetacelloProjectSpec postLoadDoIt value ] ] ] ] ]
+	^ self className = aMetacelloProjectSpec className and: [
+		  (self compareVersionsEqual: aMetacelloProjectSpec) and: [
+			  self operator == aMetacelloProjectSpec operator and: [
+				  self loads = aMetacelloProjectSpec loads and: [
+					  self preLoadDoIt value == aMetacelloProjectSpec preLoadDoIt value and: [
+						  self postLoadDoIt value == aMetacelloProjectSpec postLoadDoIt value and: [ self repositories compareEqual: aMetacelloProjectSpec repositories ] ] ] ] ] ]
 ]
 
 { #category : 'scripting' }
@@ -316,6 +314,11 @@ MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
     ^ #()
 ]
 
+{ #category : 'loading' }
+MetacelloProjectSpec >> determineCurrentVersionForLoad [
+    self subclassResponsibility
+]
+
 { #category : 'accessing' }
 MetacelloProjectSpec >> file [
     ^ self className
@@ -357,7 +360,7 @@ MetacelloProjectSpec >> getPreLoadDoIt [
 MetacelloProjectSpec >> getRepositories [
     "raw access to iv"
 
-    ^ nil
+    ^ repositories
 ]
 
 { #category : 'printing' }
@@ -372,13 +375,13 @@ MetacelloProjectSpec >> hasLoadConflicts: aMetacelloProjectSpec [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
-  "same as compareEqual:, except if versionString and/or repositories are not 
-	specified for either one, then there are not conflicts"
+	"'projectPackage repositories'"
 
-  ^ self className = aMetacelloProjectSpec className
-    and: [ 
-      (self compareVersionsEqual: aMetacelloProjectSpec)
-        and: [ self operator == aMetacelloProjectSpec operator ] ]
+	^ self className = aMetacelloProjectSpec className and: [
+		  (self compareVersionsEqual: aMetacelloProjectSpec) and: [
+			  self operator == aMetacelloProjectSpec operator and: [
+				  (self repositories isEmpty or: [ aMetacelloProjectSpec repositories isEmpty ]) or: [
+					  self repositories hasNoLoadConflicts: aMetacelloProjectSpec repositories ] ] ] ]
 ]
 
 { #category : 'testing' }
@@ -397,7 +400,7 @@ MetacelloProjectSpec >> hasNonVersionStringField [
 
 { #category : 'testing' }
 MetacelloProjectSpec >> hasRepository [
-    ^ false
+    ^ self repositorySpecs notEmpty
 ]
 
 { #category : 'scripting' }
@@ -417,7 +420,9 @@ MetacelloProjectSpec >> label [
 { #category : 'loading' }
 MetacelloProjectSpec >> load [
 
-	self subclassResponsibility
+    (MetacelloLookupProjectSpecForLoad new
+        projectSpec: self;
+        yourself) signal performLoad
 ]
 
 { #category : 'private' }
@@ -427,6 +432,11 @@ MetacelloProjectSpec >> loadListForVersion: vrsn [
 			or: [self loads isEmpty])
 		ifTrue: [vrsn spec defaultPackageNames]
 		ifFalse: [self loads]
+]
+
+{ #category : 'loading' }
+MetacelloProjectSpec >> loadVersion: aVersionOrNil [
+    self subclassResponsibility
 ]
 
 { #category : 'querying' }
@@ -457,7 +467,17 @@ MetacelloProjectSpec >> mergeMap [
 	map at: #loads put: loads.
 	map at: #preLoadDoIt put: preLoadDoIt.
 	map at: #postLoadDoIt put: postLoadDoIt.
-	^map
+	map at: #repositories put: repositories.
+	^ map
+]
+
+{ #category : 'merging' }
+MetacelloProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
+  self
+    repositories:
+      (self getRepositories == nil
+        ifTrue: [ anotherRepositories ]
+        ifFalse: [ self repositories mergeSpec: anotherRepositories ])
 ]
 
 { #category : 'scripting' }
@@ -469,17 +489,33 @@ MetacelloProjectSpec >> mergeScriptLoads: aSpec [
 ]
 
 { #category : 'scripting' }
-MetacelloProjectSpec >> metacelloRegistrationHash [
-    "name className versionString operator loads preLoadDoIt postLoadDoIt"
+MetacelloProjectSpec >> mergeScriptRepository: anotherSpec [
+    self repositories: anotherSpec repositories
+]
 
-    | hash |
-    hash := String stringHash: name initialHash: 0.
-    hash := String stringHash: self className initialHash: hash.
-    hash := String stringHash: self versionString initialHash: hash.
-    hash := String stringHash: self operator asString initialHash: hash.
-    hash := String stringHash: self preLoadDoIt asString initialHash: hash.
-    hash := String stringHash: self postLoadDoIt asString initialHash: hash.
-    ^ hash bitXor: loads hash
+{ #category : 'merging' }
+MetacelloProjectSpec >> mergeSpec: anotherSpec [
+
+	| newSpec map |
+	newSpec := super mergeSpec: anotherSpec.
+	map := anotherSpec mergeMap.
+	(map at: #repositories) ifNotNil: [ :anotherRepositories | newSpec mergeRepositoriesSpec: anotherRepositories ].
+	^ newSpec
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> metacelloRegistrationHash [
+	"projectPackage (ignored) repositories"
+
+	| hash |
+	hash := String stringHash: name initialHash: 0.
+	hash := String stringHash: self className initialHash: hash.
+	hash := String stringHash: self versionString initialHash: hash.
+	hash := String stringHash: self operator asString initialHash: hash.
+	hash := String stringHash: self preLoadDoIt asString initialHash: hash.
+	hash := String stringHash: self postLoadDoIt asString initialHash: hash.
+	hash := hash bitXor: loads hash.
+	^ hash bitXor: self repositories metacelloRegistrationHash
 ]
 
 { #category : 'querying' }
@@ -490,15 +526,22 @@ MetacelloProjectSpec >> name [
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> name: aString [
-    ((aString at: 1) isSeparator or: [ (aString at: aString size) isSeparator ])
-        ifTrue: [ self error: 'Names are not allowed to have leading or trailing blanks: ' , aString printString ].
-    self shouldBeMutable.
-    name := aString
+
+	((aString at: 1) isSeparator or: [ (aString at: aString size) isSeparator ]) ifTrue: [
+		self error: 'Names are not allowed to have leading or trailing blanks: ' , aString printString ].
+	self shouldBeMutable.
+	name := aString.
+	self projectPackage: nil
 ]
 
 { #category : 'construction' }
 MetacelloProjectSpec >> name: aString constructor: aVersionConstructor [
     aVersionConstructor nameForProject: aString
+]
+
+{ #category : 'merging' }
+MetacelloProjectSpec >> nonOverridable [
+    ^ super nonOverridable , #(#'projectPackage' #'repositories')
 ]
 
 { #category : 'querying' }
@@ -518,6 +561,13 @@ MetacelloProjectSpec >> operator: anObject [
 { #category : 'construction' }
 MetacelloProjectSpec >> operator: anObject constructor: aVersionConstructor [
     aVersionConstructor operatorForProject: anObject
+]
+
+{ #category : 'copying' }
+MetacelloProjectSpec >> postCopy [
+    super postCopy.
+    repositories := repositories copy.
+    projectPackage := nil
 ]
 
 { #category : 'querying' }
@@ -564,10 +614,20 @@ MetacelloProjectSpec >> projectLabel [
     ^ 'project'
 ]
 
-{ #category : 'querying' }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> projectPackage [
+    self subclassResponsibility
+]
 
-	^nil
+{ #category : 'accessing' }
+MetacelloProjectSpec >> projectPackage: aProjectPackage [
+    self shouldBeMutable.
+    projectPackage := aProjectPackage
+]
+
+{ #category : 'construction' }
+MetacelloProjectSpec >> projectPackage: aBlock constructor: aVersionConstructor [
+    aVersionConstructor projectPackageForProject: aBlock
 ]
 
 { #category : 'scripting' }
@@ -584,6 +644,57 @@ MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
 
     ^ self className = aMetacelloProjectSpec className
         and: [ self versionString = aMetacelloProjectSpec versionString and: [ self operator == aMetacelloProjectSpec operator ] ]
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repositories [
+    repositories ifNil: [ repositories := self project repositoriesSpec ].
+    ^ repositories
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repositories: anObject [
+    self shouldBeMutable.
+    repositories := anObject.
+    self projectPackage: nil
+]
+
+{ #category : 'construction' }
+MetacelloProjectSpec >> repositories: aBlock constructor: aVersionConstructor [
+    aVersionConstructor repositoriesForProject: aBlock
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repository: aStringOrMetacelloRepositorySpec [
+    self repositories repository: aStringOrMetacelloRepositorySpec.
+    self projectPackage: nil
+]
+
+{ #category : 'construction' }
+MetacelloProjectSpec >> repository: anObject constructor: aVersionConstructor [
+    aVersionConstructor repositoryForProject: anObject
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repository: aString username: username password: password [
+    self repositories repository: aString username: username password: password.
+    self projectPackage: nil
+]
+
+{ #category : 'construction' }
+MetacelloProjectSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
+    aVersionConstructor repositoryForProject: aString username: username password: password
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> repositoryDescriptions [
+    ^ self repositorySpecs collect: [ :repoSpec | repoSpec description ]
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> repositorySpecs [
+    repositories ifNil: [ ^ #() ].
+    ^ self repositories map values
 ]
 
 { #category : 'private' }

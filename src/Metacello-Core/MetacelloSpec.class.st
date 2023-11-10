@@ -135,17 +135,13 @@ MetacelloSpec >> mergeMember [
 
 { #category : 'merging' }
 MetacelloSpec >> mergeSpec: aSpec [
-    | newSpec nonOverridable |
-    self validateMergeForSpec: aSpec.
-    newSpec := self copy.
-    nonOverridable := self nonOverridable.
-    aSpec mergeMap
-        keysAndValuesDo: [ :key :value | 
-            (nonOverridable includes: key)
-                ifFalse: [ 
-                    value ~~ nil
-                        ifTrue: [ newSpec instVarNamed: key asString put: value ] ] ].
-    ^ newSpec
+
+	| newSpec nonOverridable |
+	self validateMergeForSpec: aSpec.
+	newSpec := self copy.
+	nonOverridable := self nonOverridable.
+	aSpec mergeMap keysAndValuesDo: [ :key :value | (nonOverridable includes: key) ifFalse: [ value ifNotNil: [ newSpec instVarNamed: key asString put: value ] ] ].
+	^ newSpec
 ]
 
 { #category : 'mutability' }

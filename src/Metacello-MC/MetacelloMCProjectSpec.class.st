@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloMCProjectSpec',
-	#superclass : 'MetacelloGenericProjectSpec',
+	#superclass : 'MetacelloProjectSpec',
 	#instVars : [
 		'file'
 	],
