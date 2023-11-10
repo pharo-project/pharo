@@ -70,14 +70,14 @@ TraitFileOutTest >> testFileOutCategory [
 	(self packageOrganizer packageNamed: self packageNameForTests)
 		fileOut;
 		removeFromSystem.
-	self deny: (testingEnvironment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
+	self deny: (self class environment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
 
 	CodeImporter evaluateFileNamed: self packageNameForTests , '.st'.
-	self assertCollection: testingEnvironment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
-	ta := testingEnvironment at: #TA.
+	self assertCollection: self class environment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
+	ta := self class environment at: #TA.
 	self assert: ta traitComposition asString equals: '((TB + TC) @ {#cc->#c}) - {#c}'.
 	self assertCollection: ta selectors asSet includesAll: #( #a #b #cc ).
-	cb := testingEnvironment at: #CB.
+	cb := self class environment at: #CB.
 	self assert: cb traitComposition asString equals: 'TA'.
 	self assertCollection: cb selectors asSet includesAll: #( #cb #a #b #cc ). "test classSide traitComposition of CB"
 	self assert: cb classSide traitComposition asString equals: 'TA classTrait + TC'.
@@ -97,8 +97,8 @@ TraitFileOutTest >> testFileOutTrait [
 	self t6 removeFromSystem.
 
 	CodeImporter evaluateFileNamed: fileName.
-	self assert: (testingEnvironment includesKey: #T6).
-	TraitsResource current t6: (testingEnvironment at: #T6).
+	self assert: (self class environment includesKey: #T6).
+	TraitsResource current t6: (self class environment at: #T6).
 	self resourceClassesAndTraits add: self t6.
 	self assert: self t6 traitComposition asString equals: 'T1 + (T2 @ {#m22Alias->#m22})'.
 	self assertCollection: self t6 selectors asSet includesAll: #(#localMethod: #m11 #m12 #m13 #m21 #m22Alias).

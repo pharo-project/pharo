@@ -29,12 +29,6 @@ TraitTest >> createTrait [
 	^ trait
 ]
 
-{ #category : 'helpers' }
-TraitTest >> packageNameForTests [
-
-	^ #'Generated-Trait-Test-Package'
-]
-
 { #category : 'running' }
 TraitTest >> tearDown [
 
@@ -152,8 +146,6 @@ TraitTest >> testErrorClassCreation [
 			         package: self packageNameForTests;
 			         beTrait ].
 
-
-	[
 	aClass := self class classInstaller make: [ :aClassBuilder |
 		          aClassBuilder
 			          name: #AClass;
@@ -178,8 +170,7 @@ TraitTest >> testErrorClassCreation [
 			          package: self packageNameForTests ].
 
 	self assert: trait traitUsers asArray equals: { aSubclass }.
-	self assert: aSubclass traits asArray equals: { trait } ] ensure: [
-		#( AClass AClass2 TMyTrait ) do: [ :aClassName | testingEnvironment at: aClassName ifPresent: [ :v | v removeFromSystem ] ] ]
+	self assert: aSubclass traits asArray equals: { trait }
 ]
 
 { #category : 'tests' }
@@ -447,16 +438,14 @@ TraitTest >> testPrintingClassSide [
 
 { #category : 'tests' }
 TraitTest >> testRemoveFromSystem [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [
-			| aClass aTrait |
-			[
-			aTrait := self createTrait.
-			aClass := self createClassUsing: aTrait.
-			aTrait removeFromSystem: false.
-			self deny: aClass hasTraitComposition.
-			self assert: aTrait isObsolete. ]
-				ensure: [ aClass removeFromSystem: false ] ]
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		| aClass aTrait |
+		aTrait := self createTrait.
+		aClass := self createClassUsing: aTrait.
+		aTrait removeFromSystem: false.
+		self deny: aClass hasTraitComposition.
+		self assert: aTrait isObsolete ]
 ]
 
 { #category : 'tests' }
@@ -472,26 +461,24 @@ TraitTest >> testTraitCompositionRespectsParenthesis [
 
 { #category : 'tests' }
 TraitTest >> testTraitRemoval [
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ | aClass aTrait |
-			[ aTrait := self createTrait.
-			aClass := self createClassUsing: aTrait.
-			self assertEmpty: aClass localSelectors.
-			aClass removeFromComposition: aTrait.
-			self assertEmpty: aClass localSelectors.
-			self assertEmpty: aClass selectors.
-			self deny: aClass hasTraitComposition.
-			self deny: (aTrait traitUsers includes: aClass) ]
-				ensure: [ aClass removeFromSystem: false.
-					aTrait removeFromSystem: false ] ]
+
+	SystemAnnouncer uniqueInstance suspendAllWhile: [
+		| aClass aTrait |
+		aTrait := self createTrait.
+		aClass := self createClassUsing: aTrait.
+		self assertEmpty: aClass localSelectors.
+		aClass removeFromComposition: aTrait.
+		self assertEmpty: aClass localSelectors.
+		self assertEmpty: aClass selectors.
+		self deny: aClass hasTraitComposition.
+		self deny: (aTrait traitUsers includes: aClass) ]
 ]
 
 { #category : 'tests' }
 TraitTest >> testTraitsMethodClassSanity [
 
-	(testingEnvironment allTraits flatCollect: #traitUsers) asSet do: [ :each |
-		each selectorsDo: [ :selector |
-			self should: [ (each >> selector) methodClass == each ] ] ]
+	((self createdClassesAndTraits select: [ :behavior | behavior isTrait ]) flatCollect: #traitUsers) asSet do: [ :trait |
+		trait selectorsDo: [ :selector | self should: [ (trait >> selector) methodClass == trait ] ] ]
 ]
 
 { #category : 'tests' }

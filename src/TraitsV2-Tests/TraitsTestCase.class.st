@@ -1,6 +1,6 @@
 Class {
 	#name : 'TraitsTestCase',
-	#superclass : 'AbstractEnvironmentTestCase',
+	#superclass : 'T2AbstractTest',
 	#category : 'TraitsV2-Tests',
 	#package : 'TraitsV2-Tests'
 }
@@ -109,12 +109,6 @@ TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
 TraitsTestCase >> createdClassesAndTraits [
 
 	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
-]
-
-{ #category : 'running' }
-TraitsTestCase >> packageNameForTests [
-
-	^ #'Generated-Trait-Test-Package'
 ]
 
 { #category : 'utilities' }
