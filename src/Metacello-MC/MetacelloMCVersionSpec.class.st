@@ -210,14 +210,6 @@ MetacelloMCVersionSpec >> isLoadedToSpec [
 ]
 
 { #category : 'testing' }
-MetacelloMCVersionSpec >> isLoadedToSpecAgainst: resolvedPackageAndProjectNames [
-	"all loaded projects and packages match specifications (at least one package loaded)"
-
-	(self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames) isLoadedToSpec: [ :ignored | ^ true ].
-	^ false
-]
-
-{ #category : 'testing' }
 MetacelloMCVersionSpec >> isPartiallyCurrent [
 
 	^self isPartiallyCurrentAgainst: (self expandToLoadableSpecNames: #('ALL'))
@@ -302,14 +294,6 @@ MetacelloMCVersionSpec >> isSomethingLoaded [
 	"at least one package loaded"
 	
 	self isPartiallyCurrent isSomethingLoaded: [ :ignored | ^ true ].
-	^ false
-]
-
-{ #category : 'testing' }
-MetacelloMCVersionSpec >> isSomethingLoadedAgainst: resolvedPackageAndProjectNames [
-	"at least one package loaded"
-
-	(self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames) isSomethingLoaded: [ :ignored | ^ true ].
 	^ false
 ]
 
@@ -424,12 +408,6 @@ MetacelloMCVersionSpec >> packages [
 	"leave reference to packages for upgrade purposes"
 
 	^ packages ifNil: [ super packages ]
-]
-
-{ #category : 'development support' }
-MetacelloMCVersionSpec >> packagesNeedSavingVisited: visitedProjects into: aCollection [
-
-	self packages map valuesDo: [:pkg | pkg packagesNeedSavingVisited: visitedProjects using: self repositories map values into: aCollection ].
 ]
 
 { #category : 'copying' }

@@ -40,11 +40,6 @@ MetacelloScriptExecutor >> baselineArg: anObject [
 	baselineArg := anObject
 ]
 
-{ #category : 'options api' }
-MetacelloScriptExecutor >> cacheRepository: aRepositoryDescription [
-    self options at: #'cacheRepository' put: aRepositoryDescription
-]
-
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg [
     ^ classNameArg
@@ -231,11 +226,6 @@ MetacelloScriptExecutor >> repositoryArg [
 { #category : 'args' }
 MetacelloScriptExecutor >> repositoryArg: anObject [
     repositoryArg := anObject
-]
-
-{ #category : 'options api' }
-MetacelloScriptExecutor >> repositoryOverrides: aRepositoryDescriptionList [
-    self options at: #'repositoryOverrides' put: aRepositoryDescriptionList
 ]
 
 { #category : 'accessing' }

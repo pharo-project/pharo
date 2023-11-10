@@ -21,17 +21,16 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'MonticelloConfigurations';
 			package: 'Gofer-Core';
 			package: 'Metacello-Base';
+			package: 'Metacello-Bitbucket';
 			package: 'Metacello-Core';
-			package: 'MonticelloFileTree-Core';
-			package: 'Metacello-MC';
-			package: 'MonticelloFileTree-FileSystem-Utilities';
-			package: 'STON-Core';
 			package: 'Metacello-GitBasedRepository';
 			package: 'Metacello-GitHub';
 			package: 'Metacello-Gitlab';
-			package: 'Metacello-Bitbucket';
+			package: 'Metacello-MC';
 			package: 'Metacello-Platform';
-			package: 'Metacello-ToolBox';
+			package: 'MonticelloFileTree-Core';
+			package: 'MonticelloFileTree-FileSystem-Utilities';
+			package: 'STON-Core';
 			package: 'MetacelloCommandLineHandler-Core'. 
 
 		spec
@@ -41,7 +40,7 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'Metacello-Gitlab-Tests'.
 
 		spec 
-			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'ConfigurationCommandLineHandler-Core' 'PragmaCollector' 'System-FileRegistry' 'MonticelloConfigurations' 'Gofer-Core' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Metacello-MC' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-Platform' 'Metacello-ToolBox' 'MetacelloCommandLineHandler-Core');
+			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'ConfigurationCommandLineHandler-Core' 'PragmaCollector' 'System-FileRegistry' 'MonticelloConfigurations' 'Gofer-Core' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'Metacello-MC' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-Platform' 'MetacelloCommandLineHandler-Core');
 			group: 'Tests' with: #( 'Metacello-TestsCore' 'Metacello-TestsMCCore' 'Metacello-TestsReference' 'Metacello-Gitlab-Tests');
 			group: 'default' with: #('Core') ]
 ]

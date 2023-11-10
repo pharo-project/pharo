@@ -27,12 +27,6 @@ MetacelloVersionLoadDirective >> finalizeLoad: aGofer [
 	"nothing special for linear loads"
 ]
 
-{ #category : 'testing' }
-MetacelloVersionLoadDirective >> isExplicit [
-
-	^false
-]
-
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> label [
 
@@ -60,18 +54,13 @@ MetacelloVersionLoadDirective >> loadDirectives: anObject [
 ]
 
 { #category : 'actions' }
-MetacelloVersionLoadDirective >> loadExplicitLoadDirective: aLoaderDirective gofer: aGofer [
-	"load has already been performed, no need to load again"
-]
-
-{ #category : 'actions' }
 MetacelloVersionLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer: aGofer [
 
 	aLoaderDirective loadDirectives do: [:directive | directive loadUsing: aLoaderDirective gofer: aGofer ].
 	aLoaderDirective finalizeLoad: aGofer.
 ]
 
-{ #category : 'loading' }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 
 	aPackageLoadDirective loader loadingSpecLoader 

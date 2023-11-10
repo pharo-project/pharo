@@ -63,22 +63,6 @@ MetacelloMCProject >> fetchProject: aLoaderPolicy [
 	^ true
 ]
 
-{ #category : 'development support' }
-MetacelloMCProject >> goferBranch: branchName project: commitMessage [
-    | pkgSpec |
-    pkgSpec := self projectPackage.
-    pkgSpec file: pkgSpec name , '.' , branchName.
-    ^ pkgSpec goferBranchPackage: branchName message: commitMessage
-]
-
-{ #category : 'development support' }
-MetacelloMCProject >> goferCommitProject: commitMessage [
-
-	^ self projectPackage
-		  ifNil: [ false ]
-		  ifNotNil: [ :pkgSpec | pkgSpec goferCommitPackage: commitMessage ]
-]
-
 { #category : 'spec classes' }
 MetacelloMCProject >> packageSpec [
 
@@ -89,19 +73,6 @@ MetacelloMCProject >> packageSpec [
 MetacelloMCProject >> packageSpecClass [
 
 	^MetacelloPackageSpec
-]
-
-{ #category : 'development support' }
-MetacelloMCProject >> packagesNeedSaving: aVersionString [
-	"Answer a collection of associations (package -> repository) representing the packages 
-	 reachable from this project that need to be saved"
-
-	| packages |
-	packages := Set new.
-	(self version: aVersionString) spec 
-		packagesNeedSavingVisited: (Set with: self configuration class name asString)
-		into: packages.
-	^packages
 ]
 
 { #category : 'private' }
@@ -166,25 +137,8 @@ MetacelloMCProject >> repositorySpecClass [
 ]
 
 { #category : 'development support' }
-MetacelloMCProject >> saveProject [
-
-	^ self projectPackage
-		  ifNil: [ false ]
-		  ifNotNil: [ :pkgSpec | pkgSpec savePackage ]
-]
-
-{ #category : 'development support' }
 MetacelloMCProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
     "noop "
-]
-
-{ #category : 'repository updating' }
-MetacelloMCProject >> updatePackageRepositoriesFor: versionString [
-
-	| versionSpec |
-	(versionSpec := (self version: versionString) versionSpec) packageSpecsInLoadOrder do: [:pkgSpec |
-		pkgSpec updatePackageRepositoriesFor: versionSpec ].
-	^true
 ]
 
 { #category : 'development support' }
