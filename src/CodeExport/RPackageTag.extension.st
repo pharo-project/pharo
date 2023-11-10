@@ -17,8 +17,8 @@ RPackageTag >> fileOutOn: aFileStream [
 	with the category and any requested shared pools in the right order."
 
 	| toExport traits |
-	traits := (self classes select: [ :class | class isTrait ]) ifNotEmpty: [ :collection | "We do not reference trait to not be detected as a dependency but this is bad :("
-		          collection anyOne class traitDependencyOrder: collection ].
+	traits := (self classes select: [ :class | class isTrait ]) ifNotEmpty: [ :collection | "This dependency should be managed better in the future :("
+		          (self class environment at: #Trait) traitDependencyOrder: collection ].
 
 	toExport := traits asArray , (Class superclassOrder: (self classes reject: [ :class | class isTrait ])) asArray.
 
