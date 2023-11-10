@@ -190,9 +190,9 @@ TraitTest >> testExplicitRequirementDoesNotTakePrecedenceEvenWhenAddingTraits [
 
 	| tempClass tempTrait |
 	self c9 compile: 'm ^100'.
-	tempTrait := self createTraitNamed: #TTempTrait uses: {}.
+	tempTrait := self newTrait: #TTempTrait traits: {  }.
 	tempTrait compile: 'm ^self explicitRequirement.'.
-	tempClass := self createClassNamed: #TempClass superclass: self c9 uses: {tempTrait}.
+	tempClass := self newClass: #TempClass superclass: self c9 traits: { tempTrait }.
 	self assert: tempClass new m equals: 100
 ]
 
@@ -366,11 +366,12 @@ TraitTest >> testMarkerMethods [
 
 { #category : 'tests' }
 TraitTest >> testOrigin [
+
 	| tr1 tr2 tr3 tr23 |
-	tr1 := self createTraitNamed: #TTT1 uses: {}.
-	tr2 := self createTraitNamed: #TTT2 uses: {tr1}.
-	tr3 := self createTraitNamed: #TTT3 uses: {tr1}.
-	tr23 := self createTraitNamed: #TTT23 uses: {(tr3 + tr2)}.
+	tr1 := self newTrait: #TTT1 traits: {  }.
+	tr2 := self newTrait: #TTT2 traits: { tr1 }.
+	tr3 := self newTrait: #TTT3 traits: { tr1 }.
+	tr23 := self newTrait: #TTT23 traits: { (tr3 + tr2) }.
 
 	tr1 compile: 'foo ^ 4'.
 	self assert: (tr1 >> #foo) origin identicalTo: tr1.
@@ -394,13 +395,14 @@ TraitTest >> testOrigin [
 
 { #category : 'tests' }
 TraitTest >> testOriginWithRequiredMethod [
+
 	| tr1 c1 |
-	tr1 := self createTraitNamed: #TTT1 uses: {}.
+	tr1 := self newTrait: #TTT1 traits: {  }.
 
 	tr1 compile: 'foo ^ self explicitRequirement'.
 	self assert: (tr1 >> #foo) origin identicalTo: tr1.
 
-	c1 := self createClassNamed: #CTT1 superclass: Object uses: tr1.
+	c1 := self newClass: #CTT1 superclass: Object traits: tr1.
 	self assert: (c1 >> #foo) origin identicalTo: tr1
 ]
 
@@ -411,10 +413,10 @@ this from another *trait* using the first trait. Tr2 uses Tr1, Tr1 defines a exp
 origin of Tr2>>foo is Tr1"
 
 	| tr1 tr2 |
-	tr1 := self createTraitNamed: #TTT1 uses: {}.
+	tr1 := self newTrait: #TTT1 traits: {  }.
 	tr1 compile: 'foo ^ self explicitRequirement'.
 	self assert: (tr1 >> #foo) origin identicalTo: tr1.
-	tr2 := self createTraitNamed: #TTT2 uses: {tr1}.
+	tr2 := self newTrait: #TTT2 traits: { tr1 }.
 	self assert: (tr2 >> #foo) origin identicalTo: tr1
 ]
 

@@ -57,26 +57,15 @@ T2OverloadingOfMethodsInTraitedClassTest >> testDirectTraitSubclassing [
 
 { #category : 'tests' }
 T2OverloadingOfMethodsInTraitedClassTest >> testIndirectTraitSubclassing [
-	<ignoreNotImplementedSelectors: #(isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest)>
+
+	<ignoreNotImplementedSelectors:
+	#( isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest )>
 	| t1 t2 superclass subclass |
 	t1 := self createT1.
 	t2 := self createT2.
-	superclass := self
-		newClass: #C2Superclass
-		with: '' asSlotCollection
-		traits: t2.
+	superclass := self newClass: #C2Superclass with: '' asSlotCollection traits: t2.
 
-	subclass := self
-		newClass: #C1Subclass
-		superclass: superclass
-		with: '' asSlotCollection
-		traits: t1.
-	self
-		deny:
-			superclass
-				isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
-	self
-		assert:
-			subclass
-				isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
+	subclass := self newClass: #C1Subclass superclass: superclass traits: t1.
+	self deny: superclass isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest.
+	self assert: subclass isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
 ]

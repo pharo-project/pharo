@@ -118,7 +118,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotInSuperclass [
 	self createSlotClass.
 	t1 := self newTrait: #T1 with: { #otherSlot => (slotClass associatedSlotName: #aSlot) }.
 	c1 := self newClass: #C1 with: { #aSlot. } traits: {t1}.
-	c2 := self newClass: #C2 superclass: c1 with: #() traits: #().
+	c2 := self newClass: #C2 superclass: c1 traits: #().
 
 	c1 compile: 'initialize
 		aSlot := 0'.
@@ -188,7 +188,7 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotInSupercla
 	t2 compile: 'doSomething
 		otherSlot := ''a'''.
 
-	c2 := self newClass: #C2 superclass: c1 with: #() traits: #().
+	c2 := self newClass: #C2 superclass: c1 traits: #().
 
 	obj := c2 new.
 	self assert: (obj instVarNamed: #aSlot) equals: 0.

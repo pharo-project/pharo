@@ -12,11 +12,10 @@ Class {
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
-
-	t1 := self newTrait: #T1 with: #() traits: TEmpty.
+	t1 := self newTrait: #T1.
 	t1 class compile: 'msg ^ 1'.
 
-	c1 := self newClass: #C1 superclass: Object with: #() traits: t1.
+	c1 := self newClass: #C1 superclass: Object traits: t1.
 	c1 class compile: 'msg ^ 12'.
 
 	self assert: self packageNameForTests asPackage methods size equals: 2.
@@ -28,14 +27,10 @@ T2TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 T2TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
 
 	| c1 t1 |
-	t1 := self newTrait: #T1 with: #(  ) traits: #(  ).
+	t1 := self newTrait: #T1.
 	t1 compile: 'msg ^ 1'.
 
-	c1 := self
-		      newClass: #C1
-		      superclass: Object
-		      with: #(  )
-		      traits: t1.
+	c1 := self newClass: #C1 superclass: Object traits: t1.
 	c1 compile: 'msg ^ 12'.
 
 	self assert: (c1 >> #msg) origin equals: c1.

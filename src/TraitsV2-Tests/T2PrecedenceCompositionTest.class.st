@@ -9,22 +9,19 @@ Class {
 T2PrecedenceCompositionTest >> testClassCompositionOnPrecedenceKeepsPreference [
 
 	| t1 t2 original copy |
+	t1 := self newTrait: #T1.
+	t1 classTrait uses: {  } slots: #(  ).
 
-	t1 := self newTrait: #T1 with: #() traits: #().
-	t1 classTrait uses: {} slots: #().
-
-	t2 := self newTrait: #T2 with: #() traits: #().
-	t2 classTrait uses: {} slots: #().
+	t2 := self newTrait: #T2.
+	t2 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
 	t2 compile: 'm1 ^ 33'.
 
-	original := (t2 + t1) withPrecedenceOf: t2.
+	original := t2 + t1 withPrecedenceOf: t2.
 	copy := original classComposition.
 
-	self
-		assert: original preferedTrait innerClass
-		equals: copy preferedTrait innerClass instanceSide
+	self assert: original preferedTrait innerClass equals: copy preferedTrait innerClass instanceSide
 ]
 
 { #category : 'tests' }
@@ -32,10 +29,10 @@ T2PrecedenceCompositionTest >> testCopyingAPrecedenceKeepsPreference [
 
 	| t1 t2 original copy |
 
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() traits: #().
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.
@@ -51,13 +48,13 @@ T2PrecedenceCompositionTest >> testCopyingAPrecedenceKeepsPreference [
 T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 
 	| t1 t2 t3 c1 |
-	t1 := self newTrait: #T1 with: #(  ) traits: #(  ).
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {  } slots: #(  ).
 
-	t2 := self newTrait: #T2 with: #(  ) traits: #(  ).
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {  } slots: #(  ).
 
-	t3 := self newTrait: #T3 with: #(  ) traits: #(  ).
+	t3 := self newTrait: #T3.
 	t3 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
@@ -77,13 +74,13 @@ T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinition [
 T2PrecedenceCompositionTest >> testPrecedencesAreGeneratedInClassDefinitionWithAlias [
 
 	| t1 t2 t3 c1 |
-	t1 := self newTrait: #T1 with: #(  ) traits: #(  ).
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {  } slots: #(  ).
 
-	t2 := self newTrait: #T2 with: #(  ) traits: #(  ).
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {  } slots: #(  ).
 
-	t3 := self newTrait: #T3 with: #(  ) traits: #(  ).
+	t3 := self newTrait: #T3.
 	t3 classTrait uses: {  } slots: #(  ).
 
 	t1 compile: 'm1 ^ 42'.
@@ -104,13 +101,13 @@ T2PrecedenceCompositionTest >> testPrecedencesCanBeCombined [
 
 	| t1 t2 t3 c1 |
 	<ignoreNotImplementedSelectors: #(m1 m2)>
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() traits: #().
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {} slots: #().
 
-	t3 := self newTrait: #T3 with: #() traits: #().
+	t3 := self newTrait: #T3.
 	t3 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.
@@ -129,10 +126,10 @@ T2PrecedenceCompositionTest >> testWithPrecedenceIsNonAConflict [
 
 	| t1 t2 c1 |
 
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() traits: #().
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.
@@ -148,10 +145,10 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOne [
 	<ignoreNotImplementedSelectors: #(m1)>
 	| t1 t2 c1 |
 
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() traits: #().
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.
@@ -167,10 +164,10 @@ T2PrecedenceCompositionTest >> testWithPrecedenceUsesThePreferedOneWithoutCaring
 	<ignoreNotImplementedSelectors: #(m1)>
 	| t1 t2 c1 |
 
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() traits: #().
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.
@@ -186,10 +183,10 @@ T2PrecedenceCompositionTest >> testWithoutPrecedenceIsAConflict [
 
 	| t1 t2 c1 |
 
-	t1 := self newTrait: #T1 with: #() traits: #().
+	t1 := self newTrait: #T1.
 	t1 classTrait uses: {} slots: #().
 
-	t2 := self newTrait: #T2 with: #() traits: #().
+	t2 := self newTrait: #T2.
 	t2 classTrait uses: {} slots: #().
 
 	t1 compile: 'm1 ^ 42'.

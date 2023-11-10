@@ -27,21 +27,22 @@ TraitFileOutTest class >> resources [
 
 { #category : 'running' }
 TraitFileOutTest >> setUp [
+
 	super setUp.
 	self packageOrganizer ensurePackage: self packageNameForTests.
 
-	td := self createTraitNamed: #TD uses: {}.
+	td := self newTrait: #TD traits: {  }.
 	td compile: 'd' classified: #cat1.
-	tc := self createTraitNamed: #TC uses: td.
+	tc := self newTrait: #TC traits: td.
 	tc compile: 'c' classified: #cat1.
-	tb := self createTraitNamed: #TB uses: td.
+	tb := self newTrait: #TB traits: td.
 	tb compile: 'b' classified: #cat1.
-	ta := self createTraitNamed: #TA uses: tb + tc @ {#cc->#c} - {#c}.
+	ta := self newTrait: #TA traits: tb + tc @ { (#cc -> #c) } - { #c }.
 	ta compile: 'a' classified: #cat1.
 
-	ca := self createClassNamed: #CA superclass: Object uses: {}.
+	ca := self newClass: #CA superclass: Object traits: {  }.
 	ca compile: 'ca' classified: #cat1.
-	cb := self createClassNamed: #CB superclass: ca uses: ta.
+	cb := self newClass: #CB superclass: ca traits: ta.
 	cb compile: 'cb' classified: #cat1.
 
 	"make the class of cb also use tc:"
@@ -53,11 +54,8 @@ TraitFileOutTest >> tearDown [
 
 	| dir |
 	dir := FileSystem workingDirectory.
-	self createdClassesAndTraits , self resourceClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
+	self createdClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
 	(dir / self packageNameForTests , 'st') ensureDelete.
-	self packageOrganizer removePackage: self packageNameForTests.
-	"Ensure cleaning of obsoletes refs"
-	ca := cb := ta := tb := tc := td := nil.
 	super tearDown
 ]
 
@@ -93,17 +91,14 @@ TraitFileOutTest >> testFileOutTrait [
 	self t6 classSide compile: 'localClassSideMethod: argument ^argument'.
 	self t6 fileOut.
 	fileName := self t6 asString , '.st'.
-	self resourceClassesAndTraits remove: self t6.
 	self t6 removeFromSystem.
 
 	CodeImporter evaluateFileNamed: fileName.
 	self assert: (self class environment includesKey: #T6).
-	TraitsResource current t6: (self class environment at: #T6).
-	self resourceClassesAndTraits add: self t6.
 	self assert: self t6 traitComposition asString equals: 'T1 + (T2 @ {#m22Alias->#m22})'.
-	self assertCollection: self t6 selectors asSet includesAll: #(#localMethod: #m11 #m12 #m13 #m21 #m22Alias).
+	self assertCollection: self t6 selectors asSet includesAll: #( #localMethod: #m11 #m12 #m13 #m21 #m22Alias ).
 	self assert: self t6 classSide localMethods size equals: 1.
-	self assertCollection: self t6 classSide selectors asSet includesAll: #(#localClassSideMethod: #m2ClassSide:)
+	self assertCollection: self t6 classSide selectors asSet includesAll: #( #localClassSideMethod: #m2ClassSide: )
 ]
 
 { #category : 'tests' }

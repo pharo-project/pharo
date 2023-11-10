@@ -24,7 +24,7 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 	self assert: self c2 localSelectors sorted equals: #(bar foo).
 
 	"change superclass of C2 from C1 to X"
-	newSuperclass := self createClassNamed: #X superclass: Object uses: {}.
+	newSuperclass := self newClass: #X superclass: Object traits: {}.
 
 	self class classInstaller make: [ :aBuilder |
 		aBuilder name: self c2 name;
@@ -173,7 +173,7 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	add subtrait t1 which implements m11 as well."
 
 	| trait |
-	trait := self createTraitNamed: #T uses: {  }.
+	trait := self newTrait: #T traits: {  }.
 	trait compile: 'm11 ^999'.
 	self assert: trait methodDict size equals: 1.
 	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
@@ -212,7 +212,7 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraits [
 TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethods [
 	| anObject |
 	<ignoreNotImplementedSelectors: #(m22Alias)>
-	anObject := (self createClassNamed: #AliasTestClass superclass: Object uses: self t6) new.
+	anObject := (self newClass: #AliasTestClass superclass: Object traits: self t6) new.
 	self assert: anObject m22Alias equals: 22.
 
 	"test update alias method"
@@ -231,7 +231,7 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethodsWhenOrigi
 		
 	| anObject |
 	<ignoreNotImplementedSelectors: #(aliasM11)>
-	anObject := (self createClassNamed: #AliasTestClass superclass: Object uses: self t1 @ {(#aliasM11 -> #m11)} - {#m11}) new.
+	anObject := (self newClass: #AliasTestClass superclass: Object traits: self t1 @ {(#aliasM11 -> #m11)} - {#m11}) new.
 	self assert: anObject aliasM11 equals: 11.
 	self deny: (anObject class methodDict includesKey: #m11).
 	self t1 compile: 'm11 ^17'.

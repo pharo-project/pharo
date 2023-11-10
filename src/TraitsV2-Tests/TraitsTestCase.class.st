@@ -76,44 +76,9 @@ TraitsTestCase >> c9 [
 ]
 
 { #category : 'utilities' }
-TraitsTestCase >> createClassNamed: aSymbol superclass: aClass uses: aTraitComposition [
-
-	| class |
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         name: aSymbol;
-			         superclass: aClass;
-			         traitComposition: aTraitComposition;
-			         package: self packageNameForTests ].
-
-	self createdClassesAndTraits add: class.
-	^ class
-]
-
-{ #category : 'utilities' }
-TraitsTestCase >> createTraitNamed: aSymbol uses: aTraitComposition [
-	| trait |
-
-	trait := self class classInstaller make: [ :aBuilder |
-		aBuilder
-			name: aSymbol;
-			traitComposition: aTraitComposition;
-			package: self packageNameForTests;
-			beTrait ].
-
-	self createdClassesAndTraits add: trait.
-	^trait
-]
-
-{ #category : 'utilities' }
 TraitsTestCase >> createdClassesAndTraits [
 
 	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
-]
-
-{ #category : 'utilities' }
-TraitsTestCase >> resourceClassesAndTraits [
-	^TraitsResource current createdClassesAndTraits
 ]
 
 { #category : 'accessing' }

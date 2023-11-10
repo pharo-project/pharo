@@ -19,6 +19,12 @@ T2AbstractTest >> newClass: aName [
 	^self newClass: aName with: #() traits: TEmpty
 ]
 
+{ #category : 'utilities' }
+T2AbstractTest >> newClass: aSymbol superclass: aClass traits: aTraitComposition [
+
+	^ self newClass: aSymbol superclass: aClass with: {  } traits: aTraitComposition
+]
+
 { #category : 'instance creation' }
 T2AbstractTest >> newClass: aName superclass: aSuperclass with: slots traits: aComposition [
 
@@ -39,6 +45,12 @@ T2AbstractTest >> newClass: aName with: slots traits: aComposition [
 { #category : 'instance creation' }
 T2AbstractTest >> newTrait: aName [
 	^ self newTrait: aName with: #()
+]
+
+{ #category : 'instance creation' }
+T2AbstractTest >> newTrait: aName traits: traits [
+
+	^ self newTrait: aName with: #(  ) traits: traits
 ]
 
 { #category : 'instance creation' }
