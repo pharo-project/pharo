@@ -18,7 +18,6 @@ mcPackages := #(
  'Metacello-Gitlab'
  'Metacello-GitHub'
  'Metacello-Bitbucket'
- 'Metacello-Platform'
  'MetacelloCommandLineHandler-Core'
  ).
 
