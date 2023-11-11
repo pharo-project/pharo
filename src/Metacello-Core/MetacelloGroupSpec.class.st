@@ -46,6 +46,11 @@ MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
   ^ #()
 ]
 
+{ #category : 'loading' }
+MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer [
+	"noop"
+]
+
 { #category : 'visiting' }
 MetacelloGroupSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
@@ -73,4 +78,54 @@ MetacelloGroupSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
 		(aVersionSpec packageNamed: specName ifAbsent: [  ]) ifNotNil: [ :pkgSpec |
 			packageOrProjectSpecs addAll: (pkgSpec resolveToPackagesAndProjectsIn: aVersionSpec visited: MetacelloVisitedPackages new) ] ].
 	^ packageOrProjectSpecs
+]
+
+{ #category : 'private' }
+MetacelloGroupSpec >> resolveToLoadableSpec [
+
+	^nil
+]
+
+{ #category : 'private' }
+MetacelloGroupSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+
+	| packages |
+	packages := Dictionary new.
+	self
+		resolveToPackagesIn: aVersionSpec
+		andProjects: true
+		into: packages
+		visited: visited.
+	^ packages values asOrderedCollection
+]
+
+{ #category : 'private' }
+MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool into: packages visited: visited [
+
+	visited visit: self doing: [ :aSpec |
+		| map |
+		map := aVersionSpec packages map.
+		aSpec includes do: [ :pkgName |
+			(aVersionSpec packageNamed: pkgName forMap: map ifAbsent: [  ])
+				projectDo: [ :prj | andProjectsBool ifTrue: [ packages at: prj name put: prj ] ]
+				packageDo: [ :pkg | packages at: pkg name put: pkg ]
+				groupDo: [ :grp |
+					grp
+						resolveToPackagesIn: aVersionSpec
+						andProjects: andProjectsBool
+						into: packages
+						visited: visited ] ] ]
+]
+
+{ #category : 'private' }
+MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	| packages |
+	packages := Dictionary new.
+	self
+		resolveToPackagesIn: aVersionSpec
+		andProjects: false
+		into: packages
+		visited: visited.
+	^ packages values asOrderedCollection
 ]

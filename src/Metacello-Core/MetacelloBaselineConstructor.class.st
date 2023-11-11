@@ -47,6 +47,11 @@ MetacelloBaselineConstructor >> extractBaselinePragmaFor: aClass [
     ^ pragmas first
 ]
 
+{ #category : 'accessing' }
+MetacelloBaselineConstructor >> projectClass [
+    ^ MetacelloMCBaselineProject
+]
+
 { #category : 'api' }
 MetacelloBaselineConstructor >> version: anObject [
 

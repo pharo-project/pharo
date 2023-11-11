@@ -475,6 +475,12 @@ MetacelloAbstractVersionConstructor >> project: aString with: aBlockOrString [
 	aBlockOrString setProject: aString withInMetacelloConfig: self
 ]
 
+{ #category : 'accessing' }
+MetacelloAbstractVersionConstructor >> projectClass [
+
+	^ MetacelloProject
+]
+
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> projectPackage: aBlock [
 	"projectPackage spec data folded into project spec"

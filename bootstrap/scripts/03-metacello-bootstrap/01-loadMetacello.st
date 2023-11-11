@@ -12,7 +12,6 @@ mcPackages := #(
  'Metacello-Base'
  'Metacello-Core'
  'MonticelloFileTree-Core'
- 'Metacello-MC'
  'MonticelloFileTree-FileSystem-Utilities'
  'STON-Core'
  'Metacello-GitBasedRepository'

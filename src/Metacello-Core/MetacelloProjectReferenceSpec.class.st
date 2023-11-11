@@ -63,6 +63,15 @@ MetacelloProjectReferenceSpec >> includes: aCollection [
 	self shouldNotImplement
 ]
 
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
+
+	| required |
+	required := self resolveToLoadableSpec.
+	required loader: aLoader.
+	^required load
+]
+
 { #category : 'importing' }
 MetacelloProjectReferenceSpec >> mergeImportLoads: aLoadList [
     self projectReference mergeImportLoads: aLoadList
@@ -146,6 +155,11 @@ MetacelloProjectReferenceSpec >> repositories [
     ^ self referencedSpec repositories
 ]
 
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> repository: aStringOrMetacelloRepositorySpec [
+    ^ self projectReference repository: aStringOrMetacelloRepositorySpec
+]
+
 { #category : 'loading' }
 MetacelloProjectReferenceSpec >> repositorySpecs [
 
@@ -158,6 +172,30 @@ MetacelloProjectReferenceSpec >> requires: aCollection [
 	self shouldNotImplement
 ]
 
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> resolveProjectSpec [
+
+	^self projectReference
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
+
+	^self resolveProjectSpec resolveToLoadableSpec
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+
+	^ { self }
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	^#()
+]
+
 { #category : 'querying' }
 MetacelloProjectReferenceSpec >> version [
 
@@ -168,6 +206,12 @@ MetacelloProjectReferenceSpec >> version [
 MetacelloProjectReferenceSpec >> versionOrNil [
 
 	^self projectReference versionOrNil
+]
+
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> versionString [
+
+	^self projectReference versionString
 ]
 
 { #category : 'querying' }

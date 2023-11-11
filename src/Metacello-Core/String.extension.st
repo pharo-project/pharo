@@ -16,6 +16,21 @@ String >> addToMetacelloPackages: aMetacelloPackagesSpec [
 ]
 
 { #category : '*Metacello-Core' }
+String >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
+
+	| spec |
+	spec := 
+		(aMetacelloRepositoriesSpec project repositorySpec)
+			description: self;
+			yourself.
+	aMetacelloRepositoriesSpec addMember: 
+		(aMetacelloRepositoriesSpec addMember 
+			name: spec name;
+			spec: spec;
+			yourself)
+]
+
+{ #category : '*Metacello-Core' }
 String >> asMetacelloVersionNumber [
 
 	^MetacelloVersionNumber fromString: self
@@ -24,6 +39,18 @@ String >> asMetacelloVersionNumber [
 { #category : '*Metacello-Core' }
 String >> execute: projectSpecBlock against: aScriptExecutor [
     aScriptExecutor executeString: self do: projectSpecBlock
+]
+
+{ #category : '*Metacello-Core' }
+String >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
+
+	^aMetacelloMCVersion doFetchRequiredFromArray: (Array with: self).
+]
+
+{ #category : '*Metacello-Core' }
+String >> loadRequiredForMetacelloMCVersion: aMetacelloMCVersion [
+
+	^aMetacelloMCVersion doLoadRequiredFromArray: (Array with: self).
 ]
 
 { #category : '*Metacello-Core' }
@@ -36,6 +63,21 @@ String >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 			yourself.
 	aMetacelloPackagesSpec addMember: 
 		(aMetacelloPackagesSpec mergeMember 
+			name: spec name;
+			spec: spec;
+			yourself)
+]
+
+{ #category : '*Metacello-Core' }
+String >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
+
+	| spec |
+	spec := 
+		(aMetacelloRepositoriesSpec project repositorySpec)
+			description: self;
+			yourself.
+	aMetacelloRepositoriesSpec addMember: 
+		(aMetacelloRepositoriesSpec mergeMember 
 			name: spec name;
 			spec: spec;
 			yourself)
@@ -78,10 +120,33 @@ String >> metacelloVersionComponentLessThan: aMetacelloVersonComponent [
 ]
 
 { #category : '*Metacello-Core' }
+String >> packageFileSpecFor: aMetacelloPackagesSpec [
+
+	^(aMetacelloPackagesSpec project packageSpec)
+			file: self;
+			yourself
+]
+
+{ #category : '*Metacello-Core' }
+String >> recordRequiredForMetacelloMCVersion: aMetacelloMCVersion [
+
+	^aMetacelloMCVersion doRecordRequiredFromArray: (Array with: self).
+]
+
+{ #category : '*Metacello-Core' }
 String >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 
 	aMetacelloPackagesSpec addMember: 
 		(aMetacelloPackagesSpec removeMember 
+			name: self;
+			yourself)
+]
+
+{ #category : '*Metacello-Core' }
+String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
+
+	aMetacelloRepositoriesSpec addMember: 
+		(aMetacelloRepositoriesSpec removeMember 
 			name: self;
 			yourself)
 ]

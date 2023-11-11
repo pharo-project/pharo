@@ -102,6 +102,20 @@ MetacelloAbstractPackageSpec >> configMethodOn: aStream for: aValue selector: se
 	cascade ifTrue: [ aStream nextPut: $; ]
 ]
 
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> file [ 
+	"MetacelloPackageSpec compatibility"
+	
+	^nil
+]
+
+{ #category : 'accessing' }
+MetacelloAbstractPackageSpec >> getFile [
+	"MetacelloPackageSpec compatibility"
+
+	^ nil
+]
+
 { #category : 'testing' }
 MetacelloAbstractPackageSpec >> hasRepository [
     ^ false
@@ -129,10 +143,22 @@ MetacelloAbstractPackageSpec >> includesForPackageOrdering [
   ^ #()
 ]
 
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> isPackageLoaded [
+
+	^ false
+]
+
 { #category : 'printing' }
 MetacelloAbstractPackageSpec >> label [
 
 	^self name
+]
+
+{ #category : 'loading' }
+MetacelloAbstractPackageSpec >> loadUsing: aLoader gofer: gofer [
+
+	^self subclassResponsibility
 ]
 
 { #category : 'merging' }
@@ -219,6 +245,12 @@ MetacelloAbstractPackageSpec >> removeFromMetacelloPackages: aMetacelloPackagesS
 			yourself)
 ]
 
+{ #category : 'loading' }
+MetacelloAbstractPackageSpec >> repositorySpecs [
+
+	^#()
+]
+
 { #category : 'private' }
 MetacelloAbstractPackageSpec >> requiredSpecNamesForPackageOrdering: aVersionSpec [
   ^ (self requiredSpecsForPackageOrdering: aVersionSpec)
@@ -250,6 +282,23 @@ MetacelloAbstractPackageSpec >> requiresSpecsForPackageOrdering: aVersionSpec [
 { #category : 'private' }
 MetacelloAbstractPackageSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
   ^ {self}
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToLoadableSpec [
+
+	^self
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec  visited: visited [
+  ^ self resolveToPackagesIn: aVersionSpec visited: visited
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	^self subclassResponsibility
 ]
 
 { #category : 'private' }
@@ -295,4 +344,11 @@ MetacelloAbstractPackageSpec >> specs: specNames forPackageOrdering: aVersionSpe
           packageOrProjectSpecs
             addAll: (spec resolveSpecsForPackageOrdering: aVersionSpec) ] ].
   ^ packageOrProjectSpecs
+]
+
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> version [ 
+	"MetacelloPackageSpec compatibility"
+	
+	^nil
 ]
