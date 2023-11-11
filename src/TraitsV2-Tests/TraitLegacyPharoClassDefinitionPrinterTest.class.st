@@ -50,15 +50,6 @@ TraitLegacyPharoClassDefinitionPrinterTest >> testMultiPools [
 ]
 
 { #category : 'tests - traits' }
-TraitLegacyPharoClassDefinitionPrinterTest >> testTBehavior [
-	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
-	self
-		assert: (self forClass: TBehavior)  equals: 'Trait named: #TBehavior
-	 uses: {}
-	 package: ''TraitsV2-Compatibility-Traits'''
-]
-
-{ #category : 'tests - traits' }
 TraitLegacyPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
 
 	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait

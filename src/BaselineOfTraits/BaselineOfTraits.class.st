@@ -46,8 +46,7 @@ BaselineOfTraits >> baseline: spec [
 			package: 'Collections-Abstract-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeImport-Traits' with: [ spec requires: #('TraitsV2') ];
 			package: 'CodeExport-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'TraitsV2-Tests' with: [ spec requires: #('TraitsV2') ];
-			package: 'TraitsV2-Compatibility' with: [ spec requires: #('TraitsV2') ].
+			package: 'TraitsV2-Tests' with: [ spec requires: #('TraitsV2') ].
 
 		spec group: 'core' with: #('TraitsV2').
 					
@@ -56,8 +55,6 @@ BaselineOfTraits >> baseline: spec [
 					'Collections-Abstract-Traits'
 					'CodeImport-Traits'
 					'CodeExport-Traits' ).
-					
-		spec group: 'compatibility' with: #('TraitsV2-Compatibility').
 		
 		spec group: 'core-traits' with: #(core 'traits-in-kernel' 'compatibility').		
 		spec group: 'default' with: #('core-traits').

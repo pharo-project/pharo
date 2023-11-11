@@ -152,16 +152,6 @@ TraitFluidClassDefinitionPrinterTest >> testMultiPools [
 ]
 
 { #category : 'tests - traits' }
-TraitFluidClassDefinitionPrinterTest >> testTBehavior [
-
-	self
-		assert: (self forClass: TBehavior)
-		equals: 'Trait << #TBehavior
-	tag: ''Traits'';
-	package: ''TraitsV2-Compatibility'''
-]
-
-{ #category : 'tests - traits' }
 TraitFluidClassDefinitionPrinterTest >> testTComparableClassTrait [
 
 	self assert: (self forClass: TComparable classTrait) equals: 'Trait << TComparable classTrait'
