@@ -1109,18 +1109,6 @@ MetacelloProjectSpec >> repositorySpecs [
 ]
 
 { #category : 'private' }
-MetacelloProjectSpec >> resolveToAllPackagesIn: aVersionSpec visited: visited [
-
-	| vrsn |
-	visited pushProject: [
-		visited visit: self doing: [ :spec |
-			spec ensureProjectLoaded.
-			vrsn := spec version.
-			^ vrsn allPackagesForSpecNamed: (self loadListForVersion: vrsn) ifAbsent: [ self error: 'invalid loads: spec' ] ] ].
-	^ #(  )
-]
-
-{ #category : 'private' }
 MetacelloProjectSpec >> resolveToLoadableSpec [
 
 	^self copy

@@ -21,13 +21,6 @@ MetacelloProjectReferenceSpec >> resolveProjectSpec [
 ]
 
 { #category : '*Metacello-MC' }
-MetacelloProjectReferenceSpec >> resolveToAllPackagesIn: aVersionSpec into: packages visited: visited [
-
-	(self resolveProjectSpec resolveToAllPackagesIn: aVersionSpec visited: visited) do: [:pkg |
-		packages at: pkg put: pkg ]
-]
-
-{ #category : '*Metacello-MC' }
 MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
 
 	^self resolveProjectSpec resolveToLoadableSpec
