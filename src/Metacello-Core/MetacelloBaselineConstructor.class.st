@@ -40,11 +40,10 @@ MetacelloBaselineConstructor >> calculate: aConfig project: aProject [
 
 { #category : 'pragma extraction' }
 MetacelloBaselineConstructor >> extractBaselinePragmaFor: aClass [
-    | pragmas |
-    pragmas := Pragma allNamed: #'baseline' in: aClass.
-    pragmas isEmpty
-        ifTrue: [ ^ self error: 'No #baseline pragma found' ].
-    ^ pragmas first
+
+	^ (Pragma allNamed: #baseline in: aClass)
+		ifEmpty: [ self error: 'No #baseline pragma found' ]
+		ifNotEmpty: [ :pragmas | pragmas first ]
 ]
 
 { #category : 'accessing' }
