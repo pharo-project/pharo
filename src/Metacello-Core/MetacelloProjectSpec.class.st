@@ -126,13 +126,14 @@ MetacelloProjectSpec >> className: aString [
 
 { #category : 'testing' }
 MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
-    ^ (MetacelloLookupProjectSpecForLoad new
-        projectSpec: self;
-        yourself) signal
-        performCurrentVersionTestAgainst: self versionOrNil
-        operator: anOperator
-        targetVersionStatus: targetVersionStatus
-        using: anMCLoader
+
+	^ (MetacelloLookupProjectSpecForLoad new
+		   projectSpec: self;
+		   yourself) signal
+		  performCurrentVersionTestAgainst: self versionOrNil
+		  operator: anOperator
+		  targetVersionStatus: targetVersionStatus
+		  using: anMCLoader
 ]
 
 { #category : 'scripting' }

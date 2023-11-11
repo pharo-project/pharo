@@ -24,7 +24,9 @@ MetacelloPlatform class >> current [
 
 { #category : 'class initialization' }
 MetacelloPlatform class >> initialize [
-  self select
+
+	self select.
+	self deprecatedAliases: { #MetacelloPharoPlatform }
 ]
 
 { #category : 'initialize-release' }

@@ -44,15 +44,13 @@ MetacelloRepositoriesSpec >> compareEqual: aMetacelloProjectSpec [
 MetacelloRepositoriesSpec >> configMethodCascadeOn: aStream indent: indent [
 
 	| repositorySpecs |
-	repositorySpecs := self map values sort: [:a :b | a description <= b description ].
+	repositorySpecs := self map values sort: [ :a :b | a description <= b description ].
 	repositorySpecs size = 1
 		ifTrue: [ repositorySpecs first configMethodCascadeOn: aStream lastCascade: true ]
 		ifFalse: [
-			1 to: repositorySpecs size do: [:index | | repositorySpec |
+			1 to: repositorySpecs size do: [ :index |
 				aStream tab: indent + 1.
-				(repositorySpecs at: index)
-					configMethodCascadeOn: aStream 
-					lastCascade: index >= repositorySpecs size ]]
+				(repositorySpecs at: index) configMethodCascadeOn: aStream lastCascade: index >= repositorySpecs size ] ]
 ]
 
 { #category : 'printing' }
@@ -67,20 +65,17 @@ MetacelloRepositoriesSpec >> configMethodOn: aStream indent: indent [
 
 { #category : 'scripting' }
 MetacelloRepositoriesSpec >> hasNoLoadConflicts: aMetacelloRepositoriesSpec [
-  | repositorySpecs anotherRepositorySpecs |
-  repositorySpecs := self map values
-    sort: [ :a :b | a description <= b description ].
-  anotherRepositorySpecs := aMetacelloRepositoriesSpec map values
-    sort: [ :a :b | a description <= b description ].
-  repositorySpecs size ~= anotherRepositorySpecs size
-    ifTrue: [ ^ false ].
-  1 to: repositorySpecs size do: [ :index | 
-    | repoSpec anotherRepoSpec |
-    repoSpec := repositorySpecs at: index.
-    anotherRepoSpec := anotherRepositorySpecs at: index.
-    (repoSpec hasNoLoadConflicts: anotherRepoSpec)
-      ifFalse: [ ^ false ] ].
-  ^ true
+
+	| repositorySpecs anotherRepositorySpecs |
+	repositorySpecs := self map values sort: [ :a :b | a description <= b description ].
+	anotherRepositorySpecs := aMetacelloRepositoriesSpec map values sort: [ :a :b | a description <= b description ].
+	repositorySpecs size ~= anotherRepositorySpecs size ifTrue: [ ^ false ].
+	1 to: repositorySpecs size do: [ :index |
+		| repoSpec anotherRepoSpec |
+		repoSpec := repositorySpecs at: index.
+		anotherRepoSpec := anotherRepositorySpecs at: index.
+		(repoSpec hasNoLoadConflicts: anotherRepoSpec) ifFalse: [ ^ false ] ].
+	^ true
 ]
 
 { #category : 'actions' }

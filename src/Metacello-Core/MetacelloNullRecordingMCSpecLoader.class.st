@@ -1,10 +1,6 @@
 Class {
 	#name : 'MetacelloNullRecordingMCSpecLoader',
 	#superclass : 'MetacelloFetchingMCSpecLoader',
-	#instVars : [
-		'afterLoads',
-		'beforeLoads'
-	],
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
@@ -14,18 +10,6 @@ Class {
 MetacelloNullRecordingMCSpecLoader >> actionLabel [
 
 	^'Recording '
-]
-
-{ #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> afterLoads [
-
-	^ afterLoads ifNil: [ afterLoads := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> beforeLoads [
-
-	^ beforeLoads ifNil: [ beforeLoads := OrderedCollection new ]
 ]
 
 { #category : 'versionInfo' }
@@ -81,15 +65,6 @@ MetacelloNullRecordingMCSpecLoader >> loadPackageDirective: aPackageLoadDirectiv
 { #category : 'actions' }
 MetacelloNullRecordingMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 	"Noop"
-]
-
-{ #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> loadedPackages [
-
-	| packages |
-	packages := OrderedCollection new.
-	self loadDirective packageDirectivesDo: [:directive | packages add: directive file ].
-	^packages
 ]
 
 { #category : 'accessing' }
