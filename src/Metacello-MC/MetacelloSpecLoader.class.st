@@ -204,47 +204,37 @@ MetacelloSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer: aGofer
 { #category : 'actions' }
 MetacelloSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 
-  MetacelloPlatform current
-    do: [ 
-      | goferLoad loadBlock answers |
-      goferLoad := MetacelloGoferLoad on: aGofer.
-      answers := OrderedCollection new.
-      pkgLoads
-        do: [ :packageLoadDirective | 
-          | resolvedReference |
-          aGofer disablePackageCache.	"for good luck:)"
-          (resolvedReference := self
-            resolvePackageSpec: packageLoadDirective spec
-            gofer: aGofer) ~~ nil
-            ifTrue: [ 
-              goferLoad addResolved: resolvedReference.
-              answers addAll: packageLoadDirective spec answers.
-              packageLoadDirective resolvedReference: resolvedReference ] ].
-     MetacelloNotification signal: 'Starting atomic load'.
-      loadBlock := [ 
-      "pkgLoads do: [:packageLoadDirective |  mcLoader preLoad: packageLoadDirective spec ]."
-      goferLoad execute.
-      pkgLoads
-        do: [ :packageLoadDirective | 
-          packageLoadDirective resolvedReference == nil
-            ifTrue: [ 
-					MetacelloNotification signal: ('Already Loaded -> ' , packageLoadDirective file) level: 2]
-            ifFalse: [ 
-            		MetacelloNotification signal: ('Loaded -> ' , packageLoadDirective file , ' --- '
-                        , packageLoadDirective repository repositoryDescription
-                        , ' --- '
-                        ,
-                          packageLoadDirective resolvedReference repository description) level: 2.
-              packageLoadDirective resolvedReference workingCopy repositoryGroup
-                addRepository: packageLoadDirective repository ] ].
-      self clearCurrentVersionCache	"pkgLoads do: [:packageLoadDirective | 
+	MetacelloPlatform current
+		do: [
+			| goferLoad loadBlock answers |
+			goferLoad := MetacelloGoferLoad on: aGofer.
+			answers := OrderedCollection new.
+			pkgLoads do: [ :packageLoadDirective |
+				aGofer disablePackageCache. "for good luck:)"
+				(self resolvePackageSpec: packageLoadDirective spec gofer: aGofer) ifNotNil: [ :resolvedReference |
+					goferLoad addResolved: resolvedReference.
+					answers addAll: packageLoadDirective spec answers.
+					packageLoadDirective resolvedReference: resolvedReference ] ].
+			MetacelloNotification signal: 'Starting atomic load'.
+			loadBlock := [ "pkgLoads do: [:packageLoadDirective |  mcLoader preLoad: packageLoadDirective spec ]."
+			             goferLoad execute.
+			             pkgLoads do: [ :packageLoadDirective |
+				             packageLoadDirective resolvedReference == nil
+					             ifTrue: [ MetacelloNotification signal: 'Already Loaded -> ' , packageLoadDirective file level: 2 ]
+					             ifFalse: [
+						             MetacelloNotification
+							             signal: 'Loaded -> ' , packageLoadDirective file , ' --- ' , packageLoadDirective repository repositoryDescription , ' --- '
+								             , packageLoadDirective resolvedReference repository description
+							             level: 2.
+						             packageLoadDirective resolvedReference workingCopy repositoryGroup addRepository: packageLoadDirective repository ] ].
+			             self clearCurrentVersionCache "pkgLoads do: [:packageLoadDirective | 
 					packageLoadDirective resolvedReference ~~ nil
 						ifTrue: [mcLoader postLoad: packageLoadDirective spec ]]" ].
-      answers notEmpty
-        ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-        ifFalse: [ loadBlock value ].
-      MetacelloNotification signal: 'Finished atomic load' ]
-    displaying: 'Atomic Load...'
+			answers notEmpty
+				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
+				ifFalse: [ loadBlock value ].
+			MetacelloNotification signal: 'Finished atomic load' ]
+		displaying: 'Atomic Load...'
 ]
 
 { #category : 'accessing' }
@@ -324,14 +314,16 @@ MetacelloSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 MetacelloSpecLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: ignoreOverrides [
 
 	| repositories repos |
-	(ignoreOverrides not and: [self hasRepositoryOverrides]) ifTrue: [ ^self loaderPolicy overrideRepositories ].
+	(ignoreOverrides not and: [ self hasRepositoryOverrides ]) ifTrue: [ ^ self loaderPolicy overrideRepositories ].
 	repositories := MCRepositoryGroup default repositories.
 	repos := OrderedCollection new.
-	aMetacelloMVRepositorySpecs do: [:aSpec | | description repo |
+	aMetacelloMVRepositorySpecs do: [ :aSpec |
+		| description |
 		description := aSpec description.
-		(repo := repositories detect: [:rep | rep description = description ] ifNone: [ aSpec createRepository ]) ~~ nil
-			ifTrue: [ repos add: repo ]].
-	^repos
+		(repositories
+			 detect: [ :rep | rep description = description ]
+			 ifNone: [ aSpec createRepository ]) ifNotNil: [ :repo | repos add: repo ] ].
+	^ repos
 ]
 
 { #category : 'accessing' }
@@ -342,25 +334,20 @@ MetacelloSpecLoader >> repositoryMap [
 
 { #category : 'private' }
 MetacelloSpecLoader >> resolvePackageSpec: packageSpec gofer: gofer [
-  | references resolvedReference mcVersion loadedVersionInfos |
-  references := self
-    retryingResolvePackageSpecReferences: packageSpec
-    gofer: gofer.
-  resolvedReference := references last asMetacelloCachingResolvedReference.
-  mcVersion := resolvedReference version.
-  (loadedVersionInfos := self ancestorsFor: packageSpec) ~~ nil
-    ifTrue: [ 
-      loadedVersionInfos
-        do: [ :info | 
-          info name = mcVersion info name
-            ifTrue: [ 
-              | spc |
-              "package already loaded, don't load again"
-              spc := packageSpec copy.
-              spc file: info name.
-              (MetacelloIgnorePackageLoaded signal: spc)
-                ifFalse: [ ^ nil ] ] ] ].
-  ^ resolvedReference
+
+	| references resolvedReference mcVersion |
+	references := self retryingResolvePackageSpecReferences: packageSpec gofer: gofer.
+	resolvedReference := references last asMetacelloCachingResolvedReference.
+	mcVersion := resolvedReference version.
+	(self ancestorsFor: packageSpec) ifNotNil: [ :loadedVersionInfos |
+		loadedVersionInfos do: [ :info |
+			info name = mcVersion info name ifTrue: [
+				| spc |
+				"package already loaded, don't load again"
+				spc := packageSpec copy.
+				spc file: info name.
+				(MetacelloIgnorePackageLoaded signal: spc) ifFalse: [ ^ nil ] ] ] ].
+	^ resolvedReference
 ]
 
 { #category : 'private' }

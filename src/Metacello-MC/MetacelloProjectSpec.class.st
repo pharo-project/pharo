@@ -497,26 +497,17 @@ MetacelloProjectSpec >> ensureProjectFetch: mcLoader [
 
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureProjectLoaded [
-  "Ensure that the MetacelloProject is loaded in image. 
+	"Ensure that the MetacelloProject is loaded in image. 
 	 projectClass == nil or requested version non-existent warrants a project package load."
 
-  "answer true if the projectClass exists"
+	"answer true if the projectClass exists"
 
-  (self projectClass == nil
-    or: [ 
-      self versionOrNil == nil
-        or: [ (loader notNil or: [ self isMutable ]) and: [ self loader ignoreImage ] ] ])
-    ifTrue: [ 
-      | pc |
-      (pc := self projectClass) ~~ nil
-        ifTrue: [ 
-          MetacelloClearStackCacheNotification
-            signal:
-              #(#'currentVersion' #'currentVersionAgainst:' #'currentVersionInfo' #'versionConstructor' #'loadableSpecNames')
-                , {pc} ].
-      self projectPackage ifNil: [ ^ true ].
-      self ensureLoadUsing: self loader ].
-  ^ self projectClass ~~ nil
+	(self projectClass == nil or: [ self versionOrNil == nil or: [ (loader notNil or: [ self isMutable ]) and: [ self loader ignoreImage ] ] ]) ifTrue: [
+		self projectClass ifNotNil: [ :pc |
+			MetacelloClearStackCacheNotification signal: #( #currentVersion #currentVersionAgainst: #currentVersionInfo #versionConstructor #loadableSpecNames ) , { pc } ].
+		self projectPackage ifNil: [ ^ true ].
+		self ensureLoadUsing: self loader ].
+	^ self projectClass ~~ nil
 ]
 
 { #category : 'private - loading' }
@@ -883,17 +874,9 @@ MetacelloProjectSpec >> nonOverridable [
 
 { #category : 'private - loading' }
 MetacelloProjectSpec >> notifyCleanStackCache [
-	| pc |
 
-	(pc := self projectClass) ~~ nil
-		ifTrue: [ 
- 			MetacelloClearStackCacheNotification signal: #(
-				#'currentVersion' 
-				#'currentVersionAgainst:' 
-				#'currentVersionInfo' 
-				#'versionConstructor' 
-				#'loadableSpecNames'), 
-				{ pc } ]
+	self projectClass ifNotNil: [ :pc |
+		MetacelloClearStackCacheNotification signal: #( #currentVersion #currentVersionAgainst: #currentVersionInfo #versionConstructor #loadableSpecNames ) , { pc } ]
 ]
 
 { #category : 'querying' }
@@ -1139,9 +1122,9 @@ MetacelloProjectSpec >> unregisterProject [
 { #category : 'development support' }
 MetacelloProjectSpec >> updateForSpawnMethod: sourceSpec [
 	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
-	
+
 	repositories := className := operator := loads := projectPackage := nil.
-	sourceSpec ~~ nil ifTrue: [ versionString := sourceSpec versionString ].
+	sourceSpec ifNotNil: [ versionString := sourceSpec versionString ]
 ]
 
 { #category : 'development support' }

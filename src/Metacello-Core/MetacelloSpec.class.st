@@ -151,10 +151,10 @@ MetacelloSpec >> nonOverridable [
 
 { #category : 'copying' }
 MetacelloSpec >> postCopy [
-    super postCopy.
-    mutable := nil.
-    loader ~~ nil
-        ifTrue: [ self loader: loader ].
+
+	super postCopy.
+	mutable := nil.
+	loader ifNotNil: [ self loader: loader ]
 ]
 
 { #category : 'doits' }

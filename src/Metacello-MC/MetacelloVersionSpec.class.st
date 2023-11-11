@@ -97,57 +97,56 @@ MetacelloVersionSpec >> computeVersionStatus: resolvedPackageAndProjectNames mat
 
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
-    | values lastIndex lastBlock |
-    last
-        ifTrue: [ 
-            "need to calculate last statement with a value"
-            values := {(self getBlessing).
-            (self getDescription).
-            (self getPreLoadDoIt).
-            (self getPostLoadDoIt).
-            (self getAuthor).
-            (self getTimestamp)}.
-            1 to: values size do: [ :index | 
-                (values at: index) ~~ nil
-                    ifTrue: [ lastIndex := index ] ].
-            lastBlock := [ :arg | arg = lastIndex ] ]
-        ifFalse: [ lastBlock := [ :arg | false ] ].
-    self
-        configMethodValueOn: aStream
-        for: self getBlessing
-        selector: 'blessing:'
-        last: (lastBlock value: 1)
-        indent: indent.
-    self
-        configMethodValueOn: aStream
-        for: self getDescription
-        selector: 'description:'
-        last: (lastBlock value: 2)
-        indent: indent.
-    self
-        configMethodValueOn: aStream
-        for: self getPreLoadDoIt
-        selector: 'preLoadDoIt:'
-        last: (lastBlock value: 3)
-        indent: indent.
-    self
-        configMethodValueOn: aStream
-        for: self getPostLoadDoIt
-        selector: 'postLoadDoIt:'
-        last: (lastBlock value: 4)
-        indent: indent.
-    self
-        configMethodValueOn: aStream
-        for: self getAuthor
-        selector: 'author:'
-        last: (lastBlock value: 5)
-        indent: indent.
-    self
-        configMethodValueOn: aStream
-        for: self getTimestamp
-        selector: 'timestamp:'
-        last: (lastBlock value: 6)
-        indent: indent
+
+	| values lastIndex lastBlock |
+	last
+		ifTrue: [ "need to calculate last statement with a value"
+			values := {
+				          self getBlessing.
+				          self getDescription.
+				          self getPreLoadDoIt.
+				          self getPostLoadDoIt.
+				          self getAuthor.
+				          self getTimestamp }.
+			1 to: values size do: [ :index | (values at: index) ifNotNil: [ lastIndex := index ] ].
+			lastBlock := [ :arg | arg = lastIndex ] ]
+		ifFalse: [ lastBlock := [ :arg | false ] ].
+	self
+		configMethodValueOn: aStream
+		for: self getBlessing
+		selector: 'blessing:'
+		last: (lastBlock value: 1)
+		indent: indent.
+	self
+		configMethodValueOn: aStream
+		for: self getDescription
+		selector: 'description:'
+		last: (lastBlock value: 2)
+		indent: indent.
+	self
+		configMethodValueOn: aStream
+		for: self getPreLoadDoIt
+		selector: 'preLoadDoIt:'
+		last: (lastBlock value: 3)
+		indent: indent.
+	self
+		configMethodValueOn: aStream
+		for: self getPostLoadDoIt
+		selector: 'postLoadDoIt:'
+		last: (lastBlock value: 4)
+		indent: indent.
+	self
+		configMethodValueOn: aStream
+		for: self getAuthor
+		selector: 'author:'
+		last: (lastBlock value: 5)
+		indent: indent.
+	self
+		configMethodValueOn: aStream
+		for: self getTimestamp
+		selector: 'timestamp:'
+		last: (lastBlock value: 6)
+		indent: indent
 ]
 
 { #category : 'printing' }
@@ -218,34 +217,46 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 	projectSpecs := OrderedCollection new.
 	packageSpecs := OrderedCollection new.
 	groupSpecs := OrderedCollection new.
-	self packagesSpec list do: [:member |
-		member spec 
-			projectDo: [:proj | member spec name ~~ nil ifTrue: [ projectSpecs add: member ]]
-			packageDo: [:package | member spec name ~~ nil ifTrue: [ packageSpecs add: member ]]
-			groupDo: [:group | member spec name ~~ nil ifTrue: [ groupSpecs add: member ]]].
-	projectSpecs isEmpty not
-		ifTrue: [
-			aStream tab: indent; nextPutAll: 'spec '.
-			projectSpecs size > 1 ifTrue: [ aStream cr; tab: indent + 1 ].
-			1 to: projectSpecs size  do: [:index | 
-				(projectSpecs at: index) configMethodCascadeOn: aStream last: index == projectSpecs size indent: indent + 1.
-				index ~= projectSpecs size ifTrue: [ aStream tab: indent + 1 ]]].
-	packageSpecs isEmpty not
-		ifTrue: [
-			projectSpecs isEmpty not ifTrue: [ aStream cr ].
-			aStream tab: indent; nextPutAll: 'spec '.
-			packageSpecs size > 1 ifTrue: [ aStream cr; tab: indent + 1 ].
-			1 to: packageSpecs size  do: [:index | 
-				(packageSpecs at: index) configMethodCascadeOn: aStream last: index == packageSpecs size indent: indent + 1.
-				index ~= packageSpecs size ifTrue: [ aStream tab: indent + 1 ]]].
-	groupSpecs isEmpty not
-		ifTrue: [
-			projectSpecs isEmpty not | packageSpecs isEmpty not ifTrue: [ aStream cr ].
-			aStream tab: indent; nextPutAll: 'spec '.
-			groupSpecs size > 1 ifTrue: [ aStream cr; tab: indent + 1 ].
-			1 to: groupSpecs size  do: [:index | 
-				(groupSpecs at: index) configMethodCascadeOn: aStream last: index == groupSpecs size indent: indent + 1.
-				index ~= groupSpecs size ifTrue: [ aStream tab: indent + 1 ]]].
+	self packagesSpec list do: [ :member |
+		member spec
+			projectDo: [ :proj | member spec name ifNotNil: [ projectSpecs add: member ] ]
+			packageDo: [ :package | member spec name ifNotNil: [ packageSpecs add: member ] ]
+			groupDo: [ :group | member spec name ifNotNil: [ groupSpecs add: member ] ] ].
+	projectSpecs isEmpty not ifTrue: [
+		aStream
+			tab: indent;
+			nextPutAll: 'spec '.
+		projectSpecs size > 1 ifTrue: [
+			aStream
+				cr;
+				tab: indent + 1 ].
+		1 to: projectSpecs size do: [ :index |
+			(projectSpecs at: index) configMethodCascadeOn: aStream last: index == projectSpecs size indent: indent + 1.
+			index ~= projectSpecs size ifTrue: [ aStream tab: indent + 1 ] ] ].
+	packageSpecs isEmpty not ifTrue: [
+		projectSpecs isEmpty not ifTrue: [ aStream cr ].
+		aStream
+			tab: indent;
+			nextPutAll: 'spec '.
+		packageSpecs size > 1 ifTrue: [
+			aStream
+				cr;
+				tab: indent + 1 ].
+		1 to: packageSpecs size do: [ :index |
+			(packageSpecs at: index) configMethodCascadeOn: aStream last: index == packageSpecs size indent: indent + 1.
+			index ~= packageSpecs size ifTrue: [ aStream tab: indent + 1 ] ] ].
+	groupSpecs isEmpty not ifTrue: [
+		projectSpecs isEmpty not | packageSpecs isEmpty not ifTrue: [ aStream cr ].
+		aStream
+			tab: indent;
+			nextPutAll: 'spec '.
+		groupSpecs size > 1 ifTrue: [
+			aStream
+				cr;
+				tab: indent + 1 ].
+		1 to: groupSpecs size do: [ :index |
+			(groupSpecs at: index) configMethodCascadeOn: aStream last: index == groupSpecs size indent: indent + 1.
+			index ~= groupSpecs size ifTrue: [ aStream tab: indent + 1 ] ] ]
 ]
 
 { #category : 'construction' }
@@ -261,19 +272,17 @@ MetacelloVersionSpec >> createVersion [
 
 { #category : 'querying' }
 MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
-  | classes |
-  classes := Set new.
-  self
-    projectDo: [ :ignored |  ]
-    packageDo: [ :packageSpec | 
-      | wc |
-      wc := [ packageSpec workingCopy ]
-        on: Error
-        do: [ :ex | ex return: nil ].
-      wc ~~ nil
-        ifTrue: [ classes addAll: wc packageSet classes ] ]
-    groupDo: [ :ignored |  ].
-  ^ classes
+
+	| classes |
+	classes := Set new.
+	self
+		projectDo: [ :ignored |  ]
+		packageDo: [ :packageSpec |
+			([ packageSpec workingCopy ]
+				 on: Error
+				 do: [ :ex | ex return: nil ]) ifNotNil: [ :wc | classes addAll: wc packageSet classes ] ]
+		groupDo: [ :ignored |  ].
+	^ classes
 ]
 
 { #category : 'loading' }
@@ -508,63 +517,56 @@ MetacelloVersionSpec >> isPartiallyCurrent: notLoadedMatters useEquality: useEqu
 
 { #category : 'testing' }
 MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectNames [
+
 	| mcLoader status |
 	status := MetacelloMCPartiallyLoadedStatus new.
 	mcLoader := self loader.
 	self
 		specsNamed: resolvedPackageAndProjectNames
-		projectDo: [ :prj | 
+		projectDo: [ :prj |
 			| vrsn currentVersion |
 			status hasNoProject: false.
 			vrsn := prj versionOrNil.
-			vrsn ~~ nil
-				ifTrue: [ 
-					(currentVersion := prj relativeCurrentVersion) ~~ nil
-						ifTrue: [ status vrsnStatus add: currentVersion versionStatus ] ].
+			vrsn ifNotNil: [ (currentVersion := prj relativeCurrentVersion) ifNotNil: [ status vrsnStatus add: currentVersion versionStatus ] ].
 			currentVersion ~~ nil
-				ifTrue: [ 
+				ifTrue: [
 					status aProjectIsLoaded: true.
 					(currentVersion perform: #= with: vrsn)
 						ifTrue: [ status aLoadedProjectIsExact: true ]
-						ifFalse: [ 
+						ifFalse: [
 							(currentVersion perform: prj projectReference operator with: vrsn)
 								ifTrue: [ status aLoadedProjectIsCurrent: true ]
 								ifFalse: [ status aLoadedProjectIsNotCurrent: true ] ] ]
 				ifFalse: [ status aProjectNotLoaded: true ] ]
-		packageDo: [ :pkg | 
+		packageDo: [ :pkg |
 			status hasNoPackage: false.
 			pkg
-				currentPackageLoaded: [ :versionInfos :file | 
+				currentPackageLoaded: [ :versionInfos :file |
 					| wcName wcRef fileRef exact current |
 					status aPackageIsLoaded: true.
 					versionInfos isEmpty
 						ifTrue: [ status aLoadedPackageIsNotCurrent: true ]
-						ifFalse: [ 
+						ifFalse: [
 							exact := current := false.
-							versionInfos
-								do: [ :vi | 
-									wcName := vi name.
-									fileRef := GoferResolvedReference name: file.
-									wcRef := GoferResolvedReference name: wcName.
-									(wcRef compare: fileRef using: #=)
-										ifTrue: [ exact := true ] ].
+							versionInfos do: [ :vi |
+								wcName := vi name.
+								fileRef := GoferResolvedReference name: file.
+								wcRef := GoferResolvedReference name: wcName.
+								(wcRef compare: fileRef using: #=) ifTrue: [ exact := true ] ].
 							exact
 								ifTrue: [ status aLoadedPackageIsExact: true ]
-								ifFalse: [ 
-									versionInfos
-										do: [ :vi | 
-											wcName := vi name.
-											fileRef := GoferResolvedReference name: file.
-											wcRef := GoferResolvedReference name: wcName.
-											(wcRef compare: fileRef using: #>=)
-												ifTrue: [ current := true ] ].
+								ifFalse: [
+									versionInfos do: [ :vi |
+										wcName := vi name.
+										fileRef := GoferResolvedReference name: file.
+										wcRef := GoferResolvedReference name: wcName.
+										(wcRef compare: fileRef using: #'>=') ifTrue: [ current := true ] ].
 									current
 										ifTrue: [ status aLoadedPackageIsCurrent: true ]
 										ifFalse: [ status aLoadedPackageIsNotCurrent: true ] ] ] ]
 				notLoaded: [ status aPackageNotLoaded: true ]
 				using: mcLoader ]
-		groupDo: [ :ignoredGroup | 
-			"if we encounter a group, trouble"
+		groupDo: [ :ignoredGroup | "if we encounter a group, trouble"
 			status abort: true.
 			^ status ].
 	^ status
@@ -1034,9 +1036,8 @@ MetacelloVersionSpec >> specsNamed: packageAndProjectNames projectDo: projectBlo
 
 	| map |
 	map := self packages map.
-	packageAndProjectNames do: [:name | | pkgSpec |
-		(pkgSpec := map at: name ifAbsent: [ ]) ~~ nil
-			ifTrue: [ pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ]]
+	packageAndProjectNames do: [ :name |
+		(map at: name ifAbsent: [  ]) ifNotNil: [ :pkgSpec | pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ] ]
 ]
 
 { #category : 'accessing' }

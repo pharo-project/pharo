@@ -80,16 +80,14 @@ MetacelloProjectReferenceSpec >> mergeMap [
 { #category : 'merging' }
 MetacelloProjectReferenceSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherProjectReference |
+	| newSpec map |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	(anotherProjectReference := map at: #projectReference) ~~ nil
-		ifTrue: [ 
-			newSpec projectReference: 
-				(newSpec projectReference == nil
-					ifTrue: [ anotherProjectReference ]
-					ifFalse: [ newSpec projectReference mergeSpec: anotherProjectReference ])].
-	^newSpec
+	(map at: #projectReference) ifNotNil: [ :anotherProjectReference |
+		newSpec projectReference: (newSpec projectReference == nil
+				 ifTrue: [ anotherProjectReference ]
+				 ifFalse: [ newSpec projectReference mergeSpec: anotherProjectReference ]) ].
+	^ newSpec
 ]
 
 { #category : 'merging' }

@@ -9,7 +9,7 @@ Class {
 { #category : 'actions' }
 MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 
-	spec preLoadDoIt value ~~ nil ifTrue: [ aLoaderDirective add: self ]
+	spec preLoadDoIt value ifNotNil: [ aLoaderDirective add: self ]
 ]
 
 { #category : 'printing' }

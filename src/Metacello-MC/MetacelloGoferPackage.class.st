@@ -36,23 +36,15 @@ MetacelloGoferPackage class >> packageFileName: pkgFileName matchesPackageName: 
 { #category : 'querying' }
 MetacelloGoferPackage >> ancestors [
 
-	| wc |
-	(wc := self workingCopy) ~~ nil
-		ifTrue: [ 
-			wc ancestry ancestors isEmpty not
-				ifTrue: [ ^wc ancestry ancestors ]].
-	^nil
+	self workingCopy ifNotNil: [ :wc | wc ancestry ancestors isEmpty not ifTrue: [ ^ wc ancestry ancestors ] ].
+	^ nil
 ]
 
 { #category : 'querying' }
 MetacelloGoferPackage >> currentVersionInfo [
 
-	| wc |
-	(wc := self workingCopy) ~~ nil
-		ifTrue: [ 
-			wc ancestry ancestors isEmpty not
-				ifTrue: [ ^wc ancestry ancestors first ]].
-	^nil
+	self workingCopy ifNotNil: [ :wc | wc ancestry ancestors isEmpty not ifTrue: [ ^ wc ancestry ancestors first ] ].
+	^ nil
 ]
 
 { #category : 'private' }

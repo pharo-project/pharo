@@ -69,31 +69,21 @@ MetacelloVersionLoadDirective >> loadPackageDirective: aPackageLoadDirective gof
 ]
 
 { #category : 'loading' }
-MetacelloVersionLoadDirective >> loadPostloadDirective: aPostloadDirective [ 
+MetacelloVersionLoadDirective >> loadPostloadDirective: aPostloadDirective [
 
-	| block |
-	(block :=  aPostloadDirective spec postLoadDoItBlock) ~~ nil
-		ifTrue: [
-			MetacelloNotification signal: ('Evaluating -> ', aPostloadDirective spec label, ' >> ', aPostloadDirective spec postLoadDoIt value asString).
-			aPostloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: 
-					(Array 
-						with: aPostloadDirective loader 
-						with: aPostloadDirective spec) ].
-			MetacelloNotification signal: ('Evaluated -> ', aPostloadDirective spec label, ' >> ', aPostloadDirective spec postLoadDoIt value asString)]
+	aPostloadDirective spec postLoadDoItBlock ifNotNil: [ :block |
+		MetacelloNotification signal: 'Evaluating -> ' , aPostloadDirective spec label , ' >> ' , aPostloadDirective spec postLoadDoIt value asString.
+		aPostloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: (Array with: aPostloadDirective loader with: aPostloadDirective spec) ].
+		MetacelloNotification signal: 'Evaluated -> ' , aPostloadDirective spec label , ' >> ' , aPostloadDirective spec postLoadDoIt value asString ]
 ]
 
 { #category : 'loading' }
-MetacelloVersionLoadDirective >> loadPreloadDirective: aPreloadDirective [ 
+MetacelloVersionLoadDirective >> loadPreloadDirective: aPreloadDirective [
 
-	| block |
-	(block :=  aPreloadDirective spec preLoadDoItBlock) ~~ nil
-		ifTrue: [
-			MetacelloNotification signal: ('Evaluating -> ', aPreloadDirective spec label, ' >> ', aPreloadDirective spec preLoadDoIt value asString).
-			aPreloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: 
-					(Array 
-						with: aPreloadDirective loader 
-						with: aPreloadDirective spec) ].
-			MetacelloNotification signal: ('Evaluated -> ', aPreloadDirective spec label, ' >> ', aPreloadDirective spec preLoadDoIt value asString)]
+	aPreloadDirective spec preLoadDoItBlock ifNotNil: [ :block |
+		MetacelloNotification signal: 'Evaluating -> ' , aPreloadDirective spec label , ' >> ' , aPreloadDirective spec preLoadDoIt value asString.
+		aPreloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: (Array with: aPreloadDirective loader with: aPreloadDirective spec) ].
+		MetacelloNotification signal: 'Evaluated -> ' , aPreloadDirective spec label , ' >> ' , aPreloadDirective spec preLoadDoIt value asString ]
 ]
 
 { #category : 'actions' }
