@@ -154,7 +154,7 @@ String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 { #category : '*Metacello-Core' }
 String >> setAuthorInMetacelloConfig: aMetacelloConfig [
 
-	aMetacelloConfig setAuthorWithString: self
+	aMetacelloConfig root author: self
 ]
 
 { #category : '*Metacello-Core' }
@@ -169,7 +169,7 @@ String >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
 { #category : '*Metacello-Core' }
 String >> setBlessingInMetacelloConfig: aMetacelloConfig [
 
-	aMetacelloConfig setBlessingWithString: self
+	aMetacelloConfig root blessing: self
 ]
 
 { #category : '*Metacello-Core' }
@@ -184,7 +184,7 @@ String >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
 { #category : '*Metacello-Core' }
 String >> setDescriptionInMetacelloConfig: aMetacelloConfig [
 
-	aMetacelloConfig setDescriptionWithString: self
+	aMetacelloConfig root description: self
 ]
 
 { #category : '*Metacello-Core' }
@@ -239,7 +239,7 @@ String >> setRequiresInMetacelloPackage: aMetacelloPackageSpec [
 { #category : '*Metacello-Core' }
 String >> setTimestampInMetacelloConfig: aMetacelloConfig [
 
-	aMetacelloConfig setTimestampWithString: self
+	aMetacelloConfig root timestamp: self
 ]
 
 { #category : '*Metacello-Core' }

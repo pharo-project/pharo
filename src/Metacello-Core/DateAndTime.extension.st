@@ -2,7 +2,8 @@ Extension { #name : 'DateAndTime' }
 
 { #category : '*Metacello-Core' }
 DateAndTime >> setTimestampInMetacelloConfig: aMetacelloConfig [
-    aMetacelloConfig setTimestampWithString: self printString
+
+	self printString setTimestampInMetacelloConfig: aMetacelloConfig
 ]
 
 { #category : '*Metacello-Core' }

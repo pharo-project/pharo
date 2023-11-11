@@ -275,22 +275,22 @@ MetacelloAbstractVersionConstructor >> file: aString [
 MetacelloAbstractVersionConstructor >> for: attributeListOrSymbol do: aBlock [
 	"conditional version support"
 
-	self
-		setFor: (attributeListOrSymbol isSymbol
-				 ifTrue: [ { attributeListOrSymbol } ]
-				 ifFalse: [ attributeListOrSymbol ])
-		do: aBlock
+	(attributeListOrSymbol isSymbol
+		 ifTrue: [ { attributeListOrSymbol } ]
+		 ifFalse: [ attributeListOrSymbol ]) do: [ :attribute |
+		(self attributeMap at: attribute ifAbsentPut: [ OrderedCollection new ]) add: aBlock.
+		self addAttribute: attribute ]
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> for: attributeListOrSymbol version: aString [
 	"conditional symbolicVersion support"
 
-	self
-		setFor: (attributeListOrSymbol isSymbol
-				 ifTrue: [ { attributeListOrSymbol } ]
-				 ifFalse: [ attributeListOrSymbol ])
-		version: aString
+	(attributeListOrSymbol isSymbol
+		 ifTrue: [ { attributeListOrSymbol } ]
+		 ifFalse: [ attributeListOrSymbol ]) do: [ :attribute |
+		self attributeMap at: attribute put: aString.
+		self addAttribute: attribute ]
 ]
 
 { #category : 'api' }
@@ -563,12 +563,6 @@ MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
 ]
 
 { #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setAuthorWithString: aString [
-
-	self root author: aString
-]
-
-{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setBaseline: aString [
     | spec projectSpec |
     projectSpec := self project baselineOfProjectSpec
@@ -601,12 +595,6 @@ MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
 ]
 
 { #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setBlessingWithString: aString [
-
-	self root blessing: aString
-]
-
-{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setConfiguration: aString withBlock: aBlock [
     | spec projectSpec |
     projectSpec := self project configurationOfProjectSpec
@@ -631,32 +619,6 @@ MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
 ]
 
 { #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setDescriptionWithString: aString [
-
-	self root description: aString
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setFor: attributeList do: aBlock [
-	"conditional version support"
-
-	attributeList do: [ :attribute |
-		| blockList |
-		blockList := self attributeMap at: attribute ifAbsent: [ self attributeMap at: attribute put: (blockList := OrderedCollection new) ].
-		blockList add: aBlock.
-		self addAttribute: attribute ]
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setFor: attributeList version: aString [
-	"conditional symbolicVersion support"
-
-	attributeList do: [ :attribute |
-		self attributeMap at: attribute put: aString.
-		self addAttribute: attribute ]
-]
-
-{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setPackage: aString withBlock: aBlock [
 
 	| spec |
@@ -671,13 +633,10 @@ MetacelloAbstractVersionConstructor >> setPackage: aString withBlock: aBlock [
 { #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setPackage: aString withString: aFile [
 
-	| spec |
-	spec := 
-		(self project packageSpec)
-			name: aString;
-			file: aFile;
-			yourself.
-	self root packages merge: spec.
+	self root packages merge: (self project packageSpec
+			 name: aString;
+			 file: aFile;
+			 yourself)
 ]
 
 { #category : 'accessing' }
@@ -725,12 +684,6 @@ MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
 		spec := self project valueHolderSpec.
 		self root setTimestamp: spec ].
 	self with: spec during: aBlock
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setTimestampWithString: aString [
-
-	self root timestamp: aString
 ]
 
 { #category : 'api' }
