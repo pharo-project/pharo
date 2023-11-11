@@ -135,14 +135,13 @@ MetacelloMCBaselineOfProjectSpec >> projectLabel [
 
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> repositoryBranchName [
-  "extract a branch name from the repository ... if possible"
+	"extract a branch name from the repository ... if possible"
 
-  "must parallel implementation of MetacelloMCBaselineProject>>setBaselineRepositoryDescription: we want the same repoSpec"
+	"must parallel implementation of MetacelloMCBaselineProject>>setBaselineRepositoryDescription: we want the same repoSpec"
 
-  | spec repo |
-  self repositorySpecs do: [ :repoSpec | spec := repoSpec ].
-  repo := spec createRepository.
-  ^ repo repositoryBranchName
+	| spec |
+	self repositorySpecs do: [ :repoSpec | spec := repoSpec ].
+	^ spec createRepository repositoryBranchName
 ]
 
 { #category : 'querying' }

@@ -1,11 +1,6 @@
 Extension { #name : 'Symbol' }
 
 { #category : '*Metacello-Core' }
-Symbol >> asMetacelloAttributeList [
-    ^ {self}
-]
-
-{ #category : '*Metacello-Core' }
 Symbol >> setForDo: aBlock withInMetacelloConfig: aMetacelloConstructore [
     aMetacelloConstructore setFor: {self} do: aBlock
 ]

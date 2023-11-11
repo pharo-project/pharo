@@ -775,26 +775,22 @@ MetacelloAbstractVersionConstructor >> setDescriptionWithString: aString [
 
 { #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setFor: attributeList do: aBlock [
-    "conditional version support"
+	"conditional version support"
 
-    attributeList asMetacelloAttributeList
-        do: [ :attribute | 
-            | blockList |
-            blockList := self attributeMap
-                at: attribute
-                ifAbsent: [ self attributeMap at: attribute put: (blockList := OrderedCollection new) ].
-            blockList add: aBlock.
-            self addAttribute: attribute ]
+	attributeList do: [ :attribute |
+		| blockList |
+		blockList := self attributeMap at: attribute ifAbsent: [ self attributeMap at: attribute put: (blockList := OrderedCollection new) ].
+		blockList add: aBlock.
+		self addAttribute: attribute ]
 ]
 
 { #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setFor: attributeList version: aString [
-    "conditional symbolicVersion support"
+	"conditional symbolicVersion support"
 
-    attributeList asMetacelloAttributeList
-        do: [ :attribute | 
-            self attributeMap at: attribute put: aString.
-            self addAttribute: attribute ]
+	attributeList do: [ :attribute |
+		self attributeMap at: attribute put: aString.
+		self addAttribute: attribute ]
 ]
 
 { #category : 'api callbacks' }

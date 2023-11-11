@@ -6,11 +6,6 @@ Collection >> addToMetacelloPackages: aMetacelloPackagesSpec [
 	self do: [:each | each addToMetacelloPackages: aMetacelloPackagesSpec ]
 ]
 
-{ #category : '*Metacello-Core' }
-Collection >> asMetacelloAttributeList [
-    ^ self
-]
-
 { #category : '*Metacello-Core-scripting' }
 Collection >> execute: projectSpecBlock against: aScriptExecutor [
     aScriptExecutor executeCollection: self do: projectSpecBlock
