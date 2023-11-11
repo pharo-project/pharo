@@ -34,11 +34,6 @@ MetacelloMCBaselineProject class >> singletonVersionName [
     ^ 'baseline'
 ]
 
-{ #category : 'accessing' }
-MetacelloMCBaselineProject class >> versionConstructorClass [
-    ^ MetacelloBaselineConstructor
-]
-
 { #category : 'scripting' }
 MetacelloMCBaselineProject >> asBaselineProject [
     ^ self

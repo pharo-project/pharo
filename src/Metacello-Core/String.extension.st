@@ -132,11 +132,6 @@ String >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
 ]
 
 { #category : '*Metacello-Core' }
-String >> setImportInVersionSpec: aMetacelloVersionSpec [
-  aMetacelloVersionSpec setImport: {self}
-]
-
-{ #category : '*Metacello-Core' }
 String >> setIncludesInMetacelloPackage: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setIncludes: { self }.

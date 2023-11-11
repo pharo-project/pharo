@@ -24,11 +24,6 @@ Collection >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 ]
 
 { #category : '*Metacello-Core' }
-Collection >> setImportInVersionSpec: aMetacelloVersionSpec [
-  aMetacelloVersionSpec setImport: self asArray
-]
-
-{ #category : '*Metacello-Core' }
 Collection >> setIncludesInMetacelloPackage: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setIncludes: self asArray.

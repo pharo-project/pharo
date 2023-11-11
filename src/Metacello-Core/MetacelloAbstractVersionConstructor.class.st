@@ -972,9 +972,9 @@ MetacelloAbstractVersionConstructor >> versionStringForVersion: anObject [
 
 { #category : 'private' }
 MetacelloAbstractVersionConstructor >> with: aMetacelloSpec during: aBlock [
-    | previousRoot |
-    previousRoot := self root.
-    self root: aMetacelloSpec.
-    aBlock
-        ensure: [ self root: previousRoot ]
+
+	| previousRoot |
+	previousRoot := self root.
+	self root: aMetacelloSpec.
+	aBlock ensure: [ self root: previousRoot ]
 ]

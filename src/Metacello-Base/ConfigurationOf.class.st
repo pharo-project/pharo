@@ -116,7 +116,7 @@ ConfigurationOf >> project [
 	^ project ifNil: [
 		  project := self projectClass new projectAttributes: self customProjectAttributes. "Create the Metacello project"
 		  project versionNumberClass: self versionNumberClass.
-		  project class versionConstructorClass on: self project: project. "Construct the project"
+		  MetacelloBaselineConstructor on: self project: project. "Construct the project"
 		  project loadType: #linear. "change to #atomic if desired"
 		  project ]
 ]
