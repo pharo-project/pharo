@@ -33,59 +33,59 @@ MetacelloPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: s
 MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: indent [
 
 	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
-	hasFile := file ~~ nil.
+	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.
-	hasPostLoadDoIt := self getPostLoadDoIt ~~ nil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [self answers isEmpty ]]) not.
-	hasRequiresOrIncludesOrAnswers
-		ifTrue: [ 
-			self 
-				configMethodBodyOn: aStream 
-				hasName: hasName 
-				cascading: hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
-				indent: indent ].
-	self 
-		configMethodOn: aStream 
-		for: file 
-		selector: 'file: ' 
-		cascading: hasName | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers 
-		cascade: hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt 
+	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
+	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
+	hasRequiresOrIncludesOrAnswers ifTrue: [
+		self
+			configMethodBodyOn: aStream
+			hasName: hasName
+			cascading: hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
+			indent: indent ].
+	self
+		configMethodOn: aStream
+		for: file
+		selector: 'file: '
+		cascading: hasName | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
+		cascade: hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt
 		indent: indent.
-	hasRepositories
-		ifTrue: [ 
-			(self repositorySpecs size > 1)
-				ifTrue: [ 
-					hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
-						ifTrue: [ 
-							aStream cr;
-							tab: indent. ].
-					aStream 
-						nextPutAll: 'repositories: ['; 
+	hasRepositories ifTrue: [
+		self repositorySpecs size > 1
+			ifTrue: [
+				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
+					aStream
 						cr;
-						tab: indent + 1;
-						nextPutAll: 'spec'; 
-						cr.
-					self repositories configMethodCascadeOn: aStream indent: indent + 1.
-					aStream nextPutAll: ' ]' ]
-				ifFalse: [ 
-					hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
-						ifTrue: [ aStream cr; tab: indent ].
-					self repositories configMethodCascadeOn: aStream indent: indent ].
-			hasPreLoadDoIt | hasPostLoadDoIt ifTrue: [ aStream nextPut: $; ] ].
-	self 
-		configMethodOn: aStream 
-		for: self getPreLoadDoIt 
+						tab: indent ].
+				aStream
+					nextPutAll: 'repositories: [';
+					cr;
+					tab: indent + 1;
+					nextPutAll: 'spec';
+					cr.
+				self repositories configMethodCascadeOn: aStream indent: indent + 1.
+				aStream nextPutAll: ' ]' ]
+			ifFalse: [
+				hasName | hasFile | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
+					aStream
+						cr;
+						tab: indent ].
+				self repositories configMethodCascadeOn: aStream indent: indent ].
+		hasPreLoadDoIt | hasPostLoadDoIt ifTrue: [ aStream nextPut: $; ] ].
+	self
+		configMethodOn: aStream
+		for: self getPreLoadDoIt
 		selector: 'preLoadDoIt: '
-		cascading: hasName | hasFile | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers 
-		cascade: hasPostLoadDoIt 
+		cascading: hasName | hasFile | hasRepositories | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
+		cascade: hasPostLoadDoIt
 		indent: indent.
-	self 
-		configMethodOn: aStream 
-		for: self getPostLoadDoIt 
-		selector: 'postLoadDoIt: ' 
-		cascading: hasName | hasFile | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludesOrAnswers 
-		cascade: false 
+	self
+		configMethodOn: aStream
+		for: self getPostLoadDoIt
+		selector: 'postLoadDoIt: '
+		cascading: hasName | hasFile | hasRepositories | hasPreLoadDoIt | hasRequiresOrIncludesOrAnswers
+		cascade: false
 		indent: indent.
 	aStream nextPut: $.
 ]
@@ -105,41 +105,47 @@ MetacelloPackageSpec >> configMethodCascadeOn: aStream member: aMember last: las
 MetacelloPackageSpec >> configMethodOn: aStream indent: indent [
 
 	| hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers hasFile |
-	hasFile := file ~~ nil.
+	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.
-	hasPostLoadDoIt := self getPostLoadDoIt ~~ nil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [self answers isEmpty ]]) not.
-	aStream tab: indent; nextPutAll: 'spec '.
+	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
+	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
+	aStream
+		tab: indent;
+		nextPutAll: 'spec '.
 	hasFile | hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
 		ifTrue: [
-			aStream cr; tab: indent + 1; nextPutAll: 'name: ', self name printString; nextPut: $;.
+			aStream
+				cr;
+				tab: indent + 1;
+				nextPutAll: 'name: ' , self name printString;
+				nextPut: $;.
 			self configMethodBodyOn: aStream hasName: true indent: indent + 1 ]
-		ifFalse: [
-			aStream nextPutAll: 'name: ', self name printString ]
+		ifFalse: [ aStream nextPutAll: 'name: ' , self name printString ]
 ]
 
 { #category : 'printing' }
 MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember indent: indent [
 
 	| hasFile hasRepositories hasPreLoadDoIt hasPostLoadDoIt hasRequiresOrIncludesOrAnswers |
-	hasFile := file ~~ nil.
+	hasFile := file isNotNil.
 	hasRepositories := self repositorySpecs size > 0.
-	hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.
-	hasPostLoadDoIt := self getPostLoadDoIt ~~ nil.
-	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [self answers isEmpty ]]) not.
-	hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers
-		ifTrue: [
-			aStream 
-				nextPutAll: 'package: ', self name printString, ' ';
-				nextPutAll: aMember methodUpdateSelector asString, ' ['; cr.
-			aStream tab: indent + 1; nextPutAll: 'spec '.
-			self configMethodBodyOn: aStream hasName: false indent: indent + 2.
-			aStream nextPutAll: ' ]'.
-			^self ].
-	aStream nextPutAll: 'package: ', self name printString.
-	hasFile
-		ifTrue: [ aStream nextPutAll: ' with: ', file printString ]
+	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
+	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasRequiresOrIncludesOrAnswers := (self requires isEmpty and: [ self includes isEmpty and: [ self answers isEmpty ] ]) not.
+	hasRepositories | hasPreLoadDoIt | hasPostLoadDoIt | hasRequiresOrIncludesOrAnswers ifTrue: [
+		aStream
+			nextPutAll: 'package: ' , self name printString , ' ';
+			nextPutAll: aMember methodUpdateSelector asString , ' [';
+			cr.
+		aStream
+			tab: indent + 1;
+			nextPutAll: 'spec '.
+		self configMethodBodyOn: aStream hasName: false indent: indent + 2.
+		aStream nextPutAll: ' ]'.
+		^ self ].
+	aStream nextPutAll: 'package: ' , self name printString.
+	hasFile ifTrue: [ aStream nextPutAll: ' with: ' , file printString ]
 ]
 
 { #category : 'testing' }
@@ -334,7 +340,7 @@ MetacelloPackageSpec >> isPackageLoaded [
 { #category : 'querying' }
 MetacelloPackageSpec >> isPackageLoaded: aLoader [
 
-	^(self workingCopyNameFor: aLoader) ~~ nil
+	^ (self workingCopyNameFor: aLoader) isNotNil
 ]
 
 { #category : 'loading' }

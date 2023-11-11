@@ -521,9 +521,9 @@ MCGitBasedNetworkRepository >> projectTagsUrlFor: aProjectPath [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersion [
-    (projectVersion == nil or: [ projectVersion isEmpty ])
-        ifTrue: [ projectVersion := 'master' ].
-    ^ projectVersion
+
+	(projectVersion isNil or: [ projectVersion isEmpty ]) ifTrue: [ projectVersion := 'master' ].
+	^ projectVersion
 ]
 
 { #category : 'accessing' }

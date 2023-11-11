@@ -138,13 +138,12 @@ MetacelloVersionLoadDirective >> printOn: aStream indent: indent [
 { #category : 'accessing' }
 MetacelloVersionLoadDirective >> spec [
 	"Expected to be a MetacelloVersionSpec"
-	
-	(spec == nil  and: [  self loader ~~ nil ]) 
-		ifTrue: [ 
-			^[ self loader spec versionSpec ] 
-				on: MessageNotUnderstood
-				do: [:ex | ex return: self loader spec ]].
-	^spec
+
+	(spec isNil and: [ self loader isNotNil ]) ifTrue: [
+		^ [ self loader spec versionSpec ]
+			  on: MessageNotUnderstood
+			  do: [ :ex | ex return: self loader spec ] ].
+	^ spec
 ]
 
 { #category : 'enumerating' }

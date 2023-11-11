@@ -526,8 +526,8 @@ MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectName
 			status hasNoProject: false.
 			vrsn := prj versionOrNil.
 			vrsn ifNotNil: [ (currentVersion := prj relativeCurrentVersion) ifNotNil: [ status vrsnStatus add: currentVersion versionStatus ] ].
-			currentVersion ~~ nil
-				ifTrue: [
+			currentVersion
+				ifNotNil: [
 					status aProjectIsLoaded: true.
 					(currentVersion perform: #= with: vrsn)
 						ifTrue: [ status aLoadedProjectIsExact: true ]
@@ -535,7 +535,7 @@ MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectName
 							(currentVersion perform: prj projectReference operator with: vrsn)
 								ifTrue: [ status aLoadedProjectIsCurrent: true ]
 								ifFalse: [ status aLoadedProjectIsNotCurrent: true ] ] ]
-				ifFalse: [ status aProjectNotLoaded: true ] ]
+				ifNil: [ status aProjectNotLoaded: true ] ]
 		packageDo: [ :pkg |
 			status hasNoPackage: false.
 			pkg

@@ -13,7 +13,8 @@ Class {
 
 { #category : 'testing' }
 MetacelloProjectSpecForLoad >> hasOverride [
-    ^ self overrideProjectSpec ~~ nil
+
+	^ self overrideProjectSpec isNotNil
 ]
 
 { #category : 'accessing' }

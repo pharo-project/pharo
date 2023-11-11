@@ -112,10 +112,10 @@ MetacelloMCVersionSpecLoader >> repositories [
 MetacelloMCVersionSpecLoader >> repositorySpecs [
 
 	| repositoryMap |
-	repositoryMap := self versionSpec repositories ~~ nil
-		ifTrue: [ self versionSpec repositories map ]
-		ifFalse: [ Dictionary new ].
-	^repositoryMap values.
+	repositoryMap := self versionSpec repositories
+		                 ifNotNil: [ self versionSpec repositories map ]
+		                 ifNil: [ Dictionary new ].
+	^ repositoryMap values
 ]
 
 { #category : 'accessing' }

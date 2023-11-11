@@ -87,7 +87,8 @@ MetacelloMCBaselineOfProjectSpec >> ensureLoadUsing: aLoader [
 
 { #category : 'printing' }
 MetacelloMCBaselineOfProjectSpec >> hasClassName [
-    ^ className ~~ nil and: [ className ~= self constructClassName ]
+
+	^ className isNotNil and: [ className ~= self constructClassName ]
 ]
 
 { #category : 'testing' }

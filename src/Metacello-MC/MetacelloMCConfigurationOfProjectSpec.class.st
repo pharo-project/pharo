@@ -40,7 +40,8 @@ MetacelloMCConfigurationOfProjectSpec >> copyForRegistration: aMetacelloProjectR
 
 { #category : 'printing' }
 MetacelloMCConfigurationOfProjectSpec >> hasClassName [
-    ^ className ~~ nil and: [ className ~= self constructClassName ]
+
+	^ className isNotNil and: [ className ~= self constructClassName ]
 ]
 
 { #category : 'testing' }
