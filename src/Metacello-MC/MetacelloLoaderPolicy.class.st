@@ -54,7 +54,7 @@ MetacelloLoaderPolicy >> ensuredMap: anObject [
 { #category : 'testing' }
 MetacelloLoaderPolicy >> hasRepositoryOverrides [
 
-	^self overrideRepositories ~~ nil
+	^ self overrideRepositories isNotNil
 ]
 
 { #category : 'accessing' }

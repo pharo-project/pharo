@@ -86,26 +86,6 @@ MetacelloMCBaselineProject >> latestVersion: blessing [
     ^ nil
 ]
 
-{ #category : 'versions' }
-MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString [
-    ^ nil
-]
-
-{ #category : 'versions' }
-MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString excludedBlessings: excluded [
-    ^ nil
-]
-
-{ #category : 'versions' }
-MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString includedBlessings: included [
-    ^ nil
-]
-
-{ #category : 'versions' }
-MetacelloMCBaselineProject >> latestVersionMatching: versionPatternString includedBlessings: included excludedBlessings: excludedBlessings [
-    ^ nil
-]
-
 { #category : 'scripting' }
 MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
   "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load

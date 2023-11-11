@@ -46,22 +46,6 @@ MetacelloVersion >> = aMetacelloVersion [
 ]
 
 { #category : 'querying' }
-MetacelloVersion >> allPackagesForSpecNamed: aStringOrArray [
-	"resolves list of packages associated with the named spec.
-	   If the spec is a packages, answer a list including the package and the transitive closure on 
-			its #requires: and #includes: fields.
-	   If the spec is a project, answer a list of the packages associated with the project,
-			following the transitive closure on packages reachable starting with the #loads: field.
-	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
-			Groups in the #includes: field are expanded following the transitive closure on groups"
-	"In essence, this query answers the list of all packages that would be loaded if the package 
-		named <aString> were loaded."
-	"If there is no spec named <aString>, answers an empty list"
-
-	^self allPackagesForSpecNamed: aStringOrArray ifAbsent: [ ^#() ]
-]
-
-{ #category : 'querying' }
 MetacelloVersion >> allPackagesForSpecNamed: aStringOrArray ifAbsent: aBlock [
 	"resolves list of packages associated with the named spec.
 	   If the spec is a packages, answer a list including the package and the transitive closure on 
@@ -70,14 +54,17 @@ MetacelloVersion >> allPackagesForSpecNamed: aStringOrArray ifAbsent: aBlock [
 			following the transitive closure on packages reachable starting with the #loads: field.
 	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
 			Groups in the #includes: field are expanded following the transitive closure on groups"
+
 	"In essence, this query answers the list of all packages that would be loaded if the package 
 		named <aString> were loaded."
+
 	"If there is no spec named <aString>, aBlock is evaluated"
 
-	^aStringOrArray 
-		resolvePackageSpecsNamedForMetacelloMCVersion: self 
-		visited: MetacelloVisitedPackages new 
-		ifAbsent: aBlock
+	^ self
+		  allPackagesForSpecs: ((aStringOrArray isString
+				    ifTrue: [ { aStringOrArray } ]
+				    ifFalse: [ aStringOrArray ]) collect: [ :ea | self packageNamed: ea ifAbsent: aBlock ])
+		  visited: MetacelloVisitedPackages new
 ]
 
 { #category : 'private' }
@@ -314,12 +301,6 @@ MetacelloVersion >> isLoadedToSpec [
 	"all loaded projects and packages match specifications"
 	
 	^self spec isLoadedToSpec
-]
-
-{ #category : 'testing' }
-MetacelloVersion >> isPossibleBaseline [
-
-	^self spec isPossibleBaseline
 ]
 
 { #category : 'testing' }

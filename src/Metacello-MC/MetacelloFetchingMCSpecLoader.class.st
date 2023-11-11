@@ -183,48 +183,40 @@ MetacelloFetchingMCSpecLoader >> printOn: aStream [
 
 { #category : 'private' }
 MetacelloFetchingMCSpecLoader >> resolveDependencies: aResolvedReference nearest: nearestReference into: aCollection [
-  | block retryCount coll notDone |
-  self flag: 'Not used, but retained to avoid upgrade issues'.
-  block := [ :dependency | 
-  | reference |
-  reference := MetacelloCachingGoferResolvedReference
-    name: dependency versionInfo name
-    repository: aResolvedReference repository.
-  coll add: reference.
-  MetacelloNotification signal: ('Fetched dependency -> ' , reference name , ' --- '
-            , reference repository repositoryDescription).
-  self resolveDependencies: reference nearest: reference into: coll ].
-  retryCount := 0.
-  notDone := true.
-  coll := OrderedCollection new.
-  [ notDone and: [ retryCount < 3 ] ]
-    whileTrue: [ 
-      retryCount > 0
-        ifTrue: [ 
-          MetacelloNotification signal: ('...RETRY') ].
-      [ 
-      "ensure that all resolved references have cached their version while wrapped by error handler"
-      aCollection do: [ :each | each version ].
-      nearestReference version dependencies do: block.
-      notDone := false ]
-        on: Error
-        do: [ :ex | 
-          retryCount := retryCount + 1.
-          retryCount >= 3
-            ifTrue: [ ex pass ].
-          coll := OrderedCollection new ] ].
-  aCollection addAll: coll.
-  ^ aCollection
+
+	| block retryCount coll notDone |
+	self flag: 'Not used, but retained to avoid upgrade issues'.
+	block := [ :dependency |
+	         | reference |
+	         reference := MetacelloCachingGoferResolvedReference name: dependency versionInfo name repository: aResolvedReference repository.
+	         coll add: reference.
+	         MetacelloNotification signal: 'Fetched dependency -> ' , reference name , ' --- ' , reference repository repositoryDescription.
+	         self resolveDependencies: reference nearest: reference into: coll ].
+	retryCount := 0.
+	notDone := true.
+	coll := OrderedCollection new.
+	[ notDone and: [ retryCount < 3 ] ] whileTrue: [
+		retryCount > 0 ifTrue: [ MetacelloNotification signal: '...RETRY' ].
+		[ "ensure that all resolved references have cached their version while wrapped by error handler"
+		aCollection do: [ :each | each version ].
+		nearestReference version dependencies do: block.
+		notDone := false ]
+			on: Error
+			do: [ :ex |
+				retryCount := retryCount + 1.
+				retryCount >= 3 ifTrue: [ ex pass ].
+				coll := OrderedCollection new ] ].
+	aCollection addAll: coll.
+	^ aCollection
 ]
 
 { #category : 'private' }
 MetacelloFetchingMCSpecLoader >> resolvePackageSpec: packageSpec cachedGofer: gofer [
 
-	|  versionReference references |
+	| versionReference references |
 	versionReference := packageSpec goferLoaderReference.
-	(references := versionReference resolveAllWith: gofer) isEmpty 
-		ifTrue: [ ^nil ].
-	^references last asMetacelloCachingResolvedReference.
+	(references := versionReference resolveAllWith: gofer) isEmpty ifTrue: [ ^ nil ].
+	^ references last asMetacelloCachingResolvedReference
 ]
 
 { #category : 'private' }
@@ -236,13 +228,11 @@ MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec cachedReference: 
 
 { #category : 'private' }
 MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec externalReference: reference [
-  ^ self
-    scheduleFetchFor: packageSpec
-    reference: reference
-    message:
-      'Fetched -> ' , reference name , ' --- '
-        , reference repository repositoryDescription , ' --- '
-        , reference repository description
+
+	^ self
+		  scheduleFetchFor: packageSpec
+		  reference: reference
+		  message: 'Fetched -> ' , reference name , ' --- ' , reference repository repositoryDescription , ' --- ' , reference repository description
 ]
 
 { #category : 'private' }

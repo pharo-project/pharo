@@ -35,10 +35,3 @@ Collection >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	self do: [:each | each removeFromMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
-
-{ #category : '*Metacello-MC' }
-Collection >> resolvePackageSpecsNamedForMetacelloMCVersion: aMetacelloMCVersion visited: visited ifAbsent: aBlock [
-    ^ aMetacelloMCVersion
-        allPackagesForSpecs: (self collect: [ :ea | aMetacelloMCVersion packageNamed: ea ifAbsent: aBlock ])
-        visited: visited
-]

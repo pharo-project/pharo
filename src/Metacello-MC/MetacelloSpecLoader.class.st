@@ -97,8 +97,9 @@ MetacelloSpecLoader >> currentVersionInfoFor: packageSpec [
 
 { #category : 'actions' }
 MetacelloSpecLoader >> doLoad [
+	"NOOP"
 
-	self subclassResponsibility
+	
 ]
 
 { #category : 'actions' }

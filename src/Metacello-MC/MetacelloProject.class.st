@@ -55,9 +55,9 @@ MetacelloProject >> asConfigurationProject [
 { #category : 'private' }
 MetacelloProject >> attributes [
 
-	^(OrderedCollection with: #common)
-		addAll: self platformAttributes;
-		yourself
+	^ (OrderedCollection with: #common)
+		  addAll: self platformAttributes;
+		  yourself
 ]
 
 { #category : 'spec classes' }
@@ -88,12 +88,7 @@ MetacelloProject >> configuration: anObject [
 
 { #category : 'spec classes' }
 MetacelloProject >> configurationOfProjectSpec [
-    ^ self configurationOfProjectSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> configurationOfProjectSpecClass [
-    ^ MetacelloMCConfigurationOfProjectSpec
+    ^ MetacelloMCConfigurationOfProjectSpec for: self
 ]
 
 { #category : 'repository creation' }
@@ -273,59 +268,6 @@ MetacelloProject >> latestVersion: blessing [
 	^(self map values select: [:version | blessing = version blessing ]) detectMax: [:version | version ]
 ]
 
-{ #category : 'versions' }
-MetacelloProject >> latestVersionMatching: versionPatternString [
-	"Answer whether the version number of the receiver matches the given pattern string.
-
-	 A Metacello version number is made up of version sequences delimited by the characters $. and $-.
-	 The $. introduces a numeric version sequence and $- introduces an alphanumeric version sequence.
-	 
-	 A version pattern is made up of version pattern match sequences. also delimited by the characters $. 
-	 and $-.. Each pattern match sequence is tested against the corresponding version sequence of the 
-	 receiver, using the 'standard' pattern matching rules. All sequences must answer true for a match.
-	
-	 The special pattern sequence '?' is a match for the corresponding version sequence and all subsequent 
-	 version sequences. '?' as the version pattern matches all versions. No more version pattern 
-	 sequences are permitted once the '?' sequence is used. If used, it is the last version pattern
-	 sequence."
-
-	^self 
-		latestVersionMatching: versionPatternString 
-		includedBlessings: #()
-		excludedBlessings: self excludeFromLatestVersion
-]
-
-{ #category : 'versions' }
-MetacelloProject >> latestVersionMatching: versionPatternString excludedBlessings: excluded [
-
-	^self 
-		latestVersionMatching: versionPatternString 
-		includedBlessings: #()
-		excludedBlessings: excluded
-]
-
-{ #category : 'versions' }
-MetacelloProject >> latestVersionMatching: versionPatternString includedBlessings: included [
-
-	^self 
-		latestVersionMatching: versionPatternString 
-		includedBlessings: included
-		excludedBlessings: self excludeFromLatestVersion
-]
-
-{ #category : 'versions' }
-MetacelloProject >> latestVersionMatching: versionPatternString includedBlessings: included excludedBlessings: excludedBlessings [
-
-	| excluded |
-	excluded := excludedBlessings asSet copy.
-	excluded removeAllFoundIn: included.
-	^(self map values select: [:version |
-		(included isEmpty or: [ included includes: version blessing ]) 
-			and: [ (excluded includes: version blessing) not 
-				and: [ version versionNumber match: versionPatternString ]]])
-		detectMax: [:version | version ]
-]
-
 { #category : 'loading' }
 MetacelloProject >> load: aVersionString [
 
@@ -497,9 +439,8 @@ MetacelloProject >> projectPlatformAttributes [
 
 	| list aBlock |
 	list := OrderedCollection new.
-	(aBlock := self projectAttributes) ~~ nil 
-		ifTrue: [ list addAll: aBlock value ].
-	^self defaultPlatformAttributes, list
+	(aBlock := self projectAttributes) ifNotNil: [ list addAll: aBlock value ].
+	^ self defaultPlatformAttributes , list
 ]
 
 { #category : 'spec classes' }
@@ -578,39 +519,6 @@ MetacelloProject >> symbolicVersionSymbols [
 	^self symbolicVersionMap keys asArray sort: [:a :b | a <= b ]
 ]
 
-{ #category : 'development support' }
-MetacelloProject >> updateProject [
-	"load the latest version of the configuration package"
-
-	"WARNING: don't forget to refresh your project instance after doing an #updateProject, 
-	 otherwise your instance won't reflect the info in the freshly loaded configuration"
-	
-	^self updateProject: MetacelloLoaderPolicy new
-]
-
-{ #category : 'development support' }
-MetacelloProject >> updateProject: aLoaderPolicy [
-	"load the latest version of the configuration package"
-
-	"WARNING: don't forget to refresh your project instance after doing an #updateProject, 
-	 otherwise your instance won't reflect the info in the freshly loaded configuration"
-
-	| mcLoader |
-	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
-	mcLoader loaderPolicy: aLoaderPolicy.
-	mcLoader doingLoads: [
-		MCWorkingCopy workingCopiesForClass: self configuration class do: [ :workingCopy |
-			| pkg ar |
-			pkg := self packageSpec.
-			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
-			ar := workingCopy metacelloPackageNameWithBranch.
-			pkg name: (ar at: 1).
-			(ar at: 2) notEmpty ifTrue: [ pkg file: (ar at: 2) ].
-			pkg load.
-			^ true ] ].
-	^ true
-]
-
 { #category : 'spec classes' }
 MetacelloProject >> valueHolderSpec [
 
@@ -644,8 +552,8 @@ MetacelloProject >> version: aVersionString ifAbsent: aBlock [
 
 { #category : 'versions' }
 MetacelloProject >> versionNumberClass [
-    versionNumberClass ifNil: [ versionNumberClass := MetacelloVersionNumber ].
-    ^ versionNumberClass
+
+	^ versionNumberClass ifNil: [ versionNumberClass := MetacelloVersionNumber ]
 ]
 
 { #category : 'versions' }
@@ -656,13 +564,7 @@ MetacelloProject >> versionNumberClass: aClass [
 { #category : 'spec classes' }
 MetacelloProject >> versionSpec [
 
-	^self versionSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> versionSpecClass [
-
-	^MetacelloVersionSpec
+	^ MetacelloVersionSpec for: self
 ]
 
 { #category : 'versions' }

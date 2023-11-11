@@ -695,15 +695,6 @@ MetacelloProjectSpec >> isPartiallyLoaded: aLoader [
 	^ false
 ]
 
-{ #category : 'testing' }
-MetacelloProjectSpec >> isPossibleBaseline [
-
-	| vrsn |
-	(vrsn := self versionOrNil) ifNil: [ ^ false ].
-	(vrsn allPackagesForSpecNamed: (self loadListForVersion: vrsn)) do: [ :pkg | pkg workingCopy ifNil: [ ^ false ] ].
-	^ true
-]
-
 { #category : 'printing' }
 MetacelloProjectSpec >> label [
 
@@ -1119,18 +1110,14 @@ MetacelloProjectSpec >> repositorySpecs [
 
 { #category : 'private' }
 MetacelloProjectSpec >> resolveToAllPackagesIn: aVersionSpec visited: visited [
-    | vrsn |
-    visited
-        pushProject: [ 
-            visited
-                visit: self
-                doing: [ :spec | 
-                    spec ensureProjectLoaded.
-                    vrsn := spec version.
-                    ^ vrsn
-                        allPackagesForSpecNamed: (self loadListForVersion: vrsn)
-                        ifAbsent: [ self error: 'invalid loads: spec' ] ] ].
-    ^ #()
+
+	| vrsn |
+	visited pushProject: [
+		visited visit: self doing: [ :spec |
+			spec ensureProjectLoaded.
+			vrsn := spec version.
+			^ vrsn allPackagesForSpecNamed: (self loadListForVersion: vrsn) ifAbsent: [ self error: 'invalid loads: spec' ] ] ].
+	^ #(  )
 ]
 
 { #category : 'private' }

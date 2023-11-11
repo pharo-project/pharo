@@ -64,10 +64,3 @@ String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 			name: self;
 			yourself)
 ]
-
-{ #category : '*Metacello-MC' }
-String >> resolvePackageSpecsNamedForMetacelloMCVersion: aMetacelloMCVersion visited: visited ifAbsent: aBlock [
-    ^ aMetacelloMCVersion
-        allPackagesForSpecs: {(aMetacelloMCVersion packageNamed: self ifAbsent: aBlock)}
-        visited: visited
-]

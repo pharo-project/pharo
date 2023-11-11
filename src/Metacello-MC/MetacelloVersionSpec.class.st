@@ -571,13 +571,6 @@ MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectName
 ]
 
 { #category : 'testing' }
-MetacelloVersionSpec >> isPossibleBaseline [
-
-	self projectDo: [ :prj | prj isPossibleBaseline ifFalse: [ ^ false ] ] packageDo: [ :pkg | pkg isPackageLoaded ifFalse: [ ^ false ] ] groupDo: [ :ignored |  ].
-	^ true
-]
-
-{ #category : 'testing' }
 MetacelloVersionSpec >> isSomethingLoaded [
 	"at least one package loaded"
 	
