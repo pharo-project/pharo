@@ -185,17 +185,7 @@ MetacelloMCBaselineOfProjectSpec >> version [
 	^ self projectClassProject version
 ]
 
-{ #category : 'construction' }
-MetacelloMCBaselineOfProjectSpec >> version: anObject constructor: aVersionConstructor [
-    self error: 'version: not allowed in a baseline project spec'
-]
-
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> versionString [
     ^ versionString ifNil: [ self version ifNotNil: [:v | v versionString] ]
-]
-
-{ #category : 'construction' }
-MetacelloMCBaselineOfProjectSpec >> versionString: anObject constructor: aVersionConstructor [
-    self error: 'versionString: not allowed in a baseline project spec'
 ]

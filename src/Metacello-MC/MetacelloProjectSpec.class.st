@@ -124,11 +124,6 @@ MetacelloProjectSpec >> className: aString [
 	self projectPackage: nil
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> className: aString constructor: aVersionConstructor [
-    aVersionConstructor classNameForProject: aString
-]
-
 { #category : 'testing' }
 MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
     ^ (MetacelloLookupProjectSpecForLoad new
@@ -511,11 +506,6 @@ MetacelloProjectSpec >> file: aString [
     self projectPackage: nil
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> file: aString constructor: aVersionConstructor [
-    aVersionConstructor fileForProject: aString
-]
-
 { #category : 'accessing' }
 MetacelloProjectSpec >> getClassName [
     "raw access to iv"
@@ -741,11 +731,6 @@ MetacelloProjectSpec >> loads: aCollection [
 	aCollection setLoadsInMetacelloProject: self
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> loads: anObject constructor: aVersionConstructor [
-    aVersionConstructor loadsForProject: anObject
-]
-
 { #category : 'merging' }
 MetacelloProjectSpec >> mergeMap [
 
@@ -825,11 +810,6 @@ MetacelloProjectSpec >> name: aString [
 	self projectPackage: nil
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> name: aString constructor: aVersionConstructor [
-    aVersionConstructor nameForProject: aString
-]
-
 { #category : 'merging' }
 MetacelloProjectSpec >> nonOverridable [
     ^ super nonOverridable , #(#'projectPackage' #'repositories')
@@ -854,11 +834,6 @@ MetacelloProjectSpec >> operator: anObject [
 
     self shouldBeMutable.
     operator := anObject
-]
-
-{ #category : 'construction' }
-MetacelloProjectSpec >> operator: anObject constructor: aVersionConstructor [
-    aVersionConstructor operatorForProject: anObject
 ]
 
 { #category : 'accessing' }
@@ -889,11 +864,6 @@ MetacelloProjectSpec >> postLoadDoIt: anObject [
 	anObject setPostLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> postLoadDoIt: aSymbol constructor: aVersionConstructor [
-    aVersionConstructor postLoadDoItForProject: aSymbol
-]
-
 { #category : 'querying' }
 MetacelloProjectSpec >> preLoadDoIt [
 
@@ -904,11 +874,6 @@ MetacelloProjectSpec >> preLoadDoIt [
 MetacelloProjectSpec >> preLoadDoIt: anObject [
 
 	anObject setPreLoadDoItInMetacelloSpec: self
-]
-
-{ #category : 'construction' }
-MetacelloProjectSpec >> preLoadDoIt: aSymbol constructor: aVersionConstructor [
-    aVersionConstructor preLoadDoItForProject: aSymbol
 ]
 
 { #category : 'querying' }
@@ -953,11 +918,6 @@ MetacelloProjectSpec >> projectPackage [
 MetacelloProjectSpec >> projectPackage: aProjectPackage [
     self shouldBeMutable.
     projectPackage := aProjectPackage
-]
-
-{ #category : 'construction' }
-MetacelloProjectSpec >> projectPackage: aBlock constructor: aVersionConstructor [
-    aVersionConstructor projectPackageForProject: aBlock
 ]
 
 { #category : 'scripting' }
@@ -1006,31 +966,16 @@ MetacelloProjectSpec >> repositories: anObject [
     self projectPackage: nil
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> repositories: aBlock constructor: aVersionConstructor [
-    aVersionConstructor repositoriesForProject: aBlock
-]
-
 { #category : 'accessing' }
 MetacelloProjectSpec >> repository: aStringOrMetacelloRepositorySpec [
     self repositories repository: aStringOrMetacelloRepositorySpec.
     self projectPackage: nil
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> repository: anObject constructor: aVersionConstructor [
-    aVersionConstructor repositoryForProject: anObject
-]
-
 { #category : 'accessing' }
 MetacelloProjectSpec >> repository: aString username: username password: password [
     self repositories repository: aString username: username password: password.
     self projectPackage: nil
-]
-
-{ #category : 'construction' }
-MetacelloProjectSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
-    aVersionConstructor repositoryForProject: aString username: username password: password
 ]
 
 { #category : 'querying' }
@@ -1177,11 +1122,6 @@ MetacelloProjectSpec >> version [
 				  ifFalse: [ vrsn ] ]
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> version: anObject constructor: aVersionConstructor [
-    aVersionConstructor versionForProject: anObject
-]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
     | prj |
@@ -1213,11 +1153,6 @@ MetacelloProjectSpec >> versionString [
 MetacelloProjectSpec >> versionString: anObject [
     self shouldBeMutable.
     versionString := anObject
-]
-
-{ #category : 'construction' }
-MetacelloProjectSpec >> versionString: anObject constructor: aVersionConstructor [
-    aVersionConstructor versionStringForProject: anObject
 ]
 
 { #category : 'accessing' }

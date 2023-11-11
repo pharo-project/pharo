@@ -69,8 +69,3 @@ MetacelloValueHolderSpec >> value [
 MetacelloValueHolderSpec >> value: anObject [
 	value := anObject
 ]
-
-{ #category : 'construction' }
-MetacelloValueHolderSpec >> value: anObject constructor: aVersionConstructor [
-    aVersionConstructor valueForValueHolder: anObject
-]

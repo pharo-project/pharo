@@ -16,20 +16,6 @@ Class {
 	#tag : 'Constructors'
 }
 
-{ #category : 'instance creation' }
-MetacelloBaselineConstructor class >> on: aConfig [
-    ^ self new
-        on: aConfig;
-        yourself
-]
-
-{ #category : 'instance creation' }
-MetacelloBaselineConstructor class >> on: aConfig project: aProject [
-    ^ self new
-        on: aConfig project: aProject;
-        yourself
-]
-
 { #category : 'private' }
 MetacelloBaselineConstructor >> calculate: aConfig project: aProject [
 
@@ -61,12 +47,8 @@ MetacelloBaselineConstructor >> extractBaselinePragmaFor: aClass [
     ^ pragmas first
 ]
 
-{ #category : 'initialization' }
-MetacelloBaselineConstructor >> on: aConfig [
-    self calculate: aConfig project: nil
-]
+{ #category : 'api' }
+MetacelloBaselineConstructor >> version: anObject [
 
-{ #category : 'initialization' }
-MetacelloBaselineConstructor >> on: aConfig project: aProject [
-    self calculate: aConfig project: aProject
+	self error: 'version: not allowed in a baseline project spec'
 ]

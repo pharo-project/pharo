@@ -242,11 +242,6 @@ MetacelloPackageSpec >> file: aString [
 	file := aString
 ]
 
-{ #category : 'construction' }
-MetacelloPackageSpec >> file: aString constructor: aVersionConstructor [
-    aVersionConstructor fileForPackage: aString
-]
-
 { #category : 'loading' }
 MetacelloPackageSpec >> forceLoadUsing: mcLoader [
 
@@ -312,11 +307,6 @@ MetacelloPackageSpec >> goferPackage [
 { #category : 'testing' }
 MetacelloPackageSpec >> hasRepository [
     ^ self repositorySpecs notEmpty
-]
-
-{ #category : 'construction' }
-MetacelloPackageSpec >> includes: anObject constructor: aVersionConstructor [
-    aVersionConstructor includesForPackage: anObject
 ]
 
 { #category : 'private' }
@@ -426,11 +416,6 @@ MetacelloPackageSpec >> postLoadDoIt: anObject [
 	anObject setPostLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : 'construction' }
-MetacelloPackageSpec >> postLoadDoIt: aSymbol constructor: aVersionConstructor [
-    aVersionConstructor postLoadDoItForPackage: aSymbol
-]
-
 { #category : 'querying' }
 MetacelloPackageSpec >> preLoadDoIt [
 
@@ -441,11 +426,6 @@ MetacelloPackageSpec >> preLoadDoIt [
 MetacelloPackageSpec >> preLoadDoIt: anObject [
 
 	anObject setPreLoadDoItInMetacelloSpec: self
-]
-
-{ #category : 'construction' }
-MetacelloPackageSpec >> preLoadDoIt: aSymbol constructor: aVersionConstructor [
-    aVersionConstructor preLoadDoItForPackage: aSymbol
 ]
 
 { #category : 'visiting' }
@@ -465,31 +445,16 @@ MetacelloPackageSpec >> repositories: anObject [
 	repositories := anObject
 ]
 
-{ #category : 'construction' }
-MetacelloPackageSpec >> repositories: aBlock constructor: aVersionConstructor [
-    aVersionConstructor repositoriesForPackage: aBlock
-]
-
 { #category : 'accessing' }
 MetacelloPackageSpec >> repository: aStringOrMetacelloRepositorySpec [
 
 	self repositories repository: aStringOrMetacelloRepositorySpec
 ]
 
-{ #category : 'construction' }
-MetacelloPackageSpec >> repository: anObject constructor: aVersionConstructor [
-    aVersionConstructor repositoryForPackage: anObject
-]
-
 { #category : 'accessing' }
 MetacelloPackageSpec >> repository: aString username: username password: password [
 
 	self repositories repository: aString username: username password: password
-]
-
-{ #category : 'construction' }
-MetacelloPackageSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
-    aVersionConstructor repositoryForPackage: aString username: username password: password
 ]
 
 { #category : 'loading' }
@@ -501,11 +466,6 @@ MetacelloPackageSpec >> repositoryDescriptions [
 MetacelloPackageSpec >> repositorySpecs [
 
 	^self repositories map values
-]
-
-{ #category : 'construction' }
-MetacelloPackageSpec >> requires: anObject constructor: aVersionConstructor [
-    aVersionConstructor requiresForPackage: anObject
 ]
 
 { #category : 'private' }
@@ -533,11 +493,6 @@ MetacelloPackageSpec >> setPostLoadDoIt: aSymbol [
 MetacelloPackageSpec >> setPreLoadDoIt: aSymbol [
 
 	preLoadDoIt := aSymbol
-]
-
-{ #category : 'construction' }
-MetacelloPackageSpec >> supplyingAnswers: anObject constructor: aVersionConstructor [
-    aVersionConstructor supplyingAnswersForPackage: anObject
 ]
 
 { #category : 'gofer' }

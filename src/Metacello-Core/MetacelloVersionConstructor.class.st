@@ -9,22 +9,6 @@ Class {
 	#tag : 'Constructors'
 }
 
-{ #category : 'instance creation' }
-MetacelloVersionConstructor class >> on: aConfig [
-
-	^(self new)
-		on: aConfig;
-		yourself
-]
-
-{ #category : 'instance creation' }
-MetacelloVersionConstructor class >> on: aConfig project: aProject [
-
-	^(self new)
-		on: aConfig project: aProject;
-		yourself
-]
-
 { #category : 'initialization' }
 MetacelloVersionConstructor >> calculate: aConfig project: aProject [
     | versionMap symbolicVersionMap executionBlock pragmaDict |
@@ -212,31 +196,26 @@ MetacelloVersionConstructor >> on: aConfig [
 
 	| cacheKey |
 	cacheKey := aConfig class.
-	project := MetacelloPlatform current
-		stackCacheFor: #versionConstructor
-		at: cacheKey
-		doing: [ :cache | 
-			self calculate: aConfig project: nil.
-			cache at: cacheKey put:  self project ].
-	self setProject: project.
+	project := MetacelloPlatform current stackCacheFor: #versionConstructor at: cacheKey doing: [ :cache |
+		           super on: aConfig.
+		           cache at: cacheKey put: self project ].
+	self setProject: project
 ]
 
 { #category : 'initialization' }
 MetacelloVersionConstructor >> on: aConfig project: aProject [
-    | cacheKey cachedProject |
-    cacheKey := aConfig class.
-    cachedProject := MetacelloPlatform current
-        stackCacheFor: #'versionConstructor'
-        at: cacheKey
-        doing: [ :cache | 
-            self calculate: aConfig project: aProject.
-            cache at: cacheKey put: self project.
-            ^ self ].
-    aProject map: cachedProject map.
-    aProject errorMap: cachedProject errorMap.
-    aProject symbolicVersionMap: cachedProject symbolicVersionMap.
-    aProject configuration: aConfig.
-    self setProject: aProject
+
+	| cacheKey cachedProject |
+	cacheKey := aConfig class.
+	cachedProject := MetacelloPlatform current stackCacheFor: #versionConstructor at: cacheKey doing: [ :cache |
+		                 super on: aConfig project: aProject.
+		                 cache at: cacheKey put: self project.
+		                 ^ self ].
+	aProject map: cachedProject map.
+	aProject errorMap: cachedProject errorMap.
+	aProject symbolicVersionMap: cachedProject symbolicVersionMap.
+	aProject configuration: aConfig.
+	self setProject: aProject
 ]
 
 { #category : 'private' }
