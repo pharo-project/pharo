@@ -24,16 +24,6 @@ Collection >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 ]
 
 { #category : '*Metacello-Core' }
-Collection >> setForDo: aBlock withInMetacelloConfig: aMetacelloConstructore [
-    aMetacelloConstructore setFor: self do: aBlock
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> setForVersion: aString withInMetacelloConfig: aMetacelloConstructore [
-    aMetacelloConstructore setFor: self version: aString
-]
-
-{ #category : '*Metacello-Core' }
 Collection >> setImportInVersionSpec: aMetacelloVersionSpec [
   aMetacelloVersionSpec setImport: self asArray
 ]

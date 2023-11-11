@@ -227,16 +227,24 @@ MetacelloAbstractVersionConstructor >> fileForProject: aString [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> for: attributeListOrSymbol do: aBlock [
-    "conditional version support"
+	"conditional version support"
 
-    attributeListOrSymbol setForDo: aBlock withInMetacelloConfig: self
+	self
+		setFor: (attributeListOrSymbol isSymbol
+				 ifTrue: [ { attributeListOrSymbol } ]
+				 ifFalse: [ attributeListOrSymbol ])
+		do: aBlock
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> for: attributeListOrSymbol version: aString [
-    "conditional symbolicVersion support"
+	"conditional symbolicVersion support"
 
-    attributeListOrSymbol setForVersion: aString withInMetacelloConfig: self
+	self
+		setFor: (attributeListOrSymbol isSymbol
+				 ifTrue: [ { attributeListOrSymbol } ]
+				 ifFalse: [ attributeListOrSymbol ])
+		version: aString
 ]
 
 { #category : 'api' }
