@@ -8,12 +8,6 @@ MetacelloAbstractPackageSpec >> file [
 ]
 
 { #category : '*Metacello-MC' }
-MetacelloAbstractPackageSpec >> forceUpdatePackageSpec: updatedSpecs using: anMCLoader [
-
-	^self updatePackageSpec: updatedSpecs using: anMCLoader
-]
-
-{ #category : '*Metacello-MC' }
 MetacelloAbstractPackageSpec >> getFile [
   "MetacelloPackageSpec compatibility"
 
@@ -86,25 +80,6 @@ MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec andProjects: a
 MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 
 	^self subclassResponsibility
-]
-
-{ #category : '*Metacello-MC' }
-MetacelloAbstractPackageSpec >> updateForSpawnMethod: sourceSpec [
-	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
-
-	answers := name := requires := includes := nil
-]
-
-{ #category : '*Metacello-MC' }
-MetacelloAbstractPackageSpec >> updatePackageRepositoriesFor: aVersionSpec [
-	"noop by default"
-	
-	^true
-]
-
-{ #category : '*Metacello-MC' }
-MetacelloAbstractPackageSpec >> updatePackageSpec: updatedSpecs using: anMCLoader [
-	"Add pkg copy to updatedSpecs if the file in current image is different from the receiver's file"
 ]
 
 { #category : '*Metacello-MC' }

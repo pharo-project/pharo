@@ -129,14 +129,6 @@ MetacelloMCVersionSpecLoader >> required: anObject [
 	required := anObject
 ]
 
-{ #category : 'loading' }
-MetacelloMCVersionSpecLoader >> resolvePackageNames [
-
-	packages := Dictionary new.
-	self resolveToLoadableSpecs.
-	^packages values collect: [:pkg | pkg name ]
-]
-
 { #category : 'private' }
 MetacelloMCVersionSpecLoader >> resolveToLoadableSpecs [
     self versionSpec resolveToLoadableSpecs: required forLoad: true map: packages

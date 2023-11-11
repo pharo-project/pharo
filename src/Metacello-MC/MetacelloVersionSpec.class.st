@@ -382,16 +382,6 @@ MetacelloVersionSpec >> expandToLoadableSpecNames: nameList [
 			cache at: cacheKey put: names ].
 ]
 
-{ #category : 'development support' }
-MetacelloVersionSpec >> forceUpdatedPackageSpecs [
-
-	| updatedSpecs mcLoader |
-	updatedSpecs := Dictionary new.
-	mcLoader := self loader.
-	self packages map valuesDo: [:pkg | pkg forceUpdatePackageSpec: updatedSpecs using: mcLoader].
-	^updatedSpecs
-]
-
 { #category : 'accessing' }
 MetacelloVersionSpec >> getAuthor [
 	^author
@@ -1081,16 +1071,6 @@ MetacelloVersionSpec >> updateForSpawnMethod: sourceSpec [
 	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
 	
 	repositories := preLoadDoIt := postLoadDoIt := nil.
-]
-
-{ #category : 'development support' }
-MetacelloVersionSpec >> updatedPackageSpecs [
-
-	| updatedSpecs mcLoader |
-	updatedSpecs := Dictionary new.
-	mcLoader := self loader.
-	self packages map valuesDo: [:pkg | pkg updatePackageSpec: updatedSpecs using: mcLoader].
-	^updatedSpecs
 ]
 
 { #category : 'private' }

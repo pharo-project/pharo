@@ -21,9 +21,3 @@ MetacelloGofer >> basicReferencesIn: aRepository [
 		doing: [ :cache | 
 			^ cache at: aRepository put: (super basicReferencesIn: aRepository) ]
 ]
-
-{ #category : 'operations' }
-MetacelloGofer >> interactiveCommit [
-
-	^ self execute: MetacelloGoferCommit
-]

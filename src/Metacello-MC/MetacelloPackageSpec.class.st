@@ -29,20 +29,6 @@ MetacelloPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: s
 		using: anMCLoader
 ]
 
-{ #category : 'testing' }
-MetacelloPackageSpec >> compareRelativeCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader [
-
-	^self compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader
-]
-
-{ #category : 'testing' }
-MetacelloPackageSpec >> compareWorkingCopyNamed: wcName using: comarisonOperator [
-	| fileRef wcRef |
-	fileRef := GoferResolvedReference name: self file.
-	wcRef := GoferResolvedReference name: wcName.
-	^ wcRef compare: fileRef using: comarisonOperator
-]
-
 { #category : 'printing' }
 MetacelloPackageSpec >> configMethodBodyOn: aStream hasName: hasName indent: indent [
 
@@ -267,12 +253,6 @@ MetacelloPackageSpec >> forceLoadUsing: mcLoader [
 		linearLoadPackageSpecs: (Array with: self)
 		repositories:
 		(fetchingSpecLoader repositoriesFrom: self repositorySpecs)
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> forceUpdatePackageSpec: updatedSpecs using: anMCLoader [
-	
-	self updatePackageSpec: updatedSpecs force: true using: anMCLoader
 ]
 
 { #category : 'accessing' }
@@ -554,53 +534,6 @@ MetacelloPackageSpec >> setPreLoadDoIt: aSymbol [
 { #category : 'construction' }
 MetacelloPackageSpec >> supplyingAnswers: anObject constructor: aVersionConstructor [
     aVersionConstructor supplyingAnswersForPackage: anObject
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> updateForSpawnMethod: sourceSpec [
-	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
-
-	| nm fl |
-	nm := name.
-	fl := file.
-	fl ifNil: [ "if only name has been set, then force the file to be non-nil, if any attribute besides file is set, then leave file nil"
-		{
-			answers.
-			requires.
-			includes.
-			repositories.
-			preLoadDoIt.
-			postLoadDoIt }
-			detect: [ :each | each ~~ nil ]
-			ifNone: [ fl := name ] ].
-	super updateForSpawnMethod: sourceSpec.
-	file := repositories := goferPackage := preLoadDoIt := postLoadDoIt := nil.
-	name := nm.
-	file := fl.
-	^ file == nil
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> updatePackageSpec: updatedSpecs force: force using: anMCLoader [
-	"Add pkg copy to updatedSpecs if the file in current image is different from the receiver's file"
-
-	| viName |
-	(force not and: [ self getFile == nil ]) ifTrue: [ ^ self ]. "no file explicitly specified in this spec"
-	(viName := self workingCopyNameFor: anMCLoader) ifNil: [ ^ self ]. "no working copy"
-	viName ~= self file
-		ifTrue: [
-			| spec |
-			spec := self copy.
-			spec file: viName.
-			updatedSpecs at: spec name put: spec ]
-		ifFalse: [ updatedSpecs at: self name put: #uptodate ]
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> updatePackageSpec: updatedSpecs using: anMCLoader [
-	"Add pkg copy to updatedSpecs if the file in current image is different from the receiver's file"
-	
-	self updatePackageSpec: updatedSpecs force: false using: anMCLoader
 ]
 
 { #category : 'visiting' }

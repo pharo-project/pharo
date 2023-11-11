@@ -47,25 +47,6 @@ MetacelloProjectReferenceSpec >> resolveToPackagesIn: aVersionSpec visited: visi
 ]
 
 { #category : '*Metacello-MC' }
-MetacelloProjectReferenceSpec >> updateForSpawnMethod: sourceSpec [
-	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
-
-	| nm |
-	nm := name.
-	self projectReference updateForSpawnMethod: sourceSpec.
-	super updateForSpawnMethod: sourceSpec.
-	name := nm.
-]
-
-{ #category : '*Metacello-MC' }
-MetacelloProjectReferenceSpec >> updatePackageSpec: updatedSpecs using: anMCLoader [
-	"Add project copy to updatedSpecs if the current version of the project 
-	 is different from the receiver's version"
-	
-	self projectReference updatePackageSpec: updatedSpecs
-]
-
-{ #category : '*Metacello-MC' }
 MetacelloProjectReferenceSpec >> versionString [
 
 	^self projectReference versionString
