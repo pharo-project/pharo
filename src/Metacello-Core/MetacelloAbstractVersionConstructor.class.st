@@ -607,7 +607,7 @@ MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
 	self deprecated: 'Author should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getAuthor) ifNil: [
 		spec := self project valueHolderSpec.
-		self root setAuthor: spec ].
+		self root author: spec ].
 	self with: spec during: aBlock
 ]
 
@@ -618,7 +618,7 @@ MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
 	self deprecated: 'Blessing should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getBlessing) ifNil: [
 		spec := self project valueHolderSpec.
-		self root setBlessing: spec ].
+		self root blessing: spec ].
 	self with: spec during: aBlock
 ]
 
@@ -629,7 +629,7 @@ MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
 	self deprecated: 'Description should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getDescription) ifNil: [
 		spec := self project valueHolderSpec.
-		self root setDescription: spec ].
+		self root description: spec ].
 	self with: spec during: aBlock
 ]
 
@@ -646,7 +646,7 @@ MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
 	self deprecated: 'Timestamp should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getTimestamp) ifNil: [
 		spec := self project valueHolderSpec.
-		self root setTimestamp: spec ].
+		self root timestamp: spec ].
 	self with: spec during: aBlock
 ]
 

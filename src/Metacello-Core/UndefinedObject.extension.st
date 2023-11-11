@@ -17,24 +17,6 @@ UndefinedObject >> registrationsCompareEqual: aMetacelloProjectSpec [
 ]
 
 { #category : '*Metacello-Core' }
-UndefinedObject >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setAuthor: self
-]
-
-{ #category : '*Metacello-Core' }
-UndefinedObject >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setBlessing: self
-]
-
-{ #category : '*Metacello-Core' }
-UndefinedObject >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setDescription: self
-]
-
-{ #category : '*Metacello-Core' }
 UndefinedObject >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
 
 	aMetacelloSpec setPostLoadDoIt: 
@@ -50,10 +32,4 @@ UndefinedObject >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
 		(aMetacelloSpec project valueHolderSpec
 			value: self;
 			yourself)
-]
-
-{ #category : '*Metacello-Core' }
-UndefinedObject >> setTimestampInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setTimestamp: self
 ]

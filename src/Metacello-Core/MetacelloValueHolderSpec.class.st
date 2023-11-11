@@ -9,6 +9,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'private' }
+MetacelloValueHolderSpec >> asMetacelloValueHolderFor: aMetacelloVersionSpec [
+
+	^ self
+]
+
 { #category : 'printing' }
 MetacelloValueHolderSpec >> configMethodOn: aStream indent: indent [
 
@@ -25,24 +31,6 @@ MetacelloValueHolderSpec >> mergeMap [
 ]
 
 { #category : 'private' }
-MetacelloValueHolderSpec >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setAuthor: self
-]
-
-{ #category : 'private' }
-MetacelloValueHolderSpec >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setBlessing: self
-]
-
-{ #category : 'private' }
-MetacelloValueHolderSpec >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setDescription: self
-]
-
-{ #category : 'private' }
 MetacelloValueHolderSpec >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
 
 	aMetacelloSpec setPostLoadDoIt: self
@@ -52,12 +40,6 @@ MetacelloValueHolderSpec >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
 MetacelloValueHolderSpec >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
 
 	aMetacelloSpec setPreLoadDoIt: self
-]
-
-{ #category : 'private' }
-MetacelloValueHolderSpec >> setTimestampInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setTimestamp: self
 ]
 
 { #category : 'querying' }

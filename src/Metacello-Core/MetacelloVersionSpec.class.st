@@ -38,7 +38,7 @@ MetacelloVersionSpec >> author [
 { #category : 'accessing' }
 MetacelloVersionSpec >> author: anObject [
 
-	anObject setAuthorInMetacelloVersion: self
+	author := anObject asMetacelloValueHolderFor: self
 ]
 
 { #category : 'accessing' }
@@ -53,7 +53,7 @@ MetacelloVersionSpec >> blessing [
 { #category : 'accessing' }
 MetacelloVersionSpec >> blessing: anObject [
 
-	anObject setBlessingInMetacelloVersion: self
+	blessing := anObject asMetacelloValueHolderFor: self
 ]
 
 { #category : 'accessing' }
@@ -273,7 +273,7 @@ MetacelloVersionSpec >> description [
 { #category : 'accessing' }
 MetacelloVersionSpec >> description: anObject [
 
-	anObject setDescriptionInMetacelloVersion: self
+	description := anObject asMetacelloValueHolderFor: self
 ]
 
 { #category : 'querying' }
@@ -746,21 +746,6 @@ MetacelloVersionSpec >> resolveToLoadableSpecs: required map: packageMap [
 ]
 
 { #category : 'accessing' }
-MetacelloVersionSpec >> setAuthor: anObject [
-	author := anObject
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> setBlessing: anObject [
-	blessing := anObject
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> setDescription: anObject [
-	description := anObject
-]
-
-{ #category : 'accessing' }
 MetacelloVersionSpec >> setImport: anArray [
   importArray := importArray
     ifNil: [ anArray ]
@@ -777,11 +762,6 @@ MetacelloVersionSpec >> setPostLoadDoIt: aSymbol [
 MetacelloVersionSpec >> setPreLoadDoIt: aSymbol [
 
 	preLoadDoIt := aSymbol
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> setTimestamp: anObject [
-	timestamp := anObject
 ]
 
 { #category : 'enumerating' }
@@ -812,7 +792,7 @@ MetacelloVersionSpec >> timestamp [
 { #category : 'accessing' }
 MetacelloVersionSpec >> timestamp: anObject [
 
-	anObject setTimestampInMetacelloVersion: self
+	timestamp := anObject asMetacelloValueHolderFor: self
 ]
 
 { #category : 'private' }

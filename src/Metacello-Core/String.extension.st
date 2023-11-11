@@ -31,6 +31,14 @@ String >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 ]
 
 { #category : '*Metacello-Core' }
+String >> asMetacelloValueHolderFor: aMetacelloVersionSpec [
+
+	^ aMetacelloVersionSpec project valueHolderSpec
+		  value: self;
+		  yourself
+]
+
+{ #category : '*Metacello-Core' }
 String >> asMetacelloVersionNumber [
 
 	^MetacelloVersionNumber fromString: self
@@ -152,33 +160,6 @@ String >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 ]
 
 { #category : '*Metacello-Core' }
-String >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setAuthor: 
-		(aMetacelloVersionSpec project valueHolderSpec
-			value: self;
-			yourself)
-]
-
-{ #category : '*Metacello-Core' }
-String >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setBlessing: 
-		(aMetacelloVersionSpec project valueHolderSpec
-			value: self;
-			yourself)
-]
-
-{ #category : '*Metacello-Core' }
-String >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setDescription: 
-		(aMetacelloVersionSpec project valueHolderSpec
-			value: self;
-			yourself)
-]
-
-{ #category : '*Metacello-Core' }
 String >> setIncludesInMetacelloPackage: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setIncludes: { self }.
@@ -204,13 +185,4 @@ String >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
 String >> setRequiresInMetacelloPackage: aMetacelloPackageSpec [
 
 	aMetacelloPackageSpec setRequires: { self }.
-]
-
-{ #category : '*Metacello-Core' }
-String >> setTimestampInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setTimestamp: 
-		(aMetacelloVersionSpec project valueHolderSpec
-			value: self;
-			yourself)
 ]
