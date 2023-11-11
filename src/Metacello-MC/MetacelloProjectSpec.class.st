@@ -153,16 +153,6 @@ MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
 							  (self repositories compareEqual: aMetacelloProjectSpec repositories) and: [ self file = aMetacelloProjectSpec file ] ] ] ] ] ] ]
 ]
 
-{ #category : 'testing' }
-MetacelloProjectSpec >> compareRelativeCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
-
-	| cv vrsn |
-	(vrsn := self versionOrNil) ifNil: [ ^ false ].
-	(cv := self relativeCurrentVersion) ifNil: [ ^ false ].
-	(targetVersionStatus includes: cv versionStatus) ifTrue: [ ^ cv perform: anOperator with: vrsn ].
-	^ false
-]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: anOperator [
   ^ aMetacelloProjectSpec versionOrNil == nil

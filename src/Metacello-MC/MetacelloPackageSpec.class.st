@@ -536,12 +536,6 @@ MetacelloPackageSpec >> supplyingAnswers: anObject constructor: aVersionConstruc
     aVersionConstructor supplyingAnswersForPackage: anObject
 ]
 
-{ #category : 'visiting' }
-MetacelloPackageSpec >> visitingWithPackages: packages [
-
-	packages at: self name put: self
-]
-
 { #category : 'gofer' }
 MetacelloPackageSpec >> workingCopy [
 

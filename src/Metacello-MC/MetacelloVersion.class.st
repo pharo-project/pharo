@@ -81,13 +81,6 @@ MetacelloVersion >> currentlyLoadedClassesInVersion [
 ]
 
 { #category : 'querying' }
-MetacelloVersion >> defaultPackageNamesToLoad [
-	"Answer the list of packages and projects to be loaded --> packages already loaded"
-	
-	^ self defaultPackageNamesToLoad: self spec defaultPackageNames
-]
-
-{ #category : 'querying' }
 MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	
@@ -408,11 +401,10 @@ MetacelloVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
 	   If the spec is a project, answers an empty list.
 	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
 			Groups in the #includes: field are expanded following the transitive closure on groups"
+
 	"If there is no spec named <aString>, aBlock is evaluated"
 
-	| pkgSpec |
-	pkgSpec := self spec packageNamed: aString ifAbsent: aBlock.
-	^pkgSpec resolveToPackagesIn: self spec visited: MetacelloVisitedPackages new
+	^ (self spec packageNamed: aString ifAbsent: aBlock) resolveToPackagesIn: self spec visited: MetacelloVisitedPackages new
 ]
 
 { #category : 'printing' }

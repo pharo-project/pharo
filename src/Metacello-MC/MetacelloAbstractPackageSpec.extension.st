@@ -44,7 +44,7 @@ MetacelloAbstractPackageSpec >> resolveToLoadableSpec [
 ]
 
 { #category : '*Metacello-MC' }
-MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool visited: visited [
+MetacelloAbstractPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec  visited: visited [
   ^ self resolveToPackagesIn: aVersionSpec visited: visited
 ]
 
@@ -59,9 +59,4 @@ MetacelloAbstractPackageSpec >> version [
 	"MetacelloPackageSpec compatibility"
 	
 	^nil
-]
-
-{ #category : '*Metacello-MC' }
-MetacelloAbstractPackageSpec >> visitingWithPackages: packages [
-	"noop"
 ]

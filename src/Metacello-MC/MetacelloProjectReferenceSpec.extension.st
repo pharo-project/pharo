@@ -27,10 +27,9 @@ MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
 ]
 
 { #category : '*Metacello-MC' }
-MetacelloProjectReferenceSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool visited: visited [
-  ^ andProjectsBool
-    ifTrue: [ {self} ]
-    ifFalse: [ self resolveToPackagesIn: aVersionSpec visited: visited ]
+MetacelloProjectReferenceSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+
+	^ { self }
 ]
 
 { #category : '*Metacello-MC' }
